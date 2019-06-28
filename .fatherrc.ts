@@ -9,7 +9,8 @@ const options: IBundleOptions = {
     prettier: true
   },
   doc: {
-    title: '@umijs/hooks'
+    title: '@umijs/hooks',
+    base: '/hooks/'
   }
 };
 

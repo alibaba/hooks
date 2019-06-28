@@ -5,7 +5,7 @@ react hooks library
 ## Usage
 
 ```sh
-umi block https://github.com/https://github.com/umijs/hooks/tree/master/hooks
+npm i @umijs/hooks --save
 ```
 
 ## LICENSE
