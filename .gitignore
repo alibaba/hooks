@@ -1,0 +1,8 @@
+/yarn.lock
+/package-lock.json
+/dist
+/.docz
+/node_modules
+/.history
+/.idea
+/coverage
