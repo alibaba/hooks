@@ -29,7 +29,7 @@ Open your browser and visit http://127.0.0.1:8001/hooks , see more at Developmen
 
 ## 🤝 Contributing
 
-@umi/hooks 正处于起步阶段，欢迎大家参与共建。
+@umijs/hooks 正处于起步阶段，欢迎大家参与共建。
 共建请参考[贡献指南](CONTRIBUTING.MD)。
 
 ## LICENSE
