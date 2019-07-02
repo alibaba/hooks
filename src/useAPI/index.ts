@@ -80,7 +80,7 @@ const useAPI = (props: IProps) => {
     if (state.loading) {
       dispatch({ type: 'onCancel' });
     }
-  }, []);
+  }, [state.loading]);
 
   const forceRefresh = useCallback(() => {
     cancelRef.current && cancelRef.current!('请求被取消');
