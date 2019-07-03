@@ -1,0 +1,37 @@
+---
+name: useAPI
+route: /
+order: -1
+sidebar: true
+---
+
+# useAPI
+
+React side-effect hook that can fetch requests and handle loading state.
+
+## Usage
+
+### Demo
+```
+import { useAPI } from '@umijs/hooks';
+
+const Demo = () => {
+  const {data, loading} = useAPI({url: 'https://taobao.com/xxx'});
+
+  return loading ? ('loading...') : (<SomeComponent data={data}>)
+};
+```
+
+## Reference
+
+```
+params:{
+  url: string;
+  method?: 'get' | 'post' | 'put' | 'delete' | 'head' | 'options' | 'patch';
+  body?: string;
+  onError?: (code: number, res: any) => void;
+  onCancel: () => void;
+}
+
+const {data, loading, cancel, reload} = useAPI(params)
+```
