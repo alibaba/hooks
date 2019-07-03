@@ -65,7 +65,7 @@ const useAPI = (props: IProps) => {
         });
         const { data, status } = res;
 
-        if (status === 200 && data) {
+        if (status >= 200 && status < 300 && data) {
           // 如果成功则保存数据
           dispatch({ type: 'saveData', payload: (data || {}).data });
           cancelRef.current = undefined;
