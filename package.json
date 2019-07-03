@@ -24,9 +24,11 @@
     "pub:npm": "npm run build & father publish --registry=https://www.npmjs.com",
     "pub:doc": "father doc build & father doc deploy"
   },
-  "peerDependencies": {
-    "react": "^16.8.0",
+  "dependencies": {
     "axios": "^0.19.0"
+  },
+  "peerDependencies": {
+    "react": "^16.8.0"
   },
   "devDependencies": {
     "@testing-library/react-hooks": "^1.0.4",

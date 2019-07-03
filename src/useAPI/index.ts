@@ -1,14 +1,21 @@
 import { useEffect, useReducer, useRef, useCallback } from 'react';
 import axios, { Canceler } from 'axios';
-const CancelToken = axios.CancelToken;
+
+const { CancelToken } = axios;
 
 interface IProps {
   url: string;
   method?: 'get' | 'post' | 'put' | 'delete' | 'head' | 'options' | 'patch';
   body?: string;
   onError?: (code: number, res: any) => void;
-  onCancel: () => void;
+  onCancel?: () => void;
 }
+
+const initState = {
+  loading: true,
+  data: undefined,
+  refreshToken: true,
+};
 
 const reducer = (state = initState, action: { type: string; payload?: any }) => {
   switch (action.type) {
@@ -26,15 +33,21 @@ const reducer = (state = initState, action: { type: string; payload?: any }) => 
   }
 };
 
-const initState = {
-  loading: true,
-  data: undefined,
-  refreshToken: true,
-};
-
 const useAPI = (props: IProps) => {
   const cancelRef = useRef<Canceler | undefined>(undefined);
   const [state, dispatch] = useReducer(reducer, initState);
+
+  const cancel = useCallback(() => {
+    if (props.onCancel) {
+      props.onCancel();
+    }
+    if (cancelRef.current) {
+      cancelRef.current('请求被取消');
+    }
+    if (state.loading) {
+      dispatch({ type: 'onCancel' });
+    }
+  }, [state.loading, props.onCancel]);
 
   useEffect(() => {
     const fetch = async () => {
@@ -46,19 +59,21 @@ const useAPI = (props: IProps) => {
           url: props.url,
           data: props.body,
           responseType: 'json',
-          cancelToken: new CancelToken(function executor(c) {
+          cancelToken: new CancelToken(c => {
             cancelRef.current = c;
-          })
+          }),
         });
         const { data, status } = res;
-        
+
         if (status === 200 && data) {
           // 如果成功则保存数据
           dispatch({ type: 'saveData', payload: (data || {}).data });
           cancelRef.current = undefined;
         } else {
           // 如果指定了错误回调，执行错误回调
-          props.onError && props.onError(status, res);
+          if (props.onError) {
+            props.onError(status, res);
+          }
           dispatch({ type: 'onError' });
           cancelRef.current = undefined;
         }
@@ -74,24 +89,18 @@ const useAPI = (props: IProps) => {
     };
   }, [props.url, props.body, state.refreshToken]);
 
-  const cancel = useCallback(() => {
-    props.onCancel && props.onCancel();
-    cancelRef.current && cancelRef.current!('请求被取消')
-    if (state.loading) {
-      dispatch({ type: 'onCancel' });
-    }
-  }, [state.loading, props.onCancel]);
-
   const forceRefresh = useCallback(() => {
-    cancelRef.current && cancelRef.current!('请求被取消');
+    if (cancelRef.current) {
+      cancelRef.current('请求被取消');
+    }
     dispatch({ type: 'onRetry' });
   }, []);
 
   return {
-    data: state.data, 
-    loading: state.loading, 
-    cancel, 
-    reload: forceRefresh
+    data: state.data,
+    loading: state.loading,
+    cancel,
+    reload: forceRefresh,
   };
 };
 
