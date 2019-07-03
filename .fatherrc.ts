@@ -7,7 +7,8 @@ const options: IBundleOptions = {
   umd: {
     name: 'umijsHooks',
     globals:{
-      'react': 'React'
+      'react': 'React',
+      'axios': 'axios'
     }
   },
   preCommit: {
