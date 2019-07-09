@@ -24,8 +24,13 @@
     "precommit": "father pre-commit",
     "pub:doc": "father doc build & father doc deploy"
   },
+  "dependencies": {
+    "antd": "^3.20.1",
+    "enzyme": "^3.10.0",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6"
+  },
   "peerDependencies": {
-    "react": "^16.8.0",
     "axios": "^0.19.0"
   },
   "devDependencies": {
