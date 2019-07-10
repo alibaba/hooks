@@ -25,13 +25,13 @@
     "pub:doc": "father doc build & father doc deploy"
   },
   "dependencies": {
-    "antd": "^3.20.1",
-    "enzyme": "^3.10.0",
-    "react": "^16.8.6",
-    "react-dom": "^16.8.6"
+    "enzyme": "^3.10.0"
   },
   "peerDependencies": {
-    "axios": "^0.19.0"
+    "axios": "^0.19.0",
+    "antd": "^3.20.1",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6"
   },
   "devDependencies": {
     "@testing-library/react-hooks": "^1.0.4",

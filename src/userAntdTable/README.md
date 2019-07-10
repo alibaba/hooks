@@ -1,6 +1,6 @@
 # React Hooks
 
-## useTable
+## userAntdTable
 
 ### 功能
 1. 包含分页能力的表格数据展示；
@@ -12,7 +12,7 @@
 ### 用法
 
 ```
-useTable({ service: Function, form?: Antd.WrappedFormUtils: id?: string })
+userAntdTable({ service: Function, form?: Antd.WrappedFormUtils, id?: string })
 ```
 
 
@@ -21,7 +21,7 @@ useTable({ service: Function, form?: Antd.WrappedFormUtils: id?: string })
 const {
   table: { data, loading, changeTable, },
   form: { search, }
-} = useTable({ form, service: getMyApp, id: 'tableId' });
+} = useTable({ form, service: getMyApp });
 
 <Form onSubmit={search}>
 </Form>
@@ -40,7 +40,7 @@ const {
 | --- | --- | --- | --- |
 | service  | 是 | Promise | 请求表格数据的 service 方法 |
 | form | 否 | Antd.WrappedFormUtils | 搜索 From，为空时 useTable 的 search 方法也不存在 |
-| id | 否 | string | 用以区分不同 hook 缓存数据的唯一 id |
+| id | 否 | string | 缓存 id，为空时不会缓存数据 |
 
 
 #### 约定

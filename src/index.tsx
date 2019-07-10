@@ -1,5 +1,5 @@
 import useTitle from './useTitle';
 import useAPI from './useAPI';
-import useTable from './useTable';
+import userAntdTable from './userAntdTable';
 
-export { useTitle, useAPI, useTable };
+export { useTitle, useAPI, userAntdTable };

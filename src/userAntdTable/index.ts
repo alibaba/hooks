@@ -15,19 +15,19 @@ interface IUseTableProps extends FormComponentProps {
 
 interface IUserTable {
   table: {
-    changeTable: (...args: unknown[]) => void;
+    changeTable: (e: { current: number; focusUpdate?: false }) => void;
     data: unknown;
     loading: boolean;
   };
   form: {
-    search?: (...args: unknown[]) => void;
+    search?: (e: { preventDefault?: Function }) => void;
     searchType: 'simple' | 'advance';
     changeSearchType?: (...args: unknown[]) => void;
   };
 }
 
 interface IHistoryData {
-  [key: string]: string | number;
+  [key: string]: unknown;
 }
 
 class UserTableInitState {
@@ -71,11 +71,7 @@ const reducer = (state = initState, action: { type: string; payload?: {} }) => {
 export default (props: IUseTableProps): IUserTable => {
   const [state, dispatch] = useReducer(reducer, initState);
   const stateRef = useRef<UserTableInitState>(({} as unknown) as UserTableInitState);
-  const cacheKey =
-    props.id ||
-    `${Date.now()}.${Math.random()
-      .toString()
-      .substr(1, 5)}`;
+  const cacheKey = props.id;
 
   useEffect(() => {
     if (stateRef.current) {
@@ -84,7 +80,7 @@ export default (props: IUseTableProps): IUserTable => {
   });
 
   useEffect(() => {
-    if (cacheData[cacheKey]) {
+    if (cacheKey && cacheData[cacheKey]) {
       const cache = cacheData[cacheKey];
 
       dispatch({
@@ -113,19 +109,21 @@ export default (props: IUseTableProps): IUserTable => {
 
     // 卸载前缓存当前查询条件
     return () => {
-      cacheData[cacheKey] = stateRef.current;
+      if (cacheKey) {
+        cacheData[cacheKey] = stateRef.current;
+      }
     };
   }, []);
 
   useEffect(() => {
-    if (!cacheData[cacheKey]) {
+    if (cacheKey && !cacheData[cacheKey]) {
       dispatch({
         type: 'updateState',
         payload: { loading: true },
       });
 
       const fieldData = state.currentFieldData;
-      const queryParams = ({} as unknown) as { [key: string]: string };
+      const queryParams = ({} as unknown) as IHistoryData;
       // 过滤当前搜索类型中不存在的查询字段及值
       Object.keys(state.currentFieldData).forEach((key: string) => {
         if (props.form.getFieldInstance && props.form.getFieldInstance(key)) {
@@ -155,7 +153,9 @@ export default (props: IUseTableProps): IUserTable => {
       });
 
       // 在最后一个 effect 里清空 cache，避免重复发请求
-      cacheData[cacheKey] = (null as unknown) as UserTableInitState;
+      if (cacheKey) {
+        cacheData[cacheKey] = (null as unknown) as UserTableInitState;
+      }
     }
   }, [state.searchType]);
 
