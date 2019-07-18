@@ -31,7 +31,8 @@
     "react": "^16.8.0"
   },
   "devDependencies": {
-    "@testing-library/react-hooks": "^1.0.4",
+    "@testing-library/react-hooks": "^1.1.0",
+    "umi-request": "^1.0.8",
     "@types/jest": "^24.0.15",
     "father": "^2.13.3",
     "typescript": "^3.3.3"

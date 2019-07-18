@@ -1,0 +1,49 @@
+---
+name: useAsync
+route: /
+order: -1
+sidebar: true
+---
+
+# useAPI
+
+React side-effect hook that can run async functions.
+
+## Usage
+
+### Demo
+```
+import { useAsync } from '@umijs/hooks';
+
+const Demo = () => {
+  const {data, loading} = useAsync(asyncFunc);
+
+  return loading ? ('loading...') : (<SomeComponent data={data}>)
+};
+```
+
+## Reference
+
+```
+params:{
+  fn: (...args: Args | any) => Promise<Result>,
+  deps: DependencyList = [],
+  options: {
+    initExecute?: boolean; // 是否初始化执行
+    pollingInterval?: number; // 轮询的间隔毫秒
+  }
+}
+
+const {
+  loading: boolean;
+  error?: Error;
+  data?: T;
+  cancel: nullFunc;
+  run: nullFunc;
+  timer: {
+      stop: nullFunc;
+      resume: nullFunc;
+      pause: nullFunc;
+  };
+} = useAsync(params);
+```
