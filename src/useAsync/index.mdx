@@ -38,12 +38,12 @@ const {
   loading: boolean;
   error?: Error;
   data?: T;
-  cancel: nullFunc;
-  run: nullFunc;
+  cancel: () => void;
+  run: () => void;
   timer: {
-      stop: nullFunc;
-      resume: nullFunc;
-      pause: nullFunc;
+      stop: () => void;
+      resume: () => void;
+      pause: () => void;
   };
 } = useAsync(params);
 ```
