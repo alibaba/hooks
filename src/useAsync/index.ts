@@ -61,7 +61,7 @@ export interface ReturnValue<T> {
   };
 }
 
-export default function useAsyncFn<Result = any, Args extends any = any[]>(
+export default function useAsync<Result = any, Args extends any = any[]>(
   fn: (...args: Args | any) => Promise<Result>,
   deps: DependencyList = [],
   options: Options = {},
@@ -154,7 +154,10 @@ export default function useAsyncFn<Result = any, Args extends any = any[]>(
     } else if (options.initExecute) {
       run();
     }
-  }, [JSON.stringify(options), run]);
+    return () => {
+      stop();
+    };
+  }, [options.initExecute, options.pollingInterval, run]);
 
   return {
     loading: state.loading,
