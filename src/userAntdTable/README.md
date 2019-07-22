@@ -1,18 +1,19 @@
 # React Hooks
 
+
 ## userAntdTable
 
 ### 功能
 1. 包含分页能力的表格数据展示；
 2. 搜索表单与表格联动；
-3. 支持简单、复杂 2 种参数独立的搜索模式切换，并且能自动载入上一次表单填充数据（需要配置 id）；
-4. 跳出当前页后返回时自动还原上一次的表单状态，并刷新之前的页码数据（需要配置 id）；
+3. 支持简单、复杂 2 种参数独立的搜索模式切换，并且能自动载入上一次表单填充数据；
+4. 跳出当前页后返回时自动还原上一次的表单状态，并刷新之前的页码数据；
 
 
 ### 用法
 
 ```
-userAntdTable({ service: Function, form?: Antd.WrappedFormUtils, id?: string })
+useTable({ service: Function, id: String, form: Antd.WrappedFormUtils })
 ```
 
 
@@ -21,7 +22,7 @@ userAntdTable({ service: Function, form?: Antd.WrappedFormUtils, id?: string })
 const {
   table: { data, loading, changeTable, },
   form: { search, }
-} = useTable({ form, service: getMyApp });
+} = useTable({ form, id: 'tableId', service: getMyApp });
 
 <Form onSubmit={search}>
 </Form>
@@ -39,8 +40,8 @@ const {
 | 参数名 | 必填 | 类型 | 说明 |
 | --- | --- | --- | --- |
 | service  | 是 | Promise | 请求表格数据的 service 方法 |
-| form | 否 | Antd.WrappedFormUtils | 搜索 From，为空时 useTable 的 search 方法也不存在 |
-| id | 否 | string | 缓存 id，为空时不会缓存数据 |
+| id  | 是 | String | 缓存 id，用以区分不同的 useTable 缓存数据 |
+| form | 是 | Antd.WrappedFormUtils | 搜索表单 |
 
 
 #### 约定

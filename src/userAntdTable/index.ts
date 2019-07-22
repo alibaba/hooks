@@ -1,33 +1,39 @@
 import { useEffect, useRef, useReducer } from 'react';
-import { WrappedFormUtils, FormComponentProps } from 'antd/lib/form/Form';
+import { PaginationConfig } from 'antd/lib/pagination';
+import { WrappedFormUtils } from 'antd/lib/form/Form';
 
 interface UserTableFormUtils extends WrappedFormUtils {
   getFieldInstance?: (name: string) => {};
 }
-interface IUseTableProps extends FormComponentProps {
-  // antd form 对象
-  form: UserTableFormUtils;
+interface IUseTableProps {
   // 请求参数的 service 方法
   service(...args: unknown[]): Promise<unknown>;
-  // 缓存 id 用于区分缓存的回填（默认时间戳）
-  id?: string;
+  // 缓存 id
+  id: string;
+  // antd form 对象
+  form: UserTableFormUtils;
 }
 
 interface IUserTable {
   table: {
-    changeTable: (e: { current: number; focusUpdate?: false }) => void;
+    changeTable: (e: IChangeTablePaginationConfig) => void;
     data: unknown;
     loading: boolean;
   };
   form: {
-    search?: (e: { preventDefault?: Function }) => void;
+    search: (
+      value: string | React.MouseEvent<HTMLElement> | React.KeyboardEvent<HTMLInputElement>,
+    ) => void;
     searchType: 'simple' | 'advance';
-    changeSearchType?: (...args: unknown[]) => void;
+    changeSearchType: (...args: unknown[]) => void;
   };
 }
-
 interface IHistoryData {
   [key: string]: unknown;
+}
+
+interface IChangeTablePaginationConfig extends PaginationConfig {
+  focusUpdate?: boolean;
 }
 
 class UserTableInitState {
@@ -39,6 +45,9 @@ class UserTableInitState {
 
   // 当前页码
   current: number = 1;
+
+  // 分页大小
+  pageSize: number = 20;
 
   // 当前表单数据
   currentFieldData: IHistoryData = {};
@@ -71,7 +80,7 @@ const reducer = (state = initState, action: { type: string; payload?: {} }) => {
 export default (props: IUseTableProps): IUserTable => {
   const [state, dispatch] = useReducer(reducer, initState);
   const stateRef = useRef<UserTableInitState>(({} as unknown) as UserTableInitState);
-  const cacheKey = props.id;
+  const cacheKey = props.id || '__cache__';
 
   useEffect(() => {
     if (stateRef.current) {
@@ -86,7 +95,9 @@ export default (props: IUseTableProps): IUserTable => {
       dispatch({
         type: 'updateState',
         payload: {
+          // 改变 current、pageSize 会重新加载数据
           current: cache.current,
+          pageSize: cache.pageSize,
           searchType: cache.searchType,
           currentFieldData: cache.currentFieldData,
           historyFieldData: cache.historyFieldData,
@@ -109,14 +120,12 @@ export default (props: IUseTableProps): IUserTable => {
 
     // 卸载前缓存当前查询条件
     return () => {
-      if (cacheKey) {
-        cacheData[cacheKey] = stateRef.current;
-      }
+      cacheData[cacheKey] = stateRef.current;
     };
   }, []);
 
   useEffect(() => {
-    if (cacheKey && !cacheData[cacheKey]) {
+    if (!cacheData[cacheKey]) {
       dispatch({
         type: 'updateState',
         payload: { loading: true },
@@ -132,31 +141,29 @@ export default (props: IUseTableProps): IUserTable => {
       });
 
       // 请求数据
-      props.service({ current: state.current, ...queryParams }).then(res => {
-        dispatch({
-          type: 'updateState',
-          payload: { loading: false, data: res },
+      props
+        .service({ current: state.current, pageSize: state.pageSize, ...queryParams })
+        .then(res => {
+          dispatch({
+            type: 'updateState',
+            payload: { loading: false, data: res },
+          });
         });
-      });
     }
-  }, [state.current, state.count]);
+  }, [state.current, state.pageSize, state.count]);
 
   useEffect(() => {
-    if (props.form) {
-      const historyData = state.historyFieldData[state.searchType];
+    const historyData = state.historyFieldData[state.searchType];
 
-      Object.keys(props.form.getFieldsValue()).forEach((key: string) => {
-        // 切换状态后，还原当前搜索类型中的历史数据
-        if (historyData[key] && props.form.getFieldInstance && props.form.getFieldInstance(key)) {
-          props.form.setFieldsValue({ [key]: historyData[key] });
-        }
-      });
-
-      // 在最后一个 effect 里清空 cache，避免重复发请求
-      if (cacheKey) {
-        cacheData[cacheKey] = (null as unknown) as UserTableInitState;
+    Object.keys(props.form.getFieldsValue()).forEach((key: string) => {
+      // 切换状态后，还原当前搜索类型中的历史数据
+      if (historyData[key] && props.form.getFieldInstance && props.form.getFieldInstance(key)) {
+        props.form.setFieldsValue({ [key]: historyData[key] });
       }
-    }
+    });
+
+    // 在最后一个 effect 里清空 cache，避免重复发请求
+    cacheData[cacheKey] = (null as unknown) as UserTableInitState;
   }, [state.searchType]);
 
   /**
@@ -164,63 +171,61 @@ export default (props: IUseTableProps): IUserTable => {
    * current 页码
    * focusUpdate 是否使用查询条件刷新当前页
    */
-  const changeTable = (e: { current: number; focusUpdate?: false }) => {
+  const changeTable = (e: IChangeTablePaginationConfig) => {
     dispatch({
       type: 'updateState',
       payload: {
         current: e.current,
+        pageSize: e.pageSize,
         count: e.focusUpdate ? state.count + 1 : state.count,
       },
     });
   };
 
   // 表单搜索
-  let search;
-  let changeSearchType;
+  const search = (
+    e: string | React.MouseEvent<HTMLElement> | React.KeyboardEvent<HTMLInputElement>,
+  ) => {
+    const currentFieldData = props.form && props.form.getFieldsValue();
 
-  if (props.form) {
-    search = (e: { preventDefault?: Function }) => {
-      const currentFieldData = props.form && props.form.getFieldsValue();
+    if (e && (e as React.MouseEvent<HTMLElement>).preventDefault) {
+      (e as React.MouseEvent<HTMLElement>).preventDefault();
+    }
 
-      if (e && e.preventDefault) {
-        e.preventDefault();
-      }
+    // 保存当前表单的用户输入数据
+    dispatch({
+      type: 'updateHistoryFiledData',
+      payload: {
+        [state.searchType]: currentFieldData,
+      },
+    });
 
-      // 保存当前表单的用户输入数据
-      dispatch({
-        type: 'updateHistoryFiledData',
-        payload: {
-          [state.searchType]: currentFieldData,
-        },
-      });
+    dispatch({
+      type: 'updateState',
+      payload: { currentFieldData, current: 1, count: state.count + 1 },
+    });
+  };
 
-      dispatch({
-        type: 'updateState',
-        payload: { currentFieldData, current: 1, count: state.count + 1 },
-      });
-    };
+  // 切换搜索类型
+  const changeSearchType = () => {
+    const fileData = props.form && props.form.getFieldsValue();
 
-    // 切换搜索类型
-    changeSearchType = () => {
-      const fileData = props.form && props.form.getFieldsValue();
+    // 切换搜索类型时，保存当前表单的用户输入数据
+    dispatch({
+      type: 'updateHistoryFiledData',
+      payload: {
+        [state.searchType]: fileData,
+      },
+    });
 
-      // 切换搜索类型时，保存当前表单的用户输入数据
-      dispatch({
-        type: 'updateHistoryFiledData',
-        payload: {
-          [state.searchType]: fileData,
-        },
-      });
-
-      // 更新搜索类型
-      dispatch({
-        type: 'updateState',
-        payload: {
-          searchType: state.searchType === 'simple' ? 'advance' : 'simple',
-        },
-      });
-    };
-  }
+    // 更新搜索类型
+    dispatch({
+      type: 'updateState',
+      payload: {
+        searchType: state.searchType === 'simple' ? 'advance' : 'simple',
+      },
+    });
+  };
 
   return {
     table: {
