@@ -45,35 +45,35 @@ export interface Options {
   pollingInterval?: number; // 轮询的间隔毫秒
 }
 
-const nullFunc: () => void = () => {};
-type nullFunc = () => void;
+type noop = (...args: any[]) => void;
+const noop: noop = () => {};
 
 export interface ReturnValue<T> {
   loading: boolean;
   error?: Error;
   data?: T;
-  cancel: nullFunc;
-  run: nullFunc;
+  cancel: noop;
+  run: noop;
   timer: {
-    stop: nullFunc;
-    resume: nullFunc;
-    pause: nullFunc;
+    stop: noop;
+    resume: noop;
+    pause: noop;
   };
 }
 
-export default function useAsync<Result = any, Args extends any = any[]>(
-  fn: (...args: Args | any) => Promise<Result>,
+export default function useAsync<Result = any>(
+  fn: (...args: any[]) => Promise<Result>,
   deps: DependencyList = [],
   options: Options = {},
 ): ReturnValue<Result> {
   const [state, set] = useState<ReturnValue<Result>>({
-    loading: true,
-    cancel: nullFunc,
-    run: nullFunc,
+    loading: false,
+    cancel: noop,
+    run: noop,
     timer: {
-      stop: nullFunc,
-      resume: nullFunc,
-      pause: nullFunc,
+      stop: noop,
+      resume: noop,
+      pause: noop,
     },
   });
   const timer = useRef<Timer | undefined>(undefined);
@@ -86,9 +86,10 @@ export default function useAsync<Result = any, Args extends any = any[]>(
     };
   }, []);
 
-  const run = useCallback((...args: Args | any) => {
+  const run = useCallback((...args: any[]) => {
+    // 保证执行 run 的时候可以执行
+    mounted.current = true;
     set(s => ({ ...s, loading: true }));
-
     return fn(...args)
       .then(data => {
         if (mounted.current) {
@@ -104,10 +105,13 @@ export default function useAsync<Result = any, Args extends any = any[]>(
       });
   }, deps);
 
-  const reload = useCallback(() => {
-    mounted.current = true;
-    run();
-  }, [run]);
+  const reload = useCallback(
+    (...args) => {
+      mounted.current = true;
+      run(...(args || []));
+    },
+    [run],
+  );
 
   const cancel = useCallback(() => {
     mounted.current = false;
@@ -137,27 +141,30 @@ export default function useAsync<Result = any, Args extends any = any[]>(
     }
   }, []);
 
-  useEffect(() => {
-    if (options.pollingInterval) {
-      const intervalAsync = async () => {
-        await run();
-        if (mounted.current) {
-          timer.current = new Timer(
-            () => {
-              intervalAsync();
-            },
-            options.pollingInterval as number,
-          );
-        }
+  useEffect(
+    (...args: any[]) => {
+      if (options.pollingInterval) {
+        const intervalAsync = async () => {
+          await run(...(args || []));
+          if (mounted.current) {
+            timer.current = new Timer(
+              () => {
+                intervalAsync();
+              },
+              options.pollingInterval as number,
+            );
+          }
+        };
+        intervalAsync();
+      } else if (options.initExecute) {
+        run(...(args || []));
+      }
+      return () => {
+        stop();
       };
-      intervalAsync();
-    } else if (options.initExecute) {
-      run();
-    }
-    return () => {
-      stop();
-    };
-  }, [options.initExecute, options.pollingInterval, run]);
+    },
+    [options.initExecute, options.pollingInterval, run],
+  );
 
   return {
     loading: state.loading,
