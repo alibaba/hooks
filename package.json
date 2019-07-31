@@ -38,5 +38,9 @@
   "engines": {
     "node": ">=8.0.0"
   },
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "antd": "^3.20.7",
+    "react-use": "^10.1.2"
+  }
 }
