@@ -17,7 +17,6 @@ class Timer {
     this.start = delay;
     this.timerId = delay;
     this.cb = cb;
-    this.resume();
   }
 
   stop = () => {
@@ -41,130 +40,166 @@ class Timer {
 }
 
 export interface Options {
-  initExecute?: boolean; // 是否初始化执行
+  manual?: boolean; // 是否初始化执行
   pollingInterval?: number; // 轮询的间隔毫秒
 }
 
-const nullFunc: () => void = () => {};
-type nullFunc = () => void;
+type noop = (...args: any[]) => void;
+const noop: noop = () => {};
 
 export interface ReturnValue<T> {
   loading: boolean;
   error?: Error;
   data?: T;
-  cancel: nullFunc;
-  run: nullFunc;
+  cancel: noop;
+  run: noop;
   timer: {
-    stop: nullFunc;
-    resume: nullFunc;
-    pause: nullFunc;
+    stop: noop;
+    resume: noop;
+    pause: noop;
   };
 }
 
-export default function useAsync<Result = any, Args extends any = any[]>(
-  fn: (...args: Args | any) => Promise<Result>,
+export default function useAsync<Result = any>(
+  fn: (...args: any[]) => Promise<Result>,
   deps: DependencyList = [],
   options: Options = {},
 ): ReturnValue<Result> {
   const [state, set] = useState<ReturnValue<Result>>({
-    loading: true,
-    cancel: nullFunc,
-    run: nullFunc,
+    loading: false,
+    cancel: noop,
+    run: noop,
     timer: {
-      stop: nullFunc,
-      resume: nullFunc,
-      pause: nullFunc,
+      stop: noop,
+      resume: noop,
+      pause: noop,
     },
   });
   const timer = useRef<Timer | undefined>(undefined);
-  const mounted = useRef(false);
+  const count = useRef(0);
+  const init = useRef(true);
 
   useEffect(() => {
-    mounted.current = true;
+    count.current += 1;
+    init.current = true;
     return () => {
-      mounted.current = false;
+      count.current += 1;
     };
-  }, []);
-
-  const run = useCallback((...args: Args | any) => {
-    set(s => ({ ...s, loading: true }));
-
-    return fn(...args)
-      .then(data => {
-        if (mounted.current) {
-          set(s => ({ ...s, data, loading: false }));
-        }
-        return data;
-      })
-      .catch(error => {
-        if (mounted.current) {
-          set(s => ({ ...s, error, loading: false }));
-        }
-        return error;
-      });
   }, deps);
 
-  const reload = useCallback(() => {
-    mounted.current = true;
-    run();
-  }, [run]);
-
-  const cancel = useCallback(() => {
-    mounted.current = false;
-  }, []);
-
   const stop = useCallback(() => {
-    mounted.current = false;
+    count.current += 1;
     // 清除计时器
     if (timer.current) {
       timer.current.stop();
     }
+    set(s => ({ ...s, error: new Error('stopped'), loading: false }));
   }, []);
 
   const pause = useCallback(() => {
-    mounted.current = false;
+    count.current += 1;
     // 暂停计时器
     if (timer.current) {
       timer.current.pause();
     }
+    set(s => ({ ...s, error: new Error('paused'), loading: false }));
   }, []);
 
   const resume = useCallback(() => {
-    mounted.current = true;
     // 恢复计时器
     if (timer.current) {
       timer.current.resume();
     }
   }, []);
 
-  useEffect(() => {
-    if (options.pollingInterval) {
-      const intervalAsync = async () => {
-        await run();
-        if (mounted.current) {
-          timer.current = new Timer(
-            () => {
-              intervalAsync();
-            },
-            options.pollingInterval as number,
-          );
+  const run = useCallback((...args: any[]) => {
+    // 确保不会返回被取消的结果
+    const runCount = count.current;
+    set(s => ({ ...s, loading: true }));
+    return fn(...args)
+      .then(data => {
+        if (runCount === count.current) {
+          set(s => ({ ...s, data, loading: false }));
         }
+        return data;
+      })
+      .catch(error => {
+        if (runCount === count.current) {
+          set(s => ({ ...s, error, loading: false }));
+        }
+        return error;
+      });
+  }, deps);
+
+  const intervalAsync = useCallback(
+    async (...args) => {
+      const runCount = count.current;
+      if (!options.manual || !init.current) {
+        await run(...(args || []));
+      }
+      if (count.current === runCount) {
+        // 只初始化定时器，不开始计时
+        timer.current = new Timer(() => intervalAsync(...args), options.pollingInterval as number);
+
+        // 如果设置了 manual，则默认不开始计时
+        if (init.current && options.manual) {
+          init.current = false;
+        } else {
+          // 开始计时
+          timer.current.resume();
+        }
+      }
+    },
+    [options.pollingInterval, options.manual, run],
+  );
+
+  const reload = useCallback(
+    (...args) => {
+      // 防止上次数据返回
+      count.current += 1;
+      if (options.pollingInterval) {
+        if (!options.manual) {
+          // 如果有 polling，清理上次的计时器
+          stop();
+        }
+        intervalAsync(...args);
+      } else {
+        // 直接运行
+        run(...(args || []));
+      }
+    },
+    [run, options.pollingInterval],
+  );
+
+  const cancel = useCallback(() => {
+    count.current += 1;
+    // throw an error
+    set(s => ({ ...s, error: new Error('canceled'), loading: false }));
+  }, []);
+
+  useEffect(
+    (...args: any[]) => {
+      if (options.pollingInterval) {
+        intervalAsync();
+      } else if (!options.manual) {
+        // 直接值行
+        run(...(args || []));
+      }
+
+      return () => {
+        count.current += 1;
+        stop();
       };
-      intervalAsync();
-    } else if (options.initExecute) {
-      run();
-    }
-    return () => {
-      stop();
-    };
-  }, [options.initExecute, options.pollingInterval, run]);
+    },
+    [options.manual, options.pollingInterval, run, intervalAsync],
+  );
 
   return {
     loading: state.loading,
     error: state.error,
     data: state.data,
     cancel,
-    run: reload,
+    run: options.manual && options.pollingInterval ? resume : reload,
     timer: {
       stop,
       resume,
