@@ -14,20 +14,6 @@ interface IUseTableProps {
   form: UserTableFormUtils;
 }
 
-interface IUserTable {
-  table: {
-    changeTable: (e: IChangeTablePaginationConfig) => void;
-    data: unknown;
-    loading: boolean;
-  };
-  form: {
-    search: (
-      value: string | React.MouseEvent<HTMLElement> | React.KeyboardEvent<HTMLInputElement>,
-    ) => void;
-    searchType: 'simple' | 'advance';
-    changeSearchType: (...args: unknown[]) => void;
-  };
-}
 interface IHistoryData {
   [key: string]: unknown;
 }
@@ -77,7 +63,7 @@ const reducer = (state = initState, action: { type: string; payload?: {} }) => {
   }
 };
 
-export default (props: IUseTableProps): IUserTable => {
+export default <T>(props: IUseTableProps) => {
   const [state, dispatch] = useReducer(reducer, initState);
   const stateRef = useRef<UserTableInitState>(({} as unknown) as UserTableInitState);
   const cacheKey = props.id || '__cache__';
@@ -184,7 +170,7 @@ export default (props: IUseTableProps): IUserTable => {
 
   // 表单搜索
   const search = (
-    e: string | React.MouseEvent<HTMLElement> | React.KeyboardEvent<HTMLInputElement>,
+    e?: string | React.MouseEvent<HTMLElement> | React.KeyboardEvent<HTMLInputElement>,
   ) => {
     const currentFieldData = props.form && props.form.getFieldsValue();
 
@@ -230,7 +216,7 @@ export default (props: IUseTableProps): IUserTable => {
   return {
     table: {
       changeTable,
-      data: state.data,
+      data: state.data as T,
       loading: state.loading,
     },
     form: {
