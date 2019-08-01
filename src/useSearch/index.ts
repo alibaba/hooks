@@ -14,14 +14,14 @@ export interface Options {
 }
 
 export default function useAntdSearch<Result>(
-  fn: (string: any) => Promise<Result>,
+  fn: (s: any) => Promise<Result>,
   deps: DependencyList = [],
   options: Options = {},
 ): ReturnValue<Result> {
   const [value, setValue] = useState<any>();
 
-  const { loading, data, run, cancel } = useAsync<Result>(fn, [value, ...deps], {
-    initExecute: false,
+  const { loading, data, run } = useAsync<Result>(fn, [value, ...deps], {
+    manual: true,
   });
 
   const wait: number = options.wait === undefined ? 300 : options.wait;
@@ -29,7 +29,6 @@ export default function useAntdSearch<Result>(
   /* value 变化时，需要防抖 */
   useDebounce(
     () => {
-      cancel();
       run(value);
     },
     wait,
@@ -38,7 +37,6 @@ export default function useAntdSearch<Result>(
 
   /* 依赖变化时，需要立即重新请求 */
   useUpdateEffect(() => {
-    cancel();
     run(value);
   }, deps);
 
