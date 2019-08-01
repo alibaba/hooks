@@ -1,0 +1,71 @@
+---
+name: useSearch
+route: /useSearch
+order: -1
+sidebar: true
+---
+
+import { Playground } from 'docz';
+import useSearch from './index';
+import { Select } from 'antd';
+import 'antd/es/select/style';
+
+# useSearch
+
+一个集成了异步搜索，防抖控制，请求时序控制的搜索 Hook，可应用于常见的 Select，Input 搜索场景。
+
+## Usage
+
+### Simple Search Demo With Select
+
+<Playground>
+{
+  ()=>{
+    const { Option } = Select;
+    function Demo(){
+
+      const fetchEmail = (str) => {
+        console.log('search string: ', str);
+        return fetch(`https://randomuser.me/api/?results=5`).then(res => res.json()).then(res => res.results);
+      }
+
+      const { data, loading, onChange } = useSearch(fetchEmail);
+
+      return (
+        <Select
+          showSearch
+          placeholder="Select Emails"
+          filterOption={false}
+          onSearch={onChange}
+          loading={loading}
+          style={{ width: 300 }}
+        >
+          {data && data.map(d => (
+            <Option key={d.email}>{d.email}</Option>
+          ))}
+        </Select>
+      )
+    }
+    return <Demo />
+  }
+}
+</Playground>
+
+## Reference
+
+```
+params:{
+  fn: (s: any) => Promise<Result>,
+  deps?: DependencyList = [],
+  options?: {
+    wait: number
+  }
+}
+
+const {
+  loading: boolean;
+  data?: T;
+  value: any,
+  onChange: (s: any) => void;
+} = useAsync(params);
+```

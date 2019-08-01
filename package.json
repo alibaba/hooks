@@ -1,6 +1,6 @@
 {
-  "name": "hooks",
-  "version": "0.0.1",
+  "name": "@umijs/hooks",
+  "version": "0.0.2-beta.4",
   "description": "react hooks library",
   "keywords": [
     "umi hooks",
@@ -13,6 +13,7 @@
     "email": "brickspert.fjl@alipay.com"
   },
   "repository": "https://github.com/umijs/hooks",
+  "homepage": "https://github.com/umijs/hooks",
   "scripts": {
     "start": "npm run dev",
     "dev": "father doc dev",
@@ -21,14 +22,14 @@
     "cov": "father test --coverage",
     "help": "father help",
     "precommit": "father pre-commit",
-    "pub:npm": "npm run build & father publish --registry=https://www.npmjs.com",
     "pub:doc": "father doc build & father doc deploy"
   },
   "dependencies": {
     "umi-request": "^1.0.8"
   },
   "peerDependencies": {
-    "react": "^16.8.0"
+    "react": "^16.8.0",
+    "axios": "^0.19.0"
   },
   "devDependencies": {
     "@testing-library/react-hooks": "^1.1.0",
@@ -39,5 +40,9 @@
   "engines": {
     "node": ">=8.0.0"
   },
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "antd": "^3.20.7",
+    "react-use": "^10.1.2"
+  }
 }
