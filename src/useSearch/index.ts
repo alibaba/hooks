@@ -1,5 +1,4 @@
-import { DependencyList, useState, useMemo } from 'react';
-import { useDebounce } from 'react-use';
+import { DependencyList, useState, useMemo, useRef } from 'react';
 import useUpdateEffect from '../useUpdateEffect';
 
 import useAsync from '../useAsync';
@@ -20,7 +19,9 @@ export default function useAntdSearch<Result>(
   deps: DependencyList = [],
   options: Options = {},
 ): ReturnValue<Result> {
-  const [value, setValue] = useState<any>();
+  const [value, setValue] = useState<any>(0);
+
+  const timer = useRef<number>();
 
   const { loading, data, run } = useAsync<Result>(fn, [value, ...deps], {
     manual: true,
@@ -31,13 +32,19 @@ export default function useAntdSearch<Result>(
   ]);
 
   /* value 变化时，需要防抖 */
-  useDebounce(
-    () => {
+  useUpdateEffect(() => {
+    if (timer.current) {
+      window.clearTimeout(timer.current);
+    }
+
+    timer.current = window.setTimeout(() => {
       run(value);
-    },
-    wait,
-    [value],
-  );
+    }, wait);
+
+    return () => {
+      window.clearTimeout(timer.current);
+    };
+  }, [value]);
 
   /* 依赖变化时，需要立即重新请求 */
   useUpdateEffect(() => {
