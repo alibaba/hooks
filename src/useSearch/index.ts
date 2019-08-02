@@ -1,4 +1,4 @@
-import { DependencyList, useState } from 'react';
+import { DependencyList, useState, useMemo } from 'react';
 import { useDebounce, useUpdateEffect } from 'react-use';
 import useAsync from '../useAsync';
 
@@ -6,7 +6,7 @@ export interface ReturnValue<T> {
   loading: boolean;
   data?: T;
   value: any;
-  onChange: (s: any) => void;
+  onChange: (value: any) => void;
 }
 
 export interface Options {
@@ -14,7 +14,7 @@ export interface Options {
 }
 
 export default function useAntdSearch<Result>(
-  fn: (s: any) => Promise<Result>,
+  fn: (value: any) => Promise<Result>,
   deps: DependencyList = [],
   options: Options = {},
 ): ReturnValue<Result> {
@@ -24,7 +24,9 @@ export default function useAntdSearch<Result>(
     manual: true,
   });
 
-  const wait: number = options.wait === undefined ? 300 : options.wait;
+  const wait: number = useMemo(() => (options.wait === undefined ? 300 : options.wait), [
+    options.wait,
+  ]);
 
   /* value 变化时，需要防抖 */
   useDebounce(
