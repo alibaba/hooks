@@ -75,7 +75,7 @@ describe('useLoadMore', () => {
   });
 
   const hook = renderHook(({ fn, deps, options }) => useLoadMore(fn, deps, options), {
-    initialProps: { fn: asyncFn, deps: [], options: { initPageSize: 3, peerPageSize: 4 } },
+    initialProps: { fn: asyncFn, deps: [], options: { initPageSize: 3, incrementSize: 4 } },
   });
 
   it('render the first', async () => {

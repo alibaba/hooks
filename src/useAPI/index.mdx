@@ -1,7 +1,6 @@
 ---
 name: useAPI
 route: /useAPI
-order: -1
 sidebar: true
 ---
 
@@ -13,11 +12,12 @@ import useAPI from './index';
 
 # useAPI
 
-React side-effect hook that can fetch requests and handle loading state.
+一个内置 `umi-request`，帮你管理网络请求的 Hook，支持立即执行，手动触发执行，轮询。
 
-## Usage
+## 代码演示
 
-### Fetch triggered when component load.
+### 立即执行
+
 <Playground>
 {
   ()=>{
@@ -27,11 +27,13 @@ React side-effect hook that can fetch requests and handle loading state.
       const email = useMemo(()=>(((data||{}).results || [])[0] || {}).email, [data]);
 
       return (
-        <>
-        <Spin spinning={loading}>id: {state}; email: {email}</Spin>
-        <Button onClick={run}>reload</Button>
-        <Button onClick={cancel}>cancel</Button>
-        <Button onClick={()=>set(c=>c+1)}>increase id</Button>
+         <>
+          <Spin spinning={loading}><div>id: {state}</div> <div>email: {email}</div></Spin>
+          <Button.Group style={{marginTop: 16}}>
+            <Button onClick={run}>reload</Button>
+            <Button onClick={cancel}>cancel</Button>
+            <Button onClick={()=>set(c=>c+1)}>increase id</Button>
+          </Button.Group>
         </>
       )
     }
@@ -40,7 +42,8 @@ React side-effect hook that can fetch requests and handle loading state.
 }
 </Playground>
 
-### Fetch the request when execute a callback
+### 手动触发执行
+
 <Playground>
 {
   ()=>{
@@ -50,8 +53,8 @@ React side-effect hook that can fetch requests and handle loading state.
 
       return (
         <>
-        <Spin spinning={loading}>{email}</Spin>
-        <Button onClick={run}>send request</Button>
+          <Spin spinning={loading}>email: {email}</Spin>
+          <Button onClick={run} style={{marginTop: 16}}>fetch</Button>
         </>
       )
     }
@@ -60,7 +63,8 @@ React side-effect hook that can fetch requests and handle loading state.
 }
 </Playground>
 
-### Polling a fetch request
+### 轮询
+
 <Playground>
 {
   ()=>{
@@ -70,10 +74,12 @@ React side-effect hook that can fetch requests and handle loading state.
 
       return (
         <>
-        <Spin spinning={loading}>{email}</Spin>
-        <Button onClick={timer.pause}>pause</Button>
-        <Button onClick={timer.stop}>stop</Button>
-        <Button onClick={timer.resume}>resume</Button>
+         <Spin spinning={loading}>email: {email}</Spin>
+          <Button.Group style={{marginTop: 16}}>
+            <Button onClick={timer.pause}>pause</Button>
+            <Button onClick={timer.stop}>stop</Button>
+            <Button onClick={timer.resume}>resume</Button>
+          </Button.Group>
         </>
       )
     }
@@ -82,28 +88,27 @@ React side-effect hook that can fetch requests and handle loading state.
 }
 </Playground>
 
-### Demo
-```
-import { useAPI } from '@umijs/hooks';
-
-const Demo = () => {
-  const {data, loading} = useAPI({url: 'https://taobao.com/xxx'});
-
-  return loading ? ('loading...') : (<SomeComponent data={data}>)
-};
-```
-
-## Reference
+## API
 
 ```
-params:{
+
+const { // 返回数据同 useAsync
+  loading: boolean;
+  error?: Error;
+  data?: T;
+  cancel: () => void;
+  run: () => void;
+  timer: {
+    stop: () => void;
+    resume: () => void;
+    pause: () => void;
+  };
+} = useAPI(params)
+
+params:(
   url: string;
   options: RequestInit;
   manual: boolean;
   pollingInterval: number;
-}
-
-const returnType = useAPI(params)
-
-See returnType in useAsync
+)
 ```

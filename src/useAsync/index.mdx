@@ -1,7 +1,6 @@
 ---
 name: useAsync
 route: /useAsync
-order: -1
 sidebar: true
 ---
 
@@ -13,11 +12,12 @@ import useAsync from './index';
 
 # useAsync
 
-React side-effect hook that helps you run async function
+一个帮你管理异步函数的 Hook，支持立即执行，手动触发执行，轮询。
 
-## Usage
+## 代码演示
 
-### Run the async function when component load.
+### 立即执行
+
 <Playground>
 {
   ()=>{
@@ -33,10 +33,12 @@ React side-effect hook that helps you run async function
 
       return (
         <>
-          <Spin spinning={loading}>id: {state}; email: {email}</Spin>
-          <Button onClick={run}>reload</Button>
-          <Button onClick={cancel}>cancel</Button>
-          <Button onClick={()=>set(c=>c+1)}>increase id</Button>
+          <Spin spinning={loading}><div>id: {state}</div> <div>email: {email}</div></Spin>
+          <Button.Group style={{marginTop: 16}}>
+            <Button onClick={run}>reload</Button>
+            <Button onClick={cancel}>cancel</Button>
+            <Button onClick={()=>set(c=>c+1)}>increase id</Button>
+          </Button.Group>
         </>
       )
     }
@@ -45,7 +47,8 @@ React side-effect hook that helps you run async function
 }
 </Playground>
 
-### Run the async function with callback.
+### 手动触发执行
+
 <Playground>
 {
   ()=>{
@@ -61,7 +64,7 @@ React side-effect hook that helps you run async function
       return (
         <>
           <Spin spinning={loading}>email: {email}</Spin>
-          <Button onClick={run}>fetch</Button>
+          <Button onClick={run} style={{marginTop: 16}}>fetch</Button>
         </>
       )
     }
@@ -70,7 +73,8 @@ React side-effect hook that helps you run async function
 }
 </Playground>
 
-### set a polling interval for async function.
+### 轮询
+
 <Playground>
 {
   ()=>{
@@ -86,10 +90,12 @@ React side-effect hook that helps you run async function
       return (
         <>
           <Spin spinning={loading}>email: {email}</Spin>
-          <Button onClick={run}>start polling</Button>
-          <Button onClick={timer.pause}>pause</Button>
-          <Button onClick={timer.stop}>stop</Button>
-          <Button onClick={timer.resume}>resume</Button>
+          <Button.Group style={{marginTop: 16}}>
+            <Button onClick={run}>start polling</Button>
+            <Button onClick={timer.pause}>pause</Button>
+            <Button onClick={timer.stop}>stop</Button>
+            <Button onClick={timer.resume}>resume</Button>
+          </Button.Group>
         </>
       )
     }
@@ -98,30 +104,9 @@ React side-effect hook that helps you run async function
 }
 </Playground>
 
-
-### Demo
-```
-import { useAsync } from '@umijs/hooks';
-
-const Demo = () => {
-  const {data, loading} = useAsync(asyncFunc);
-
-  return loading ? ('loading...') : (<SomeComponent data={data}>)
-};
-```
-
-## Reference
+## API
 
 ```
-params:{
-  fn: (...args: Args | any) => Promise<Result>,
-  deps: DependencyList = [],
-  options: {
-    initExecute?: boolean; // 是否初始化执行
-    pollingInterval?: number; // 轮询的间隔毫秒
-  }
-}
-
 const {
   loading: boolean;
   error?: Error;
@@ -129,9 +114,47 @@ const {
   cancel: () => void;
   run: () => void;
   timer: {
-      stop: () => void;
-      resume: () => void;
-      pause: () => void;
+    stop: () => void;
+    resume: () => void;
+    pause: () => void;
   };
 } = useAsync(params);
+
+params:(
+  service: (...args: Args | any) => Promise<Result>,
+  deps: DependencyList = [],
+  options: {
+    manual?: boolean; // 是否初始化执行
+    pollingInterval?: number; // 轮询的间隔毫秒
+  }
+)
 ```
+
+### 结果
+
+| 参数         | 说明         | 类型                 |   |
+|--------------|--------------|----------------------|---|
+| loading      | 是否正在加载 | boolean              |   |
+| error        | 请求错误数据 | Errow                |   |
+| data         | 请求成功数据 | (value: any) => void | - |
+| cancel       | 取消         | () => void;          |   |
+| run          | 执行         | () => void;          |   |
+| timer.stop   | 轮询取消     | () => void;          |   |
+| timer.resume | 轮询暂停     | () => void;          |   |
+| timer.pause  | 轮询继续     | () => void;          |   |
+
+
+### 参数
+
+| 参数    | 说明                   | 类型           | 默认值         |   |
+|---------|------------------------|----------------|----------------|---|
+| service | 异步请求函数           | (...args: Args | any)=> Promise | - |
+| deps    | 依赖数组               | any[]          | []             |   |
+| options | 可选配置项，见 Options | -              | -              |   |
+
+### Options
+
+| 参数            | 说明                                                   | 类型    | 默认值 |
+|-----------------|--------------------------------------------------------|---------|--------|
+| manual          | 是否需要手动触发                                       | boolean | false  |
+| pollingInterval | 轮询间隔毫秒，只有设置了 pollingInterval，才会开启轮询 | number  | -      |
