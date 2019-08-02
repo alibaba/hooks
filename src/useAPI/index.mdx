@@ -1,15 +1,86 @@
 ---
 name: useAPI
-route: /
+route: /useAPI
 order: -1
 sidebar: true
 ---
+
+import { Playground } from 'docz';
+import { useState, useMemo } from 'react';
+import { Button, Spin } from 'antd';
+import 'antd/es/select/style';
+import useAPI from './index';
 
 # useAPI
 
 React side-effect hook that can fetch requests and handle loading state.
 
 ## Usage
+
+### Fetch triggered when component load.
+<Playground>
+{
+  ()=>{
+    function Demo(){
+      const [ state, set ] = useState(0);
+      const { data, loading, cancel, run } = useAPI({url: `https://randomuser.me/api?id=${state}`})
+      const email = useMemo(()=>(((data||{}).results || [])[0] || {}).email, [data]);
+
+      return (
+        <>
+        <Spin spinning={loading}>id: {state}; email: {email}</Spin>
+        <Button onClick={run}>reload</Button>
+        <Button onClick={cancel}>cancel</Button>
+        <Button onClick={()=>set(c=>c+1)}>increase id</Button>
+        </>
+      )
+    }
+    return <Demo />
+  }
+}
+</Playground>
+
+### Fetch the request when execute a callback
+<Playground>
+{
+  ()=>{
+    function Demo(){
+      const { data, loading, cancel, run } = useAPI({url: `https://randomuser.me/api`, manual: true})
+      const email = useMemo(()=>(((data||{}).results || [])[0] || {}).email, [data]);
+
+      return (
+        <>
+        <Spin spinning={loading}>{email}</Spin>
+        <Button onClick={run}>send request</Button>
+        </>
+      )
+    }
+    return <Demo />
+  }
+}
+</Playground>
+
+### Polling a fetch request
+<Playground>
+{
+  ()=>{
+    function Demo(){
+      const { data, loading, timer } = useAPI({url: `https://randomuser.me/api`, pollingInterval: 3000})
+      const email = useMemo(()=>(((data||{}).results || [])[0] || {}).email, [data]);
+
+      return (
+        <>
+        <Spin spinning={loading}>{email}</Spin>
+        <Button onClick={timer.pause}>pause</Button>
+        <Button onClick={timer.stop}>stop</Button>
+        <Button onClick={timer.resume}>resume</Button>
+        </>
+      )
+    }
+    return <Demo />
+  }
+}
+</Playground>
 
 ### Demo
 ```
@@ -27,11 +98,12 @@ const Demo = () => {
 ```
 params:{
   url: string;
-  method?: 'get' | 'post' | 'put' | 'delete' | 'head' | 'options' | 'patch';
-  body?: string;
-  onError?: (code: number, res: any) => void;
-  onCancel: () => void;
+  options: RequestInit;
+  manual: boolean;
+  pollingInterval: number;
 }
 
-const {data, loading, cancel, reload} = useAPI(params)
+const returnType = useAPI(params)
+
+See returnType in useAsync
 ```
