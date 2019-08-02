@@ -1,5 +1,7 @@
 import { DependencyList, useState, useMemo } from 'react';
-import { useDebounce, useUpdateEffect } from 'react-use';
+import { useDebounce } from 'react-use';
+import useUpdateEffect from '../useUpdateEffect';
+
 import useAsync from '../useAsync';
 
 export interface ReturnValue<T> {
