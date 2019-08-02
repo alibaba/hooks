@@ -1,0 +1,94 @@
+---
+name: useSearch
+route: /useSearch
+order: -1
+sidebar: true
+---
+
+import { Playground } from 'docz';
+import useSearch from './index';
+import { Select } from 'antd';
+import 'antd/es/select/style';
+
+# useSearch
+
+一个集成了异步搜索，防抖控制，请求时序控制的搜索 Hook，可应用于常见的 Select，Input 搜索场景。
+
+## 代码演示
+
+<Playground>
+{
+  ()=>{
+    const { Option } = Select;
+    function Demo(){
+
+      const fetchEmail = (str) => {
+        console.log('search string: ', str);
+        return fetch(`https://randomuser.me/api/?results=5`).then(res => res.json()).then(res => res.results);
+      }
+
+      const { data, loading, onChange } = useSearch(fetchEmail);
+
+      return (
+        <Select
+          showSearch
+          placeholder="Select Emails"
+          filterOption={false}
+          onSearch={onChange}
+          loading={loading}
+          style={{ width: 300 }}
+        >
+          {data && data.map(d => (
+            <Option key={d.email}>{d.email}</Option>
+          ))}
+        </Select>
+      )
+    }
+    return <Demo />
+  }
+}
+</Playground>
+
+## API
+
+```
+const {
+  loading: boolean;
+  data?: any;
+  value: any,
+  onChange: (value: any) => void;
+} = useAsync(params);
+
+params:(
+  fn: (value: any) => Promise<Result>,
+  deps?: DependencyList = [],
+  options?: {
+    wait: number
+  }
+)
+```
+
+### 结果
+
+| 参数     | 说明                                     | 类型       |
+|----------|------------------------------------------|------------|
+| loading  | 是否正在加载                             | boolean    |
+| data     | 搜索结果数据                             | any        |
+| onChange | 触发搜索的函数，参数会发送给 fn   | (value: any) => void |
+| value    | onChange 的参数                          | -          |
+
+
+### 参数
+
+| 参数    | 说明                                         | 类型                   | 默认值 |
+|---------|----------------------------------------------|------------------------|--------|
+| fn      | 请求数据的函数，函数参数为 onChange 的 value | (value: any)=> Promise | -      |
+| deps    | 依赖数组，如果 deps 变化，会触发 fn          | any[]                  | []     |
+| options | 可选配置项，见 Options                       | -                      | -      |
+
+
+### Options
+
+| 参数 | 说明         | 类型   | 默认值 |
+|------|--------------|--------|--------|
+| wait | 防抖时间间隔 | number | 300    |
