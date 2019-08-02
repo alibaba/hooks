@@ -1,39 +1,112 @@
 ---
 name: useAsync
 route: /useAsync
-order: -1
 sidebar: true
 ---
 
-# useAPI
+import { Playground } from 'docz';
+import { useState, useMemo } from 'react';
+import { Button, Spin } from 'antd';
+import 'antd/es/select/style';
+import useAsync from './index';
 
-React side-effect hook that can run async functions.
+# useAsync
 
-## Usage
+一个帮你管理异步函数的 Hook，支持立即执行，手动触发执行，轮询。
 
-### Demo
-```
-import { useAsync } from '@umijs/hooks';
+## 代码演示
 
-const Demo = () => {
-  const {data, loading} = useAsync(asyncFunc);
+### 立即执行
 
-  return loading ? ('loading...') : (<SomeComponent data={data}>)
-};
-```
+<Playground>
+{
+  ()=>{
 
-## Reference
+    function getEmail(id){
+      return fetch(`https://randomuser.me/api?id=${id}`).then(res => res.json());
+    }
 
-```
-params:{
-  fn: (...args: Args | any) => Promise<Result>,
-  deps: DependencyList = [],
-  options: {
-    initExecute?: boolean; // 是否初始化执行
-    pollingInterval?: number; // 轮询的间隔毫秒
+    function Demo(){
+      const [ state, set ] = useState(0);
+      const { data, loading, cancel, run } = useAsync(()=>getEmail(state), [state])
+      const email = useMemo(()=>(((data||{}).results || [])[0] || {}).email, [data]);
+
+      return (
+        <>
+          <Spin spinning={loading}><div>id: {state}</div> <div>email: {email}</div></Spin>
+          <Button.Group style={{marginTop: 16}}>
+            <Button onClick={run}>reload</Button>
+            <Button onClick={cancel}>cancel</Button>
+            <Button onClick={()=>set(c=>c+1)}>increase id</Button>
+          </Button.Group>
+        </>
+      )
+    }
+    return <Demo />
   }
 }
+</Playground>
 
+### 手动触发执行
+
+<Playground>
+{
+  ()=>{
+
+    function getEmail(){
+      return fetch(`https://randomuser.me/api`).then(res => res.json());
+    }
+
+    function Demo(){
+      const { data, loading, cancel, run } = useAsync(()=>getEmail(), [], {manual: true})
+      const email = useMemo(()=>(((data||{}).results || [])[0] || {}).email, [data]);
+
+      return (
+        <>
+          <Spin spinning={loading}>email: {email}</Spin>
+          <Button onClick={run} style={{marginTop: 16}}>fetch</Button>
+        </>
+      )
+    }
+    return <Demo />
+  }
+}
+</Playground>
+
+### 轮询
+
+<Playground>
+{
+  ()=>{
+
+    function getEmail(){
+      return fetch(`https://randomuser.me/api`).then(res => res.json());
+    }
+
+    function Demo(){
+      const { data, loading, timer, run } = useAsync(()=>getEmail(), [], { manual: true, pollingInterval: 3000 })
+      const email = useMemo(()=>(((data||{}).results || [])[0] || {}).email, [data]);
+
+      return (
+        <>
+          <Spin spinning={loading}>email: {email}</Spin>
+          <Button.Group style={{marginTop: 16}}>
+            <Button onClick={run}>start polling</Button>
+            <Button onClick={timer.pause}>pause</Button>
+            <Button onClick={timer.stop}>stop</Button>
+            <Button onClick={timer.resume}>resume</Button>
+          </Button.Group>
+        </>
+      )
+    }
+    return <Demo />
+  }
+}
+</Playground>
+
+## API
+
+```
 const {
   loading: boolean;
   error?: Error;
@@ -41,9 +114,47 @@ const {
   cancel: () => void;
   run: () => void;
   timer: {
-      stop: () => void;
-      resume: () => void;
-      pause: () => void;
+    stop: () => void;
+    resume: () => void;
+    pause: () => void;
   };
 } = useAsync(params);
+
+params:(
+  service: (...args: Args | any) => Promise<Result>,
+  deps: DependencyList = [],
+  options: {
+    manual?: boolean; // 是否初始化执行
+    pollingInterval?: number; // 轮询的间隔毫秒
+  }
+)
 ```
+
+### 结果
+
+| 参数         | 说明         | 类型                 |   |
+|--------------|--------------|----------------------|---|
+| loading      | 是否正在加载 | boolean              |   |
+| error        | 请求错误数据 | Errow                |   |
+| data         | 请求成功数据 | (value: any) => void | - |
+| cancel       | 取消         | () => void;          |   |
+| run          | 执行         | () => void;          |   |
+| timer.stop   | 轮询取消     | () => void;          |   |
+| timer.resume | 轮询暂停     | () => void;          |   |
+| timer.pause  | 轮询继续     | () => void;          |   |
+
+
+### 参数
+
+| 参数    | 说明                   | 类型           | 默认值         |   |
+|---------|------------------------|----------------|----------------|---|
+| service | 异步请求函数           | (...args: Args | any)=> Promise | - |
+| deps    | 依赖数组               | any[]          | []             |   |
+| options | 可选配置项，见 Options | -              | -              |   |
+
+### Options
+
+| 参数            | 说明                                                   | 类型    | 默认值 |
+|-----------------|--------------------------------------------------------|---------|--------|
+| manual          | 是否需要手动触发                                       | boolean | false  |
+| pollingInterval | 轮询间隔毫秒，只有设置了 pollingInterval，才会开启轮询 | number  | -      |

@@ -13,7 +13,7 @@ export interface ReturnValue<Item> {
 
 export interface Options<Result, Item> {
   initPageSize?: number;
-  peerPageSize?: number;
+  incrementSize?: number;
   itemKey?: string | ((record: Item, index: number) => string);
   formatResult?: (
     x: Result,
@@ -40,10 +40,10 @@ export default function useLoadMore<Result = any, Item = any>(
 ): ReturnValue<Item> {
   /* 初始化值 */
   const { itemKey, initPageSize = 10, formatResult, ref, threshold = 100 } = options;
-  let { peerPageSize } = options;
+  let { incrementSize } = options;
 
-  if (!peerPageSize) {
-    peerPageSize = initPageSize;
+  if (!incrementSize) {
+    incrementSize = initPageSize;
   }
 
   const [page, setPage] = useState<number>(1);
@@ -78,7 +78,7 @@ export default function useLoadMore<Result = any, Item = any>(
 
     const params: FnParams = {
       page,
-      pageSize: (page === 1 ? initPageSize : peerPageSize) as number,
+      pageSize: (page === 1 ? initPageSize : incrementSize) as number,
       offset: data.length,
       startTime: startTime.current,
     };
@@ -100,7 +100,7 @@ export default function useLoadMore<Result = any, Item = any>(
       setData(data.concat(currentData));
       setTotal(currentTotal);
     });
-  }, [page, initPageSize, peerPageSize, data]);
+  }, [page, initPageSize, incrementSize, data]);
 
   const loadMore = useCallback(() => {
     if (total && data.length >= total) {
