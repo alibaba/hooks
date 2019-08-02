@@ -54,7 +54,7 @@ import 'antd/es/select/style';
 ```
 const {
   loading: boolean;
-  data?: T;
+  data?: any;
   value: any,
   onChange: (value: any) => void;
 } = useAsync(params);
@@ -74,7 +74,7 @@ params:(
 |----------|------------------------------------------|------------|
 | loading  | 是否正在加载                             | boolean    |
 | data     | 搜索结果数据                             | any        |
-| onChange | 触发搜索的函数，参数为发送给 fn 的 value | (value: any) => void |
+| onChange | 触发搜索的函数，参数会发送给 fn   | (value: any) => void |
 | value    | onChange 的参数                          | -          |
 
 
