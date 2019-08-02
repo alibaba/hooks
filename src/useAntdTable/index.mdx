@@ -1,0 +1,187 @@
+---
+name: useAntdTable
+route: /useAntdTable
+order: 1
+sidebar: true
+---
+
+import { Playground } from 'docz';
+import { Button, Col, Form, Input, Row, Select, Table } from 'antd';
+import { useState } from 'react';
+import Demo from './Demo';
+import useAntdTable from './';
+
+# useAntdTable
+
+一个适用于常见的基于 Antd Table 的列表页 Hook，包含了以下功能：
+
+1. 表格的分页处理；
+2. 搜索表单与表格联动；
+3. 支持简单、复杂 2 种搜索模式切换，并且在切换模式时，能自动填充上一次的数据；
+4. 支持数据缓存，组件销毁重建时能自动还原上一次的表单数据，分页状态等；
+
+
+## 代码演示
+
+### 基本的列表页
+
+<Playground>
+{
+  ()=>{
+    const { Option } = Select;
+
+    const Demo = () => {
+
+      const [gender, setGender] = useState();
+
+      const getTableData = ({ current, pageSize }) => {
+        console.log(current, pageSize);
+        return fetch(`https://randomuser.me/api?results=55&page=${current}&size=${pageSize}&gender=${gender}`)
+          .then(res => {
+            return res.json();
+          })
+      }
+
+      const { data, loading, changeTable, pageSize } = useAntdTable(getTableData, [gender], {
+        defaultPageSize: 5
+      });
+
+      // 未请求服务端时，使用默认数据
+      const tableData = data || {
+        results: [],
+        info: {
+          results: 0,
+          page: 1
+        }
+      };
+
+      const columns = [
+        {
+          title: 'name',
+          dataIndex: 'name',
+          key: 'name',
+          width: 100,
+          render({ }, record) {
+            return record.name.title;
+          },
+        },
+        {
+          title: 'email',
+          dataIndex: 'email',
+          key: 'email',
+          width: 350,
+        },
+        {
+          title: 'phone',
+          dataIndex: 'phone',
+          key: 'phone',
+        },
+        {
+          title: 'gender',
+          key: 'gender',
+          width: 200,
+          dataIndex: 'gender',
+        },
+      ];
+
+      return (
+        <>
+          <Select style={{ width: 180, marginBottom: 24 }} onChange={setGender} placeholder='性别筛选' allowClear>
+            <Option value="male">male</Option>
+            <Option value="female">female</Option>
+          </Select>
+          <Table
+            columns={columns}
+            loading={loading}
+            onChange={changeTable}
+            pagination={{
+              showSizeChanger: true,
+              showQuickJumper: true,
+              current: tableData.info.page,
+              pageSize,
+              total: tableData.info.results,
+            }}
+            dataSource={tableData.results.map((d, index) => ({ ...d, key: index }))}
+          />
+        </>
+      )
+    }
+
+    return <Demo />
+  }
+}
+</Playground>
+
+### 搜索表单与列表联动，数据缓存
+
+<Playground>
+
+  <Demo />
+
+</Playground>
+
+## Reference
+
+```
+const {
+  data: unknown,
+  loading: boolean,
+  changeTable: (e: PaginationConfig) => void,
+  current: number,
+  pageSize: number,
+  refresh: () => void,
+  form?: {
+    searchType: 'simple' | 'advance',
+    changeSearchType: () => void,
+    search: () => void
+  }
+} = useAntdTable(params);
+
+params:(
+  service: ({
+    current: number,
+    pageSize: number,
+    [key: string]: any,
+  }) => Promise<Result>,
+  deps?: DependencyList = [],
+  options?: {
+    defaultPageSize?: number,
+    id?: string,
+    form?: UseTableFormUtils
+  }
+)
+```
+
+### 结果
+
+| 参数                  | 说明                            | 类型                          | 默认值    |
+|-----------------------|---------------------------------|-------------------------------|-----------|
+| loading               | 是否正在加载                    | boolean                       | false     |
+| data                  | service 函数返回的数据           | -                             | -         |          
+| changeTable           | antd Table 组件的 onChange 函数 | (e: PaginationConfig) => void | -         |          
+| current               | 当前页数                        | number                        | 1         |          
+| pageSize              | 每页数据量                      | number                        | 10        |          
+| refresh               | 刷新当前数据                    | () => void                    | -         |          
+| form.searchType       | 搜索类型                        | 'simple' \| 'advance'         | 'simple' |
+| form.changeSearchType | 触发搜索类型切换                | () => void                    | -         |          
+| form.search           | 触发搜索                        | () => void                    | -         |          
+
+
+
+### 参数
+
+| 参数    | 说明                                                         | 类型               | 默认值 |
+|---------|--------------------------------------------------------------|--------------------|--------|
+| service | 请求数据的函数，函数参数为 current, pageSize，及当前搜索表单数据 | (Params)=> Promise | -      |
+| deps    | 依赖数组，如果 deps 变化，会触发 reload                      | any[]              | []     |
+| options | 可选配置项，见 Options                                       | -                  | -      |
+
+
+
+### Options
+
+| 参数            | 说明                                           | 类型   | 默认值 |
+|-----------------|------------------------------------------------|--------|--------|
+| defaultPageSize | 默认的每页数据量                               | number | 10     |
+| id              | 表格唯一 id，如果有 id，则会自动缓存并恢复数据 | string | -      |
+| form            | antd form 实例                                 | -      | -      |

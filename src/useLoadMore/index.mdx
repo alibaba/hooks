@@ -1,0 +1,304 @@
+---
+name: useLoadMore
+route: /useLoadMore
+order: -1
+sidebar: true
+---
+
+import { Playground } from 'docz';
+import { useRef } from 'react';
+import useLoadMore from './index';
+import { List, Button, Avatar } from 'antd';
+
+
+# useLoadMore
+
+一个适用于点击加载更多或上拉加载更多应用场景的 Hook。
+
+
+## 代码演示
+
+### 点击加载更多
+
+<Playground>
+{
+  ()=>{
+    const data = [{
+      id: 1,
+      title: 'Ant Design Title 1',
+    }, {
+      id: 2,
+      title: 'Ant Design Title 2',
+    }, {
+      id: 3,
+      title: 'Ant Design Title 3',
+    }, {
+      id: 4,
+      title: 'Ant Design Title 4',
+    }, {
+      id: 5,
+      title: 'Ant Design Title 5',
+    }, {
+      id: 6,
+      title: 'Ant Design Title 6',
+    }, {
+      id: 7,
+      title: 'Ant Design Title 7',
+    }, {
+      id: 8,
+      title: 'Ant Design Title 8',
+    }, {
+      id: 9,
+      title: 'Ant Design Title 9',
+    }, {
+      id: 10,
+      title: 'Ant Design Title 10',
+    }];
+
+    const asyncFn = ({ pageSize, offset }) => {
+      return new Promise((resolve) => {
+        setTimeout(() => {
+          resolve({
+            total: data.length,
+            data: data.slice(offset, offset + pageSize)
+          });
+        }, 1000);
+      });
+    }
+
+    const Demo = () => {
+
+      const { data, loading, loadingMore, reload, loadMore, total, noMore } = useLoadMore(asyncFn, [], {
+        initPageSize: 3,
+        peerPageSize: 4,
+        formatResult: (result) => ({ total: result.total, data: result.data })
+      });
+
+      const renderFooter = () => {
+        return (
+          <>
+            {!noMore &&
+              <Button
+                onClick={loadMore}
+                loading={loadingMore}
+              >
+                {loadingMore ? '加载更多' : '点击加载更多'}
+              </Button>
+            }
+
+            {noMore && <span>没有更多数据了</span>}
+
+            <span style={{ float: 'right', fontSize: 12 }}>共有{total}条记录</span>
+          </>
+        )
+      }
+
+      return (
+        <div>
+          <List
+            header={<Button onClick={reload} loading={loading}>重新加载</Button>}
+            footer={!loading && renderFooter()}
+            loading={loading}
+            bordered
+            dataSource={data}
+            renderItem={item => (
+              <List.Item>
+                <List.Item.Meta
+                  avatar={<Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />}
+                  title={<a>{item.title}</a>}
+                  description="umijs/hooks is a react hooks library"
+                />
+              </List.Item>
+            )}
+          />
+        </div>
+      )
+    }
+
+    return <Demo />
+  }
+}
+</Playground>
+
+### 上拉加载更多
+
+<Playground>
+{
+  ()=>{
+    const data = [{
+      id: 1,
+      title: 'Ant Design Title 1',
+    }, {
+      id: 2,
+      title: 'Ant Design Title 2',
+    }, {
+      id: 3,
+      title: 'Ant Design Title 3',
+    }, {
+      id: 4,
+      title: 'Ant Design Title 4',
+    }, {
+      id: 5,
+      title: 'Ant Design Title 5',
+    }, {
+      id: 6,
+      title: 'Ant Design Title 6',
+    }, {
+      id: 7,
+      title: 'Ant Design Title 7',
+    }, {
+      id: 8,
+      title: 'Ant Design Title 8',
+    }, {
+      id: 9,
+      title: 'Ant Design Title 9',
+    }, {
+      id: 10,
+      title: 'Ant Design Title 10',
+    }];
+
+    const asyncFn = ({ pageSize, offset }) => {
+      return new Promise((resolve) => {
+        setTimeout(() => {
+          resolve({
+            total: data.length,
+            data: data.slice(offset, offset + pageSize)
+          });
+        }, 1000);
+      });
+    }
+
+    const Demo = ()=>{
+      const containerRef = useRef();
+      const { data, loading, loadingMore, reload, total, noMore } = useLoadMore(asyncFn, [], {
+        initPageSize: 4,
+        peerPageSize: 3,
+        ref: containerRef
+      });
+
+      const renderFooter = () => {
+        return (
+          <>
+            {!noMore &&
+              <Button
+                loading={loadingMore}
+              >
+                {loadingMore ? '加载更多' : '上拉加载更多'}
+              </Button>
+            }
+            {noMore && <span>没有更多数据了</span>}
+            <span style={{ float: 'right', fontSize: 12 }}>共有{total}条记录</span>
+          </>
+        )
+      }
+
+      return (
+        <div ref={containerRef} style={{ height: 300, overflowY: 'auto' }}>
+          <List
+            header={<Button onClick={reload} loading={loading}>重新加载</Button>}
+            footer={!loading && renderFooter()}
+            loading={loading}
+            bordered
+            dataSource={data}
+            renderItem={item => (
+              <List.Item>
+                <List.Item.Meta
+                  avatar={<Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />}
+                  title={<a>{item.title}</a>}
+                  description="umijs/hooks is a react hooks library"
+                />
+              </List.Item>
+            )}
+          />
+        </div>
+      )
+    }
+
+    return <Demo />
+  }
+}
+</Playground>
+
+## API
+
+```
+const {
+  loading: boolean,
+  loadingMore: boolean,
+  data: any[],
+  reload: () => void,
+  loadMore: () => void,
+  noMore: boolean,
+  total: number,
+} = useLoadMore(params);
+
+params:(
+  fn: ({page, pageSize, offset, id, startTime}) => Promise<Result>,
+  deps?: DependencyList = [],
+  options?: {
+    initPageSize?: number,
+    peerPageSize?: number,
+    itemKey?: string | ((record: Item, index: number) => string),
+    formatResult?: (x: Result) => ({
+      total: number,
+      data: Item[]
+    }),
+    ref?: RefObject<HTMLElement>,
+    threshold?: number
+  }
+)
+```
+
+### 结果
+
+| 参数           | 说明                                   | 类型           | 默认值     |
+|----------------|----------------------------------------|----------------|------------|
+| loading        | 是否第一次加载中 |  boolean | false |
+| loadingMore    | 是否加载更多中    | boolean | false  |
+| data       | 全部列表数据      | any[]         | []          |
+| reload | 重新加载函数                       | () => void        | -      |
+| loadMore | 加载更多函数                       | () => void        | -      |
+| noMore | 是否没有更多数据了                       | boolean        | false      |
+| total | 数据总量                       | number\|undefined        | -      |
+
+### 参数
+
+| 参数           | 说明                                   | 类型           | 默认值     |
+|----------------|----------------------------------------|----------------|------------|
+| fn        | 请求数据的函数，函数参数见 Params |  (Params)=> Promise | - |
+| deps    | 依赖数组，如果 deps 变化，会触发 reload    | any[] | []  |
+| options    | 可选配置项，见 Options    | - | -  |
+
+
+### Params
+
+| 参数           | 说明                                   | 类型           | 默认值     |
+|----------------|----------------------------------------|----------------|------------|
+| page    | 请求第几页数据，一般来说，如果你的 initPageSize 不等于 peerPageSize，那 page 对你没有意义，你可以使用 offset     | number | -  |
+| pageSize    | 请求数据数量，第一页等于 initPageSize，非第一页等于 peerPageSize | number | -  |
+| offset    | 数据偏移量，也就是当前已经存在多少条数据了    | number | -  |
+| id    | 最后一条数据的 id，只有设置了 itemKey 后才会存在    | string | -  |
+| startTime    | 开始时间戳，第一次加载或每次 reload 时记录    | number | -  |
+
+
+### Options
+
+| 参数           | 说明                                   | 类型           | 默认值     |
+|----------------|----------------------------------------|----------------|------------|
+| initPageSize    | 第一页的 pageSize    | number | 10  |
+| peerPageSize    | 非第一页的 pageSize，如果不设置，则等于 initPageSize    | number | -  |
+| itemKey    | 数据 id，可以是字符串或一个函数	    | `string | ((record: Item, index: number) => string)` | -  |
+| formatResult    | 格式化 fn 请求结果     | `(x: Result) => ({ total: number, data: Item[]})` | -  |
+| ref    | 容器的 ref，如果存在，则在滚动到底部时，自动触发 loadMore    | `RefObject<HTMLElement>` | -  |
+| threshold    | 下拉自动加载，距离底部距离阈值    | number | 100  |
+
+
+## 备注
+
+在加载更多的场景中，后台数据可能一直在增加，如果我们用普通的分页来处理，可能会出现重复的数据。常见的加载更多场景会有以下几种处理数据分页方式：
+
+普通模式：数据不会更新，总数是固定的。这种场景我们就可以使用 Demo 中例子，使用 `page`，`pageSize`，`offset` 等直接向后端服务端请求数据。
+
+id 模式：数据会一直更新，每个数据有唯一 id。我们去服务端请求数据时，应该是请求当前最后一条数据后面的 `pageSize` 条数据。这时候我们需要定义 `itemKey`，这样我们的 `fn` 函数就可以拿到当前最后一条数据的 `id` 了。
+
+timestamp 模式：数据更新频率不高，没有唯一 id。这种场景我们去服务器请求数据时，应该是请求 `startTime` 之前的数据。使用 `startTime`，`page`，`pageSize`，`offset` 即可准确定位数据。
