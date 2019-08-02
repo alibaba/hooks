@@ -6,7 +6,7 @@ const options: IBundleOptions = {
   cjs: 'rollup',
   umd: {
     name: 'umijsHooks',
-    globals:{
+    globals: {
       'react': 'React',
       'axios': 'axios'
     }
@@ -18,7 +18,15 @@ const options: IBundleOptions = {
   doc: {
     title: '@umijs/hooks',
     base: '/hooks/'
-  }
+  },
+  extraBabelPlugins: [[
+    'babel-plugin-import',
+    {
+      libraryName: 'antd',
+      libraryDirectory: 'es',
+      style: true,
+    },
+  ]],
 };
 
 export default options;
