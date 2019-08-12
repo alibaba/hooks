@@ -1,4 +1,4 @@
-# @umi/hooks
+# @umijs/hooks
 
 react hooks library
 
