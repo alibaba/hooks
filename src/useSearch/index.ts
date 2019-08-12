@@ -8,6 +8,7 @@ export interface ReturnValue<T> {
   data?: T;
   value: any;
   onChange: (value: any) => void;
+  cancel: () => void;
 }
 
 export interface Options {
@@ -23,7 +24,7 @@ export default function useAntdSearch<Result>(
 
   const timer = useRef<number>();
 
-  const { loading, data, run } = useAsync<Result>(fn, [value, ...deps], {
+  const { loading, data, run, cancel: cancelAsync } = useAsync<Result>(fn, [value, ...deps], {
     manual: true,
   });
 
@@ -51,10 +52,20 @@ export default function useAntdSearch<Result>(
     run(value);
   }, deps);
 
+  const cancel = () => {
+    /* 先取消防抖 */
+    if (timer.current) {
+      window.clearTimeout(timer.current);
+    }
+    /* 再取消 async */
+    cancelAsync();
+  };
+
   return {
     data,
     loading,
     value,
     onChange: setValue,
+    cancel,
   };
 }
