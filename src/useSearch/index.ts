@@ -1,4 +1,4 @@
-import { DependencyList, useState, useMemo, useRef } from 'react';
+import { DependencyList, useState, useMemo, useRef, useCallback } from 'react';
 import useUpdateEffect from '../useUpdateEffect';
 
 import useAsync from '../useAsync';
@@ -9,6 +9,7 @@ export interface ReturnValue<T> {
   value: any;
   onChange: (value: any) => void;
   cancel: () => void;
+  run: () => void;
 }
 
 export interface Options {
@@ -20,7 +21,7 @@ export default function useAntdSearch<Result>(
   deps: DependencyList = [],
   options: Options = {},
 ): ReturnValue<Result> {
-  const [value, setValue] = useState<any>(0);
+  const [value, setValue] = useState<any>('');
 
   const timer = useRef<number>();
 
@@ -52,14 +53,19 @@ export default function useAntdSearch<Result>(
     run(value);
   }, deps);
 
-  const cancel = () => {
+  const cancel = useCallback(() => {
     /* 先取消防抖 */
     if (timer.current) {
       window.clearTimeout(timer.current);
     }
     /* 再取消 async */
     cancelAsync();
-  };
+  }, [cancelAsync]);
+
+  /* 手动触发 */
+  const trigger = useCallback(() => {
+    run(value);
+  }, [run, value]);
 
   return {
     data,
@@ -67,5 +73,6 @@ export default function useAntdSearch<Result>(
     value,
     onChange: setValue,
     cancel,
+    run: trigger,
   };
 }

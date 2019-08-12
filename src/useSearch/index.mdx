@@ -58,10 +58,11 @@ const {
   value: any,
   onChange: (value: any) => void;
   cancel: () => void;
+  run: () => void;
 } = useAsync(params);
 
 params:(
-  fn: (value: any) => Promise<Result>,
+  service: (value: any) => Promise<Result>,
   deps?: DependencyList = [],
   options?: {
     wait: number
@@ -78,13 +79,13 @@ params:(
 | onChange | 触发搜索的函数，参数会发送给 fn   | (value: any) => void |
 | value    | onChange 的参数                          | -          |
 | cancel   | 取消所有行为                              | () => void |
-
+| run      | 用当前 value 重新执行一次 service          | () => void |
 
 ### 参数
 
 | 参数    | 说明                                         | 类型                   | 默认值 |
 |---------|----------------------------------------------|------------------------|--------|
-| fn      | 请求数据的函数，函数参数为 onChange 的 value | (value: any)=> Promise | -      |
+| service | 请求数据的函数，函数参数为 onChange 的 value | (value: any)=> Promise | -      |
 | deps    | 依赖数组，如果 deps 变化，会触发 fn          | any[]                  | []     |
 | options | 可选配置项，见 Options                       | -                      | -      |
 
