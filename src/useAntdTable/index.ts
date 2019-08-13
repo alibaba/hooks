@@ -6,24 +6,38 @@ import useUpdateEffect from '../useUpdateEffect';
 interface UseTableFormUtils extends WrappedFormUtils {
   getFieldInstance?: (name: string) => {};
 }
+
 export interface ReturnValue<T> {
-  data: T;
-  loading: boolean;
-  current: number;
-  pageSize: number;
-  changeTable: (e: PaginationConfig) => void;
+  table: {
+    dataSource: T;
+    loading: boolean;
+    onChange: (e: PaginationConfig) => void;
+    pagination: {
+      current: number;
+      pageSize: number;
+      total: number;
+    };
+  };
   refresh: () => void;
-  form?: {
-    searchType: 'simple' | 'advance';
-    changeSearchType: () => void;
-    search: () => void;
+  search?: {
+    type: 'simple' | 'advance';
+    changeType: () => void;
+    submit: () => void;
   };
 }
 
-export interface Options {
+export interface Options<T> {
   defaultPageSize?: number;
   id?: string;
   form?: UseTableFormUtils;
+  formatResult?: (
+    result: T,
+  ) => {
+    current?: number;
+    pageSize?: number;
+    total: number;
+    data: any[];
+  };
 }
 
 export interface FnParams {
@@ -47,6 +61,9 @@ class UseTableInitState {
 
   // 分页大小
   pageSize: number = 10;
+
+  // 总页数
+  total: number = 0;
 
   // 表单数据
   formData: { simple: IHistoryData; advance: IHistoryData } = { simple: {}, advance: {} };
@@ -78,9 +95,9 @@ const reducer = (state = initState, action: { type: string; payload?: {} }) => {
 export default function useAntdTable<T>(
   fn: (params: FnParams) => Promise<any>,
   deps: DependencyList = [],
-  options: Options = {},
+  options: Options<T> = {},
 ): ReturnValue<T> {
-  const { defaultPageSize = 10, id, form } = options;
+  const { defaultPageSize = 10, id, form, formatResult } = options;
   const [state, dispatch] = useReducer(reducer, { ...initState, pageSize: defaultPageSize });
   const stateRef = useRef<UseTableInitState>(({} as unknown) as UseTableInitState);
 
@@ -166,9 +183,15 @@ export default function useAntdTable<T>(
       if (currentCount !== runCount.current) {
         return;
       }
+
+      let formatData = res;
+      if (formatResult) {
+        formatData = formatResult(res);
+      }
+
       dispatch({
         type: 'updateState',
-        payload: { loading: false, data: res },
+        payload: { loading: false, ...formatData },
       });
     });
   }, [state.current, state.pageSize, state.count]);
@@ -185,7 +208,7 @@ export default function useAntdTable<T>(
   };
 
   // 表单搜索
-  const search = (
+  const searchSubmit = (
     e?: string | React.MouseEvent<HTMLElement> | React.KeyboardEvent<HTMLInputElement>,
   ) => {
     if (!form) {
@@ -242,18 +265,23 @@ export default function useAntdTable<T>(
   };
 
   const result: ReturnValue<T> = {
-    changeTable,
-    data: state.data as T,
-    current: state.current,
-    pageSize: state.pageSize,
-    loading: state.loading,
+    table: {
+      dataSource: state.data as T,
+      loading: state.loading,
+      onChange: changeTable,
+      pagination: {
+        current: state.current,
+        pageSize: state.pageSize,
+        total: state.total,
+      },
+    },
     refresh,
   };
   if (form) {
-    result.form = {
-      search,
-      searchType: state.searchType,
-      changeSearchType,
+    result.search = {
+      submit: searchSubmit,
+      type: state.searchType,
+      changeType: changeSearchType,
     };
   }
 

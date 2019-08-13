@@ -4,34 +4,26 @@ import useAntdTable from '.';
 
 const getTableData = ({ current, pageSize, ...rest }) => {
   console.log(current, pageSize, rest);
-  return fetch(`https://randomuser.me/api?results=55&page=${current}&size=${pageSize}`).then(res =>
-    res.json(),
-  );
+  return fetch(`https://randomuser.me/api?results=55&page=${current}&size=${pageSize}`)
+    .then(res => res.json())
+    .then(res => ({
+      page: res.info.page,
+      total: res.info.results,
+      data: res.results,
+    }));
 };
 
 const AppList = props => {
   const { getFieldDecorator } = props.form;
 
   const {
-    data,
-    loading,
-    changeTable,
-    pageSize,
-    form: { searchType, changeSearchType, search },
+    table,
+    search: { type, changeType, submit },
   } = useAntdTable(getTableData, [], {
     defaultPageSize: 5,
     form: props.form,
     id: 'tableId',
   });
-
-  // 未请求服务端时，使用默认数据
-  const tableData = data || {
-    results: [],
-    info: {
-      results: 0,
-      page: 1,
-    },
-  };
 
   const columns = [
     {
@@ -84,13 +76,13 @@ const AppList = props => {
         </Row>
         <Row>
           <Form.Item style={{ display: 'flex', justifyContent: 'flex-end' }}>
-            <Button type="primary" onClick={search}>
+            <Button type="primary" onClick={submit}>
               搜索
             </Button>
             <Button onClick={() => props.form.resetFields()} style={{ marginLeft: 16 }}>
               清空
             </Button>
-            <Button type="link" onClick={changeSearchType}>
+            <Button type="link" onClick={changeType}>
               简易搜索
             </Button>
           </Form.Item>
@@ -105,10 +97,10 @@ const AppList = props => {
         {getFieldDecorator('name', {})(
           <Input placeholder="enter name" style={{ width: 240, marginRight: 16 }} />,
         )}
-        <Button type="primary" onClick={search}>
+        <Button type="primary" onClick={submit}>
           搜索
         </Button>
-        <Button type="link" onClick={changeSearchType}>
+        <Button type="link" onClick={changeType}>
           高级搜索
         </Button>
       </Form>
@@ -117,19 +109,15 @@ const AppList = props => {
 
   return (
     <div>
-      {searchType === 'simple' ? searchFrom : advanceSearchForm}
+      {type === 'simple' ? searchFrom : advanceSearchForm}
       <Table
         columns={columns}
-        loading={loading}
-        onChange={changeTable}
+        {...table}
         pagination={{
           showSizeChanger: true,
           showQuickJumper: true,
-          current: tableData.info.page,
-          pageSize,
-          total: tableData.info.results,
+          ...table.pagination,
         }}
-        dataSource={tableData.results.map((d, index) => ({ ...d, key: index }))}
       />
     </div>
   );
