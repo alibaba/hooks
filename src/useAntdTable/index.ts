@@ -6,8 +6,8 @@ import useUpdateEffect from '../useUpdateEffect';
 interface UseTableFormUtils extends WrappedFormUtils {
   getFieldInstance?: (name: string) => {};
 }
-export interface ReturnValue {
-  data: unknown;
+export interface ReturnValue<T> {
+  data: T;
   loading: boolean;
   current: number;
   pageSize: number;
@@ -75,11 +75,11 @@ const reducer = (state = initState, action: { type: string; payload?: {} }) => {
   }
 };
 
-export default function useAntdTable(
+export default function useAntdTable<T>(
   fn: (params: FnParams) => Promise<any>,
   deps: DependencyList = [],
   options: Options = {},
-): ReturnValue {
+): ReturnValue<T> {
   const { defaultPageSize = 10, id, form } = options;
   const [state, dispatch] = useReducer(reducer, { ...initState, pageSize: defaultPageSize });
   const stateRef = useRef<UseTableInitState>(({} as unknown) as UseTableInitState);
@@ -241,9 +241,9 @@ export default function useAntdTable(
     });
   };
 
-  const result: ReturnValue = {
+  const result: ReturnValue<T> = {
     changeTable,
-    data: state.data,
+    data: state.data as T,
     current: state.current,
     pageSize: state.pageSize,
     loading: state.loading,
