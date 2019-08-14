@@ -1,20 +1,23 @@
 import request from 'umi-request';
 import useAsync from '../useAsync';
 
-interface IProps {
+interface IProps<T> {
   url: string;
   options?: RequestInit;
   manual?: boolean;
   pollingInterval?: number;
+  fetch?: (url: string, options?: RequestInit) => Promise<T>;
 }
 
-const useAPI = (opt: IProps) =>
-  useAsync(
+const requestMethod = fetch || request;
+
+const useAPI = <T = any>(opt: IProps<T>) =>
+  useAsync<T>(
     async () =>
-      new Promise((resolve, reject) => {
-        request(opt.url, opt.options)
+      new Promise<T>((resolve, reject) => {
+        requestMethod(opt.url, opt.options)
           .then(async res => {
-            resolve(res);
+            resolve(await res.json());
           })
           .catch(e => {
             reject(e);
