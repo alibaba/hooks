@@ -5,7 +5,7 @@ class Timer {
 
   private delay: number = 0;
 
-  private cb: (() => void) | null = null;
+  private cb: ((...args: any[]) => void) | null = null;
 
   private start: number = 0;
 
@@ -30,11 +30,15 @@ class Timer {
     this.remaining -= Date.now() - this.start;
   };
 
-  resume = () => {
+  resume = (...args: any[]) => {
     this.start = Date.now();
     window.clearTimeout(this.timerId);
     if (this.cb) {
-      this.timerId = window.setTimeout(this.cb, this.remaining);
+      this.timerId = window.setTimeout(() => {
+        if (this.cb) {
+          this.cb(...(args || []));
+        }
+      }, this.remaining);
     }
   };
 }
@@ -105,10 +109,10 @@ export default function useAsync<Result = any>(
     set(s => ({ ...s, error: new Error('paused'), loading: false }));
   }, []);
 
-  const resume = useCallback(() => {
+  const resume = useCallback((...args) => {
     // 恢复计时器
     if (timer.current) {
-      timer.current.resume();
+      timer.current.resume(...(args || []));
     }
   }, []);
 
@@ -146,7 +150,7 @@ export default function useAsync<Result = any>(
           init.current = false;
         } else {
           // 开始计时
-          timer.current.resume();
+          timer.current.resume(...(args || []));
         }
       }
     },

@@ -34,13 +34,13 @@ import { InputNumber, Button } from 'antd';
     const Demo = () => {
       const [state, setState] = useState();
 
-      const increment = (v) => {
-        setState(state + 1);
-      }
+    const increment = v => {
+      setState(s => s ? s + 1 : 1)
+    }
 
-      const decrease = () => {
-        setState(state - 1);
-      }
+    const decrease = () => {
+      setState(s => s ? s - 1 : - 1)
+    }
 
       return (
         <>
