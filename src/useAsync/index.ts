@@ -43,9 +43,11 @@ class Timer {
   };
 }
 
-export interface Options {
+export interface Options<T> {
   manual?: boolean; // 是否初始化执行
   pollingInterval?: number; // 轮询的间隔毫秒
+  onSuccess?: (d: T) => void;
+  onError?: (e: Error) => void;
 }
 
 type noop = (...args: any[]) => void;
@@ -67,7 +69,7 @@ export interface ReturnValue<T> {
 export default function useAsync<Result = any>(
   fn: (...args: any[]) => Promise<Result>,
   deps: DependencyList = [],
-  options: Options = {},
+  options: Options<Result> = {},
 ): ReturnValue<Result> {
   const [state, set] = useState<ReturnValue<Result>>({
     loading: false,
@@ -123,12 +125,19 @@ export default function useAsync<Result = any>(
     return fn(...args)
       .then(data => {
         if (runCount === count.current) {
+          if (options.onSuccess) {
+            options.onSuccess(data);
+          }
           set(s => ({ ...s, data, loading: false }));
         }
         return data;
       })
       .catch(error => {
+        console.log('useAsync', error);
         if (runCount === count.current) {
+          if (options.onError) {
+            options.onError(error);
+          }
           set(s => ({ ...s, error, loading: false }));
         }
         return error;
