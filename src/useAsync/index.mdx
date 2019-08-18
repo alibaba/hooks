@@ -6,7 +6,7 @@ sidebar: true
 
 import { Playground } from 'docz';
 import { useState, useMemo } from 'react';
-import { Button, Spin } from 'antd';
+import { Button, Spin, Form, Input, message } from 'antd';
 import 'antd/es/select/style';
 import useAsync from './index';
 
@@ -104,6 +104,50 @@ import useAsync from './index';
 }
 </Playground>
 
+### 表单提交
+
+<Playground>
+{
+  ()=>{
+
+    function saveToServer(data){
+      return new Promise((resolve)=>{
+        window.setTimeout(()=>{
+          resolve(`${data} saved`);
+        }, 2000)
+      });
+    }
+
+    const Demo = Form.create()((props) => {
+      const { data, loading, cancel, run } = useAsync((data)=>saveToServer(data), [], 
+        { 
+          manual: true,
+          onSuccess: (data) => message.success(data),
+          onError: (error) => console.log(error) || message.error(error),
+        }
+      )
+      const email = useMemo(()=>(((data||{}).results || [])[0] || {}).email, [data]);
+      const { getFieldDecorator, getFieldValue } = props.form;
+
+      const submit = () => {
+        const fromData = getFieldValue('name');
+        run(fromData);
+      }
+
+      return (
+        <>
+          {
+            getFieldDecorator('name')(<Input style={{width: 300, marginRight: 16}} placeholder='please input your name' />)
+          }
+          <Button type='primary' loading={loading} onClick={submit} style={{marginTop: 16}}>save</Button>
+        </>
+      )
+    });
+    return <Demo />
+  }
+}
+</Playground>
+
 ## API
 
 ```
@@ -148,7 +192,7 @@ params:(
 
 | 参数    | 说明                   | 类型           | 默认值         |   |
 |---------|------------------------|----------------|----------------|---|
-| service | 异步请求函数           | (...args: Args | any)=> Promise | - |
+| service | 异步请求函数           | (...args: Args \| any)=> Promise | - |
 | deps    | 依赖数组               | any[]          | []             |   |
 | options | 可选配置项，见 Options | -              | -              |   |
 
@@ -158,3 +202,5 @@ params:(
 |-----------------|--------------------------------------------------------|---------|--------|
 | manual          | 是否需要手动触发                                       | boolean | false  |
 | pollingInterval | 轮询间隔毫秒，只有设置了 pollingInterval，才会开启轮询 | number  | -      |
+| onSuccess       | 执行成功时的回掉                                    | (d: T) => void | - |
+| onError         | 执行失败时的回掉                                    | (e: Error) => void | - |

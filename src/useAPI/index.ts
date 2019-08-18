@@ -7,6 +7,8 @@ interface IProps<T> {
   manual?: boolean;
   pollingInterval?: number;
   fetch?: (url: string, options?: RequestInit) => Promise<T>;
+  onSuccess?: (d: T) => void;
+  onError?: (e: Error) => void;
 }
 
 const requestMethod = fetch || request;
@@ -27,6 +29,8 @@ const useAPI = <T = any>(opt: IProps<T>) =>
     {
       manual: opt.manual,
       pollingInterval: opt.pollingInterval,
+      onError: opt.onError,
+      onSuccess: opt.onSuccess,
     },
   );
 

@@ -110,6 +110,8 @@ params: {
   options?: RequestInit;
   manual?: boolean;
   pollingInterval?: number;
+  onSuccess?: (d: T) => void;
+  onError?: (e: Error) => void;
   fetch?: (url: string, options?: RequestInit) => Promise<T>;
 }
 ```
