@@ -1,5 +1,5 @@
 import { useMemo, useState, useCallback } from 'react';
-import useUpdateEffect from '../useUpdateEffect';
+import { useUpdateEffect } from 'react-use';
 
 export interface Options {
   defaultValuePropName?: string;
