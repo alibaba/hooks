@@ -97,7 +97,7 @@ const { // 返回数据同 useAsync
   error?: Error;
   data?: T;
   cancel: () => void;
-  run: () => void;
+  run: () => Promise<T>;
   timer: {
     stop: () => void;
     resume: () => void;
