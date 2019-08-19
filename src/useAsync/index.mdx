@@ -168,6 +168,8 @@ params:(
   service: (...args: Args | any) => Promise<Result>,
   deps: DependencyList = [],
   options: {
+    onSuccess?: (d: T) => void // 执行成功的回调
+    onError?: (e: Error) => void // 执行失败时的回掉
     manual?: boolean; // 是否初始化执行
     pollingInterval?: number; // 轮询的间隔毫秒
   }
@@ -182,7 +184,7 @@ params:(
 | error        | 请求错误数据 | Errow                |   |
 | data         | 请求成功数据 | (value: any) => void | - |
 | cancel       | 取消         | () => void;          |   |
-| run          | 执行         | () => void;          |   |
+| run          | 执行         | () => Promise\<T\>          |   |
 | timer.stop   | 轮询取消     | () => void;          |   |
 | timer.resume | 轮询暂停     | () => void;          |   |
 | timer.pause  | 轮询继续     | () => void;          |   |
