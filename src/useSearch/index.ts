@@ -1,5 +1,5 @@
 import { DependencyList, useState, useMemo, useRef, useCallback } from 'react';
-import useUpdateEffect from '../useUpdateEffect';
+import { useUpdateEffect } from 'react-use';
 
 import useAsync from '../useAsync';
 
