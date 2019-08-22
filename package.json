@@ -22,7 +22,7 @@
     "cov": "father test --coverage",
     "help": "father help",
     "precommit": "father pre-commit",
-    "pub:doc": "father doc build & father doc deploy"
+    "pub:doc": "father doc build && father doc deploy"
   },
   "dependencies": {
     "antd": "^3.20.1",

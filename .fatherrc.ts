@@ -18,7 +18,6 @@ const options: IBundleOptions = {
   doc: {
     title: '@umijs/hooks',
     base: '/hooks/',
-    ignore: ['changelog.md', 'code_of_conduct.md', 'contributing.md', 'license.md']
   },
   extraBabelPlugins: [[
     'babel-plugin-import',
