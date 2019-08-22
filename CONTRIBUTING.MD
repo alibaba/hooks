@@ -14,9 +14,9 @@
 
 ## 新增功能
 
-如果你想新增一个 Hook，我们建议你先建立一个 issue，说明该 Hook 的应用场景及用法。
+如果你想新增一个 Hooks，我们建议你先建立一个 issue，说明该 Hook 的应用场景及用法。
 
-一个标准的 Hook 应该包含 `index.ts`， `index.mdx`，`index.test.ts` 三个文件，参考 [useTitle](https://github.com/umijs/hooks/tree/master/src/useTitle)。
+一个标准的 Hook 应该包含 `index.ts`， `index.mdx`，`index.test.ts` 三个文件，参考 [useAsync](https://github.com/umijs/hooks/tree/master/src/useAsync)。
 
 ## Pull Request
 

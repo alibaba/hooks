@@ -1,3 +1,9 @@
+---
+name: umijs/hooks
+route: /
+sidebar: true
+---
+
 # @umijs/hooks
 
 react hooks library
@@ -5,19 +11,19 @@ react hooks library
 [![NPM version][image-1]][1] [![NPM downloads][image-2]][2]
 
 
-## 📦 Install
+## Install
 
 ```
 npm i @umijs/hooks --save
 ```
 
-## 🔨 Usage
+## Usage
 
 ```
-import { useTitle } from '@umijs/hooks';
+import { useAsync } from '@umijs/hooks';
 ```
 
-## ⌨️ Development
+## Development
 
 ```
 $ git clone git@github.com:umijs/hooks.git
@@ -27,10 +33,9 @@ $ npm start
 ```
 Open your browser and visit http://127.0.0.1:8001/hooks , see more at Development.
 
-## 🤝 Contributing
+## Contributing
 
-@umijs/hooks 正处于起步阶段，欢迎大家参与共建。
-共建请参考[贡献指南](CONTRIBUTING.MD)。
+We welcome all contributions, please read our CONTRIBUTING.md first, let's build a better antd together.
 
 ## LICENSE
 
