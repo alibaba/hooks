@@ -157,7 +157,7 @@ import useList from './index';
       return (
         <>
           <Table columns={columns} dataSource={list} rowKey={(r, index)=>getKey(index)} pagination={false} />
-          <Button onClick={()=>push(0)}>Add one line</Button>
+          <Button onClick={()=>push({})}>Add one line</Button>
           <Button type='primary' onClick={()=>alert(JSON.stringify(getFieldsValue()))}>submit</Button>
         </>
       )
