@@ -22,15 +22,19 @@ import useList from './index';
 {
   ()=>{
     function Demo(){
-      const { list, merge, insert, replace, remove, getKey } = useList([1,2,3]);
+      const { list, merge, insert, replace, remove, getKey, unshift, shift, pop, move } = useList([1,2,3]);
 
       return (
         <>
-          {list.map((ele, index)=>(<div key={getKey(index)}>{ele}: {getKey(index)}</div>))}
+          {list.map((ele, index)=>(<div key={getKey(index)}>value: {JSON.stringify(ele)} | uuid: {getKey(index)}</div>))}
           <Button onClick={()=>insert(0, 999)}> insert </Button>
-          <Button onClick={()=>merge(0, [444, 555])}> merge </Button>
+          <Button onClick={()=>unshift(1)}> unshift </Button>
+          <Button onClick={()=>merge(0, [444, 555, 'some string'])}> merge </Button>
           <Button onClick={()=>remove(3)}> remove </Button>
-          <Button onClick={()=>replace(0, 8)}> repalce </Button>
+          <Button onClick={()=>shift()}> shift </Button>
+          <Button onClick={()=>replace(0, {name: 'complexObj'})}> repalce </Button>
+          <Button onClick={()=>pop()}> pop </Button>
+          <Button onClick={()=>move(0, 1)}>switch row 0 and row 1</Button>
         </>
       )
     }
@@ -72,6 +76,7 @@ import useList from './index';
                 <>
                   {getFieldDecorator(`memo[${getKey(index)}]`)(<Input style={{width: 300, marginRight: 16}} placeholder='please input your name' />)}
                   <Button onClick={()=>remove(index)}>删除</Button>
+                  <span>   uuid: {getKey(index)}</span>
                 </>)
             }
           
@@ -89,8 +94,8 @@ import useList from './index';
           </Button.Group>
           <Button.Group>
             <Button onClick={()=>pop()}>remove last</Button>
-            <Button onClick={()=>insert(1, {name: '新插入', age: 98})}>insert between row 1 and row 2</Button>
-            <Button onClick={()=>merge(1, [{name: '新插入1', age: 98}, {name: '新插入2', age: 97}])}>insert multiple rows between row 1 and row 2</Button>
+            <Button onClick={()=>insert(1, {name: '新插入', age: 98})}>insert between row 0 and row 1</Button>
+            <Button onClick={()=>merge(1, [{name: '新插入1', age: 98}, {name: '新插入2', age: 97}])}>insert multiple rows between row 0 and row 1</Button>
           </Button.Group>
         </>
       )
