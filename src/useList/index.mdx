@@ -1,0 +1,125 @@
+---
+name: useList
+route: /useList
+sidebar: true
+---
+
+import { Playground } from 'docz';
+import { useState, useMemo } from 'react';
+import { Button, Spin, Table, Form, Input } from 'antd';
+import 'antd/es/select/style';
+import useList from './index';
+
+# useAPI
+
+一个帮助你管理列表状态，并能生成唯一 key 的 hook。
+
+## 代码演示
+
+### 简单 list
+
+<Playground>
+{
+  ()=>{
+    function Demo(){
+      const { list, merge, insert, replace, remove, getKey } = useList([1,2,3]);
+
+      return (
+        <>
+          {list.map((ele, index)=>(<div key={getKey(index)}>{ele}: {getKey(index)}</div>))}
+          <Button onClick={()=>insert(0, 999)}> insert </Button>
+          <Button onClick={()=>merge(0, [444, 555])}> merge </Button>
+          <Button onClick={()=>remove(3)}> remove </Button>
+          <Button onClick={()=>replace(0, 8)}> repalce </Button>
+        </>
+      )
+    }
+    return <Demo />
+  }
+}
+</Playground>
+
+### 复杂 list
+
+<Playground>
+{
+  ()=>{
+    const Demo = Form.create()((props) => {
+      const { list, merge, insert, replace, remove, getKey, move, push, unshift, pop } = useList([
+        { name: 'aaa', age: 24 },
+        { name: 'bbb', age: 23 },
+        { name: 'ccc', age: 22 },
+      ])
+      const { getFieldDecorator, getFieldValue } = props.form;
+
+      const columns = [
+        {
+          title: '姓名',
+          dataIndex: 'name',
+          key: 'name',
+        },
+        {
+          title: '年龄',
+          dataIndex: 'age',
+          key: 'age',
+        },
+        {
+          key: 'memo',
+          title: '备注',
+          render: (text, row, index) => 
+            {
+              return (
+                <>
+                  {getFieldDecorator(`memo[${getKey(index)}]`)(<Input style={{width: 300, marginRight: 16}} placeholder='please input your name' />)}
+                  <Button onClick={()=>remove(index)}>删除</Button>
+                </>)
+            }
+          
+        }
+      ]
+
+      return (
+        <>
+          <Table columns={columns} dataSource={list} rowKey={(r, index)=>getKey(index)} pagination={false} />
+          <Button.Group>
+            <Button onClick={()=>unshift({name: '新插入', age: 98})}>add at front</Button>
+            <Button onClick={()=>push({name: '新插入', age: 98})}>push at end</Button>
+            <Button onClick={()=>replace(0, {name: '被修改', age: 12})}>replace the first</Button>
+            <Button onClick={()=>move(0, 1)}>switch row 0 and row 1</Button>
+          </Button.Group>
+          <Button.Group>
+            <Button onClick={()=>pop()}>remove last</Button>
+            <Button onClick={()=>insert(1, {name: '新插入', age: 98})}>insert between row 1 and row 2</Button>
+            <Button onClick={()=>merge(1, [{name: '新插入1', age: 98}, {name: '新插入2', age: 97}])}>insert multiple rows between row 1 and row 2</Button>
+          </Button.Group>
+        </>
+      )
+    });
+    return <Demo />
+  }
+}
+</Playground>
+
+## API
+
+### 入参
+
+| 参数         | 说明         | 类型                 |   |
+|--------------|--------------|----------------------|---|
+| initialValue      | 列表的初始值 | T[]              |   |
+
+### 返回结果
+
+| 参数         | 说明         | 类型                 |  备注            |
+|--------------|--------------|----------------------|---------------|
+| list      | 当前的列表 | T[]              |   |
+| insert        | 在指定位置插入元素 | (index: number, obj: T) => void                | - |
+| merge         | 在指定位置插入多个元素 | (index: number, obj: T) => void | - |
+| replace          | 替换指定元素         | (index: number, obj: T) => void          | - |
+| remove   | 删除指定元素     | (index: number) => void;          | - |
+| move | 移动元素     | (oldIndex: number, newIndex: number) => void;          | - |
+| getKey  | 获得某个元素的 uuid     | (index: number) => string;           | 不会为简单类型(Boolean, Number, String, Symbol, undefined, null), 生成 uuid
+| push  | 在列表末尾添加元素     | (obj: T) => void;          | - |
+| pop  | 移除末尾元素     | () => void;          | - |
+| unshift  | 在列表起始位置添加元素    | (obj: T) => void;          | - |
+| shift  | 移除起始位置元素     | () => void;          | - |
