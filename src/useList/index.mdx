@@ -105,6 +105,68 @@ import useList from './index';
 }
 </Playground>
 
+### 动态表单
+
+<Playground>
+{
+  ()=>{
+    const Demo = Form.create()((props) => {
+      const { list, merge, insert, replace, remove, getKey, move, push, unshift, pop } = useList([{name: 'my bro', age: '23', memo: 'he\'s my bro' }, 0, 0])
+      const { getFieldDecorator, getFieldsValue } = props.form;
+
+      const columns = [
+        {
+          title: '姓名',
+          dataIndex: 'name',
+          key: 'name',
+          render: (text, row, index) => 
+            {
+              return (
+                <>
+                  {getFieldDecorator(`name[${getKey(index)}]`, { initialValue: text })(<Input style={{width: 120, marginRight: 16}} placeholder='name' />)}
+                </>)
+            }
+        },
+        {
+          title: '年龄',
+          dataIndex: 'age',
+          key: 'age',
+          render: (text, row, index) => 
+            {
+              return (
+                <>
+                  {getFieldDecorator(`age[${getKey(index)}]`, { initialValue: text })(<Input style={{width: 120, marginRight: 16}} placeholder='age' />)}
+                </>)
+            }
+        },
+        {
+          key: 'memo',
+          title: '备注',
+          dataIndex: 'memo',
+          render: (text, row, index) => 
+            {
+              return (
+                <>
+                  {getFieldDecorator(`memo[${getKey(index)}]`, { initialValue: text })(<Input style={{width: 300, marginRight: 16}} placeholder={`please input memo for uuid: ${getKey(index)}`} />)}
+                  <Button onClick={()=>remove(index)}>删除</Button>
+                </>)
+            }
+        }
+      ]
+
+      return (
+        <>
+          <Table columns={columns} dataSource={list} rowKey={(r, index)=>getKey(index)} pagination={false} />
+          <Button onClick={()=>push(0)}>Add one line</Button>
+          <Button type='primary' onClick={()=>alert(JSON.stringify(getFieldsValue()))}>submit</Button>
+        </>
+      )
+    });
+    return <Demo />
+  }
+}
+</Playground>
+
 ## API
 
 ### 入参
@@ -123,7 +185,7 @@ import useList from './index';
 | replace          | 替换指定元素         | (index: number, obj: T) => void          | - |
 | remove   | 删除指定元素     | (index: number) => void;          | - |
 | move | 移动元素     | (oldIndex: number, newIndex: number) => void;          | - |
-| getKey  | 获得某个元素的 uuid     | (index: number) => string;           | 不会为简单类型(Boolean, Number, String, Symbol, undefined, null), 生成 uuid
+| getKey  | 获得某个元素的 uuid     | (index: number) => string;           | - |
 | push  | 在列表末尾添加元素     | (obj: T) => void;          | - |
 | pop  | 移除末尾元素     | () => void;          | - |
 | unshift  | 在列表起始位置添加元素    | (obj: T) => void;          | - |

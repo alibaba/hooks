@@ -2,36 +2,20 @@ import { useState, useRef, useCallback } from 'react';
 
 export default <T>(initialValue: T[]) => {
   // 复杂类型 key 存储器
-  const keyMap = useRef(new WeakMap());
-  const counterRef = useRef(0);
+  // const keyMap = useRef(new WeakMap());
+  const counterRef = useRef(-1);
   // 简单类型 key 存储器
   const keyList = useRef<number[]>([]);
 
   // 内部方法
-  const setKey = useCallback((obj: T, index?: number) => {
+  const setKey = useCallback((obj: T, index: number) => {
     counterRef.current += 1;
-    try {
-      keyMap.current.set(obj as Record<string, any>, counterRef.current);
-    } catch (e) {
-      // 设置 基本类型的 key
-      if (index || index === 0) {
-        keyList.current.splice(index, 0, counterRef.current);
-      }
-    }
-  }, []);
-
-  // 内部方法
-  const replaceKey = useCallback((prevObj: T, newObj: T) => {
-    try {
-      const prevKey = keyMap.current.get(prevObj as Record<string, any>);
-      keyMap.current.set(newObj as Record<string, any>, prevKey);
-    } catch (e) {
-      // 基本类型 key 无需修改顺序
-    }
+    keyList.current.splice(index, 0, counterRef.current);
   }, []);
 
   const [list, setList] = useState(() => {
     initialValue.forEach((ele, index) => {
+      console.log('init', ele, index);
       setKey(ele, index);
     });
     return initialValue || [];
@@ -46,15 +30,7 @@ export default <T>(initialValue: T[]) => {
     });
   };
 
-  const getKey = (index: number) => {
-    try {
-      const obj = list[index] || {};
-      return keyMap.current.get(obj) || keyList.current[index];
-    } catch (e) {
-      return undefined;
-      // return normalMap.current[(list[index]).toString()];
-    }
-  };
+  const getKey = (index: number) => keyList.current[index];
 
   const merge = (index: number, obj: T[]) => {
     setList(l => {
@@ -72,7 +48,6 @@ export default <T>(initialValue: T[]) => {
   const replace = (index: number, obj: T) => {
     setList(l => {
       const temp = [...l];
-      replaceKey(temp[index], obj);
       temp[index] = obj;
       return temp;
     });
@@ -120,7 +95,7 @@ export default <T>(initialValue: T[]) => {
 
   const push = (obj: T) => {
     setList(l => {
-      setKey(obj, 0);
+      setKey(obj, l.length);
       return l.concat([obj]);
     });
   };
