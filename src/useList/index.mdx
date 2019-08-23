@@ -111,7 +111,7 @@ import useList from './index';
 {
   ()=>{
     const Demo = Form.create()((props) => {
-      const { list, merge, insert, replace, remove, getKey, move, push, unshift, pop } = useList([{name: 'my bro', age: '23', memo: 'he\'s my bro' }, 0, 0])
+      const { list, merge, insert, replace, remove, getKey, move, push, unshift, pop } = useList([{name: 'my bro', age: '23', memo: 'he\'s my bro' }, {}, {}])
       const { getFieldDecorator, getFieldsValue } = props.form;
 
       const columns = [
