@@ -1,0 +1,51 @@
+---
+name: useResponsive
+route: /useResponsive
+sidebar: true
+---
+
+import { Playground } from 'docz';
+import { useState, useMemo } from 'react';
+import { useResponsive } from './index';
+
+# useResponsive
+
+获取响应式信息。
+
+## 代码演示
+
+### 在组件中获取响应式信息。
+
+<Playground>
+{
+  ()=>{
+    function Demo(){
+      const responsive = useResponsive();
+      return (
+        <>
+          <p>请改变浏览器窗口宽度来查看效果：</p>
+          {Object.keys(responsive).map(key => (
+            <p>
+              {key} {responsive[key] ? '✔' : '✘'}
+            </p>
+          ))}
+        </>
+      )
+    }
+    return <Demo />
+  }
+}
+</Playground>
+
+## API
+
+```
+interface ResponsiveConfig {
+  [key: string]: number;
+}
+interface ResponsiveInfo {
+  [key: string]: boolean;
+}
+function configResponsive(config: ResponsiveConfig): void
+function useResponsive(): ResponsiveInfo
+```
