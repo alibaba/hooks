@@ -15,7 +15,6 @@ export default <T>(initialValue: T[]) => {
 
   const [list, setList] = useState(() => {
     initialValue.forEach((ele, index) => {
-      console.log('init', ele, index);
       setKey(ele, index);
     });
     return initialValue || [];
