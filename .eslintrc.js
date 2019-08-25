@@ -7,4 +7,4 @@ module.exports = {
     "no-restricted-syntax": "off",
     "@typescript-eslint/no-object-literal-type-assertion": "off",
   }
-}
+};
