@@ -1,6 +1,6 @@
 ---
-name: useList
-route: /useList
+name: useDynamicList
+route: /useDynamicList
 sidebar: true
 ---
 
@@ -8,9 +8,9 @@ import { Playground } from 'docz';
 import { useState, useMemo } from 'react';
 import { Button, Spin, Table, Form, Input } from 'antd';
 import 'antd/es/select/style';
-import useList from './index';
+import useDynamicList from './index';
 
-# useList
+# useDynamicList
 
 一个帮助你管理列表状态，并能生成唯一 key 的 hook。
 
@@ -22,7 +22,7 @@ import useList from './index';
 {
   ()=>{
     function Demo(){
-      const { list, merge, insert, replace, remove, getKey, unshift, shift, pop, move } = useList([1,2,3]);
+      const { list, merge, insert, replace, remove, getKey, unshift, shift, pop, move } = useDynamicList([1,2,3]);
 
       return (
         <>
@@ -49,7 +49,7 @@ import useList from './index';
 {
   ()=>{
     const Demo = Form.create()((props) => {
-      const { list, merge, insert, replace, remove, getKey, move, push, unshift, pop } = useList([
+      const { list, merge, insert, replace, remove, getKey, move, push, unshift, pop } = useDynamicList([
         { name: 'aaa', age: 24 },
         { name: 'bbb', age: 23 },
         { name: 'ccc', age: 22 },
@@ -111,7 +111,7 @@ import useList from './index';
 {
   ()=>{
     const Demo = Form.create()((props) => {
-      const { list, merge, insert, replace, remove, getKey, move, push, unshift, pop } = useList([{name: 'my bro', age: '23', memo: 'he\'s my bro' }, {}, {}])
+      const { list, merge, insert, replace, remove, getKey, move, push, unshift, pop } = useDynamicList([{name: 'my bro', age: '23', memo: 'he\'s my bro' }, {}, {}])
       const { getFieldDecorator, getFieldsValue } = props.form;
 
       const columns = [
