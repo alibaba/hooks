@@ -6,7 +6,7 @@ sidebar: true
 
 import { Playground } from 'docz';
 import { useState, useMemo } from 'react';
-import { useResponsive } from './index';
+import { useResponsive, configResponsive } from './index';
 
 # useResponsive
 
@@ -19,18 +19,23 @@ import { useResponsive } from './index';
 <Playground>
 {
   ()=>{
+    configResponsive({
+      small: 0,
+      middle: 800,
+      large: 1200,
+    });
     function Demo(){
       const responsive = useResponsive();
       return (
         <>
           <p>请改变浏览器窗口宽度来查看效果：</p>
           {Object.keys(responsive).map(key => (
-            <p>
+            <p key={key}>
               {key} {responsive[key] ? '✔' : '✘'}
             </p>
           ))}
         </>
-      )
+      );
     }
     return <Demo />
   }

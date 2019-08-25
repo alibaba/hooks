@@ -21,6 +21,7 @@ let responsiveConfig: ResponsiveConfig = {
 
 export function configResponsive(config: ResponsiveConfig) {
   responsiveConfig = config;
+  calculate();
 }
 
 let info: ResponsiveInfo = {};
