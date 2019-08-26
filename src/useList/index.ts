@@ -8,14 +8,14 @@ export default <T>(initialValue: T[]) => {
   const keyList = useRef<number[]>([]);
 
   // 内部方法
-  const setKey = useCallback((obj: T, index: number) => {
+  const setKey = useCallback((index: number) => {
     counterRef.current += 1;
     keyList.current.splice(index, 0, counterRef.current);
   }, []);
 
   const [list, setList] = useState(() => {
-    initialValue.forEach((ele, index) => {
-      setKey(ele, index);
+    (initialValue || []).forEach((_, index) => {
+      setKey(index);
     });
     return initialValue || [];
   });
@@ -24,7 +24,7 @@ export default <T>(initialValue: T[]) => {
     setList(l => {
       const temp = [...l];
       temp.splice(index, 0, obj);
-      setKey(obj, index);
+      setKey(index);
       return temp;
     });
   };
@@ -33,14 +33,12 @@ export default <T>(initialValue: T[]) => {
 
   const merge = (index: number, obj: T[]) => {
     setList(l => {
-      const head = l.slice(0, index);
-      const tail = l.slice(index);
-
-      obj.forEach((ele, i) => {
-        setKey(ele, index + i);
+      const temp = [...l];
+      obj.forEach((_, i) => {
+        setKey(index + i);
       });
-
-      return head.concat(obj).concat(tail);
+      temp.splice(index, 0, ...obj);
+      return temp;
     });
   };
 
@@ -54,19 +52,16 @@ export default <T>(initialValue: T[]) => {
 
   const remove = (index: number) => {
     setList(l => {
-      const head = l.slice(0, index);
-      const tail = l.slice(index + 1);
+      const temp = [...list];
+      temp.splice(index, 1);
 
       // remove keys if necessary
       try {
-        const keyHead = keyList.current.slice(0, index);
-        const keyTail = keyList.current.slice(index + 1);
-        keyList.current = keyHead.concat(keyTail);
+        keyList.current.splice(index, 1);
       } catch (e) {
         Promise.reject(e);
       }
-
-      return head.concat(tail);
+      return temp;
     });
   };
 
@@ -94,7 +89,7 @@ export default <T>(initialValue: T[]) => {
 
   const push = (obj: T) => {
     setList(l => {
-      setKey(obj, l.length);
+      setKey(l.length);
       return l.concat([obj]);
     });
   };
@@ -112,7 +107,7 @@ export default <T>(initialValue: T[]) => {
 
   const unshift = (obj: T) => {
     setList(l => {
-      setKey(obj, 0);
+      setKey(0);
       return [obj].concat(l);
     });
   };
