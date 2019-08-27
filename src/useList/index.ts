@@ -30,6 +30,7 @@ export default <T>(initialValue: T[]) => {
   };
 
   const getKey = (index: number) => keyList.current[index];
+  const getIndex = (index: number) => keyList.current.findIndex(ele => ele === index);
 
   const merge = (index: number, obj: T[]) => {
     setList(l => {
@@ -129,6 +130,7 @@ export default <T>(initialValue: T[]) => {
     replace,
     remove,
     getKey,
+    getIndex,
     move,
     push,
     pop,

@@ -9,39 +9,13 @@ import { useState, useMemo } from 'react';
 import { Button, Spin, Table, Form, Input } from 'antd';
 import 'antd/es/select/style';
 import useDynamicList from './index';
+import ReactDragListView from 'react-drag-listview';
 
 # useDynamicList
 
 一个帮助你管理列表状态，并能生成唯一 key 的 hook。
 
 ## 代码演示
-
-### 简单 list
-
-<Playground>
-{
-  ()=>{
-    function Demo(){
-      const { list, merge, insert, replace, remove, getKey, unshift, shift, pop, move } = useDynamicList([1,2,3]);
-
-      return (
-        <>
-          {list.map((ele, index)=>(<div key={getKey(index)}>value: {JSON.stringify(ele)} | uuid: {getKey(index)}</div>))}
-          <Button onClick={()=>insert(0, 999)}> insert </Button>
-          <Button onClick={()=>unshift(1)}> unshift </Button>
-          <Button onClick={()=>merge(0, [444, 555, 'some string'])}> merge </Button>
-          <Button onClick={()=>remove(3)}> remove </Button>
-          <Button onClick={()=>shift()}> shift </Button>
-          <Button onClick={()=>replace(0, {name: 'complexObj'})}> repalce </Button>
-          <Button onClick={()=>pop()}> pop </Button>
-          <Button onClick={()=>move(0, 1)}>switch row 0 and row 1</Button>
-        </>
-      )
-    }
-    return <Demo />
-  }
-}
-</Playground>
 
 ### 复杂 list
 
@@ -57,6 +31,11 @@ import useDynamicList from './index';
       const { getFieldDecorator, getFieldValue } = props.form;
 
       const columns = [
+        {
+          title: 'uuid(自动生成)',
+          key: 'id',
+          render: (text, row, index) => getKey(index)
+        },
         {
           title: '姓名',
           dataIndex: 'name',
@@ -74,9 +53,12 @@ import useDynamicList from './index';
             {
               return (
                 <>
-                  {getFieldDecorator(`memo[${getKey(index)}]`)(<Input style={{width: 300, marginRight: 16}} placeholder='please input your name' />)}
-                  <Button onClick={()=>remove(index)}>删除</Button>
-                  <span>   uuid: {getKey(index)}</span>
+                  {getFieldDecorator(`memo[${getKey(index)}]`)(<Input style={{width: 300, marginRight: 16}} placeholder='please input the memo' />)}
+                  <Button.Group>
+                    <Button disabled={index === 0} onClick={()=>move(index, index - 1)}>上移</Button>
+                    <Button disabled={index === list.length - 1 } onClick={()=>move(index, index + 1)}>下移</Button>
+                    <Button type='danger' onClick={()=>remove(index)}>删除</Button>
+                  </Button.Group>
                 </>)
             }
           
@@ -86,17 +68,7 @@ import useDynamicList from './index';
       return (
         <>
           <Table columns={columns} dataSource={list} rowKey={(r, index)=>getKey(index)} pagination={false} />
-          <Button.Group>
-            <Button onClick={()=>unshift({name: '新插入', age: 98})}>add at front</Button>
-            <Button onClick={()=>push({name: '新插入', age: 98})}>push at end</Button>
-            <Button onClick={()=>replace(0, {name: '被修改', age: 12})}>replace the first</Button>
-            <Button onClick={()=>move(0, 1)}>switch row 0 and row 1</Button>
-          </Button.Group>
-          <Button.Group>
-            <Button onClick={()=>pop()}>remove last</Button>
-            <Button onClick={()=>insert(1, {name: '新插入', age: 98})}>insert between row 0 and row 1</Button>
-            <Button onClick={()=>merge(1, [{name: '新插入1', age: 98}, {name: '新插入2', age: 97}])}>insert multiple rows between row 0 and row 1</Button>
-          </Button.Group>
+          <Button style={{marginTop: 8}} block type='dashed' onClick={()=>push({name: '新增行', age: '25'})}>+ 添加行</Button>
         </>
       )
     });
@@ -110,9 +82,11 @@ import useDynamicList from './index';
 <Playground>
 {
   ()=>{
+
     const Demo = Form.create()((props) => {
-      const { list, merge, insert, replace, remove, getKey, move, push, unshift, pop } = useDynamicList([{name: 'my bro', age: '23', memo: 'he\'s my bro' }, {}, {}])
+      const { list, merge, insert, replace, remove, getKey, move, push, unshift, pop, getIndex } = useDynamicList([{name: 'my bro', age: '23', memo: 'he\'s my bro' }, {name: 'my sis', age: '21', memo: 'she\'s my sis' }, {}])
       const { getFieldDecorator, getFieldsValue } = props.form;
+      const [ result, setResult ] = useState('');
 
       const columns = [
         {
@@ -147,8 +121,10 @@ import useDynamicList from './index';
             {
               return (
                 <>
-                  {getFieldDecorator(`memo[${getKey(index)}]`, { initialValue: text })(<Input style={{width: 300, marginRight: 16}} placeholder={`please input memo for uuid: ${getKey(index)}`} />)}
-                  <Button onClick={()=>remove(index)}>删除</Button>
+                  {getFieldDecorator(`memo[${getKey(index)}]`, { initialValue: text })(<Input style={{width: 300, marginRight: 16}} placeholder={`please input the memo`} />)}
+                  <Button.Group>
+                    <Button type='danger' onClick={()=>remove(index)}>删除</Button>
+                  </Button.Group>
                 </>)
             }
         }
@@ -156,9 +132,43 @@ import useDynamicList from './index';
 
       return (
         <>
-          <Table columns={columns} dataSource={list} rowKey={(r, index)=>getKey(index)} pagination={false} />
-          <Button onClick={()=>push({})}>Add one line</Button>
-          <Button type='primary' onClick={()=>alert(JSON.stringify(getFieldsValue()))}>submit</Button>
+          <ReactDragListView onDragEnd={(oldIndex, newIndex)=>move(oldIndex, newIndex)}>
+            <Table columns={columns} dataSource={list} rowKey={(r, index)=>getKey(index)} pagination={false} />
+          </ReactDragListView>
+          <Button style={{marginTop: 8}} block type='dashed' onClick={()=>push({name: '新增行', age: '25'})}>+ 添加行</Button>
+          <Button
+            type='primary'
+            style={{marginTop: 16}}
+            onClick={()=>
+              setResult(
+                `names: 
+                ${JSON.stringify(
+                  getFieldsValue().name
+                  .map((item, index)=> ({index, item})) // add index into obj
+                  .sort((a, b) => getIndex(a.index) - getIndex(b.index)) // sort based on the index of table
+                  .filter(item=>!!item.item) // remove undefined(s)
+                  .map(item => item.item) // retrive the data
+                )};
+                ages: 
+                ${JSON.stringify(
+                  getFieldsValue().age
+                  .map((item, index)=> ({index, item})) // add index into obj
+                  .sort((a, b) => getIndex(a.index) - getIndex(b.index)) // sort based on the index of table
+                  .filter(item=>!!item.item) // remove undefined(s)
+                  .map(item => item.item) // retrive the data
+                )};
+                memos: 
+                ${JSON.stringify(
+                  getFieldsValue().memo
+                  .map((item, index)=> ({index, item})) // add index into obj
+                  .sort((a, b) => getIndex(a.index) - getIndex(b.index)) // sort based on the index of table
+                  .filter(item=>!!item.item) // remove undefined(s)
+                  .map(item => item.item) // retrive the data
+                )};
+                `
+              )
+            }>提交</Button>
+          <div>{result && ('表单内容: ' + result)}</div>
         </>
       )
     });
@@ -185,7 +195,8 @@ import useDynamicList from './index';
 | replace          | 替换指定元素         | (index: number, obj: T) => void          | - |
 | remove   | 删除指定元素     | (index: number) => void;          | - |
 | move | 移动元素     | (oldIndex: number, newIndex: number) => void;          | - |
-| getKey  | 获得某个元素的 uuid     | (index: number) => string;           | - |
+| getKey  | 获得某个元素的 uuid     | (index: number) => number;           | - |
+| getIndex  | 获得某个key的 index     | (key: number) => number;           | - |
 | push  | 在列表末尾添加元素     | (obj: T) => void;          | - |
 | pop  | 移除末尾元素     | () => void;          | - |
 | unshift  | 在列表起始位置添加元素    | (obj: T) => void;          | - |
