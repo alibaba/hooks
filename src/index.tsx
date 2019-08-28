@@ -5,9 +5,9 @@ import useAPI from './useAPI';
 import useAsync from './useAsync';
 import useLoadMore from './useLoadMore';
 import useSearch from './useSearch';
-import useUpdateEffect from './useUpdateEffect';
 import useControlledValue from './useControlledValue';
 import useDynamicList from './useDynamicList';
+import { configResponsive, useResponsive } from './useResponsive';
 
 export {
   useAntdTable,
@@ -15,7 +15,8 @@ export {
   useAsync,
   useLoadMore,
   useSearch,
-  useUpdateEffect,
   useControlledValue,
   useDynamicList,
+  useResponsive,
+  configResponsive,
 };

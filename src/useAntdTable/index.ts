@@ -1,7 +1,7 @@
 import { WrappedFormUtils } from 'antd/lib/form/Form';
 import { PaginationConfig } from 'antd/lib/pagination';
 import { DependencyList, useEffect, useReducer, useRef } from 'react';
-import useUpdateEffect from '../useUpdateEffect';
+import { useUpdateEffect } from 'react-use';
 
 interface UseTableFormUtils extends WrappedFormUtils {
   getFieldInstance?: (name: string) => {};
@@ -54,16 +54,16 @@ class UseTableInitState {
   searchType: 'simple' | 'advance' = 'simple';
 
   // 数据加载状态
-  loading: boolean = false;
+  loading = false;
 
   // 当前页码
-  current: number = 1;
+  current = 1;
 
   // 分页大小
-  pageSize: number = 10;
+  pageSize = 10;
 
   // 总页数
-  total: number = 0;
+  total = 0;
 
   // 表单数据
   formData: { simple: IHistoryData; advance: IHistoryData } = { simple: {}, advance: {} };
@@ -72,7 +72,7 @@ class UseTableInitState {
   data: unknown = null;
 
   // 计数器
-  count: number = 0;
+  count = 0;
 }
 
 // 初始值
