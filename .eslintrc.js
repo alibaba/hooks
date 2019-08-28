@@ -1,9 +1,9 @@
 const fabric = require('@umijs/fabric');
 
 module.exports = {
-  ...fabric,
+  ...fabric.default,
   rules: {
-    ...fabric.rules,
+    ...fabric.default.rules,
     "no-restricted-syntax": "off",
     "@typescript-eslint/no-object-literal-type-assertion": "off",
   }

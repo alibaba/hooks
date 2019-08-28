@@ -6,6 +6,7 @@ import useAsync from './useAsync';
 import useLoadMore from './useLoadMore';
 import useSearch from './useSearch';
 import useControlledValue from './useControlledValue';
+import useDynamicList from './useDynamicList';
 import { configResponsive, useResponsive } from './useResponsive';
 
 export {
@@ -15,6 +16,7 @@ export {
   useLoadMore,
   useSearch,
   useControlledValue,
+  useDynamicList,
   useResponsive,
   configResponsive,
 };
