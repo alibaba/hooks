@@ -6,7 +6,7 @@ sidebar: true
 
 import { Playground } from 'docz';
 import { useState, useMemo } from 'react';
-import { Button, Spin, Table, Form, Input } from 'antd';
+import { Button, Spin, Table, Form, Input, Icon } from 'antd';
 import 'antd/es/select/style';
 import useDynamicList from './index';
 import ReactDragListView from 'react-drag-listview';
@@ -17,58 +17,60 @@ import ReactDragListView from 'react-drag-listview';
 
 ## 代码演示
 
-### 复杂 list
+### 动态列表
 
 <Playground>
 {
   ()=>{
     const Demo = Form.create()((props) => {
-      const { list, merge, insert, replace, remove, getKey, move, push, unshift, pop } = useDynamicList([
-        { name: 'aaa', age: 24 },
-        { name: 'bbb', age: 23 },
-        { name: 'ccc', age: 22 },
+      const { list, merge, insert, replace, remove, getKey, move, push, unshift, pop, getIndex } = useDynamicList([
+        '张三',
+        '李四'
       ])
-      const { getFieldDecorator, getFieldValue } = props.form;
+      const { getFieldDecorator, getFieldValue, validateFields } = props.form;
 
-      const columns = [
-        {
-          title: 'uuid(自动生成)',
-          key: 'id',
-          render: (text, row, index) => getKey(index)
-        },
-        {
-          title: '姓名',
-          dataIndex: 'name',
-          key: 'name',
-        },
-        {
-          title: '年龄',
-          dataIndex: 'age',
-          key: 'age',
-        },
-        {
-          key: 'memo',
-          title: '备注',
-          render: (text, row, index) => 
-            {
-              return (
-                <>
-                  {getFieldDecorator(`memo[${getKey(index)}]`)(<Input style={{width: 300, marginRight: 16}} placeholder='please input the memo' />)}
-                  <Button.Group>
-                    <Button disabled={index === 0} onClick={()=>move(index, index - 1)}>上移</Button>
-                    <Button disabled={index === list.length - 1 } onClick={()=>move(index, index + 1)}>下移</Button>
-                    <Button type='danger' onClick={()=>remove(index)}>删除</Button>
-                  </Button.Group>
-                </>)
-            }
-          
-        }
-      ]
+      const [result, setResult] = useState('');
+
+      const Row = (index, item) => (
+        <Form.Item key={getKey(index)}>
+          {getFieldDecorator(`names[${getKey(index)}]`, {
+            initialValue: item,
+            rules: [
+              {
+                required: true, 
+                message: '必填',
+              }
+            ]
+          })(<Input style={{width: 300}} placeholder='请输入姓名' />)}
+          { list.length > 1 && <Icon
+            type="minus-circle-o"
+            style={{marginLeft: 8}}
+            onClick={() => {remove(index)}}
+          />}
+          <Icon
+            type="plus-circle-o"
+            style={{marginLeft: 8}}
+            onClick={() => {push('')}}
+          />
+        </Form.Item>
+      );
 
       return (
         <>
-          <Table columns={columns} dataSource={list} rowKey={(r, index)=>getKey(index)} pagination={false} />
-          <Button style={{marginTop: 8}} block type='dashed' onClick={()=>push({name: '新增行', age: '25'})}>+ 添加行</Button>
+          <Form>
+          {
+            list.map((ele, index) => {
+              return Row(index, ele);
+            })
+          }
+          </Form>
+          <Button style={{marginTop: 8}} type='primary' onClick={()=>validateFields((err, val)=>{
+            if(!err){
+              console.log(val);
+              setResult(JSON.stringify((val || {}).names.filter(e=>!!e)));
+            }
+          })}>提交</Button>
+          <div>{result}</div>
         </>
       )
     });
@@ -77,14 +79,14 @@ import ReactDragListView from 'react-drag-listview';
 }
 </Playground>
 
-### 动态表单
+### 动态表格(可拖拽)
 
 <Playground>
 {
   ()=>{
 
     const Demo = Form.create()((props) => {
-      const { list, merge, insert, replace, remove, getKey, move, push, unshift, pop, getIndex } = useDynamicList([{name: 'my bro', age: '23', memo: 'he\'s my bro' }, {name: 'my sis', age: '21', memo: 'she\'s my sis' }, {}])
+      const { list, merge, insert, replace, remove, getKey, move, push, unshift, pop, getIndex, sortForm } = useDynamicList([{name: 'my bro', age: '23', memo: 'he\'s my bro' }, {name: 'my sis', age: '21', memo: 'she\'s my sis' }, {}])
       const { getFieldDecorator, getFieldsValue } = props.form;
       const [ result, setResult ] = useState('');
 
@@ -97,7 +99,8 @@ import ReactDragListView from 'react-drag-listview';
             {
               return (
                 <>
-                  {getFieldDecorator(`name[${getKey(index)}]`, { initialValue: text })(<Input style={{width: 120, marginRight: 16}} placeholder='name' />)}
+                  <Icon style={{ cursor: 'move', marginRight: 8 }} type="drag" />
+                  {getFieldDecorator(`params[${getKey(index)}].name`, { initialValue: text })(<Input style={{width: 120, marginRight: 16}} placeholder='name' />)}
                 </>)
             }
         },
@@ -109,7 +112,7 @@ import ReactDragListView from 'react-drag-listview';
             {
               return (
                 <>
-                  {getFieldDecorator(`age[${getKey(index)}]`, { initialValue: text })(<Input style={{width: 120, marginRight: 16}} placeholder='age' />)}
+                  {getFieldDecorator(`params[${getKey(index)}].age`, { initialValue: text })(<Input style={{width: 120, marginRight: 16}} placeholder='age' />)}
                 </>)
             }
         },
@@ -121,7 +124,7 @@ import ReactDragListView from 'react-drag-listview';
             {
               return (
                 <>
-                  {getFieldDecorator(`memo[${getKey(index)}]`, { initialValue: text })(<Input style={{width: 300, marginRight: 16}} placeholder={`please input the memo`} />)}
+                  {getFieldDecorator(`params[${getKey(index)}].memo`, { initialValue: text })(<Input style={{width: 300, marginRight: 16}} placeholder={`please input the memo`} />)}
                   <Button.Group>
                     <Button type='danger' onClick={()=>remove(index)}>删除</Button>
                   </Button.Group>
@@ -132,7 +135,7 @@ import ReactDragListView from 'react-drag-listview';
 
       return (
         <>
-          <ReactDragListView onDragEnd={(oldIndex, newIndex)=>move(oldIndex, newIndex)}>
+          <ReactDragListView onDragEnd={(oldIndex, newIndex)=>move(oldIndex, newIndex)} handleSelector={'i[aria-label="icon: drag"]'}>
             <Table columns={columns} dataSource={list} rowKey={(r, index)=>getKey(index)} pagination={false} />
           </ReactDragListView>
           <Button style={{marginTop: 8}} block type='dashed' onClick={()=>push({name: '新增行', age: '25'})}>+ 添加行</Button>
@@ -140,35 +143,9 @@ import ReactDragListView from 'react-drag-listview';
             type='primary'
             style={{marginTop: 16}}
             onClick={()=>
-              setResult(
-                `names: 
-                ${JSON.stringify(
-                  getFieldsValue().name
-                  .map((item, index)=> ({index, item})) // add index into obj
-                  .sort((a, b) => getIndex(a.index) - getIndex(b.index)) // sort based on the index of table
-                  .filter(item=>!!item.item) // remove undefined(s)
-                  .map(item => item.item) // retrive the data
-                )};
-                ages: 
-                ${JSON.stringify(
-                  getFieldsValue().age
-                  .map((item, index)=> ({index, item})) // add index into obj
-                  .sort((a, b) => getIndex(a.index) - getIndex(b.index)) // sort based on the index of table
-                  .filter(item=>!!item.item) // remove undefined(s)
-                  .map(item => item.item) // retrive the data
-                )};
-                memos: 
-                ${JSON.stringify(
-                  getFieldsValue().memo
-                  .map((item, index)=> ({index, item})) // add index into obj
-                  .sort((a, b) => getIndex(a.index) - getIndex(b.index)) // sort based on the index of table
-                  .filter(item=>!!item.item) // remove undefined(s)
-                  .map(item => item.item) // retrive the data
-                )};
-                `
-              )
+              setResult(JSON.stringify(sortForm(getFieldsValue().params), null, 2))
             }>提交</Button>
-          <div>{result && ('表单内容: ' + result)}</div>
+          <div style={{whiteSpace: 'pre'}}>{result && ('表单内容: ' + result)}</div>
         </>
       )
     });
@@ -197,6 +174,7 @@ import ReactDragListView from 'react-drag-listview';
 | move | 移动元素     | (oldIndex: number, newIndex: number) => void;          | - |
 | getKey  | 获得某个元素的 uuid     | (index: number) => number;           | - |
 | getIndex  | 获得某个key的 index     | (key: number) => number;           | - |
+| sortForm  | 根据表单结果自动排序     | (list: unknown[]) => unknown[];           | 使用方法详见[`动态表格(可拖拽)`](#动态表格可拖拽) |
 | push  | 在列表末尾添加元素     | (obj: T) => void;          | - |
 | pop  | 移除末尾元素     | () => void;          | - |
 | unshift  | 在列表起始位置添加元素    | (obj: T) => void;          | - |
