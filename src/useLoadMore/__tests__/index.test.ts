@@ -69,42 +69,215 @@ const asyncFn = ({ pageSize, offset }: any) =>
     }, 1);
   });
 
+const callLoadmore = (hook: any) => {
+  act(() => {
+    const { loadMore } = hook.result.current;
+    loadMore();
+  });
+};
+
+const callReload = (hook: any) => {
+  act(() => {
+    const { reload } = hook.result.current;
+    reload();
+  });
+};
+
 describe('useLoadMore', () => {
   it('should be defined', () => {
     expect(useLoadMore).toBeDefined();
   });
 
-  const hook = renderHook(({ fn, deps, options }) => useLoadMore(fn, deps, options), {
-    initialProps: { fn: asyncFn, deps: [], options: { initPageSize: 3, incrementSize: 4 } },
+  describe('render the first', () => {
+    let hook: any;
+    beforeEach(() => {
+      hook = renderHook(() =>
+        useLoadMore(asyncFn, undefined, {
+          initPageSize: 3,
+        }),
+      );
+    });
+
+    it('initially starts loading', () => {
+      expect(hook.result.current.loading).toBeTruthy();
+    });
+
+    it('resolves', async () => {
+      expect.assertions(3);
+
+      const { rerender, waitForNextUpdate } = hook;
+      rerender();
+      await waitForNextUpdate();
+      const { data, total, loading } = hook.result.current;
+      expect(data.length).toEqual(3);
+      expect(total).toEqual(10);
+      expect(loading).toBeFalsy();
+    });
   });
 
-  it('render the first', async () => {
-    expect(hook.result.current.loading).toBeTruthy();
-    await hook.waitForNextUpdate();
-    expect(hook.result.current.data.length).toEqual(3);
-    expect(hook.result.current.total).toEqual(10);
-    act(() => {
-      hook.result.current.loadMore();
-    });
-    expect(hook.result.current.loadingMore).toBeTruthy();
-    await hook.waitForNextUpdate();
-    expect(hook.result.current.data.length).toEqual(7);
-    act(() => {
-      hook.result.current.loadMore();
-    });
-    await hook.waitForNextUpdate();
-    expect(hook.result.current.data.length).toEqual(10);
-    expect(hook.result.current.noMore).toBeTruthy();
-    act(() => {
-      hook.result.current.loadMore();
-    });
-    expect(hook.result.current.data.length).toEqual(10);
+  describe('should method run', () => {
+    let hook: any;
+    beforeEach(done => {
+      hook = renderHook(
+        ({ fn, deps, options }) => {
+          return useLoadMore(fn, [deps], options);
+        },
+        {
+          initialProps: {
+            fn: asyncFn,
+            deps: null,
+            options: {
+              itemKey: 'id',
+              initPageSize: 3,
+              incrementSize: 4,
+            },
+          },
+        },
+      );
 
-    act(() => {
-      hook.result.current.reload();
+      hook.waitForNextUpdate().then(done);
     });
-    expect(hook.result.current.loading).toBeTruthy();
-    await hook.waitForNextUpdate();
-    expect(hook.result.current.data.length).toEqual(3);
+
+    it('test on loadmore', async () => {
+      expect.assertions(5);
+
+      callLoadmore(hook);
+      expect(hook.result.current.loadingMore).toBeTruthy();
+      await hook.waitForNextUpdate();
+      expect(hook.result.current.loadingMore).toBeFalsy();
+      expect(hook.result.current.data.length).toEqual(7);
+
+      callLoadmore(hook);
+      await hook.waitForNextUpdate();
+      expect(hook.result.current.data.length).toEqual(10);
+      expect(hook.result.current.noMore).toBeTruthy();
+    });
+
+    it('test on reload', async () => {
+      expect.assertions(6);
+
+      hook.rerender({
+        fn: asyncFn,
+        deps: [],
+        options: {
+          initPageSize: 4,
+          itemKey: (item: any, index: any) => {
+            return undefined;
+          },
+        },
+      });
+
+      await hook.waitForNextUpdate();
+      expect(hook.result.current.data.length).toEqual(4);
+
+      callLoadmore(hook);
+      await hook.waitForNextUpdate();
+      expect(hook.result.current.data.length).toEqual(8);
+
+      callLoadmore(hook);
+      await hook.waitForNextUpdate();
+      expect(hook.result.current.data.length).toEqual(10);
+
+      // 测试边界值
+      callLoadmore(hook);
+
+      callReload(hook);
+      expect(hook.result.current.loading).toBeTruthy();
+      await hook.waitForNextUpdate();
+      expect(hook.result.current.loadingMore).toBeFalsy();
+      expect(hook.result.current.data.length).toEqual(4);
+    });
+  });
+
+  describe('the additional dependencies list changes', () => {
+    let setUp = (options: any) =>
+      renderHook(
+        ({ fn, deps, options }) => {
+          return useLoadMore(fn, [deps], options);
+        },
+        {
+          initialProps: {
+            fn: asyncFn,
+            deps: null,
+            options,
+          },
+        },
+      );
+
+    it('test on different options', async () => {
+      expect.assertions(2);
+
+      let result = [
+        {
+          id: 1222,
+          title: 'hahaha',
+        },
+      ];
+      let hook = setUp({
+        initPageSize: 6,
+        threshold: 200,
+        itemKey: (item: any, index: any) => {
+          return 'id';
+        },
+        formatResult: (res: any) => {
+          return {
+            total: 0,
+            data: result,
+          };
+        },
+      });
+      await hook.waitForNextUpdate();
+      expect(hook.result.current.data).toEqual(result);
+      expect(hook.result.current.total).toEqual(0);
+    });
+
+    it('test on dom scroll', async () => {
+      expect.assertions(7);
+
+      let callCount = 0;
+      // 模拟一个dom对象
+      const ref = {
+        current: {
+          scrollHeight: 300,
+          scrollTop: 50,
+          clientHeight: 200,
+          addEventListener: (trigger: any, callback: any) => {
+            callCount = 1;
+            callback();
+          },
+          removeEventListener: (trigger: any, callback: any) => {
+            callCount = 2;
+            callback();
+          },
+        },
+      };
+      let hook = setUp({
+        initPageSize: 3,
+        threshold: 200,
+        ref,
+      });
+      await hook.waitForNextUpdate();
+      expect(callCount).toEqual(1);
+      expect(hook.result.current.data.length).toEqual(3);
+      expect(hook.result.current.total).toEqual(10);
+      expect(hook.result.current.loadingMore).toBeTruthy();
+
+      hook.rerender({
+        fn: asyncFn,
+        deps: null,
+        options: {
+          initPageSize: 6,
+          threshold: 10,
+          ref,
+        },
+      });
+
+      await hook.waitForNextUpdate();
+      expect(hook.result.current.data.length).toEqual(6);
+      expect(hook.result.current.loadingMore).toBeFalsy();
+
+      hook.unmount();
+      expect(callCount).toEqual(2);
+    });
   });
 });
