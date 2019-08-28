@@ -7,6 +7,7 @@ import useLoadMore from './useLoadMore';
 import useSearch from './useSearch';
 import useUpdateEffect from './useUpdateEffect';
 import useControlledValue from './useControlledValue';
+import useDynamicList from './useDynamicList';
 
 export {
   useAntdTable,
@@ -16,4 +17,5 @@ export {
   useSearch,
   useUpdateEffect,
   useControlledValue,
+  useDynamicList,
 };
