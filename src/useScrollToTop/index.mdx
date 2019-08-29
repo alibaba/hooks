@@ -1,0 +1,60 @@
+---
+name: useScrollToTop
+route: /useScrollToTop
+sidebar: true
+---
+
+import { Playground } from 'docz';
+import { Button, Spin } from 'antd';
+import {useState} from 'react';
+import useScrollToTop from './index';
+
+# useScrollToTop
+
+在路由跳转时滚动到顶部。
+
+## 代码演示
+
+<Playground>
+{
+  ()=>{
+    function PageOne() {
+      useScrollToTop();
+      return (
+        <p>现在处于页面1</p>
+      )
+    }
+    function PageTwo() {
+      useScrollToTop();
+      return (
+        <p>现在处于页面2</p>
+      )
+    }
+    function Demo(){
+      const [page, setPage] = useState(false);
+      return (
+        <>
+          请先将浏览器页面向下滚动，再点击：
+          <Button
+            onClick={() => {setPage(!page)}}
+          >
+            切换页面
+          </Button>
+          {page ? (
+            <PageTwo/>
+          ) : (
+            <PageOne/>
+          )}
+        </>
+      )
+    }
+    return <Demo />
+  }
+}
+</Playground>
+
+## API
+
+```
+
+```
