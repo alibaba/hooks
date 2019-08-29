@@ -6,14 +6,16 @@ sidebar: true
 
 import { Playground } from 'docz';
 import { Button, Spin } from 'antd';
-import {useState} from 'react';
+import { useState, useRef } from 'react';
 import useScrollToTop from './index';
 
 # useScrollToTop
 
-在路由跳转时滚动到顶部。
+在切换页面时滚动到顶部。
 
 ## 代码演示
+
+### 滚动到屏幕顶部
 
 <Playground>
 {
@@ -21,13 +23,57 @@ import useScrollToTop from './index';
     function PageOne() {
       useScrollToTop();
       return (
-        <p>现在处于页面1</p>
+        <p style={{height: 500}}>现在处于页面1</p>
       )
     }
     function PageTwo() {
       useScrollToTop();
       return (
-        <p>现在处于页面2</p>
+        <p style={{height: 500}}>现在处于页面2</p>
+      )
+    }
+    function Demo(){
+      const [page, setPage] = useState(false);
+      return (
+        <>
+          请先将浏览器页面向下滚动，再点击：
+          <Button
+            onClick={() => {setPage(!page)}}
+          >
+            切换页面
+          </Button>
+          {page ? (
+            <PageTwo/>
+          ) : (
+            <PageOne/>
+          )}
+        </>
+      )
+    }
+    return <Demo />
+  }
+}
+</Playground>
+
+### 滚动到指定元素
+
+<Playground>
+{
+  ()=>{
+    function PageOne() {
+      return (
+        <p style={{height: 500}}>现在处于页面1</p>
+      )
+    }
+    function PageTwo() {
+      const ref = useRef();
+      useScrollToTop({
+        ref,
+        offset: -170,
+        behavior: 'smooth',
+      });
+      return (
+        <p ref={ref} style={{height: 500}}>现在处于页面2</p>
       )
     }
     function Demo(){
