@@ -18,12 +18,34 @@ afterAll(() => {
 
 const data = [1, 2, 3, 4, 5];
 
-const asyncFn = (value: any) =>
-  new Promise(resolve => {
+const asyncFn = (value: any) => {
+  return new Promise(resolve => {
     setTimeout(() => {
       resolve(data.filter(item => item === value));
     }, 1);
   });
+}
+
+const callChange = (hook: any, value: any) => {
+  act(() => {
+    const { onChange } = hook.result.current;
+    onChange(value);
+  });
+};
+
+const callRun = (hook: any) => {
+  act(() => {
+    const { run } = hook.result.current;
+    run();
+  });
+};
+
+const callCancel = (hook: any) => {
+  act(() => {
+    const { cancel } = hook.result.current;
+    cancel();
+  });
+};
 
 describe('useSearch', () => {
   it('should be defined', () => {
