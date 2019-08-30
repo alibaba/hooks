@@ -1,5 +1,3 @@
-import 'regenerator-runtime/runtime';
-
 import useAntdTable from './useAntdTable';
 import useAPI from './useAPI';
 import useAsync from './useAsync';
