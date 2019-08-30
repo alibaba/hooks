@@ -2,13 +2,25 @@ import { WrappedFormUtils } from 'antd/lib/form/Form';
 import { PaginationConfig } from 'antd/lib/pagination';
 import { DependencyList, useEffect, useReducer, useRef } from 'react';
 import { useUpdateEffect } from 'react-use';
+import useAsync from '../useAsync';
 
 interface UseTableFormUtils extends WrappedFormUtils {
   getFieldInstance?: (name: string) => {};
 }
 
 export interface ReturnValue<T> {
-  table: {
+  /* table 已经废弃 */
+  table?: {
+    dataSource: T;
+    loading: boolean;
+    onChange: (e: PaginationConfig) => void;
+    pagination: {
+      current: number;
+      pageSize: number;
+      total: number;
+    };
+  };
+  tableProps: {
     dataSource: T;
     loading: boolean;
     onChange: (e: PaginationConfig) => void;
@@ -53,9 +65,6 @@ class UseTableInitState {
   // 搜索类型，简单、高级
   searchType: 'simple' | 'advance' = 'simple';
 
-  // 数据加载状态
-  loading = false;
-
   // 当前页码
   current = 1;
 
@@ -68,11 +77,11 @@ class UseTableInitState {
   // 表单数据
   formData: { simple: IHistoryData; advance: IHistoryData } = { simple: {}, advance: {} };
 
-  // 服务端返回的数据
-  data: unknown = null;
-
   // 计数器
   count = 0;
+
+  // 服务端返回的数据
+  data: unknown = null;
 }
 
 // 初始值
@@ -100,11 +109,11 @@ export default function useAntdTable<T>(
   const { defaultPageSize = 10, id, form, formatResult } = options;
   const [state, dispatch] = useReducer(reducer, { ...initState, pageSize: defaultPageSize });
   const stateRef = useRef<UseTableInitState>(({} as unknown) as UseTableInitState);
-
-  /* 控制异步请求时序 */
-  const runCount = useRef(0);
-
   stateRef.current = state;
+
+  const { run, loading } = useAsync(fn, [], {
+    manual: true,
+  });
 
   const reload = () => {
     dispatch({
@@ -165,25 +174,13 @@ export default function useAntdTable<T>(
   }, deps);
 
   useUpdateEffect(() => {
-    runCount.current += 1;
-    const currentCount = runCount.current;
-
-    dispatch({
-      type: 'updateState',
-      payload: { loading: true },
-    });
-
     const queryParams = form ? state.formData[state.searchType] : {};
 
-    fn({
+    run({
       current: state.current,
       pageSize: state.pageSize,
       ...queryParams,
     }).then(res => {
-      if (currentCount !== runCount.current) {
-        return;
-      }
-
       let formatData = res;
       if (formatResult) {
         formatData = formatResult(res);
@@ -191,7 +188,7 @@ export default function useAntdTable<T>(
 
       dispatch({
         type: 'updateState',
-        payload: { loading: false, ...formatData },
+        payload: { ...formatData },
       });
     });
   }, [state.current, state.pageSize, state.count]);
@@ -265,9 +262,20 @@ export default function useAntdTable<T>(
   };
 
   const result: ReturnValue<T> = {
+    /* table 已经废弃 */
     table: {
       dataSource: state.data as T,
-      loading: state.loading,
+      loading,
+      onChange: changeTable,
+      pagination: {
+        current: state.current,
+        pageSize: state.pageSize,
+        total: state.total,
+      },
+    },
+    tableProps: {
+      dataSource: state.data as T,
+      loading,
       onChange: changeTable,
       pagination: {
         current: state.current,
