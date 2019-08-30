@@ -17,7 +17,8 @@ const options: IBundleOptions = {
   },
   doc: {
     title: '@umijs/hooks',
-    base: '/hooks/'
+    base: '/hooks/',
+    theme: 'docz-theme-ztopia',
   },
   extraBabelPlugins: [[
     'babel-plugin-import',

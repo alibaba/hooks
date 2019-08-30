@@ -1,5 +1,5 @@
 import { DependencyList, RefObject, useEffect, useState, useCallback, useRef } from 'react';
-import useUpdateEffect from '../useUpdateEffect';
+import { useUpdateEffect } from 'react-use';
 
 export interface ReturnValue<Item> {
   loading: boolean;

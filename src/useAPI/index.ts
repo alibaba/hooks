@@ -1,20 +1,29 @@
-import request from 'umi-request';
 import useAsync from '../useAsync';
 
-interface IProps {
+interface IProps<T> {
   url: string;
   options?: RequestInit;
   manual?: boolean;
   pollingInterval?: number;
+  method?: (url: string, options?: RequestInit) => Promise<T>;
+  onSuccess?: (d: T) => void;
+  onError?: (e: Error) => void;
 }
 
-const useAPI = (opt: IProps) =>
-  useAsync(
+let globalMethod: (url: string, options?: RequestInit) => Promise<any>;
+
+export const setFetch = (method: () => any) => {
+  globalMethod = method;
+};
+
+const useAPI = <T = any>(opt: IProps<T>) => {
+  const requestMethod = opt.method || globalMethod || window.fetch;
+  return useAsync<T>(
     async () =>
-      new Promise((resolve, reject) => {
-        request(opt.url, opt.options)
+      new Promise<T>((resolve, reject) => {
+        requestMethod(opt.url, opt.options)
           .then(async res => {
-            resolve(res);
+            resolve(res.json && typeof res.json === 'function' ? res.json() : res);
           })
           .catch(e => {
             reject(e);
@@ -24,7 +33,10 @@ const useAPI = (opt: IProps) =>
     {
       manual: opt.manual,
       pollingInterval: opt.pollingInterval,
+      onError: opt.onError,
+      onSuccess: opt.onSuccess,
     },
   );
+};
 
 export default useAPI;

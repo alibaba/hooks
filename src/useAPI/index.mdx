@@ -74,7 +74,7 @@ import useAPI from './index';
 
       return (
         <>
-         <Spin spinning={loading}>email: {email}</Spin>
+          <Spin spinning={loading}>email: {email}</Spin>
           <Button.Group style={{marginTop: 16}}>
             <Button onClick={timer.pause}>pause</Button>
             <Button onClick={timer.stop}>stop</Button>
@@ -97,7 +97,7 @@ const { // 返回数据同 useAsync
   error?: Error;
   data?: T;
   cancel: () => void;
-  run: () => void;
+  run: () => Promise<T>;
   timer: {
     stop: () => void;
     resume: () => void;
@@ -105,10 +105,13 @@ const { // 返回数据同 useAsync
   };
 } = useAPI(params)
 
-params:(
+params: {
   url: string;
-  options: RequestInit;
-  manual: boolean;
-  pollingInterval: number;
-)
+  options?: RequestInit;
+  manual?: boolean;
+  pollingInterval?: number;
+  onSuccess?: (d: T) => void;
+  onError?: (e: Error) => void;
+  fetch?: (url: string, options?: RequestInit) => Promise<T>;
+}
 ```
