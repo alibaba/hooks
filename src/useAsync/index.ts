@@ -1,15 +1,15 @@
 import { DependencyList, useCallback, useState, useRef, useEffect } from 'react';
 
 class Timer<T> {
-  private remaining: number = 0;
+  private remaining = 0;
 
-  private delay: number = 0;
+  private delay = 0;
 
   private cb: ((...args: any[]) => Promise<T | undefined>) | null = null;
 
-  private start: number = 0;
+  private start = 0;
 
-  private timerId: number = 0;
+  private timerId = 0;
 
   constructor(cb: () => Promise<T | undefined>, delay: number) {
     this.remaining = delay;
@@ -125,7 +125,7 @@ export default function useAsync<Result = any>(
           }
           set(s => ({ ...s, error, loading: false }));
         }
-        return error;
+        throw error;
       });
   }, deps);
 
