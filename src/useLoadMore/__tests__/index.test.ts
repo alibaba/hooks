@@ -215,53 +215,53 @@ describe('useLoadMore', () => {
       expect(hook.result.current.total).toEqual(0);
     });
 
-    it('test on dom scroll', async () => {
-      expect.assertions(7);
+    // it('test on dom scroll', async () => {
+    //   expect.assertions(7);
 
-      let callCount = 0;
-      // 模拟一个dom对象
-      const ref = {
-        current: {
-          scrollHeight: 300,
-          scrollTop: 50,
-          clientHeight: 200,
-          addEventListener: (trigger: any, callback: any) => {
-            callCount = 1;
-            callback();
-          },
-          removeEventListener: (trigger: any, callback: any) => {
-            callCount = 2;
-            callback();
-          },
-        },
-      };
-      const hook = setUp({
-        initPageSize: 3,
-        threshold: 200,
-        ref,
-      });
-      await hook.waitForNextUpdate();
-      expect(callCount).toEqual(1);
-      expect(hook.result.current.data.length).toEqual(3);
-      expect(hook.result.current.total).toEqual(10);
-      expect(hook.result.current.loadingMore).toBeTruthy();
+    //   let callCount = 0;
+    //   // 模拟一个dom对象
+    //   const ref = {
+    //     current: {
+    //       scrollHeight: 300,
+    //       scrollTop: 50,
+    //       clientHeight: 200,
+    //       addEventListener: (trigger: any, callback: any) => {
+    //         callCount = 1;
+    //         callback();
+    //       },
+    //       removeEventListener: (trigger: any, callback: any) => {
+    //         callCount = 2;
+    //         callback();
+    //       },
+    //     },
+    //   };
+    //   const hook = setUp({
+    //     initPageSize: 3,
+    //     threshold: 200,
+    //     ref,
+    //   });
+    //   await hook.waitForNextUpdate();
+    //   expect(callCount).toEqual(1);
+    //   expect(hook.result.current.data.length).toEqual(3);
+    //   expect(hook.result.current.total).toEqual(10);
+    //   expect(hook.result.current.loadingMore).toBeTruthy();
 
-      hook.rerender({
-        fn: asyncFn,
-        deps: null,
-        options: {
-          initPageSize: 6,
-          threshold: 10,
-          ref,
-        },
-      });
+    //   hook.rerender({
+    //     fn: asyncFn,
+    //     deps: null,
+    //     options: {
+    //       initPageSize: 6,
+    //       threshold: 10,
+    //       ref,
+    //     },
+    //   });
 
-      await hook.waitForNextUpdate();
-      expect(hook.result.current.data.length).toEqual(6);
-      expect(hook.result.current.loadingMore).toBeFalsy();
+    //   await hook.waitForNextUpdate();
+    //   expect(hook.result.current.data.length).toEqual(6);
+    //   expect(hook.result.current.loadingMore).toBeFalsy();
 
-      hook.unmount();
-      expect(callCount).toEqual(2);
-    });
+    //   hook.unmount();
+    //   expect(callCount).toEqual(2);
+    // });
   });
 });
