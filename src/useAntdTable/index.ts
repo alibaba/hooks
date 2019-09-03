@@ -173,23 +173,23 @@ export default function useAntdTable<Result, Item>(
 
   /* state.count 变化时，重新请求数据 */
   useUpdateEffect(() => {
-    const washedFormData: FormData = {};
+    const formattedData: FormData = {};
     /* 把  undefined 的过滤掉 */
     Object.keys(state.activeFormData).forEach(key => {
       if (state.activeFormData[key] !== undefined) {
-        washedFormData[key] = state.activeFormData[key];
+        formattedData[key] = state.activeFormData[key];
       }
     });
 
     run({
       current: state.current,
       pageSize: state.pageSize,
-      ...washedFormData,
+      ...formattedData,
     }).then(res => {
-      const formatData = formatResult ? formatResult(res) : res;
+      const payload = formatResult ? formatResult(res) : res;
       dispatch({
         type: 'updateState',
-        payload: { ...formatData },
+        payload,
       });
     });
   }, [state.current, state.pageSize, state.count]);
@@ -210,15 +210,15 @@ export default function useAntdTable<Result, Item>(
   }, [state.searchType, state.formData]);
 
   /* 获得当前 form 数据 */
-  const getCurrentFiledlsValues = useCallback(() => {
+  const getCurrentFieldsValues = useCallback(() => {
     if (!form) {
       return [];
     }
-    const filedlsValue = form.getFieldsValue();
+    const fieldsValue = form.getFieldsValue();
     const filterFiledsValue: FormData = {};
-    Object.keys(filedlsValue).forEach((key: string) => {
+    Object.keys(fieldsValue).forEach((key: string) => {
       if (form.getFieldInstance && form.getFieldInstance(key)) {
-        filterFiledsValue[key] = filedlsValue[key];
+        filterFiledsValue[key] = fieldsValue[key];
       }
     });
     return filterFiledsValue;
@@ -234,12 +234,12 @@ export default function useAntdTable<Result, Item>(
         (e as React.MouseEvent<HTMLElement>).preventDefault();
       }
 
-      const filedlsValue = getCurrentFiledlsValues();
+      const activeFormData = getCurrentFieldsValues();
       dispatch({
         type: 'updateState',
         payload: {
-          activeFormData: filedlsValue,
-          formData: { ...state.formData, ...filedlsValue },
+          activeFormData,
+          formData: { ...state.formData, ...activeFormData },
         },
       });
       reload();
@@ -255,13 +255,13 @@ export default function useAntdTable<Result, Item>(
     // 恢复初始值
     form.resetFields();
     // 重置表单后，拿到当前默认值
-    const filedlsValue = getCurrentFiledlsValues();
+    const activeFormData = getCurrentFieldsValues();
 
     dispatch({
       type: 'updateState',
       payload: {
-        activeFormData: filedlsValue,
-        formData: { ...filedlsValue },
+        activeFormData,
+        formData: activeFormData,
       },
     });
 
