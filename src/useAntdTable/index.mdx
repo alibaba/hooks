@@ -8,6 +8,7 @@ sidebar: true
 import { Playground } from 'docz';
 import { Button, Col, Form, Input, Row, Select, Table } from 'antd';
 import { useState } from 'react';
+import CacheDemo from './CacheDemo';
 import Demo from './Demo';
 import useAntdTable from './';
 
@@ -98,13 +99,21 @@ import useAntdTable from './';
 }
 </Playground>
 
-### 搜索表单与列表联动，数据缓存
+### 搜索表单与列表联动
 
 <Playground>
   <>
     <Demo />
-    ---
-    代码见：https://github.com/umijs/hooks/blob/master/src/useAntdTable/Demo.js
+    代码见：<a target='_blank' href='https://github.com/umijs/hooks/blob/master/src/useAntdTable/Demo.js'>https://github.com/umijs/hooks/blob/master/src/useAntdTable/Demo.js</a>
+  </>
+</Playground>
+
+### 数据缓存
+
+<Playground>
+  <>
+    <CacheDemo />
+    代码见：<a target='_blank' href='https://github.com/umijs/hooks/blob/master/src/useAntdTable/CacheDemo.js'>https://github.com/umijs/hooks/blob/master/src/useAntdTable/CacheDemo.js</a>
   </>
 </Playground>
 

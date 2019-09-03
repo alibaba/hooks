@@ -111,6 +111,10 @@ export default function useAntdTable<Result, Item>(
 ): ReturnValue<Item> {
   const { defaultPageSize = 10, id, form, formatResult } = options;
   const [state, dispatch] = useReducer(reducer, { ...initState, pageSize: defaultPageSize });
+
+  /* 临时记录切换前的表单数据 */
+  const tempFieldsValueRef = useRef<FormData>({});
+
   const stateRef = useRef<UseTableInitState>(({} as unknown) as UseTableInitState);
   stateRef.current = state;
   const { run, loading } = useAsync(fn, [], {
@@ -180,7 +184,6 @@ export default function useAntdTable<Result, Item>(
         formattedData[key] = state.activeFormData[key];
       }
     });
-
     run({
       current: state.current,
       pageSize: state.pageSize,
@@ -199,14 +202,15 @@ export default function useAntdTable<Result, Item>(
     if (!form) {
       return;
     }
-
+    const targetFormData = { ...state.formData, ...tempFieldsValueRef.current };
     const existFormData: FormData = {};
-    Object.keys(state.formData).forEach((key: string) => {
+    Object.keys(targetFormData).forEach((key: string) => {
       if (form.getFieldInstance && form.getFieldInstance(key)) {
-        existFormData[key] = state.formData[key];
+        existFormData[key] = targetFormData[key];
       }
     });
     form.setFieldsValue(existFormData);
+    tempFieldsValueRef.current = {};
   }, [state.searchType, state.formData]);
 
   /* 获得当前 form 数据 */
@@ -234,17 +238,19 @@ export default function useAntdTable<Result, Item>(
         (e as React.MouseEvent<HTMLElement>).preventDefault();
       }
 
-      const activeFormData = getCurrentFieldsValues();
-      dispatch({
-        type: 'updateState',
-        payload: {
-          activeFormData,
-          formData: { ...state.formData, ...activeFormData },
-        },
+      setTimeout(() => {
+        const activeFormData = getCurrentFieldsValues();
+        dispatch({
+          type: 'updateState',
+          payload: {
+            activeFormData,
+            formData: { ...state.formData, ...activeFormData },
+          },
+        });
+        reload();
       });
-      reload();
     },
-    [form],
+    [form, reload],
   );
 
   // 重置表单
@@ -266,13 +272,14 @@ export default function useAntdTable<Result, Item>(
     });
 
     reload();
-  }, [form]);
+  }, [form, reload]);
 
   // 切换搜索类型
   const changeSearchType = useCallback(() => {
     if (!form) {
       return;
     }
+    tempFieldsValueRef.current = getCurrentFieldsValues();
     const targetSearchType = state.searchType === 'simple' ? 'advance' : 'simple';
     dispatch({
       type: 'updateState',
