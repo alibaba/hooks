@@ -126,7 +126,8 @@ const {
   search?: {
     type: 'simple' | 'advance',
     changeType: () => void,
-    submit: () => void
+    submit: () => void,
+    reset: () => void,
   }
 } = useAntdTable(params);
 
@@ -165,6 +166,7 @@ params:(
 | search.type               | 搜索类型                        | 'simple' \| 'advance'        |'simple' |
 | search.changeType         | 触发搜索类型切换                | () => void                    | -                  |
 | search.submit             | 触发搜索                        | () => void                    | -                  |
+| search.reset              | 重置搜索                        | () => void                    | -                  |
 
 
 

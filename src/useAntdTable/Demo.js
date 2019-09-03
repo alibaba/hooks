@@ -15,10 +15,9 @@ const getTableData = ({ current, pageSize, ...rest }) => {
 
 const AppList = props => {
   const { getFieldDecorator } = props.form;
-
   const {
     table,
-    search: { type, changeType, submit },
+    search: { type, changeType, submit, reset },
   } = useAntdTable(getTableData, [], {
     defaultPageSize: 5,
     form: props.form,
@@ -60,12 +59,12 @@ const AppList = props => {
         <Row gutter={24}>
           <Col span={8}>
             <Form.Item label="name">
-              {getFieldDecorator('name', {})(<Input placeholder="name" />)}
+              {getFieldDecorator('name')(<Input placeholder="name" />)}
             </Form.Item>
           </Col>
           <Col span={8}>
             <Form.Item label="email">
-              {getFieldDecorator('email', {})(<Input placeholder="email" />)}
+              {getFieldDecorator('email')(<Input placeholder="email" />)}
             </Form.Item>
           </Col>
           <Col span={8}>
@@ -79,7 +78,7 @@ const AppList = props => {
             <Button type="primary" onClick={submit}>
               搜索
             </Button>
-            <Button onClick={() => props.form.resetFields()} style={{ marginLeft: 16 }}>
+            <Button onClick={reset} style={{ marginLeft: 16 }}>
               清空
             </Button>
             <Button type="link" onClick={changeType}>
@@ -94,7 +93,10 @@ const AppList = props => {
   const searchFrom = (
     <div style={{ marginBottom: 16 }}>
       <Form style={{ display: 'flex', justifyContent: 'flex-end' }}>
-        {getFieldDecorator('name', {})(
+        {getFieldDecorator('name', {
+          initialValue: 'miss',
+        })(<Input placeholder="enter name" style={{ width: 240, marginRight: 16 }} />)}
+        {getFieldDecorator('test')(
           <Input placeholder="enter name" style={{ width: 240, marginRight: 16 }} />,
         )}
         <Button type="primary" onClick={submit}>
@@ -112,6 +114,7 @@ const AppList = props => {
       {type === 'simple' ? searchFrom : advanceSearchForm}
       <Table
         columns={columns}
+        rowKey="email"
         {...table}
         pagination={{
           showSizeChanger: true,

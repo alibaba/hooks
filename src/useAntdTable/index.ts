@@ -1,17 +1,17 @@
 import { WrappedFormUtils } from 'antd/lib/form/Form';
 import { PaginationConfig } from 'antd/lib/pagination';
-import { DependencyList, useEffect, useReducer, useRef } from 'react';
+import { DependencyList, useEffect, useReducer, useRef, useCallback } from 'react';
 import { useUpdateEffect } from 'react-use';
 import useAsync from '../useAsync';
 
-interface UseTableFormUtils extends WrappedFormUtils {
+interface UseAntdTableFormUtils extends WrappedFormUtils {
   getFieldInstance?: (name: string) => {};
 }
 
-export interface ReturnValue<T> {
+export interface ReturnValue<Item> {
   /* table 已经废弃 */
   table?: {
-    dataSource: T;
+    dataSource: Item[];
     loading: boolean;
     onChange: (e: PaginationConfig) => void;
     pagination: {
@@ -21,7 +21,7 @@ export interface ReturnValue<T> {
     };
   };
   tableProps: {
-    dataSource: T;
+    dataSource: Item[];
     loading: boolean;
     onChange: (e: PaginationConfig) => void;
     pagination: {
@@ -35,20 +35,21 @@ export interface ReturnValue<T> {
     type: 'simple' | 'advance';
     changeType: () => void;
     submit: () => void;
+    reset: () => void;
   };
 }
 
-export interface Options<T> {
+export interface Options<Result, Item> {
   defaultPageSize?: number;
   id?: string;
-  form?: UseTableFormUtils;
+  form?: UseAntdTableFormUtils;
   formatResult?: (
-    result: T,
+    result: Result,
   ) => {
     current?: number;
     pageSize?: number;
     total: number;
-    data: any[];
+    data: Item[];
   };
 }
 
@@ -58,9 +59,10 @@ export interface FnParams {
   [key: string]: any;
 }
 
-interface IHistoryData {
-  [key: string]: unknown;
+interface FormData {
+  [key: string]: any;
 }
+
 class UseTableInitState {
   // 搜索类型，简单、高级
   searchType: 'simple' | 'advance' = 'simple';
@@ -74,14 +76,17 @@ class UseTableInitState {
   // 总页数
   total = 0;
 
-  // 表单数据
-  formData: { simple: IHistoryData; advance: IHistoryData } = { simple: {}, advance: {} };
+  // 全量表单数据
+  formData: FormData = {};
+
+  // active 表单数据
+  activeFormData: FormData = {};
 
   // 计数器
   count = 0;
 
-  // 服务端返回的数据
-  data: unknown = null;
+  // 列表数据
+  data: any[] = [];
 }
 
 // 初始值
@@ -94,28 +99,25 @@ const reducer = (state = initState, action: { type: string; payload?: {} }) => {
   switch (action.type) {
     case 'updateState':
       return { ...state, ...action.payload };
-    case 'updateFormData':
-      return { ...state, formData: { ...state.formData, ...action.payload } };
     default:
       throw new Error();
   }
 };
 
-export default function useAntdTable<T>(
+export default function useAntdTable<Result, Item>(
   fn: (params: FnParams) => Promise<any>,
   deps: DependencyList = [],
-  options: Options<T> = {},
-): ReturnValue<T> {
+  options: Options<Result, Item> = {},
+): ReturnValue<Item> {
   const { defaultPageSize = 10, id, form, formatResult } = options;
   const [state, dispatch] = useReducer(reducer, { ...initState, pageSize: defaultPageSize });
   const stateRef = useRef<UseTableInitState>(({} as unknown) as UseTableInitState);
   stateRef.current = state;
-
   const { run, loading } = useAsync(fn, [], {
     manual: true,
   });
 
-  const reload = () => {
+  const reload = useCallback(() => {
     dispatch({
       type: 'updateState',
       payload: {
@@ -123,48 +125,44 @@ export default function useAntdTable<T>(
         count: state.count + 1,
       },
     });
-  };
+  }, [state.count]);
 
-  useEffect(() => {
-    /* 有缓存，恢复 */
-    if (id) {
-      if (cacheData[id]) {
-        const cache = cacheData[id];
-        dispatch({
-          type: 'updateState',
-          payload: {
-            // 改变 current、pageSize 会重新加载数据
-            current: cache.current,
-            pageSize: cache.pageSize,
-            searchType: cache.searchType,
-            formData: cache.formData,
-            // 恢复 cache 后 强制刷新
-            count: state.count + 1,
-          },
-        });
-        /* 如果有 form ,还原 form 数据 */
-        if (form) {
-          const cacheFormData = cache.formData[cache.searchType];
-          form.setFieldsValue(cacheFormData);
-        }
-      } else {
-        dispatch({
-          type: 'updateState',
-          payload: { count: state.count + 1 },
-        });
-      }
-
-      /* 如果有 id，在销毁时缓存数据 */
-      return () => {
-        cacheData[id] = stateRef.current;
-      };
-    }
-
-    /* 没有缓存，请求数据 */
+  const refresh = useCallback(() => {
     dispatch({
       type: 'updateState',
       payload: { count: state.count + 1 },
     });
+  }, [state.count]);
+
+  /* 初始化执行 */
+  useEffect(() => {
+    /* 有缓存，恢复 */
+    if (id && cacheData[id]) {
+      const cache = cacheData[id];
+      /* 修改完 formData 和 searchType 之后，会触发 useUpdateEffect，给当前表单赋值 */
+      dispatch({
+        type: 'updateState',
+        payload: {
+          current: cache.current,
+          pageSize: cache.pageSize,
+          searchType: cache.searchType,
+          activeFormData: cache.activeFormData,
+          formData: cache.formData,
+          count: state.count + 1,
+        },
+      });
+    } else if (form) {
+      /* 如果有 form，需要走 searchSubmit，为了初始化的时候，拿到 initialValue */
+      searchSubmit();
+    } else {
+      refresh();
+    }
+
+    if (id) {
+      return () => {
+        cacheData[id] = stateRef.current;
+      };
+    }
     return () => {};
   }, []);
 
@@ -173,19 +171,22 @@ export default function useAntdTable<T>(
     reload();
   }, deps);
 
+  /* state.count 变化时，重新请求数据 */
   useUpdateEffect(() => {
-    const queryParams = form ? state.formData[state.searchType] : {};
+    const washedFormData: FormData = {};
+    /* 把  undefined 的过滤掉 */
+    Object.keys(state.activeFormData).forEach(key => {
+      if (state.activeFormData[key] !== undefined) {
+        washedFormData[key] = state.activeFormData[key];
+      }
+    });
 
     run({
       current: state.current,
       pageSize: state.pageSize,
-      ...queryParams,
+      ...washedFormData,
     }).then(res => {
-      let formatData = res;
-      if (formatResult) {
-        formatData = formatResult(res);
-      }
-
+      const formatData = formatResult ? formatResult(res) : res;
       dispatch({
         type: 'updateState',
         payload: { ...formatData },
@@ -193,53 +194,85 @@ export default function useAntdTable<T>(
     });
   }, [state.current, state.pageSize, state.count]);
 
-  // 表格翻页
-  const changeTable = (e: PaginationConfig) => {
-    dispatch({
-      type: 'updateState',
-      payload: {
-        current: e.current,
-        pageSize: e.pageSize,
-      },
-    });
-  };
-
-  // 表单搜索
-  const searchSubmit = (
-    e?: string | React.MouseEvent<HTMLElement> | React.KeyboardEvent<HTMLInputElement>,
-  ) => {
+  /* 改变了 searchType，或者 formData，恢复表单数据 */
+  useUpdateEffect(() => {
     if (!form) {
       return;
     }
 
-    if (e && (e as React.MouseEvent<HTMLElement>).preventDefault) {
-      (e as React.MouseEvent<HTMLElement>).preventDefault();
+    const existFormData: FormData = {};
+    Object.keys(state.formData).forEach((key: string) => {
+      if (form.getFieldInstance && form.getFieldInstance(key)) {
+        existFormData[key] = state.formData[key];
+      }
+    });
+    form.setFieldsValue(existFormData);
+  }, [state.searchType, state.formData]);
+
+  /* 获得当前 form 数据 */
+  const getCurrentFiledlsValues = useCallback(() => {
+    if (!form) {
+      return [];
     }
     const filedlsValue = form.getFieldsValue();
-    const filterFiledsValue: IHistoryData = {};
+    const filterFiledsValue: FormData = {};
     Object.keys(filedlsValue).forEach((key: string) => {
       if (form.getFieldInstance && form.getFieldInstance(key)) {
         filterFiledsValue[key] = filedlsValue[key];
       }
     });
+    return filterFiledsValue;
+  }, [form]);
 
-    // 保存当前表单的用户输入数据
+  // 表单搜索
+  const searchSubmit = useCallback(
+    (e?: string | React.MouseEvent<HTMLElement> | React.KeyboardEvent<HTMLInputElement>) => {
+      if (!form) {
+        return;
+      }
+      if (e && (e as React.MouseEvent<HTMLElement>).preventDefault) {
+        (e as React.MouseEvent<HTMLElement>).preventDefault();
+      }
+
+      const filedlsValue = getCurrentFiledlsValues();
+      dispatch({
+        type: 'updateState',
+        payload: {
+          activeFormData: filedlsValue,
+          formData: { ...state.formData, ...filedlsValue },
+        },
+      });
+      reload();
+    },
+    [form],
+  );
+
+  // 重置表单
+  const searchReset = useCallback(() => {
+    if (!form) {
+      return;
+    }
+    // 恢复初始值
+    form.resetFields();
+    // 重置表单后，拿到当前默认值
+    const filedlsValue = getCurrentFiledlsValues();
+
     dispatch({
-      type: 'updateFormData',
+      type: 'updateState',
       payload: {
-        [state.searchType]: filterFiledsValue,
+        activeFormData: filedlsValue,
+        formData: { ...filedlsValue },
       },
     });
 
     reload();
-  };
+  }, [form]);
 
   // 切换搜索类型
-  const changeSearchType = () => {
+  const changeSearchType = useCallback(() => {
     if (!form) {
       return;
     }
-    form.resetFields();
     const targetSearchType = state.searchType === 'simple' ? 'advance' : 'simple';
     dispatch({
       type: 'updateState',
@@ -247,24 +280,27 @@ export default function useAntdTable<T>(
         searchType: targetSearchType,
       },
     });
-    const currentFormData = state.formData[targetSearchType];
-    form.setFieldsValue(currentFormData);
-    reload();
-  };
+  }, [state.searchType]);
 
-  const refresh = () => {
-    dispatch({
-      type: 'updateState',
-      payload: {
-        count: state.count + 1,
-      },
-    });
-  };
+  // 表格翻页
+  const changeTable = useCallback(
+    (e: PaginationConfig) => {
+      dispatch({
+        type: 'updateState',
+        payload: {
+          current: e.current,
+          pageSize: e.pageSize,
+          count: state.count + 1,
+        },
+      });
+    },
+    [state.count],
+  );
 
-  const result: ReturnValue<T> = {
+  const result: ReturnValue<Item> = {
     /* table 已经废弃 */
     table: {
-      dataSource: state.data as T,
+      dataSource: state.data,
       loading,
       onChange: changeTable,
       pagination: {
@@ -274,7 +310,7 @@ export default function useAntdTable<T>(
       },
     },
     tableProps: {
-      dataSource: state.data as T,
+      dataSource: state.data,
       loading,
       onChange: changeTable,
       pagination: {
@@ -290,6 +326,7 @@ export default function useAntdTable<T>(
       submit: searchSubmit,
       type: state.searchType,
       changeType: changeSearchType,
+      reset: searchReset,
     };
   }
 
