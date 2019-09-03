@@ -18,6 +18,7 @@ const options: IBundleOptions = {
   doc: {
     title: '@umijs/hooks',
     base: '/hooks/',
+    repository: 'https://github.com/umijs/hooks',
   },
   extraBabelPlugins: [[
     'babel-plugin-import',

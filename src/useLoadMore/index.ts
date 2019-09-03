@@ -1,5 +1,6 @@
 import { DependencyList, RefObject, useEffect, useState, useCallback, useRef } from 'react';
 import { useUpdateEffect } from 'react-use';
+import useAsync from '../useAsync';
 
 export interface ReturnValue<Item> {
   loading: boolean;
@@ -50,16 +51,15 @@ export default function useLoadMore<Result = any, Item = any>(
   const [total, setTotal] = useState<number>();
   const [data, setData] = useState<Item[]>([]);
 
-  const [loading, setLoading] = useState<boolean>(false);
-
   /* 控制重新执行 */
   const [count, setCount] = useState<number>(0);
 
-  /* 控制异步请求时序 */
-  const runCount = useRef(0);
-
   /* 开始的时间戳 */
   const startTime = useRef(new Date().getTime());
+
+  const { run, loading } = useAsync<Result>(fn, [], {
+    manual: true,
+  });
 
   /* id 模式下读取 Key */
   const getItemKey = useCallback(
@@ -71,11 +71,7 @@ export default function useLoadMore<Result = any, Item = any>(
     [itemKey],
   );
 
-  const run = useCallback(() => {
-    runCount.current += 1;
-    const currentCount = runCount.current;
-    setLoading(true);
-
+  const loadData = useCallback(() => {
     const params: FnParams = {
       page,
       pageSize: (page === 1 ? initPageSize : incrementSize) as number,
@@ -88,12 +84,10 @@ export default function useLoadMore<Result = any, Item = any>(
       params.id = data.length > 0 ? getItemKey(data[data.length - 1], data.length - 1) : undefined;
     }
 
-    fn(params).then((result: Result) => {
-      if (currentCount !== runCount.current) {
+    run(params).then((result: Result | undefined) => {
+      if (!result) {
         return;
       }
-      setLoading(false);
-      /* 格式化 result */
       const { total: currentTotal, data: currentData } = (formatResult
         ? formatResult(result)
         : result) as any;
@@ -142,10 +136,7 @@ export default function useLoadMore<Result = any, Item = any>(
 
   /* 只有初始化，或者 count 变化时，才会执行 run */
   useEffect(() => {
-    run();
-    return () => {
-      runCount.current += 1;
-    };
+    loadData();
   }, [count]);
 
   /* deps 变化后，重新 reload */

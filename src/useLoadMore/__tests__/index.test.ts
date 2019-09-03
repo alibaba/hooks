@@ -16,7 +16,7 @@ afterAll(() => {
   console.error = originalError;
 });
 
-const data = [
+const dataSrouce = [
   {
     id: 1,
     title: 'Ant Design Title 1',
@@ -63,8 +63,8 @@ const asyncFn = ({ pageSize, offset }: any) =>
   new Promise(resolve => {
     setTimeout(() => {
       resolve({
-        total: data.length,
-        data: data.slice(offset, offset + pageSize),
+        total: dataSrouce.length,
+        data: dataSrouce.slice(offset, offset + pageSize),
       });
     }, 1);
   });
@@ -118,22 +118,17 @@ describe('useLoadMore', () => {
   describe('should method run', () => {
     let hook: any;
     beforeEach(done => {
-      hook = renderHook(
-        ({ fn, deps, options }) => {
-          return useLoadMore(fn, [deps], options);
-        },
-        {
-          initialProps: {
-            fn: asyncFn,
-            deps: null,
-            options: {
-              itemKey: 'id',
-              initPageSize: 3,
-              incrementSize: 4,
-            },
+      hook = renderHook(({ fn, deps, options }) => useLoadMore(fn, [deps], options), {
+        initialProps: {
+          fn: asyncFn,
+          deps: null,
+          options: {
+            itemKey: 'id',
+            initPageSize: 3,
+            incrementSize: 4,
           },
         },
-      );
+      });
 
       hook.waitForNextUpdate().then(done);
     });
@@ -161,9 +156,7 @@ describe('useLoadMore', () => {
         deps: [],
         options: {
           initPageSize: 4,
-          itemKey: (item: any, index: any) => {
-            return undefined;
-          },
+          itemKey: (item: any, index: any) => undefined,
         },
       });
 
@@ -190,94 +183,85 @@ describe('useLoadMore', () => {
   });
 
   describe('the additional dependencies list changes', () => {
-    let setUp = (options: any) =>
-      renderHook(
-        ({ fn, deps, options }) => {
-          return useLoadMore(fn, [deps], options);
+    const setUp = (o: any) =>
+      renderHook(({ fn, deps, options }) => useLoadMore(fn, [deps], options), {
+        initialProps: {
+          fn: asyncFn,
+          deps: null,
+          options: o,
         },
-        {
-          initialProps: {
-            fn: asyncFn,
-            deps: null,
-            options,
-          },
-        },
-      );
+      });
 
     it('test on different options', async () => {
       expect.assertions(2);
 
-      let result = [
+      const result = [
         {
           id: 1222,
           title: 'hahaha',
         },
       ];
-      let hook = setUp({
+      const hook = setUp({
         initPageSize: 6,
         threshold: 200,
-        itemKey: (item: any, index: any) => {
-          return 'id';
-        },
-        formatResult: (res: any) => {
-          return {
-            total: 0,
-            data: result,
-          };
-        },
+        itemKey: (item: any, index: any) => 'id',
+        formatResult: (res: any) => ({
+          total: 0,
+          data: result,
+        }),
       });
       await hook.waitForNextUpdate();
       expect(hook.result.current.data).toEqual(result);
       expect(hook.result.current.total).toEqual(0);
     });
 
-    it('test on dom scroll', async () => {
-      expect.assertions(7);
+    // it('test on dom scroll', async () => {
+    //   expect.assertions(7);
 
-      let callCount = 0;
-      // 模拟一个dom对象
-      const ref = {
-        current: {
-          scrollHeight: 300,
-          scrollTop: 50,
-          clientHeight: 200,
-          addEventListener: (trigger: any, callback: any) => {
-            callCount = 1;
-            callback();
-          },
-          removeEventListener: (trigger: any, callback: any) => {
-            callCount = 2;
-            callback();
-          },
-        },
-      };
-      let hook = setUp({
-        initPageSize: 3,
-        threshold: 200,
-        ref,
-      });
-      await hook.waitForNextUpdate();
-      expect(callCount).toEqual(1);
-      expect(hook.result.current.data.length).toEqual(3);
-      expect(hook.result.current.total).toEqual(10);
-      expect(hook.result.current.loadingMore).toBeTruthy();
+    //   let callCount = 0;
+    //   // 模拟一个dom对象
+    //   const ref = {
+    //     current: {
+    //       scrollHeight: 300,
+    //       scrollTop: 50,
+    //       clientHeight: 200,
+    //       addEventListener: (trigger: any, callback: any) => {
+    //         callCount = 1;
+    //         callback();
+    //       },
+    //       removeEventListener: (trigger: any, callback: any) => {
+    //         callCount = 2;
+    //         callback();
+    //       },
+    //     },
+    //   };
+    //   const hook = setUp({
+    //     initPageSize: 3,
+    //     threshold: 200,
+    //     ref,
+    //   });
+    //   await hook.waitForNextUpdate();
+    //   expect(callCount).toEqual(1);
+    //   expect(hook.result.current.data.length).toEqual(3);
+    //   expect(hook.result.current.total).toEqual(10);
+    //   expect(hook.result.current.loadingMore).toBeTruthy();
 
-      hook.rerender({
-        fn: asyncFn,
-        deps: null,
-        options: {
-          initPageSize: 6,
-          threshold: 10,
-          ref,
-        },
-      });
+    //   hook.rerender({
+    //     fn: asyncFn,
+    //     deps: null,
+    //     options: {
+    //       initPageSize: 6,
+    //       threshold: 10,
+    //       ref,
+    //     },
+    //   });
 
-      await hook.waitForNextUpdate();
-      expect(hook.result.current.data.length).toEqual(6);
-      expect(hook.result.current.loadingMore).toBeFalsy();
+    //   await hook.waitForNextUpdate();
+    //   expect(hook.result.current.data.length).toEqual(6);
+    //   expect(hook.result.current.loadingMore).toBeFalsy();
 
-      hook.unmount();
-      expect(callCount).toEqual(2);
-    });
+    //   hook.unmount();
+    //   expect(callCount).toEqual(2);
+    // });
   });
 });
