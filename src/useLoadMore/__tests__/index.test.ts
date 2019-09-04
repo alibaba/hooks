@@ -62,10 +62,14 @@ const dataSrouce = [
 const asyncFn = ({ pageSize, offset }: any) =>
   new Promise(resolve => {
     setTimeout(() => {
-      resolve({
-        total: dataSrouce.length,
-        data: dataSrouce.slice(offset, offset + pageSize),
-      });
+      const data =
+        pageSize === -1
+          ? null
+          : {
+              total: dataSrouce.length,
+              data: dataSrouce.slice(offset, offset + pageSize),
+            };
+      resolve(data);
     }, 1);
   });
 
@@ -183,85 +187,124 @@ describe('useLoadMore', () => {
   });
 
   describe('the additional dependencies list changes', () => {
-    const setUp = (o: any) =>
-      renderHook(({ fn, deps, options }) => useLoadMore(fn, [deps], options), {
+    const result = [
+      {
+        id: 1222,
+        title: 'hahaha',
+      },
+    ];
+
+    let callCount = 0;
+    // 模拟一个dom对象
+    const ref = {
+      current: {
+        scrollHeight: 800,
+        scrollTop: 0,
+        clientHeight: 200,
+        addEventListener(trigger: any, callback: any) {
+          callCount = 1;
+          callback();
+        },
+        removeEventListener(trigger: any, callback: any) {
+          callCount = 2;
+          callback();
+        },
+      },
+    };
+
+    let hook: any;
+    beforeEach(done => {
+      callCount = 0;
+      hook = renderHook(({ fn, deps, options }) => useLoadMore(fn, [deps], options), {
         initialProps: {
           fn: asyncFn,
           deps: null,
-          options: o,
+          options: {
+            initPageSize: 3,
+            incrementSize: 4,
+            threshold: 100,
+          },
         },
       });
-
-    it('test on different options', async () => {
-      expect.assertions(2);
-
-      const result = [
-        {
-          id: 1222,
-          title: 'hahaha',
-        },
-      ];
-      const hook = setUp({
-        initPageSize: 6,
-        threshold: 200,
-        itemKey: (item: any, index: any) => 'id',
-        formatResult: (res: any) => ({
-          total: 0,
-          data: result,
-        }),
-      });
-      await hook.waitForNextUpdate();
-      expect(hook.result.current.data).toEqual(result);
-      expect(hook.result.current.total).toEqual(0);
+      hook.waitForNextUpdate().then(done);
     });
 
-    // it('test on dom scroll', async () => {
-    //   expect.assertions(7);
+    it('test on different options', async () => {
+      // expect.assertions(2);
 
-    //   let callCount = 0;
-    //   // 模拟一个dom对象
-    //   const ref = {
-    //     current: {
-    //       scrollHeight: 300,
-    //       scrollTop: 50,
-    //       clientHeight: 200,
-    //       addEventListener: (trigger: any, callback: any) => {
-    //         callCount = 1;
-    //         callback();
-    //       },
-    //       removeEventListener: (trigger: any, callback: any) => {
-    //         callCount = 2;
-    //         callback();
-    //       },
-    //     },
-    //   };
-    //   const hook = setUp({
-    //     initPageSize: 3,
-    //     threshold: 200,
-    //     ref,
-    //   });
-    //   await hook.waitForNextUpdate();
-    //   expect(callCount).toEqual(1);
-    //   expect(hook.result.current.data.length).toEqual(3);
-    //   expect(hook.result.current.total).toEqual(10);
-    //   expect(hook.result.current.loadingMore).toBeTruthy();
+      hook.rerender({
+        fn: asyncFn,
+        deps: [],
+        options: {
+          initPageSize: 6,
+          threshold: 200,
+          itemKey: (item: any, index: any) => 'id',
+          formatResult: (res: any) => ({
+            total: 0,
+            data: result,
+          }),
+        },
+      });
+      await hook.waitForNextUpdate();
 
-    //   hook.rerender({
-    //     fn: asyncFn,
-    //     deps: null,
-    //     options: {
-    //       initPageSize: 6,
-    //       threshold: 10,
-    //       ref,
-    //     },
-    //   });
+      expect(hook.result.current.data).toEqual(result);
+      expect(hook.result.current.total).toEqual(0);
 
-    //   await hook.waitForNextUpdate();
-    //   expect(hook.result.current.data.length).toEqual(6);
-    //   expect(hook.result.current.loadingMore).toBeFalsy();
+      // 测试边界溢出
+      hook.rerender({
+        fn: asyncFn,
+        deps: [],
+        options: {
+          initPageSize: -1,
+          incrementSize: -1,
+          threshold: 200,
+          itemKey: (item: any, index: any) => 'id',
+          formatResult: (res: any) => ({
+            total: 0,
+            data: result,
+          }),
+        },
+      });
+      await hook.waitForNextUpdate();
+      expect(hook.result.current.data.length).toEqual(0);
+    });
 
-    //   hook.unmount();
-    //   expect(callCount).toEqual(2);
-    // });
+    it('test on dom scroll', async () => {
+      expect(hook.result.current.data.length).toEqual(3);
+      expect(hook.result.current.noMore).toBeFalsy();
+
+      ref.current.scrollTop = 100;
+
+      hook.rerender({
+        fn: asyncFn,
+        deps: [],
+        options: {
+          initPageSize: 6,
+          threshold: 100,
+          ref,
+        },
+      });
+      await hook.waitForNextUpdate();
+      expect(hook.result.current.data.length).toEqual(6);
+      expect(hook.result.current.noMore).toBeFalsy();
+
+      ref.current.scrollTop = 600;
+
+      hook.rerender({
+        fn: asyncFn,
+        deps: [],
+        options: {
+          initPageSize: 10,
+          threshold: 100,
+          ref,
+        },
+      });
+      await hook.waitForNextUpdate();
+      expect(hook.result.current.data.length).toEqual(10);
+      expect(hook.result.current.noMore).toBeTruthy();
+
+      hook.unmount();
+      expect(callCount).toEqual(2);
+    });
   });
 });
