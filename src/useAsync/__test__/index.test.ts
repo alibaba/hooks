@@ -2,7 +2,7 @@ import { renderHook, act, RenderHookResult } from '@testing-library/react-hooks'
 import { DependencyList } from 'react';
 import useAsync, { ReturnValue, Options } from '../index';
 
-describe('useAPI', () => {
+describe('useAsync', () => {
   const originalError = console.error;
   beforeAll(() => {
     jest.useFakeTimers();
