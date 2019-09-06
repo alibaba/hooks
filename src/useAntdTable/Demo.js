@@ -18,7 +18,7 @@ const getTableData = ({ current, pageSize, ...rest }) => {
 const AppList = props => {
   const { getFieldDecorator } = props.form;
   const {
-    table,
+    tableProps,
     search: { type, changeType, submit, reset },
   } = useAntdTable(getTableData, [], {
     defaultPageSize: 5,
@@ -120,11 +120,11 @@ const AppList = props => {
       <Table
         columns={columns}
         rowKey="email"
-        {...table}
+        {...tableProps}
         pagination={{
           showSizeChanger: true,
           showQuickJumper: true,
-          ...table.pagination,
+          ...tableProps.pagination,
         }}
       />
     </div>
