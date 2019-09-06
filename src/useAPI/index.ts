@@ -12,7 +12,7 @@ interface IProps<T> {
 
 let globalMethod: (url: string, options?: RequestInit) => Promise<any>;
 
-export const setFetch = (method: () => any) => {
+export const configRequest = (method: () => any) => {
   globalMethod = method;
 };
 
