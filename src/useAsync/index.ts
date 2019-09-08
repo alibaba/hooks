@@ -125,7 +125,7 @@ export default function useAsync<Result = any>(
           }
           set(s => ({ ...s, error, loading: false }));
         }
-        throw error;
+        return error;
       });
   }, deps);
 
