@@ -11,7 +11,6 @@ interface Query {
 describe('useAntdTable', () => {
   const originalError = console.error;
   beforeAll(() => {
-    jest.useFakeTimers();
     console.error = (...args: any) => {
       if (/Warning.*not wrapped in act/.test(args[0])) {
         return;
@@ -22,7 +21,7 @@ describe('useAntdTable', () => {
   afterAll(() => {
     console.error = originalError;
   });
-
+  // jest.useFakeTimers();
   let queryArgs: any;
   const asyncFn = (query: Query) => {
     queryArgs = query;
@@ -108,10 +107,9 @@ describe('useAntdTable', () => {
         options: { form, defaultPageSize: 5, id: 'tableId' },
       });
     });
-    jest.runAllTimers();
+    await hook.waitForNextUpdate();
     const { search } = hook.result.current;
-
-    expect(hook.result.current.tableProps.loading).toEqual(true);
+    expect(hook.result.current.tableProps.loading).toEqual(false);
     expect(queryArgs.current).toEqual(1);
     expect(queryArgs.pageSize).toEqual(5);
     expect(queryArgs.name).toEqual('default name');
@@ -120,13 +118,14 @@ describe('useAntdTable', () => {
       expect(search.type).toEqual('simple');
     }
 
-    /* 切换 分页 */
+    // /* 切换 分页 */
     act(() => {
       hook.result.current.tableProps.onChange({
         current: 2,
         pageSize: 5,
       });
     });
+    await hook.waitForNextUpdate();
     expect(queryArgs.current).toEqual(2);
     expect(queryArgs.pageSize).toEqual(5);
     expect(queryArgs.name).toEqual('default name');
@@ -138,19 +137,18 @@ describe('useAntdTable', () => {
         search.submit();
       }
     });
-    jest.runAllTimers();
+    await hook.waitForNextUpdate();
     expect(queryArgs.current).toEqual(1);
     expect(queryArgs.pageSize).toEqual(5);
     expect(queryArgs.name).toEqual('change name');
 
-    /* 切换 searchType 到 advance */
+    // /* 切换 searchType 到 advance */
     act(() => {
       if (search) {
         search.changeType();
+        changeSearchType('advance');
       }
     });
-
-    changeSearchType('advance');
     if (hook.result.current.search) {
       expect(hook.result.current.search.type).toEqual('advance');
     }
@@ -159,11 +157,12 @@ describe('useAntdTable', () => {
         hook.result.current.search.submit();
       }
     });
-    jest.runAllTimers();
+    await hook.waitForNextUpdate();
+
     expect(queryArgs.current).toEqual(1);
     expect(queryArgs.name).toEqual('change name');
 
-    /* 手动改变其他两个字段的值 */
+    // /* 手动改变其他两个字段的值 */
     form.fieldsValue.phone = '13344556677';
     form.fieldsValue.email = 'x@qq.com';
 
@@ -172,39 +171,39 @@ describe('useAntdTable', () => {
         hook.result.current.search.submit();
       }
     });
-    jest.runAllTimers();
+    await hook.waitForNextUpdate();
     expect(queryArgs.current).toEqual(1);
     expect(queryArgs.name).toEqual('change name');
     expect(queryArgs.phone).toEqual('13344556677');
     expect(queryArgs.email).toEqual('x@qq.com');
 
-    /* 改变 name，但是不提交，切换到 simple 去 */
+    // /* 改变 name，但是不提交，切换到 simple 去 */
     form.fieldsValue.name = 'change name 2';
     act(() => {
       if (hook.result.current.search) {
         hook.result.current.search.changeType();
+        changeSearchType('simple');
       }
     });
 
-    changeSearchType('simple');
     if (hook.result.current.search) {
       expect(hook.result.current.search.type).toEqual('simple');
     }
     expect(form.fieldsValue.name).toEqual('change name 2');
 
-    /* 提交 */
+    // /* 提交 */
     act(() => {
       if (hook.result.current.search) {
         hook.result.current.search.submit();
       }
     });
-    jest.runAllTimers();
+    await hook.waitForNextUpdate();
 
     expect(queryArgs.name).toEqual('change name 2');
     expect(queryArgs.phone).toBeUndefined();
     expect(queryArgs.email).toBeUndefined();
 
-    /* 切换回 advance，恢复之前的条件 */
+    // /* 切换回 advance，恢复之前的条件 */
     act(() => {
       if (hook.result.current.search) {
         hook.result.current.search.changeType();
@@ -225,15 +224,16 @@ describe('useAntdTable', () => {
         pageSize: 5,
       });
     });
-
-    /* 卸载重装 */
+    await hook.waitForNextUpdate();
+    // /* 卸载重装 */
     form.fieldsValue = {
       name: '',
       phone: '',
       email: '',
     };
-    hook.unmount();
-
+    act(() => {
+      hook.unmount();
+    });
     act(() => {
       hook = setUp({
         asyncFn,
@@ -255,13 +255,14 @@ describe('useAntdTable', () => {
       hook.result.current.refresh();
     });
     expect(hook.result.current.tableProps.loading).toEqual(true);
-
+    await hook.waitForNextUpdate();
     /* reset */
     act(() => {
       if (hook.result.current.search) {
         hook.result.current.search.reset();
       }
     });
+
     expect(form.fieldsValue.name).toEqual('default name');
     expect(form.fieldsValue.phone).toBeUndefined();
     expect(form.fieldsValue.email).toBeUndefined();
