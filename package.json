@@ -12,6 +12,9 @@
     "name": "brickspert",
     "email": "brickspert.fjl@alipay.com"
   },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.com/"
+  },
   "repository": "https://github.com/umijs/hooks",
   "homepage": "https://github.com/umijs/hooks",
   "scripts": {
@@ -25,8 +28,7 @@
     "pub:doc": "father doc build && father doc deploy"
   },
   "dependencies": {
-    "react-use": "^10.6.2",
-    "regenerator-runtime": "^0.13.3"
+    "react-use": "^10.6.2"
   },
   "peerDependencies": {
     "antd": "^3.20.1",
