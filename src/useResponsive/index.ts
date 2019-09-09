@@ -11,6 +11,8 @@ interface ResponsiveInfo {
   [key: string]: boolean;
 }
 
+let info: ResponsiveInfo;
+
 let responsiveConfig: ResponsiveConfig = {
   xs: 0,
   sm: 576,
@@ -19,12 +21,19 @@ let responsiveConfig: ResponsiveConfig = {
   xl: 1200,
 };
 
-export function configResponsive(config: ResponsiveConfig) {
-  responsiveConfig = config;
+function init() {
+  if (info) return;
+  info = {};
   calculate();
+  window.addEventListener('resize', () => {
+    const oldInfo = info;
+    calculate();
+    if (oldInfo === info) return;
+    for (const subscriber of subscribers) {
+      subscriber();
+    }
+  });
 }
-
-let info: ResponsiveInfo = {};
 
 function calculate() {
   const width = window.innerWidth;
@@ -40,18 +49,14 @@ function calculate() {
     info = newInfo;
   }
 }
-calculate();
 
-window.addEventListener('resize', () => {
-  const oldInfo = info;
-  calculate();
-  if (oldInfo === info) return;
-  for (const subscriber of subscribers) {
-    subscriber();
-  }
-});
+export function configResponsive(config: ResponsiveConfig) {
+  responsiveConfig = config;
+  if (info) calculate();
+}
 
 export function useResponsive() {
+  init();
   const [state, setState] = useState<ResponsiveInfo>(info);
 
   useEffect(() => {
