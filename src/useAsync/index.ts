@@ -9,7 +9,7 @@ class Timer<T> {
 
   private start = 0;
 
-  private timerId = 0;
+  private timerId: any = 0;
 
   constructor(cb: () => Promise<T | undefined>, delay: number) {
     this.remaining = delay;
@@ -20,22 +20,22 @@ class Timer<T> {
   }
 
   stop = () => {
-    window.clearTimeout(this.timerId);
+    clearTimeout(this.timerId);
     this.timerId = 0;
     this.remaining = this.delay;
   };
 
   pause = () => {
-    window.clearTimeout(this.timerId);
+    clearTimeout(this.timerId);
     this.remaining -= Date.now() - this.start;
   };
 
   resume = (...args: any[]): Promise<T> | undefined => {
     this.start = Date.now();
-    window.clearTimeout(this.timerId);
+    clearTimeout(this.timerId);
     if (this.cb) {
       return new Promise<T>(resolve => {
-        this.timerId = window.setTimeout(async () => {
+        this.timerId = setTimeout(async () => {
           if (this.cb) {
             this.cb(...(args || []));
             // resume 只触发定时器开始计时，没有返回结果

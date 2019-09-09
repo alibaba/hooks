@@ -17,7 +17,7 @@ export const configRequest = (method: () => any) => {
 };
 
 const useAPI = <T = any>(opt: IProps<T>) => {
-  const requestMethod = opt.method || globalMethod || window.fetch;
+  const requestMethod = opt.method || globalMethod || fetch;
   return useAsync<T>(
     async () =>
       new Promise<T>((resolve, reject) => {

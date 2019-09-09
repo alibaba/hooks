@@ -23,7 +23,7 @@ export default function useAntdSearch<Result>(
 ): ReturnValue<Result> {
   const [value, setValue] = useState<any>('');
 
-  const timer = useRef<number>();
+  const timer = useRef<any>();
 
   const { loading, data, run, cancel: cancelAsync } = useAsync<Result>(fn, [value, ...deps], {
     manual: true,
@@ -36,15 +36,17 @@ export default function useAntdSearch<Result>(
   /* value 变化时，需要防抖 */
   useUpdateEffect(() => {
     if (timer.current) {
-      window.clearTimeout(timer.current);
+      clearTimeout(timer.current);
     }
 
-    timer.current = window.setTimeout(() => {
+    timer.current = setTimeout(() => {
       run(value);
     }, wait);
 
     return () => {
-      window.clearTimeout(timer.current);
+      if (timer.current) {
+        clearTimeout(timer.current);
+      }
     };
   }, [value]);
 
@@ -56,7 +58,7 @@ export default function useAntdSearch<Result>(
   const cancel = useCallback(() => {
     /* 先取消防抖 */
     if (timer.current) {
-      window.clearTimeout(timer.current);
+      clearTimeout(timer.current);
     }
     /* 再取消 async */
     cancelAsync();

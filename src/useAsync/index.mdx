@@ -113,7 +113,7 @@ import useAsync from './index';
 
     function saveToServer(data){
       return new Promise((resolve)=>{
-        window.setTimeout(()=>{
+        setTimeout(()=>{
           resolve(`${data} saved`);
         }, 2000)
       });
