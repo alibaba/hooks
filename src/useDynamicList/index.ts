@@ -1,10 +1,8 @@
-import { useState, useRef, useCallback } from 'react';
+import { useState, useRef, useCallback, useEffect, useMemo } from 'react';
 
 export default <T>(initialValue: T[]) => {
-  // 复杂类型 key 存储器
-  // const keyMap = useRef(new WeakMap());
   const counterRef = useRef(-1);
-  // 简单类型 key 存储器
+  // key 存储器
   const keyList = useRef<number[]>([]);
 
   // 内部方法
@@ -19,6 +17,17 @@ export default <T>(initialValue: T[]) => {
     });
     return initialValue || [];
   });
+
+  const resetList = (newList: T[] = []) => {
+    keyList.current = [];
+    counterRef.current = -1;
+    setList(() => {
+      (newList || []).forEach((_, index) => {
+        setKey(index);
+      });
+      return newList || [];
+    });
+  };
 
   const insert = (index: number, obj: T) => {
     setList(l => {
@@ -60,7 +69,7 @@ export default <T>(initialValue: T[]) => {
       try {
         keyList.current.splice(index, 1);
       } catch (e) {
-        Promise.reject(e);
+        console.error(e);
       }
       return temp;
     });
@@ -81,7 +90,7 @@ export default <T>(initialValue: T[]) => {
         keyTemp.splice(newIndex, 0, keyList.current[oldIndex]);
         keyList.current = keyTemp;
       } catch (e) {
-        Promise.reject(e);
+        console.error(e);
       }
 
       return temp;
@@ -100,7 +109,7 @@ export default <T>(initialValue: T[]) => {
     try {
       keyList.current = keyList.current.slice(0, keyList.current.length - 1);
     } catch (e) {
-      Promise.reject(e);
+      console.error(e);
     }
 
     setList(l => l.slice(0, l.length - 1));
@@ -125,7 +134,7 @@ export default <T>(initialValue: T[]) => {
     try {
       keyList.current = keyList.current.slice(1, keyList.current.length);
     } catch (e) {
-      Promise.reject(e);
+      console.error(e);
     }
     setList(l => l.slice(1, l.length));
   };
@@ -144,5 +153,6 @@ export default <T>(initialValue: T[]) => {
     unshift,
     shift,
     sortForm,
+    resetList,
   };
 };

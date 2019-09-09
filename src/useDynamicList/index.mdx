@@ -85,7 +85,7 @@ import ReactDragListView from 'react-drag-listview';
 <Playground>
 {
   ()=>{
-
+    // import ReactDragListView from 'react-drag-listview';
     const Demo = Form.create()((props) => {
       const { list, merge, insert, replace, remove, getKey, move, push, unshift, pop, getIndex, sortForm } = useDynamicList([{name: 'my bro', age: '23', memo: 'he\'s my bro' }, {name: 'my sis', age: '21', memo: 'she\'s my sis' }, {}])
       const { getFieldDecorator, getFieldsValue } = props.form;
@@ -167,7 +167,8 @@ import ReactDragListView from 'react-drag-listview';
 
 | 参数         | 说明         | 类型                 |  备注            |
 |--------------|--------------|----------------------|---------------|
-| list      | 当前的列表 | T[]              |   |
+| list      | 当前的列表 | T[]              | - |
+| resetList  | 重新设置 list 的值     | (list: T[]) => void;          | - |
 | insert        | 在指定位置插入元素 | (index: number, obj: T) => void                | - |
 | merge         | 在指定位置插入多个元素 | (index: number, obj: T) => void | - |
 | replace          | 替换指定元素         | (index: number, obj: T) => void          | - |
