@@ -1,6 +1,6 @@
 {
   "name": "@umijs/hooks",
-  "version": "1.0.1",
+  "version": "1.0.2-beta.0",
   "description": "react hooks library",
   "keywords": [
     "umi hooks",
