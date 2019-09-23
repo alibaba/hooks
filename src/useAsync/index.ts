@@ -95,6 +95,14 @@ export default function useAsync<Result = any>(
   const count = useRef(0);
   const init = useRef(true);
   const everPaused = useRef(false);
+  const mount = useRef(false);
+
+  useEffect(()=>{
+    mount.current = true;
+    return () => {
+      mount.current = false;
+    };
+  }, [])
 
   useEffect(() => {
     count.current += 1;
@@ -107,14 +115,18 @@ export default function useAsync<Result = any>(
   const run = useCallback((...args: any[]): Promise<Result | undefined> => {
     // 确保不会返回被取消的结果
     const runCount = count.current;
-    set(s => ({ ...s, loading: true }));
+    if(mount.current){
+      set(s => ({ ...s, loading: true }));
+    }
     return fn(...args)
       .then(data => {
         if (runCount === count.current) {
           if (options.onSuccess) {
             options.onSuccess(data);
           }
-          set(s => ({ ...s, data, loading: false }));
+          if(mount.current){
+            set(s => ({ ...s, data, loading: false }));
+          }
         }
         return data;
       })
@@ -123,7 +135,9 @@ export default function useAsync<Result = any>(
           if (options.onError) {
             options.onError(error);
           }
-          set(s => ({ ...s, error, loading: false }));
+          if(mount.current){
+            set(s => ({ ...s, error, loading: false }));
+          }
         }
         return error;
       });
@@ -136,7 +150,9 @@ export default function useAsync<Result = any>(
     if (timer.current) {
       timer.current.stop();
     }
-    set(s => ({ ...s, error: new Error('stopped'), loading: false }));
+    if(mount.current){
+      set(s => ({ ...s, error: new Error('stopped'), loading: false }));
+    }
   }, []);
 
   const pause = useCallback(() => {
@@ -146,7 +162,9 @@ export default function useAsync<Result = any>(
     if (timer.current) {
       timer.current.pause();
     }
-    set(s => ({ ...s, error: new Error('paused'), loading: false }));
+    if(mount.current){
+      set(s => ({ ...s, error: new Error('paused'), loading: false }));
+    }
   }, []);
 
   const resume = useCallback(async (...args): Promise<Result | undefined> => {
@@ -208,7 +226,9 @@ export default function useAsync<Result = any>(
   const cancel = useCallback(() => {
     count.current += 1;
     // throw an error
-    set(s => ({ ...s, error: new Error('canceled'), loading: false }));
+    if(mount.current){
+      set(s => ({ ...s, error: new Error('canceled'), loading: false }));
+    }
   }, []);
 
   useEffect(
