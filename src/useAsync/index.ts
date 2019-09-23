@@ -95,14 +95,6 @@ export default function useAsync<Result = any>(
   const count = useRef(0);
   const init = useRef(true);
   const everPaused = useRef(false);
-  const mount = useRef(false);
-
-  useEffect(()=>{
-    mount.current = true;
-    return () => {
-      mount.current = false;
-    };
-  }, [])
 
   useEffect(() => {
     count.current += 1;
@@ -115,7 +107,7 @@ export default function useAsync<Result = any>(
   const run = useCallback((...args: any[]): Promise<Result | undefined> => {
     // 确保不会返回被取消的结果
     const runCount = count.current;
-    if(mount.current){
+    if(runCount === count.current){
       set(s => ({ ...s, loading: true }));
     }
     return fn(...args)
@@ -124,7 +116,7 @@ export default function useAsync<Result = any>(
           if (options.onSuccess) {
             options.onSuccess(data);
           }
-          if(mount.current){
+          if(runCount === count.current){
             set(s => ({ ...s, data, loading: false }));
           }
         }
@@ -135,7 +127,7 @@ export default function useAsync<Result = any>(
           if (options.onError) {
             options.onError(error);
           }
-          if(mount.current){
+          if(runCount === count.current){
             set(s => ({ ...s, error, loading: false }));
           }
         }
@@ -150,9 +142,7 @@ export default function useAsync<Result = any>(
     if (timer.current) {
       timer.current.stop();
     }
-    if(mount.current){
-      set(s => ({ ...s, error: new Error('stopped'), loading: false }));
-    }
+    set(s => ({ ...s, error: new Error('stopped'), loading: false }));
   }, []);
 
   const pause = useCallback(() => {
@@ -162,9 +152,7 @@ export default function useAsync<Result = any>(
     if (timer.current) {
       timer.current.pause();
     }
-    if(mount.current){
-      set(s => ({ ...s, error: new Error('paused'), loading: false }));
-    }
+    set(s => ({ ...s, error: new Error('paused'), loading: false }));
   }, []);
 
   const resume = useCallback(async (...args : any[]): Promise<Result | undefined> => {
@@ -226,9 +214,7 @@ export default function useAsync<Result = any>(
   const cancel = useCallback(() => {
     count.current += 1;
     // throw an error
-    if(mount.current){
-      set(s => ({ ...s, error: new Error('canceled'), loading: false }));
-    }
+    set(s => ({ ...s, error: new Error('canceled'), loading: false }));
   }, []);
 
   useEffect(
