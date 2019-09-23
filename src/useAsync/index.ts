@@ -167,7 +167,7 @@ export default function useAsync<Result = any>(
     }
   }, []);
 
-  const resume = useCallback(async (...args): Promise<Result | undefined> => {
+  const resume = useCallback(async (...args : any[]): Promise<Result | undefined> => {
     // 恢复计时器
     if (!everPaused.current) {
       // 首次执行 resume 时，应立即执行，随后开始计时
@@ -180,7 +180,7 @@ export default function useAsync<Result = any>(
   }, []);
 
   const intervalAsync = useCallback(
-    async (...args) => {
+    async (...args: any[]) => {
       const runCount = count.current;
       let ret: Result | undefined;
       if (!options.manual || !init.current) {
@@ -207,7 +207,7 @@ export default function useAsync<Result = any>(
   );
 
   const reload = useCallback(
-    (...args): Promise<Result | undefined> => {
+    (...args: any[]): Promise<Result | undefined> => {
       // 防止上次数据返回
       count.current += 1;
       if (options.pollingInterval) {
