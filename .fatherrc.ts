@@ -1,7 +1,7 @@
 import { IBundleOptions } from 'father-build';
 
 const options: IBundleOptions = {
-  entry: 'src/index.tsx',
+  entry: 'src/index.ts',
   esm: 'rollup',
   cjs: 'rollup',
   umd: {
