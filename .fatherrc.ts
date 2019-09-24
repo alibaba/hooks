@@ -1,14 +1,13 @@
 import { IBundleOptions } from 'father-build';
 
 const options: IBundleOptions = {
-  entry: 'src/index.tsx',
+  entry: 'src/index.ts',
   esm: 'rollup',
   cjs: 'rollup',
   umd: {
     name: 'umijsHooks',
     globals: {
       'react': 'React',
-      'axios': 'axios'
     }
   },
   preCommit: {
@@ -17,8 +16,18 @@ const options: IBundleOptions = {
   },
   doc: {
     title: '@umijs/hooks',
-    base: '/hooks/',
+    base: '/hooks',
     repository: 'https://github.com/umijs/hooks',
+    theme: 'docz-theme-umi-hooks',
+    ignore: ['readme.md', 'changelog.md', 'readme_zh-CN.md', 'contributing.md', 'license.md'],
+    themeConfig: {
+      codemirrorTheme: 'docz-dark',
+      // showPlaygroundEditor: true,
+      menus: [
+        { title: '发布日志', link: 'https://github.com/umijs/hooks/releases' },
+        { title: 'Github', link: 'https://github.com/umijs/hooks' },
+      ],
+    },
   },
   extraBabelPlugins: [[
     'babel-plugin-import',

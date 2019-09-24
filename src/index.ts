@@ -1,5 +1,5 @@
 import useAntdTable from './useAntdTable';
-import useAPI from './useAPI';
+import useAPI, { configRequest } from './useAPI';
 import useAsync from './useAsync';
 import useLoadMore from './useLoadMore';
 import useSearch from './useSearch';
@@ -17,4 +17,5 @@ export {
   useDynamicList,
   useResponsive,
   configResponsive,
+  configRequest,
 };

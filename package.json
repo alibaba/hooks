@@ -45,7 +45,8 @@
     "react-dom": "^16.8.6",
     "react-drag-listview": "^0.1.6",
     "typescript": "^3.3.3",
-    "umi-request": "^1.0.8"
+    "umi-request": "^1.0.8",
+    "docz-theme-umi-hooks": "^0.0.4"
   },
   "engines": {
     "node": ">=8.0.0"
