@@ -8,7 +8,6 @@ const options: IBundleOptions = {
     name: 'umijsHooks',
     globals: {
       'react': 'React',
-      'axios': 'axios'
     }
   },
   preCommit: {
@@ -17,8 +16,18 @@ const options: IBundleOptions = {
   },
   doc: {
     title: '@umijs/hooks',
-    base: '/hooks/',
+    base: '/',
     repository: 'https://github.com/umijs/hooks',
+    theme: 'docz-theme-umi-hooks',
+    ignore: ['readme.md', 'changelog.md', 'readme_zh-CN.md', 'contributing.md', 'license.md'],
+    themeConfig: {
+      codemirrorTheme: 'docz-dark',
+      showPlaygroundEditor: true,
+      menus: [
+        { title: '发布日志', link: 'https://github.com/umijs/hooks/releases' },
+        { title: 'Github', link: 'https://github.com/umijs/hooks' },
+      ],
+    },
   },
   extraBabelPlugins: [[
     'babel-plugin-import',

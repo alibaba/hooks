@@ -1,25 +1,25 @@
-English | [简体中文](./README_zh-CN.md)
+[English](.README.md) | 简体中文
 
 # @umijs/hooks
 
-react hooks library
+适用于中台场景的 react hooks 库
 
 [![NPM version][image-1]][1] [![NPM downloads][image-2]][2]
 
 
-## Install
+## 安装
 
 ```
 npm i @umijs/hooks --save
 ```
 
-## Usage
+## 使用
 
 ```
 import { useAsync } from '@umijs/hooks';
 ```
 
-## Development
+## 开发
 
 ```
 $ git clone git@github.com:umijs/hooks.git
@@ -27,9 +27,9 @@ $ cd hooks
 $ npm install
 $ npm start
 ```
-Open your browser and visit http://127.0.0.1:8001/hooks , see more at Development.
+打开浏览器访问 http://127.0.0.1:8001/hooks
 
-## Contributing
+## 贡献
 
 We welcome all contributions, please read our [CONTRIBUTING.MD](https://github.com/umijs/hooks/blob/master/CONTRIBUTING.MD) first, let's build a better antd together.
 
