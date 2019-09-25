@@ -1,2 +1,2 @@
-yarn install --registry "https://registry.npmjs.org"
-yarn run father doc build
+npm install
+npm run build:doc
