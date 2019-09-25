@@ -1,2 +1,2 @@
-npm install
-npm run build:doc
+yarn install
+yarn run build:doc

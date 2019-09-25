@@ -1,5 +1,6 @@
 {
-  "scope": "umi-hooks",
+  "name": "hooks",
+  "scope": "umijs",
   "builds": [
     {
       "src": "now-build.sh",
