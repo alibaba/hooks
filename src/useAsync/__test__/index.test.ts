@@ -220,4 +220,39 @@ describe('useAsync', () => {
     expect(callback).toHaveBeenCalledTimes(4);
     hook.unmount();
   });
+
+  it('unmount hook in onSuccess callback', async () => {
+    const callback = jest.fn();
+    let counter = 1;
+    hook = renderHook(({ func, deps, opt }) => useAsync(func, deps, opt), {
+      initialProps: {
+        func: (req: number) => request(req),
+        deps: [] as ReadonlyArray<{}>,
+        opt: {
+          onSuccess: () => {
+            if (counter === 1) {
+              counter += 1;
+            } else {
+              hook.unmount();
+            }
+          },
+          manual: true,
+        } as Options<{}>,
+      },
+    });
+    expect(hook.result.current.loading).toEqual(false);
+
+    act(() => {
+      hook.result.current.run(1);
+    });
+    jest.runAllTimers();
+    await hook.waitForNextUpdate();
+    expect(hook.result.current.data).toEqual('success');
+
+    act(() => {
+      hook.result.current.run(1).then(res => callback());
+    });
+    // hook already unmount
+    expect(callback).not.toHaveBeenCalled();
+  });
 });

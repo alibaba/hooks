@@ -94,7 +94,6 @@ export default function useAsync<Result = any>(
   const timer = useRef<Timer<Result> | undefined>(undefined);
   const count = useRef(0);
   const init = useRef(true);
-  const everPaused = useRef(false);
 
   useEffect(() => {
     count.current += 1;
@@ -114,7 +113,9 @@ export default function useAsync<Result = any>(
           if (options.onSuccess) {
             options.onSuccess(data);
           }
-          set(s => ({ ...s, data, loading: false }));
+          if (runCount === count.current) {
+            set(s => ({ ...s, data, loading: false }));
+          }
         }
         return data;
       })
@@ -123,14 +124,15 @@ export default function useAsync<Result = any>(
           if (options.onError) {
             options.onError(error);
           }
-          set(s => ({ ...s, error, loading: false }));
+          if (runCount === count.current) {
+            set(s => ({ ...s, error, loading: false }));
+          }
         }
         return error;
       });
   }, deps);
 
   const stop = useCallback(() => {
-    everPaused.current = true;
     count.current += 1;
     // 清除计时器
     if (timer.current) {
@@ -140,7 +142,6 @@ export default function useAsync<Result = any>(
   }, []);
 
   const pause = useCallback(() => {
-    everPaused.current = true;
     count.current += 1;
     // 暂停计时器
     if (timer.current) {
@@ -149,20 +150,28 @@ export default function useAsync<Result = any>(
     set(s => ({ ...s, error: new Error('paused'), loading: false }));
   }, []);
 
-  const resume = useCallback(async (...args): Promise<Result | undefined> => {
-    // 恢复计时器
-    if (!everPaused.current) {
-      // 首次执行 resume 时，应立即执行，随后开始计时
-      await run(...args);
-    }
-    if (timer.current) {
-      return timer.current.resume(...(args || []));
-    }
-    return undefined;
-  }, []);
+  const resume = useCallback(
+    async (...args: any[]): Promise<Result | undefined> => {
+      // 恢复计时器
+      if (timer.current) {
+        return timer.current.resume(...(args || []));
+      }
+      return undefined;
+    },
+    [run],
+  );
+
+  const start = useCallback(
+    async (...args: any[]): Promise<Result | undefined> => {
+      // 执行并开启计时器
+      await run(...(args || []));
+      return resume(...(args || []));
+    },
+    [run],
+  );
 
   const intervalAsync = useCallback(
-    async (...args) => {
+    async (...args: any[]) => {
       const runCount = count.current;
       let ret: Result | undefined;
       if (!options.manual || !init.current) {
@@ -189,7 +198,7 @@ export default function useAsync<Result = any>(
   );
 
   const reload = useCallback(
-    (...args): Promise<Result | undefined> => {
+    (...args: any[]): Promise<Result | undefined> => {
       // 防止上次数据返回
       count.current += 1;
       if (options.pollingInterval) {
@@ -233,7 +242,7 @@ export default function useAsync<Result = any>(
     error: state.error,
     data: state.data,
     cancel,
-    run: options.manual && options.pollingInterval ? resume : reload,
+    run: options.manual && options.pollingInterval ? start : reload,
     timer: {
       stop,
       resume,
