@@ -67,7 +67,6 @@ import ReactDragListView from 'react-drag-listview';
           </Form>
           <Button style={{marginTop: 8}} type='primary' onClick={()=>validateFields((err, val)=>{
             if(!err){
-              console.log(val);
               setResult(JSON.stringify((val || {}).names.filter(e=>!!e)));
             }
           })}>提交</Button>
