@@ -1,0 +1,34 @@
+{
+  "name": "hooks",
+  "scope": "umijs",
+  "builds": [
+    {
+      "src": "now-build.sh",
+      "use": "@now/static-build",
+      "config": {
+        "distDir": ".doc"
+      }
+    }
+  ],
+  "routes": [
+    {
+      "src": "/static/(.*)",
+      "headers": {
+        "cache-control": "s-maxage=604800"
+      },
+      "dest": "/static/$1"
+    },
+    {
+      "src": "/assets.json",
+      "dest": "/assets.json"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/"
+    }
+  ],
+  "github": {
+    "autoAlias": false
+  },
+  "alias": ["hooks.umijs.now.sh", "hooks.umijs.org"]
+}

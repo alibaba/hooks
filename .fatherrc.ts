@@ -16,7 +16,6 @@ const options: IBundleOptions = {
   },
   doc: {
     title: '@umijs/hooks',
-    base: '/hooks',
     repository: 'https://github.com/umijs/hooks',
     theme: 'docz-theme-umi-hooks',
     ignore: ['readme.md', 'changelog.md', 'readme_zh-CN.md', 'contributing.md', 'license.md'],
