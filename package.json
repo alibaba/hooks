@@ -25,7 +25,8 @@
     "cov": "father test --coverage",
     "help": "father help",
     "precommit": "father pre-commit",
-    "pub:doc": "father doc build && now --prod"
+    "build:doc": "father doc build",
+    "pub:doc": "now --prod"
   },
   "dependencies": {
     "react-use": "^10.6.2"
