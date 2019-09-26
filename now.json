@@ -29,6 +29,5 @@
   ],
   "github": {
     "autoAlias": false
-  },
-  "alias": ["hooks.umijs.now.sh", "hooks.umijs.org"]
+  }
 }
