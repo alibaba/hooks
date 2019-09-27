@@ -1,0 +1,67 @@
+---
+name: useEventEmitter
+route: /useEventEmitter
+edit: false
+sidebar: true
+---
+
+
+import { Playground } from 'docz';
+import { useRef } from 'react';
+import { Button, Spin, Form, Input, message } from 'antd';
+import useEventEmitter from './index';
+
+# useEventEmitter
+
+在多个组件之间进行事件通知有时会让人非常头疼，借助 EventEmitter ，可以让这一过程变得更加简单。
+
+## 代码演示
+
+<Playground>
+{
+  ()=>{
+    function Demo() {
+      const focus$ = useEventEmitter()
+      return (
+        <>
+          <MessageBox focus$={focus$}/>
+          <InputBox focus$={focus$}/>
+        </>
+      )
+    }
+
+    function MessageBox(props) {
+      return (
+        <div style={{paddingBottom: 24}}>
+          <p>你收到了一条消息</p>
+          <Button onClick={props.focus$.emit}>回复</Button>
+        </div>
+      )
+    }
+
+    function InputBox(props) {
+      const inputRef = useRef()
+      props.focus$.useSubscription(() => {
+        inputRef.current.focus()
+      })
+      return (
+        <Input ref={inputRef} placeholder='输入回复'/>
+      )
+    }
+    return <Demo />
+  }
+}
+</Playground>
+
+## API
+
+### 入参
+
+无
+
+### 返回结果
+
+| 参数         | 说明         | 类型                 |  备注            |
+|--------------|--------------|----------------------|---------------|
+| emit         | 发送一个事件通知 | (val: T) => void       | - |
+| useSubscription | 订阅事件    | ((val: T) => void) => void     | - |
