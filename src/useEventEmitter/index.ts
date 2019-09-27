@@ -12,11 +12,13 @@ export class EventEmitter<T> {
   };
 
   useSubscription = (callback: Subscription<T>) => {
-    const callbackRef = useRef<Subscription<T>>(callback);
+    const callbackRef = useRef<Subscription<T>>();
     callbackRef.current = callback;
     useEffect(() => {
       function subscription(val: T) {
-        callbackRef.current(val);
+        if (callbackRef.current) {
+          callbackRef.current(val);
+        }
       }
       this.subscriptions.add(subscription);
       return () => {
