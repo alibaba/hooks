@@ -9,11 +9,11 @@ interface OptionType {
 export default <T = any>(list: T[], options: OptionType) => {
   const containerRef = useRef<HTMLElement>();
   const [state, setState] = useState({ start: 0, end: 10 });
-  const { itemHeight = 30, buffer = 5 } = options;
+  const { itemHeight = 30, buffer = 5 } = options || {};
 
   const getViewCapacity = (containerHeight: number) => {
-    if (typeof options.itemHeight === 'number') {
-      return Math.ceil(containerHeight / options.itemHeight);
+    if (typeof itemHeight === 'number') {
+      return Math.ceil(containerHeight / itemHeight);
     }
     const { start = 0 } = state;
     let sum = 0;
@@ -30,8 +30,8 @@ export default <T = any>(list: T[], options: OptionType) => {
   };
 
   const getOffset = (scrollTop: number) => {
-    if (typeof options.itemHeight === 'number') {
-      return Math.floor(scrollTop / options.itemHeight) + 1;
+    if (typeof itemHeight === 'number') {
+      return Math.floor(scrollTop / itemHeight) + 1;
     }
     let sum = 0;
     let offset = 0;

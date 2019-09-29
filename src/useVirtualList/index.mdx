@@ -15,11 +15,53 @@ import useVirtualList from './index';
 
 ## 代码演示
 
+### 直接使用
+
 <Playground>
 {
   ()=>{
     function Demo(){
-      const data = Array.from(Array(1000)).map((ele, index)=> index);
+      const [ value, onChange ] = React.useState('');
+      const { list, containerProps, wrapperProps } = useVirtualList(Array.from(new Array(99999).keys()))
+      return (
+        <>
+          <div {...containerProps()} style={{ height: '300px', overflow: 'auto' }}>
+            <div {...wrapperProps()}>
+              {
+                list.map((ele, index)=>{
+                  return (
+                    <div 
+                      style={{
+                        height: 30,
+                        display: 'flex',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        border: '1px solid #e8e8e8',
+                        marginBottom: 8,
+                      }}
+                      key={ele.index}
+                    >
+                      Row: {ele.data}
+                    </div>
+                  )
+                })
+              }
+            </div>
+          </div>
+        </>
+      )
+    }
+    return <Demo />
+  }
+}
+</Playground>
+
+### 高级配置
+
+<Playground>
+{
+  ()=>{
+    function Demo(){
       const [ value, onChange ] = React.useState('');
       const {
         list,
@@ -28,13 +70,12 @@ import useVirtualList from './index';
         scrollTo,
       } = useVirtualList(Array.from(new Array(99999).keys()), {
         itemHeight: (i)=> i % 2 === 0 ? 42 + 8 : 84 + 8,
-        // itemHeight: (i)=> i % 2 === 0 ? 57 : 78,
         buffer: 3,
       })
       return (
         <div>
           <div style={{ textAlign: 'right' }}>
-            <InputNumber placeholder='行数' value={value} onChange={onChange} />
+            <InputNumber min={0} max={99999} placeholder='行数' value={value} onChange={onChange} />
             <Button style={{marginLeft: 8}} onClick={()=>{ scrollTo(Number(value)) }}>滚动到此行</Button>
           </div>
           <div {...containerProps()} style={{ height: '300px', overflow: 'auto' }}>
