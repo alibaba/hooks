@@ -1,6 +1,6 @@
 {
   "name": "@umijs/hooks",
-  "version": "1.0.2-beta.0",
+  "version": "1.1.0",
   "description": "react hooks library",
   "keywords": [
     "umi hooks",
@@ -25,7 +25,8 @@
     "cov": "father test --coverage",
     "help": "father help",
     "precommit": "father pre-commit",
-    "pub:doc": "father doc build && father doc deploy"
+    "build:doc": "father doc build",
+    "pub:doc": "now --prod"
   },
   "dependencies": {
     "react-use": "^10.6.2"
@@ -42,6 +43,7 @@
     "docz-theme-umi-hooks": "^0.0.4",
     "enzyme": "^3.10.0",
     "father": "^2.13.3",
+    "now": "^16.2.0",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-drag-listview": "^0.1.6",

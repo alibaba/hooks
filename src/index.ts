@@ -5,6 +5,7 @@ import useLoadMore from './useLoadMore';
 import useSearch from './useSearch';
 import useControlledValue from './useControlledValue';
 import useDynamicList from './useDynamicList';
+import useEventEmitter from './useEventEmitter';
 import { configResponsive, useResponsive } from './useResponsive';
 
 export {
@@ -16,6 +17,7 @@ export {
   useControlledValue,
   useDynamicList,
   useResponsive,
+  useEventEmitter,
   configResponsive,
   configRequest,
 };

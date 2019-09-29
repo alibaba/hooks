@@ -31,7 +31,7 @@ Open your browser and visit http://127.0.0.1:8001/hooks , see more at Developmen
 
 ## Contributing
 
-We welcome all contributions, please read our [CONTRIBUTING.MD](https://github.com/umijs/hooks/blob/master/CONTRIBUTING.MD) first, let's build a better antd together.
+We welcome all contributions, please read our [CONTRIBUTING.MD](https://github.com/umijs/hooks/blob/master/CONTRIBUTING.MD) first, let's build a better hooks library together.
 
 
 ## Community
