@@ -3,7 +3,7 @@ import { useRef, useEffect } from 'react';
 type Subscription<T> = (val: T) => void;
 
 export class EventEmitter<T> {
-  private subscriptions = new Set<Subscription<T>>();
+  private subscriptions: Subscription<T>[] = [];
 
   emit = (val: T) => {
     for (const subscription of this.subscriptions) {
@@ -20,9 +20,10 @@ export class EventEmitter<T> {
           callbackRef.current(val);
         }
       }
-      this.subscriptions.add(subscription);
+      this.subscriptions.push(subscription);
       return () => {
-        this.subscriptions.delete(subscription);
+        const idx = this.subscriptions.indexOf(subscription);
+        this.subscriptions.splice(idx, 1);
       };
     }, []);
   };
