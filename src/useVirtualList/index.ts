@@ -1,12 +1,12 @@
 import React, { useRef, useEffect, useState, useMemo } from 'react';
 import ResizeObserver from 'resize-observer-polyfill';
 
-interface OptionType {
-  itemHeight: number | ((index: number) => number);
-  buffer: number;
+export interface OptionType {
+  itemHeight?: number | ((index: number) => number);
+  buffer?: number;
 }
 
-export default <T = any>(list: T[], options: OptionType) => {
+export default <T = any>(list: T[], options?: OptionType) => {
   const containerRef = useRef<HTMLElement>();
   const [state, setState] = useState({ start: 0, end: 10 });
   const { itemHeight = 30, buffer = 5 } = options || {};

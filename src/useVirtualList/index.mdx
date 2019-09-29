@@ -22,7 +22,7 @@ import useVirtualList from './index';
   ()=>{
     function Demo(){
       const [ value, onChange ] = React.useState('');
-      const { list, containerProps, wrapperProps } = useVirtualList(Array.from(new Array(99999).keys()))
+      const { list, containerProps, wrapperProps } = useVirtualList(Array.from(Array(99999).keys()), { buffer: 30 })
       return (
         <>
           <div {...containerProps()} style={{ height: '300px', overflow: 'auto' }}>
@@ -32,7 +32,7 @@ import useVirtualList from './index';
                   return (
                     <div 
                       style={{
-                        height: 30,
+                        height: 22,
                         display: 'flex',
                         justifyContent: 'center',
                         alignItems: 'center',
@@ -68,9 +68,9 @@ import useVirtualList from './index';
         containerProps,
         wrapperProps,
         scrollTo,
-      } = useVirtualList(Array.from(new Array(99999).keys()), {
+      } = useVirtualList(Array.from(Array(99999).keys()), {
         itemHeight: (i)=> i % 2 === 0 ? 42 + 8 : 84 + 8,
-        buffer: 3,
+        buffer: 10,
       })
       return (
         <div>
