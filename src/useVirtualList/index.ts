@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState, useMemo, useCallback } from 'react';
+import React, { useRef, useEffect, useState, useMemo } from 'react';
 import ResizeObserver from 'resize-observer-polyfill';
 
 interface OptionType {
@@ -79,12 +79,12 @@ export default <T = any>(list: T[], options: OptionType) => {
     return list.reduce((sum, _, index) => sum + itemHeight(index), 0);
   }, [list.length]);
 
-  const getDistenceTop = useCallback((index: number) => {
+  const getDistenceTop = (index: number) => {
     if (typeof itemHeight === 'number') {
       return index * itemHeight;
     }
     return list.slice(0, index).reduce((sum, _, i) => sum + itemHeight(i), 0);
-  }, []);
+  };
 
   const wrapperStyle = () => ({
     height: totalHeight,
