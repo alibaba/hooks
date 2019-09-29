@@ -23,7 +23,7 @@ describe('useVirtualList', () => {
   });
 
   describe('virtual list render', () => {
-    const mockRef = { scrollTop: 0, clientHeight: 300 };
+    let mockRef = { scrollTop: 0, clientHeight: 300 };
     let hook: RenderHookResult<
       { list: unknown[]; options: OptionType },
       {
@@ -32,7 +32,12 @@ describe('useVirtualList', () => {
         containerProps: () => {
           ref: (ref: any) => void;
         };
-        wrapperProps: () => {};
+        wrapperProps: () => {
+          style: {
+            paddingTop: number;
+            height: number;
+          };
+        };
       }
     >;
 
@@ -43,6 +48,7 @@ describe('useVirtualList', () => {
 
     afterEach(() => {
       hook.unmount();
+      mockRef = { scrollTop: 0, clientHeight: 300 };
     });
 
     it('test return list size', () => {
@@ -52,10 +58,44 @@ describe('useVirtualList', () => {
         hook.result.current.scrollTo(80);
       });
 
+      // 10 items plus 5 buffer * 2
       expect(hook.result.current.list.length).toBe(20);
       expect(mockRef.scrollTop).toBe(80 * 30);
+    });
 
-      console.log(hook.result.current.list, mockRef);
+    it('test with fixed height', () => {
+      setup(Array.from(Array(99999).keys()), { buffer: 0 });
+
+      act(() => {
+        hook.result.current.scrollTo(20);
+      });
+
+      expect(hook.result.current.list.length).toBe(10);
+      expect(mockRef.scrollTop).toBe(20 * 30);
+    });
+
+    it('test with dynamic height', () => {
+      setup(Array.from(Array(99999).keys()), {
+        buffer: 0,
+        itemHeight: (i: number) => (i % 2 === 0 ? 30 : 60),
+      });
+
+      act(() => {
+        hook.result.current.scrollTo(20);
+      });
+
+      // average height for easy calculation
+      const averageHeight = (30 + 60) / 2;
+
+      expect(hook.result.current.list.length).toBe(Math.floor(300 / averageHeight));
+      expect(mockRef.scrollTop).toBe(10 * 30 + 10 * 60);
+      expect((hook.result.current.list[0] as { data: number }).data).toBe(20);
+      expect((hook.result.current.list[0] as { index: number }).index).toBe(20);
+      expect((hook.result.current.list[5] as { data: number }).data).toBe(25);
+      expect((hook.result.current.list[5] as { index: number }).index).toBe(25);
+
+      expect(hook.result.current.wrapperProps().style.paddingTop).toBe(20 * averageHeight);
+      expect(hook.result.current.wrapperProps().style.height).toBe(99998 * averageHeight + 30);
     });
   });
 });
