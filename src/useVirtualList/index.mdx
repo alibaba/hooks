@@ -11,7 +11,7 @@ import useVirtualList from './index';
 
 # useVirtualList
 
-提供虚拟化列表能力的 hook，用于解决展示海量数据渲染时首屏渲染缓慢和滚动卡顿问题。
+提供虚拟化列表能力的 Hook，用于解决展示海量数据渲染时首屏渲染缓慢和滚动卡顿问题。
 
 ## 代码演示
 
@@ -74,7 +74,7 @@ import useVirtualList from './index';
       })
       return (
         <div>
-          <div style={{ textAlign: 'right' }}>
+          <div style={{ textAlign: 'right', marginBottom: 16 }}>
             <InputNumber min={0} max={99999} placeholder='行数' value={value} onChange={onChange} />
             <Button style={{marginLeft: 8}} onClick={()=>{ scrollTo(Number(value)) }}>滚动到此行</Button>
           </div>

@@ -4,12 +4,14 @@ import ResizeObserver from 'resize-observer-polyfill';
 export interface OptionType {
   itemHeight?: number | ((index: number) => number);
   buffer?: number;
+  enableCache?: boolean;
 }
 
 export default <T = any>(list: T[], options?: OptionType) => {
   const containerRef = useRef<HTMLElement>();
+  const distanceCache = useRef<{ [key: number]: number }>({});
   const [state, setState] = useState({ start: 0, end: 10 });
-  const { itemHeight = 30, buffer = 5 } = options || {};
+  const { itemHeight = 30, buffer = 5, enableCache = true } = options || {};
 
   const getViewCapacity = (containerHeight: number) => {
     if (typeof itemHeight === 'number') {
@@ -80,10 +82,22 @@ export default <T = any>(list: T[], options?: OptionType) => {
   }, [list.length]);
 
   const getDistenceTop = (index: number) => {
-    if (typeof itemHeight === 'number') {
-      return index * itemHeight;
+    // 如果有缓存，优先返回缓存值
+    if (enableCache && distanceCache.current[index]) {
+      return distanceCache.current[index];
     }
-    return list.slice(0, index).reduce((sum, _, i) => sum + itemHeight(i), 0);
+    if (typeof itemHeight === 'number') {
+      const height = index * itemHeight;
+      if (enableCache) {
+        distanceCache.current[index] = height;
+      }
+      return height;
+    }
+    const height = list.slice(0, index).reduce((sum, _, i) => sum + itemHeight(i), 0);
+    if (enableCache) {
+      distanceCache.current[index] = height;
+    }
+    return height;
   };
 
   const scrollTo = (index: number) => {
