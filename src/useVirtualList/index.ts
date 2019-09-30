@@ -86,11 +86,6 @@ export default <T = any>(list: T[], options?: OptionType) => {
     return list.slice(0, index).reduce((sum, _, i) => sum + itemHeight(i), 0);
   };
 
-  const wrapperStyle = () => ({
-    height: totalHeight,
-    paddingTop: getDistenceTop(state.start),
-  });
-
   const scrollTo = (index: number) => {
     if (containerRef.current) {
       containerRef.current.scrollTop = getDistenceTop(index);
@@ -104,7 +99,7 @@ export default <T = any>(list: T[], options?: OptionType) => {
       index: index + state.start,
     })),
     scrollTo,
-    containerProps: () => ({
+    containerProps: {
       ref: (ref: HTMLElement) => {
         containerRef.current = ref;
       },
@@ -113,9 +108,9 @@ export default <T = any>(list: T[], options?: OptionType) => {
         calculateRange();
       },
       style: { overflowY: 'auto' },
-    }),
-    wrapperProps: () => ({
-      style: { width: '100%', ...wrapperStyle() },
-    }),
+    },
+    wrapperProps: {
+      style: { width: '100%', height: totalHeight, paddingTop: getDistenceTop(state.start) },
+    },
   };
 };

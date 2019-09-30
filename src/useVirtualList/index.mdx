@@ -25,8 +25,8 @@ import useVirtualList from './index';
       const { list, containerProps, wrapperProps } = useVirtualList(Array.from(Array(99999).keys()), { buffer: 30 })
       return (
         <>
-          <div {...containerProps()} style={{ height: '300px', overflow: 'auto' }}>
-            <div {...wrapperProps()}>
+          <div {...containerProps} style={{ height: '300px', overflow: 'auto' }}>
+            <div {...wrapperProps}>
               {
                 list.map((ele, index)=>{
                   return (
@@ -78,8 +78,8 @@ import useVirtualList from './index';
             <InputNumber min={0} max={99999} placeholder='行数' value={value} onChange={onChange} />
             <Button style={{marginLeft: 8}} onClick={()=>{ scrollTo(Number(value)) }}>滚动到此行</Button>
           </div>
-          <div {...containerProps()} style={{ height: '300px', overflow: 'auto' }}>
-            <div {...wrapperProps()}>
+          <div {...containerProps} style={{ height: '300px', overflow: 'auto' }}>
+            <div {...wrapperProps}>
               {
                 list.map((ele, index)=>{
                   return (

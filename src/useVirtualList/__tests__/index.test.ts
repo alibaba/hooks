@@ -29,10 +29,10 @@ describe('useVirtualList', () => {
       {
         list: unknown[];
         scrollTo: (index: number) => void;
-        containerProps: () => {
+        containerProps: {
           ref: (ref: any) => void;
         };
-        wrapperProps: () => {
+        wrapperProps: {
           style: {
             paddingTop: number;
             height: number;
@@ -43,7 +43,7 @@ describe('useVirtualList', () => {
 
     const setup = (list: any[] = [], options: {}) => {
       hook = renderHook(() => useVirtualList(list as unknown[], options as OptionType));
-      hook.result.current.containerProps().ref(mockRef);
+      hook.result.current.containerProps.ref(mockRef);
     };
 
     afterEach(() => {
@@ -94,8 +94,8 @@ describe('useVirtualList', () => {
       expect((hook.result.current.list[5] as { data: number }).data).toBe(25);
       expect((hook.result.current.list[5] as { index: number }).index).toBe(25);
 
-      expect(hook.result.current.wrapperProps().style.paddingTop).toBe(20 * averageHeight);
-      expect(hook.result.current.wrapperProps().style.height).toBe(99998 * averageHeight + 30);
+      expect(hook.result.current.wrapperProps.style.paddingTop).toBe(20 * averageHeight);
+      expect(hook.result.current.wrapperProps.style.height).toBe(99998 * averageHeight + 30);
     });
   });
 });
