@@ -35,7 +35,7 @@ import useAntdTable from './';
       const [gender, setGender] = useState();
 
       const getTableData = ({ current, pageSize }) => {
-        console.log(current, pageSize);
+        console.log(current, pageSize, gender);
         return fetch(`https://randomuser.me/api?results=55&page=${current}&size=${pageSize}&gender=${gender}`)
           .then(res => {
             return res.json();
@@ -81,7 +81,7 @@ import useAntdTable from './';
 
       return (
         <>
-          <Select style={{ width: 180, marginBottom: 24 }} onChange={setGender} placeholder='性别筛选' allowClear>
+          <Select style={{ width: 180, marginBottom: 24 }} onChange={(g)=>setGender(g)} placeholder='性别筛选' allowClear>
             <Option value="male">male</Option>
             <Option value="female">female</Option>
           </Select>
