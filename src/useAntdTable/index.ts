@@ -117,7 +117,7 @@ export default function useAntdTable<Result, Item>(
 
   const stateRef = useRef<UseTableInitState>(({} as unknown) as UseTableInitState);
   stateRef.current = state;
-  const { run, loading } = useAsync(fn, [], {
+  const { run, loading } = useAsync(fn, deps, {
     manual: true,
   });
 
