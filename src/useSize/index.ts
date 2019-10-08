@@ -19,8 +19,8 @@ function useSizeRef<T = HTMLElement>(
         return () => {};
       }
     } else if (!element.current) {
-        return () => {};
-      }
+      return () => {};
+    }
 
     const resizeObserver = new ResizeObserver(entries => {
       entries.forEach(entry => {

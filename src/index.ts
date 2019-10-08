@@ -7,6 +7,7 @@ import useControlledValue from './useControlledValue';
 import useDynamicList from './useDynamicList';
 import useEventEmitter from './useEventEmitter';
 import { configResponsive, useResponsive } from './useResponsive';
+import useSize from './useSize';
 
 export {
   useAntdTable,
@@ -20,4 +21,5 @@ export {
   useEventEmitter,
   configResponsive,
   configRequest,
+  useSize,
 };

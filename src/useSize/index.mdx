@@ -1,16 +1,17 @@
 ---
-name: useSizeRef
-route: /useSizeRef
+name: useSize
+route: /useSize
+menu: '基础 hooks'
 edit: false
 sidebar: true
 ---
 
 import { Playground } from 'docz';
-import useSizeRef from './index';
+import useSize from './index';
 
-# useSearch
+# useSize
 
-一个集成了异步搜索，防抖控制，请求时序控制的搜索 Hook，可应用于常见的 Select，Input 搜索场景。
+一个用于监听 dom 节点尺寸变化的 Hook
 
 ## 代码演示
 
@@ -20,7 +21,7 @@ import useSizeRef from './index';
 {
   () => {
     function Demo() {
-      const [state, ref] = useSizeRef()
+      const [state, ref] = useSize()
       return (
         <div ref={ref}>
           try to resize the preview window <br />
@@ -39,7 +40,7 @@ import useSizeRef from './index';
 {
   () => {
     function Demo() {
-      const [state] = useSizeRef(()=>document.querySelector('#demo2'))
+      const [state] = useSize(()=>document.querySelector('#demo2'))
       return (
         <div id='demo2'>
           try to resize the preview window <br />
@@ -58,7 +59,7 @@ import useSizeRef from './index';
 {
   () => {
     function Demo() {
-      const [state] = useSizeRef(document.querySelector('body'));
+      const [state] = useSize(document.querySelector('body'));
       return (
         <div>
           this demo is listening to body size change, try to resize the window instead <br />
