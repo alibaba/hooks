@@ -1,6 +1,9 @@
 import { useState } from 'react';
 
-export default function useStorageState<T extends string = string>(key: string, defaultValue?: T) {
+export default function useLocalStorageState<T extends string = string>(
+  key: string,
+  defaultValue?: T,
+) {
   const [state, setState] = useState(() => (localStorage.getItem(key) as T) || defaultValue);
   function updateState(value?: T) {
     if (value === undefined) {

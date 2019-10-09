@@ -1,6 +1,6 @@
 ---
-name: useStorageState
-route: /useStorageState
+name: useLocalStorageState
+route: /useLocalStorageState
 edit: false
 sidebar: true
 ---
@@ -8,9 +8,9 @@ sidebar: true
 import { Playground } from 'docz';
 import { useRef } from 'react';
 import { Button, Input } from 'antd';
-import useStorageState from './index';
+import useLocalStorageState from './index';
 
-# useStorageState
+# useLocalStorageState
 
 一个可以将状态持久化存储在 localStorage 中的 Hook 。
 
@@ -24,7 +24,7 @@ import useStorageState from './index';
 {
   ()=>{
     function Demo() {
-      const [message, setMessage] = useStorageState('user-message', 'Hello~')
+      const [message, setMessage] = useLocalStorageState('user-message', 'Hello~')
       return (
         <>
           <p>刷新页面后，可以看到输入框中的内容被从 localStorage 中恢复了。</p>
@@ -47,7 +47,7 @@ import useStorageState from './index';
 ## API
 
 ```typescript
-function useStorageState<T extends string = string>(
+function useLocalStorageState<T extends string = string>(
   key: string,
   defaultValue?: T,
 ): [T?, (value?: T) => void]

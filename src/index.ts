@@ -7,7 +7,7 @@ import useControlledValue from './useControlledValue';
 import useDynamicList from './useDynamicList';
 import useEventEmitter from './useEventEmitter';
 import { configResponsive, useResponsive } from './useResponsive';
-import useStorageState from './useStorageState';
+import useLocalStorageState from './useLocalStorageState';
 
 export {
   useAntdTable,
@@ -19,7 +19,7 @@ export {
   useDynamicList,
   useResponsive,
   useEventEmitter,
-  useStorageState,
+  useLocalStorageState,
   configResponsive,
   configRequest,
 };
