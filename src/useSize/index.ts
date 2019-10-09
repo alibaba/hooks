@@ -3,7 +3,7 @@ import ResizeObserver from 'resize-observer-polyfill';
 
 type args = HTMLElement | (() => HTMLElement);
 
-function useSizeRef<T = HTMLElement>(
+function useSize<T = HTMLElement>(
   ...args: args[]
 ): [{ width: number; height: number }, MutableRefObject<T>] {
   const element = useRef<T>(null);
@@ -41,4 +41,4 @@ function useSizeRef<T = HTMLElement>(
   return [state, element as MutableRefObject<T>];
 }
 
-export default useSizeRef;
+export default useSize;
