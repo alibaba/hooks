@@ -12,7 +12,10 @@ describe('useEventEmitter', () => {
       const event$ = useEventEmitter<number>();
       const [count, setCount] = useState(0);
       event$.useSubscription(val => {
-        setCount(count + val);
+        setCount(c => c + val);
+      });
+      event$.useSubscription(val => {
+        setCount(c => c + val + 10);
       });
       return {
         event$,
@@ -20,17 +23,15 @@ describe('useEventEmitter', () => {
       };
     });
 
-  it('getKey should work', () => {
+  it('emit and subscribe should work', () => {
     const hook = setUp();
     act(() => {
       hook.result.current.event$.emit(1);
     });
-    expect(hook.result.current.count).toEqual(1);
+    expect(hook.result.current.count).toEqual(12);
     act(() => {
       hook.result.current.event$.emit(2);
     });
-    expect(hook.result.current.count).toEqual(3);
-    // expect(hook.result.current.getKey(1)).toEqual(1);
-    // expect(hook.result.current.getKey(2)).toEqual(2);
+    expect(hook.result.current.count).toEqual(26);
   });
 });
