@@ -79,6 +79,56 @@ import ReactDragListView from 'react-drag-listview';
 }
 </Playground>
 
+### 连环嵌套
+
+<Playground>
+{
+  ()=>{
+
+    const Card = (props) => {
+
+      const { list, getKey, push } = useDynamicList(props.list || [1])
+
+      return (
+        <div style={{ border: '1px solid #e8e8e8', padding: 16, marginBottom: 16 }}>
+          <Form.Item label='组名称'>
+            <Input placeholder='请填写组名称' defaultValue={props.name} />
+          </Form.Item>
+
+          <Form.Item label='投放节奏'>
+          {
+            list.map((ele, index)=>(
+              <div style={{marginBottom: 16}} key={getKey(index)}>
+                <Input placeholder='请填写广告名称' defaultValue={ele.name} addonBefore={'名称：'} />
+                <Input placeholder='请填写投放节奏' defaultValue={ele.value} addonAfter={'次/天'} />
+              </div>
+            ))
+          }
+          </Form.Item>
+          <Button block onClick={push}>增加广告</Button>
+        </div>
+      )
+    }
+
+    const Demo = (props) => {
+
+      const { list, push } = useDynamicList([{
+        name: '广告组1',
+        list: [{name: '广告1', value: 2}, {name: '广告2', value: 1}]
+      }])
+
+      return (
+        <div style={{width: 400, margin: 'auto'}}>
+          {list.map(ele=><Card list={ele.list} name={ele.name} />)}
+          <Button style={{marginTop: 16}} block onClick={push}>增加卡片</Button>
+        </div>
+      )
+    };
+    return <Demo />
+  }
+}
+</Playground>
+
 ### 动态表格(可拖拽)
 
 <Playground>
