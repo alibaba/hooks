@@ -3,9 +3,12 @@ import ResizeObserver from 'resize-observer-polyfill';
 
 type Args = HTMLElement | (() => HTMLElement);
 
+// @ts-ignore
 declare function useSize<T extends HTMLElement = HTMLElement>(
   ...args: [Args]
 ): [{ width: number; height: number }];
+
+// @ts-ignore
 declare function useSize<T extends HTMLElement = HTMLElement>(
   ...args: []
 ): [{ width: number; height: number }, MutableRefObject<T>];
@@ -42,9 +45,12 @@ function useSize<T extends HTMLElement = HTMLElement>(...args: [Args] | []) {
   }, [element.current, typeof args[0] === 'function' ? undefined : args[0]]);
 
   if (hasPassedInElement) {
-    return [state] as [typeof state];
+    return [state] as [{ width: number; height: number }];
   }
-  return [state, element as MutableRefObject<T>] as [typeof state, MutableRefObject<T>];
+  return [state, element as MutableRefObject<T>] as [
+    { width: number; height: number },
+    MutableRefObject<T>,
+  ];
 }
 
 export default useSize;
