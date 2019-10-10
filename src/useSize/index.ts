@@ -1,25 +1,22 @@
-import React, { useEffect, useState, useRef, MutableRefObject, useLayoutEffect } from 'react';
+import { useState, useRef, MutableRefObject, useLayoutEffect } from 'react';
 import ResizeObserver from 'resize-observer-polyfill';
 
 type Arg = HTMLElement | (() => HTMLElement);
 
-function useSize<T extends HTMLElement = HTMLElement>(): [{ width: number; height: number }];
-function useSize<T extends HTMLElement = HTMLElement>(
-  arg: Arg,
-): [{ width: number; height: number }, MutableRefObject<T>];
-function useSize<T extends HTMLElement = HTMLElement>(arg?: Arg) {
-  const element = useRef<T>(null);
-  const [state, setState] = useState({ width: 0, height: 0 });
+type Size = { width: number; height: number };
+
+function useSize<T extends HTMLElement = HTMLElement>(): [Size];
+function useSize<T extends HTMLElement = HTMLElement>(arg: Arg): [Size, MutableRefObject<T>];
+function useSize<T extends HTMLElement = HTMLElement>(arg?: Arg): [Size, MutableRefObject<T>?] {
+  const element = useRef<T>();
+  const [state, setState] = useState<Size>({ width: 0, height: 0 });
   const hasPassedInElement = !!arg;
 
   useLayoutEffect(() => {
-    const passedInElement = typeof arg === 'function' ? (arg as (() => HTMLElement))() : arg;
+    const passedInElement = typeof arg === 'function' ? arg() : arg;
 
-    if (hasPassedInElement) {
-      if (!passedInElement) {
-        return () => {};
-      }
-    } else if (!element.current) {
+    const targetElement = hasPassedInElement ? passedInElement : element.current;
+    if (!targetElement) {
       return () => {};
     }
 
@@ -29,21 +26,16 @@ function useSize<T extends HTMLElement = HTMLElement>(arg?: Arg) {
       });
     });
 
-    resizeObserver.observe(
-      hasPassedInElement ? (passedInElement as HTMLElement) : (element.current as HTMLElement),
-    );
+    resizeObserver.observe(targetElement);
     return () => {
       resizeObserver.disconnect();
     };
   }, [element.current, typeof arg === 'function' ? undefined : arg]);
 
   if (hasPassedInElement) {
-    return [state] as [{ width: number; height: number }];
+    return [state];
   }
-  return [state, element as MutableRefObject<T>] as [
-    { width: number; height: number },
-    MutableRefObject<T>,
-  ];
+  return [state, element as MutableRefObject<T>];
 }
 
 export default useSize;
