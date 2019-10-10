@@ -19,16 +19,10 @@ export const configRequest = (method: () => any) => {
 const useAPI = <T = any>(opt: IProps<T>) => {
   const requestMethod = opt.method || globalMethod || fetch;
   return useAsync<T>(
-    async () =>
-      new Promise<T>((resolve, reject) => {
-        requestMethod(opt.url, opt.options)
-          .then(async res => {
-            resolve(res.json && typeof res.json === 'function' ? res.json() : res);
-          })
-          .catch(e => {
-            reject(e);
-          });
-      }),
+    async () => {
+      const res = await requestMethod(opt.url, opt.options);
+      return res.json && typeof res.json === 'function' ? res.json() : res;
+    },
     [JSON.stringify(opt)],
     {
       manual: opt.manual,
