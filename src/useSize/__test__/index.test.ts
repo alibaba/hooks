@@ -6,10 +6,17 @@ describe('useSearch', () => {
   it('should be defined', () => {
     expect(useSize).toBeDefined();
   });
-  it('initial value ', () => {
+  it('without argument ', () => {
     const hook = renderHook(() => useSize());
+    expect(hook.result.current.length).toEqual(2);
     expect(hook.result.current[0].width).toEqual(0);
     expect(hook.result.current[0].height).toEqual(0);
     expect(hook.result.current[1].current).toEqual(null);
+  });
+  it('with argument', () => {
+    const hook = renderHook(() => useSize<HTMLBodyElement>(document.body));
+    expect(hook.result.current.length).toEqual(1);
+    expect(hook.result.current[0].width).toEqual(0);
+    expect(hook.result.current[0].height).toEqual(0);
   });
 });
