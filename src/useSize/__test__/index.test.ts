@@ -11,7 +11,7 @@ describe('useSearch', () => {
     expect(hook.result.current.length).toEqual(2);
     expect(hook.result.current[0].width).toEqual(0);
     expect(hook.result.current[0].height).toEqual(0);
-    expect(hook.result.current[1].current).toEqual(null);
+    expect(hook.result.current[1].current).toEqual(undefined);
   });
   it('with argument', () => {
     const hook = renderHook(() => useSize<HTMLBodyElement>(document.body));
