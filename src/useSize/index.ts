@@ -8,7 +8,7 @@ type Size = { width: number; height: number };
 function useSize<T extends HTMLElement = HTMLElement>(): [Size, MutableRefObject<T>];
 function useSize<T extends HTMLElement = HTMLElement>(arg: Arg): [Size];
 function useSize<T extends HTMLElement = HTMLElement>(
-  ...args: Arg[]
+  ...args: [Arg] | []
 ): [Size, MutableRefObject<T>?] {
   const element = useRef<T>();
   const [state, setState] = useState<Size>({ width: 0, height: 0 });
