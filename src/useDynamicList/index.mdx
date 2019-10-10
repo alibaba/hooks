@@ -112,14 +112,14 @@ import ReactDragListView from 'react-drag-listview';
 
     const Demo = (props) => {
 
-      const { list, push } = useDynamicList([{
+      const { list, push, getKey } = useDynamicList([{
         name: '广告组1',
         list: [{name: '广告1', value: 2}, {name: '广告2', value: 1}]
       }])
 
       return (
         <div style={{width: 400, margin: 'auto'}}>
-          {list.map(ele=><Card list={ele.list} name={ele.name} />)}
+          {list.map((ele, index)=><Card key={getKey(index)} list={ele.list} name={ele.name} />)}
           <Button style={{marginTop: 16}} block onClick={push}>增加卡片</Button>
         </div>
       )
