@@ -1,16 +1,19 @@
 import { useState, useRef, MutableRefObject, useLayoutEffect } from 'react';
 import ResizeObserver from 'resize-observer-polyfill';
 
-type Arg = HTMLElement | (() => HTMLElement);
+type Arg = HTMLElement | (() => HTMLElement) | null;
 
 type Size = { width: number; height: number };
 
-function useSize<T extends HTMLElement = HTMLElement>(): [Size];
-function useSize<T extends HTMLElement = HTMLElement>(arg: Arg): [Size, MutableRefObject<T>];
-function useSize<T extends HTMLElement = HTMLElement>(arg?: Arg): [Size, MutableRefObject<T>?] {
+function useSize<T extends HTMLElement = HTMLElement>(): [Size, MutableRefObject<T>];
+function useSize<T extends HTMLElement = HTMLElement>(arg: Arg): [Size];
+function useSize<T extends HTMLElement = HTMLElement>(
+  ...args: Arg[]
+): [Size, MutableRefObject<T>?] {
   const element = useRef<T>();
   const [state, setState] = useState<Size>({ width: 0, height: 0 });
-  const hasPassedInElement = !!arg;
+  const hasPassedInElement = args.length === 1;
+  const arg = args[0];
 
   useLayoutEffect(() => {
     const passedInElement = typeof arg === 'function' ? arg() : arg;
