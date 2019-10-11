@@ -11,10 +11,7 @@ export interface Props {
   [key: string]: any;
 }
 
-export default function useControlledValue<T>(
-  props: Props = {},
-  options: Options = {},
-): [T, (v: T) => void] {
+export default function useControlledValue<T>(props: Props = {}, options: Options = {}) {
   const {
     defaultValuePropName = 'defaultValue',
     valuePropName = 'value',
@@ -55,5 +52,5 @@ export default function useControlledValue<T>(
     [props, valuePropName, trigger],
   );
 
-  return [state, handleSetState];
+  return [state, handleSetState] as const;
 }
