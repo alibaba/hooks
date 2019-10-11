@@ -14,5 +14,5 @@ export default function useLocalStorageState<T extends string = string>(
       setState(value);
     }
   }
-  return [state, updateState] as [typeof state, typeof updateState];
+  return [state, updateState] as const;
 }

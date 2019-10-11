@@ -1,0 +1,93 @@
+---
+name: useSize
+route: /useSize
+menu: '基础 hooks'
+edit: false
+sidebar: true
+---
+
+import { Playground } from 'docz';
+import useSize from './index';
+
+# useSize
+
+一个用于监听 dom 节点尺寸变化的 Hook
+
+## 代码演示
+
+### 基本用法
+
+<Playground>
+{
+  () => {
+    function Demo() {
+      const [state, ref] = useSize()
+      return (
+        <div ref={ref}>
+          try to resize the preview window <br />
+          dimensions -- width: {state.width} px, height: {state.height} px
+        </div>
+      )
+    }
+    return <Demo />
+  }
+}
+</Playground>
+
+### 懒加载（用于监听同一组件内后渲染节点）
+
+<Playground>
+{
+  () => {
+    function Demo() {
+      const [state] = useSize(()=>document.querySelector('#demo2'))
+      return (
+        <div id='demo2'>
+          try to resize the preview window <br />
+          dimensions -- width: {state.width} px, height: {state.height} px
+        </div>
+      )
+    }
+    return <Demo />
+  }
+}
+</Playground>
+
+### 监听提前渲染节点
+
+<Playground>
+{
+  () => {
+    function Demo() {
+      const [state] = useSize(document.querySelector('body'));
+      return (
+        <div>
+          this demo is listening to body size change, try to resize the window instead <br />
+          dimensions -- width: {state.width} px, height: {state.height} px
+        </div>
+      )
+    }
+    return <Demo />
+  }
+}
+</Playground>
+
+## API
+
+```
+const [ state, ref? ] = useSize(dom);
+dom?: HTMLElement | (() => HTMLElement)
+```
+
+### 结果
+
+| 参数     | 说明                                     | 类型       |
+|----------|------------------------------------------|------------|
+| state  | dom 节点的尺寸                             | { width: number, height: number }    |
+| ref     | 当未传入任何参数时，将 ref 绑定给需监听的节点      | -        |
+
+### 参数
+
+| 参数    | 说明                                         | 类型                   | 默认值 |
+|---------|----------------------------------------------|------------------------|--------|
+| dom? | 可选项，如果未传入则会监听返回结果中的 ref，否则会监听传入的节点  | HTMLElement \| (() => HTMLElement) \| undefined | -      |
