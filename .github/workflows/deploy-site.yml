@@ -1,0 +1,20 @@
+# Do not use now
+name: Deploy Doc Site
+on:
+  release:
+    types: [published]
+    branches:
+      - master
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@master
+    - name: deploy
+      uses: actions/zeit-now@master
+      with:
+        args: --prod
+      env:
+        ZEIT_TOKEN: ${{ secrets.ZEIT_TOKEN }}

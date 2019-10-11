@@ -1,6 +1,7 @@
 ---
 name: useAsync
 route: /useAsync
+menu: '中台 hooks'
 edit: false
 sidebar: true
 ---
@@ -113,7 +114,7 @@ import useAsync from './index';
 
     function saveToServer(data){
       return new Promise((resolve)=>{
-        window.setTimeout(()=>{
+        setTimeout(()=>{
           resolve(`${data} saved`);
         }, 2000)
       });
