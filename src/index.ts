@@ -7,6 +7,7 @@ import useControlledValue from './useControlledValue';
 import useDynamicList from './useDynamicList';
 import useEventEmitter from './useEventEmitter';
 import { configResponsive, useResponsive } from './useResponsive';
+import useSize from './useSize';
 import useLocalStorageState from './useLocalStorageState';
 
 export {
@@ -20,6 +21,7 @@ export {
   useResponsive,
   useEventEmitter,
   useLocalStorageState,
+  useSize,
   configResponsive,
   configRequest,
 };
