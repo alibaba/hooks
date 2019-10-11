@@ -2,17 +2,20 @@ import React, { useRef, useEffect, useState, useMemo } from 'react';
 import ResizeObserver from 'resize-observer-polyfill';
 
 export interface OptionType {
-  itemHeight?: number | ((index: number) => number);
+  itemHeight: number | ((index: number) => number);
   buffer?: number;
-  enableCache?: boolean;
 }
 
-export default <T = any>(list: T[], options?: OptionType) => {
+export default <T = any>(list: T[], options: OptionType) => {
   const containerRef = useRef<HTMLElement>();
   // 暂时禁止 cache
   // const distanceCache = useRef<{ [key: number]: number }>({});
   const [state, setState] = useState({ start: 0, end: 10 });
-  const { itemHeight = 30, buffer = 5, enableCache = true } = options || {};
+  const { itemHeight, buffer = 5 } = options;
+
+  if (!itemHeight) {
+    console.warn('please enter a valid itemHeight');
+  }
 
   const getViewCapacity = (containerHeight: number) => {
     if (typeof itemHeight === 'number') {
