@@ -8,6 +8,7 @@ import useDynamicList from './useDynamicList';
 import useEventEmitter from './useEventEmitter';
 import useVirtualList from './useVirtualList';
 import { configResponsive, useResponsive } from './useResponsive';
+import useLocalStorageState from './useLocalStorageState';
 
 export {
   useAntdTable,
@@ -20,6 +21,7 @@ export {
   useVirtualList,
   useResponsive,
   useEventEmitter,
+  useLocalStorageState,
   configResponsive,
   configRequest,
 };
