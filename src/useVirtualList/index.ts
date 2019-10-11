@@ -9,7 +9,8 @@ export interface OptionType {
 
 export default <T = any>(list: T[], options?: OptionType) => {
   const containerRef = useRef<HTMLElement>();
-  const distanceCache = useRef<{ [key: number]: number }>({});
+  // 暂时禁止 cache
+  // const distanceCache = useRef<{ [key: number]: number }>({});
   const [state, setState] = useState({ start: 0, end: 10 });
   const { itemHeight = 30, buffer = 5, enableCache = true } = options || {};
 
@@ -83,20 +84,20 @@ export default <T = any>(list: T[], options?: OptionType) => {
 
   const getDistenceTop = (index: number) => {
     // 如果有缓存，优先返回缓存值
-    if (enableCache && distanceCache.current[index]) {
-      return distanceCache.current[index];
-    }
+    // if (enableCache && distanceCache.current[index]) {
+    //   return distanceCache.current[index];
+    // }
     if (typeof itemHeight === 'number') {
       const height = index * itemHeight;
-      if (enableCache) {
-        distanceCache.current[index] = height;
-      }
+      // if (enableCache) {
+      //   distanceCache.current[index] = height;
+      // }
       return height;
     }
     const height = list.slice(0, index).reduce((sum, _, i) => sum + itemHeight(i), 0);
-    if (enableCache) {
-      distanceCache.current[index] = height;
-    }
+    // if (enableCache) {
+    //   distanceCache.current[index] = height;
+    // }
     return height;
   };
 
