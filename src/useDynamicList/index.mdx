@@ -92,15 +92,34 @@ import ReactDragListView from 'react-drag-listview';
       return (
         <div style={{ border: '1px solid #e8e8e8', padding: 16, marginBottom: 16 }}>
           <Form.Item label='组名称'>
-            <Input placeholder='请填写组名称' defaultValue={props.name} />
+            {
+              props.form.getFieldDecorator(`params[${props.index}].groupName`, {
+                initialValue: props.name
+              })(
+                <Input placeholder='请填写组名称' />
+              )
+            }
           </Form.Item>
 
           <Form.Item label='投放节奏'>
           {
             list.map((ele, index)=>(
               <div style={{marginBottom: 16}} key={getKey(index)}>
-                <Input placeholder='请填写广告名称' defaultValue={ele.name} addonBefore={'名称：'} />
-                <Input placeholder='请填写投放节奏' defaultValue={ele.value} addonAfter={'次/天'} />
+                {
+                  props.form.getFieldDecorator(`params[${props.index}].ad[${getKey(index)}].name`, {
+                    initialValue: ele.name
+                  })(
+                    <Input placeholder='请填写广告名称' addonBefore={'名称：'} />
+                  )
+                }
+                {
+                  props.form.getFieldDecorator(`params[${props.index}].ad[${getKey(index)}].frequency`, {
+                    initialValue: ele.value
+                  })(
+                    <Input placeholder='请填写投放节奏' addonAfter={'次/天'} />
+                  )
+                }
+                
               </div>
             ))
           }
@@ -110,20 +129,35 @@ import ReactDragListView from 'react-drag-listview';
       )
     }
 
-    const Demo = (props) => {
+    const Demo = Form.create()((props) => {
 
-      const { list, push, getKey } = useDynamicList([{
+      const [result, setResult] = useState('');
+
+      const { list, push, getKey, sortForm } = useDynamicList([{
         name: '广告组1',
         list: [{name: '广告1', value: 2}, {name: '广告2', value: 1}]
       }])
 
       return (
-        <div style={{width: 400, margin: 'auto'}}>
-          {list.map((ele, index)=><Card key={getKey(index)} list={ele.list} name={ele.name} />)}
-          <Button style={{marginTop: 16}} block onClick={push}>增加卡片</Button>
+        <div style={{width: 800, margin: 'auto', display: 'flex'}}>
+          <div style={{width: 400, marginRight: 16}}>
+            {list.map((ele, index)=><Card form={props.form} key={getKey(index)} list={ele.list} name={ele.name} index={getKey(index)} />)}
+            <Button style={{marginTop: 16}} block onClick={push}>增加卡片</Button>
+          </div>
+          <div>
+            <Button onClick={()=>{
+              const res = props.form.getFieldsValue().params;
+              const sortedResult = sortForm(res.map(ele=>{
+                ele.ad = sortForm(ele.ad);
+                return ele;
+              }));
+              setResult(JSON.stringify(sortedResult, null ,2));
+            }}>获取表单内容</Button>
+            <div><pre>{result}</pre></div>
+          </div>
         </div>
       )
-    };
+    });
     return <Demo />
   }
 }
