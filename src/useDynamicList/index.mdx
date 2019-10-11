@@ -147,11 +147,8 @@ import ReactDragListView from 'react-drag-listview';
           <div>
             <Button onClick={()=>{
               const res = props.form.getFieldsValue().params;
-              const sortedResult = sortForm(res.map(ele=>{
-                ele.ad = sortForm(ele.ad);
-                return ele;
-              }));
-              setResult(JSON.stringify(sortedResult, null ,2));
+              const sortedResult = sortForm(res);
+              setResult(JSON.stringify(sortedResult, null, 2));
             }}>获取表单内容</Button>
             <div><pre>{result}</pre></div>
           </div>
