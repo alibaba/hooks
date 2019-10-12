@@ -21,7 +21,7 @@ import useVirtualList from './index';
 {
   ()=>{
     function Demo(){
-      const { list, containerProps, wrapperProps } = useVirtualList(Array.from(Array(99999).keys()), { buffer: 30, itemHeight: 30 })
+      const { list, containerProps, wrapperProps } = useVirtualList(Array.from(Array(99999).keys()), { overscan: 30, itemHeight: 30 })
       return (
         <>
           <div {...containerProps} style={{ height: '300px', overflow: 'auto' }}>
@@ -69,7 +69,7 @@ import useVirtualList from './index';
         scrollTo,
       } = useVirtualList(Array.from(Array(99999).keys()), {
         itemHeight: (i)=> i % 2 === 0 ? 42 + 8 : 84 + 8,
-        buffer: 10,
+        overscan: 10,
       })
       return (
         <div>
@@ -120,7 +120,7 @@ const {
 
 Options: {
   itemHeight: number | ((index: number) => number),
-  buffer: number,
+  overscan: number,
 }
 ```
 

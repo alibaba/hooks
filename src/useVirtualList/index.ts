@@ -108,7 +108,9 @@ export default <T = any>(list: T[], options: OptionType) => {
     })),
     scrollTo,
     containerProps: {
-      ref: containerRef,
+      ref: (ele: any) => {
+        containerRef.current = ele;
+      },
       onScroll: (e: any) => {
         e.preventDefault();
         calculateRange();

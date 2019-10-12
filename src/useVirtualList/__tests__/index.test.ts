@@ -42,7 +42,9 @@ describe('useVirtualList', () => {
     >;
 
     const setup = (list: any[] = [], options: {}) => {
-      hook = renderHook(() => useVirtualList(list as unknown[], options as OptionType));
+      hook = renderHook(() =>
+        useVirtualList(list as unknown[], { itemHeight: 30, ...options } as OptionType),
+      );
       hook.result.current.containerProps.ref(mockRef);
     };
 
@@ -58,13 +60,13 @@ describe('useVirtualList', () => {
         hook.result.current.scrollTo(80);
       });
 
-      // 10 items plus 5 buffer * 2
+      // 10 items plus 5 overscan * 2
       expect(hook.result.current.list.length).toBe(20);
       expect(mockRef.scrollTop).toBe(80 * 30);
     });
 
     it('test with fixed height', () => {
-      setup(Array.from(Array(99999).keys()), { buffer: 0 });
+      setup(Array.from(Array(99999).keys()), { overscan: 0 });
 
       act(() => {
         hook.result.current.scrollTo(20);
@@ -76,7 +78,7 @@ describe('useVirtualList', () => {
 
     it('test with dynamic height', () => {
       setup(Array.from(Array(99999).keys()), {
-        buffer: 0,
+        overscan: 0,
         itemHeight: (i: number) => (i % 2 === 0 ? 30 : 60),
       });
 
