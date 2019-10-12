@@ -1,17 +1,17 @@
-import React, { useRef, useEffect, useState, useMemo } from 'react';
-import ResizeObserver from 'resize-observer-polyfill';
+import { useEffect, useState, useMemo } from 'react';
+import { useSize } from '../index';
 
 export interface OptionType {
   itemHeight: number | ((index: number) => number);
-  buffer?: number;
+  overscan?: number;
 }
 
 export default <T = any>(list: T[], options: OptionType) => {
-  const containerRef = useRef<HTMLElement>();
+  const [size, containerRef] = useSize<HTMLElement>();
   // 暂时禁止 cache
   // const distanceCache = useRef<{ [key: number]: number }>({});
   const [state, setState] = useState({ start: 0, end: 10 });
-  const { itemHeight, buffer = 5 } = options;
+  const { itemHeight, overscan = 5 } = options;
 
   if (!itemHeight) {
     console.warn('please enter a valid itemHeight');
@@ -58,25 +58,15 @@ export default <T = any>(list: T[], options: OptionType) => {
       const offset = getOffset(element.scrollTop);
       const viewCapacity = getViewCapacity(element.clientHeight);
 
-      const from = offset - buffer;
-      const to = offset + viewCapacity + buffer;
+      const from = offset - overscan;
+      const to = offset + viewCapacity + overscan;
       setState({ start: from < 0 ? 0 : from, end: to > list.length ? list.length : to });
     }
   };
 
   useEffect(() => {
-    const observer = new ResizeObserver(() => {
-      calculateRange();
-    });
-
-    if (containerRef.current) {
-      observer.observe(containerRef.current);
-    }
-
-    return () => {
-      observer.disconnect();
-    };
-  }, []);
+    calculateRange();
+  }, [size.width, size.height]);
 
   const totalHeight = useMemo(() => {
     if (typeof itemHeight === 'number') {
@@ -118,9 +108,7 @@ export default <T = any>(list: T[], options: OptionType) => {
     })),
     scrollTo,
     containerProps: {
-      ref: (ref: HTMLElement) => {
-        containerRef.current = ref;
-      },
+      ref: containerRef,
       onScroll: (e: any) => {
         e.preventDefault();
         calculateRange();
