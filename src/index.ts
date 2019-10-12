@@ -6,6 +6,7 @@ import useSearch from './useSearch';
 import useControlledValue from './useControlledValue';
 import useDynamicList from './useDynamicList';
 import useEventEmitter from './useEventEmitter';
+import useVirtualList from './useVirtualList';
 import { configResponsive, useResponsive } from './useResponsive';
 import useSize from './useSize';
 import useLocalStorageState from './useLocalStorageState';
@@ -18,6 +19,7 @@ export {
   useSearch,
   useControlledValue,
   useDynamicList,
+  useVirtualList,
   useResponsive,
   useEventEmitter,
   useLocalStorageState,

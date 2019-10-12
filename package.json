@@ -49,6 +49,7 @@
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-drag-listview": "^0.1.6",
+    "resize-observer-polyfill": "^1.5.1",
     "typescript": "^3.3.3",
     "umi-request": "^1.0.8"
   },
