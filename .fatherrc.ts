@@ -17,10 +17,10 @@ const options: IBundleOptions = {
   doc: {
     title: '@umijs/hooks',
     repository: 'https://github.com/umijs/hooks',
-    theme: 'docz-theme-umi-hooks',
+    theme: '/Users/troy/Desktop/my-npm/fix/docz-theme-umi/es',
     ignore: ['readme.md', 'changelog.md', 'readme_zh-CN.md', 'contributing.md', 'license.md'],
     themeConfig: {
-      codemirrorTheme: 'docz-dark',
+      codemirrorTheme: 'docz-light',
       // showPlaygroundEditor: true,
       menus: [
         { title: '发布日志', link: 'https://github.com/umijs/hooks/releases' },

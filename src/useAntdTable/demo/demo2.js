@@ -1,6 +1,6 @@
+import React from 'react';
 import { Button, Col, Form, Input, Row, Table, Select } from 'antd';
-import React, { useState } from 'react';
-import useAntdTable from '.';
+import useAntdTable from '..';
 
 const { Option } = Select;
 

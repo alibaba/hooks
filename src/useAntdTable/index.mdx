@@ -6,12 +6,16 @@ edit: false
 sidebar: true
 ---
 
-import { Playground } from 'docz';
-import { Button, Col, Form, Input, Row, Select, Table } from 'antd';
-import { useState } from 'react';
-import CacheDemo from './CacheDemo';
-import Demo from './Demo';
-import useAntdTable from './';
+import BasicDemo from './demo/demo1';
+import BasicDemoCode from '!raw-loader!./demo/demo1';
+
+import Demo from './demo/demo2';
+import DemoCode from '!raw-loader!./demo/demo2';
+
+import CacheDemo from './demo/demo3';
+import CacheDemoCode from '!raw-loader!./demo/demo3';
+
+import JackBox from 'jackbox';
 
 # useAntdTable
 
@@ -27,96 +31,21 @@ import useAntdTable from './';
 
 ### 基本的列表页
 
-<Playground>
-{
-  ()=>{
-    const { Option } = Select;
-
-    const Demo = () => {
-      const [gender, setGender] = useState();
-
-      const getTableData = ({ current, pageSize }) => {
-        console.log(current, pageSize, gender);
-        return fetch(`https://randomuser.me/api?results=55&page=${current}&size=${pageSize}&gender=${gender}`)
-          .then(res => {
-            return res.json();
-          }).then(res => ({
-            page: res.info.page,
-            total: res.info.results,
-            data: res.results
-          }));
-      }
-
-      const { tableProps } = useAntdTable(getTableData, [gender], {
-        defaultPageSize: 5
-      });
-
-      const columns = [
-        {
-          title: 'name',
-          dataIndex: 'name',
-          key: 'name',
-          width: 100,
-          render({ }, record) {
-            return record.name.title;
-          },
-        },
-        {
-          title: 'email',
-          dataIndex: 'email',
-          key: 'email',
-          width: 350,
-        },
-        {
-          title: 'phone',
-          dataIndex: 'phone',
-          key: 'phone',
-        },
-        {
-          title: 'gender',
-          key: 'gender',
-          width: 200,
-          dataIndex: 'gender',
-        },
-      ];
-
-      return (
-        <>
-          <Select style={{ width: 180, marginBottom: 24 }} onChange={(g)=>setGender(g)} placeholder='性别筛选' allowClear>
-            <Option value="male">male</Option>
-            <Option value="female">female</Option>
-          </Select>
-          <Table
-            columns={columns}
-            rowKey='email'
-            {...tableProps}
-          />
-        </>
-      )
-    }
-
-    return <Demo />;
-  }
-}
-</Playground>
+<JackBox demoName="基本的列表页" file={BasicDemoCode} locale='en-US'>
+  <BasicDemo />
+</JackBox>
 
 ### 搜索表单与列表联动
 
-<Playground>
-  <>
-    <Demo />
-    代码见：<a target='_blank' href='https://github.com/umijs/hooks/blob/master/src/useAntdTable/Demo.js'>https://github.com/umijs/hooks/blob/master/src/useAntdTable/Demo.js</a>
-  </>
-</Playground>
+<JackBox demoName="搜索表单与列表联动" file={DemoCode}>
+  <Demo />
+</JackBox>
 
 ### 数据缓存
 
-<Playground>
-  <>
-    <CacheDemo />
-    代码见：<a target='_blank' href='https://github.com/umijs/hooks/blob/master/src/useAntdTable/CacheDemo.js'>https://github.com/umijs/hooks/blob/master/src/useAntdTable/CacheDemo.js</a>
-  </>
-</Playground>
+<JackBox demoName="数据缓存" file={CacheDemoCode}>
+  <CacheDemo />
+</JackBox>
 
 ## API
 

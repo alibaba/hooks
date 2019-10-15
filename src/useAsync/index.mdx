@@ -6,11 +6,19 @@ edit: false
 sidebar: true
 ---
 
-import { Playground } from 'docz';
-import { useState, useMemo } from 'react';
-import { Button, Spin, Form, Input, message } from 'antd';
-import 'antd/es/select/style';
-import useAsync from './index';
+import JackBox from 'jackbox';
+
+import Demo1 from './demo/demo1';
+import Demo1Code from '!raw-loader!./demo/demo1';
+
+import Demo2 from './demo/demo2';
+import Demo2Code from '!raw-loader!./demo/demo2';
+
+import Demo3 from './demo/demo3';
+import Demo3Code from '!raw-loader!./demo/demo3';
+
+import Demo4 from './demo/demo4';
+import Demo4Code from '!raw-loader!./demo/demo4';
 
 # useAsync
 
@@ -20,135 +28,27 @@ import useAsync from './index';
 
 ### 立即执行
 
-<Playground>
-{
-  ()=>{
-
-    function getEmail(id){
-      return fetch(`https://randomuser.me/api?id=${id}`).then(res => res.json());
-    }
-
-    function Demo(){
-      const [ state, set ] = useState(0);
-      const { data, loading, cancel, run } = useAsync(()=>getEmail(state), [state])
-      const email = useMemo(()=>(((data||{}).results || [])[0] || {}).email, [data]);
-
-      return (
-        <>
-          <Spin spinning={loading}><div>id: {state}</div> <div>email: {email}</div></Spin>
-          <Button.Group style={{marginTop: 16}}>
-            <Button onClick={run}>reload</Button>
-            <Button onClick={cancel}>cancel</Button>
-            <Button onClick={()=>set(c=>c+1)}>increase id</Button>
-          </Button.Group>
-        </>
-      )
-    }
-    return <Demo />
-  }
-}
-</Playground>
+<JackBox file={Demo1Code} demoName='立即执行'>
+  <Demo1 />
+</JackBox>
 
 ### 手动触发执行
 
-<Playground>
-{
-  ()=>{
-
-    function getEmail(){
-      return fetch(`https://randomuser.me/api`).then(res => res.json());
-    }
-
-    function Demo(){
-      const { data, loading, cancel, run } = useAsync(()=>getEmail(), [], {manual: true})
-      const email = useMemo(()=>(((data||{}).results || [])[0] || {}).email, [data]);
-
-      return (
-        <>
-          <Spin spinning={loading}>email: {email}</Spin>
-          <Button onClick={run} style={{marginTop: 16}}>fetch</Button>
-        </>
-      )
-    }
-    return <Demo />
-  }
-}
-</Playground>
+<JackBox file={Demo2Code} demoName='手动触发执行' description='执行函数 run 时，async function 才会被执行'>
+  <Demo2 />
+</JackBox>
 
 ### 轮询
 
-<Playground>
-{
-  ()=>{
-
-    function getEmail(){
-      return fetch(`https://randomuser.me/api`).then(res => res.json());
-    }
-
-    function Demo(){
-      const { data, loading, timer, run } = useAsync(()=>getEmail(), [], { manual: true, pollingInterval: 3000 })
-      const email = useMemo(()=>(((data||{}).results || [])[0] || {}).email, [data]);
-
-      return (
-        <>
-          <Spin spinning={loading}>email: {email}</Spin>
-          <Button.Group style={{marginTop: 16}}>
-            <Button onClick={run}>start polling</Button>
-            <Button onClick={timer.pause}>pause</Button>
-            <Button onClick={timer.stop}>stop</Button>
-            <Button onClick={timer.resume}>resume</Button>
-          </Button.Group>
-        </>
-      )
-    }
-    return <Demo />
-  }
-}
-</Playground>
+<JackBox file={Demo3Code} demoName='轮询' description='使用 timer 控制轮训的执行与停止'>
+  <Demo3 />
+</JackBox>
 
 ### 表单提交
 
-<Playground>
-{
-  ()=>{
-
-    function saveToServer(data){
-      return new Promise((resolve)=>{
-        setTimeout(()=>{
-          resolve(`${data} saved`);
-        }, 2000)
-      });
-    }
-
-    const Demo = Form.create()((props) => {
-      const { data, loading, cancel, run } = useAsync((data)=>saveToServer(data), [], 
-        { 
-          manual: true,
-          onSuccess: (data) => message.success(data),
-          onError: (error) => console.log(error) || message.error(error),
-        }
-      )
-      const email = useMemo(()=>(((data||{}).results || [])[0] || {}).email, [data]);
-      const { getFieldDecorator, getFieldValue } = props.form;
-
-      const submit = () => {
-        const fromData = getFieldValue('name');
-        run(fromData);
-      }
-
-      return (
-        <>
-          {
-            getFieldDecorator('name')(<Input style={{width: 300, marginRight: 16}} placeholder='please input your name' />)
-          }
-          <Button type='primary' loading={loading} onClick={submit} style={{marginTop: 16}}>save</Button>
-        </>
-      )
-    });
-    return <Demo />
-  }
-}
-</Playground>
+<JackBox file={Demo4Code} demoName='表单提交' description='配合 antd 表单提交的例子'>
+  <Demo4 />
+</JackBox>
 
 ## API
 

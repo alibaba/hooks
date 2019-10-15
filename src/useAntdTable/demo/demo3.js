@@ -1,6 +1,6 @@
-import { Button, Col, Form, Input, Row, Table } from 'antd';
+import { Button, Form, Input, Table } from 'antd';
 import React, { useState } from 'react';
-import useAntdTable from '.';
+import useAntdTable from '..';
 
 const getTableData = ({ current, pageSize, ...rest }) => {
   console.log(current, pageSize, rest);
