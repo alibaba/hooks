@@ -221,12 +221,12 @@ export default function useAsync<Result = any>(
   }, []);
 
   useEffect(
-    (...args: any[]) => {
+    () => {
       if (options.pollingInterval) {
         intervalAsync();
       } else if (!options.manual) {
-        // 直接值行
-        run(...(args || []));
+        // 直接执行
+        run();
       }
 
       return () => {
