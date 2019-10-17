@@ -3,7 +3,7 @@ import useAPI, { configRequest } from './useAPI';
 import useAsync from './useAsync';
 import useLoadMore from './useLoadMore';
 import useSearch from './useSearch';
-import useControlledValue from './useControlledValue';
+import useControllableValue from './useControllableValue';
 import useDynamicList from './useDynamicList';
 import useEventEmitter from './useEventEmitter';
 import useVirtualList from './useVirtualList';
@@ -17,7 +17,8 @@ export {
   useAsync,
   useLoadMore,
   useSearch,
-  useControlledValue,
+  useControllableValue as useControlledValue,
+  useControllableValue,
   useDynamicList,
   useVirtualList,
   useResponsive,

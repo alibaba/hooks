@@ -1,17 +1,17 @@
 ---
-name: useControlledValue
-route: /useControlledValue
+name: useControllableValue
+route: /useControllableValue
 menu: '中台 hooks'
 edit: false
 sidebar: true
 ---
 
 import { Playground } from 'docz';
-import useControlledValue from './index';
+import useControllableValue from './index';
 import { useState } from 'react';
 import { InputNumber, Button } from 'antd';
 
-# useControlledValue
+# useControllableValue
 
 一个帮你处理受控组件中受控值的 Hook。
 
@@ -22,7 +22,7 @@ import { InputNumber, Button } from 'antd';
   ()=>{
 
     const ControlledComponent = (props) => {
-      const [state, setState] = useControlledValue(props);
+      const [state, setState] = useControllableValue(props);
 
       return (
         <InputNumber
@@ -68,7 +68,7 @@ import { InputNumber, Button } from 'antd';
 ## API
 
 ```
-const [state, setState] = useControlledValue(params);
+const [state, setState] = useControllableValue(params);
 
 params:(
   props: object;
