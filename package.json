@@ -20,6 +20,7 @@
   "scripts": {
     "start": "npm run dev",
     "dev": "father doc dev",
+    "js": "node ./.ts2js.js",
     "build": "father build",
     "test": "father test",
     "cov": "father test --coverage",
@@ -51,6 +52,7 @@
     "react-dom": "^16.8.6",
     "react-drag-listview": "^0.1.6",
     "resize-observer-polyfill": "^1.5.1",
+    "sylvanas": "^0.4.2",
     "typescript": "^3.3.3",
     "umi-request": "^1.0.8"
   },
