@@ -1,5 +1,5 @@
 // main code of your hooks
-import React, { useState } from 'react';
+import { useState } from 'react';
 
 export default () => {
   const [ state, setState ] = useState('');
