@@ -25,6 +25,21 @@
     {
       "src": "/(.*)",
       "dest": "/"
+    },
+    {
+      "src": "/zh-cn/static/(.*)",
+      "headers": {
+        "cache-control": "s-maxage=604800"
+      },
+      "dest": "/zh-cn/static/$1"
+    },
+    {
+      "src": "/zh-cn/assets.json",
+      "dest": "/zh-cn/assets.json"
+    },
+    {
+      "src": "/zh-cn/(.*)",
+      "dest": "/zh-cn"
     }
   ],
   "github": {
