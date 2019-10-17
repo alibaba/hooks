@@ -23,7 +23,7 @@
       "dest": "/zh-cn/assets.json"
     },
     {
-      "src": "/zh-cn/(.*)",
+      "src": "/zh-cn(/(.*))?",
       "dest": "/zh-cn"
     },
     {
@@ -40,7 +40,7 @@
     {
       "src": "/(.*)",
       "dest": "/"
-    },
+    }
   ],
   "github": {
     "autoAlias": false
