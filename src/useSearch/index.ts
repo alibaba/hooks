@@ -30,24 +30,21 @@ function useSearch<Result>(
   deps?: DependencyList | Options,
   options?: Options,
 ): ReturnValue<Result> {
-  if (typeof deps === 'object' && !Array.isArray(deps)) {
-    options = deps as Options;
-    deps = [];
-  }
-
-  deps = (deps || []) as DependencyList;
-  options = options || {};
+  const _deps: DependencyList = (Array.isArray(deps) ? deps : []) as DependencyList;
+  const _options: Options = (typeof deps === 'object' && !Array.isArray(deps)
+    ? deps
+    : options || {}) as Options;
 
   const [value, setValue] = useState<any>('');
 
   const timer = useRef<any>();
 
-  const { loading, data, run, cancel: cancelAsync } = useAsync<Result>(fn, [value, ...deps], {
+  const { loading, data, run, cancel: cancelAsync } = useAsync<Result>(fn, [value, ..._deps], {
     manual: true,
   });
 
-  const wait: number = useMemo(() => (options.wait === undefined ? 300 : options.wait), [
-    options.wait,
+  const wait: number = useMemo(() => (_options.wait === undefined ? 300 : _options.wait), [
+    _options.wait,
   ]);
 
   /* value 变化时，需要防抖 */
@@ -70,7 +67,7 @@ function useSearch<Result>(
   /* 依赖变化时，需要立即重新请求 */
   useUpdateEffect(() => {
     run(value);
-  }, deps);
+  }, _deps);
 
   const cancel = useCallback(() => {
     /* 先取消防抖 */

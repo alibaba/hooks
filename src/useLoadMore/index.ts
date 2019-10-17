@@ -48,17 +48,14 @@ function useLoadMore<Result = any, Item = any>(
   deps?: DependencyList | Options<Result, Item>,
   options?: Options<Result, Item>,
 ): ReturnValue<Item> {
-  if (typeof deps === 'object' && !Array.isArray(deps)) {
-    options = deps as Options<Result, Item>;
-    deps = [];
-  }
-
-  deps = (deps || []) as DependencyList;
-  options = options || {};
+  const _deps: DependencyList = (Array.isArray(deps) ? deps : []) as DependencyList;
+  const _options: Options<Result, Item> = (typeof deps === 'object' && !Array.isArray(deps)
+    ? deps
+    : options || {}) as Options<Result, Item>;
 
   /* 初始化值 */
-  const { itemKey, initPageSize = 10, formatResult, ref, threshold = 100 } = options;
-  let { incrementSize } = options;
+  const { itemKey, initPageSize = 10, formatResult, ref, threshold = 100 } = _options;
+  let { incrementSize } = _options;
 
   if (!incrementSize) {
     incrementSize = initPageSize;
@@ -159,7 +156,7 @@ function useLoadMore<Result = any, Item = any>(
   /* deps 变化后，重新 reload */
   useUpdateEffect(() => {
     reload();
-  }, deps);
+  }, _deps);
 
   return {
     data,
