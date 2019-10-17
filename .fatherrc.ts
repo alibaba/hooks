@@ -17,7 +17,7 @@ const options: IBundleOptions = {
   doc: {
     title: '@umijs/hooks',
     repository: 'https://github.com/umijs/hooks',
-    theme: '/Users/troy/Desktop/my-npm/fix/docz-theme-umi/es',
+    theme: 'docz-theme-umi-hooks',
     ignore: ['readme.md', 'changelog.md', 'readme_zh-CN.md', 'contributing.md', 'license.md'],
     themeConfig: {
       codemirrorTheme: 'docz-light',
