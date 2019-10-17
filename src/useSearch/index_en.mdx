@@ -8,7 +8,8 @@ sidebar: true
 import JackBox from 'jackbox';
 
 import Demo1 from './demo/demo1';
-import Demo1Code from '!raw-loader!./demo/demo1';
+import Demo1CodeTsx from '!raw-loader!./demo/demo1.tsx';
+import Demo1CodeJsx from '!raw-loader!./demo/demo1.jsx';
 
 # useSearch
 
@@ -22,7 +23,7 @@ Applicable to common side input, asynchronous search scenes.
 
 ## Examples
 
-<JackBox file={Demo1Code} demoName='Select Search' description='Basic Usage'>
+<JackBox jsCode={Demo1CodeJsx} tsCode={Demo1CodeTsx} demoName='Select Search' description='Basic Usage'>
   <Demo1 />
 </JackBox>
 
