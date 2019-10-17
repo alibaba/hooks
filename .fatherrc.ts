@@ -18,7 +18,8 @@ const options: IBundleOptions = {
     title: '@umijs/hooks',
     repository: 'https://github.com/umijs/hooks',
     theme: 'docz-theme-umi-hooks',
-    ignore: ['readme.md', 'changelog.md', 'readme_zh-CN.md', 'contributing.md', 'license.md'],
+    files: './src/**/*.{md,markdown,mdx}',
+    ignore: ['readme.md', 'changelog.md', 'readme_zh-CN.md', 'contributing.md', 'license.md', '__template__/*.mdx'],
     themeConfig: {
       codemirrorTheme: 'docz-light',
       // showPlaygroundEditor: true,
