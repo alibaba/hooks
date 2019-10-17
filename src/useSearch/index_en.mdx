@@ -1,0 +1,69 @@
+---
+name: useSearch
+route: /useSearch
+menu: 'Business Hooks'
+edit: false
+sidebar: true
+---
+import JackBox from 'jackbox';
+
+import Demo1 from './demo/demo1';
+import Demo1Code from '!raw-loader!./demo/demo1';
+
+# useSearch
+
+Applicable to common side input, asynchronous search scenes.
+
+**Core Characteristics**
+
+* Async request control(loading, request timing control, etc)
+* Debounce
+* Auto unmount
+
+## Examples
+
+<JackBox file={Demo1Code} demoName='Select Search' description='Basic Usage'>
+  <Demo1 />
+</JackBox>
+
+## API
+
+```javascript
+const result: T = useSearch<T>(
+  asyncFn: (value: any) => Promise<T>,
+  options?: Options,
+);
+
+const result: T = useSearch<T>(
+  asyncFn: (value: any) => Promise<T>,
+  deps?: any[],
+  options?: Options,
+);
+```
+
+### Result
+
+| Property | Description                                         | Type                 |
+|----------|-----------------------------------------------------|----------------------|
+| data     | Search result data                                  | any                  |
+| loading  | Loading status                                      | boolean              |
+| onChange | Trigger asyncFn, the parameters are sent to asyncFn | (value: any) => void |
+| value    | onChange parameters                                 | -                    |
+| cancel   | Cancel the ongoing request and debounce in the wait | () => void           |
+| run      | Re-execute the asyncFn with the current value       | () => void           |
+
+### Params
+
+| Property | Description                                                        | Type                   | Default |
+|----------|--------------------------------------------------------------------|------------------------|---------|
+| asyncFn  | Async request function, parameter is onChange's value              | (value: any)=> Promise | -       |
+| deps     | Depends on the array, if the deps changes, it will trigger asyncFn |                        |         |
+| any[]    | []                                                                 |                        |         |
+| options  | Optional configuration item, see Options                           | -                      | -       |
+
+
+### Options
+
+| Property | Description       | Type   | Default |
+|----------|-------------------|--------|---------|
+| wait     | Debounce interval | number | 300     |

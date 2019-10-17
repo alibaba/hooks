@@ -1,5 +1,34 @@
 import { IBundleOptions } from 'father-build';
 
+
+const zhConfig = {
+  dest: '.doc/zh-cn',
+  base: '/zh-cn',
+  files: './src/**/*_cn.{md,markdown,mdx}',
+  themeConfig: {
+    codemirrorTheme: 'docz-light',
+    menus: [
+      { title: '发布日志', link: 'https://github.com/umijs/hooks/releases' },
+      { title: 'Github', link: 'https://github.com/umijs/hooks' },
+    ],
+  },
+}
+
+const enConfig = {
+  dest: '.doc',
+  base: '/',
+  files: './src/**/*_en.{md,markdown,mdx}',
+  themeConfig: {
+    codemirrorTheme: 'docz-light',
+    menus: [
+      { title: 'Changelog', link: 'https://github.com/umijs/hooks/releases' },
+      { title: 'Github', link: 'https://github.com/umijs/hooks' },
+    ],
+  },
+}
+
+const config = process.env.LAN === 'zh-CN' ? zhConfig : enConfig;
+
 const options: IBundleOptions = {
   entry: 'src/index.ts',
   esm: 'rollup',
@@ -18,16 +47,8 @@ const options: IBundleOptions = {
     title: '@umijs/hooks',
     repository: 'https://github.com/umijs/hooks',
     theme: 'docz-theme-umi-hooks',
-    files: './src/**/*.{md,markdown,mdx}',
     ignore: ['readme.md', 'changelog.md', 'readme_zh-CN.md', 'contributing.md', 'license.md', '__template__/*.mdx'],
-    themeConfig: {
-      codemirrorTheme: 'docz-light',
-      // showPlaygroundEditor: true,
-      menus: [
-        { title: '发布日志', link: 'https://github.com/umijs/hooks/releases' },
-        { title: 'Github', link: 'https://github.com/umijs/hooks' },
-      ],
-    },
+    ...config,
   },
   extraBabelPlugins: [[
     'babel-plugin-import',
