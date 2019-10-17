@@ -75,12 +75,28 @@ export interface ReturnValue<T> {
     pause: noop;
   };
 }
-
-export default function useAsync<Result = any>(
+function useAsync<Result = any>(
   fn: (...args: any[]) => Promise<Result>,
-  deps: DependencyList = [],
-  options: Options<Result> = {},
+  options?: Options<Result>,
+): ReturnValue<Result>;
+function useAsync<Result = any>(
+  fn: (...args: any[]) => Promise<Result>,
+  deps?: DependencyList,
+  options?: Options<Result>,
+): ReturnValue<Result>;
+function useAsync<Result = any>(
+  fn: (...args: any[]) => Promise<Result>,
+  deps?: DependencyList | Options<Result>,
+  options?: Options<Result>,
 ): ReturnValue<Result> {
+  if (typeof deps === 'object' && !Array.isArray(deps)) {
+    options = deps as Options<Result>;
+    deps = [];
+  }
+
+  deps = (deps || []) as DependencyList;
+  options = options || {};
+
   const [state, set] = useState<ReturnValue<Result>>({
     loading: false,
     cancel: noop,
@@ -220,22 +236,19 @@ export default function useAsync<Result = any>(
     set(s => ({ ...s, error: new Error('canceled'), loading: false }));
   }, []);
 
-  useEffect(
-    () => {
-      if (options.pollingInterval) {
-        intervalAsync();
-      } else if (!options.manual) {
-        // 直接执行
-        run();
-      }
+  useEffect(() => {
+    if (options.pollingInterval) {
+      intervalAsync();
+    } else if (!options.manual) {
+      // 直接执行
+      run();
+    }
 
-      return () => {
-        count.current += 1;
-        stop();
-      };
-    },
-    [options.manual, options.pollingInterval, run, intervalAsync],
-  );
+    return () => {
+      count.current += 1;
+      stop();
+    };
+  }, [options.manual, options.pollingInterval, run, intervalAsync]);
 
   return {
     loading: state.loading,
@@ -250,3 +263,5 @@ export default function useAsync<Result = any>(
     },
   };
 }
+
+export default useAsync;

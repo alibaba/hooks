@@ -16,11 +16,28 @@ export interface Options {
   wait?: number;
 }
 
-export default function useAntdSearch<Result>(
+function useSearch<Result>(
   fn: (value: any) => Promise<Result>,
-  deps: DependencyList = [],
-  options: Options = {},
+  options?: Options,
+): ReturnValue<Result>;
+function useSearch<Result>(
+  fn: (value: any) => Promise<Result>,
+  deps?: DependencyList,
+  options?: Options,
+): ReturnValue<Result>;
+function useSearch<Result>(
+  fn: (value: any) => Promise<Result>,
+  deps?: DependencyList | Options,
+  options?: Options,
 ): ReturnValue<Result> {
+  if (typeof deps === 'object' && !Array.isArray(deps)) {
+    options = deps as Options;
+    deps = [];
+  }
+
+  deps = (deps || []) as DependencyList;
+  options = options || {};
+
   const [value, setValue] = useState<any>('');
 
   const timer = useRef<any>();
@@ -78,3 +95,5 @@ export default function useAntdSearch<Result>(
     run: trigger,
   };
 }
+
+export default useSearch;

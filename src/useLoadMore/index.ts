@@ -34,11 +34,28 @@ export interface FnParams {
   startTime?: number;
 }
 
-export default function useLoadMore<Result = any, Item = any>(
+function useLoadMore<Result = any, Item = any>(
   fn: (params: FnParams) => Promise<Result>,
-  deps: DependencyList = [],
-  options: Options<Result, Item>,
+  options?: Options<Result, Item>,
+): ReturnValue<Item>;
+function useLoadMore<Result = any, Item = any>(
+  fn: (params: FnParams) => Promise<Result>,
+  deps?: DependencyList,
+  options?: Options<Result, Item>,
+): ReturnValue<Item>;
+function useLoadMore<Result = any, Item = any>(
+  fn: (params: FnParams) => Promise<Result>,
+  deps?: DependencyList | Options<Result, Item>,
+  options?: Options<Result, Item>,
 ): ReturnValue<Item> {
+  if (typeof deps === 'object' && !Array.isArray(deps)) {
+    options = deps as Options<Result, Item>;
+    deps = [];
+  }
+
+  deps = (deps || []) as DependencyList;
+  options = options || {};
+
   /* 初始化值 */
   const { itemKey, initPageSize = 10, formatResult, ref, threshold = 100 } = options;
   let { incrementSize } = options;
@@ -154,3 +171,5 @@ export default function useLoadMore<Result = any, Item = any>(
     noMore: !!total && data.length >= total,
   };
 }
+
+export default useLoadMore;

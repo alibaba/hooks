@@ -104,11 +104,28 @@ const reducer = (state = initState, action: { type: string; payload?: {} }) => {
   }
 };
 
-export default function useAntdTable<Result, Item>(
+function useAntdTable<Result, Item>(
   fn: (params: FnParams) => Promise<any>,
-  deps: DependencyList = [],
-  options: Options<Result, Item> = {},
+  options?: Options<Result, Item>,
+): ReturnValue<Item>;
+function useAntdTable<Result, Item>(
+  fn: (params: FnParams) => Promise<any>,
+  deps?: DependencyList,
+  options?: Options<Result, Item>,
+): ReturnValue<Item>;
+function useAntdTable<Result, Item>(
+  fn: (params: FnParams) => Promise<any>,
+  deps?: DependencyList | Options<Result, Item>,
+  options?: Options<Result, Item>,
 ): ReturnValue<Item> {
+  if (typeof deps === 'object' && !Array.isArray(deps)) {
+    options = deps as Options<Result, Item>;
+    deps = [];
+  }
+
+  deps = (deps || []) as DependencyList;
+  options = options || {};
+
   const { defaultPageSize = 10, id, form, formatResult } = options;
   const [state, dispatch] = useReducer(reducer, { ...initState, pageSize: defaultPageSize });
 
@@ -339,3 +356,5 @@ export default function useAntdTable<Result, Item>(
 
   return result;
 }
+
+export default useAntdTable;
