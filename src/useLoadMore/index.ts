@@ -1,5 +1,5 @@
 import { DependencyList, RefObject, useEffect, useState, useCallback, useRef } from 'react';
-import { useUpdateEffect } from 'react-use';
+import useUpdateEffect from '../useUpdateEffect';
 import useAsync from '../useAsync';
 
 export interface ReturnValue<Item> {
@@ -124,7 +124,7 @@ export default function useLoadMore<Result = any, Item = any>(
   /* 如果有 ref，则会上拉加载更多 */
   useEffect(() => {
     if (!ref || !ref.current) {
-      return () => {};
+      return () => { };
     }
     ref.current.addEventListener('scroll', scrollMethod);
     return () => {
