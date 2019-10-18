@@ -10,6 +10,7 @@ import useVirtualList from './useVirtualList';
 import { configResponsive, useResponsive } from './useResponsive';
 import useSize from './useSize';
 import useLocalStorageState from './useLocalStorageState';
+import useUpdateEffect from './useUpdateEffect';
 
 export {
   useAntdTable,
@@ -26,4 +27,5 @@ export {
   useSize,
   configResponsive,
   configRequest,
+  useUpdateEffect,
 };
