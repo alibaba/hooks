@@ -11,13 +11,20 @@ import { configResponsive, useResponsive } from './useResponsive';
 import useSize from './useSize';
 import useLocalStorageState from './useLocalStorageState';
 
+const useControlledValue: typeof useControllableValue = function (...args) {
+  console.warn(
+    'useControlledValue is deprecated and will be removed in the next major version. Please use useControllableValue instead.',
+  );
+  return useControllableValue(...args);
+};
+
 export {
   useAntdTable,
   useAPI,
   useAsync,
   useLoadMore,
   useSearch,
-  useControllableValue as useControlledValue,
+  useControlledValue,
   useControllableValue,
   useDynamicList,
   useVirtualList,
