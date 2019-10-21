@@ -76,6 +76,25 @@ describe('useSelections', () => {
     it('selectAll and unSelectAll should work correct', async () => {
       expect(hookUtils(hook).helper.noneSelected).toEqual(true);
       act(() => {
+        hookUtils(hook).helper.selectAll();
+      });
+      expect(hookUtils(hook).seleected).toEqual([1, 2, 3]);
+      expect(hookUtils(hook).helper.allSelected).toEqual(true);
+      expect(hookUtils(hook).helper.noneSelected).toEqual(false);
+      expect(hookUtils(hook).helper.halfSelected).toEqual(false);
+
+      act(() => {
+        hookUtils(hook).helper.unSelectAll();
+      });
+      expect(hookUtils(hook).seleected).toEqual([]);
+      expect(hookUtils(hook).helper.allSelected).toEqual(false);
+      expect(hookUtils(hook).helper.noneSelected).toEqual(true);
+      expect(hookUtils(hook).helper.halfSelected).toEqual(false);
+    });
+
+    it('toggleAll should work correct', async () => {
+      expect(hookUtils(hook).helper.noneSelected).toEqual(true);
+      act(() => {
         hookUtils(hook).helper.toggleAll();
       });
       expect(hookUtils(hook).seleected).toEqual([1, 2, 3]);
