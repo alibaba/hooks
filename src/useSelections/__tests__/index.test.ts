@@ -35,8 +35,8 @@ describe('useSelections', () => {
   const hookUtils = (hook: ReturnType<typeof setUp>) => {
     const { current } = hook.result;
     return {
-      seleected: current[0][0],
-      helper: current[0][1],
+      seleected: current[0].selected,
+      helper: current[0],
       setItems: current[1],
     };
   };

@@ -60,7 +60,8 @@ export default function useSelections<T>(items: T[]) {
 
   const toggleAll = () => (allSelected ? unSelectAll() : selectAll());
 
-  const helper = {
+  return {
+    selected,
     isSelected,
     select,
     unSelect,
@@ -72,7 +73,5 @@ export default function useSelections<T>(items: T[]) {
     noneSelected,
     halfSelected,
     setSelected,
-  };
-
-  return [selected, helper] as const;
+  } as const;
 }
