@@ -1,94 +1,76 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useCallback } from 'react';
 
-export default function useSelections<T>(items: T[], subItems?: T[]) {
+export default function useSelections<T>(items: T[]) {
   const [selected, setSelected] = useState<T[]>([]);
 
-  const { subItemsMap, selectedMap, subMode, subSelectedSet } = useMemo(() => {
-    const selectedMap = new Set<T>(selected);
-    const subItemsMap = new Set<T>(subItems);
-    const subMode = Array.isArray(subItems);
-    const subSelectedSet = new Set<T>(selected.filter(o => subItemsMap.has(o)));
-    return { subItemsMap, selectedMap, subMode, subSelectedSet };
-  }, [items, subItems, selected]);
+  const { selectedSet } = useMemo(() => ({ selectedSet: new Set<T>(selected) }), [selected]);
 
-  function isSelected(item: T) {
-    return selectedMap.has(item);
-  }
+  const isSelected = useCallback((item: T) => selectedSet.has(item), [selectedSet]);
 
-  function selectItem(item: T, callback?: (s: T[]) => void) {
-    selectedMap.add(item);
-    setSelected(Array.from(selectedMap));
-    if (callback && typeof callback === 'function') {
-      callback(Array.from(selectedMap));
-    }
-  }
+  const select = useCallback(
+    (item: T) => {
+      selectedSet.add(item);
+      return setSelected(Array.from(selectedSet));
+    },
+    [selectedSet],
+  );
 
-  function deleteItem(item: T, callback?: (s: T[]) => void) {
-    selectedMap.delete(item);
-    setSelected(Array.from(selectedMap));
-    if (callback && typeof callback === 'function') {
-      callback(Array.from(selectedMap));
-    }
-  }
+  const unSelect = useCallback(
+    (item: T) => {
+      selectedSet.delete(item);
+      return setSelected(Array.from(selectedSet));
+    },
+    [selectedSet],
+  );
 
-  function selectAll(callback?: (s: T[]) => void) {
-    if (subMode) {
-      subItems.forEach(o => {
-        selectedMap.add(o);
-      });
-    } else {
-      items.forEach(o => {
-        selectedMap.add(o);
-      });
-    }
-    setSelected(Array.from(selectedMap));
-    if (callback && typeof callback === 'function') {
-      callback(Array.from(selectedMap));
-    }
-  }
+  const toggle = useCallback(
+    (item: T) => {
+      if (isSelected(item)) {
+        unSelect(item);
+      } else {
+        select(item);
+      }
+    },
+    [selectedSet],
+  );
 
-  function removeAll(callback?: (s: T[]) => void) {
-    let result = [];
-    if (subMode) {
-      result = selected.filter(o => !subItemsMap.has(o));
-    }
-    setSelected(result);
-    if (callback && typeof callback === 'function') {
-      callback(result);
-    }
-  }
+  const selectAll = useCallback(() => {
+    items.forEach(o => {
+      selectedSet.add(o);
+    });
+    setSelected(Array.from(selectedSet));
+  }, [selectedSet, items]);
 
-  const noneSelected = subMode ? subSelectedSet.size === 0 : selectedMap.size === 0;
+  const unSelectAll = useCallback(() => {
+    items.forEach(o => {
+      selectedSet.delete(o);
+    });
+    setSelected(Array.from(selectedSet));
+  }, [selectedSet, items]);
 
-  const allSelected =
-    (subMode ? subItems.every(o => subSelectedSet.has(o)) : items.every(o => selectedMap.has(o))) &&
-    !noneSelected;
+  const noneSelected = useMemo(() => items.every(o => !selectedSet.has(o)), [selectedSet, items]);
 
-  const selectToggle = (o: T, callback?: (s: T[]) => void) => {
-    if (!isSelected(o)) {
-      return () => selectItem(o, callback);
-    }
-    return () => deleteItem(o, callback);
-  };
-
-  const toggleAll = (callback?: (s: T[]) => void) => {
-    return allSelected ? removeAll(callback) : selectAll(callback);
-  };
+  const allSelected = useMemo(() => items.every(o => selectedSet.has(o) && !noneSelected), [
+    selectedSet,
+    items,
+    noneSelected,
+  ]);
 
   const halfSelected = !noneSelected && !allSelected;
 
+  const toggleAll = () => (allSelected ? unSelectAll() : selectAll());
+
   const helper = {
     isSelected,
+    select,
+    unSelect,
+    toggle,
     selectAll,
-    removeAll,
-    selectItem,
+    unSelectAll,
+    toggleAll,
     allSelected,
     noneSelected,
-    deleteItem,
-    selectToggle,
-    toggleAll,
     halfSelected,
-    setSelected,
   };
 
   return [selected, helper] as const;
