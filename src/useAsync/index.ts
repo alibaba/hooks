@@ -75,12 +75,25 @@ export interface ReturnValue<T> {
     pause: noop;
   };
 }
-
-export default function useAsync<Result = any>(
+function useAsync<Result = any>(
   fn: (...args: any[]) => Promise<Result>,
-  deps: DependencyList = [],
-  options: Options<Result> = {},
+  options?: Options<Result>,
+): ReturnValue<Result>;
+function useAsync<Result = any>(
+  fn: (...args: any[]) => Promise<Result>,
+  deps?: DependencyList,
+  options?: Options<Result>,
+): ReturnValue<Result>;
+function useAsync<Result = any>(
+  fn: (...args: any[]) => Promise<Result>,
+  deps?: DependencyList | Options<Result>,
+  options?: Options<Result>,
 ): ReturnValue<Result> {
+  const _deps: DependencyList = (Array.isArray(deps) ? deps : []) as DependencyList;
+  const _options: Options<Result> = (typeof deps === 'object' && !Array.isArray(deps)
+    ? deps
+    : options || {}) as Options<Result>;
+
   const [state, set] = useState<ReturnValue<Result>>({
     loading: false,
     cancel: noop,
@@ -101,7 +114,7 @@ export default function useAsync<Result = any>(
     return () => {
       count.current += 1;
     };
-  }, deps);
+  }, _deps);
 
   const run = useCallback((...args: any[]): Promise<Result | undefined> => {
     // 确保不会返回被取消的结果
@@ -110,8 +123,8 @@ export default function useAsync<Result = any>(
     return fn(...args)
       .then(data => {
         if (runCount === count.current) {
-          if (options.onSuccess) {
-            options.onSuccess(data);
+          if (_options.onSuccess) {
+            _options.onSuccess(data);
           }
           if (runCount === count.current) {
             set(s => ({ ...s, data, loading: false }));
@@ -121,8 +134,8 @@ export default function useAsync<Result = any>(
       })
       .catch(error => {
         if (runCount === count.current) {
-          if (options.onError) {
-            options.onError(error);
+          if (_options.onError) {
+            _options.onError(error);
           }
           if (runCount === count.current) {
             set(s => ({ ...s, error, loading: false }));
@@ -130,7 +143,7 @@ export default function useAsync<Result = any>(
         }
         return error;
       });
-  }, deps);
+  }, _deps);
 
   const stop = useCallback(() => {
     count.current += 1;
@@ -174,17 +187,17 @@ export default function useAsync<Result = any>(
     async (...args: any[]) => {
       const runCount = count.current;
       let ret: Result | undefined;
-      if (!options.manual || !init.current) {
+      if (!_options.manual || !init.current) {
         ret = await run(...(args || []));
       }
       if (count.current === runCount) {
         // 只初始化定时器，不开始计时
         timer.current = new Timer<Result>(
           () => intervalAsync(...args),
-          options.pollingInterval as number,
+          _options.pollingInterval as number,
         );
         // 如果设置了 manual，则默认不开始计时
-        if (init.current && options.manual) {
+        if (init.current && _options.manual) {
           // await run(...(args || []));
           init.current = false;
         } else {
@@ -194,15 +207,15 @@ export default function useAsync<Result = any>(
       }
       return ret;
     },
-    [options.pollingInterval, options.manual, run],
+    [_options.pollingInterval, _options.manual, run],
   );
 
   const reload = useCallback(
     (...args: any[]): Promise<Result | undefined> => {
       // 防止上次数据返回
       count.current += 1;
-      if (options.pollingInterval) {
-        if (!options.manual) {
+      if (_options.pollingInterval) {
+        if (!_options.manual) {
           // 如果有 polling，清理上次的计时器
           stop();
         }
@@ -211,7 +224,7 @@ export default function useAsync<Result = any>(
       // 直接运行
       return run(...(args || []));
     },
-    [run, options.pollingInterval],
+    [run, _options.pollingInterval],
   );
 
   const cancel = useCallback(() => {
@@ -220,29 +233,26 @@ export default function useAsync<Result = any>(
     set(s => ({ ...s, error: new Error('canceled'), loading: false }));
   }, []);
 
-  useEffect(
-    () => {
-      if (options.pollingInterval) {
-        intervalAsync();
-      } else if (!options.manual) {
-        // 直接执行
-        run();
-      }
+  useEffect(() => {
+    if (_options.pollingInterval) {
+      intervalAsync();
+    } else if (!_options.manual) {
+      // 直接执行
+      run();
+    }
 
-      return () => {
-        count.current += 1;
-        stop();
-      };
-    },
-    [options.manual, options.pollingInterval, run, intervalAsync],
-  );
+    return () => {
+      count.current += 1;
+      stop();
+    };
+  }, [_options.manual, _options.pollingInterval, run, intervalAsync]);
 
   return {
     loading: state.loading,
     error: state.error,
     data: state.data,
     cancel,
-    run: options.manual && options.pollingInterval ? start : reload,
+    run: _options.manual && _options.pollingInterval ? start : reload,
     timer: {
       stop,
       resume,
@@ -250,3 +260,5 @@ export default function useAsync<Result = any>(
     },
   };
 }
+
+export default useAsync;
