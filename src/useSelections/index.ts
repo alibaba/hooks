@@ -71,6 +71,7 @@ export default function useSelections<T>(items: T[]) {
     allSelected,
     noneSelected,
     halfSelected,
+    setSelected,
   };
 
   return [selected, helper] as const;
