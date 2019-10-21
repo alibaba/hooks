@@ -29,7 +29,6 @@
     "pub:doc": "now --prod"
   },
   "dependencies": {
-    "react-use": "^10.6.2",
     "resize-observer-polyfill": "^1.5.1"
   },
   "peerDependencies": {

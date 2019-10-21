@@ -1,0 +1,71 @@
+---
+name: useUpdateEffect
+route: /useUpdateEffect
+menu: '基础 hooks'
+edit: false
+sidebar: true
+---
+
+import { Playground } from 'docz';
+import useUpdateEffect from './index';
+
+# useUpdateEffect
+
+一个作用于组件 didMount 阶段以后的 useEffect hook。
+
+## 代码演示
+
+> 使用上和 useEffect 一模一样，只是生命周期放在了组件 didMount 之后。
+
+<Playground>
+{
+  () => {
+    function Demo() {
+      const [count, setCount] = React.useState(0);
+
+      React.useEffect(() => {
+        const time = setTimeout(() => {
+          setCount(count => count + 1)
+        }, 1000)
+
+        return () => {
+          clearTimeout(time)
+        }
+      })
+
+      useUpdateEffect(() => {
+        // you can look console count 1 and beyond
+        console.log(`count: ${count}`)
+
+        return () => {
+          // do something
+        }
+      }) // you can include deps array if necessary
+
+      return (
+        <div>
+          <p>请打开控制台查看：</p>
+          Count: {count}
+        </div>
+      )
+    }
+    return <Demo />
+  }
+}
+</Playground>
+
+## API
+
+```js
+useUpdateEffect(
+  effect: () => void,
+  deps?: deps,
+)
+```
+
+### 参数
+
+| 参数    | 说明                                         | 类型                   | 默认值 |
+|---------|----------------------------------------------|------------------------|--------|
+| effect | 可执行函数  | Function | -      |
+| deps | 可选项，传入依赖变化的对象  | array | array \| undefined | -      |
