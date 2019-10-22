@@ -104,12 +104,26 @@ const reducer = (state = initState, action: { type: string; payload?: {} }) => {
   }
 };
 
-export default function useAntdTable<Result, Item>(
+function useAntdTable<Result, Item>(
   fn: (params: FnParams) => Promise<any>,
-  deps: DependencyList = [],
-  options: Options<Result, Item> = {},
+  options?: Options<Result, Item>,
+): ReturnValue<Item>;
+function useAntdTable<Result, Item>(
+  fn: (params: FnParams) => Promise<any>,
+  deps?: DependencyList,
+  options?: Options<Result, Item>,
+): ReturnValue<Item>;
+function useAntdTable<Result, Item>(
+  fn: (params: FnParams) => Promise<any>,
+  deps?: DependencyList | Options<Result, Item>,
+  options?: Options<Result, Item>,
 ): ReturnValue<Item> {
-  const { defaultPageSize = 10, id, form, formatResult } = options;
+  const _deps: DependencyList = (Array.isArray(deps) ? deps : []) as DependencyList;
+  const _options: Options<Result, Item> = (typeof deps === 'object' && !Array.isArray(deps)
+    ? deps
+    : options || {}) as Options<Result, Item>;
+
+  const { defaultPageSize = 10, id, form, formatResult } = _options;
   const [state, dispatch] = useReducer(reducer, { ...initState, pageSize: defaultPageSize });
 
   /* 临时记录切换前的表单数据 */
@@ -117,7 +131,7 @@ export default function useAntdTable<Result, Item>(
 
   const stateRef = useRef<UseTableInitState>(({} as unknown) as UseTableInitState);
   stateRef.current = state;
-  const { run, loading } = useAsync(fn, deps, {
+  const { run, loading } = useAsync(fn, _deps, {
     manual: true,
   });
 
@@ -173,7 +187,7 @@ export default function useAntdTable<Result, Item>(
   /* deps 变化后，重置表格 */
   useUpdateEffect(() => {
     reload();
-  }, deps);
+  }, _deps);
 
   /* state.count 变化时，重新请求数据 */
   useUpdateEffect(() => {
@@ -339,3 +353,5 @@ export default function useAntdTable<Result, Item>(
 
   return result;
 }
+
+export default useAntdTable;
