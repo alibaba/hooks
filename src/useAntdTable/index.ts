@@ -1,7 +1,7 @@
 import { WrappedFormUtils } from 'antd/lib/form/Form';
 import { PaginationConfig } from 'antd/lib/pagination';
 import { DependencyList, useEffect, useReducer, useRef, useCallback } from 'react';
-import { useUpdateEffect } from 'react-use';
+import useUpdateEffect from '../useUpdateEffect';
 import useAsync from '../useAsync';
 
 interface UseAntdTableFormUtils extends WrappedFormUtils {
