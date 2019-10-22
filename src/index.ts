@@ -11,6 +11,7 @@ import { configResponsive, useResponsive } from './useResponsive';
 import useSize from './useSize';
 import useLocalStorageState from './useLocalStorageState';
 import useUpdateEffect from './useUpdateEffect';
+import usePagination from './usePagination';
 
 export {
   useAntdTable,
@@ -28,4 +29,5 @@ export {
   configResponsive,
   configRequest,
   useUpdateEffect,
+  usePagination,
 };
