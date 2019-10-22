@@ -209,7 +209,7 @@ function useAntdTable<Result, Item>(
       };
     }
     return () => {};
-  }, [form, id, refresh, searchSubmit, state.count]);
+  }, []);
 
   /* deps 变化后，重置表格 */
   useUpdateEffect(() => {
@@ -299,7 +299,7 @@ function useAntdTable<Result, Item>(
         reload();
       });
     },
-    [form, getCurrentFieldsValues, reload, state.formData],
+    [form, reload],
   );
 
   // 重置表单
@@ -321,7 +321,7 @@ function useAntdTable<Result, Item>(
     });
 
     reload();
-  }, [form, getCurrentFieldsValues, reload]);
+  }, [form, reload]);
 
   // 切换搜索类型
   const changeSearchType = useCallback(() => {
@@ -336,7 +336,7 @@ function useAntdTable<Result, Item>(
         searchType: targetSearchType,
       },
     });
-  }, [form, getCurrentFieldsValues, state.searchType]);
+  }, [state.searchType]);
 
   // 表格翻页 排序 筛选等
   const changeTable = useCallback(
@@ -361,7 +361,7 @@ function useAntdTable<Result, Item>(
         },
       });
     },
-    [state.count, state.filters, state.sorter.field, state.sorter.order],
+    [state.count],
   );
 
   const result: ReturnValue<Item> = {
