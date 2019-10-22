@@ -36,7 +36,7 @@ import  { useState, useMemo } from 'react';
       <div>
         <div>Selected : {selected.join(',')}</div>
         <div style={{ borderBottom: '1px solid #E9E9E9', padding: '10px 0' }}>
-          <Checkbox checked={allSelected} onClick={() => toggleAll()} indeterminate={halfSelected}>
+          <Checkbox checked={allSelected} onClick={toggleAll} indeterminate={halfSelected}>
             Check all
           </Checkbox>
           <Checkbox
@@ -91,10 +91,10 @@ const {
 | select       | 选择元素           | (value: T) => void    |
 | unSelect     | 取消选择元素       | (value: T) => void    |
 | toggle       | 反选元素           | (value: T) => void    |
-| unSelect     | 选择全部元素       | () => void            |
+| selectAll    | 选择全部元素       | () => void            |
 | unSelectAll  | 取消选择全部元素   | (value: T) => void    |
 | toggleAll    | 反选全部元素       | (value: T) => void    |
 | allSelected  | 是否全选           | boolean               |
-| noneSelected | 是否一个都美元选择 | boolean               |
+| noneSelected | 是否一个都没有选择 | boolean               |
 | halfSelected | 是否半选           | boolean               |
 | setSelected  | 设置选择的元素     | (value:T[]) => void   |

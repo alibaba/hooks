@@ -1,64 +1,67 @@
-import { useState, useMemo, useCallback } from 'react';
+/* eslint-disable no-shadow */
+import { useState, useMemo } from 'react';
 
 export default function useSelections<T>(items: T[]) {
   const [selected, setSelected] = useState<T[]>([]);
 
-  const { selectedSet } = useMemo(() => ({ selectedSet: new Set<T>(selected) }), [selected]);
+  const { selectedSet, isSelected, select, unSelect, toggle } = useMemo(() => {
+    const selectedSet = new Set<T>(selected);
 
-  const isSelected = useCallback((item: T) => selectedSet.has(item), [selectedSet]);
+    const isSelected = (item: T) => selectedSet.has(item);
 
-  const select = useCallback(
-    (item: T) => {
+    const select = (item: T) => {
       selectedSet.add(item);
       return setSelected(Array.from(selectedSet));
-    },
-    [selectedSet],
-  );
+    };
 
-  const unSelect = useCallback(
-    (item: T) => {
+    const unSelect = (item: T) => {
       selectedSet.delete(item);
       return setSelected(Array.from(selectedSet));
-    },
-    [selectedSet],
-  );
+    };
 
-  const toggle = useCallback(
-    (item: T) => {
+    const toggle = (item: T) => {
       if (isSelected(item)) {
         unSelect(item);
       } else {
         select(item);
       }
-    },
-    [selectedSet],
-  );
+    };
 
-  const selectAll = useCallback(() => {
-    items.forEach(o => {
-      selectedSet.add(o);
-    });
-    setSelected(Array.from(selectedSet));
-  }, [selectedSet, items]);
+    return { selectedSet, isSelected, select, unSelect, toggle };
+  }, [selected]);
 
-  const unSelectAll = useCallback(() => {
-    items.forEach(o => {
-      selectedSet.delete(o);
-    });
-    setSelected(Array.from(selectedSet));
-  }, [selectedSet, items]);
-
-  const noneSelected = useMemo(() => items.every(o => !selectedSet.has(o)), [selectedSet, items]);
-
-  const allSelected = useMemo(() => items.every(o => selectedSet.has(o) && !noneSelected), [
-    selectedSet,
-    items,
+  const {
+    selectAll,
+    unSelectAll,
     noneSelected,
-  ]);
+    allSelected,
+    halfSelected,
+    toggleAll,
+  } = useMemo(() => {
+    const selectAll = () => {
+      items.forEach(o => {
+        selectedSet.add(o);
+      });
+      setSelected(Array.from(selectedSet));
+    };
 
-  const halfSelected = !noneSelected && !allSelected;
+    const unSelectAll = () => {
+      items.forEach(o => {
+        selectedSet.delete(o);
+      });
+      setSelected(Array.from(selectedSet));
+    };
 
-  const toggleAll = () => (allSelected ? unSelectAll() : selectAll());
+    const noneSelected = items.every(o => !selectedSet.has(o));
+
+    const allSelected = items.every(o => selectedSet.has(o)) && !noneSelected;
+
+    const halfSelected = !noneSelected && !allSelected;
+
+    const toggleAll = () => (allSelected ? unSelectAll() : selectAll());
+
+    return { selectAll, unSelectAll, noneSelected, allSelected, halfSelected, toggleAll };
+  }, [selectedSet, items]);
 
   return {
     selected,
