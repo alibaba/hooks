@@ -1,0 +1,61 @@
+---
+name: useSelections
+route: /useSelections
+menu: '中台 hooks'
+edit: false
+sidebar: true
+---
+
+import { Playground } from 'docz';
+import useSelections from '../useSelections';
+import { Checkbox, Switch, Col, Row } from 'antd';
+import 'antd/es/select/style';
+import  { useState, useMemo } from 'react';
+
+# useSelections
+
+选择逻辑的封装，支持多选，单选，全选逻辑，还提供了是否选择，是否全选，是否半选的状态。
+
+## 代码演示
+
+<Playground>
+  {() => {
+    const [hideOdd, setHideOdd] = useState(false);
+    const list = useMemo(() => {
+      if (hideOdd) {
+        return [2, 4, 6, 8];
+      }
+      return [1, 2, 3, 4, 5, 6, 7, 8];
+    }, [hideOdd]);
+
+    const { selected, allSelected, isSelected, toggle, toggleAll, halfSelected } = useSelections(
+      list,
+    );
+
+    return (
+      <div>
+        <div>selected:{selected.join(',')}</div>
+        <Switch checked={hideOdd} onClick={() => setHideOdd(v => !v)}></Switch>
+        <div style={{ borderBottom: '1px solid #E9E9E9' }}>
+          <Checkbox checked={allSelected} onClick={() => toggleAll()} indeterminate={halfSelected}>
+            Check all
+          </Checkbox>
+        </div>
+        <Checkbox.Group style={{ width: '100%' }}>
+          <Row>
+            {list.map(o => {
+              return (
+                <Col span={12} key={o}>
+                  <Checkbox checked={isSelected(o)} onClick={() => toggle(o)}>
+                    {o}
+                  </Checkbox>
+                </Col>
+              );
+            })}
+          </Row>
+        </Checkbox.Group>
+      </div>
+    );
+  }}
+</Playground>
+
