@@ -3,7 +3,7 @@ import useAPI, { configRequest } from './useAPI';
 import useAsync from './useAsync';
 import useLoadMore from './useLoadMore';
 import useSearch from './useSearch';
-import useControlledValue from './useControlledValue';
+import useControllableValue from './useControllableValue';
 import useDynamicList from './useDynamicList';
 import useEventEmitter from './useEventEmitter';
 import useVirtualList from './useVirtualList';
@@ -13,6 +13,13 @@ import useLocalStorageState from './useLocalStorageState';
 import useUpdateEffect from './useUpdateEffect';
 import usePagination from './usePagination';
 
+const useControlledValue: typeof useControllableValue = function (...args) {
+  console.warn(
+    'useControlledValue is deprecated and will be removed in the next major version. Please use useControllableValue instead.',
+  );
+  return useControllableValue(...args);
+};
+
 export {
   useAntdTable,
   useAPI,
@@ -20,6 +27,7 @@ export {
   useLoadMore,
   useSearch,
   useControlledValue,
+  useControllableValue,
   useDynamicList,
   useVirtualList,
   useResponsive,
