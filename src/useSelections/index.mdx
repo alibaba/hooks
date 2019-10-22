@@ -34,28 +34,68 @@ import  { useState, useMemo } from 'react';
 
     return (
       <div>
-        <div>selected:{selected.join(',')}</div>
-        <Switch checked={hideOdd} onClick={() => setHideOdd(v => !v)}></Switch>
-        <div style={{ borderBottom: '1px solid #E9E9E9' }}>
+        <div>Selected : {selected.join(',')}</div>
+        <div style={{ borderBottom: '1px solid #E9E9E9', padding: '10px 0' }}>
           <Checkbox checked={allSelected} onClick={() => toggleAll()} indeterminate={halfSelected}>
             Check all
           </Checkbox>
+          <Checkbox
+            checked={hideOdd}
+            onClick={() => setHideOdd(v => !v)}
+            indeterminate={halfSelected}
+          >
+            Hide Odd
+          </Checkbox>
         </div>
-        <Checkbox.Group style={{ width: '100%' }}>
-          <Row>
-            {list.map(o => {
-              return (
-                <Col span={12} key={o}>
-                  <Checkbox checked={isSelected(o)} onClick={() => toggle(o)}>
-                    {o}
-                  </Checkbox>
-                </Col>
-              );
-            })}
-          </Row>
-        </Checkbox.Group>
+        <Row style={{ padding: '10px 0' }}>
+          {list.map(o => {
+            return (
+              <Col span={12} key={o}>
+                <Checkbox checked={isSelected(o)} onClick={() => toggle(o)}>
+                  {o}
+                </Checkbox>
+              </Col>
+            );
+          })}
+        </Row>
       </div>
     );
   }}
 </Playground>
 
+### API
+
+```typescript
+const {
+  selected,
+  isSelected,
+  select,
+  unSelect,
+  toggle,
+  unSelect,
+  unSelectAll,
+  toggleAll,
+  allSelected,
+  noneSelected,
+  halfSelected,
+  setSelected,
+} = useSelections([]);
+```
+
+
+### 结果
+
+| 参数         | 说明               | 类型                  |
+| ------------ | ------------------ | --------------------- |
+| selected     | 已经选择的元素     | array                 |
+| isSelected   | 是否被选择         | (value: T) => boolean |
+| select       | 选择元素           | (value: T) => void    |
+| unSelect     | 取消选择元素       | (value: T) => void    |
+| toggle       | 反选元素           | (value: T) => void    |
+| unSelect     | 选择全部元素       | () => void            |
+| unSelectAll  | 取消选择全部元素   | (value: T) => void    |
+| toggleAll    | 反选全部元素       | (value: T) => void    |
+| allSelected  | 是否全选           | boolean               |
+| noneSelected | 是否一个都美元选择 | boolean               |
+| halfSelected | 是否半选           | boolean               |
+| setSelected  | 设置选择的元素     | (value:T[]) => void   |
