@@ -35,7 +35,7 @@ export default function useSelections<T>(items: T[]) {
     unSelectAll,
     noneSelected,
     allSelected,
-    halfSelected,
+    partiallySelected,
     toggleAll,
   } = useMemo(() => {
     const selectAll = () => {
@@ -56,11 +56,11 @@ export default function useSelections<T>(items: T[]) {
 
     const allSelected = items.every(o => selectedSet.has(o)) && !noneSelected;
 
-    const halfSelected = !noneSelected && !allSelected;
+    const partiallySelected = !noneSelected && !allSelected;
 
     const toggleAll = () => (allSelected ? unSelectAll() : selectAll());
 
-    return { selectAll, unSelectAll, noneSelected, allSelected, halfSelected, toggleAll };
+    return { selectAll, unSelectAll, noneSelected, allSelected, partiallySelected, toggleAll };
   }, [selectedSet, items]);
 
   return {
@@ -74,7 +74,7 @@ export default function useSelections<T>(items: T[]) {
     toggleAll,
     allSelected,
     noneSelected,
-    halfSelected,
+    partiallySelected,
     setSelected,
   } as const;
 }
