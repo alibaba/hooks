@@ -13,6 +13,8 @@ import {
 import useAsync from '../useAsync';
 import useUpdateEffect from '../useUpdateEffect';
 
+const isEqual = require('lodash.isequal');
+
 interface UseAntdTableFormUtils extends WrappedFormUtils {
   getFieldInstance?: (name: string) => {};
 }
@@ -347,7 +349,7 @@ function useAntdTable<Result, Item>(
     ) => {
       /* 如果 filter，或者 sort 变化，就初始化 current */
       const needReload =
-        JSON.stringify(f) !== JSON.stringify(state.filters) ||
+        !isEqual(f, state.filters) ||
         s.field !== state.sorter.field ||
         s.order !== state.sorter.order;
       dispatch({
