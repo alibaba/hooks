@@ -1,5 +1,5 @@
 import { useEffect, useState, useMemo } from 'react';
-import { useSize } from '../index';
+import useSize from '../useSize';
 
 export interface OptionType {
   itemHeight: number | ((index: number) => number);
