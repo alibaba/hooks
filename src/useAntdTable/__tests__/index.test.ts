@@ -97,7 +97,40 @@ describe('useAntdTable', () => {
     expect(hook.result.current.tableProps.pagination.pageSize).toEqual(10);
     expect(hook.result.current.tableProps.pagination.total).toEqual(20);
   });
-
+  it('should sorter, filters work', async () => {
+    queryArgs = undefined;
+    act(() => {
+      hook = setUp({
+        asyncFn,
+      });
+    });
+    await hook.waitForNextUpdate();
+    act(() => {
+      hook.result.current.tableProps.onChange({
+        current: 2,
+        pageSize: 5,
+      });
+    });
+    await hook.waitForNextUpdate();
+    expect(hook.result.current.tableProps.pagination.current).toEqual(2);
+    /* 改变 filter, sorter */
+    act(() => {
+      hook.result.current.tableProps.onChange(
+        {
+          current: 2,
+          pageSize: 5,
+        },
+        { gender: ['male'] },
+        { field: 'email', order: 'ascend' } as any,
+      );
+    });
+    await hook.waitForNextUpdate();
+    expect(queryArgs.current).toEqual(1);
+    expect(queryArgs.pageSize).toEqual(5);
+    expect(queryArgs.sorter.field).toEqual('email');
+    expect(queryArgs.sorter.order).toEqual('ascend');
+    expect(queryArgs.filters.gender[0]).toEqual('male');
+  });
   it('should form, defaultPageSize, id work', async () => {
     queryArgs = undefined;
     act(() => {
