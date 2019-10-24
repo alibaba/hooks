@@ -10,6 +10,8 @@ import useVirtualList from './useVirtualList';
 import { configResponsive, useResponsive } from './useResponsive';
 import useSize from './useSize';
 import useLocalStorageState from './useLocalStorageState';
+import useUpdateEffect from './useUpdateEffect';
+import usePagination from './usePagination';
 
 const useControlledValue: typeof useControllableValue = function (...args) {
   console.warn(
@@ -34,4 +36,6 @@ export {
   useSize,
   configResponsive,
   configRequest,
+  useUpdateEffect,
+  usePagination,
 };
