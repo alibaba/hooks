@@ -145,9 +145,9 @@ const result: ReturnValue<Item> = usePagination<Result, Item>(
 | pagination.pageSize       | 每页数据量               | number                                    |
 | pagination.total          | 数据总量                 | number                                    |
 | pagination.totalPage      | 总页数                   | number                                    |
-| pagination.onChange       | 修改 current 和 pageSize | (current: number, pageSize: number)=>void |
-| pagination.changeCurrent  | 修改 current             | (current: number)=>void                   |
-| pagination.changePageSize | 修改 pageSize            | (pageSize: number)=>void                  |
+| pagination.onChange       | 同时修改 current 和 pageSize | (current: number, pageSize: number)=>void |
+| pagination.changeCurrent  | 单独修改 current             | (current: number)=>void                   |
+| pagination.changePageSize | 单独修改 pageSize            | (pageSize: number)=>void                  |
 | refresh                   | 刷新当前数据             | () => void                                |
 
 ### Params
