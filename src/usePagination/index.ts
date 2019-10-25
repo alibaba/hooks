@@ -96,7 +96,7 @@ function usePagination<Result, Item>(
         if (formattedResult.pageSize) setPageSize(formattedResult.pageSize);
       }
     });
-  }, [current, pageSize, count, run, formatResult]);
+  }, [current, pageSize, count]);
 
   useUpdateEffect(() => {
     setCurrent(1);
