@@ -13,7 +13,7 @@ import Demo1CodeJsx from '!raw-loader!./demo/demo1.jsx';
 
 # useUpdateEffect
 
-一个作用于组件 didMount 阶段以后的 useEffect hook。
+useUpdateEffect 与 useEffect API 一致，不过它会忽略第一调用（mount 时），也就是 useUpdateEffect 只会在更新时执行。
 
 **核心特性**
 
@@ -22,7 +22,7 @@ import Demo1CodeJsx from '!raw-loader!./demo/demo1.jsx';
 
 ## 代码演示
 
-<JackBox jsCode={Demo1CodeJsx} tsCode={Demo1CodeTsx} demoName='基础使用' description='使用上和 useEffect 一模一样，只是生命周期放在了组件 didMount 之后'>
+<JackBox jsCode={Demo1CodeJsx} tsCode={Demo1CodeTsx} demoName='基础使用' description='useUpdateEffect 只会在更新时触发执行。'>
   <Demo1 />
 </JackBox>
 
@@ -39,5 +39,5 @@ useUpdateEffect(
 
 | 参数    | 说明                                         | 类型                   | 默认值 |
 |---------|----------------------------------------------|------------------------|--------|
-| effect | 可执行函数  | Function | -      |
-| deps | 可选项，传入依赖变化的对象  | array | array \| undefined | -      |
+| effect | 可执行函数  | function | -      |
+| deps | 可选项，传入依赖变化的对象  | array \| undefined | -      |
