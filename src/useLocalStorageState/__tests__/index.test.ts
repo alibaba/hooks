@@ -75,18 +75,30 @@ describe('useLocalStorageState', () => {
 
   it('should support boolean', () => {
     const LOCAL_STORAGE_KEY = 'test-boolean-key';
-    const hook = setUp(LOCAL_STORAGE_KEY, false);
+    const hook = setUp(LOCAL_STORAGE_KEY, true);
+    expect(hook.result.current.state).toEqual(true);
+    act(() => {
+      hook.result.current.setState(false);
+    });
+    expect(hook.result.current.state).toEqual(false);
+    const anotherHook = setUp(LOCAL_STORAGE_KEY, true);
+    expect(anotherHook.result.current.state).toEqual(false);
+    act(() => {
+      anotherHook.result.current.setState(true);
+    });
+    expect(anotherHook.result.current.state).toEqual(true);
+    expect(hook.result.current.state).toEqual(false);
+  });
+
+  it('should support null', () => {
+    const LOCAL_STORAGE_KEY = 'test-boolean-key-with-null';
+    const hook = setUp<boolean | null>(LOCAL_STORAGE_KEY, false);
     expect(hook.result.current.state).toEqual(false);
     act(() => {
-      hook.result.current.setState(true);
+      hook.result.current.setState(null);
     });
-    expect(hook.result.current.state).toEqual(true);
+    expect(hook.result.current.state).toEqual(null);
     const anotherHook = setUp(LOCAL_STORAGE_KEY, false);
-    expect(anotherHook.result.current.state).toEqual(true);
-    act(() => {
-      anotherHook.result.current.setState(false);
-    });
-    expect(anotherHook.result.current.state).toEqual(false);
-    expect(hook.result.current.state).toEqual(true);
+    expect(anotherHook.result.current.state).toEqual(null);
   });
 });
