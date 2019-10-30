@@ -13,7 +13,7 @@ import Demo1CodeJsx from '!raw-loader!./demo/demo1.jsx';
 
 # useUpdateEffect
 
-useUpdateEffect 与 useEffect API 一致，不过它会忽略第一调用（mount 时），也就是 useUpdateEffect 只会在更新时执行。
+一个只在依赖更新时执行的 useEffect hook。
 
 **核心特性**
 
@@ -22,7 +22,7 @@ useUpdateEffect 与 useEffect API 一致，不过它会忽略第一调用（moun
 
 ## 代码演示
 
-<JackBox jsCode={Demo1CodeJsx} tsCode={Demo1CodeTsx} demoName='基础使用' description='useUpdateEffect 只会在更新时触发执行。'>
+<JackBox jsCode={Demo1CodeJsx} tsCode={Demo1CodeTsx} demoName='基础使用' description='使用上与 useEffect 完全相同，只是它忽略了首次渲染，且只在依赖项更新时运行。'>
   <Demo1 />
 </JackBox>
 
