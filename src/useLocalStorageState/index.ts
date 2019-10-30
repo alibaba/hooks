@@ -1,16 +1,15 @@
 import { useState } from 'react';
 
-export default function useLocalStorageState<T extends string = string>(
-  key: string,
-  defaultValue?: T,
-) {
-  const [state, setState] = useState(() => (localStorage.getItem(key) as T) || defaultValue);
+export default function useLocalStorageState<T = string>(key: string, defaultValue?: T) {
+  const [state, setState] = useState(
+    () => JSON.parse(localStorage.getItem(key) || 'null') || defaultValue,
+  );
   function updateState(value?: T) {
     if (value === undefined) {
       localStorage.removeItem(key);
       setState(defaultValue);
     } else {
-      localStorage.setItem(key, value as string);
+      localStorage.setItem(key, JSON.stringify(value));
       setState(value);
     }
   }
