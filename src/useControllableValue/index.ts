@@ -1,5 +1,5 @@
 import { useMemo, useState, useCallback } from 'react';
-import { useUpdateEffect } from 'react-use';
+import useUpdateEffect from '../useUpdateEffect';
 
 export interface Options {
   defaultValuePropName?: string;
@@ -11,7 +11,7 @@ export interface Props {
   [key: string]: any;
 }
 
-export default function useControlledValue<T>(props: Props = {}, options: Options = {}) {
+export default function useControllableValue<T>(props: Props = {}, options: Options = {}) {
   const {
     defaultValuePropName = 'defaultValue',
     valuePropName = 'value',

@@ -1,8 +1,19 @@
 import { WrappedFormUtils } from 'antd/lib/form/Form';
 import { PaginationConfig } from 'antd/lib/pagination';
-import { DependencyList, useEffect, useReducer, useRef, useCallback } from 'react';
-import { useUpdateEffect } from 'react-use';
+import { SorterResult } from 'antd/lib/table';
+import {
+  DependencyList,
+  useCallback,
+  useEffect,
+  useReducer,
+  useRef,
+  useMemo,
+  Reducer,
+} from 'react';
 import useAsync from '../useAsync';
+import useUpdateEffect from '../useUpdateEffect';
+
+const isEqual = require('lodash.isequal');
 
 interface UseAntdTableFormUtils extends WrappedFormUtils {
   getFieldInstance?: (name: string) => {};
@@ -13,7 +24,11 @@ export interface ReturnValue<Item> {
   table?: {
     dataSource: Item[];
     loading: boolean;
-    onChange: (e: PaginationConfig) => void;
+    onChange: (
+      pagination: PaginationConfig,
+      filters?: Record<keyof Item, string[]>,
+      sorter?: SorterResult<Item>,
+    ) => void;
     pagination: {
       current: number;
       pageSize: number;
@@ -23,13 +38,19 @@ export interface ReturnValue<Item> {
   tableProps: {
     dataSource: Item[];
     loading: boolean;
-    onChange: (e: PaginationConfig) => void;
+    onChange: (
+      pagination: PaginationConfig,
+      filters?: Record<keyof Item, string[]>,
+      sorter?: SorterResult<Item>,
+    ) => void;
     pagination: {
       current: number;
       pageSize: number;
       total: number;
     };
   };
+  sorter: SorterResult<Item>;
+  filters: Record<keyof Item, string[]>;
   refresh: () => void;
   search?: {
     type: 'simple' | 'advance';
@@ -63,7 +84,7 @@ interface FormData {
   [key: string]: any;
 }
 
-class UseTableInitState {
+class UseTableInitState<Item> {
   // 搜索类型，简单、高级
   searchType: 'simple' | 'advance' = 'simple';
 
@@ -86,16 +107,17 @@ class UseTableInitState {
   count = 0;
 
   // 列表数据
-  data: any[] = [];
+  data: Item[] = [];
+
+  filters: Record<keyof Item, string[]> = {} as Record<keyof Item, string[]>;
+
+  sorter: SorterResult<Item> = {} as SorterResult<Item>;
 }
 
-// 初始值
-const initState = new UseTableInitState();
-
 // 缓存
-const cacheData: { [key: string]: UseTableInitState } = {};
+const cacheData: { [key: string]: any } = {};
 
-const reducer = (state = initState, action: { type: string; payload?: {} }) => {
+const reducer = <Item>(state: UseTableInitState<Item>, action: { type: string; payload?: {} }) => {
   switch (action.type) {
     case 'updateState':
       return { ...state, ...action.payload };
@@ -104,20 +126,39 @@ const reducer = (state = initState, action: { type: string; payload?: {} }) => {
   }
 };
 
-export default function useAntdTable<Result, Item>(
+function useAntdTable<Result, Item>(
   fn: (params: FnParams) => Promise<any>,
-  deps: DependencyList = [],
-  options: Options<Result, Item> = {},
+  options?: Options<Result, Item>,
+): ReturnValue<Item>;
+function useAntdTable<Result, Item>(
+  fn: (params: FnParams) => Promise<any>,
+  deps?: DependencyList,
+  options?: Options<Result, Item>,
+): ReturnValue<Item>;
+function useAntdTable<Result, Item>(
+  fn: (params: FnParams) => Promise<any>,
+  deps?: DependencyList | Options<Result, Item>,
+  options?: Options<Result, Item>,
 ): ReturnValue<Item> {
-  const { defaultPageSize = 10, id, form, formatResult } = options;
-  const [state, dispatch] = useReducer(reducer, { ...initState, pageSize: defaultPageSize });
+  const _deps: DependencyList = (Array.isArray(deps) ? deps : []) as DependencyList;
+  const _options: Options<Result, Item> = (typeof deps === 'object' && !Array.isArray(deps)
+    ? deps
+    : options || {}) as Options<Result, Item>;
+
+  const initState = useMemo(() => new UseTableInitState<Item>(), []);
+
+  const { defaultPageSize = 10, id, form, formatResult } = _options;
+  const [state, dispatch] = useReducer<Reducer<UseTableInitState<Item>, any>>(reducer, {
+    ...initState,
+    pageSize: defaultPageSize,
+  });
 
   /* 临时记录切换前的表单数据 */
   const tempFieldsValueRef = useRef<FormData>({});
 
-  const stateRef = useRef<UseTableInitState>(({} as unknown) as UseTableInitState);
+  const stateRef = useRef({} as UseTableInitState<Item>);
   stateRef.current = state;
-  const { run, loading } = useAsync(fn, deps, {
+  const { run, loading } = useAsync(fn, _deps, {
     manual: true,
   });
 
@@ -152,6 +193,8 @@ export default function useAntdTable<Result, Item>(
           searchType: cache.searchType,
           activeFormData: cache.activeFormData,
           formData: cache.formData,
+          filters: cache.filters,
+          sorter: cache.sorter,
           count: state.count + 1,
         },
       });
@@ -173,7 +216,7 @@ export default function useAntdTable<Result, Item>(
   /* deps 变化后，重置表格 */
   useUpdateEffect(() => {
     reload();
-  }, deps);
+  }, _deps);
 
   /* state.count 变化时，重新请求数据 */
   useUpdateEffect(() => {
@@ -184,11 +227,19 @@ export default function useAntdTable<Result, Item>(
         formattedData[key] = state.activeFormData[key];
       }
     });
-    run({
+
+    const params: any = {
       current: state.current,
       pageSize: state.pageSize,
       ...formattedData,
-    }).then(res => {
+    };
+    if (state.filters) {
+      params.filters = state.filters;
+    }
+    if (state.sorter) {
+      params.sorter = state.sorter;
+    }
+    run(params).then(res => {
       const payload = formatResult ? formatResult(res) : res;
       dispatch({
         type: 'updateState',
@@ -289,15 +340,26 @@ export default function useAntdTable<Result, Item>(
     });
   }, [state.searchType]);
 
-  // 表格翻页
+  // 表格翻页 排序 筛选等
   const changeTable = useCallback(
-    (e: PaginationConfig) => {
+    (
+      p: PaginationConfig,
+      f: Record<keyof Item, string[]> = {} as Record<keyof Item, string[]>,
+      s: SorterResult<Item> = {} as SorterResult<Item>,
+    ) => {
+      /* 如果 filter，或者 sort 变化，就初始化 current */
+      const needReload =
+        !isEqual(f, state.filters) ||
+        s.field !== state.sorter.field ||
+        s.order !== state.sorter.order;
       dispatch({
         type: 'updateState',
         payload: {
-          current: e.current,
-          pageSize: e.pageSize,
+          current: needReload ? 1 : p.current,
+          pageSize: p.pageSize,
           count: state.count + 1,
+          filters: f,
+          sorter: s,
         },
       });
     },
@@ -326,6 +388,8 @@ export default function useAntdTable<Result, Item>(
         total: state.total,
       },
     },
+    sorter: state.sorter,
+    filters: state.filters,
     refresh,
   };
   if (form) {
@@ -339,3 +403,5 @@ export default function useAntdTable<Result, Item>(
 
   return result;
 }
+
+export default useAntdTable;

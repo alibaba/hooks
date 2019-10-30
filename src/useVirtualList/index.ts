@@ -1,5 +1,5 @@
 import { useEffect, useState, useMemo } from 'react';
-import { useSize } from '../index';
+import useSize from '../useSize';
 
 export interface OptionType {
   itemHeight: number | ((index: number) => number);
@@ -75,7 +75,7 @@ export default <T = any>(list: T[], options: OptionType) => {
     return list.reduce((sum, _, index) => sum + itemHeight(index), 0);
   }, [list.length]);
 
-  const getDistenceTop = (index: number) => {
+  const getDistanceTop = (index: number) => {
     // 如果有缓存，优先返回缓存值
     // if (enableCache && distanceCache.current[index]) {
     //   return distanceCache.current[index];
@@ -96,7 +96,7 @@ export default <T = any>(list: T[], options: OptionType) => {
 
   const scrollTo = (index: number) => {
     if (containerRef.current) {
-      containerRef.current.scrollTop = getDistenceTop(index);
+      containerRef.current.scrollTop = getDistanceTop(index);
       calculateRange();
     }
   };
@@ -118,7 +118,7 @@ export default <T = any>(list: T[], options: OptionType) => {
       style: { overflowY: 'auto' },
     },
     wrapperProps: {
-      style: { width: '100%', height: totalHeight, paddingTop: getDistenceTop(state.start) },
+      style: { width: '100%', height: totalHeight, paddingTop: getDistanceTop(state.start) },
     },
   };
 };

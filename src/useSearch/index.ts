@@ -1,5 +1,5 @@
 import { DependencyList, useState, useMemo, useRef, useCallback } from 'react';
-import { useUpdateEffect } from 'react-use';
+import useUpdateEffect from '../useUpdateEffect';
 
 import useAsync from '../useAsync';
 
@@ -16,21 +16,35 @@ export interface Options {
   wait?: number;
 }
 
-export default function useAntdSearch<Result>(
+function useSearch<Result>(
   fn: (value: any) => Promise<Result>,
-  deps: DependencyList = [],
-  options: Options = {},
+  options?: Options,
+): ReturnValue<Result>;
+function useSearch<Result>(
+  fn: (value: any) => Promise<Result>,
+  deps?: DependencyList,
+  options?: Options,
+): ReturnValue<Result>;
+function useSearch<Result>(
+  fn: (value: any) => Promise<Result>,
+  deps?: DependencyList | Options,
+  options?: Options,
 ): ReturnValue<Result> {
+  const _deps: DependencyList = (Array.isArray(deps) ? deps : []) as DependencyList;
+  const _options: Options = (typeof deps === 'object' && !Array.isArray(deps)
+    ? deps
+    : options || {}) as Options;
+
   const [value, setValue] = useState<any>('');
 
   const timer = useRef<any>();
 
-  const { loading, data, run, cancel: cancelAsync } = useAsync<Result>(fn, [value, ...deps], {
+  const { loading, data, run, cancel: cancelAsync } = useAsync<Result>(fn, [value, ..._deps], {
     manual: true,
   });
 
-  const wait: number = useMemo(() => (options.wait === undefined ? 300 : options.wait), [
-    options.wait,
+  const wait: number = useMemo(() => (_options.wait === undefined ? 300 : _options.wait), [
+    _options.wait,
   ]);
 
   /* value 变化时，需要防抖 */
@@ -53,7 +67,7 @@ export default function useAntdSearch<Result>(
   /* 依赖变化时，需要立即重新请求 */
   useUpdateEffect(() => {
     run(value);
-  }, deps);
+  }, _deps);
 
   const cancel = useCallback(() => {
     /* 先取消防抖 */
@@ -78,3 +92,5 @@ export default function useAntdSearch<Result>(
     run: trigger,
   };
 }
+
+export default useSearch;

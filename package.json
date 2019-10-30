@@ -1,6 +1,6 @@
 {
   "name": "@umijs/hooks",
-  "version": "1.2.0",
+  "version": "1.3.1",
   "description": "react hooks library",
   "keywords": [
     "umi hooks",
@@ -30,7 +30,7 @@
     "pub:doc": "now --prod"
   },
   "dependencies": {
-    "react-use": "^10.6.2",
+    "lodash.isequal": "^4.5.0",
     "resize-observer-polyfill": "^1.5.1"
   },
   "peerDependencies": {
