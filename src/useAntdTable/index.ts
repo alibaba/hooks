@@ -348,10 +348,10 @@ function useAntdTable<Result, Item>(
       s: SorterResult<Item> = {} as SorterResult<Item>,
     ) => {
       /* 如果 filter，或者 sort 变化，就初始化 current */
-      const realFilter = JSON.parse(JSON.stringify(f));
+      const realFilter = {...f};
       Object.entries(realFilter).forEach( item => {
         if(item[1] === null) {
-          delete (realFilter as any)[item[0]];
+          delete (realFilter as Object)[item[0] as keyof Object];
         }
       });
       const needReload =
