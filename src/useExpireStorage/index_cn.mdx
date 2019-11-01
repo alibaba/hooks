@@ -1,0 +1,71 @@
+---
+name: useExpireStorage
+route: /useExpireStorage
+menu: '基础 hooks'
+edit: false
+sidebar: true
+---
+import JackBox from 'jackbox';
+
+import Demo1 from './demo/demo1';
+import Demo1CodeTsx from '!raw-loader!./demo/demo1.tsx';
+import Demo1CodeJsx from '!raw-loader!./demo/demo1.jsx';
+import Demo2 from './demo/demo2';
+import Demo2CodeTsx from '!raw-loader!./demo/demo2.tsx';
+import Demo2CodeJsx from '!raw-loader!./demo/demo2.jsx';
+import Demo3 from './demo/demo3';
+import Demo3CodeTsx from '!raw-loader!./demo/demo3.tsx';
+import Demo3CodeJsx from '!raw-loader!./demo/demo3.jsx';
+
+# useExpireStorage
+
+用于解决跨页面的数据存储在本地的问题,并设置有效期。
+
+**核心特性**
+
+* 支持可选的 localStorage 和 sessionStorage 的存储方案
+* 提供跨页面和跨组件间的数据交互
+
+## 代码演示
+
+<JackBox jsCode={Demo1CodeJsx} tsCode={Demo1CodeTsx} demoName='基础使用' description='默认使用 localStorage 的方式进行数据存储，支持多种数据类型。'>
+  <Demo1 />
+</JackBox>
+
+<JackBox jsCode={Demo2CodeJsx} tsCode={Demo2CodeTsx} demoName='存储方式' description={<>通过第三个参数，你可以切换存储方式。<br/>支持 localStorage 和 sessionStorage，且数据类型与 localStorage 一致。</>}>
+  <Demo2 />
+</JackBox>
+
+<JackBox jsCode={Demo3CodeJsx} tsCode={Demo3CodeTsx} demoName='存储时间' description={<>设置存储的有效期。<br>单位为毫秒，设置持续时间小于 10 的自动转化单位为秒</>}>
+  <Demo3 />
+</JackBox>
+
+## API
+
+```javascript
+const { 
+  value, 
+  setValue, 
+  remove 
+} = useExpireStorage(
+  key: string,
+  defaultValue?: T,
+  type: IType = 'localStorage'
+);
+```
+
+### Result
+
+| 参数     | 说明                              | 类型                                   |
+|----------|----------------------------------|----------------------------------------|
+| value    | state value                      | any                                    |
+| setValue | 触发状态值更改的方法               | (val: any, maxAge: number = 0) => void |
+| remove    | 移除当前存储的对象                | () => void                             |
+
+### 参数
+
+| 参数          | 说明                                         | 类型                   | 默认值 |
+|--------------|----------------------------------------------|------------------------|--------|
+| key          | 必选项（具有唯一性）                          | string                  | -      |
+| defaultValue | 默认值                                       | any \| undefined        | -      |
+| type         | 存储方式  | localStorage \| sessionStorage \| undefined                | localStorage |

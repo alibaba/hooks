@@ -12,6 +12,7 @@ import useSize from './useSize';
 import useLocalStorageState from './useLocalStorageState';
 import useUpdateEffect from './useUpdateEffect';
 import usePagination from './usePagination';
+import useExpireStorage from './useExpireStorage';
 
 const useControlledValue: typeof useControllableValue = function (...args) {
   console.warn(
@@ -38,4 +39,5 @@ export {
   configRequest,
   useUpdateEffect,
   usePagination,
+  useExpireStorage,
 };

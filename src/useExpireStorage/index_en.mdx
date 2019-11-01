@@ -1,0 +1,71 @@
+---
+name: useExpireStorage
+route: /useExpireStorage
+menu: 'Basic Hooks'
+edit: false
+sidebar: true
+---
+import JackBox from 'jackbox';
+
+import Demo1 from './demo/demo1';
+import Demo1CodeTsx from '!raw-loader!./demo/demo1.tsx';
+import Demo1CodeJsx from '!raw-loader!./demo/demo1.jsx';
+import Demo2 from './demo/demo2';
+import Demo2CodeTsx from '!raw-loader!./demo/demo2.tsx';
+import Demo2CodeJsx from '!raw-loader!./demo/demo2.jsx';
+import Demo3 from './demo/demo3';
+import Demo3CodeTsx from '!raw-loader!./demo/demo3.tsx';
+import Demo3CodeJsx from '!raw-loader!./demo/demo3.jsx';
+
+# useExpireStorage
+
+To resolve the problem of cross-page and cross-component data being stored locally and to set the expiration date.
+
+**Core Characteristics**
+
+* Supports alternative storage schemes for localStorage and sessionStorage
+* Provides cross-page and cross-component data interaction
+
+## Examples
+
+<JackBox jsCode={Demo1CodeJsx} tsCode={Demo1CodeTsx} demoName='Basic Usage' description='LocalStorage is default for used for data storage, and supporting multiple data types.'>
+  <Demo1 />
+</JackBox>
+
+<JackBox jsCode={Demo2CodeJsx} tsCode={Demo2CodeTsx} demoName='Storage Mode' description={<>You can change storage mode by the third parameter.<br/>Supporting localStorage and sessionStorage.and with the same data types of localStorage.</>}>
+  <Demo2 />
+</JackBox>
+
+<JackBox jsCode={Demo3CodeJsx} tsCode={Demo3CodeTsx} demoName='Expire Time' description={<>Set the expiration date of the storage.<br/>Units are milliseconds, and automatic conversions with a duration less than 10 are set to seconds.</>}>
+  <Demo3 />
+</JackBox>
+
+## API
+
+```javascript
+const { 
+  value, 
+  setValue, 
+  remove 
+} = useExpireStorage(
+  key: string,
+  defaultValue?: T,
+  type: IType = 'localStorage'
+);
+```
+
+### Result
+
+| Property | Description                                     | Type                                   |
+|----------|-------------------------------------------------|----------------------------------------|
+| value    | State value                                     | any                                    |
+| setValue | Trigger to change the state value               | (val: any, maxAge: number = 0) => void |
+| remove   | Removes the currently storage object            | () => void                             |
+
+### Params
+
+| Property | Description                                      | Type                   | Default |
+|--------------|----------------------------------------------|------------------------|--------|
+| key          | Required (unique)                            | string                  | -      |
+| defaultValue | Default value                                | any \| undefined        | -      |
+| type         | Storage mode  | localStorage \| sessionStorage \| undefined                | localStorage |
