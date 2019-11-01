@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
 export default function useLocalStorageState<T = string>(key: string, defaultValue?: T) {
-  const [state, setState] = useState(() =>
+  const [state, setState] = useState<T | undefined>(() =>
     (localStorage.getItem(key) === null ? defaultValue : JSON.parse(localStorage.getItem(key)!)),
   );
   function updateState(value?: T) {
