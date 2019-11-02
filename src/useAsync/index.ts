@@ -124,21 +124,25 @@ function useAsync<Result = any>(
   const run = useCallback((...args: any[]): Promise<Result | undefined> => {
     // 确保不会返回被取消的结果
     const runCount = count.current;
-    set(s => ({ ...s, loading: true }));
     params.current = args;
+    set(s => ({ ...s, loading: true }));
     return fn(...args)
       .then(data => {
+        // 如果关掉 autoCancel，callback 可以在变量更新后继续执行
         if (!autoCancel || runCount === count.current) {
           if (_options.onSuccess) {
             _options.onSuccess(data, args || []);
           }
+          // onSuccess 里可能会有副作用，这里还需要再判断一次
           if (!autoCancel || runCount === count.current) {
+            // 关掉 autoCancel 可能会有 react warning, 不推荐
             set(s => ({ ...s, data, loading: false }));
           }
         }
         return data;
       })
       .catch(error => {
+        // 如果关掉 autoCancel，callback 可以在变量更新后继续执行
         if (!autoCancel || runCount === count.current) {
           if (_options.onError) {
             _options.onError(error, args || []);
