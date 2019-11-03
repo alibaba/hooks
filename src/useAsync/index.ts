@@ -53,8 +53,9 @@ class Timer<T> {
 export interface Options<T> {
   manual?: boolean; // 是否初始化执行
   pollingInterval?: number; // 轮询的间隔毫秒
-  onSuccess?: (d: T) => void; // 成功回调
-  onError?: (e: Error) => void; // 失败回调
+  onSuccess?: (data: T, params?: any[]) => void; // 成功回调
+  onError?: (e: Error, params?: any[]) => void; // 失败回调
+  autoCancel?: boolean; // 竞态处理开关
 }
 
 type noop = (...args: any[]) => void;
@@ -66,6 +67,7 @@ const promiseReturn: promiseReturn<any> = async () => null as any;
 export interface ReturnValue<T> {
   loading: boolean;
   error?: Error;
+  params: any[];
   data?: T;
   cancel: noop;
   run: promiseReturn<T | undefined>;
@@ -97,6 +99,7 @@ function useAsync<Result = any>(
   const [state, set] = useState<ReturnValue<Result>>({
     loading: false,
     cancel: noop,
+    params: [],
     run: promiseReturn,
     timer: {
       stop: noop,
@@ -104,9 +107,11 @@ function useAsync<Result = any>(
       pause: noop,
     },
   });
+  const { autoCancel = true } = _options;
   const timer = useRef<Timer<Result> | undefined>(undefined);
   const count = useRef(0);
   const init = useRef(true);
+  const params = useRef<any[]>([]);
 
   useEffect(() => {
     count.current += 1;
@@ -119,25 +124,30 @@ function useAsync<Result = any>(
   const run = useCallback((...args: any[]): Promise<Result | undefined> => {
     // 确保不会返回被取消的结果
     const runCount = count.current;
+    params.current = args;
     set(s => ({ ...s, loading: true }));
     return fn(...args)
       .then(data => {
-        if (runCount === count.current) {
+        // 如果关掉 autoCancel，callback 可以在变量更新后继续执行
+        if (!autoCancel || runCount === count.current) {
           if (_options.onSuccess) {
-            _options.onSuccess(data);
+            _options.onSuccess(data, args || []);
           }
-          if (runCount === count.current) {
+          // onSuccess 里可能会有副作用，这里还需要再判断一次
+          if (!autoCancel || runCount === count.current) {
+            // 关掉 autoCancel 可能会有 react warning, 不推荐
             set(s => ({ ...s, data, loading: false }));
           }
         }
         return data;
       })
       .catch(error => {
-        if (runCount === count.current) {
+        // 如果关掉 autoCancel，callback 可以在变量更新后继续执行
+        if (!autoCancel || runCount === count.current) {
           if (_options.onError) {
-            _options.onError(error);
+            _options.onError(error, args || []);
           }
-          if (runCount === count.current) {
+          if (!autoCancel || runCount === count.current) {
             set(s => ({ ...s, error, loading: false }));
           }
         }
@@ -249,6 +259,7 @@ function useAsync<Result = any>(
 
   return {
     loading: state.loading,
+    params: params.current,
     error: state.error,
     data: state.data,
     cancel,
