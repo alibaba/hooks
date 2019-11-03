@@ -20,6 +20,7 @@
   "scripts": {
     "start": "npm run dev",
     "dev": "father doc dev",
+    "dev:zh-cn": "LAN=zh-CN father doc dev",
     "js": "node ./.ts2js.js",
     "build": "father build",
     "test": "father test",
