@@ -13,7 +13,7 @@ import Demo1CodeJsx from '!raw-loader!./demo/demo1.jsx';
 
 # useBoolean
 
-React state hook that tracks value of a boolean.
+A hook that elegantly manages value of a boolean.
 
 **Core Characteristics**
 
@@ -29,9 +29,12 @@ React state hook that tracks value of a boolean.
 ## API
 
 ```javascript
-const [state, toggle] = useToggle();
-
-const [state, toggle] = useToggle(
+const {
+  state, 
+  toggle,
+  setTrue,
+  setFalse
+} = useToggle(
   defaultValue?: boolean,
 );
 ```
@@ -42,6 +45,8 @@ const [state, toggle] = useToggle(
 |----------|--------------------------------------|----------------------|
 | state  | State value                         | boolean              |
 | toggle | Trigger state change, accept an optional parameter | (value?: any) => void |
+| setTrue | Set state value true | () => void |
+| setFalse | Set state value false | () => void |
 
 ### Params
 

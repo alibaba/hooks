@@ -16,7 +16,7 @@ import Demo2CodeJsx from '!raw-loader!./demo/demo2.jsx';
 
 # useToggle
 
-React state hook that switch value in two states.
+A hook that switch value in two states.
 
 **Core Characteristics**
 
@@ -36,16 +36,24 @@ React state hook that switch value in two states.
 ## API
 
 ```javascript
-const [state, toggle] = useToggle()
+const const {
+  state, 
+  toggle,
+  setLeft,
+  setRight
+} = useToggle(
+  defaultValue?: boolean,
+);
 
-const [state, toggle] = useToggle(
-  defaultValue: any = false,
-)
-
-const [state, toggle] = useToggle(
+const const {
+  state, 
+  toggle,
+  setLeft,
+  setRight
+} = useToggle(
   defaultValue: any = false,
   reverseValue?: any,
-)
+);
 ```
 
 ### Result
@@ -54,10 +62,12 @@ const [state, toggle] = useToggle(
 |----------|--------------------------------------|----------------------|
 | state  | state value                         | boolean              |
 | toggle | Trigger state change, accept two optional parameters | (defaultValue: any = false, reverseValue?: any) => void |
+| setLeft | Set default value | () => void |
+| setRight | Set reverse value | () => void |
 
 ### Params
 
 | Property | Description                                 | Type                   | Default |
 |---------|----------------------------------------------|------------------------|--------|
-| defaultValue | Optional，set a default value  | number \| string \| boolean \| undefined | -      |
+| defaultValue | Optional，set a default value  | number \| string \| boolean \| undefined | false      |
 | reverseValue | Optional，set a reverse value  | number \| string \| boolean \| undefined | -      |

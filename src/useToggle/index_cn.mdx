@@ -16,7 +16,7 @@ import Demo2CodeJsx from '!raw-loader!./demo/demo2.jsx';
 
 # useToggle
 
-用于在两个状态值间切换的 React 状态钩子。
+用于在两个状态值间切换的 Hook。
 
 **核心特性**
 
@@ -36,16 +36,24 @@ import Demo2CodeJsx from '!raw-loader!./demo/demo2.jsx';
 ## API
 
 ```javascript
-const [state, toggle] = useToggle()
+const const {
+  state, 
+  toggle,
+  setLeft,
+  setRight
+} = useToggle(
+  defaultValue?: boolean,
+);
 
-const [state, toggle] = useToggle(
-  defaultValue: any = false,
-)
-
-const [state, toggle] = useToggle(
+const const {
+  state, 
+  toggle,
+  setLeft,
+  setRight
+} = useToggle(
   defaultValue: any = false,
   reverseValue?: any,
-)
+);
 ```
 
 ### Result
@@ -54,10 +62,12 @@ const [state, toggle] = useToggle(
 |----------|--------------------------------------|----------------------|
 | state  | 状态值                         | boolean              |
 | toggle | 触发状态更改的函数,可以接受两个可选参数修改状态值 | (defaultValue: any = false, reverseValue?: any) => void |
+| setLeft | 设置为默认值 | () => void |
+| setRight | 设置为相反值 | () => void |
 
 ### 参数
 
 | 参数    | 说明                                         | 类型                   | 默认值 |
 |---------|----------------------------------------------|------------------------|--------|
-| defaultValue | 可选项，传入默认的状态值  | number \| string \| boolean \| undefined | -      |
+| defaultValue | 可选项，传入默认的状态值  | number \| string \| boolean \| undefined | false      |
 | reverseValue | 可选项，传入取反的状态值  | number \| string \| boolean \| undefined | -      |

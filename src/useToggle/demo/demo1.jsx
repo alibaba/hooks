@@ -3,7 +3,7 @@ import { Button, Switch } from 'antd';
 import useToggle from '..';
 
 export default () => {
-  const [state, toggle] = useToggle(true);
+  const { state, toggle } = useToggle(true);
 
   return (
     <div>
@@ -16,10 +16,10 @@ export default () => {
           Toggle
         </Button>
         <Button type="danger" onClick={() => toggle(false)} style={{ margin: '0 16px' }}>
-          Set false
+          Toggle False
         </Button>
         <Button type="primary" onClick={() => toggle(true)}>
-          Set true
+          Toggle True
         </Button>
       </p>
     </div>

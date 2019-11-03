@@ -13,7 +13,7 @@ import Demo1CodeJsx from '!raw-loader!./demo/demo1.jsx';
 
 # useBoolean
 
-跟踪布尔值的 React 状态钩子。
+优雅的管理 boolean 值的 Hook。
 
 **核心特性**
 
@@ -29,9 +29,12 @@ import Demo1CodeJsx from '!raw-loader!./demo/demo1.jsx';
 ## API
 
 ```javascript
-const [state, toggle] = useToggle();
-
-const [state, toggle] = useToggle(
+const {
+  state, 
+  toggle,
+  setTrue,
+  setFalse
+} = useToggle(
   defaultValue?: boolean,
 );
 ```
@@ -42,6 +45,8 @@ const [state, toggle] = useToggle(
 |----------|--------------------------------------|----------------------|
 | state  | 状态值                         | boolean              |
 | toggle | 触发状态更改的函数,可以接受一个可选参数修改状态值 | (value?: any) => void |
+| setTrue | 设置状态值为 true | () => void |
+| setFalse | 设置状态值为 false | () => void |
 
 ### 参数
 

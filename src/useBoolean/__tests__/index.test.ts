@@ -3,7 +3,7 @@ import useBoolean from '../index';
 
 const callToggle = (hook: any) => {
   act(() => {
-    hook.result.current[1]();
+    hook.result.current.toggle();
   });
 };
 
@@ -12,15 +12,25 @@ describe('useBoolean', () => {
     expect(useBoolean).toBeDefined();
   });
 
-  it('test on toggle', async () => {
+  it('test on methods', async () => {
     const hook = renderHook(() => useBoolean());
-    expect(hook.result.current[0]).toBeFalsy();
-    callToggle(hook);
-    expect(hook.result.current[0]).toBeTruthy();
+    expect(hook.result.current.state).toBeFalsy();
+    act(() => {
+      hook.result.current.toggle(true);
+    });
+    expect(hook.result.current.state).toBeTruthy();
+    act(() => {
+      hook.result.current.setFalse();
+    });
+    expect(hook.result.current.state).toBeFalsy();
+    act(() => {
+      hook.result.current.setTrue();
+    });
+    expect(hook.result.current.state).toBeTruthy();
   });
 
   it('test on optional', () => {
     const hook = renderHook(() => useBoolean(true));
-    expect(hook.result.current[0]).toBeTruthy();
+    expect(hook.result.current.state).toBeTruthy();
   });
 });
