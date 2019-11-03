@@ -3,7 +3,7 @@ import { Button, Switch } from 'antd';
 import useToggle from '..';
 
 export default () => {
-  const { state, toggle } = useToggle(true);
+  const { state, toggle } = useToggle();
 
   return (
     <div>

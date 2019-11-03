@@ -28,12 +28,12 @@ function useToggle<T = IState, U = IState>(
   setRight: () => void;
 };
 
-function useToggle(defaultValue?: IState, reverseValue?: IState) {
+function useToggle(defaultValue: IState = false, reverseValue?: IState) {
   const [state, setState] = useState(defaultValue);
-
-  const defaultValueOrigin = useMemo(() => (defaultValue === undefined ? false : defaultValue), [defaultValue]);
-
-  const reverseValueOrigin = useMemo(() => (reverseValue === undefined ? !defaultValue : reverseValue), [reverseValue]);
+  const reverseValueOrigin = useMemo(
+    () => (reverseValue === undefined ? !defaultValue : reverseValue),
+    [reverseValue],
+  );
 
   // 切换返回值
   const toggle = useCallback(
@@ -43,7 +43,7 @@ function useToggle(defaultValue?: IState, reverseValue?: IState) {
         setState(value);
         return;
       }
-      const data = state === defaultValueOrigin ? reverseValueOrigin : defaultValueOrigin;
+      const data = state === defaultValue ? reverseValueOrigin : defaultValue;
       setState(data);
     },
     [state],
@@ -51,7 +51,7 @@ function useToggle(defaultValue?: IState, reverseValue?: IState) {
 
   // 设置默认值
   const setLeft = useCallback(() => {
-    setState(defaultValueOrigin);
+    setState(defaultValue);
   }, [state]);
 
   // 设置取反值
