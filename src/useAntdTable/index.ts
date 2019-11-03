@@ -52,6 +52,7 @@ export interface ReturnValue<Item> {
   sorter: SorterResult<Item>;
   filters: Record<keyof Item, string[]>;
   refresh: () => void;
+  // TODO 如果有 form，则一定有 search
   search?: {
     type: 'simple' | 'advance';
     changeType: () => void;
@@ -65,7 +66,7 @@ export interface Options<Result, Item> {
   id?: string;
   form?: UseAntdTableFormUtils;
   formatResult?: (
-    result: Result,
+    result: Result | undefined,
   ) => {
     current?: number;
     pageSize?: number;
@@ -74,9 +75,12 @@ export interface Options<Result, Item> {
   };
 }
 
-export interface FnParams {
+// Item 如何变成可选的？
+export interface FnParams<Item> {
   current: number;
   pageSize: number;
+  sorter?: SorterResult<Item>;
+  filters?: Record<keyof Item, string[]>;
   [key: string]: any;
 }
 
@@ -127,16 +131,16 @@ const reducer = <Item>(state: UseTableInitState<Item>, action: { type: string; p
 };
 
 function useAntdTable<Result, Item>(
-  fn: (params: FnParams) => Promise<any>,
+  fn: (params: FnParams<Item>) => Promise<Result>,
   options?: Options<Result, Item>,
 ): ReturnValue<Item>;
 function useAntdTable<Result, Item>(
-  fn: (params: FnParams) => Promise<any>,
+  fn: (params: FnParams<Item>) => Promise<Result>,
   deps?: DependencyList,
   options?: Options<Result, Item>,
 ): ReturnValue<Item>;
 function useAntdTable<Result, Item>(
-  fn: (params: FnParams) => Promise<any>,
+  fn: (params: FnParams<Item>) => Promise<Result>,
   deps?: DependencyList | Options<Result, Item>,
   options?: Options<Result, Item>,
 ): ReturnValue<Item> {
@@ -158,7 +162,7 @@ function useAntdTable<Result, Item>(
 
   const stateRef = useRef({} as UseTableInitState<Item>);
   stateRef.current = state;
-  const { run, loading } = useAsync(fn, _deps, {
+  const { run, loading } = useAsync<Result>(fn, _deps, {
     manual: true,
   });
 
@@ -348,9 +352,9 @@ function useAntdTable<Result, Item>(
       s: SorterResult<Item> = {} as SorterResult<Item>,
     ) => {
       // antd table 的初始状态 filter 带有 null 字段，需要先去除后再比较
-      const realFilter = {...f};
-      Object.entries(realFilter).forEach( item => {
-        if(item[1] === null) {
+      const realFilter = { ...f };
+      Object.entries(realFilter).forEach(item => {
+        if (item[1] === null) {
           delete (realFilter as Object)[item[0] as keyof Object];
         }
       });
