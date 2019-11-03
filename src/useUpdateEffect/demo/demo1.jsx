@@ -4,11 +4,9 @@ import useUpdateEffect from '..';
 
 export default () => {
   const [count, setCount] = useState(0);
-
   useEffect(() => {
     message.success(`useEffect ${count}`);
   });
-
   useUpdateEffect(() => {
     message.success(`useUpdateEffect ${count}`);
     return () => {
