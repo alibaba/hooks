@@ -47,7 +47,7 @@ import useLocalStorageState from './index';
 ## API
 
 ```typescript
-function useLocalStorageState<T extends string = string>(
+function useLocalStorageState<T = string>(
   key: string,
   defaultValue?: T,
 ): [T?, (value?: T) => void]
