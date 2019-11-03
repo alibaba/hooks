@@ -1,0 +1,149 @@
+---
+name: useAsync
+route: /useAsync
+menu: 'Data Hooks'
+edit: false
+sidebar: true
+---
+
+
+import JackBox from 'jackbox';
+
+import Demo1 from './demo/demo1';
+import Demo1CodeTs from '!raw-loader!./demo/demo1.tsx';
+import Demo1CodeJs from '!raw-loader!./demo/demo1.jsx';
+
+import Demo2 from './demo/demo2';
+import Demo2CodeTs from '!raw-loader!./demo/demo2.tsx';
+import Demo2CodeJs from '!raw-loader!./demo/demo2.jsx';
+
+import Demo3 from './demo/demo3';
+import Demo3CodeTs from '!raw-loader!./demo/demo3.tsx';
+import Demo3CodeJs from '!raw-loader!./demo/demo3.jsx';
+
+import Demo4 from './demo/demo4';
+import Demo4CodeTs from '!raw-loader!./demo/demo4.tsx';
+import Demo4CodeJs from '!raw-loader!./demo/demo4.jsx';
+
+# useAsync
+
+A custom hook that helps you manage async functions and their returned data.
+
+## Examples
+
+### Default usage
+
+<JackBox tsCode={Demo1CodeTs} jsCode={Demo1CodeJs} demoName='Default usage' description='Sending the request only when the `run` function is called'>
+  <Demo1 />
+</JackBox>
+
+### Manually triggered
+
+<JackBox tsCode={Demo2CodeTs} jsCode={Demo2CodeJs} demoName='Manually triggered' description='Executing async function only when the `run` function is called'>
+  <Demo2 />
+</JackBox>
+
+### Polling
+
+<JackBox tsCode={Demo3CodeTs} jsCode={Demo3CodeJs} demoName='Polling' description='use `timer` to control the execution of async function'>
+  <Demo3 />
+</JackBox>
+
+### Form submission
+
+<JackBox tsCode={Demo4CodeTs} jsCode={Demo4CodeJs} demoName='Form Submission' description='A form submit example incorporate with antd form'>
+  <Demo4 />
+</JackBox>
+
+## API
+
+```
+const {
+  loading: boolean;
+  error?: Error;
+  data?: T;
+  params?: any[];
+  cancel: () => void;
+  run: () => void;
+  timer: {
+    stop: () => void;
+    resume: () => void;
+    pause: () => void;
+  };
+} = useAsync(params);
+
+params:(
+  service: (...args: Args | any) => Promise<Result>,
+  deps: DependencyList = [],
+  options: {
+    onSuccess?: (d: T) => void //
+    onError?: (e: Error) => void // 执行失败时的回掉
+    manual?: boolean; // 是否初始化执行
+    pollingInterval?: number; // 轮询的间隔毫秒
+    autoCancel?: boolean // 是否关闭竞态处理
+  }
+)
+```
+
+## API
+
+```
+const {
+  loading: boolean;
+  error?: Error;
+  data?: T;
+  params?: any[];
+  cancel: () => void;
+  run: () => void;
+  timer: {
+    stop: () => void;
+    resume: () => void;
+    pause: () => void;
+  };
+} = useAsync(params);
+
+params:(
+  service: (...args: Args | any) => Promise<Result>,
+  deps: DependencyList = [],
+  options: {
+    onSuccess?: (d: T, params: any[]) => void // success callback
+    onError?: (e: Error, params: any[]) => void // error callback
+    manual?: boolean; // whether manually trigger
+    pollingInterval?: number; // polling interval
+    autoCancel?: boolean // whether drop the data at unmount.
+  }
+)
+```
+
+### 结果
+
+| Property | Description                                         | Type                 |
+|--------------|--------------|----------------------|---|
+| loading      | whether the async function is resolved | boolean              |   |
+| params       | the params you passed to that async function | any[] | -- |
+| error        | the Error that async function throwed | Error                |   |
+| data         | the result that async function resolved | (value: any) => void | - |
+| cancel       | drop the async function result         | () => void;          |   |
+| run          | running the async function         | (...args: any[]) => Promise\<T\>          |   |
+| timer.stop   | stop polling     | () => void;          |   |
+| timer.pause | pause pollinng     | () => void;          |   |
+| timer.resume  | resume polling     | () => void;          |   |
+
+
+### 参数
+
+| Property | Description                                                        | Type                   | Default |
+|---------|------------------------|----------------|----------------|---|
+| service | the async function  itself           | (...args: Args \| any)=> Promise | - |
+| deps    | dependencyList               | any[]          | []             |   |
+| options | advanced options，see Options below | -              | -              |   |
+
+### Options
+
+| Property | Description                                                        | Type                   | Default |
+|-----------------|--------------------------------------------------------|---------|--------|
+| manual          | whether the function need to be triggered mannually        | boolean | false  |
+| pollingInterval | the polling interval, enable polling only if this property is set. (numbers in ms) | number  | -      |
+| onSuccess       | the callback when async function runs successfully           | (d: T, params: any[]) => void | - |
+| onError         | the callback when async function fails              | (e: Error, params: any[]) => void | - |
+| autoCancel      | whether to drop the result when deps change or component unmount         | boolean | false |

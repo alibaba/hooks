@@ -7,8 +7,7 @@ sidebar: true
 ---
 
 
-import JackBox from '/Users/troy/Desktop/my-npm/jukebox/es';
-//import JackBox from 'jackbox';
+import JackBox from 'jackbox';
 
 import Demo1 from './demo/demo1';
 import Demo1CodeTs from '!raw-loader!./demo/demo1.tsx';
@@ -32,9 +31,9 @@ import Demo4CodeJs from '!raw-loader!./demo/demo4.jsx';
 
 ## 代码演示
 
-### 立即执行
+### 默认用法
 
-<JackBox tsCode={Demo1CodeTs} jsCode={Demo1CodeJs} demoName='立即执行'>
+<JackBox tsCode={Demo1CodeTs} jsCode={Demo1CodeJs} demoName='默认用法' description='组件加载时立即执行'>
   <Demo1 />
 </JackBox>
 
@@ -63,6 +62,7 @@ const {
   loading: boolean;
   error?: Error;
   data?: T;
+  params?: any[];
   cancel: () => void;
   run: () => void;
   timer: {
@@ -76,10 +76,11 @@ params:(
   service: (...args: Args | any) => Promise<Result>,
   deps: DependencyList = [],
   options: {
-    onSuccess?: (d: T) => void // 执行成功的回调
-    onError?: (e: Error) => void // 执行失败时的回掉
+    onSuccess?: (d: T, params: any[]) => void // 执行成功的回调
+    onError?: (e: Error, params: any[]) => void // 执行失败时的回掉
     manual?: boolean; // 是否初始化执行
     pollingInterval?: number; // 轮询的间隔毫秒
+    autoCancel?: boolean // 是否关闭竞态处理
   }
 )
 ```
@@ -89,13 +90,14 @@ params:(
 | 参数         | 说明         | 类型                 |   |
 |--------------|--------------|----------------------|---|
 | loading      | 是否正在加载 | boolean              |   |
-| error        | 请求错误数据 | Errow                |   |
+| params       | 传给 async function 的参数 | any[] | -- |
+| error        | 请求错误数据 | Error                |   |
 | data         | 请求成功数据 | (value: any) => void | - |
 | cancel       | 取消         | () => void;          |   |
 | run          | 执行         | () => Promise\<T\>          |   |
 | timer.stop   | 轮询取消     | () => void;          |   |
-| timer.resume | 轮询暂停     | () => void;          |   |
-| timer.pause  | 轮询继续     | () => void;          |   |
+| timer.pause | 轮询暂停     | () => void;          |   |
+| timer.resume  | 轮询继续     | () => void;          |   |
 
 
 ### 参数
@@ -112,5 +114,6 @@ params:(
 |-----------------|--------------------------------------------------------|---------|--------|
 | manual          | 是否需要手动触发                                       | boolean | false  |
 | pollingInterval | 轮询间隔毫秒，只有设置了 pollingInterval，才会开启轮询 | number  | -      |
-| onSuccess       | 执行成功时的回掉                                    | (d: T) => void | - |
-| onError         | 执行失败时的回掉                                    | (e: Error) => void | - |
+| onSuccess       | 执行成功时的回掉                                    | (d: T, params: any[]) => void | - |
+| onError         | 执行失败时的回掉                                    | (e: Error, params: any[]) => void | - |
+| autoCancel      | 是否需要关闭竞态处理                                 | boolean | false |
