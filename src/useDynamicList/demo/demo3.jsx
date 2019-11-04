@@ -25,72 +25,72 @@ export default Form.create()(props => {
       dataIndex: 'name',
       key: 'name',
       render: (text, row, index) => (
-          <>
-            <Icon
+        <>
+          <Icon
+            style={{
+              cursor: 'move',
+              marginRight: 8,
+            }}
+            type="drag"
+          />
+          {getFieldDecorator(`params[${getKey(index)}].name`, {
+            initialValue: text,
+          })(
+            <Input
               style={{
-                cursor: 'move',
-                marginRight: 8,
+                width: 120,
+                marginRight: 16,
               }}
-              type="drag"
-            />
-            {getFieldDecorator(`params[${getKey(index)}].name`, {
-              initialValue: text,
-            })(
-              <Input
-                style={{
-                  width: 120,
-                  marginRight: 16,
-                }}
-                placeholder="name"
-              />,
-            )}
-          </>
-        ),
+              placeholder="name"
+            />,
+          )}
+        </>
+      ),
     },
     {
       title: 'Age',
       dataIndex: 'age',
       key: 'age',
       render: (text, row, index) => (
-          <>
-            {getFieldDecorator(`params[${getKey(index)}].age`, {
-              initialValue: text,
-            })(
-              <Input
-                style={{
-                  width: 120,
-                  marginRight: 16,
-                }}
-                placeholder="age"
-              />,
-            )}
-          </>
-        ),
+        <>
+          {getFieldDecorator(`params[${getKey(index)}].age`, {
+            initialValue: text,
+          })(
+            <Input
+              style={{
+                width: 120,
+                marginRight: 16,
+              }}
+              placeholder="age"
+            />,
+          )}
+        </>
+      ),
     },
     {
       key: 'memo',
       title: 'Memo',
       dataIndex: 'memo',
       render: (text, row, index) => (
-          <>
-            {getFieldDecorator(`params[${getKey(index)}].memo`, {
-              initialValue: text,
-            })(
-              <Input
-                style={{
-                  width: 300,
-                  marginRight: 16,
-                }}
-                placeholder="please input the memo"
-              />,
-            )}
-            <Button.Group>
-              <Button type="danger" onClick={() => remove(index)}>
-                Delete
-              </Button>
-            </Button.Group>
-          </>
-        ),
+        <>
+          {getFieldDecorator(`params[${getKey(index)}].memo`, {
+            initialValue: text,
+          })(
+            <Input
+              style={{
+                width: 300,
+                marginRight: 16,
+              }}
+              placeholder="please input the memo"
+            />,
+          )}
+          <Button.Group>
+            <Button type="danger" onClick={() => remove(index)}>
+              Delete
+            </Button>
+          </Button.Group>
+        </>
+      ),
     },
   ];
   return (

@@ -50,9 +50,7 @@ export default Form.create()(props => {
 
   return (
     <>
-      <Form>
-        {list.map((ele, index) => Row(index, ele))}
-      </Form>
+      <Form>{list.map((ele, index) => Row(index, ele))}</Form>
       <Button
         style={{
           marginTop: 8,
