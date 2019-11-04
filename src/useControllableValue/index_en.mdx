@@ -23,7 +23,7 @@ import Demo3CodeJsx from '!raw-loader!./demo/demo3.jsx';
 
 In some components, we need the state to be managed by itself or externally controlled. `useControllableValue` is a Hook that helps you manage this state.
 
-## 代码演示
+## Examples
 
 <JackBox jsCode={Demo1CodeJsx} tsCode={Demo1CodeTsx} demoName='Uncontrolled component' description='If there is no value in props, the component internal self-care state'>
   <Demo1 />
@@ -43,14 +43,14 @@ In some components, we need the state to be managed by itself or externally cont
 const [state, setState] = useControllableValue(props: object, options?: Options)
 ```
 
-### 结果
+### Result
 
 | Property | Description                  | Type                 |
 |----------|------------------------------|----------------------|
 | state    | your state                   | -                    |
 | setState | Modify the function of state | (value: any) => void |
 
-### 参数
+### Params
 
 | Property | Description                              | Type   | Default |
 |----------|------------------------------------------|--------|---------|
