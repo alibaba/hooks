@@ -36,12 +36,12 @@ export default () => {
         }}
       >
         {list.map(o => (
-            <Col span={12} key={o}>
-              <Checkbox checked={isSelected(o)} onClick={() => toggle(o)}>
-                {o}
-              </Checkbox>
-            </Col>
-          ))}
+          <Col span={12} key={o}>
+            <Checkbox checked={isSelected(o)} onClick={() => toggle(o)}>
+              {o}
+            </Checkbox>
+          </Col>
+        ))}
       </Row>
     </div>
   );

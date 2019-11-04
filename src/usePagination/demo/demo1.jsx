@@ -2,7 +2,8 @@ import { Avatar, Card, List } from 'antd';
 import React from 'react';
 import usePagination from '..';
 
-const queryData = ({ current, pageSize }) => fetch(`https://randomuser.me/api?results=${pageSize}&page=${current}`)
+const queryData = ({ current, pageSize }) =>
+  fetch(`https://randomuser.me/api?results=${pageSize}&page=${current}`)
     .then(res => res.json())
     .then(res => ({
       total: 55,

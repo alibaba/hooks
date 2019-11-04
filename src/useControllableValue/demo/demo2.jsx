@@ -35,8 +35,8 @@ const Parent = () => {
           marginLeft: 16,
         }}
       >
-        <Button onClick={increment}>加</Button>
-        <Button onClick={decrease}>减</Button>
+        <Button onClick={increment}>Increment</Button>
+        <Button onClick={decrease}>Decrement</Button>
       </Button.Group>
     </>
   );

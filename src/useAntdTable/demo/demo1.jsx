@@ -2,7 +2,8 @@ import { Table } from 'antd';
 import React from 'react';
 import useAntdTable from '..';
 
-const getTableData = ({ current, pageSize }) => fetch(`https://randomuser.me/api?results=55&page=${current}&size=${pageSize}`)
+const getTableData = ({ current, pageSize }) =>
+  fetch(`https://randomuser.me/api?results=55&page=${current}&size=${pageSize}`)
     .then(res => res.json())
     .then(res => ({
       total: res.info.results,

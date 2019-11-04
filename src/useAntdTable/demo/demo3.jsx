@@ -4,9 +4,8 @@ import useAntdTable from '..';
 
 const { Option } = Select;
 
-const getTableData = ({ current, pageSize, gender }) => fetch(
-    `https://randomuser.me/api?results=55&page=${current}&size=${pageSize}&gender=${gender}`,
-  )
+const getTableData = ({ current, pageSize, gender }) =>
+  fetch(`https://randomuser.me/api?results=55&page=${current}&size=${pageSize}&gender=${gender}`)
     .then(res => res.json())
     .then(res => ({
       total: res.info.results,
@@ -15,13 +14,9 @@ const getTableData = ({ current, pageSize, gender }) => fetch(
 
 export default () => {
   const [gender, setGender] = useState('male');
-  const { tableProps } = useAntdTable(
-    params => getTableData({ ...params, gender }),
-    [gender],
-    {
-      defaultPageSize: 5,
-    },
-  );
+  const { tableProps } = useAntdTable(params => getTableData({ ...params, gender }), [gender], {
+    defaultPageSize: 5,
+  });
   const columns = [
     {
       title: 'name',
