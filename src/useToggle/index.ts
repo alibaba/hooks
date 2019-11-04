@@ -52,12 +52,12 @@ function useToggle(defaultValue: IState = false, reverseValue?: IState) {
   // 设置默认值
   const setLeft = useCallback(() => {
     setState(defaultValue);
-  }, [state]);
+  }, [setState]);
 
   // 设置取反值
   const setRight = useCallback(() => {
     setState(reverseValueOrigin);
-  }, [state]);
+  }, [setState]);
 
   return {
     state,
