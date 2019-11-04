@@ -1,14 +1,10 @@
 import { useState, useCallback, useMemo } from 'react';
 
-type IStorage = {
-  [key: string]: any;
-};
-
 type IType = 'localStorage' | 'sessionStorage' | undefined;
 
 function useExpireStorage<T>(key: string, defaultValue?: T, type: IType = 'localStorage') {
   const privateKey: string = `private_storage_key_${key}`;
-  const storage: IStorage = window[type];
+  const storage: Storage = window[type];
   const [state, setState] = useState(defaultValue);
 
   /**
