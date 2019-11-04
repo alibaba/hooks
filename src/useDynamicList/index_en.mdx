@@ -62,14 +62,14 @@ A hook that helps you manage your list data and generate unique key for each ite
 | move | move item from old index to new index     | (oldIndex: number, newIndex: number) => void;          | - |
 | getKey  | get the uuid of specific item    | (index: number) => number;           | - |
 | getIndex  | retrieve index from uuid    | (key: number) => number;           | - |
-| sortForm  | sort the form data(using with antd form)     | (list: unknown[]) => unknown[];           | see[`Dyanmic table(draggable)`](#Dyanmic table(draggable)) |
+| sortForm  | sort the form data(using with antd form)     | (list: unknown[]) => unknown[];           | see[`Dyanmic table(draggable)`](#dyanmic-tabledraggable) |
 | push  | push new item at the end of list     | (obj: T) => void;          | - |
 | pop  | remove the last item from the list     | () => void;          | - |
 | unshift  | add new item at the front of the list    | (obj: T) => void;          | - |
 | shift  | remove the first item from the list     | () => void;          | - |
 
-### 参数
+### Options
 
-| 参数         | 说明         | 类型                 |   |
+| Property | Description                                                        | Type                   | Default |
 |--------------|--------------|----------------------|---|
-| initialValue      | 列表的初始值 | T[]              |   |
+| initialValue      | initial value of the list | T[]              | -  |
