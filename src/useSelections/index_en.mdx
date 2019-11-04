@@ -1,0 +1,45 @@
+---
+name: useSelections
+route: /useSelections
+menu: 'Data Hooks'
+edit: false
+sidebar: true
+---
+import JackBox from 'jackbox';
+
+import Demo1 from './demo/demo1';
+import Demo1CodeTsx from '!raw-loader!./demo/demo1.tsx';
+import Demo1CodeJsx from '!raw-loader!./demo/demo1.jsx';
+
+# useSelections
+
+Common checkbox linkage, support multiple selection, single selection, all-select logic, and also provide whether to choose, whether to select all, whether the state is semi-selected.
+
+## Examples
+
+<JackBox jsCode={Demo1CodeJsx} tsCode={Demo1CodeTsx} demoName='Basic usage' description='Common checkbox linkage'>
+  <Demo1 />
+</JackBox>
+
+## API
+
+```javascript
+const result: Result= useSelections<T>(items: T[]);
+```
+
+### Result
+
+| Property          | Description                 | Type                  |
+|-------------------|-----------------------------|-----------------------|
+| selected          | selected Items              | array                 |
+| isSelected        | Whether item is selected    | (value: T) => boolean |
+| select            | Select item                 | (value: T) => void    |
+| unSelect          | UnSelect item               | (value: T) => void    |
+| toggle            | Toggle item select status   | (value: T) => void    |
+| selectAll         | Select all items            | () => void            |
+| unSelectAll       | UnSelect all items          | (value: T) => void    |
+| toggleAll         | Toggle select all items     | (value: T) => void    |
+| allSelected       | Is all items selected       | boolean               |
+| noneSelected      | Is no item selected         | boolean               |
+| partiallySelected | Is partially items selected | boolean               |
+| setSelected       | Set selected items          | (value:T[]) => void   |
