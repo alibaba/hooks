@@ -1,56 +1,63 @@
 import React from 'react';
 import { Button, Col, Form, Input, Row, Table, Select } from 'antd';
-import useAntdTable from '..';
+import { WrappedFormUtils } from 'antd/lib/form/Form';
+
+import useAntdTable, { FnParams } from '..';
 
 const { Option } = Select;
 
-const getTableData = ({ current, pageSize, ...rest }) => {
+interface Item {
+  name: {
+    last: string;
+  };
+  email: string;
+  phone: string;
+  gender: 'male' | 'female';
+}
+
+interface Result {
+  total: number;
+  data: Item[];
+}
+
+interface AppListProps {
+  form: WrappedFormUtils;
+}
+
+const getTableData = ({ current, pageSize, ...rest }: FnParams<Item>) => {
   console.log(current, pageSize, rest);
   return fetch(`https://randomuser.me/api?results=55&page=${current}&size=${pageSize}`)
     .then(res => res.json())
     .then(res => ({
-      page: res.info.page,
       total: res.info.results,
       data: res.results,
     }));
 };
 
-const AppList = props => {
+const AppList = (props: AppListProps) => {
   const { getFieldDecorator } = props.form;
-  const {
-    tableProps,
-    search: { type, changeType, submit, reset },
-  } = useAntdTable(getTableData, [], {
+  const { tableProps, search } = useAntdTable<Result, Item>(getTableData, {
     defaultPageSize: 5,
     form: props.form,
-    id: 'tableId',
   });
+
+  const { type, changeType, submit, reset } = search || {};
 
   const columns = [
     {
       title: 'name',
-      dataIndex: 'name',
-      key: 'name',
-      width: 100,
-      render(_, record) {
-        return record.name.title;
-      },
+      dataIndex: 'name.last',
     },
     {
       title: 'email',
       dataIndex: 'email',
-      key: 'email',
-      width: 350,
     },
     {
       title: 'phone',
       dataIndex: 'phone',
-      key: 'phone',
     },
     {
       title: 'gender',
-      key: 'gender',
-      width: 200,
       dataIndex: 'gender',
     },
   ];
@@ -78,13 +85,13 @@ const AppList = props => {
         <Row>
           <Form.Item style={{ display: 'flex', justifyContent: 'flex-end' }}>
             <Button type="primary" onClick={submit}>
-              搜索
+              Search
             </Button>
             <Button onClick={reset} style={{ marginLeft: 16 }}>
-              清空
+              Reset
             </Button>
             <Button type="link" onClick={changeType}>
-              简易搜索
+              Simple Search
             </Button>
           </Form.Item>
         </Row>
@@ -108,7 +115,7 @@ const AppList = props => {
           <Input.Search placeholder="enter name" style={{ width: 240 }} onSearch={submit} />,
         )}
         <Button type="link" onClick={changeType}>
-          高级搜索
+          Advanced Search
         </Button>
       </Form>
     </div>
@@ -117,16 +124,7 @@ const AppList = props => {
   return (
     <div>
       {type === 'simple' ? searchFrom : advanceSearchForm}
-      <Table
-        columns={columns}
-        rowKey="email"
-        {...tableProps}
-        pagination={{
-          showSizeChanger: true,
-          showQuickJumper: true,
-          ...tableProps.pagination,
-        }}
-      />
+      <Table columns={columns} rowKey="email" {...tableProps} />
     </div>
   );
 };

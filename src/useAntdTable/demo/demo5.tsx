@@ -1,55 +1,66 @@
 import { Button, Form, Input, Table } from 'antd';
 import React, { useState } from 'react';
-import useAntdTable from '..';
+import { WrappedFormUtils } from 'antd/lib/form/Form';
+import useAntdTable, { FnParams } from '..';
 
-const getTableData = ({ current, pageSize, ...rest }) => {
+interface Item {
+  name: {
+    last: string;
+  };
+  email: string;
+  phone: string;
+  gender: 'male' | 'female';
+}
+
+interface Result {
+  total: number;
+  data: Item[];
+}
+
+interface AppListProps {
+  form: WrappedFormUtils;
+}
+
+const getTableData = ({ current, pageSize, ...rest }: FnParams<Item>) => {
   console.log(current, pageSize, rest);
   return fetch(`https://randomuser.me/api?results=55&page=${current}&size=${pageSize}`)
     .then(res => res.json())
     .then(res => ({
-      page: res.info.page,
       total: res.info.results,
       data: res.results,
     }));
 };
 
-const AppList = props => {
+const AppList = (props: AppListProps) => {
   const { getFieldDecorator } = props.form;
-  const {
-    tableProps,
-    search: { type, changeType, submit, reset },
-  } = useAntdTable(getTableData, [], {
+  const { tableProps, filters, sorter, search } = useAntdTable<Result, Item>(getTableData, {
     defaultPageSize: 5,
     form: props.form,
     id: 'tableId',
   });
 
+  const { type, changeType, submit, reset } = search || {};
+
   const columns = [
     {
       title: 'name',
-      dataIndex: 'name',
-      key: 'name',
-      width: 100,
-      render(_, record) {
-        return record.name.title;
-      },
+      dataIndex: 'name.last',
     },
     {
       title: 'email',
       dataIndex: 'email',
-      key: 'email',
-      width: 350,
     },
     {
       title: 'phone',
       dataIndex: 'phone',
-      key: 'phone',
+      sorter: true,
+      sortOrder: sorter.field === 'phone' && sorter.order,
     },
     {
       title: 'gender',
-      key: 'gender',
-      width: 200,
       dataIndex: 'gender',
+      filters: [{ text: 'male', value: 'male' }, { text: 'female', value: 'female' }],
+      filteredValue: filters.gender,
     },
   ];
 
@@ -71,13 +82,13 @@ const AppList = props => {
           </>
         )}
         <Button type="primary" onClick={submit}>
-          搜索
+          Search
         </Button>
         <Button onClick={reset} style={{ marginLeft: 8 }}>
-          重置
+          Reset
         </Button>
         <Button type="link" onClick={changeType}>
-          {type === 'simple' ? '展开' : '关闭'}
+          {type === 'simple' ? 'Expand' : 'Close'}
         </Button>
       </Form>
     </div>
@@ -86,16 +97,7 @@ const AppList = props => {
   return (
     <div>
       {searchFrom}
-      <Table
-        columns={columns}
-        rowKey="email"
-        {...tableProps}
-        pagination={{
-          showSizeChanger: true,
-          showQuickJumper: true,
-          ...tableProps.pagination,
-        }}
-      />
+      <Table columns={columns} rowKey="email" {...tableProps} />
     </div>
   );
 };
@@ -114,7 +116,7 @@ const Demo = () => {
         }}
         style={{ marginBottom: 16 }}
       >
-        {show ? '点击销毁' : '点击恢复'}
+        {show ? 'Click to destroy' : 'Click recovery'}
       </Button>
       {show && <AppListTable />}
     </div>
