@@ -4,7 +4,7 @@ import useAPI from '..';
 
 export default () => {
   const { run } = useAPI({
-    url: 'https://randomuser.me/api',
+    url: 'https://helloacm.com/api/random/?n=8&x=4',
     manual: true,
     method: (...args) => {
       notification.success({

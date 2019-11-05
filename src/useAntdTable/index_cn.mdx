@@ -1,7 +1,7 @@
 ---
 name: useAntdTable
 route: /useAntdTable
-menu: '中台 hooks'
+menu: '中台 Hooks'
 edit: false
 sidebar: true
 ---
@@ -41,21 +41,31 @@ import Demo5CodeJsx from '!raw-loader!./demo/demo5.jsx';
 
 ## 代码演示
 
-<JackBox jsCode={Demo1CodeJsx} tsCode={Demo1CodeTsx} demoName='基础用法' description='自动处理分页数据'>
+### 基本用法
+
+<JackBox jsCode={Demo1CodeJsx} tsCode={Demo1CodeTsx} demoName='基本用法' description='自动处理分页数据'>
   <Demo1 />
 </JackBox>
+
+### 排序与筛选
 
 <JackBox jsCode={Demo2CodeJsx} tsCode={Demo2CodeTsx} demoName='排序与筛选' description='自动处理 Table 的排序与筛选，在修改排序或筛选时，会初始化到第一页'>
   <Demo2 />
 </JackBox>
 
+### 带筛选和分页器的 Table
+
 <JackBox jsCode={Demo3CodeJsx} tsCode={Demo3CodeTsx} demoName='带筛选和分页器的 Table' description='合理利用 deps，当 deps 变化时，会初始化到第一页'>
   <Demo3 />
 </JackBox>
 
+### 搜索表单与列表联动
+
 <JackBox jsCode={Demo4CodeJsx} tsCode={Demo4CodeTsx} demoName='搜索表单与列表联动' description='如果 options 传了 form 参数，则我们会帮你管理 form 数据'>
   <Demo4 />
 </JackBox>
+
+### 数据缓存
 
 <JackBox jsCode={Demo5CodeJsx} tsCode={Demo5CodeTsx} demoName='数据缓存' description='如果 options 传了 id 参数，则我们会将当前表单数据、分页数据、筛选排序等数据全部缓存下来，下次构建时恢复缓存数据'>
   <Demo5 />

@@ -14,7 +14,7 @@ export default Form.create()(props => {
         rules: [
           {
             required: true,
-            message: '必填',
+            message: 'required',
           },
         ],
       })(

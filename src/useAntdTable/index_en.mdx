@@ -1,7 +1,7 @@
 ---
 name: useAntdTable
 route: /useAntdTable
-menu: 'Business Hooks'
+menu: 'Data Hooks'
 edit: false
 sidebar: true
 ---
@@ -41,21 +41,31 @@ Encapsulates common logic to make it easier to manage [Antd Table](https://ant.d
 
 ## Examples
 
+### Basic usage
+
 <JackBox jsCode={Demo1CodeJsx} tsCode={Demo1CodeTsx} demoName='Basic usage' description='Automatic processing of paged data'>
   <Demo1 />
 </JackBox>
+
+### Filter And Sorter
 
 <JackBox jsCode={Demo2CodeJsx} tsCode={Demo2CodeTsx} demoName='Filter And Sorter' description='Dynamically sort and filter Tables, initialize to the first page when modifying sort or filter'>
   <Demo2 />
 </JackBox>
 
+### Table with filter and pager
+
 <JackBox jsCode={Demo3CodeJsx} tsCode={Demo3CodeTsx} demoName='Table with filter and pager' description='Proper use of deps, when deps changes, will be initialized to the first page'>
   <Demo3 />
 </JackBox>
 
+### Search form and list linkage
+
 <JackBox jsCode={Demo4CodeJsx} tsCode={Demo4CodeTsx} demoName='Search form and list linkage' description='If options have the form parameter, we will help you manage the form data.'>
   <Demo4 />
 </JackBox>
+
+### Data cache
 
 <JackBox jsCode={Demo5CodeJsx} tsCode={Demo5CodeTsx} demoName='Data cache' description='If options have the id parameter, we will cache the current form data, pagination data, filters, sorter, etc., and restore the cached data the next time we build.'>
   <Demo5 />

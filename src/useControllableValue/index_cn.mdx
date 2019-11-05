@@ -1,7 +1,7 @@
 ---
 name: useControllableValue
 route: /useControllableValue
-menu: '中台 hooks'
+menu: '基础 Hooks'
 edit: false
 sidebar: true
 ---
@@ -25,13 +25,19 @@ import Demo3CodeJsx from '!raw-loader!./demo/demo3.jsx';
 
 ## 代码演示
 
+### 非受控组件
+
 <JackBox jsCode={Demo1CodeJsx} tsCode={Demo1CodeTsx} demoName='非受控组件' description='如果 props 中没有 value，则组件内部自理 state'>
   <Demo1 />
 </JackBox>
 
+### 受控组件
+
 <JackBox jsCode={Demo2CodeJsx} tsCode={Demo2CodeTsx} demoName='受控组件' description='如果 props 有 value 字段，则由父级接管控制 state'>
   <Demo2 />
 </JackBox>
+
+### 无 value，有 onChange 的组件
 
 <JackBox jsCode={Demo3CodeJsx} tsCode={Demo3CodeTsx} demoName='无 value，有 onChange 的组件' description='只要 props 中有 onChange 字段，则在 state 变化时，就会触发 onChange 函数'>
   <Demo3 />

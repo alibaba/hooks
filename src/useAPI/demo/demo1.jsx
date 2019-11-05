@@ -1,17 +1,14 @@
-import React, { useMemo } from 'react';
 import { Spin } from 'antd';
+import React from 'react';
 import useAPI from '..';
 
 export default () => {
   const { data, loading } = useAPI({
-    url: 'https://randomuser.me/api',
+    url: 'https://helloacm.com/api/random/?n=8&x=4',
   });
-  const email = useMemo(() => (((data || {}).results || [])[0] || {}).email, [data]);
   return (
-    <>
-      <Spin spinning={loading}>
-        <div>email: {email}</div>
-      </Spin>
-    </>
+    <Spin spinning={loading}>
+      <div>ID: {data}</div>
+    </Spin>
   );
 };

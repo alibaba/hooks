@@ -16,7 +16,7 @@ export default Form.create()((props: FormComponentProps) => {
         rules: [
           {
             required: true,
-            message: '必填',
+            message: 'required',
           },
         ],
       })(<Input style={{ width: 300 }} placeholder="Please enter your name" />)}
@@ -41,9 +41,7 @@ export default Form.create()((props: FormComponentProps) => {
 
   return (
     <>
-      <Form>
-        {list.map((ele, index) => Row(index, ele))}
-      </Form>
+      <Form>{list.map((ele, index) => Row(index, ele))}</Form>
       <Button
         style={{ marginTop: 8 }}
         type="primary"

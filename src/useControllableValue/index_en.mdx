@@ -1,7 +1,7 @@
 ---
 name: useControllableValue
 route: /useControllableValue
-menu: 'Business hooks'
+menu: 'Basic Hooks'
 edit: false
 sidebar: true
 ---
@@ -25,13 +25,19 @@ In some components, we need the state to be managed by itself or externally cont
 
 ## Examples
 
+### Uncontrolled component
+
 <JackBox jsCode={Demo1CodeJsx} tsCode={Demo1CodeTsx} demoName='Uncontrolled component' description='If there is no value in props, the component internal self-care state'>
   <Demo1 />
 </JackBox>
 
+### Controlled component
+
 <JackBox jsCode={Demo2CodeJsx} tsCode={Demo2CodeTsx} demoName='Controlled component' description='If props has a value field, then the parent takes over the state'>
   <Demo2 />
 </JackBox>
+
+### No value, have onChange component
 
 <JackBox jsCode={Demo3CodeJsx} tsCode={Demo3CodeTsx} demoName='No value, have onChange component' description='As long as there is an onChange field in props, the onChange function is fired when the state changes'>
   <Demo3 />

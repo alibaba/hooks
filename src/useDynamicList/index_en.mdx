@@ -49,6 +49,10 @@ A hook that helps you manage your list data and generate unique key for each ite
 
 ## API
 
+```typescript
+const result: Result = useDynamicList(initialValue: T[]);
+```
+
 ### Result
 
 | Property | Description                                         | Type                 | Remarks  |
@@ -68,7 +72,7 @@ A hook that helps you manage your list data and generate unique key for each ite
 | unshift  | add new item at the front of the list    | (obj: T) => void;          | - |
 | shift  | remove the first item from the list     | () => void;          | - |
 
-### Options
+### Params
 
 | Property | Description                                                        | Type                   | Default |
 |--------------|--------------|----------------------|---|

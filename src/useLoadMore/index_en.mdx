@@ -40,17 +40,25 @@ A Hook that is suitable for clicking to load more or pull up to load more scenar
 
 ## Examples
 
+### Click to load more
+
 <JackBox jsCode={Demo1CodeJsx} tsCode={Demo1CodeTsx} demoName='Click to load more' description='Standard loading more examples'>
   <Demo1 />
 </JackBox>
+
+### Pull up load more
 
 <JackBox jsCode={Demo2CodeJsx} tsCode={Demo2CodeTsx} demoName='Pull up load more' description='If ref exists in options, loadMore is automatically triggered when scrolling to the bottom'>
   <Demo2 />
 </JackBox>
 
+### Rational use of deps
+
 <JackBox jsCode={Demo3CodeJsx} tsCode={Demo3CodeTsx} demoName='Rational use of deps' description='If the deps changes, reset the current page and re-request the data'>
   <Demo3 />
 </JackBox>
+
+### Dynamic data loading - timestamp mode
 
 <JackBox jsCode={Demo4CodeJsx} tsCode={Demo4CodeTsx} demoName='Dynamic data loading - timestamp mode' description={
   <div>
@@ -60,6 +68,8 @@ A Hook that is suitable for clicking to load more or pull up to load more scenar
 }>
   <Demo4 />
 </JackBox>
+
+### Dynamic data loading - ID mode
 
 <JackBox jsCode={Demo5CodeJsx} tsCode={Demo5CodeTsx} demoName='Dynamic data loading - ID mode' description={
   <div>

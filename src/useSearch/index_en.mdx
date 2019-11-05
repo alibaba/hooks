@@ -27,10 +27,12 @@ Applicable to common side input, asynchronous search scenes.
 
 ## Examples
 
+### Select Search
 <JackBox jsCode={Demo1CodeJsx} tsCode={Demo1CodeTsx} demoName='Select Search' description='Common Select asynchronous search'>
   <Demo1 />
 </JackBox>
 
+### Input Search
 <JackBox jsCode={Demo2CodeJsx} tsCode={Demo2CodeTsx} demoName='Input Search' description='Complex Input search scenario, use deps properly'>
   <Demo2 />
 </JackBox>
@@ -38,12 +40,12 @@ Applicable to common side input, asynchronous search scenes.
 ## API
 
 ```javascript
-const result: T = useSearch<T>(
+const result: Result = useSearch<T>(
   asyncFn: (value: any) => Promise<T>,
   options?: Options,
 );
 
-const result: T = useSearch<T>(
+const result: Result = useSearch<T>(
   asyncFn: (value: any) => Promise<T>,
   deps?: any[],
   options?: Options,

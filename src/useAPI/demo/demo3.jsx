@@ -1,16 +1,15 @@
-import React, { useMemo } from 'react';
-import { Spin, Button } from 'antd';
+import { Button, Spin } from 'antd';
+import React from 'react';
 import useAPI from '..';
 
 export default () => {
   const { data, loading, timer } = useAPI({
-    url: 'https://randomuser.me/api',
+    url: 'https://helloacm.com/api/random/?n=8&x=4',
     pollingInterval: 3000,
   });
-  const email = useMemo(() => (((data || {}).results || [])[0] || {}).email, [data]);
   return (
     <>
-      <Spin spinning={loading}>email: {email}</Spin>
+      <Spin spinning={loading}>ID: {data}</Spin>
       <Button.Group
         style={{
           marginTop: 16,

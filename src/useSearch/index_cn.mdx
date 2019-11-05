@@ -1,7 +1,7 @@
 ---
 name: useSearch
 route: /useSearch
-menu: '中台 hooks'
+menu: '中台 Hooks'
 edit: false
 sidebar: true
 ---
@@ -27,9 +27,12 @@ import Demo2CodeTsx from '!raw-loader!./demo/demo2.tsx';
 
 ## 代码演示
 
+### Select Search
 <JackBox jsCode={Demo1CodeJsx} tsCode={Demo1CodeTsx} demoName='Select Search' description='常见的 Select 异步搜索'>
   <Demo1 />
 </JackBox>
+
+### Input Search
 
 <JackBox jsCode={Demo2CodeJsx} tsCode={Demo2CodeTsx} demoName='Input Search' description='复杂的 Input 搜索场景，合理使用 deps'>
   <Demo2 />
@@ -38,12 +41,12 @@ import Demo2CodeTsx from '!raw-loader!./demo/demo2.tsx';
 ## API
 
 ```javascript
-const result: T = useSearch<T>(
+const result: Result = useSearch<T>(
   asyncFn: (value: any) => Promise<T>,
   options?: Options,
 );
 
-const result: T = useSearch<T>(
+const result: Result = useSearch<T>(
   asyncFn: (value: any) => Promise<T>,
   deps?: any[],
   options?: Options,

@@ -1,7 +1,7 @@
 ---
 name: usePagination
 route: /usePagination
-menu: '中台 hooks'
+menu: '中台 Hooks'
 edit: false
 sidebar: true
 ---
@@ -21,9 +21,13 @@ import Demo2CodeTsx from '!raw-loader!./demo/demo2.tsx';
 
 ## 代码演示
 
-<JackBox jsCode={Demo1CodeJsx} tsCode={Demo1CodeTsx} demoName='Basic usage' description='简单的分页列表'>
+### 基本用法
+
+<JackBox jsCode={Demo1CodeJsx} tsCode={Demo1CodeTsx} demoName='基本用法' description='简单的分页列表'>
   <Demo1 />
 </JackBox>
+
+### 合理利用 deps
 
 <JackBox jsCode={Demo2CodeJsx} tsCode={Demo2CodeTsx} demoName='合理利用 deps' description='当 deps 变化时，会初始化到第一页'>
   <Demo2 />

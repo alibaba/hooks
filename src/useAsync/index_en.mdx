@@ -33,23 +33,23 @@ A custom hook that helps you manage async functions and their returned data.
 
 ### Default usage
 
-<JackBox tsCode={Demo1CodeTs} jsCode={Demo1CodeJs} demoName='Default usage' description='Sending the request only when the `run` function is called'>
+<JackBox tsCode={Demo1CodeTs} jsCode={Demo1CodeJs} demoName='Default usage' description='Sending the request only when the `run` function is called, and will be re-executed after the deps change.'>
   <Demo1 />
 </JackBox>
 
 ### Manually triggered
 
-<JackBox tsCode={Demo2CodeTs} jsCode={Demo2CodeJs} demoName='Manually triggered' description='Executing async function only when the `run` function is called'>
+<JackBox tsCode={Demo2CodeTs} jsCode={Demo2CodeJs} demoName='Manually triggered' description='If manual is set, the async function only be executed when the `run` function is called'>
   <Demo2 />
 </JackBox>
 
 ### Polling
 
-<JackBox tsCode={Demo3CodeTs} jsCode={Demo3CodeJs} demoName='Polling' description='use `timer` to control the execution of async function'>
+<JackBox tsCode={Demo3CodeTs} jsCode={Demo3CodeJs} demoName='Polling' description='If pollingInterval is set, Polling can be turned on, you can use `timer` to control the execution of async function'>
   <Demo3 />
 </JackBox>
 
-### Form submission
+### Form Submission
 
 <JackBox tsCode={Demo4CodeTs} jsCode={Demo4CodeJs} demoName='Form Submission' description='A form submit example incorporate with antd form'>
   <Demo4 />
@@ -57,80 +57,35 @@ A custom hook that helps you manage async functions and their returned data.
 
 ## API
 
-```
-const {
-  loading: boolean;
-  error?: Error;
-  data?: T;
-  params?: any[];
-  cancel: () => void;
-  run: () => void;
-  timer: {
-    stop: () => void;
-    resume: () => void;
-    pause: () => void;
-  };
-} = useAsync(params);
+```javascript
+const result: Result = useAsync<T>(
+  asyncFn: (value: any) => Promise<T>,
+  options?: Options,
+);
 
-params:(
-  service: (...args: Args | any) => Promise<Result>,
-  deps: DependencyList = [],
-  options: {
-    onSuccess?: (d: T) => void //
-    onError?: (e: Error) => void // 执行失败时的回掉
-    manual?: boolean; // 是否初始化执行
-    pollingInterval?: number; // 轮询的间隔毫秒
-    autoCancel?: boolean // 是否关闭竞态处理
-  }
-)
+const result: Result = useAsync<T>(
+  asyncFn: (value: any) => Promise<T>,
+  deps?: any[],
+  options?: Options,
+);
 ```
 
-## API
-
-```
-const {
-  loading: boolean;
-  error?: Error;
-  data?: T;
-  params?: any[];
-  cancel: () => void;
-  run: () => void;
-  timer: {
-    stop: () => void;
-    resume: () => void;
-    pause: () => void;
-  };
-} = useAsync(params);
-
-params:(
-  service: (...args: Args | any) => Promise<Result>,
-  deps: DependencyList = [],
-  options: {
-    onSuccess?: (d: T, params: any[]) => void // success callback
-    onError?: (e: Error, params: any[]) => void // error callback
-    manual?: boolean; // whether manually trigger
-    pollingInterval?: number; // polling interval
-    autoCancel?: boolean // whether drop the data at unmount.
-  }
-)
-```
-
-### 结果
+### Result
 
 | Property | Description                                         | Type                 |
-|--------------|--------------|----------------------|---|
-| loading      | whether the async function is resolved | boolean              |   |
-| params       | the params you passed to that async function | any[] | -- |
-| error        | the Error that async function throwed | Error                |   |
-| data         | the result that async function resolved | (value: any) => void | - |
-| cancel       | drop the async function result         | () => void;          |   |
-| run          | running the async function         | (...args: any[]) => Promise\<T\>          |   |
-| timer.stop   | stop polling     | () => void;          |   |
-| timer.pause | pause pollinng     | () => void;          |   |
-| timer.resume  | resume polling     | () => void;          |   |
+|--------------|--------------|----------------------|
+| loading      | whether the async function is resolved | boolean              |  
+| params       | the params you passed to that async function | any[] |
+| error        | the Error that async function throwed | Error                |   
+| data         | the result that async function resolved | (value: any) => void | 
+| cancel       | drop the async function result         | () => void;          |   
+| run          | running the async function         | (...args: any[]) => Promise\<T\>          |   
+| timer.stop   | stop polling     | () => void;          |   
+| timer.pause | pause pollinng     | () => void;          |   
+| timer.resume  | resume polling     | () => void;          |   
 
 
-### 参数
+### Params
 
 | Property | Description                                                        | Type                   | Default |
 |---------|------------------------|----------------|----------------|---|

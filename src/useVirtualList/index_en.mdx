@@ -36,18 +36,8 @@ A hook that allows you to use virtual list to render huge chunks of list data.
 
 ## API
 
-```
-const {
-  list,
-  containerProps,
-  wrapperProps,
-  scrollTo,
-} = useVirtualList(originalList, Options);
-
-Options: {
-  itemHeight: number | ((index: number) => number),
-  overscan: number,
-}
+```typescript
+const result:Result = useVirtualList(originalList: any[], Options);
 ```
 
 ### Result

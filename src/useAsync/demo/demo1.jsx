@@ -1,19 +1,19 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState } from 'react';
 import { Spin, Button } from 'antd';
 import useAsync from '..';
 
-function getEmail(id) {
-  return fetch(`https://randomuser.me/api?id=${id}`).then(res => res.json());
+function getNumber(id) {
+  return fetch(`https://helloacm.com/api/random/?n=8&x=4&id=${id}`).then(res => res.json());
 }
 
 export default () => {
   const [state, set] = useState(0);
-  const { data, loading, cancel, run } = useAsync(() => getEmail(state), [state]);
-  const email = useMemo(() => (((data || {}).results || [])[0] || {}).email, [data]);
+  const { data, loading, cancel, run } = useAsync(() => getNumber(state), [state]);
   return (
     <>
       <Spin spinning={loading}>
-        <div>id: {state}</div> <div>email: {email}</div>
+        <div>id: {state}</div>
+        <div>Number: {data}</div>
       </Spin>
       <Button.Group
         style={{

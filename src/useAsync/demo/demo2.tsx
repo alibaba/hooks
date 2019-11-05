@@ -2,17 +2,16 @@ import React, { useMemo } from 'react';
 import { Spin, Button } from 'antd';
 import useAsync from '..';
 
-function getEmail() {
-  return fetch('https://randomuser.me/api').then(res => res.json());
+function getNumber() {
+  return fetch('https://helloacm.com/api/random/?n=8&x=4').then(res => res.json());
 }
 
 export default () => {
-  const { data, loading, run } = useAsync(() => getEmail(), [], { manual: true });
-  const email = useMemo(() => (((data || {}).results || [])[0] || {}).email, [data]);
+  const { data, loading, run } = useAsync(() => getNumber(), { manual: true });
 
   return (
     <>
-      <Spin spinning={loading}>email: {email}</Spin>
+      <Spin spinning={loading}>Number: {data}</Spin>
       <Button onClick={run} style={{ marginTop: 16 }}>
         fetch
       </Button>

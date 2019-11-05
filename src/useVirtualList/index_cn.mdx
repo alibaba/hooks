@@ -1,7 +1,7 @@
 ---
 name: useVirtualList
 route: /useVirtualList
-menu: '中台 hooks'
+menu: '中台 Hooks'
 edit: false
 sidebar: true
 ---
@@ -36,21 +36,11 @@ import Demo2Jsx from '!raw-loader!./demo/Demo2.jsx';
 
 ## API
 
-```
-const {
-  list,
-  containerProps,
-  wrapperProps,
-  scrollTo,
-} = useVirtualList(originalList, Options);
-
-Options: {
-  itemHeight: number | ((index: number) => number),
-  overscan: number,
-}
+```typescript
+const result:Result = useVirtualList(originalList: any[], Options);
 ```
 
-### 结果
+### Result
 
 | 参数     | 说明                                     | 类型       |
 |----------|------------------------------------------|------------|

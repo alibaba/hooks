@@ -1,7 +1,7 @@
 ---
 name: useLoadMore
 route: /useLoadMore
-menu: '中台 hooks'
+menu: '中台 Hooks'
 edit: false
 sidebar: true
 ---
@@ -40,17 +40,25 @@ import Demo5CodeJsx from '!raw-loader!./demo/demo5.jsx';
 
 ## 代码演示
 
+### 点击加载更多
+
 <JackBox jsCode={Demo1CodeJsx} tsCode={Demo1CodeTsx} demoName='点击加载更多' description='标准的加载更多例子'>
   <Demo1 />
 </JackBox>
+
+### 上拉加载更多
 
 <JackBox jsCode={Demo2CodeJsx} tsCode={Demo2CodeTsx} demoName='上拉加载更多' description='如果 options 中存在 ref，则在滚动到底部时，自动触发 loadMore'>
   <Demo2 />
 </JackBox>
 
+### 合理利用 deps
+
 <JackBox jsCode={Demo3CodeJsx} tsCode={Demo3CodeTsx} demoName='合理利用 deps' description='如果 deps 变化，则重置当前分页，重新请求数据'>
   <Demo3 />
 </JackBox>
+
+### 动态数据加载之时间戳模式
 
 <JackBox jsCode={Demo4CodeJsx} tsCode={Demo4CodeTsx} demoName='动态数据加载之时间戳模式' description={
   <div>
@@ -60,6 +68,8 @@ import Demo5CodeJsx from '!raw-loader!./demo/demo5.jsx';
 }>
   <Demo4 />
 </JackBox>
+
+### 动态数据加载之 ID 模式
 
 <JackBox jsCode={Demo5CodeJsx} tsCode={Demo5CodeTsx} demoName='动态数据加载之 ID 模式' description={
   <div>

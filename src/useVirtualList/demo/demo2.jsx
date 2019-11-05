@@ -22,7 +22,10 @@ export default () => {
         <InputNumber
           min={0}
           max={99999}
-          placeholder="行数"
+          style={{
+            width: 120,
+          }}
+          placeholder="line number"
           value={value}
           onChange={e => onChange(e)}
         />
@@ -34,7 +37,7 @@ export default () => {
             scrollTo(Number(value));
           }}
         >
-          滚动到此行
+          scroll to
         </Button>
       </div>
       <div
