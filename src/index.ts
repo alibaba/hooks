@@ -12,6 +12,8 @@ import useSize from './useSize';
 import useLocalStorageState from './useLocalStorageState';
 import useUpdateEffect from './useUpdateEffect';
 import usePagination from './usePagination';
+import useBoolean from './useBoolean';
+import useToggle from './useToggle';
 
 const useControlledValue: typeof useControllableValue = function (...args) {
   console.warn(
@@ -38,4 +40,6 @@ export {
   configRequest,
   useUpdateEffect,
   usePagination,
+  useBoolean,
+  useToggle,
 };
