@@ -1,7 +1,7 @@
 ---
 name: useEventEmitter
 route: /useEventEmitter
-menu: '高阶 hooks'
+menu: '高阶 Hooks'
 edit: false
 sidebar: true
 ---
@@ -41,6 +41,8 @@ event$.useSubscription(val => {
 
 ## 代码演示
 
+### 父组件向子组件共享事件
+
 <JackBox jsCode={Demo1CodeJsx} tsCode={Demo1CodeTsx} demoName='父组件向子组件共享事件' description={
   <div>
     父组件创建了一个 focus$ 事件，并且将它传递给了两个子组件。在 MessageBox 中调用 focus$.emit ，InputBox 组件就可以收到通知。
@@ -51,13 +53,13 @@ event$.useSubscription(val => {
 
 ## API
 
-### 入参
+```typescript
+const result: Result = useEventEmitter<T>();
+```
 
-无
+### Result
 
-### 返回结果
-
-| 参数         | 说明         | 类型                 |  备注            |
-|--------------|--------------|----------------------|---------------|
-| emit         | 发送一个事件通知 | (val: T) => void       | - |
-| useSubscription | 订阅事件    | (callback: (val: T) => void) => void     | - |
+| 参数            | 说明             | 类型                                 |
+|-----------------|------------------|--------------------------------------|
+| emit            | 发送一个事件通知 | (val: T) => void                     |
+| useSubscription | 订阅事件         | (callback: (val: T) => void) => void |

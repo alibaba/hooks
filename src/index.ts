@@ -14,6 +14,7 @@ import useUpdateEffect from './useUpdateEffect';
 import usePagination from './usePagination';
 import useBoolean from './useBoolean';
 import useToggle from './useToggle';
+import useSelections from './useSelections';
 
 const useControlledValue: typeof useControllableValue = function (...args) {
   console.warn(
@@ -42,4 +43,5 @@ export {
   usePagination,
   useBoolean,
   useToggle,
+  useSelections,
 };

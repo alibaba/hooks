@@ -7,13 +7,13 @@ const MessageBox: FC<{
 }> = function (props) {
   return (
     <div style={{ paddingBottom: 24 }}>
-      <p>你收到了一条消息</p>
+      <p>You received a message</p>
       <Button
         onClick={() => {
           props.focus$.emit();
         }}
       >
-        回复
+        Reply
       </Button>
     </div>
   );
@@ -26,7 +26,7 @@ const InputBox: FC<{
   props.focus$.useSubscription(() => {
     inputRef.current.focus();
   });
-  return <Input ref={inputRef} placeholder="输入回复" />;
+  return <Input ref={inputRef} placeholder="Enter reply" />;
 };
 
 export default function () {

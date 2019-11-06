@@ -11,7 +11,7 @@ export default function () {
   const responsive = useResponsive();
   return (
     <>
-      <p>请改变浏览器窗口宽度来查看效果：</p>
+      <p>Please change the width of the browser window to see the effect: </p>
       {Object.keys(responsive).map(key => (
         <p key={key}>
           {key} {responsive[key] ? '✔' : '✘'}

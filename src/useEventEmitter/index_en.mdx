@@ -1,7 +1,7 @@
 ---
 name: useEventEmitter
 route: /useEventEmitter
-menu: '高阶 hooks'
+menu: 'Advanced Hooks'
 edit: false
 sidebar: true
 ---
@@ -41,6 +41,8 @@ If you want to let the child component notify the parent component, you can just
 
 ## Examples
 
+### Parent component shares a event
+
 <JackBox jsCode={Demo1CodeJsx} tsCode={Demo1CodeTsx} demoName='Parent component shares a event' description={
   <div>
     The parent component creates a focus$ event emitter, and passes it to its children. When calling focus$.emit in MessageBox, InputBox will get notified.
@@ -53,11 +55,13 @@ If you want to let the child component notify the parent component, you can just
 
 ### Params
 
-No param.
+```typescript
+const result: Result = useEventEmitter<T>();
+```
 
 ### Result
 
-| Property    | Description                              | Type       | Default     |
-|--------------|--------------|----------------------|---------------|
-| emit         | Emit a new event. | (val: T) => void       | - |
-| useSubscription | Subscribe to a event emitter.    | (callback: (val: T) => void) => void     | - |
+| Property        | Description                   | Type                                 |
+|-----------------|-------------------------------|--------------------------------------|
+| emit            | Emit a new event.             | (val: T) => void                     |
+| useSubscription | Subscribe to a event emitter. | (callback: (val: T) => void) => void |
