@@ -5,10 +5,15 @@ menu: '基础 Hooks'
 edit: false
 sidebar: true
 ---
-
+import JackBox from 'jackbox';
 import { Playground } from 'docz';
 import { useState, useMemo } from 'react';
 import { useResponsive, configResponsive } from './index';
+
+import Demo1 from './demo/demo1';
+import Demo1CodeTsx from '!raw-loader!./demo/demo1.tsx';
+import Demo1CodeJsx from '!raw-loader!./demo/demo1.jsx';
+
 
 # useResponsive
 
@@ -16,33 +21,13 @@ import { useResponsive, configResponsive } from './index';
 
 ## 代码演示
 
-### 在组件中获取响应式信息。
-
-<Playground>
-{
-  ()=>{
-    configResponsive({
-      small: 0,
-      middle: 800,
-      large: 1200,
-    });
-    function Demo(){
-      const responsive = useResponsive();
-      return (
-        <>
-          <p>请改变浏览器窗口宽度来查看效果：</p>
-          {Object.keys(responsive).map(key => (
-            <p key={key}>
-              {key} {responsive[key] ? '✔' : '✘'}
-            </p>
-          ))}
-        </>
-      );
-    }
-    return <Demo />
-  }
-}
-</Playground>
+<JackBox jsCode={Demo1CodeJsx} tsCode={Demo1CodeTsx} demoName='在组件中获取响应式信息' description={
+  <div>
+    在组件中调用 useResponsive 可以获取并订阅浏览器窗口的响应式信息。
+  </div>
+}>
+  <Demo1/>
+</JackBox>
 
 ## API
 
@@ -71,7 +56,7 @@ function useResponsive(): ResponsiveInfo
 }
 ```
 
-如果你想配置自己的响应式断点，可以使用 `useResponsive` ：
+如果你想配置自己的响应式断点，可以使用 `configResponsive` ：
 
 （注意：只需配置一次，请勿在组件中重复调用该方法）
 
