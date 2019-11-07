@@ -13,6 +13,11 @@ React Hooks Library.
 * Contains a wealth of basic Hooks.
 * Written in TypeScript with predictable static types.
 
+## 📣 Explain
+
+**You can use umi hooks anywhere, with any component library.**
+Although our examples are based on ant design, it does not mean that our Hooks can only be used with ant design.
+
 ## 📦 Install
 
 ```
