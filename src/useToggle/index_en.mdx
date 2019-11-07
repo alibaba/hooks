@@ -16,20 +16,24 @@ import Demo2CodeJsx from '!raw-loader!./demo/demo2.jsx';
 
 # useToggle
 
-A hook that switch value in two states.
+A hook that switch value between two states.
 
 **Core Characteristics**
 
 * Set default state.
-* switch value in two states
+* switch value between two states
 
 ## Examples
 
-<JackBox jsCode={Demo1CodeJsx} tsCode={Demo1CodeTsx} demoName='Basic usage' description='Default as a boolean toggle，use as same as useBoolean.'>
+### Default usage
+
+<JackBox jsCode={Demo1CodeJsx} tsCode={Demo1CodeTsx} demoName='Default usage' description='use boolean value as default，use it as same as useBoolean.'>
   <Demo1 />
 </JackBox>
 
-<JackBox jsCode={Demo2CodeJsx} tsCode={Demo2CodeTsx} demoName='Advanced' description='Accept two parameters, switch of them.'>
+### Advanced usage
+
+<JackBox jsCode={Demo2CodeJsx} tsCode={Demo2CodeTsx} demoName='Advanced usage' description='Accept two parameters, switch between them.'>
   <Demo2 />
 </JackBox>
 

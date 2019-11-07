@@ -21,25 +21,25 @@ import Demo3CodeJsx from '!raw-loader!./demo/demo3.jsx';
 
 # useControllableValue
 
-In some components, we need the state to be managed by itself or externally controlled. `useControllableValue` is a Hook that helps you manage this state.
+In some components, we need the state to be managed by itself or controlled by it's parent. `useControllableValue` is a Hook that helps you manage this kind of state.
 
 ## Examples
 
 ### Uncontrolled component
 
-<JackBox jsCode={Demo1CodeJsx} tsCode={Demo1CodeTsx} demoName='Uncontrolled component' description='If there is no value in props, the component internal self-care state'>
+<JackBox jsCode={Demo1CodeJsx} tsCode={Demo1CodeTsx} demoName='Uncontrolled component' description='If there is no value in props, the component use self-contained state'>
   <Demo1 />
 </JackBox>
 
 ### Controlled component
 
-<JackBox jsCode={Demo2CodeJsx} tsCode={Demo2CodeTsx} demoName='Controlled component' description='If props has a value field, then the parent takes over the state'>
+<JackBox jsCode={Demo2CodeJsx} tsCode={Demo2CodeTsx} demoName='Controlled component' description="If props has a value field, then the state is controlled by it's parent">
   <Demo2 />
 </JackBox>
 
 ### No value, have onChange component
 
-<JackBox jsCode={Demo3CodeJsx} tsCode={Demo3CodeTsx} demoName='No value, have onChange component' description='As long as there is an onChange field in props, the onChange function is fired when the state changes'>
+<JackBox jsCode={Demo3CodeJsx} tsCode={Demo3CodeTsx} demoName='No value, have onChange component' description='As long as there is an onChange field in props, the onChange function will be fired when state changes'>
   <Demo3 />
 </JackBox>
 

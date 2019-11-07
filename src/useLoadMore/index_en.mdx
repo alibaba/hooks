@@ -30,13 +30,13 @@ import Demo5CodeJsx from '!raw-loader!./demo/demo5.jsx';
 
 # useLoadMore
 
-A Hook that is suitable for clicking to load more or pull up to load more scenarios.
+A Hook that is designed to display paged data incrementally.
 
 **Core Characteristics**
 
 * Async request control(loading, request timing control, etc)
-* Logic that encapsulates common loadMore scenarios
-* Support dynamic data loadMore scene
+* Logics will be used in common loadMore scenarios
+* Support custom data loading method
 
 ## Examples
 
@@ -48,19 +48,19 @@ A Hook that is suitable for clicking to load more or pull up to load more scenar
 
 ### Pull up load more
 
-<JackBox jsCode={Demo2CodeJsx} tsCode={Demo2CodeTsx} demoName='Pull up load more' description='If ref exists in options, loadMore is automatically triggered when scrolling to the bottom'>
+<JackBox jsCode={Demo2CodeJsx} tsCode={Demo2CodeTsx} demoName='Pull up to load more' description='If ref exists in options, loadMore is automatically triggered when scrolling to the bottom'>
   <Demo2 />
 </JackBox>
 
-### Rational use of deps
+### Use deps properly
 
-<JackBox jsCode={Demo3CodeJsx} tsCode={Demo3CodeTsx} demoName='Rational use of deps' description='If the deps changes, reset the current page and re-request the data'>
+<JackBox jsCode={Demo3CodeJsx} tsCode={Demo3CodeTsx} demoName='use deps properly' description='If the deps changes, reset the current page and re-request the data'>
   <Demo3 />
 </JackBox>
 
-### Dynamic data loading - timestamp mode
+### Custom data loading - timestamp mode
 
-<JackBox jsCode={Demo4CodeJsx} tsCode={Demo4CodeTsx} demoName='Dynamic data loading - timestamp mode' description={
+<JackBox jsCode={Demo4CodeJsx} tsCode={Demo4CodeTsx} demoName='custom data loading - timestamp mode' description={
   <div>
     If the back-end data is constantly being updated, then just use page, offset, pageSize, etc. to cut the data, and there may be a lot of duplicate data. At this time, if we know the time to pull the data for the first time, then only the data before this timestamp can be cut at the same time, and the correct data can be obtained.<br />
     We will record the current time 'startTime' when we first start the request or reload, and pass it to asyncFn.
@@ -69,9 +69,9 @@ A Hook that is suitable for clicking to load more or pull up to load more scenar
   <Demo4 />
 </JackBox>
 
-### Dynamic data loading - ID mode
+### Custom data loading - ID mode
 
-<JackBox jsCode={Demo5CodeJsx} tsCode={Demo5CodeTsx} demoName='Dynamic data loading - ID mode' description={
+<JackBox jsCode={Demo5CodeJsx} tsCode={Demo5CodeTsx} demoName='custom data loading - ID mode' description={
   <div>
     If the data update frequency is very high, there may be multiple data corresponding to the same timestamp, and the timestamp mode above may have problems. At this point we can get the correct data by the id and offset of the last data.<br />
     If there is an itemKey field in options, we will send the id of the current last data to asyncFn.

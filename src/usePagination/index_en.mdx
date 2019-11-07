@@ -17,19 +17,19 @@ import Demo2CodeTsx from '!raw-loader!./demo/demo2.tsx';
 
 # usePagination
 
-Hook for common asynchronous paging scenarios.
+Hook for common asynchronous paging scenario.
 
 ## Examples
 
-### Basic usage
+### Default usage
 
-<JackBox jsCode={Demo1CodeJsx} tsCode={Demo1CodeTsx} demoName='Basic usage' description='Simple page list'>
+<JackBox jsCode={Demo1CodeJsx} tsCode={Demo1CodeTsx} demoName='Default usage' description='Simple paged list'>
   <Demo1 />
 </JackBox>
 
 ### Rational use of deps
 
-<JackBox jsCode={Demo2CodeJsx} tsCode={Demo2CodeTsx} demoName='Rational use of deps' description='When deps changes, it initializes to the first page'>
+<JackBox jsCode={Demo2CodeJsx} tsCode={Demo2CodeTsx} demoName='Rational use of deps' description='When deps changes, the page number will be reset'>
   <Demo2 />
 </JackBox>
 
