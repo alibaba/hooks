@@ -1,6 +1,6 @@
 {
   "name": "@umijs/hooks",
-  "version": "1.3.1",
+  "version": "1.3.3",
   "description": "react hooks library",
   "keywords": [
     "umi hooks",
@@ -20,12 +20,14 @@
   "scripts": {
     "start": "npm run dev",
     "dev": "father doc dev",
+    "dev:zh-cn": "LAN=zh-CN father doc dev",
+    "js": "node ./.ts2js.js",
     "build": "father build",
     "test": "father test",
     "cov": "father test --coverage",
     "help": "father help",
     "precommit": "father pre-commit",
-    "build:doc": "father doc build",
+    "build:doc": "father doc build && LAN=zh-CN father doc build",
     "pub:doc": "now --prod"
   },
   "dependencies": {
@@ -41,14 +43,17 @@
     "@types/jest": "^24.0.15",
     "antd": "^3.20.1",
     "babel-plugin-import": "^1.12.0",
-    "docz-theme-umi-hooks": "^0.0.4",
+    "docz-theme-umi-hooks": "^0.0.7",
     "enzyme": "^3.10.0",
     "father": "^2.13.3",
+    "jackbox": "^0.0.7",
     "now": "^16.2.0",
+    "raw-loader": "^3.1.0",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-drag-listview": "^0.1.6",
     "resize-observer-polyfill": "^1.5.1",
+    "sylvanas": "^0.4.2",
     "typescript": "^3.3.3",
     "umi-request": "^1.0.8"
   },
