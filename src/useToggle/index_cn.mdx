@@ -1,7 +1,7 @@
 ---
 name: useToggle
 route: /useToggle
-menu: '基础 Hooks'
+menu: 'State'
 edit: false
 sidebar: true
 ---
@@ -18,16 +18,15 @@ import Demo2CodeJsx from '!raw-loader!./demo/demo2.jsx';
 
 用于在两个状态值间切换的 Hook。
 
-**核心特性**
-
-* 设置默认状态
-* 切换显示状态
-
 ## 代码演示
+
+### 基础使用
 
 <JackBox jsCode={Demo1CodeJsx} tsCode={Demo1CodeTsx} demoName='基础使用' description='默认为 boolean 切换，基本用法与 useBoolean 一致。'>
   <Demo1 />
 </JackBox>
+
+### 进阶使用
 
 <JackBox jsCode={Demo2CodeJsx} tsCode={Demo2CodeTsx} demoName='进阶使用' description='接受两个参数，在参数间进行切换。'>
   <Demo2 />
@@ -65,7 +64,7 @@ const {
 | setLeft | 设置为默认值 | () => void |
 | setRight | 设置为相反值 | () => void |
 
-### 参数
+### Params
 
 | 参数    | 说明                                         | 类型                   | 默认值 |
 |---------|----------------------------------------------|------------------------|--------|

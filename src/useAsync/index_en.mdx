@@ -1,7 +1,7 @@
 ---
 name: useAsync
 route: /useAsync
-menu: 'Data Hooks'
+menu: 'SideEffect'
 edit: false
 sidebar: true
 ---
@@ -33,13 +33,13 @@ A custom hook that helps you manage async functions and their returned data.
 
 ### Default usage
 
-<JackBox tsCode={Demo1CodeTs} jsCode={Demo1CodeJs} demoName='Default usage' description='Sending the request only when the `run` function is called, and will be re-executed after the deps change.'>
+<JackBox tsCode={Demo1CodeTs} jsCode={Demo1CodeJs} demoName='Default usage' description='Sending the request only when the "run" function is called, and will be re-executed after the deps change.'>
   <Demo1 />
 </JackBox>
 
 ### Manually triggered
 
-<JackBox tsCode={Demo2CodeTs} jsCode={Demo2CodeJs} demoName='Manually triggered' description='If manual is set, the async function only be executed when the `run` function is called'>
+<JackBox tsCode={Demo2CodeTs} jsCode={Demo2CodeJs} demoName='Manually triggered' description='If manual is set, the async function only be executed when the "run" function is called'>
   <Demo2 />
 </JackBox>
 
@@ -77,12 +77,12 @@ const result: Result = useAsync<T>(
 | loading      | whether the async function is resolved | boolean              |  
 | params       | the params you passed to that async function | any[] |
 | error        | the Error that async function throwed | Error                |   
-| data         | the result that async function resolved | (value: any) => void | 
-| cancel       | drop the async function result         | () => void;          |   
-| run          | running the async function         | (...args: any[]) => Promise\<T\>          |   
-| timer.stop   | stop polling     | () => void;          |   
-| timer.pause | pause pollinng     | () => void;          |   
-| timer.resume  | resume polling     | () => void;          |   
+| data         | the result that async function resolved | any | 
+| cancel       | drop the async function result         | () => void          |   
+| run          | running the async function         | (...args: any[]) => Promise<T\>          |   
+| timer.stop   | stop polling     | () => void          |   
+| timer.pause | pause pollinng     | () => void          |   
+| timer.resume  | resume polling     | () => void          |   
 
 
 ### Params

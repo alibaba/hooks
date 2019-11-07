@@ -1,7 +1,7 @@
 ---
 name: useAsync
 route: /useAsync
-menu: '中台 Hooks'
+menu: 'SideEffect'
 edit: false
 sidebar: true
 ---
@@ -39,7 +39,7 @@ import Demo4CodeJs from '!raw-loader!./demo/demo4.jsx';
 
 ### 手动触发执行
 
-<JackBox tsCode={Demo2CodeTs} jsCode={Demo2CodeJs} demoName='手动触发执行' description='如果设置了 manual, 则只有在执行函数 run 时，async function 才会被执行'>
+<JackBox tsCode={Demo2CodeTs} jsCode={Demo2CodeJs} demoName='手动触发执行' description='如果设置了 manual，则只有在执行函数 run 时，async function 才会被执行'>
   <Demo2 />
 </JackBox>
 
@@ -77,12 +77,12 @@ const result: Result = useAsync<T>(
 | loading      | 是否正在加载               | boolean              |
 | params       | 传给 async function 的参数 | any[]                |
 | error        | 请求错误数据               | Error                |
-| data         | 请求成功数据               | (value: any) => void |
-| cancel       | 取消                       | () => void;          |
-| run          | 执行                       | () => Promise\<T\>   |
-| timer.stop   | 轮询取消                   | () => void;          |
-| timer.pause  | 轮询暂停                   | () => void;          |
-| timer.resume | 轮询继续                   | () => void;          |
+| data         | 请求成功数据               | any |
+| cancel       | 取消                       | () => void          |
+| run          | 执行                       | () => Promise<T\>   |
+| timer.stop   | 轮询取消                   | () => void          |
+| timer.pause  | 轮询暂停                   | () => void          |
+| timer.resume | 轮询继续                   | () => void          |
 
 
 ### 参数

@@ -1,5 +1,5 @@
-import React, { useMemo } from 'react';
-import { Spin, Button } from 'antd';
+import { Button, Spin } from 'antd';
+import React from 'react';
 import useAsync from '..';
 
 function getNumber() {

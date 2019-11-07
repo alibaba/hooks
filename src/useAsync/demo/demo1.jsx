@@ -1,5 +1,5 @@
+import { Button, Spin } from 'antd';
 import React, { useState } from 'react';
-import { Spin, Button } from 'antd';
 import useAsync from '..';
 
 function getNumber(id) {

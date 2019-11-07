@@ -1,7 +1,7 @@
 ---
 name: useAPI
 route: /useAPI
-menu: '中台 Hooks'
+menu: 'SideEffect'
 edit: false
 sidebar: true
 ---
@@ -29,7 +29,7 @@ import Demo4CodeJsx from '!raw-loader!./demo/demo4.jsx';
 
 一个内置 `umi-request`，帮你管理网络请求的 Hook。
 支持立即执行，手动触发执行，轮询。
-> 这个 hook 的主要展示了封装 useAsync 的能力，可能您不需要使用 umi-request，
+> 这个 Hook 主要展示了如果封装 useAsync 能力，可能您不需要使用 umi-request，
 但是可以参照 [useAPI 的方式](https://github.com/umijs/hooks/blob/master/src/useAPI/index.ts)封装 useAsync。在这里可以添加请求头信息，根据接口格式做统一报错处理，数据转换等等。
 当然，如果 useAPI 可以满足您的需求，也可以直接在您的业务中使用。
 

@@ -1,7 +1,7 @@
 ---
 name: useLocalStorageState
 route: /useLocalStorageState
-menu: '基础 Hooks'
+menu: 'State'
 edit: false
 sidebar: true
 ---
@@ -33,7 +33,7 @@ import Demo2CodeJsx from '!raw-loader!./demo/demo2.jsx';
 ## API
 
 ```typescript
-function useLocalStorageState<T>(
+const [state, setState] = useLocalStorageState<T>(
   key: string,
   defaultValue?: T,
 ): [T?, (value?: T) => void]

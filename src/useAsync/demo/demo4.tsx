@@ -1,6 +1,6 @@
-import React from 'react';
-import { Form, message, Input, Button } from 'antd';
+import { Button, Form, Input, message } from 'antd';
 import { FormComponentProps } from 'antd/lib/form';
+import React from 'react';
 import useAsync from '..';
 
 const saveToServer = (data: string) =>

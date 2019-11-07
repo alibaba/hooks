@@ -1,7 +1,7 @@
 ---
 name: useLocalStorageState
 route: /useLocalStorageState
-menu: 'Basic Hooks'
+menu: 'State'
 edit: false
 sidebar: true
 ---
@@ -33,7 +33,7 @@ A Hook for persisting state into localStorage.
 ## API
 
 ```typescript
-function useLocalStorageState<T>(
+const [state, setState] = useLocalStorageState<T>(
   key: string,
   defaultValue?: T,
 ): [T?, (value?: T) => void]
