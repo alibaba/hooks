@@ -59,7 +59,7 @@ Encapsulates common logic to make it easier to manage [Antd Table](https://ant.d
   <Demo3 />
 </JackBox>
 
-### Search form and list linkage
+### Search form and table data binding
 
 <JackBox jsCode={Demo4CodeJsx} tsCode={Demo4CodeTsx} demoName='Search form and table data binding' description='If options have the form parameter, useAntdTable will take care of form data changing and data caching.'>
   <Demo4 />
@@ -127,7 +127,7 @@ interface ReturnValue<Item> {
 | sorter                         | Sort data                                     | antd sorter                           | {}                 |
 | filters                        | Filter data                                   | antd filters                          | {}                 |
 | refresh                        | Refresh current data                          | () => void                            | -                  |
-| search.type                    | Search type                                   | 'simple' \                            | 'advance'|'simple' |
+| search.type                    | Search type                                   | 'simple'\|'advance'                            |'simple' |
 | search.changeType              | Trigger search type switch                    | () => void                            | -                  |
 | search.submit                  | Trigger search                                | () => void                            | -                  |
 | search.reset                   | Reset search                                  | () => void                            | -                  |
@@ -152,7 +152,7 @@ interface ReturnValue<Item> {
 
 ## Remarks
 
-In our daily work, the Pagination configuration and the API return data structure are consistentof each website. If we config Pagination and formatResult separately when we use `useAntdTable`, it is definitely not elegant, so we recommend that you should repackaged based on `useAntdTable`, for example the following example:
+In production, the pagination configuration and the API data structure are usually identical in each project. If we config pagination and formatResult each time we use `useAntdTable`, it is definitely not elegant, so we recommend that you should repackaged a new hook based on `useAntdTable` in your project, for example:
 
 ```javascript
 import { useAntdTable } from '@umijs/hooks'
