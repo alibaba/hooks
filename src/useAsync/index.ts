@@ -104,8 +104,8 @@ function useAsync<Result = any>(
   const count = useRef(0);
   // initial loading state is related to manual option
   const [state, set] = useState({
-    data: {} as Result,
-    error: '' as (Error | string),
+    data: undefined as Result | undefined,
+    error: undefined as (Error | string | undefined),
     loading: !_options.manual,
   });
 
@@ -141,35 +141,44 @@ function useAsync<Result = any>(
       });
   }, _deps);
 
-  useEffect(() => () => {
+  useEffect(
+    () => () => {
       // possible memory leak!
       if (autoCancel) {
         count.current += 1;
       }
-    }, _deps);
-
-  const start = async (...args: any[]) => {
-    // 有定时器的延时逻辑
-    if (_options.pollingInterval) {
-      timer.current = new Timer<Result>(() => start(...args), _options.pollingInterval as number);
       stop();
-      const ret = run(...args);
-      ret.finally(() => {
-        if (timer.current && !omitNextResume.current) {
-          timer.current.resume(...args);
-        }
-      });
-      return ret;
-    }
-    // 没有定时器，直接执行
+    },
+    _deps,
+  );
 
+  const start = useCallback(
+    async (...args: any[]) => {
+      // 有定时器的延时逻辑
+      if (_options.pollingInterval) {
+        timer.current = new Timer<Result>(() => start(...args), _options.pollingInterval as number);
+        if (timer.current) {
+          timer.current.stop();
+          cancel();
+        }
+        const ret = run(...args);
+        ret.finally(() => {
+          if (timer.current && !omitNextResume.current) {
+            timer.current.resume(...args);
+          }
+        });
+        return ret;
+      }
+      // 没有定时器，直接执行
       return run(...args);
-  };
+    },
+    [_options.pollingInterval],
+  );
 
   useEffect(() => {
     // 如果自动执行
     if (!_options.manual) {
-      run();
+      start();
     }
   }, [run, _options.manual]);
 
