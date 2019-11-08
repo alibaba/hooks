@@ -53,8 +53,9 @@ class Timer<T> {
 export interface Options<T> {
   manual?: boolean; // 是否初始化执行
   pollingInterval?: number; // 轮询的间隔毫秒
-  onSuccess?: (d: T) => void; // 成功回调
-  onError?: (e: Error) => void; // 失败回调
+  onSuccess?: (data: T, params?: any[]) => void; // 成功回调
+  onError?: (e: Error, params?: any[]) => void; // 失败回调
+  autoCancel?: boolean; // 竞态处理开关
 }
 
 type noop = (...args: any[]) => void;
@@ -65,7 +66,8 @@ const promiseReturn: promiseReturn<any> = async () => null as any;
 
 export interface ReturnValue<T> {
   loading: boolean;
-  error?: Error;
+  error?: Error | string;
+  params: any[];
   data?: T;
   cancel: noop;
   run: promiseReturn<T | undefined>;
@@ -94,31 +96,23 @@ function useAsync<Result = any>(
     ? deps
     : options || {}) as Options<Result>;
 
-  const [state, set] = useState<ReturnValue<Result>>({
-    loading: false,
-    cancel: noop,
-    run: promiseReturn,
-    timer: {
-      stop: noop,
-      resume: promiseReturn,
-      pause: noop,
-    },
-  });
+  const params = useRef<any[]>([]);
+  const { autoCancel = true } = _options;
   const timer = useRef<Timer<Result> | undefined>(undefined);
-  const count = useRef(0);
-  const init = useRef(true);
+  const omitNextResume = useRef(false);
 
-  useEffect(() => {
-    count.current += 1;
-    init.current = true;
-    return () => {
-      count.current += 1;
-    };
-  }, _deps);
+  const count = useRef(0);
+  // initial loading state is related to manual option
+  const [state, set] = useState({
+    data: {} as Result,
+    error: '' as (Error | string),
+    loading: !_options.manual,
+  });
 
   const run = useCallback((...args: any[]): Promise<Result | undefined> => {
     // 确保不会返回被取消的结果
     const runCount = count.current;
+    params.current = args;
     set(s => ({ ...s, loading: true }));
     return fn(...args)
       .then(data => {
@@ -126,6 +120,7 @@ function useAsync<Result = any>(
           if (_options.onSuccess) {
             _options.onSuccess(data);
           }
+          // 需要重新判断 runCount，因为 onSuccess 中可能存在副作用
           if (runCount === count.current) {
             set(s => ({ ...s, data, loading: false }));
           }
@@ -137,6 +132,7 @@ function useAsync<Result = any>(
           if (_options.onError) {
             _options.onError(error);
           }
+          // 需要重新判断 runCount，因为 onError 中可能存在副作用
           if (runCount === count.current) {
             set(s => ({ ...s, error, loading: false }));
           }
@@ -145,114 +141,74 @@ function useAsync<Result = any>(
       });
   }, _deps);
 
+  useEffect(() => () => {
+      // possible memory leak!
+      if (autoCancel) {
+        count.current += 1;
+      }
+    }, _deps);
+
+  const start = async (...args: any[]) => {
+    // 有定时器的延时逻辑
+    if (_options.pollingInterval) {
+      timer.current = new Timer<Result>(() => start(...args), _options.pollingInterval as number);
+      stop();
+      const ret = run(...args);
+      ret.finally(() => {
+        if (timer.current && !omitNextResume.current) {
+          timer.current.resume(...args);
+        }
+      });
+      return ret;
+    }
+    // 没有定时器，直接执行
+
+      return run(...args);
+  };
+
+  useEffect(() => {
+    // 如果自动执行
+    if (!_options.manual) {
+      run();
+    }
+  }, [run, _options.manual]);
+
+  const cancel = useCallback(() => {
+    if (autoCancel) {
+      count.current += 1;
+    }
+    set(s => ({ ...s, loading: false }));
+  }, []);
+
   const stop = useCallback(() => {
-    count.current += 1;
-    // 清除计时器
     if (timer.current) {
       timer.current.stop();
+      omitNextResume.current = true;
+      cancel();
     }
-    set(s => ({ ...s, error: new Error('stopped'), loading: false }));
+  }, []);
+
+  const resume = useCallback(() => {
+    if (timer.current) {
+      omitNextResume.current = false;
+      timer.current.resume();
+    }
   }, []);
 
   const pause = useCallback(() => {
-    count.current += 1;
-    // 暂停计时器
     if (timer.current) {
       timer.current.pause();
+      cancel();
     }
-    set(s => ({ ...s, error: new Error('paused'), loading: false }));
   }, []);
-
-  const resume = useCallback(
-    async (...args: any[]): Promise<Result | undefined> => {
-      // 恢复计时器
-      if (timer.current) {
-        return timer.current.resume(...(args || []));
-      }
-      return undefined;
-    },
-    [run],
-  );
-
-  const start = useCallback(
-    async (...args: any[]): Promise<Result | undefined> => {
-      // 执行并开启计时器
-      await run(...(args || []));
-      return resume(...(args || []));
-    },
-    [run],
-  );
-
-  const intervalAsync = useCallback(
-    async (...args: any[]) => {
-      const runCount = count.current;
-      let ret: Result | undefined;
-      if (!_options.manual || !init.current) {
-        ret = await run(...(args || []));
-      }
-      if (count.current === runCount) {
-        // 只初始化定时器，不开始计时
-        timer.current = new Timer<Result>(
-          () => intervalAsync(...args),
-          _options.pollingInterval as number,
-        );
-        // 如果设置了 manual，则默认不开始计时
-        if (init.current && _options.manual) {
-          // await run(...(args || []));
-          init.current = false;
-        } else {
-          // 开始计时
-          ret = await timer.current.resume(...(args || []));
-        }
-      }
-      return ret;
-    },
-    [_options.pollingInterval, _options.manual, run],
-  );
-
-  const reload = useCallback(
-    (...args: any[]): Promise<Result | undefined> => {
-      // 防止上次数据返回
-      count.current += 1;
-      if (_options.pollingInterval) {
-        if (!_options.manual) {
-          // 如果有 polling，清理上次的计时器
-          stop();
-        }
-        return intervalAsync(...args);
-      }
-      // 直接运行
-      return run(...(args || []));
-    },
-    [run, _options.pollingInterval],
-  );
-
-  const cancel = useCallback(() => {
-    count.current += 1;
-    // throw an error
-    set(s => ({ ...s, error: new Error('canceled'), loading: false }));
-  }, []);
-
-  useEffect(() => {
-    if (_options.pollingInterval) {
-      intervalAsync();
-    } else if (!_options.manual) {
-      // 直接执行
-      run();
-    }
-
-    return () => {
-      count.current += 1;
-      stop();
-    };
-  }, [_options.manual, _options.pollingInterval, run, intervalAsync]);
 
   return {
     loading: state.loading,
+    params: params.current,
     error: state.error,
     data: state.data,
     cancel,
-    run: _options.manual && _options.pollingInterval ? start : reload,
+    run: start,
     timer: {
       stop,
       resume,
