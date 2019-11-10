@@ -1,7 +1,8 @@
 import { useMemo, useState, useCallback } from 'react';
 import useUpdateEffect from '../useUpdateEffect';
 
-export interface Options {
+export interface Options<T> {
+  defaultValue?: T;
   defaultValuePropName?: string;
   valuePropName?: string;
   trigger?: string;
@@ -11,14 +12,14 @@ export interface Props {
   [key: string]: any;
 }
 
-export default function useControllableValue<T>(props: Props = {}, options: Options = {}) {
+export default function useControllableValue<T>(props: Props = {}, options: Options<T> = {}) {
   const {
+    defaultValue,
     defaultValuePropName = 'defaultValue',
     valuePropName = 'value',
     trigger = 'onChange',
   } = options;
 
-  const defaultValue = props[defaultValuePropName];
   const value = props[valuePropName];
 
   const initialValue = useMemo(() => {
@@ -26,12 +27,12 @@ export default function useControllableValue<T>(props: Props = {}, options: Opti
       return value;
     }
     if (defaultValuePropName in props) {
-      return defaultValue;
+      return props[defaultValuePropName];
     }
-    return undefined;
+    return defaultValue;
   }, []);
 
-  const [state, setState] = useState<T>(initialValue);
+  const [state, setState] = useState<T | undefined>(initialValue);
 
   /* init 的时候不用执行了 */
   useUpdateEffect(() => {
@@ -41,7 +42,7 @@ export default function useControllableValue<T>(props: Props = {}, options: Opti
   }, [value]);
 
   const handleSetState = useCallback(
-    (v: T) => {
+    (v: T | undefined) => {
       if (!(valuePropName in props)) {
         setState(v);
       }
