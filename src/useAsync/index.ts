@@ -169,10 +169,14 @@ function useAsync<Result = any>(
         });
         return ret;
       }
-      // 没有定时器，直接执行
-      return run(...args);
+      // 如果上一次 async 还在 loading，则不会重重新执行，除非 autoCancel 关掉
+      if (!state.loading || !autoCancel) {
+        // 没有定时器，直接执行
+        return run(...args);
+      }
+      return new Promise(resolve => resolve(undefined));
     },
-    [_options.pollingInterval],
+    [_options.pollingInterval, state.loading],
   );
 
   useEffect(() => {
