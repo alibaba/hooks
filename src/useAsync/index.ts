@@ -146,9 +146,7 @@ function useAsync<Result = any>(
   useEffect(
     () => () => {
       // possible memory leak!
-      if (autoCancel) {
-        count.current += 1;
-      }
+      cancel();
       stop();
     },
     _deps,
@@ -158,6 +156,7 @@ function useAsync<Result = any>(
     async (...args: any[]) => {
       // 有定时器的延时逻辑
       if (_options.pollingInterval) {
+        omitNextResume.current = false;
         timer.current = new Timer<Result>(() => start(...args), _options.pollingInterval as number);
         if (timer.current) {
           timer.current.stop();
@@ -171,14 +170,11 @@ function useAsync<Result = any>(
         });
         return ret;
       }
-      // 如果上一次 async 还在 loading，则不会重重新执行，除非 autoCancel 关掉
-      if (!state.loading || !autoCancel) {
-        // 没有定时器，直接执行
-        return run(...args);
-      }
-      return undefined;
+      // 如果上一次异步操作还在 loading，则会尝试取消掉上一次的异步操作。
+      cancel();
+      return run(...args);
     },
-    [_options.pollingInterval, state.loading],
+    [_options.pollingInterval],
   );
 
   useEffect(() => {
@@ -186,12 +182,18 @@ function useAsync<Result = any>(
     if (!_options.manual) {
       start();
     }
-  }, [run, _options.manual]);
+  }, [start, _options.manual]);
 
   const cancel = useCallback(() => {
     if (autoCancel) {
       count.current += 1;
     }
+    set(s => ({ ...s, loading: false }));
+  }, []);
+
+  const forceCancel = useCallback(() => {
+    // 强制更新，跳过 autoCancel 判断的逻辑
+    count.current += 1;
     set(s => ({ ...s, loading: false }));
   }, []);
 
@@ -222,7 +224,7 @@ function useAsync<Result = any>(
     params: params.current,
     error: state.error,
     data: state.data,
-    cancel,
+    cancel: forceCancel,
     run: start,
     timer: {
       stop,
