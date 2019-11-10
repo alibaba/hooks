@@ -116,24 +116,26 @@ function useAsync<Result = any>(
     set(s => ({ ...s, loading: true }));
     return fn(...args)
       .then(data => {
-        if (runCount === count.current) {
+        // 如果关掉 autoCancel，callback 可以在变量更新后继续执行
+        if (!autoCancel || runCount === count.current) {
           if (_options.onSuccess) {
-            _options.onSuccess(data);
+            _options.onSuccess(data, args || []);
           }
           // 需要重新判断 runCount，因为 onSuccess 中可能存在副作用
-          if (runCount === count.current) {
+          if (!autoCancel || runCount === count.current) {
             set(s => ({ ...s, data, loading: false }));
           }
         }
         return data;
       })
       .catch(error => {
-        if (runCount === count.current) {
+        // 如果关掉 autoCancel，callback 可以在变量更新后继续执行
+        if (!autoCancel || runCount === count.current) {
           if (_options.onError) {
-            _options.onError(error);
+            _options.onError(error, args || []);
           }
           // 需要重新判断 runCount，因为 onError 中可能存在副作用
-          if (runCount === count.current) {
+          if (!autoCancel || runCount === count.current) {
             set(s => ({ ...s, error, loading: false }));
           }
         }
@@ -174,7 +176,7 @@ function useAsync<Result = any>(
         // 没有定时器，直接执行
         return run(...args);
       }
-      return new Promise(resolve => resolve(undefined));
+      return undefined;
     },
     [_options.pollingInterval, state.loading],
   );

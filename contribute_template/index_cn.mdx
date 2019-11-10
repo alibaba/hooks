@@ -1,0 +1,67 @@
+---
+name: yourname
+route: /yourname
+menu: '分类'
+edit: false
+sidebar: true
+---
+
+<!--- 贡献代码步骤
+1. 复制 'contribute_template' 文件夹到 'src' 目录下
+2. 使用 typescript 编写你的 hooks 代码
+3. 在 demo 目录下，使用 typescript 编写例子
+4. 运行 'npm run js' 生成 js 版本的例子
+5. 在 mdx 文件中引入 js 和 ts 版本的例子，并使用 JackBox 组件展示他们.
+6. 在发布之前删除这一段注释
+-->
+
+# 标题
+
+对该 Hook 的一些介绍，包括该 Hook 的常见应用场景等等。
+
+**核心特性**
+
+* 罗列该 Hook 的核心特性
+
+## 代码演示
+
+### DemoTitle
+此处为由简到繁的代码示例，尽量包含所有的参数。
+
+## API
+```
+用法 show，类似
+
+const result: T = useSearch<T>(
+  asyncFn: (value: any) => Promise<T>,
+  options?: Options,
+);
+```
+
+### result
+
+| 参数 | 说明     | 类型 |
+|------|----------|------|
+| data | 文字说明 | any  |
+
+### 参数
+
+| 参数    | 说明     | 类型                   | 默认值 |
+|---------|----------|------------------------|--------|
+| asyncFn | 文字说明 | (value: any)=> Promise | -      |
+
+
+### Options
+
+| 参数 | 说明     | 类型   | 默认值 |
+|------|----------|--------|--------|
+| wait | 文字说明 | number | 300    |
+
+## 备注（如果有）
+
+一些对该 Hook 的补充讲解
+
+## FAQ（如果有）
+
+### Q
+A

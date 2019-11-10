@@ -1,0 +1,66 @@
+---
+name: yourname
+route: /yourname
+menu: 'category'
+edit: false
+sidebar: true
+---
+
+<!--- Steps to contribute
+1. copy the whole 'contribute_template' folder into the 'src' directroy.
+2. write your hooks in typescript
+3. write your demo in seperate files under 'demo' directory using typescript
+4. run 'npm run js' to generate the js version of your demo
+5. import both your js&ts demos into the mdx file and display them in JackBox.
+6. delete this block of comments before publish
+-->
+
+# Title
+
+Some introductions to the Hook, including common scenarios for the Hook, and more.
+
+**Core Characteristics**
+
+List the core features of the Hook
+
+## Examples
+
+Here is a simple and complex code example, try to include all the parameters.
+
+## API
+```
+api show，linke
+
+const result: T = useSearch<T>(
+  asyncFn: (value: any) => Promise<T>,
+  options?: Options,
+);
+```
+
+### result
+
+| Property | Description | Type |
+|----------|-------------|------|
+| data     | some intro  | any  |
+
+### 参数
+
+| Property | Description | Type                   | Default |
+|----------|-------------|------------------------|---------|
+| asyncFn  | some intro  | (value: any)=> Promise | -       |
+
+
+### Options
+
+| Property | Description | Type   | Default |
+|----------|-------------|--------|---------|
+| wait     | some intro  | number | 300     |
+
+## Remarks(Optional)
+
+Some additional explanations for this Hook
+
+## FAQ(Optional)
+
+### Q
+A

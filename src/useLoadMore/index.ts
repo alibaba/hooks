@@ -31,7 +31,7 @@ export interface FnParams {
   pageSize: number;
   offset: number;
   id?: any;
-  startTime?: number;
+  startTime: number;
 }
 
 function useLoadMore<Result = any, Item = any>(

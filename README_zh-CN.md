@@ -2,24 +2,36 @@
 
 # @umijs/hooks
 
-适用于中台场景的 react hooks 库
+React Hooks Library.
 
 [![NPM version][image-1]][1] [![NPM downloads][image-2]][2]
 
+## ✨ 特性
 
-## 安装
+* 易学易用
+* 包含大量提炼自应用的高级 Hooks。
+* 包含丰富的基础 Hooks。
+* 使用 TypeScript 构建，提供完整的类型定义文件。
+
+## 📣 说明
+
+**你可以将 umi hooks 使用在任何地方，和任意组件库搭配使用。**
+虽然我们的代码示例都是基于 ant design 的，但是并不代表我们的 Hooks 只能和 ant design 配合使用。
+
+
+## 📦 安装
 
 ```
 npm i @umijs/hooks --save
 ```
 
-## 使用
+## 🔨使用
 
 ```
 import { useAsync } from '@umijs/hooks';
 ```
 
-## 开发
+## 🖥 开发
 
 ```
 $ git clone git@github.com:umijs/hooks.git
@@ -27,24 +39,15 @@ $ cd hooks
 $ npm install
 $ npm start
 ```
-打开浏览器访问 http://127.0.0.1:8001/hooks
+打开浏览器访问 http://127.0.0.1:8001
 
-## 贡献
+## 🤝 贡献
 
-We welcome all contributions, please read our [CONTRIBUTING.MD](https://github.com/umijs/hooks/blob/master/CONTRIBUTING.MD) first, let's build a better hooks library together.
+我们欢迎所有人参与共建，请参考[CONTRIBUTING.MD](https://github.com/umijs/hooks/blob/master/CONTRIBUTING.MD)
 
-
-## Community
-
-| Github Issue                                            | 钉钉群                                                                                                                         | 微信群                                                                                      |
-| ------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------- |
-| [umijs/hooks/issues](https://github.com/umijs/hooks/issues) | <img src="https://img.alicdn.com/tfs/TB1KxCae9f2gK0jSZFPXXXsopXa-1125-1485.jpg" width="60" /> | <img src="https://img.alicdn.com/tfs/TB1pd1ce8r0gK0jSZFnXXbRRXXa-430-430.jpg" width="60" /> |
-
-## License
+## ✅ License
 
 [MIT](https://github.com/umijs/umi/blob/master/LICENSE)
-
-
 
 [1]:	https://www.npmjs.com/package/@umijs/hooks
 [2]:	https://npmjs.org/package/@umijs/hooks

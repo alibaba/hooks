@@ -28,7 +28,7 @@ export class EventEmitter<T> {
   };
 }
 
-export default function useEventEmitter<T>() {
+export default function useEventEmitter<T = void>() {
   const ref = useRef<EventEmitter<T>>();
   if (!ref.current) {
     ref.current = new EventEmitter();
