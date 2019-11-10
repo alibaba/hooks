@@ -11,6 +11,7 @@ import { configResponsive, useResponsive } from './useResponsive';
 import useSize from './useSize';
 import useLocalStorageState from './useLocalStorageState';
 import useUpdateEffect from './useUpdateEffect';
+import useUpdateLayoutEffect from './useUpdateLayoutEffect';
 import usePagination from './usePagination';
 import useBoolean from './useBoolean';
 import useToggle from './useToggle';
@@ -40,6 +41,7 @@ export {
   configResponsive,
   configRequest,
   useUpdateEffect,
+  useUpdateLayoutEffect,
   usePagination,
   useBoolean,
   useToggle,
