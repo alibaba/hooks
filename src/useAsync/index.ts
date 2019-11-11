@@ -104,7 +104,7 @@ function useAsync<Result = any>(
   const count = useRef(0);
   // initial loading state is related to manual option
   const [state, set] = useState({
-    data: undefined as Result | undefined,
+    data: undefined as (Result | undefined),
     error: undefined as (Error | string | undefined),
     loading: !_options.manual,
   });
@@ -117,7 +117,7 @@ function useAsync<Result = any>(
     return fn(...args)
       .then(data => {
         // 如果关掉 autoCancel，callback 可以在变量更新后继续执行
-        if (!autoCancel || runCount === count.current) {
+        if (runCount === count.current) {
           set(s => ({ ...s, data, loading: false }));
           if (_options.onSuccess) {
             _options.onSuccess(data, args || []);
@@ -127,7 +127,7 @@ function useAsync<Result = any>(
       })
       .catch(error => {
         // 如果关掉 autoCancel，callback 可以在变量更新后继续执行
-        if (!autoCancel || runCount === count.current) {
+        if (runCount === count.current) {
           set(s => ({ ...s, error, loading: false }));
           if (_options.onError) {
             _options.onError(error, args || []);
@@ -136,48 +136,6 @@ function useAsync<Result = any>(
         return error;
       });
   }, _deps);
-
-  useEffect(
-    () => () => {
-      // possible memory leak!
-      if (timer.current) {
-        timer.current.stop();
-      }
-      cancel();
-    },
-    _deps,
-  );
-
-  const start = useCallback(
-    async (...args: any[]) => {
-      // 有定时器的延时逻辑
-      if (_options.pollingInterval) {
-        if (timer.current) {
-          stop();
-        }
-        omitNextResume.current = false;
-        timer.current = new Timer<Result>(() => start(...args), _options.pollingInterval as number);
-        const ret = run(...args);
-        ret.finally(() => {
-          if (timer.current && !omitNextResume.current) {
-            timer.current.resume(...args);
-          }
-        });
-        return ret;
-      }
-      // 如果上一次异步操作还在 loading，则会尝试取消掉上一次的异步操作。
-      cancel();
-      return run(...args);
-    },
-    [_options.pollingInterval],
-  );
-
-  useEffect(() => {
-    // 如果自动执行
-    if (!_options.manual) {
-      start();
-    }
-  }, [start, _options.manual]);
 
   const cancel = useCallback(() => {
     if (autoCancel) {
@@ -214,6 +172,49 @@ function useAsync<Result = any>(
     }
     cancel();
   }, []);
+
+  useEffect(() => () => {
+      // 组件卸载时，强制取消
+      forceCancel();
+    }, []);
+
+  useEffect(() => {
+    if (!_options.manual) {
+      // deps 变化时，重新执行
+      start();
+    }
+    return () => {
+      if (timer.current) {
+        timer.current.stop();
+      }
+      // 软取消
+      cancel();
+    };
+  }, _deps);
+
+  const start = useCallback(
+    async (...args: any[]) => {
+      // 有定时器的延时逻辑
+      if (_options.pollingInterval) {
+        if (timer.current) {
+          stop();
+        }
+        omitNextResume.current = false;
+        timer.current = new Timer<Result>(() => start(...args), _options.pollingInterval as number);
+        const ret = run(...args);
+        ret.finally(() => {
+          if (timer.current && !omitNextResume.current) {
+            timer.current.resume(...args);
+          }
+        });
+        return ret;
+      }
+      // 如果上一次异步操作还在 loading，则会尝试取消掉上一次的异步操作。
+      cancel();
+      return run(...args);
+    },
+    [run, cancel, stop, _options.pollingInterval],
+  );
 
   return {
     loading: state.loading,
