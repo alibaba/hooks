@@ -118,12 +118,9 @@ function useAsync<Result = any>(
       .then(data => {
         // 如果关掉 autoCancel，callback 可以在变量更新后继续执行
         if (!autoCancel || runCount === count.current) {
+          set(s => ({ ...s, data, loading: false }));
           if (_options.onSuccess) {
             _options.onSuccess(data, args || []);
-          }
-          // 需要重新判断 runCount，因为 onSuccess 中可能存在副作用
-          if (!autoCancel || runCount === count.current) {
-            set(s => ({ ...s, data, loading: false }));
           }
         }
         return data;
@@ -131,12 +128,9 @@ function useAsync<Result = any>(
       .catch(error => {
         // 如果关掉 autoCancel，callback 可以在变量更新后继续执行
         if (!autoCancel || runCount === count.current) {
+          set(s => ({ ...s, error, loading: false }));
           if (_options.onError) {
             _options.onError(error, args || []);
-          }
-          // 需要重新判断 runCount，因为 onError 中可能存在副作用
-          if (!autoCancel || runCount === count.current) {
-            set(s => ({ ...s, error, loading: false }));
           }
         }
         return error;
@@ -146,8 +140,10 @@ function useAsync<Result = any>(
   useEffect(
     () => () => {
       // possible memory leak!
+      if (timer.current) {
+        timer.current.stop();
+      }
       cancel();
-      stop();
     },
     _deps,
   );
@@ -158,7 +154,6 @@ function useAsync<Result = any>(
       if (_options.pollingInterval) {
         if (timer.current) {
           stop();
-          cancel();
         }
         omitNextResume.current = false;
         timer.current = new Timer<Result>(() => start(...args), _options.pollingInterval as number);
@@ -201,8 +196,8 @@ function useAsync<Result = any>(
     if (timer.current) {
       timer.current.stop();
       omitNextResume.current = true;
-      cancel();
     }
+    cancel();
   }, []);
 
   const resume = useCallback(() => {
@@ -216,8 +211,8 @@ function useAsync<Result = any>(
     if (timer.current) {
       timer.current.pause();
       omitNextResume.current = true;
-      cancel();
     }
+    cancel();
   }, []);
 
   return {
