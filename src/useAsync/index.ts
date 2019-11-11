@@ -14,6 +14,7 @@ class Timer<T> {
   constructor(cb: () => Promise<T | undefined>, delay: number) {
     this.remaining = delay;
     this.delay = delay;
+    this.start = Date.now();
     this.cb = cb;
   }
 
@@ -98,35 +99,32 @@ function useAsync<Result = any>(
     loading: !_options.manual,
   });
 
-  const run = useCallback(
-    (...args: any[]): Promise<Result | undefined> => {
-      // 确保不会返回被取消的结果
-      const runCount = count.current;
-      /* 当前参数保存一下 */
-      params.current = args;
-      set(s => ({ ...s, loading: true }));
-      return fn(...args)
-        .then(data => {
-          if (runCount === count.current) {
-            set(s => ({ ...s, data, loading: false }));
-            if (_options.onSuccess) {
-              _options.onSuccess(data, args || []);
-            }
+  const run = useCallback((...args: any[]): Promise<Result | undefined> => {
+    // 确保不会返回被取消的结果
+    const runCount = count.current;
+    /* 当前参数保存一下 */
+    params.current = args;
+    set(s => ({ ...s, loading: true }));
+    return fn(...args)
+      .then(data => {
+        if (runCount === count.current) {
+          set(s => ({ ...s, data, loading: false }));
+          if (_options.onSuccess) {
+            _options.onSuccess(data, args || []);
           }
-          return data;
-        })
-        .catch(error => {
-          if (runCount === count.current) {
-            set(s => ({ ...s, error, loading: false }));
-            if (_options.onError) {
-              _options.onError(error, args || []);
-            }
+        }
+        return data;
+      })
+      .catch(error => {
+        if (runCount === count.current) {
+          set(s => ({ ...s, error, loading: false }));
+          if (_options.onError) {
+            _options.onError(error, args || []);
           }
-          return error;
-        });
-    },
-    [_options.onSuccess, _options.onError],
-  );
+        }
+        return error;
+      });
+  }, []);
 
   /* 软取消，由于竞态，需要取消上一次的请求 */
   const softCancel = useCallback(() => {
@@ -165,21 +163,6 @@ function useAsync<Result = any>(
     forceCancel();
   }, [forceCancel]);
 
-  useEffect(() => {
-    if (!_options.manual) {
-      // deps 变化时，重新执行
-      start();
-    }
-
-    /* 如果 desp 变化，强制取消 */
-    return () => {
-      if (timer.current) {
-        timer.current.stop();
-      }
-      forceCancel();
-    };
-  }, [..._deps, forceCancel]);
-
   const start = useCallback(
     async (...args: any[]) => {
       // 有定时器的延时逻辑
@@ -203,6 +186,20 @@ function useAsync<Result = any>(
     },
     [run, softCancel, stop, _options.pollingInterval],
   );
+
+  useEffect(() => {
+    if (!_options.manual) {
+      // deps 变化时，重新执行
+      start();
+    }
+    /* 如果 desp 变化，强制取消 */
+    return () => {
+      if (timer.current) {
+        timer.current.stop();
+      }
+      forceCancel();
+    };
+  }, [..._deps, forceCancel, start]);
 
   return {
     loading: state.loading,
