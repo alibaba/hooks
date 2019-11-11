@@ -215,6 +215,7 @@ function useAsync<Result = any>(
   const pause = useCallback(() => {
     if (timer.current) {
       timer.current.pause();
+      omitNextResume.current = true;
       cancel();
     }
   }, []);
