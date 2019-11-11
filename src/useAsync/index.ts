@@ -124,7 +124,7 @@ function useAsync<Result = any>(
         }
         return error;
       });
-  }, []);
+  }, _deps);
 
   /* 软取消，由于竞态，需要取消上一次的请求 */
   const softCancel = useCallback(() => {
