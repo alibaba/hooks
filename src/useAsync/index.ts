@@ -14,8 +14,6 @@ class Timer<T> {
   constructor(cb: () => Promise<T | undefined>, delay: number) {
     this.remaining = delay;
     this.delay = delay;
-    this.start = delay;
-    this.timerId = delay;
     this.cb = cb;
   }
 
@@ -30,23 +28,14 @@ class Timer<T> {
     this.remaining -= Date.now() - this.start;
   };
 
-  resume = (...args: any[]): Promise<T> | undefined => {
+  resume = () => {
     this.start = Date.now();
     clearTimeout(this.timerId);
-    if (this.cb) {
-      return new Promise<T>(resolve => {
-        this.timerId = setTimeout(async () => {
-          if (this.cb) {
-            this.cb(...(args || []));
-            // resume 只触发定时器开始计时，没有返回结果
-            resolve(
-              'No resolve value when pollingInterval is set, please use onSuccess & onError instead' as any,
-            );
-          }
-        }, this.remaining);
-      });
-    }
-    return undefined;
+    this.timerId = setTimeout(async () => {
+      if (this.cb) {
+        this.cb();
+      }
+    }, this.remaining);
   };
 }
 
@@ -109,43 +98,46 @@ function useAsync<Result = any>(
     loading: !_options.manual,
   });
 
-  const run = useCallback((...args: any[]): Promise<Result | undefined> => {
-    // 确保不会返回被取消的结果
-    const runCount = count.current;
-    params.current = args;
-    set(s => ({ ...s, loading: true }));
-    return fn(...args)
-      .then(data => {
-        // 如果关掉 autoCancel，callback 可以在变量更新后继续执行
-        if (runCount === count.current) {
-          set(s => ({ ...s, data, loading: false }));
-          if (_options.onSuccess) {
-            _options.onSuccess(data, args || []);
+  const run = useCallback(
+    (...args: any[]): Promise<Result | undefined> => {
+      // 确保不会返回被取消的结果
+      const runCount = count.current;
+      /* 当前参数保存一下 */
+      params.current = args;
+      set(s => ({ ...s, loading: true }));
+      return fn(...args)
+        .then(data => {
+          if (runCount === count.current) {
+            set(s => ({ ...s, data, loading: false }));
+            if (_options.onSuccess) {
+              _options.onSuccess(data, args || []);
+            }
           }
-        }
-        return data;
-      })
-      .catch(error => {
-        // 如果关掉 autoCancel，callback 可以在变量更新后继续执行
-        if (runCount === count.current) {
-          set(s => ({ ...s, error, loading: false }));
-          if (_options.onError) {
-            _options.onError(error, args || []);
+          return data;
+        })
+        .catch(error => {
+          if (runCount === count.current) {
+            set(s => ({ ...s, error, loading: false }));
+            if (_options.onError) {
+              _options.onError(error, args || []);
+            }
           }
-        }
-        return error;
-      });
-  }, _deps);
+          return error;
+        });
+    },
+    [_options.onSuccess, _options.onError],
+  );
 
-  const cancel = useCallback(() => {
+  /* 软取消，由于竞态，需要取消上一次的请求 */
+  const softCancel = useCallback(() => {
     if (autoCancel) {
       count.current += 1;
+      set(s => ({ ...s, loading: false }));
     }
-    set(s => ({ ...s, loading: false }));
-  }, []);
+  }, [autoCancel]);
 
+  /* 强制取消，组件卸载，或者用户手工取消 */
   const forceCancel = useCallback(() => {
-    // 强制更新，跳过 autoCancel 判断的逻辑
     count.current += 1;
     set(s => ({ ...s, loading: false }));
   }, []);
@@ -155,8 +147,8 @@ function useAsync<Result = any>(
       timer.current.stop();
       omitNextResume.current = true;
     }
-    cancel();
-  }, []);
+    forceCancel();
+  }, [forceCancel]);
 
   const resume = useCallback(() => {
     if (timer.current) {
@@ -170,27 +162,23 @@ function useAsync<Result = any>(
       timer.current.pause();
       omitNextResume.current = true;
     }
-    cancel();
-  }, []);
-
-  useEffect(() => () => {
-      // 组件卸载时，强制取消
-      forceCancel();
-    }, []);
+    forceCancel();
+  }, [forceCancel]);
 
   useEffect(() => {
     if (!_options.manual) {
       // deps 变化时，重新执行
       start();
     }
+
+    /* 如果 desp 变化，强制取消 */
     return () => {
       if (timer.current) {
         timer.current.stop();
       }
-      // 软取消
-      cancel();
+      forceCancel();
     };
-  }, _deps);
+  }, [..._deps, forceCancel]);
 
   const start = useCallback(
     async (...args: any[]) => {
@@ -204,16 +192,16 @@ function useAsync<Result = any>(
         const ret = run(...args);
         ret.finally(() => {
           if (timer.current && !omitNextResume.current) {
-            timer.current.resume(...args);
+            timer.current.resume();
           }
         });
         return ret;
       }
       // 如果上一次异步操作还在 loading，则会尝试取消掉上一次的异步操作。
-      cancel();
+      softCancel();
       return run(...args);
     },
-    [run, cancel, stop, _options.pollingInterval],
+    [run, softCancel, stop, _options.pollingInterval],
   );
 
   return {
