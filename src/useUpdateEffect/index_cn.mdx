@@ -26,7 +26,7 @@ import Demo1CodeJsx from '!raw-loader!./demo/demo1.jsx';
 
 ```javascript
 useUpdateEffect(
-  effect: () => void,
+  effect: () => (void | (() => void | undefined)),
   deps?: deps,
 )
 ```
@@ -35,5 +35,5 @@ useUpdateEffect(
 
 | 参数    | 说明                                         | 类型                   | 默认值 |
 |---------|----------------------------------------------|------------------------|--------|
-| effect | 可执行函数  | function | -      |
+| effect | 可执行函数  | () => (void | (() => void | undefined)) | -      |
 | deps | 可选项，传入依赖变化的对象  | array \| undefined | -      |

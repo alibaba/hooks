@@ -26,7 +26,7 @@ A hook of useEffect that only runs when dependencies update.
 
 ```javascript
 useUpdateEffect(
-  effect: () => void,
+  effect: () => (void | (() => void | undefined)),
   deps?: deps,
 )
 ```
@@ -35,5 +35,5 @@ useUpdateEffect(
 
 | Property | Description                                                        | Type                   | Default |
 |---------|----------------------------------------------|------------------------|--------|
-| effect | Executable function  | function | -      |
+| effect | Executable function  | () => (void | (() => void | undefined)) | -      |
 | deps | Optionally, pass in objects that depend on changes | array \| undefined | -      |
