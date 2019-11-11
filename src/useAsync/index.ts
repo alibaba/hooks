@@ -156,12 +156,12 @@ function useAsync<Result = any>(
     async (...args: any[]) => {
       // 有定时器的延时逻辑
       if (_options.pollingInterval) {
-        omitNextResume.current = false;
-        timer.current = new Timer<Result>(() => start(...args), _options.pollingInterval as number);
         if (timer.current) {
-          timer.current.stop();
+          stop();
           cancel();
         }
+        omitNextResume.current = false;
+        timer.current = new Timer<Result>(() => start(...args), _options.pollingInterval as number);
         const ret = run(...args);
         ret.finally(() => {
           if (timer.current && !omitNextResume.current) {
