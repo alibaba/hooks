@@ -92,6 +92,8 @@ function useAsync<Result = any>(
   const omitNextResume = useRef(false);
 
   const count = useRef(0);
+  const fnRef = useRef(fn);
+  fnRef.current = fn;
   // initial loading state is related to manual option
   const [state, set] = useState({
     data: undefined as (Result | undefined),
@@ -105,7 +107,8 @@ function useAsync<Result = any>(
     /* 当前参数保存一下 */
     params.current = args;
     set(s => ({ ...s, loading: true }));
-    return fn(...args)
+    return fnRef
+      .current(...args)
       .then(data => {
         if (runCount === count.current) {
           set(s => ({ ...s, data, loading: false }));
@@ -124,7 +127,7 @@ function useAsync<Result = any>(
         }
         throw error;
       });
-  }, _deps);
+  }, []);
 
   /* 软取消，由于竞态，需要取消上一次的请求 */
   const softCancel = useCallback(() => {
