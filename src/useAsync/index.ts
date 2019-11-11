@@ -122,7 +122,7 @@ function useAsync<Result = any>(
             _options.onError(error, args || []);
           }
         }
-        return error;
+        throw error;
       });
   }, _deps);
 
