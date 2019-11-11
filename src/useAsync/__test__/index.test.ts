@@ -130,18 +130,21 @@ describe('useAsync', () => {
 
   it('timer should work with manual trigger', async () => {
     const callback = jest.fn();
-    hook = renderHook(({ func, deps, opt }) => useAsync(func, deps, opt), {
-      initialProps: {
-        func: (req: number) => {
-          callback();
-          return request(req);
+
+    act(() => {
+      hook = renderHook(({ func, deps, opt }) => useAsync(func, deps, opt), {
+        initialProps: {
+          func: (req: number) => {
+            callback();
+            return request(req);
+          },
+          deps: [] as ReadonlyArray<{}>,
+          opt: {
+            manual: true,
+            pollingInterval: 3000,
+          } as Options<{}>,
         },
-        deps: [] as ReadonlyArray<{}>,
-        opt: {
-          manual: true,
-          pollingInterval: 3000,
-        } as Options<{}>,
-      },
+      });
     });
 
     expect(hook.result.current.loading).toEqual(false);
@@ -155,12 +158,14 @@ describe('useAsync', () => {
     expect(hook.result.current.loading).toEqual(false);
     expect(callback).toHaveBeenCalled();
 
-    jest.runAllTimers();
+    act(() => {
+      jest.runAllTimers();
+    });
     await hook.waitForNextUpdate();
     expect(callback).toHaveBeenCalledTimes(2);
 
     jest.runAllTimers();
-    await hook.waitForNextUpdate();
+    // await hook.waitForNextUpdate();
     expect(callback).toHaveBeenCalledTimes(3);
 
     act(() => {
@@ -172,7 +177,7 @@ describe('useAsync', () => {
       hook.result.current.timer.resume();
     });
     jest.runAllTimers();
-    await hook.waitForNextUpdate();
+    // await hook.waitForNextUpdate();
     expect(callback).toHaveBeenCalledTimes(4);
     hook.unmount();
   });
@@ -193,7 +198,7 @@ describe('useAsync', () => {
     });
 
     expect(hook.result.current.loading).toEqual(true);
-    jest.runOnlyPendingTimers();
+    jest.runAllTimers();
     await hook.waitForNextUpdate();
     expect(hook.result.current.data).toEqual('success');
     expect(hook.result.current.loading).toEqual(false);
@@ -216,7 +221,7 @@ describe('useAsync', () => {
       hook.result.current.timer.resume();
     });
     jest.runAllTimers();
-    await hook.waitForNextUpdate();
+    // await hook.waitForNextUpdate();
     expect(callback).toHaveBeenCalledTimes(4);
     hook.unmount();
   });

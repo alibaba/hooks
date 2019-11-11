@@ -16,7 +16,8 @@ interface Result {
   data: Item[];
 }
 
-const getTableData = ({ current, pageSize }: FnParams<Item>) => fetch(`https://randomuser.me/api?results=55&page=${current}&size=${pageSize}`)
+const getTableData = ({ current, pageSize }: FnParams<Item>) =>
+  fetch(`https://randomuser.me/api?results=55&page=${current}&size=${pageSize}`)
     .then(res => res.json())
     .then(res => ({
       total: res.info.results,
