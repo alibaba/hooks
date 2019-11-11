@@ -1,18 +1,18 @@
 import { Button } from 'antd';
 import React, { useLayoutEffect, useState } from 'react';
-import useUpdateEffect from '..';
+import useUpdateLayoutEffect from '..';
 
 export default () => {
   const [count, setCount] = useState(0);
-  const [effectCount, setEffectCount] = useState(0);
-  const [updateEffectCount, setUpdateEffectCount] = useState(0);
+  const [layoutEffectCount, setLayoutEffectCount] = useState(0);
+  const [updateLayoutEffectCount, setUpdateLayoutEffectCount] = useState(0);
 
   useLayoutEffect(() => {
-    setEffectCount(c => c + 1);
+    setLayoutEffectCount(c => c + 1);
   }, [count]);
 
-  useUpdateEffect(() => {
-    setUpdateEffectCount(c => c + 1);
+  useUpdateLayoutEffect(() => {
+    setUpdateLayoutEffectCount(c => c + 1);
     return () => {
       // do something
     };
@@ -20,8 +20,8 @@ export default () => {
 
   return (
     <div>
-      <p>effectCount: {effectCount}</p>
-      <p>updateEffectCount: {updateEffectCount}</p>
+      <p>layoutEffectCount: {layoutEffectCount}</p>
+      <p>updateLayoutEffectCount: {updateLayoutEffectCount}</p>
       <p>
         <Button type="primary" onClick={() => setCount(c => c + 1)}>
           reRender
