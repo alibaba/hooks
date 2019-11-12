@@ -1,0 +1,45 @@
+---
+name: useMouse
+route: /useMouse
+menu: 'Other'
+edit: false
+sidebar: true
+---
+
+import JackBox from 'jackbox';
+
+import Demo1 from './demo/demo1';
+import Demo1CodeTsx from '!raw-loader!./demo/demo1.tsx';
+import Demo1CodeJsx from '!raw-loader!./demo/demo1.jsx';
+
+import Demo2 from './demo/demo2';
+import Demo2CodeTsx from '!raw-loader!./demo/demo2.tsx';
+import Demo2CodeJsx from '!raw-loader!./demo/demo2.jsx';
+
+# useMouse
+
+A hook to track cursor position
+
+## 代码演示
+
+### 默认用法
+<JackBox tsCode={Demo1CodeTsx} jsCode={Demo1CodeJsx} demoName='默认用法' description='获取鼠标位置' >
+  <Demo1 />
+</JackBox>
+
+### 与 useSize 一同使用
+<JackBox tsCode={Demo2CodeTsx} jsCode={Demo2CodeJsx} demoName='与 useSize 一同使用' description='获取鼠标是否在某一 div 内部' >
+  <Demo2 />
+</JackBox>
+
+## API
+```
+const state: { top: number, left: number } = useMouse();
+```
+
+### result
+
+| Property | Description | Type |
+|----------|-------------|------|
+| top     | 距离 document 顶部的距离  | number  |
+| left     | 距离 document 左侧的距离  | number  |

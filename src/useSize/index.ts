@@ -3,7 +3,7 @@ import ResizeObserver from 'resize-observer-polyfill';
 
 type Arg = HTMLElement | (() => HTMLElement) | null;
 
-type Size = { width: number; height: number };
+type Size = { width: number; height: number; top: number; left: number };
 
 function useSize<T extends HTMLElement = HTMLElement>(): [Size, MutableRefObject<T>];
 function useSize<T extends HTMLElement = HTMLElement>(arg: Arg): [Size];
@@ -11,7 +11,7 @@ function useSize<T extends HTMLElement = HTMLElement>(
   ...args: [Arg] | []
 ): [Size, MutableRefObject<T>?] {
   const element = useRef<T>();
-  const [state, setState] = useState<Size>({ width: 0, height: 0 });
+  const [state, setState] = useState<Size>({ width: 0, height: 0, top: 0, left: 0 });
   const hasPassedInElement = args.length === 1;
   const arg = args[0];
 
@@ -25,7 +25,16 @@ function useSize<T extends HTMLElement = HTMLElement>(
 
     const resizeObserver = new ResizeObserver(entries => {
       entries.forEach(entry => {
-        setState({ width: entry.target.clientWidth, height: entry.target.clientHeight });
+        const rect = entry.target.getBoundingClientRect();
+        const scrollLeft = window.pageXOffset || document.documentElement.scrollLeft;
+        const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+
+        setState({
+          width: entry.target.clientWidth,
+          height: entry.target.clientHeight,
+          top: rect.top + scrollTop,
+          left: rect.left + scrollLeft,
+        });
       });
     });
 

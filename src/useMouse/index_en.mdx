@@ -1,0 +1,45 @@
+---
+name: useMouse
+route: /useMouse
+menu: 'Other'
+edit: false
+sidebar: true
+---
+
+import JackBox from 'jackbox';
+
+import Demo1 from './demo/demo1';
+import Demo1CodeTsx from '!raw-loader!./demo/demo1.tsx';
+import Demo1CodeJsx from '!raw-loader!./demo/demo1.jsx';
+
+import Demo2 from './demo/demo2';
+import Demo2CodeTsx from '!raw-loader!./demo/demo2.tsx';
+import Demo2CodeJsx from '!raw-loader!./demo/demo2.jsx';
+
+# useMouse
+
+A hook to track cursor position
+
+## Examples
+
+### Default Usage
+<JackBox tsCode={Demo1CodeTsx} jsCode={Demo1CodeJsx} demoName='Default usage' description='tracking cursor position' >
+  <Demo1 />
+</JackBox>
+
+### Using with useSize
+<JackBox tsCode={Demo2CodeTsx} jsCode={Demo2CodeJsx} demoName='Using with useSize' description='tracking whether mouse is inside a div' >
+  <Demo2 />
+</JackBox>
+
+## API
+```
+const state: { top: number, left: number } = useMouse();
+```
+
+### result
+
+| Property | Description | Type |
+|----------|-------------|------|
+| top     | position top related to document  | number  |
+| left     | position left related to document  | number  |
