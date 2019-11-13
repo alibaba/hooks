@@ -6,8 +6,9 @@
     "umi hooks",
     "react hooks"
   ],
-  "main": "lib/index.js",
-  "module": "es/index.js",
+  "main": "./lib/index.js",
+  "module": "./es/index.js",
+  "types": "./lib/index.d.ts",
   "authors": {
     "name": "brickspert",
     "email": "brickspert.fjl@alipay.com"
