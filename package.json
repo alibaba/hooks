@@ -6,8 +6,8 @@
     "umi hooks",
     "react hooks"
   ],
-  "main": "dist/index.js",
-  "module": "dist/index.esm.js",
+  "main": "lib/index.js",
+  "module": "es/index.js",
   "authors": {
     "name": "brickspert",
     "email": "brickspert.fjl@alipay.com"
@@ -22,7 +22,7 @@
     "dev": "father doc dev",
     "dev:zh-cn": "LAN=zh-CN father doc dev",
     "js": "node ./.ts2js.js",
-    "build": "father build",
+    "build": "father build && tsc --declarationDir ./lib && tsc --declarationDir ./es",
     "test": "father test",
     "cov": "father test --coverage",
     "help": "father help",
@@ -30,6 +30,14 @@
     "build:doc": "father doc build && LAN=zh-CN father doc build",
     "pub:doc": "now --prod"
   },
+  "files": [
+    "dist",
+    "lib",
+    "es",
+    "README.md",
+    "LICENSE",
+    "package.json"
+  ],
   "dependencies": {
     "lodash.isequal": "^4.5.0",
     "resize-observer-polyfill": "^1.5.1"

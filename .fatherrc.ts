@@ -31,14 +31,15 @@ const config = process.env.LAN === 'zh-CN' ? zhConfig : enConfig;
 
 const options: IBundleOptions = {
   entry: 'src/index.ts',
-  esm: 'rollup',
-  cjs: 'rollup',
+  esm: 'babel',
+  cjs: 'babel',
   umd: {
     name: 'umijsHooks',
     globals: {
       'react': 'React',
     }
   },
+  disableTypeCheck: true,
   preCommit: {
     eslint: true,
     prettier: true,
