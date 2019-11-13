@@ -1,6 +1,8 @@
 /yarn.lock
 /package-lock.json
-/dist
+/dist/
+/es/
+/lib/
 /.docz
 /node_modules
 /.history
