@@ -1,17 +1,20 @@
+import { Input } from 'antd';
 import React, { useState } from 'react';
-import { Button } from 'antd';
 import useDebounce from '..';
 
 export default () => {
-  const [value, setValue] = useState(0);
-  const { run } = useDebounce(() => {
-    setValue(value + 1);
-  }, 500);
+  const [value, setValue] = useState();
+  const debouncedValue = useDebounce(value, 500);
 
   return (
     <div>
-      <p style={{ marginTop: 16 }}> Clicked count: {value} </p>
-      <Button onClick={run}>Click fast!</Button>
+      <Input
+        value={value}
+        onChange={e => setValue(e.target.value)}
+        placeholder="Typed value"
+        style={{ width: 280 }}
+      />
+      <p style={{ marginTop: 16 }}>DebouncedValue: {debouncedValue}</p>
     </div>
   );
 };

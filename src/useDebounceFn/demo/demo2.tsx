@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import { Button, Input } from 'antd';
-import useDebounce from '..';
+import useDebounceFn from '..';
 
 export default () => {
   const [value, setValue] = useState();
   const [debouncedValue, setDebouncedValue] = useState();
 
-  const { cancel } = useDebounce(
+  const { cancel } = useDebounceFn(
     () => {
       setDebouncedValue(value);
     },

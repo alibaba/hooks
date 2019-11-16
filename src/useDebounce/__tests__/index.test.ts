@@ -1,9 +1,8 @@
 import { act, renderHook, RenderHookResult } from '@testing-library/react-hooks';
-import useDebounce, { ReturnValue } from '../index';
+import useDebounce from '../index';
 
 interface ParamsObj {
-  fn: (...arg: any) => any;
-  deps?: any[];
+  value: any;
   wait: number;
 }
 
@@ -21,14 +20,7 @@ afterAll(() => {
   console.error = originalError;
 });
 
-let count = 0;
-const debounceFn = (gap: number) => {
-  count += gap;
-};
-
-const setUp = ({ fn, wait }: ParamsObj) => renderHook(() => useDebounce(fn, wait));
-
-let hook: RenderHookResult<ParamsObj, ReturnValue>;
+let hook: RenderHookResult<ParamsObj, any>;
 
 describe('useDebounce', () => {
   beforeEach(() => {
@@ -42,53 +34,24 @@ describe('useDebounce', () => {
     expect(useDebounce).toBeDefined();
   });
 
-  it('run and cancel should work', () => {
-    act(() => {
-      hook = setUp({
-        fn: debounceFn,
-        wait: 500,
-      });
-    });
-    act(() => {
-      hook.result.current.run(2);
-      hook.result.current.run(2);
-      hook.result.current.run(2);
-      hook.result.current.run(2);
-      jest.runAllTimers();
-      expect(count).toBe(2);
-      hook.result.current.run(4);
-      jest.runAllTimers();
-      expect(count).toBe(6);
-      hook.result.current.run(4);
-      hook.result.current.cancel();
-      jest.runAllTimers();
-      expect(count).toBe(6);
-    });
-  });
-
-  it('deps should work', () => {
-    let c = 0;
+  it('useDebounce should work', () => {
     let mountedState = 1;
-    hook = renderHook(() =>
-      useDebounce(
-        () => {
-          c += 1;
-        },
-        [mountedState],
-        500,
-      ),
-    );
-    expect(c).toEqual(0);
-    mountedState = 2;
-    hook.rerender();
-    mountedState = 3;
-    hook.rerender();
-    jest.runAllTimers();
-    expect(c).toEqual(1);
-    mountedState = 4;
-    hook.rerender();
-    expect(c).toEqual(1);
-    jest.runAllTimers();
-    expect(c).toEqual(2);
+    act(() => {
+      hook = renderHook(() => useDebounce(mountedState, 500));
+    });
+    act(() => {
+      expect(hook.result.current).toEqual(1);
+      mountedState = 2;
+      hook.rerender();
+      mountedState = 3;
+      hook.rerender();
+      jest.runAllTimers();
+      expect(hook.result.current).toEqual(3);
+      mountedState = 4;
+      hook.rerender();
+      expect(hook.result.current).toEqual(3);
+      jest.runAllTimers();
+      expect(hook.result.current).toEqual(4);
+    });
   });
 });

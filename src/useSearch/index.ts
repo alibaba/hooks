@@ -1,6 +1,6 @@
 import { DependencyList, useState, useMemo, useRef, useCallback } from 'react';
 import useUpdateEffect from '../useUpdateEffect';
-import useDebounce from '../useDebounce';
+import useDebounceFn from '../useDebounceFn';
 
 import useAsync from '../useAsync';
 
@@ -46,7 +46,7 @@ function useSearch<Result>(
     _options.wait,
   ]);
 
-  const debounce = useDebounce(
+  const debounce = useDebounceFn(
     () => {
       run(value);
     },
