@@ -3,14 +3,22 @@ import useUpdateEffect from '../useUpdateEffect';
 
 type noop = (...args: any[]) => any;
 
-export interface ReturnValue {
-  run: (...args: any[]) => void;
+export interface ReturnValue<T extends any[]> {
+  run: (...args: T) => void;
   cancel: () => void;
 }
 
-function useThrottleFn(fn: noop, wait: number): ReturnValue;
-function useThrottleFn(fn: noop, deps: DependencyList, wait: number): ReturnValue;
-function useThrottleFn(fn: noop, deps: DependencyList | number, wait?: number): ReturnValue {
+function useThrottleFn<T extends any[]>(fn: (...args: T) => any, wait: number): ReturnValue<T>;
+function useThrottleFn<T extends any[]>(
+  fn: (...args: T) => any,
+  deps: DependencyList,
+  wait: number,
+): ReturnValue<T>;
+function useThrottleFn<T extends any[]>(
+  fn: (...args: T) => any,
+  deps: DependencyList | number,
+  wait?: number,
+): ReturnValue<T> {
   const _deps: DependencyList = (Array.isArray(deps) ? deps : []) as DependencyList;
   const _wait: number = typeof deps === 'number' ? deps : wait || 0;
   const timer = useRef<any>();
