@@ -16,6 +16,8 @@ import usePagination from './usePagination';
 import useBoolean from './useBoolean';
 import useToggle from './useToggle';
 import useSelections from './useSelections';
+import useThrottle from './useThrottle';
+import useThrottleFn from './useThrottleFn';
 
 const useControlledValue: typeof useControllableValue = function (...args) {
   console.warn(
@@ -46,4 +48,6 @@ export {
   useBoolean,
   useToggle,
   useSelections,
+  useThrottle,
+  useThrottleFn,
 };
