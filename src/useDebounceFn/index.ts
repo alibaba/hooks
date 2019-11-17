@@ -3,19 +3,19 @@ import useUpdateEffect from '../useUpdateEffect';
 
 type noop = (...args: any[]) => any;
 
-export interface ReturnValue<T extends Function> {
-  run: T;
+export interface ReturnValue<T extends any[]> {
+  run: (...args: T) => void;
   cancel: () => void;
 }
 
-function useDebounceFn<T extends Function>(fn: T, wait: number): ReturnValue<T>;
-function useDebounceFn<T extends Function>(
-  fn: T,
+function useDebounceFn<T extends any[]>(fn: (...args: T) => any, wait: number): ReturnValue<T>;
+function useDebounceFn<T extends any[]>(
+  fn: (...args: T) => any,
   deps: DependencyList,
   wait: number,
 ): ReturnValue<T>;
-function useDebounceFn<T extends Function>(
-  fn: T,
+function useDebounceFn<T extends any[]>(
+  fn: (...args: T) => any,
   deps: DependencyList | number,
   wait?: number,
 ): ReturnValue<T> {
@@ -23,7 +23,7 @@ function useDebounceFn<T extends Function>(
   const _wait: number = typeof deps === 'number' ? deps : wait || 0;
   const timer = useRef<any>();
 
-  const fnRef = useRef<T>(fn);
+  const fnRef = useRef<noop>(fn);
   fnRef.current = fn;
 
   const cancel = useCallback(() => {
