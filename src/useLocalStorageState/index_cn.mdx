@@ -35,9 +35,9 @@ import Demo2CodeJsx from '!raw-loader!./demo/demo2.jsx';
 ```typescript
 const [state, setState] = useLocalStorageState<T>(
   key: string,
-  defaultValue?: T,
+  defaultValue?: T | (() => T),
 ): [T?, (value?: T) => void]
 ```
-它的API和 `useState` 非常类似，但是多了一个参数 `key` ，用来指定在 localStorage 中存储时所使用的 `key` 。而它的返回值类型和 `useState` 保持来一致，当调用 `setState` 时，它会自动将新值写入到 localStorage 中。
+它的API和 `useState` 非常类似，但是多了一个参数 `key` ，用来指定在 localStorage 中存储时所使用的 `key` 。而它的返回值类型和 `useState` 保持了一致，当调用 `setState` 时，它会自动将新值写入到 localStorage 中。
 
 如果想从 localStorage 中删除这条数据，可以使用 `setState()` 或 `setState(undefined)` 。
