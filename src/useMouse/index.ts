@@ -1,13 +1,21 @@
 import React, { useEffect, useState } from 'react';
 
-export interface cursorState {
-  left: number;
-  top: number;
+export interface CursorState {
+  screenX: number;
+  screenY: number;
+  clientX: number;
+  clientY: number;
+  pageX: number;
+  pageY: number;
 }
 
-const initState: cursorState = {
-  left: 0,
-  top: 0,
+const initState: CursorState = {
+  screenX: NaN,
+  screenY: NaN,
+  clientX: NaN,
+  clientY: NaN,
+  pageX: NaN,
+  pageY: NaN,
 };
 
 export default () => {
@@ -15,13 +23,15 @@ export default () => {
 
   useEffect(() => {
     const moveHandler = (event: MouseEvent) => {
-      console.log('change', event);
       setState({
-        left: event.pageX,
-        top: event.pageY,
+        screenX: event.screenX,
+        screenY: event.screenY,
+        clientX: event.clientX,
+        clientY: event.clientY,
+        pageX: event.pageX,
+        pageY: event.pageY,
       });
     };
-
     document.addEventListener('mousemove', moveHandler);
     return () => {
       document.removeEventListener('mousemove', moveHandler);

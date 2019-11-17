@@ -12,10 +12,6 @@ import Demo1 from './demo/demo1';
 import Demo1CodeTsx from '!raw-loader!./demo/demo1.tsx';
 import Demo1CodeJsx from '!raw-loader!./demo/demo1.jsx';
 
-import Demo2 from './demo/demo2';
-import Demo2CodeTsx from '!raw-loader!./demo/demo2.tsx';
-import Demo2CodeJsx from '!raw-loader!./demo/demo2.jsx';
-
 # useMouse
 
 A hook to track cursor position
@@ -27,19 +23,25 @@ A hook to track cursor position
   <Demo1 />
 </JackBox>
 
-### Using with useSize
-<JackBox tsCode={Demo2CodeTsx} jsCode={Demo2CodeJsx} demoName='Using with useSize' description='tracking whether mouse is inside a div' >
-  <Demo2 />
-</JackBox>
-
 ## API
 ```
-const state: { top: number, left: number } = useMouse();
+const state: {
+  screenX: number, 
+  screenY: number, 
+  clientX: number, 
+  clientY: number,
+  pageX: number,
+  pageY: number,
+} = useMouse();
 ```
 
 ### result
 
 | Property | Description | Type |
 |----------|-------------|------|
-| top     | position top related to document  | number  |
-| left     | position left related to document  | number  |
+| screenX     | position left relative to the top left of the physical screen/monitor  | number  |
+| screenY     | position top relative to the top left of the physical screen/monitor  | number  |
+| clientX     | position left relative to the upper left edge of the content area  | number  |
+| clientY     | position top relative to the upper left edge of the content area  | number  |
+| pageX     | position left relative to the top left of the fully rendered content area in the browser  | number  |
+| pageY     | position top relative to the top left of the fully rendered content area in the browser  | number  |

@@ -12,13 +12,9 @@ import Demo1 from './demo/demo1';
 import Demo1CodeTsx from '!raw-loader!./demo/demo1.tsx';
 import Demo1CodeJsx from '!raw-loader!./demo/demo1.jsx';
 
-import Demo2 from './demo/demo2';
-import Demo2CodeTsx from '!raw-loader!./demo/demo2.tsx';
-import Demo2CodeJsx from '!raw-loader!./demo/demo2.jsx';
-
 # useMouse
 
-A hook to track cursor position
+一个跟踪鼠标位置的 hook
 
 ## 代码演示
 
@@ -27,19 +23,25 @@ A hook to track cursor position
   <Demo1 />
 </JackBox>
 
-### 与 useSize 一同使用
-<JackBox tsCode={Demo2CodeTsx} jsCode={Demo2CodeJsx} demoName='与 useSize 一同使用' description='获取鼠标是否在某一 div 内部' >
-  <Demo2 />
-</JackBox>
-
 ## API
 ```
-const state: { top: number, left: number } = useMouse();
+const state: {
+  screenX: number, 
+  screenY: number, 
+  clientX: number, 
+  clientY: number,
+  pageX: number,
+  pageY: number,
+} = useMouse();
 ```
 
-### result
+### 结果
 
-| Property | Description | Type |
+| 参数     | 说明                                     | 类型       |
 |----------|-------------|------|
-| top     | 距离 document 顶部的距离  | number  |
-| left     | 距离 document 左侧的距离  | number  |
+| screenX     | 距离显示器左侧的距离  | number  |
+| screenY     | 距离显示器顶部的距离  | number  |
+| clientX     | 距离当前视窗左侧的距离  | number  |
+| clientY     | 距离当前视窗顶部的距离  | number  |
+| pageX     | 距离完整页面顶部的距离  | number  |
+| pageY     | 距离完整页面顶部的距离  | number  |
