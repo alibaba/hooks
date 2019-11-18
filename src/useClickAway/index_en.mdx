@@ -1,0 +1,42 @@
+---
+name: useClickAway
+route: /useClickAway
+menu: 'Other'
+edit: false
+sidebar: true
+---
+import JackBox from 'jackbox';
+
+import Demo1 from './demo/demo1';
+import Demo1CodeTsx from '!raw-loader!./demo/demo1.tsx';
+import Demo1CodeJsx from '!raw-loader!./demo/demo1.jsx';
+
+# useClickAway
+
+A hook that elegantly manages click outside of target elements.
+
+## Examples
+
+### Default usage
+
+<JackBox jsCode={Demo1CodeJsx} tsCode={Demo1CodeTsx} demoName='Default usage' description='Please click the out of red box to view the effect.'>
+  <Demo1 />
+</JackBox>
+
+## API
+
+```javascript
+useClickAway(
+  ref: RefObject<HTMLElement | null>,
+  onClickAway: (event: KeyboardEvent) => void,
+  events: string[] = defaultEvents
+);
+```
+
+### Params
+
+| Property | Description                                 | Type                   | Default |
+|---------|----------------------------------------------|------------------------|--------|
+| ref | Target  | HTMLElement | -      |
+| onClickAway | Trigger function  | (event) => void | -      |
+| events | Trigger events  | string[] | ['mousedown', 'touchstart']      |

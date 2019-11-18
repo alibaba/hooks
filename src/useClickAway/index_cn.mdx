@@ -1,0 +1,40 @@
+---
+name: useClickAway
+route: /useClickAway
+menu: 'Other'
+edit: false
+sidebar: true
+---
+import JackBox from 'jackbox';
+
+import Demo1 from './demo/demo1';
+import Demo1CodeTsx from '!raw-loader!./demo/demo1.tsx';
+import Demo1CodeJsx from '!raw-loader!./demo/demo1.jsx';
+
+# useClickAway
+
+优雅的管理目标元素外点击事件的 Hook。
+
+## 代码演示
+
+<JackBox jsCode={Demo1CodeJsx} tsCode={Demo1CodeTsx} demoName='基础使用' description='请点击红色方块以外查看效果。'>
+  <Demo1 />
+</JackBox>
+
+## API
+
+```javascript
+useClickAway(
+  ref: RefObject<HTMLElement | null>,
+  onClickAway: (event: KeyboardEvent) => void,
+  events: string[] = defaultEvents
+);
+```
+
+### Params
+
+| 参数    | 说明                                         | 类型                   | 默认值 |
+|---------|----------------------------------------------|------------------------|--------|
+| ref | 目标元素  | HTMLElement | -      |
+| onClickAway | 触发事件的函数  | (event) => void | -      |
+| events | 触发事件  | string[] | ['mousedown', 'touchstart']      |
