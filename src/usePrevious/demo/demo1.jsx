@@ -5,7 +5,6 @@ import usePrevious from '..';
 export default () => {
   const [count, setCount] = useState(0);
   const previous = usePrevious(count);
-  console.log('in demo', previous);
   return (
     <>
       <div>counter current value: {count}</div>

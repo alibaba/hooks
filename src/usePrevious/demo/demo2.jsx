@@ -68,8 +68,7 @@ export default () => {
             setState(s => ({ ...s, name: nameInput }));
           }}
         >
-          {' '}
-          update{' '}
+          update
         </Button>
       </Input.Group>
       <Input.Group
@@ -91,8 +90,7 @@ export default () => {
             setState(s => ({ ...s, job: jobInput }));
           }}
         >
-          {' '}
-          update{' '}
+          update
         </Button>
       </Input.Group>
     </>
