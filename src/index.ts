@@ -17,6 +17,8 @@ import useBoolean from './useBoolean';
 import useToggle from './useToggle';
 import useSelections from './useSelections';
 import usePrevious from './usePrevious';
+import useMouse from './useMouse';
+
 
 const useControlledValue: typeof useControllableValue = function (...args) {
   console.warn(
@@ -48,4 +50,5 @@ export {
   useToggle,
   useSelections,
   usePrevious,
+  useMouse,
 };
