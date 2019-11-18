@@ -16,6 +16,7 @@ import usePagination from './usePagination';
 import useBoolean from './useBoolean';
 import useToggle from './useToggle';
 import useSelections from './useSelections';
+import useMouse from './useMouse';
 
 const useControlledValue: typeof useControllableValue = function (...args) {
   console.warn(
@@ -46,4 +47,5 @@ export {
   useBoolean,
   useToggle,
   useSelections,
+  useMouse,
 };
