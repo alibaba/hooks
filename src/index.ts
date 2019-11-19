@@ -18,9 +18,10 @@ import useToggle from './useToggle';
 import useSelections from './useSelections';
 import useThrottle from './useThrottle';
 import useThrottleFn from './useThrottleFn';
+import useDebounce from './useDebounce';
+import useDebounceFn from './useDebounceFn';
 import usePrevious from './usePrevious';
 import useMouse from './useMouse';
-
 
 const useControlledValue: typeof useControllableValue = function (...args) {
   console.warn(
@@ -53,6 +54,8 @@ export {
   useSelections,
   useThrottle,
   useThrottleFn,
+  useDebounce,
+  useDebounceFn,
   usePrevious,
   useMouse,
 };
