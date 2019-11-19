@@ -1,21 +1,20 @@
-import React, { useRef } from 'react';
-import { message } from 'antd';
+import React, { useState } from 'react';
+import { Button } from 'antd';
 import useClickAway from '..';
 
 export default () => {
-  const ref = useRef(null);
-  useClickAway(ref, () => {
-    message.success('outside clicked');
+  const [counter, setCounter] = useState(0);
+
+  const ref = useClickAway(() => {
+    setCounter(s => s + 1);
   });
 
   return (
-    <div
-      ref={ref}
-      style={{
-        width: 200,
-        height: 200,
-        background: 'red',
-      }}
-    />
+    <div>
+      <span ref={ref}>
+        <Button type="primary">click</Button>
+      </span>
+      <p>counter: {counter}</p>
+    </div>
   );
 };

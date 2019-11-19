@@ -11,6 +11,10 @@ import Demo1 from './demo/demo1';
 import Demo1CodeTsx from '!raw-loader!./demo/demo1.tsx';
 import Demo1CodeJsx from '!raw-loader!./demo/demo1.jsx';
 
+import Demo2 from './demo/demo2';
+import Demo2CodeTsx from '!raw-loader!./demo/demo2.tsx';
+import Demo2CodeJsx from '!raw-loader!./demo/demo2.jsx';
+
 # useClickAway
 
 A hook that elegantly manages click outside of target elements.
@@ -19,24 +23,32 @@ A hook that elegantly manages click outside of target elements.
 
 ### Default usage
 
-<JackBox jsCode={Demo1CodeJsx} tsCode={Demo1CodeTsx} demoName='Default usage' description='Please click the out of red box to view the effect.'>
+<JackBox jsCode={Demo1CodeJsx} tsCode={Demo1CodeTsx} demoName='Default usage' description='Please click button or outside of button to show effects.'>
   <Demo1 />
+</JackBox>
+
+<JackBox jsCode={Demo2CodeJsx} tsCode={Demo2CodeTsx} demoName='Custom' description='Support custom dom objects.'>
+  <Demo2 />
 </JackBox>
 
 ## API
 
 ```javascript
-useClickAway(
-  ref: RefObject<HTMLElement | null>,
+const ele = useClickAway(
   onClickAway: (event: KeyboardEvent) => void,
-  events: string[] = defaultEvents
+  ref?: RefType,
 );
 ```
+
+### Result
+
+| Property | Description                                         | Type                 |
+|----------|------------------------------------------|------------|
+| ele     | when no param is passed, this ele will be listened      | -        |
 
 ### Params
 
 | Property | Description                                 | Type                   | Default |
 |---------|----------------------------------------------|------------------------|--------|
-| ref | Target  | HTMLElement | -      |
-| onClickAway | Trigger function  | (event) => void | -      |
-| events | Trigger events  | string[] | ['mousedown', 'touchstart']      |
+| onClickAway | Trigger Function  | (event) => void | -      |
+| ref | Target Element  | HTMLElement \| (() => HTMLElement \| null) \| string \| null | -      |
