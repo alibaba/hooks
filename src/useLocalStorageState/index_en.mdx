@@ -35,7 +35,7 @@ A Hook for persisting state into localStorage.
 ```typescript
 const [state, setState] = useLocalStorageState<T>(
   key: string,
-  defaultValue?: T,
+  defaultValue?: T | (() => T),
 ): [T?, (value?: T) => void]
 ```
 
