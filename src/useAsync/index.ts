@@ -14,8 +14,7 @@ class Timer<T> {
   constructor(cb: () => Promise<T | undefined>, delay: number) {
     this.remaining = delay;
     this.delay = delay;
-    this.start = delay;
-    this.timerId = delay;
+    this.start = Date.now();
     this.cb = cb;
   }
 
@@ -30,23 +29,14 @@ class Timer<T> {
     this.remaining -= Date.now() - this.start;
   };
 
-  resume = (...args: any[]): Promise<T> | undefined => {
+  resume = () => {
     this.start = Date.now();
     clearTimeout(this.timerId);
-    if (this.cb) {
-      return new Promise<T>(resolve => {
-        this.timerId = setTimeout(async () => {
-          if (this.cb) {
-            this.cb(...(args || []));
-            // resume 只触发定时器开始计时，没有返回结果
-            resolve(
-              'No resolve value when pollingInterval is set, please use onSuccess & onError instead' as any,
-            );
-          }
-        }, this.remaining);
-      });
-    }
-    return undefined;
+    this.timerId = setTimeout(async () => {
+      if (this.cb) {
+        this.cb();
+      }
+    }, this.remaining);
   };
 }
 
@@ -66,7 +56,7 @@ const promiseReturn: promiseReturn<any> = async () => null as any;
 
 export interface ReturnValue<T> {
   loading: boolean;
-  error?: Error;
+  error?: Error | string;
   params: any[];
   data?: T;
   cancel: noop;
@@ -96,174 +86,131 @@ function useAsync<Result = any>(
     ? deps
     : options || {}) as Options<Result>;
 
-  const [state, set] = useState<ReturnValue<Result>>({
-    loading: false,
-    cancel: noop,
-    params: [],
-    run: promiseReturn,
-    timer: {
-      stop: noop,
-      resume: promiseReturn,
-      pause: noop,
-    },
-  });
+  const params = useRef<any[]>([]);
   const { autoCancel = true } = _options;
   const timer = useRef<Timer<Result> | undefined>(undefined);
-  const count = useRef(0);
-  const init = useRef(true);
-  const params = useRef<any[]>([]);
+  const omitNextResume = useRef(false);
 
-  useEffect(() => {
-    count.current += 1;
-    init.current = true;
-    return () => {
-      count.current += 1;
-    };
-  }, _deps);
+  const count = useRef(0);
+  const fnRef = useRef(fn);
+  fnRef.current = fn;
+  // initial loading state is related to manual option
+  const [state, set] = useState({
+    data: undefined as (Result | undefined),
+    error: undefined as (Error | string | undefined),
+    loading: !_options.manual,
+  });
 
   const run = useCallback((...args: any[]): Promise<Result | undefined> => {
     // 确保不会返回被取消的结果
     const runCount = count.current;
+    /* 当前参数保存一下 */
     params.current = args;
     set(s => ({ ...s, loading: true }));
-    return fn(...args)
+    return fnRef
+      .current(...args)
       .then(data => {
-        // 如果关掉 autoCancel，callback 可以在变量更新后继续执行
-        if (!autoCancel || runCount === count.current) {
+        if (runCount === count.current) {
+          set(s => ({ ...s, data, loading: false }));
           if (_options.onSuccess) {
             _options.onSuccess(data, args || []);
-          }
-          // onSuccess 里可能会有副作用，这里还需要再判断一次
-          if (!autoCancel || runCount === count.current) {
-            // 关掉 autoCancel 可能会有 react warning, 不推荐
-            set(s => ({ ...s, data, loading: false }));
           }
         }
         return data;
       })
       .catch(error => {
-        // 如果关掉 autoCancel，callback 可以在变量更新后继续执行
-        if (!autoCancel || runCount === count.current) {
+        if (runCount === count.current) {
+          set(s => ({ ...s, error, loading: false }));
           if (_options.onError) {
             _options.onError(error, args || []);
           }
-          if (!autoCancel || runCount === count.current) {
-            set(s => ({ ...s, error, loading: false }));
-          }
         }
-        return error;
+        throw error;
       });
-  }, _deps);
+  }, []);
+
+  /* 软取消，由于竞态，需要取消上一次的请求 */
+  const softCancel = useCallback(() => {
+    if (autoCancel) {
+      count.current += 1;
+      set(s => ({ ...s, loading: false }));
+    }
+  }, [autoCancel]);
+
+  /* 强制取消，组件卸载，或者用户手工取消 */
+  const forceCancel = useCallback(() => {
+    count.current += 1;
+    set(s => ({ ...s, loading: false }));
+  }, []);
 
   const stop = useCallback(() => {
-    count.current += 1;
-    // 清除计时器
     if (timer.current) {
       timer.current.stop();
+      omitNextResume.current = true;
     }
-    set(s => ({ ...s, error: new Error('stopped'), loading: false }));
+    forceCancel();
+  }, [forceCancel]);
+
+  const resume = useCallback(() => {
+    if (timer.current) {
+      omitNextResume.current = false;
+      timer.current.resume();
+    }
   }, []);
 
   const pause = useCallback(() => {
-    count.current += 1;
-    // 暂停计时器
     if (timer.current) {
       timer.current.pause();
+      omitNextResume.current = true;
     }
-    set(s => ({ ...s, error: new Error('paused'), loading: false }));
-  }, []);
-
-  const resume = useCallback(
-    async (...args: any[]): Promise<Result | undefined> => {
-      // 恢复计时器
-      if (timer.current) {
-        return timer.current.resume(...(args || []));
-      }
-      return undefined;
-    },
-    [run],
-  );
+    forceCancel();
+  }, [forceCancel]);
 
   const start = useCallback(
-    async (...args: any[]): Promise<Result | undefined> => {
-      // 执行并开启计时器
-      await run(...(args || []));
-      return resume(...(args || []));
-    },
-    [run],
-  );
-
-  const intervalAsync = useCallback(
     async (...args: any[]) => {
-      const runCount = count.current;
-      let ret: Result | undefined;
-      if (!_options.manual || !init.current) {
-        ret = await run(...(args || []));
-      }
-      if (count.current === runCount) {
-        // 只初始化定时器，不开始计时
-        timer.current = new Timer<Result>(
-          () => intervalAsync(...args),
-          _options.pollingInterval as number,
-        );
-        // 如果设置了 manual，则默认不开始计时
-        if (init.current && _options.manual) {
-          // await run(...(args || []));
-          init.current = false;
-        } else {
-          // 开始计时
-          ret = await timer.current.resume(...(args || []));
-        }
-      }
-      return ret;
-    },
-    [_options.pollingInterval, _options.manual, run],
-  );
-
-  const reload = useCallback(
-    (...args: any[]): Promise<Result | undefined> => {
-      // 防止上次数据返回
-      count.current += 1;
+      // 有定时器的延时逻辑
       if (_options.pollingInterval) {
-        if (!_options.manual) {
-          // 如果有 polling，清理上次的计时器
+        if (timer.current) {
           stop();
         }
-        return intervalAsync(...args);
+        omitNextResume.current = false;
+        timer.current = new Timer<Result>(() => start(...args), _options.pollingInterval as number);
+        const ret = run(...args);
+        ret.finally(() => {
+          if (timer.current && !omitNextResume.current) {
+            timer.current.resume();
+          }
+        });
+        return ret;
       }
-      // 直接运行
-      return run(...(args || []));
+      // 如果上一次异步操作还在 loading，则会尝试取消掉上一次的异步操作。
+      softCancel();
+      return run(...args);
     },
-    [run, _options.pollingInterval],
+    [run, softCancel, stop, _options.pollingInterval],
   );
 
-  const cancel = useCallback(() => {
-    count.current += 1;
-    // throw an error
-    set(s => ({ ...s, error: new Error('canceled'), loading: false }));
-  }, []);
-
   useEffect(() => {
-    if (_options.pollingInterval) {
-      intervalAsync();
-    } else if (!_options.manual) {
-      // 直接执行
-      run();
+    if (!_options.manual) {
+      // deps 变化时，重新执行
+      start();
     }
-
+    /* 如果 desp 变化，强制取消 */
     return () => {
-      count.current += 1;
-      stop();
+      if (timer.current) {
+        timer.current.stop();
+      }
+      forceCancel();
     };
-  }, [_options.manual, _options.pollingInterval, run, intervalAsync]);
+  }, [..._deps, forceCancel, start]);
 
   return {
     loading: state.loading,
     params: params.current,
     error: state.error,
     data: state.data,
-    cancel,
-    run: _options.manual && _options.pollingInterval ? start : reload,
+    cancel: forceCancel,
+    run: start,
     timer: {
       stop,
       resume,

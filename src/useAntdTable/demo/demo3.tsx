@@ -20,9 +20,8 @@ interface Result {
 
 type Gender = 'male' | 'female';
 
-const getTableData = ({ current, pageSize, gender }: FnParams<Item>) => fetch(
-    `https://randomuser.me/api?results=55&page=${current}&size=${pageSize}&gender=${gender}`,
-  )
+const getTableData = ({ current, pageSize, gender }: FnParams<Item>) =>
+  fetch(`https://randomuser.me/api?results=55&page=${current}&size=${pageSize}&gender=${gender}`)
     .then(res => res.json())
     .then(res => ({
       total: res.info.results,
@@ -32,7 +31,8 @@ const getTableData = ({ current, pageSize, gender }: FnParams<Item>) => fetch(
 export default () => {
   const [gender, setGender] = useState<Gender>('male');
   const { tableProps } = useAntdTable<Result, Item>(
-    params => getTableData({
+    params =>
+      getTableData({
         ...params,
         gender,
       }),

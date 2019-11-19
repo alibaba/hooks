@@ -17,7 +17,8 @@ interface Result {
   data: Item[];
 }
 
-const queryData = ({ current, pageSize }: FnParams) => fetch(`https://randomuser.me/api?results=${pageSize}&page=${current}`)
+const queryData = ({ current, pageSize }: FnParams) =>
+  fetch(`https://randomuser.me/api?results=${pageSize}&page=${current}`)
     .then(res => res.json())
     .then(res => ({
       total: 55,
