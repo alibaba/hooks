@@ -16,9 +16,10 @@ import usePagination from './usePagination';
 import useBoolean from './useBoolean';
 import useToggle from './useToggle';
 import useSelections from './useSelections';
+import useDebounce from './useDebounce';
+import useDebounceFn from './useDebounceFn';
 import usePrevious from './usePrevious';
 import useMouse from './useMouse';
-
 
 const useControlledValue: typeof useControllableValue = function (...args) {
   console.warn(
@@ -49,6 +50,8 @@ export {
   useBoolean,
   useToggle,
   useSelections,
+  useDebounce,
+  useDebounceFn,
   usePrevious,
   useMouse,
 };
