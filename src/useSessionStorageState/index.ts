@@ -6,7 +6,7 @@ function useSessionStorageState<T>(
   defaultValue: T | (() => T),
 ): [T, (value?: T) => void];
 function useSessionStorageState<T>(key: string, defaultValue?: T | (() => T)) {
-  return useStorageState(window.sessionStorage, key, defaultValue);
+  return useStorageState(sessionStorage, key, defaultValue);
 }
 
 export default useSessionStorageState;

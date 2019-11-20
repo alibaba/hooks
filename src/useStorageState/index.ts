@@ -2,7 +2,7 @@ import { useState } from 'react';
 
 function useStorageState<T>(storage: Storage, key: string, defaultValue?: T | (() => T)) {
   const [state, setState] = useState<T | undefined>(() => {
-    const raw = localStorage.getItem(key);
+    const raw = storage.getItem(key);
     if (raw !== null) {
       return JSON.parse(raw);
     }
@@ -13,10 +13,10 @@ function useStorageState<T>(storage: Storage, key: string, defaultValue?: T | ((
   });
   function updateState(value?: T) {
     if (typeof value === 'undefined') {
-      localStorage.removeItem(key);
+      storage.removeItem(key);
       setState(defaultValue);
     } else {
-      localStorage.setItem(key, JSON.stringify(value));
+      storage.setItem(key, JSON.stringify(value));
       setState(value);
     }
   }

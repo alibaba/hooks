@@ -6,7 +6,7 @@ function useLocalStorageState<T>(
   defaultValue: T | (() => T),
 ): [T, (value?: T) => void];
 function useLocalStorageState<T>(key: string, defaultValue?: T | (() => T)) {
-  return useStorageState(window.localStorage, key, defaultValue);
+  return useStorageState(localStorage, key, defaultValue);
 }
 
 export default useLocalStorageState;
