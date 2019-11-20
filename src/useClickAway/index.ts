@@ -3,7 +3,7 @@ import { MutableRefObject, useRef, useEffect, useCallback, useMemo } from 'react
 // 鼠标点击事件，click 不会监听右键
 const defaultEvent = 'click';
 
-type RefType = HTMLElement | (() => HTMLElement | null) | string | null;
+type RefType = () => HTMLElement | null;
 
 export default function useClickAway<T extends HTMLElement = HTMLDivElement>(
   onClickAway: (event: KeyboardEvent) => void,
@@ -12,18 +12,9 @@ export default function useClickAway<T extends HTMLElement = HTMLDivElement>(
 ): MutableRefObject<T> {
   const element = useRef<T>();
 
-  const getRef = useCallback(() => {
-    if (typeof ref === 'function') {
-      return ref();
-    } if (typeof ref === 'string') {
-      return document.getElementById(ref);
-    }
-    return ref;
-  }, [ref]);
-
   const handler = useCallback(
     event => {
-      const targetElement = getRef() || element.current;
+      const targetElement = typeof ref === 'function' ? ref() : element.current;
       if (!targetElement || targetElement.contains(event.target)) {
         return;
       }
