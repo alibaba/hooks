@@ -1,5 +1,6 @@
 import { DependencyList, useState, useMemo, useRef, useCallback } from 'react';
 import useUpdateEffect from '../useUpdateEffect';
+import useDebounceFn from '../useDebounceFn';
 
 import useAsync from '../useAsync';
 
@@ -37,8 +38,6 @@ function useSearch<Result>(
 
   const [value, setValue] = useState<any>('');
 
-  const timer = useRef<any>();
-
   const { loading, data, run, cancel: cancelAsync } = useAsync<Result>(fn, [value, ..._deps], {
     manual: true,
   });
@@ -47,22 +46,13 @@ function useSearch<Result>(
     _options.wait,
   ]);
 
-  /* value 变化时，需要防抖 */
-  useUpdateEffect(() => {
-    if (timer.current) {
-      clearTimeout(timer.current);
-    }
-
-    timer.current = setTimeout(() => {
+  const debounce = useDebounceFn(
+    () => {
       run(value);
-    }, wait);
-
-    return () => {
-      if (timer.current) {
-        clearTimeout(timer.current);
-      }
-    };
-  }, [value]);
+    },
+    [value],
+    wait,
+  );
 
   /* 依赖变化时，需要立即重新请求 */
   useUpdateEffect(() => {
@@ -71,12 +61,10 @@ function useSearch<Result>(
 
   const cancel = useCallback(() => {
     /* 先取消防抖 */
-    if (timer.current) {
-      clearTimeout(timer.current);
-    }
+    debounce.cancel();
     /* 再取消 async */
     cancelAsync();
-  }, [cancelAsync]);
+  }, [cancelAsync, debounce.cancel]);
 
   /* 手动触发 */
   const trigger = useCallback(() => {
