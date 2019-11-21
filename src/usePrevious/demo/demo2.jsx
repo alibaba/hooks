@@ -6,9 +6,11 @@ const nameCompareFunction = (prev, next) => {
   if (!prev) {
     return true;
   }
+
   if (prev.name !== next.name) {
     return true;
   }
+
   return false;
 };
 
@@ -16,9 +18,11 @@ const jobCompareFunction = (prev, next) => {
   if (!prev) {
     return true;
   }
+
   if (prev.job !== next.job) {
     return true;
   }
+
   return false;
 };
 

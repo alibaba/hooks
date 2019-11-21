@@ -1,0 +1,45 @@
+---
+name: useScroll
+route: /useScroll
+menu: 'Other'
+edit: false
+sidebar: true
+---
+
+import JackBox from 'jackbox';
+
+import Demo1 from './demo/demo1';
+import Demo1CodeTsx from '!raw-loader!./demo/demo1.tsx';
+import Demo1CodeJsx from '!raw-loader!./demo/demo1.jsx';
+
+# useScroll
+
+Get the scroll position of an element.
+
+
+## Examples
+
+<JackBox jsCode={Demo1CodeJsx} tsCode={Demo1CodeTsx} demoName='Basic Usage' description='Try to scroll the box below.'>
+  <Demo1 />
+</JackBox>
+
+## API
+```
+function useScroll(ref: RefObject<HTMLElement>): {
+  left: number;
+  top: number;
+}
+```
+
+### Result
+
+| Property | Description                                                       | Type                 |
+|------|----------|------|
+| left | The `scrollLeft` value of scroll container | number  |
+| top | The `scrollTop` value of scroll container | number  |
+
+### Params
+
+| 参数    | 说明     | 类型                   | 默认值 |
+|---------|----------|------------------------|--------|
+| ref | The `ref` of scroll container | `RefObject<HTMLElement>` | -      |
