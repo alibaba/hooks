@@ -1,0 +1,40 @@
+---
+name: useThrottle
+route: /useThrottle
+menu: 'SideEffect'
+edit: false
+sidebar: true
+---
+import JackBox from 'jackbox';
+
+import Demo1 from './demo/demo1';
+import Demo1CodeTsx from '!raw-loader!./demo/demo1.tsx';
+import Demo1CodeJsx from '!raw-loader!./demo/demo1.jsx';
+
+# useThrottle
+
+A hook that handle the throttle value.
+
+## Examples
+
+### Default usage
+
+<JackBox jsCode={Demo1CodeJsx} tsCode={Demo1CodeTsx} demoName='Default usage' description='ThrottledValue will change every 500ms.'>
+  <Demo1 />
+</JackBox>
+
+## API
+
+```javascript
+const ThrottledValue = useThrottle(
+  value: any,
+  wait: number
+);
+```
+
+### Params
+
+| Property | Description                  | Type   | Default |
+|----------|------------------------------|--------|---------|
+| value    | value that requires throttle | any    | -       |
+| wait     | wait time in milliseconds    | number | 1000    |

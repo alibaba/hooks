@@ -1,0 +1,40 @@
+---
+name: useThrottle
+route: /useThrottle
+menu: 'SideEffect'
+edit: false
+sidebar: true
+---
+import JackBox from 'jackbox';
+
+import Demo1 from './demo/demo1';
+import Demo1CodeTsx from '!raw-loader!./demo/demo1.tsx';
+import Demo1CodeJsx from '!raw-loader!./demo/demo1.jsx';
+
+# useThrottle
+
+用来处理值节流 Hook。
+
+## 代码演示
+
+### 基础使用
+
+<JackBox jsCode={Demo1CodeJsx} tsCode={Demo1CodeTsx} demoName='基础使用' description='ThrottledValue 每隔 500ms 变化一次'>
+  <Demo1 />
+</JackBox>
+
+## API
+
+```javascript
+const ThrottledValue = useThrottle(
+  value: any,
+  wait: number
+);
+```
+
+### Params
+
+| 参数  | 说明                     | 类型   | 默认值 |
+|-------|--------------------------|--------|--------|
+| value | 需要节流变化的值         | any    | -      |
+| wait  | 防抖等待时间，单位为毫秒 | number | 1000   |

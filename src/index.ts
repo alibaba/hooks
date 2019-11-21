@@ -17,6 +17,8 @@ import usePagination from './usePagination';
 import useBoolean from './useBoolean';
 import useToggle from './useToggle';
 import useSelections from './useSelections';
+import useThrottle from './useThrottle';
+import useThrottleFn from './useThrottleFn';
 import useDebounce from './useDebounce';
 import useDebounceFn from './useDebounceFn';
 import usePrevious from './usePrevious';
@@ -53,6 +55,8 @@ export {
   useBoolean,
   useToggle,
   useSelections,
+  useThrottle,
+  useThrottleFn,
   useDebounce,
   useDebounceFn,
   usePrevious,
