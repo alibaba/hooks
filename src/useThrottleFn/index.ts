@@ -32,6 +32,7 @@ function useThrottleFn<T extends any[]>(
     if (timer.current) {
       clearTimeout(timer.current);
     }
+    timer.current = undefined;
   }, []);
 
   const run = useCallback(
