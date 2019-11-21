@@ -10,6 +10,7 @@ import useVirtualList from './useVirtualList';
 import { configResponsive, useResponsive } from './useResponsive';
 import useSize from './useSize';
 import useLocalStorageState from './useLocalStorageState';
+import useSessionStorageState from './useSessionStorageState';
 import useUpdateEffect from './useUpdateEffect';
 import useUpdateLayoutEffect from './useUpdateLayoutEffect';
 import usePagination from './usePagination';
@@ -41,6 +42,7 @@ export {
   useResponsive,
   useEventEmitter,
   useLocalStorageState,
+  useSessionStorageState,
   useSize,
   configResponsive,
   configRequest,
