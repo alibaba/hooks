@@ -27,16 +27,16 @@ A hook that elegantly manages click outside of target elements.
   <Demo1 />
 </JackBox>
 
-<JackBox jsCode={Demo2CodeJsx} tsCode={Demo2CodeTsx} demoName='Custom' description='Support custom dom objects.'>
+<JackBox jsCode={Demo2CodeJsx} tsCode={Demo2CodeTsx} demoName='Custom DOM' description='Support pass in a DOM element directly or a function that returns the DOM element.'>
   <Demo2 />
 </JackBox>
 
 ## API
 
 ```javascript
-const ele = useClickAway(
+const ref = useClickAway(
   onClickAway: (event: KeyboardEvent) => void,
-  ref?: RefType,
+  dom?: RefType,
 );
 ```
 
@@ -44,11 +44,11 @@ const ele = useClickAway(
 
 | Property | Description                                         | Type                 |
 |----------|------------------------------------------|------------|
-| ele     | when no param is passed, this ele will be listened      | -        |
+| ref     | when no param is passed, this ref will be listened     | -        |
 
 ### Params
 
 | Property | Description                                 | Type                   | Default |
 |---------|----------------------------------------------|------------------------|--------|
 | onClickAway | Trigger Function  | (event) => void | -      |
-| ref | Target Element  | () => HTMLElement | -      |
+| dom | optional, if none is passed, this hook will subscibe to the dom that it returns  | HTMLElement \| (() => HTMLElement) \| undefined | -      |

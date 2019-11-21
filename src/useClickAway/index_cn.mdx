@@ -25,16 +25,16 @@ import Demo2CodeJsx from '!raw-loader!./demo/demo2.jsx';
   <Demo1 />
 </JackBox>
 
-<JackBox jsCode={Demo2CodeJsx} tsCode={Demo2CodeTsx} demoName='自定义' description='支持自定义 dom 对象'>
+<JackBox jsCode={Demo2CodeJsx} tsCode={Demo2CodeTsx} demoName='自定义 DOM' description='支持直接传入 DOM 对象或通过 function 返回一个对象的方式引入。'>
   <Demo2 />
 </JackBox>
 
 ## API
 
 ```javascript
-const ele = useClickAway(
+const ref = useClickAway(
   onClickAway: (event: KeyboardEvent) => void,
-  ref?: RefType,
+  dom?: RefType,
 );
 ```
 
@@ -42,11 +42,11 @@ const ele = useClickAway(
 
 | 参数     | 说明                                     | 类型       |
 |----------|------------------------------------------|------------|
-| ele     | 当未传入任何参数时，将 ele 绑定给需监听的节点      | -        |
+| ref     | 当未传入任何参数时，将 ref 绑定给需监听的节点      | -        |
 
 ### Params
 
 | 参数    | 说明                                         | 类型                   | 默认值 |
 |---------|----------------------------------------------|------------------------|--------|
 | onClickAway | 触发事件的函数  | (event) => void | -      |
-| ref | 目标元素  | () => HTMLElement | -      |
+| dom? | 可选项，如果未传入则会监听返回结果中的 ref，否则会监听传入的节点  | HTMLElement \| (() => HTMLElement) \| undefined | -      |

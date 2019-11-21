@@ -7,15 +7,19 @@ describe('useClickAway', () => {
   });
 
   let container: HTMLDivElement;
+  let container1: HTMLDivElement;
 
   beforeEach(() => {
     container = document.createElement('div');
-    container.setAttribute('id', 'ele');
+    container1 = document.createElement('div');
+    container1.setAttribute('id', 'ele');
     document.body.appendChild(container);
+    document.body.appendChild(container1);
   });
 
   afterEach(() => {
     document.body.removeChild(container);
+    document.body.removeChild(container1);
   });
 
   it('test on dom optional', async () => {
@@ -35,8 +39,14 @@ describe('useClickAway', () => {
     document.body.click();
     expect(state).toEqual(1);
 
+    rerender(container1);
+    container1.click();
+    expect(state).toEqual(1);
+    document.body.click();
+    expect(state).toEqual(2);
+
     unmount();
     document.body.click();
-    expect(state).toEqual(1);
+    expect(state).toEqual(2);
   });
 });

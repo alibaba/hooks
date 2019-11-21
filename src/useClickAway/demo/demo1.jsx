@@ -12,7 +12,7 @@ export default () => {
   return (
     <div>
       <span ref={ref}>
-        <Button type="primary">click</Button>
+        <Button type="primary">box1</Button>
       </span>
       <p>counter: {counter}</p>
     </div>

@@ -9,13 +9,13 @@ export default () => {
     () => {
       setCounter(s => s + 1);
     },
-    () => document.getElementById('box'),
+    () => document.getElementById('box2'),
   );
 
   return (
     <div>
-      <Button type="primary" id="box">
-        click
+      <Button type="primary" id="box2">
+        box2
       </Button>
       <p>counter: {counter}</p>
     </div>
