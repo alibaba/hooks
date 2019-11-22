@@ -2,8 +2,7 @@ import React, { useRef } from 'react';
 import useScroll from '..';
 
 export default () => {
-  const ref = useRef<HTMLDivElement>(null);
-  const scroll = useScroll(ref);
+  const [scroll, ref] = useScroll<HTMLDivElement>();
   return (
     <>
       <div>{JSON.stringify(scroll)}</div>

@@ -25,21 +25,23 @@ import Demo1CodeJsx from '!raw-loader!./demo/demo1.jsx';
 
 ## API
 ```
-function useScroll(ref: RefObject<HTMLElement>): {
+interface Position {
   left: number;
   top: number;
 }
+function useScroll<T extends HTMLElement = HTMLElement>(): [Position, MutableRefObject<T>]
+function useScroll<T extends HTMLElement = HTMLElement>(arg: HTMLElement | (() => HTMLElement)): [Position]
 ```
 
 ### Result
 
 | 参数 | 说明     | 类型 |
 |------|----------|------|
-| left | 滚动容器的 scrollLeft 值 | number  |
-| top | 滚动容器的 scrollTop 值 | number  |
+| position | 滚动容器当前的滚动位置 | `{x: number, y: number}`  |
+| ref | 当未传入任何参数时，将 ref 绑定给需监听的节点 | `RefObject<HTMLElement>` |
 
 ### Params
 
-| 参数    | 说明     | 类型                   | 默认值 |
-|---------|----------|------------------------|--------|
-| ref | 滚动容器的 ref | RefObject<HTMLElement> | -      |
+| 参数    | 说明                                         | 类型                   | 默认值 |
+|---------|----------------------------------------------|------------------------|--------|
+| dom? | 可选项，如果未传入则会监听返回结果中的 ref，否则会监听传入的节点  | HTMLElement \| (() => HTMLElement) \| undefined | -      |

@@ -7,11 +7,8 @@ describe('useScroll', () => {
     expect(useScroll).toBeDefined();
   });
   it('document body', () => {
-    const hook = renderHook(() => {
-      const ref = useRef(document.body);
-      return useScroll(ref);
-    });
-    expect(hook.result.current.left).toBe(0);
-    expect(hook.result.current.top).toBe(0);
+    const hook = renderHook(() => useScroll(() => document.body));
+    expect(hook.result.current[0].left).toBe(0);
+    expect(hook.result.current[0].top).toBe(0);
   });
 });

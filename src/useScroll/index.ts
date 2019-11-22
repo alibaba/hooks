@@ -1,17 +1,28 @@
-import { RefObject, useEffect, useState } from 'react';
+import { MutableRefObject, useEffect, useRef, useState } from 'react';
 
 interface Position {
   left: number;
   top: number;
 }
 
-function useScroll(ref: RefObject<HTMLElement>) {
+type Arg = HTMLElement | (() => HTMLElement) | null;
+
+function useScroll<T extends HTMLElement = HTMLElement>(): [Position, MutableRefObject<T>];
+function useScroll<T extends HTMLElement = HTMLElement>(arg: Arg): [Position];
+function useScroll<T extends HTMLElement = HTMLElement>(...args: [Arg] | []) {
   const [position, setPosition] = useState<Position>({
     left: NaN,
     top: NaN,
   });
+  const ref = useRef<T>();
+
+  const hasPassedInElement = args.length === 1;
+  const arg = args[0];
+
   useEffect(() => {
-    const element = ref.current;
+    const passedInElement = typeof arg === 'function' ? arg() : arg;
+    const element = hasPassedInElement ? passedInElement : ref.current;
+    if (!element) return;
     if (!element) {
       return;
     }
@@ -29,8 +40,8 @@ function useScroll(ref: RefObject<HTMLElement>) {
     return () => {
       element.removeEventListener('scroll', listener);
     };
-  }, [ref]);
-  return position;
+  }, [ref.current, typeof arg === 'function' ? undefined : arg]);
+  return [position, ref];
 }
 
 export default useScroll;

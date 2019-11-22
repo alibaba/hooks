@@ -4,11 +4,9 @@ import useClickAway from '..';
 
 export default () => {
   const [counter, setCounter] = useState(0);
-
   const ref = useClickAway(() => {
     setCounter(s => s + 1);
   });
-
   return (
     <div>
       <span ref={ref}>

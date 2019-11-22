@@ -25,21 +25,23 @@ Get the scroll position of an element.
 
 ## API
 ```
-function useScroll(ref: RefObject<HTMLElement>): {
+interface Position {
   left: number;
   top: number;
 }
+function useScroll<T extends HTMLElement = HTMLElement>(): [Position, MutableRefObject<T>]
+function useScroll<T extends HTMLElement = HTMLElement>(arg: HTMLElement | (() => HTMLElement)): [Position]
 ```
 
 ### Result
 
 | Property | Description                                                       | Type                 |
 |------|----------|------|
-| left | The `scrollLeft` value of scroll container | number  |
-| top | The `scrollTop` value of scroll container | number  |
+| position | The current scroll position of the element. | `{x: number, y: number}`  |
+| ref | When no param is passed, this ref will be listened | `RefObject<HTMLElement>` |
 
 ### Params
 
-| 参数    | 说明     | 类型                   | 默认值 |
-|---------|----------|------------------------|--------|
-| ref | The `ref` of scroll container | `RefObject<HTMLElement>` | -      |
+| Property | Description                                                        | Type                   | Default |
+|---------|----------------------------------------------|------------------------|--------|
+| dom? | optional, if none is passed, this hook will subscibe to the ref that it returns  | HTMLElement \| (() => HTMLElement) \| undefined | -      |
