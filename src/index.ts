@@ -23,6 +23,7 @@ import useDebounce from './useDebounce';
 import useDebounceFn from './useDebounceFn';
 import usePrevious from './usePrevious';
 import useMouse from './useMouse';
+import useScroll from './useScroll';
 import useClickAway from './useClickAway';
 
 const useControlledValue: typeof useControllableValue = function (...args) {
@@ -61,5 +62,6 @@ export {
   useDebounceFn,
   usePrevious,
   useMouse,
+  useScroll,
   useClickAway,
 };
