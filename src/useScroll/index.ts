@@ -23,9 +23,6 @@ function useScroll<T extends HTMLElement = HTMLElement>(...args: [Arg] | []) {
     const passedInElement = typeof arg === 'function' ? arg() : arg;
     const element = hasPassedInElement ? passedInElement : ref.current;
     if (!element) return;
-    if (!element) {
-      return;
-    }
     setPosition({
       left: element.scrollLeft,
       top: element.scrollTop,
