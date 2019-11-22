@@ -25,7 +25,10 @@ function useSize<T extends HTMLElement = HTMLElement>(
 
     const resizeObserver = new ResizeObserver(entries => {
       entries.forEach(entry => {
-        setState({ width: entry.target.clientWidth, height: entry.target.clientHeight });
+        setState({
+          width: entry.target.clientWidth,
+          height: entry.target.clientHeight,
+        });
       });
     });
 

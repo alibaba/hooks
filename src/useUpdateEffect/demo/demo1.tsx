@@ -1,27 +1,30 @@
-import React, { useState, useEffect } from 'react';
-import { message, Button } from 'antd';
+import { Button } from 'antd';
+import React, { useLayoutEffect, useState } from 'react';
 import useUpdateEffect from '..';
 
 export default () => {
   const [count, setCount] = useState(0);
+  const [effectCount, setEffectCount] = useState(0);
+  const [updateEffectCount, setUpdateEffectCount] = useState(0);
 
-  useEffect(() => {
-    message.success(`useEffect ${count}`);
-  });
+  useLayoutEffect(() => {
+    setEffectCount(c => c + 1);
+  }, [count]);
 
   useUpdateEffect(() => {
-    message.success(`useUpdateEffect ${count}`);
+    setUpdateEffectCount(c => c + 1);
     return () => {
       // do something
     };
-  }); // you can include deps array if necessary
+  }, [count]); // you can include deps array if necessary
 
   return (
     <div>
-      <p>count: {count}</p>
+      <p>effectCount: {effectCount}</p>
+      <p>updateEffectCount: {updateEffectCount}</p>
       <p>
         <Button type="primary" onClick={() => setCount(c => c + 1)}>
-          increase
+          reRender
         </Button>
       </p>
     </div>

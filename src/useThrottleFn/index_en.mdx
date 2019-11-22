@@ -1,0 +1,71 @@
+---
+name: useThrottleFn
+route: /useThrottleFn
+menu: 'SideEffect'
+edit: false
+sidebar: true
+---
+import JackBox from 'jackbox';
+
+import Demo1 from './demo/demo1';
+import Demo1CodeTsx from '!raw-loader!./demo/demo1.tsx';
+import Demo1CodeJsx from '!raw-loader!./demo/demo1.jsx';
+import Demo2 from './demo/demo2';
+import Demo2CodeTsx from '!raw-loader!./demo/demo2.tsx';
+import Demo2CodeJsx from '!raw-loader!./demo/demo2.jsx';
+
+# useThrottleFn
+
+A Hook that handles function throttling.
+
+## Examples
+
+### Default usage
+
+<JackBox jsCode={Demo1CodeJsx} tsCode={Demo1CodeTsx} demoName='Default usage' description='Frequent calls run, but the function is only executed every 500ms.'>
+  <Demo1 />
+</JackBox>
+
+### Using deps properly
+
+<JackBox jsCode={Demo2CodeJsx} tsCode={Demo2CodeTsx} demoName='Using deps properly' description='
+Use deps can achieve the same effect as run. If the deps changes, the function will be executed oevery 1000ms.'>
+  <Demo2 />
+</JackBox>
+
+## API
+
+```javascript
+const {
+  run,
+  cancel
+} = useThrottleFn(
+  fn: (...args: any[]) => any,
+  wait: number
+);
+
+const {
+  run,
+  cancel
+} = useThrottleFn(
+  fn: (...args: any[]) => any,
+  deps: any[],
+  wait: number
+);
+```
+
+### Result
+
+| Property | Description                               | Type                    |
+|----------|-------------------------------------------|-------------------------|
+| run      | trigger fn, parameters will be send to fn | (...args: any[]) => any |
+| cancel   | cancel current throttle                   | () => void              |
+
+### Params
+
+| Property | Description                                                                  | Type                    | Default |
+|----------|------------------------------------------------------------------------------|-------------------------|---------|
+| fn       | function that requires throttle                                              | (...args: any[]) => any | -       |
+| deps     | dependent array, if the array changes, it will trigger fn throttling after throttling | any[]                   | -       |
+| wait     | Throttling interval in milliseconds
+                                                    | number                  | 1000    |
