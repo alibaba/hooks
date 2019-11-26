@@ -27,8 +27,10 @@ const queryData = ({ current, pageSize, gender }: FnParams) =>
 
 export default () => {
   const [gender, setGender] = useState();
-  const { data, loading, pagination } = usePagination<Result, Item>(queryData, [gender]);
-
+  const { data, loading, pagination } = usePagination<Result, Item>(
+    params => queryData({ ...params, gender }),
+    [gender],
+  );
   return (
     <>
       <Select
