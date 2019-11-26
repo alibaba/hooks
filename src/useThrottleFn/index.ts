@@ -50,6 +50,7 @@ function useThrottleFn<T extends any[]>(
 
   useUpdateEffect(() => {
     run();
+    return cancel;
   }, [..._deps, run]);
 
   useEffect(() => cancel, []);
