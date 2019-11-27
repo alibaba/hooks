@@ -90,10 +90,10 @@ function usePagination<Result, Item>(
         ? formatResult(res)
         : ((res as unknown) as FormattedResult<Item>);
       if (formattedResult) {
-        if (formattedResult.total) setTotal(formattedResult.total);
+        if (typeof formattedResult.total === 'number') setTotal(formattedResult.total);
         if (formattedResult.data) setData(formattedResult.data);
-        if (formattedResult.current) setCurrent(formattedResult.current);
-        if (formattedResult.pageSize) setPageSize(formattedResult.pageSize);
+        if (typeof formattedResult.current === 'number') setCurrent(formattedResult.current);
+        if (typeof formattedResult.pageSize === 'number') setPageSize(formattedResult.pageSize);
       }
     });
   }, [current, pageSize, count]);
