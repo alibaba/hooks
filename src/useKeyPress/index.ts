@@ -57,6 +57,17 @@ function isType(obj: any) {
 }
 
 /**
+ * 字符串转数字，如果失败则返回字符串
+ * @param [val: string] 字符串参数
+ * @returns Boolean
+ */
+function toNumber(val: string) {
+  const n = parseFloat(val);
+  // eslint-disable-next-line no-restricted-globals
+  return isNaN(n) ? val : n;
+}
+
+/**
  * 判断按键是否激活
  * @param [event: KeyboardEvent]键盘事件
  * @param [keyFilter: any] 当前键
@@ -94,7 +105,7 @@ function genFilterKey(event: any, keyFilter: any) {
         ? aliasKeyCode.includes(event.keyCode)
         : aliasKeyCode === event.keyCode) ||
       event.key.toUpperCase() === key.toUpperCase() ||
-      event.keyCode === Number(key)
+      event.keyCode === toNumber(key)
     ) {
       genLen++;
     }
