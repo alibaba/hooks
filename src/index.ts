@@ -25,6 +25,7 @@ import usePrevious from './usePrevious';
 import useMouse from './useMouse';
 import useScroll from './useScroll';
 import useClickAway from './useClickAway';
+import useKeyPress from './useKeyPress';
 
 const useControlledValue: typeof useControllableValue = function (...args) {
   console.warn(
@@ -64,4 +65,5 @@ export {
   useMouse,
   useScroll,
   useClickAway,
+  useKeyPress,
 };

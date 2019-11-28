@@ -1,10 +1,10 @@
 import { useEffect, useCallback } from 'react';
 
-type KeyPredicate = (event: KeyboardEvent) => boolean;
-type keyType = KeyboardEvent['keyCode'] | KeyboardEvent['key'];
-type KeyFilter = keyType | Array<keyType> | ((event: KeyboardEvent) => boolean);
-type EventHandler = (event: KeyboardEvent) => void;
-type keyEvent = 'keydown' | 'keyup';
+export type KeyPredicate = (event: KeyboardEvent) => boolean;
+export type keyType = KeyboardEvent['keyCode'] | KeyboardEvent['key'];
+export type KeyFilter = keyType | Array<keyType> | ((event: KeyboardEvent) => boolean);
+export type EventHandler = (event: KeyboardEvent) => void;
+export type keyEvent = 'keydown' | 'keyup';
 
 // 键盘事件 keyCode 别名
 const aliasKeyCodeMap: any = {
