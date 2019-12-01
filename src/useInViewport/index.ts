@@ -9,7 +9,7 @@ function useInViewport<T extends HTMLElement = HTMLElement>(): [InViewport, Muta
 function useInViewport<T extends HTMLElement = HTMLElement>(arg: Arg): [InViewport];
 function useInViewport<T extends HTMLElement = HTMLElement>(
   ...args: [Arg] | []
-): [boolean, MutableRefObject<T>?] {
+): [InViewport, MutableRefObject<T>?] {
   const [inViewPort, setInViewport] = useState<InViewport>(undefined);
   const element = useRef<T>();
   const hasPassedInElement = args.length === 1;
