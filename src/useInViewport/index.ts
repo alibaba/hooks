@@ -3,13 +3,14 @@ import { useRef, useLayoutEffect, useState, MutableRefObject } from 'react';
 require('intersection-observer');
 
 type Arg = HTMLElement | (() => HTMLElement) | null;
+type InViewport = boolean | undefined;
 
-function useInViewport<T extends HTMLElement = HTMLElement>(): [boolean, MutableRefObject<T>];
-function useInViewport<T extends HTMLElement = HTMLElement>(arg: Arg): [boolean];
+function useInViewport<T extends HTMLElement = HTMLElement>(): [InViewport, MutableRefObject<T>];
+function useInViewport<T extends HTMLElement = HTMLElement>(arg: Arg): [InViewport];
 function useInViewport<T extends HTMLElement = HTMLElement>(
   ...args: [Arg] | []
 ): [boolean, MutableRefObject<T>?] {
-  const [inViewPort, setInViewport] = useState<boolean>(false);
+  const [inViewPort, setInViewport] = useState<InViewport>(undefined);
   const element = useRef<T>();
   const hasPassedInElement = args.length === 1;
   const arg = args[0];
