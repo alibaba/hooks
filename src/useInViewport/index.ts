@@ -5,18 +5,33 @@ require('intersection-observer');
 type Arg = HTMLElement | (() => HTMLElement) | null;
 type InViewport = boolean | undefined;
 
+function isInViewPort (el: HTMLElement): boolean {
+  if (!el) {
+    return false;
+  }
+
+  const viewPortHeight = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight
+  const top = el.getBoundingClientRect() && el.getBoundingClientRect().top
+  return top <= viewPortHeight
+}
+
 function useInViewport<T extends HTMLElement = HTMLElement>(): [InViewport, MutableRefObject<T>];
 function useInViewport<T extends HTMLElement = HTMLElement>(arg: Arg): [InViewport];
 function useInViewport<T extends HTMLElement = HTMLElement>(
   ...args: [Arg] | []
 ): [InViewport, MutableRefObject<T>?] {
-  const [inViewPort, setInViewport] = useState<InViewport>(undefined);
   const element = useRef<T>();
   const hasPassedInElement = args.length === 1;
-  const arg = args[0];
+  const arg = useRef(args[0]);
+  [arg.current] = args;
+  const [inViewPort, setInViewport] = useState<InViewport>(() => {
+    const initDOM = typeof arg.current === 'function' ? arg.current() : arg.current;
+
+    return isInViewPort(initDOM as HTMLElement);
+  });
 
   useLayoutEffect(() => {
-    const passedInElement = typeof arg === 'function' ? arg() : arg;
+    const passedInElement = typeof arg.current === 'function' ? arg.current() : arg.current;
 
     const targetElement = hasPassedInElement ? passedInElement : element.current;
 
@@ -39,7 +54,7 @@ function useInViewport<T extends HTMLElement = HTMLElement>(
     return () => {
       observer.disconnect();
     };
-  }, [element.current, typeof arg === 'function' ? undefined : arg]);
+  }, [element.current, typeof arg.current === 'function' ? undefined : arg.current]);
 
   if (hasPassedInElement) {
     return [inViewPort];
