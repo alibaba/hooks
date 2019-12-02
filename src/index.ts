@@ -24,6 +24,7 @@ import useDebounceFn from './useDebounceFn';
 import usePrevious from './usePrevious';
 import useMouse from './useMouse';
 import useClickAway from './useClickAway';
+import useFullscreen from './useFullscreen';
 
 const useControlledValue: typeof useControllableValue = function (...args) {
   console.warn(
@@ -62,4 +63,5 @@ export {
   usePrevious,
   useMouse,
   useClickAway,
+  useFullscreen,
 };

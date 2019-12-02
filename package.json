@@ -41,7 +41,8 @@
   ],
   "dependencies": {
     "lodash.isequal": "^4.5.0",
-    "resize-observer-polyfill": "^1.5.1"
+    "resize-observer-polyfill": "^1.5.1",
+    "screenfull": "^5.0.0"
   },
   "peerDependencies": {
     "antd": "^3.20.1",
