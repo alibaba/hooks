@@ -3,21 +3,27 @@ import ResizeObserver from 'resize-observer-polyfill';
 
 type Arg = HTMLElement | (() => HTMLElement) | null;
 
-type Size = { width: number; height: number };
+type Size = { width?: number; height?: number };
 
 function useSize<T extends HTMLElement = HTMLElement>(): [Size, MutableRefObject<T>];
 function useSize<T extends HTMLElement = HTMLElement>(arg: Arg): [Size];
 function useSize<T extends HTMLElement = HTMLElement>(
   ...args: [Arg] | []
 ): [Size, MutableRefObject<T>?] {
-  const element = useRef<T>();
-  const [state, setState] = useState<Size>({ width: 0, height: 0 });
   const hasPassedInElement = args.length === 1;
-  const arg = args[0];
+  const arg = useRef(args[0]);
+  [arg.current] = args;
+  const element = useRef<T>();
+  const [state, setState] = useState<Size>(() => {
+    const initDOM = typeof arg.current === 'function' ? arg.current() : arg.current;
+    return {
+      width: (initDOM || {}).clientWidth,
+      height: (initDOM || {}).clientHeight,
+    };
+  });
 
   useLayoutEffect(() => {
-    const passedInElement = typeof arg === 'function' ? arg() : arg;
-
+    const passedInElement = typeof arg.current === 'function' ? arg.current() : arg.current;
     const targetElement = hasPassedInElement ? passedInElement : element.current;
     if (!targetElement) {
       return () => {};
@@ -36,7 +42,7 @@ function useSize<T extends HTMLElement = HTMLElement>(
     return () => {
       resizeObserver.disconnect();
     };
-  }, [element.current, typeof arg === 'function' ? undefined : arg]);
+  }, [element.current, typeof arg.current === 'function' ? undefined : arg.current]);
 
   if (hasPassedInElement) {
     return [state];
