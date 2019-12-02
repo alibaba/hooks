@@ -17,6 +17,9 @@ import Demo2CodeJsx from '!raw-loader!./demo/demo2.jsx';
 import Demo3 from './demo/demo3';
 import Demo3CodeTsx from '!raw-loader!./demo/demo3.tsx';
 import Demo3CodeJsx from '!raw-loader!./demo/demo3.jsx';
+import Demo4 from './demo/demo4';
+import Demo4CodeTsx from '!raw-loader!./demo/demo4.tsx';
+import Demo4CodeJsx from '!raw-loader!./demo/demo4.jsx';
 
 # useKeyPress
 
@@ -24,32 +27,36 @@ import Demo3CodeJsx from '!raw-loader!./demo/demo3.jsx';
 
 ## 代码演示
 
-<JackBox jsCode={Demo1CodeJsx} tsCode={Demo1CodeTsx} demoName='基础使用' description='请按 ArrowUp 或 ArrowDown 键进行演示。'>
+<JackBox jsCode={Demo1CodeJsx} tsCode={Demo1CodeTsx} demoName='基础使用' description='支持键盘事件中的 key 和 keyCode，请按 ArrowUp 或 ArrowDown 键进行演示。'>
   <Demo1 />
 </JackBox>
 
-<JackBox jsCode={Demo2CodeJsx} tsCode={Demo2CodeTsx} demoName='组合方式' description={
+<JackBox jsCode={Demo2CodeJsx} tsCode={Demo2CodeTsx} demoName='使用别名'
+description={
   <div>
-    支持接收一组输入键，或以组合键的方式传递参数。<br />
-    请注意：组合键方式只支持使用修饰键 
-    <Tag color="cyan" style={{ marginLeft: 8 }}>.ctrl</Tag>
-    <Tag color="blue">.alt</Tag>
-    <Tag color="red">.shift</Tag>
-    <Tag color="orange">.meta</Tag>
-    ，更多内容请<a href='#备注'>查看备注</a> 。
+    支持使用别名，更多内容请<a href='#备注'>查看备注</a> 。
   </div>
 }>
   <Demo2 />
 </JackBox>
 
-<JackBox jsCode={Demo3CodeJsx} tsCode={Demo3CodeTsx} demoName='进阶使用'
-description={
+<JackBox jsCode={Demo3CodeJsx} tsCode={Demo3CodeTsx} demoName='组合方式' description={
   <div>
-    支持接收一个返回 boolean 的回调函数，处理预处理操作。<br />
-    配合第三个参数可以阻止原生事件，默认处理事件为 keydown
+    支持接收一组输入键，或以组合键的方式传递参数。<br />
+    请注意：组合键方式只支持使用修饰键 + 键位别名 + 键盘事件中的 key 进行组合，更多内容请<a href='#备注'>查看备注</a> 。
   </div>
 }>
   <Demo3 />
+</JackBox>
+
+<JackBox jsCode={Demo4CodeJsx} tsCode={Demo4CodeTsx} demoName='进阶使用'
+description={
+  <div>
+    支持接收一个返回 boolean 的回调函数，处理预处理操作。<br />
+    配合第三个参数使用 keyup 处理并阻止原生事件，默认处理事件为 keydown
+  </div>
+}>
+  <Demo4 />
 </JackBox>
 
 ## API

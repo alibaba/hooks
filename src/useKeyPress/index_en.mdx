@@ -17,6 +17,9 @@ import Demo2CodeJsx from '!raw-loader!./demo/demo2.jsx';
 import Demo3 from './demo/demo3';
 import Demo3CodeTsx from '!raw-loader!./demo/demo3.tsx';
 import Demo3CodeJsx from '!raw-loader!./demo/demo3.jsx';
+import Demo4 from './demo/demo4';
+import Demo4CodeTsx from '!raw-loader!./demo/demo4.tsx';
+import Demo4CodeJsx from '!raw-loader!./demo/demo4.jsx';
 
 # useKeyPress
 
@@ -24,32 +27,36 @@ A hook that elegantly manages KeyboardEvent of keyup adn keydown, Keyboard key c
 
 ## Examples
 
-<JackBox jsCode={Demo1CodeJsx} tsCode={Demo1CodeTsx} demoName='Basic usage' description='Pressing ArrowUp or ArrowDown to show effect.'>
+<JackBox jsCode={Demo1CodeJsx} tsCode={Demo1CodeTsx} demoName='Basic usage' description='Supported Key and keyCode in keyboard events, pressing ArrowUp or ArrowDown to show effect.'>
   <Demo1 />
 </JackBox>
 
-<JackBox jsCode={Demo2CodeJsx} tsCode={Demo2CodeTsx} demoName='Compound mode' description={
+<JackBox jsCode={Demo2CodeJsx} tsCode={Demo2CodeTsx} demoName='Use key aliases'
+description={
   <div>
-    Support for receiving a set of input keys or passing parameters as a combination of keys.<br />
-    Attention：Key combination only supports the use of decorated keys
-    <Tag color="cyan" style={{ marginLeft: 8 }}>.ctrl</Tag>
-    <Tag color="blue">.alt</Tag>
-    <Tag color="red">.shift</Tag>
-    <Tag color="orange">.meta</Tag>
-    , <a href='#remarks'>See detail</a> 。
+    Supported for aliases, <a href='#remarks'>See detail</a> 。
   </div>
 }>
   <Demo2 />
 </JackBox>
 
-<JackBox jsCode={Demo3CodeJsx} tsCode={Demo3CodeTsx} demoName='Advanced'
-description={
+<JackBox jsCode={Demo3CodeJsx} tsCode={Demo3CodeTsx} demoName='Compound mode' description={
   <div>
-    Supports receiving a Boolean callback function to handle preprocessing operations.<br />
-    With the third parameter, the native event is blocked, and the default processing event is keydown
+    Support for receiving a set of input keys or passing parameters as a combination of keys.<br />
+    Attention：Key combination only supports the use of modified key + key alias + key in keyboard events, <a href='#remarks'>See detail</a> 。
   </div>
 }>
   <Demo3 />
+</JackBox>
+
+<JackBox jsCode={Demo4CodeJsx} tsCode={Demo4CodeTsx} demoName='Advanced'
+description={
+  <div>
+    Supports receiving a Boolean callback function to handle preprocessing operations.<br />
+    Use keyup with the third parameter to handle and block native events. The default processing event is keydown
+  </div>
+}>
+  <Demo4 />
 </JackBox>
 
 ## API

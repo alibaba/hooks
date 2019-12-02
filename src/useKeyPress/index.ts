@@ -1,4 +1,4 @@
-import { useEffect, useCallback } from 'react';
+import { useEffect, useCallback, useRef } from 'react';
 
 export type KeyPredicate = (event: KeyboardEvent) => boolean;
 export type keyType = KeyboardEvent['keyCode'] | KeyboardEvent['key'];
@@ -127,14 +127,16 @@ function useKeyPress(
   eventHandler: EventHandler = noop,
   events: Array<keyEvent> = defaultEvents,
 ) {
+  const callbackRef = useRef(eventHandler);
+  callbackRef.current = eventHandler;
   const callbackHandler: EventHandler = useCallback(
     (event: KeyboardEvent) => {
       const genGuard: KeyPredicate = genKeyFormater(keyFilter);
       if (genGuard(event)) {
-        return eventHandler(event);
+        return callbackRef.current(event);
       }
     },
-    [eventHandler],
+    [keyFilter],
   );
 
   useEffect(() => {

@@ -8,7 +8,7 @@ export default () => {
     setCounter(s => s + 1);
   });
 
-  // 此处为 ArrowDown 的 keyCode 值
+  // keyCode value for ArrowDown
   useKeyPress(40, event => {
     setCounter(s => s - 1);
   });
