@@ -1,0 +1,103 @@
+---
+name: useKeyPress
+route: /useKeyPress
+menu: 'Other'
+edit: false
+sidebar: true
+---
+import JackBox from 'jackbox';
+import { Tag } from 'antd';
+
+import Demo1 from './demo/demo1';
+import Demo1CodeTsx from '!raw-loader!./demo/demo1.tsx';
+import Demo1CodeJsx from '!raw-loader!./demo/demo1.jsx';
+import Demo2 from './demo/demo2';
+import Demo2CodeTsx from '!raw-loader!./demo/demo2.tsx';
+import Demo2CodeJsx from '!raw-loader!./demo/demo2.jsx';
+import Demo3 from './demo/demo3';
+import Demo3CodeTsx from '!raw-loader!./demo/demo3.tsx';
+import Demo3CodeJsx from '!raw-loader!./demo/demo3.jsx';
+import Demo4 from './demo/demo4';
+import Demo4CodeTsx from '!raw-loader!./demo/demo4.tsx';
+import Demo4CodeJsx from '!raw-loader!./demo/demo4.jsx';
+
+# useKeyPress
+
+A hook that elegantly manages KeyboardEvent of keyup adn keydown, Keyboard key combinations are supported to define key and keyCode alias input for keyboard events.
+
+## Examples
+
+<JackBox jsCode={Demo1CodeJsx} tsCode={Demo1CodeTsx} demoName='Basic usage' description='Supported Key and keyCode in keyboard events, pressing ArrowUp or ArrowDown to show effect.'>
+  <Demo1 />
+</JackBox>
+
+<JackBox jsCode={Demo2CodeJsx} tsCode={Demo2CodeTsx} demoName='Use key aliases'
+description={
+  <div>
+    Supported for aliases, <a href='#remarks'>See detail</a> 。
+  </div>
+}>
+  <Demo2 />
+</JackBox>
+
+<JackBox jsCode={Demo3CodeJsx} tsCode={Demo3CodeTsx} demoName='Compound mode' description={
+  <div>
+    Support for receiving a set of input keys or passing parameters as a combination of keys.<br />
+    Attention：Key combination only supports the use of modified key + key alias + key in keyboard events, <a href='#remarks'>See detail</a> 。
+  </div>
+}>
+  <Demo3 />
+</JackBox>
+
+<JackBox jsCode={Demo4CodeJsx} tsCode={Demo4CodeTsx} demoName='Advanced'
+description={
+  <div>
+    Supports receiving a Boolean callback function to handle preprocessing operations.<br />
+    Use keyup with the third parameter to handle and block native events. The default processing event is keydown
+  </div>
+}>
+  <Demo4 />
+</JackBox>
+
+## API
+
+```javascript
+useKeyPress(
+  keyFilter: KeyFilter, 
+  eventHandler: EventHandler = noop, 
+  events: Array<keyEvent> = defaultEvents
+)
+```
+
+### Params
+
+> Tips: keyType is the key or keyCode of KeyboardEvent.
+
+| Property | Description                                                        | Type                   | Default |
+|---------|----------------------------------------------|------------------------|--------|
+| keyFilter | Support for key and keyCode in keyboard events,function that return Boolean, key aliases  | keyType \| Array<keyType\> \| ((event: KeyboardEvent) => boolean) | -      |
+| eventHandler | Callback Function  | (event: KeyboardEvent) => void | () => {}      |
+| events | Trigger Events  |  Array<keydown \| keyup\> | ['keydown']     |
+
+## Remarks
+
+1.All key aliases
+```javascript
+enter
+tab
+delete ('Backspace', 'Delete')
+esc
+space
+up
+down
+left
+right
+```
+
+2.Modifier keys
+```javascript
+ctrl
+alt
+shift
+meta
+```
