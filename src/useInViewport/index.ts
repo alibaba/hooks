@@ -10,9 +10,10 @@ function isInViewPort (el: HTMLElement): boolean {
     return false;
   }
 
-  const viewPortHeight = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight
-  const top = el.getBoundingClientRect() && el.getBoundingClientRect().top
-  return top <= viewPortHeight
+  const viewPortHeight = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight 
+  const top = el.getBoundingClientRect() && el.getBoundingClientRect().top;
+  const scrollTop = document.documentElement.scrollTop;
+  return top >= scrollTop && top <= viewPortHeight + scrollTop;
 }
 
 function useInViewport<T extends HTMLElement = HTMLElement>(): [InViewport, MutableRefObject<T>];
