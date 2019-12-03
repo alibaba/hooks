@@ -10,11 +10,16 @@ function isInViewPort (el: HTMLElement): boolean {
     return false;
   }
 
-  const viewPortHeight = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight 
+  const viewPortWidth = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+  const viewPortHeight = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
   const rect = el.getBoundingClientRect();
-  const top = rect && rect.top;
-  const bottom = rect && rect.bottom;
-  return bottom > 0 && top <= viewPortHeight;
+
+  if (rect) {
+    const { top, bottom, left, right } = rect;
+    return bottom > 0 && top <= viewPortHeight && left <= viewPortWidth && right > 0;
+  }
+
+  return false;
 }
 
 function useInViewport<T extends HTMLElement = HTMLElement>(): [InViewport, MutableRefObject<T>];
