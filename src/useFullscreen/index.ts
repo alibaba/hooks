@@ -14,6 +14,7 @@ export interface Result<T> {
   isFullscreen: boolean;
   setFull: () => void;
   exitFull: () => void;
+  toggleFull: () => void;
   ref?: MutableRefObject<T>;
 }
 
@@ -80,10 +81,13 @@ export default <T extends HTMLElement = HTMLElement>(options?: Options<T>): Resu
     };
   }, [state, typeof dom === 'function' ? undefined : dom]);
 
+  const toggleFull = () => toggle();
+
   const result: Result<T> = {
     isFullscreen: !!state,
     setFull: setTrue,
     exitFull: setFalse,
+    toggleFull,
   };
 
   if (!dom) {
