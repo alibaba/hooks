@@ -7,6 +7,7 @@ module.exports = {
     "no-restricted-syntax": "off",
     "no-plusplus": "off",
     "no-underscore-dangle": "off",
+    "consistent-return": "off",
     "@typescript-eslint/ban-ts-ignore": "off",
     "@typescript-eslint/no-object-literal-type-assertion": "off",
     "consistent-return": "off",

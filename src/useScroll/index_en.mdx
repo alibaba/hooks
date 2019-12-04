@@ -1,0 +1,47 @@
+---
+name: useScroll
+route: /useScroll
+menu: 'Other'
+edit: false
+sidebar: true
+---
+
+import JackBox from 'jackbox';
+
+import Demo1 from './demo/demo1';
+import Demo1CodeTsx from '!raw-loader!./demo/demo1.tsx';
+import Demo1CodeJsx from '!raw-loader!./demo/demo1.jsx';
+
+# useScroll
+
+Get the scroll position of an element.
+
+
+## Examples
+
+<JackBox jsCode={Demo1CodeJsx} tsCode={Demo1CodeTsx} demoName='Basic Usage' description='Try to scroll the box below.'>
+  <Demo1 />
+</JackBox>
+
+## API
+```
+interface Position {
+  left: number;
+  top: number;
+}
+function useScroll<T extends HTMLElement = HTMLElement>(): [Position, MutableRefObject<T>]
+function useScroll<T extends HTMLElement = HTMLElement>(arg: HTMLElement | (() => HTMLElement)): [Position]
+```
+
+### Result
+
+| Property | Description                                                       | Type                 |
+|------|----------|------|
+| position | The current scroll position of the element. | `{x: number, y: number}`  |
+| ref | When no param is passed, this ref will be listened | `RefObject<HTMLElement>` |
+
+### Params
+
+| Property | Description                                                        | Type                   | Default |
+|---------|----------------------------------------------|------------------------|--------|
+| dom? | optional, if none is passed, this hook will subscibe to the ref that it returns  | HTMLElement \| (() => HTMLElement) \| undefined | -      |
