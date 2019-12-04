@@ -9,5 +9,6 @@ module.exports = {
     "no-underscore-dangle": "off",
     "@typescript-eslint/ban-ts-ignore": "off",
     "@typescript-eslint/no-object-literal-type-assertion": "off",
+    "consistent-return": "off",
   }
 };

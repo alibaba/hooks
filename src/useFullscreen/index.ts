@@ -1,5 +1,8 @@
-import { MutableRefObject, useCallback, useEffect, useRef, useState } from 'react';
+/* eslint no-empty: 0 */
+
+import { MutableRefObject, useLayoutEffect, useRef } from 'react';
 import screenfull from 'screenfull';
+import useBoolean from '../useBoolean';
 
 export interface Options<T> {
   dom?: T | (() => T) | null;
@@ -25,58 +28,62 @@ export default <T extends HTMLElement = HTMLElement>(options?: Options<T>): Resu
 
   const element = useRef<T>();
 
-  const [state, setState] = useState(false);
+  const { state, toggle, setTrue, setFalse } = useBoolean(false);
 
-  const onChange = useCallback(() => {
-    if (screenfull.isEnabled) {
-      const { isFullscreen } = screenfull;
-      setState(isFullscreen);
-      if (isFullscreen && onFullRef.current) {
-        onFullRef.current();
-      }
-      if (!isFullscreen && onExitFullRef.current) {
-        onExitFullRef.current();
-      }
+  useLayoutEffect(() => {
+    /* 非全屏时，不需要监听任何全屏事件 */
+    if (!state) {
+      return;
     }
-  }, []);
 
-  useEffect(() => {
-    if (screenfull.isEnabled) {
-      screenfull.on('change', onChange);
+    const passedInElement = typeof dom === 'function' ? dom() : dom;
+    const targetElement = passedInElement || element.current;
+    if (!targetElement) {
+      return;
     }
-    return () => {
+
+    /* 监听退出 */
+    const onChange = () => {
       if (screenfull.isEnabled) {
-        screenfull.off('change', onChange);
+        const { isFullscreen } = screenfull;
+        toggle(isFullscreen);
       }
     };
-  }, [onChange]);
 
-  const setFull = useCallback(() => {
-    const passedInElement = typeof dom === 'function' ? dom() : dom;
-    const targetElement = passedInElement || element.current;
-    if (!targetElement) {
-      return;
-    }
     if (screenfull.isEnabled) {
-      screenfull.request(targetElement);
+      try {
+        screenfull.request(targetElement);
+        setTrue();
+        if (onFullRef.current) {
+          onFullRef.current();
+        }
+      } catch (error) {
+        setFalse();
+        if (onExitFullRef.current) {
+          onExitFullRef.current();
+        }
+      }
+      screenfull.on('change', onChange);
     }
-  }, [typeof dom === 'function' ? undefined : dom]);
 
-  const exitFull = useCallback(() => {
-    const passedInElement = typeof dom === 'function' ? dom() : dom;
-    const targetElement = passedInElement || element.current;
-    if (!targetElement) {
-      return;
-    }
-    if (screenfull.isEnabled) {
-      screenfull.exit();
-    }
-  }, [typeof dom === 'function' ? undefined : dom]);
+    /* state 从 true 变为 false，则关闭全屏 */
+    return () => {
+      if (screenfull.isEnabled) {
+        try {
+          screenfull.off('change', onChange);
+          screenfull.exit();
+        } catch (error) {}
+      }
+      if (onExitFullRef.current) {
+        onExitFullRef.current();
+      }
+    };
+  }, [state, typeof dom === 'function' ? undefined : dom]);
 
   const result: Result<T> = {
-    isFullscreen: state,
-    setFull,
-    exitFull,
+    isFullscreen: !!state,
+    setFull: setTrue,
+    exitFull: setFalse,
   };
 
   if (!dom) {
