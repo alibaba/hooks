@@ -15,5 +15,6 @@ describe('useInViewport', () => {
     const hook = renderHook(() => useInViewport<HTMLBodyElement>(document.body));
     expect(hook.result.current.length).toEqual(1);
     // expect(hook.result.current[0]).toEqual(true);
+    expect(hook.result.current[0]).toEqual(false);
   });
 });
