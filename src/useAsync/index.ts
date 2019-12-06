@@ -94,6 +94,13 @@ function useAsync<Result = any>(
   const count = useRef(0);
   const fnRef = useRef(fn);
   fnRef.current = fn;
+
+  const onSuccessRef = useRef(_options.onSuccess);
+  onSuccessRef.current = _options.onSuccess;
+
+  const onErrorRef = useRef(_options.onError);
+  onErrorRef.current = _options.onError;
+
   // initial loading state is related to manual option
   const [state, set] = useState({
     data: undefined as (Result | undefined),
@@ -112,8 +119,8 @@ function useAsync<Result = any>(
       .then(data => {
         if (runCount === count.current) {
           set(s => ({ ...s, data, loading: false }));
-          if (_options.onSuccess) {
-            _options.onSuccess(data, args || []);
+          if (onSuccessRef.current) {
+            onSuccessRef.current(data, args || []);
           }
         }
         return data;
@@ -121,8 +128,8 @@ function useAsync<Result = any>(
       .catch(error => {
         if (runCount === count.current) {
           set(s => ({ ...s, error, loading: false }));
-          if (_options.onError) {
-            _options.onError(error, args || []);
+          if (onErrorRef.current) {
+            onErrorRef.current(error, args || []);
           }
         }
         throw error;

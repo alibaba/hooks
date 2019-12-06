@@ -12,7 +12,9 @@ const queryData = ({ current, pageSize, gender }) =>
 
 export default () => {
   const [gender, setGender] = useState();
-  const { data, loading, pagination } = usePagination(queryData, [gender]);
+  const { data, loading, pagination } = usePagination(params => queryData({ ...params, gender }), [
+    gender,
+  ]);
   return (
     <>
       <Select

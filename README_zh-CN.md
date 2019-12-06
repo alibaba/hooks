@@ -6,6 +6,11 @@ React Hooks Library.
 
 [![NPM version][image-1]][1] [![NPM downloads][image-2]][2]
 
+## 📚 文档
+
+* [English](https://hooks.umijs.org/)
+* [中文](https://hooks.umijs.org/zh-cn/)
+
 ## ✨ 特性
 
 * 易学易用
