@@ -20,6 +20,9 @@ import Demo3CodeJsx from '!raw-loader!./demo/demo3.jsx';
 import Demo4 from './demo/demo4';
 import Demo4CodeTsx from '!raw-loader!./demo/demo4.tsx';
 import Demo4CodeJsx from '!raw-loader!./demo/demo4.jsx';
+import Demo5 from './demo/demo5';
+import Demo5CodeTsx from '!raw-loader!./demo/demo5.tsx';
+import Demo5CodeJsx from '!raw-loader!./demo/demo5.jsx';
 
 # useKeyPress
 
@@ -52,22 +55,37 @@ description={
 <JackBox jsCode={Demo4CodeJsx} tsCode={Demo4CodeTsx} demoName='进阶使用'
 description={
   <div>
-    支持接收一个返回 boolean 的回调函数，处理预处理操作。<br />
-    配合第三个参数使用 keyup 处理并阻止原生事件，默认处理事件为 keydown
+    支持接收一个返回 boolean 的回调函数，处理预处理操作。
   </div>
 }>
   <Demo4 />
 </JackBox>
 
+<JackBox jsCode={Demo5CodeJsx} tsCode={Demo5CodeTsx} demoName='自定义 DOM'
+description={
+  <div>
+    默认监听挂载在 window 上的事件，你也可以传入 DOM 对象或通过 function 返回一个对象的方式引入。<br />
+    如常见的监听输入框事件，支持多种 DOM 回调。
+  </div>
+}>
+  <Demo5 />
+</JackBox>
+
 ## API
 
 ```javascript
-useKeyPress(
+const ref = useKeyPress(
   keyFilter: KeyFilter, 
   eventHandler: EventHandler = noop, 
-  events: Array<keyEvent> = defaultEvents
+  options?: Options
 )
 ```
+
+### Result
+
+| 参数     | 说明                                     | 类型       |
+|----------|------------------------------------------|------------|
+| ref     | 当未传入任何 target 时，将 ref 绑定给需监听的节点      | -        |
 
 ### 参数
 
@@ -77,7 +95,14 @@ useKeyPress(
 |---------|----------------------------------------------|------------------------|--------|
 | keyFilter | 支持键盘事件中的 key 和 keyCode，支持回调方式返回 boolean 判断，支持别名使用  | keyType \| Array<keyType\> \| ((event: KeyboardEvent) => boolean) | -      |
 | eventHandler | 事件回调函数  | (event: KeyboardEvent) => void | () => {}      |
+| options | 可选配置项，见 Options | -                | -              |   |
+
+### Options
+
+| 参数            | 说明                                                   | 类型                              | 默认值 |
+|-----------------|--------------------------------------------------------|-----------------------------------|--------|
 | events | 触发事件  |  Array<keydown \| keyup\> | ['keydown']     |
+| target? | Optional, listens for ref in returned results if not passed in, otherwise listens for incoming nodes, and listens for window by default  | window \| HTMLElement \| (() => HTMLElement) \| undefined | window     |
 
 ## 备注
 
