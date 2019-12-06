@@ -20,6 +20,9 @@ import Demo3CodeJsx from '!raw-loader!./demo/demo3.jsx';
 import Demo4 from './demo/demo4';
 import Demo4CodeTsx from '!raw-loader!./demo/demo4.tsx';
 import Demo4CodeJsx from '!raw-loader!./demo/demo4.jsx';
+import Demo5 from './demo/demo5';
+import Demo5CodeTsx from '!raw-loader!./demo/demo5.tsx';
+import Demo5CodeJsx from '!raw-loader!./demo/demo5.jsx';
 
 # useKeyPress
 
@@ -52,22 +55,37 @@ description={
 <JackBox jsCode={Demo4CodeJsx} tsCode={Demo4CodeTsx} demoName='Advanced'
 description={
   <div>
-    Supports receiving a Boolean callback function to handle preprocessing operations.<br />
-    Use keyup with the third parameter to handle and block native events. The default processing event is keydown
+    Supports receiving a Boolean callback function to handle preprocessing operations.
   </div>
 }>
   <Demo4 />
 </JackBox>
 
+<JackBox jsCode={Demo5CodeJsx} tsCode={Demo5CodeTsx} demoName='Custom DOM'
+description={
+  <div>
+    By default, you listen for events that are mounted on the window. You can also pass in a DOM object or return an object via function.<br />
+    Supports multiple DOM callbacks, such as the common listening for input box events.
+  </div>
+}>
+  <Demo5 />
+</JackBox>
+
 ## API
 
 ```javascript
-useKeyPress(
+const ref = useKeyPress(
   keyFilter: KeyFilter, 
   eventHandler: EventHandler = noop, 
-  events: Array<keyEvent> = defaultEvents
+  options?: Options
 )
 ```
+
+### Result
+
+| Property | Description                                         | Type                 |
+|----------|------------------------------------------|------------|
+| ref     | when no target is passed, this ref will be listened     | -        |
 
 ### Params
 
@@ -77,7 +95,14 @@ useKeyPress(
 |---------|----------------------------------------------|------------------------|--------|
 | keyFilter | Support for key and keyCode in keyboard events,function that return Boolean, key aliases  | keyType \| Array<keyType\> \| ((event: KeyboardEvent) => boolean) | -      |
 | eventHandler | Callback Function  | (event: KeyboardEvent) => void | () => {}      |
+| options | advanced options，see Options below | -              | -              |   |
+
+### Options
+
+| Property | Description                                                        | Type                   | Default |
+|-----------------|--------------------------------------------------------|---------|--------|
 | events | Trigger Events  |  Array<keydown \| keyup\> | ['keydown']     |
+| target | optional, if none is passed, this hook will subscibe to the dom that it returns  | window \| HTMLElement \| (() => HTMLElement) \| undefined | window     |
 
 ## Remarks
 
