@@ -98,8 +98,8 @@ function usePaginated<R, Item, U extends Item = any>(
   const changeTable = useCallback(
     (
       p: PaginationConfig,
-      f?: Record<keyof Item, string[]>,
-      s?: SorterResult<Item>,
+      f?: Record<keyof U, string[]>,
+      s?: SorterResult<U>,
     ) => {
       // antd table 的初始状态 filter 带有 null 字段，需要先去除后再比较
       const realFilter = { ...f };
