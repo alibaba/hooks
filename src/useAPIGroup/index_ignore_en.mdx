@@ -1,0 +1,140 @@
+---
+name: useAPIGroup
+route: /useAPIGroup
+edit: false
+sidebar: false
+---
+
+import JackBox from 'jackbox';
+
+import Demo1 from './demo/demo1';
+import Demo1CodeTsx from '!raw-loader!./demo/demo1.tsx';
+import Demo1CodeJsx from '!raw-loader!./demo/demo1.jsx';
+
+import Demo2 from './demo/demo2';
+import Demo2CodeTsx from '!raw-loader!./demo/demo2.tsx';
+import Demo2CodeJsx from '!raw-loader!./demo/demo2.jsx';
+
+import Demo3 from './demo/demo3';
+import Demo3CodeTsx from '!raw-loader!./demo/demo3.tsx';
+import Demo3CodeJsx from '!raw-loader!./demo/demo3.jsx';
+
+import Demo4 from './demo/demo4';
+import Demo4CodeTsx from '!raw-loader!./demo/demo4.tsx';
+import Demo4CodeJsx from '!raw-loader!./demo/demo4.jsx';
+
+import Demo5 from './demo/demo5';
+import Demo5CodeTsx from '!raw-loader!./demo/demo5.tsx';
+import Demo5CodeJsx from '!raw-loader!./demo/demo5.jsx';
+
+import Demo6 from './demo/demo6';
+import Demo6CodeTsx from '!raw-loader!./demo/demo6.tsx';
+import Demo6CodeJsx from '!raw-loader!./demo/demo6.jsx';
+
+# useAPI 开发中！禁止使用！
+
+## Examples
+
+### Default usage
+
+<JackBox tsCode={Demo1CodeTsx} jsCode={Demo1CodeJsx} demoName='Default usage' description='The request will be sent after the component mount'>
+  <Demo1 />
+</JackBox>
+
+### Sending request manually
+
+<JackBox tsCode={Demo2CodeTsx} jsCode={Demo2CodeJsx} demoName='Sending request manually' description='Sending the request only when the "run" function is called'>
+  <Demo2 />
+</JackBox>
+
+### Polling
+
+<JackBox tsCode={Demo3CodeTsx} jsCode={Demo3CodeJsx} demoName='Polling' description='The request will be sent every 3 seconds, the timer will start running only if the last request has been received'>
+  <Demo3 />
+</JackBox>
+
+### Modifying the request method
+
+<JackBox tsCode={Demo4CodeTsx} jsCode={Demo4CodeJsx} demoName='Modifying the request method' description='Using your custom request method'>
+  <Demo4 />
+</JackBox>
+
+### pagination
+
+<JackBox tsCode={Demo5CodeTsx} jsCode={Demo5CodeJsx} demoName='pagination' description='pagination'>
+  <Demo5 />
+</JackBox>
+
+### antdTable
+
+<JackBox tsCode={Demo6CodeTsx} jsCode={Demo6CodeJsx} demoName='Table' description='antd table'>
+  <Demo6 />
+</JackBox>
+
+## API
+
+### Options
+
+```
+{
+  refreshDeps?: DependencyList; // 如果 deps 变化后，重新请求
+  manual?: boolean; // 是否需要手动触发
+  onSuccess?: (data: T, params?: K) => void; // 成功回调
+  onError?: (e: Error, params?: K) => void; // 失败回调
+
+  autoCancel?: boolean; // 竞态处理开关
+  defaultParams?: K;
+
+  pollingInterval?: number; // 轮询的间隔毫秒
+
+  formatResult: (data: T) => U
+
+  /* 分页 */
+  paginated: true;
+  defaultPageSize?: number; // 默认每页数据
+  loadMorePageSize?: number; // 非第一页的 pageSize, for loadMore
+}
+```
+
+### Result
+
+```
+{
+  loading: boolean;
+  data?: T,
+  error?: Error | string;
+  run: (...args: K) => Promise<T>; // 手动触发
+  params: K | undefined; // 上一次触发的参数
+  cancel: noop; // 取消请求
+  refresh: noop; // 用当前参数重新请求一次
+
+  /* 分页场景下会返回的类型 */
+  pagination: {
+    current: number;
+    pageSize: number;
+    total: number;
+    totalPage: number;
+    onChange: (current: number, pageSize: number) => void;
+    changeCurrent: (current: number) => void;
+    changePageSize: (pageSize: number) => void;
+  };
+  tableProps: {
+    dataSource: Item[];
+    loading: boolean;
+    onChange: (
+      pagination: PaginationConfig,
+      filters?: Record<keyof Item, string[]>,
+      sorter?: SorterResult<Item>,
+    ) => void;
+    pagination: {
+      current: number;
+      pageSize: number;
+      total: number;
+    };
+  };
+
+  sorter?: SorterResult<Item>;
+  filters?: Record<keyof Item, string[]>;
+}  
+```
+

@@ -1,0 +1,116 @@
+---
+name: useAPIGroup
+route: /useAPIGroup
+menu: 'SideEffect'
+edit: false
+sidebar: false
+---
+
+import JackBox from 'jackbox';
+
+import Demo1 from './demo/demo1';
+import Demo1CodeTsx from '!raw-loader!./demo/demo1.tsx';
+import Demo1CodeJsx from '!raw-loader!./demo/demo1.jsx';
+
+import Demo2 from './demo/demo2';
+import Demo2CodeTsx from '!raw-loader!./demo/demo2.tsx';
+import Demo2CodeJsx from '!raw-loader!./demo/demo2.jsx';
+
+import Demo3 from './demo/demo3';
+import Demo3CodeTsx from '!raw-loader!./demo/demo3.tsx';
+import Demo3CodeJsx from '!raw-loader!./demo/demo3.jsx';
+
+import Demo4 from './demo/demo4';
+import Demo4CodeTsx from '!raw-loader!./demo/demo4.tsx';
+import Demo4CodeJsx from '!raw-loader!./demo/demo4.jsx';
+
+import Demo5 from './demo/demo5';
+import Demo5CodeTsx from '!raw-loader!./demo/demo5.tsx';
+import Demo5CodeJsx from '!raw-loader!./demo/demo5.jsx';
+
+import Demo6 from './demo/demo6';
+import Demo6CodeTsx from '!raw-loader!./demo/demo6.tsx';
+import Demo6CodeJsx from '!raw-loader!./demo/demo6.jsx';
+
+# useAPI 开发中！禁止使用！
+
+## 代码演示
+
+### 默认用法
+
+<JackBox tsCode={Demo1CodeTsx} jsCode={Demo1CodeJsx} demoName='默认用法' description='组件加载时立即执行'>
+  <Demo1 />
+</JackBox>
+
+### 手动触发执行
+
+<JackBox tsCode={Demo2CodeTsx} jsCode={Demo2CodeJsx} demoName='手动触发执行' description='手动发送请求，只有当 run 方法被调用时请求才会发出'>
+  <Demo2 />
+</JackBox>
+
+### 轮询
+
+<JackBox tsCode={Demo3CodeTsx} jsCode={Demo3CodeJsx} demoName='轮询' description='每三秒进行一次请求，将在上次请求返回后开始计时'>
+  <Demo3 />
+</JackBox>
+
+### 修改 request 方法
+
+<JackBox tsCode={Demo4CodeTsx} jsCode={Demo4CodeJsx} demoName='修改 request 方法' description='使用自定义的 request 方法'>
+  <Demo4 />
+</JackBox>
+
+### pagination
+
+<JackBox tsCode={Demo5CodeTsx} jsCode={Demo5CodeJsx} demoName='分页' description='普通的分页'>
+  <Demo5 />
+</JackBox>
+
+### antdTable
+
+<JackBox tsCode={Demo6CodeTsx} jsCode={Demo6CodeJsx} demoName='Table' description='antd table'>
+  <Demo6 />
+</JackBox>
+
+## API
+
+Result
+
+```
+  loading: boolean;
+  data?: T,
+  error?: Error | string;
+  run: (...args: K) => Promise<T>; // 手动触发
+  params: K | undefined; // 上一次触发的参数
+  cancel: noop; // 取消请求
+  refresh: noop; // 用当前参数重新请求一次
+
+  /* 分页场景下会返回的类型 */
+  pagination: {
+    current: number;
+    pageSize: number;
+    total: number;
+    totalPage: number;
+    onChange: (current: number, pageSize: number) => void;
+    changeCurrent: (current: number) => void;
+    changePageSize: (pageSize: number) => void;
+  };
+  tableProps: {
+    dataSource: Item[];
+    loading: boolean;
+    onChange: (
+      pagination: PaginationConfig,
+      filters?: Record<keyof Item, string[]>,
+      sorter?: SorterResult<Item>,
+    ) => void;
+    pagination: {
+      current: number;
+      pageSize: number;
+      total: number;
+    };
+  };
+
+  sorter?: SorterResult<Item>;
+  filters?: Record<keyof Item, string[]>;
+```
+
