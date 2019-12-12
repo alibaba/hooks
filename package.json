@@ -66,8 +66,11 @@
     "react-drag-listview": "^0.1.6",
     "resize-observer-polyfill": "^1.5.1",
     "sylvanas": "^0.4.2",
-    "typescript": "^3.3.3",
+    "typescript": "^3.7.2",
     "umi-request": "^1.0.8"
+  },
+  "resolutions": {
+    "typescript": "^3.7.2"
   },
   "engines": {
     "node": ">=8.0.0"
