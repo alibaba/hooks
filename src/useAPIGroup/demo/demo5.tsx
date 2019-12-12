@@ -2,7 +2,6 @@ import { List, Pagination, Select, Button } from 'antd';
 import { PaginationConfig } from 'antd/lib/pagination';
 import React, { useState } from 'react';
 import useAPI from '..';
-import { PaginatedFormatReturn } from '../types';
 
 interface Item {
   name: {
@@ -26,17 +25,22 @@ const queryData = ({ current, pageSize, gender }) =>
 
 export default () => {
   const [gender, setGender] = useState();
-  const { data, loading, pagination } = useAPI(
+  const { data, loading, pagination, tableProps, params, run } = useAPI(
     params => queryData({ ...params, gender }),
     {
       paginated: true,
       refreshDeps: [gender],
+      onSuccess: (xx) => { },
+      defaultParams: [{
+        current: 1,
+        pageSize: 10,
+      }],
       formatResult: (res) => ({
         pager: {
           total: 55
         },
-        list: res.results,
-      } as PaginatedFormatReturn<Item>)
+        list: res.results as Item[],
+      })
     }
   );
 

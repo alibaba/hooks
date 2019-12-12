@@ -7,40 +7,45 @@ import useAsync from './useAsync';
 
 const isEqual = require('lodash.isequal');
 
-function usePaginated<T, Item>(
-  service: (params: PaginatedParams<Item>) => Promise<T>,
-  options: PaginatedOptionsWithFormat<T, Item>
-): PaginatedResult<PaginatedFormatReturn<Item>, Item>
-function usePaginated<T extends PaginatedFormatReturn<Item>, Item>(
-  service: (params: PaginatedParams<Item>) => Promise<T>,
-  options: BasePaginatedOptions<T, Item>
-): PaginatedResult<T, Item>
-function usePaginated<T, Item>(
-  service: (params: PaginatedParams<Item>) => Promise<T>,
-  options: BasePaginatedOptions<T, Item> | PaginatedOptionsWithFormat<T, Item>
+function usePaginated<R, Item, U extends Item = any>(
+  service: (params: PaginatedParams<U>) => Promise<R>,
+  options: PaginatedOptionsWithFormat<R, Item, U>
+): PaginatedResult<Item>
+function usePaginated<R, Item, U extends Item = any>(
+  service: (params: PaginatedParams<U>) => Promise<PaginatedFormatReturn<Item>>,
+  options: BasePaginatedOptions<U>
+): PaginatedResult<Item>
+function usePaginated<R, Item, U extends Item = any>(
+  service: (params: PaginatedParams<U>) => Promise<R>,
+  options: BasePaginatedOptions<U> | PaginatedOptionsWithFormat<R, Item, U>
 ) {
 
   const {
+    paginated,
     defaultPageSize = 10,
     loadMorePageSize = defaultPageSize,
     refreshDeps = [],
     ...restOptions
   } = options;
 
-  const { data, params, run, loading, ...rest } = useAsync(service, {
-    ...restOptions,
-    defaultParams: [{
-      current: 1,
-      pageSize: defaultPageSize
-    }]
-  });
+  const { data, params, run, loading, ...rest } = useAsync(
+    service,
+    {
+      ...restOptions as any,
+      defaultParams: [{
+        current: 1,
+        pageSize: defaultPageSize
+      }]
+    });
 
-  const current = params ? params[0].current : 1;
-  const pageSize = params ? params[0].pageSize : defaultPageSize;
-  const sorter = params ? params[0].sorter : undefined;
-  const filters = params ? params[0].filters : undefined;
+  const {
+    current = 1,
+    pageSize = defaultPageSize,
+    sorter,
+    filters
+  } = params && params[0] ? params[0] : ({} as any);
 
-  const total = data ? (data as any).pager?.total : 0;
+  const total = data?.pager?.total || 0;
   const totalPage = useMemo(() => Math.ceil(total / pageSize), [pageSize, total]);
 
   const pageSizeRef = useRef(pageSize);
@@ -134,7 +139,7 @@ function usePaginated<T, Item>(
       changePageSize,
     },
     tableProps: {
-      dataSource: (data as any)?.list,
+      dataSource: data?.list || [],
       loading,
       onChange: changeTable,
       pagination: {
@@ -146,7 +151,7 @@ function usePaginated<T, Item>(
     sorter,
     filters,
     ...rest
-  }
+  } as PaginatedResult<U>
 }
 
 export default usePaginated;

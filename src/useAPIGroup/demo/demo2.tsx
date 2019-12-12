@@ -1,13 +1,13 @@
 import { Button, Spin } from 'antd';
 import React from 'react';
-import useAPI from '../';
+import useAPI from '..';
 
-function getNumber() {
+function getNumber():Promise<string> {
   return fetch('https://helloacm.com/api/random/?n=8&x=4').then(res => res.json());
 }
 
 export default () => {
-  const { data, loading, run } = useAPI(getNumber, { manual: true });
+  const { data, loading, run } = useAPI(getNumber, { manual: true, paginated: false });
 
   return (
     <>

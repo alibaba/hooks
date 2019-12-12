@@ -1,6 +1,6 @@
 import { Table, Button } from 'antd';
 import React from 'react';
-import useAPI from '..';
+import useAPI from '../usePaginated';
 
 interface Item {
   name: {
@@ -11,18 +11,11 @@ interface Item {
   gender: 'male' | 'female';
 }
 
-interface Result {
-  pager: {
-    total: number;
-  }
-  list: Item[];
-}
-
-const getTableData = ({ current, pageSize, sorter = {}, filters = {} }) => {
+const getTableData = ({ current, pageSize, sorter, filters }) => {
   console.log(current, pageSize, sorter, filters);
   let url = `https://randomuser.me/api?results=55&page=${current}&size=${pageSize}`;
-  if (sorter && sorter.field && sorter.order) {
-    url += `&${sorter.field}=${sorter.order}`;
+  if (sorter && sorter?.field && sorter?.order) {
+    url += `&${sorter?.field}=${sorter?.order}`;
   }
   if (filters) {
     Object.entries(filters).forEach(i => {
@@ -42,7 +35,7 @@ export default () => {
     paginated: true,
     formatResult: (res) => {
       return {
-        list: res.list,
+        list: res.list as Item[],
         pager: {
           total: res.total,
         }
@@ -63,13 +56,13 @@ export default () => {
       title: 'phone',
       dataIndex: 'phone',
       sorter: true,
-      sortOrder: sorter && sorter.field === 'phone' && sorter.order,
+      sortOrder: sorter?.field === 'phone' ? sorter?.order : false,
     },
     {
       title: 'gender',
       dataIndex: 'gender',
       filters: [{ text: 'male', value: 'male' }, { text: 'female', value: 'female' }],
-      filteredValue: filters && filters.gender,
+      filteredValue: filters?.gender,
     },
   ];
 

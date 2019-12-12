@@ -1,19 +1,20 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { BaseOptions, OptionsWithFormat, Options, BaseResult } from './types';
 
-
-function useAsync<T, K extends any[], U>(
-  service: (...args: K) => Promise<T>,
-  options: OptionsWithFormat<T, K, U>
-): BaseResult<U, K>
-function useAsync<T, K extends any[]>(
-  service: (...args: K) => Promise<T>,
-  options: BaseOptions<T, K>
-): BaseResult<T, K>
-function useAsync<T, K extends any[], U>(
-  service: (...args: K) => Promise<T>,
-  options: Options<T, K, U>
+function useAsync<R, P extends any[], U, UU extends U = any>(
+  service: (...args: P) => Promise<R>,
+  options?: OptionsWithFormat<R, P, U, UU>
+): BaseResult<U, P>
+function useAsync<R, P extends any[]>(
+  service: (...args: P) => Promise<R>,
+  options?: BaseOptions<R, P>
+): BaseResult<R, P>
+function useAsync<R, P extends any[], U, UU extends U = any>(
+  service: (...args: P) => Promise<R>,
+  options?: Options<R, P, U, UU>
 ) {
+
+  const _options: Options<R, P, U, UU> = options || {};
 
   const {
     refreshDeps = [],
@@ -23,9 +24,9 @@ function useAsync<T, K extends any[], U>(
     autoCancel = true,
     pollingInterval = 0,
     defaultParams = []
-  } = options;
+  } = _options;
 
-  const params = useRef<K | undefined>();
+  const params = useRef<P | undefined>();
   // 时序控制，每一次请求都有一个编号
   const count = useRef(0);
   // 有些请求被强制取消掉了，这里记录一下
@@ -45,13 +46,13 @@ function useAsync<T, K extends any[], U>(
   onErrorRef.current = onError;
 
   const formatResultRef = useRef<any>();
-  if ("formatResult" in options) {
-    formatResultRef.current = options.formatResult;
+  if ("formatResult" in _options) {
+    formatResultRef.current = _options.formatResult;
   }
 
 
   const [state, setState] = useState({
-    data: undefined as (T | U | undefined),
+    data: undefined as (R | U | undefined),
     error: undefined as (Error | undefined),
     loading: !manual,
   });
@@ -69,7 +70,7 @@ function useAsync<T, K extends any[], U>(
     count.current += 1;
   }, [autoCancel]);
 
-  const run = useCallback((...args: K) => {
+  const run = useCallback((...args: P) => {
     // 取消上一次请求（及定时器）
     cancel();
     // 存储当前 count
@@ -130,7 +131,7 @@ function useAsync<T, K extends any[], U>(
     refresh,
     params: params.current,
     cancel: () => { cancel(true) },
-  }
+  } as BaseResult<U, P>
 }
 
 export default useAsync;
