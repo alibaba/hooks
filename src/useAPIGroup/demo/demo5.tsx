@@ -1,4 +1,4 @@
-import { List, Pagination, Select, Button } from 'antd';
+import { List, Pagination, Select } from 'antd';
 import { PaginationConfig } from 'antd/lib/pagination';
 import React, { useState } from 'react';
 import useAPI from '..';
@@ -12,33 +12,20 @@ interface Item {
   gender: 'male' | 'female';
 }
 
-interface Result {
-  pager: {
-    total: number;
-  }
-  list: Item[];
-}
-
-const queryData = ({ current, pageSize, gender }) =>
+const queryData = ({ current, pageSize, gender }) => (
   fetch(`https://randomuser.me/api?results=${pageSize}&page=${current}&gender=${gender}`)
-    .then(res => res.json());
+    .then(res => res.json())
+)
 
 export default () => {
   const [gender, setGender] = useState();
-  const { data, loading, pagination, tableProps, params, run } = useAPI(
+  const { data, loading, pagination } = useAPI(
     params => queryData({ ...params, gender }),
     {
       paginated: true,
       refreshDeps: [gender],
-      onSuccess: (xx) => { },
-      defaultParams: [{
-        current: 1,
-        pageSize: 10,
-      }],
       formatResult: (res) => ({
-        pager: {
-          total: 55
-        },
+        total: 55,
         list: res.results as Item[],
       })
     }
@@ -65,7 +52,7 @@ export default () => {
         )}
       />
       <Pagination
-        {...(pagination as PaginationConfig)}
+        {...pagination}
         showQuickJumper
         showSizeChanger
         onShowSizeChange={pagination.onChange}

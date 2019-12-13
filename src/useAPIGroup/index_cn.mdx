@@ -1,0 +1,142 @@
+---
+name: WIP-useAPIGroup
+route: /useAPIGroup
+menu: 'SideEffect'
+edit: false
+sidebar: false
+---
+
+import JackBox from 'jackbox';
+
+import Demo1 from './demo/demo1';
+import Demo1CodeTsx from '!raw-loader!./demo/demo1.tsx';
+import Demo1CodeJsx from '!raw-loader!./demo/demo1.jsx';
+
+import Demo2 from './demo/demo2';
+import Demo2CodeTsx from '!raw-loader!./demo/demo2.tsx';
+import Demo2CodeJsx from '!raw-loader!./demo/demo2.jsx';
+
+import Demo3 from './demo/demo3';
+import Demo3CodeTsx from '!raw-loader!./demo/demo3.tsx';
+import Demo3CodeJsx from '!raw-loader!./demo/demo3.jsx';
+
+import Demo4 from './demo/demo4';
+import Demo4CodeTsx from '!raw-loader!./demo/demo4.tsx';
+import Demo4CodeJsx from '!raw-loader!./demo/demo4.jsx';
+
+import Demo5 from './demo/demo5';
+import Demo5CodeTsx from '!raw-loader!./demo/demo5.tsx';
+import Demo5CodeJsx from '!raw-loader!./demo/demo5.jsx';
+
+import Demo6 from './demo/demo6';
+import Demo6CodeTsx from '!raw-loader!./demo/demo6.tsx';
+import Demo6CodeJsx from '!raw-loader!./demo/demo6.jsx';
+
+import Demo7 from './demo/demo7';
+import Demo7CodeTsx from '!raw-loader!./demo/demo7.tsx';
+import Demo7CodeJsx from '!raw-loader!./demo/demo7.jsx';
+
+import Demo8 from './demo/demo8';
+import Demo8CodeTsx from '!raw-loader!./demo/demo8.tsx';
+import Demo8CodeJsx from '!raw-loader!./demo/demo8.jsx';
+
+
+# [WIP]useAPI
+
+## 代码演示
+
+### 默认用法
+
+<JackBox tsCode={Demo1CodeTsx} jsCode={Demo1CodeJsx} demoName='默认用法' description='默认 useAPI 会在组件加载时立即执行'>
+  <Demo1 />
+</JackBox>
+
+### 手动触发执行
+
+<JackBox tsCode={Demo2CodeTsx} jsCode={Demo2CodeJsx} demoName='手动触发执行' description='如果设置了 manual = true，则 useAPI 不会自动执行，只有当手动触发 run 时执行。'>
+  <Demo2 />
+</JackBox>
+
+### refreshDeps
+
+<JackBox tsCode={Demo7CodeTsx} jsCode={Demo7CodeJsx} demoName='refreshDeps' description={
+  <div>
+    1. 在非 manual 场景下，refreshDeps 变化，会触发 useAPI 重新执行。<br/>
+    2. refresh 会使用上一次的参数，重新执行一次 service。
+  </div>
+}>
+  <Demo7 />
+</JackBox>
+
+### 竞态处理
+
+<JackBox tsCode={Demo8CodeTsx} jsCode={Demo8CodeJsx} demoName='竞态处理' description="你可以通过 autoCancel 控制是否关闭竞态处理">
+  <Demo8 />
+</JackBox>
+
+### 轮询
+
+<JackBox tsCode={Demo3CodeTsx} jsCode={Demo3CodeJsx} demoName='轮询' description='如果设置了 pollingInterval，则 useAPI 将循环请求，你可以通过 stopPolling/run 控制 暂停/开始'>
+  <Demo3 />
+</JackBox>
+
+### run 接收参数
+
+<JackBox tsCode={Demo4CodeTsx} jsCode={Demo4CodeJsx} demoName='run 函数接收参数' description='run 的参数会传递给 service'>
+  <Demo4 />
+</JackBox>
+
+### pagination
+
+<JackBox tsCode={Demo5CodeTsx} jsCode={Demo5CodeJsx} demoName='分页' description={
+  <div>
+    1. 通过设置 paginated = true 即可启用分页模式。<br/>
+    2. 分页模式会自动管理 current, pageSize 等，并作为参数传递给 service。<br/>
+    3. 分页场景的 refreshDeps 变化，我们会重置 current 到第一页。<br/>
+    4. 分页场景需要数据结构满足 "total: number, list: Item[]"，如果不满足，可以通过 formatResult 转换一次。
+  </div>
+}>
+  <Demo5 />
+</JackBox>
+
+### antdTable
+
+<JackBox tsCode={Demo6CodeTsx} jsCode={Demo6CodeJsx} demoName='AntD Table' description={
+  <div>
+    1. 分页场景，我们对 antd Table 做了特殊优化支持。<br/>
+    2. 你可以在 tableProps 中拿到所有 Table 需要的数据。<br/>
+    3. 支持 sorder 和 filters。
+  </div>
+}>
+  <Demo6 />
+</JackBox>
+
+## API
+
+### Options
+
+* refreshDeps: 在非 manual 场景下，refreshDeps 变化，会触发 useAPI 重新执行。参考 [例子](#refreshdeps)
+* manual: 默认 `false`。 是否需要手动触发。
+* onSuccess: 成功时触发，参数为响应 `data` 和 `params`, 参考 [例子](#竞态处理)
+* onError：失败时触发
+* pollingInterval: 轮询间隔，单位毫秒。设置后，将定时触发 run
+* formatResult: 格式化请求结果，`onSuccess`, `data` 等参数均为格式化之后的数据。参考 [例子](#pagination)
+* paginated: 默认 `false`。是否需要分页。在分页场景下，响应结果必须为 `{list: Item[], total: number}`
+* defaultPageSize: 默认每页数据
+* fetchKey: 根据 params，获取当前请求的 key, 设置之后，你可以并行处理多个请求，参考 [例子](#竞态处理)
+
+
+### Result
+* loading
+* data
+* error
+* run
+* params: 当次 run 的参数，是一个数组
+* cancel
+* refresh: 使用上次的参数，重新触发 run
+* stopPolling: 停止轮询
+* history: 默认情况下，新请求会覆盖旧请求。如果设置了 fetchKey，则可以实现多个请求并行，一般会和 fetchKey 一起使用。参考 [例子](#竞态处理)
+* pagination: 分页结果
+* tableProps: 为 antd table 格式化之后的数据
+* sorter: antd table 的 soter
+* filters: antd table 的 filter

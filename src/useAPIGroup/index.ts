@@ -5,7 +5,7 @@ import usePaginated from './usePaginated';
 
 function useAPI<R, P extends any[], U, UU extends U = any>(
   service: (...args: P) => Promise<R>,
-  options?: OptionsWithFormat<R, P, U, UU>
+  options: OptionsWithFormat<R, P, U, UU>
 ): BaseResult<U, P>
 function useAPI<R, P extends any[]>(
   service: (...args: P) => Promise<R>,

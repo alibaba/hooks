@@ -41,11 +41,11 @@ function usePaginated<R, Item, U extends Item = any>(
   const {
     current = 1,
     pageSize = defaultPageSize,
-    sorter,
-    filters
+    sorter = {},
+    filters = {}
   } = params && params[0] ? params[0] : ({} as any);
 
-  const total = data?.pager?.total || 0;
+  const total = data?.total || 0;
   const totalPage = useMemo(() => Math.ceil(total / pageSize), [pageSize, total]);
 
   const pageSizeRef = useRef(pageSize);
@@ -56,10 +56,13 @@ function usePaginated<R, Item, U extends Item = any>(
 
   /* 分页场景下，如果 refreshDeps 变化，重置分页 */
   useUpdateEffect(() => {
-    runRef.current({
-      current: 1,
-      pageSize: pageSizeRef.current
-    });
+    /* 只有自动执行的场景， refreshDeps 才有效 */
+    if (!options.manual) {
+      runRef.current({
+        current: 1,
+        pageSize: pageSizeRef.current
+      });
+    }
   }, [...refreshDeps]);
 
 
@@ -108,6 +111,7 @@ function usePaginated<R, Item, U extends Item = any>(
           delete (realFilter as Object)[item[0] as keyof Object];
         }
       });
+
       /* 如果 filter，或者 sort 变化，就初始化 current */
       const needReload =
         !isEqual(realFilter, filters) ||
@@ -143,9 +147,9 @@ function usePaginated<R, Item, U extends Item = any>(
       loading,
       onChange: changeTable,
       pagination: {
-        current: current,
-        pageSize: pageSize,
-        total: total,
+        current,
+        pageSize,
+        total,
       },
     },
     sorter,

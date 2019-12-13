@@ -3,7 +3,7 @@ import { Button } from 'antd';
 import useFullscreen from '..';
 
 export default () => {
-  const { ref, isFullscreen, setFull, exitFull } = useFullscreen();
+  const { ref, isFullscreen, setFull, exitFull, toggleFull } = useFullscreen();
   return (
     <div
       ref={ref}
@@ -21,6 +21,7 @@ export default () => {
       <Button.Group>
         <Button onClick={setFull}>setFull</Button>
         <Button onClick={exitFull}>exitFull</Button>
+        <Button onClick={toggleFull}>toggle</Button>
       </Button.Group>
     </div>
   );

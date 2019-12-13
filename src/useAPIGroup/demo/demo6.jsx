@@ -1,9 +1,8 @@
 import { Table, Button } from 'antd';
 import React from 'react';
-import useAPI from '..';
+import useAPI from '../usePaginated';
 
-const getTableData = ({ current, pageSize, sorter = {}, filters = {} }) => {
-  console.log(current, pageSize, sorter, filters);
+const getTableData = ({ current, pageSize, sorter, filters }) => {
   let url = `https://randomuser.me/api?results=55&page=${current}&size=${pageSize}`;
 
   if (sorter && sorter.field && sorter.order) {
@@ -25,14 +24,8 @@ const getTableData = ({ current, pageSize, sorter = {}, filters = {} }) => {
 };
 
 export default () => {
-  const { tableProps, filters, sorter, cancel, run, refresh, params } = useAPI(getTableData, {
+  const { tableProps, filters, sorter, refresh } = useAPI(getTableData, {
     paginated: true,
-    formatResult: res => ({
-      list: res.list,
-      pager: {
-        total: res.total,
-      },
-    }),
   });
   const columns = [
     {
@@ -47,7 +40,7 @@ export default () => {
       title: 'phone',
       dataIndex: 'phone',
       sorter: true,
-      sortOrder: sorter && sorter.field === 'phone' && sorter.order,
+      sortOrder: sorter && sorter.field === 'phone' ? sorter.order : false,
     },
     {
       title: 'gender',
@@ -62,12 +55,19 @@ export default () => {
           value: 'female',
         },
       ],
-      filteredValue: filters && filters.gender,
+      filteredValue: filters.gender,
     },
   ];
   return (
     <div>
-      <Button onClick={refresh}>刷新</Button>
+      <Button
+        onClick={refresh}
+        style={{
+          marginBottom: 16,
+        }}
+      >
+        刷新
+      </Button>
       <Table columns={columns} rowKey="email" {...tableProps} />
     </div>
   );

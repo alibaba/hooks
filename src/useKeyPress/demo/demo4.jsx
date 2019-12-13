@@ -15,10 +15,16 @@ export default () => {
       events: ['keydown', 'keyup'],
     },
   );
-
   return (
     <div>
-      Pressing key except number key：<span style={{ color: '#f00' }}>{key}</span>
+      Pressing key except number key：
+      <span
+        style={{
+          color: '#f00',
+        }}
+      >
+        {key}
+      </span>
     </div>
   );
 };

@@ -2,7 +2,7 @@ import React from 'react';
 import { Input, Button } from 'antd';
 import useSessionStorageState from '..';
 
-export default function () {
+export default function() {
   const [message, setMessage] = useSessionStorageState('user-message', 'Hello~');
   return (
     <>

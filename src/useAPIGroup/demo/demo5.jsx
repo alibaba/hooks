@@ -13,9 +13,7 @@ export default () => {
     paginated: true,
     refreshDeps: [gender],
     formatResult: res => ({
-      pager: {
-        total: 55,
-      },
+      total: 55,
       list: res.results,
     }),
   });

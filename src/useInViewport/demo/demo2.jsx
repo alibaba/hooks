@@ -6,7 +6,12 @@ export default () => {
   return (
     <div>
       <div id="demo2">observer dom</div>
-      <div style={{ marginTop: 70, color: inViewPort ? '#87d068' : '#f50' }}>
+      <div
+        style={{
+          marginTop: 70,
+          color: inViewPort ? '#87d068' : '#f50',
+        }}
+      >
         {inViewPort ? 'visible' : 'hidden'}
       </div>
     </div>

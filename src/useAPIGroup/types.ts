@@ -8,36 +8,49 @@ type noop = (...args: any[]) => void;
 
 export interface BaseResult<T, K extends any[]> {
   loading: boolean;
-  data: T | undefined,
+  data: T | undefined;
   error: Error | string | undefined;
 
   run: (...args: K) => Promise<T>; // 手动触发
   params: K | undefined; // 上一次手动触发的参数
 
   cancel: noop; // 取消请求
-
   refresh: noop; // 用当前参数重新请求一次
+
+  stopPolling: noop; // 停止轮询
+
+  history: {
+    [key: string]: {
+      loading: boolean;
+      data: T | undefined;
+      error: Error | string | undefined;
+      params: K | undefined; // 上一次手动触发的参数
+      cancel: noop; // 取消请求
+      refresh: noop; // 用当前参数重新请求一次
+    }
+  }
 }
 
-export type BaseOptions<R, P> = {
+export type BaseOptions<R, P extends any[]> = {
   refreshDeps?: DependencyList; // 如果 deps 变化后，重新请求
   manual?: boolean; // 是否需要手动触发
   onSuccess?: (data: R, params?: P) => void; // 成功回调
   onError?: (e: Error, params?: P) => void; // 失败回调
 
-  autoCancel?: boolean; // 竞态处理开关
   defaultParams?: P;
   // 轮询
   pollingInterval?: number; // 轮询的间隔毫秒
 
+  fetchKey?: (...args: P) => string | number,
+
   paginated?: false
 }
 
-export type OptionsWithFormat<R, P, U, UU extends U> = {
+export type OptionsWithFormat<R, P extends any[], U, UU extends U> = {
   formatResult: (res: R) => U
 } & BaseOptions<UU, P>;
 
-export type Options<R, P, U, UU extends U> = BaseOptions<R, P> | OptionsWithFormat<R, P, U, UU>;
+export type Options<R, P extends any[], U, UU extends U> = BaseOptions<R, P> | OptionsWithFormat<R, P, U, UU>;
 
 
 /* ✅ --------------------------usePaginated---------------------------- */
@@ -50,10 +63,7 @@ export interface PaginatedParams<Item> {
 }
 
 export interface PaginatedFormatReturn<Item> {
-  pager: {
-    total: number,
-    [key: string]: any,
-  };
+  total: number,
   list: Item[];
   [key: string]: any;
 }

@@ -7,8 +7,7 @@ function getNumber() {
 }
 
 export default () => {
-  const { data, loading, run, cancel } = useAPI(getNumber, {
-    manual: true,
+  const { data, loading, run, stopPolling } = useAPI(getNumber, {
     pollingInterval: 1000,
   });
   return (
@@ -19,8 +18,8 @@ export default () => {
           marginTop: 16,
         }}
       >
-        <Button onClick={run}>start polling</Button>
-        <Button onClick={cancel}>stop</Button>
+        <Button onClick={run}>start</Button>
+        <Button onClick={stopPolling}>stop</Button>
       </Button.Group>
     </>
   );

@@ -1,28 +1,15 @@
-import { Button, Spin } from 'antd';
-import React, { useState } from 'react';
+import { Spin } from 'antd';
+import React from 'react';
 import useAPI from '..';
 
-function getNumber(id: number) {
-  return fetch(`https://helloacm.com/api/random/?n=8&x=4&id=${id}`).then(res => res.json());
+function getNumber(): Promise<string> {
+  return fetch('https://helloacm.com/api/random/?n=8&x=4').then(res => res.json());
 }
 
 export default () => {
-  const [state, set] = useState(0);
-  const { data, loading, cancel, run } = useAPI(() => getNumber(state), {
-    refreshDeps: [state]
-  });
+  const { data, loading } = useAPI(getNumber);
 
   return (
-    <>
-      <Spin spinning={loading}>
-        <div>id: {state}</div>
-        <div>Number: {data}</div>
-      </Spin>
-      <Button.Group style={{ marginTop: 16 }}>
-        <Button onClick={run}>reload</Button>
-        <Button onClick={cancel}>cancel</Button>
-        <Button onClick={() => set(c => c + 1)}>increase id</Button>
-      </Button.Group>
-    </>
+    <Spin spinning={loading}>Number: {data}</Spin>
   );
 };

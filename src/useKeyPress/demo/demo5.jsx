@@ -16,13 +16,11 @@ export default () => {
       target: () => document.getElementById('input'),
     },
   );
-
   const InputRef = useKeyPress('enter', event => {
     const { value } = event.target;
     setTextRef(value);
-  });
+  }); // Make sure the DOM exists
 
-  // Make sure the DOM exists
   useKeyPress(
     () => true,
     event => {
@@ -34,20 +32,45 @@ export default () => {
       target: document.getElementById('input2'),
     },
   );
-
   return (
     <div>
       <div>
         <p>Input and pressing enter: {text}</p>
-        <input id="input" style={{ width: 300, marginRight: 24 }} />
+        <input
+          id="input"
+          style={{
+            width: 300,
+            marginRight: 24,
+          }}
+        />
       </div>
-      <div style={{ marginTop: 24 }}>
+      <div
+        style={{
+          marginTop: 24,
+        }}
+      >
         <p>Input and pressing enter: {textRef}</p>
-        <input ref={InputRef} style={{ width: 300, marginRight: 24 }} />
+        <input
+          ref={InputRef}
+          style={{
+            width: 300,
+            marginRight: 24,
+          }}
+        />
       </div>
-      <div style={{ marginTop: 24 }}>
+      <div
+        style={{
+          marginTop: 24,
+        }}
+      >
         <p>Input after enter change: {textSync}</p>
-        <input id="input2" style={{ width: 300, marginRight: 24 }} />
+        <input
+          id="input2"
+          style={{
+            width: 300,
+            marginRight: 24,
+          }}
+        />
       </div>
     </div>
   );

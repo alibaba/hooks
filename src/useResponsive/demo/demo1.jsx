@@ -6,7 +6,7 @@ configResponsive({
   middle: 800,
   large: 1200,
 });
-export default function () {
+export default function() {
   const responsive = useResponsive();
   return (
     <>

@@ -2,7 +2,7 @@ import React from 'react';
 import { Input, Button } from 'antd';
 import useLocalStorageState from '..';
 
-export default function () {
+export default function() {
   const [message, setMessage] = useLocalStorageState('user-message', 'Hello~');
   return (
     <>

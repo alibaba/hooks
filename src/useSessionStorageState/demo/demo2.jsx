@@ -36,7 +36,7 @@ const options = [
     ],
   },
 ];
-export default function () {
+export default function() {
   const [value, setValue] = useSessionStorageState('cascader');
   return (
     <>

@@ -34,6 +34,7 @@ export default Form.create()(props => {
         />,
       )}
       <Button
+        loading={loading}
         type="primary"
         onClick={submit}
         style={{

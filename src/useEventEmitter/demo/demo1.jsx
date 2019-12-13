@@ -2,7 +2,7 @@ import React, { useRef } from 'react';
 import { Button, Input } from 'antd';
 import useEventEmitter from '../index';
 
-const MessageBox = function (props) {
+const MessageBox = function(props) {
   return (
     <div
       style={{
@@ -21,7 +21,7 @@ const MessageBox = function (props) {
   );
 };
 
-const InputBox = function (props) {
+const InputBox = function(props) {
   const inputRef = useRef();
   props.focus$.useSubscription(() => {
     inputRef.current.focus();
@@ -29,7 +29,7 @@ const InputBox = function (props) {
   return <Input ref={inputRef} placeholder="Enter reply" />;
 };
 
-export default function () {
+export default function() {
   const focus$ = useEventEmitter();
   return (
     <>
