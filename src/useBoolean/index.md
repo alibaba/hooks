@@ -1,15 +1,9 @@
 ---
-name: useBoolean
-route: /useBoolean
-menu: 'State'
-edit: false
-sidebar: true
+title: useBoolean
+group:
+  title: State Hooks
+  path: /state
 ---
-import JackBox from 'jackbox';
-
-import Demo1 from './demo/demo1';
-import Demo1CodeTsx from '!raw-loader!./demo/demo1.tsx';
-import Demo1CodeJsx from '!raw-loader!./demo/demo1.jsx';
 
 # useBoolean
 
@@ -19,9 +13,7 @@ A hook that elegantly manages boolean values.
 
 ### Default usage
 
-<JackBox jsCode={Demo1CodeJsx} tsCode={Demo1CodeTsx} demoName='Default usage' description='Default as a switch function,or accept a parameter to change state'>
-  <Demo1 />
-</JackBox>
+<code src="./demo/demo1.tsx" />
 
 ## API
 

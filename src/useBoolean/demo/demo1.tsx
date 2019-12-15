@@ -1,6 +1,11 @@
+/**
+ * title: Default usage
+ * desc: Default as a switch function,or accept a parameter to change state
+ */
+
 import React from 'react';
 import { Button, Switch } from 'antd';
-import useBoolean from '..';
+import { useBoolean } from '@umijs/hooks';
 
 export default () => {
   const { state, toggle, setTrue, setFalse } = useBoolean(true);
