@@ -10,3 +10,4 @@
 /coverage
 .doc
 .DS_Store
+src/.umi
