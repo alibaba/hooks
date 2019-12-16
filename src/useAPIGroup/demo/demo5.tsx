@@ -1,5 +1,4 @@
 import { List, Pagination, Select } from 'antd';
-import { PaginationConfig } from 'antd/lib/pagination';
 import React, { useState } from 'react';
 import useAPI from '..';
 

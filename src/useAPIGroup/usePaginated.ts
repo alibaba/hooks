@@ -25,6 +25,7 @@ function usePaginated<R, Item, U extends Item = any>(
     defaultPageSize = 10,
     loadMorePageSize = defaultPageSize,
     refreshDeps = [],
+    extraCacheDeps = [],
     ...restOptions
   } = options;
 
@@ -32,6 +33,7 @@ function usePaginated<R, Item, U extends Item = any>(
     service,
     {
       ...restOptions as any,
+      extraCacheDeps: [...extraCacheDeps, ...refreshDeps], // 缓存场景需要使用 refreshDeps 生成 cacheKey，但是不需要它变化触发更新
       defaultParams: [{
         current: 1,
         pageSize: defaultPageSize

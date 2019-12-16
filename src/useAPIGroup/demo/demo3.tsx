@@ -3,11 +3,12 @@ import React from 'react';
 import useAPI from '..';
 
 function getNumber(): Promise<number> {
+  console.log('qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq');
   return fetch('https://helloacm.com/api/random/?n=8&x=4').then(res => res.json());
 }
 
 export default () => {
-  const { data, loading, run, stopPolling } = useAPI(getNumber, { pollingInterval: 1000 });
+  const { data, loading, run, stopPolling } = useAPI(getNumber, { pollingInterval: 1000, pollingWhenHidden: false });
 
   return (
     <>

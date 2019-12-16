@@ -1,7 +1,7 @@
-import { BaseOptions, BasePaginatedOptions, PaginatedFormatReturn, BaseResult, OptionsWithFormat, PaginatedOptionsWithFormat, PaginatedParams, PaginatedResult } from './types';
+import { useRef } from 'react';
+import { BaseOptions, BasePaginatedOptions, BaseResult, OptionsWithFormat, PaginatedFormatReturn, PaginatedOptionsWithFormat, PaginatedParams, PaginatedResult } from './types';
 import useAsync from './useAsync';
 import usePaginated from './usePaginated';
-
 
 function useAPI<R, P extends any[], U, UU extends U = any>(
   service: (...args: P) => Promise<R>,
@@ -23,17 +23,17 @@ function useAPI(service: any, options: any = {}) {
 
   const { paginated } = options;
 
-  const result = useAsync(service, {
-    ...options,
-    manual: paginated || options.manual,
-  });
+  const paginatedRef = useRef(paginated);
+  if (paginatedRef.current !== paginated) {
+    throw Error('You should not modify this paginated of options');
+  }
+  paginatedRef.current = paginated;
 
-  const paginatedResult = usePaginated(service, {
-    ...options,
-    manual: !paginated || options.manual,
-  });
-
-  return paginated ? paginatedResult : result;
+  if (paginated) {
+    return usePaginated(service, options);
+  } else {
+    return useAsync(service, options);
+  }
 }
 
 export default useAPI;

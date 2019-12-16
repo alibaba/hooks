@@ -25,7 +25,6 @@ export default () => {
       message.success(`${params[0]} 删除成功`);
     },
   });
-
   return (
     <>
       <p>

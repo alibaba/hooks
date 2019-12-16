@@ -19,6 +19,7 @@ export interface BaseResult<T, K extends any[]> {
 
   stopPolling: noop; // 停止轮询
 
+  mutate: (data: T) => void;
   history: {
     [key: string]: {
       loading: boolean;
@@ -40,10 +41,21 @@ export type BaseOptions<R, P extends any[]> = {
   defaultParams?: P;
   // 轮询
   pollingInterval?: number; // 轮询的间隔毫秒
+  pollingWhenHidden?: boolean; // 屏幕隐藏时，停止轮询
 
   fetchKey?: (...args: P) => string | number,
 
   paginated?: false
+
+  refreshOnWindowFocus?: boolean;
+  focusTimespan?: number;
+
+  cacheKey?: string;
+  extraCacheDeps?: DependencyList; // 暂时内部使用，不在文档上体现
+  // staleTime?: number;
+
+  debounceInterval?: number;
+  throttleInterval?: number;
 }
 
 export type OptionsWithFormat<R, P extends any[], U, UU extends U> = {
@@ -99,8 +111,8 @@ export interface PaginatedResult<Item> extends BaseResult<PaginatedFormatReturn<
   sorter?: SorterResult<Item>;
   filters?: Record<keyof Item, string[]>;
 
-  // loadMore: () => void;
-  // loadingMore: boolean;
+  loadMore: () => void;
+  loadingMore: boolean;
 }
 
 

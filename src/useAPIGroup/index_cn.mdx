@@ -1,5 +1,5 @@
 ---
-name: WIP-useAPIGroup
+name: WIP-useAPI
 route: /useAPIGroup
 menu: 'SideEffect'
 edit: false
@@ -40,6 +40,30 @@ import Demo8 from './demo/demo8';
 import Demo8CodeTsx from '!raw-loader!./demo/demo8.tsx';
 import Demo8CodeJsx from '!raw-loader!./demo/demo8.jsx';
 
+import Demo9 from './demo/demo9';
+import Demo9CodeTsx from '!raw-loader!./demo/demo9.tsx';
+import Demo9CodeJsx from '!raw-loader!./demo/demo9.tsx';
+
+import Demo10 from './demo/demo10';
+import Demo10CodeTsx from '!raw-loader!./demo/demo10.tsx';
+import Demo10CodeJsx from '!raw-loader!./demo/demo10.tsx';
+
+import Demo11 from './demo/demo11';
+import Demo11CodeTsx from '!raw-loader!./demo/demo11.tsx';
+import Demo11CodeJsx from '!raw-loader!./demo/demo11.tsx';
+
+import Demo12 from './demo/demo12';
+import Demo12CodeTsx from '!raw-loader!./demo/demo12.tsx';
+import Demo12CodeJsx from '!raw-loader!./demo/demo12.tsx';
+
+import Demo13 from './demo/demo13';
+import Demo13CodeTsx from '!raw-loader!./demo/demo13.tsx';
+import Demo13CodeJsx from '!raw-loader!./demo/demo13.tsx';
+
+import Demo14 from './demo/demo14';
+import Demo14CodeTsx from '!raw-loader!./demo/demo14.tsx';
+import Demo14CodeJsx from '!raw-loader!./demo/demo14.tsx';
+
 
 # [WIP]useAPI
 
@@ -55,6 +79,30 @@ import Demo8CodeJsx from '!raw-loader!./demo/demo8.jsx';
 
 <JackBox tsCode={Demo2CodeTsx} jsCode={Demo2CodeJsx} demoName='手动触发执行' description='如果设置了 manual = true，则 useAPI 不会自动执行，只有当手动触发 run 时执行。'>
   <Demo2 />
+</JackBox>
+
+### refreshOnWindowFocus
+
+<JackBox tsCode={Demo10CodeTsx} jsCode={Demo10CodeJsx} demoName='refreshOnWindowFocus' description='通过设置 refreshOnWindowFocus = ture，可以在屏幕重新聚焦时，重新发起请求。同时，你可以通过设置 focusTimespan 来设置发起请求的频率, 默认为 5000ms。'>
+  <Demo10 />
+</JackBox>
+
+### 缓存
+
+<JackBox tsCode={Demo11CodeTsx} jsCode={Demo11CodeJsx} demoName='缓存' description='如果设置了 cacheKey，我们会对请求进行缓存，缓存的依据是 cacheKey, params, refreshDeps 均一致。'>
+  <Demo11 />
+</JackBox>
+
+### 预加载
+
+<JackBox tsCode={Demo12CodeTsx} jsCode={Demo12CodeJsx} demoName='预加载' description='利用缓存机制，可以实现预加载'>
+  <Demo12 />
+</JackBox>
+
+### 突变
+
+<JackBox tsCode={Demo9CodeTsx} jsCode={Demo9CodeJsx} demoName='突变' description='通过 mutate 可以直接修改 data'>
+  <Demo9 />
 </JackBox>
 
 ### refreshDeps
@@ -76,8 +124,20 @@ import Demo8CodeJsx from '!raw-loader!./demo/demo8.jsx';
 
 ### 轮询
 
-<JackBox tsCode={Demo3CodeTsx} jsCode={Demo3CodeJsx} demoName='轮询' description='如果设置了 pollingInterval，则 useAPI 将循环请求，你可以通过 stopPolling/run 控制 暂停/开始'>
+<JackBox tsCode={Demo3CodeTsx} jsCode={Demo3CodeJsx} demoName='轮询' description='如果设置了 pollingInterval，则 useAPI 将循环请求，你可以通过 stopPolling/run 控制 暂停/开始。同时你可以通过 pollingWhenHidden 来设置是否在屏幕隐藏时，需要暂时关闭轮询。'>
   <Demo3 />
+</JackBox>
+
+### 防抖
+
+<JackBox tsCode={Demo13CodeTsx} jsCode={Demo13CodeJsx} demoName='防抖' description='如果设置了 debounceInterval， useAPI 将以防抖模式执行'>
+  <Demo13 />
+</JackBox>
+
+### 节流
+
+<JackBox tsCode={Demo14CodeTsx} jsCode={Demo14CodeJsx} demoName='节流' description='如果设置了 throttleInterval， useAPI 将以节流模式执行'>
+  <Demo14 />
 </JackBox>
 
 ### run 接收参数
@@ -116,21 +176,27 @@ import Demo8CodeJsx from '!raw-loader!./demo/demo8.jsx';
 ### Options
 
 * refreshDeps: 在非 manual 场景下，refreshDeps 变化，会触发 useAPI 重新执行。参考 [例子](#refreshdeps)
-* manual: 默认 `false`。 是否需要手动触发。
+* manual: 默认 `false`。 是否需要手动触发，参考 [例子](#突变)
 * onSuccess: 成功时触发，参数为响应 `data` 和 `params`, 参考 [例子](#竞态处理)
 * onError：失败时触发
+* fetchKey: 根据 params，获取当前请求的 key, 设置之后，你可以并行处理多个请求，参考 [例子](#竞态处理)
+* cacheKey: 请求唯一标识 string，如果有该值，我们会启用缓存机制，同样的请求我们会先返回缓存中的数据，同时会立即发送新的请求，待新数据返回后，重新触发数据更新。cacheKey 的唯一值为 `JSON.Stringify([cacheKey,...params,...refreshDeps,])`
 * pollingInterval: 轮询间隔，单位毫秒。设置后，将定时触发 run
+* pollingWhenHidden: 默认 `true`，如果设置为 `false`, 在浏览器隐藏时会暂时停止轮询，重新显示时继续上次轮询。
+* refreshOnWindowFocus: 默认 `false`，在屏幕重新获取焦点时，重新发起请求
+* focusTimespan: refreshOnWindowFocus 的时间间隔
 * formatResult: 格式化请求结果，`onSuccess`, `data` 等参数均为格式化之后的数据。参考 [例子](#pagination)
 * paginated: 默认 `false`。是否需要分页。在分页场景下，响应结果必须为 `{list: Item[], total: number}`
 * defaultPageSize: 默认每页数据
-* fetchKey: 根据 params，获取当前请求的 key, 设置之后，你可以并行处理多个请求，参考 [例子](#竞态处理)
-
+* debounceInterval: 防抖间隔，设置后，请求进入防抖模式
+* throttleInterval：节流间隔，设置后，请求进入节流模式
 
 ### Result
 * loading
 * data
 * error
 * run
+* mutate: 突变，直接修改 data
 * params: 当次 run 的参数，是一个数组
 * cancel
 * refresh: 使用上次的参数，重新触发 run
@@ -140,3 +206,13 @@ import Demo8CodeJsx from '!raw-loader!./demo/demo8.jsx';
 * tableProps: 为 antd table 格式化之后的数据
 * sorter: antd table 的 soter
 * filters: antd table 的 filter
+
+
+### TODO
+* [ ] staleTime: 在一定时间内，认为响应是新鲜的，不再去发送请求。
+* [ ] loadMore: 加载更多数据，数据加载完会 append 到 `data.list` 上
+* [ ] loadingMore: 是否正在加载更多中
+* [ ] retry: 错误自动重试，设置重试次数 boolean/number
+* [ ] retryDelay: 重试的时间间隔
+* [ ] loadingTimeout: 超时时间，超时后触发 onLoadingSlow
+* [ ] onLoadingSlow: 超时触发
