@@ -165,7 +165,7 @@ function useLoadMore<Result = any, Item = any>(
     reload,
     loadMore,
     total,
-    noMore: !!total && data.length >= total,
+    noMore: (!loading && !total) || (!!total && data.length >= total),
   };
 }
 
