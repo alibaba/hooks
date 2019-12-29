@@ -10,10 +10,10 @@ import {
   useMemo,
   Reducer,
 } from 'react';
+import isEqual from 'lodash.isequal';
 import useAsync from '../useAsync';
 import useUpdateEffect from '../useUpdateEffect';
 
-const isEqual = require('lodash.isequal');
 
 interface UseAntdTableFormUtils extends WrappedFormUtils {
   getFieldInstance?: (name: string) => {};
