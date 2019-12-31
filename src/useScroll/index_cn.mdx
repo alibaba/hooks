@@ -12,6 +12,10 @@ import Demo1 from './demo/demo1';
 import Demo1CodeTsx from '!raw-loader!./demo/demo1.tsx';
 import Demo1CodeJsx from '!raw-loader!./demo/demo1.jsx';
 
+import Demo2 from './demo/demo1';
+import Demo2CodeTsx from '!raw-loader!./demo/demo2.tsx';
+import Demo2CodeJsx from '!raw-loader!./demo/demo2.jsx';
+
 # useScroll
 
 获取元素的滚动状态。
@@ -23,14 +27,21 @@ import Demo1CodeJsx from '!raw-loader!./demo/demo1.jsx';
   <Demo1 />
 </JackBox>
 
+<JackBox jsCode={Demo2CodeJsx} tsCode={Demo2CodeTsx} demoName='监测整页的滚动' description='尝试滚动一下页面'>
+  <Demo2 />
+</JackBox>
+
 ## API
 ```
 interface Position {
   left: number;
   top: number;
 }
-function useScroll<T extends HTMLElement = HTMLElement>(): [Position, MutableRefObject<T>]
-function useScroll<T extends HTMLElement = HTMLElement>(arg: HTMLElement | (() => HTMLElement)): [Position]
+
+type Target = HTMLElement | Document;
+
+function useScroll<T extends Target>(): [Position, MutableRefObject<T>]
+function useScroll<T extends Target>(arg: Target | (() => Target)): [Position]
 ```
 
 ### Result
@@ -44,4 +55,4 @@ function useScroll<T extends HTMLElement = HTMLElement>(arg: HTMLElement | (() =
 
 | 参数    | 说明                                         | 类型                   | 默认值 |
 |---------|----------------------------------------------|------------------------|--------|
-| dom? | 可选项，如果未传入则会监听返回结果中的 ref，否则会监听传入的节点  | HTMLElement \| (() => HTMLElement) \| undefined | -      |
+| dom? | 可选项，如果未传入则会监听返回结果中的 ref，否则会监听传入的节点  | HTMLElement \| Document \| (() => HTMLElement) \| (() => Document) \| undefined | -      |
