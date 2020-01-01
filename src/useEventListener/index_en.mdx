@@ -7,14 +7,16 @@ sidebar: true
 ---
 import JackBox from 'jackbox';
 import Demo1 from './demo/demo1';
+import Demo1CodeTsx from '!raw-loader!./demo/demo1.tsx';
+import Demo1CodeJsx from '!raw-loader!./demo/demo1.jsx';
 
 # useEventListener
 
-use EventListener elegant by Hook.
+Use EventListener elegant by Hook.
 
-## demo
+## Examples
 
-<JackBox jsCode={Demo1CodeJsx} tsCode={Demo1CodeTsx} demoName='使用示例' description='请按下键盘查看效果。'>
+<JackBox jsCode={Demo1CodeJsx} tsCode={Demo1CodeTsx} demoName='Examples' description='Please press down any key to preview'>
   <Demo1 />
 </JackBox>
 
