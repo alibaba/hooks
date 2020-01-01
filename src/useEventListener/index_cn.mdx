@@ -1,0 +1,40 @@
+---
+name: useEventListener
+route: /useEventListener
+menu: 'Other'
+edit: false
+sidebar: true
+---
+import JackBox from 'jackbox';
+import Demo1 from './demo/demo1';
+
+# useEventListener
+
+优雅使用EventListener的 Hook。
+
+## 代码演示
+
+<JackBox jsCode={Demo1CodeJsx} tsCode={Demo1CodeTsx} demoName='使用示例' description='请按下键盘查看效果。'>
+  <Demo1 />
+</JackBox>
+
+## API
+
+```
+useEventListener(
+  eventName:string;
+  handler:Function;
+  element:HTMLElement | Window
+)
+```
+
+
+### 参数
+
+| 参数    | 说明     | 类型                   | 默认值 |
+|---------|----------|------------------------|--------|
+| eventName | 事件名称 | string | -      |
+| handler | 处理函数 | Function | -      |
+| element | 监听元素 | HTMLElement | Window | window     |
+
+
