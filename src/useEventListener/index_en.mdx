@@ -7,8 +7,11 @@ sidebar: true
 ---
 import JackBox from 'jackbox';
 import Demo1 from './demo/demo1';
+import Demo2 from './demo/demo2';
 import Demo1CodeTsx from '!raw-loader!./demo/demo1.tsx';
 import Demo1CodeJsx from '!raw-loader!./demo/demo1.jsx';
+import Demo2CodeTsx from '!raw-loader!./demo/demo2.tsx';
+import Demo2CodeJsx from '!raw-loader!./demo/demo2.jsx';
 
 # useEventListener
 
@@ -16,18 +19,33 @@ Use EventListener elegant by Hook.
 
 ## Examples
 
-<JackBox jsCode={Demo1CodeJsx} tsCode={Demo1CodeTsx} demoName='Examples' description='Please press down any key to preview'>
+<JackBox jsCode={Demo1CodeJsx} tsCode={Demo1CodeTsx} demoName='Examples' description='Click the button to preview'>
   <Demo1 />
+</JackBox>
+
+<JackBox jsCode={Demo2CodeJsx} tsCode={Demo2CodeTsx} demoName='Examples' description='Press any key to preview'>
+  <Demo2 />
 </JackBox>
 
 ## API
 
 ```
-useEventListener(
-  eventName: string;
-  handler: Function;
-  element: HTMLElement | Window
-)
+function useEventListener<T extends Target = HTMLElement>(
+  eventName: string,
+  handler: Function,
+  options?: { eventListenerOptions?: boolean | AddEventListenerOptions },
+): MutableRefObject<T>;
+
+function useEventListener<T extends Target = HTMLElement>(
+  eventName: string,
+  handler: Function,
+  options?: { dom: Dom, eventListenerOptions?: boolean | AddEventListenerOptions },
+): void
+
+type Target = HTMLElement | Window;
+type Options = { dom?: Dom, eventListenerOptions?: boolean | AddEventListenerOptions }
+type Dom = Target | (() => Target) | null;
+
 ```
 
 ### Property
@@ -36,4 +54,17 @@ useEventListener(
 |---------|----------|------------------------|--------|
 | eventName | event name | string | -      |
 | handler | handle function | Function | -      |
-| element | element on listening | HTMLElement or Window | window     |
+| options | more options(optional) | Options |      |
+
+### Options
+
+| Property    | Description     | type                   | default |
+|---------|----------|------------------------|--------|
+| dom? | optional, if none is passed, this hook will subscribe to the ref that it returns	 | HTMLElement \| (() => HTMLElement) \| null   | Window      |
+| eventListenerOptions? | optional, params for EventListener | boolean \| AddEventListenerOptions   |       |
+
+### Return
+
+| Property | Description                                                       | Type                 |
+|------|----------|------|
+| ref | When no param is passed, this ref will be listened | `RefObject<HTMLElement>` |

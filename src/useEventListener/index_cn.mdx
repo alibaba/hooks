@@ -7,27 +7,46 @@ sidebar: true
 ---
 import JackBox from 'jackbox';
 import Demo1 from './demo/demo1';
+import Demo2 from './demo/demo2';
 import Demo1CodeTsx from '!raw-loader!./demo/demo1.tsx';
 import Demo1CodeJsx from '!raw-loader!./demo/demo1.jsx';
+import Demo2CodeTsx from '!raw-loader!./demo/demo2.tsx';
+import Demo2CodeJsx from '!raw-loader!./demo/demo2.jsx';
 
 # useEventListener
 
-优雅使用EventListener的 Hook。
+优雅使用 EventListener 的 Hook。
 
 ## 代码演示
 
-<JackBox jsCode={Demo1CodeJsx} tsCode={Demo1CodeTsx} demoName='使用示例' description='请按下键盘查看效果。'>
+<JackBox jsCode={Demo1CodeJsx} tsCode={Demo1CodeTsx} demoName='使用示例' description='点击按钮查看效果。'>
   <Demo1 />
 </JackBox>
+
+<JackBox jsCode={Demo2CodeJsx} tsCode={Demo2CodeTsx} demoName='使用示例' description='按下键盘查看效果。'>
+  <Demo2 />
+</JackBox>
+
 
 ## API
 
 ```
-useEventListener(
-  eventName: string;
-  handler: Function;
-  element: HTMLElement | Window
-)
+function useEventListener<T extends Target = HTMLElement>(
+  eventName: string,
+  handler: Function,
+  options?: { eventListenerOptions?: boolean | AddEventListenerOptions },
+): MutableRefObject<T>;
+
+function useEventListener<T extends Target = HTMLElement>(
+  eventName: string,
+  handler: Function,
+  options?: { dom: Dom, eventListenerOptions?: boolean | AddEventListenerOptions },
+): void
+
+type Target = HTMLElement | Window;
+type Options = { dom?: Dom, eventListenerOptions?: boolean | AddEventListenerOptions }
+type Dom = Target | (() => Target) | null;
+
 ```
 
 
@@ -37,6 +56,18 @@ useEventListener(
 |---------|----------|------------------------|--------|
 | eventName | 事件名称 | string | -      |
 | handler | 处理函数 | Function | -      |
-| element | 监听元素 | HTMLElement or Window | window     |
+| options | 设置(可选) | Options |      |
 
+### Options
+
+| 参数    | 说明     | 类型                   | 默认值 |
+|---------|----------|------------------------|--------|
+| dom? | 可选项，如果未传入则会监听返回结果中的 ref，否则会监听传入的节点	 | HTMLElement \| (() => HTMLElement) \| null   | Window      |
+| eventListenerOptions? | 可选项，监听参数	 | boolean \| AddEventListenerOptions   |       |
+
+### 返回
+
+| 参数 | 说明     | 类型 |
+|------|----------|------|
+| ref | 当未传入任何参数时，将 ref 绑定给需监听的节点 | RefObject<HTMLElement> |
 

@@ -2,12 +2,12 @@ import React, { useState } from 'react';
 import useEventListener from '../index';
 
 export default () => {
-  const [value, setValue] = useState('');
+  const [value, setValue] = useState(0);
 
-  const keyDownHandler = ev => {
-    setValue(ev.code);
+  const clickHandler = () => {
+    setValue(value + 1);
   };
 
-  useEventListener('keydown', keyDownHandler);
-  return <p>Your press key is {value}</p>;
+  const ref = useEventListener('click', clickHandler);
+  return <button ref={ref}>You click {value} times</button>;
 };
