@@ -1,19 +1,19 @@
 import { MutableRefObject, useEffect, useRef } from 'react';
 
 type Target = HTMLElement | Window;
-type Options = { dom?: Dom, eventListenerOptions?: boolean | AddEventListenerOptions }
+type Options = { dom?: Dom; capture?: boolean; once?: boolean; passive?: boolean; }
 type Dom = Target | (() => Target) | null;
 
 function useEventListener<T extends Target = HTMLElement>(
   eventName: string,
   handler: Function,
-  options?: { eventListenerOptions?: boolean | AddEventListenerOptions },
+  options?: { capture?: boolean; once?: boolean; passive?: boolean; },
 ): MutableRefObject<T>;
 
 function useEventListener<T extends Target = HTMLElement>(
   eventName: string,
   handler: Function,
-  options?: { dom: Dom, eventListenerOptions?: boolean | AddEventListenerOptions },
+  options?: { dom: Dom, capture?: boolean; once?: boolean; passive?: boolean; },
 ): void
 
 function useEventListener<T extends Target = HTMLElement>(
@@ -39,20 +39,16 @@ function useEventListener<T extends Target = HTMLElement>(
     ): EventListenerOrEventListenerObject | AddEventListenerOptions =>
       savedHandler.current && savedHandler.current(event);
 
-    if (options && options.eventListenerOptions) {
-      element.addEventListener(eventName, eventListener,
-        options.eventListenerOptions);
-    } else {
-      element.addEventListener(eventName, eventListener);
-    }
+    element.addEventListener(eventName, eventListener,{
+      capture:options?.capture,
+      once:options?.once,
+      passive:options?.passive
+    });
 
     return () => {
-      if (options && options.eventListenerOptions) {
-        element && element.removeEventListener(eventName, eventListener,
-          options.eventListenerOptions);
-      } else {
-        element && element.removeEventListener(eventName, eventListener);
-      }
+      element.removeEventListener(eventName, eventListener,{
+        capture:options?.capture,
+      });
     };
   }, [eventName, options, ref.current]);
   return ref;
