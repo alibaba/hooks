@@ -28,6 +28,7 @@ import useClickAway from './useClickAway';
 import useFullscreen from './useFullscreen';
 import useInViewport from './useInViewport';
 import useKeyPress from './useKeyPress';
+import useEventListener from './useEventListener';
 
 const useControlledValue: typeof useControllableValue = function (...args) {
   console.warn(
@@ -70,4 +71,5 @@ export {
   useFullscreen,
   useInViewport,
   useKeyPress,
+  useEventListener,
 };
