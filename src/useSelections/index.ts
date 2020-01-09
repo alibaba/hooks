@@ -1,15 +1,28 @@
 /* eslint-disable no-shadow */
-import { useState, useMemo, useEffect } from 'react';
+import { useState, useMemo, useEffect, useCallback } from 'react';
 
 export default function useSelections<T>(
   items: T[],
-  checkDisbled?: (o:T) => boolean,
-  compare?: (oldValue: T, newValue: T) => boolean
+  opt?: {
+    checkDisbled?: (o: T) => boolean;
+    compare?: (oldValue: T, newValue: T) => boolean;
+  }
 ) {
   const [selected, setSelected] = useState<T[]>([]);
-  const [disableSet, setDisableSet] = useState<Set<T>>(new Set());
+
+  /** 禁用项 */
+  const disableSet = useMemo(() => {
+    const _disableSet = new Set<T>();
+    if (opt && opt.checkDisbled) {
+      items.forEach(o => {
+        if (opt.checkDisbled!(o)) _disableSet.add(o);
+      });
+    }
+    return _disableSet;
+  }, [items, opt]);
+
   /** 该项是否禁用 */
-  const isDisbled = (item: T) => disableSet.has(item);
+  const isDisbled = useCallback((item: T) => disableSet.has(item), [disableSet]);
 
   const { selectedSet, isSelected, select, unSelect, toggle } = useMemo(() => {
     const selectedSet = new Set<T>(selected);
@@ -38,26 +51,17 @@ export default function useSelections<T>(
   }, [selected]);
 
   useEffect(() => {
-    // 检查哪些选项是不可用的
-    const disableSet = new Set<T>();
-    if (checkDisbled) {
-      items.forEach(o => {
-        if (checkDisbled(o)) disableSet.add(o);
-      });
-    }
-    setDisableSet(disableSet);
-
     // 更新源数据时，合并新数据
-    if (compare && selected.length > 0) {
+    if (opt && opt.compare && selected.length > 0) {
       const newSelected: T[] = [];
       items.forEach(o => {
         if (disableSet.has(o)) return;
-        const s = selected.find(e => compare(e, o));
+        const s = selected.find(e => opt.compare!(e, o));
         if (s) newSelected.push(o);
       });
       setSelected(newSelected);
     }
-  }, [items, checkDisbled]);
+  }, [items]);
 
   const {
     selectAll,
@@ -84,7 +88,7 @@ export default function useSelections<T>(
     const noneSelected = items.every(o => !selectedSet.has(o));
 
     const allSelected =
-      items.every(o => selectedSet.has(o) || disableSet.has(o)) && !noneSelected;
+      items.every(o => selectedSet.has(o) || isDisbled(o)) && !noneSelected;
 
     const partiallySelected = !noneSelected && !allSelected;
 
@@ -96,10 +100,9 @@ export default function useSelections<T>(
       noneSelected,
       allSelected,
       partiallySelected,
-      toggleAll,
-      disableSet
+      toggleAll
     };
-  }, [selectedSet, items]);
+  }, [items, selectedSet, isDisbled]);
 
   return {
     selected,
