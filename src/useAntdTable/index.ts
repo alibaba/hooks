@@ -14,7 +14,6 @@ import isEqual from 'lodash.isequal';
 import useAsync from '../useAsync';
 import useUpdateEffect from '../useUpdateEffect';
 
-
 interface UseAntdTableFormUtils extends WrappedFormUtils {
   getFieldInstance?: (name: string) => {};
 }
@@ -33,7 +32,7 @@ export interface ReturnValue<Item> {
       current: number;
       pageSize: number;
       total: number;
-    };
+    } & { [K in keyof PaginationConfig]?: PaginationConfig[K] };
   };
   tableProps: {
     dataSource: Item[];
@@ -47,7 +46,7 @@ export interface ReturnValue<Item> {
       current: number;
       pageSize: number;
       total: number;
-    };
+    } & { [K in keyof PaginationConfig]?: PaginationConfig[K] };
   };
   sorter: SorterResult<Item>;
   filters: Record<keyof Item, string[]>;
