@@ -1,24 +1,42 @@
 import { useState } from 'react';
 
-function useStorageState<T>(storage: Storage, key: string, defaultValue?: T | (() => T)) {
-  const [state, setState] = useState<T | undefined>(() => {
-    const raw = storage.getItem(key);
-    if (raw !== null) {
-      return JSON.parse(raw);
-    }
-    if (typeof defaultValue === 'function') {
-      return (defaultValue as () => T)();
-    }
-    return defaultValue;
-  });
-  function updateState(value?: T | ((previousState: T) => T)) {
+interface IInitFunc<T> {
+  (): T;
+}
+
+interface IFuncUpdater<T> {
+  (previousState?: T): T;
+}
+
+function isFunction<T>(obj: any): obj is T {
+  return typeof obj === 'function';
+}
+
+function getByKey<T>(
+  storage: Storage,
+  key: string,
+  defaultValue?: T | IInitFunc<T>,
+): T | undefined {
+  const raw = storage.getItem(key);
+  if (raw) {
+    return JSON.parse(raw);
+  }
+  if (isFunction<IInitFunc<T>>(defaultValue)) {
+    return defaultValue();
+  }
+  return defaultValue;
+}
+
+function useStorageState<T>(storage: Storage, key: string, defaultValue?: T | IInitFunc<T>) {
+  const [state, setState] = useState<T | undefined>(() => getByKey(storage, key, defaultValue));
+
+  function updateState(value?: T | IFuncUpdater<T>) {
     if (typeof value === 'undefined') {
       storage.removeItem(key);
       setState(defaultValue);
-    } else if (typeof value === 'function') {
-      const raw = storage.getItem(key);
-      const previousState = raw !== null ? JSON.parse(raw) : defaultValue;
-      const currentState = (value as (previousState: T) => T)(previousState);
+    } else if (isFunction<IFuncUpdater<T>>(value)) {
+      const previousState = getByKey(storage, key, defaultValue);
+      const currentState = value(previousState);
       storage.setItem(key, JSON.stringify(currentState));
       setState(currentState);
     } else {
