@@ -25,7 +25,7 @@ export interface ReturnValue<Item> {
     loading: boolean;
     onChange: (
       pagination: PaginationConfig,
-      filters?: Record<keyof Item, string[]>,
+      filters?: Partial<Record<keyof Item, string[]>>,
       sorter?: SorterResult<Item>,
     ) => void;
     pagination: {
@@ -39,7 +39,7 @@ export interface ReturnValue<Item> {
     loading: boolean;
     onChange: (
       pagination: PaginationConfig,
-      filters?: Record<keyof Item, string[]>,
+      filters?: Partial<Record<keyof Item, string[]>>,
       sorter?: SorterResult<Item>,
     ) => void;
     pagination: {
@@ -347,7 +347,7 @@ function useAntdTable<Result, Item>(
   const changeTable = useCallback(
     (
       p: PaginationConfig,
-      f: Record<keyof Item, string[]> = {} as Record<keyof Item, string[]>,
+      f: Partial<Record<keyof Item, string[]>> = {} as Partial<Record<keyof Item, string[]>>,
       s: SorterResult<Item> = {} as SorterResult<Item>,
     ) => {
       // antd table 的初始状态 filter 带有 null 字段，需要先去除后再比较
