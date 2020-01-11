@@ -5,11 +5,13 @@ interface Position {
   top: number;
 }
 
-type Arg = HTMLElement | (() => HTMLElement) | null;
+type Target = HTMLElement | Document;
 
-function useScroll<T extends HTMLElement = HTMLElement>(): [Position, MutableRefObject<T>];
-function useScroll<T extends HTMLElement = HTMLElement>(arg: Arg): [Position];
-function useScroll<T extends HTMLElement = HTMLElement>(...args: [Arg] | []) {
+type Arg = Target | (() => Target) | null;
+
+function useScroll<T extends Target = HTMLElement>(): [Position, MutableRefObject<T>];
+function useScroll<T extends Target = HTMLElement>(arg: Arg): [Position];
+function useScroll<T extends Target = HTMLElement>(...args: [Arg] | []) {
   const [position, setPosition] = useState<Position>({
     left: NaN,
     top: NaN,
@@ -23,15 +25,26 @@ function useScroll<T extends HTMLElement = HTMLElement>(...args: [Arg] | []) {
     const passedInElement = typeof arg === 'function' ? arg() : arg;
     const element = hasPassedInElement ? passedInElement : ref.current;
     if (!element) return;
-    setPosition({
-      left: element.scrollLeft,
-      top: element.scrollTop,
-    });
+    function updatePosition(target: Target) {
+      let newPosition;
+      if (target === document) {
+        if (!document.scrollingElement) return;
+        newPosition = {
+          left: document.scrollingElement.scrollLeft,
+          top: document.scrollingElement.scrollTop,
+        };
+      } else {
+        newPosition = {
+          left: (target as HTMLElement).scrollLeft,
+          top: (target as HTMLElement).scrollTop,
+        };
+      }
+      setPosition(newPosition);
+    }
+    updatePosition(element);
     function listener(event: Event) {
-      setPosition({
-        left: (event.target as HTMLElement).scrollLeft,
-        top: (event.target as HTMLElement).scrollTop,
-      });
+      if (!event.target) return;
+      updatePosition(event.target as Target);
     }
     element.addEventListener('scroll', listener);
     return () => {
