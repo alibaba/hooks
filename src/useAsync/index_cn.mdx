@@ -101,4 +101,4 @@ const result: Result = useAsync<T>(
 | pollingInterval | 轮询间隔毫秒，只有设置了 pollingInterval，才会开启轮询 | number                            | -      |
 | onSuccess       | 执行成功时的回掉                                       | (d: T, params: any[]) => void     | -      |
 | onError         | 执行失败时的回掉                                       | (e: Error, params: any[]) => void | -      |
-| autoCancel      | 是否需要关闭竞态处理                                   | boolean                           | false  |
+| autoCancel      | 是否需要关闭竞态处理                                   | boolean                           | true  |

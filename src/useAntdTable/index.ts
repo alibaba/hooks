@@ -10,10 +10,9 @@ import {
   useMemo,
   Reducer,
 } from 'react';
+import isEqual from 'lodash.isequal';
 import useAsync from '../useAsync';
 import useUpdateEffect from '../useUpdateEffect';
-
-const isEqual = require('lodash.isequal');
 
 interface UseAntdTableFormUtils extends WrappedFormUtils {
   getFieldInstance?: (name: string) => {};
@@ -26,28 +25,28 @@ export interface ReturnValue<Item> {
     loading: boolean;
     onChange: (
       pagination: PaginationConfig,
-      filters?: Record<keyof Item, string[]>,
+      filters?: Partial<Record<keyof Item, string[]>>,
       sorter?: SorterResult<Item>,
     ) => void;
     pagination: {
       current: number;
       pageSize: number;
       total: number;
-    };
+    } & { [K in keyof PaginationConfig]?: PaginationConfig[K] };
   };
   tableProps: {
     dataSource: Item[];
     loading: boolean;
     onChange: (
       pagination: PaginationConfig,
-      filters?: Record<keyof Item, string[]>,
+      filters?: Partial<Record<keyof Item, string[]>>,
       sorter?: SorterResult<Item>,
     ) => void;
     pagination: {
       current: number;
       pageSize: number;
       total: number;
-    };
+    } & { [K in keyof PaginationConfig]?: PaginationConfig[K] };
   };
   sorter: SorterResult<Item>;
   filters: Record<keyof Item, string[]>;
@@ -260,7 +259,7 @@ function useAntdTable<Result, Item>(
     const targetFormData = { ...state.formData, ...tempFieldsValueRef.current };
     const existFormData: FormData = {};
     Object.keys(targetFormData).forEach((key: string) => {
-      if (form.getFieldInstance && form.getFieldInstance(key)) {
+      if (form.getFieldInstance ? form.getFieldInstance(key) : true) {
         existFormData[key] = targetFormData[key];
       }
     });
@@ -276,7 +275,7 @@ function useAntdTable<Result, Item>(
     const fieldsValue = form.getFieldsValue();
     const filterFiledsValue: FormData = {};
     Object.keys(fieldsValue).forEach((key: string) => {
-      if (form.getFieldInstance && form.getFieldInstance(key)) {
+      if (form.getFieldInstance ? form.getFieldInstance(key) : true) {
         filterFiledsValue[key] = fieldsValue[key];
       }
     });
@@ -348,7 +347,7 @@ function useAntdTable<Result, Item>(
   const changeTable = useCallback(
     (
       p: PaginationConfig,
-      f: Record<keyof Item, string[]> = {} as Record<keyof Item, string[]>,
+      f: Partial<Record<keyof Item, string[]>> = {} as Partial<Record<keyof Item, string[]>>,
       s: SorterResult<Item> = {} as SorterResult<Item>,
     ) => {
       // antd table 的初始状态 filter 带有 null 字段，需要先去除后再比较
