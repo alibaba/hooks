@@ -1,6 +1,3 @@
-import { WrappedFormUtils } from 'antd/lib/form/Form';
-import { PaginationConfig } from 'antd/lib/pagination';
-import { SorterResult } from 'antd/lib/table';
 import {
   DependencyList,
   useCallback,
@@ -11,11 +8,16 @@ import {
   Reducer,
 } from 'react';
 import isEqual from 'lodash.isequal';
+import { PaginationConfig, SorterItem } from './typings';
 import useAsync from '../useAsync';
 import useUpdateEffect from '../useUpdateEffect';
 
-interface UseAntdTableFormUtils extends WrappedFormUtils {
+interface UseAntdTableFormUtils {
   getFieldInstance?: (name: string) => {};
+  setFieldsValue?: (value: { [key: string]: any }) => void;
+  getFieldsValue?: (...args: any) => any;
+  resetFields?: () => void;
+  [key: string]: any;
 }
 
 export interface ReturnValue<Item> {
@@ -26,7 +28,7 @@ export interface ReturnValue<Item> {
     onChange: (
       pagination: PaginationConfig,
       filters?: Partial<Record<keyof Item, string[]>>,
-      sorter?: SorterResult<Item>,
+      sorter?: SorterItem | SorterItem[],
     ) => void;
     pagination: {
       current: number;
@@ -40,7 +42,7 @@ export interface ReturnValue<Item> {
     onChange: (
       pagination: PaginationConfig,
       filters?: Partial<Record<keyof Item, string[]>>,
-      sorter?: SorterResult<Item>,
+      sorter?: SorterItem | SorterItem[],
     ) => void;
     pagination: {
       current: number;
@@ -48,7 +50,7 @@ export interface ReturnValue<Item> {
       total: number;
     } & { [K in keyof PaginationConfig]?: PaginationConfig[K] };
   };
-  sorter: SorterResult<Item>;
+  sorter: SorterItem | SorterItem[];
   filters: Record<keyof Item, string[]>;
   refresh: () => void;
   // TODO 如果有 form，则一定有 search
@@ -78,7 +80,7 @@ export interface Options<Result, Item> {
 export interface FnParams<Item> {
   current: number;
   pageSize: number;
-  sorter?: SorterResult<Item>;
+  sorter?: SorterItem | SorterItem[];
   filters?: Record<keyof Item, string[]>;
   [key: string]: any;
 }
@@ -114,7 +116,7 @@ class UseTableInitState<Item> {
 
   filters: Record<keyof Item, string[]> = {} as Record<keyof Item, string[]>;
 
-  sorter: SorterResult<Item> = {} as SorterResult<Item>;
+  sorter: SorterItem | SorterItem[] = {} as (SorterItem | SorterItem[]);
 }
 
 // 缓存
@@ -263,7 +265,9 @@ function useAntdTable<Result, Item>(
         existFormData[key] = targetFormData[key];
       }
     });
-    form.setFieldsValue(existFormData);
+    if (form.setFieldsValue) {
+      form.setFieldsValue(existFormData);
+    }
     tempFieldsValueRef.current = {};
   }, [state.searchType, state.formData]);
 
@@ -272,7 +276,10 @@ function useAntdTable<Result, Item>(
     if (!form) {
       return [];
     }
-    const fieldsValue = form.getFieldsValue();
+    let fieldsValue = {} as FormData;
+    if (form.getFieldsValue) {
+      fieldsValue = form.getFieldsValue();
+    }
     const filterFiledsValue: FormData = {};
     Object.keys(fieldsValue).forEach((key: string) => {
       if (form.getFieldInstance ? form.getFieldInstance(key) : true) {
@@ -313,7 +320,9 @@ function useAntdTable<Result, Item>(
       return;
     }
     // 恢复初始值
-    form.resetFields();
+    if (form.resetFields) {
+      form.resetFields();
+    }
     // 重置表单后，拿到当前默认值
     const activeFormData = getCurrentFieldsValues();
 
@@ -348,7 +357,7 @@ function useAntdTable<Result, Item>(
     (
       p: PaginationConfig,
       f: Partial<Record<keyof Item, string[]>> = {} as Partial<Record<keyof Item, string[]>>,
-      s: SorterResult<Item> = {} as SorterResult<Item>,
+      s: SorterItem | SorterItem[] = {} as (SorterItem | SorterItem[]),
     ) => {
       // antd table 的初始状态 filter 带有 null 字段，需要先去除后再比较
       const realFilter = { ...f };
@@ -360,8 +369,10 @@ function useAntdTable<Result, Item>(
       /* 如果 filter，或者 sort 变化，就初始化 current */
       const needReload =
         !isEqual(realFilter, state.filters) ||
-        s.field !== state.sorter.field ||
-        s.order !== state.sorter.order;
+        Array.isArray(s) !== Array.isArray(state.sorter) ||
+        (Array.isArray(s) && Array.isArray(state.sorter) && s.length !== state.sorter.length) ||
+        (s as SorterItem).field !== (state.sorter as SorterItem).field ||
+        (s as SorterItem).order !== (state.sorter as SorterItem).order;
       dispatch({
         type: 'updateState',
         payload: {
