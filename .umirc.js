@@ -7,4 +7,7 @@ export default {
       style: true,
     },
   ]],
+  doc: {
+    locales: [['en-US', 'English'], ['zh-CN', '中文']]
+  }
 }
