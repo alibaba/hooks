@@ -11,6 +11,7 @@ export default function () {
   return (
     <>
       <Input
+        style={{ width: 200 }}
         defaultValue={user.name}
         placeholder="input user name"
         onChange={e => {
