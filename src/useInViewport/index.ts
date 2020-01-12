@@ -1,17 +1,19 @@
 import { useRef, useLayoutEffect, useState, MutableRefObject } from 'react';
 
-require('intersection-observer');
+import 'intersection-observer';
 
 type Arg = HTMLElement | (() => HTMLElement) | null;
 type InViewport = boolean | undefined;
 
-function isInViewPort (el: HTMLElement): boolean {
+function isInViewPort(el: HTMLElement): boolean {
   if (!el) {
     return false;
   }
 
-  const viewPortWidth = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
-  const viewPortHeight = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
+  const viewPortWidth =
+    window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+  const viewPortHeight =
+    window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
   const rect = el.getBoundingClientRect();
 
   if (rect) {

@@ -101,4 +101,4 @@ const result: Result = useAsync<T>(
 | pollingInterval | the polling interval, enable polling only if this property is set. (numbers in ms) | number  | -      |
 | onSuccess       | the callback when async function runs successfully           | (d: T, params: any[]) => void | - |
 | onError         | the callback when async function fails              | (e: Error, params: any[]) => void | - |
-| autoCancel      | whether to drop the result when deps change or component unmount         | boolean | false |
+| autoCancel      | whether to drop the result when deps change or component unmount         | boolean | true |
