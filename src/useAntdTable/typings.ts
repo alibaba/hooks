@@ -34,5 +34,12 @@ export interface PaginationConfig {
   [key: string]: any;
 }
 
-export type Sorter = any;
+export interface Sorter {
+  column?: any;
+  order?: 'ascend' | 'descend';
+  field?: string;
+  columnKey?: string;
+  [key: string]: any;
+}
+
 export type Filter = any;
