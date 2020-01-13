@@ -1,6 +1,3 @@
-import { WrappedFormUtils } from 'antd/lib/form/Form';
-import { PaginationConfig } from 'antd/lib/pagination';
-import { SorterResult } from 'antd/lib/table';
 import {
   DependencyList,
   useCallback,
@@ -11,11 +8,16 @@ import {
   Reducer,
 } from 'react';
 import isEqual from 'lodash.isequal';
+import { PaginationConfig, Sorter, Filter } from './typings';
 import useAsync from '../useAsync';
 import useUpdateEffect from '../useUpdateEffect';
 
-interface UseAntdTableFormUtils extends WrappedFormUtils {
+interface UseAntdTableFormUtils {
   getFieldInstance?: (name: string) => {};
+  setFieldsValue?: (value: { [key: string]: any }) => void;
+  getFieldsValue?: (...args: any) => any;
+  resetFields?: () => void;
+  [key: string]: any;
 }
 
 export interface ReturnValue<Item> {
@@ -23,11 +25,7 @@ export interface ReturnValue<Item> {
   table?: {
     dataSource: Item[];
     loading: boolean;
-    onChange: (
-      pagination: PaginationConfig,
-      filters?: Partial<Record<keyof Item, string[]>>,
-      sorter?: SorterResult<Item>,
-    ) => void;
+    onChange: (pagination: PaginationConfig, filters?: Filter, sorter?: Sorter) => void;
     pagination: {
       current: number;
       pageSize: number;
@@ -37,19 +35,15 @@ export interface ReturnValue<Item> {
   tableProps: {
     dataSource: Item[];
     loading: boolean;
-    onChange: (
-      pagination: PaginationConfig,
-      filters?: Partial<Record<keyof Item, string[]>>,
-      sorter?: SorterResult<Item>,
-    ) => void;
+    onChange: (pagination: PaginationConfig, filters?: Filter, sorter?: Sorter) => void;
     pagination: {
       current: number;
       pageSize: number;
       total: number;
     } & { [K in keyof PaginationConfig]?: PaginationConfig[K] };
   };
-  sorter: SorterResult<Item>;
-  filters: Record<keyof Item, string[]>;
+  sorter: Sorter;
+  filters: Filter;
   refresh: () => void;
   // TODO 如果有 form，则一定有 search
   search?: {
@@ -78,8 +72,8 @@ export interface Options<Result, Item> {
 export interface FnParams<Item> {
   current: number;
   pageSize: number;
-  sorter?: SorterResult<Item>;
-  filters?: Record<keyof Item, string[]>;
+  sorter?: Sorter;
+  filters?: Filter;
   [key: string]: any;
 }
 
@@ -112,9 +106,9 @@ class UseTableInitState<Item> {
   // 列表数据
   data: Item[] = [];
 
-  filters: Record<keyof Item, string[]> = {} as Record<keyof Item, string[]>;
+  filters: Filter = {} as Filter;
 
-  sorter: SorterResult<Item> = {} as SorterResult<Item>;
+  sorter: Sorter = {} as Sorter;
 }
 
 // 缓存
@@ -263,7 +257,9 @@ function useAntdTable<Result, Item>(
         existFormData[key] = targetFormData[key];
       }
     });
-    form.setFieldsValue(existFormData);
+    if (form.setFieldsValue) {
+      form.setFieldsValue(existFormData);
+    }
     tempFieldsValueRef.current = {};
   }, [state.searchType, state.formData]);
 
@@ -272,7 +268,10 @@ function useAntdTable<Result, Item>(
     if (!form) {
       return [];
     }
-    const fieldsValue = form.getFieldsValue();
+    let fieldsValue = {} as FormData;
+    if (form.getFieldsValue) {
+      fieldsValue = form.getFieldsValue();
+    }
     const filterFiledsValue: FormData = {};
     Object.keys(fieldsValue).forEach((key: string) => {
       if (form.getFieldInstance ? form.getFieldInstance(key) : true) {
@@ -313,7 +312,9 @@ function useAntdTable<Result, Item>(
       return;
     }
     // 恢复初始值
-    form.resetFields();
+    if (form.resetFields) {
+      form.resetFields();
+    }
     // 重置表单后，拿到当前默认值
     const activeFormData = getCurrentFieldsValues();
 
@@ -345,11 +346,7 @@ function useAntdTable<Result, Item>(
 
   // 表格翻页 排序 筛选等
   const changeTable = useCallback(
-    (
-      p: PaginationConfig,
-      f: Partial<Record<keyof Item, string[]>> = {} as Partial<Record<keyof Item, string[]>>,
-      s: SorterResult<Item> = {} as SorterResult<Item>,
-    ) => {
+    (p: PaginationConfig, f: Filter = {} as Filter, s: Sorter = {} as Sorter) => {
       // antd table 的初始状态 filter 带有 null 字段，需要先去除后再比较
       const realFilter = { ...f };
       Object.entries(realFilter).forEach(item => {
@@ -357,11 +354,11 @@ function useAntdTable<Result, Item>(
           delete (realFilter as Object)[item[0] as keyof Object];
         }
       });
-      /* 如果 filter，或者 sort 变化，就初始化 current */
       const needReload =
         !isEqual(realFilter, state.filters) ||
         s.field !== state.sorter.field ||
         s.order !== state.sorter.order;
+
       dispatch({
         type: 'updateState',
         payload: {

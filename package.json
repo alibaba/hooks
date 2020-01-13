@@ -46,7 +46,6 @@
     "resize-observer-polyfill": "^1.5.1"
   },
   "peerDependencies": {
-    "antd": "^3.26.6",
     "react": "^16.8.6"
   },
   "devDependencies": {
