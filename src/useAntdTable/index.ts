@@ -7,8 +7,7 @@ import {
   useMemo,
   Reducer,
 } from 'react';
-import isEqual from 'lodash.isequal';
-import { PaginationConfig, SorterItem } from './typings';
+import { PaginationConfig, Sorter, Filter } from './typings';
 import useAsync from '../useAsync';
 import useUpdateEffect from '../useUpdateEffect';
 
@@ -25,11 +24,7 @@ export interface ReturnValue<Item> {
   table?: {
     dataSource: Item[];
     loading: boolean;
-    onChange: (
-      pagination: PaginationConfig,
-      filters?: Partial<Record<keyof Item, string[]>>,
-      sorter?: SorterItem | SorterItem[],
-    ) => void;
+    onChange: (pagination: PaginationConfig, filters?: Filter, sorter?: Sorter) => void;
     pagination: {
       current: number;
       pageSize: number;
@@ -39,19 +34,15 @@ export interface ReturnValue<Item> {
   tableProps: {
     dataSource: Item[];
     loading: boolean;
-    onChange: (
-      pagination: PaginationConfig,
-      filters?: Partial<Record<keyof Item, string[]>>,
-      sorter?: SorterItem | SorterItem[],
-    ) => void;
+    onChange: (pagination: PaginationConfig, filters?: Filter, sorter?: Sorter) => void;
     pagination: {
       current: number;
       pageSize: number;
       total: number;
     } & { [K in keyof PaginationConfig]?: PaginationConfig[K] };
   };
-  sorter: SorterItem | SorterItem[];
-  filters: Record<keyof Item, string[]>;
+  sorter: Sorter;
+  filters: Filter;
   refresh: () => void;
   // TODO 如果有 form，则一定有 search
   search?: {
@@ -80,8 +71,8 @@ export interface Options<Result, Item> {
 export interface FnParams<Item> {
   current: number;
   pageSize: number;
-  sorter?: SorterItem | SorterItem[];
-  filters?: Record<keyof Item, string[]>;
+  sorter?: Sorter;
+  filters?: Filter;
   [key: string]: any;
 }
 
@@ -114,9 +105,9 @@ class UseTableInitState<Item> {
   // 列表数据
   data: Item[] = [];
 
-  filters: Record<keyof Item, string[]> = {} as Record<keyof Item, string[]>;
+  filters: Filter = {} as Filter;
 
-  sorter: SorterItem | SorterItem[] = {} as (SorterItem | SorterItem[]);
+  sorter: Sorter = {} as Sorter;
 }
 
 // 缓存
@@ -354,29 +345,11 @@ function useAntdTable<Result, Item>(
 
   // 表格翻页 排序 筛选等
   const changeTable = useCallback(
-    (
-      p: PaginationConfig,
-      f: Partial<Record<keyof Item, string[]>> = {} as Partial<Record<keyof Item, string[]>>,
-      s: SorterItem | SorterItem[] = {} as (SorterItem | SorterItem[]),
-    ) => {
-      // antd table 的初始状态 filter 带有 null 字段，需要先去除后再比较
-      const realFilter = { ...f };
-      Object.entries(realFilter).forEach(item => {
-        if (item[1] === null) {
-          delete (realFilter as Object)[item[0] as keyof Object];
-        }
-      });
-      /* 如果 filter，或者 sort 变化，就初始化 current */
-      const needReload =
-        !isEqual(realFilter, state.filters) ||
-        Array.isArray(s) !== Array.isArray(state.sorter) ||
-        (Array.isArray(s) && Array.isArray(state.sorter) && s.length !== state.sorter.length) ||
-        (s as SorterItem).field !== (state.sorter as SorterItem).field ||
-        (s as SorterItem).order !== (state.sorter as SorterItem).order;
+    (p: PaginationConfig, f: Filter = {} as Filter, s: Sorter = {} as Sorter) => {
       dispatch({
         type: 'updateState',
         payload: {
-          current: needReload ? 1 : p.current,
+          current: p.current,
           pageSize: p.pageSize,
           count: state.count + 1,
           filters: f,
