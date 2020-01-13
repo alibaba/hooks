@@ -1,5 +1,4 @@
 import { renderHook, act } from '@testing-library/react-hooks';
-import { useState } from 'react';
 import useLocalStorageState from '../index';
 
 describe('useLocalStorageState', () => {
@@ -100,5 +99,15 @@ describe('useLocalStorageState', () => {
     expect(hook.result.current.state).toEqual(null);
     const anotherHook = setUp(LOCAL_STORAGE_KEY, false);
     expect(anotherHook.result.current.state).toEqual(null);
+  });
+
+  it('should support function updater', () => {
+    const LOCAL_STORAGE_KEY = 'test-func-updater';
+    const hook = setUp<string | null>(LOCAL_STORAGE_KEY, 'hello world');
+    expect(hook.result.current.state).toEqual('hello world');
+    act(() => {
+      hook.result.current.setState(state => `${state}, zhangsan`);
+    });
+    expect(hook.result.current.state).toEqual('hello world, zhangsan');
   });
 });
