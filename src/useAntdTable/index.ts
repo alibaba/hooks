@@ -7,6 +7,7 @@ import {
   useMemo,
   Reducer,
 } from 'react';
+import isEqual from 'lodash.isequal';
 import { PaginationConfig, Sorter, Filter } from './typings';
 import useAsync from '../useAsync';
 import useUpdateEffect from '../useUpdateEffect';
@@ -346,10 +347,22 @@ function useAntdTable<Result, Item>(
   // 表格翻页 排序 筛选等
   const changeTable = useCallback(
     (p: PaginationConfig, f: Filter = {} as Filter, s: Sorter = {} as Sorter) => {
+      // antd table 的初始状态 filter 带有 null 字段，需要先去除后再比较
+      const realFilter = { ...f };
+      Object.entries(realFilter).forEach(item => {
+        if (item[1] === null) {
+          delete (realFilter as Object)[item[0] as keyof Object];
+        }
+      });
+      const needReload =
+        !isEqual(realFilter, state.filters) ||
+        s.field !== state.sorter.field ||
+        s.order !== state.sorter.order;
+
       dispatch({
         type: 'updateState',
         payload: {
-          current: p.current,
+          current: needReload ? 1 : p.current,
           pageSize: p.pageSize,
           count: state.count + 1,
           filters: f,
