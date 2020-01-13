@@ -16,6 +16,10 @@ import Demo2 from './demo/demo2';
 import Demo2CodeTsx from '!raw-loader!./demo/demo2.tsx';
 import Demo2CodeJsx from '!raw-loader!./demo/demo2.jsx';
 
+import Demo3 from './demo/demo3';
+import Demo3CodeTsx from '!raw-loader!./demo/demo3.tsx';
+import Demo3CodeJsx from '!raw-loader!./demo/demo3.jsx';
+
 # useSessionStorageState
 
 A Hook for persisting state into sessionStorage.
@@ -30,13 +34,17 @@ A Hook for persisting state into sessionStorage.
   <Demo2 />
 </JackBox>
 
+<JackBox jsCode={Demo3CodeJsx} tsCode={Demo3CodeTsx} demoName='Persist objects with function updater' description='function updater is also acceptable with useSessionStorageState.'>
+  <Demo3 />
+</JackBox>
+
 ## API
 
 ```typescript
 const [state, setState] = useSessionStorageState<T>(
   key: string,
   defaultValue?: T | (() => T),
-): [T?, (value?: T) => void]
+): [T?, (value?: T | ((previousState: T) => T)) => void]
 ```
 
 The API is very similiar to `useState`, but there is an extra `key` parameter for specifying the key of sessionStorage. The return value is the same as `useState`. When `setState` gets called, it will update the new value to sessionStorage automatically.
