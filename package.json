@@ -20,7 +20,7 @@
   "homepage": "https://github.com/umijs/hooks",
   "scripts": {
     "start": "npm run dev",
-    "dev": "father doc dev",
+    "dev": "father-doc dev",
     "dev:zh-cn": "LAN=zh-CN father doc dev",
     "js": "node ./.ts2js.js",
     "build": "node ./scripts/clean-old-build.js && father build && tsc --declarationDir ./lib && tsc --declarationDir ./es && node ./scripts/build-wind-up.js",
@@ -58,6 +58,7 @@
     "docz-theme-umi-hooks": "^0.0.7",
     "enzyme": "^3.10.0",
     "father": "^2.13.3",
+    "father-doc": "^1.0.0-alpha.15",
     "jackbox": "^0.2.0",
     "now": "^16.2.0",
     "raw-loader": "^3.1.0",
