@@ -59,7 +59,7 @@
     "docz-theme-umi-hooks": "^0.0.7",
     "enzyme": "^3.10.0",
     "father": "^2.13.3",
-    "father-doc": "^1.0.0-alpha.13",
+    "father-doc": "^1.0.0-alpha.15",
     "jackbox": "^0.2.0",
     "now": "^16.2.0",
     "raw-loader": "^3.1.0",
