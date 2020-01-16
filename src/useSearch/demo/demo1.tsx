@@ -24,7 +24,12 @@ export default () => {
       onBlur={cancel}
       style={{ width: 300 }}
     >
-      {data && data.map((d: any) => <Option key={d.email}>{d.email}</Option>)}
+      {data &&
+        data.map((d: any) => (
+          <Option value={d.email} key={d.email}>
+            {d.email}
+          </Option>
+        ))}
     </Select>
   );
 };

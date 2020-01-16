@@ -53,7 +53,7 @@ export default () => {
       title: 'phone',
       dataIndex: 'phone',
       sorter: true,
-      sortOrder: sorter.field === 'phone' && sorter.order,
+      sortOrder: sorter.field === 'phone' ? sorter.order : false,
     },
     {
       title: 'gender',

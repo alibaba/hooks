@@ -1,5 +1,4 @@
 import { Button, Form, Input, message } from 'antd';
-import { FormComponentProps } from 'antd/lib/form';
 import React from 'react';
 import useAsync from '..';
 
@@ -10,13 +9,14 @@ const saveToServer = (data: string) =>
     }, 2000);
   });
 
-export default Form.create()((props: FormComponentProps) => {
+export default () => {
+  const [form] = Form.useForm();
   const { loading, run } = useAsync<string>(data => saveToServer(data), [], {
     manual: true,
     onSuccess: res => message.success(res),
     onError: error => message.error(error),
   });
-  const { getFieldDecorator, getFieldValue } = props.form;
+  const { getFieldValue } = form;
 
   const submit = () => {
     const fromData = getFieldValue('name');
@@ -24,13 +24,13 @@ export default Form.create()((props: FormComponentProps) => {
   };
 
   return (
-    <>
-      {getFieldDecorator('name')(
-        <Input style={{ width: 300, marginRight: 16 }} placeholder="please input your name" />,
-      )}
+    <Form form={form}>
+      <Form.Item name="name">
+        <Input style={{ width: 300, marginRight: 16 }} placeholder="please input your name" />
+      </Form.Item>
       <Button type="primary" loading={loading} onClick={submit} style={{ marginTop: 16 }}>
         save
       </Button>
-    </>
+    </Form>
   );
-});
+};

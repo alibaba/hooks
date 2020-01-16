@@ -1,50 +1,40 @@
 import React, { useState } from 'react';
-import { Form, Button, Input, Icon, Table } from 'antd';
+import { Form, Button, Input, Table } from 'antd';
+import { DragOutlined } from '@ant-design/icons';
 import ReactDragListView from 'react-drag-listview';
 import useDynamicList from '..';
+import './demo3.less';
 
-export default Form.create()(props => {
-  const { list, remove, getKey, move, push, sortForm } = useDynamicList([
-    {
-      name: 'my bro',
-      age: '23',
-      memo: "he's my bro",
-    },
-    {
-      name: 'my sis',
-      age: '21',
-      memo: "she's my sis",
-    },
-    {},
-  ]);
-  const { getFieldDecorator, getFieldsValue } = props.form;
+export default () => {
+  const initData = {
+    params: [
+      { name: 'my bro', age: '23', memo: "he's my bro" },
+      { name: 'my sis', age: '21', memo: "she's my sis" },
+      {},
+    ],
+  };
+  const { list, remove, getKey, move, push, sortForm } = useDynamicList(initData.params);
+  const [form] = Form.useForm();
+  const { getFieldsValue } = form;
   const [result, setResult] = useState('');
+
   const columns = [
     {
       title: 'Name',
       dataIndex: 'name',
       key: 'name',
       render: (text, row, index) => (
-        <>
-          <Icon
-            style={{
-              cursor: 'move',
-              marginRight: 8,
-            }}
-            type="drag"
-          />
-          {getFieldDecorator(`params[${getKey(index)}].name`, {
-            initialValue: text,
-          })(
-            <Input
-              style={{
-                width: 120,
-                marginRight: 16,
-              }}
-              placeholder="name"
-            />,
-          )}
-        </>
+        <Form.Item>
+          <Form.Item style={{ display: 'inline-block', width: '10px' }}>
+            <DragOutlined style={{ cursor: 'move' }} />
+          </Form.Item>
+          <Form.Item
+            name={['params', getKey(index), 'name']}
+            style={{ display: 'inline-block', width: 'calc(100% - 18px)', marginLeft: 8 }}
+          >
+            <Input placeholder="name" />
+          </Form.Item>
+        </Form.Item>
       ),
     },
     {
@@ -52,19 +42,9 @@ export default Form.create()(props => {
       dataIndex: 'age',
       key: 'age',
       render: (text, row, index) => (
-        <>
-          {getFieldDecorator(`params[${getKey(index)}].age`, {
-            initialValue: text,
-          })(
-            <Input
-              style={{
-                width: 120,
-                marginRight: 16,
-              }}
-              placeholder="age"
-            />,
-          )}
-        </>
+        <Form.Item name={['params', getKey(index), 'age']}>
+          <Input placeholder="age" />
+        </Form.Item>
       ),
     },
     {
@@ -72,71 +52,56 @@ export default Form.create()(props => {
       title: 'Memo',
       dataIndex: 'memo',
       render: (text, row, index) => (
-        <>
-          {getFieldDecorator(`params[${getKey(index)}].memo`, {
-            initialValue: text,
-          })(
-            <Input
-              style={{
-                width: 300,
-                marginRight: 16,
-              }}
-              placeholder="please input the memo"
-            />,
-          )}
-          <Button.Group>
-            <Button type="danger" onClick={() => remove(index)}>
-              Delete
-            </Button>
-          </Button.Group>
-        </>
+        <Form.Item style={{ marginBottom: 0 }}>
+          <Form.Item
+            name={['params', getKey(index), 'memo']}
+            style={{ display: 'inline-block', width: 'calc(100% - 58px)' }}
+          >
+            <Input placeholder="please input the memo" />
+          </Form.Item>
+          <Form.Item style={{ display: 'inline-block', width: '50px', marginLeft: 8 }}>
+            <Button.Group>
+              <Button type="danger" onClick={() => remove(index)}>
+                Delete
+              </Button>
+            </Button.Group>
+          </Form.Item>
+        </Form.Item>
       ),
     },
   ];
+
   return (
-    <>
+    <div className="use-dynamic-list_demo3">
       <ReactDragListView
         onDragEnd={(oldIndex, newIndex) => move(oldIndex, newIndex)}
-        handleSelector={'i[aria-label="icon: drag"]'}
+        handleSelector={'span[aria-label="drag"]'}
       >
-        <Table
-          columns={columns}
-          dataSource={list}
-          rowKey={(r, index) => getKey(index).toString()}
-          pagination={false}
-        />
+        <Form form={form} initialValues={list}>
+          <Table
+            columns={columns}
+            dataSource={list}
+            rowKey={(r, index) => getKey(index).toString()}
+            pagination={false}
+          />
+        </Form>
       </ReactDragListView>
       <Button
-        style={{
-          marginTop: 8,
-        }}
+        style={{ marginTop: 8 }}
         block
         type="dashed"
-        onClick={() =>
-          push({
-            name: 'new row',
-            age: '25',
-          })
-        }
+        onClick={() => push({ name: 'new row', age: '25' })}
       >
         + Add row
       </Button>
       <Button
         type="primary"
-        style={{
-          marginTop: 16,
-        }}
+        style={{ marginTop: 16 }}
         onClick={() => setResult(JSON.stringify(sortForm(getFieldsValue().params), null, 2))}
       >
         Submit
       </Button>
-      <div
-        style={{
-          whiteSpace: 'pre',
-        }}
-      >
-        {result && `content: ${result}`}
-      </div>
-    </>
+      <div style={{ whiteSpace: 'pre' }}>{result && `content: ${result}`}</div>
+    </div>
   );
-});
+};

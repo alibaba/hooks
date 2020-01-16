@@ -1,5 +1,5 @@
-import { Button, Form, Input, Table } from 'antd';
 import React, { useState } from 'react';
+import { Button, Form, Input, Table } from 'antd';
 import useAntdTable from '..';
 
 const getTableData = ({ current, pageSize, ...rest }) => {
@@ -12,14 +12,16 @@ const getTableData = ({ current, pageSize, ...rest }) => {
     }));
 };
 
-const AppList = props => {
-  const { getFieldDecorator } = props.form;
+const AppListTable = () => {
+  const [form] = Form.useForm();
+
   const { tableProps, filters, sorter, search } = useAntdTable(getTableData, {
     defaultPageSize: 5,
-    form: props.form,
+    form,
     id: 'tableId',
   });
   const { type, changeType, submit, reset } = search || {};
+
   const columns = [
     {
       title: 'name',
@@ -38,80 +40,43 @@ const AppList = props => {
     {
       title: 'gender',
       dataIndex: 'gender',
-      filters: [
-        {
-          text: 'male',
-          value: 'male',
-        },
-        {
-          text: 'female',
-          value: 'female',
-        },
-      ],
+      filters: [{ text: 'male', value: 'male' }, { text: 'female', value: 'female' }],
       filteredValue: filters.gender,
     },
   ];
+
   const searchFrom = (
-    <div
-      style={{
-        marginBottom: 16,
-      }}
-    >
-      <Form
-        style={{
-          display: 'flex',
-          justifyContent: 'flex-end',
-        }}
-      >
-        {getFieldDecorator('name')(
-          <Input
-            placeholder="enter name"
-            style={{
-              width: 140,
-              marginRight: 16,
-            }}
-          />,
-        )}
+    <div style={{ marginBottom: 16 }}>
+      <Form form={form} style={{ display: 'flex', justifyContent: 'flex-end' }}>
+        <Form.Item label="name" name="name">
+          <Input placeholder="enter name" style={{ width: 140, marginRight: 16 }} />
+        </Form.Item>
 
         {type === 'advance' && (
           <>
-            {getFieldDecorator('email')(
-              <Input
-                placeholder="enter email"
-                style={{
-                  width: 140,
-                  marginRight: 16,
-                }}
-              />,
-            )}
-            {getFieldDecorator('phone')(
-              <Input
-                placeholder="enter phone"
-                style={{
-                  width: 140,
-                  marginRight: 16,
-                }}
-              />,
-            )}
+            <Form.Item label="email" name="email">
+              <Input placeholder="enter email" style={{ width: 140, marginRight: 16 }} />
+            </Form.Item>
+            <Form.Item label="phone" name="phone">
+              <Input placeholder="enter phone" style={{ width: 140, marginRight: 16 }} />
+            </Form.Item>
           </>
         )}
-        <Button type="primary" onClick={submit}>
-          Search
-        </Button>
-        <Button
-          onClick={reset}
-          style={{
-            marginLeft: 8,
-          }}
-        >
-          Reset
-        </Button>
-        <Button type="link" onClick={changeType}>
-          {type === 'simple' ? 'Expand' : 'Close'}
-        </Button>
+        <Form.Item style={{ display: 'flex', justifyContent: 'flex-end' }}>
+          <Button type="primary" onClick={submit}>
+            Search
+          </Button>
+          <Button onClick={reset} style={{ marginLeft: 8 }}>
+            Reset
+          </Button>
+          <Button type="link" onClick={changeType}>
+            {type === 'simple' ? 'Expand' : 'Close'}
+          </Button>
+        </Form.Item>
       </Form>
     </div>
   );
+
   return (
     <div>
       {searchFrom}
@@ -120,10 +85,9 @@ const AppList = props => {
   );
 };
 
-const AppListTable = Form.create()(AppList);
-
 const Demo = () => {
   const [show, setShow] = useState(true);
+
   return (
     <div>
       <Button
@@ -131,9 +95,7 @@ const Demo = () => {
         onClick={() => {
           setShow(!show);
         }}
-        style={{
-          marginBottom: 16,
-        }}
+        style={{ marginBottom: 16 }}
       >
         {show ? 'Click to destroy' : 'Click recovery'}
       </Button>

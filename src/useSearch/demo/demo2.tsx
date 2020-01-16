@@ -35,12 +35,7 @@ export default () => {
         <Option value="app">App</Option>
         <Option value="product">Product</Option>
       </Select>
-      <AutoComplete
-        dataSource={data}
-        style={{ width: 300 }}
-        onSearch={onChange}
-        placeholder="Search"
-      >
+      <AutoComplete options={data} style={{ width: 300 }} onSearch={onChange} placeholder="Search">
         <Input.Search loading={loading} />
       </AutoComplete>
     </Input.Group>
