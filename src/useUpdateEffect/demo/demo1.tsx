@@ -1,6 +1,11 @@
-import { Button } from 'antd';
+/**
+ * title: Default usage
+ * desc: This hook is exactly the same as useEffect, except it omits the first render and only runs when dependencies update.
+ */
+
 import React, { useLayoutEffect, useState } from 'react';
-import useUpdateEffect from '..';
+import { Button } from 'antd';
+import { useUpdateEffect } from '@umijs/hooks';
 
 export default () => {
   const [count, setCount] = useState(0);

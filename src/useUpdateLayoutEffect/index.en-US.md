@@ -1,15 +1,9 @@
 ---
-name: useUpdateLayoutEffect
-route: /useUpdateLayoutEffect
-menu: 'LifeCycle'
-edit: false
-sidebar: true
+title: useUpdateLayoutEffect
+group:
+  title: LifeCycle Hooks
+  path: /LifeCycle
 ---
-import JackBox from 'jackbox';
-
-import Demo1 from './demo/demo1';
-import Demo1CodeTsx from '!raw-loader!./demo/demo1.tsx';
-import Demo1CodeJsx from '!raw-loader!./demo/demo1.jsx';
 
 # useUpdateLayoutEffect
 
@@ -17,10 +11,9 @@ A hook of useLayoutEffect that only runs when dependencies update.
 
 ## Examples
 
-### Basic usage
-<JackBox jsCode={Demo1CodeJsx} tsCode={Demo1CodeTsx} demoName='Basic usage' description='This hook is exactly the same as useLayoutEffect, except it omits the first render and only runs when dependencies update.'>
-  <Demo1 />
-</JackBox>
+### Default usage
+
+<code src="./demo/demo1.tsx" />
 
 ## API
 
