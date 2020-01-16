@@ -10,7 +10,7 @@ export default function() {
 
   const [result, setResult] = useState('');
 
-  const Row = (index: number) => (
+  const Row = index => (
     <Form.Item key={index}>
       <Form.Item
         name={['names', getKey(index)]}
@@ -50,7 +50,7 @@ export default function() {
         onClick={() =>
           validateFields()
             .then(values => {
-              setResult(JSON.stringify((values || {}).names.filter((e: string) => !!e)));
+              setResult(JSON.stringify((values || {}).names.filter(e => !!e)));
             })
             .catch(errorInfo => {
               console.log(errorInfo);
