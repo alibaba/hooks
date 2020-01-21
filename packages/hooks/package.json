@@ -28,10 +28,11 @@
     "package.json"
   ],
   "dependencies": {
-    "lodash.isequal": "^4.5.0",
-    "screenfull": "^5.0.0",
+    "@umijs/use-request": "^1.0.0",
     "intersection-observer": "^0.7.0",
-    "resize-observer-polyfill": "^1.5.1"
+    "lodash.isequal": "^4.5.0",
+    "resize-observer-polyfill": "^1.5.1",
+    "screenfull": "^5.0.0"
   },
   "peerDependencies": {
     "react": "^16.8.6"

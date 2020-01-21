@@ -1,4 +1,4 @@
-English | [简体中文](./README_zh-CN.md)
+English | [简体中文](https://github.com/umijs/hooks/blob/master/README_zh-CN.md)
 
 # @umijs/hooks
 
@@ -9,7 +9,7 @@ React Hooks Library.
 ## 📚 Document
 
 * [English](https://hooks.umijs.org/)
-* [中文](https://hooks.umijs.org/zh-cn/)
+* [中文](https://hooks.umijs.org/zh-CN/)
 
 ## ✨ Features
 
