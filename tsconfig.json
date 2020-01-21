@@ -16,17 +16,5 @@
     "skipLibCheck": true,
     "declaration": true,
     "emitDeclarationOnly": true
-  },
-  "include": [
-    "src/**/*"
-  ],
-  "exclude": [
-    "node_modules",
-    "lib",
-    "es",
-    "dist",
-    "**/__tests__",
-    "**/__test__",
-    "**/demo"
-  ]
+  }
 }

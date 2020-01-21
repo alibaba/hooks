@@ -33,7 +33,7 @@
 
 ## 开发流程
 
-在你 clone 代码并且使用 `npm install` 安装完依赖后，你还可以运行下面几个常用的命令：
+在你 clone 代码并且使用 `npm run init` 安装完依赖后，你还可以运行下面几个常用的命令：
 
 1. `npm start` 在本地运行 `@umijs/hooks` 网站。
 

@@ -1,4 +1,5 @@
 export default {
+  hash: true,
   extraBabelPlugins: [[
     'babel-plugin-import',
     {
@@ -8,6 +9,8 @@ export default {
     },
   ]],
   doc: {
+    title: 'Umi Hooks',
+    include: ['packages/hooks/src', 'packages/use-request/src'],
     locales: [['en-US', 'English'], ['zh-CN', '中文']]
   }
 }
