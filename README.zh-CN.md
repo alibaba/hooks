@@ -41,7 +41,7 @@ import { useAsync } from '@umijs/hooks';
 ```
 $ git clone git@github.com:umijs/hooks.git
 $ cd hooks
-$ npm install
+$ npm run init
 $ npm start
 ```
 打开浏览器访问 http://127.0.0.1:8001

@@ -6,36 +6,17 @@
       "src": "now-build.sh",
       "use": "@now/static-build",
       "config": {
-        "distDir": ".doc"
+        "distDir": "dist"
       }
     }
   ],
   "routes": [
     {
-      "src": "/zh-cn/static/(.*)",
+      "src": "/(.*).(js|css)",
       "headers": {
         "cache-control": "s-maxage=604800"
       },
-      "dest": "/zh-cn/static/$1"
-    },
-    {
-      "src": "/zh-cn/assets.json",
-      "dest": "/zh-cn/assets.json"
-    },
-    {
-      "src": "/zh-cn(/(.*))?",
-      "dest": "/zh-cn"
-    },
-    {
-      "src": "/static/(.*)",
-      "headers": {
-        "cache-control": "s-maxage=604800"
-      },
-      "dest": "/static/$1"
-    },
-    {
-      "src": "/assets.json",
-      "dest": "/assets.json"
+      "dest": "/$1"
     },
     {
       "src": "/(.*)",

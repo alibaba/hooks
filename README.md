@@ -40,7 +40,7 @@ import { useAsync } from '@umijs/hooks';
 ```
 $ git clone git@github.com:umijs/hooks.git
 $ cd hooks
-$ npm install
+$ npm run init
 $ npm start
 ```
 Open your browser and visit http://127.0.0.1:8001 , see more at Development.
