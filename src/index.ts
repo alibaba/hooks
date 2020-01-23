@@ -29,6 +29,7 @@ import useFullscreen from './useFullscreen';
 import useInViewport from './useInViewport';
 import useKeyPress from './useKeyPress';
 import useEventListener from './useEventListener';
+import useHover from './useHover';
 
 const useControlledValue: typeof useControllableValue = function (...args) {
   console.warn(
@@ -72,4 +73,5 @@ export {
   useInViewport,
   useKeyPress,
   useEventListener,
+  useHover,
 };
