@@ -86,10 +86,11 @@ function useLoadMore<Result = any, Item = any>(
   );
 
   const loadData = useCallback(() => {
+    const size = incrementSize || initPageSize;
     const params: FnParams = {
       page,
       pageSize: (page === 1 ? initPageSize : incrementSize) as number,
-      offset: data.length,
+      offset: Math.round(data.length / size) * size,
       startTime: startTime.current,
     };
 
