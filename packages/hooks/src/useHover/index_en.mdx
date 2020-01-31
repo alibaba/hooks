@@ -1,0 +1,64 @@
+---
+name: useHover
+route: /useHover
+menu: 'Other'
+edit: false
+sidebar: true
+---
+
+import JackBox from 'jackbox';
+
+import Demo1 from './demo/demo1';
+import Demo1CodeTs from '!raw-loader!./demo/demo1.tsx';
+import Demo1CodeJs from '!raw-loader!./demo/demo1.jsx';
+
+import Demo2 from './demo/demo2';
+import Demo2CodeTs from '!raw-loader!./demo/demo2.tsx';
+import Demo2CodeJs from '!raw-loader!./demo/demo2.jsx';
+
+# useHover
+React UI sensor hooks that track if some element is being hovered by a mouse.
+
+## Examples
+
+### Default usage
+
+<JackBox tsCode={Demo1CodeTs} jsCode={Demo1CodeJs} demoName='Default usage' description='Use ref to set elements that need listen dom'>
+  <Demo1 />
+</JackBox>
+
+<JackBox tsCode={Demo2CodeTs} jsCode={Demo2CodeJs} demoName='Lazy load' description='Pass in a function that returns the DOM element'>
+  <Demo2 />
+</JackBox>
+
+## API
+```
+// If there is no dom parameter, ref is returned
+const {state, ref} = useHover({
+    onEnter,
+    onLeave,
+});
+
+// If there is a dom, ref is not returned
+const [state] = useHover({
+  dom?,
+  onEnter,
+  onLeave,
+});
+
+```
+
+### Result
+
+| Property | Description                                         | Type                 |
+|----------|------------------------------------------|------------|
+| isHovering   | Determine whether the mouse element is in the hover element | boolean    |
+| ref     | When no parameters are passed in, bind the ref to the node to listen on  | -        |
+
+### Options
+
+| Property| Description                                                        | Type                   | Default |
+|---------|----------------------------------------------|------------------------|--------|
+| dom | Optional, if not passed in, it will listen for refs in the returned result, otherwise it will listen for incoming nodes | HTMLElement \| (() => HTMLElement) \| undefined | -      |
+| onEnter | Listen to hover  | ()=>void | -      |
+| onLeave | Listening leave hover  | ()=>void | -      |
