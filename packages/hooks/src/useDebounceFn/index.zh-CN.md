@@ -1,18 +1,9 @@
 ---
-name: useDebounceFn
-route: /useDebounceFn
-menu: 'SideEffect'
-edit: false
-sidebar: true
+title: useDebounceFn
+group:
+  title: SideEffect Hook
+  path: /sideEffect
 ---
-import JackBox from 'jackbox';
-
-import Demo1 from './demo/demo1';
-import Demo1CodeTsx from '!raw-loader!./demo/demo1.tsx';
-import Demo1CodeJsx from '!raw-loader!./demo/demo1.jsx';
-import Demo2 from './demo/demo2';
-import Demo2CodeTsx from '!raw-loader!./demo/demo2.tsx';
-import Demo2CodeJsx from '!raw-loader!./demo/demo2.jsx';
 
 # useDebounceFn
 
@@ -22,15 +13,11 @@ import Demo2CodeJsx from '!raw-loader!./demo/demo2.jsx';
 
 ### 基础使用
 
-<JackBox jsCode={Demo1CodeJsx} tsCode={Demo1CodeTsx} demoName='基础使用' description='频繁调用 run，但只会在所有点击完成 500ms 后执行一次相关函数。'>
-  <Demo1 />
-</JackBox>
+<code src="./demo/demo1.tsx" />
 
 ### 合理利用 deps
 
-<JackBox jsCode={Demo2CodeJsx} tsCode={Demo2CodeTsx} demoName='合理利用 deps' description='使用 deps 可以实现和 run 一样的效果。如果 deps 变化，会在所有变化完成 1000ms 后执行一次相关函数。'>
-  <Demo2 />
-</JackBox>
+<code src="./demo/demo2.tsx" />
 
 ## API
 

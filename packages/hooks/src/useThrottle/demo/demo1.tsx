@@ -1,6 +1,14 @@
+/**
+ * title: Default usage
+ * desc: ThrottledValue will change every 500ms.
+ *
+ * title.zh-CN: 基础使用
+ * desc.zh-CN: ThrottledValue 每隔 500ms 变化一次。
+ */
+
 import { Input } from 'antd';
 import React, { useState } from 'react';
-import useThrottle from '..';
+import { useThrottle } from '@umijs/hooks';
 
 export default () => {
   const [value, setValue] = useState();

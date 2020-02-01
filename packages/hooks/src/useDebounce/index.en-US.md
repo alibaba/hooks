@@ -1,15 +1,9 @@
 ---
-name: useDebounce
-route: /useDebounce
-menu: 'SideEffect'
-edit: false
-sidebar: true
+title: useDebounce
+group:
+  title: SideEffect Hook
+  path: /sideEffect
 ---
-import JackBox from 'jackbox';
-
-import Demo1 from './demo/demo1';
-import Demo1CodeTsx from '!raw-loader!./demo/demo1.tsx';
-import Demo1CodeJsx from '!raw-loader!./demo/demo1.jsx';
 
 # useDebounce
 
@@ -19,9 +13,7 @@ A hook that handle the debounce value.
 
 ### Default usage
 
-<JackBox jsCode={Demo1CodeJsx} tsCode={Demo1CodeTsx} demoName='Default usage' description='DebouncedValue will change after the input ends 500ms.'>
-  <Demo1 />
-</JackBox>
+<code src="./demo/demo1.tsx" />
 
 ## API
 

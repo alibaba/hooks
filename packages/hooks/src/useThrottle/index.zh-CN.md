@@ -1,15 +1,9 @@
 ---
-name: useThrottle
-route: /useThrottle
-menu: 'SideEffect'
-edit: false
-sidebar: true
+title: useThrottle
+group:
+  title: SideEffect Hook
+  path: /sideEffect
 ---
-import JackBox from 'jackbox';
-
-import Demo1 from './demo/demo1';
-import Demo1CodeTsx from '!raw-loader!./demo/demo1.tsx';
-import Demo1CodeJsx from '!raw-loader!./demo/demo1.jsx';
 
 # useThrottle
 
@@ -19,9 +13,7 @@ import Demo1CodeJsx from '!raw-loader!./demo/demo1.jsx';
 
 ### 基础使用
 
-<JackBox jsCode={Demo1CodeJsx} tsCode={Demo1CodeTsx} demoName='基础使用' description='ThrottledValue 每隔 500ms 变化一次'>
-  <Demo1 />
-</JackBox>
+<code src="./demo/demo1.tsx" />
 
 ## API
 

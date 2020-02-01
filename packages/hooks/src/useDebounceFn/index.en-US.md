@@ -1,18 +1,9 @@
 ---
-name: useDebounceFn
-route: /useDebounceFn
-menu: 'SideEffect'
-edit: false
-sidebar: true
+title: useDebounceFn
+group:
+  title: SideEffect Hook
+  path: /sideEffect
 ---
-import JackBox from 'jackbox';
-
-import Demo1 from './demo/demo1';
-import Demo1CodeTsx from '!raw-loader!./demo/demo1.tsx';
-import Demo1CodeJsx from '!raw-loader!./demo/demo1.jsx';
-import Demo2 from './demo/demo2';
-import Demo2CodeTsx from '!raw-loader!./demo/demo2.tsx';
-import Demo2CodeJsx from '!raw-loader!./demo/demo2.jsx';
 
 # useDebounceFn
 
@@ -22,16 +13,11 @@ A hook that handle the debounce function.
 
 ### Default usage
 
-<JackBox jsCode={Demo1CodeJsx} tsCode={Demo1CodeTsx} demoName='Default usage' description='Frequent calls run, but the function is executed only after all the clicks have completed 500ms.'>
-  <Demo1 />
-</JackBox>
+<code src="./demo/demo1.tsx" />
 
 ### Using deps properly
 
-<JackBox jsCode={Demo2CodeJsx} tsCode={Demo2CodeTsx} demoName='Using deps properly' description='
-Use deps can achieve the same effect as run. If the deps changes, the function will be executed once all changes have been completed for 1000ms.'>
-  <Demo2 />
-</JackBox>
+<code src="./demo/demo2.tsx" />
 
 ## API
 
