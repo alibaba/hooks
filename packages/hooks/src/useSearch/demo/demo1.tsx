@@ -1,6 +1,14 @@
+/**
+ * title: Select Search
+ * desc: Common Select with asynchronous search.
+ *
+ * title.zh-CN: Select Search
+ * desc.zh-CN: 常见的 Select 异步搜索。
+ */
+
 import React from 'react';
 import { Select } from 'antd';
-import useSearch from '..';
+import { useSearch } from '@umijs/hooks';
 
 const { Option } = Select;
 

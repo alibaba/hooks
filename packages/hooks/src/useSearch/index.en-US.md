@@ -1,21 +1,15 @@
 ---
-name: useSearch
-route: /useSearch
-menu: 'UI'
-edit: false
-sidebar: true
+title: useSearch
+group:
+  title: Deprecated
+  path: /deprecated
 ---
-import JackBox from 'jackbox';
-
-import Demo1 from './demo/demo1';
-import Demo1CodeTsx from '!raw-loader!./demo/demo1.tsx';
-import Demo1CodeJsx from '!raw-loader!./demo/demo1.jsx';
-
-import Demo2 from './demo/demo2';
-import Demo2CodeJsx from '!raw-loader!./demo/demo2.jsx';
-import Demo2CodeTsx from '!raw-loader!./demo/demo2.tsx';
 
 # useSearch
+
+<div style={{color: 'red'}}>
+WARNING: useSearch is deprecated and will be removed in the next major version. Please use useRequest debounceInterval instead.
+</div>
 
 Applicable to typing while searching scenario.
 
@@ -28,14 +22,13 @@ Applicable to typing while searching scenario.
 ## Examples
 
 ### Select Search
-<JackBox jsCode={Demo1CodeJsx} tsCode={Demo1CodeTsx} demoName='Select Search' description='Common Select with asynchronous search'>
-  <Demo1 />
-</JackBox>
+
+<code src="./demo/demo1.tsx" />
+
 
 ### Input Search
-<JackBox jsCode={Demo2CodeJsx} tsCode={Demo2CodeTsx} demoName='Input Search' description='Complex Input search scenario, use deps properly'>
-  <Demo2 />
-</JackBox>
+
+<code src="./demo/demo2.tsx" />
 
 ## API
 

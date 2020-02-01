@@ -1,6 +1,14 @@
+/**
+ * title: Input Search
+ * desc: Complex Input search scenario, use deps properly.
+ *
+ * title.zh-CN: Input Search
+ * desc.zh-CN: 复杂的 Input 搜索场景，合理使用 deps。
+ */
+
 import React, { useState } from 'react';
 import { Select, Input, AutoComplete } from 'antd';
-import useSearch from '..';
+import { useSearch } from '@umijs/hooks';
 
 const { Option } = Select;
 
