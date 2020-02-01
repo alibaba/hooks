@@ -1,9 +1,9 @@
 /**
  * title: refreshDeps
- * desc: When refreshDeps changes, useRequest re-executes the asynchronous request.
+ * desc: When refreshDeps changes, useRequest trigger the service with last params.
  *
  * title.zh-CN: refreshDeps
- * desc.zh-CN: 当 refreshDeps 变化时，useRequest 会重新执行异步请求。
+ * desc.zh-CN: 当 refreshDeps 变化时，useRequest 会使用之前的参数重新执行 service。
  */
 
 import { useRequest } from '@umijs/hooks';
