@@ -149,7 +149,7 @@ const {
 
 ## 扩展用法
 
-基于基础的 useRequest，我们可以进一步封装，实现更高级的定制需求。当前 useRequest 内置了 `集成请求库`，`分页` 和 `加载更多` 三种场景。你可以参考代码，实现自己的封装。参考 [useRequest](./src/useRequest.ts)、[usePaginated](./src/usePaginated.ts)、[useLoadMore](./src/useLoadMore.ts) 的实现。
+基于基础的 useRequest，我们可以进一步封装，实现更高级的定制需求。当前 useRequest 内置了 `集成请求库`，`分页` 和 `加载更多` 三种场景。你可以参考代码，实现自己的封装。参考 [useRequest](https://github.com/umijs/hooks/blob/master/packages/use-request/src/useRequest.ts)、[usePaginated](https://github.com/umijs/hooks/blob/master/packages/use-request/src/usePaginated.ts)、[useLoadMore](https://github.com/umijs/hooks/blob/master/packages/use-request/src/useLoadMore.ts) 的实现。
 
 ### 集成请求库
 
@@ -338,5 +338,6 @@ export function ({children})=>{
 }
 ```
 
+## 致谢
 - [zeit/swr](https://github.com/zeit/swr)
 - [tannerlinsley/react-query](https://github.com/tannerlinsley/react-query)
