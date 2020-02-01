@@ -75,6 +75,18 @@ Production-ready React Hooks library for manage asynchronous data.
 
 ### RefreshDeps
 
+When some `state` changes, we need to re-execute the asynchronous request. Generally, we will write code like this:
+
+```jsx | pure
+const [userId, setUserId] = useState('1');
+const { data, run, loading } = useRequest(()=> getUserSchool(userId));
+useEffect(() => {
+  run();
+}, [userId]);
+```
+
+`refreshDeps` is a syntactic sugar that makes it easier for you to implement the above functions. When `refreshDeps` changes, the service will be re-executed using the previous params.
+
 <code src="./demo/demo12.tsx" />
 
 ## Basic API

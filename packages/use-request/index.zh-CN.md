@@ -75,6 +75,18 @@ group:
 
 ### refreshDeps
 
+当某些 `state` 变化时，我们需要重新执行异步请求，一般我们会这样写代码：
+
+```jsx | pure
+const [userId, setUserId] = useState('1');
+const { data, run, loading } = useRequest(()=> getUserSchool(userId));
+useEffect(() => {
+  run();
+}, [userId]);
+```
+
+`refreshDeps` 是一个语法糖，让你更方便的实现上面的功能。当 `refreshDeps` 变化时，会使用之前的 params 重新执行 service。
+
 <code src="./demo/demo12.tsx" />
 
 ## 基础 API
