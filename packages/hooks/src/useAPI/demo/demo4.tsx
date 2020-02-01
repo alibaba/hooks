@@ -1,6 +1,14 @@
+/**
+ * title: Modifying the request method
+ * desc: Using your custom request method.
+ *
+ * title.zh-CN: 修改 request 方法
+ * desc.zh-CN: 使用自定义的 request 方法。
+ */
+
 import React from 'react';
 import { Button, notification } from 'antd';
-import useAPI from '..';
+import { useAPI } from '@umijs/hooks';
 
 export default () => {
   const { run } = useAPI({

@@ -8,7 +8,7 @@ group:
 # useAsync
 
 <div style={{color: 'red'}}>
-WARNING: useAsync is deprecated and will be removed in the next major version. Please use useAsync instead.
+WARNING: useAsync is deprecated and will be removed in the next major version. Please use useRequest instead.
 </div>
 
 A custom hook that helps you manage async functions and their returned data.

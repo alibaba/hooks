@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import useAsync from '../useAsync';
 
 interface IProps<T> {
@@ -17,6 +18,11 @@ export const configRequest = (method: () => any) => {
 };
 
 const useAPI = <T = any>(opt: IProps<T>) => {
+  useEffect(() => {
+    console.warn(
+      'useAPI is deprecated and will be removed in the next major version. Please use useRequest instead.',
+    );
+  }, []);
   const requestMethod = opt.method || globalMethod || fetch;
   return useAsync<T>(
     async () => {
