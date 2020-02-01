@@ -213,6 +213,7 @@ class Fetch<R, P extends any[]> {
   mutate(data: any) {
     if (typeof data === 'function') {
       this.setState({
+        // eslint-disable-next-line react/no-access-state-in-setstate
         data: data(this.state.data) || {}
       });
     } else {
@@ -279,6 +280,7 @@ function useAsync<R, P extends any[], U, UU extends U = any>(
 
   let formatResult: any;
   if ('formatResult' in _options) {
+    // eslint-disable-next-line prefer-destructuring
     formatResult = _options.formatResult;
   }
   const formatResultPersist = usePersistFn(formatResult);
@@ -299,6 +301,7 @@ function useAsync<R, P extends any[], U, UU extends U = any>(
 
   const subscribe = usePersistFn((key: string, data: any) => {
     setFeches(s => {
+      // eslint-disable-next-line no-param-reassign
       s[key] = data;
       return { ...s };
     });
@@ -357,6 +360,7 @@ function useAsync<R, P extends any[], U, UU extends U = any>(
       );
       currentFetch = newFetch.state;
       setFeches(s => {
+        // eslint-disable-next-line no-param-reassign
         s[currentFetchKey] = currentFetch;
         return { ...s };
       });

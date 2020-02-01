@@ -33,7 +33,6 @@ function useRequest<R = any, Item = any, U extends Item = any>(
 ): PaginatedResult<Item>
 
 function useRequest(service: any, options: any = {}) {
-
   const contextConfig = useContext(ConfigContext);
   const finalOptions = { ...contextConfig, ...options };
 
@@ -62,8 +61,7 @@ function useRequest(service: any, options: any = {}) {
     const { url, ...rest } = service;
     promiseService = () => finalRequestMehod(url, rest);
   } else {
-    promiseService = (...args: any[]) => {
-      return new Promise((resolve) => {
+    promiseService = (...args: any[]) => new Promise(resolve => {
         const result = service(...args);
         if (result.then) {
           result.then((data: any) => resolve(data))
@@ -78,17 +76,15 @@ function useRequest(service: any, options: any = {}) {
             request(url, rest).then((data: any) => { resolve(data) });
           }
         }
-      })
-    };
+      });
   }
 
   if (loadMore) {
     return useLoadMore(promiseService, finalOptions);
-  } else if (paginated) {
+  } if (paginated) {
     return usePaginated(promiseService, finalOptions);
-  } else {
-    return useAsync(promiseService, finalOptions);
   }
+    return useAsync(promiseService, finalOptions);
 }
 
 const UseAPIProvider = ConfigContext.Provider;
