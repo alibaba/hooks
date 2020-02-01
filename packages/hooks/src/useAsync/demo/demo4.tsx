@@ -1,7 +1,15 @@
+/**
+ * title: Form Submission
+ * desc: A form submit example incorporate with antd form.
+ *
+ * title.zh-CN: 表单提交
+ * desc.zh-CN: 配合 antd 表单提交的例子。
+ */
+
 import { Button, Form, Input, message } from 'antd';
 import { FormComponentProps } from 'antd/lib/form';
 import React from 'react';
-import useAsync from '..';
+import { useAsync } from '@umijs/hooks';
 
 const saveToServer = (data: string) =>
   new Promise<string>(resolve => {

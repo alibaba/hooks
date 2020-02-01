@@ -1,31 +1,15 @@
 ---
-name: useAsync
-route: /useAsync
-menu: 'SideEffect'
-edit: false
-sidebar: true
+title: useAsync
+group:
+  title: 废弃
+  path: /deprecated
 ---
 
-
-import JackBox from 'jackbox';
-
-import Demo1 from './demo/demo1';
-import Demo1CodeTs from '!raw-loader!./demo/demo1.tsx';
-import Demo1CodeJs from '!raw-loader!./demo/demo1.jsx';
-
-import Demo2 from './demo/demo2';
-import Demo2CodeTs from '!raw-loader!./demo/demo2.tsx';
-import Demo2CodeJs from '!raw-loader!./demo/demo2.jsx';
-
-import Demo3 from './demo/demo3';
-import Demo3CodeTs from '!raw-loader!./demo/demo3.tsx';
-import Demo3CodeJs from '!raw-loader!./demo/demo3.jsx';
-
-import Demo4 from './demo/demo4';
-import Demo4CodeTs from '!raw-loader!./demo/demo4.tsx';
-import Demo4CodeJs from '!raw-loader!./demo/demo4.jsx';
-
 # useAsync
+
+<div style={{color: 'red'}}>
+警告: useAsync 已经被废弃了，将在下一个大版本时移除，你可以使用 useRequest 代替。
+</div>
 
 一个帮你管理异步函数的 Hook，支持立即执行，手动触发执行，轮询。
 
@@ -33,27 +17,23 @@ import Demo4CodeJs from '!raw-loader!./demo/demo4.jsx';
 
 ### 默认用法
 
-<JackBox tsCode={Demo1CodeTs} jsCode={Demo1CodeJs} demoName='默认用法' description='组件加载时立即执行，并且 deps 变化后，会重新执行'>
-  <Demo1 />
-</JackBox>
+<code src="./demo/demo1.tsx" />
+
 
 ### 手动触发执行
 
-<JackBox tsCode={Demo2CodeTs} jsCode={Demo2CodeJs} demoName='手动触发执行' description='如果设置了 manual，则只有在执行函数 run 时，async function 才会被执行'>
-  <Demo2 />
-</JackBox>
+<code src="./demo/demo2.tsx" />
+
 
 ### 轮询
 
-<JackBox tsCode={Demo3CodeTs} jsCode={Demo3CodeJs} demoName='轮询' description='可以通过设置 pollingInterval 来开启轮询功能，并且通过 timer 控制轮训的执行与停止'>
-  <Demo3 />
-</JackBox>
+<code src="./demo/demo3.tsx" />
+
 
 ### 表单提交
 
-<JackBox tsCode={Demo4CodeTs} jsCode={Demo4CodeJs} demoName='表单提交' description='配合 antd 表单提交的例子'>
-  <Demo4 />
-</JackBox>
+<code src="./demo/demo4.tsx" />
+
 
 ## API
 

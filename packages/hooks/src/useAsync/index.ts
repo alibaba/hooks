@@ -49,7 +49,7 @@ export interface Options<T> {
 }
 
 type noop = (...args: any[]) => void;
-const noop: noop = () => {};
+const noop: noop = () => { };
 
 type promiseReturn<T> = (...args: any[]) => Promise<T | undefined>;
 const promiseReturn: promiseReturn<any> = async () => null as any;
@@ -81,6 +81,12 @@ function useAsync<Result = any>(
   deps?: DependencyList | Options<Result>,
   options?: Options<Result>,
 ): ReturnValue<Result> {
+  useEffect(() => {
+    console.warn(
+      'useAsync is deprecated and will be removed in the next major version. Please use useRequest instead.',
+    );
+  }, []);
+
   const _deps: DependencyList = (Array.isArray(deps) ? deps : []) as DependencyList;
   const _options: Options<Result> = (typeof deps === 'object' && !Array.isArray(deps)
     ? deps
