@@ -1,3 +1,4 @@
+import useRequest from '@umijs/use-request';
 import useAntdTable from './useAntdTable';
 import useAPI, { configRequest } from './useAPI';
 import useAsync from './useAsync';
@@ -74,4 +75,5 @@ export {
   useKeyPress,
   useEventListener,
   useHover,
+  useRequest
 };

@@ -17,7 +17,6 @@ function useRequest(
   service: any,
   options?: any
 ): any {
-
   let promiseService: () => Promise<any>;
   if (typeof service === 'string') {
     promiseService = () => request(service);
@@ -25,20 +24,17 @@ function useRequest(
     const { url, ...rest } = service;
     promiseService = () => request(url, rest);
   } else {
-    promiseService = (...args) => {
-      return new Promise((resolve) => {
+    promiseService = (...args) => new Promise(resolve => {
         const result = service(...args);
         if (typeof result === 'string') {
-          request(result).then((data) => { resolve(data) });
+          request(result).then(data => { resolve(data) });
         } else if (typeof result === 'object') {
           const { url, ...rest } = result;
-          request(url, rest).then((data) => { resolve(data) });
+          request(url, rest).then(data => { resolve(data) });
         }
-      })
-    };
+      });
   }
   return useAsync(promiseService, options);
-
 }
 
 export default useRequest;

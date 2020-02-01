@@ -15,6 +15,7 @@ const DEFAULT_KEY = 'UMIJS_USE_API_DEFAULT_KEY';
 
 class Fetch<R, P extends any[]> {
   config: FetchConfig<R, P>;
+
   service: Service<R, P>;
 
   // 请求时序
@@ -22,10 +23,12 @@ class Fetch<R, P extends any[]> {
 
   // 是否卸载
   unmountedFlag = false;
+
   // visible 后，是否继续轮询
   pollingWhenVisibleFlag = false;
 
   pollingTimer: any = undefined;
+
   loadingDelayTimer: any = undefined;
 
   subscribe: Subscribe<R, P>;
@@ -47,7 +50,9 @@ class Fetch<R, P extends any[]> {
   }
 
   debounceRun: any;
+
   throttleRun: any;
+
   limitRefresh: any;
 
   constructor(
@@ -56,7 +61,6 @@ class Fetch<R, P extends any[]> {
     subscribe: Subscribe<R, P>,
     initState?: { data?: any, error?: any, params?: any, loading?: any }
   ) {
-
     this.service = service;
     this.config = config;
     this.subscribe = subscribe;
@@ -101,7 +105,7 @@ class Fetch<R, P extends any[]> {
     const currentCount = this.count;
 
     this.setState({
-      loading: this.config.loadingDelay ? false : true,
+      loading: !this.config.loadingDelay,
       params: args
     });
 
@@ -160,7 +164,6 @@ class Fetch<R, P extends any[]> {
         }
       }
     });
-
   }
 
   run(...args: P) {
@@ -194,7 +197,6 @@ class Fetch<R, P extends any[]> {
     this.setState({
       loading: false
     });
-
   }
 
   refresh() {
@@ -223,11 +225,10 @@ class Fetch<R, P extends any[]> {
   unmount() {
     this.unmountedFlag = true;
     this.cancel();
-    this.unsubscribe.forEach((s) => {
+    this.unsubscribe.forEach(s => {
       s();
     });
   }
-
 }
 
 function useAsync<R, P extends any[], U, UU extends U = any>(
@@ -242,7 +243,6 @@ function useAsync<R, P extends any[], U, UU extends U = any>(
   service: Service<R, P>,
   options?: Options<R, P, U, UU>
 ): BaseResult<U, P> {
-
   const _options = options || {} as Options<R, P, U, UU>;
   const {
     refreshDeps = [],
@@ -278,7 +278,7 @@ function useAsync<R, P extends any[], U, UU extends U = any>(
 
 
   let formatResult: any;
-  if ("formatResult" in _options) {
+  if ('formatResult' in _options) {
     formatResult = _options.formatResult;
   }
   const formatResultPersist = usePersistFn(formatResult);
@@ -298,7 +298,7 @@ function useAsync<R, P extends any[], U, UU extends U = any>(
 
 
   const subscribe = usePersistFn((key: string, data: any) => {
-    setFeches((s) => {
+    setFeches(s => {
       s[key] = data;
       return { ...s };
     });
@@ -312,7 +312,7 @@ function useAsync<R, P extends any[], U, UU extends U = any>(
         newstFetchKey.current = cache.newstFetchKey;
         /* 使用 initState, 重新 new Fetch */
         const newFetches: any = {};
-        Object.keys(cache.fetches).forEach((key) => {
+        Object.keys(cache.fetches).forEach(key => {
           const cacheFetch = cache.fetches[key];
           const newFetch = new Fetch(
             servicePersist,
@@ -356,13 +356,12 @@ function useAsync<R, P extends any[], U, UU extends U = any>(
         }
       );
       currentFetch = newFetch.state;
-      setFeches((s) => {
+      setFeches(s => {
         s[currentFetchKey] = currentFetch;
         return { ...s };
       });
     }
     return currentFetch.run(...args);
-
   }, [fetchKey, subscribe])
 
   // cache
@@ -382,7 +381,7 @@ function useAsync<R, P extends any[], U, UU extends U = any>(
       // 如果有缓存
       if (Object.keys(fetches).length > 0) {
         /* 重新执行所有的 */
-        Object.values(fetches).forEach((f) => {
+        Object.values(fetches).forEach(f => {
           f.refresh();
         });
       } else {
@@ -394,7 +393,7 @@ function useAsync<R, P extends any[], U, UU extends U = any>(
 
   // 重置 fetches
   const reset = useCallback(() => {
-    Object.values(fetchesRef.current).forEach((f) => {
+    Object.values(fetchesRef.current).forEach(f => {
       f.unmount();
     });
     newstFetchKey.current = DEFAULT_KEY;
@@ -407,27 +406,23 @@ function useAsync<R, P extends any[], U, UU extends U = any>(
   useUpdateEffect(() => {
     if (!manual) {
       /* 全部重新执行 */
-      Object.values(fetchesRef.current).forEach((f) => {
+      Object.values(fetchesRef.current).forEach(f => {
         f.refresh();
       });
     }
   }, [...refreshDeps]);
 
   // 卸载组件触发
-  useEffect(() => {
-    return () => {
-      Object.values(fetchesRef.current).forEach((f) => {
+  useEffect(() => () => {
+      Object.values(fetchesRef.current).forEach(f => {
         f.unmount();
       });
-    };
-  }, []);
+    }, []);
 
 
-  const noReady = useCallback((name: string) => {
-    return () => {
+  const noReady = useCallback((name: string) => () => {
       throw new Error(`Cannot call ${name} when service not executed once.`);
-    }
-  }, [])
+    }, [])
 
   return {
     loading: !manual,
