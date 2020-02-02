@@ -1,7 +1,16 @@
+/**
+ * title: Using deps properly
+ * desc: When deps changes, the page number will be reset.
+ *
+ * title.zh-CN: 合理利用 deps
+ * desc.zh-CN: 当 deps 变化时，会初始化到第一页。
+ */
+
 import { List, Pagination, Select } from 'antd';
 import { PaginationConfig } from 'antd/lib/pagination';
 import React, { useState } from 'react';
-import usePagination, { FnParams } from '..';
+import { usePagination } from '@umijs/hooks';
+import { FnParams } from '@umijs/hooks/es/usePagination';
 
 interface Item {
   name: {

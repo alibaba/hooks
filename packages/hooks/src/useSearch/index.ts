@@ -1,8 +1,8 @@
-import { DependencyList, useState, useMemo, useEffect, useCallback } from 'react';
-import useUpdateEffect from '../useUpdateEffect';
-import useDebounceFn from '../useDebounceFn';
-
+import { DependencyList, useCallback, useMemo, useState } from 'react';
 import useAsync from '../useAsync';
+import useDebounceFn from '../useDebounceFn';
+import useUpdateEffect from '../useUpdateEffect';
+
 
 export interface ReturnValue<T> {
   loading: boolean;
@@ -31,12 +31,6 @@ function useSearch<Result>(
   deps?: DependencyList | Options,
   options?: Options,
 ): ReturnValue<Result> {
-  useEffect(() => {
-    console.warn(
-      'useSearch is deprecated and will be removed in the next major version. Please use useRequest debounceInterval instead.',
-    );
-  }, []);
-
   const _deps: DependencyList = (Array.isArray(deps) ? deps : []) as DependencyList;
   const _options: Options = (typeof deps === 'object' && !Array.isArray(deps)
     ? deps
