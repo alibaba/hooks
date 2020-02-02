@@ -1,27 +1,9 @@
 ---
-name: useDynamicList
-route: /useDynamicList
-menu: 'UI'
-edit: false
-sidebar: true
+title: useDynamicList
+group:
+  title: UI
+  path: /UI
 ---
-
-import { Playground } from 'docz';
-import JackBox from 'jackbox';
-
-import { useState, useMemo } from 'react';
-import Demo1 from './demo/demo1';
-import Demo1Tsx from '!raw-loader!./demo/demo1.tsx';
-import Demo1Jsx from '!raw-loader!./demo/demo1.jsx';
-
-import Demo2 from './demo/demo2';
-import Demo2Tsx from '!raw-loader!./demo/demo2.tsx';
-import Demo2Jsx from '!raw-loader!./demo/demo2.jsx';
-
-import Demo3 from './demo/demo3';
-import Demo3Tsx from '!raw-loader!./demo/demo3.tsx';
-import Demo3Jsx from '!raw-loader!./demo/demo3.jsx';
-
 
 # useDynamicList
 
@@ -31,21 +13,15 @@ import Demo3Jsx from '!raw-loader!./demo/demo3.jsx';
 
 ### 动态列表
 
-<JackBox tsCode={Demo1Tsx} jsCode={Demo1Jsx} demoName='动态列表' description='可增删的不定条数表单'>
-  <Demo1 />
-</JackBox>
+<code src="./demo/demo1.tsx" />
 
 ### 连环嵌套
 
-<JackBox tsCode={Demo2Tsx} jsCode={Demo2Jsx} demoName='嵌套表单' description='动态表单内部嵌套动态表单'>
-  <Demo2 />
-</JackBox>
+<code src="./demo/demo2.tsx" />
 
 ### 动态表格(可拖拽)
 
-<JackBox tsCode={Demo3Tsx} jsCode={Demo3Jsx} demoName='动态表格(可拖拽)' description='使用 antd table 构建动态表格'>
-  <Demo3 />
-</JackBox>
+<code src="./demo/demo3.tsx" />
 
 ## API
 

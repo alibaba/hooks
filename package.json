@@ -33,6 +33,7 @@
     "now": "^16.2.0",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
+    "react-drag-listview": "^0.1.6",
     "typescript": "^3.3.3"
   }
 }

@@ -1,8 +1,16 @@
+/**
+ * title: Dyanmic table(draggable)
+ * desc: using antd table to build dynamic table form.
+ *
+ * title.zh-CN: 动态表格(可拖拽)
+ * desc.zh-CN: 使用 antd table 构建动态表格
+ */
+
 import React, { useState } from 'react';
 import { Form, Button, Input, Icon, Table } from 'antd';
 import { FormComponentProps } from 'antd/lib/form';
 import ReactDragListView from 'react-drag-listview';
-import useDynamicList from '..';
+import { useDynamicList } from '@umijs/hooks';
 
 interface Item {
   name?: string;
