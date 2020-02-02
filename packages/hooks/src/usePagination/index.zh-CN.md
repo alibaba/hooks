@@ -1,21 +1,15 @@
 ---
-name: usePagination
-route: /usePagination
-menu: 'UI'
-edit: false
-sidebar: true
+title: usePagination
+group:
+  title: Deprecated
+  path: /deprecated
 ---
-import JackBox from 'jackbox';
-
-import Demo1 from './demo/demo1';
-import Demo1CodeTsx from '!raw-loader!./demo/demo1.tsx';
-import Demo1CodeJsx from '!raw-loader!./demo/demo1.jsx';
-
-import Demo2 from './demo/demo2';
-import Demo2CodeJsx from '!raw-loader!./demo/demo2.jsx';
-import Demo2CodeTsx from '!raw-loader!./demo/demo2.tsx';
 
 # usePagination
+
+<div style={{color: 'red'}}>
+警告: usePagination 已经被废弃了，将在下一个大版本时移除，你可以使用 useRequest 代替。
+</div>
 
 适用于常见的异步分页场景的 Hook。
 
@@ -23,15 +17,11 @@ import Demo2CodeTsx from '!raw-loader!./demo/demo2.tsx';
 
 ### 基本用法
 
-<JackBox jsCode={Demo1CodeJsx} tsCode={Demo1CodeTsx} demoName='基本用法' description='简单的分页列表'>
-  <Demo1 />
-</JackBox>
+<code src="./demo/demo1.tsx" />
 
 ### 合理利用 deps
 
-<JackBox jsCode={Demo2CodeJsx} tsCode={Demo2CodeTsx} demoName='合理利用 deps' description='当 deps 变化时，会初始化到第一页'>
-  <Demo2 />
-</JackBox>
+<code src="./demo/demo2.tsx" />
 
 ## API
 

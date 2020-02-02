@@ -1,21 +1,15 @@
 ---
-name: usePagination
-route: /usePagination
-menu: 'UI'
-edit: false
-sidebar: true
+title: usePagination
+group:
+  title: Deprecated
+  path: /deprecated
 ---
-import JackBox from 'jackbox';
-
-import Demo1 from './demo/demo1';
-import Demo1CodeTsx from '!raw-loader!./demo/demo1.tsx';
-import Demo1CodeJsx from '!raw-loader!./demo/demo1.jsx';
-
-import Demo2 from './demo/demo2';
-import Demo2CodeJsx from '!raw-loader!./demo/demo2.jsx';
-import Demo2CodeTsx from '!raw-loader!./demo/demo2.tsx';
 
 # usePagination
+
+<div style={{color: 'red'}}>
+WARNING: usePagination is deprecated and will be removed in the next major version. Please use useRequest instead.
+</div>
 
 Hook for common asynchronous paging scenario.
 
@@ -23,15 +17,11 @@ Hook for common asynchronous paging scenario.
 
 ### Default usage
 
-<JackBox jsCode={Demo1CodeJsx} tsCode={Demo1CodeTsx} demoName='Default usage' description='Simple paged list'>
-  <Demo1 />
-</JackBox>
+<code src="./demo/demo1.tsx" />
 
 ### Using deps properly
 
-<JackBox jsCode={Demo2CodeJsx} tsCode={Demo2CodeTsx} demoName='Using deps properly' description='When deps changes, the page number will be reset'>
-  <Demo2 />
-</JackBox>
+<code src="./demo/demo2.tsx" />
 
 ## API
 

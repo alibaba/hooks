@@ -1,6 +1,15 @@
-import { List, Button, Avatar } from 'antd';
+/**
+ * title: Click to load more
+ * desc: Standard loading more examples.
+ *
+ * title.zh-CN: 点击加载更多
+ * desc.zh-CN: 标准的加载更多例子
+ */
+
+import { useLoadMore } from '@umijs/hooks';
+import { FnParams } from '@umijs/hooks/es/useLoadMore';
+import { Avatar, Button, List } from 'antd';
 import React from 'react';
-import useLoadMore, { FnParams } from '..';
 
 interface Item {
   id: number;
