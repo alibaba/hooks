@@ -1,32 +1,9 @@
 ---
-name: useLoadMore
-route: /useLoadMore
-menu: 'UI'
-edit: false
-sidebar: true
+title: useLoadMore
+group:
+  title: Async Hooks
+  path: /async
 ---
-import JackBox from 'jackbox';
-
-import Demo1 from './demo/demo1';
-import Demo1CodeTsx from '!raw-loader!./demo/demo1.tsx';
-import Demo1CodeJsx from '!raw-loader!./demo/demo1.jsx';
-
-import Demo2 from './demo/demo2';
-import Demo2CodeTsx from '!raw-loader!./demo/demo2.tsx';
-import Demo2CodeJsx from '!raw-loader!./demo/demo2.jsx';
-
-import Demo3 from './demo/demo3';
-import Demo3CodeTsx from '!raw-loader!./demo/demo3.tsx';
-import Demo3CodeJsx from '!raw-loader!./demo/demo3.jsx';
-
-import Demo4 from './demo/demo4';
-import Demo4CodeTsx from '!raw-loader!./demo/demo4.tsx';
-import Demo4CodeJsx from '!raw-loader!./demo/demo4.jsx';
-
-import Demo5 from './demo/demo5';
-import Demo5CodeTsx from '!raw-loader!./demo/demo5.tsx';
-import Demo5CodeJsx from '!raw-loader!./demo/demo5.jsx';
-
 
 # useLoadMore
 
@@ -42,43 +19,23 @@ import Demo5CodeJsx from '!raw-loader!./demo/demo5.jsx';
 
 ### 点击加载更多
 
-<JackBox jsCode={Demo1CodeJsx} tsCode={Demo1CodeTsx} demoName='点击加载更多' description='标准的加载更多例子'>
-  <Demo1 />
-</JackBox>
+<code src="./demo/demo1.tsx" />
 
 ### 上拉加载更多
 
-<JackBox jsCode={Demo2CodeJsx} tsCode={Demo2CodeTsx} demoName='上拉加载更多' description='如果 options 中存在 ref，则在滚动到底部时，自动触发 loadMore'>
-  <Demo2 />
-</JackBox>
+<code src="./demo/demo2.tsx" />
 
 ### 合理利用 deps
 
-<JackBox jsCode={Demo3CodeJsx} tsCode={Demo3CodeTsx} demoName='合理利用 deps' description='如果 deps 变化，则重置当前分页，重新请求数据'>
-  <Demo3 />
-</JackBox>
+<code src="./demo/demo3.tsx" />
 
 ### 动态数据加载之时间戳模式
 
-<JackBox jsCode={Demo4CodeJsx} tsCode={Demo4CodeTsx} demoName='动态数据加载之时间戳模式' description={
-  <div>
-    如果后端数据在不断更新，那么仅仅使用 page, offset, pageSize 等来切割数据，可能会出现很多的重复的数据。这时候如果我们知道第一次拉取数据的时间，那每次只对这个时间戳之前的数据进行切割，是可以拿到正确数据的。<br />
-    我们会记录在第一次开始请求或 reload 时，记录当前的时间 startTime，并把它传给 asyncFn。
-  </div>
-}>
-  <Demo4 />
-</JackBox>
+<code src="./demo/demo4.tsx" />
 
 ### 动态数据加载之 ID 模式
 
-<JackBox jsCode={Demo5CodeJsx} tsCode={Demo5CodeTsx} demoName='动态数据加载之 ID 模式' description={
-  <div>
-    如果数据更新频率很高，可能同一个时间戳会对应多条数据，那上面的时间戳模式可能出现问题。这时候我们可以通过最后一条数据的 id 和 offset 来获取到正确的数据。<br />
-    如果 options 中有 itemKey 字段，我们会把当前最后一条数据的 id 发给 asyncFn。
-  </div>
-}>
-  <Demo5 />
-</JackBox>
+<code src="./demo/demo5.tsx" />
 
 ## API
 

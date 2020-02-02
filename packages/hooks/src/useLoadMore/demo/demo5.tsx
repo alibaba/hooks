@@ -1,6 +1,17 @@
+/**
+ * title: custom data loading - ID mode
+ * desc: If the data update frequency is very high, there may be multiple data corresponding to the same timestamp, and the timestamp mode above may have problems. At this point we can get the correct data by the id and offset of the last data.| 
+ *  If there is an itemKey field in options, we will send the id of the current last data to asyncFn.
+ *
+ * title.zh-CN: 动态数据加载之 ID 模式
+ * desc.zh-CN: 如果数据更新频率很高，可能同一个时间戳会对应多条数据，那上面的时间戳模式可能出现问题。这时候我们可以通过最后一条数据的 id 和 offset 来获取到正确的数据。| 
+ *  如果 options 中有 itemKey 字段，我们会把当前最后一条数据的 id 发给 asyncFn。
+ */
+
 import { List, Button, Avatar } from 'antd';
 import React from 'react';
-import useLoadMore, { FnParams } from '..';
+import { useLoadMore } from '@umijs/hooks';
+import { FnParams } from '@umijs/hooks/es/useLoadMore';
 
 interface Item {
   id: number;

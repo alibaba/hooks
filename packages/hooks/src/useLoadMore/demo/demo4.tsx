@@ -1,6 +1,17 @@
+/**
+ * title: custom data loading - timestamp mode
+ * desc: If the back-end data is constantly being updated, then just use page, offset, pageSize, etc. to cut the data, and there may be a lot of duplicate data. At this time, if we know the time to pull the data for the first time, then only the data before this timestamp can be cut at the same time, and the correct data can be obtained. |
+ *  We will record the current time 'startTime' when we first start the request or reload, and pass it to asyncFn.
+ *
+ * title.zh-CN: 动态数据加载之时间戳模式
+ * desc.zh-CN: 如果后端数据在不断更新，那么仅仅使用 page, offset, pageSize 等来切割数据，可能会出现很多的重复的数据。这时候如果我们知道第一次拉取数据的时间，那每次只对这个时间戳之前的数据进行切割，是可以拿到正确数据的。| 
+ *  我们会记录在第一次开始请求或 reload 时，记录当前的时间 startTime，并把它传给 asyncFn。
+ */
+
 import { List, Button, Avatar } from 'antd';
 import React from 'react';
-import useLoadMore, { FnParams } from '..';
+import { useLoadMore } from '@umijs/hooks';
+import { FnParams } from '@umijs/hooks/es/useLoadMore';
 
 interface Item {
   id: number;

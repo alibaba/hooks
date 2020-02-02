@@ -1,6 +1,15 @@
+/**
+ * title: Pull up to load more
+ * desc: If ref exists in options, loadMore is automatically triggered when scrolling to the bottom.
+ *
+ * title.zh-CN: 上拉加载更多
+ * desc.zh-CN: 如果 options 中存在 ref，则在滚动到底部时，自动触发 loadMore。
+ */
+
 import { List, Button, Avatar } from 'antd';
 import React, { useRef } from 'react';
-import useLoadMore, { FnParams } from '..';
+import { useLoadMore } from '@umijs/hooks';
+import { FnParams } from '@umijs/hooks/es/useLoadMore';
 
 interface Item {
   id: number;

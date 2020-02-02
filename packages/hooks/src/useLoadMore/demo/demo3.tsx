@@ -1,6 +1,15 @@
+/**
+ * title: use deps properly
+ * desc: If the deps changes, reset the current page and re-request the data.
+ *
+ * title.zh-CN: 合理利用 deps
+ * desc.zh-CN: 如果 deps 变化，则重置当前分页，重新请求数据。
+ */
+
 import { List, Button, Avatar, Select } from 'antd';
 import React, { useState } from 'react';
-import useLoadMore, { FnParams } from '..';
+import { useLoadMore } from '@umijs/hooks';
+import { FnParams } from '@umijs/hooks/es/useLoadMore';
 
 const { Option } = Select;
 

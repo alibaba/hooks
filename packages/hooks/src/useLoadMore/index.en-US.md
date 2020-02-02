@@ -1,32 +1,9 @@
 ---
-name: useLoadMore
-route: /useLoadMore
-menu: 'UI'
-edit: false
-sidebar: true
+title: useLoadMore
+group:
+  title: Async Hooks
+  path: /async
 ---
-import JackBox from 'jackbox';
-
-import Demo1 from './demo/demo1';
-import Demo1CodeTsx from '!raw-loader!./demo/demo1.tsx';
-import Demo1CodeJsx from '!raw-loader!./demo/demo1.jsx';
-
-import Demo2 from './demo/demo2';
-import Demo2CodeTsx from '!raw-loader!./demo/demo2.tsx';
-import Demo2CodeJsx from '!raw-loader!./demo/demo2.jsx';
-
-import Demo3 from './demo/demo3';
-import Demo3CodeTsx from '!raw-loader!./demo/demo3.tsx';
-import Demo3CodeJsx from '!raw-loader!./demo/demo3.jsx';
-
-import Demo4 from './demo/demo4';
-import Demo4CodeTsx from '!raw-loader!./demo/demo4.tsx';
-import Demo4CodeJsx from '!raw-loader!./demo/demo4.jsx';
-
-import Demo5 from './demo/demo5';
-import Demo5CodeTsx from '!raw-loader!./demo/demo5.tsx';
-import Demo5CodeJsx from '!raw-loader!./demo/demo5.jsx';
-
 
 # useLoadMore
 
@@ -42,43 +19,23 @@ A Hook that is designed to display paged data incrementally.
 
 ### Click to load more
 
-<JackBox jsCode={Demo1CodeJsx} tsCode={Demo1CodeTsx} demoName='Click to load more' description='Standard loading more examples'>
-  <Demo1 />
-</JackBox>
+<code src="./demo/demo1.tsx" />
 
 ### Pull up load more
 
-<JackBox jsCode={Demo2CodeJsx} tsCode={Demo2CodeTsx} demoName='Pull up to load more' description='If ref exists in options, loadMore is automatically triggered when scrolling to the bottom'>
-  <Demo2 />
-</JackBox>
+<code src="./demo/demo2.tsx" />
 
 ### Use deps properly
 
-<JackBox jsCode={Demo3CodeJsx} tsCode={Demo3CodeTsx} demoName='use deps properly' description='If the deps changes, reset the current page and re-request the data'>
-  <Demo3 />
-</JackBox>
+<code src="./demo/demo3.tsx" />
 
 ### Custom data loading - timestamp mode
 
-<JackBox jsCode={Demo4CodeJsx} tsCode={Demo4CodeTsx} demoName='custom data loading - timestamp mode' description={
-  <div>
-    If the back-end data is constantly being updated, then just use page, offset, pageSize, etc. to cut the data, and there may be a lot of duplicate data. At this time, if we know the time to pull the data for the first time, then only the data before this timestamp can be cut at the same time, and the correct data can be obtained.<br />
-    We will record the current time 'startTime' when we first start the request or reload, and pass it to asyncFn.
-  </div>
-}>
-  <Demo4 />
-</JackBox>
+<code src="./demo/demo4.tsx" />
 
 ### Custom data loading - ID mode
 
-<JackBox jsCode={Demo5CodeJsx} tsCode={Demo5CodeTsx} demoName='custom data loading - ID mode' description={
-  <div>
-    If the data update frequency is very high, there may be multiple data corresponding to the same timestamp, and the timestamp mode above may have problems. At this point we can get the correct data by the id and offset of the last data.<br />
-    If there is an itemKey field in options, we will send the id of the current last data to asyncFn.
-  </div>
-}>
-  <Demo5 />
-</JackBox>
+<code src="./demo/demo5.tsx" />
 
 ## API
 
