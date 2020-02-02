@@ -1,8 +1,8 @@
 ---
 title: useAntdTable
 group:
-  title: UI
-  path: /UI
+  title: Async Hooks
+  path: /async
 ---
 
 # useAntdTable

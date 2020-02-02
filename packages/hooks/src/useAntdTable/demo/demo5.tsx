@@ -9,7 +9,8 @@
 import { Button, Form, Input, Table } from 'antd';
 import React, { useState } from 'react';
 import { WrappedFormUtils } from 'antd/lib/form/Form';
-import useAntdTable, { FnParams } from '..';
+import useAntdTable from '@umijs/hooks'
+import FnParams from '@umijs/hooks/es/useAntdTable';
 
 interface Item {
   name: {

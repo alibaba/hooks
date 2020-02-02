@@ -9,8 +9,8 @@
 import React from 'react';
 import { Button, Col, Form, Input, Row, Table, Select } from 'antd';
 import { WrappedFormUtils } from 'antd/lib/form/Form';
-
-import useAntdTable, { FnParams } from '..';
+import useAntdTable from '@umijs/hooks'
+import FnParams from '@umijs/hooks/es/useAntdTable';
 
 const { Option } = Select;
 
