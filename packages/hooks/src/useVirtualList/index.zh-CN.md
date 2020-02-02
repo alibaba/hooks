@@ -1,20 +1,9 @@
 ---
-name: useVirtualList
-route: /useVirtualList
-menu: 'UI'
-edit: false
-sidebar: true
+title: useVirtualList
+group:
+  title: UI
+  path: /UI
 ---
-
-import JackBox from 'jackbox';
-
-import Demo1 from './demo/demo1';
-import Demo1Tsx from '!raw-loader!./demo/demo1.tsx';
-import Demo1Jsx from '!raw-loader!./demo/demo1.jsx';
-
-import Demo2 from './demo/demo2';
-import Demo2Tsx from '!raw-loader!./demo/demo2.tsx';
-import Demo2Jsx from '!raw-loader!./demo/demo2.jsx';
 
 # useVirtualList
 
@@ -24,15 +13,11 @@ import Demo2Jsx from '!raw-loader!./demo/demo2.jsx';
 
 ### 默认用法
 
-<JackBox tsCode={Demo1Tsx} jsCode={Demo1Jsx} demoName='默认用法' description='渲染大量数据'>
-  <Demo1 />
-</JackBox>
+<code src="./demo/demo1.tsx" />
 
 ### 动态元素高度
 
-<JackBox tsCode={Demo2Tsx} jsCode={Demo2Jsx} demoName='动态元素高度' description='动态指定每个元素的高度'>
-  <Demo2 />
-</JackBox>
+<code src="./demo/demo2.tsx" />
 
 ## API
 
