@@ -1,15 +1,9 @@
 ---
-name: useSelections
-route: /useSelections
-menu: 'UI'
-edit: false
-sidebar: true
+title: useSelections
+group:
+  title: UI
+  path: /UI
 ---
-import JackBox from 'jackbox';
-
-import Demo1 from './demo/demo1';
-import Demo1CodeTsx from '!raw-loader!./demo/demo1.tsx';
-import Demo1CodeJsx from '!raw-loader!./demo/demo1.jsx';
 
 # useSelections
 
@@ -18,9 +12,8 @@ This hook is used for checkbox group, supports multiple selection, single select
 ## Examples
 
 ### Default usage
-<JackBox jsCode={Demo1CodeJsx} tsCode={Demo1CodeTsx} demoName='Default usage' description='Checkbox group'>
-  <Demo1 />
-</JackBox>
+
+<code src="./demo/demo1.tsx" />
 
 ## API
 

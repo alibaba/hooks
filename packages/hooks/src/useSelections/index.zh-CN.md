@@ -1,15 +1,9 @@
 ---
-name: useSelections
-route: /useSelections
-menu: 'UI'
-edit: false
-sidebar: true
+title: useSelections
+group:
+  title: UI
+  path: /UI
 ---
-import JackBox from 'jackbox';
-
-import Demo1 from './demo/demo1';
-import Demo1CodeTsx from '!raw-loader!./demo/demo1.tsx';
-import Demo1CodeJsx from '!raw-loader!./demo/demo1.jsx';
 
 # useSelections
 
@@ -18,9 +12,8 @@ import Demo1CodeJsx from '!raw-loader!./demo/demo1.jsx';
 ## 代码演示
 
 ### 基础用法
-<JackBox jsCode={Demo1CodeJsx} tsCode={Demo1CodeTsx} demoName='基础用法' description='常见的 checkbox 联动'>
-  <Demo1 />
-</JackBox>
+
+<code src="./demo/demo1.tsx" />
 
 ## API
 
