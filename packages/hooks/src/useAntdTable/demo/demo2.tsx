@@ -1,3 +1,11 @@
+/**
+ * title: Filter And Sorter
+ * desc: Retrieve filter and sorter from antd table. Page number will be reset when filter or sorter changes.
+ *
+ * title.zh-CN: 排序与筛选
+ * desc.zh-CN: 自动处理 Table 的排序与筛选，在修改排序或筛选时，会初始化到第一页
+ */
+
 import { Table } from 'antd';
 import React from 'react';
 import useAntdTable, { FnParams } from '..';

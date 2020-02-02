@@ -1,32 +1,9 @@
 ---
-name: useAntdTable
-route: /useAntdTable
-menu: 'UI'
-edit: false
-sidebar: true
+title: useAntdTable
+group:
+  title: UI
+  path: /UI
 ---
-import JackBox from 'jackbox';
-
-import Demo1 from './demo/demo1';
-import Demo1CodeTsx from '!raw-loader!./demo/demo1.tsx';
-import Demo1CodeJsx from '!raw-loader!./demo/demo1.jsx';
-
-import Demo2 from './demo/demo2';
-import Demo2CodeTsx from '!raw-loader!./demo/demo2.tsx';
-import Demo2CodeJsx from '!raw-loader!./demo/demo2.jsx';
-
-import Demo3 from './demo/demo3';
-import Demo3CodeTsx from '!raw-loader!./demo/demo3.tsx';
-import Demo3CodeJsx from '!raw-loader!./demo/demo3.jsx';
-
-import Demo4 from './demo/demo4';
-import Demo4CodeTsx from '!raw-loader!./demo/demo4.tsx';
-import Demo4CodeJsx from '!raw-loader!./demo/demo4.jsx';
-
-import Demo5 from './demo/demo5';
-import Demo5CodeTsx from '!raw-loader!./demo/demo5.tsx';
-import Demo5CodeJsx from '!raw-loader!./demo/demo5.jsx';
-
 
 # useAntdTable
 
@@ -43,33 +20,23 @@ Encapsulates common logic to make it easier to manage [Antd Table](https://ant.d
 
 ### Default usage
 
-<JackBox jsCode={Demo1CodeJsx} tsCode={Demo1CodeTsx} demoName='Default usage' description='Automatically handle paged data.'>
-  <Demo1 />
-</JackBox>
+<code src="./demo/demo1.tsx" />
 
 ### Filter And Sorter
 
-<JackBox jsCode={Demo2CodeJsx} tsCode={Demo2CodeTsx} demoName='Filter And Sorter' description='Retrieve filter and sorter from antd table. Page number will be reset when filter or sorter changes.'>
-  <Demo2 />
-</JackBox>
+<code src="./demo/demo2.tsx" />
 
 ### Table with filter and pager
 
-<JackBox jsCode={Demo3CodeJsx} tsCode={Demo3CodeTsx} demoName='Table with filter and page size switcher' description='use deps properly, when deps changes, page number will be reset'>
-  <Demo3 />
-</JackBox>
+<code src="./demo/demo3.tsx" />
 
 ### Search form and table data binding
 
-<JackBox jsCode={Demo4CodeJsx} tsCode={Demo4CodeTsx} demoName='Search form and table data binding' description='If options have the form parameter, useAntdTable will take care of form data changing and data caching.'>
-  <Demo4 />
-</JackBox>
+<code src="./demo/demo4.tsx" />
 
 ### Data cache
 
-<JackBox jsCode={Demo5CodeJsx} tsCode={Demo5CodeTsx} demoName='Data caching' description='If id shows in the options, All the data related to the table will be cached in memory.'>
-  <Demo5 />
-</JackBox>
+<code src="./demo/demo5.tsx" />
 
 ## API
 

@@ -1,31 +1,9 @@
 ---
-name: useAntdTable
-route: /useAntdTable
-menu: 'UI'
-edit: false
-sidebar: true
+title: useAntdTable
+group:
+  title: UI
+  path: /UI
 ---
-import JackBox from 'jackbox';
-
-import Demo1 from './demo/demo1';
-import Demo1CodeTsx from '!raw-loader!./demo/demo1.tsx';
-import Demo1CodeJsx from '!raw-loader!./demo/demo1.jsx';
-
-import Demo2 from './demo/demo2';
-import Demo2CodeTsx from '!raw-loader!./demo/demo2.tsx';
-import Demo2CodeJsx from '!raw-loader!./demo/demo2.jsx';
-
-import Demo3 from './demo/demo3';
-import Demo3CodeTsx from '!raw-loader!./demo/demo3.tsx';
-import Demo3CodeJsx from '!raw-loader!./demo/demo3.jsx';
-
-import Demo4 from './demo/demo4';
-import Demo4CodeTsx from '!raw-loader!./demo/demo4.tsx';
-import Demo4CodeJsx from '!raw-loader!./demo/demo4.jsx';
-
-import Demo5 from './demo/demo5';
-import Demo5CodeTsx from '!raw-loader!./demo/demo5.tsx';
-import Demo5CodeJsx from '!raw-loader!./demo/demo5.jsx';
 
 
 # useAntdTable
@@ -43,33 +21,23 @@ import Demo5CodeJsx from '!raw-loader!./demo/demo5.jsx';
 
 ### 基本用法
 
-<JackBox jsCode={Demo1CodeJsx} tsCode={Demo1CodeTsx} demoName='基本用法' description='自动处理分页数据'>
-  <Demo1 />
-</JackBox>
+<code src="./demo/demo1.tsx" />
 
 ### 排序与筛选
 
-<JackBox jsCode={Demo2CodeJsx} tsCode={Demo2CodeTsx} demoName='排序与筛选' description='自动处理 Table 的排序与筛选，在修改排序或筛选时，会初始化到第一页'>
-  <Demo2 />
-</JackBox>
+<code src="./demo/demo2.tsx" />
 
 ### 带筛选和分页器的 Table
 
-<JackBox jsCode={Demo3CodeJsx} tsCode={Demo3CodeTsx} demoName='带筛选和分页器的 Table' description='合理利用 deps，当 deps 变化时，会初始化到第一页'>
-  <Demo3 />
-</JackBox>
+<code src="./demo/demo3.tsx" />
 
 ### 搜索表单与列表联动
 
-<JackBox jsCode={Demo4CodeJsx} tsCode={Demo4CodeTsx} demoName='搜索表单与列表联动' description='如果 options 传了 form 参数，则我们会帮你管理 form 数据'>
-  <Demo4 />
-</JackBox>
+<code src="./demo/demo4.tsx" />
 
 ### 数据缓存
 
-<JackBox jsCode={Demo5CodeJsx} tsCode={Demo5CodeTsx} demoName='数据缓存' description='如果 options 传了 id 参数，则我们会将当前表单数据、分页数据、筛选排序等数据全部缓存下来，下次构建时恢复缓存数据'>
-  <Demo5 />
-</JackBox>
+<code src="./demo/demo5.tsx" />
 
 ## API
 

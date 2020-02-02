@@ -1,3 +1,11 @@
+/**
+ * title: Table with filter and page size switcher
+ * desc: use deps properly, when deps changes, page number will be reset.
+ *
+ * title.zh-CN: 带筛选和分页器的 Table
+ * desc.zh-CN: 合理利用 deps，当 deps 变化时，会初始化到第一页
+ */
+
 import { Select, Table } from 'antd';
 import React, { useState } from 'react';
 import useAntdTable, { FnParams } from '..';

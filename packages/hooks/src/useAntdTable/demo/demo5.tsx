@@ -1,3 +1,11 @@
+/**
+ * title: Data caching
+ * desc: If id shows in the options, All the data related to the table will be cached in memory.
+ *
+ * title.zh-CN: 数据缓存
+ * desc.zh-CN: 如果 options 传了 id 参数，则我们会将当前表单数据、分页数据、筛选排序等数据全部缓存下来，下次构建时恢复缓存数据
+ */
+
 import { Button, Form, Input, Table } from 'antd';
 import React, { useState } from 'react';
 import { WrappedFormUtils } from 'antd/lib/form/Form';

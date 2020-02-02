@@ -1,3 +1,11 @@
+/**
+ * title: Search form and table data binding
+ * desc: If options have the form parameter, useAntdTable will take care of form data changing and data caching.
+ *
+ * title.zh-CN: 搜索表单与列表联动
+ * desc.zh-CN: 如果 options 传了 form 参数，则我们会帮你管理 form 数据
+ */
+
 import React from 'react';
 import { Button, Col, Form, Input, Row, Table, Select } from 'antd';
 import { WrappedFormUtils } from 'antd/lib/form/Form';

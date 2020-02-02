@@ -1,3 +1,11 @@
+/**
+ * title: Default usage
+ * desc: Automatically handle paged data.
+ *
+ * title.zh-CN: 基本用法
+ * desc.zh-CN: 自动处理分页数据
+ */
+
 import { Table } from 'antd';
 import React from 'react';
 import useAntdTable, { FnParams } from '..';
