@@ -254,9 +254,9 @@ const {
     dataSource: Item[];
     loading: boolean;
     onChange: (
-      pagination: PaginationConfig,
-      filters?: Record<keyof Item, string[]>,
-      sorter?: SorterResult<Item>,
+      pagination: any,
+      filters?: any,
+      sorter?: any,
     ) => void;
     pagination: {
       current: number;
@@ -264,9 +264,6 @@ const {
       total: number;
     };
   };
-
-  sorter?: SorterResult<Item>;
-  filters?: Record<keyof Item, string[]>;
 } = useRequest(service, {
   ...,
   paginated,
@@ -280,8 +277,7 @@ const {
 |------------|-------------------------------------------------------------------------------------------------------------|------|
 | pagination | 分页数据及操作分页的方法                                                                                    | -    |
 | tableProps | 适配 [antd Table](https://ant.design/components/table-cn/) 组件的数据结构，可以直接用在 AntD Table 组件上。 | -    |
-| sorter     | antd Table sorter                                                                                           | -    |
-| filters    | antd Table filters                                                                                          | -    |
+
 
 #### Params
 

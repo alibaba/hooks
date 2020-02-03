@@ -1,6 +1,6 @@
 /**
  * title: Default pagination
- * desc: For normal paging scenarios, we will automatically manage `current` and` pageSize`.
+ * desc: For normal paging scenarios, we will automatically manage `current` and `pageSize`.
  *
  * title.zh-CN: 普通分页
  * desc.zh-CN: 普通的分页场景，我们会自动管理 `current` 和 `pageSize`。

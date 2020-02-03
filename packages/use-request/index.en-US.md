@@ -221,7 +221,7 @@ If service is `string`,` object`, `(... args) => string | object`, then automati
 
 By setting `options.paginated = true`, useRequest will run in pagination mode, which will have the following characteristics:
 
-- useRequest will automatically manage the `current`,` pageSize`. The first parameter of service is `{current, pageSize}`.
+- useRequest will automatically manage the `current`, `pageSize`. The first parameter of service is `{current, pageSize}`.
 - The data structure returned by service must be `{list: Item [], total: number}`. If it is not satisfied, it can be converted once by `options.formatResult`.
 - Additional pagination field will be returned, which contains all pagination information and functions for manipulating pagination.
 - The `refreshDeps` change will reset` current` to the first page and re-initiate the request. Generally you can put the pagination dependent conditions here.
@@ -280,8 +280,6 @@ const {
 |------------|----------------------------------------------------------------------------------------------------------------------------------------------|------|
 | pagination | Paging data and methods for operating paging                                                                                                 | -    |
 | tableProps | The data structure of the [antd Table] (https://ant.design/components/table-cn/) component can be used directly on the AntD Table component. | -    |
-| sorter     | antd Table sorter                                                                                                                            | -    |
-| filters    | antd Table filters                                                                                                                           | -    |
 
 #### Params
 
