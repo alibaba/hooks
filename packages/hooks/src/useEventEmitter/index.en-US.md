@@ -1,15 +1,9 @@
 ---
-name: useEventEmitter
-route: /useEventEmitter
-menu: 'Other'
-edit: false
-sidebar: true
+title: useEventEmitter
+group:
+  title: Advanced
+  path: /advanced
 ---
-import JackBox from 'jackbox';
-
-import Demo1 from './demo/demo1';
-import Demo1CodeTsx from '!raw-loader!./demo/demo1.tsx';
-import Demo1CodeJsx from '!raw-loader!./demo/demo1.jsx';
 
 # useEventEmitter
 
@@ -43,13 +37,7 @@ If you want to let the child component notify the parent component, you can just
 
 ### Parent component shares a event
 
-<JackBox jsCode={Demo1CodeJsx} tsCode={Demo1CodeTsx} demoName='Parent component shares a event' description={
-  <div>
-    The parent component creates a focus$ event emitter, and passes it to its children. When calling focus$.emit in MessageBox, InputBox will get notified.
-  </div>
-}>
-  <Demo1 />
-</JackBox>
+<code src="./demo/demo1.tsx" />
 
 ## API
 
