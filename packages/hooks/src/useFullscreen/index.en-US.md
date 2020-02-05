@@ -1,21 +1,9 @@
 ---
-name: useFullscreen
-route: /useFullscreen
-menu: 'Other'
-edit: false
-sidebar: true
+title: useFullscreen
+group:
+  title: Dom
+  path: /dom
 ---
-
-import JackBox from 'jackbox';
-
-import Demo1 from './demo/demo1';
-import Demo1Tsx from '!raw-loader!./demo/demo1.tsx';
-import Demo1Jsx from '!raw-loader!./demo/demo1.jsx';
-
-import Demo2 from './demo/demo2';
-import Demo2Tsx from '!raw-loader!./demo/demo2.tsx';
-import Demo2Jsx from '!raw-loader!./demo/demo2.jsx';
-
 
 # useFullscreen
 
@@ -25,13 +13,9 @@ A Hook for handling dom full screen
 
 ### Default usage
 
-<JackBox tsCode={Demo1Tsx} jsCode={Demo1Jsx} demoName='Default usage' description='Use ref to set elements that need full screen'>
-  <Demo1 />
-</JackBox>
+<code src="./demo/demo1.tsx" />
 
-<JackBox tsCode={Demo2Tsx} jsCode={Demo2Jsx} demoName='Lazy load' description='Pass in a function that returns the DOM element'>
-  <Demo2 />
-</JackBox>
+<code src="./demo/demo2.tsx" />
 
 ## API
 

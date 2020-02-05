@@ -1,21 +1,9 @@
 ---
-name: useFullscreen
-route: /useFullscreen
-menu: 'Other'
-edit: false
-sidebar: true
+title: useFullscreen
+group:
+  title: Dom
+  path: /dom
 ---
-
-import JackBox from 'jackbox';
-
-import Demo1 from './demo/demo1';
-import Demo1Tsx from '!raw-loader!./demo/demo1.tsx';
-import Demo1Jsx from '!raw-loader!./demo/demo1.jsx';
-
-import Demo2 from './demo/demo2';
-import Demo2Tsx from '!raw-loader!./demo/demo2.tsx';
-import Demo2Jsx from '!raw-loader!./demo/demo2.jsx';
-
 
 # useFullscreen
 
@@ -25,13 +13,9 @@ import Demo2Jsx from '!raw-loader!./demo/demo2.jsx';
 
 ### 基本用法
 
-<JackBox tsCode={Demo1Tsx} jsCode={Demo1Jsx} demoName='基本用法' description='使用 ref 设置需要全屏的元素'>
-  <Demo1 />
-</JackBox>
+<code src="./demo/demo1.tsx" />
 
-<JackBox tsCode={Demo2Tsx} jsCode={Demo2Jsx} demoName='懒加载' description='传入 function 来监听任意的 dom 节点'>
-  <Demo2 />
-</JackBox>
+<code src="./demo/demo2.tsx" />
 
 ## API
 
