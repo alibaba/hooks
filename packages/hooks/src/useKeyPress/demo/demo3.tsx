@@ -1,3 +1,17 @@
+/**
+ * title: Compound mode
+ * desc: |
+ *  Support for receiving a set of input keys or passing parameters as a combination of keys.
+ *
+ *  Attention：Key combination only supports the use of modified key + key alias + key in keyboard events, [See detail](#remarks)
+ *
+ * title.zh-CN: 组合方式
+ * desc.zh-CN: |
+ *  支持接收一组输入键，或以组合键的方式传递参数。
+ *
+ *  请注意：组合键方式只支持使用修饰键 + 键位别名 + 键盘事件中的 key 进行组合，更多内容请[查看备注](#备注)。
+ */
+
 import React, { useState } from 'react';
 import { Icon } from 'antd';
 import useKeyPress from '..';
