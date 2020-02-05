@@ -1,21 +1,9 @@
 ---
-name: useInViewport
-route: /useInViewport
-menu: 'Other'
-edit: false
-sidebar: true
+title: useInViewport
+group:
+  title: Dom
+  path: /dom
 ---
-
-import JackBox from 'jackbox';
-
-import Demo1 from './demo/demo1';
-import Demo1Tsx from '!raw-loader!./demo/demo1.tsx';
-import Demo1Jsx from '!raw-loader!./demo/demo1.jsx';
-
-import Demo2 from './demo/demo2';
-import Demo2Tsx from '!raw-loader!./demo/demo2.tsx';
-import Demo2Jsx from '!raw-loader!./demo/demo2.jsx';
-
 
 # useInViewport
 
@@ -25,15 +13,11 @@ A hook to subscribe DOM element visibility change
 
 ### Default usage
 
-<JackBox tsCode={Demo1Tsx} jsCode={Demo1Jsx} demoName='Default usage' description='using ref to listen to visibility change'>
-  <Demo1 />
-</JackBox>
+<code src="./demo/demo1.tsx" />
 
 ### Lazy load DOM element（used to subscibe to DOM element renders after the hook）
 
-<JackBox tsCode={Demo2Tsx} jsCode={Demo2Jsx} demoName='Lazy load DOM element（used to subscibe to dom element renders after the hook）' description='pass in a function that returns the DOM element'>
-  <Demo2 />
-</JackBox>
+<code src="./demo/demo2.tsx" />
 
 
 ## API

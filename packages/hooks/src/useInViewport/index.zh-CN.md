@@ -1,20 +1,9 @@
 ---
-name: useInViewport
-route: /useInViewport
-menu: 'Other'
-edit: false
-sidebar: true
+title: useInViewport
+group:
+  title: Dom
+  path: /dom
 ---
-
-import JackBox from 'jackbox';
-
-import Demo1 from './demo/demo1';
-import Demo1Tsx from '!raw-loader!./demo/demo1.tsx';
-import Demo1Jsx from '!raw-loader!./demo/demo1.jsx';
-
-import Demo2 from './demo/demo2';
-import Demo2Tsx from '!raw-loader!./demo/demo2.tsx';
-import Demo2Jsx from '!raw-loader!./demo/demo2.jsx';
 
 # useInViewport
 
@@ -24,15 +13,11 @@ import Demo2Jsx from '!raw-loader!./demo/demo2.jsx';
 
 ### 基本用法
 
-<JackBox tsCode={Demo1Tsx} jsCode={Demo1Jsx} demoName='基本用法' description='使用 ref 监听节点在视图变化或者滚动时是否在可视范围之内'>
-  <Demo1 />
-</JackBox>
+<code src="./demo/demo1.tsx" />
 
 ### 懒加载（用于监听同一组件内后渲染节点）
 
-<JackBox tsCode={Demo2Tsx} jsCode={Demo2Jsx} demoName='懒加载（用于监听同一组件内后渲染节点）' description='传入 function 来监听 dom 节点'>
-  <Demo2 />
-</JackBox>
+<code src="./demo/demo2.tsx" />
 
 ## API
 
