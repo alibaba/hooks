@@ -1,18 +1,9 @@
 ---
-name: useToggle
-route: /useToggle
-menu: 'State'
-edit: false
-sidebar: true
+title: useToggle
+group:
+  title: State Hooks
+  path: /state
 ---
-import JackBox from 'jackbox';
-
-import Demo1 from './demo/demo1';
-import Demo1CodeTsx from '!raw-loader!./demo/demo1.tsx';
-import Demo1CodeJsx from '!raw-loader!./demo/demo1.jsx';
-import Demo2 from './demo/demo2';
-import Demo2CodeTsx from '!raw-loader!./demo/demo2.tsx';
-import Demo2CodeJsx from '!raw-loader!./demo/demo2.jsx';
 
 # useToggle
 
@@ -22,15 +13,11 @@ A hook that switch value between two states.
 
 ### Default usage
 
-<JackBox jsCode={Demo1CodeJsx} tsCode={Demo1CodeTsx} demoName='Default usage' description='use boolean value as default，use it as same as useBoolean.'>
-  <Demo1 />
-</JackBox>
+<code src="./demo/demo1.tsx" />
 
 ### Advanced usage
 
-<JackBox jsCode={Demo2CodeJsx} tsCode={Demo2CodeTsx} demoName='Advanced usage' description='Accept two parameters, switch between them.'>
-  <Demo2 />
-</JackBox>
+<code src="./demo/demo2.tsx" />
 
 ## API
 

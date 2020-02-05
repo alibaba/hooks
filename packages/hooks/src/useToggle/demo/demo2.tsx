@@ -1,3 +1,11 @@
+/**
+ * title: Advanced usage
+ * desc: Accept two parameters, switch between them.
+ *
+ * title.zh-CN: 进阶使用
+ * desc.zh-CN: 接受两个参数，在参数间进行切换。
+ */
+
 import React from 'react';
 import { Button } from 'antd';
 import useToggle from '..';

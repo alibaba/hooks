@@ -1,36 +1,23 @@
 ---
-name: useToggle
-route: /useToggle
-menu: 'State'
-edit: false
-sidebar: true
+title: useToggle
+group:
+  title: State Hooks
+  path: /state
 ---
-import JackBox from 'jackbox';
-
-import Demo1 from './demo/demo1';
-import Demo1CodeTsx from '!raw-loader!./demo/demo1.tsx';
-import Demo1CodeJsx from '!raw-loader!./demo/demo1.jsx';
-import Demo2 from './demo/demo2';
-import Demo2CodeTsx from '!raw-loader!./demo/demo2.tsx';
-import Demo2CodeJsx from '!raw-loader!./demo/demo2.jsx';
 
 # useToggle
 
-用于在两个状态值间切换的 Hook。
+A hook that switch value between two states.
 
-## 代码演示
+## Examples
 
-### 基础使用
+### Default usage
 
-<JackBox jsCode={Demo1CodeJsx} tsCode={Demo1CodeTsx} demoName='基础使用' description='默认为 boolean 切换，基本用法与 useBoolean 一致。'>
-  <Demo1 />
-</JackBox>
+<code src="./demo/demo1.tsx" />
 
-### 进阶使用
+### Advanced usage
 
-<JackBox jsCode={Demo2CodeJsx} tsCode={Demo2CodeTsx} demoName='进阶使用' description='接受两个参数，在参数间进行切换。'>
-  <Demo2 />
-</JackBox>
+<code src="./demo/demo2.tsx" />
 
 ## API
 
