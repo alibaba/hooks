@@ -1,6 +1,14 @@
+/**
+ * title: Persist objects
+ * desc: useLocalStorageState will do the serialization and deserialization work automatically.
+ * 
+ * title.zh-CN: 存储对象
+ * desc.zh-CN: useLocalStorageState 会自动处理序列化和反序列化的操作。
+ */
+
 import React from 'react';
 import { Cascader } from 'antd';
-import useLocalStorageState from '..';
+import { useLocalStorageState } from '@umijs/hooks';
 
 const options = [
   {
