@@ -24,11 +24,11 @@ function useRequest<R = any, Item = any, U extends Item = any>(
 ): LoadMoreResult<Item>
 
 function useRequest<R = any, Item = any, U extends Item = any>(
-  service: CombineService<R, PaginatedParams<U>>,
+  service: CombineService<R, PaginatedParams>,
   options: PaginatedOptionsWithFormat<R, Item, U>
 ): PaginatedResult<Item>
 function useRequest<R = any, Item = any, U extends Item = any>(
-  service: CombineService<PaginatedFormatReturn<Item>, PaginatedParams<U>>,
+  service: CombineService<PaginatedFormatReturn<Item>, PaginatedParams>,
   options: BasePaginatedOptions<U>
 ): PaginatedResult<Item>
 

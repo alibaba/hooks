@@ -31,6 +31,7 @@ import useInViewport from './useInViewport';
 import useKeyPress from './useKeyPress';
 import useEventListener from './useEventListener';
 import useHover from './useHover';
+import useFormTable from './useFormTable';
 
 const useControlledValue: typeof useControllableValue = function (...args) {
   console.warn(
@@ -75,5 +76,6 @@ export {
   useKeyPress,
   useEventListener,
   useHover,
-  useRequest
+  useRequest,
+  useFormTable
 };

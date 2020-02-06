@@ -19,7 +19,7 @@
   "repository": "https://github.com/umijs/hooks",
   "homepage": "https://github.com/umijs/hooks",
   "scripts": {
-    "build": "node ./scripts/clean-old-build.js && father build && node ./scripts/build-wind-up.js"
+    "compile": "tsc --declarationDir lib && tsc --declarationDir es"
   },
   "files": [
     "dist",

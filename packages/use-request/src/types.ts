@@ -93,7 +93,7 @@ export type Options<R, P extends any[], U, UU extends U> = BaseOptions<R, P> | O
 
 /* ✅ --------------------------usePaginated---------------------------- */
 
-export type PaginatedParams<Item> = [{
+export type PaginatedParams = [{
   current: number,
   pageSize: number,
   sorter?: Sorter,
@@ -106,7 +106,7 @@ export interface PaginatedFormatReturn<Item> {
   [key: string]: any;
 }
 
-export interface PaginatedResult<Item> extends BaseResult<PaginatedFormatReturn<Item>, PaginatedParams<Item>> {
+export interface PaginatedResult<Item> extends BaseResult<PaginatedFormatReturn<Item>, PaginatedParams> {
 
   // reload: noop; // 重置所有参数，包括分页数据数据等，重新执行 asyncFn
 
@@ -138,13 +138,13 @@ export interface PaginatedResult<Item> extends BaseResult<PaginatedFormatReturn<
 }
 
 
-export interface BasePaginatedOptions<U> extends Omit<BaseOptions<PaginatedFormatReturn<U>, PaginatedParams<U>>, 'paginated'> {
+export interface BasePaginatedOptions<U> extends Omit<BaseOptions<PaginatedFormatReturn<U>, PaginatedParams>, 'paginated'> {
   paginated: true;
   defaultPageSize?: number; // 默认每页数据
   // loadMorePageSize?: number; // 非第一页的 pageSize, for loadMore
 }
 
-export interface PaginatedOptionsWithFormat<R, Item, U> extends Omit<BaseOptions<PaginatedFormatReturn<U>, PaginatedParams<U>>, 'paginated'> {
+export interface PaginatedOptionsWithFormat<R, Item, U> extends Omit<BaseOptions<PaginatedFormatReturn<U>, PaginatedParams>, 'paginated'> {
   paginated: true;
   defaultPageSize?: number; // 默认每页数据
   // loadMorePageSize?: number; // 非第一页的 pageSize, for loadMore

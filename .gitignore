@@ -13,3 +13,4 @@ coverage
 .umi
 page
 lerna-debug.log
+tsconfig.tsbuildinfo

@@ -5,9 +5,9 @@
     "start": "npm run dev",
     "dev": "father-doc dev",
     "bootstrap": "lerna bootstrap",
-    "clean": "lerna clean",
-    "compile": "tsc -b packages/use-request packages/hooks",
-    "build": "father build && npm run compile",
+    "clean": "lerna clean --yes",
+    "compile": "lerna run --scope @umijs/use-request compile && lerna run --scope @umijs/hooks compile",
+    "build": "node ./scripts/clean-old-build.js && father build && npm run compile && node ./scripts/build-wind-up.js",
     "test": "father test",
     "cov": "father test --coverage",
     "help": "father help",
@@ -33,6 +33,7 @@
     "now": "^16.2.0",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
-    "typescript": "^3.3.3"
+    "typescript": "^3.3.3",
+    "umi-request": "^1.2.18"
   }
 }

@@ -1,12 +1,18 @@
 ---
 title: useAntdTable
 group:
-  title: Async Hooks
-  path: /async
+  title: Deprecated
+  path: /deprecated
 ---
 
 
 # useAntdTable
+
+<div style={{color: 'red'}}>
+警告: useAntdTable 已经被废弃了，将在下一个大版本时移除。<br />
+一般的 AntD Table（<a href="#基本用法">demo1</a>, <a href="#排序与筛选">demo2</a>, <a href="#带筛选和分页器的-table">demo3</a>），你可以使用 <a href="https://hooks.umijs.org/async?anchor=pagination">useRequest 分页模式</a>代替。<br />
+复杂的与 Form 联动的 Table（<a href="#搜索表单与列表联动">demo4</a>, <a href="#数据缓存">demo5</a>），你可以使用 useFormTable 代替。
+</div>
 
 封装了常用的逻辑，让你更轻松的管理 [Antd Table](https://ant.design/components/table/)。
 

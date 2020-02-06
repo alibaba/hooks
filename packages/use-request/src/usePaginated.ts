@@ -8,15 +8,15 @@ import useUpdateEffect from './utils/useUpdateEffect';
 const isEqual = require('lodash.isequal');
 
 function usePaginated<R, Item, U extends Item = any>(
-  service: (...p: PaginatedParams<U>) => Promise<R>,
+  service: (...p: PaginatedParams) => Promise<R>,
   options: PaginatedOptionsWithFormat<R, Item, U>
 ): PaginatedResult<Item>
 function usePaginated<R, Item, U extends Item = any>(
-  service: (...p: PaginatedParams<U>) => Promise<PaginatedFormatReturn<Item>>,
+  service: (...p: PaginatedParams) => Promise<PaginatedFormatReturn<Item>>,
   options: BasePaginatedOptions<U>
 ): PaginatedResult<Item>
 function usePaginated<R, Item, U extends Item = any>(
-  service: (...p: PaginatedParams<U>) => Promise<R>,
+  service: (...p: PaginatedParams) => Promise<R>,
   options: BasePaginatedOptions<U> | PaginatedOptionsWithFormat<R, Item, U>
 ) {
 

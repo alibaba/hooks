@@ -255,8 +255,8 @@ const {
     loading: boolean;
     onChange: (
       pagination: PaginationConfig,
-      filters?: Record<keyof Item, string[]>,
-      sorter?: SorterResult<Item>,
+      filters?: any,
+      sorter?: any,
     ) => void;
     pagination: {
       current: number;
@@ -264,9 +264,6 @@ const {
       total: number;
     };
   };
-
-  sorter?: SorterResult<Item>;
-  filters?: Record<keyof Item, string[]>;
 } = useRequest(service, {
   ...,
   paginated,

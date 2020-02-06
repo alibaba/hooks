@@ -15,6 +15,9 @@
     "type": "git",
     "url": "git+https://github.com/umijs/hooks.git"
   },
+  "scripts": {
+    "compile": "tsc --declarationDir ./lib && tsc --declarationDir ./es"
+  },
   "publishConfig": {
     "registry": "https://registry.npmjs.com/"
   },
