@@ -1,19 +1,9 @@
 ---
-name: useResponsive
-route: /useResponsive
-menu: 'Other'
-edit: false
-sidebar: true
+title: useResponsive
+group:
+  title: Dom
+  path: /dom
 ---
-import JackBox from 'jackbox';
-import { Playground } from 'docz';
-import { useState, useMemo } from 'react';
-import { useResponsive, configResponsive } from './index';
-
-import Demo1 from './demo/demo1';
-import Demo1CodeTsx from '!raw-loader!./demo/demo1.tsx';
-import Demo1CodeJsx from '!raw-loader!./demo/demo1.jsx';
-
 
 # useResponsive
 
@@ -23,13 +13,7 @@ import Demo1CodeJsx from '!raw-loader!./demo/demo1.jsx';
 
 ### 在组件中获取响应式信息
 
-<JackBox jsCode={Demo1CodeJsx} tsCode={Demo1CodeTsx} demoName='在组件中获取响应式信息' description={
-  <div>
-    在组件中调用 useResponsive 可以获取并订阅浏览器窗口的响应式信息。
-  </div>
-}>
-  <Demo1/>
-</JackBox>
+<code src="./demo/demo1.tsx" />
 
 ## API
 
