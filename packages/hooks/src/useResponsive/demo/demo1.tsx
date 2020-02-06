@@ -8,7 +8,7 @@
 
 
 import React from 'react';
-import { configResponsive, useResponsive } from '..';
+import { configResponsive, useResponsive } from '@umijs/hooks';
 
 configResponsive({
   small: 0,

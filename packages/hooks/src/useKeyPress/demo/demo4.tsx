@@ -7,7 +7,7 @@
  */
 
 import React, { useState } from 'react';
-import useKeyPress from '..';
+import {useKeyPress} from '@umijs/hooks';
 
 export default () => {
   const [key, setKey] = useState();
