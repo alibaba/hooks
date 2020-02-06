@@ -7,9 +7,9 @@ group:
 
 # usePagination
 
-<div style={{color: 'red'}}>
-WARNING: usePagination is deprecated and will be removed in the next major version. Please use useRequest instead.
-</div>
+<Alert>
+<b>⚠️WARNING: usePagination is deprecated and will be removed in the next major version. Please use <a href="/async?anchor=pagination">useRequest pagination mode</a> instead.</b>
+</Alert>
 
 Hook for common asynchronous paging scenario.
 

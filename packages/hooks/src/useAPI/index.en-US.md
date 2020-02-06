@@ -7,9 +7,9 @@ group:
 
 # useAPI
 
-<div style={{color: 'red'}}>
-WARNING: useAPI is deprecated and will be removed in the next major version. Please use useRequest instead.
-</div>
+<Alert>
+<b>⚠️WARNING: useAPI is deprecated and will be removed in the next major version. Please use <a href="/async">useRequest</a> instead.</b>
+</Alert>
 
 A custom hook that helps you sending and receiving data from server, using `umi-request` as default request library.
 Supporting manual-trigged fetch and fetch in interval.

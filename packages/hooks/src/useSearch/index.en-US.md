@@ -7,9 +7,9 @@ group:
 
 # useSearch
 
-<div style={{color: 'red'}}>
-WARNING: useSearch is deprecated and will be removed in the next major version. Please use useRequest debounceInterval instead.
-</div>
+<Alert>
+<b>⚠️WARNING: useSearch is deprecated and will be removed in the next major version. Please use <a href="/async?anchor=debounce">useRequest debounceInterval</a> instead.</b>
+</Alert>
 
 Applicable to typing while searching scenario.
 

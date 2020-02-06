@@ -7,9 +7,9 @@ group:
 
 # usePagination
 
-<div style={{color: 'red'}}>
-警告: usePagination 已经被废弃了，将在下一个大版本时移除，你可以使用 useRequest 代替。
-</div>
+<Alert>
+<b>⚠️警告: usePagination 已经被废弃了，将在下一个大版本时移除，你可以使用 <a href="/zh-CN/async?anchor=分页">useRequest 分页模式</a> 代替。</b>
+</Alert>
 
 适用于常见的异步分页场景的 Hook。
 

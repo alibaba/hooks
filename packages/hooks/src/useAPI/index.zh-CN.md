@@ -7,9 +7,9 @@ group:
 
 # useAPI
 
-<div style={{color: 'red'}}>
-警告: useAPI 已经被废弃了，将在下一个大版本时移除，你可以使用 useRequest 代替。
-</div>
+<Alert>
+<b>⚠️警告: useAPI 已经被废弃了，将在下一个大版本时移除，你可以使用 <a href="/zh-CN/async">useRequest</a> 代替。</b>
+</Alert>
 
 一个内置 `umi-request`，帮你管理网络请求的 Hook。
 支持立即执行，手动触发执行，轮询。

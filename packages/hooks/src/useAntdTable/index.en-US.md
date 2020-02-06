@@ -7,11 +7,11 @@ group:
 
 # useAntdTable
 
-<div style={{color: 'red'}}>
-WARNING: useAntdTable is deprecated and will be removed in the next major version. <br />
-Simple AntD Table（<a href="#default-usage">demo1</a>, <a href="#filter-and-sorter">demo2</a>, <a href="#table-with-filter-and-pager">demo3</a>），you can use <a href="https://hooks.umijs.org/async?anchor=pagination">useRequest pagination mode</a> instead. <br />
-Complex AntD Table with Form（<a href="#search-form-and-table-data-binding">demo4</a>, <a href="#data-cache">demo5</a>），you can use useFormTable instead.
-</div>
+<Alert>
+<p><b>⚠️WARNING: useAntdTable is deprecated and will be removed in the next major version. </b></p>
+<p>Simple AntD Table（<a href="#default-usage">demo1</a>, <a href="#filter-and-sorter">demo2</a>, <a href="#table-with-filter-and-pager">demo3</a>），you can use <a href="/async?anchor=pagination">useRequest pagination mode</a> instead. </p>
+<p>Complex AntD Table with Form（<a href="#search-form-and-table-data-binding">demo4</a>, <a href="#data-cache">demo5</a>），you can use <a href="/antd/use-form-table">useFormTable</a> instead.</p>
+</Alert>
 
 Encapsulates common logic to make it easier to manage [Antd Table](https://ant.design/components/table/)。
 
