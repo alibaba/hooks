@@ -1,15 +1,10 @@
 ---
-name: useUpdateLayoutEffect
-route: /useUpdateLayoutEffect
-menu: 'LifeCycle'
-edit: false
-sidebar: true
+title: useUpdateLayoutEffect
+group:
+  title: LifeCycle
+  path: /lifeCycle
+  order: 600
 ---
-import JackBox from 'jackbox';
-
-import Demo1 from './demo/demo1';
-import Demo1CodeTsx from '!raw-loader!./demo/demo1.tsx';
-import Demo1CodeJsx from '!raw-loader!./demo/demo1.jsx';
 
 # useUpdateLayoutEffect
 
@@ -18,9 +13,8 @@ import Demo1CodeJsx from '!raw-loader!./demo/demo1.jsx';
 ## 代码演示
 
 ### 基础使用
-<JackBox jsCode={Demo1CodeJsx} tsCode={Demo1CodeTsx} demoName='基础使用' description='使用上与 useLayoutEffect 完全相同，只是它忽略了首次渲染，且只在依赖项更新时运行。'>
-  <Demo1 />
-</JackBox>
+
+<code src="./demo/demo1.tsx" />
 
 ## API
 
