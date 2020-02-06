@@ -1,16 +1,9 @@
 ---
-name: useMouse
-route: /useMouse
-menu: 'Other'
-edit: false
-sidebar: true
+title: useMouse
+group:
+  title: Dom
+  path: /dom
 ---
-
-import JackBox from 'jackbox';
-
-import Demo1 from './demo/demo1';
-import Demo1CodeTsx from '!raw-loader!./demo/demo1.tsx';
-import Demo1CodeJsx from '!raw-loader!./demo/demo1.jsx';
 
 # useMouse
 
@@ -19,9 +12,8 @@ A Hook to track cursor position
 ## Examples
 
 ### Default Usage
-<JackBox tsCode={Demo1CodeTsx} jsCode={Demo1CodeJsx} demoName='Default usage' description='tracking cursor position' >
-  <Demo1 />
-</JackBox>
+
+<code src="./demo/demo1.tsx" />
 
 ## API
 ```
