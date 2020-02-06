@@ -1,6 +1,14 @@
+/**
+ * title: Controlled component
+ * desc: If props has the value field, then the state is controlled by it's parent
+ *
+ * title.zh-CN: 受控组件
+ * desc.zh-CN: 如果 props 有 value 字段，则由父级接管控制 state
+ */
+
 import { InputNumber, Button } from 'antd';
 import React, { useState } from 'react';
-import useControllableValue from '..';
+import { useControllableValue } from '@umijs/hooks';
 
 const ControllableComponent = (props: any) => {
   const [state, setState] = useControllableValue(props);
