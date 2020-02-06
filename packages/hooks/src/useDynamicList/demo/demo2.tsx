@@ -1,7 +1,15 @@
+/**
+ * title: Nesting forms
+ * desc: nesting dynamic forms in a set of form groups.
+ *
+ * title.zh-CN: 嵌套表单
+ * desc.zh-CN: 动态表单内部嵌套动态表单
+ */
+
 import React, { useState } from 'react';
-import { Form, Input, Button, List } from 'antd';
+import { Form, Input, Button } from 'antd';
 import { FormComponentProps } from 'antd/lib/form';
-import useDynamicList from '..';
+import { useDynamicList } from '@umijs/hooks';
 
 interface CardProps extends FormComponentProps {
   index: number;

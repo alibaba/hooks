@@ -1,6 +1,14 @@
+/**
+ * title: Default usage
+ * desc: Checkbox group.
+ *
+ * title.zh-CN: 默认用法
+ * desc.zh-CN: 常见的 checkbox 联动
+ */
+
 import { Checkbox, Col, Row } from 'antd';
 import React, { useMemo, useState } from 'react';
-import useSelections from '..';
+import { useSelections } from '@umijs/hooks'
 
 export default () => {
   const [hideOdd, setHideOdd] = useState(false);

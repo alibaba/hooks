@@ -34,6 +34,7 @@
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "typescript": "^3.3.3",
-    "umi-request": "^1.2.18"
+    "umi-request": "^1.2.18",
+    "react-drag-listview": "^0.1.6"
   }
 }

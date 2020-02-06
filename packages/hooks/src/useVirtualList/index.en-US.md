@@ -1,20 +1,9 @@
 ---
-name: useVirtualList
-route: /useVirtualList
-menu: 'UI'
-edit: false
-sidebar: true
+title: useVirtualList
+group:
+  title: UI
+  path: /UI
 ---
-
-import JackBox from 'jackbox';
-
-import Demo1 from './demo/demo1';
-import Demo1Tsx from '!raw-loader!./demo/demo1.tsx';
-import Demo1Jsx from '!raw-loader!./demo/demo1.jsx';
-
-import Demo2 from './demo/demo2';
-import Demo2Tsx from '!raw-loader!./demo/demo2.tsx';
-import Demo2Jsx from '!raw-loader!./demo/demo2.jsx';
 
 # useVirtualList
 
@@ -24,15 +13,11 @@ A hook that allows you to use virtual list to render huge chunks of list data.
 
 ### Default usage
 
-<JackBox tsCode={Demo1Tsx} jsCode={Demo1Jsx} demoName='Default usage' description='render 100,000 items in a list'>
-  <Demo1 />
-</JackBox>
+<code src="./demo/demo1.tsx" />
 
 ### Dynamic item height
 
-<JackBox tsCode={Demo2Tsx} jsCode={Demo2Jsx} demoName='Dynamic item height' description='specify item height dynamically'>
-  <Demo2 />
-</JackBox>
+<code src="./demo/demo2.tsx" />
 
 ## API
 

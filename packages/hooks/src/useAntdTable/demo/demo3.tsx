@@ -9,7 +9,7 @@
 import { Select, Table } from 'antd';
 import React, { useState } from 'react';
 import { useAntdTable } from '@umijs/hooks'
-import {FnParams} from '@umijs/hooks/es/useAntdTable';
+import { FnParams } from '@umijs/hooks/es/useAntdTable';
 
 const { Option } = Select;
 

@@ -1,23 +1,9 @@
 ---
-name: useControllableValue
-route: /useControllableValue
-menu: 'State'
-edit: false
-sidebar: true
+title: useControllableValue
+group:
+  title: State Hooks
+  path: /state
 ---
-import JackBox from 'jackbox';
-
-import Demo1 from './demo/demo1';
-import Demo1CodeTsx from '!raw-loader!./demo/demo1.tsx';
-import Demo1CodeJsx from '!raw-loader!./demo/demo1.jsx';
-
-import Demo2 from './demo/demo2';
-import Demo2CodeTsx from '!raw-loader!./demo/demo2.tsx';
-import Demo2CodeJsx from '!raw-loader!./demo/demo2.jsx';
-
-import Demo3 from './demo/demo3';
-import Demo3CodeTsx from '!raw-loader!./demo/demo3.tsx';
-import Demo3CodeJsx from '!raw-loader!./demo/demo3.jsx';
 
 # useControllableValue
 
@@ -27,22 +13,15 @@ import Demo3CodeJsx from '!raw-loader!./demo/demo3.jsx';
 
 ### 非受控组件
 
-<JackBox jsCode={Demo1CodeJsx} tsCode={Demo1CodeTsx} demoName='非受控组件' description='如果 props 中没有 value，则组件内部自理 state'>
-  <Demo1 />
-</JackBox>
+<code src="./demo/demo1.tsx" />
 
 ### 受控组件
 
-<JackBox jsCode={Demo2CodeJsx} tsCode={Demo2CodeTsx} demoName='受控组件' description='如果 props 有 value 字段，则由父级接管控制 state'>
-  <Demo2 />
-</JackBox>
+<code src="./demo/demo2.tsx" />
 
 ### 无 value，有 onChange 的组件
 
-<JackBox jsCode={Demo3CodeJsx} tsCode={Demo3CodeTsx} demoName='无 value，有 onChange 的组件' description='只要 props 中有 onChange 字段，则在 state 变化时，就会触发 onChange 函数'>
-  <Demo3 />
-</JackBox>
-
+<code src="./demo/demo3.tsx" />
 ## API
 
 ```javascript

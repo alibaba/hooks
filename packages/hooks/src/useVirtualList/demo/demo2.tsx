@@ -1,3 +1,11 @@
+/**
+ * title: Dynamic item height
+ * desc: specify item height dynamically.
+ *
+ * title.zh-CN: 动态元素高度
+ * desc.zh-CN: 动态指定每个元素的高度
+ */
+
 import React from 'react';
 import { InputNumber, Button } from 'antd';
 import useVirtualList from '..';

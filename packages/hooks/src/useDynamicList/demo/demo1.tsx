@@ -1,7 +1,15 @@
-import React, { useState, useMemo } from 'react';
+/**
+ * title: Default usage
+ * desc: a form that can add/remove fields dynamically.
+ *
+ * title.zh-CN: 动态列表
+ * desc.zh-CN: 可增删的不定条数表单
+ */
+
+import React, { useState } from 'react';
 import { Form, Button, Input, Icon } from 'antd';
 import { FormComponentProps } from 'antd/lib/form';
-import useDynamicList from '..';
+import { useDynamicList } from '@umijs/hooks'
 
 export default Form.create()((props: FormComponentProps) => {
   const { list, remove, getKey, push } = useDynamicList(['David', 'Jack']);
