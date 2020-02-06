@@ -1,6 +1,14 @@
+/**
+ * title: Default usage
+ * desc: Store the previous value.
+ * 
+ * title.zh-CN: 基本用法
+ * desc.zh-CN: 记录上次的 count 值
+ */
+
 import React, { useState } from 'react';
 import { Button } from 'antd';
-import usePrevious from '..';
+import { usePrevious } from '@umijs/hooks';
 
 export default () => {
   const [count, setCount] = useState(0);

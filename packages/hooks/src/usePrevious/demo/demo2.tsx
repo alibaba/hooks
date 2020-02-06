@@ -1,6 +1,14 @@
+/**
+ * title: Using compare function
+ * desc: The stored previous value update only when the compare function returns true.
+ * 
+ * title.zh-CN: 使用 compare function
+ * desc.zh-CN: 只有 compare function 返回 true 时，才会记录值的变化
+ */
+
 import React, { useState } from 'react';
 import { Button, Input } from 'antd';
-import usePrevious from '..';
+import { usePrevious } from '@umijs/hooks';
 
 interface Person {
   name: string;
