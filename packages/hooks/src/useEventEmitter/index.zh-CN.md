@@ -1,15 +1,9 @@
 ---
-name: useEventEmitter
-route: /useEventEmitter
-menu: 'Other'
-edit: false
-sidebar: true
+title: useEventEmitter
+group:
+  title: Advanced
+  path: /advanced
 ---
-import JackBox from 'jackbox';
-
-import Demo1 from './demo/demo1';
-import Demo1CodeTsx from '!raw-loader!./demo/demo1.tsx';
-import Demo1CodeJsx from '!raw-loader!./demo/demo1.jsx';
 
 # useEventEmitter
 
@@ -43,13 +37,7 @@ event$.useSubscription(val => {
 
 ### 父组件向子组件共享事件
 
-<JackBox jsCode={Demo1CodeJsx} tsCode={Demo1CodeTsx} demoName='父组件向子组件共享事件' description={
-  <div>
-    父组件创建了一个 focus$ 事件，并且将它传递给了两个子组件。在 MessageBox 中调用 focus$.emit ，InputBox 组件就可以收到通知。
-  </div>
-}>
-  <Demo1 />
-</JackBox>
+<code src="./demo/demo1.tsx" />
 
 ## API
 

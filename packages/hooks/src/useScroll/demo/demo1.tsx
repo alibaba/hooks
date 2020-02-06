@@ -1,5 +1,13 @@
+/**
+ * title: Basic Usage
+ * desc: Try to scroll the box below.
+ *
+ * title.zh-CN: 基本用法
+ * desc.zh-CN: 尝试滚动一下文字内容。
+ */
+
 import React, { useRef } from 'react';
-import useScroll from '..';
+import {useScroll} from '@umijs/hooks';
 
 export default () => {
   const [scroll, ref] = useScroll<HTMLDivElement>();

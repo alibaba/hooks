@@ -1,6 +1,15 @@
+/**
+ * title: Default usage
+ * desc: Use ref to set elements that need full screen
+ *
+ * title.zh-CN: 基本用法
+ * desc.zh-CN: 使用 ref 设置需要全屏的元素
+ */
+
+
 import React from 'react';
 import { Button } from 'antd';
-import useFullscreen from '..';
+import {useFullscreen} from '@umijs/hooks';
 
 export default () => {
   const { ref, isFullscreen, setFull, exitFull, toggleFull } = useFullscreen<HTMLDivElement>();

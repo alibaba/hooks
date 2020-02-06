@@ -1,6 +1,14 @@
+/**
+ * title: Default usage
+ * desc: Please click button or outside of button to show effects.
+ *
+ * title.zh-CN: 基本用法
+ * desc.zh-CN: 请点击按钮或按钮外查看效果。
+ */
+
 import React, { useState } from 'react';
 import { Button } from 'antd';
-import useClickAway from '..';
+import {useClickAway} from '@umijs/hooks';
 
 export default () => {
   const [counter, setCounter] = useState(0);

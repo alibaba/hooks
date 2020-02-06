@@ -1,5 +1,13 @@
+/**
+ * title: Use key aliases
+ * desc: Support using key aliases. Please refer to the [document](#remarks) below.
+ *
+ * title.zh-CN: 使用别名
+ * desc.zh-CN: 支持使用别名，更多内容请[查看备注](#备注)。
+ */
+
 import React, { useState } from 'react';
-import useKeyPress from '..';
+import {useKeyPress} from '@umijs/hooks';
 
 export default () => {
   const [counter, setCounter] = useState(0);

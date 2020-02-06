@@ -1,19 +1,9 @@
 ---
-name: useResponsive
-route: /useResponsive
-menu: 'Other'
-edit: false
-sidebar: true
+title: useResponsive
+group:
+  title: Dom
+  path: /dom
 ---
-import JackBox from 'jackbox';
-import { Playground } from 'docz';
-import { useState, useMemo } from 'react';
-import { useResponsive, configResponsive } from './index';
-
-import Demo1 from './demo/demo1';
-import Demo1CodeTsx from '!raw-loader!./demo/demo1.tsx';
-import Demo1CodeJsx from '!raw-loader!./demo/demo1.jsx';
-
 
 # useResponsive
 
@@ -23,13 +13,7 @@ React Hook for getting responsive info.
 
 ### Get responsive info in components
 
-<JackBox jsCode={Demo1CodeJsx} tsCode={Demo1CodeTsx} demoName='Get responsive info in components' description={
-  <div>
-    By calling useResponsive in components, you can retrieve the responsive infomation of the browser page and subscribe to it at the same time.
-  </div>
-}>
-  <Demo1/>
-</JackBox>
+<code src="./demo/demo1.tsx" />
 
 ## API
 
