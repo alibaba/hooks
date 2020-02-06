@@ -1,6 +1,6 @@
 /**
  * title: Manual trigger
- * desc: If options.manual is set, the async function only be executed when the "run" function is called.
+ * desc: If options.manual is set, the async function will only be executed when the "run" function is called.
  *
  * title.zh-CN: 手动触发
  * desc.zh-CN: 通过设置 `options.manual = true` , 则需要手动调用 `run` 时才会触发执行异步函数。

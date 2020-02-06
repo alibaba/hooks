@@ -1,6 +1,6 @@
 /**
  * title: Debounce
- * desc: If options.debounceInterval is set, will enter debounce mode. if run is frequently triggered, the request will be requested with a debounce strategy.
+ * desc: If options.debounceInterval is set, requests except for the last one within the debounce interval will be dropped.
  *
  * title.zh-CN: 防抖
  * desc.zh-CN: 通过设置 `debounceInterval` ，则进入防抖模式。此时如果频繁触发 `run` ，则会以防抖策略进行请求。

@@ -1,6 +1,6 @@
 /**
  * title: refreshDeps
- * desc: When refreshDeps changes, useRequest trigger the service with last params.
+ * desc: When refreshDeps changes, useRequest will execute the service with previous params.
  *
  * title.zh-CN: refreshDeps
  * desc.zh-CN: 当 refreshDeps 变化时，useRequest 会使用之前的参数重新执行 service。

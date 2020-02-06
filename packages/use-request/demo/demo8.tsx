@@ -1,6 +1,6 @@
 /**
  * title: Preload
- * desc: Requests for the same `cacheKey` are globally shared, which means that you can load data in advance. With this feature, preloading can be easily implemented..
+ * desc: Requests for the same `cacheKey` are shared globally, which means that you can load data in advance. With this feature, preloading can be easily implemented..
  *
  * title.zh-CN: 预加载
  * desc.zh-CN: 同一个 `cacheKey` 的请求，是全局共享的，也就是你可以提前加载数据。利用该特性，可以很方便的实现预加载。

@@ -1,6 +1,6 @@
 /**
  * title: Loading Delay
- * desc: By setting `loadingDelay`, can specifies a delay in milliseconds for loading (prevent flush).
+ * desc: Setting `loadingDelay` can specifies a delay in milliseconds for loading (prevent flush).
  *
  * title.zh-CN: Loading Delay
  * desc.zh-CN: 通过设置 `loadingDelay` ，可以延迟 `loading` 变成 `true` 的时间，有效防止闪烁。

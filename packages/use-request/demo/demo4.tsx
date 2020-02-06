@@ -4,7 +4,7 @@
  *  If options.pollingInterval is set, Polling can be turned on.
  *  - You can set `pollingWhenHidden=false` to temporarily suspend the scheduled task when the screen is not visible.
  *  - Use `run` / `cancel` to start / stop polling.
- *  - When `manual=true`, you need to run `run` for the first time before you start polling.
+ *  - When `manual=true`, you need to call the `run` function to start the polling.
  *
  * title.zh-CN: 轮询
  * desc.zh-CN: |

@@ -9,11 +9,11 @@ group:
 
 # useRequest
 
-Production-ready React Hooks library for manage asynchronous data.
+Production-ready React Hook to manage asynchronous data.
 
 **Core Characteristics**
 
-* Auto Request / Manual Request
+* Auto-triggered request and Manually-triggered Request
 * SWR(stale-while-revalidate)
 * Cache / Preload
 * Refresh On Window Focus
@@ -23,8 +23,8 @@ Production-ready React Hooks library for manage asynchronous data.
 * Concurrent Request
 * Loading Delay
 * Pagination
-* Load more, data recovery + scroll position recovery
-* [ ] Error retry
+* Load more, data recovery and scroll position recovery
+* [ ] Retry on error
 * [ ] Request timeout management
 * [ ] Suspense
 * ......
@@ -87,7 +87,7 @@ useEffect(() => {
 }, [userId]);
 ```
 
-`refreshDeps` is a syntactic sugar that makes it easier for you to implement the above functions. When `refreshDeps` changes, the service will be re-executed using the previous params.
+`refreshDeps` is an equivalent yet easy way to implement the above function. When `refreshDeps` changes, the service will be re-executed using the previous params.
 
 <code src="./demo/demo12.tsx" />
 
@@ -128,15 +128,15 @@ const {
 
 | Property | Description                                                                                                                                                                                                                                                             | Type                                                                    |
 |----------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------|
-| data     | <ul><li> Data returned by the service。</li><li> If there is `formatResult`, the data is formatted data.</li></ul>                                                                                                                                                      | `undefined / any`                                                       |
+| data     | <ul><li> Data returned by the service。</li><li> If `formatResult` is set, the data will be the return of `formatResult`. </li></ul>                                                                                                                                                      | `undefined / any`                                                       |
 | error    | exception thrown by service, default is `undefined`                                                                                                                                                                                                                     | `undefined / Error`                                                     |
-| loading  | Whether the service is executing                                                                                                                                                                                                                                        | `boolean`                                                               |
-| run      | Manually trigger service execution, and its parameters will be passed to service                                                                                                                                                                                        | `(...args: any[]) => Promise`                                           |
+| loading  | Whether the service is loaded                                                                                                                                                                                                                                        | `boolean`                                                               |
+| run      | Manually trigger the service execution. Its parameters will be passed to the service function                                                                                                                                                                                        | `(...args: any[]) => Promise`                                           |
 | params   | An array of parameters for the service being executed. For example, you triggered `run (1, 2, 3)`, then params is equal to [[1, 2, 3] `                                                                                          | `any[]`                              |
-| cancel   | <ul><li>Cancel current request </li><li>If there is a poll, stop it. </li></ul>                                                                                                                                                                                         | `() => void`                                                            |
+| cancel   | <ul><li>Cancel the current running request </li><li>This will also stop the polling. </li></ul>                                                                                                                                                                                         | `() => void`                                                            |
 | refresh  | Using the last params, re-execute the service                                                                                                                                                                                                                           | `() => void`                                                            |
-| mutate   | Modify data directly                                                                                                                                                                                                                                                    | `(newData) => void / ((oldData)=>newData) => void`                      |
-| fetches  | <ul><li>By default, new requests overwrite old ones. If `fetchKey` is set, multiple requests can be implemented in parallel, and` fetches` stores the status of multiple requests.</li><li>The status of the outer layer is the newly triggered fetches data.</li></ul> | `{[key:string]: {loading,data,error,params,cancel,refresh,mutate,run}}` |
+| mutate   | Modify the returned data directly                                                                                                                                                                                                                                                    | `(newData) => void / ((oldData)=>newData) => void`                      |
+| fetches  | <ul><li>By default, new requests overwrite old ones. If `fetchKey` is set, multiple requests can be implemented in parallel, and` fetches` stores the status of all the requests.</li><li>The status of the outer layer is the newly triggered fetches data.</li></ul> | `{[key:string]: {loading,data,error,params,cancel,refresh,mutate,run}}` |
 
 ### Params
 

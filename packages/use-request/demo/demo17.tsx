@@ -1,6 +1,6 @@
 /**
  * title: With Cache
- * desc: In the `cacheKey` scenario, the `params` of `run` can be cached. Using this feature, we can implement caching of pagination-related conditions.
+ * desc: In the scenario where `cacheKey` is set, the `params` of `run` can be cached. Using this feature, we can implement caching of pagination-related conditions.
  *
  * title.zh-CN: 带缓存的 Pagination
  * desc.zh-CN: 在 `cacheKey` 场景下， `run` 的参数 `params` 是可以缓存的，利用这个特点，我们可以实现 pagination 相关条件的缓存。

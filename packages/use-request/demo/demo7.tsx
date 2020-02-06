@@ -1,6 +1,6 @@
 /**
  * title: Cache & SWR
- * desc: If options.cacheKey is set, useRequest will cache the data of last request. On next component load, if there is cached data, we will return the cached data first, and then send a new request in background, like SWR.
+ * desc: If options.cacheKey is set, useRequest will cache the data of the previous request, and use it as the initial  value while the next request is not returned, like SWR.
  *
  * title.zh-CN: 缓存 & SWR
  * desc.zh-CN: 如果设置了 `cacheKey` ， useRequest 会将当前请求结束数据缓存起来。下次组件初始化时，如果有缓存数据，我们会优先返回缓存数据，然后在背后发送新请求，也就是 SWR 的能力。

@@ -1,6 +1,6 @@
 /**
  * title: Throttle
- * desc: If options.throttleInterval is set, will enter throttle mode. if run is frequently triggered, the request will be requested with a throttle strategy.
+ * desc: If options.throttleInterval is set, the request will be triggered once maximum within the throttle interval.
  *
  * title.zh-CN: 节流
  * desc.zh-CN: 通过设置 `throttleInterval` ，则进入节流模式。此时如果频繁触发 `run` ，则会以节流策略进行请求。
