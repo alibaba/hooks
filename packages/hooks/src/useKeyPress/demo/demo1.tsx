@@ -2,7 +2,7 @@
  * title: Basic usage
  * desc: Supported Key and keyCode in keyboard events, pressing ArrowUp or ArrowDown to show effect.
  *
- * title.zh-CN: 基本用法1
+ * title.zh-CN: 基本用法
  * desc.zh-CN: 支持键盘事件中的 key 和 keyCode，请按 ArrowUp 或 ArrowDown 键进行演示。
  */
 
