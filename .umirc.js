@@ -12,5 +12,11 @@ export default {
     title: 'Umi Hooks',
     include: ['packages/hooks/src', 'packages/use-request'],
     locales: [['en-US', 'English'], ['zh-CN', '中文']]
-  }
+  },
+  plugins: [[
+    'umi-plugin-react/lib/plugins/headScripts',
+    [
+      'https://v1.cnzz.com/z_stat.php?id=1278602214&web_id=1278602214'
+    ]
+  ]]
 }
