@@ -3,6 +3,7 @@ title: useKeyPress
 group:
   title: Dom
   path: /dom
+  order: 500
 ---
 
 # useKeyPress

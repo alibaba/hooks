@@ -3,6 +3,7 @@ title: useAsync
 group:
   title: Deprecated
   path: /deprecated
+  order: 300
 ---
 
 # useAsync

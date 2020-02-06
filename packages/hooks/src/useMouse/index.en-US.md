@@ -3,6 +3,7 @@ title: useMouse
 group:
   title: Dom
   path: /dom
+  order: 500
 ---
 
 # useMouse

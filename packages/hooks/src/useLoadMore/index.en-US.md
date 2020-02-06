@@ -1,8 +1,10 @@
 ---
 title: useLoadMore
+order: 900
 group:
-  title: Async Hooks
+  title: Async
   path: /async
+  order: 1000
 ---
 
 # useLoadMore

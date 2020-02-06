@@ -3,6 +3,7 @@ title: usePagination
 group:
   title: Deprecated
   path: /deprecated
+  order: 300
 ---
 
 # usePagination

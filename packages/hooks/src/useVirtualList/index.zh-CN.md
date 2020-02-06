@@ -2,7 +2,8 @@
 title: useVirtualList
 group:
   title: UI
-  path: /UI
+  path: /ui
+  order: 800
 ---
 
 # useVirtualList

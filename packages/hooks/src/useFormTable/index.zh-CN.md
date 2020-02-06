@@ -1,8 +1,10 @@
 ---
 title: useFormTable
+order: 1000
 group:
-  title: AntD
+  title: Ant Design
   path: /antd
+  order: 900
 ---
 
 # useFormTable

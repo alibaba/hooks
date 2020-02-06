@@ -2,7 +2,8 @@
 title: useSelections
 group:
   title: UI
-  path: /UI
+  path: /ui
+  order: 800
 ---
 
 # useSelections

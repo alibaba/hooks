@@ -1,8 +1,9 @@
 ---
 title: useDebounce
 group:
-  title: SideEffect Hook
-  path: /sideEffect
+  title: SideEffect
+  path: /side-effect
+  order: 700
 ---
 
 # useDebounce
