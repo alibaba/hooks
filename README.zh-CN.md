@@ -52,7 +52,7 @@ $ npm start
 
 ## 👥 讨论
 
-<img src="./dingtalk.jpg" width="300" />
+<img src="https://raw.githubusercontent.com/umijs/hooks/master/dingtalk.jpg" width="300" />
 
 ## ✅ License
 
