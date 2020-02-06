@@ -1,6 +1,14 @@
+/**
+ * title: Persist objects
+ * desc: useSessionStorageState will do the serialization and deserialization work automatically.
+ * 
+ * title.zh-CN: 存储对象
+ * desc.zh-CN: useSessionStorageState 会自动处理序列化和反序列化的操作。
+ */
+
 import React from 'react';
 import { Cascader } from 'antd';
-import useSessionStorageState from '..';
+import { useSessionStorageState } from '@umijs/hooks';
 
 const options = [
   {
