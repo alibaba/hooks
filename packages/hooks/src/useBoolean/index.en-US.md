@@ -1,8 +1,9 @@
 ---
 title: useBoolean
 group:
-  title: State Hooks
+  title: State
   path: /state
+  order: 600
 ---
 
 # useBoolean

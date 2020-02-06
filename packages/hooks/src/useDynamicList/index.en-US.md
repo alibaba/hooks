@@ -2,7 +2,8 @@
 title: useDynamicList
 group:
   title: UI
-  path: /UI
+  path: /ui
+  order: 800
 ---
 
 # useDynamicList

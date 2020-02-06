@@ -3,6 +3,7 @@ title: useInViewport
 group:
   title: Dom
   path: /dom
+  order: 500
 ---
 
 # useInViewport

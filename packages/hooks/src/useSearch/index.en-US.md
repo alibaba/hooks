@@ -3,6 +3,7 @@ title: useSearch
 group:
   title: Deprecated
   path: /deprecated
+  order: 300
 ---
 
 # useSearch

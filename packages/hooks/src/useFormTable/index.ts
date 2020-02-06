@@ -8,7 +8,7 @@ import {
   PaginatedFormatReturn,
   PaginatedResult
 } from '../../../use-request/lib/types';
-// } from '@umijs/use-request/es/types';
+// } from '@umijs/use-request/lib/types';
 
 export {
   CombineService,

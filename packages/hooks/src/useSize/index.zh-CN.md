@@ -3,6 +3,7 @@ title: useSize
 group:
   title: Dom
   path: /dom
+  order: 500
 ---
 
 # useSize

@@ -3,6 +3,7 @@ title: useFullscreen
 group:
   title: Dom
   path: /dom
+  order: 500
 ---
 
 # useFullscreen

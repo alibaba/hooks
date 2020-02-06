@@ -3,6 +3,7 @@ title: useClickAway
 group:
   title: Dom
   path: /dom
+  order: 500
 ---
 
 # useClickAway

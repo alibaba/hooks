@@ -3,6 +3,7 @@ title: useEventEmitter
 group:
   title: Advanced
   path: /advanced
+  order: 400
 ---
 
 # useEventEmitter

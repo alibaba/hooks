@@ -3,6 +3,7 @@ title: useAntdTable
 group:
   title: Deprecated
   path: /deprecated
+  order: 300
 ---
 
 # useAntdTable
