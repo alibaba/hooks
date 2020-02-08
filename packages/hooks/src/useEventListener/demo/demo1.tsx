@@ -1,3 +1,11 @@
+/**
+ * title: Default usage
+ * desc: Click the button to preview.
+ *
+ * title.zh-CN: 基本用法
+ * desc.zh-CN: 点击按钮查看效果。
+ */
+
 import React, { useState } from 'react';
 import useEventListener from '../index';
 

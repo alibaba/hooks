@@ -1,17 +1,10 @@
 ---
-name: useEventListener
-route: /useEventListener
-menu: 'Other'
-edit: false
-sidebar: true
+title: useEventListener
+group:
+  title: Dom
+  path: /dom
+  order: 500
 ---
-import JackBox from 'jackbox';
-import Demo1 from './demo/demo1';
-import Demo2 from './demo/demo2';
-import Demo1CodeTsx from '!raw-loader!./demo/demo1.tsx';
-import Demo1CodeJsx from '!raw-loader!./demo/demo1.jsx';
-import Demo2CodeTsx from '!raw-loader!./demo/demo2.tsx';
-import Demo2CodeJsx from '!raw-loader!./demo/demo2.jsx';
 
 # useEventListener
 
@@ -19,17 +12,13 @@ Use EventListener elegant by Hook.
 
 ## Examples
 
-<JackBox jsCode={Demo1CodeJsx} tsCode={Demo1CodeTsx} demoName='Examples' description='Click the button to preview'>
-  <Demo1 />
-</JackBox>
+<code src="./demo/demo1.tsx" />
 
-<JackBox jsCode={Demo2CodeJsx} tsCode={Demo2CodeTsx} demoName='Examples' description='Press any key to preview'>
-  <Demo2 />
-</JackBox>
+<code src="./demo/demo2.tsx" />
 
 ## API
 
-```
+```javascript
 function useEventListener<T extends Target = HTMLElement>(
   eventName: string,
   handler: Function,

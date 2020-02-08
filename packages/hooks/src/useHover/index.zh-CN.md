@@ -1,20 +1,10 @@
 ---
-name: useHover
-route: /useHover
-menu: 'Other'
-edit: false
-sidebar: true
+title: useHover
+group:
+  title: Dom
+  path: /dom
+  order: 500
 ---
-
-import JackBox from 'jackbox';
-
-import Demo1 from './demo/demo1';
-import Demo1CodeTs from '!raw-loader!./demo/demo1.tsx';
-import Demo1CodeJs from '!raw-loader!./demo/demo1.jsx';
-
-import Demo2 from './demo/demo2';
-import Demo2CodeTs from '!raw-loader!./demo/demo2.tsx';
-import Demo2CodeJs from '!raw-loader!./demo/demo2.jsx';
 
 # useHover
 一个用于追踪 dom 元素是否有鼠标悬停的 Hook
@@ -23,16 +13,15 @@ import Demo2CodeJs from '!raw-loader!./demo/demo2.jsx';
 
 ### 默认用法
 
-<JackBox tsCode={Demo1CodeTs} jsCode={Demo1CodeJs} demoName='默认用法' description='使用 ref 设置需要需要监听的元素'>
-  <Demo1 />
-</JackBox>
+<code src="./demo/demo1.tsx" />
 
-<JackBox tsCode={Demo2CodeTs} jsCode={Demo2CodeJs} demoName='懒加载' description='传入 function 或者 dom 来监听任意的 dom 节点'>
-  <Demo2 />
-</JackBox>
+### 懒加载
+
+<code src="./demo/demo2.tsx" />
 
 ## API
-```
+
+```javascript
 // 如果没有 dom 参数，则会返回 ref
 const [isHovering, ref] = useHover({
     onEnter?,

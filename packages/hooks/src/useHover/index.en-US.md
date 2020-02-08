@@ -1,20 +1,10 @@
 ---
-name: useHover
-route: /useHover
-menu: 'Other'
-edit: false
-sidebar: true
+title: useHover
+group:
+  title: Dom
+  path: /dom
+  order: 500
 ---
-
-import JackBox from 'jackbox';
-
-import Demo1 from './demo/demo1';
-import Demo1CodeTs from '!raw-loader!./demo/demo1.tsx';
-import Demo1CodeJs from '!raw-loader!./demo/demo1.jsx';
-
-import Demo2 from './demo/demo2';
-import Demo2CodeTs from '!raw-loader!./demo/demo2.tsx';
-import Demo2CodeJs from '!raw-loader!./demo/demo2.jsx';
 
 # useHover
 React UI sensor hooks that track if some element is being hovered by a mouse.
@@ -23,16 +13,14 @@ React UI sensor hooks that track if some element is being hovered by a mouse.
 
 ### Default usage
 
-<JackBox tsCode={Demo1CodeTs} jsCode={Demo1CodeJs} demoName='Default usage' description='Use ref to set elements that need listen dom'>
-  <Demo1 />
-</JackBox>
+<code src="./demo/demo1.tsx" />
 
-<JackBox tsCode={Demo2CodeTs} jsCode={Demo2CodeJs} demoName='Lazy load' description='Pass in a function that returns the DOM element'>
-  <Demo2 />
-</JackBox>
+### Lazy Load
+<code src="./demo/demo2.tsx" />
 
 ## API
-```
+
+```javascript
 // If there is no dom parameter, ref is returned
 const {state, ref} = useHover({
     onEnter,
