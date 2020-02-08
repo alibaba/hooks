@@ -1,52 +1,52 @@
+import { useRef, useCallback, useMemo, useEffect, useState } from 'react';
 import useAsync from './useAsync';
 import { LoadMoreParams, LoadMoreOptionsWithFormat, LoadMoreResult, LoadMoreFormatReturn, LoadMoreOptions } from './types';
-import { useRef, useCallback, useMemo, useEffect, useState } from 'react';
 import useUpdateEffect from './utils/useUpdateEffect';
 
-function useLoadMore<R, Item, U extends Item = any>(
-  service: (...p: LoadMoreParams) => Promise<R>,
-  options: LoadMoreOptionsWithFormat<R, Item, U>
-): LoadMoreResult<Item>
-function useLoadMore<R, Item, U extends Item = any>(
-  service: (...p: LoadMoreParams) => Promise<LoadMoreFormatReturn<Item>>,
-  options: LoadMoreOptions<U>
-): LoadMoreResult<Item>
-function useLoadMore<R, Item, U extends Item = any>(
-  service: (...p: LoadMoreParams) => Promise<R>,
-  options: LoadMoreOptions<U> | LoadMoreOptionsWithFormat<R, Item, U>
-): LoadMoreResult<Item> {
-
+function useLoadMore<R extends LoadMoreFormatReturn, RR>(
+  service: (...p: LoadMoreParams<R>) => Promise<RR>,
+  options: LoadMoreOptionsWithFormat<R, RR>
+): LoadMoreResult<R>
+function useLoadMore<R extends LoadMoreFormatReturn, RR extends R = any>(
+  service: (...p: LoadMoreParams<RR>) => Promise<R>,
+  options: LoadMoreOptions<RR>
+): LoadMoreResult<R>
+function useLoadMore<R extends LoadMoreFormatReturn, RR = any>(
+  service: (...p: LoadMoreParams<any>) => Promise<any>,
+  options: LoadMoreOptions<R> | LoadMoreOptionsWithFormat<R, RR>
+): LoadMoreResult<R> {
   const {
     refreshDeps = [],
-    fetchKey,
+    ref,
+    isNoMore,
+    threshold = 100,
     ...restOptions
   } = options;
 
+  const [loadingMore, setLoadingMore] = useState(false);
+
   useEffect(() => {
-    if (fetchKey) {
-      console.warn(`useRequest loadMore's fetchKey will not work!`);
+    if (!options.fetchKey) {
+      console.error('useRequest loadMore must have fetchKey!');
     }
   }, []);
 
-  const [loadingMore, setLoadingMore] = useState(false);
-
-  const { data, run, params, reset, loading, fetches, ...rest } = useAsync(
-    service,
-    {
-      ...restOptions as any,
-      fetchKey: (nextId) => {
-        // 仅仅为了让 nextId 变成字符串，保证 object 的顺序
-        return nextId + '-';
-      },
-      onSuccess: () => {
-        setLoadingMore(false);
+  const result: any = useAsync(service, {
+    ...restOptions as any,
+    onSuccess: (...params) => {
+      setLoadingMore(false);
+      if (options.onSuccess) {
+        options.onSuccess(...params);
       }
-    });
+    }
+  });
+
+  const { data, run, params, reset, loading, fetches } = result;
 
   const reload = useCallback(() => {
     reset();
-    const [_, ...rest] = params;
-    run(undefined, ...rest);
+    const [, ...restParams] = params;
+    run(undefined, ...restParams);
   }, [run, reset, params])
 
   const reloadRef = useRef(reload);
@@ -61,35 +61,66 @@ function useLoadMore<R, Item, U extends Item = any>(
 
 
   const dataGroup = useMemo(() => {
-    let listGroup: Item[] = [];
+    let listGroup: any[] = [];
+    // 在 loadMore 时，不希望清空上一次的 data。需要把最后一个 非 loading 的请求 data，放回去。
+    let lastNoLoadingData: R = data;
     Object.values(fetches).forEach((h: any) => {
       if (h.data?.list) {
         listGroup = listGroup.concat(h.data?.list);
       }
+      if (!h.loading) {
+        lastNoLoadingData = h.data;
+      }
     });
     return {
-      ...data,
+      ...lastNoLoadingData,
       list: listGroup
     };
   }, [fetches, data]);
 
+  const noMore = isNoMore ? (!loading && !loadingMore && isNoMore(dataGroup)) : false;
+
   const loadMore = useCallback(() => {
+    if (noMore) {
+      return;
+    }
     setLoadingMore(true);
-    const [_, ...rest] = params;
-    run(data.nextId, ...rest);
-  }, [run, data, params])
+    const [, ...restParams] = params;
+    run(dataGroup, ...restParams);
+  }, [noMore, run, dataGroup, params]);
+
+  /* 上拉加载的方法 */
+  const scrollMethod = useCallback(() => {
+    if (loading || !ref || !ref.current) {
+      return;
+    }
+    if (ref.current.scrollHeight - ref.current.scrollTop <= ref.current.clientHeight + threshold) {
+      loadMore();
+    }
+  }, [loading, ref, loadMore]);
+
+  /* 如果有 ref，则会上拉加载更多 */
+  useEffect(() => {
+    if (!ref || !ref.current) {
+      return () => { };
+    }
+    ref.current.addEventListener('scroll', scrollMethod);
+    return () => {
+      if (ref && ref.current) {
+        ref.current.removeEventListener('scroll', scrollMethod);
+      }
+    };
+  }, [scrollMethod]);
 
   return {
+    ...result,
     data: dataGroup,
-    run,
-    params,
-    reset,
+    reload,
     loading: loading && dataGroup.list.length === 0,
     loadMore,
     loadingMore,
-    fetches,
-    ...rest,
-  } as any;
+    noMore
+  }
 }
 
 export default useLoadMore;

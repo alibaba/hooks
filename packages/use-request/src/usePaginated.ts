@@ -1,11 +1,9 @@
+import { useCallback, useMemo, useRef, useEffect } from 'react';
 import { PaginationConfig, Sorter, Filter } from './antdTypes';
 
-import { useCallback, useMemo, useRef, useEffect } from 'react';
 import { BasePaginatedOptions, PaginatedFormatReturn, PaginatedOptionsWithFormat, PaginatedParams, PaginatedResult } from './types';
 import useAsync from './useAsync';
 import useUpdateEffect from './utils/useUpdateEffect';
-
-const isEqual = require('lodash.isequal');
 
 function usePaginated<R, Item, U extends Item = any>(
   service: (...p: PaginatedParams) => Promise<R>,
@@ -19,7 +17,6 @@ function usePaginated<R, Item, U extends Item = any>(
   service: (...p: PaginatedParams) => Promise<R>,
   options: BasePaginatedOptions<U> | PaginatedOptionsWithFormat<R, Item, U>
 ) {
-
   const {
     paginated,
     defaultPageSize = 10,
@@ -30,7 +27,7 @@ function usePaginated<R, Item, U extends Item = any>(
 
   useEffect(() => {
     if (fetchKey) {
-      console.warn(`useRequest pagination's fetchKey will not work!`);
+      console.error('useRequest pagination\'s fetchKey will not work!');
     }
   }, []);
 
@@ -52,12 +49,12 @@ function usePaginated<R, Item, U extends Item = any>(
   } = params && params[0] ? params[0] : ({} as any);
 
   // 只改变 pagination，其他参数原样传递
-  const runChangePaination = useCallback((paginationParams) => {
-    const [oldPaginationParams, ...rest] = params;
+  const runChangePaination = useCallback(paginationParams => {
+    const [oldPaginationParams, ...restParams] = params;
     run({
       ...oldPaginationParams,
       ...paginationParams,
-    }, ...rest)
+    }, ...restParams)
   }, [run, params]);
 
   const total = data?.total || 0;

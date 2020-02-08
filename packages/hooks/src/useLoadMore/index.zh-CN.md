@@ -1,12 +1,16 @@
 ---
 title: useLoadMore
 group:
-  title: Async
-  path: /async
-  order: 1000
+  title: Deprecated
+  path: /deprecated
+  order: 300
 ---
 
 # useLoadMore
+
+<Alert>
+<b>⚠️警告: useAsync 已经被废弃了，将在下一个大版本时移除，你可以使用 <a href="/zh-CN/async?anchor=加载更多">useRequest loadMore 模式</a> 代替。</b>
+</Alert>
 
 一个适用于点击加载更多或上拉加载更多应用场景的 Hook。
 

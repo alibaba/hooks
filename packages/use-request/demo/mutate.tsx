@@ -9,7 +9,24 @@
 import { useRequest } from '@umijs/hooks';
 import { Button, Input, message } from 'antd';
 import React, { useState } from 'react';
-import { changeUsername, getUsername } from './service';
+import Mock from 'mockjs';
+
+function getUsername(): Promise<string> {
+  return new Promise(resolve => {
+    setTimeout(() => {
+      resolve(Mock.mock('@name'));
+    }, 1000);
+  });
+}
+
+function changeUsername(username: string): Promise<{ success: boolean }> {
+  console.log(username);
+  return new Promise(resolve => {
+    setTimeout(() => {
+      resolve({ success: true });
+    }, 1000);
+  });
+}
 
 export default () => {
   const [state, setState] = useState('');

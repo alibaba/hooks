@@ -2,12 +2,16 @@
 title: useLoadMore
 order: 900
 group:
-  title: Async
-  path: /async
-  order: 1000
+  title: Deprecated
+  path: /deprecated
+  order: 300
 ---
 
 # useLoadMore
+
+<Alert>
+<b>⚠️WARNING: useLoadMore is deprecated and will be removed in the next major version. Please use <a href="/async?anchor=load-more">useRequest loadMore mode</a> instead.</b>
+</Alert>
 
 A Hook that is designed to display paged data incrementally.
 

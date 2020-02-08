@@ -33,47 +33,47 @@ Production-ready React Hook to manage asynchronous data.
 
 ### Default request
 
-<code src="./demo/demo1.tsx" />
+<code src="./demo/default.tsx" />
 
 ### Manual trigger
 
-<code src="./demo/demo2.tsx" />
+<code src="./demo/manual.tsx" />
 
 ### Polling
 
-<code src="./demo/demo4.tsx" />
+<code src="./demo/polling.tsx" />
 
 ### Concurrent Request
 
-<code src="./demo/demo10.tsx" />
+<code src="./demo/concurrent.tsx" />
 
 ### Debounce
 
-<code src="./demo/demo5.tsx" />
+<code src="./demo/debounce.tsx" />
 
 ### Throttle
 
-<code src="./demo/demo6.tsx" />
+<code src="./demo/throttle.tsx" />
 
 ### Cache & SWR
 
-<code src="./demo/demo7.tsx" />
+<code src="./demo/cacheKey.tsx" />
 
 ### Preload
 
-<code src="./demo/demo8.tsx" />
+<code src="./demo/preload" />
 
 ### Refresh On Window Focus
 
-<code src="./demo/demo9.tsx" />
+<code src="./demo/refreshOnWindowFocus.tsx" />
 
 ### Mutate
 
-<code src="./demo/demo3.tsx" />
+<code src="./demo/mutate.tsx" />
 
 ### Loading Delay
 
-<code src="./demo/demo11.tsx" />
+<code src="./demo/loadingDelay.tsx" />
 
 ### RefreshDeps
 
@@ -89,7 +89,7 @@ useEffect(() => {
 
 `refreshDeps` is an equivalent yet easy way to implement the above function. When `refreshDeps` changes, the service will be re-executed using the previous params.
 
-<code src="./demo/demo12.tsx" />
+<code src="./demo/refreshDeps.tsx" />
 
 ## Basic API
 
@@ -126,16 +126,16 @@ const {
 
 ### Result
 
-| Property | Description                                                                                                                                                                                                                                                             | Type                                                                    |
-|----------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------|
-| data     | <ul><li> Data returned by the service。</li><li> If `formatResult` is set, the data will be the return of `formatResult`. </li></ul>                                                                                                                                                      | `undefined / any`                                                       |
-| error    | exception thrown by service, default is `undefined`                                                                                                                                                                                                                     | `undefined / Error`                                                     |
-| loading  | Whether the service is loaded                                                                                                                                                                                                                                        | `boolean`                                                               |
-| run      | Manually trigger the service execution. Its parameters will be passed to the service function                                                                                                                                                                                        | `(...args: any[]) => Promise`                                           |
-| params   | An array of parameters for the service being executed. For example, you triggered `run (1, 2, 3)`, then params is equal to [[1, 2, 3] `                                                                                          | `any[]`                              |
-| cancel   | <ul><li>Cancel the current running request </li><li>This will also stop the polling. </li></ul>                                                                                                                                                                                         | `() => void`                                                            |
-| refresh  | Using the last params, re-execute the service                                                                                                                                                                                                                           | `() => void`                                                            |
-| mutate   | Modify the returned data directly                                                                                                                                                                                                                                                    | `(newData) => void / ((oldData)=>newData) => void`                      |
+| Property | Description                                                                                                                                                                                                                                                            | Type                                                                    |
+|----------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------|
+| data     | <ul><li> Data returned by the service。</li><li> If `formatResult` is set, the data will be the return of `formatResult`. </li></ul>                                                                                                                                   | `undefined / any`                                                       |
+| error    | exception thrown by service, default is `undefined`                                                                                                                                                                                                                    | `undefined / Error`                                                     |
+| loading  | Whether the service is loaded                                                                                                                                                                                                                                          | `boolean`                                                               |
+| run      | Manually trigger the service execution. Its parameters will be passed to the service function                                                                                                                                                                          | `(...args: any[]) => Promise`                                           |
+| params   | An array of parameters for the service being executed. For example, you triggered `run (1, 2, 3)`, then params is equal to [[1, 2, 3] `                                                                                          | `any[]`                             |
+| cancel   | <ul><li>Cancel the current running request </li><li>This will also stop the polling. </li></ul>                                                                                                                                                                        | `() => void`                                                            |
+| refresh  | Using the last params, re-execute the service                                                                                                                                                                                                                          | `() => void`                                                            |
+| mutate   | Modify the returned data directly                                                                                                                                                                                                                                      | `(newData) => void / ((oldData)=>newData) => void`                      |
 | fetches  | <ul><li>By default, new requests overwrite old ones. If `fetchKey` is set, multiple requests can be implemented in parallel, and` fetches` stores the status of all the requests.</li><li>The status of the outer layer is the newly triggered fetches data.</li></ul> | `{[key:string]: {loading,data,error,params,cancel,refresh,mutate,run}}` |
 
 ### Params
@@ -192,11 +192,11 @@ const { loading, run } = useRequest((username) => ({
 });
 ```
 
-<code src="./demo/demo13.tsx" />
+<code src="./demo/umiRequest.tsx" />
 
 <br>
 
-<code src="./demo/demo14.tsx" />
+<code src="./demo/axios.tsx" />
 
 #### API
 
@@ -228,15 +228,13 @@ By setting `options.paginated = true`, useRequest will run in pagination mode, w
 - Additional pagination field will be returned, which contains all pagination information and functions for manipulating pagination.
 - The `refreshDeps` change will reset` current` to the first page and re-initiate the request. Generally you can put the pagination dependent conditions here.
 
-<code src="./demo/demo15.tsx" />
+<code src="./demo/pagination-1.tsx" />
 
-<br>
 
-<code src="./demo/demo16.tsx" />
+<code src="./demo/pagination-antd.tsx" />
 
-<br>
 
-<code src="./demo/demo17.tsx" />
+<code src="./demo/pagination-cache.tsx" />
 
 #### API
 
@@ -284,8 +282,7 @@ const {
 
 | Property        | Description                                                                                                                                                                                                                                                          | Type     | Default |
 |-----------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|----------|------|
-| paginated       | <ul> <li> If set to `true`, paging mode is turned on. In paging mode, the first parameter of service is `{curret, pageSize, sorter, filters}` </li> <li> The service response result or `formatResult` result must be` {list: Item [], total: number} `. </li> </ul> |
-| `boolean`       | false                                                                                                                                                                                                                                                                |
+| paginated       | <ul> <li> If set to `true`, paging mode is turned on. In paging mode, the first parameter of service is `{curret, pageSize, sorter, filters}` </li> <li> The service response result or `formatResult` result must be` {list: Item [], total: number} `. </li> </ul>| `boolean`       | false                                                                                                                                                                                                                                |
 | defaultPageSize | default each page size                                                                                                                                                                                                                                               | `number` | `10` |
 | refreshDeps     | In pagination mode, changing refreshDeps will reset current to the first page and re-initiate the request. Generally you can put the dependent conditions here.                                                                                                      | `any[]`  | `[]` |
 
@@ -293,12 +290,16 @@ const {
 
 By setting `options.loadMore = true`, useRequest will run in loadMore mode, which will have the following characteristics:
 
-- The data structure returned by the service must contain `{list: Item [], nextId: string | undefined}`, if it is not satisfied, it can be converted once by `options.formatResult`.
-- useRequest automatically manages list data. The first parameter of service is nextId.
-- Will return `result.loadingMore` and` result.loadMore` additionally.
+- useRequest will automatically manage the list data, `result.data.list` is a merged list. The first parameter of service is `result.data | undefined`
+- The data structure returned by the service must contain `{list: Item []}`, if it is not satisfied, it can be converted once by `options.formatResult`.
+- loadMore manages all requests through `fetches`, so you must set `options.fetchKey`. At the same time, in order to maintain the order of the data, the return value of `fetchKey` must be a string(not be `'undefined'`).
+- useRequest will return `result.loadingMore` and `result.loadMore` additionally.
+- By setting `options.ref`， `options.isNoMore`, loadMore is automatically triggered when scrolling to the bottom.
 - The `refreshDeps` change will clear the current data and re-initiate the request. Generally, you can put the conditions that loadMore depends on here.
 
-<code src="./demo/demo18.tsx" />
+<code src="./demo/loadMore-1.tsx" />
+
+<code src="./demo/loadMore-2.tsx" />
 
 #### API
 
@@ -307,28 +308,37 @@ const {
   ...,
   loadMore,
   loadingMore,
+  noMore,
+  reload
 } = useRequest(service, {
   ...,
   loadMore,
+  ref,
+  isNoMore,
+  threshold,
   refreshDeps,
 }); 
 ```
 
 #### Result
-| Property    | Description | Type |
-|-------------|--|--|
-| loadMore    | Trigger load more |
-| `()=>void`  |
-| loadingMore | Is loading more |
-| `boolean`   |
+| Property    | Description                                          | Type       |
+|-------------|------------------------------------------------------|------------|
+| loadMore    | Trigger load more                                    | `()=>void`  |
+| loadingMore | Is loading more                                      | `boolean`   |
+| noMore      | Is there have more data, need use with `options.isNoMore` | `boolean`  |
+| reload      | trigger reload                                       | `()=>void` |
 
 #### Params
 
-| Property    | Description                                                                                                                                                                                                                                                                  | Type    | Default |
-|-------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------|------|
-| loadMore    | <ul> <li> Enable loading more mode </li> <li> If set to `true`, enable loading more mode. In this mode, the first parameter of service is `nextId` </li> <li> The response result or` formatResult` result must be `{list: Item [], nextId: string / undefined}` </li> </ul> |
-| `boolean`   | false                                                                                                                                                                                                                                                                        |
-| refreshDeps | When loading more modes, `refreshDeps` changes, it will clear the current data and re-initiate the request. Generally you can put the dependent conditions here.                                                                                                             | `any[]` | `[]` |
+| Property    | Description                                                                                                                                                      | Type    | Default |
+|-------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------|------|
+| loadMore    | Enable loading more mode | `boolean`   | false  |
+| refreshDeps | When loading more modes, `refreshDeps` changes, it will clear the current data and re-initiate the request. Generally you can put the dependent conditions here. | `any[]` | `[]` |
+| fetchKey    | loadMore manages all requests through `fetches`, so you must set `options.fetchKey`. At the same time, in order to maintain the order of the data, the return value of `fetchKey` must be a string(not be `'undefined'`). | `(r: Result)=>string`                | false  |
+| ref         | The container's ref, if it exists, automatically triggers loadMore when scrolling to the bottom loadMore                                                                                                   | `RefObject<HTMLElement>` | false  |
+| isNoMore    | Is there has more data | `(r: Result)=>boolan`    | false  |
+| threshold   | Set the distance bottom threshold when pulling down autoload  | `number`                 | 100    |
+| refreshDeps | The `refreshDeps` change will clear the current data and re-initiate the request. Generally, you can put the conditions that loadMore depends on here. | `any[]`                  | `[]`   |
 
 ## Global configuration
 
@@ -346,7 +356,7 @@ export function ({children})=>{
       ...
     }}>
       {children}
-    </UseAPIProvider>
+    </UseAPIProvider> 
   )
 }
 ```

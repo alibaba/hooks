@@ -14,14 +14,15 @@ function useRequest<R = any, P extends any[] = any>(
   service: CombineService<R, P>,
   options?: BaseOptions<R, P>
 ): BaseResult<R, P>
-function useRequest<R = any, Item = any, U extends Item = any>(
-  service: CombineService<R, LoadMoreParams>,
-  options: LoadMoreOptionsWithFormat<R, Item, U>
-): LoadMoreResult<Item>
-function useRequest<R = any, Item = any, U extends Item = any>(
-  service: CombineService<LoadMoreFormatReturn<Item>, LoadMoreParams>,
-  options: LoadMoreOptions<U>
-): LoadMoreResult<Item>
+
+function useRequest<R extends LoadMoreFormatReturn, RR>(
+  service: CombineService<RR, LoadMoreParams<R>>,
+  options: LoadMoreOptionsWithFormat<R, RR>
+): LoadMoreResult<R>
+function useRequest<R extends LoadMoreFormatReturn, RR extends R>(
+  service: CombineService<R, LoadMoreParams<R>>,
+  options: LoadMoreOptions<RR>
+): LoadMoreResult<R>
 
 function useRequest<R = any, Item = any, U extends Item = any>(
   service: CombineService<R, PaginatedParams>,
@@ -42,11 +43,11 @@ function useRequest(service: any, options: any = {}) {
   const loadMoreRef = useRef(loadMore);
 
   if (paginatedRef.current !== paginated) {
-    throw Error('You should not modify this paginated of options');
+    throw Error('You should not modify the paginated of options');
   }
 
   if (loadMoreRef.current !== loadMore) {
-    throw Error('You should not modify this loadMore of options');
+    throw Error('You should not modify the loadMore of options');
   }
 
   paginatedRef.current = paginated;

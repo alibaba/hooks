@@ -9,7 +9,19 @@
 import { useBoolean, useRequest } from '@umijs/hooks';
 import { Button, Spin } from 'antd';
 import React from 'react';
-import { getArticle } from './service';
+import Mock from 'mockjs';
+
+async function getArticle(type?: string): Promise<{ data: string, time: number }> {
+  console.log(type);
+  return new Promise(resolve => {
+    setTimeout(() => {
+      resolve({
+        data: Mock.mock('@paragraph'),
+        time: new Date().getTime()
+      })
+    }, 1000)
+  });
+}
 
 export default () => {
   const { state, toggle } = useBoolean();
@@ -21,7 +33,7 @@ export default () => {
     <div>
       <p>When the mouse hovers over the button, the article data is preloaded.</p>
       <p>
-        <Button onMouseEnter={run} onClick={() => toggle()}>show/hidden</Button>
+        <Button onMouseEnter={() => run()} onClick={() => toggle()}>show/hidden</Button>
       </p>
       {state && <Article />}
     </div>

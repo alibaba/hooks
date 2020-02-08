@@ -1,15 +1,22 @@
 /**
  * title: Loading Delay
- * desc: Setting `loadingDelay` can specifies a delay in milliseconds for loading (prevent flush).
+ * desc: Setting `options.loadingDelay` can specifies a delay in milliseconds for loading (prevent flush).
  *
  * title.zh-CN: Loading Delay
- * desc.zh-CN: 通过设置 `loadingDelay` ，可以延迟 `loading` 变成 `true` 的时间，有效防止闪烁。
+ * desc.zh-CN: 通过设置 `options.loadingDelay` ，可以延迟 `loading` 变成 `true` 的时间，有效防止闪烁。
  */
 
 import { useRequest } from '@umijs/hooks';
 import { Spin, Button } from 'antd';
 import React from 'react';
-import { getCurrentTime } from './service';
+
+async function getCurrentTime(): Promise<number> {
+  return new Promise(resolve => {
+    setTimeout(() => {
+      resolve(new Date().getTime())
+    }, 100)
+  });
+}
 
 export default () => {
   const getTimeAction = useRequest(getCurrentTime);

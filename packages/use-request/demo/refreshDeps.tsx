@@ -1,15 +1,35 @@
 /**
  * title: refreshDeps
- * desc: When refreshDeps changes, useRequest will execute the service with previous params.
+ * desc: When `options.refreshDeps` changes, useRequest will execute the service with previous params.
  *
  * title.zh-CN: refreshDeps
- * desc.zh-CN: 当 refreshDeps 变化时，useRequest 会使用之前的参数重新执行 service。
+ * desc.zh-CN: 当 `options.refreshDeps` 变化时，useRequest 会使用之前的参数重新执行 service。
  */
 
 import { useRequest } from '@umijs/hooks';
 import { Spin, Select } from 'antd';
 import React, { useState } from 'react';
-import { getUserSchool } from './service';
+
+const userSchool = (id:string) => {
+  switch (id) {
+    case '1':
+      return 'Tsinghua University';
+    case '2':
+      return 'Beijing University';
+    case '3':
+      return 'Zhejiang University';
+    default:
+      return ''
+  }
+}
+
+async function getUserSchool(userId: string): Promise<string> {
+  return new Promise(resolve => {
+    setTimeout(() => {
+      resolve(userSchool(userId))
+    }, 1000)
+  });
+}
 
 export default () => {
   const [userId, setUserId] = useState('1');

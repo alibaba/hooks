@@ -1,4 +1,4 @@
-import { DependencyList } from 'react';
+import { DependencyList, RefObject } from 'react';
 import { PaginationConfig, Filter, Sorter } from './antdTypes';
 
 export type noop = (...args: any[]) => void;
@@ -152,23 +152,33 @@ export interface PaginatedOptionsWithFormat<R, Item, U> extends Omit<BaseOptions
 }
 
 /* ✅ --------------------------useLoadMore---------------------------- */
-export type LoadMoreParams = any[]
+export type LoadMoreParams<R> = [R | undefined, ...any[]];
 
-export interface LoadMoreFormatReturn<Item> {
-  list: Item[];
-  nextId?: string;
+export interface LoadMoreFormatReturn {
+  list: any[];
+  [key: string]: any
 }
 
-export interface LoadMoreResult<Item> extends BaseResult<LoadMoreFormatReturn<Item>, LoadMoreParams> {
+export interface LoadMoreResult<R> extends BaseResult<R, LoadMoreParams<R>> {
+  noMore?: boolean;
   loadMore: () => void;
+  reload: () => void;
   loadingMore: boolean;
 }
 
-export interface LoadMoreOptions<U> extends Omit<BaseOptions<LoadMoreFormatReturn<U>, LoadMoreParams>, 'loadMore'> {
+export interface LoadMoreOptions<R extends LoadMoreFormatReturn> extends Omit<BaseOptions<R, LoadMoreParams<R>>, 'loadMore'> {
   loadMore: true;
+  fetchKey: (...args: LoadMoreParams<R>) => string,
+  ref?: RefObject<any>;
+  isNoMore?: (r: R) => boolean;
+  threshold?: number;
 }
 
-export interface LoadMoreOptionsWithFormat<R, Item, U> extends Omit<BaseOptions<LoadMoreFormatReturn<U>, LoadMoreParams>, 'loadMore'> {
+export interface LoadMoreOptionsWithFormat<R extends LoadMoreFormatReturn, RR> extends Omit<BaseOptions<R, LoadMoreParams<R>>, 'loadMore'> {
   loadMore: true;
-  formatResult: (data: R) => LoadMoreFormatReturn<Item>;
+  fetchKey: (...args: LoadMoreParams<R>) => string,
+  formatResult: (data: RR) => R;
+  ref?: RefObject<any>;
+  isNoMore?: (r: R) => boolean;
+  threshold?: number;
 }

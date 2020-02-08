@@ -1,15 +1,23 @@
 /**
  * title: refreshOnWindowFocus
- * desc: Through `fetchKey`, you can categorize requests. Each type of request has an independent status. You can find all requests in` fetches`.
+ * desc: Through `options.fetchKey`, you can categorize requests. Each type of request has an independent status. You can find all requests in` fetches`.
  *
  * title.zh-CN: 并行请求
- * desc.zh-CN: 通过 `fetchKey` ，可以将请求进行分类，每一类的请求都有独立的状态，你可以在 `fetches` 中找到所有的请求。
+ * desc.zh-CN: 通过 `options.fetchKey` ，可以将请求进行分类，每一类的请求都有独立的状态，你可以在 `fetches` 中找到所有的请求。
  */
 
 import { useRequest } from '@umijs/hooks';
 import { Button, message } from 'antd';
 import React from 'react';
-import { deleteUser } from './service';
+
+export function deleteUser(userId: string): Promise<{ success: boolean }> {
+  console.log(userId);
+  return new Promise(resolve => {
+    setTimeout(() => {
+      resolve({ success: true });
+    }, 1000);
+  });
+}
 
 export default () => {
   const { run, fetches } = useRequest(deleteUser, {

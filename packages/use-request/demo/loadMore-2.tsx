@@ -1,27 +1,23 @@
 /**
- * title: custom data loading - ID mode
- * desc: If the data update frequency is very high, there may be multiple data corresponding to the same timestamp, and the timestamp mode above may have problems. At this point we can get the correct data by the id and offset of the last data.
+ * title: Pull up to load more
+ * desc: If `options.ref` is set, loadMore is automatically triggered when scrolling to the bottom. Of course you must set `isNoMore` at this time so that `useReqeust` will know when to stop.
  *
- *  If there is an itemKey field in options, we will send the id of the current last data to asyncFn.
- *
- * title.zh-CN: 动态数据加载之 ID 模式
- * desc.zh-CN: 如果数据更新频率很高，可能同一个时间戳会对应多条数据，那上面的时间戳模式可能出现问题。这时候我们可以通过最后一条数据的 id 和 offset 来获取到正确的数据。
- *
- *  如果 options 中有 itemKey 字段，我们会把当前最后一条数据的 id 发给 asyncFn。
+ * title.zh-CN: 上拉加载更多
+ * desc.zh-CN: 如果 options 中存在 `ref`，则在滚动到底部时，自动触发 loadMore。当然此时你必须设置 `isNoMore`, 以便让 `useReqeust` 知道何时停止。
  */
 
-import { List, Button, Avatar } from 'antd';
-import React from 'react';
-import { useLoadMore } from '@umijs/hooks';
-import { FnParams } from '@umijs/hooks/es/useLoadMore';
+import { useRequest } from '@umijs/hooks';
+import { Avatar, Button, List } from 'antd';
+import React, { useRef } from 'react';
 
 interface Item {
   id: number;
   title: string;
 }
+
 interface Result {
   total: number;
-  data: Item[];
+  list: Item[];
 }
 
 const dataSource = [
@@ -67,28 +63,29 @@ const dataSource = [
   },
 ];
 
-const asyncFn = ({ pageSize, id = 0 }: FnParams): Promise<Result> => {
-  /* should query data by id */
-  const filteredData = dataSource.filter(i => i.id > id);
-  return new Promise(resolve => {
+const asyncFn = ({ pageSize, offset }: any): Promise<Result> =>
+  new Promise(resolve => {
     setTimeout(() => {
       resolve({
         total: dataSource.length,
-        data: filteredData.slice(0, pageSize),
+        list: dataSource.slice(offset, offset + pageSize),
       });
     }, 1000);
   });
-};
 
 export default () => {
-  const { data, loading, loadingMore, reload, loadMore, total, noMore } = useLoadMore<Result, Item>(
-    asyncFn,
-    {
-      initPageSize: 3,
-      incrementSize: 4,
-      itemKey: 'id',
-    },
-  );
+  const containerRef = useRef<HTMLDivElement>(null);
+  const { data, loading, loadingMore, reload, loadMore, noMore } = useRequest((d: Result | undefined) => asyncFn({
+    offset: d?.list?.length || 0,
+    pageSize: 3,
+  }), {
+    loadMore: true,
+    fetchKey: (d: Result | undefined) => `${d?.list?.length}-`,
+    ref: containerRef,
+    isNoMore: (d: Result | undefined) => d?.list?.length >= d?.total
+  });
+
+  const { list = [] } = data || {};
 
   const renderFooter = () => (
     <>
@@ -100,12 +97,12 @@ export default () => {
 
       {noMore && <span>No more data</span>}
 
-      <span style={{ float: 'right', fontSize: 12 }}>total: {total}</span>
+      <span style={{ float: 'right', fontSize: 12 }}>total: {data?.total}</span>
     </>
   );
 
   return (
-    <div>
+    <div ref={containerRef} style={{ height: 300, overflowY: 'auto' }}>
       <List
         header={
           <Button onClick={reload} loading={loading}>
@@ -115,7 +112,7 @@ export default () => {
         footer={!loading && renderFooter()}
         loading={loading}
         bordered
-        dataSource={data}
+        dataSource={list}
         renderItem={item => (
           <List.Item>
             <List.Item.Meta

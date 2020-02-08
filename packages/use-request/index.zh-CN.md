@@ -33,47 +33,47 @@ group:
 
 ### 默认请求
 
-<code src="./demo/demo1.tsx" />
+<code src="./demo/default.tsx" />
 
 ### 手动触发
 
-<code src="./demo/demo2.tsx" />
+<code src="./demo/manual.tsx" />
 
 ### 轮询
 
-<code src="./demo/demo4.tsx" />
+<code src="./demo/polling.tsx" />
 
 ### 并行请求
 
-<code src="./demo/demo10.tsx" />
+<code src="./demo/concurrent.tsx" />
 
 ### 防抖
 
-<code src="./demo/demo5.tsx" />
+<code src="./demo/debounce.tsx" />
 
 ### 节流
 
-<code src="./demo/demo6.tsx" />
+<code src="./demo/throttle.tsx" />
 
 ### 缓存 & SWR
 
-<code src="./demo/demo7.tsx" />
+<code src="./demo/cacheKey.tsx" />
 
 ### 预加载
 
-<code src="./demo/demo8.tsx" />
+<code src="./demo/preload.tsx" />
 
 ### 屏幕聚焦重新请求
 
-<code src="./demo/demo9.tsx" />
+<code src="./demo/refreshOnWindowFocus.tsx" />
 
 ### 突变
 
-<code src="./demo/demo3.tsx" />
+<code src="./demo/mutate.tsx" />
 
 ### Loading Delay
 
-<code src="./demo/demo11.tsx" />
+<code src="./demo/loadingDelay.tsx" />
 
 ### refreshDeps
 
@@ -89,7 +89,7 @@ useEffect(() => {
 
 `refreshDeps` 是一个语法糖，让你更方便的实现上面的功能。当 `refreshDeps` 变化时，会使用之前的 params 重新执行 service。
 
-<code src="./demo/demo12.tsx" />
+<code src="./demo/refreshDeps.tsx" />
 
 ## 基础 API
 
@@ -192,11 +192,11 @@ const { loading, run } = useRequest((username) => ({
 });
 ```
 
-<code src="./demo/demo13.tsx" />
+<code src="./demo/umiRequest.tsx" />
 
 <br>
 
-<code src="./demo/demo14.tsx" />
+<code src="./demo/axios.tsx" />
 
 #### API
 
@@ -228,15 +228,13 @@ const {...} = useRequest<R>(
 - 会额外返回 `pagination` 字段，包含所有分页信息，及操作分页的函数。
 - `refreshDeps` 变化，会重置 `current` 到第一页，并重新发起请求，一般你可以把 pagination 依赖的条件放这里。
 
-<code src="./demo/demo15.tsx" />
+<code src="./demo/pagination-1.tsx" />
 
-<br>
 
-<code src="./demo/demo16.tsx" />
+<code src="./demo/pagination-antd.tsx" />
 
-<br>
 
-<code src="./demo/demo17.tsx" />
+<code src="./demo/pagination-cache.tsx" />
 
 #### API
 
@@ -293,12 +291,16 @@ const {
 
 通过设置 `options.loadMore = true` ， useRequest 将以 loadMore 模式运行，此时会有以下特性：
 
-- service 返回的数据结构必须包含 `{list: Item[], nextId: string|undefined}` ，如果不满足，可以通过 `options.formatResult` 转换一次。
-- useRequest 会自动管理列表数据 。service 的第一个参数为 `nextId`。
-- 会额外返回 `result.loadingMore` 和 `result.loadMore` 。
+- useRequest 会自动管理列表数据，返回的 `data.list` 为所有请求数据的 list 合并数组。service 的参数为 `result.data | undefined`。
+- service 返回的数据结构必须包含 `{list: Item[]}` ，如果不满足，可以通过 `options.formatResult` 转换一次。
+- loadMore 是通过 `fetches` 来管理所有的请求，所以你必须设置 `options.fetchKey`。同时为了保持数据的顺序，`fetchKey` 的返回值必须为非 `'undefined'` 的字符串。
+- useRequest 会额外返回 `result.loadingMore` 和 `result.loadMore` 。
+- 通过设置 `options.ref`， `options.isNoMore`，可以实现上拉加载更多功能。
 - `refreshDeps` 变化，会清空当前数据，并重新发起请求，一般你可以把 loadMore 依赖的条件放这里。
 
-<code src="./demo/demo18.tsx" />
+<code src="./demo/loadMore-1.tsx" />
+
+<code src="./demo/loadMore-2.tsx" />
 
 #### API
 
@@ -307,25 +309,36 @@ const {
   ...,
   loadMore,
   loadingMore,
+  noMore,
+  reload
 } = useRequest(service, {
   ...,
   loadMore,
+  ref,
+  isNoMore,
+  threshold,
   refreshDeps,
 }); 
 ```
 
 #### Result
-| 参数        | 说明             | 类型       |
-|-------------|------------------|------------|
-| loadMore    | 触发加载更多     | `()=>void` |
-| loadingMore | 是否正在加载更多 | `boolean`  |
+| 参数        | 说明                                             | 类型       |
+|-------------|--------------------------------------------------|------------|
+| loadMore    | 触发加载更多                                     | `()=>void` |
+| loadingMore | 是否正在加载更多                                 | `boolean`  |
+| noMore      | 是否有更多数据，需要配合 `options.isNoMore` 使用 | `boolean`  |
+| reload      | 触发重新加载                                     | `()=>void` |
 
-#### Params
+#### Options
 
-| 参数        | 说明                                                                                                                                                                                                                          | 类型      | 默认值 |
-|-------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-----------|--------|
-| loadMore    | <ul><li>是否开启加载更多模式 </li><li> 如果设置为 `true`，则开启加载更多模式。在该模式下，service 的第一个参数为 `nextId` </li><li> 响应结果或 `formatResult` 结果必须为 `{list: Item[], nextId: string/undefined}`</li></ul> | `boolean` | false  |
-| refreshDeps | 加载更多模式下， `refreshDeps` 变化，会清空当前数据，并重新发起请求，一般你可以把依赖的条件放这里。                                                                                                                           | `any[]`   | `[]`   |
+| 参数        | 说明                                                                                                                                                        | 类型                     | 默认值 |
+|-------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------|--------|
+| loadMore    | 是否开启加载更多模式                                                                                                                                        | `boolean`                | false  |
+| fetchKey    | loadMore 是通过 `fetches` 来管理所有的请求，所以你必须设置 `options.fetchKey`。同时为了保持数据的顺序，`fetchKey` 的返回值必须为非 `'undefined'` 的字符串。 | `(r: Result)=>string`                | false  |
+| ref         | 容器的 ref，如果存在，则在滚动到底部时，自动触发 loadMore                                                                                                   | `RefObject<HTMLElement>` | false  |
+| isNoMore    | 判断是否还有更多数据的函数                                                                                                                                  | `(r: Result)=>boolan`    | false  |
+| threshold   | 下拉自动加载，距离底部距离阈值                                                                                                                              | `number`                 | 100    |
+| refreshDeps | 加载更多模式下， `refreshDeps` 变化，会清空当前数据，并重新发起请求，一般你可以把依赖的条件放这里。                                                         | `any[]`                  | `[]`   |
 
 ## 全局配置
 

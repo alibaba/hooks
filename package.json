@@ -1,5 +1,9 @@
 {
   "private": true,
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/umijs/hooks.git"
+  },
   "scripts": {
     "init": "rm -rf node_modules && npm install && npm run clean && npm run bootstrap && npm run build",
     "start": "npm run dev",
@@ -27,7 +31,7 @@
     "del": "^5.1.0",
     "enzyme": "^3.10.0",
     "father": "^2.13.3",
-    "father-doc": "^1.0.0-alpha.18",
+    "father-doc": "^1.0.0-alpha.19",
     "lerna": "^3.20.2",
     "mockjs": "^1.1.0",
     "now": "^16.2.0",
