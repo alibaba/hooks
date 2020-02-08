@@ -1,4 +1,4 @@
-English | [简体中文](./README_zh-CN.md)
+English | [简体中文](https://github.com/umijs/hooks/blob/master/README_zh-CN.md)
 
 # @umijs/hooks
 
@@ -9,7 +9,7 @@ React Hooks Library.
 ## 📚 Document
 
 * [English](https://hooks.umijs.org/)
-* [中文](https://hooks.umijs.org/zh-cn/)
+* [中文](https://hooks.umijs.org/zh-CN/)
 
 ## ✨ Features
 
@@ -40,7 +40,7 @@ import { useAsync } from '@umijs/hooks';
 ```
 $ git clone git@github.com:umijs/hooks.git
 $ cd hooks
-$ npm install
+$ npm run init
 $ npm start
 ```
 Open your browser and visit http://127.0.0.1:8001 , see more at Development.
@@ -51,7 +51,7 @@ We welcome all contributions, please read our [CONTRIBUTING.MD](https://github.c
 
 ## 👥 Discuss
 
-<img src="./dingtalk.jpg" width="300" />
+<img src="https://raw.githubusercontent.com/umijs/hooks/master/dingtalk.jpg" width="300" />
 
 ## ✅ License
 

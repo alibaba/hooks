@@ -1,0 +1,49 @@
+{
+  "name": "@umijs/hooks",
+  "version": "1.5.3",
+  "description": "react hooks library",
+  "keywords": [
+    "umi hooks",
+    "react hooks"
+  ],
+  "main": "./lib/index.js",
+  "module": "./es/index.js",
+  "types": "./lib/index.d.ts",
+  "authors": {
+    "name": "brickspert",
+    "email": "brickspert.fjl@alipay.com"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.com/"
+  },
+  "repository": "https://github.com/umijs/hooks",
+  "homepage": "https://github.com/umijs/hooks",
+  "scripts": {
+    "compile": "tsc --declarationDir lib && tsc --declarationDir es"
+  },
+  "files": [
+    "dist",
+    "lib",
+    "es",
+    "package.json"
+  ],
+  "dependencies": {
+    "@umijs/use-request": "^1.0.0",
+    "intersection-observer": "^0.7.0",
+    "lodash.isequal": "^4.5.0",
+    "resize-observer-polyfill": "^1.5.1",
+    "screenfull": "^5.0.0"
+  },
+  "peerDependencies": {
+    "react": "^16.8.6"
+  },
+  "devDependencies": {
+    "antd": "^3.26.6",
+    "react-drag-listview": "^0.1.6",
+    "umi-request": "^1.0.8"
+  },
+  "engines": {
+    "node": ">=8.0.0"
+  },
+  "license": "MIT"
+}

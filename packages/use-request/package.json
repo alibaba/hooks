@@ -1,0 +1,41 @@
+{
+  "name": "@umijs/use-request",
+  "version": "1.0.0",
+  "description": "React Hooks for fetching, caching and updating asynchronous data",
+  "main": "./lib/index.js",
+  "module": "./es/index.js",
+  "types": "./lib/index.d.ts",
+  "files": [
+    "dist",
+    "lib",
+    "es",
+    "package.json"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/umijs/hooks.git"
+  },
+  "scripts": {
+    "compile": "tsc --declarationDir ./lib && tsc --declarationDir ./es"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.com/"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/umijs/hooks/issues"
+  },
+  "homepage": "https://github.com/umijs/hooks",
+  "peerDependencies": {
+    "react": "^16.8.6"
+  },
+  "dependencies": {
+    "lodash.debounce": "^4.0.8",
+    "lodash.throttle": "^4.1.1",
+    "umi-request": "^1.2.17"
+  },
+  "devDependencies": {
+    "@umijs/hooks": "^1.5.3",
+    "axios": "^0.19.2"
+  }
+}

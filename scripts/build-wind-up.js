@@ -1,3 +1,3 @@
 const del = require('del');
 
-del.sync(['./{es,lib}/**/__{test,tests}__/**', './{es,lib}/**/demo/**']);
+del.sync(['./packages/*/{es,lib}/**/__{test,tests}__/**', './packages/*/{es,lib}/**/demo/**']);

@@ -1,76 +1,45 @@
 {
-  "name": "@umijs/hooks",
-  "version": "1.5.4",
-  "description": "react hooks library",
-  "keywords": [
-    "umi hooks",
-    "react hooks"
-  ],
-  "main": "./lib/index.js",
-  "module": "./es/index.js",
-  "types": "./lib/index.d.ts",
-  "authors": {
-    "name": "brickspert",
-    "email": "brickspert.fjl@alipay.com"
+  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/umijs/hooks.git"
   },
-  "publishConfig": {
-    "registry": "https://registry.npmjs.com/"
-  },
-  "repository": "https://github.com/umijs/hooks",
-  "homepage": "https://github.com/umijs/hooks",
   "scripts": {
+    "init": "rm -rf node_modules && npm install && npm run clean && npm run bootstrap && npm run build",
     "start": "npm run dev",
-    "dev": "father doc dev",
-    "dev:zh-cn": "LAN=zh-CN father doc dev",
-    "js": "node ./.ts2js.js",
-    "build": "node ./scripts/clean-old-build.js && father build && tsc --declarationDir ./lib && tsc --declarationDir ./es && node ./scripts/build-wind-up.js",
+    "dev": "father-doc dev",
+    "bootstrap": "lerna bootstrap",
+    "clean": "lerna clean --yes",
+    "compile": "lerna run --scope @umijs/use-request compile && lerna run --scope @umijs/hooks compile",
+    "build": "node ./scripts/clean-old-build.js && father build && npm run compile && node ./scripts/build-wind-up.js",
     "test": "father test",
     "cov": "father test --coverage",
     "help": "father help",
     "precommit": "father pre-commit",
-    "build:doc": "father doc build && LAN=zh-CN father doc build",
-    "pub:doc": "now --prod"
-  },
-  "files": [
-    "dist",
-    "lib",
-    "es",
-    "README.md",
-    "LICENSE",
-    "package.json"
-  ],
-  "dependencies": {
-    "lodash.isequal": "^4.5.0",
-    "screenfull": "^5.0.0",
-    "intersection-observer": "^0.7.0",
-    "resize-observer-polyfill": "^1.5.1"
-  },
-  "peerDependencies": {
-    "react": "^16.8.6"
+    "build:doc": "father-doc build",
+    "pub:doc": "now --prod",
+    "pub": "father publish"
   },
   "devDependencies": {
     "@testing-library/react-hooks": "^2.0.1",
     "@types/jest": "^24.0.15",
+    "@types/lodash.debounce": "^4.0.6",
     "@types/lodash.isequal": "^4.5.5",
-    "antd": "^3.26.6",
+    "@types/lodash.throttle": "^4.1.6",
     "babel-plugin-import": "^1.12.0",
+    "create-test-server": "^3.0.1",
     "del": "^5.1.0",
-    "docz-theme-umi-hooks": "^0.0.7",
     "enzyme": "^3.10.0",
     "father": "^2.13.3",
-    "jackbox": "^0.2.0",
+    "father-doc": "^1.0.0-alpha.19",
+    "lerna": "^3.20.2",
+    "mockjs": "^1.1.0",
     "now": "^16.2.0",
-    "raw-loader": "^3.1.0",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-drag-listview": "^0.1.6",
-    "resize-observer-polyfill": "^1.5.1",
-    "sylvanas": "^0.4.2",
     "typescript": "^3.3.3",
-    "umi-request": "^1.0.8"
-  },
-  "engines": {
-    "node": ">=8.0.0"
-  },
-  "license": "MIT"
+    "umi-plugin-react": "^1.15.2",
+    "umi-request": "^1.2.18"
+  }
 }
