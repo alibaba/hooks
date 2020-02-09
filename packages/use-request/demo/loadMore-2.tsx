@@ -75,7 +75,7 @@ const asyncFn = ({ pageSize, offset }: any): Promise<Result> =>
 
 export default () => {
   const containerRef = useRef<HTMLDivElement>(null);
-  const { data, loading, loadingMore, reload, loadMore, noMore } = useLoadMore((d: Result | undefined) => asyncFn({
+  const { data, loading, loadingMore, reload, loadMore, noMore } = useRequest((d: Result | undefined) => asyncFn({
     offset: d?.list?.length || 0,
     pageSize: 3,
   }), {
