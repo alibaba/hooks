@@ -1,4 +1,5 @@
 {
+  "name": "@umijs/hooks",
   "private": true,
   "repository": {
     "type": "git",

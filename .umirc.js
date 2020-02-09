@@ -14,9 +14,12 @@ export default {
     locales: [['en-US', 'English'], ['zh-CN', '中文']]
   },
   plugins: [[
-    'umi-plugin-react/lib/plugins/headScripts',
-    [
-      'https://v1.cnzz.com/z_stat.php?id=1278602214&web_id=1278602214'
-    ]
-  ]]
+    'umi-plugin-react', {
+      pwa: true,
+      headScripts: [
+        'https://v1.cnzz.com/z_stat.php?id=1278602214&web_id=1278602214'
+      ]
+    },
+  ]],
+
 }
