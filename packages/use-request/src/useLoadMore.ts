@@ -9,7 +9,7 @@ function useLoadMore<R extends LoadMoreFormatReturn, RR>(
 ): LoadMoreResult<R>
 function useLoadMore<R extends LoadMoreFormatReturn, RR extends R = any>(
   service: (...p: LoadMoreParams<RR>) => Promise<R>,
-  options: LoadMoreOptions<RR>
+  options: LoadMoreOptions<R>
 ): LoadMoreResult<R>
 function useLoadMore<R extends LoadMoreFormatReturn, RR = any>(
   service: (...p: LoadMoreParams<any>) => Promise<any>,

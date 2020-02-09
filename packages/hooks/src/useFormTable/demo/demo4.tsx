@@ -6,8 +6,8 @@
  * desc.zh-CN: 通过 cacheKey 可以实现 Form 和 Table 数据缓存。这是一个 antd v3 示例，antd v4 示例见 [链接](href)。
  */
 
-import { useFormTable } from '@umijs/hooks';
-import { PaginatedParams } from '@umijs/hooks/useFormTable/lib';
+import { useFormTable } from '@umijs/hooks'
+import { PaginatedParams } from '@umijs/hooks/es/useFormTable';
 import { Button, Form, Input, Table } from 'antd';
 import React, { useState } from 'react';
 

@@ -22,8 +22,7 @@ describe('normal request', () => {
 
   const prefix = api => `${server.url}${api}`;
 
-  // TODO fix this test case
-  test.skip('http failed with reqeust', async () => {
+  test('http failed with reqeust', async () => {
     const rawData = {
       text: 'testtext',
     };

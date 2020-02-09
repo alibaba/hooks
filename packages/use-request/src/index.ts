@@ -62,22 +62,22 @@ function useRequest(service: any, options: any = {}) {
     const { url, ...rest } = service;
     promiseService = () => finalRequestMehod(url, rest);
   } else {
-    promiseService = (...args: any[]) => new Promise(resolve => {
-        const result = service(...args);
-        if (result.then) {
-          result.then((data: any) => resolve(data))
-        } else if (typeof result === 'string') {
-          finalRequestMehod(result).then((data: any) => { resolve(data) });
-        } else if (typeof result === 'object') {
-          // umi-request 需要拆分下字段
-          if (requestMehod) {
-            finalRequestMehod(result).then((data: any) => { resolve(data) });
-          } else {
-            const { url, ...rest } = result;
-            request(url, rest).then((data: any) => { resolve(data) });
-          }
+    promiseService = (...args: any[]) => new Promise((resolve, reject) => {
+      const result = service(...args);
+      if (result.then) {
+        result.then((data: any) => resolve(data)).catch((e: any) => reject(e))
+      } else if (typeof result === 'string') {
+        finalRequestMehod(result).then((data: any) => { resolve(data) }).catch((e: any) => reject(e));
+      } else if (typeof result === 'object') {
+        // umi-request 需要拆分下字段
+        if (requestMehod) {
+          finalRequestMehod(result).then((data: any) => { resolve(data) }).catch((e: any) => reject(e));
+        } else {
+          const { url, ...rest } = result;
+          request(url, rest).then((data: any) => { resolve(data) }).catch((e: any) => reject(e));
         }
-      });
+      }
+    });
   }
 
   if (loadMore) {
@@ -85,7 +85,7 @@ function useRequest(service: any, options: any = {}) {
   } if (paginated) {
     return usePaginated(promiseService, finalOptions);
   }
-    return useAsync(promiseService, finalOptions);
+  return useAsync(promiseService, finalOptions);
 }
 
 const UseAPIProvider = ConfigContext.Provider;

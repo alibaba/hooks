@@ -75,14 +75,14 @@ const asyncFn = ({ pageSize, offset }: any): Promise<Result> =>
 
 export default () => {
   const containerRef = useRef<HTMLDivElement>(null);
-  const { data, loading, loadingMore, reload, loadMore, noMore } = useRequest((d: Result | undefined) => asyncFn({
+  const { data, loading, loadingMore, reload, loadMore, noMore } = useLoadMore((d: Result | undefined) => asyncFn({
     offset: d?.list?.length || 0,
     pageSize: 3,
   }), {
     loadMore: true,
-    fetchKey: (d: Result | undefined) => `${d?.list?.length}-`,
+    fetchKey: d => `${d?.list?.length}-`,
     ref: containerRef,
-    isNoMore: (d: Result | undefined) => d?.list?.length >= d?.total
+    isNoMore: d => (d ? d.list.length >= d.total : false)
   });
 
   const { list = [] } = data || {};

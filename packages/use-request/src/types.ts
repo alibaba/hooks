@@ -170,7 +170,7 @@ export interface LoadMoreOptions<R extends LoadMoreFormatReturn> extends Omit<Ba
   loadMore: true;
   fetchKey: (...args: LoadMoreParams<R>) => string,
   ref?: RefObject<any>;
-  isNoMore?: (r: R) => boolean;
+  isNoMore?: (r: R | undefined) => boolean;
   threshold?: number;
 }
 
@@ -179,6 +179,6 @@ export interface LoadMoreOptionsWithFormat<R extends LoadMoreFormatReturn, RR> e
   fetchKey: (...args: LoadMoreParams<R>) => string,
   formatResult: (data: RR) => R;
   ref?: RefObject<any>;
-  isNoMore?: (r: R) => boolean;
+  isNoMore?: (r: R | undefined) => boolean;
   threshold?: number;
 }

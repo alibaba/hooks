@@ -59,10 +59,10 @@ export default () => {
 };
 
 const LoadMoreComponent = () => {
-  const { data, loading, loadMore, loadingMore } = useRequest((d: Result | undefined) => getLoadMoreList(d?.nextId, 3), {
+  const { data, loading, loadMore, loadingMore } = useLoadMore((d: Result | undefined) => getLoadMoreList(d?.nextId, 3), {
     loadMore: true,
     cacheKey: 'loadMoreDemoCacheId',
-    fetchKey: (d: Result | undefined) => `${d?.nextId}-`,
+    fetchKey: d => `${d?.nextId}-`,
   });
 
   return (
