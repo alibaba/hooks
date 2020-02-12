@@ -127,11 +127,13 @@ function useAntdTable<Result, Item>(
   fn: (params: FnParams<Item>) => Promise<Result>,
   options?: Options<Result, Item>,
 ): ReturnValue<Item>;
+
 function useAntdTable<Result, Item>(
   fn: (params: FnParams<Item>) => Promise<Result>,
   deps?: DependencyList,
   options?: Options<Result, Item>,
 ): ReturnValue<Item>;
+
 function useAntdTable<Result, Item>(
   fn: (params: FnParams<Item>) => Promise<Result>,
   deps?: DependencyList | Options<Result, Item>,
