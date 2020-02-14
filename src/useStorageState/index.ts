@@ -14,7 +14,7 @@ function isFunction<T>(obj: any): obj is T {
 
 // 定义useStorageState
 /**
- * 
+ *
  * @param storage : 缓存类型localStorage， SessionStorage;
  * @param key: 对应的key
  * @param defaultValue： 设置对应的值
@@ -38,7 +38,6 @@ function useStorageState<T>(storage: Storage, key: string, defaultValue?: T | IF
     return defaultValue;
   }
 
-
   /**
    * updateState： 更新值
    * @param value：传入值
@@ -52,11 +51,10 @@ function useStorageState<T>(storage: Storage, key: string, defaultValue?: T | IF
       setState(defaultValue);
       // 判断value是否为Function
     } else if (isFunction<IFuncUpdater<T>>(value)) {
-
       // 获取previousState = getStoreValue();
       const previousState = getStoredValue();
 
-      // 获取currentState 
+      // 获取currentState
       const currentState = value(previousState);
 
       // 设置对应值

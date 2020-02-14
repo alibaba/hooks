@@ -14,7 +14,7 @@ function useLocalStorageState<T = undefined>(
 ): [T | undefined, (value?: T | ((previousState?: T) => T)) => void];
 
 /**
- * 
+ *
  * @param key： key
  * @param defaultValue: 值
  * [key， value]
@@ -25,7 +25,7 @@ function useLocalStorageState<T>(
 ): [T, (value?: T | ((previousState?: T) => T)) => void];
 
 /**
- * 
+ *
  * @param key ： key
  * @param defaultValue ： 值
  * 返回: 获取对应的值 localStorage(key);

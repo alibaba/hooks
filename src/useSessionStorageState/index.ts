@@ -10,7 +10,7 @@ function useSessionStorageState<T = undefined>(
 ): [T | undefined, (value?: T | ((previousState?: T) => T)) => void];
 
 /**
- * 
+ *
  * @param key : 缓存对应的key
  * @param defaultValue : 对应的值
  */
@@ -18,7 +18,6 @@ function useSessionStorageState<T>(
   key: string,
   defaultValue: T | (() => T),
 ): [T, (value?: T | ((previousState?: T) => T)) => void];
-
 
 function useSessionStorageState<T>(key: string, defaultValue?: T | (() => T)) {
   return useStorageState(sessionStorage, key, defaultValue);
