@@ -251,6 +251,7 @@ function useAsync<R, P extends any[], U, UU extends U = any>(
     onSuccess = () => { },
     onError = () => { },
 
+    defaultLoading = false,
     loadingDelay,
 
     pollingInterval = 0,
@@ -429,7 +430,7 @@ function useAsync<R, P extends any[], U, UU extends U = any>(
     }, [])
 
   return {
-    loading: !manual,
+    loading: !manual || defaultLoading,
     data: initialData,
     error: undefined,
     params: [],
