@@ -58,6 +58,8 @@ export type BaseOptions<R, P extends any[]> = {
   onSuccess?: (data: R, params: P) => void; // 成功回调
   onError?: (e: Error, params: P) => void; // 失败回调
 
+  defaultLoading?: boolean; // 默认 loading 状态
+
   loadingDelay?: number; // loading delay
 
   defaultParams?: P;
