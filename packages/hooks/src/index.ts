@@ -31,6 +31,7 @@ import useInViewport from './useInViewport';
 import useKeyPress from './useKeyPress';
 import useEventListener from './useEventListener';
 import useHover from './useHover';
+import useUnmount from './useUnmount';
 import useFormTable from './useFormTable';
 
 const useControlledValue: typeof useControllableValue = function (...args) {
@@ -77,5 +78,6 @@ export {
   useEventListener,
   useHover,
   useRequest,
-  useFormTable
+  useFormTable,
+  useUnmount,
 };
