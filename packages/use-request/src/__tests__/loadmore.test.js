@@ -79,7 +79,6 @@ describe('useRequest', () => {
         pageSize: 3,
       }), {
         loadMore: true,
-        fetchKey: d => `${d?.list?.length}-`,
         isNoMore: d => (d ? d.total <= d.list.length : false)
       });
     });

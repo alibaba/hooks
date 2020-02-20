@@ -293,7 +293,6 @@ const {
 
 - useRequest 会自动管理列表数据，返回的 `data.list` 为所有请求数据的 list 合并数组。service 的参数为 `result.data | undefined`。
 - service 返回的数据结构必须包含 `{list: Item[]}` ，如果不满足，可以通过 `options.formatResult` 转换一次。
-- loadMore 是通过 `fetches` 来管理所有的请求，所以你必须设置 `options.fetchKey`。同时为了保持数据的顺序，`fetchKey` 的返回值必须为非 `'undefined'` 的字符串。
 - useRequest 会额外返回 `result.loadingMore` 和 `result.loadMore` 。
 - 通过设置 `options.ref`， `options.isNoMore`，可以实现上拉加载更多功能。
 - `refreshDeps` 变化，会清空当前数据，并重新发起请求，一般你可以把 loadMore 依赖的条件放这里。
@@ -334,7 +333,6 @@ const {
 | 参数        | 说明                                                                                                                                                        | 类型                     | 默认值 |
 |-------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------|--------|
 | loadMore    | 是否开启加载更多模式                                                                                                                                        | `boolean`                | false  |
-| fetchKey    | loadMore 是通过 `fetches` 来管理所有的请求，所以你必须设置 `options.fetchKey`。同时为了保持数据的顺序，`fetchKey` 的返回值必须为非 `'undefined'` 的字符串。 | `(r: Result)=>string`                | false  |
 | ref         | 容器的 ref，如果存在，则在滚动到底部时，自动触发 loadMore                                                                                                   | `RefObject<HTMLElement>` | false  |
 | isNoMore    | 判断是否还有更多数据的函数                                                                                                                                  | `(r: Result)=>boolan`    | false  |
 | threshold   | 下拉自动加载，距离底部距离阈值                                                                                                                              | `number`                 | 100    |

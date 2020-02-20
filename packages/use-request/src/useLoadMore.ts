@@ -20,19 +20,21 @@ function useLoadMore<R extends LoadMoreFormatReturn, RR = any>(
     ref,
     isNoMore,
     threshold = 100,
+    fetchKey,
     ...restOptions
   } = options;
 
   const [loadingMore, setLoadingMore] = useState(false);
 
   useEffect(() => {
-    if (!options.fetchKey) {
-      console.error('useRequest loadMore must have fetchKey!');
+    if (options.fetchKey) {
+      console.warn("useRequest loadMore mode don't need fetchKey!");
     }
   }, []);
 
   const result: any = useAsync(service, {
     ...restOptions as any,
+    fetchKey: d => d?.list?.length || 0,
     onSuccess: (...params) => {
       setLoadingMore(false);
       if (options.onSuccess) {
