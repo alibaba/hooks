@@ -12,7 +12,7 @@ import axios from 'axios';
 
 export default () => {
   const { data, error, loading } = useRequest('https://helloacm.com/api/random/?n=8&x=4', {
-    requestMehod: (param: any) => axios(param),
+    requestMethod: (param: any) => axios(param),
   })
   if (error) {
     return <div>failed to load</div>

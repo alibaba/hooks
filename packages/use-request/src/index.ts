@@ -37,7 +37,7 @@ function useRequest(service: any, options: any = {}) {
   const contextConfig = useContext(ConfigContext);
   const finalOptions = { ...contextConfig, ...options };
 
-  const { paginated, loadMore, requestMehod } = finalOptions;
+  const { paginated, loadMore, requestMethod } = finalOptions;
 
   const paginatedRef = useRef(paginated);
   const loadMoreRef = useRef(loadMore);
@@ -53,25 +53,25 @@ function useRequest(service: any, options: any = {}) {
   paginatedRef.current = paginated;
   loadMoreRef.current = loadMore;
 
-  const finalRequestMehod = requestMehod || request;
+  const finalRequestMethod = requestMethod || request;
 
   let promiseService: () => Promise<any>;
   if (typeof service === 'string') {
-    promiseService = () => finalRequestMehod(service);
+    promiseService = () => finalRequestMethod(service);
   } else if (typeof service === 'object') {
     const { url, ...rest } = service;
-    promiseService = () => finalRequestMehod(url, rest);
+    promiseService = () => finalRequestMethod(url, rest);
   } else {
     promiseService = (...args: any[]) => new Promise((resolve, reject) => {
       const result = service(...args);
       if (result.then) {
         result.then((data: any) => resolve(data)).catch((e: any) => reject(e))
       } else if (typeof result === 'string') {
-        finalRequestMehod(result).then((data: any) => { resolve(data) }).catch((e: any) => reject(e));
+        finalRequestMethod(result).then((data: any) => { resolve(data) }).catch((e: any) => reject(e));
       } else if (typeof result === 'object') {
         // umi-request 需要拆分下字段
-        if (requestMehod) {
-          finalRequestMehod(result).then((data: any) => { resolve(data) }).catch((e: any) => reject(e));
+        if (requestMethod) {
+          finalRequestMethod(result).then((data: any) => { resolve(data) }).catch((e: any) => reject(e));
         } else {
           const { url, ...rest } = result;
           request(url, rest).then((data: any) => { resolve(data) }).catch((e: any) => reject(e));
