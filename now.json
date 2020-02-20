@@ -10,5 +10,21 @@
       }
     }
   ],
-  "routes": [{ "src": "/(.*)", "dest": "/$1" }]
+  "routes": [
+    {
+      "src": "/(.*).(js|css)",
+      "headers": {
+        "cache-control": "s-maxage=604800"
+      },
+      "dest": "/$1"
+    },
+    {
+      "src": "/(.*).(json)",
+      "dest": "/$1"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/"
+    }
+  ]
 }
