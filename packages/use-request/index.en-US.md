@@ -292,7 +292,6 @@ By setting `options.loadMore = true`, useRequest will run in loadMore mode, whic
 
 - useRequest will automatically manage the list data, `result.data.list` is a merged list. The first parameter of service is `result.data | undefined`
 - The data structure returned by the service must contain `{list: Item []}`, if it is not satisfied, it can be converted once by `options.formatResult`.
-- loadMore manages all requests through `fetches`, so you must set `options.fetchKey`. At the same time, in order to maintain the order of the data, the return value of `fetchKey` must be a string(not be `'undefined'`).
 - useRequest will return `result.loadingMore` and `result.loadMore` additionally.
 - By setting `options.ref`， `options.isNoMore`, loadMore is automatically triggered when scrolling to the bottom.
 - The `refreshDeps` change will clear the current data and re-initiate the request. Generally, you can put the conditions that loadMore depends on here.
@@ -333,8 +332,6 @@ const {
 | Property    | Description                                                                                                                                                      | Type    | Default |
 |-------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------|------|
 | loadMore    | Enable loading more mode | `boolean`   | false  |
-| refreshDeps | When loading more modes, `refreshDeps` changes, it will clear the current data and re-initiate the request. Generally you can put the dependent conditions here. | `any[]` | `[]` |
-| fetchKey    | loadMore manages all requests through `fetches`, so you must set `options.fetchKey`. At the same time, in order to maintain the order of the data, the return value of `fetchKey` must be a string(not be `'undefined'`). | `(r: Result)=>string`                | false  |
 | ref         | The container's ref, if it exists, automatically triggers loadMore when scrolling to the bottom loadMore                                                                                                   | `RefObject<HTMLElement>` | false  |
 | isNoMore    | Is there has more data | `(r: Result)=>boolan`    | false  |
 | threshold   | Set the distance bottom threshold when pulling down autoload  | `number`                 | 100    |
