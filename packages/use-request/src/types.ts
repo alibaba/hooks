@@ -19,9 +19,10 @@ export interface FetchResult<R, P extends any[]> {
   error: Error | undefined;
   params: P;
   cancel: noop;
-  refresh: noop;
+  refresh: () => Promise<R>;
   mutate: Mutate<R>;
-  run: (...args: P) => void | Promise<R>;
+  // TODO 如果 options 存在 debounceInterval，或 throttleInterval，则 run 和 refresh 不会返回 Promise。类型需要修复。
+  run: (...args: P) => Promise<R>;
   unmount: () => void;
 }
 

@@ -169,11 +169,12 @@ class Fetch<R, P extends any[]> {
   run(...args: P) {
     if (this.debounceRun) {
       this.debounceRun(...args);
-      return;
+      // TODO 如果 options 存在 debounceInterval，或 throttleInterval，则 run 和 refresh 不会返回 Promise。 带类型需要修复后，此处变成 return;。
+      return Promise.resolve(null as any);
     }
     if (this.throttleRun) {
       this.throttleRun(...args);
-      return;
+      return Promise.resolve(null as any);
     }
     return this._run(...args);
   }
@@ -200,7 +201,7 @@ class Fetch<R, P extends any[]> {
   }
 
   refresh() {
-    this.run(...this.state.params);
+    return this.run(...this.state.params);
   }
 
   rePolling() {
@@ -419,15 +420,15 @@ function useAsync<R, P extends any[], U, UU extends U = any>(
 
   // 卸载组件触发
   useEffect(() => () => {
-      Object.values(fetchesRef.current).forEach(f => {
-        f.unmount();
-      });
-    }, []);
+    Object.values(fetchesRef.current).forEach(f => {
+      f.unmount();
+    });
+  }, []);
 
 
   const noReady = useCallback((name: string) => () => {
-      throw new Error(`Cannot call ${name} when service not executed once.`);
-    }, [])
+    throw new Error(`Cannot call ${name} when service not executed once.`);
+  }, [])
 
   return {
     loading: !manual || defaultLoading,
