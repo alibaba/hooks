@@ -42,8 +42,5 @@
     "typescript": "^3.3.3",
     "umi-plugin-react": "^1.15.2",
     "umi-request": "^1.2.18"
-  },
-  "dependencies": {
-    "father-doc": "^1.0.0-alpha.20"
   }
 }
