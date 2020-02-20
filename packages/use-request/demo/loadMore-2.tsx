@@ -80,7 +80,6 @@ export default () => {
     pageSize: 3,
   }), {
     loadMore: true,
-    fetchKey: d => `${d?.list?.length}-`,
     ref: containerRef,
     isNoMore: d => (d ? d.list.length >= d.total : false)
   });

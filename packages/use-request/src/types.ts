@@ -19,9 +19,10 @@ export interface FetchResult<R, P extends any[]> {
   error: Error | undefined;
   params: P;
   cancel: noop;
-  refresh: noop;
+  refresh: () => Promise<R>;
   mutate: Mutate<R>;
-  run: (...args: P) => void | Promise<R>;
+  // TODO 如果 options 存在 debounceInterval，或 throttleInterval，则 run 和 refresh 不会返回 Promise。类型需要修复。
+  run: (...args: P) => Promise<R>;
   unmount: () => void;
 }
 
@@ -82,7 +83,7 @@ export type BaseOptions<R, P extends any[]> = {
 
   initialData?: R;
 
-  requestMehod?: (service: any) => Promise<any>
+  requestMethod?: (service: any) => Promise<any>
 }
 
 export type OptionsWithFormat<R, P extends any[], U, UU extends U> = {
@@ -170,7 +171,6 @@ export interface LoadMoreResult<R> extends BaseResult<R, LoadMoreParams<R>> {
 
 export interface LoadMoreOptions<R extends LoadMoreFormatReturn> extends Omit<BaseOptions<R, LoadMoreParams<R>>, 'loadMore'> {
   loadMore: true;
-  fetchKey: (...args: LoadMoreParams<R>) => string,
   ref?: RefObject<any>;
   isNoMore?: (r: R | undefined) => boolean;
   threshold?: number;
@@ -178,7 +178,6 @@ export interface LoadMoreOptions<R extends LoadMoreFormatReturn> extends Omit<Ba
 
 export interface LoadMoreOptionsWithFormat<R extends LoadMoreFormatReturn, RR> extends Omit<BaseOptions<R, LoadMoreParams<R>>, 'loadMore'> {
   loadMore: true;
-  fetchKey: (...args: LoadMoreParams<R>) => string,
   formatResult: (data: RR) => R;
   ref?: RefObject<any>;
   isNoMore?: (r: R | undefined) => boolean;

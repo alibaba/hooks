@@ -121,7 +121,7 @@ const {
   focusTimespan,
   debounceInterval,
   throttleInterval,
-}); 
+});
 ```
 
 ### Result
@@ -131,10 +131,10 @@ const {
 | data    | <ul><li> service 返回的数据，默认为 `undefined`。</li><li> 如果有 `formatResult`, 则该数据为被格式化后的数据。</li></ul>                                                        | `undefined / any`                                                       |
 | error   | service 抛出的异常，默认为 `undefined`                                                                                                                                          | `undefined / Error`                                                     |
 | loading | service 是否正在执行                                                                                                                                                            | `boolean`                                                               |
-| run     | 手动触发 service 执行，参数会传递给 service                                                                                                                                     | `(...args: any[]) => Promise`                                           |
+| run     | <ul><li>手动触发 service 执行，参数会传递给 service</li><li>debounce 模式与 throttle 模式返回值为 `Promise<null>`</li></ul>                                                                                                                                   | `(...args: any[]) => Promise`                                           |
 | params  | 当次执行的 service 的参数数组。比如你触发了 `run(1, 2, 3)`，则 params 等于 `[1, 2, 3]`                                                                                          | `any[]`                                                                 |
 | cancel  | <ul><li>取消当前请求 </li><li>如果有轮询，停止 </li></ul>                                                                                                                       | `() => void`                                                            |
-| refresh | 使用上一次的 params，重新执行 service                                                                                                                                           | `() => void`                                                            |
+| refresh | 使用上一次的 params，重新执行 service                                                                                                                                           | `() => Promise`                                                            |
 | mutate  | 直接修改 data                                                                                                                                                                   | `(newData) => void / ((oldData)=>newData) => void`                      |
 | fetches | <ul><li>默认情况下，新请求会覆盖旧请求。如果设置了 `fetchKey`，则可以实现多个请求并行，`fetches` 存储了多个请求的状态。</li><li>外层的状态为最新触发的 fetches 数据。</li></ul> | `{[key:string]: {loading,data,error,params,cancel,refresh,mutate,run}}` |
 
@@ -202,10 +202,10 @@ const { loading, run } = useRequest((username) => ({
 
 ```typescript
 const {...} = useRequest<R>(
-  service: string | object | ((...args:any) => string | object), 
+  service: string | object | ((...args:any) => string | object),
   {
     ...,
-    requestMehod?: (service) => Promise
+    requestMethod?: (service) => Promise
   })
 ```
 
@@ -269,7 +269,7 @@ const {
   paginated,
   defaultPageSize,
   refreshDeps,
-}); 
+});
 ```
 
 #### Result
@@ -293,7 +293,6 @@ const {
 
 - useRequest 会自动管理列表数据，返回的 `data.list` 为所有请求数据的 list 合并数组。service 的参数为 `result.data | undefined`。
 - service 返回的数据结构必须包含 `{list: Item[]}` ，如果不满足，可以通过 `options.formatResult` 转换一次。
-- loadMore 是通过 `fetches` 来管理所有的请求，所以你必须设置 `options.fetchKey`。同时为了保持数据的顺序，`fetchKey` 的返回值必须为非 `'undefined'` 的字符串。
 - useRequest 会额外返回 `result.loadingMore` 和 `result.loadMore` 。
 - 通过设置 `options.ref`， `options.isNoMore`，可以实现上拉加载更多功能。
 - `refreshDeps` 变化，会清空当前数据，并重新发起请求，一般你可以把 loadMore 依赖的条件放这里。
@@ -318,7 +317,7 @@ const {
   isNoMore,
   threshold,
   refreshDeps,
-}); 
+});
 ```
 
 #### Result
@@ -334,7 +333,6 @@ const {
 | 参数        | 说明                                                                                                                                                        | 类型                     | 默认值 |
 |-------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------|--------|
 | loadMore    | 是否开启加载更多模式                                                                                                                                        | `boolean`                | false  |
-| fetchKey    | loadMore 是通过 `fetches` 来管理所有的请求，所以你必须设置 `options.fetchKey`。同时为了保持数据的顺序，`fetchKey` 的返回值必须为非 `'undefined'` 的字符串。 | `(r: Result)=>string`                | false  |
 | ref         | 容器的 ref，如果存在，则在滚动到底部时，自动触发 loadMore                                                                                                   | `RefObject<HTMLElement>` | false  |
 | isNoMore    | 判断是否还有更多数据的函数                                                                                                                                  | `(r: Result)=>boolan`    | false  |
 | threshold   | 下拉自动加载，距离底部距离阈值                                                                                                                              | `number`                 | 100    |

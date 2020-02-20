@@ -121,7 +121,7 @@ const {
   focusTimespan,
   debounceInterval,
   throttleInterval,
-}); 
+});
 ```
 
 ### Result
@@ -131,10 +131,10 @@ const {
 | data     | <ul><li> Data returned by the service。</li><li> If `formatResult` is set, the data will be the return of `formatResult`. </li></ul>                                                                                                                                   | `undefined / any`                                                       |
 | error    | exception thrown by service, default is `undefined`                                                                                                                                                                                                                    | `undefined / Error`                                                     |
 | loading  | Whether the service is loaded                                                                                                                                                                                                                                          | `boolean`                                                               |
-| run      | Manually trigger the service execution. Its parameters will be passed to the service function                                                                                                                                                                          | `(...args: any[]) => Promise`                                           |
+| run      | <ul><li>Manually trigger the service execution. Its parameters will be passed to the service function. </li><li>In Debounce or Throttle mode, will return `Promise<null>`</li></ul>                                                                                                                                                                          | `(...args: any[]) => Promise`                                           |
 | params   | An array of parameters for the service being executed. For example, you triggered `run (1, 2, 3)`, then params is equal to [[1, 2, 3] `                                                                                          | `any[]`                             |
 | cancel   | <ul><li>Cancel the current running request </li><li>This will also stop the polling. </li></ul>                                                                                                                                                                        | `() => void`                                                            |
-| refresh  | Using the last params, re-execute the service                                                                                                                                                                                                                          | `() => void`                                                            |
+| refresh  | Using the last params, re-execute the service                                                                                                                                                                                                                          | `() => Promise`                                                            |
 | mutate   | Modify the returned data directly                                                                                                                                                                                                                                      | `(newData) => void / ((oldData)=>newData) => void`                      |
 | fetches  | <ul><li>By default, new requests overwrite old ones. If `fetchKey` is set, multiple requests can be implemented in parallel, and` fetches` stores the status of all the requests.</li><li>The status of the outer layer is the newly triggered fetches data.</li></ul> | `{[key:string]: {loading,data,error,params,cancel,refresh,mutate,run}}` |
 
@@ -202,10 +202,10 @@ const { loading, run } = useRequest((username) => ({
 
 ```typescript
 const {...} = useRequest<R>(
-  service: string | object | ((...args:any) => string | object), 
+  service: string | object | ((...args:any) => string | object),
   {
     ...,
-    requestMehod?: (service) => Promise
+    requestMethod?: (service) => Promise
   })
 ```
 
@@ -269,7 +269,7 @@ const {
   paginated,
   defaultPageSize,
   refreshDeps,
-}); 
+});
 ```
 
 #### Result
@@ -292,7 +292,6 @@ By setting `options.loadMore = true`, useRequest will run in loadMore mode, whic
 
 - useRequest will automatically manage the list data, `result.data.list` is a merged list. The first parameter of service is `result.data | undefined`
 - The data structure returned by the service must contain `{list: Item []}`, if it is not satisfied, it can be converted once by `options.formatResult`.
-- loadMore manages all requests through `fetches`, so you must set `options.fetchKey`. At the same time, in order to maintain the order of the data, the return value of `fetchKey` must be a string(not be `'undefined'`).
 - useRequest will return `result.loadingMore` and `result.loadMore` additionally.
 - By setting `options.ref`， `options.isNoMore`, loadMore is automatically triggered when scrolling to the bottom.
 - The `refreshDeps` change will clear the current data and re-initiate the request. Generally, you can put the conditions that loadMore depends on here.
@@ -317,7 +316,7 @@ const {
   isNoMore,
   threshold,
   refreshDeps,
-}); 
+});
 ```
 
 #### Result
@@ -333,8 +332,6 @@ const {
 | Property    | Description                                                                                                                                                      | Type    | Default |
 |-------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------|------|
 | loadMore    | Enable loading more mode | `boolean`   | false  |
-| refreshDeps | When loading more modes, `refreshDeps` changes, it will clear the current data and re-initiate the request. Generally you can put the dependent conditions here. | `any[]` | `[]` |
-| fetchKey    | loadMore manages all requests through `fetches`, so you must set `options.fetchKey`. At the same time, in order to maintain the order of the data, the return value of `fetchKey` must be a string(not be `'undefined'`). | `(r: Result)=>string`                | false  |
 | ref         | The container's ref, if it exists, automatically triggers loadMore when scrolling to the bottom loadMore                                                                                                   | `RefObject<HTMLElement>` | false  |
 | isNoMore    | Is there has more data | `(r: Result)=>boolan`    | false  |
 | threshold   | Set the distance bottom threshold when pulling down autoload  | `number`                 | 100    |
@@ -356,7 +353,7 @@ export function ({children})=>{
       ...
     }}>
       {children}
-    </UseAPIProvider> 
+    </UseAPIProvider>
   )
 }
 ```

@@ -33,7 +33,7 @@ describe('normal request', () => {
 
     const { result, waitForNextUpdate } = renderHook(() =>
       useRequest(() => request(prefix('/test/failed1')), {
-        requestMehod: request,
+        requestMethod: request,
       }),
     );
     await waitForNextUpdate(() => result.current.error);
