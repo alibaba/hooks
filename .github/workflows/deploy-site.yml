@@ -13,8 +13,7 @@ jobs:
     - name: Checkout
       uses: actions/checkout@master
     - name: deploy
-      uses: actions/zeit-now@master
+      uses: amondnet/now-deployment@v1
       with:
-        args: --prod
-      env:
-        ZEIT_TOKEN: ${{ secrets.ZEIT_TOKEN }}
+        now-args: '--prod'
+        zeit-token: ${{ secrets.ZEIT_TOKEN }}
