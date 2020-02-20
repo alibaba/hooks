@@ -121,7 +121,7 @@ const {
   focusTimespan,
   debounceInterval,
   throttleInterval,
-}); 
+});
 ```
 
 ### Result
@@ -202,10 +202,10 @@ const { loading, run } = useRequest((username) => ({
 
 ```typescript
 const {...} = useRequest<R>(
-  service: string | object | ((...args:any) => string | object), 
+  service: string | object | ((...args:any) => string | object),
   {
     ...,
-    requestMehod?: (service) => Promise
+    requestMethod?: (service) => Promise
   })
 ```
 
@@ -269,7 +269,7 @@ const {
   paginated,
   defaultPageSize,
   refreshDeps,
-}); 
+});
 ```
 
 #### Result
@@ -318,7 +318,7 @@ const {
   isNoMore,
   threshold,
   refreshDeps,
-}); 
+});
 ```
 
 #### Result
