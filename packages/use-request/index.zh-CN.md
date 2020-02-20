@@ -134,7 +134,7 @@ const {
 | run     | 手动触发 service 执行，参数会传递给 service                                                                                                                                     | `(...args: any[]) => Promise`                                           |
 | params  | 当次执行的 service 的参数数组。比如你触发了 `run(1, 2, 3)`，则 params 等于 `[1, 2, 3]`                                                                                          | `any[]`                                                                 |
 | cancel  | <ul><li>取消当前请求 </li><li>如果有轮询，停止 </li></ul>                                                                                                                       | `() => void`                                                            |
-| refresh | 使用上一次的 params，重新执行 service                                                                                                                                           | `() => void`                                                            |
+| refresh | 使用上一次的 params，重新执行 service                                                                                                                                           | `() => Promise`                                                            |
 | mutate  | 直接修改 data                                                                                                                                                                   | `(newData) => void / ((oldData)=>newData) => void`                      |
 | fetches | <ul><li>默认情况下，新请求会覆盖旧请求。如果设置了 `fetchKey`，则可以实现多个请求并行，`fetches` 存储了多个请求的状态。</li><li>外层的状态为最新触发的 fetches 数据。</li></ul> | `{[key:string]: {loading,data,error,params,cancel,refresh,mutate,run}}` |
 
