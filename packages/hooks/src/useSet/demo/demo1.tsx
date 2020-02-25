@@ -1,25 +1,28 @@
 /**
  * title: Default usage
- * desc: Default as a switch function,or accept a parameter to change state
+ * desc: Pass in a set acceptable parameter.
  * 
  * title.zh-CN: 默认用法
- * desc.zh-CN: 默认切换布尔值状态，也可以接收一个参数作为新的值
+ * desc.zh-CN: 传入一个 Set 可接受的参数。
  */
 
 import React from 'react';
-import useSet from '../index';
+import { Button } from 'antd';
+import { useSet } from '@umijs/hooks';
 
 export default () => {
-  const [set, { add, has, remove, reset }] = useSet('hello');
+  const [set, { add, has, remove, reset }] = useSet(['Hello']);
 
   return (
     <div>
-      <button onClick={() => add(String(Date.now()))}>Add</button>
-      <button onClick={() => reset()}>Reset</button>
-      <button onClick={() => remove('hello')} disabled={!has('hello')}>
-        Remove 'hello'
-      </button>
-      <pre>{JSON.stringify(Array.from(set), null, 2)}</pre>
+      <Button type="primary" onClick={() => add(String(Date.now()))}>Add Timestamp</Button>
+      <Button type="default" onClick={() => remove('Hello')} disabled={!has('Hello')} style={{ margin: '0 16px' }}>
+        Remove Hello
+      </Button>
+      <Button type="danger" onClick={() => reset()}>Reset</Button>
+      <div style={{ marginTop: 16 }}>
+        <pre>{JSON.stringify(Array.from(set), null, 2)}</pre>
+      </div>
     </div>
   );
 };

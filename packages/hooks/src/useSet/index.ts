@@ -10,24 +10,24 @@ interface Actions<K> extends StableActions<K> {
   has: (key: K) => boolean;
 }
 
-const useSet = <K>(initialValue?: any): [Set<K>, Actions<K>] => {
+function useSet<K>(initialValue?: Iterable<K>): [Set<K>, Actions<K>] {
   const initialSet = useMemo<Set<K>>(
-    () => (initialValue === undefined ? new Set() : new Set([initialValue])) as Set<K>,
+    () => (initialValue === undefined ? new Set() : new Set(initialValue)) as Set<K>,
     [initialValue]
   );
   const [set, setSet] = useState(initialSet);
 
   const stableActions = useMemo<StableActions<K>>(
     () => ({
-      add: item => setSet(prevSet => new Set([...Array.from(prevSet), item])),
-      remove: item => setSet(prevSet => new Set(Array.from(prevSet).filter(i => i !== item))),
+      add: key => setSet(prevSet => new Set([...Array.from(prevSet), key])),
+      remove: key => setSet(prevSet => new Set(Array.from(prevSet).filter(i => i !== key))),
       reset: () => setSet(initialSet),
     }),
     [setSet]
   );
-  
+
   const utils = {
-    has: useCallback(item => set.has(item), [set]),
+    has: useCallback(key => set.has(key), [set]),
     ...stableActions,
   } as Actions<K>;
 

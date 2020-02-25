@@ -1,14 +1,14 @@
 ---
 title: useSet
 group:
-  title: State1
-  path: /state1
+  title: State
+  path: /state
   order: 600
 ---
 
 # useSet
 
-A hook that elegantly manages boolean values.
+A hook that can manage state in Set
 
 ## Examples
 
@@ -27,20 +27,21 @@ const [
     remove,
     reset
   }
-] = useSet(initialValue?);
+] = useSet(initialValue?: any[]);
 ```
 
 ### Result
 
 | Property | Description                                         | Type                 |
 |----------|--------------------------------------|----------------------|
-| state  | State value                         | boolean              |
-| toggle | Trigger state change, accept an optional parameter | (value?: any) => void |
-| setTrue | Set state value true | () => void |
-| setFalse | Set state value false | () => void |
+| set  | Set object                         | Set              |
+| add | add key | (key: any) => void |
+| has | Determine whether elements exist | (key: any) => Boolean |
+| remove | remove key | (key: any) => void |
+| reset | reset to default | () => void |
 
 ### Params
 
 | Property | Description                                 | Type                   | Default |
 |---------|----------------------------------------------|------------------------|--------|
-| defaultValue | Optional，set a default value  | boolean \| undefined | false      |
+| initialValue | 可选项，传入默认的 Set 参数  | Iterable<K\> | -      |
