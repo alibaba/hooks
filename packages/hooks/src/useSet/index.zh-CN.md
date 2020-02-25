@@ -1,8 +1,8 @@
 ---
 title: useSet
 group:
-  title: State1
-  path: /state1
+  title: State
+  path: /state
   order: 600
 ---
 
@@ -25,21 +25,21 @@ const [
     remove,
     reset
   }
-] = useSet(initialValue?);
+] = useSet(initialValue?: any[]);
 ```
 
 ### Result
 
 | 参数     | 说明                                 | 类型                 |
 |----------|--------------------------------------|----------------------|
-| state  | 状态值                         | boolean              |
-| toggle | 触发状态更改的函数,可以接受一个可选参数修改状态值 | (value?: any) => void |
-| setTrue | 设置状态值为 true | () => void |
-| setFalse | 设置状态值为 false | () => void |
+| set  | Set 对象                         | Set              |
+| add | 添加元素 | (key: any) => void |
+| has | 判断是否存在元素 | (key: any) => Boolean |
+| remove | 移除元素 | (key: any) => void |
+| reset | 重置为默认值 | () => void |
 
 ### Params
 
 | 参数    | 说明                                         | 类型                   | 默认值 |
 |---------|----------------------------------------------|------------------------|--------|
-| defaultValue | 可选项，传入默认的状态值  | boolean \| undefined | false      |
-
+| initialValue | 可选项，传入默认的 Set 参数  | Iterable<K\> | -      |
