@@ -36,7 +36,7 @@ const [
 |----------|--------------------------------------|----------------------|
 | set  | Set object                         | Set              |
 | add | add key | (key: any) => void |
-| has | Determine whether elements exist | (key: any) => Boolean |
+| has | Determine whether the element exists | (key: any) => Boolean |
 | remove | remove key | (key: any) => void |
 | reset | reset to default | () => void |
 
@@ -44,4 +44,4 @@ const [
 
 | Property | Description                                 | Type                   | Default |
 |---------|----------------------------------------------|------------------------|--------|
-| initialValue | Optional, Pass in the default Set parameter  | Iterable<K\> | -      |
+| initialValue | Optional, Pass in the default Set as parameter  | Iterable<K\> | -      |
