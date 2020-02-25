@@ -25,7 +25,7 @@ const [
     remove,
     reset
   }
-] = useSet(initialValue?: any[]);
+] = useSet(initialValue?: Iterable<K>);
 ```
 
 ### Result
