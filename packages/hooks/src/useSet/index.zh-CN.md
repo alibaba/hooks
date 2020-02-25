@@ -8,7 +8,7 @@ group:
 
 # useSet
 
-一个可以将状态管理在 Set 类型中的 Hook 。
+一个可以管理 Set 类型状态的 Hook。
 
 ## 代码演示
 
