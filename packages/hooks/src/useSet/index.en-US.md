@@ -8,7 +8,7 @@ group:
 
 # useSet
 
-A hook that can manage state in Set
+A hook that can manage the state of Set.
 
 ## Examples
 
@@ -44,4 +44,4 @@ const [
 
 | Property | Description                                 | Type                   | Default |
 |---------|----------------------------------------------|------------------------|--------|
-| initialValue | 可选项，传入默认的 Set 参数  | Iterable<K\> | -      |
+| initialValue | Optional, Pass in the default Set parameter  | Iterable<K\> | -      |
