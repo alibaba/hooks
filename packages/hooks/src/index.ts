@@ -33,6 +33,7 @@ import useEventListener from './useEventListener';
 import useHover from './useHover';
 import useUnmount from './useUnmount';
 import useFormTable from './useFormTable';
+import useSet from './useSet';
 
 const useControlledValue: typeof useControllableValue = function (...args) {
   console.warn(
@@ -80,4 +81,5 @@ export {
   useRequest,
   useFormTable,
   useUnmount,
+  useSet,
 };
