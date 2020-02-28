@@ -1,6 +1,6 @@
 /**
  * title: Default usage
- * desc: Pass in a set acceptable parameter.
+ * desc: Pass in a Set acceptable parameter.
  * 
  * title.zh-CN: 默认用法
  * desc.zh-CN: 传入一个 Set 可接受的参数。
