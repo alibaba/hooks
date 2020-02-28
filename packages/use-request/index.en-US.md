@@ -357,6 +357,38 @@ export function ({children})=>{
   )
 }
 ```
+## FAQ
+
+### 1. Can I use multiple useRequests in a component?
+
+Yes, You shoud use it like this.
+
+```javascript
+
+const firstRequest = useReqeust(service);
+const secondRequest = useReqeust(service);
+
+// firstRequest.loading
+// firstRequest.data
+
+// secondRequest.loading
+// secondRequest.data
+```
+
+### 2. How do I use umi-request's `use` `errorHandler` etc.?
+
+You can configure the `request` after processing by `requsetMehod`.
+
+```javascript
+// your request
+import { request } from '@/utils/request';
+
+<UseAPIProvider value={{
+  requestMethod: request,
+}}>
+
+</UseAPIProvider>
+```
 
 ## Thanks
 - [zeit/swr](https://github.com/zeit/swr)
