@@ -363,7 +363,7 @@ export function ({children})=>{
 
 ### 1. 我可以在一个组件中使用多个 useRequest 吗？
 
-可以的，建议您向下面这样使用。
+可以的，建议您像下面这样使用。
 
 ```javascript
 
