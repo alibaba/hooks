@@ -34,6 +34,7 @@ import useHover from './useHover';
 import useUnmount from './useUnmount';
 import useFormTable from './useFormTable';
 import useSet from './useSet';
+import usePersistFn from './usePersistFn';
 
 const useControlledValue: typeof useControllableValue = function (...args) {
   console.warn(
@@ -82,4 +83,5 @@ export {
   useFormTable,
   useUnmount,
   useSet,
+  usePersistFn,
 };
