@@ -1,9 +1,9 @@
 ---
 title: usePersistFn
 group:
-  title: State
-  path: /state
-  order: 600
+  title: Advanced
+  path: /advanced
+  order: 400
 ---
 
 # usePersistFn
