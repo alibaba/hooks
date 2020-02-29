@@ -381,7 +381,7 @@ You can configure the `request` after processing by `requsetMehod`.
 
 ```javascript
 // your request
-import { request } from '@/utils/request';
+import { UseAPIProvider } from '@/utils/request';
 
 <UseAPIProvider value={{
   requestMethod: request,
