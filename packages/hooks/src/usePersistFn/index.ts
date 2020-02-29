@@ -1,15 +1,13 @@
-import { useRef, useEffect, DependencyList, useCallback } from 'react';
+import { useCallback, useRef } from 'react';
 
 export type noop = (...args: any[]) => any;
 
-function usePersistFn<T extends noop>(fn: T, dependencies: DependencyList) {
+function usePersistFn<T extends noop>(fn: T) {
   const ref = useRef<any>(() => {
     throw new Error('Cannot call function while rendering.');
   });
 
-  useEffect(() => {
-    ref.current = fn;
-  }, [fn, ...dependencies]);
+  ref.current = fn;
 
   const persistFn = useCallback(((...args) => ref.current(...args)) as T, [ref]);
 

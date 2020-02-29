@@ -10,7 +10,7 @@ const testHooks = () => {
   const addCount = () => {
     setCount(c => c + 1);
   }
-  const persistFn = usePersistFn(() => count, [count]);
+  const persistFn = usePersistFn(() => count);
 
   return { addCount, persistFn }
 }

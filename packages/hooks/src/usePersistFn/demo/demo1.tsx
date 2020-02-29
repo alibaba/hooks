@@ -15,7 +15,7 @@ export default () => {
 
   const showCountPersistFn = usePersistFn(() => {
     message.info(`Current count is ${count}`);
-  }, [count]);
+  });
 
   const showCountCommon = useCallback(
     () => {

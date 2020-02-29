@@ -26,8 +26,7 @@ Hooks for persistent functions
 type noop = (...args: any[]) => any;
 
 const fn = usePersistFn<T extends noop>(
-  fn: T,
-  dependencies: DependencyList
+  fn: T
 );
 ```
 
@@ -42,4 +41,3 @@ const fn = usePersistFn<T extends noop>(
 | Property       | Description                        | Type                      | Default |
 |----------------|------------------------------------|---------------------------|---------|
 | fn             | Functions that require persistence | `(...args: any[]) => any` | -       |
-| DependencyList | deps                               | `any[]`                   | -    |

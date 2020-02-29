@@ -27,7 +27,6 @@ type noop = (...args: any[]) => any;
 
 const fn = usePersistFn<T extends noop>(
   fn: T,
-  dependencies: DependencyList
 );
 ```
 
@@ -42,4 +41,3 @@ const fn = usePersistFn<T extends noop>(
 | 参数           | 说明             | 类型                      | 默认值 |
 |----------------|------------------|---------------------------|--------|
 | fn             | 需要持久化的函数 | `(...args: any[]) => any` | -      |
-| DependencyList | 函数依赖数据     | `any[]`                   | -      |
