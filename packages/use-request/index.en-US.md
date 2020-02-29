@@ -381,7 +381,8 @@ You can configure the `request` after processing by `requsetMehod`.
 
 ```javascript
 // your request
-import { UseAPIProvider } from '@/utils/request';
+import { request } from '@/utils/request';
+import { UseAPIProvider } from '@umijs/use-request';
 
 <UseAPIProvider value={{
   requestMethod: request,

@@ -383,7 +383,8 @@ const secondRequest = useReqeust(service);
 
 ```javascript
 // 你自己封装的 request
-import { UseAPIProvider } from '@/utils/request';
+import { request } from '@/utils/request';
+import { UseAPIProvider } from '@umijs/use-request';
 
 <UseAPIProvider value={{
   requestMethod: request,
