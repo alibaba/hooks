@@ -5,7 +5,7 @@ export type noop = (...args: any[]) => void;
 
 export type Service<R, P extends any[]> = (...args: P) => Promise<R>;
 export type Subscribe<R, P extends any[]> = (data: FetchResult<R, P>) => void;
-export type Mutate<R> = (x: (R | ((data: R) => R))) => void;
+export type Mutate<R> = (x: (R | undefined | ((data: R) => R))) => void;
 
 export type RequestService = string | { [key: string]: any };
 export type CombineService<R, P extends any[]> = RequestService | ((...args: P) => RequestService) | Service<R, P>;

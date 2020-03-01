@@ -1,7 +1,6 @@
 const cache: { [key: string]: { data: any, timer: any } } = {};
 
 const setCache = (key: string, data: any) => {
-
   if (cache[key]) {
     clearTimeout(cache[key].timer);
   }
@@ -17,9 +16,7 @@ const setCache = (key: string, data: any) => {
   };
 };
 
-const getCache = (key: string) => {
-  return cache[key]?.data;
-}
+const getCache = (key: string) => cache[key]?.data
 
 
 export {
