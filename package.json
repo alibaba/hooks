@@ -19,7 +19,8 @@
     "precommit": "father pre-commit",
     "build:doc": "father-doc build",
     "pub:doc": "now --prod",
-    "pub": "father publish"
+    "pub": "father publish",
+    "now-build": "echo \"hello\""
   },
   "devDependencies": {
     "@testing-library/react-hooks": "^2.0.1",
