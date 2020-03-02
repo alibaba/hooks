@@ -13,8 +13,7 @@ jobs:
       - uses: actions/checkout@v2
       - name: build
         run: |
-          yarn install
-          yarn build
+          yarn init
           yarn build:doc
       - name: deploy
         env:
