@@ -30,10 +30,15 @@ interface AppListProps {
   form: WrappedFormUtils;
 }
 
-const getTableData = ({ current, pageSize }: PaginatedParams[0], formData): Promise<Result> => {
-  console.log(current, pageSize);
-  console.log('formData', formData);
-  return fetch(`https://randomuser.me/api?results=55&page=${current}&size=${pageSize}`)
+const getTableData = ({ current, pageSize }: PaginatedParams[0], formData: Object): Promise<Result> => {
+  let query = `page=${current}&size=${pageSize}`;
+  Object.entries(formData).forEach(([key, value]) => {
+    if (value) {
+      query += `&${key}=${value}`
+    }
+  });
+
+  return fetch(`https://randomuser.me/api?results=55&${query}`)
     .then(res => res.json())
     .then(res => ({
       total: res.info.results,
