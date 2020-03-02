@@ -359,6 +359,40 @@ export function ({children})=>{
 }
 ```
 
+## FAQ
+
+### 1. 我可以在一个组件中使用多个 useRequest 吗？
+
+可以的，建议您像下面这样使用。
+
+```javascript
+
+const firstRequest = useReqeust(service);
+const secondRequest = useReqeust(service);
+
+// firstRequest.loading
+// firstRequest.data
+
+// secondRequest.loading
+// secondRequest.data
+```
+
+### 2. 我如何使用 umi-request 的 `use` `errorHandler` 等？
+
+你可以将处理完后的 `request` 通过 `requsetMehod` 配置一下即可。
+
+```javascript
+// 你自己封装的 request
+import { request } from '@/utils/request';
+import { UseAPIProvider } from '@umijs/use-request';
+
+<UseAPIProvider value={{
+  requestMethod: request,
+}}>
+
+</UseAPIProvider>
+```
+
 ## 致谢
 - [zeit/swr](https://github.com/zeit/swr)
 - [tannerlinsley/react-query](https://github.com/tannerlinsley/react-query)
