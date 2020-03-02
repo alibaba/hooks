@@ -1,7 +1,7 @@
 // from swr
 import { isDocumentVisible, isOnline } from './index';
 
-let listeners: any[] = [];
+const listeners: any[] = [];
 
 function subscribe(listener: () => void) {
   listeners.push(listener);
