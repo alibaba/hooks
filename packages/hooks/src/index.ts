@@ -34,6 +34,7 @@ import useHover from './useHover';
 import useUnmount from './useUnmount';
 import useFormTable from './useFormTable';
 import useSet from './useSet';
+import usePersistFn from './usePersistFn';
 import useMap from './useMap';
 
 const useControlledValue: typeof useControllableValue = function (...args) {
@@ -83,5 +84,6 @@ export {
   useFormTable,
   useUnmount,
   useSet,
+  usePersistFn,
   useMap,
 };
