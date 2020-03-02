@@ -13,8 +13,8 @@ jobs:
       - uses: actions/checkout@v2
       - name: build
         run: |
-          yarn init
-          yarn build:doc
+          npm run init
+          npm run build:doc
       - name: deploy
         env:
           BUILD_ID: ${{ github.sha }}
