@@ -35,6 +35,7 @@ import useUnmount from './useUnmount';
 import useFormTable from './useFormTable';
 import useSet from './useSet';
 import useMap from './useMap';
+import useCreation from './useCreation'
 
 const useControlledValue: typeof useControllableValue = function (...args) {
   console.warn(
@@ -84,4 +85,5 @@ export {
   useUnmount,
   useSet,
   useMap,
+  useCreation,
 };
