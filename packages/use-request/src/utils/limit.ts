@@ -4,6 +4,6 @@ export default function limit(fn: any, timespan: number) {
     if (pending) return
     pending = true
     fn(...args)
-    setTimeout(() => (pending = false), timespan)
+    setTimeout(() => { pending = false }, timespan)
   }
 }
