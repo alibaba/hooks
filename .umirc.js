@@ -10,7 +10,7 @@ export default {
   ]],
   doc: {
     title: 'Umi Hooks',
-    include: ['packages/hooks/src', 'packages/use-request'],
+    include: ['packages/hooks/src', 'packages/use-request', 'docs'],
     locales: [['en-US', 'English'], ['zh-CN', '中文']]
   },
   plugins: [[
