@@ -8,5 +8,6 @@
       "includeMergedTags": true
     }
   },
-  "version": "independent"
+  "version": "independent",
+  "lerna": "2.11.0"
 }
