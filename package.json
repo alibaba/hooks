@@ -19,7 +19,7 @@
     "precommit": "father pre-commit",
     "build:doc": "father-doc build",
     "pub:doc": "now --prod",
-    "pub": "father publish",
+    "pub": "lerna publish",
     "now-build": "echo \"hello\""
   },
   "devDependencies": {
