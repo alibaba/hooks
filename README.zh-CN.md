@@ -33,7 +33,7 @@ npm i @umijs/hooks --save
 ## 🔨使用
 
 ```
-import { useAsync } from '@umijs/hooks';
+import { useRequest } from '@umijs/hooks';
 ```
 
 ## 🖥 开发
