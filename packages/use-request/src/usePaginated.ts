@@ -1,9 +1,9 @@
-import { useCallback, useMemo, useRef, useEffect } from 'react';
-import { PaginationConfig, Sorter, Filter } from './antdTypes';
-
+import { useCallback, useEffect, useMemo, useRef } from 'react';
+import { Filter, PaginationConfig, Sorter } from './antdTypes';
 import { BasePaginatedOptions, PaginatedFormatReturn, PaginatedOptionsWithFormat, PaginatedParams, PaginatedResult } from './types';
 import useAsync from './useAsync';
 import useUpdateEffect from './utils/useUpdateEffect';
+
 
 function usePaginated<R, Item, U extends Item = any>(
   service: (...p: PaginatedParams) => Promise<R>,
@@ -31,7 +31,7 @@ function usePaginated<R, Item, U extends Item = any>(
     }
   }, []);
 
-  const { data, params, run, loading, ...rest } = useAsync(
+  const { data, params, run, loading, ...rest }: any = useAsync(
     service,
     {
       ...restOptions as any,
@@ -49,7 +49,7 @@ function usePaginated<R, Item, U extends Item = any>(
   } = params && params[0] ? params[0] : ({} as any);
 
   // 只改变 pagination，其他参数原样传递
-  const runChangePaination = useCallback(paginationParams => {
+  const runChangePaination = useCallback((paginationParams: any) => {
     const [oldPaginationParams, ...restParams] = params;
     run({
       ...oldPaginationParams,

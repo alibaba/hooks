@@ -1,9 +1,10 @@
 {
   "name": "hooks",
   "scope": "umijs",
+  "version": 2,
   "builds": [
     {
-      "src": "now-build.sh",
+      "src": "package.json",
       "use": "@now/static-build",
       "config": {
         "distDir": "dist"
@@ -14,20 +15,13 @@
     "enabled": false
   },
   "routes": [
-    {
-      "src": "/(.*).(js|css)",
-      "headers": {
-        "cache-control": "s-maxage=604800"
-      },
-      "dest": "/$1"
-    },
-    {
-      "src": "/(.*).(json)",
-      "dest": "/$1"
-    },
-    {
-      "src": "/(.*)",
-      "dest": "/"
-    }
+    { "handle": "filesystem" },
+    { "src": "/.*", "dest": "/index.html" }
+  ],
+  "github": {
+    "enabled": false
+  },
+  "alias": [
+    "hooks.umijs.org"
   ]
 }

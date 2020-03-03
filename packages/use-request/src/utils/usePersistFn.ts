@@ -1,4 +1,4 @@
-import { useCallback, useRef, useEffect } from "react";
+import { useCallback, useRef, useEffect } from 'react';
 
 function usePersistFn(fn: any, dependencies: any = []) {
   const ref = useRef<any>(() => {
@@ -10,17 +10,16 @@ function usePersistFn(fn: any, dependencies: any = []) {
   }, [fn, ...dependencies]);
 
   const persist = useCallback((...args) => {
-    const fn = ref.current;
-    if (fn) {
-      return fn(...args);
+    const refFn = ref.current;
+    if (refFn) {
+      return refFn(...args);
     }
   }, [ref]);
 
   if (typeof fn === 'function') {
     return persist;
-  } else {
-    return undefined;
   }
+  return undefined;
 }
 
 export default usePersistFn;

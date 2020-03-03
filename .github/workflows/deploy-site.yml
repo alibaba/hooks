@@ -10,10 +10,15 @@ jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout
-      uses: actions/checkout@master
-    - name: deploy
-      uses: amondnet/now-deployment@v1
-      with:
-        now-args: '--prod'
-        zeit-token: ${{ secrets.ZEIT_TOKEN }}
+      - uses: actions/checkout@v2
+      - name: build
+        run: |
+          npm run init
+          npm run build:doc
+      - name: deploy
+        env:
+          BUILD_ID: ${{ github.sha }}
+          ZEIT_TOKEN: ${{ secrets.ZEIT_TOKEN }}
+        run: |
+          now --token=$ZEIT_TOKEN --confirm --prod --force --scope umijs
+
