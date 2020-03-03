@@ -36,6 +36,7 @@ import useFormTable from './useFormTable';
 import useSet from './useSet';
 import usePersistFn from './usePersistFn';
 import useMap from './useMap';
+import useCreation from './useCreation'
 
 const useControlledValue: typeof useControllableValue = function (...args) {
   console.warn(
@@ -86,4 +87,5 @@ export {
   useSet,
   usePersistFn,
   useMap,
+  useCreation,
 };
