@@ -1,9 +1,12 @@
 ---
 title: useSearch
+nav:
+  title: Hooks
+  path: /hooks
 group:
   title: Deprecated
   path: /deprecated
-  order: 300
+legacy: /deprecated/use-search
 ---
 
 # useSearch

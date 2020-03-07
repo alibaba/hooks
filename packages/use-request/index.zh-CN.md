@@ -1,10 +1,9 @@
 ---
 title: useRequest
-order: 1000
 group:
   title: Async
   path: /async
-  order: 1000
+legacy: /zh-CN/async/use-request
 ---
 
 # useRequest

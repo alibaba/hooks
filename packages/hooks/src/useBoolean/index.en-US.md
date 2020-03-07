@@ -1,9 +1,13 @@
 ---
 title: useBoolean
+nav:
+  title: Hooks
+  path: /hooks
 group:
   title: State
   path: /state
-  order: 600
+  order: 11
+legacy: /state/use-boolean
 ---
 
 # useBoolean

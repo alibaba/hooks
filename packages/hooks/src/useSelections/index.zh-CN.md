@@ -1,9 +1,12 @@
 ---
 title: useSelections
+nav:
+  title: Hooks
+  path: /hooks
 group:
   title: UI
   path: /ui
-  order: 800
+legacy: /zh-CN/ui/use-selections
 ---
 
 # useSelections

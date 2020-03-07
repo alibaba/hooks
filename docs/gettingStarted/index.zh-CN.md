@@ -1,10 +1,12 @@
 ---
 title: 快速上手
-order: 1000
-group:
-  title: Docs
+order: 2
+nav:
+  title: 指南
   path: /docs
-  order: 1100
+  order: 1
+group:
+  title: 快速上手
 ---
 
 # 快速上手

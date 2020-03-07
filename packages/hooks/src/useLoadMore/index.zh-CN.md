@@ -1,9 +1,12 @@
 ---
 title: useLoadMore
+nav:
+  title: Hooks
+  path: /hooks
 group:
   title: Deprecated
   path: /deprecated
-  order: 300
+legacy: /zh-CN/deprecated/use-load-more
 ---
 
 # useLoadMore

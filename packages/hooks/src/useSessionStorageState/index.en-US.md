@@ -1,8 +1,12 @@
 ---
 title: useSessionStorageState
+nav:
+  title: Hooks
+  path: /hooks
 group:
   title: State Hooks
   path: /state
+legacy: /state/use-session-storage-state
 ---
 
 # useSessionStorageState
