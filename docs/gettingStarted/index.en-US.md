@@ -5,8 +5,6 @@ nav:
   title: Guide
   path: /docs
   order: 1
-group:
-  title: Getting Started
 ---
 
 # Getting Started

@@ -7,18 +7,11 @@ nav:
   order: 1
 ---
 
-[English](https://github.com/umijs/hooks/blob/master/README.md) | 简体中文
-
 # @umijs/hooks
 
 React Hooks Library.
 
 [![NPM version][image-1]][1] [![NPM downloads][image-2]][2]
-
-## 📚 文档
-
-* [English](https://hooks.umijs.org/)
-* [中文](https://hooks.umijs.org/zh-CN/)
 
 ## ✨ 特性
 

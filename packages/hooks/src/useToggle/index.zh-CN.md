@@ -11,7 +11,7 @@ legacy: /zh-CN/state/use-toggle
 
 # useToggle
 
-A hook that switch value between two states.
+用于在两个状态值间切换的 Hook。
 
 ## Examples
 

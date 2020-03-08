@@ -1,9 +1,13 @@
 ---
 title: useRequest
+nav:
+  title: Hooks
+  path: /hooks
 group:
   title: Async
   path: /async
-legacy: /zh-CN/async/use-request
+  order: 1
+legacy: /zh-CN/async
 ---
 
 # useRequest

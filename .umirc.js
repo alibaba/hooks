@@ -12,6 +12,9 @@ export default {
   resolve: {
     includes: ['docs', 'packages/hooks/src', 'packages/use-request'],
   },
+  styles: [
+    `a[title='站长统计'] { display: none; }`,
+  ],
   navs: {
     'zh-CN': [
       null,

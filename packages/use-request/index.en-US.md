@@ -7,7 +7,7 @@ group:
   title: Async
   path: /async
   order: 1
-legacy: /async/use-request
+legacy: /async
 ---
 
 # useRequest

@@ -1,11 +1,10 @@
 ---
 title: FAQ
+order: 3
 nav:
   title: 指南
   path: /docs
   order: 1
-group:
-  title: FAQ
 ---
 
 # FAQ

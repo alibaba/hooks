@@ -5,8 +5,6 @@ nav:
   title: 指南
   path: /docs
   order: 1
-group:
-  title: 快速上手
 ---
 
 # 快速上手
