@@ -1,9 +1,12 @@
 ---
 title: useThrottleFn
+nav:
+  title: Hooks
+  path: /hooks
 group:
   title: SideEffect
   path: /side-effect
-  order: 700
+legacy: /side-effect/use-throttle-fn
 ---
 
 # useThrottleFn

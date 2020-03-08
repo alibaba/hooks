@@ -1,10 +1,14 @@
 ---
 title: useFormTable
 order: 1000
+nav:
+  title: Hooks
+  path: /hooks
 group:
   title: Ant Design
   path: /antd
-  order: 900
+  order: 3
+legacy: /antd/use-form-table
 ---
 
 # useFormTable

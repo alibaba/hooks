@@ -1,9 +1,12 @@
 ---
 title: useUpdateLayoutEffect
+nav:
+  title: Hooks
+  path: /hooks
 group:
   title: LifeCycle
   path: /lifeCycle
-  order: 600
+legacy: /zh-CN/lifeCycle/use-update-layout-effect
 ---
 
 # useUpdateLayoutEffect

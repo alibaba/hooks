@@ -1,9 +1,12 @@
 ---
 title: useCreation
+nav:
+  title: Hooks
+  path: /hooks
 group:
   title: Advanced
   path: /advanced
-  order: 400
+legacy: /zh-CN/advanced/use-creation
 ---
 
 # useCreation

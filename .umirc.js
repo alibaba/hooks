@@ -1,5 +1,4 @@
 export default {
-  hash: true,
   extraBabelPlugins: [[
     'babel-plugin-import',
     {
@@ -8,18 +7,24 @@ export default {
       style: true,
     },
   ]],
-  doc: {
-    title: 'Umi Hooks',
-    include: ['packages/hooks/src', 'packages/use-request', 'docs'],
-    locales: [['en-US', 'English'], ['zh-CN', '中文']]
+  mode: 'site',
+  title: 'Umi Hooks',
+  resolve: {
+    includes: ['docs', 'packages/hooks/src', 'packages/use-request'],
   },
-  plugins: [[
-    'umi-plugin-react', {
-      pwa: true,
-      headScripts: [
-        'https://v1.cnzz.com/z_stat.php?id=1278602214&web_id=1278602214'
-      ]
-    },
-  ]],
-
+  navs: {
+    'zh-CN': [
+      null,
+      { title: 'GitHub', path: 'https://github.com/umijs/hooks' },
+      { title: '更新日志', path: 'https://github.com/umijs/hooks/releases' },
+    ],
+    'en-US': [
+      null,
+      { title: 'GitHub', path: 'https://github.com/umijs/hooks' },
+      { title: 'Changelog', path: 'https://github.com/umijs/hooks/releases' },
+    ],
+  },
+  headScripts: [
+    'https://v1.cnzz.com/z_stat.php?id=1278602214&web_id=1278602214'
+  ],
 }

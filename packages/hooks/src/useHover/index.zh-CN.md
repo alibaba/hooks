@@ -1,9 +1,12 @@
 ---
 title: useHover
+nav:
+  title: Hooks
+  path: /hooks
 group:
   title: Dom
   path: /dom
-  order: 500
+legacy: /zh-CN/dom/use-hover
 ---
 
 # useHover

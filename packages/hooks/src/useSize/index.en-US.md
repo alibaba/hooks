@@ -1,9 +1,12 @@
 ---
 title: useSize
+nav:
+  title: Hooks
+  path: /hooks
 group:
   title: Dom
   path: /dom
-  order: 500
+legacy: /dom/use-size
 ---
 
 # useSize

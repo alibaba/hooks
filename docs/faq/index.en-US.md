@@ -1,10 +1,11 @@
 ---
 title: FAQ
-order: 900
-group:
-  title: Docs
+nav:
+  title: Guide
   path: /docs
-  order: 1100
+  order: 1
+group:
+  title: FAQ
 ---
 
 # FAQ

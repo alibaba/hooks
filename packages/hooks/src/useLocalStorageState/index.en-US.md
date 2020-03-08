@@ -1,8 +1,12 @@
 ---
 title: useLocalStorageState
+nav:
+  title: Hooks
+  path: /hooks
 group:
   title: State Hooks
   path: /state
+legacy: /state/use-local-storage-state
 ---
 
 # useLocalStorageState
