@@ -12,6 +12,7 @@ const options: IBundleOptions = {
     'use-request',
     'hooks',
   ],
+  extraBabelPlugins: [['babel-plugin-transform-async-to-promises']],
 };
 
 export default options;
