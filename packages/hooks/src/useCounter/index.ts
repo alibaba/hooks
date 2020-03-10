@@ -1,4 +1,5 @@
 import { useMemo, useState } from 'react';
+import useCreation from '../useCreation';
 
 export interface Options {
   min?: number;
@@ -19,7 +20,7 @@ function useCounter(
   const { min, max } = options;
 
   // get init value
-  const init = useMemo(() => {
+  const init = useCreation(() => {
     if (typeof max === 'number') {
       return Math.min(max, initialValue);
     }
