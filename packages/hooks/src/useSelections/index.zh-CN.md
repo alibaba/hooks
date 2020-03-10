@@ -22,7 +22,7 @@ legacy: /zh-CN/ui/use-selections
 ## API
 
 ```javascript
-const result: Result= useSelections<T>(items: T[]);
+const result: Result= useSelections<T>(items: T[], defaultSelected?: T[]);
 ```
 
 ### Result
