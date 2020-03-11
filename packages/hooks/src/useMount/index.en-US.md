@@ -7,7 +7,6 @@ group:
   title: LifeCycle
   path: /lifeCycle
   order: 9
-legacy: /lifeCycle/use-mount
 ---
 
 # useMount

@@ -1,12 +1,13 @@
-import { useEffect, useRef } from 'react';
+import { useEffect } from 'react';
+import usePersistFn from '../usePersistFn';
 
 const useMount = (fn: any) => {
-  const fnRef = useRef(fn);
-  fnRef.current = fn;
+  // 持久化函数
+  const fnPersist = usePersistFn(fn);
 
   useEffect(() => {
-    if (fnRef.current && typeof fnRef.current === 'function') {
-      fnRef.current();
+    if (fnPersist && typeof fnPersist === 'function') {
+      fnPersist();
     }
   }, [])
 };

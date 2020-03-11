@@ -6,7 +6,6 @@ nav:
 group:
   title: LifeCycle
   path: /lifeCycle
-legacy: /zh-CN/lifeCycle/use-mount
 ---
 
 # useMount
