@@ -38,6 +38,7 @@ import usePersistFn from './usePersistFn';
 import useMap from './useMap';
 import useCreation from './useCreation';
 import useMount from './useMount';
+import useCounter from './useCounter';
 
 const useControlledValue: typeof useControllableValue = function (...args) {
   console.warn(
@@ -89,5 +90,6 @@ export {
   usePersistFn,
   useMap,
   useCreation,
-  useMount
+  useMount,
+  useCounter,
 };
