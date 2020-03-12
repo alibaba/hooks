@@ -31,7 +31,7 @@
     "babel-plugin-import": "^1.12.0",
     "create-test-server": "^3.0.1",
     "del": "^5.1.0",
-    "dumi": "^1.0.3",
+    "dumi": "^1.0.7",
     "enzyme": "^3.10.0",
     "father": "^2.13.3",
     "lerna": "^2.11.0",

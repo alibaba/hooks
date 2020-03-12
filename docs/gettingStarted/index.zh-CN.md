@@ -1,6 +1,8 @@
 ---
 title: 快速上手
-order: 2
+group:
+  title: Getting Started
+  order: 2
 nav:
   title: 指南
   path: /docs

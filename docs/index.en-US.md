@@ -2,7 +2,7 @@
 title: Umi Hooks - React Hooks Library
 hero:
   title: Umi Hooks
-  desc: Born for React Hooks.
+  desc: Born for React Hooks
   actions:
     - text: Getting Started
       link: /docs/getting-started
@@ -18,3 +18,17 @@ features:
     desc: 已在蚂蚁内外经受过足够大量的线上系统的考验及打磨，健壮性值得信赖。
 footer: Open-source MIT Licensed | Copyright © 2019-present<br />Powered by [dumi](https://d.umijs.org)
 ---
+
+## Easy to get started
+
+```bash
+// Install dependency
+npm i @umijs/hooks --save
+
+// Use Hooks
+import { useRequest } from '@umijs/hooks';
+```
+
+## 👥 Feedback
+
+<img src="https://raw.githubusercontent.com/umijs/hooks/master/dingtalk.jpg" width="300" />
