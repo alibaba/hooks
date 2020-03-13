@@ -39,6 +39,7 @@ import useMap from './useMap';
 import useCreation from './useCreation'
 import { useDrag, useDrop } from './useDrop';
 import useCounter from './useCounter'
+import useMount from './useMount';
 
 const useControlledValue: typeof useControllableValue = function (...args) {
   console.warn(
@@ -92,5 +93,6 @@ export {
   useCreation,
   useDrag,
   useDrop,
+  useMount,
   useCounter,
 };

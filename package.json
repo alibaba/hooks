@@ -29,6 +29,7 @@
     "@types/lodash.isequal": "^4.5.5",
     "@types/lodash.throttle": "^4.1.6",
     "babel-plugin-import": "^1.12.0",
+    "babel-plugin-transform-async-to-promises": "^0.8.15",
     "create-test-server": "^3.0.1",
     "del": "^5.1.0",
     "dumi": "^1.0.7",
