@@ -115,7 +115,7 @@ export default <T = any>(list: T[], options: OptionType) => {
         e.preventDefault();
         calculateRange();
       },
-      style: { overflowY: 'auto' },
+      style: { overflowY: 'auto' as const },
     },
     wrapperProps: {
       style: { width: '100%', height: totalHeight, paddingTop: getDistanceTop(state.start) },
