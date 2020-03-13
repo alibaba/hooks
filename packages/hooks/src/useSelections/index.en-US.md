@@ -22,7 +22,7 @@ This hook is used for checkbox group, supports multiple selection, single select
 ## API
 
 ```javascript
-const result: Result= useSelections<T>(items: T[]);
+const result: Result= useSelections<T>(items: T[], defaultSelected?: T[]);
 ```
 
 ### Result

@@ -7,7 +7,7 @@
  */
 
 import React from 'react';
-import useVirtualList from '..';
+import { useVirtualList } from '@umijs/hooks';
 
 export default () => {
   const { list, containerProps, wrapperProps } = useVirtualList(Array.from(Array(99999).keys()), {
