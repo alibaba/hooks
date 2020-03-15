@@ -9,7 +9,7 @@ group:
 legacy: /lifeCycle/use-update
 ---
 
-# useUnmount
+# useUpdate
 
 A hook that executes a function at update
 
