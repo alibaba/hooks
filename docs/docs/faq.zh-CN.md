@@ -1,14 +1,3 @@
----
-title: FAQ
-group:
-  title: FAQ
-  order: 3
-nav:
-  title: 指南
-  path: /docs
-  order: 1
----
-
 # FAQ
 
 以下整理了一些 Umi Hooks 社区常见的问题和官方答复，在提问之前建议找找有没有类似的问题。

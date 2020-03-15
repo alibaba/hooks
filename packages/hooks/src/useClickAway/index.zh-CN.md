@@ -6,6 +6,7 @@ nav:
 group:
   title: Dom
   path: /dom
+  order: 13
 legacy: /zh-CN/dom/use-click-away
 ---
 
