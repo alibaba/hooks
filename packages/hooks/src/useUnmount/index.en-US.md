@@ -7,7 +7,6 @@ group:
   title: LifeCycle
   path: /life-cycle
   order: 9
-legacy: /lifeCycle/use-unmount
 ---
 
 # useUnmount

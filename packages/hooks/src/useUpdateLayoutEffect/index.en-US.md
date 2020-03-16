@@ -6,7 +6,6 @@ nav:
 group:
   title: LifeCycle
   path: /life-cycle
-legacy: /lifeCycle/use-update-layout-effect
 ---
 
 # useUpdateLayoutEffect

@@ -9,18 +9,7 @@ export default () => {
   return (
     <>
       <div>Time: {Date.now()}</div>
-      <Refresh />
-      <Button onClick={update}>update</Button>
+      <Button onClick={update} style={{ marginTop: 16 }}>update</Button>
     </>
   );
 };
-
-const Refresh = () => {
-  const update = useUpdate();
-  return (
-    <>
-      <div>Refresh: {Date.now()}</div>
-      <Button onClick={update}>Refresh update</Button>
-    </>
-  )
-}
