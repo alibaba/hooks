@@ -17,7 +17,7 @@ export default <T>(initialValue?: T, transformer?: (value: T) => T): [
 ] => {
   const [value, setValue] = useState(initialValue);
 
-  const reset = useCallback(() => setValue(initialValue), []);
+  const reset = useCallback(() => setValue(initialValue), [setValue]);
 
   const onChange = useCallback((e: EventTarget<T>) => {
     let val = e.target.value;
@@ -25,7 +25,7 @@ export default <T>(initialValue?: T, transformer?: (value: T) => T): [
       val = transformer(val);
     }
     setValue(val);
-  }, []);
+  }, [setValue]);
 
   return [{
     value,
