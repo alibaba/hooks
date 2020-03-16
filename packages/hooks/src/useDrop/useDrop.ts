@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useMemo, useState, useRef, useCallback } from 'react';
 
 export interface DropAreaState {
   isOver: boolean;
@@ -17,32 +17,6 @@ export interface DropAreaOptions {
   onUri?: (url: string, event?: React.DragEvent) => void;
   onDom?: (content: any, event?: React.DragEvent) => void;
   onText?: (text: string, event?: React.ClipboardEvent) => void;
-}
-
-const getCallback = (options: DropAreaOptions) => (dataTransfer: DataTransfer, event: (React.DragEvent | React.ClipboardEvent)) => {
-  const uri = dataTransfer.getData('text/uri-list');
-  const dom = dataTransfer.getData('custom');
-
-  if(dom && options.onDom) {
-    options.onDom(JSON.parse(dom), event as React.DragEvent);
-    return;
-  }
-
-  if (uri && options.onUri) {
-    options.onUri(uri, event as React.DragEvent);
-    return;
-  }
-
-  if (dataTransfer.files && dataTransfer.files.length && options.onFiles) {
-    options.onFiles([...dataTransfer.files], event as React.DragEvent);
-    return;
-  }
-
-  if (dataTransfer.items && dataTransfer.items.length && options.onText) {
-    dataTransfer.items[0].getAsString(text => {
-      options.onText!(text, event as React.ClipboardEvent);
-    });
-  }
 };
 
 const getProps = (
@@ -72,9 +46,37 @@ const getProps = (
 });
 
 const useDrop = (options: DropAreaOptions = {}): [DropProps, DropAreaState] => {
-  const { onFiles, onText, onUri } = options;
+  const optionsRef = useRef(options);
+  optionsRef.current = options;
   const [isOver, setIsOver] = useState<boolean>(false);
-  const callback = useMemo(() => getCallback(options), [onFiles, onText, onUri]);
+  const callback = useCallback((
+    dataTransfer: DataTransfer, event: (React.DragEvent | React.ClipboardEvent)
+  ) => {
+    const uri = dataTransfer.getData('text/uri-list');
+    const dom = dataTransfer.getData('custom');
+  
+    if(dom && optionsRef.current.onDom) {
+      optionsRef.current.onDom(JSON.parse(dom), event as React.DragEvent);
+      return;
+    }
+  
+    if (uri && optionsRef.current.onUri) {
+      optionsRef.current.onUri(uri, event as React.DragEvent);
+      return;
+    }
+  
+    if (dataTransfer.files && dataTransfer.files.length && optionsRef.current.onFiles) {
+      optionsRef.current.onFiles([...dataTransfer.files], event as React.DragEvent);
+      return;
+    }
+  
+    if (dataTransfer.items && dataTransfer.items.length && optionsRef.current.onText) {
+      dataTransfer.items[0].getAsString(text => {
+        optionsRef.current.onText!(text, event as React.ClipboardEvent);
+      });
+    }
+  }, []);
+  
   const props: DropProps = useMemo(() => getProps(callback, setIsOver), [callback, setIsOver]);
 
   return [props, { isOver }];

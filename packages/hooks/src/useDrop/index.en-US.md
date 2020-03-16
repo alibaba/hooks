@@ -14,7 +14,11 @@ legacy: /ui/use-drag-and-use-drop
 
 A pair of hooks to help you manage data transfer between drag and drop
 
-> useDrag should be used along with useDrop. useDrop can be used alone to accept file, text or uri dropping.
+> useDrop can be used alone to accept file, text or uri dropping.
+>
+> useDrag should be used along with useDrop.
+>
+> Paste into the drop area will also be treated as content drop.
 
 ## Examples
 
@@ -47,14 +51,14 @@ const [ props, { isOver } ] = useDrop({
 
 | Property | Description                               | Type                    |
 |----------|-------------------------------------------|-------------------------|
-| props      | props passed to the drop area | - |
-| isOver   | whether the dragging element is on top of the drop area     | boolean     |
+| props      | Props passed to the drop area | - |
+| isOver   | Whether the dragging element is on top of the drop area     | boolean     |
 
 ### useDrop Params
 
 | Property    | Description                                         | Type                   | Default |
 |---------|----------------------------------------------|------------------------|--------|
-| onText | the callback when text is dropped | (text: string, e: Event) => void | -      |
-| onFiles | the callback when files are dropped | (files: File[], e: Event) => void | -      |
-| onUri | the callback when a uri is dropped | (text: string, e: Event) => void | -      |
-| onDom | the callback when a dom is dropped | (content: any, e: Event) => void | -      |
+| onText | The callback when text is dropped | (text: string, e: Event) => void | -      |
+| onFiles | The callback when files are dropped | (files: File[], e: Event) => void | -      |
+| onUri | The callback when a uri is dropped | (text: string, e: Event) => void | -      |
+| onDom | The callback when a dom is dropped | (content: any, e: Event) => void | -      |

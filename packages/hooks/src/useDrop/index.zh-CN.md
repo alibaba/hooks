@@ -14,7 +14,11 @@ legacy: /ui/use-drag-and-use-drop
 
 一对帮助你处理在拖拽中进行数据转移的 hooks
 
-> useDrag 允许一个 dom 节点被拖拽，需要配合 useDrop 使用，useDrop 可以单独使用来接收文件、文字和网址的拖拽。
+> useDrop 可以单独使用来接收文件、文字和网址的拖拽。
+>
+> useDrag 允许一个 dom 节点被拖拽，需要配合 useDrop 使用。
+>
+> 向节点内触发粘贴时也会被视为拖拽的内容
 
 ## 代码演示
 
