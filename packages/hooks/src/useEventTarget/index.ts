@@ -1,30 +1,34 @@
 import { useState, useCallback } from 'react';
+import usePersistFn from '../usePersistFn';
 
-interface ValueProps<T> {
+interface ValueProps<T, U> {
   value: T | undefined;
-  onChange: (e: EventTarget<T>) => any
+  onChange: (e: EventTarget<U>) => any
 }
 
-interface EventTarget<T> {
+interface EventTarget<U> {
   target: {
-    value: T;
+    value: U;
   }
 }
 
-export default <T>(initialValue?: T, transformer?: (value: T) => any): [
-  ValueProps<T>,
+export default <T, U = T>(initialValue?: T, transformer?: (value: U) => T): [
+  ValueProps<T, U>,
   () => void
 ] => {
   const [value, setValue] = useState(initialValue);
 
   const reset = useCallback(() => setValue(initialValue), [setValue]);
 
-  const onChange = useCallback((e: EventTarget<T>) => {
-    let val = e.target.value;
-    if (typeof transformer === 'function') {
-      val = transformer(val);
+  const persistTransformer = transformer == null ? transformer : usePersistFn(transformer);
+
+  const onChange = useCallback((e: EventTarget<U>) => {
+    const _value = e.target.value;
+    if (typeof persistTransformer === 'function') {
+      return setValue(persistTransformer(_value))
     }
-    setValue(val);
+    // no transformer => U and T should be the same
+    return setValue(_value as unknown as T);
   }, [setValue]);
 
   return [{

@@ -38,11 +38,11 @@ describe('useEventTarget', () => {
   });
 
   it('should be able to transform to any type', () => {
-    const hook = renderHook(() => useEventTarget('', (str: string) => Number(str)));
+    const hook = renderHook(() => useEventTarget<string, number>('', (num: number) => String(num)));
     expect(hook.result.current[0].value).toEqual('');
     act(() => {
-      hook.result.current[0].onChange({ target: { value: '123' } });
+      hook.result.current[0].onChange({ target: { value: 123 } });
     });
-    expect(hook.result.current[0].value).toEqual(123);
+    expect(hook.result.current[0].value).toEqual('123');
   });
 });
