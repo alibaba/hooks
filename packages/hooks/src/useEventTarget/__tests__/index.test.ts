@@ -6,6 +6,15 @@ describe('useEventTarget', () => {
     expect(useEventTarget).toBeDefined();
   });
 
+  it('should work without initial value', async () => {
+    const hook = renderHook(() => useEventTarget());
+    expect(hook.result.current[0].value).toEqual(undefined);
+    act(() => {
+      hook.result.current[0].onChange({ target: { value: 'abc' } });
+    });
+    expect(hook.result.current[0].value).toEqual('abc');
+  });
+
   it('should work with initial value', async () => {
     const hook = renderHook(() => useEventTarget('abc'));
     expect(hook.result.current[0].value).toEqual('abc');
