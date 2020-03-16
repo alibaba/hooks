@@ -6,6 +6,7 @@ nav:
 group:
   title: SideEffect
   path: /side-effect
+  order: 7
 legacy: /zh-CN/side-effect/use-debounce
 ---
 

@@ -2,7 +2,7 @@
 title: useRequest
 nav:
   title: Hooks
-  path: /hooks
+  path: /zh-CN/hooks
 group:
   title: Async
   path: /async

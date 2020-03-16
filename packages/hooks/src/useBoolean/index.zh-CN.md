@@ -6,6 +6,7 @@ nav:
 group:
   title: State
   path: /state
+  order: 11
 legacy: /zh-CN/state/use-boolean
 ---
 

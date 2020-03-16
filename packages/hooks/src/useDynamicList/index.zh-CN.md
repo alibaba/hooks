@@ -6,6 +6,7 @@ nav:
 group:
   title: UI
   path: /ui
+  order: 5
 legacy: /zh-CN/ui/use-dynamic-list
 ---
 

@@ -5,7 +5,7 @@ nav:
   path: /hooks
 group:
   title: LifeCycle
-  path: /lifeCycle
+  path: /life-cycle
 legacy: /zh-CN/lifeCycle/use-update-layout-effect
 ---
 

@@ -6,6 +6,7 @@ nav:
 group:
   title: Advanced
   path: /advanced
+  order: 15
 legacy: /zh-CN/advanced/use-creation
 ---
 
