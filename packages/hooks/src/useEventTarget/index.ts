@@ -11,7 +11,7 @@ interface EventTarget<T> {
   }
 }
 
-export default <T>(initialValue?: T, transformer?: (value: T) => T): [
+export default <T>(initialValue?: T, transformer?: (value: T) => any): [
   ValueProps<T>,
   () => void
 ] => {

@@ -25,7 +25,7 @@ group:
 ## API
 
 ```javascript
-const [ { value, onChange }, reset ] = useEventTarget<T>(initialValue: T, transformer?: T => T );
+const [ { value, onChange }, reset ] = useEventTarget<T>(initialValue?: T, transformer?: T => any );
 ```
 
 ### Result
@@ -40,5 +40,5 @@ const [ { value, onChange }, reset ] = useEventTarget<T>(initialValue: T, transf
 
 | 参数    | 说明                                         | 类型                   | 默认值 |
 |---------|----------------------------------------------|------------------------|--------|
-| initialValue | 初始值  | T |  - |     
-| transformer? | 可选项，可自定义回调值的转化  | T => T | - |
+| initialValue? | 可选项, 初始值  | T |  - |     
+| transformer? | 可选项，可自定义回调值的转化  | T => any | - |

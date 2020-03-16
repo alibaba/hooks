@@ -36,4 +36,13 @@ describe('useEventTarget', () => {
     });
     expect(hook.result.current[0].value).toEqual('DEF');
   });
+
+  it('should be able to transform to any type', () => {
+    const hook = renderHook(() => useEventTarget('', (str: string) => Number(str)));
+    expect(hook.result.current[0].value).toEqual('');
+    act(() => {
+      hook.result.current[0].onChange({ target: { value: '123' } });
+    });
+    expect(hook.result.current[0].value).toEqual(123);
+  });
 });
