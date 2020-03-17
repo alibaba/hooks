@@ -9,6 +9,9 @@ export default {
   ]],
   mode: 'site',
   title: 'Umi Hooks',
+  manifest: {},
+  links: [{ rel: "manifest", href: "/asset-manifest.json" }],
+  hash: true,
   resolve: {
     includes: ['docs', 'packages/hooks/src', 'packages/use-request'],
   },
