@@ -12,7 +12,7 @@ import { useDrop, useDrag } from '@umijs/hooks';
 
 export default () => {
   const getDragProps = useDrag();
-  const [ props, { isOver } ] = useDrop({
+  const [ props, { isHovering } ] = useDrop({
     onText: (text, e) => {
       console.log(e);
       message.success(`'text: ${text}' dropped`);
@@ -33,7 +33,7 @@ export default () => {
   return (
     <div>
       <div style={{ border: '1px dashed #e8e8e8', padding: 16, textAlign: 'center' }} {...props}>
-        { isOver ? 'release here' : 'drop here' }
+        { isHovering ? 'release here' : 'drop here' }
       </div>
 
       <div style={{ display: 'flex', marginTop: 8 }}>

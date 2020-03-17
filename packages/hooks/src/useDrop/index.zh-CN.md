@@ -33,7 +33,7 @@ const getDragProps = useDrag();
 
 <div {...getDragProps(id)}>draggable</div>
 
-const [ props, { isOver } ] = useDrop({
+const [ props, { isHovering } ] = useDrop({
   onText: (text: string, e: Event) => void,
   onFiles: (files: File[], e: Event) => void,
   onUri: (uri: string, e: Event) => void,
@@ -52,7 +52,7 @@ const [ props, { isOver } ] = useDrop({
 | 参数 | 说明                                              | 类型                    |
 |----------|-------------------------------------------|-------------------------|
 | props      | 需要透传给接受拖拽区域 dom 节点的 props | - |
-| isOver   | 是否是拖拽中，且光标处于释放区域内   | boolean     |
+| isHovering   | 是否是拖拽中，且光标处于释放区域内   | boolean     |
 
 ### useDrop Params
 

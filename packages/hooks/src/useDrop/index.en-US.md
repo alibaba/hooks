@@ -33,7 +33,7 @@ const getDragProps = useDrag();
 
 <div {...getDragProps(id)}>draggable</div>
 
-const [ props, { isOver } ] = useDrop({
+const [ props, { isHovering } ] = useDrop({
   onText: (text: string, e: Event) => void,
   onFiles: (files: File[], e: Event) => void,
   onUri: (uri: string, e: Event) => void,
@@ -52,7 +52,7 @@ const [ props, { isOver } ] = useDrop({
 | Property | Description                               | Type                    |
 |----------|-------------------------------------------|-------------------------|
 | props      | Props passed to the drop area | - |
-| isOver   | Whether the dragging element is on top of the drop area     | boolean     |
+| isHovering   | Whether the dragging element is on top of the drop area     | boolean     |
 
 ### useDrop Params
 

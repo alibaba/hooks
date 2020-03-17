@@ -1,7 +1,7 @@
 import { useMemo, useState, useRef, useCallback } from 'react';
 
 export interface DropAreaState {
-  isOver: boolean;
+  isHovering: boolean;
 }
 
 export interface DropProps {
@@ -21,22 +21,22 @@ export interface DropAreaOptions {
 
 const getProps = (
   callback: (dataTransfer: DataTransfer, event: (React.DragEvent | React.ClipboardEvent)) => void, 
-  setIsOver: (over: boolean) => void,
+  setIsHovering: (over: boolean) => void,
 ): DropProps => ({
   onDragOver: (event: React.DragEvent) => {
     event.preventDefault();
   },
   onDragEnter: (event: React.DragEvent) => {
     event.preventDefault();
-    setIsOver(true);
+    setIsHovering(true);
   },
   onDragLeave: () => {
-    setIsOver(false);
+    setIsHovering(false);
   },
   onDrop: (event: React.DragEvent) => {
     event.preventDefault();
     event.persist();
-    setIsOver(false);
+    setIsHovering(false);
     callback(event.dataTransfer, event);
   },
   onPaste: (event: React.ClipboardEvent) => {
@@ -48,7 +48,7 @@ const getProps = (
 const useDrop = (options: DropAreaOptions = {}): [DropProps, DropAreaState] => {
   const optionsRef = useRef(options);
   optionsRef.current = options;
-  const [isOver, setIsOver] = useState<boolean>(false);
+  const [isHovering, setIsHovering] = useState<boolean>(false);
   const callback = useCallback((
     dataTransfer: DataTransfer, event: (React.DragEvent | React.ClipboardEvent)
   ) => {
@@ -77,9 +77,9 @@ const useDrop = (options: DropAreaOptions = {}): [DropProps, DropAreaState] => {
     }
   }, []);
   
-  const props: DropProps = useMemo(() => getProps(callback, setIsOver), [callback, setIsOver]);
+  const props: DropProps = useMemo(() => getProps(callback, setIsHovering), [callback, setIsHovering]);
 
-  return [props, { isOver }];
+  return [props, { isHovering }];
 };
 
 export default useDrop;
