@@ -1,9 +1,12 @@
 ---
 title: useAsync
+nav:
+  title: Hooks
+  path: /hooks
 group:
   title: Deprecated
   path: /deprecated
-  order: 300
+legacy: /deprecated/use-async
 ---
 
 # useAsync

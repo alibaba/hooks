@@ -1,9 +1,12 @@
 ---
 title: useVirtualList
+nav:
+  title: Hooks
+  path: /hooks
 group:
   title: UI
   path: /ui
-  order: 800
+legacy: /ui/use-virtual-list
 ---
 
 # useVirtualList

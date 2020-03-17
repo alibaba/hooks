@@ -1,9 +1,13 @@
 ---
 title: useDebounce
+nav:
+  title: Hooks
+  path: /hooks
 group:
   title: SideEffect
   path: /side-effect
-  order: 700
+  order: 7
+legacy: /side-effect/use-debounce
 ---
 
 # useDebounce

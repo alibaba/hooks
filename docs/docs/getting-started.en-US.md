@@ -1,10 +1,8 @@
 ---
-title: Getting Started
-order: 1000
-group:
-  title: Docs
-  path: /docs
-  order: 1100
+order: 1
+nav:
+  title: Guide
+  order: 1
 ---
 
 # Getting Started

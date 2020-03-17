@@ -1,9 +1,13 @@
 ---
 title: useClickAway
+nav:
+  title: Hooks
+  path: /hooks
 group:
   title: Dom
   path: /dom
-  order: 500
+  order: 13
+legacy: /dom/use-click-away
 ---
 
 # useClickAway

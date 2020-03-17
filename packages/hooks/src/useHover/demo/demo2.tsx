@@ -7,7 +7,7 @@
  */
 
 import React from 'react';
-import useHover from '..';
+import { useHover } from '@umijs/hooks';
 
 export default () => {
   const [isHovering] = useHover({

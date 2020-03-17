@@ -1,8 +1,12 @@
 ---
 title: useSearch
+nav:
+  title: Hooks
+  path: /hooks
 group:
   title: 废弃
   path: /deprecated
+legacy: /zh-CN/deprecated/use-search
 ---
 
 # useSearch

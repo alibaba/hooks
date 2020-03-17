@@ -1,15 +1,11 @@
----
-title: FAQ
-order: 900
-group:
-  title: Docs
-  path: /docs
-  order: 1100
----
-
 # FAQ
 
 以下整理了一些 Umi Hooks 社区常见的问题和官方答复，在提问之前建议找找有没有类似的问题。
+
+### 我只能在 ant design 中使用 Umi Hooks 吗？
+
+你可以将 umi hooks 使用在任何地方，和任意组件库搭配使用。虽然我们的代码示例都是基于 ant design 的，但是并不代表我们的 Hooks 只能和 ant design 配合使用。
+
 
 ### 当我使用 Umi Hooks 时，报错 `regeneratorRuntime is not defined`，如何解决？
 

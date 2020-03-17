@@ -21,6 +21,7 @@ export default () => {
 
   const { selected, allSelected, isSelected, toggle, toggleAll, partiallySelected } = useSelections(
     list,
+    [1]
   );
 
   return (
