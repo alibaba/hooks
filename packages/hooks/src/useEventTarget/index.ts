@@ -1,5 +1,4 @@
-import { useState, useCallback } from 'react';
-import usePersistFn from '../usePersistFn';
+import { useState, useCallback, useRef } from 'react';
 
 interface ValueProps<T, U> {
   value: T | undefined;
@@ -20,12 +19,13 @@ export default <T, U = T>(initialValue?: T, transformer?: (value: U) => T): [
 
   const reset = useCallback(() => setValue(initialValue), [setValue]);
 
-  const persistTransformer = transformer == null ? transformer : usePersistFn(transformer);
+  const transformerRef = useRef(transformer);
+  transformerRef.current = transformer;
 
   const onChange = useCallback((e: EventTarget<U>) => {
     const _value = e.target.value;
-    if (typeof persistTransformer === 'function') {
-      return setValue(persistTransformer(_value))
+    if (typeof transformerRef.current === 'function') {
+      return setValue(transformerRef.current(_value))
     }
     // no transformer => U and T should be the same
     return setValue(_value as unknown as T);
