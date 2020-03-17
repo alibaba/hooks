@@ -17,6 +17,7 @@ import useUpdateLayoutEffect from './useUpdateLayoutEffect';
 import usePagination from './usePagination';
 import useBoolean from './useBoolean';
 import useToggle from './useToggle';
+import useDocumentVisibility from './useDocumentVisibility';
 import useSelections from './useSelections';
 import useThrottle from './useThrottle';
 import useThrottleFn from './useThrottleFn';
@@ -70,6 +71,7 @@ export {
   usePagination,
   useBoolean,
   useToggle,
+  useDocumentVisibility,
   useSelections,
   useThrottle,
   useThrottleFn,
