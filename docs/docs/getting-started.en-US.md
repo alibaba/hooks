@@ -1,11 +1,7 @@
 ---
-title: Getting Started
-group:
-  title: Getting Started
-  order: 2
+order: 1
 nav:
   title: Guide
-  path: /docs
   order: 1
 ---
 

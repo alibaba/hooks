@@ -60,7 +60,7 @@ function useRequest(service: any, options: any = {}) {
     promiseService = () => finalRequestMethod(service);
   } else if (typeof service === 'object') {
     const { url, ...rest } = service;
-    promiseService = () => finalRequestMethod(url, rest);
+    promiseService = () => (requestMethod ? requestMethod(service) : request(url, rest));
   } else {
     promiseService = (...args: any[]) => new Promise((resolve, reject) => {
       const result = service(...args);

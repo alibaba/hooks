@@ -5,8 +5,7 @@ nav:
   path: /hooks
 group:
   title: LifeCycle
-  path: /lifeCycle
-legacy: /lifeCycle/use-update-effect
+  path: /life-cycle
 ---
 
 # useUpdateEffect

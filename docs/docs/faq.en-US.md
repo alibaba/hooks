@@ -1,14 +1,3 @@
----
-title: FAQ
-group:
-  title: FAQ
-  order: 3
-nav:
-  title: Guide
-  path: /docs
-  order: 1
----
-
 # FAQ
 
 Here are the frequently asked questions about Umi Hooks, you should look up before you ask in the community or create a new issue. 

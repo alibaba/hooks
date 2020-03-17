@@ -5,9 +5,8 @@ nav:
   path: /hooks
 group:
   title: LifeCycle
-  path: /lifeCycle
+  path: /life-cycle
   order: 9
-legacy: /lifeCycle/use-unmount
 ---
 
 # useUnmount
