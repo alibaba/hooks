@@ -1,9 +1,12 @@
 ---
 title: usePersistFn
+nav:
+  title: Hooks
+  path: /hooks
 group:
   title: Advanced
   path: /advanced
-  order: 400
+legacy: /advanced/use-persist-fn
 ---
 
 # usePersistFn

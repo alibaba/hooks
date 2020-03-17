@@ -1,9 +1,12 @@
 ---
 title: useThrottle
+nav:
+  title: Hooks
+  path: /hooks
 group:
   title: SideEffect
   path: /side-effect
-  order: 700
+legacy: /zh-CN/side-effect/use-throttle
 ---
 
 # useThrottle

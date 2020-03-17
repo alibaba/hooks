@@ -1,8 +1,8 @@
 /* eslint-disable no-shadow */
 import { useState, useMemo } from 'react';
 
-export default function useSelections<T>(items: T[]) {
-  const [selected, setSelected] = useState<T[]>([]);
+export default function useSelections<T>(items: T[], defaultSelected: T[] = []) {
+  const [selected, setSelected] = useState<T[]>(defaultSelected);
 
   const { selectedSet, isSelected, select, unSelect, toggle } = useMemo(() => {
     const selectedSet = new Set<T>(selected);

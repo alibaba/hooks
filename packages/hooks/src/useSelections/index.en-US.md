@@ -1,9 +1,12 @@
 ---
 title: useSelections
+nav:
+  title: Hooks
+  path: /hooks
 group:
   title: UI
   path: /ui
-  order: 800
+legacy: /ui/use-selections
 ---
 
 # useSelections
@@ -19,7 +22,7 @@ This hook is used for checkbox group, supports multiple selection, single select
 ## API
 
 ```javascript
-const result: Result= useSelections<T>(items: T[]);
+const result: Result= useSelections<T>(items: T[], defaultSelected?: T[]);
 ```
 
 ### Result

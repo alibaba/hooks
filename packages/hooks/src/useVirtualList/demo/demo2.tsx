@@ -8,7 +8,7 @@
 
 import React from 'react';
 import { InputNumber, Button } from 'antd';
-import useVirtualList from '..';
+import { useVirtualList } from '@umijs/hooks';
 
 export default () => {
   const [value, onChange] = React.useState<number>(undefined);

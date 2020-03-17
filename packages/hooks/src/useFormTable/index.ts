@@ -8,6 +8,8 @@ import {
   PaginatedFormatReturn,
   PaginatedResult
 } from '@umijs/use-request/lib/types';
+import useUpdateEffect from '../useUpdateEffect';
+import usePersistFn from '../usePersistFn';
 
 export {
   CombineService,
@@ -59,7 +61,7 @@ function useFormTable<R = any, Item = any, U extends Item = any>(
   service: CombineService<any, any>,
   options: BaseOptions<U> | OptionsWithFormat<R, Item, U>
 ): any {
-  const { form, ...restOptions } = options;
+  const { form, refreshDeps = [], manual, ...restOptions } = options;
   const result = useRequest(
     service,
     {
@@ -122,7 +124,7 @@ function useFormTable<R = any, Item = any, U extends Item = any>(
       return;
     }
     // 如果没有缓存，触发 submit
-    if (!options.manual) {
+    if (!manual) {
       submit();
     }
   }, [])
@@ -160,7 +162,16 @@ function useFormTable<R = any, Item = any, U extends Item = any>(
   const reset = useCallback(() => {
     form.resetFields();
     submit();
-  }, [form, submit])
+  }, [form, submit]);
+
+  const resetPersistFn = usePersistFn(reset);
+
+  // refreshDeps 变化，reset。
+  useUpdateEffect(() => {
+    if (!manual) {
+      resetPersistFn();
+    }
+  }, [...refreshDeps]);
 
   return {
     ...result,

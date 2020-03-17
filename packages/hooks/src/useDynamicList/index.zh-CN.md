@@ -1,9 +1,13 @@
 ---
 title: useDynamicList
+nav:
+  title: Hooks
+  path: /hooks
 group:
   title: UI
   path: /ui
-  order: 800
+  order: 5
+legacy: /zh-CN/ui/use-dynamic-list
 ---
 
 # useDynamicList

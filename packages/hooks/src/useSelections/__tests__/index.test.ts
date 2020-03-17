@@ -1,5 +1,5 @@
-import { renderHook, act } from '@testing-library/react-hooks';
-import { useState, ReactType } from 'react';
+import { act, renderHook } from '@testing-library/react-hooks';
+import { useState } from 'react';
 import useSelections from '../index';
 
 /* 暂时关闭 act 警告  见：https://github.com/testing-library/react-testing-library/issues/281#issuecomment-480349256 */
@@ -26,7 +26,7 @@ describe('useSelections', () => {
 
   function useTestUseSelections() {
     const [items, setItems] = useState(data);
-    const useSelectionsResult = useSelections(items);
+    const useSelectionsResult = useSelections(items, [1]);
     return [useSelectionsResult, setItems] as const;
   }
 
@@ -43,7 +43,17 @@ describe('useSelections', () => {
 
   describe('test helper ', () => {
     const hook = setUp();
+    it('defaultSelected should work correct', async () => {
+      expect(hookUtils(hook).seleected).toEqual([1]);
+      expect(hookUtils(hook).helper.isSelected(1)).toEqual(true);
+    });
     it('select and unSelect should work correct', async () => {
+      act(() => {
+        hookUtils(hook).helper.unSelect(1);
+      });
+      expect(hookUtils(hook).seleected).toEqual([]);
+      expect(hookUtils(hook).helper.isSelected(1)).toEqual(false);
+      expect(hookUtils(hook).helper.allSelected).toEqual(false);
       act(() => {
         hookUtils(hook).helper.select(1);
       });
@@ -53,9 +63,6 @@ describe('useSelections', () => {
       act(() => {
         hookUtils(hook).helper.unSelect(1);
       });
-      expect(hookUtils(hook).seleected).toEqual([]);
-      expect(hookUtils(hook).helper.isSelected(1)).toEqual(false);
-      expect(hookUtils(hook).helper.allSelected).toEqual(false);
     });
 
     it('toggle should work correct', async () => {

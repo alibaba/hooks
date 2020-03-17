@@ -1,10 +1,13 @@
 ---
 title: useRequest
-order: 1000
+nav:
+  title: Hooks
+  path: /hooks
 group:
   title: Async
   path: /async
-  order: 1000
+  order: 1
+legacy: /async
 ---
 
 # useRequest

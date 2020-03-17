@@ -1,8 +1,12 @@
 ---
 title: useAsync
+nav:
+  title: Hooks
+  path: /hooks
 group:
   title: 废弃
   path: /deprecated
+legacy: /zh-CN/deprecated/use-api
 ---
 
 # useAsync
