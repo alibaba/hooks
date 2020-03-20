@@ -36,7 +36,7 @@ export default () => {
       </div>
       <div style={{ marginTop: 32 }}>
         <h4>Component without persist function:</h4>
-        {/* use persist function, ExpensiveTree component will only render once */}
+        {/* without persist function, ExpensiveTree component will re-render on state change */}
         <ExpensiveTree showCount={showCountCommon} />
       </div>
     </>

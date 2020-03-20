@@ -37,10 +37,12 @@ import useFormTable from './useFormTable';
 import useSet from './useSet';
 import usePersistFn from './usePersistFn';
 import useMap from './useMap';
-import useCreation from './useCreation';
+import useCreation from './useCreation'
+import { useDrag, useDrop } from './useDrop';
 import useMount from './useMount';
 import useCounter from './useCounter';
-import useUpdate from './useUpdate'
+import useUpdate from './useUpdate';
+import useEventTarget from './useEventTarget';
 
 const useControlledValue: typeof useControllableValue = function (...args) {
   console.warn(
@@ -93,7 +95,10 @@ export {
   usePersistFn,
   useMap,
   useCreation,
+  useDrag,
+  useDrop,
   useMount,
   useCounter,
   useUpdate,
+  useEventTarget
 };
