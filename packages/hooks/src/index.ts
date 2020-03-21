@@ -41,6 +41,7 @@ import { useDrag, useDrop } from './useDrop';
 import useCounter from './useCounter'
 import useMount from './useMount';
 import useUpdate from './useUpdate'
+import useTextSelection from './useTextSelection';
 
 const useControlledValue: typeof useControllableValue = function (...args) {
   console.warn(
@@ -97,4 +98,5 @@ export {
   useMount,
   useCounter,
   useUpdate,
+  useTextSelection,
 };
