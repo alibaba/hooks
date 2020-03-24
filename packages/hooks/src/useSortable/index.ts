@@ -65,16 +65,18 @@ export default <T>(props: SortableProps<T>) => {
           });
           lastSorted.current = ret;
           if(onSortRef.current){
-            onSortRef.current(
-              // oldIndex
-              dragging!, 
-              // newIndex
-              dragging! < dummyIndex.current! ? dummyIndex.current! - 1 : dummyIndex.current!,
-              // oldList
-              l.filter(ele => ele.type !== 'dummy').map(ele => ele.content),
-              // newList
-              ret.map(ele => ele.content),
-            );
+            setTimeout(()=>{
+              onSortRef.current!(
+                // oldIndex
+                dragging!, 
+                // newIndex
+                dragging! < dummyIndex.current! ? dummyIndex.current! - 1 : dummyIndex.current!,
+                // oldList
+                l.filter(ele => ele.type !== 'dummy').map(ele => ele.content),
+                // newList
+                ret.map(ele => ele.content),
+              );
+            })
           }
           return ret;
         })
