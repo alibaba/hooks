@@ -42,26 +42,13 @@ export default function useHistoryTravel<T>(initialValue?: T) {
   const { present, past, future } = history;
   const updateValue = useCallback((val: T) => {
     const isInited = isInitedRef.current;
-    if (!isInited) {
-      // has NOT been initialized, always set the value without comparison
-      isInitedRef.current = true;
-    } else if (val === present) {
-      return;
-    }
+    isInitedRef.current = true;
 
-    const newHistory = {
+    return setHistory({
       present: val,
       future: [],
-      past: []
-    }
-    if (!isInited) {
-      // first operation to set value
-      return setHistory(newHistory);
-    }
-    return setHistory({
-      ...newHistory,
-      past: [...past, present]
-    })
+      past: isInited ? [...past, present] : []
+    });
   }, [history, setHistory])
 
   const _forward = useCallback((step: number = 1) => {
