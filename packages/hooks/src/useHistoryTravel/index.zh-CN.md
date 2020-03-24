@@ -24,7 +24,7 @@ group:
 const { value, setValue, backLength, forwardLength, go, back, forward } = useHistoryTravel<T>(initialValue?: T);
 ```
 
-### Result
+### 结果
 
 | 参数              | 说明               | 类型                  |
 |------------------|--------------------|-----------------------|
@@ -36,7 +36,7 @@ const { value, setValue, backLength, forwardLength, go, back, forward } = useHis
 | back | 在历史中向后回退一步 | () => void |
 | foward | 在历史中向前前进一步 | () => void |
 
-### Params
+### 参数
 
 | 参数    | 说明                                         | 类型                   | 默认值 |
 |---------|----------------------------------------------|------------------------|--------|

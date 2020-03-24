@@ -1,4 +1,6 @@
-import { useState, useCallback } from 'react';
+import { useRef, useState, useCallback } from 'react';
+
+const isUndefined = (val: any) => typeof val === 'undefined';
 
 interface IData<T> {
   present?: T;
@@ -29,15 +31,21 @@ const split = <T>(step: number, targetArr: T[]) => {
 }
 
 export default function useHistoryTravel<T>(initialValue?: T) {
-  const [history, setHistory] = useState<IData<T>>({
+  const [history, setHistory] = useState<IData<T | undefined>>({
     present: initialValue,
     past: [],
     future: []
-  })
+  });
+
+  const isInitedRef = useRef(!isUndefined(initialValue));
 
   const { present, past, future } = history;
   const updateValue = useCallback((val: T) => {
-    if (val === present) {
+    const isInited = isInitedRef.current;
+    if (!isInited) {
+      // has NOT been initialized, always set the value without comparison
+      isInitedRef.current = true;
+    } else if (val === present) {
       return;
     }
 
@@ -46,7 +54,7 @@ export default function useHistoryTravel<T>(initialValue?: T) {
       future: [],
       past: []
     }
-    if (present == null) {
+    if (!isInited) {
       // first operation to set value
       return setHistory(newHistory);
     }
@@ -57,7 +65,7 @@ export default function useHistoryTravel<T>(initialValue?: T) {
   }, [history, setHistory])
 
   const _forward = useCallback((step: number = 1) => {
-    if (future.length === 0 || present == null) {
+    if (future.length === 0) {
       return;
     }
     const { _before, _current, _after } = split(step, future)
@@ -69,7 +77,7 @@ export default function useHistoryTravel<T>(initialValue?: T) {
   }, [history, setHistory])
 
   const _backward = useCallback((step: number = -1) => {
-    if (past.length === 0 || present == null) {
+    if (past.length === 0) {
       return;
     }
 

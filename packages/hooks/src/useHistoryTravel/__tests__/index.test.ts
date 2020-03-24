@@ -15,6 +15,26 @@ describe('useHistoryTravel', () => {
     expect(hook.result.current.value).toEqual('test');
   });
 
+  it('should work with null and undefined without initial value', async () => {
+    const nullHook = renderHook(() => useHistoryTravel());
+    expect(nullHook.result.current.value).toEqual(undefined);
+    act(() => {
+      nullHook.result.current.setValue(null);
+    });
+    expect(nullHook.result.current.value).toEqual(null);
+
+    const undefHook = renderHook(() => useHistoryTravel());
+    expect(undefHook.result.current.value).toEqual(undefined);
+    act(() => {
+      undefHook.result.current.setValue('def');
+    });
+    act(() => {
+      undefHook.result.current.setValue(undefined);
+    });
+    expect(undefHook.result.current.value).toEqual(undefined);
+    expect(undefHook.result.current.backLength).toEqual(1);
+  })
+
   it('should work with initial value', async () => {
     const hook = renderHook(() => useHistoryTravel('abc'));
     expect(hook.result.current.value).toEqual('abc');
@@ -22,6 +42,21 @@ describe('useHistoryTravel', () => {
       hook.result.current.setValue('def');
     });
     expect(hook.result.current.value).toEqual('def');
+  });
+
+  it('should work with null and undefined with initial value', async () => {
+    const nullHook = renderHook(() => useHistoryTravel('abc'));
+    act(() => {
+      nullHook.result.current.setValue(null);
+    });
+    expect(nullHook.result.current.value).toEqual(null);
+
+    const undefHook = renderHook(() => useHistoryTravel('abc'));
+    act(() => {
+      undefHook.result.current.setValue(undefined);
+    });
+    expect(undefHook.result.current.value).toEqual(undefined);
+    expect(undefHook.result.current.backLength).toEqual(1);
   });
 
   it('back and forward should work', () => {
