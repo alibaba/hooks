@@ -14,9 +14,9 @@ export default () => {
   return (
     <div>
       <p>
-        请滑动你的鼠标在页面上随意选取文本~~~~~
+        Please swipe your mouse to select any text on the page~~~~~
       </p>
-      <p>结果：{JSON.stringify(selection)}</p>
+      <p>Result：{JSON.stringify(selection)}</p>
     </div>
   );
 };

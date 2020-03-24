@@ -11,7 +11,7 @@ legacy: /zh-CN/dom/use-text-selection
 
 # useTextSelection
 
-实时获取用户当前选取的文本范围。
+实时获取用户当前选取的文本内容及位置。
 
 ## 代码演示
 
@@ -33,6 +33,12 @@ legacy: /zh-CN/dom/use-text-selection
 ``` typescript
 const state: {
   text: string;
+  left: number;
+  right: number;
+  top: number;
+  bottom: number;
+  height: number;
+  width: number;
 } = useTextSelection(element: string | HTMLElement | Document)
 ```
 

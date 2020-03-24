@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 
 
 interface IRect {
@@ -44,7 +44,7 @@ function getTarget(element: TElement) {
     return element;
   }
 
-  throw Error('"element" 参数格式不合法， 请传入对应 string 或 HTMLElement');
+  throw Error('"element" param type should be string, HTMLElement or Document');
 }
 
 function getRectFromSelection(selection: Selection | null): IRect {
@@ -86,8 +86,6 @@ export default (element: IProps = initProps) => {
 
 
   useEffect(() => {
-    console.log('on textselection useeffect xxxx');
-
     // 获取 target 需要放在 useEffect 里，否则存在组件未加载好的情况而导致元素获取不到
     const target = getTarget(element);
 
@@ -97,7 +95,6 @@ export default (element: IProps = initProps) => {
     }
 
     const mouseupHandler = (e: Event) => {
-      console.log('mouse up:', window.getSelection);
       let selObj = null;
       let text = '';
       let rect = initRect;

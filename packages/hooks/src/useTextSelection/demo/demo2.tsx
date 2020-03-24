@@ -16,9 +16,9 @@ export default () => {
   return (
     <div>
       <p id="target-element">
-        只监听本段落的文本选取；
+      Only listen to the text selection of this paragraph;
       </p>
-      <p>结果：{text}</p>
+      <p>Result：{text}</p>
     </div>
   );
 };

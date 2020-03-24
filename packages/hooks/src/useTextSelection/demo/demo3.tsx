@@ -6,11 +6,11 @@
  * desc.zh-CN: 配合 Popover 做划词翻译
  */
 
-import React, { useEffect, useState, useLayoutEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Popover, Spin } from 'antd';
 import { useTextSelection } from '@umijs/hooks';
 
-let reqId  = 0; // 最新请求 ID
+let reqId = 0; // lasted ID
 
 export default () => {
   const {
@@ -29,16 +29,15 @@ export default () => {
   useEffect(() => {
     async function getTranslateResult(keyword: string) {
       return new Promise(resolve => {
-        setTimeout(() => resolve(`【翻译结果】${keyword}`), 2000);
+        setTimeout(() => resolve(`[translate result] ${keyword}`), 2000);
       })
     }
-    console.log('text:', text, text.length);
     if (text.trim() === '') {
       setVisible(false);
       return;
     }
     setLoading(true);
-    setResult('翻译中……');
+    setResult('Translating……');
     setResultPosition({
       left,
       top,
@@ -52,7 +51,6 @@ export default () => {
     getTranslateResult(text)
     .then((res: string) => {
       if (lastReqId !== reqId) return;
-      console.log('hallo', res)
       setLoading(false);
       setResult(res);
     })
@@ -61,7 +59,7 @@ export default () => {
   return (
     <div>
       <p id="translate-element">
-        对本段文本做翻译；对本段文本做翻译；对本段文本做翻译；对本段文本做翻译；对本段文本做翻译；对本段文本做翻译；对本段文本做翻译；对本段文本做翻译；
+        Translation of this paragraph;Translation of this paragraph;Translation of this paragraph;
       </p>
       <Popover
         content={
