@@ -11,7 +11,7 @@ import { message } from 'antd';
 import useSortable from '../index';
 
 export default () => {
-  const { getSortProps, list } = useSortable({
+  const { list } = useSortable({
     initialValue: ['1', '2', '3'],
     onSort: (oldIndex, newIndex, oldList, newList) => {
       message.success(`${oldList[oldIndex]} moved from ${oldIndex} to ${newIndex}`);
@@ -19,8 +19,8 @@ export default () => {
   });
     
   return (
-    list.map((ele, i) => 
-      <div style={{ border: '1px solid #e8e8e8', height: 66, padding: 8, margin: 8, lineHeight: '50px' }} {...getSortProps(i)} >
+    list.map(ele => 
+      <div style={{ border: '1px solid #e8e8e8', height: 66, padding: 8, margin: 8, lineHeight: '50px' }} {...ele.props} >
         {ele.type === 'dummy' ? 'drop it here' : ele.content}
       </div>)
   );

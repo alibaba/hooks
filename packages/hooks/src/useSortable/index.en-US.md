@@ -23,14 +23,14 @@ A hook to help you generate a sortable list.
 ## API
 
 ```javascript
-const { getSortProps, list, dragging } = useSortable<T>({
+const { list } = useSortable<T>({
   initialValue: T[],
   onSort: (oldIndex, newIndex, oldList, newList) => void,
 });
 
 // in render
 {
-  list.map((e, index) => (<div {...getSortProps(index)}>sortable</div>))
+  list.map((e, index) => (<div {...e.props}>sortable</div>))
 }
 ```
 
@@ -38,8 +38,7 @@ const { getSortProps, list, dragging } = useSortable<T>({
 
 | Property | Description                               | Type                    |
 |----------|-------------------------------------------|-------------------------|
-| getDragProps  | A function that accept list index and return props passed to a dom element | (index: number) => props |
-| list  | The whole list | { type: 'dummy' \| 'item', content: T }[] |
+| list  | The whole list | { type: 'dummy' \| 'item', content: T, props: PropsType }[] |
 
 ### useDrop Params
 

@@ -23,14 +23,14 @@ legacy: /ui/use-sortable
 ## API
 
 ```javascript
-const { getSortProps, list } = useSortable<T>({
+const { list } = useSortable<T>({
   initialValue: T[],
   onSort: (oldIndex, newIndex, oldList, newList) => void,
 });
 
 // in render
 {
-  list.map((e, index) => (<div {...getSortProps(index)}>sortable</div>))
+  list.map((e, index) => (<div {...e.props}>sortable</div>))
 }
 ```
 
@@ -38,12 +38,11 @@ const { getSortProps, list } = useSortable<T>({
 
 | 参数     | 说明                                 | 类型                 |
 |----------|-------------------------------------------|-------------------------|
-| getDragProps  | 一个接受 index，返回传递给拖拽项属性的方法 | (index: number) => props |
-| list  | 完整的待排序列表 | { type: 'dummy' \| 'item', content: T }[] |
+| list  | 完整的待排序列表 | { type: 'dummy' \| 'item', content: T, props: PropsType }[] |
 
 ### useDrop Params
 
 | 参数    | 说明                                         | 类型                   | 默认值 |
 |---------|----------------------------------------------|------------------------|--------|
-| initialValue | initialValue of the list | T[] | -      |
-| onSort | The callback when items are moved | (oldIndex: number, newIndex: number, oldList: T[], newList: T[]) => void | -      |
+| initialValue | 列表的初始值 | T[] | -      |
+| onSort | 元素被拖动后的回调 | (oldIndex: number, newIndex: number, oldList: T[], newList: T[]) => void | -      |

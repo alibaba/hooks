@@ -39,9 +39,9 @@ describe('useSortable', () => {
     expect(hook.result.current.list.length).toBe(3);
 
     jest.useFakeTimers();
-    hook.result.current.getSortProps(0).onDragStart(mockDragEvent)
+    hook.result.current.list[0].props.onDragStart(mockDragEvent)
     jest.runAllTimers();
-    hook.result.current.getSortProps(1).onDragEnter();
+    hook.result.current.list[1].props.onDragEnter();
 
     expect(hook.result.current.list.length).toBe(4);
     expect(hook.result.current.list[0].content).toBe('1');
@@ -49,19 +49,19 @@ describe('useSortable', () => {
     expect(hook.result.current.list[2].content).toBe('2');
     expect(hook.result.current.list[3].content).toBe('3');
 
-    hook.result.current.getSortProps(2).onDragEnter();
+    hook.result.current.list[2].props.onDragEnter();
     expect(hook.result.current.list[0].content).toBe('1');
     expect(hook.result.current.list[1].content).toBe('2');
     expect(hook.result.current.list[2].content).toBe('dummy');
     expect(hook.result.current.list[3].content).toBe('3');
 
-    hook.result.current.getSortProps(3).onDragEnter();
+    hook.result.current.list[3].props.onDragEnter();
     expect(hook.result.current.list[0].content).toBe('1');
     expect(hook.result.current.list[1].content).toBe('2');
     expect(hook.result.current.list[2].content).toBe('3');
     expect(hook.result.current.list[3].content).toBe('dummy');
 
-    hook.result.current.getSortProps(0).onDragEnd();
+    hook.result.current.list[0].props.onDragEnd();
 
     expect(hook.result.current.list[0].content).toBe('2');
     expect(hook.result.current.list[1].content).toBe('3');

@@ -94,7 +94,6 @@ export default <T>(props: SortableProps<T>) => {
   }, [dragging, list])
 
   return {
-    getSortProps,
-    list,
+    list: list.map((ele, index) => ({ ...ele, props: getSortProps(index)})),
   }
 }
