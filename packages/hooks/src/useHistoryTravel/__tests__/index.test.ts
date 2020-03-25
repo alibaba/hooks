@@ -32,7 +32,7 @@ describe('useHistoryTravel', () => {
       undefHook.result.current.setValue(undefined);
     });
     expect(undefHook.result.current.value).toEqual(undefined);
-    expect(undefHook.result.current.backLength).toEqual(1);
+    expect(undefHook.result.current.backLength).toEqual(2);
   })
 
   it('should work with initial value', async () => {

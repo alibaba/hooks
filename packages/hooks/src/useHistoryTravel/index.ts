@@ -1,6 +1,4 @@
-import { useRef, useState, useCallback } from 'react';
-
-const isUndefined = (val: any) => typeof val === 'undefined';
+import { useState, useCallback } from 'react';
 
 interface IData<T> {
   present?: T;
@@ -37,17 +35,13 @@ export default function useHistoryTravel<T>(initialValue?: T) {
     future: []
   });
 
-  const isInitedRef = useRef(!isUndefined(initialValue));
 
   const { present, past, future } = history;
   const updateValue = useCallback((val: T) => {
-    const isInited = isInitedRef.current;
-    isInitedRef.current = true;
-
-    return setHistory({
+    setHistory({
       present: val,
       future: [],
-      past: isInited ? [...past, present] : []
+      past: [...past, present]
     });
   }, [history, setHistory])
 
