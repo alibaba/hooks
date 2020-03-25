@@ -42,6 +42,7 @@ import useMount from './useMount';
 import useCounter from './useCounter';
 import useUpdate from './useUpdate';
 import useEventTarget from './useEventTarget';
+import useSortable from './useSortable';
 
 const useControlledValue: typeof useControllableValue = function (...args) {
   console.warn(
@@ -98,5 +99,6 @@ export {
   useMount,
   useCounter,
   useUpdate,
-  useEventTarget
+  useEventTarget,
+  useSortable
 };
