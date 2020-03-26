@@ -43,6 +43,7 @@ import useMount from './useMount';
 import useCounter from './useCounter';
 import useUpdate from './useUpdate';
 import useEventTarget from './useEventTarget';
+import useHistoryTravel from './useHistoryTravel';
 
 const useControlledValue: typeof useControllableValue = function (...args) {
   console.warn(
@@ -100,5 +101,6 @@ export {
   useMount,
   useCounter,
   useUpdate,
-  useEventTarget
+  useEventTarget,
+  useHistoryTravel
 };
