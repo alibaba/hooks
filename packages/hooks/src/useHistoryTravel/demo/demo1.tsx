@@ -41,7 +41,7 @@ export default () => {
 
   return (
     <div>
-      <Input {...valueProps} placeholder="请输入TODO名称" style={{ width: 200, marginRight: 20 }}/>
+      <Input {...valueProps} placeholder="Please enter TODO name" style={{ width: 200, marginRight: 20 }}/>
       <Button onClick={onAdd}> Add TODO </Button>
       <List
         header={<div> TODO list </div>}
