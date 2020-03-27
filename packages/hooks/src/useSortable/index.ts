@@ -15,7 +15,7 @@ export default <T>(props: SortableProps<T>) => {
   const onSortRef = useRef(props.onSort);
   onSortRef.current = props.onSort;
 
-  const [ list, setList ] = useState(initialValue);
+  const [ list, _setList ] = useState(initialValue);
   const [dragging, setDragging] = useState<number | null>(null);
 
   const getSortProps = useCallback((index: number)=>{
@@ -35,7 +35,7 @@ export default <T>(props: SortableProps<T>) => {
           draggingNodeRef.current.style.display = 'none'
           // 在后面插入一条 dummy placeholder
           setDragging(index)
-          setList(
+          _setList(
             lastSorted.current.slice(0, index)
             .concat({ type: 'dummy', content: lastSorted.current[index].content})
             .concat(lastSorted.current.slice(index))
@@ -47,7 +47,7 @@ export default <T>(props: SortableProps<T>) => {
         previewRef.current.style.display = 'none';
         document.body.removeChild(previewRef.current!);
         draggingNodeRef.current.style.display = 'inherit';
-        setList(l => {
+        _setList(l => {
           let ret = l.map(ele => {
             if(ele.type === 'dummy') {
               return { type: 'item', content: lastSorted.current[draggingIndexRef.current!].content};
@@ -84,16 +84,18 @@ export default <T>(props: SortableProps<T>) => {
       },
       onDragEnter: () => {
         dummyIndex.current = index;
-        if(dummyIndex.current! < dragging!) {
-          setList(lastSorted.current.slice(0, index).concat({ type: 'dummy', content: 'dummy' as any as T }).concat(lastSorted.current.slice(index)));
-        } else {
-          setList(lastSorted.current.slice(0, index).concat({ type: 'dummy', content: 'dummy' as any as T }).concat(lastSorted.current.slice(index)));
-        }
+        _setList(lastSorted.current.slice(0, index).concat({ type: 'dummy', content: 'dummy' as any as T }).concat(lastSorted.current.slice(index)));
       },
     }
   }, [dragging, list])
 
-  return {
-    list: list.map((ele, index) => ({ ...ele, props: getSortProps(index)})),
-  }
+  const setList = useCallback((newList: T[]) => {
+    _setList(newList.map(ele => ({ type: 'item', content: ele })));
+    lastSorted.current = initialValue;
+  }, []);
+
+  return [
+    list.map((ele, index) => ({ ...ele, props: getSortProps(index)})),
+    setList
+  ] as const;
 }

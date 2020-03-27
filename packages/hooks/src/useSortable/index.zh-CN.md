@@ -39,6 +39,7 @@ const { list } = useSortable<T>({
 | 参数     | 说明                                 | 类型                 |
 |----------|-------------------------------------------|-------------------------|
 | list  | 完整的待排序列表 | { type: 'dummy' \| 'item', content: T, props: PropsType }[] |
+| setList  | 更新 list 的值 | T[] |
 
 ### useDrop Params
 

@@ -6,12 +6,12 @@
  * desc.zh-CN: 通过拖拽列表项来重新排序, type&#58; 'dummy' 的节点表示被将被释放位置的占位区域。
  */
 
-import React, { useState } from 'react';
+import React from 'react';
 import { message } from 'antd';
 import useSortable from '../index';
 
 export default () => {
-  const { list } = useSortable({
+  const [ list ] = useSortable<string>({
     initialValue: ['1', '2', '3'],
     onSort: (oldIndex, newIndex, oldList, newList) => {
       message.success(`${oldList[oldIndex]} moved from ${oldIndex} to ${newIndex}`);

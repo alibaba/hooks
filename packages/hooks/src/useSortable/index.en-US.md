@@ -23,7 +23,7 @@ A hook to help you generate a sortable list.
 ## API
 
 ```javascript
-const { list } = useSortable<T>({
+const [ list, setList ] = useSortable<T>({
   initialValue: T[],
   onSort: (oldIndex, newIndex, oldList, newList) => void,
 });
@@ -39,6 +39,7 @@ const { list } = useSortable<T>({
 | Property | Description                               | Type                    |
 |----------|-------------------------------------------|-------------------------|
 | list  | The whole list | { type: 'dummy' \| 'item', content: T, props: PropsType }[] |
+| setList  | update the original list | T[] |
 
 ### useDrop Params
 
