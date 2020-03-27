@@ -17,6 +17,7 @@ import useUpdateLayoutEffect from './useUpdateLayoutEffect';
 import usePagination from './usePagination';
 import useBoolean from './useBoolean';
 import useToggle from './useToggle';
+import useDocumentVisibility from './useDocumentVisibility';
 import useSelections from './useSelections';
 import useThrottle from './useThrottle';
 import useThrottleFn from './useThrottleFn';
@@ -43,6 +44,7 @@ import useCounter from './useCounter';
 import useUpdate from './useUpdate';
 import useEventTarget from './useEventTarget';
 import useSortable from './useSortable';
+import useHistoryTravel from './useHistoryTravel';
 
 const useControlledValue: typeof useControllableValue = function (...args) {
   console.warn(
@@ -73,6 +75,7 @@ export {
   usePagination,
   useBoolean,
   useToggle,
+  useDocumentVisibility,
   useSelections,
   useThrottle,
   useThrottleFn,
@@ -100,5 +103,6 @@ export {
   useCounter,
   useUpdate,
   useEventTarget,
-  useSortable
+  useSortable,
+  useHistoryTravel
 };
