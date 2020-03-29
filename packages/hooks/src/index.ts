@@ -44,6 +44,7 @@ import useTextSelection from './useTextSelection';
 import useCounter from './useCounter';
 import useUpdate from './useUpdate';
 import useEventTarget from './useEventTarget';
+import useHistoryTravel from './useHistoryTravel';
 
 const useControlledValue: typeof useControllableValue = function (...args) {
   console.warn(
@@ -102,5 +103,6 @@ export {
   useCounter,
   useUpdate,
   useTextSelection,
-  useEventTarget
+  useEventTarget,
+  useHistoryTravel
 };
