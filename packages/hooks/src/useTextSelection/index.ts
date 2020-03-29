@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef, MutableRefObject } from "react";
 
 
 interface IRect {
@@ -13,9 +13,9 @@ export interface IState extends IRect {
   text: string;
 }
 
+type TDom = HTMLElement | Document;
 
-type TElement = string | HTMLElement | Document;
-type IProps = TElement;
+type Arg = TDom | (() => TDom) | null;
 
 const initRect: IRect = {
   top: NaN,
@@ -30,22 +30,6 @@ const initState: IState = {
   text: "",
   ...initRect,
 };
-
-const initProps: IProps = document;
-
-function getTarget(element: TElement) {
-  if (!element) {
-    return document;
-  }
-  if (typeof element === 'string') {
-    return document.querySelector(element);
-  }
-  if (element instanceof HTMLElement || element instanceof Document ) {
-    return element;
-  }
-
-  throw Error('"element" param type should be string, HTMLElement or Document');
-}
 
 function getRectFromSelection(selection: Selection | null): IRect {
   if (!selection) {
@@ -80,18 +64,21 @@ function getRectFromSelection(selection: Selection | null): IRect {
  * 1. 指定监听元素
  * 2. 选区位置、大小
  * */
-export default (element: IProps = initProps) => {
-
+function useTextSelection<T extends TDom = TDom>(): [IState, MutableRefObject<T>];
+function useTextSelection<T extends TDom = TDom>(arg: Arg): [IState];
+function useTextSelection<T extends TDom = TDom>(...args: [Arg] | []): [IState, MutableRefObject<T>?] {
+  const hasPassedInArg = args.length === 1;
+  const arg = useRef(args[0]);
+  const ref = useRef<T>();
   const [state, setState] = useState(initState);
-
 
   useEffect(() => {
     // 获取 target 需要放在 useEffect 里，否则存在组件未加载好的情况而导致元素获取不到
-    const target = getTarget(element);
+    const passedInArg = typeof arg.current === 'function' ? arg.current() : arg.current;
+    const target = hasPassedInArg ? passedInArg : ref.current;
 
     if (!target) {
-      console.warn('"element" not exist!');
-      return;
+      return () => {};
     }
 
     const mouseupHandler = (e: Event) => {
@@ -102,7 +89,7 @@ export default (element: IProps = initProps) => {
       selObj = window.getSelection();
       text = selObj ? selObj.toString() : '';
       rect = getRectFromSelection(selObj);
-      setState({ text, ...rect });
+      setState({ ...state, text, ...rect });
     };
 
     const mousedownHandler = () => {
@@ -122,7 +109,14 @@ export default (element: IProps = initProps) => {
       target.removeEventListener("mousedown",
       mousedownHandler)
     };
-  }, []);
 
-  return state;
+  }, [ ref.current, typeof arg.current === 'function' ? undefined : arg.current ]);
+
+  if (hasPassedInArg) {
+    return [state];
+  }
+
+  return [state, ref as MutableRefObject<T>];
 }
+
+export default useTextSelection;

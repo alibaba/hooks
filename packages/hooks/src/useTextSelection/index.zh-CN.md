@@ -19,7 +19,11 @@ legacy: /zh-CN/dom/use-text-selection
 
 <code src="./demo/demo1.tsx" />
 
-### 获取选取位置
+### 使用 Ref
+
+<code src="./demo/demo4.tsx" />
+
+### 使用 Dom
 
 <code src="./demo/demo2.tsx" />
 
@@ -31,24 +35,24 @@ legacy: /zh-CN/dom/use-text-selection
 ## API
 
 ``` typescript
-const state: {
-  text: string;
-  left: number;
-  right: number;
-  top: number;
-  bottom: number;
-  height: number;
-  width: number;
-} = useTextSelection(element: string | HTMLElement | Document)
+const [state, ref?] = useTextSelection(dom);
 ```
 
 ### 参数
 
 | 参数 | 说明 | 类型 | 默认值 |
 |-----|-----|-----|-----|
-| element | 监听 element 元素下的用户选取文本，默认对整个页面做监听 | string, 示例："#target-id", ".target-class" | document |
+| dom? | 可选项，如果未传入则会监听返回结果中的 ref，否则会监听传入的节点 | HTMLElement | (() => HTMLElement) | undefined | - |
 
 ### 结果
+
+
+| 参数 | 说明 | 类型 |
+|-----|-----|-----|
+| state | dom 节点内选取文本的内容和位置 | 详见下方 state |
+| ref | 当未传入任何参数时，将 ref 绑定给需监听的节点 | - |
+
+#### state
 
 | 参数 | 说明 | 类型 |
 |-----|-----|-----|

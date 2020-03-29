@@ -10,13 +10,16 @@ import React from 'react';
 import { useTextSelection } from '@umijs/hooks';
 
 export default () => {
-  const [selection] = useTextSelection(document);
+  const [ selection, ref ] = useTextSelection();
   return (
     <div>
-      <p>
-        Please swipe your mouse to select any text on the page.
-      </p>
+      <div ref={ref}>
+        <p>
+          Please swipe your mouse to select any text on this paragraph.
+        </p>
+      </div>
       <p>Result：{JSON.stringify(selection)}</p>
     </div>
+
   );
 };

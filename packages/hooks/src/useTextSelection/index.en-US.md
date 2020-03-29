@@ -19,7 +19,11 @@ Tracking content, size, position of user text selection
 
 <code src="./demo/demo1.tsx" />
 
-### Set 'element'  target
+### Use Ref
+
+<code src="./demo/demo4.tsx" />
+
+### Set 'dom'  target
 
 <code src="./demo/demo2.tsx" />
 
@@ -27,22 +31,26 @@ Tracking content, size, position of user text selection
 
 <code src="./demo/demo3.tsx" />
 
-
 ## API
 
 ``` typescript
-const state: {
-  text: string;
-} = useTextSelection(element: string | HTMLElement | Document)
+const [state, ref?] = useTextSelection(dom);
 ```
 
 ### Params
 
 | Property | Description | Type | Default |
 |-----|-----|-----|-----|
-| element | Specifies the text selection  listen to 'element'  | string, eg："#target-id", ".target-class" | document |
+| dom？ | optional, if none is passed, this hook will subscibe to the ref that it returns | - |
 
 ### Result
+
+| Property | Description                                         | Type                 |
+|----------|------------------------------------------|------------|
+| state  | content, size, position of user text selection | detail as fallow 'state' |
+| ref     | when no param is passed, this ref will be listened      | -        |
+
+#### state
 
 | Property | Description | Type |
 |-----|-----|-----|

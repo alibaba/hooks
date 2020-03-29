@@ -1,8 +1,8 @@
 /**
- * title: Set 'element'  target。
- * desc: Specifies the text selection to listen for an element
+ * title: Set 'dom'  target。
+ * desc: Specifies the text selection to listen for an dom
  *
- * title.zh-CN: 指定监听 'element' 元素
+ * title.zh-CN: 指定监听 'dom' 元素
  * desc.zh-CN: 指定监听某个元素的文本选取。
  */
 
@@ -10,13 +10,13 @@ import React from 'react';
 import { useTextSelection } from '@umijs/hooks';
 
 export default () => {
-  const {
+  const [{
     text
-  } = useTextSelection('#target-element');
+  }] = useTextSelection(() => document.querySelector('#target-dom'));
   return (
     <div>
-      <p id="target-element">
-      Only listen to the text selection of this paragraph;
+      <p id="target-dom">
+      Only listen to the text selection of this paragraph.
       </p>
       <p>Result：{text}</p>
     </div>

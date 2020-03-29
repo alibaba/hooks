@@ -8,35 +8,42 @@
 
 import React, { useEffect, useState } from 'react';
 import { Popover, Spin } from 'antd';
-import { useTextSelection } from '@umijs/hooks';
-
-let reqId = 0; // lasted ID
+import { useTextSelection, useRequest } from '@umijs/hooks';
 
 export default () => {
-  const {
+  const [{
     text = '',
     left = 0,
     top = 0,
     height = 0,
     width = 0,
-  } = useTextSelection('#translate-element');
+  }] = useTextSelection(() => document.querySelector('#translate-dom'));
 
   const [visible, setVisible] = useState(false);
-  const [loading, setLoading] = useState(false);
   const [result, setResult] = useState('');
   const [resultPosition, setResultPosition] = useState({ left: 0, top: 0, height: 0, width: 0 });
 
+  const getResult = (keyword)=>{
+    const trimedText = keyword.trim() !== '';
+    if(!trimedText) { return Promise.resolve('') };
+    return new Promise(resolve => {
+      setTimeout(() => resolve(`[translate result] ${keyword}`), 2000);
+     })
+  }
+
+  const { run, loading } = useRequest(getResult, {
+     manual: true,
+     refreshDeps: [text],
+     onSuccess: (result) => {
+       setResult(result);
+     }
+  });
+
   useEffect(() => {
-    async function getTranslateResult(keyword: string) {
-      return new Promise(resolve => {
-        setTimeout(() => resolve(`[translate result] ${keyword}`), 2000);
-      })
-    }
     if (text.trim() === '') {
       setVisible(false);
       return;
     }
-    setLoading(true);
     setResult('Translating……');
     setResultPosition({
       left,
@@ -45,20 +52,13 @@ export default () => {
       width,
     })
     setVisible(true);
+    run(text);
 
-    reqId++;
-    const lastReqId = reqId;
-    getTranslateResult(text)
-    .then((res: string) => {
-      if (lastReqId !== reqId) return;
-      setLoading(false);
-      setResult(res);
-    })
   }, [text])
 
   return (
     <div>
-      <p id="translate-element">
+      <p id="translate-dom">
         Translation of this paragraph;Translation of this paragraph;Translation of this paragraph;
       </p>
       <Popover
