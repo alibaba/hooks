@@ -36,36 +36,36 @@ describe('useSortable', () => {
       },
     }))
 
-    expect(hook.result.current.list.length).toBe(3);
+    expect(hook.result.current[0].length).toBe(3);
 
     jest.useFakeTimers();
-    hook.result.current.list[0].props.onDragStart(mockDragEvent)
+    hook.result.current[0][0].props.onDragStart(mockDragEvent)
     jest.runAllTimers();
-    hook.result.current.list[1].props.onDragEnter();
+    hook.result.current[0][1].props.onDragEnter();
 
-    expect(hook.result.current.list.length).toBe(4);
-    expect(hook.result.current.list[0].content).toBe('1');
-    expect(hook.result.current.list[1].content).toBe('dummy');
-    expect(hook.result.current.list[2].content).toBe('2');
-    expect(hook.result.current.list[3].content).toBe('3');
+    expect(hook.result.current[0].length).toBe(4);
+    expect(hook.result.current[0][0].content).toBe('1');
+    expect(hook.result.current[0][1].content).toBe('dummy');
+    expect(hook.result.current[0][2].content).toBe('2');
+    expect(hook.result.current[0][3].content).toBe('3');
 
-    hook.result.current.list[2].props.onDragEnter();
-    expect(hook.result.current.list[0].content).toBe('1');
-    expect(hook.result.current.list[1].content).toBe('2');
-    expect(hook.result.current.list[2].content).toBe('dummy');
-    expect(hook.result.current.list[3].content).toBe('3');
+    hook.result.current[0][2].props.onDragEnter();
+    expect(hook.result.current[0][0].content).toBe('1');
+    expect(hook.result.current[0][1].content).toBe('2');
+    expect(hook.result.current[0][2].content).toBe('dummy');
+    expect(hook.result.current[0][3].content).toBe('3');
 
-    hook.result.current.list[3].props.onDragEnter();
-    expect(hook.result.current.list[0].content).toBe('1');
-    expect(hook.result.current.list[1].content).toBe('2');
-    expect(hook.result.current.list[2].content).toBe('3');
-    expect(hook.result.current.list[3].content).toBe('dummy');
+    hook.result.current[0][3].props.onDragEnter();
+    expect(hook.result.current[0][0].content).toBe('1');
+    expect(hook.result.current[0][1].content).toBe('2');
+    expect(hook.result.current[0][2].content).toBe('3');
+    expect(hook.result.current[0][3].content).toBe('dummy');
 
-    hook.result.current.list[0].props.onDragEnd();
+    hook.result.current[0][0].props.onDragEnd();
 
-    expect(hook.result.current.list[0].content).toBe('2');
-    expect(hook.result.current.list[1].content).toBe('3');
-    expect(hook.result.current.list[2].content).toBe('1');
+    expect(hook.result.current[0][0].content).toBe('2');
+    expect(hook.result.current[0][1].content).toBe('3');
+    expect(hook.result.current[0][2].content).toBe('1');
 
   });
 });
