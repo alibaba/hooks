@@ -16,7 +16,6 @@ export interface PaginationConfig {
         goButton?: React.ReactNode;
       };
   showTotal?: (total: number, range: [number, number]) => React.ReactNode;
-  size?: string;
   simple?: boolean;
   style?: React.CSSProperties;
   locale?: Object;
@@ -30,7 +29,6 @@ export interface PaginationConfig {
   ) => React.ReactNode;
   role?: string;
   showLessItems?: boolean;
-  position?: 'top' | 'bottom' | 'both';
   [key: string]: any;
 }
 
