@@ -6,9 +6,18 @@
  * desc.zh-CN: 配合 Popover 做划词翻译
  */
 
-import React, { useEffect, useState } from 'react';
+import { useRequest, useTextSelection } from '@umijs/hooks';
 import { Popover, Spin } from 'antd';
-import { useTextSelection, useRequest } from '@umijs/hooks';
+import React, { useEffect, useState } from 'react';
+
+
+const getResult = (keyword: string): Promise<string> => {
+  const trimedText = keyword.trim() !== '';
+  if (!trimedText) { return Promise.resolve('') }
+  return new Promise(resolve => {
+    setTimeout(() => resolve(`[translate result] ${keyword}`), 2000);
+  })
+}
 
 export default () => {
   const [{
@@ -20,23 +29,9 @@ export default () => {
   }] = useTextSelection(() => document.querySelector('#translate-dom'));
 
   const [visible, setVisible] = useState(false);
-  const [result, setResult] = useState('');
-  const [resultPosition, setResultPosition] = useState({ left: 0, top: 0, height: 0, width: 0 });
 
-  const getResult = (keyword)=>{
-    const trimedText = keyword.trim() !== '';
-    if(!trimedText) { return Promise.resolve('') };
-    return new Promise(resolve => {
-      setTimeout(() => resolve(`[translate result] ${keyword}`), 2000);
-     })
-  }
-
-  const { run, loading } = useRequest(getResult, {
-     manual: true,
-     refreshDeps: [text],
-     onSuccess: (result) => {
-       setResult(result);
-     }
+  const { data, run, loading } = useRequest(getResult, {
+    manual: true
   });
 
   useEffect(() => {
@@ -44,16 +39,8 @@ export default () => {
       setVisible(false);
       return;
     }
-    setResult('Translating……');
-    setResultPosition({
-      left,
-      top,
-      height,
-      width,
-    })
     setVisible(true);
     run(text);
-
   }, [text])
 
   return (
@@ -64,19 +51,19 @@ export default () => {
       <Popover
         content={
           <Spin spinning={loading}>
-            {result}
+            {loading ? 'Translating……' : data}
           </Spin>
         }
         visible={visible}
       >
         <span style={{
           position: 'fixed',
-          top: `${resultPosition.top}px`,
-          left: `${resultPosition.left}px`,
-          height: `${resultPosition.height}px`,
-          width: `${resultPosition.width}px`,
+          top: `${top}px`,
+          left: `${left}px`,
+          height: `${height}px`,
+          width: `${width}px`,
           pointerEvents: 'none',
-        }}/>
+        }} />
       </Popover>
     </div>
   );

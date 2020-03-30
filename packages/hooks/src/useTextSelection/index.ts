@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, MutableRefObject } from "react";
+import { useState, useEffect, useRef, MutableRefObject } from 'react';
 
 
 interface IRect {
@@ -27,7 +27,7 @@ const initRect: IRect = {
 }
 
 const initState: IState = {
-  text: "",
+  text: '',
   ...initRect,
 };
 
@@ -72,45 +72,51 @@ function useTextSelection<T extends TDom = TDom>(...args: [Arg] | []): [IState, 
   const ref = useRef<T>();
   const [state, setState] = useState(initState);
 
+  const stateRef = useRef(state);
+  stateRef.current = state;
+
   useEffect(() => {
     // 获取 target 需要放在 useEffect 里，否则存在组件未加载好的情况而导致元素获取不到
     const passedInArg = typeof arg.current === 'function' ? arg.current() : arg.current;
     const target = hasPassedInArg ? passedInArg : ref.current;
 
     if (!target) {
-      return () => {};
+      return () => { };
     }
 
-    const mouseupHandler = (e: Event) => {
+    const mouseupHandler = () => {
       let selObj = null;
       let text = '';
       let rect = initRect;
       if (!window.getSelection) return;
       selObj = window.getSelection();
       text = selObj ? selObj.toString() : '';
-      rect = getRectFromSelection(selObj);
-      setState({ ...state, text, ...rect });
+      if (text) {
+        rect = getRectFromSelection(selObj);
+        setState({ ...state, text, ...rect });
+      }
     };
 
+    // 任意点击都需要清空之前的 range
     const mousedownHandler = () => {
       if (!window.getSelection) return;
+      if (stateRef.current.text) {
+        setState({ ...initState });
+      }
       const selObj = window.getSelection();
-
       if (!selObj) return;
       selObj.removeAllRanges();
     }
 
-    target.addEventListener("mouseup", mouseupHandler);
+    target.addEventListener('mouseup', mouseupHandler);
 
-    target.addEventListener("mousedown", mousedownHandler)
+    document.addEventListener('mousedown', mousedownHandler)
 
     return () => {
-      target.removeEventListener("mouseup", mouseupHandler);
-      target.removeEventListener("mousedown",
-      mousedownHandler)
+      target.removeEventListener('mouseup', mouseupHandler);
+      document.removeEventListener('mousedown', mousedownHandler);
     };
-
-  }, [ ref.current, typeof arg.current === 'function' ? undefined : arg.current ]);
+  }, [ref.current, typeof arg.current === 'function' ? undefined : arg.current]);
 
   if (hasPassedInArg) {
     return [state];

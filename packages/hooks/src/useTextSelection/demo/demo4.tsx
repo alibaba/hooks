@@ -10,7 +10,7 @@ import React from 'react';
 import { useTextSelection } from '@umijs/hooks';
 
 export default () => {
-  const [ selection, ref ] = useTextSelection();
+  const [selection, ref] = useTextSelection();
   return (
     <div>
       <div ref={ref}>
