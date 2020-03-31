@@ -14,6 +14,7 @@
     "compile": "lerna run --scope @umijs/use-request compile && lerna run --scope @umijs/hooks compile",
     "build": "node ./scripts/clean-old-build.js && father build && npm run compile && node ./scripts/build-wind-up.js",
     "test": "father test",
+    "test:watch": "father test --watch",
     "cov": "father test --coverage",
     "help": "father help",
     "precommit": "father pre-commit",
