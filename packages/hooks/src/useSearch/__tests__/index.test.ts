@@ -18,13 +18,11 @@ afterAll(() => {
 
 const data = [1, 2, 3, 4, 5];
 
-const asyncFn = (value: any) => {
-  return new Promise(resolve => {
+const asyncFn = (value: any) => new Promise(resolve => {
     setTimeout(() => {
       resolve(data.filter(item => item === value));
     }, 1);
-  });
-}
+  })
 
 const callChange = (hook: any, value: any) => {
   act(() => {
@@ -127,5 +125,5 @@ describe('useSearch', () => {
   //     expect(hook.result.current.loading).toBeFalsy();
   //     expect(hook.result.current.data).toBeUndefined();
   //   });
-  });
+  // });
 });
