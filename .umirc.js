@@ -9,6 +9,7 @@ export default {
   ]],
   mode: 'site',
   title: 'Umi Hooks',
+  dynamicImport: {},
   manifest: {},
   links: [{ rel: "manifest", href: "/asset-manifest.json" }],
   hash: true,

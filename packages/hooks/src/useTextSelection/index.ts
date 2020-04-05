@@ -60,9 +60,6 @@ function getRectFromSelection(selection: Selection | null): IRect {
 
 /**
  * 获取用户选取的文本或当前光标插入的位置
- * TODO：
- * 1. 指定监听元素
- * 2. 选区位置、大小
  * */
 function useTextSelection<T extends TDom = TDom>(): [IState, MutableRefObject<T>];
 function useTextSelection<T extends TDom = TDom>(arg: Arg): [IState];

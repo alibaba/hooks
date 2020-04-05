@@ -33,7 +33,7 @@
     "babel-plugin-transform-async-to-promises": "^0.8.15",
     "create-test-server": "^3.0.1",
     "del": "^5.1.0",
-    "dumi": "^1.0.8",
+    "dumi": "^1.0.13",
     "enzyme": "^3.10.0",
     "father": "^2.13.3",
     "lerna": "^2.11.0",
