@@ -18,13 +18,11 @@ afterAll(() => {
 
 const data = [1, 2, 3, 4, 5];
 
-const asyncFn = (value: any) => {
-  return new Promise(resolve => {
+const asyncFn = (value: any) => new Promise(resolve => {
     setTimeout(() => {
       resolve(data.filter(item => item === value));
     }, 1);
-  });
-}
+  })
 
 const callChange = (hook: any, value: any) => {
   act(() => {
@@ -52,80 +50,80 @@ describe('useSearch', () => {
     expect(useSearch).toBeDefined();
   });
 
-  describe('should method run', () => {
-    let hook: any;
-    beforeEach(() => {
-      hook = renderHook(({ fn, deps, options }) => useSearch(fn, deps, options), {
-        initialProps: { fn: asyncFn, deps: undefined, options: {} },
-      });
-    });
+  // describe('should method run', () => {
+  //   let hook: any;
+  //   beforeEach(() => {
+  //     hook = renderHook(({ fn, deps, options }) => useSearch(fn, deps, options), {
+  //       initialProps: { fn: asyncFn, deps: undefined, options: {} },
+  //     });
+  //   });
 
-    it('test on change', async () => {
-      expect.assertions(4);
+  //   it('test on change', async () => {
+  //     expect.assertions(4);
 
-      callChange(hook, 1);
-      callChange(hook, 2);
-      callChange(hook, 3);
-      await hook.waitForNextUpdate();
-      expect(hook.result.current.loading).toBeTruthy();
-      await hook.waitForNextUpdate();
-      expect(hook.result.current.data).toBeDefined();
-      expect((hook.result.current.data as any)[0]).toEqual(3);
-      expect(hook.result.current.loading).toBeFalsy();
-    });
+  //     callChange(hook, 1);
+  //     callChange(hook, 2);
+  //     callChange(hook, 3);
+  //     await hook.waitForNextUpdate();
+  //     expect(hook.result.current.loading).toBeTruthy();
+  //     await hook.waitForNextUpdate();
+  //     expect(hook.result.current.data).toBeDefined();
+  //     expect((hook.result.current.data as any)[0]).toEqual(3);
+  //     expect(hook.result.current.loading).toBeFalsy();
+  //   });
 
-    it('test on run', async () => {
-      expect.assertions(2);
+  //   it('test on run', async () => {
+  //     expect.assertions(2);
 
-      callChange(hook, 1);
-      callRun(hook);
-      await hook.waitForNextUpdate();
-      expect((hook.result.current.data as any)[0]).toEqual(1);
-      callChange(hook, 2);
-      callRun(hook);
-      await hook.waitForNextUpdate();
-      expect((hook.result.current.data as any)[0]).toEqual(2);
-    });
+  //     callChange(hook, 1);
+  //     callRun(hook);
+  //     await hook.waitForNextUpdate();
+  //     expect((hook.result.current.data as any)[0]).toEqual(1);
+  //     callChange(hook, 2);
+  //     callRun(hook);
+  //     await hook.waitForNextUpdate();
+  //     expect((hook.result.current.data as any)[0]).toEqual(2);
+  //   });
 
-    it('test on cancel', async () => {
-      expect.assertions(5);
+  //   it('test on cancel', async () => {
+  //     expect.assertions(5);
 
-      callChange(hook, 1);
-      await hook.waitForNextUpdate()
-      expect(hook.result.current.loading).toBeTruthy();
-      expect(hook.result.current.value).toEqual(1);
-      await hook.waitForNextUpdate();
-      callChange(hook, 2);
-      callCancel(hook);
-      expect(hook.result.current.loading).toBeFalsy();
-      expect((hook.result.current.data as any)[0]).toEqual(1);
-      expect(hook.result.current.value).toEqual(2);
-    });
+  //     callChange(hook, 1);
+  //     await hook.waitForNextUpdate()
+  //     expect(hook.result.current.loading).toBeTruthy();
+  //     expect(hook.result.current.value).toEqual(1);
+  //     await hook.waitForNextUpdate();
+  //     callChange(hook, 2);
+  //     callCancel(hook);
+  //     expect(hook.result.current.loading).toBeFalsy();
+  //     expect((hook.result.current.data as any)[0]).toEqual(1);
+  //     expect(hook.result.current.value).toEqual(2);
+  //   });
 
-  });
+  // });
 
-  describe('test on options', () => {
-    let hook: any;
-    beforeEach(() => {
-      hook = renderHook(({ fn, deps, options }) => useSearch(fn, [deps], options), {
-        initialProps: {
-          fn: asyncFn,
-          deps: null,
-          options: undefined
-        },
-      });
-    });
+  // describe('test on options', () => {
+  //   let hook: any;
+  //   beforeEach(() => {
+  //     hook = renderHook(({ fn, deps, options }) => useSearch(fn, [deps], options), {
+  //       initialProps: {
+  //         fn: asyncFn,
+  //         deps: null,
+  //         options: undefined
+  //       },
+  //     });
+  //   });
 
-    it('should cancel in rerender return undefined', async () => {
-      expect.assertions(2);
+  //   it('should cancel in rerender return undefined', async () => {
+  //     expect.assertions(2);
 
-      hook.rerender({
-        fn: asyncFn,
-        options: { wait: 300 }
-      });
-      callCancel(hook);
-      expect(hook.result.current.loading).toBeFalsy();
-      expect(hook.result.current.data).toBeUndefined();
-    });
-  });
+  //     hook.rerender({
+  //       fn: asyncFn,
+  //       options: { wait: 300 }
+  //     });
+  //     callCancel(hook);
+  //     expect(hook.result.current.loading).toBeFalsy();
+  //     expect(hook.result.current.data).toBeUndefined();
+  //   });
+  // });
 });
