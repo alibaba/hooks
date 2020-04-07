@@ -8,7 +8,7 @@
 
 import React from 'react';
 import { message, Button } from 'antd';
-import useSortable from '../index';
+import { useSortable } from '@umijs/hooks';
 
 export default () => {
   const [ list, setList ] = useSortable<string>({
