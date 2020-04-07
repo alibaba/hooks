@@ -1,5 +1,5 @@
 import useRequest from '@umijs/use-request';
-import { useState, useCallback, useEffect } from 'react';
+import { useState, useCallback, useEffect, useRef } from 'react';
 import {
   CombineService,
   PaginatedParams,
@@ -42,11 +42,11 @@ export interface Result<Item> extends PaginatedResult<Item> {
 }
 
 export interface BaseOptions<U> extends Omit<BasePaginatedOptions<U>, 'paginated'> {
-  form: UseAntdTableFormUtils;
+  form?: UseAntdTableFormUtils;
 }
 
 export interface OptionsWithFormat<R, Item, U> extends Omit<PaginatedOptionsWithFormat<R, Item, U>, 'paginated'> {
-  form: UseAntdTableFormUtils;
+  form?: UseAntdTableFormUtils;
 }
 
 function useFormTable<R = any, Item = any, U extends Item = any>(
@@ -83,6 +83,9 @@ function useFormTable<R = any, Item = any, U extends Item = any>(
 
   // 获取当前展示的 form 字段值
   const getActivetFieldValues = useCallback((): Store => {
+    if (!form) {
+      return {};
+    }
     // antd 3
     if (form.getFieldInstance) {
       const tempAllFiledsValue = form.getFieldsValue();
@@ -98,21 +101,26 @@ function useFormTable<R = any, Item = any, U extends Item = any>(
     return form.getFieldsValue(null, () => true);
   }, [form]);
 
+  const formRef = useRef(form);
+  formRef.current = form;
   /* 初始化，或改变了 searchType, 恢复表单数据 */
   useEffect(() => {
+    if (!formRef.current) {
+      return;
+    }
     // antd 3
-    if (form.getFieldInstance) {
+    if (formRef.current.getFieldInstance) {
       // antd 3 需要判断字段是否存在，否则会抛警告
       const filterFiledsValue: Store = {};
       Object.keys(allFormData).forEach((key: string) => {
-        if (form.getFieldInstance ? form.getFieldInstance(key) : true) {
+        if (formRef.current!.getFieldInstance ? formRef.current!.getFieldInstance(key) : true) {
           filterFiledsValue[key] = allFormData[key];
         }
       });
-      form.setFieldsValue(filterFiledsValue);
+      formRef.current.setFieldsValue(filterFiledsValue);
     } else {
       // antd 4
-      form.setFieldsValue(allFormData);
+      formRef.current.setFieldsValue(allFormData);
     }
   }, [type]);
 
@@ -160,7 +168,9 @@ function useFormTable<R = any, Item = any, U extends Item = any>(
   }, [getActivetFieldValues, run, params, allFormData, type]);
 
   const reset = useCallback(() => {
-    form.resetFields();
+    if (form) {
+      form.resetFields();
+    }
     submit();
   }, [form, submit]);
 

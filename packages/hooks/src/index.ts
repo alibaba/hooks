@@ -40,6 +40,7 @@ import useMap from './useMap';
 import useCreation from './useCreation'
 import { useDrag, useDrop } from './useDrop';
 import useMount from './useMount';
+import useTextSelection from './useTextSelection';
 import useCounter from './useCounter';
 import useUpdate from './useUpdate';
 import useEventTarget from './useEventTarget';
@@ -102,6 +103,7 @@ export {
   useMount,
   useCounter,
   useUpdate,
+  useTextSelection,
   useEventTarget,
   useSortable,
   useHistoryTravel
