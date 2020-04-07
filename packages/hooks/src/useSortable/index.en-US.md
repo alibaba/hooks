@@ -39,11 +39,12 @@ const [ list, setList ] = useSortable<T>({
 | Property | Description                               | Type                    |
 |----------|-------------------------------------------|-------------------------|
 | list  | The whole list | { type: 'dummy' \| 'item', content: T, props: PropsType }[] |
-| setList  | update the original list | T[] |
+| setList  | update the original list | T[] \| ((oldList: T[]) => T[]) |
 
 ### useDrop Params
 
 | Property    | Description                                         | Type                   | Default |
 |---------|----------------------------------------------|------------------------|--------|
 | initialValue | initialValue of the list | T[] | -      |
+| disabledItems | whether an item should be disabled for dragging | (item: T) => boolean | -      |
 | onSort | The callback when items are moved | (oldIndex: number, newIndex: number, oldList: T[], newList: T[]) => void | -      |

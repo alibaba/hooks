@@ -2,11 +2,14 @@ import React, { useState, useCallback, useRef } from 'react';
 
 interface SortableProps<T> {
   initialValue: T[];
+  disabledItems: (item: T) => boolean;
   onSort?: (oldIndex: number, newIndex: number, oldList: T[], newList: T[]) => void;
 }
 
+type SetListFn<T> = (oldList: T[]) => T[];
+
 export default <T>(props: SortableProps<T>) => {
-  const initialValue = props.initialValue.map(ele => ({ type: 'item', content: ele }));
+  const initialValue = (props?.initialValue || []).map(ele => ({ type: 'item', content: ele }));
   const lastSorted = useRef(initialValue);
   const dummyIndex = useRef<null | number>(null);
   const previewRef = useRef<any>(null);
@@ -14,15 +17,19 @@ export default <T>(props: SortableProps<T>) => {
   const draggingIndexRef = useRef<null | number>(null);
   const onSortRef = useRef(props.onSort);
   onSortRef.current = props.onSort;
+  const disabledItemsRef = useRef(props.disabledItems);
+  disabledItemsRef.current = props.disabledItems;
 
   const [ list, _setList ] = useState(initialValue);
   const [dragging, setDragging] = useState<number | null>(null);
 
   const getSortProps = useCallback((index: number)=>{
     return {
-      draggable: 'true' as const,
-      key: JSON.stringify(list[index]),
+      draggable: disabledItemsRef.current && disabledItemsRef.current(list[index].content) ? 'false' as const : 'true' as const,
       onDragStart: (e: React.DragEvent) => {
+        if(disabledItemsRef.current && disabledItemsRef.current(list[index].content)) {
+          return;
+        }
         e.persist();
         draggingNodeRef.current = e.target;
         previewRef.current = (e.target as any).cloneNode(true);
@@ -89,9 +96,18 @@ export default <T>(props: SortableProps<T>) => {
     }
   }, [dragging, list])
 
-  const setList = useCallback((newList: T[]) => {
-    _setList(newList.map(ele => ({ type: 'item', content: ele })));
-    lastSorted.current = initialValue;
+  const setList = useCallback((newList: (T[] | SetListFn<T>)) => {
+    if(Array.isArray(newList)){
+      _setList(() => {
+        lastSorted.current = newList.map(ele => ({ type: 'item', content: ele }));
+        return lastSorted.current;
+      });
+    } else {
+      _setList((l) => {
+        lastSorted.current = newList(l.map(ele => ele.content)).map(ele => ({ type: 'item', content: ele }))
+        return lastSorted.current;
+      });
+    }
   }, []);
 
   return [

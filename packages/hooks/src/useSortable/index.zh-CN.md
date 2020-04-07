@@ -39,11 +39,12 @@ const { list } = useSortable<T>({
 | 参数     | 说明                                 | 类型                 |
 |----------|-------------------------------------------|-------------------------|
 | list  | 完整的待排序列表 | { type: 'dummy' \| 'item', content: T, props: PropsType }[] |
-| setList  | 更新 list 的值 | T[] |
+| setList  | 更新 list 的值 | T[] \| ((oldList: T[]) => T[]) |
 
 ### useDrop Params
 
 | 参数    | 说明                                         | 类型                   | 默认值 |
 |---------|----------------------------------------------|------------------------|--------|
 | initialValue | 列表的初始值 | T[] | -      |
+| disabledItems | 禁用拖拽的元素 | (item: T) => boolean | -      |
 | onSort | 元素被拖动后的回调 | (oldIndex: number, newIndex: number, oldList: T[], newList: T[]) => void | -      |

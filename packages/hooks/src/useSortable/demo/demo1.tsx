@@ -7,21 +7,29 @@
  */
 
 import React from 'react';
-import { message } from 'antd';
+import { message, Button } from 'antd';
 import useSortable from '../index';
 
 export default () => {
-  const [ list ] = useSortable<string>({
-    initialValue: ['1', '2', '3'],
+  const [ list, setList ] = useSortable<string>({
+    initialValue: ['1', '2(disabled)', '3'],
+    disabledItems: (e) => e.includes('disabled'),
     onSort: (oldIndex, newIndex, oldList, newList) => {
       message.success(`${oldList[oldIndex]} moved from ${oldIndex} to ${newIndex}`);
     }
   });
     
-  return (
-    list.map(ele => 
-      <div style={{ border: '1px solid #e8e8e8', height: 66, padding: 8, margin: 8, lineHeight: '50px' }} {...ele.props} >
+  return (<>
+    {list.map(ele => 
+      <div
+        style={{ border: '1px solid #e8e8e8', height: 66,  margin: 8, padding: 8, lineHeight: '50px' }}
+        key={ele.type + ele.content}
+        {...ele.props}
+      >
         {ele.type === 'dummy' ? 'drop it here' : ele.content}
-      </div>)
+      </div>
+    )}
+    <Button style={{ marginLeft: 8 }} onClick={()=>setList(l => l.concat((list.length + 1).toString()))}>append Item</Button>
+    </>
   );
 };
