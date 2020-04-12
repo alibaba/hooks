@@ -7,7 +7,7 @@ import {
   PaginatedOptionsWithFormat,
   PaginatedFormatReturn,
   PaginatedResult
-} from '@umijs/use-request/lib/types';
+} from '@umijs/use-request/lib/types.d';
 import useUpdateEffect from '../useUpdateEffect';
 import usePersistFn from '../usePersistFn';
 
