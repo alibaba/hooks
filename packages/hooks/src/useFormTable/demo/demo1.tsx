@@ -115,7 +115,7 @@ const AppList = (props: AppListProps) => {
     </div>
   );
 
-  const searchFrom = (
+  const searchForm = (
     <div style={{ marginBottom: 16 }}>
       <Form style={{ display: 'flex', justifyContent: 'flex-end' }}>
         {getFieldDecorator('gender', {
@@ -139,7 +139,7 @@ const AppList = (props: AppListProps) => {
 
   return (
     <div>
-      {type === 'simple' ? searchFrom : advanceSearchForm}
+      {type === 'simple' ? searchForm : advanceSearchForm}
       <Table columns={columns} rowKey="email" {...tableProps} />
     </div>
   );

@@ -1,12 +1,12 @@
 /**
  * title: Use DefaultParams
  * desc: useFormTable sets the initial value through defaultParams, defaultParams is an array, the first value is the paging related parameter, |
- * and the second value is the form related data. If there is a second value, we will help you initialize the form! |
- * It should be noted that the initial form data can be filled with simple and advance form data. We will help you select the form data in the currently activated type.
+ *  and the second value is the form related data. If there is a second value, we will help you initialize the form! |
+ *  It should be noted that the initial form data can be filled with simple and advance form data. We will help you select the form data in the currently activated type.
  *
  * title.zh-CN: 使用 defaultParams
  * desc.zh-CN: useFormTable 通过 defaultParams 设置初始化值，defaultParams 是一个数组，第一个值为分页相关参数，第二个值为表单相关数据。如果有第二个值，我们会帮您初始化表单！ |
- * 需要注意的是，初始化的表单数据可以填写 simple 和 advance 全量的表单数据，我们会帮您挑选当前激活的类型中的表单数据。
+ *  需要注意的是，初始化的表单数据可以填写 simple 和 advance 全量的表单数据，我们会帮您挑选当前激活的类型中的表单数据。
  */
 
 import React from 'react';

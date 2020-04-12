@@ -43,11 +43,12 @@ export interface Result<Item> extends PaginatedResult<Item> {
 
 export interface BaseOptions<U> extends Omit<BasePaginatedOptions<U>, 'paginated'> {
   form?: UseAntdTableFormUtils;
+  defaultType: 'simple' | 'advance';
 }
 
 export interface OptionsWithFormat<R, Item, U> extends Omit<PaginatedOptionsWithFormat<R, Item, U>, 'paginated'> {
   form?: UseAntdTableFormUtils;
-  defaultType: 'simple' | 'advance'
+  defaultType: 'simple' | 'advance';
 }
 
 function useFormTable<R = any, Item = any, U extends Item = any>(
@@ -135,7 +136,7 @@ function useFormTable<R = any, Item = any, U extends Item = any>(
 
     // 如果没有缓存，触发 submit
     if (!manual) {
-      submit(null, defaultParams);
+      submit(defaultParams);
     }
   }, [])
 
@@ -149,10 +150,7 @@ function useFormTable<R = any, Item = any, U extends Item = any>(
   }, [type, allFormData, getActivetFieldValues]);
 
 
-  const submit = useCallback((e?: any, initParams?: any) => {
-    if (e?.preventDefault) {
-      e.preventDefault();
-    }
+  const submit = useCallback((initParams?: any) => {
     setTimeout(() => {
       const activeFormData = getActivetFieldValues();
       // 记录全量数据
@@ -201,7 +199,7 @@ function useFormTable<R = any, Item = any, U extends Item = any>(
   return {
     ...result,
     search: {
-      submit,
+      submit: () => { submit() },
       type,
       changeType,
       reset,
