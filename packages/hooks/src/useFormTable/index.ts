@@ -47,6 +47,7 @@ export interface BaseOptions<U> extends Omit<BasePaginatedOptions<U>, 'paginated
 
 export interface OptionsWithFormat<R, Item, U> extends Omit<PaginatedOptionsWithFormat<R, Item, U>, 'paginated'> {
   form?: UseAntdTableFormUtils;
+  defaultType: 'simple' | 'advance'
 }
 
 function useFormTable<R = any, Item = any, U extends Item = any>(
@@ -61,7 +62,7 @@ function useFormTable<R = any, Item = any, U extends Item = any>(
   service: CombineService<any, any>,
   options: BaseOptions<U> | OptionsWithFormat<R, Item, U>
 ): any {
-  const { form, refreshDeps = [], manual, ...restOptions } = options;
+  const { form, refreshDeps = [], manual, defaultType = 'simple', defaultParams, ...restOptions } = options;
   const result = useRequest(
     service,
     {
@@ -76,10 +77,10 @@ function useFormTable<R = any, Item = any, U extends Item = any>(
   const cacheFormTableData = params[2] || ({} as any);
 
   // 优先从缓存中读
-  const [type, setType] = useState(cacheFormTableData.type || 'simple');
+  const [type, setType] = useState(cacheFormTableData.type || defaultType);
 
   // 全量 form 数据，包括 simple 和 advance
-  const [allFormData, setAllFormData] = useState<Store>(cacheFormTableData.allFormData || {});
+  const [allFormData, setAllFormData] = useState<Store>(cacheFormTableData.allFormData || (defaultParams && defaultParams[1]) || {});
 
   // 获取当前展示的 form 字段值
   const getActivetFieldValues = useCallback((): Store => {
@@ -131,9 +132,10 @@ function useFormTable<R = any, Item = any, U extends Item = any>(
       run(...params);
       return;
     }
+
     // 如果没有缓存，触发 submit
     if (!manual) {
-      submit();
+      submit(null, defaultParams);
     }
   }, [])
 
@@ -147,7 +149,7 @@ function useFormTable<R = any, Item = any, U extends Item = any>(
   }, [type, allFormData, getActivetFieldValues]);
 
 
-  const submit = useCallback((e?: any) => {
+  const submit = useCallback((e?: any, initParams?: any) => {
     if (e?.preventDefault) {
       e.preventDefault();
     }
@@ -156,6 +158,19 @@ function useFormTable<R = any, Item = any, U extends Item = any>(
       // 记录全量数据
       const _allFormData = { ...allFormData, ...activeFormData };
       setAllFormData(_allFormData);
+
+      // has defaultParams
+      if (initParams) {
+        run(
+          initParams[0],
+          activeFormData,
+          {
+            allFormData: _allFormData,
+            type
+          });
+        return;
+      }
+
       run({
         pageSize: options.defaultPageSize || 10,
         ...(params[0] || {}), // 防止 manual 情况下，第一次触发 submit，此时没有 params[0]
