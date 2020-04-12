@@ -354,6 +354,13 @@ function useAntdTable<Result, Item>(
           delete (realFilter as Object)[item[0] as keyof Object];
         }
       });
+
+      // fix: https://github.com/umijs/hooks/issues/338
+      if (!s.order) {
+        // eslint-disable-next-line no-param-reassign
+        s.field = undefined;
+      }
+
       const needReload =
         !isEqual(realFilter, state.filters) ||
         s.field !== state.sorter.field ||
