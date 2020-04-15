@@ -25,6 +25,10 @@ legacy: /zh-CN/antd/use-form-table
 
 <code src="./demo/demo2.tsx" />
 
+### 初始化数据
+
+<code src="./demo/demo5.tsx" />
+
 ## API
 
 useFormTable 基于 [useRequest](/zh-CN/async) 实现，所有的 [useRquest Pagination](/zh-CN/async?anchor=pagination#api-1) API 均可以直接使用。比如 `cacheKey`、`manual` 等等。
@@ -44,7 +48,9 @@ const {
   service,
   {
     ...,
-    form
+    form,
+    defaultType: 'simple' | 'advance',
+    defaultParams: [pagination, formData],
   }
 );
 ```
