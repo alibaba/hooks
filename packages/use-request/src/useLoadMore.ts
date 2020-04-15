@@ -93,7 +93,7 @@ function useLoadMore<R extends LoadMoreFormatReturn, RR = any>(
 
   /* 上拉加载的方法 */
   const scrollMethod = useCallback(() => {
-    if (loading || !ref || !ref.current) {
+    if (loading || loadingMore || !ref || !ref.current) {
       return;
     }
     if (ref.current.scrollHeight - ref.current.scrollTop <= ref.current.clientHeight + threshold) {
