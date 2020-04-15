@@ -25,6 +25,10 @@ It encapsulates the common AntD [Form](https://ant.design/components/form-cn/) a
 
 <code src="./demo/demo2.tsx" />
 
+### Set Default Params
+
+<code src="./demo/demo5.tsx" />
+
 ## API
 
 useFormTable is based on [useRequest](/async). All [useRquest Pagination](/async?anchor=pagination#api-1) APIs can be used directly. For example `cacheKey`,` manual`, etc.
@@ -44,7 +48,9 @@ const {
   service,
   {
     ...,
-    form
+    form,
+    defaultType: 'simple' | 'advance',
+    defaultParams: [pagination, formData],
   }
 );
 ```
