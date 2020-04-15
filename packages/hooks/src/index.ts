@@ -33,7 +33,7 @@ import useKeyPress from './useKeyPress';
 import useEventListener from './useEventListener';
 import useHover from './useHover';
 import useUnmount from './useUnmount';
-import useFormTable from './useFormTable';
+import useFormTable, { configFormTableFormatResult } from './useFormTable';
 import useSet from './useSet';
 import usePersistFn from './usePersistFn';
 import useMap from './useMap';
@@ -92,6 +92,7 @@ export {
   useHover,
   useRequest,
   useFormTable,
+  configFormTableFormatResult,
   useUnmount,
   useSet,
   usePersistFn,
