@@ -43,12 +43,12 @@ export interface Result<Item> extends PaginatedResult<Item> {
 
 export interface BaseOptions<U> extends Omit<BasePaginatedOptions<U>, 'paginated'> {
   form?: UseAntdTableFormUtils;
-  defaultType: 'simple' | 'advance';
+  defaultType?: 'simple' | 'advance';
 }
 
 export interface OptionsWithFormat<R, Item, U> extends Omit<PaginatedOptionsWithFormat<R, Item, U>, 'paginated'> {
   form?: UseAntdTableFormUtils;
-  defaultType: 'simple' | 'advance';
+  defaultType?: 'simple' | 'advance';
 }
 
 function useFormTable<R = any, Item = any, U extends Item = any>(
