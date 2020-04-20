@@ -92,13 +92,13 @@ function genFilterKey(event: any, keyFilter: any) {
      */
     if (
       (genModifier && genModifier(event)) ||
-      (aliasKey && isType(aliasKey) === 'array'
+      (aliasKey ? isType(aliasKey) === 'array'
         ? aliasKey.includes(event.key)
-        : aliasKey === event.key) ||
-      (aliasKeyCode && isType(aliasKeyCode) === 'array'
+        : aliasKey === event.key : false) ||
+      (aliasKeyCode ? isType(aliasKeyCode) === 'array' // 当 input 触发 autocomplete 时 keyCode 和 key 不存在
         ? aliasKeyCode.includes(event.keyCode)
-        : aliasKeyCode === event.keyCode) ||
-      event.key.toUpperCase() === key.toUpperCase()
+        : aliasKeyCode === event.keyCode : false) ||
+      event.key?.toUpperCase() === key.toUpperCase()
     ) {
       genLen++;
     }
