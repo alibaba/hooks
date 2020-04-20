@@ -1,9 +1,12 @@
 /**
- * title: Form and Table data binding
- * desc: useFormTable returns a search object after receiving a form instance. This is an example of antd v3, see [link](https://github.com/umijs/hooks/blob/master/packages/hooks/src/useFormTable/demo/demo3.tsx) for an example of antd v4.
+ * title: Use DefaultParams
+ * desc: useFormTable sets the initial value through defaultParams, defaultParams is an array, the first value is the paging related parameter, |
+ *  and the second value is the form related data. If there is a second value, we will help you initialize the form! |
+ *  It should be noted that the initial form data can be filled with simple and advance form data. We will help you select the form data in the currently activated type.
  *
- * title.zh-CN: Form 与 Table 联动
- * desc.zh-CN: useFormTable 接收 form 实例后，会返回 search 对象。这是一个 antd v3 示例，antd v4 示例见 [链接](https://github.com/umijs/hooks/blob/master/packages/hooks/src/useFormTable/demo/demo3.tsx)。
+ * title.zh-CN: 使用 defaultParams
+ * desc.zh-CN: useFormTable 通过 defaultParams 设置初始化值，defaultParams 是一个数组，第一个值为分页相关参数，第二个值为表单相关数据。如果有第二个值，我们会帮您初始化表单！ |
+ *  需要注意的是，初始化的表单数据可以填写 simple 和 advance 全量的表单数据，我们会帮您挑选当前激活的类型中的表单数据。
  */
 
 import React from 'react';
@@ -50,12 +53,14 @@ const getTableData = ({ current, pageSize }: PaginatedParams[0], formData: Objec
 
 const AppList = (props: AppListProps) => {
   const { getFieldDecorator } = props.form;
-  const { tableProps, search, loading } = useFormTable(getTableData, {
-    defaultPageSize: 5,
+  const { tableProps, search } = useFormTable(getTableData, {
     form: props.form,
+    defaultParams: [
+      { current: 2, pageSize: 5 },
+      { name: 'hello', email: 'abc@gmail.com', gender: 'female' }
+    ],
+    defaultType: 'advance'
   });
-
-  console.log('loading', loading);
 
   const { type, changeType, submit, reset } = search;
 
@@ -115,7 +120,7 @@ const AppList = (props: AppListProps) => {
     </div>
   );
 
-  const searchForm = (
+  const searchFrom = (
     <div style={{ marginBottom: 16 }}>
       <Form style={{ display: 'flex', justifyContent: 'flex-end' }}>
         {getFieldDecorator('gender', {
@@ -139,7 +144,7 @@ const AppList = (props: AppListProps) => {
 
   return (
     <div>
-      {type === 'simple' ? searchForm : advanceSearchForm}
+      {type === 'simple' ? searchFrom : advanceSearchForm}
       <Table columns={columns} rowKey="email" {...tableProps} />
     </div>
   );
