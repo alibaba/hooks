@@ -10,7 +10,7 @@ import { Button, Form, Input, Table } from 'antd';
 import React, { useState } from 'react';
 import { WrappedFormUtils } from 'antd/lib/form/Form';
 import { useFormTable } from '@umijs/hooks'
-import { PaginatedParams } from '@umijs/hooks/useFormTable/lib'
+import { PaginatedParams } from '@umijs/hooks/lib/useFormTable'
 
 interface Item {
   name: {
