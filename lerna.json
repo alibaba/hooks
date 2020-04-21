@@ -2,6 +2,12 @@
   "packages": [
     "packages/*"
   ],
+  "command": {
+    "version": {
+      "allowBranch": "feat/v1.0",
+      "includeMergedTags": true
+    }
+  },
   "version": "independent",
   "lerna": "2.11.0"
 }
