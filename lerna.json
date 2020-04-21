@@ -2,11 +2,6 @@
   "packages": [
     "packages/*"
   ],
-  "command": {
-    "version": {
-      "includeMergedTags": true
-    }
-  },
   "version": "independent",
   "lerna": "2.11.0"
 }
