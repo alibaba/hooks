@@ -1,6 +1,6 @@
 {
   "name": "@umijs/use-request",
-  "version": "1.4.1",
+  "version": "1.4.2",
   "description": "React Hooks for fetching, caching and updating asynchronous data",
   "main": "./lib/index.js",
   "module": "./es/index.js",
@@ -35,7 +35,7 @@
     "umi-request": "^1.2.17"
   },
   "devDependencies": {
-    "@umijs/hooks": "^1.9.1",
+    "@umijs/hooks": "^1.9.2",
     "axios": "^0.19.2"
   },
   "gitHead": "4ea8f5c04c06eff2a33b2be473a8f7460909bebb"

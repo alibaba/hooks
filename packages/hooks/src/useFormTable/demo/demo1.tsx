@@ -10,7 +10,7 @@ import React from 'react';
 import { Button, Col, Form, Input, Row, Table, Select } from 'antd';
 import { WrappedFormUtils } from 'antd/lib/form/Form';
 import { useFormTable } from '@umijs/hooks'
-import { PaginatedParams } from '@umijs/hooks/useFormTable/lib'
+import { PaginatedParams } from '@umijs/hooks/lib/useFormTable'
 
 const { Option } = Select;
 
