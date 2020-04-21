@@ -6,7 +6,7 @@
  * desc.zh-CN: 在 `cacheKey` 场景下， `run` 的参数 `params` 是可以缓存的，利用这个特点，我们可以实现 pagination 相关条件的缓存。
  */
 
-import { useBoolean, useRequest, useUpdateEffect } from '@umijs/hooks';
+import { useBoolean, useRequest, useUpdateEffect } from 'ahooks';
 import { Button, List, Pagination, Select } from 'antd';
 import React, { useState } from 'react';
 import Mock from 'mockjs';

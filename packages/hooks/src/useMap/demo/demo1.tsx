@@ -8,7 +8,7 @@
 
 import React from 'react';
 import { Button } from 'antd';
-import { useMap } from '@umijs/hooks';
+import { useMap } from 'ahooks';
 
 export default () => {
   const [map, { set, setAll, remove, reset, get }] = useMap<string | number, string>([['msg', 'hello world'], [123, 'number type']]);

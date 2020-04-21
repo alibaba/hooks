@@ -9,7 +9,7 @@
 import React, { useState } from 'react';
 import { Form, Button, Input, Icon } from 'antd';
 import { FormComponentProps } from 'antd/lib/form';
-import { useDynamicList } from '@umijs/hooks'
+import { useDynamicList } from 'ahooks'
 
 export default Form.create()((props: FormComponentProps) => {
   const { list, remove, getKey, push } = useDynamicList(['David', 'Jack']);

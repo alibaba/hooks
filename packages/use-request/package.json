@@ -1,6 +1,6 @@
 {
-  "name": "@umijs/use-request",
-  "version": "1.4.2",
+  "name": "@ahooksjs/use-request",
+  "version": "0.1.0",
   "description": "React Hooks for fetching, caching and updating asynchronous data",
   "main": "./lib/index.js",
   "module": "./es/index.js",
@@ -13,7 +13,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/umijs/hooks.git"
+    "url": "git+https://github.com/ice-lab/ahooks.git"
   },
   "scripts": {
     "compile": "tsc --declarationDir ./lib && tsc --declarationDir ./es"
@@ -23,9 +23,9 @@
   },
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/umijs/hooks/issues"
+    "url": "https://github.com/ice-lab/ahooks/issues"
   },
-  "homepage": "https://github.com/umijs/hooks",
+  "homepage": "https://github.com/ice-lab/ahooks",
   "peerDependencies": {
     "react": "^16.8.6"
   },
@@ -35,7 +35,7 @@
     "umi-request": "^1.2.17"
   },
   "devDependencies": {
-    "@umijs/hooks": "^1.9.2",
+    "ahooks": "^0.1.0",
     "axios": "^0.19.2"
   },
   "gitHead": "4ea8f5c04c06eff2a33b2be473a8f7460909bebb"

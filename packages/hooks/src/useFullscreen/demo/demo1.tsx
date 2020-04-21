@@ -9,7 +9,7 @@
 
 import React from 'react';
 import { Button } from 'antd';
-import {useFullscreen} from '@umijs/hooks';
+import {useFullscreen} from 'ahooks';
 
 export default () => {
   const { ref, isFullscreen, setFull, exitFull, toggleFull } = useFullscreen<HTMLDivElement>();

@@ -166,7 +166,7 @@ const {
 
 ## 扩展用法
 
-基于基础的 useRequest，我们可以进一步封装，实现更高级的定制需求。当前 useRequest 内置了 `集成请求库`，`分页` 和 `加载更多` 三种场景。你可以参考代码，实现自己的封装。参考 [useRequest](https://github.com/umijs/hooks/blob/master/packages/use-request/src/useRequest.ts)、[usePaginated](https://github.com/umijs/hooks/blob/master/packages/use-request/src/usePaginated.ts)、[useLoadMore](https://github.com/umijs/hooks/blob/master/packages/use-request/src/useLoadMore.ts) 的实现。
+基于基础的 useRequest，我们可以进一步封装，实现更高级的定制需求。当前 useRequest 内置了 `集成请求库`，`分页` 和 `加载更多` 三种场景。你可以参考代码，实现自己的封装。参考 [useRequest](https://github.com/ice-lab/ahooks/blob/master/packages/use-request/src/useRequest.ts)、[usePaginated](https://github.com/ice-lab/ahooks/blob/master/packages/use-request/src/usePaginated.ts)、[useLoadMore](https://github.com/ice-lab/ahooks/blob/master/packages/use-request/src/useLoadMore.ts) 的实现。
 
 ### 集成请求库
 
@@ -347,7 +347,7 @@ const {
 你可以通过 `UseAPIProvider` 在项目的最外层设置全局 options。
 
 ```javascript
-import {UseAPIProvider} from '@umijs/use-request';
+import {UseAPIProvider} from '@ahooksjs/use-request';
 
 export function ({children})=>{
   return (
@@ -387,7 +387,7 @@ const secondRequest = useReqeust(service);
 ```javascript
 // 你自己封装的 request
 import { request } from '@/utils/request';
-import { UseAPIProvider } from '@umijs/use-request';
+import { UseAPIProvider } from '@ahooksjs/use-request';
 
 <UseAPIProvider value={{
   requestMethod: request,

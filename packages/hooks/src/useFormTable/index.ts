@@ -1,4 +1,4 @@
-import useRequest from '@umijs/use-request';
+import useRequest from '@ahooksjs/use-request';
 import { useState, useCallback, useEffect, useRef } from 'react';
 import {
   CombineService,
@@ -7,7 +7,7 @@ import {
   PaginatedOptionsWithFormat,
   PaginatedFormatReturn,
   PaginatedResult
-} from '@umijs/use-request/lib/types';
+} from '@ahooksjs/use-request/lib/types';
 import useUpdateEffect from '../useUpdateEffect';
 import usePersistFn from '../usePersistFn';
 

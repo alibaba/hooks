@@ -6,7 +6,7 @@
  * desc.zh-CN: 通过 `options.fetchKey` ，可以将请求进行分类，每一类的请求都有独立的状态，你可以在 `fetches` 中找到所有的请求。
  */
 
-import { useRequest } from '@umijs/hooks';
+import { useRequest } from 'ahooks';
 import { Button, message } from 'antd';
 import React from 'react';
 

@@ -6,7 +6,7 @@
  * desc.zh-CN: 如果 useRequest 第一个参数是字符串，则默认使用 umi-request 发送网络请求
  */
 
-import { useRequest } from '@umijs/hooks';
+import { useRequest } from 'ahooks';
 import React from 'react';
 
 export default () => {

@@ -8,7 +8,7 @@
 
 import React, { useState } from 'react';
 import { Button } from 'antd';
-import { useThrottleFn } from '@umijs/hooks';
+import { useThrottleFn } from 'ahooks';
 
 export default () => {
   const [value, setValue] = useState(0);

@@ -10,7 +10,7 @@ import React, { useState } from 'react';
 import { Form, Button, Input, Icon, Table } from 'antd';
 import { FormComponentProps } from 'antd/lib/form';
 import ReactDragListView from 'react-drag-listview';
-import { useDynamicList } from '@umijs/hooks';
+import { useDynamicList } from 'ahooks';
 
 interface Item {
   name?: string;

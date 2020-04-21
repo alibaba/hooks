@@ -8,7 +8,7 @@
 
 import React, { useState } from 'react';
 import { Button } from 'antd';
-import { useCreation } from '@umijs/hooks';
+import { useCreation } from 'ahooks';
 
 class Foo {
   constructor() {

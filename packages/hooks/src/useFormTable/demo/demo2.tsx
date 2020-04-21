@@ -1,16 +1,16 @@
 /**
  * title: Data caching
- * desc: Form and Table data cache through cacheKey. This is an example of antd v3, see [link](https://github.com/umijs/hooks/blob/master/packages/hooks/src/useFormTable/demo/demo4.tsx) for an example of antd v4.
+ * desc: Form and Table data cache through cacheKey. This is an example of antd v3, see [link](https://github.com/ice-lab/ahooks/blob/master/packages/hooks/src/useFormTable/demo/demo4.tsx) for an example of antd v4.
  *
  * title.zh-CN: 数据缓存
- * desc.zh-CN: 通过 cacheKey 可以实现 Form 和 Table 数据缓存。这是一个 antd v3 示例，antd v4 示例见 [链接](https://github.com/umijs/hooks/blob/master/packages/hooks/src/useFormTable/demo/demo4.tsx)。
+ * desc.zh-CN: 通过 cacheKey 可以实现 Form 和 Table 数据缓存。这是一个 antd v3 示例，antd v4 示例见 [链接](https://github.com/ice-lab/ahooks/blob/master/packages/hooks/src/useFormTable/demo/demo4.tsx)。
  */
 
 import { Button, Form, Input, Table } from 'antd';
 import React, { useState } from 'react';
 import { WrappedFormUtils } from 'antd/lib/form/Form';
-import { useFormTable } from '@umijs/hooks'
-import { PaginatedParams } from '@umijs/hooks/lib/useFormTable'
+import { useFormTable } from 'ahooks'
+import { PaginatedParams } from 'ahooks/lib/useFormTable'
 
 interface Item {
   name: {

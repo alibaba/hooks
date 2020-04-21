@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button } from 'antd';
-import { useUpdate } from '@umijs/hooks';
+import { useUpdate } from 'ahooks';
 
 
 export default () => {

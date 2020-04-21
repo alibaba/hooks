@@ -7,7 +7,7 @@
  */
 
 import React from 'react';
-import { useTextSelection } from '@umijs/hooks';
+import { useTextSelection } from 'ahooks';
 
 export default () => {
   const [{

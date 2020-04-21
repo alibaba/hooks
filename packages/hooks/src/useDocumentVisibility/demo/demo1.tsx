@@ -7,7 +7,7 @@
  */
 
 import React, { useEffect } from 'react';
-import { useDocumentVisibility } from '@umijs/hooks';
+import { useDocumentVisibility } from 'ahooks';
 
 export default () => {
   const documentVisibility = useDocumentVisibility();

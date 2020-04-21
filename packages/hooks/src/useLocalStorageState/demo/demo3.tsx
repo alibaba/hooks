@@ -8,7 +8,7 @@
 
 import React from 'react';
 import { Input } from 'antd';
-import { useLocalStorageState } from '@umijs/hooks';
+import { useLocalStorageState } from 'ahooks';
 
 interface IUser {
   id: number;

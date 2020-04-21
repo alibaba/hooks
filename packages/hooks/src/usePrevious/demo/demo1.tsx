@@ -8,7 +8,7 @@
 
 import React, { useState } from 'react';
 import { Button } from 'antd';
-import { usePrevious } from '@umijs/hooks';
+import { usePrevious } from 'ahooks';
 
 export default () => {
   const [count, setCount] = useState(0);

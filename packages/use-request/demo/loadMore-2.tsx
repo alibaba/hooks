@@ -6,7 +6,7 @@
  * desc.zh-CN: 如果 options 中存在 `ref`，则在滚动到底部时，自动触发 loadMore。当然此时你必须设置 `isNoMore`, 以便让 `useReqeust` 知道何时停止。
  */
 
-import { useRequest } from '@umijs/hooks';
+import { useRequest } from 'ahooks';
 import { Avatar, Button, List } from 'antd';
 import React, { useRef } from 'react';
 
@@ -119,7 +119,7 @@ export default () => {
                 <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
               }
               title={<a>{item.title}</a>}
-              description="umijs/hooks is a react hooks library"
+              description="ahooks is a react hooks library"
             />
           </List.Item>
         )}

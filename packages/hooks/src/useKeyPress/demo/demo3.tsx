@@ -14,7 +14,7 @@
 
 import React, { useState } from 'react';
 import { Icon } from 'antd';
-import {useKeyPress} from '@umijs/hooks';
+import {useKeyPress} from 'ahooks';
 
 export default () => {
   const [num, setNum] = useState();

@@ -6,7 +6,7 @@
  * desc.zh-CN: 同一个 `cacheKey` 的请求，是全局共享的，也就是你可以提前加载数据。利用该特性，可以很方便的实现预加载。
  */
 
-import { useBoolean, useRequest } from '@umijs/hooks';
+import { useBoolean, useRequest } from 'ahooks';
 import { Button, Spin } from 'antd';
 import React from 'react';
 import Mock from 'mockjs';

@@ -6,7 +6,7 @@
  * desc.zh-CN: 在这个例子中， useRequest 接收了一个异步函数 `getUsername` ，在组件初次加载时， 自动触发该函数执行。同时 useRequest 会自动管理异步请求的 `loading` , `data` , `error` 等状态。
  */
 
-import { useRequest } from '@umijs/hooks';
+import { useRequest } from 'ahooks';
 import Mock from 'mockjs';
 import React from 'react';
 

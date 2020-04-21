@@ -6,7 +6,7 @@
  * desc.zh-CN: 通过设置 `requstMethod`, 可以使用自己的请求库。
  */
 
-import { useRequest } from '@umijs/hooks';
+import { useRequest } from 'ahooks';
 import React from 'react';
 import axios from 'axios';
 

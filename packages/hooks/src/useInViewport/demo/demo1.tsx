@@ -7,7 +7,7 @@
  */
 
 import React from 'react';
-import {useInViewport} from '@umijs/hooks';
+import {useInViewport} from 'ahooks';
 
 export default () => {
   const [inViewPort, ref] = useInViewport<HTMLDivElement>();

@@ -7,7 +7,7 @@
  */
 
 import React, { useRef } from 'react';
-import {useScroll} from '@umijs/hooks';
+import {useScroll} from 'ahooks';
 
 export default () => {
   const [scroll] = useScroll(document);

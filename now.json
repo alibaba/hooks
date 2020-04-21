@@ -18,9 +18,6 @@
     { "handle": "filesystem" },
     { "src": "/.*", "dest": "/index.html" }
   ],
-  "github": {
-    "enabled": false
-  },
   "alias": [
     "hooks.umijs.org"
   ]

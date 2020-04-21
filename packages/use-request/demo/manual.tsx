@@ -6,7 +6,7 @@
  * desc.zh-CN: 通过设置 `options.manual = true` , 则需要手动调用 `run` 时才会触发执行异步函数。
  */
 
-import { useRequest } from '@umijs/hooks';
+import { useRequest } from 'ahooks';
 import { Button, Input, message } from 'antd';
 import React, { useState } from 'react';
 

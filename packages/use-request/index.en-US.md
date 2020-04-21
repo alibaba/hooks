@@ -346,7 +346,7 @@ const {
 You can set global options at the outermost level of the project via `UseAPIProvider`.
 
 ```javascript
-import {UseAPIProvider} from '@umijs/use-request';
+import {UseAPIProvider} from '@ahooksjs/use-request';
 
 export function ({children})=>{
   return (
@@ -385,7 +385,7 @@ You can configure the `request` after processing by `requsetMehod`.
 ```javascript
 // your request
 import { request } from '@/utils/request';
-import { UseAPIProvider } from '@umijs/use-request';
+import { UseAPIProvider } from '@ahooksjs/use-request';
 
 <UseAPIProvider value={{
   requestMethod: request,
