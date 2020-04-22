@@ -24,7 +24,7 @@ legacy: /zh-CN/dom/use-click-away
 
 ```javascript
 const ref = useClickAway(
-  onClickAway: (event: KeyboardEvent) => void,
+  onClickAway: (event: MouseEvent | TouchEvent) => void,
   dom?: RefType,
 );
 ```
