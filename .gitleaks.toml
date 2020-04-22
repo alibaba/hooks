@@ -121,7 +121,4 @@ title = "gitleaks config"
 	tags = ["key", "twilio"]
 [whitelist]
 	description = "Whitelisted files"
-	file = '''(^\.?gitleaks.toml$|(.*?)(jpg|gif|doc|pdf|bin))'''
-[whitelist]
-	description = "Ignore package-lock.json"
-	file = '''(^package-lock\.json$)'''
+	file = '''(^\.?gitleaks.toml$|(.*?)(jpg|gif|doc|pdf|bin)$|^package-lock\.json$|yarn\.lock)'''
