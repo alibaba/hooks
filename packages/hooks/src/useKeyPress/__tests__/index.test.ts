@@ -24,4 +24,19 @@ describe('useKeyPress', () => {
       },
     );
   });
+
+  it('test keyCode is undefined', async () => {
+    let msg = ''
+    renderHook(
+      () => useKeyPress('meta.e', e => {
+        msg = 'keypress meta.e'
+      })
+    )
+    act(() => {
+      const ev = document.createEvent('Events');
+      ev.initEvent('keydown', true, true);
+      document.dispatchEvent(ev);
+    })
+    expect(msg).toEqual('')
+  });
 });

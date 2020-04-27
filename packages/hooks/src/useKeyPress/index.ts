@@ -68,6 +68,9 @@ function isType(obj: any) {
  * @returns Boolean
  */
 function genFilterKey(event: any, keyFilter: any) {
+  if (!event.key || !event.keyCode) {
+    return false;
+  }
   const type = isType(keyFilter);
   // 数字类型直接匹配事件的 keyCode
   if (type === 'number') {
@@ -94,10 +97,10 @@ function genFilterKey(event: any, keyFilter: any) {
       (genModifier && genModifier(event)) ||
       (aliasKey && isType(aliasKey) === 'array'
         ? aliasKey.includes(event.key)
-        : aliasKey === event.key) ||
+        : (aliasKey === event.key)) ||
       (aliasKeyCode && isType(aliasKeyCode) === 'array'
         ? aliasKeyCode.includes(event.keyCode)
-        : aliasKeyCode === event.keyCode) ||
+        : (aliasKeyCode === event.keyCode)) ||
       event.key.toUpperCase() === key.toUpperCase()
     ) {
       genLen++;
