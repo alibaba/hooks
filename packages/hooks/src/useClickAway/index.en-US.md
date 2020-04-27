@@ -26,7 +26,7 @@ A hook that elegantly manages click outside of target elements.
 
 ```javascript
 const ref = useClickAway(
-  onClickAway: (event: KeyboardEvent) => void,
+  onClickAway: (event: MouseEvent | TouchEvent) => void,
   dom?: RefType,
 );
 ```
