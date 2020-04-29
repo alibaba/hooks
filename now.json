@@ -11,9 +11,6 @@
       }
     }
   ],
-  "github": {
-    "enabled": false
-  },
   "routes": [
     { "handle": "filesystem" },
     { "src": "/.*", "dest": "/index.html" }
