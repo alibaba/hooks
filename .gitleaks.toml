@@ -37,7 +37,7 @@ title = "gitleaks config"
 	tags = ["key", "Github Token"]
 [[rules]]
 	description = "Alibaba"
-	regex = '''(alibaba|antfin)-inc'''
+	regex = '''((alibaba|antfin|aliyun|alipay)(-inc|\.net)|intranetproxy\.alipay)'''
 	tags = ["key", "Alibaba"]
 [[rules]]
 	description = "antfin"
@@ -121,4 +121,4 @@ title = "gitleaks config"
 	tags = ["key", "twilio"]
 [whitelist]
 	description = "Whitelisted files"
-	file = '''(^\.?gitleaks.toml$|(.*?)(jpg|gif|doc|pdf|bin)$|^package-lock\.json$|yarn\.lock)'''
+	file = '''(^\.?gitleaks.toml$|(.*?)(jpg|gif|doc|pdf|bin)$|^package-lock.json$|yarn.lock|node_modules)'''
