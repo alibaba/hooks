@@ -7,7 +7,7 @@ function useSessionStorageState<T = undefined>(
 function useSessionStorageState<T>(
   key: string,
   defaultValue: T | (() => T),
-): [T, (value?: T | ((previousState?: T) => T)) => void];
+): [T, (value?: T | ((previousState: T) => T)) => void];
 
 function useSessionStorageState<T>(key: string, defaultValue?: T | (() => T)) {
   return useStorageState(sessionStorage, key, defaultValue);
