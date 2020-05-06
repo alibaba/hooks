@@ -370,8 +370,8 @@ export function ({children})=>{
 
 ```javascript
 
-const firstRequest = useReqeust(service);
-const secondRequest = useReqeust(service);
+const firstRequest = useRequest(service);
+const secondRequest = useRequest(service);
 
 // firstRequest.loading
 // firstRequest.data
