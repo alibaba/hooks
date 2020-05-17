@@ -170,7 +170,7 @@ const {
 
 ### 集成请求库
 
-如果 service 是 `string` 、 `object` 、 `(...args)=> string|object`, 我们会自动使用 [umi-request](https://github.com/umijs/umi-request/blob/master/README_zh-CN.md) 来发送网络请求。umi-request 是类似 axios、fetch 的请求库。
+如果 service 是 `string` 、 `object` 、 `(...args)=> string|object`, 我们会自动使用 [fetch](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch) 来发送网络请求。
 
 ```javascript
 // 用法 1
@@ -195,7 +195,7 @@ const { loading, run } = useRequest((username) => ({
 });
 ```
 
-<code src="./demo/umiRequest.tsx" />
+<code src="./demo/fetch.tsx" />
 
 <br>
 
@@ -214,7 +214,7 @@ const {...} = useRequest<R>(
 
 #### Service
 
-如果 service 是 `string` 、 `object` 、 `(...args)=> string|object`，则自动使用 `umi-request` 来发送请求。
+如果 service 是 `string` 、 `object` 、 `(...args)=> string|object`，则自动使用 `fetch` 来发送请求。
 
 #### Params
 
@@ -378,22 +378,6 @@ const secondRequest = useReqeust(service);
 
 // secondRequest.loading
 // secondRequest.data
-```
-
-### 2. 我如何使用 umi-request 的 `use` `errorHandler` 等？
-
-你可以将处理完后的 `request` 通过 `requsetMehod` 配置一下即可。
-
-```javascript
-// 你自己封装的 request
-import { request } from '@/utils/request';
-import { UseAPIProvider } from '@ahooksjs/use-request';
-
-<UseAPIProvider value={{
-  requestMethod: request,
-}}>
-
-</UseAPIProvider>
 ```
 
 ## 致谢

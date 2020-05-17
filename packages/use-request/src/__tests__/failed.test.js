@@ -61,6 +61,6 @@ describe('normal request', () => {
 
     const { result, waitForNextUpdate } = renderHook(() => useRequest(prefix('/test/failed3')));
     await waitForNextUpdate(() => result.current.error);
-    expect(result.current.error.message).toEqual('http error');
+    expect(result.current.error.message).toEqual('Internal Server Error');
   });
 });

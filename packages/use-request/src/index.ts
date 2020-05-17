@@ -1,5 +1,4 @@
 import { useRef, useContext } from 'react';
-import request from 'umi-request';
 import { BaseOptions, BasePaginatedOptions, BaseResult, CombineService, LoadMoreFormatReturn, LoadMoreOptions, LoadMoreOptionsWithFormat, LoadMoreParams, LoadMoreResult, OptionsWithFormat, PaginatedFormatReturn, PaginatedOptionsWithFormat, PaginatedParams, PaginatedResult } from './types';
 import useAsync from './useAsync';
 import useLoadMore from './useLoadMore';
@@ -53,14 +52,24 @@ function useRequest(service: any, options: any = {}) {
   paginatedRef.current = paginated;
   loadMoreRef.current = loadMore;
 
-  const finalRequestMethod = requestMethod || request;
+  // @ts-ignore
+  const fetchProxy = (...args: any[]) => fetch(...args).then(
+    (res: Response) => {
+      if (res.ok) {
+        return res.json();
+      }
+      throw new Error(res.statusText);
+    }
+  )
+
+  const finalRequestMethod = requestMethod || fetchProxy;
 
   let promiseService: () => Promise<any>;
   if (typeof service === 'string') {
     promiseService = () => finalRequestMethod(service);
   } else if (typeof service === 'object') {
     const { url, ...rest } = service;
-    promiseService = () => (requestMethod ? requestMethod(service) : request(url, rest));
+    promiseService = () => (requestMethod ? requestMethod(service) : fetchProxy(url, rest));
   } else {
     promiseService = (...args: any[]) => new Promise((resolve, reject) => {
       const result = service(...args);
@@ -69,12 +78,12 @@ function useRequest(service: any, options: any = {}) {
       } else if (typeof result === 'string') {
         finalRequestMethod(result).then((data: any) => { resolve(data) }).catch((e: any) => reject(e));
       } else if (typeof result === 'object') {
-        // umi-request 需要拆分下字段
+        // fetch 需要拆分下字段
         if (requestMethod) {
-          finalRequestMethod(result).then((data: any) => { resolve(data) }).catch((e: any) => reject(e));
+          requestMethod(result).then((data: any) => { resolve(data) }).catch((e: any) => reject(e));
         } else {
           const { url, ...rest } = result;
-          request(url, rest).then((data: any) => { resolve(data) }).catch((e: any) => reject(e));
+          fetchProxy(url, rest).then((data: any) => { resolve(data) }).catch((e: any) => reject(e));
         }
       }
     });

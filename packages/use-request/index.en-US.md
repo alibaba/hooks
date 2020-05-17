@@ -170,7 +170,7 @@ Based on the basic useRequest, we can further encapsulate and implement more adv
 
 ### Integration Request Library
 
-If service is `string`,` object`, `(... args) => string | object`, we will automatically use [umi-request] (https://github.com/umijs/umi-request/blob /master/README_zh-CN.md) to send network requests. umi-request is a request library similar to axios and fetch.
+If service is `string`,` object`, `(... args) => string | object`, we will automatically use [fetch] (https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch) to send network requests. 
 
 ```javascript
 // Usage 1
@@ -195,7 +195,7 @@ const { loading, run } = useRequest((username) => ({
 });
 ```
 
-<code src="./demo/umiRequest.tsx" />
+<code src="./demo/fetch.tsx" />
 
 <br>
 
@@ -214,7 +214,7 @@ const {...} = useRequest<R>(
 
 #### Service
 
-If service is `string`,` object`, `(... args) => string | object`, then automatically use` umi-request` to send the request.
+If service is `string`,` object`, `(... args) => string | object`, then automatically use `fetch` to send the request.
 
 #### Params
 
@@ -376,22 +376,6 @@ const secondRequest = useReqeust(service);
 
 // secondRequest.loading
 // secondRequest.data
-```
-
-### 2. How do I use umi-request's `use` `errorHandler` etc.?
-
-You can configure the `request` after processing by `requsetMehod`.
-
-```javascript
-// your request
-import { request } from '@/utils/request';
-import { UseAPIProvider } from '@ahooksjs/use-request';
-
-<UseAPIProvider value={{
-  requestMethod: request,
-}}>
-
-</UseAPIProvider>
 ```
 
 ## Thanks
