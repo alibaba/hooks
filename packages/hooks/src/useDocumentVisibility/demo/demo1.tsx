@@ -12,7 +12,6 @@ import { useDocumentVisibility } from 'ahooks';
 export default () => {
   const documentVisibility = useDocumentVisibility();
 
-
   useEffect(() => {
     if (documentVisibility === 'visible') {
       console.log(`Current document visibility state: ${documentVisibility}`)
@@ -22,7 +21,7 @@ export default () => {
   }, [documentVisibility]);
   return (
     <div>
-Current document visibility state: {documentVisibility}
+      Current document visibility state: {documentVisibility}
     </div>
   );
 };
