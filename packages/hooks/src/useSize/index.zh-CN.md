@@ -19,29 +19,24 @@ legacy: /zh-CN/dom/use-size
 
 <code src="./demo/demo1.tsx" />
 
-### 懒加载（用于监听同一组件内后渲染节点）
+### 传入 DOM 节点
 
 <code src="./demo/demo2.tsx" />
-
-### 监听提前渲染节点
-
-<code src="./demo/demo3.tsx" />
 
 ## API
 
 ```
-const [ state, ref? ] = useSize(dom);
+const size = useSize(dom);
 ```
 
 ### Result
 
 | 参数     | 说明                                     | 类型       |
 |----------|------------------------------------------|------------|
-| state  | dom 节点的尺寸和位置                          | { width: number, height: number }    |
-| ref     | 当未传入任何参数时，将 ref 绑定给需监听的节点      | -        |
+| size  | dom 节点的尺寸                         | { width: number, height: number }    |
 
 ### Params
 
 | 参数    | 说明                                         | 类型                   | 默认值 |
 |---------|----------------------------------------------|------------------------|--------|
-| dom? | 可选项，如果未传入则会监听返回结果中的 ref，否则会监听传入的节点  | HTMLElement \| (() => HTMLElement) \| undefined | -      |
+| dom | DOM 节点或者 Refs  | HTMLElement \| React.RefObject | -      |

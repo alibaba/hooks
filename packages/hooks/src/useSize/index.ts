@@ -1,30 +1,27 @@
-import { useState, useRef, MutableRefObject, useLayoutEffect } from 'react';
+import { useState, useLayoutEffect } from 'react';
 import ResizeObserver from 'resize-observer-polyfill';
 
-type Arg = HTMLElement | (() => HTMLElement) | null;
+type Arg = HTMLElement | React.RefObject<HTMLInputElement>;
 
 type Size = { width?: number; height?: number };
 
-function useSize<T extends HTMLElement = HTMLElement>(): [Size, MutableRefObject<T>];
-function useSize<T extends HTMLElement = HTMLElement>(arg: Arg): [Size];
-function useSize<T extends HTMLElement = HTMLElement>(
-  ...args: [Arg] | []
-): [Size, MutableRefObject<T>?] {
-  const hasPassedInElement = args.length === 1;
-  const arg = useRef(args[0]);
-  [arg.current] = args;
-  const element = useRef<T>();
+function useSize(arg: Arg): Size {
+  if (!arg) {
+    throw Error('useSize requires at least 1 argument, but only 0 were passed');
+  }
+
   const [state, setState] = useState<Size>(() => {
-    const initDOM = typeof arg.current === 'function' ? arg.current() : arg.current;
+    // @ts-ignore
+    const targetElement = arg.current ? arg.current : arg;
     return {
-      width: (initDOM || {}).clientWidth,
-      height: (initDOM || {}).clientHeight,
+      width: (targetElement || {}).clientWidth,
+      height: (targetElement || {}).clientHeight,
     };
   });
 
   useLayoutEffect(() => {
-    const passedInElement = typeof arg.current === 'function' ? arg.current() : arg.current;
-    const targetElement = hasPassedInElement ? passedInElement : element.current;
+    // @ts-ignore
+    const targetElement = arg.current ? arg.current : arg;
     if (!targetElement) {
       return () => {};
     }
@@ -42,12 +39,10 @@ function useSize<T extends HTMLElement = HTMLElement>(
     return () => {
       resizeObserver.disconnect();
     };
-  }, [element.current, typeof arg.current === 'function' ? undefined : arg.current]);
+  }, [arg]);
 
-  if (hasPassedInElement) {
-    return [state];
-  }
-  return [state, element as MutableRefObject<T>];
+
+  return state;
 }
 
 export default useSize;
