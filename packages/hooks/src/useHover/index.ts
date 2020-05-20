@@ -20,7 +20,7 @@ export default <T extends HTMLElement = HTMLElement>(
   const onLeaveRef = useRef(onLeave);
   onLeaveRef.current = onLeave;
 
-  const { state, setTrue, setFalse } = useBoolean(false);
+  const [ state, { setTrue, setFalse }] = useBoolean(false);
 
   useEffect(() => {
     const onMouseEnter = () => {

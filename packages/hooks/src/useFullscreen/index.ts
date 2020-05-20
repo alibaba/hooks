@@ -29,7 +29,7 @@ export default <T extends HTMLElement = HTMLElement>(options?: Options<T>): Resu
 
   const element = useRef<T>();
 
-  const { state, toggle, setTrue, setFalse } = useBoolean(false);
+  const [ state, { toggle, setTrue, setFalse }] = useBoolean(false);
 
   useLayoutEffect(() => {
     /* 非全屏时，不需要监听任何全屏事件 */
