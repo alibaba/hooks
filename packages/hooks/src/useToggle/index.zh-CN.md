@@ -28,18 +28,22 @@ legacy: /zh-CN/state/use-toggle
 ```javascript
 const {
   state,
-  toggle,
-  setLeft,
-  setRight
+  {
+      toggle,
+      setLeft,
+      setRight
+  }
 } = useToggle(
   defaultValue?: boolean,
 );
 
 const {
   state,
-  toggle,
-  setLeft,
-  setRight
+  {
+      toggle,
+      setLeft,
+      setRight
+  }
 } = useToggle(
   defaultValue: any = false,
   reverseValue?: any,

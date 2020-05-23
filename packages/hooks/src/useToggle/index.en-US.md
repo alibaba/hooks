@@ -26,21 +26,25 @@ A hook that switch value between two states.
 ## API
 
 ```javascript
-const {
+const [
   state,
-  toggle,
-  setLeft,
-  setRight
-} = useToggle(
+  {
+      toggle,
+      setLeft,
+      setRight
+  }
+] = useToggle(
   defaultValue?: boolean,
 );
 
-const {
+const [
   state,
-  toggle,
-  setLeft,
-  setRight
-} = useToggle(
+  {
+      toggle,
+      setLeft,
+      setRight
+  }
+] = useToggle(
   defaultValue: any = false,
   reverseValue?: any,
 );
