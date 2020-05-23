@@ -49,6 +49,12 @@ const [
   reverseValue?: any,
 );
 ```
+### Params
+
+| Property | Description                                 | Type                   | Default |
+|---------|----------------------------------------------|------------------------|--------|
+| defaultValue | Optional，set a default value  | number \| string \| boolean \| undefined | false      |
+| reverseValue | Optional，set a reverse value  | number \| string \| boolean \| undefined | -      |
 
 ### Result
 
@@ -64,9 +70,3 @@ const [
 | setLeft | Set default value | () => void |
 | setRight | Set reverse value | () => void |
 
-### Params
-
-| Property | Description                                 | Type                   | Default |
-|---------|----------------------------------------------|------------------------|--------|
-| defaultValue | Optional，set a default value  | number \| string \| boolean \| undefined | false      |
-| reverseValue | Optional，set a reverse value  | number \| string \| boolean \| undefined | -      |
