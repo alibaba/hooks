@@ -26,19 +26,18 @@ A hook to subscribe DOM element visibility change
 
 ## API
 
+```ts
+const inViewPort = useInViewport(target);
 ```
-const [ inViewPort, ref? ] = useInViewport(dom);
-```
+
+### Params
+
+| Property | Description                                                        | Type                   | Default |
+|---------|----------------------------------------------|------------------------|--------|
+| target | DOM element or Ref Object | (() => HTMLElement) | React.RefObject | - |
 
 ### Result
 
 | Property | Description                                         | Type                 |
 |----------|------------------------------------------|------------|
 | inViewPort  | Whether DOM elements are in the visible range                             | boolean    |
-| ref     | when no param is passed, this ref will be listened      | -        |
-
-### Params
-
-| Property | Description                                                        | Type                   | Default |
-|---------|----------------------------------------------|------------------------|--------|
-| dom? | optional, if none is passed, this hook will subscibe to the ref that it returns  | HTMLElement \| (() => HTMLElement) \| undefined | -      |

@@ -7,10 +7,10 @@
  */
 
 import React from 'react';
-import {useInViewport} from 'ahooks';
+import { useInViewport } from 'ahooks';
 
 export default () => {
-  const [inViewPort] = useInViewport(() => document.querySelector('#demo2'));
+  const inViewPort = useInViewport(() => document.querySelector('#demo2'));
   return (
     <div>
       <div id="demo2">observer dom</div>
