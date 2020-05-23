@@ -23,14 +23,13 @@ legacy: /zh-CN/dom/use-full-screen
 
 ## API
 
-```
+```ts
 const {
    isFullscreen,
    setFull,
-   exitFull,
-   ref?,
+   exitFull
 } = useFullScreen({
-  dom?,
+  target,
   onExitFull?,
   onFull?,
 });
@@ -43,8 +42,7 @@ const {
 | isFullscreen  | 是否全屏                          | boolean    |
 | setFull  | 设置全屏                          | ()=>void    |
 | exitFull  | 退出全屏                          | ()=>void    |
-| toggleFull  | 切换全屏                          | ()=>void    |
-| ref     | 当未传入 dom 参数时，将 ref 绑定给需全屏的节点      | -        |
+| target | DOM 节点或者 Ref 对象  | (() => HTMLElement) | React.RefObject | - |
 
 ### Options
 

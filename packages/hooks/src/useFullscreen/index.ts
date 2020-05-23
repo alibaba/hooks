@@ -1,33 +1,30 @@
 /* eslint no-empty: 0 */
 
-import { MutableRefObject, useLayoutEffect, useRef } from 'react';
+import { useLayoutEffect, useRef } from 'react';
 import screenfull from 'screenfull';
 import useBoolean from '../useBoolean';
 
-export interface Options<T> {
-  dom?: T | (() => T) | null;
+export interface Options {
+  target: HTMLElement | React.RefObject<HTMLInputElement>;
   onExitFull?: () => void;
   onFull?: () => void;
 }
 
-export interface Result<T> {
+export interface Result {
   isFullscreen: boolean;
   setFull: () => void;
   exitFull: () => void;
   toggleFull: () => void;
-  ref?: MutableRefObject<T>;
 }
 
-export default <T extends HTMLElement = HTMLElement>(options?: Options<T>): Result<T> => {
-  const { dom, onExitFull, onFull } = options || {};
+export default (options?: Options): Result => {
+  const { target, onExitFull, onFull } = options || {};
 
   const onExitFullRef = useRef(onExitFull);
   onExitFullRef.current = onExitFull;
 
   const onFullRef = useRef(onFull);
   onFullRef.current = onFull;
-
-  const element = useRef<T>();
 
   const { state, toggle, setTrue, setFalse } = useBoolean(false);
 
@@ -37,8 +34,8 @@ export default <T extends HTMLElement = HTMLElement>(options?: Options<T>): Resu
       return;
     }
 
-    const passedInElement = typeof dom === 'function' ? dom() : dom;
-    const targetElement = passedInElement || element.current;
+    // @ts-ignore
+    const targetElement = typeof target === 'function' ? target() : target.current;
     if (!targetElement) {
       return;
     }
@@ -79,20 +76,16 @@ export default <T extends HTMLElement = HTMLElement>(options?: Options<T>): Resu
         onExitFullRef.current();
       }
     };
-  }, [state, typeof dom === 'function' ? undefined : dom]);
+  }, [state, typeof target === 'function' ? undefined : target]);
 
   const toggleFull = () => toggle();
 
-  const result: Result<T> = {
+  const result: Result = {
     isFullscreen: !!state,
     setFull: setTrue,
     exitFull: setFalse,
     toggleFull,
   };
-
-  if (!dom) {
-    result.ref = element as MutableRefObject<T>;
-  }
 
   return result;
 };

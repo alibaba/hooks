@@ -13,7 +13,7 @@ import img from './react-hooks.jpg';
 
 export default () => {
   const { setFull } = useFullscreen<HTMLElement>({
-    dom: () => document.getElementById('fullscreen-img'),
+    target: () => document.getElementById('fullscreen-img'),
   });
   return (
     <div style={{ background: 'white' }}>
