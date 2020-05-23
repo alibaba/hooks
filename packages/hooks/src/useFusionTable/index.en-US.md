@@ -1,5 +1,5 @@
 ---
-title: useFormTable
+title: useFusionTable
 order: 1000
 nav:
   title: Hooks
@@ -8,12 +8,12 @@ group:
   title: Table
   path: /table
   order: 3
-legacy: /table/use-form-table
+legacy: /table/use-fusion-table
 ---
 
-# useFormTable
+# useFusionTable
 
-It encapsulates the common AntD [Form](https://ant.design/components/form-cn/) and AntD [Table](https://ant.design/components/table-cn/) linkage logic, and supports AntD V3 and V4 at the same time.
+It encapsulates the common Fusion [Form](https://fusion.design/pc/component/basic/form) and Fusion [Table](https://fusion.design/pc/component/basic/table) linkage logic.
 
 ## Examples
 
@@ -21,13 +21,6 @@ It encapsulates the common AntD [Form](https://ant.design/components/form-cn/) a
 
 <code src="./demo/demo1.tsx" />
 
-### Data caching
-
-<code src="./demo/demo2.tsx" />
-
-### Set Default Params
-
-<code src="./demo/demo5.tsx" />
 
 ## API
 

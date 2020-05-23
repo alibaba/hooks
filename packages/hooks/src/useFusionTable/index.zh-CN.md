@@ -1,5 +1,5 @@
 ---
-title: useFormTable
+title: useFusionTable
 order: 1000
 nav:
   title: Hooks
@@ -8,7 +8,7 @@ group:
   title: Table
   path: /table
   order: 3
-legacy: /zh-CN/table/use-form-table
+legacy: /zh-CN/table/use-fusion-table
 ---
 
 # useFormTable
@@ -21,13 +21,6 @@ legacy: /zh-CN/table/use-form-table
 
 <code src="./demo/demo1.tsx" />
 
-### 数据缓存
-
-<code src="./demo/demo2.tsx" />
-
-### 初始化数据
-
-<code src="./demo/demo5.tsx" />
 
 ## API
 

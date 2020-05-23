@@ -38,6 +38,7 @@
     "react": "^16.8.6"
   },
   "devDependencies": {
+    "@alifd/next": "^1.20.6",
     "antd": "^3.26.6",
     "react-drag-listview": "^0.1.6",
     "umi-request": "^1.0.8"

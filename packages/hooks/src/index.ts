@@ -34,6 +34,7 @@ import useEventListener from './useEventListener';
 import useHover from './useHover';
 import useUnmount from './useUnmount';
 import useFormTable from './useFormTable';
+import useFusionTable from './useFusionTable';
 import useSet from './useSet';
 import usePersistFn from './usePersistFn';
 import useMap from './useMap';
@@ -104,5 +105,6 @@ export {
   useUpdate,
   useTextSelection,
   useEventTarget,
-  useHistoryTravel
+  useHistoryTravel,
+  useFusionTable
 };
