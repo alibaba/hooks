@@ -6,14 +6,14 @@
  * desc.zh-CN: 尝试滚动一下页面。
  */
 
-import React, { useRef } from 'react';
-import {useScroll} from 'ahooks';
+import React from 'react';
+import { useScroll } from 'ahooks';
 
 export default () => {
-  const [scroll] = useScroll(document);
+  const scroll = useScroll(document);
   return (
-    <>
+    <div id="demo">
       <div>{JSON.stringify(scroll)}</div>
-    </>
+    </div>
   );
 };
