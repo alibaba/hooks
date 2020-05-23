@@ -1,18 +1,14 @@
 import { useState, useLayoutEffect } from 'react';
 import ResizeObserver from 'resize-observer-polyfill';
 
-type Arg = HTMLElement | React.RefObject<HTMLInputElement>;
+type Target = HTMLElement | React.RefObject<HTMLInputElement>;
 
 type Size = { width?: number; height?: number };
 
-function useSize(arg: Arg): Size {
-  if (!arg) {
-    throw Error('useSize requires at least 1 argument, but only 0 were passed');
-  }
-
+function useSize(target: Target): Size {
   const [state, setState] = useState<Size>(() => {
     // @ts-ignore
-    const targetElement = arg.current ? arg.current : arg;
+    const targetElement = target.current ? target.current : target;
     return {
       width: (targetElement || {}).clientWidth,
       height: (targetElement || {}).clientHeight,
@@ -21,7 +17,7 @@ function useSize(arg: Arg): Size {
 
   useLayoutEffect(() => {
     // @ts-ignore
-    const targetElement = arg.current ? arg.current : arg;
+    const targetElement = target.current ? target.current : target;
     if (!targetElement) {
       return () => {};
     }
@@ -39,7 +35,7 @@ function useSize(arg: Arg): Size {
     return () => {
       resizeObserver.disconnect();
     };
-  }, [arg]);
+  }, [target]);
 
 
   return state;
