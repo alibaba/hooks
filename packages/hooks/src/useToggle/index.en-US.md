@@ -27,7 +27,7 @@ A hook that switch value between two states.
 
 ```javascript
 const {
-  state, 
+  state,
   toggle,
   setLeft,
   setRight
@@ -36,7 +36,7 @@ const {
 );
 
 const {
-  state, 
+  state,
   toggle,
   setLeft,
   setRight
@@ -51,6 +51,11 @@ const {
 | Property | Description                                         | Type                 |
 |----------|--------------------------------------|----------------------|
 | state  | state value                         | boolean              |
+| actions | Operation set | object |
+
+### Actions
+| Property | Description                                         | Type                 |
+|----------|--------------------------------------|----------------------|
 | toggle | Trigger state change, accept two optional parameters | (defaultValue: any = false, reverseValue?: any) => void |
 | setLeft | Set default value | () => void |
 | setRight | Set reverse value | () => void |

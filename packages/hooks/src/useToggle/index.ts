@@ -2,31 +2,31 @@ import { useCallback, useState, useMemo } from 'react';
 
 type IState = string | number | boolean | undefined;
 
-function useToggle<T = boolean | undefined>(): {
-  state: boolean;
-  toggle: (value?: T) => void;
+export interface Actions<T = IState> {
   setLeft: () => void;
   setRight: () => void;
+  toggle: (value?: T) => void;
+}
+
+function useToggle<T = boolean | undefined>(): {
+  state: boolean;
+  actions: Actions
 };
 
 function useToggle<T = IState>(
   defaultValue: T,
 ): {
-  state: T;
-  toggle: (value?: T) => void;
-  setLeft: () => void;
-  setRight: () => void;
-};
+    state: T;
+    actions: Actions
+  };
 
 function useToggle<T = IState, U = IState>(
   defaultValue: T,
   reverseValue: U,
 ): {
-  state: T | U;
-  toggle: (value?: T | U) => void;
-  setLeft: () => void;
-  setRight: () => void;
-};
+    state: T | U;
+    actions: Actions
+  };
 
 function useToggle<D extends IState = IState, R extends IState = IState>(
   defaultValue: D = false as D,
@@ -38,9 +38,11 @@ function useToggle<D extends IState = IState, R extends IState = IState>(
     [reverseValue],
   );
 
-  // 切换返回值
-  const toggle = useCallback(
-    (value?: D | R) => {
+
+
+  const actions = useMemo(() => {
+    // 切换返回值
+    const toggle: () => void = (value?: D | R) => {
       // 强制返回状态值，适用于点击操作
       if (value !== undefined) {
         setState(value);
@@ -48,26 +50,22 @@ function useToggle<D extends IState = IState, R extends IState = IState>(
       }
       const data = state === defaultValue ? reverseValueOrigin : defaultValue;
       setState(data);
-    },
-    [state],
-  );
+    }
+    // 设置默认值
+    const setLeft: () => void = () => setState(defaultValue);
+    // 设置取反值
+    const setRight: () => void = () => setState(reverseValueOrigin);
+    return {
+      toggle,
+      setLeft,
+      setRight,
+    }
+}, [setState, state]);
 
-  // 设置默认值
-  const setLeft = useCallback(() => {
-    setState(defaultValue);
-  }, [setState]);
-
-  // 设置取反值
-  const setRight = useCallback(() => {
-    setState(reverseValueOrigin);
-  }, [setState]);
-
-  return {
+  return [
     state,
-    toggle,
-    setLeft,
-    setRight,
-  };
+    actions
+  ]
 }
 
 export default useToggle;

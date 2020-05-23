@@ -27,7 +27,7 @@ legacy: /zh-CN/state/use-toggle
 
 ```javascript
 const {
-  state, 
+  state,
   toggle,
   setLeft,
   setRight
@@ -36,7 +36,7 @@ const {
 );
 
 const {
-  state, 
+  state,
   toggle,
   setLeft,
   setRight
@@ -51,6 +51,12 @@ const {
 | 参数     | 说明                                 | 类型                 |
 |----------|--------------------------------------|----------------------|
 | state  | 状态值                         | boolean              |
+| actions | 操作集合    | object |
+
+### Actions
+
+| 参数     | 说明                                 | 类型                 |
+|----------|--------------------------------------|----------------------|
 | toggle | 触发状态更改的函数,可以接受两个可选参数修改状态值 | (defaultValue: any = false, reverseValue?: any) => void |
 | setLeft | 设置为默认值 | () => void |
 | setRight | 设置为相反值 | () => void |
