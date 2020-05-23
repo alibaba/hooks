@@ -22,18 +22,18 @@ A hook to subscribe DOM element size change
 
 ## API
 
+```ts
+const size = useSize(target);
 ```
-const size = useSize(domOrRef);
-```
+
+### Params
+
+| Property | Description                                                        | Type                   | Default |
+|---------|----------------------------------------------|------------------------|--------|
+| target | DOM element or Ref Object  | HTMLElement \| React.RefObject | -      |
 
 ### Result
 
 | Property | Description                                         | Type                 |
 |----------|------------------------------------------|------------|
 | size  | size of the DOM                             | { width: number, height: number }    |
-
-### Params
-
-| Property | Description                                                        | Type                   | Default |
-|---------|----------------------------------------------|------------------------|--------|
-| domOrRef | DOM element or Refs  | HTMLElement \| React.RefObject | -      |

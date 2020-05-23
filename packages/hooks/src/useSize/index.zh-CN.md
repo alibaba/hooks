@@ -25,18 +25,18 @@ legacy: /zh-CN/dom/use-size
 
 ## API
 
+```ts
+const size = useSize(target);
 ```
-const size = useSize(dom);
-```
+
+### Params
+
+| 参数    | 说明                                         | 类型                   | 默认值 |
+|---------|----------------------------------------------|------------------------|--------|
+| target | DOM 节点或者 Refs  | HTMLElement \| React.RefObject | -      |
 
 ### Result
 
 | 参数     | 说明                                     | 类型       |
 |----------|------------------------------------------|------------|
 | size  | dom 节点的尺寸                         | { width: number, height: number }    |
-
-### Params
-
-| 参数    | 说明                                         | 类型                   | 默认值 |
-|---------|----------------------------------------------|------------------------|--------|
-| dom | DOM 节点或者 Refs  | HTMLElement \| React.RefObject | -      |
