@@ -15,40 +15,35 @@ Tracking content, size, position of user text selection
 
 ## Examples
 
-### Default Usage
+### Set 'dom'  target
 
 <code src="./demo/demo1.tsx" />
 
 ### Use Ref
 
-<code src="./demo/demo4.tsx" />
-
-### Set 'dom'  target
-
-<code src="./demo/demo2.tsx" />
+<code src="./demo/demo3.tsx" />
 
 ### Translate user text selection
 
-<code src="./demo/demo3.tsx" />
+<code src="./demo/demo2.tsx" />
 
 ## API
 
-``` typescript
-const [state, ref?] = useTextSelection(dom);
+``` ts
+const state = useTextSelection(target);
 ```
 
 ### Params
 
 | Property | Description | Type | Default |
 |-----|-----|-----|-----|
-| dom？ | optional, if none is passed, this hook will subscibe to the ref that it returns | - |
+| target | DOM element or Ref Object | (() => HTMLElement) | React.RefObject | - |
 
 ### Result
 
 | Property | Description                                         | Type                 |
 |----------|------------------------------------------|------------|
 | state  | content, size, position of user text selection | detail as fallow 'state' |
-| ref     | when no param is passed, this ref will be listened      | -        |
 
 #### state
 

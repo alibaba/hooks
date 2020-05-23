@@ -15,42 +15,36 @@ legacy: /zh-CN/dom/use-text-selection
 
 ## 代码演示
 
-### 默认用法
+### 使用 Dom
 
 <code src="./demo/demo1.tsx" />
 
 ### 使用 Ref
 
-<code src="./demo/demo4.tsx" />
-
-### 使用 Dom
-
-<code src="./demo/demo2.tsx" />
+<code src="./demo/demo3.tsx" />
 
 ### 划词翻译
 
-<code src="./demo/demo3.tsx" />
+<code src="./demo/demo2.tsx" />
 
 
 ## API
 
 ``` typescript
-const [state, ref?] = useTextSelection(dom);
+const state = useTextSelection(target);
 ```
 
 ### 参数
 
 | 参数 | 说明 | 类型 | 默认值 |
 |-----|-----|-----|-----|
-| dom? | 可选项，如果未传入则会监听返回结果中的 ref，否则会监听传入的节点 | HTMLElement | (() => HTMLElement) | undefined | - |
+| target |  | (() => HTMLElement) | React.RefObject | - |
 
 ### 结果
-
 
 | 参数 | 说明 | 类型 |
 |-----|-----|-----|
 | state | dom 节点内选取文本的内容和位置 | 详见下方 state |
-| ref | 当未传入任何参数时，将 ref 绑定给需监听的节点 | - |
 
 #### state
 
