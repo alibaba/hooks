@@ -128,6 +128,7 @@ const {
   focusTimespan,
   debounceInterval,
   throttleInterval,
+  ready,
 });
 ```
 
