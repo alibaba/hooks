@@ -50,6 +50,10 @@ Production-ready React Hook to manage asynchronous data.
 
 <code src="./demo/concurrent.tsx" />
 
+### Dependent Request
+
+<code src="./demo/ready.tsx" />
+
 ### Debounce
 
 <code src="./demo/debounce.tsx" />
@@ -163,7 +167,7 @@ All Options are optional.
 | focusTimespan        | <ul><li>  If the request is re-initiated every time, it is not good. We need to have a time interval. In the current time interval, the request will not be re-initiated. </li><li> Needs to be used with refreshOnWindowFocus. </li></ul>                                                                                                                                                                 | `number`                                | `5000`  |
 | debounceInterval     | debounce interval, the unit is millisecond. After setting, request to enter debounce mode.                                                                                                                                                                                                                                                                                                                 | `number`                                | -       |
 | throttleInterval     | throttle interval, the unit is millisecond. After setting, request to enter throttle mode.                                                                                                                                                                                                                                                                                                                 | `number`                                | -       |
-
+| ready     | Only when ready is `true`, will the request be initiated                                                                                                                                                                                                               | `boolean`                                | `true`       |
 ## Advanced usage
 
 Based on the basic useRequest, we can further encapsulate and implement more advanced customization requirements. Currently useRequest has three scenarios: `Integrated Request Library`,` Pagination` and `Load More`. You can refer to the code to implement your own encapsulation. Refer to the implementation of [useRequest](./src/useRequest.ts)、[usePaginated](./src/usePaginated.ts)、[useLoadMore](./src/useLoadMore.ts) 的实现。
