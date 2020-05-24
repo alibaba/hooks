@@ -10,8 +10,8 @@ import React from 'react';
 import { useHover } from 'ahooks';
 
 export default () => {
-  const [isHovering] = useHover({
-    dom: () => document.getElementById('hover-div'),
+  const isHovering = useHover({
+    target: () => document.getElementById('hover-div'),
     onEnter: () => {
       console.log('onEnter');
     },
