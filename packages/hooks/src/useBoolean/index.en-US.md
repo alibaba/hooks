@@ -28,6 +28,12 @@ const [ state, { toggle, setTrue, setFalse }] = useBoolean(
 );
 ```
 
+### Params
+
+| Property | Description                                 | Type                   | Default |
+|---------|----------------------------------------------|------------------------|--------|
+| defaultValue | Optional，set a default value  | boolean \| undefined | false      |
+
 ### Result
 
 | Property | Description                                         | Type                 |
@@ -41,9 +47,3 @@ const [ state, { toggle, setTrue, setFalse }] = useBoolean(
 | toggle | Trigger state change, accept an optional parameter | (value?: any) => void |
 | setTrue | Set state value true | () => void |
 | setFalse | Set state value false | () => void |
-
-### Params
-
-| Property | Description                                 | Type                   | Default |
-|---------|----------------------------------------------|------------------------|--------|
-| defaultValue | Optional，set a default value  | boolean \| undefined | false      |

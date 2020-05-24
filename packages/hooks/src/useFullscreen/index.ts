@@ -81,13 +81,11 @@ export default <T extends HTMLElement = HTMLElement>(options?: Options<T>): Resu
     };
   }, [state, typeof dom === 'function' ? undefined : dom]);
 
-  const toggleFull = () => toggle();
-
   const result: Result<T> = {
     isFullscreen: !!state,
     setFull: setTrue,
     exitFull: setFalse,
-    toggleFull,
+    toggleFull: toggle,
   };
 
   if (!dom) {

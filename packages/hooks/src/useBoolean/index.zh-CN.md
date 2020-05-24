@@ -26,6 +26,13 @@ const [ state, { toggle, setTrue, setFalse }] = useBoolean(
 );
 ```
 
+### Params
+
+| 参数    | 说明                                         | 类型                   | 默认值 |
+|---------|----------------------------------------------|------------------------|--------|
+| defaultValue | 可选项，传入默认的状态值  | boolean \| undefined | false      |
+
+
 ### Result
 
 | 参数     | 说明                                 | 类型                 |
@@ -40,10 +47,3 @@ const [ state, { toggle, setTrue, setFalse }] = useBoolean(
 | toggle | 触发状态更改的函数,可以接受一个可选参数修改状态值 | (value?: any) => void |
 | setTrue | 设置状态值为 true | () => void |
 | setFalse | 设置状态值为 false | () => void |
-
-### Params
-
-| 参数    | 说明                                         | 类型                   | 默认值 |
-|---------|----------------------------------------------|------------------------|--------|
-| defaultValue | 可选项，传入默认的状态值  | boolean \| undefined | false      |
-

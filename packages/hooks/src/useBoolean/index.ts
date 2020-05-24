@@ -1,10 +1,12 @@
 import { useCallback, useMemo } from 'react';
 import useToggle from '../useToggle';
 
+type IState = string | number | boolean | undefined;
+
 export interface Actions {
   setTrue : () => void;
   setFalse: () => void;
-  toggle: (bool: any) => void;
+  toggle: (value?: boolean | undefined) => void;
 }
 
 export default function useBoolean(defaultValue = false): [boolean, Actions] {
