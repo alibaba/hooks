@@ -97,13 +97,13 @@ function useRequest(service: any, options: any = {}) {
   return useAsync(promiseService, finalOptions);
 }
 
-const UseAPIProvider = ConfigContext.Provider;
+const UseRequestProvider = ConfigContext.Provider;
 
 export {
   useAsync,
   usePaginated,
   useLoadMore,
-  UseAPIProvider
+  UseRequestProvider
 };
 
 export default useRequest;

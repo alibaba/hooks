@@ -347,21 +347,21 @@ const {
 
 ## Global configuration
 
-### UseAPIProvider
-You can set global options at the outermost level of the project via `UseAPIProvider`.
+### UseRequestProvider
+You can set global options at the outermost level of the project via `UseRequestProvider`.
 
 ```javascript
-import {UseAPIProvider} from '@ahooksjs/use-request';
+import { UseRequestProvider } from '@ahooksjs/use-request';
 
 export function ({children})=>{
   return (
-    <UseAPIProvider value={{
+    <UseRequestProvider value={{
       refreshOnWindowFocus: true,
       requestMethod: (param)=> axios(param),
       ...
     }}>
       {children}
-    </UseAPIProvider>
+    </UseRequestProvider>
   )
 }
 ```

@@ -348,21 +348,21 @@ const {
 
 ## 全局配置
 
-### UseAPIProvider
-你可以通过 `UseAPIProvider` 在项目的最外层设置全局 options。
+### UseRequestProvider
+你可以通过 `UseRequestProvider` 在项目的最外层设置全局 options。
 
 ```javascript
-import {UseAPIProvider} from '@ahooksjs/use-request';
+import { UseRequestProvider } from '@ahooksjs/use-request';
 
 export function ({children})=>{
   return (
-    <UseAPIProvider value={{
+    <UseRequestProvider value={{
       refreshOnWindowFocus: true,
       requestMethod: (param)=> axios(param),
       ...
     }}>
       {children}
-    </UseAPIProvider>
+    </UseRequestProvider>
   )
 }
 ```
