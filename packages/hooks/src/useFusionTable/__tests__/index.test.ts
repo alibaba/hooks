@@ -25,7 +25,6 @@ describe('useFormTable', () => {
   // jest.useFakeTimers();
   let queryArgs: any;
   const asyncFn = (query: Query, formData: any = {}) => {
-    console.log('>>>>><<<<<', query, formData);
     queryArgs = { ...query, ...formData };
     return Promise.resolve({
       current: query.current,
@@ -44,24 +43,24 @@ describe('useFormTable', () => {
     fieldsValue: {
       name: 'default name',
     },
-    getValues() {
-      return this.fieldsValue || {};
+    getValues: () => {
+      return field.fieldsValue || {};
     },
-    getNames() {
+    getNames: () => {
       // 根据不同的 type 返回不同的 fieldsValues
       if (searchType === 'simple') {
         return ['name']
       }
       return ['name', 'email', 'phone']
     },
-    setValues(values: object) {
-      this.fieldsValue = {
-        ...this.fieldsValue,
+    setValues: (values: object) => {
+      field.fieldsValue = {
+        ...field.fieldsValue,
         ...values
       };
     },
-    reset() {
-      this.fieldsValue = { ...this.initialValue };
+    reset: () => {
+      field.fieldsValue = { ...field.initialValue };
     },
   };
 
@@ -95,6 +94,7 @@ describe('useFormTable', () => {
     expect(hook.result.current.paginationProps.current).toEqual(1);
     expect(hook.result.current.paginationProps.pageSize).toEqual(10);
     expect(hook.result.current.paginationProps.total).toEqual(20);
+    expect(queryArgs.name).toEqual('default name');
   });
   it('should form, defaultPageSize, id work', async () => {
     queryArgs = undefined;
@@ -120,6 +120,7 @@ describe('useFormTable', () => {
     hook.result.current.paginationProps.onChange(2);
     hook.result.current.paginationProps.onPageSizeChange(5);
 
+    jest.runAllTimers();
     await hook.waitForNextUpdate();
     expect(queryArgs.current).toEqual(2);
     expect(queryArgs.pageSize).toEqual(5);
@@ -154,7 +155,8 @@ describe('useFormTable', () => {
         hook.result.current.search.submit();
       }
     });
-    // await hook.waitForNextUpdate();
+    jest.runAllTimers();
+    await hook.waitForNextUpdate();
 
     expect(queryArgs.current).toEqual(1);
     expect(queryArgs.name).toEqual('change name');
@@ -168,7 +170,8 @@ describe('useFormTable', () => {
         hook.result.current.search.submit();
       }
     });
-    // await hook.waitForNextUpdate();
+    jest.runAllTimers();
+    await hook.waitForNextUpdate();
     expect(queryArgs.current).toEqual(1);
     expect(queryArgs.name).toEqual('change name');
     expect(queryArgs.phone).toEqual('13344556677');
@@ -194,7 +197,8 @@ describe('useFormTable', () => {
         hook.result.current.search.submit();
       }
     });
-    // await hook.waitForNextUpdate();
+    jest.runAllTimers();
+    await hook.waitForNextUpdate();
 
     expect(queryArgs.name).toEqual('change name 2');
     expect(queryArgs.phone).toBeUndefined();
@@ -216,12 +220,12 @@ describe('useFormTable', () => {
     expect(field.fieldsValue.email).toEqual('x@qq.com');
 
     act(() => {
-      hook.result.current.tableProps.onChange({
-        current: 3,
-        pageSize: 5,
-      });
+      hook.result.current.paginationProps.onPageSizeChange(5);
+      hook.result.current.paginationProps.onChange(3);
     });
-    // await hook.waitForNextUpdate();
+    jest.runAllTimers();
+    await hook.waitForNextUpdate();
+    expect(hook.result.current.paginationProps.current).toEqual(3);
     // /* 卸载重装 */
     field.fieldsValue = {
       name: '',
@@ -237,11 +241,12 @@ describe('useFormTable', () => {
         options: { field, defaultPageSize: 5, cacheKey: 'tableId' },
       });
     });
-    // await hook.waitForNextUpdate();
+    jest.runAllTimers();
+    await hook.waitForNextUpdate();
     if (hook.result.current.search) {
       expect(hook.result.current.search.type).toEqual('simple');
     }
-    expect(hook.result.current.tableProps.pagination.current).toEqual(3);
+    expect(hook.result.current.paginationProps.current).toEqual(3);
     expect(field.fieldsValue.name).toEqual('change name 2');
     expect(field.fieldsValue.phone).toEqual('13344556677');
     expect(field.fieldsValue.email).toEqual('x@qq.com');
@@ -251,7 +256,8 @@ describe('useFormTable', () => {
       hook.result.current.refresh();
     });
     expect(hook.result.current.tableProps.loading).toEqual(true);
-    // await hook.waitForNextUpdate();
+    jest.runAllTimers();
+    await hook.waitForNextUpdate();
     /* reset */
     act(() => {
       if (hook.result.current.search) {

@@ -1,5 +1,3 @@
-import useRequest from '@umijs/use-request';
-import { useState, useCallback, useEffect, useRef } from 'react';
 import {
   CombineService,
   PaginatedParams,
@@ -8,9 +6,8 @@ import {
   PaginatedFormatReturn,
   PaginatedResult
 } from '@umijs/use-request/lib/types';
-import { fieldAdapter } from './fusionAdapter';
-import useUpdateEffect from '../useUpdateEffect';
-import usePersistFn from '../usePersistFn';
+import { useFormTable } from '..';
+import { fieldAdapter, resultAdapter } from './fusionAdapter';
 
 export {
   CombineService,
@@ -41,13 +38,19 @@ export interface UseAntdTableFormUtils {
   [key: string]: any;
 }
 
-export interface Result<Item> extends PaginatedResult<Item> {
+export interface Result<Item> extends Omit<PaginatedResult<Item>, 'tableProps'> {
   paginationProps: {
     onChange: (current: number) => void,
     onPageSizeChange: (size: number) => void,
     current: number,
     pageSize: number,
     total: number,
+  },
+  tableProps: {
+    dataSource: Item[],
+    loading: boolean,
+    onSort: (dataIndex: String, order: String) => void,
+    onFilter: (filterParams: Object) => void,
   },
   search: {
     type: 'simple' | 'advance';
@@ -75,179 +78,17 @@ function useFusionTable<R = any, Item = any, U extends Item = any>(
   service: CombineService<PaginatedFormatReturn<Item>, PaginatedParams>,
   options: BaseOptions<U>
 ): Result<Item>
+
 function useFusionTable<R = any, Item = any, U extends Item = any>(
   service: CombineService<any, any>,
   options: BaseOptions<U> | OptionsWithFormat<R, Item, U>
 ): any {
-  const { refreshDeps = [], manual, defaultType = 'simple', defaultParams, ...restOptions } = options;
-  const result = useRequest(
-    service,
-    {
-      ...restOptions,
-      paginated: true as true,
-      manual: true,
-    }
-  );
+  const ret = useFormTable(service, {
+    ...options,
+    form: fieldAdapter(options.field!),
+  });
 
-  const form = fieldAdapter(options.field!);
-
-  const { params, run } = result;
-
-  const cacheFormTableData = params[2] || ({} as any);
-
-  // 优先从缓存中读
-  const [type, setType] = useState(cacheFormTableData.type || defaultType);
-
-  // 全量 form 数据，包括 simple 和 advance
-  const [allFormData, setAllFormData] = useState<Store>(cacheFormTableData.allFormData || (defaultParams && defaultParams[1]) || {});
-
-  // 获取当前展示的 form 字段值
-  const getActivetFieldValues = useCallback((): Store => {
-    if (!form) {
-      return {};
-    }
-    // antd 3
-    if (form.getFieldInstance) {
-      const tempAllFiledsValue = form.getFieldsValue();
-      const filterFiledsValue: Store = {};
-      Object.keys(tempAllFiledsValue).forEach((key: string) => {
-        if (form.getFieldInstance ? form.getFieldInstance(key) : true) {
-          filterFiledsValue[key] = tempAllFiledsValue[key];
-        }
-      });
-      return filterFiledsValue;
-    }
-    // antd 4
-    return form.getFieldsValue(null, () => true);
-  }, [form]);
-
-  const formRef = useRef(form);
-  formRef.current = form;
-  /* 初始化，或改变了 searchType, 恢复表单数据 */
-  useEffect(() => {
-    if (!formRef.current) {
-      return;
-    }
-    // antd 3
-    if (formRef.current.getFieldInstance) {
-      // antd 3 需要判断字段是否存在，否则会抛警告
-      const filterFiledsValue: Store = {};
-      Object.keys(allFormData).forEach((key: string) => {
-        if (formRef.current!.getFieldInstance ? formRef.current!.getFieldInstance(key) : true) {
-          filterFiledsValue[key] = allFormData[key];
-        }
-      });
-      formRef.current.setFieldsValue(filterFiledsValue);
-    } else {
-      // antd 4
-      formRef.current.setFieldsValue(allFormData);
-    }
-  }, [type]);
-
-  // 首次加载，手动提交。为了拿到 form 的 initial values
-  useEffect(() => {
-    // 如果有缓存，则使用缓存，重新请求
-    if (params.length > 0) {
-      run(...params);
-      return;
-    }
-
-    // 如果没有缓存，触发 submit
-    if (!manual) {
-      submit(defaultParams);
-    }
-  }, [])
-
-
-  const changeType = useCallback(() => {
-    const currentFormData = getActivetFieldValues();
-    setAllFormData({ ...allFormData, ...currentFormData });
-
-    const targetType = type === 'simple' ? 'advance' : 'simple';
-    setType(targetType);
-  }, [type, allFormData, getActivetFieldValues]);
-
-
-  const submit = useCallback((initParams?: any) => {
-    setTimeout(() => {
-      const activeFormData = getActivetFieldValues();
-      // 记录全量数据
-      const _allFormData = { ...allFormData, ...activeFormData };
-      setAllFormData(_allFormData);
-
-      // has defaultParams
-      if (initParams) {
-        run(
-          initParams[0],
-          activeFormData,
-          {
-            allFormData: _allFormData,
-            type
-          });
-        return;
-      }
-
-      run({
-        pageSize: options.defaultPageSize || 10,
-        ...(params[0] || {}), // 防止 manual 情况下，第一次触发 submit，此时没有 params[0]
-        current: 1
-      }, activeFormData, {
-        allFormData: _allFormData,
-        type
-      });
-    });
-  }, [getActivetFieldValues, run, params, allFormData, type]);
-
-  const reset = useCallback(() => {
-    if (form) {
-      form.resetFields();
-    }
-    submit();
-  }, [form, submit]);
-
-  const resetPersistFn = usePersistFn(reset);
-
-  // refreshDeps 变化，reset。
-  useUpdateEffect(() => {
-    if (!manual) {
-      resetPersistFn();
-    }
-  }, [...refreshDeps]);
-
-
-  const tableProps = {
-    dataSource: result.tableProps.dataSource,
-    loading: result.tableProps.loading,
-    onSort: (dataIndex: String, order: String) => {
-      result.tableProps.onChange({ current: result.pagination.current, pageSize: result.pagination.pageSize }, result.filters, {
-        field: dataIndex,
-        order
-      })
-    },
-    onFilter: (filterParams: Object) => {
-      result.tableProps.onChange({ current: result.pagination.current, pageSize: result.pagination.pageSize }, filterParams, result.sorter);
-    },
-  };
-
-  const paginationProps = {
-    onChange: result.pagination.changeCurrent,
-    onPageSizeChange: result.pagination.changePageSize,
-    current: result.pagination.current,
-    pageSize: result.pagination.pageSize,
-    total: result.pagination.total,
-  };
-
-  return {
-    ...result,
-    tableProps,
-    paginationProps,
-    search: {
-      submit: () => { submit() },
-      type,
-      changeType,
-      reset,
-    }
-  }
+  return resultAdapter(ret);
 }
 
 export default useFusionTable;
