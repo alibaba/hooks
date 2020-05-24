@@ -35,12 +35,6 @@ const ref = useKeyPress(
 )
 ```
 
-### Result
-
-| Property | Description                                         | Type                 |
-|----------|------------------------------------------|------------|
-| ref     | when no target is passed, this ref will be listened     | -        |
-
 ### Params
 
 > Tips: keyType is the key or keyCode of KeyboardEvent.
@@ -56,7 +50,7 @@ const ref = useKeyPress(
 | Property | Description                                                        | Type                   | Default |
 |-----------------|--------------------------------------------------------|---------|--------|
 | events | Trigger Events  |  Array<keydown \| keyup\> | ['keydown']     |
-| target | optional, if none is passed, this hook will subscibe to the dom that it returns  | window \| HTMLElement \| (() => HTMLElement) \| undefined | window     |
+| target | DOM element or Ref Object | (() => HTMLElement) | React.RefObject | - |
 
 ## Remarks
 

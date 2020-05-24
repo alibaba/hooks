@@ -8,7 +8,7 @@ export type keyEvent = 'keydown' | 'keyup';
 export type RefType = HTMLElement | (() => HTMLElement | null);
 export type EventOption = {
   events?: Array<keyEvent>;
-  target?: Window | RefType;
+  target?: () => HTMLElement | Window | RefObject<HTMLInputElement>
 };
 
 // 键盘事件 keyCode 别名
@@ -127,13 +127,12 @@ function genKeyFormater(keyFilter: any): KeyPredicate {
 
 const defaultEvents: Array<keyEvent> = ['keydown'];
 
-function useKeyPress<T extends HTMLElement = HTMLInputElement>(
+function useKeyPress(
   keyFilter: KeyFilter,
   eventHandler: EventHandler = noop,
   option: EventOption = {},
-): RefObject<T> {
+) {
   const { events = defaultEvents, target } = option;
-  const element = useRef<T>();
   const callbackRef = useRef(eventHandler);
   callbackRef.current = eventHandler;
 
@@ -148,19 +147,21 @@ function useKeyPress<T extends HTMLElement = HTMLInputElement>(
   );
 
   useEffect(() => {
-    const targetElement = typeof target === 'function' ? target() : target;
-    const el = element.current || targetElement || window;
+    // @ts-ignore
+    let targetElement = window;
+    if (target) {
+      // @ts-ignore
+      targetElement = typeof target === 'function' ? target() : target.current;
+    }
     for (const eventName of events) {
-      el.addEventListener(eventName, callbackHandler);
+      targetElement.addEventListener(eventName, callbackHandler);
     }
     return () => {
       for (const eventName of events) {
-        el.removeEventListener(eventName, callbackHandler);
+        targetElement.removeEventListener(eventName, callbackHandler);
       }
     };
   }, [events, callbackHandler, target]);
-
-  return element as RefObject<T>;
 }
 
 export default useKeyPress;
