@@ -1,28 +1,26 @@
-import { MutableRefObject, useRef, useEffect, useCallback, useMemo } from 'react';
+import { useEffect, useCallback } from 'react';
 
 // 鼠标点击事件，click 不会监听右键
 const defaultEvent = 'click';
 
-type RefType = HTMLElement | (() => HTMLElement | null) | null;
+type Target = () => HTMLElement | React.RefObject<HTMLInputElement>;
 
-export default function useClickAway<T extends HTMLElement = HTMLDivElement>(
+export default function useClickAway(
   onClickAway: (event: KeyboardEvent) => void,
-  dom?: RefType,
+  target?: Target,
   eventName: string = defaultEvent,
-): MutableRefObject<T> {
-  const element = useRef<T>();
-
+) {
   const handler = useCallback(
     event => {
-      const targetElement = typeof dom === 'function' ? dom() : dom;
-      const el = targetElement || element.current;
-      if (!el || el.contains(event.target)) {
+      // @ts-ignore
+      const targetElement = typeof target === 'function' ? target() : target.current;
+      if (!targetElement || targetElement.contains(event.target)) {
         return;
       }
 
       onClickAway(event);
     },
-    [element.current, onClickAway, dom],
+    [onClickAway, target],
   );
 
   useEffect(() => {
@@ -32,6 +30,4 @@ export default function useClickAway<T extends HTMLElement = HTMLDivElement>(
       document.removeEventListener(eventName, handler);
     };
   }, [eventName, handler]);
-
-  return element as MutableRefObject<T>;
 }
