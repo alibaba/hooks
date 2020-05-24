@@ -8,25 +8,16 @@ export interface Actions<T = IState> {
   toggle: (value?: T) => void;
 }
 
-function useToggle<T = boolean | undefined>(): {
-  state: boolean;
-  actions: Actions
-};
+function useToggle<T = boolean | undefined>(): [boolean, Actions];
 
 function useToggle<T = IState>(
   defaultValue: T,
-): {
-    state: T;
-    actions: Actions
-  };
+): [T, Actions];
 
 function useToggle<T = IState, U = IState>(
   defaultValue: T,
   reverseValue: U,
-): {
-    state: T | U;
-    actions: Actions
-  };
+): [T | U, Actions];
 
 function useToggle<D extends IState = IState, R extends IState = IState>(
   defaultValue: D = false as D,
@@ -60,7 +51,7 @@ function useToggle<D extends IState = IState, R extends IState = IState>(
       setLeft,
       setRight,
     }
-}, [setState, state]);
+  }, [setState, state]);
 
   return [
     state,
