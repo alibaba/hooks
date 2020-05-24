@@ -21,23 +21,21 @@ Use EventListener elegant by Hook.
 
 ## API
 
-```javascript
-function useEventListener<T extends Target = HTMLElement>(
+```ts
+function useEventListener(
   eventName: string,
   handler: Function,
   options?: { capture?: boolean; once?: boolean; passive?: boolean; },
-): MutableRefObject<T>;
+): void;
 
-function useEventListener<T extends Target = HTMLElement>(
+function useEventListener(
   eventName: string,
   handler: Function,
-  options?: { dom: Dom, capture?: boolean; once?: boolean; passive?: boolean; },
+  options?: { target: Target, capture?: boolean; once?: boolean; passive?: boolean; },
 ): void
 
-type Target = HTMLElement | Window;
-type Options = { dom?: Dom; capture?: boolean; once?: boolean; passive?: boolean; }
-type Dom = Target | (() => Target) | null;
-
+type Target = () => HTMLElement | React.RefObject<HTMLInputElement>;
+type Options = { target?: Target; capture?: boolean; once?: boolean; passive?: boolean; }
 ```
 
 ### Property
@@ -52,7 +50,7 @@ type Dom = Target | (() => Target) | null;
 
 | Property    | Description     | type                   | default |
 |---------|----------|------------------------|--------|
-| dom | Optional, if none is passed, this hook will subscribe to the ref that it returns.	 | HTMLElement \| (() => HTMLElement) \| null   | Window      |
+| target | DOM element or Ref Object | (() => HTMLElement) | React.RefObject | - |
 | capture | Optional, a Boolean indicating that events of this type will be dispatched to the registered listener before being dispatched to any EventTarget beneath it in the DOM tree.	 | boolean  |    -   |
 | once | Optional, A Boolean indicating that the listener should be invoked at most once after being added. If true, the listener would be automatically removed when invoked.	 | boolean   |    -   |
 | passive | Optional, A Boolean which, if true, indicates that the function specified by listener will never call preventDefault(). If a passive listener does call preventDefault(), the user agent will do nothing other than generate a console warning.	 | boolean   |    -   |

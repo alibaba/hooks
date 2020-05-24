@@ -22,23 +22,21 @@ legacy: /zh-CN/dom/use-event-listener
 
 ## API
 
-```javascript
-function useEventListener<T extends Target = HTMLElement>(
+```ts
+function useEventListener(
   eventName: string,
   handler: Function,
   options?: { capture?: boolean; once?: boolean; passive?: boolean; },
-): MutableRefObject<T>;
+): void;
 
-function useEventListener<T extends Target = HTMLElement>(
+function useEventListener(
   eventName: string,
   handler: Function,
-  options?: { dom: Dom, capture?: boolean; once?: boolean; passive?: boolean; },
+  options?: { target: Target, capture?: boolean; once?: boolean; passive?: boolean; },
 ): void
 
-type Target = HTMLElement | Window;
-type Options = { dom?: Dom; capture?: boolean; once?: boolean; passive?: boolean; }
-type Dom = Target | (() => Target) | null;
-
+type Target = () => HTMLElement | React.RefObject<HTMLInputElement>;
+type Options = { target?: Target; capture?: boolean; once?: boolean; passive?: boolean; }
 ```
 
 
@@ -54,7 +52,7 @@ type Dom = Target | (() => Target) | null;
 
 | 参数    | 说明     | 类型                   | 默认值 |
 |---------|----------|------------------------|--------|
-| dom | 可选项，如果未传入则会监听返回结果中的 ref ，否则会监听传入的节点	 | HTMLElement \| (() => HTMLElement) \| null   | Window      |
+| target | DOM 节点或者 Ref 对象  | (() => HTMLElement) | React.RefObject | - |
 | capture | 可选项，listener 会在该类型的事件捕获阶段传播到该 EventTarget 时触发。	 | boolean  |    -   |
 | once | 可选项，listener 在添加之后最多只调用一次。如果是 true ， listener 会在其被调用之后自动移除。	 | boolean   |    -   |
 | passive | 可选项，设置为 true 时，表示 listener 永远不会调用 preventDefault() 。如果 listener 仍然调用了这个函数，客户端将会忽略它并抛出一个控制台警告。	 | boolean   |    -   |

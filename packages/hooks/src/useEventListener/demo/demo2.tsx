@@ -15,7 +15,9 @@ export default () => {
   const keyDownHandler = (ev:KeyboardEvent) => {
     setValue(ev.code);
   };
-  useEventListener('keydown', keyDownHandler);
+  useEventListener('keydown', keyDownHandler, {
+    target: () => window,
+  });
 
-  return <p>Your press key is {value}</p>;
+  return <p id="demo">Your press key is {value}</p>;
 };
