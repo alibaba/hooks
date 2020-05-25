@@ -10,12 +10,14 @@ export interface Options {
   onFull?: () => void;
 }
 
-export interface Result {
-  isFullscreen: boolean;
+interface Callback {
   setFull: () => void;
   exitFull: () => void;
   toggleFull: () => void;
 }
+
+type Value = boolean;
+type Result = [Value, Callback];
 
 export default (options?: Options): Result => {
   const { target, onExitFull, onFull } = options || {};
@@ -80,12 +82,14 @@ export default (options?: Options): Result => {
 
   const toggleFull = () => toggle();
 
-  const result: Result = {
-    isFullscreen: !!state,
-    setFull: setTrue,
-    exitFull: setFalse,
-    toggleFull,
-  };
+  const result: Result = [
+    !!state,
+    {
+      setFull: setTrue,
+      exitFull: setFalse,
+      toggleFull,
+    }
+  ];
 
   return result;
 };

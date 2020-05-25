@@ -8,11 +8,11 @@
 
 import React from 'react';
 import { Button } from 'antd';
-import {useFullscreen} from 'ahooks';
+import { useFullscreen } from 'ahooks';
 import img from './react-hooks.jpg';
 
 export default () => {
-  const { setFull } = useFullscreen<HTMLElement>({
+  const [, { setFull }] = useFullscreen<HTMLElement>({
     target: () => document.getElementById('fullscreen-img'),
   });
   return (

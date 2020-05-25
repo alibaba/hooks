@@ -24,16 +24,7 @@ A Hook for handling dom full screen
 ## API
 
 ```ts
-const {
-  isFullscreen,
-  setFull,
-  exitFull,
-  toggleFull
-} = useFullScreen({
-  target,
-  onExitFull?,
-  onFull?,
-});
+const [isFullscreen, { setFull, exitFull, toggleFull }] = useFullScreen({ target, onExitFull?, onFull? });
 ```
 
 ### Params
