@@ -34,7 +34,7 @@ function useEventListener(
   options?: { target: Target, capture?: boolean; once?: boolean; passive?: boolean; },
 ): void
 
-type Target = () => HTMLElement | React.RefObject<HTMLInputElement>;
+type Target = () => HTMLElement | React.RefObject<HTMLElement>;
 type Options = { target?: Target; capture?: boolean; once?: boolean; passive?: boolean; }
 ```
 
@@ -54,9 +54,3 @@ type Options = { target?: Target; capture?: boolean; once?: boolean; passive?: b
 | capture | Optional, a Boolean indicating that events of this type will be dispatched to the registered listener before being dispatched to any EventTarget beneath it in the DOM tree.	 | boolean  |    -   |
 | once | Optional, A Boolean indicating that the listener should be invoked at most once after being added. If true, the listener would be automatically removed when invoked.	 | boolean   |    -   |
 | passive | Optional, A Boolean which, if true, indicates that the function specified by listener will never call preventDefault(). If a passive listener does call preventDefault(), the user agent will do nothing other than generate a console warning.	 | boolean   |    -   |
-
-### Return
-
-| Property | Description                                                       | Type                 |
-|------|----------|------|
-| ref | When no param is passed, this ref will be listened. | `RefObject<HTMLElement>` |

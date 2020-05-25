@@ -35,7 +35,7 @@ function useEventListener(
   options?: { target: Target, capture?: boolean; once?: boolean; passive?: boolean; },
 ): void
 
-type Target = () => HTMLElement | React.RefObject<HTMLInputElement>;
+type Target = () => HTMLElement | React.RefObject<HTMLElement>;
 type Options = { target?: Target; capture?: boolean; once?: boolean; passive?: boolean; }
 ```
 
@@ -52,14 +52,7 @@ type Options = { target?: Target; capture?: boolean; once?: boolean; passive?: b
 
 | 参数    | 说明     | 类型                   | 默认值 |
 |---------|----------|------------------------|--------|
-| target | DOM 节点或者 Ref 对象  | (() => HTMLElement) | React.RefObject | - |
+| target | DOM 节点或者 Ref 对象  | (() => HTMLElement) \| React.RefObject | - |
 | capture | 可选项，listener 会在该类型的事件捕获阶段传播到该 EventTarget 时触发。	 | boolean  |    -   |
 | once | 可选项，listener 在添加之后最多只调用一次。如果是 true ， listener 会在其被调用之后自动移除。	 | boolean   |    -   |
 | passive | 可选项，设置为 true 时，表示 listener 永远不会调用 preventDefault() 。如果 listener 仍然调用了这个函数，客户端将会忽略它并抛出一个控制台警告。	 | boolean   |    -   |
-
-### 返回
-
-| 参数 | 说明     | 类型 |
-|------|----------|------|
-| ref | 当未传入任何参数时，将 ref 绑定给需监听的节点 | `RefObject<HTMLElement>` |
-

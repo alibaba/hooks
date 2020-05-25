@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
 
-type Target = () => HTMLElement | React.RefObject<HTMLInputElement>;
+type Target = () => HTMLElement | React.RefObject<HTMLElement>;
 type Options = { target?: Target; capture?: boolean; once?: boolean; passive?: boolean; }
 
 function useEventListener(
