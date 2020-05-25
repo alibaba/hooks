@@ -14,7 +14,7 @@ export default () => {
 
   useKeyPress('left', event => {
     setCounter(s => s - 1);
-  },);
+  });
 
   useKeyPress('right', event => {
     setCounter(s => s + 1);

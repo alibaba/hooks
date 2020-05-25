@@ -8,7 +8,7 @@ export type keyEvent = 'keydown' | 'keyup';
 export type RefType = HTMLElement | (() => HTMLElement | null);
 export type EventOption = {
   events?: Array<keyEvent>;
-  target?: () => HTMLElement | Window | RefObject<HTMLInputElement>
+  target?: () => HTMLElement | Window | RefObject<HTMLElement>
 };
 
 // 键盘事件 keyCode 别名
