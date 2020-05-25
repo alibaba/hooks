@@ -39,18 +39,16 @@ function useToggle<D extends IState = IState, R extends IState = IState>(
   );
 
   // 切换返回值
-  const toggle = useCallback(
-    (value?: D | R) => {
+  const toggle = useCallback((value?: D | R) => {
+    setState((oldState) => {
       // 强制返回状态值，适用于点击操作
       if (value !== undefined) {
-        setState(value);
-        return;
+        return value;
       }
-      const data = state === defaultValue ? reverseValueOrigin : defaultValue;
-      setState(data);
-    },
-    [state],
-  );
+
+      return oldState === defaultValue ? reverseValueOrigin : defaultValue;
+    });
+  }, []);
 
   // 设置默认值
   const setLeft = useCallback(() => {
