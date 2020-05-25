@@ -19,7 +19,7 @@ A hook to subscribe DOM element visibility change
 
 <code src="./demo/demo1.tsx" />
 
-### Lazy load DOM element（used to subscibe to DOM element renders after the hook）
+### Pass in DOM element
 
 <code src="./demo/demo2.tsx" />
 
@@ -34,7 +34,7 @@ const inViewPort = useInViewport(target);
 
 | Property | Description                                                        | Type                   | Default |
 |---------|----------------------------------------------|------------------------|--------|
-| target | DOM element or Ref Object | (() => HTMLElement) | React.RefObject | - |
+| target | DOM element or Ref Object | () => HTMLElement \| React.RefObject | - |
 
 ### Result
 

@@ -3,7 +3,7 @@ import { useLayoutEffect, useState } from 'react';
 
 import 'intersection-observer';
 
-type Target = HTMLElement | React.RefObject<HTMLInputElement>;
+type Target = HTMLElement | React.RefObject<HTMLElement>;
 type InViewport = boolean | undefined;
 
 function isInViewPort(el: HTMLElement): boolean {

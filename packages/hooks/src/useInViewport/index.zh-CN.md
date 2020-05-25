@@ -19,7 +19,7 @@ legacy: /zh-CN/dom/use-in-viewport
 
 <code src="./demo/demo1.tsx" />
 
-### 懒加载（用于监听同一组件内后渲染节点）
+### 传入 DOM 元素
 
 <code src="./demo/demo2.tsx" />
 
@@ -33,7 +33,7 @@ const inViewPort = useInViewport(target);
 
 | 参数    | 说明                                         | 类型                   | 默认值 |
 |---------|----------------------------------------------|------------------------|--------|
-| target |  | (() => HTMLElement) | React.RefObject | - |
+| target |  | () => HTMLElement \| React.RefObject | - |
 
 ### Result
 
