@@ -6,18 +6,6 @@ type Options = { target?: Target; capture?: boolean; once?: boolean; passive?: b
 function useEventListener(
   eventName: string,
   handler: Function,
-  options?: { capture?: boolean; once?: boolean; passive?: boolean; },
-): void;
-
-function useEventListener(
-  eventName: string,
-  handler: Function,
-  options?: { target: Target, capture?: boolean; once?: boolean; passive?: boolean; },
-): void;
-
-function useEventListener(
-  eventName: string,
-  handler: Function,
   options?: Options,
 ) {
   const savedHandler = useRef<Function>();

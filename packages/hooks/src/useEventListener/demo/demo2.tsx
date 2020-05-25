@@ -19,5 +19,5 @@ export default () => {
     target: () => window,
   });
 
-  return <p id="demo">Your press key is {value}</p>;
+  return <p>Your press key is {value}</p>;
 };
