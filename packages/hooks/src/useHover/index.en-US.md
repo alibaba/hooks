@@ -36,7 +36,7 @@ const isHovering = useHover({
 
 | Property| Description                                                        | Type                   | Default |
 |---------|----------------------------------------------|------------------------|--------|
-| target | DOM element or Ref Object | (() => HTMLElement) | React.RefObject | - |
+| target | DOM element or Ref Object | (() => HTMLElement) \| React.RefObject | - |
 | onEnter | Listen to hover  | ()=>void | -      |
 | onLeave | Listening leave hover  | ()=>void | -      |
 
