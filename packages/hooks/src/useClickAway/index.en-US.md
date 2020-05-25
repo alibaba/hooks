@@ -36,4 +36,4 @@ useClickAway(
 | Property | Description                                 | Type                   | Default |
 |---------|----------------------------------------------|------------------------|--------|
 | onClickAway | Trigger Function  | (event) => void | -      |
-| target | DOM element or Ref Object | (() => HTMLElement) | React.RefObject | - |
+| target | DOM element or Ref Object | () => HTMLElement \| React.RefObject | - |
