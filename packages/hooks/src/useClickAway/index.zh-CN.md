@@ -24,7 +24,7 @@ legacy: /zh-CN/dom/use-click-away
 
 ```ts
 useClickAway(
-  onClickAway: (event: KeyboardEvent) => void,
+  onClickAway: (event: MouseEvent | TouchEvent) => void,
   target: () => HTMLElement | React.RefObject,
 );
 ```

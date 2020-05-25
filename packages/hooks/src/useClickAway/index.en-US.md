@@ -26,7 +26,7 @@ A hook that elegantly manages click outside of target elements.
 
 ```ts
 useClickAway(
-  onClickAway: (event: KeyboardEvent) => void,
+  onClickAway: (event: MouseEvent | TouchEvent) => void,
   target: () => HTMLElement | React.RefObject,
 );
 ```

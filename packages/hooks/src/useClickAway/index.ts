@@ -3,10 +3,11 @@ import { useEffect, useCallback } from 'react';
 // 鼠标点击事件，click 不会监听右键
 const defaultEvent = 'click';
 
+type EventType = MouseEvent | TouchEvent;
 type Target = () => HTMLElement | React.RefObject<HTMLElement>;
 
 export default function useClickAway(
-  onClickAway: (event: KeyboardEvent) => void,
+  onClickAway: (event: EventType) => void,
   target?: Target,
   eventName: string = defaultEvent,
 ) {
