@@ -1,7 +1,7 @@
 import { useState, useLayoutEffect } from 'react';
 import ResizeObserver from 'resize-observer-polyfill';
 
-type Target = HTMLElement | React.RefObject<HTMLInputElement>;
+type Target = HTMLElement | React.RefObject<HTMLElement>;
 
 type Size = { width?: number; height?: number };
 
