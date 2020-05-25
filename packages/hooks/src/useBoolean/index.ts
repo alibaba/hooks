@@ -13,8 +13,8 @@ export default function useBoolean(defaultValue = false): [boolean, Actions] {
     const { state, toggle } = useToggle(defaultValue);
 
     const actions: Actions = useMemo(() => {
-        const setTrue: () => void = () => toggle(true);
-        const setFalse: () => void = () => toggle(false);
+        const setTrue = () => toggle(true);
+        const setFalse = () => toggle(false);
         return { toggle, setTrue, setFalse }
     }, [toggle]);
 
