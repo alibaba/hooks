@@ -2,7 +2,7 @@ import { useEffect, useRef } from 'react';
 import useBoolean from '../useBoolean';
 
 export interface Options {
-  target?: () => HTMLElement | React.RefObject<HTMLInputElement>;
+  target?: () => HTMLElement | React.RefObject<HTMLElement>;
   onEnter?: () => void;
   onLeave?: () => void;
 }

@@ -18,7 +18,7 @@ legacy: /zh-CN/dom/use-hover
 
 <code src="./demo/demo1.tsx" />
 
-### 懒加载
+### 传入 DOM 元素
 
 <code src="./demo/demo2.tsx" />
 

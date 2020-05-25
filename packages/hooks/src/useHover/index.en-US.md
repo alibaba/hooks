@@ -18,7 +18,8 @@ React UI sensor hooks that track if some element is being hovered by a mouse.
 
 <code src="./demo/demo1.tsx" />
 
-### Lazy Load
+### Pass in DOM element
+
 <code src="./demo/demo2.tsx" />
 
 ## API
