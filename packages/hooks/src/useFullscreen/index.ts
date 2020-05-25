@@ -5,7 +5,7 @@ import screenfull from 'screenfull';
 import useBoolean from '../useBoolean';
 
 export interface Options {
-  target: HTMLElement | React.RefObject<HTMLInputElement>;
+  target: HTMLElement | React.RefObject<HTMLElement>;
   onExitFull?: () => void;
   onFull?: () => void;
 }
