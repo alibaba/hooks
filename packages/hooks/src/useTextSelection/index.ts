@@ -13,7 +13,7 @@ export interface IState extends IRect {
   text: string;
 }
 
-type Target = () => HTMLElement | React.RefObject<HTMLInputElement>;
+type Target = () => HTMLElement | React.RefObject<HTMLElement>;
 
 const initRect: IRect = {
   top: NaN,
