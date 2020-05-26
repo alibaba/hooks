@@ -13,10 +13,16 @@ interface EventTarget<U> {
   }
 }
 
-export default <T, U = T>(initialValue?: T, transformer?: (value: U) => T): [
+interface Params<T, U> {
+  initialValue?: T;
+  transformer?: (value: U) => T;
+}
+
+export default <T, U = T>(parmas?: Params<T, U>): [
   ValueProps<T, U>,
   Callback<T, U>
 ] => {
+  const { initialValue, transformer } = parmas || {};
   const [value, setValue] = useState(initialValue);
 
   const reset = useCallback(() => setValue(initialValue), [setValue]);

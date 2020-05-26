@@ -10,8 +10,8 @@ import { Input, Button } from 'antd';
 import { useEventTarget } from 'ahooks'
 
 export default () => {
-  const [value, { onChange, reset }] = useEventTarget('', (val: string) => {
-    return val.replace(/[^\d]/g, '')
+  const [value, { onChange, reset }] = useEventTarget({
+    transformer: (val: string) => val.replace(/[^\d]/g, '')
   });
 
   return (<Fragment>

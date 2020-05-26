@@ -11,7 +11,7 @@ import { Input, Button } from 'antd';
 import { useEventTarget } from 'ahooks'
 
 export default () => {
-  const [value, { reset, onChange }] = useEventTarget('this is initial value');
+  const [value, { reset, onChange }] = useEventTarget({ initialValue: 'this is initial value' });
 
   return (<Fragment>
       <Input value={value} onChange={onChange} style={{ width: 200, marginRight: 20 }}/>
