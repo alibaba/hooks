@@ -3,7 +3,6 @@ import { useState, useEffect } from 'react';
 type VisibilityState = 'hidden' | 'visible' | 'prerender' | undefined;
 
 const getVisibility = () => {
-  // 如果是服务端渲染，直接返回true
   if (typeof document === 'undefined') return;
   return document.visibilityState;
 }
