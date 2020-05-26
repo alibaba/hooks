@@ -3,9 +3,9 @@ import { MutableRefObject } from 'react';
 type TargetElement = HTMLElement | Document | Window;
 type TargetParams = (() => HTMLElement) | MutableRefObject<HTMLElement> | TargetElement;
 
-export function getTargetElement(target?: TargetParams, defaultDom?: TargetElement): TargetElement | undefined {
+export function getTargetElement(target?: TargetParams, defaultElement?: TargetElement): TargetElement | undefined {
   if (!target) {
-    return defaultDom;
+    return defaultElement;
   }
 
   let targetElement: TargetElement;
