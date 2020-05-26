@@ -19,6 +19,10 @@ A hook to subscribe DOM element size change
 
 <code src="./demo/demo1.tsx" />
 
+### Pass in the DOM element
+
+<code src="./demo/demo2.tsx" />
+
 
 ## API
 
