@@ -59,7 +59,7 @@ function getRectFromSelection(selection: Selection | null): IRect {
 /**
  * 获取用户选取的文本或当前光标插入的位置
  * */
-function useTextSelection(target: Target): IState {
+function useTextSelection(target?: Target): IState {
   const [state, setState] = useState(initState);
 
   const stateRef = useRef(state);
@@ -68,7 +68,7 @@ function useTextSelection(target: Target): IState {
   useEffect(() => {
     // 获取 target 需要放在 useEffect 里，否则存在组件未加载好的情况而导致元素获取不到
     // @ts-ignore
-    const el = getTargetElement(target);
+    const el = getTargetElement(target, document);
 
     if (!el) {
       return () => { };
