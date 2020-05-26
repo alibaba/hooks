@@ -1,5 +1,5 @@
-import { useState, useEffect, useRef } from 'react';
-
+import { useState, useEffect, useRef, MutableRefObject } from 'react';
+import { getTargetElement } from '../utils/dom';
 
 interface IRect {
   top: number;
@@ -13,7 +13,7 @@ export interface IState extends IRect {
   text: string;
 }
 
-type Target = () => HTMLElement | React.RefObject<HTMLElement>;
+type Target = () => HTMLElement | (() => HTMLElement) | MutableRefObject<HTMLElement>;
 
 const initRect: IRect = {
   top: NaN,
@@ -68,9 +68,9 @@ function useTextSelection(target: Target): IState {
   useEffect(() => {
     // 获取 target 需要放在 useEffect 里，否则存在组件未加载好的情况而导致元素获取不到
     // @ts-ignore
-    const targetElement = typeof target === 'function' ? target() : target.current;
+    const el = getTargetElement(target);
 
-    if (!targetElement) {
+    if (!el) {
       return () => { };
     }
 
@@ -98,12 +98,12 @@ function useTextSelection(target: Target): IState {
       selObj.removeAllRanges();
     }
 
-    targetElement.addEventListener('mouseup', mouseupHandler);
+    el.addEventListener('mouseup', mouseupHandler);
 
     document.addEventListener('mousedown', mousedownHandler)
 
     return () => {
-      targetElement.removeEventListener('mouseup', mouseupHandler);
+      el.removeEventListener('mouseup', mouseupHandler);
       document.removeEventListener('mousedown', mousedownHandler);
     };
   }, [typeof target === 'function' ? undefined : target]);
