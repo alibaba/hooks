@@ -11,8 +11,6 @@ import { useHover } from 'ahooks';
 
 export default () => {
   const ref = useRef();
-  const isHovering = useHover({
-    target: ref
-  });
+  const isHovering = useHover(ref);
   return <div ref={ref}>{isHovering ? 'hover' : 'leaveHover'}</div>;
 };

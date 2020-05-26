@@ -25,18 +25,20 @@ React UI sensor hooks that track if some element is being hovered by a mouse.
 ## API
 
 ```javascript
-const isHovering = useHover({
-  target,
-  onEnter,
-  onLeave,
-});
+const isHovering = useHover(
+  target, 
+  {
+   onEnter,
+   onLeave
+  }
+);
 ```
 
 ### Params
 
 | Property| Description                                                        | Type                   | Default |
 |---------|----------------------------------------------|------------------------|--------|
-| target | DOM element or Ref Object | (() => HTMLElement) \| React.RefObject | - |
+| target | DOM element or Ref Object | (() => HTMLElement) \| HTMLElement \| React.RefObject | - |
 | onEnter | Listen to hover  | ()=>void | -      |
 | onLeave | Listening leave hover  | ()=>void | -      |
 

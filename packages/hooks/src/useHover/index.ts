@@ -1,16 +1,17 @@
 import { useEffect, useRef } from 'react';
 import useBoolean from '../useBoolean';
+import { getTargetElement } from '../utils/dom';
 
 export interface Options {
-  target?: () => HTMLElement | React.RefObject<HTMLElement>;
   onEnter?: () => void;
   onLeave?: () => void;
 }
 
 export default (
+  target: (() => HTMLElement) | HTMLElement | React.MutableRefObject<HTMLElement>,
   options?: Options,
 ): boolean => {
-  const { target, onEnter, onLeave } = options || {};
+  const { onEnter, onLeave } = options || {};
 
   const onEnterRef = useRef(onEnter);
   onEnterRef.current = onEnter;
@@ -29,8 +30,8 @@ export default (
       if (onLeaveRef.current) onLeaveRef.current();
       setFalse();
     };
-    // @ts-ignore
-    const targetElement = typeof target === 'function' ? target() : target.current;
+
+    const targetElement = getTargetElement(target);
     // 如果 传入dom
     if (targetElement) {
       targetElement.addEventListener('mouseenter', onMouseEnter);
