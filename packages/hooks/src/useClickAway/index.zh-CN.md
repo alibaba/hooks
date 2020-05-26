@@ -25,7 +25,7 @@ legacy: /zh-CN/dom/use-click-away
 ```ts
 useClickAway(
   onClickAway: (event: MouseEvent | TouchEvent) => void,
-  target: () => HTMLElement | React.RefObject,
+  target: (() => HTMLElement) | HTMLElement | React.MutableRefObject,
 );
 ```
 
@@ -34,4 +34,4 @@ useClickAway(
 | 参数    | 说明                                         | 类型                   | 默认值 |
 |---------|----------------------------------------------|------------------------|--------|
 | onClickAway | 触发事件的函数  | (event) => void | -      |
-| target | DOM 节点或者 Ref 对象  | () => HTMLElement \| React.RefObject | - |
+| target | DOM 节点或者 Ref 对象  | (() => HTMLElement) \| HTMLElement \| React.MutableRefObject | - |
