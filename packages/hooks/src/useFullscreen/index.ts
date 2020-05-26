@@ -83,7 +83,7 @@ export default (target: Target, options?: Options): Result => {
 
   const toggleFull = () => toggle();
 
-  const result: Result = [
+  return [
     !!state,
     {
       setFull: setTrue,
@@ -91,6 +91,4 @@ export default (target: Target, options?: Options): Result => {
       toggleFull,
     }
   ];
-
-  return result;
 };
