@@ -29,13 +29,13 @@ legacy: /zh-CN/dom/use-size
 const size = useSize(target);
 ```
 
-### Params
+### 参数
 
 | 参数    | 说明                                         | 类型                   | 默认值 |
 |---------|----------------------------------------------|------------------------|--------|
-| target | DOM 节点或者 Refs  | HTMLElement \| React.RefObject | -      |
+| target | DOM 节点或者 Refs  | HTMLElement \| (() => HTMLElement) \| MutableRefObject | -      |
 
-### Result
+### 结果
 
 | 参数     | 说明                                     | 类型       |
 |----------|------------------------------------------|------------|

@@ -1,24 +1,23 @@
-import { useState, useLayoutEffect } from 'react';
+import { useState, useLayoutEffect, MutableRefObject } from 'react';
 import ResizeObserver from 'resize-observer-polyfill';
+import { getTargetElement } from '../utils/dom';
 
-type Target = HTMLElement | React.RefObject<HTMLElement>;
+type Target = HTMLElement | (() => HTMLElement) | MutableRefObject<HTMLElement>;
 
 type Size = { width?: number; height?: number };
 
 function useSize(target: Target): Size {
   const [state, setState] = useState<Size>(() => {
-    // @ts-ignore
-    const targetElement = target.current ? target.current : target;
+    const el = getTargetElement(target);
     return {
-      width: (targetElement || {}).clientWidth,
-      height: (targetElement || {}).clientHeight,
+      width: ((el || {}) as HTMLElement).clientWidth,
+      height: ((el || {}) as HTMLElement).clientHeight,
     };
   });
 
   useLayoutEffect(() => {
-    // @ts-ignore
-    const targetElement = target.current ? target.current : target;
-    if (!targetElement) {
+    const el = getTargetElement(target)
+    if (!el) {
       return () => {};
     }
 
@@ -31,7 +30,7 @@ function useSize(target: Target): Size {
       });
     });
 
-    resizeObserver.observe(targetElement);
+    resizeObserver.observe(el as HTMLElement);
     return () => {
       resizeObserver.disconnect();
     };
