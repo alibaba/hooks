@@ -52,8 +52,8 @@ const [state, { toggle, setLeft, setRight }] = useToggle(
 
 ### Actions
 
-| Property | Description                                          | Type                                                    |
-| -------- | ---------------------------------------------------- | ------------------------------------------------------- |
-| toggle   | Trigger state change, accept two optional parameters | (defaultValue: any = false, reverseValue?: any) => void |
-| setLeft  | Set default value                                    | () => void                                              |
-| setRight | Set reverse value                                    | () => void                                              |
+| Property | Description                                          | Type                  |
+| -------- | ---------------------------------------------------- | --------------------- |
+| toggle   | Trigger state change, accept two optional parameters | (state?: any) => void |
+| setLeft  | Set default value                                    | () => void            |
+| setRight | Set reverse value                                    | () => void            |
