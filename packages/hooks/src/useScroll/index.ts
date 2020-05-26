@@ -1,11 +1,12 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, MutableRefObject } from 'react';
+import { getTargetElement } from '../utils/dom'
 
 interface Position {
   left: number;
   top: number;
 }
 
-type Target = HTMLElement | Document | React.RefObject<HTMLInputElement>;
+type Target = HTMLElement | (() => HTMLElement) | Document | MutableRefObject<HTMLElement>;
 
 function useScroll(target: Target): Position {
   const [position, setPosition] = useState<Position>({
@@ -14,9 +15,8 @@ function useScroll(target: Target): Position {
   });
 
   useEffect(() => {
-    // @ts-ignore
-    const element = target.current ? target.current : target;
-    if (!element) return;
+    const el = getTargetElement(target, document);
+    if (!el) return;
     function updatePosition(currentTarget: Target) {
       let newPosition;
       if (currentTarget === document) {
@@ -33,14 +33,14 @@ function useScroll(target: Target): Position {
       }
       setPosition(newPosition);
     }
-    updatePosition(element);
+    updatePosition(el as Target);
     function listener(event: Event) {
       if (!event.target) return;
       updatePosition(event.target as Target);
     }
-    element.addEventListener('scroll', listener);
+    el.addEventListener('scroll', listener);
     return () => {
-      element.removeEventListener('scroll', listener);
+      el.removeEventListener('scroll', listener);
     };
   }, [target]);
   return position;

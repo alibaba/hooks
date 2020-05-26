@@ -26,14 +26,14 @@ legacy: /zh-CN/dom/use-scroll
 const pisition = useSize(target);
 ```
 
+### Params
+
+| 参数    | 说明                                         | 类型                   | 默认值 |
+|---------|----------------------------------------------|------------------------|--------|
+| target | DOM 节点或者 Ref 对象  |  HTMLElement \| (() => HTMLElement) \| Document \| React.MutableRefObject  | Document    |
+
 ### Result
 
 | 参数 | 说明     | 类型 |
 |------|----------|------|
 | position | 滚动容器当前的滚动位置 | `{x: number, y: number}`  |
-
-### Params
-
-| 参数    | 说明                                         | 类型                   | 默认值 |
-|---------|----------------------------------------------|------------------------|--------|
-| target | DOM 节点或者 Ref 对象  | HTMLElement \| Document \| React.RefObject  | -      |

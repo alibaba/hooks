@@ -26,15 +26,15 @@ Get the scroll position of an element.
 const pisition = useScroll(target);
 ```
 
+### Params
+
+| Property | Description                                                        | Type                   | Default |
+|---------|----------------------------------------------|------------------------|--------|
+| target | DOM element or Ref object | HTMLElement \| (() => HTMLElement) \| Document \| React.MutableRefObject  | Document    |
+
+
 ### Result
 
 | Property | Description                                                       | Type                 |
 |------|----------|------|
 | position | The current scroll position of the element. | `{x: number, y: number}`  |
-
-### Params
-
-| Property | Description                                                        | Type                   | Default |
-|---------|----------------------------------------------|------------------------|--------|
-| target | DOM element or Ref object | HTMLElement \| Document \| React.RefObject  | -      |
-
