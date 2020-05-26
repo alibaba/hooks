@@ -34,7 +34,7 @@ const inViewPort = useInViewport(target);
 
 | Property | Description                                                        | Type                   | Default |
 |---------|----------------------------------------------|------------------------|--------|
-| target | DOM element or Ref Object | () => HTMLElement \| React.RefObject | - |
+| target | DOM element or Ref Object | HTMLElement \| (() => HTMLElement) \| React.MutableRefObject | - |
 
 ### Result
 

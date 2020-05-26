@@ -29,13 +29,13 @@ legacy: /zh-CN/dom/use-in-viewport
 const inViewPort = useInViewport(target);
 ```
 
-### Params
+### 参数
 
 | 参数    | 说明                                         | 类型                   | 默认值 |
 |---------|----------------------------------------------|------------------------|--------|
-| target |  | () => HTMLElement \| React.RefObject | - |
+| target | DOM element or Ref Object | HTMLElement \| (() => HTMLElement) \| React.MutableRefObject | - |
 
-### Result
+### 结果
 
 | 参数     | 说明                                     | 类型       |
 |----------|------------------------------------------|------------|
