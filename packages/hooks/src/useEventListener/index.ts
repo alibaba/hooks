@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react';
+import { getTargetElement } from '../utils/dom';
 
-type Target = () => HTMLElement | React.RefObject<HTMLElement>;
+type Target = (() => HTMLElement) | HTMLElement | React.MutableRefObject<HTMLElement> | Window;
 type Options = { target?: Target; capture?: boolean; once?: boolean; passive?: boolean; }
 
 function useEventListener(
@@ -15,18 +16,17 @@ function useEventListener(
   }, [handler]);
 
   useEffect(() => {
-    const targetElement = options && (typeof options.target === 'function'
-      ? options.target()
-      // @ts-ignore
-      : options.target.current);
+    const targetElement = getTargetElement(options?.target, window)!;
+
     const isSupported = targetElement.addEventListener;
+
     if (!isSupported) return;
     const eventListener = (
       event: Event,
     ): EventListenerOrEventListenerObject | AddEventListenerOptions =>
       savedHandler.current && savedHandler.current(event);
 
-      targetElement.addEventListener(eventName, eventListener, {
+    targetElement.addEventListener(eventName, eventListener, {
       capture: options?.capture,
       once: options?.once,
       passive: options?.passive

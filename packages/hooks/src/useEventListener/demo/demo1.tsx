@@ -7,7 +7,7 @@
  */
 
 import React, { useState, useRef } from 'react';
-import useEventListener from '../index';
+import { useEventListener } from 'ahooks';
 
 export default () => {
   const [value, setValue] = useState(0);
@@ -19,5 +19,5 @@ export default () => {
   const ref = useRef();
   useEventListener('click', clickHandler, { target: ref });
 
-  return <button ref={ref}>You click {value} times</button>;
+  return <button ref={ref} type="button">You click {value} times</button>;
 };

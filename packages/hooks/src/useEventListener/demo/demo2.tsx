@@ -7,7 +7,7 @@
  */
 
 import React, { useState } from 'react';
-import useEventListener from '../index';
+import { useEventListener } from 'ahooks';
 
 export default () => {
   const [value, setValue] = useState('');
@@ -15,9 +15,7 @@ export default () => {
   const keyDownHandler = (ev:KeyboardEvent) => {
     setValue(ev.code);
   };
-  useEventListener('keydown', keyDownHandler, {
-    target: () => window,
-  });
+  useEventListener('keydown', keyDownHandler);
 
   return <p>Your press key is {value}</p>;
 };
