@@ -106,7 +106,7 @@ function useTextSelection(target: Target): IState {
       targetElement.removeEventListener('mouseup', mouseupHandler);
       document.removeEventListener('mousedown', mousedownHandler);
     };
-  }, [target]);
+  }, [typeof target === 'function' ? undefined : target]);
 
   return state;
 }
