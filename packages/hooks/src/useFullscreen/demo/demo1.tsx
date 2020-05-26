@@ -13,9 +13,7 @@ import { useFullscreen } from 'ahooks';
 
 export default () => {
   const ref = useRef();
-  const [isFullscreen, { setFull, exitFull, toggleFull }] = useFullscreen({
-    target: ref
-  });
+  const [isFullscreen, { setFull, exitFull, toggleFull }] = useFullscreen(ref);
   return (
     <div ref={ref} style={{ background: 'white' }}>
       <div style={{ marginBottom: 16 }}>{isFullscreen ? 'Fullscreen' : 'Not fullscreen'}</div>

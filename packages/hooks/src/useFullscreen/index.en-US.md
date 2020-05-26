@@ -24,14 +24,14 @@ A Hook for handling dom full screen
 ## API
 
 ```ts
-const [isFullscreen, { setFull, exitFull, toggleFull }] = useFullScreen({ target, onExitFull?, onFull? });
+const [isFullscreen, { setFull, exitFull, toggleFull }] = useFullScreen(target, { onExitFull?, onFull? });
 ```
 
 ### Params
 
 | Property | Description                                                        | Type                   | Default |
 |---------|----------------------------------------------|------------------------|--------|
-| target | DOM element or Ref Object | () => HTMLElement \| React.RefObject | - |
+| target | DOM element or Ref Object | HTMLElement \| () => HTMLElement \| React.MutableRefObject | - |
 | onExitFull | listen for exit full screen events  | ()=>void | -      |
 | onFull | listen for full screen events  | ()=>void | -      |
 

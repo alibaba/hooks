@@ -24,14 +24,14 @@ legacy: /zh-CN/dom/use-full-screen
 ## API
 
 ```ts
-const [isFullscreen, { setFull, exitFull, toggleFull }] = useFullScreen({ target, onExitFull?, onFull? });
+const [isFullscreen, { setFull, exitFull, toggleFull }] = useFullScreen(target, { onExitFull?, onFull? });
 ```
 
 ### 参数
 
 | 参数    | 说明                                         | 类型                   | 默认值 |
 |---------|----------------------------------------------|------------------------|--------|
-| target | DOM 节点或者 Ref 对象  | () => HTMLElement \| React.RefObject | - |
+| target | DOM 节点或者 Ref 对象  | HTMLElement \| () => HTMLElement \| React.MutableRefObject | - |
 | onExitFull | 监听退出全屏  | ()=>void | -      |
 | onFull | 监听全屏  | ()=>void | -      |
 

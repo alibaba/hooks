@@ -1,11 +1,13 @@
 /* eslint no-empty: 0 */
 
-import { useLayoutEffect, useRef } from 'react';
+import { useLayoutEffect, useRef, MutableRefObject } from 'react';
 import screenfull from 'screenfull';
 import useBoolean from '../useBoolean';
+import { getTargetElement } from '../utils/dom';
+
+type Target = HTMLElement | (() => HTMLElement) | MutableRefObject<HTMLElement>;
 
 export interface Options {
-  target: HTMLElement | React.RefObject<HTMLElement>;
   onExitFull?: () => void;
   onFull?: () => void;
 }
@@ -19,8 +21,8 @@ interface Callback {
 type Value = boolean;
 type Result = [Value, Callback];
 
-export default (options?: Options): Result => {
-  const { target, onExitFull, onFull } = options || {};
+export default (target: Target, options?: Options): Result => {
+  const { onExitFull, onFull } = options || {};
 
   const onExitFullRef = useRef(onExitFull);
   onExitFullRef.current = onExitFull;
@@ -36,9 +38,8 @@ export default (options?: Options): Result => {
       return;
     }
 
-    // @ts-ignore
-    const targetElement = typeof target === 'function' ? target() : target.current;
-    if (!targetElement) {
+    const el = getTargetElement(target);
+    if (!el) {
       return;
     }
 
@@ -52,7 +53,7 @@ export default (options?: Options): Result => {
 
     if (screenfull.isEnabled) {
       try {
-        screenfull.request(targetElement);
+        screenfull.request(el as HTMLElement);
         setTrue();
         if (onFullRef.current) {
           onFullRef.current();
