@@ -4,7 +4,7 @@ import useDebounceEffect from '..';
 
 export default () => {
   const [value, setValue] = useState('hello');
-  const [records, setRecords] = useState([]);
+  const [records, setRecords] = useState<string[]>([]);
   useDebounceEffect(() => {
     setRecords(val => (
       [...val, value]
