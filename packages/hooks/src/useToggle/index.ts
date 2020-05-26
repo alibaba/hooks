@@ -1,4 +1,4 @@
-import { useCallback, useState, useMemo } from 'react';
+import { useState, useMemo } from 'react';
 
 type IState = string | number | boolean | undefined;
 
@@ -8,7 +8,7 @@ export interface Actions<T = IState> {
   toggle: (value?: T) => void;
 }
 
-function useToggle<T = boolean | undefined>(): [boolean, Actions];
+function useToggle<T = boolean | undefined>(): [boolean, Actions<T>];
 
 function useToggle<T = IState>(
   defaultValue: T,
@@ -28,8 +28,6 @@ function useToggle<D extends IState = IState, R extends IState = IState>(
     () => (reverseValue === undefined ? !defaultValue : reverseValue) as D | R,
     [reverseValue],
   );
-
-
 
   const actions = useMemo(() => {
     // 切换返回值
