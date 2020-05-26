@@ -12,12 +12,12 @@ import { useKeyPress } from 'ahooks';
 export default () => {
   const [counter, setCounter] = useState(0);
 
-  useKeyPress('ArrowUp', event => {
+  useKeyPress('ArrowUp', () => {
     setCounter(s => s + 1);
   });
 
   // keyCode value for ArrowDown
-  useKeyPress(40, event => {
+  useKeyPress(40, () => {
     setCounter(s => s - 1);
   });
 

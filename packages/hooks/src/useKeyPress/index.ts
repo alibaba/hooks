@@ -1,14 +1,15 @@
-import { useEffect, useCallback, useRef, RefObject } from 'react';
+import { useEffect, useCallback, useRef, MutableRefObject } from 'react';
+import { getTargetElement } from '../utils/dom';
 
 export type KeyPredicate = (event: KeyboardEvent) => boolean;
 export type keyType = KeyboardEvent['keyCode'] | KeyboardEvent['key'];
 export type KeyFilter = keyType | Array<keyType> | ((event: KeyboardEvent) => boolean);
 export type EventHandler = (event: KeyboardEvent) => void;
 export type keyEvent = 'keydown' | 'keyup';
-export type RefType = HTMLElement | (() => HTMLElement | null);
+
 export type EventOption = {
   events?: Array<keyEvent>;
-  target?: () => HTMLElement | Window | RefObject<HTMLElement>
+  target?: (() => HTMLElement) | HTMLElement | MutableRefObject<HTMLElement> | Document | Window
 };
 
 // 键盘事件 keyCode 别名
@@ -147,21 +148,17 @@ function useKeyPress(
   );
 
   useEffect(() => {
-    // @ts-ignore
-    let targetElement = window;
-    if (target) {
-      // @ts-ignore
-      targetElement = typeof target === 'function' ? target() : target.current;
-    }
+    const el = getTargetElement(target, window)!;
+
     for (const eventName of events) {
-      targetElement.addEventListener(eventName, callbackHandler);
+      el.addEventListener(eventName, callbackHandler);
     }
     return () => {
       for (const eventName of events) {
-        targetElement.removeEventListener(eventName, callbackHandler);
+        el.removeEventListener(eventName, callbackHandler);
       }
     };
-  }, [events, callbackHandler, target]);
+  }, [events, callbackHandler, typeof target === 'function' ? undefined : target]);
 }
 
 export default useKeyPress;

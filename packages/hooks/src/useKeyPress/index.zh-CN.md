@@ -28,7 +28,7 @@ legacy: /zh-CN/dom/use-key-press
 ## API
 
 ```javascript
-const ref = useKeyPress(
+useKeyPress(
   keyFilter: KeyFilter, 
   eventHandler: EventHandler = noop, 
   options?: Options
@@ -50,7 +50,7 @@ const ref = useKeyPress(
 | 参数            | 说明                                                   | 类型                              | 默认值 |
 |-----------------|--------------------------------------------------------|-----------------------------------|--------|
 | events | 触发事件  |  Array<keydown \| keyup\> | ['keydown']     |
-| target | DOM 节点或者 Ref 对象  | (() => HTMLElement) | React.RefObject | - |
+| target | DOM 节点或者 Ref 对象  | (() => HTMLElement) \| HTMLElement \| React.MutableRefObject | - |
 
 ## 备注
 
