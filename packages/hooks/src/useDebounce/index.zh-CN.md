@@ -25,7 +25,7 @@ legacy: /zh-CN/side-effect/use-debounce
 ```javascript
 const debouncedValue = useDebounce(
   value: any,
-  wait: number
+  options?: object
 );
 ```
 
@@ -34,4 +34,7 @@ const debouncedValue = useDebounce(
 | 参数  | 说明                     | 类型   | 默认值 |
 |-------|--------------------------|--------|--------|
 | value | 需要防抖的值         | any    | -      |
-| wait  | 防抖等待时间，单位为毫秒 | number | 1000   |
+| options  | 配置去抖的行为                                                    | object                  | {}    |
+| options.wait | 超时时间，单位为毫秒 | number | 1000 |
+| options.leading | 是否在上升沿触发副作用函数 | boolean | false |
+| options.trailing | 是否在下降沿触发副作用函数 | boolean | true |

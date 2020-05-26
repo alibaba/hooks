@@ -1,17 +1,17 @@
 ---
-title: useDebounceFn
+title: useDebounceEffect
 nav:
   title: Hooks
   path: /hooks
 group:
-  title: SideEffect
-  path: /side-effect
-legacy: /side-effect/use-debounce-fn
+  title: LifeCycle
+  path: /life-cycle
+legacy: /life-cycle/use-debounce-effect
 ---
 
-# useDebounceFn
+# useDebounceEffect
 
-A hook that handle the debounce function.
+Debounce your `useEffect`.
 
 ## Examples
 
@@ -22,27 +22,19 @@ A hook that handle the debounce function.
 ## API
 
 ```javascript
-const {
-  run,
-  cancel
-} = useDebounceFn(
-  fn: (...args: any[]) => any,
+useDebounceEffect(
+  effect: () => (void | (() => void | undefined)),
+  deps?: any[],
   options?: object
 );
 ```
-
-### Result
-
-| Property | Description                               | Type                    |
-|----------|-------------------------------------------|-------------------------|
-| run      | trigger fn, parameters will be send to fn | Function |
-| cancel   | cancel current debounce                   | () => void              |
 
 ### Params
 
 | Property | Description                                                                  | Type                    | Default |
 |----------|------------------------------------------------------------------------------|-------------------------|---------|
-| fn       |  The function to debounce.                                              | Function | -       |
+| effect       |  The effect callback.                                              | Function | -       |
+| deps | The dependencies list. | any[] \| undefined | undefined |
 | options  | Config the debounce behavior.                                                    | object                  | {}    |
 | options.wait | The number of milliseconds to delay. | number | 1000 |
 | options.leading | Specify invoking on the leading edge of the timeout. | boolean | false |

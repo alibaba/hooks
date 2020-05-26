@@ -1,5 +1,5 @@
 import { act, renderHook, RenderHookResult } from '@testing-library/react-hooks';
-import useDebounceFn, { ReturnValue } from '../index';
+import useDebounceFn from '../index';
 
 interface ParamsObj {
   fn: (...arg: any) => any;
@@ -26,9 +26,9 @@ const debounceFn = (gap: number) => {
   count += gap;
 };
 
-const setUp = ({ fn, wait }: ParamsObj) => renderHook(() => useDebounceFn(fn, wait));
+const setUp = ({ fn, wait }: ParamsObj) => renderHook(() => useDebounceFn(fn, {wait}));
 
-let hook: RenderHookResult<ParamsObj, ReturnValue>;
+let hook: RenderHookResult<ParamsObj, ReturnType<typeof useDebounceFn>>;
 
 describe('useDebounceFn', () => {
   beforeEach(() => {
@@ -63,36 +63,6 @@ describe('useDebounceFn', () => {
       hook.result.current.cancel();
       jest.runAllTimers();
       expect(count).toBe(6);
-    });
-  });
-
-  it('deps should work', () => {
-    let c = 0;
-    let mountedState = 1;
-    act(() => {
-      hook = renderHook(() =>
-        useDebounceFn(
-          () => {
-            c += 1;
-          },
-          [mountedState],
-          500,
-        ),
-      );
-    });
-    act(() => {
-      expect(c).toEqual(0);
-      mountedState = 2;
-      hook.rerender();
-      mountedState = 3;
-      hook.rerender();
-      jest.runAllTimers();
-      expect(c).toEqual(1);
-      mountedState = 4;
-      hook.rerender();
-      expect(c).toEqual(1);
-      jest.runAllTimers();
-      expect(c).toEqual(2);
     });
   });
 });
