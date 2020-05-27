@@ -1,70 +1,26 @@
 /**
- * title: Translate user text selection
- * desc: Use Antd.Popover to translate user text selection
+ * title: Default usage
+ * desc: Tracking content, size, position of user text selection
  *
- * title.zh-CN: 划词翻译
- * desc.zh-CN: 配合 Popover 做划词翻译
+ * title.zh-CN: 默认用法
+ * desc.zh-CN: 获取用户当前选择的文本内容、大小及其相对于视口的位置。
  */
 
-import { useRequest, useTextSelection } from 'ahooks';
-import { Popover, Spin } from 'antd';
-import React, { useEffect, useState } from 'react';
-
-
-const getResult = (keyword: string): Promise<string> => {
-  const trimedText = keyword.trim() !== '';
-  if (!trimedText) { return Promise.resolve('') }
-  return new Promise(resolve => {
-    setTimeout(() => resolve(`[translate result] ${keyword}`), 2000);
-  })
-}
+import React, { useRef } from 'react';
+import { useTextSelection } from 'ahooks';
 
 export default () => {
-  const [{
-    text = '',
-    left = 0,
-    top = 0,
-    height = 0,
-    width = 0,
-  }] = useTextSelection(() => document.querySelector('#translate-dom'));
-
-  const [visible, setVisible] = useState(false);
-
-  const { data, run, loading } = useRequest(getResult, {
-    manual: true
-  });
-
-  useEffect(() => {
-    if (text.trim() === '') {
-      setVisible(false);
-      return;
-    }
-    setVisible(true);
-    run(text);
-  }, [text])
-
+  const ref = useRef();
+  const selection = useTextSelection(ref);
   return (
     <div>
-      <p id="translate-dom">
-        Translation of this paragraph;Translation of this paragraph;Translation of this paragraph;
-      </p>
-      <Popover
-        content={
-          <Spin spinning={loading}>
-            {loading ? 'Translating……' : data}
-          </Spin>
-        }
-        visible={visible}
-      >
-        <span style={{
-          position: 'fixed',
-          top: `${top}px`,
-          left: `${left}px`,
-          height: `${height}px`,
-          width: `${width}px`,
-          pointerEvents: 'none',
-        }} />
-      </Popover>
+      <div ref={ref}>
+        <p>
+          Please swipe your mouse to select any text on this paragraph.
+        </p>
+      </div>
+      <p>Result：{JSON.stringify(selection)}</p>
     </div>
+
   );
 };

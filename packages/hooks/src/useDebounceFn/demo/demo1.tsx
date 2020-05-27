@@ -14,7 +14,9 @@ export default () => {
   const [value, setValue] = useState(0);
   const { run } = useDebounceFn(() => {
     setValue(value + 1);
-  }, 500);
+  }, {
+    wait: 500
+  });
 
   return (
     <div>

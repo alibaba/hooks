@@ -8,13 +8,11 @@
 
 import React from 'react';
 import { Button } from 'antd';
-import {useFullscreen} from 'ahooks';
+import { useFullscreen } from 'ahooks';
 import img from './react-hooks.jpg';
 
 export default () => {
-  const { setFull } = useFullscreen<HTMLElement>({
-    dom: () => document.getElementById('fullscreen-img'),
-  });
+  const [, { setFull }] = useFullscreen(() => document.getElementById('fullscreen-img'));
   return (
     <div style={{ background: 'white' }}>
       <div style={{ marginBottom: 16 }}>

@@ -18,25 +18,20 @@ legacy: /zh-CN/dom/use-hover
 
 <code src="./demo/demo1.tsx" />
 
-### 懒加载
+### 传入 DOM 元素
 
 <code src="./demo/demo2.tsx" />
 
 ## API
 
 ```javascript
-// 如果没有 dom 参数，则会返回 ref
-const [isHovering, ref] = useHover({
-    onEnter?,
-    onLeave?,
-});
-
-// 如果有 dom，不会返回 ref
-const [isHovering] = useHover({
-  dom?,
-  onEnter?,
-  onLeave?,
-});
+const isHovering = useHover(
+  target, 
+  {
+   onEnter,
+   onLeave
+  }
+);
 ```
 
 ### 结果
@@ -44,12 +39,11 @@ const [isHovering] = useHover({
 | 参数     | 说明                                     | 类型       |
 |----------|------------------------------------------|------------|
 | isHovering  | 判断鼠标元素是否处于 hover 元素                  | boolean    |
-| ref     | 当未传入任何参数时，将 ref 绑定给需监听的节点      | -        |
 
 ### 参数
 
 | 参数    | 说明                                         | 类型                   | 默认值 |
 |---------|----------------------------------------------|------------------------|--------|
-| dom | 可选项，如果未传入则会监听返回结果中的 ref，否则会监听传入的节点  | HTMLElement \| (() => HTMLElement) \| undefined | -      |
+| target | DOM 节点或者 Ref 对象  | (() => HTMLElement) \| HTMLElement \| React.RefObject | - |
 | onEnter | 监听进入 hover  | ()=>void | -      |
 | onLeave | 监听离开 hover  | ()=>void | -      |

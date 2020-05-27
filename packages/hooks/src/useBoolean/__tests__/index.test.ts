@@ -1,11 +1,7 @@
 import { renderHook, act } from '@testing-library/react-hooks';
 import useBoolean from '../index';
 
-const callToggle = (hook: any) => {
-  act(() => {
-    hook.result.current.toggle();
-  });
-};
+const setUp = (defaultValue: boolean = false) => renderHook(() => useBoolean(defaultValue));
 
 describe('useBoolean', () => {
   it('should be defined', () => {
@@ -13,24 +9,28 @@ describe('useBoolean', () => {
   });
 
   it('test on methods', async () => {
-    const hook = renderHook(() => useBoolean());
-    expect(hook.result.current.state).toBeFalsy();
+    const { result } = setUp();
+    expect(result.current[0]).toBeFalsy();
     act(() => {
-      hook.result.current.toggle(true);
+      result.current[1].setTrue(true);
     });
-    expect(hook.result.current.state).toBeTruthy();
+    expect(result.current[0]).toBeTruthy();
     act(() => {
-      hook.result.current.setFalse();
+      result.current[1].setFalse();
     });
-    expect(hook.result.current.state).toBeFalsy();
+    expect(result.current[0]).toBeFalsy();
     act(() => {
-      hook.result.current.setTrue();
+      result.current[1].toggle();
     });
-    expect(hook.result.current.state).toBeTruthy();
+    expect(result.current[0]).toBeTruthy();
+    act(() => {
+      result.current[1].toggle();
+    });
+    expect(result.current[0]).toBeFalsy();
   });
 
   it('test on optional', () => {
-    const hook = renderHook(() => useBoolean(true));
-    expect(hook.result.current.state).toBeTruthy();
+    const hook = setUp(true);
+    expect(hook.result.current[0]).toBeTruthy();
   });
 });

@@ -7,16 +7,16 @@
  */
 
 import React, { useState } from 'react';
-import {useKeyPress} from 'ahooks';
+import { useKeyPress } from 'ahooks';
 
 export default () => {
   const [counter, setCounter] = useState(0);
 
-  useKeyPress('left', event => {
+  useKeyPress('left', () => {
     setCounter(s => s - 1);
   });
 
-  useKeyPress('right', event => {
+  useKeyPress('right', () => {
     setCounter(s => s + 1);
   });
 

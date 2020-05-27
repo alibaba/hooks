@@ -21,24 +21,10 @@ legacy: /zh-CN/state/use-boolean
 ## API
 
 ```javascript
-const {
-  state, 
-  toggle,
-  setTrue,
-  setFalse
-} = useBoolean(
+const [ state, { toggle, setTrue, setFalse }] = useBoolean(
   defaultValue?: boolean,
 );
 ```
-
-### Result
-
-| 参数     | 说明                                 | 类型                 |
-|----------|--------------------------------------|----------------------|
-| state  | 状态值                         | boolean              |
-| toggle | 触发状态更改的函数,可以接受一个可选参数修改状态值 | (value?: any) => void |
-| setTrue | 设置状态值为 true | () => void |
-| setFalse | 设置状态值为 false | () => void |
 
 ### Params
 
@@ -46,3 +32,18 @@ const {
 |---------|----------------------------------------------|------------------------|--------|
 | defaultValue | 可选项，传入默认的状态值  | boolean \| undefined | false      |
 
+
+### Result
+
+| 参数     | 说明                                 | 类型                 |
+|----------|--------------------------------------|----------------------|
+| state  | 状态值                         | boolean              |
+| actions | 操作集合 | object |
+
+### Actions
+
+| 参数     | 说明                                 | 类型                 |
+|----------|--------------------------------------|----------------------|
+| toggle | 触发状态更改的函数,可以接受一个可选参数修改状态值 | (value?: any) => void |
+| setTrue | 设置状态值为 true | () => void |
+| setFalse | 设置状态值为 false | () => void |

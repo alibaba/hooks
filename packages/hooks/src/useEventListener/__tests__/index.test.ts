@@ -23,7 +23,7 @@ describe('useEventListener', () => {
       state++;
     };
     const { rerender, unmount } = renderHook(() =>
-      useEventListener('click', onClick, { dom: container }));
+      useEventListener('click', onClick, { target: () => container }));
 
     document.body.click();
     expect(state).toEqual(0);

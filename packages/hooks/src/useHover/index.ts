@@ -1,18 +1,17 @@
-import { MutableRefObject, useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import useBoolean from '../useBoolean';
+import { getTargetElement } from '../utils/dom';
 
-export interface Options<T> {
-  dom?: T | (() => T) | null;
+export interface Options {
   onEnter?: () => void;
   onLeave?: () => void;
 }
 
-export default <T extends HTMLElement = HTMLElement>(
-  options?: Options<T>,
-): [boolean | undefined, MutableRefObject<T>?] => {
-  const { dom, onEnter, onLeave } = options || {};
-
-  const element = useRef<T>(null);
+export default (
+  target: (() => HTMLElement) | HTMLElement | React.MutableRefObject<HTMLElement>,
+  options?: Options,
+): boolean => {
+  const { onEnter, onLeave } = options || {};
 
   const onEnterRef = useRef(onEnter);
   onEnterRef.current = onEnter;
@@ -20,7 +19,7 @@ export default <T extends HTMLElement = HTMLElement>(
   const onLeaveRef = useRef(onLeave);
   onLeaveRef.current = onLeave;
 
-  const { state, setTrue, setFalse } = useBoolean(false);
+  const [ state, { setTrue, setFalse }] = useBoolean(false);
 
   useEffect(() => {
     const onMouseEnter = () => {
@@ -31,30 +30,18 @@ export default <T extends HTMLElement = HTMLElement>(
       if (onLeaveRef.current) onLeaveRef.current();
       setFalse();
     };
-    const passedInElement = typeof dom === 'function' ? dom() : dom;
+
+    const targetElement = getTargetElement(target);
     // 如果 传入dom
-    if (passedInElement) {
-      passedInElement.addEventListener('mouseenter', onMouseEnter);
-      passedInElement.addEventListener('mouseleave', onMouseLeave);
+    if (targetElement) {
+      targetElement.addEventListener('mouseenter', onMouseEnter);
+      targetElement.addEventListener('mouseleave', onMouseLeave);
       return () => {
-        passedInElement.removeEventListener('mouseenter', onMouseEnter);
-        passedInElement.removeEventListener('mouseleave', onMouseLeave);
+        targetElement.removeEventListener('mouseenter', onMouseEnter);
+        targetElement.removeEventListener('mouseleave', onMouseLeave);
       };
     }
-    const node = element.current;
-    if (node) {
-      node.addEventListener('mouseenter', onMouseEnter);
-      node.addEventListener('mouseleave', onMouseLeave);
-      return () => {
-        node.removeEventListener('mouseenter', onMouseEnter);
-        node.removeEventListener('mouseleave', onMouseLeave);
-      };
-    }
-  }, [element.current, typeof dom === 'function' ? undefined : dom]);
+  }, [typeof target === 'function' ? undefined : target]);
 
-  if (dom) {
-    return [!!state];
-  }
-
-  return [!!state, element as MutableRefObject<T>];
+  return state;
 };

@@ -11,10 +11,10 @@ import { Input, Button } from 'antd';
 import { useEventTarget } from 'ahooks'
 
 export default () => {
-  const [valueProps, reset] = useEventTarget('this is initial value');
+  const [value, { reset, onChange }] = useEventTarget({ initialValue: 'this is initial value' });
 
   return (<Fragment>
-      <Input {...valueProps} style={{ width: 200, marginRight: 20 }}/>
+      <Input value={value} onChange={onChange} style={{ width: 200, marginRight: 20 }}/>
       <Button type="primary" onClick={reset}>重置</Button>
     </Fragment>
   );

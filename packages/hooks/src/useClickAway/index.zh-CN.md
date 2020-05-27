@@ -22,22 +22,16 @@ legacy: /zh-CN/dom/use-click-away
 
 ## API
 
-```javascript
-const ref = useClickAway(
-  onClickAway: (event: KeyboardEvent) => void,
-  dom?: RefType,
+```ts
+useClickAway(
+  onClickAway: (event: MouseEvent | TouchEvent) => void,
+  target: (() => HTMLElement) | HTMLElement | React.MutableRefObject,
 );
 ```
-
-### Result
-
-| 参数     | 说明                                     | 类型       |
-|----------|------------------------------------------|------------|
-| ref     | 当未传入任何参数时，将 ref 绑定给需监听的节点      | -        |
 
 ### Params
 
 | 参数    | 说明                                         | 类型                   | 默认值 |
 |---------|----------------------------------------------|------------------------|--------|
 | onClickAway | 触发事件的函数  | (event) => void | -      |
-| dom? | 可选项，如果未传入则会监听返回结果中的 ref，否则会监听传入的节点  | HTMLElement \| (() => HTMLElement) \| undefined | -      |
+| target | DOM 节点或者 Ref 对象  | (() => HTMLElement) \| HTMLElement \| React.MutableRefObject | - |
