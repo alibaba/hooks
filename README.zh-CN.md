@@ -8,8 +8,8 @@ React Hooks Library.
 
 ## 📚 文档
 
-* [English](https://hooks.umijs.org/)
-* [中文](https://hooks.umijs.org/zh-CN/)
+* [English](https://ahooks.js.org/)
+* [中文](https://ahooks.js.org/zh-CN/)
 
 ## ✨ 特性
 
