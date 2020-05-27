@@ -1,19 +1,15 @@
 /**
- * title: Use DefaultParams
- * desc: useFormTable sets the initial value through defaultParams, defaultParams is an array, the first value is the paging related parameter, |
- *  and the second value is the form related data. If there is a second value, we will help you initialize the form! |
- *  It should be noted that the initial form data can be filled with simple and advance form data. We will help you select the form data in the currently activated type.
+ * title: Form and Table data binding
+ * desc: useAntdTable returns a search object after receiving a form instance.
  *
- * title.zh-CN: 使用 defaultParams
- * desc.zh-CN: useFormTable 通过 defaultParams 设置初始化值，defaultParams 是一个数组，第一个值为分页相关参数，第二个值为表单相关数据。如果有第二个值，我们会帮您初始化表单！ |
- *  需要注意的是，初始化的表单数据可以填写 simple 和 advance 全量的表单数据，我们会帮您挑选当前激活的类型中的表单数据。
+ * title.zh-CN: Form 与 Table 联动
+ * desc.zh-CN: useAntdTable 接收 form 实例后，会返回 search 对象。
  */
 
 import React from 'react';
 import { Button, Col, Form, Input, Row, Table, Select } from 'antd';
-import { WrappedFormUtils } from 'antd/lib/form/Form';
-import { useFormTable } from 'ahooks'
-import { PaginatedParams } from 'ahooks/lib/useFormTable'
+import { useAntdTable } from 'ahooks'
+import { PaginatedParams } from 'ahooks/lib/useAntdTable'
 
 const { Option } = Select;
 
@@ -29,10 +25,6 @@ interface Item {
 interface Result {
   total: number;
   list: Item[];
-}
-
-interface AppListProps {
-  form: WrappedFormUtils;
 }
 
 const getTableData = ({ current, pageSize }: PaginatedParams[0], formData: Object): Promise<Result> => {
@@ -51,15 +43,12 @@ const getTableData = ({ current, pageSize }: PaginatedParams[0], formData: Objec
     }));
 };
 
-const AppList = (props: AppListProps) => {
-  const { getFieldDecorator } = props.form;
-  const { tableProps, search } = useFormTable(getTableData, {
-    form: props.form,
-    defaultParams: [
-      { current: 2, pageSize: 5 },
-      { name: 'hello', email: 'abc@gmail.com', gender: 'female' }
-    ],
-    defaultType: 'advance'
+export default () => {
+  const [form] = Form.useForm();
+
+  const { tableProps, search } = useAntdTable(getTableData, {
+    defaultPageSize: 5,
+    form,
   });
 
   const { type, changeType, submit, reset } = search;
@@ -85,21 +74,21 @@ const AppList = (props: AppListProps) => {
 
   const advanceSearchForm = (
     <div>
-      <Form>
+      <Form form={form}>
         <Row gutter={24}>
           <Col span={8}>
-            <Form.Item label="name">
-              {getFieldDecorator('name')(<Input placeholder="name" />)}
+            <Form.Item label="name" name="name">
+              <Input placeholder="name" />
             </Form.Item>
           </Col>
           <Col span={8}>
-            <Form.Item label="email">
-              {getFieldDecorator('email')(<Input placeholder="email" />)}
+            <Form.Item label="email" name="email">
+              <Input placeholder="email" />
             </Form.Item>
           </Col>
           <Col span={8}>
-            <Form.Item label="phone">
-              {getFieldDecorator('phone')(<Input placeholder="phone" />)}
+            <Form.Item label="phone" name="phone">
+              <Input placeholder="phone" />
             </Form.Item>
           </Col>
         </Row>
@@ -122,19 +111,17 @@ const AppList = (props: AppListProps) => {
 
   const searchFrom = (
     <div style={{ marginBottom: 16 }}>
-      <Form style={{ display: 'flex', justifyContent: 'flex-end' }}>
-        {getFieldDecorator('gender', {
-          initialValue: 'male',
-        })(
+      <Form form={form} style={{ display: 'flex', justifyContent: 'flex-end' }}>
+        <Form.Item name="gender">
           <Select style={{ width: 120, marginRight: 16 }} onChange={submit}>
             <Option value="">all</Option>
             <Option value="male">male</Option>
             <Option value="female">female</Option>
-          </Select>,
-        )}
-        {getFieldDecorator('name')(
-          <Input.Search placeholder="enter name" style={{ width: 240 }} onSearch={submit} />,
-        )}
+          </Select>
+        </Form.Item>
+        <Form.Item name="name">
+          <Input.Search placeholder="enter name" style={{ width: 240 }} onSearch={submit} />
+        </Form.Item>
         <Button type="link" onClick={changeType}>
           Advanced Search
         </Button>
@@ -149,5 +136,3 @@ const AppList = (props: AppListProps) => {
     </div>
   );
 };
-
-export default Form.create()(AppList);

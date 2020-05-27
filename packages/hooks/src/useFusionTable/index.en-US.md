@@ -21,12 +21,21 @@ It encapsulates the common Fusion [Form](https://fusion.design/pc/component/basi
 
 <code src="./demo/demo1.tsx" />
 
+### Data caching
+
+<code src="./demo/demo2.tsx" />
+
+### Set Default Params
+
+<code src="./demo/demo3.tsx" />
 
 ## API
 
-useFusionTable is based on [useRequest](/async). All [useRquest Pagination](/async?anchor=pagination#api-1) APIs can be used directly. For example `cacheKey`,` manual`, etc.
+useFusionTable is based on [useRequest](/async). All [useRquest Pagination](/async?anchor=pagination#api-1) APIs can be used directly. For example `cacheKey`, `manual`, etc.
 
-useFusionTable adds `result.search` and` options.form`.
+As the same as useRequest Pagination mode，The data structure returned by service must be `{list: Item [], total: number}`. If it is not satisfied, it can be converted once by `options.formatResult`.
+
+useFusionTable adds `result.search` and `options.filed`.
 
 ```javascript
 const {

@@ -1,5 +1,5 @@
 import { act, renderHook, RenderHookResult } from '@testing-library/react-hooks';
-import useFormTable, { BaseOptions, Result } from '../index';
+import useFusionTable, { BaseOptions, Result } from '../index';
 
 interface Query {
   current: number;
@@ -7,7 +7,7 @@ interface Query {
   [key: string]: any;
 }
 
-describe('useFormTable', () => {
+describe('useFusionTable', () => {
   const originalError = console.error;
   beforeEach(() => {
     jest.useFakeTimers();
@@ -43,9 +43,7 @@ describe('useFormTable', () => {
     fieldsValue: {
       name: 'default name',
     },
-    getValues: () => {
-      return field.fieldsValue || {};
-    },
+    getValues: () => field.fieldsValue || {},
     getNames: () => {
       // 根据不同的 type 返回不同的 fieldsValues
       if (searchType === 'simple') {
@@ -69,7 +67,7 @@ describe('useFormTable', () => {
   };
 
   const setUp = ({ asyncFn: fn, options }: any) =>
-    renderHook(() => useFormTable(fn, options));
+    renderHook(() => useFusionTable(fn, options));
 
   let hook: RenderHookResult<
     { func: (...args: any[]) => Promise<{}>; opt: BaseOptions<any> },
@@ -77,7 +75,7 @@ describe('useFormTable', () => {
   >;
 
   it('should be defined', () => {
-    expect(useFormTable).toBeDefined();
+    expect(useFusionTable).toBeDefined();
   });
 
   it('should fetch after first render', async () => {

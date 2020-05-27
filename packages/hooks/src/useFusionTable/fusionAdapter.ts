@@ -1,13 +1,22 @@
-import { Field, UseAntdTableFormUtils } from './index';
+import { Field } from './index';
 
-export const fieldAdapter = (field: Field) => {
-  return {
-    getFieldInstance: (name: string) => field.getNames().includes(name),
-    setFieldsValue: field.setValues,
-    getFieldsValue: field.getValues,
-    resetFields: field.reset,
-  } as UseAntdTableFormUtils;
-};
+export interface Store {
+  [name: string]: any;
+}
+interface UseAntdTableFormUtils {
+  getFieldInstance?: (name: string) => {}; // antd 3
+  setFieldsValue: (value: Store) => void;
+  getFieldsValue: (...args: any) => Store;
+  resetFields: (...args: any) => void;
+  [key: string]: any;
+}
+
+export const fieldAdapter = (field: Field) => ({
+  getFieldInstance: (name: string) => field.getNames().includes(name),
+  setFieldsValue: field.setValues,
+  getFieldsValue: field.getValues,
+  resetFields: field.reset,
+} as UseAntdTableFormUtils);
 
 export const resultAdapter = (result: any) => {
   const tableProps = {
@@ -25,7 +34,7 @@ export const resultAdapter = (result: any) => {
   };
 
   const paginationProps = {
-    onChange: result.pagination.onChange,
+    onChange: result.pagination.changeCurrent,
     onPageSizeChange: result.pagination.changePageSize,
     current: result.pagination.current,
     pageSize: result.pagination.pageSize,

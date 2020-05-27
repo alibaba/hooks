@@ -5,8 +5,9 @@ import {
   PaginatedOptionsWithFormat,
   PaginatedFormatReturn,
   PaginatedResult
-} from '@umijs/use-request/lib/types';
-import { useFormTable } from '..';
+} from '@ahooksjs/use-request/lib/types';
+
+import { useAntdTable } from '..';
 import { fieldAdapter, resultAdapter } from './fusionAdapter';
 
 export {
@@ -27,14 +28,6 @@ export interface Field {
   setValues: (value: Store) => void;
   getValues: (...args: any) => Store;
   reset: (...args: any) => void;
-  [key: string]: any;
-}
-
-export interface UseAntdTableFormUtils {
-  getFieldInstance?: (name: string) => {}; // antd 3
-  setFieldsValue: (value: Store) => void;
-  getFieldsValue: (...args: any) => Store;
-  resetFields: (...args: any) => void;
   [key: string]: any;
 }
 
@@ -83,9 +76,9 @@ function useFusionTable<R = any, Item = any, U extends Item = any>(
   service: CombineService<any, any>,
   options: BaseOptions<U> | OptionsWithFormat<R, Item, U>
 ): any {
-  const ret = useFormTable(service, {
+  const ret = useAntdTable(service, {
     ...options,
-    form: fieldAdapter(options.field!),
+    form: options.field ? fieldAdapter(options.field) : undefined,
   });
 
   return resultAdapter(ret);

@@ -11,7 +11,7 @@ group:
 legacy: /table/use-antd-table
 ---
 
-# useFormTable
+# useAntdTable
 
 It encapsulates the common AntD [Form](https://ant.design/components/form-cn/) and AntD [Table](https://ant.design/components/table-cn/) linkage logic, and supports AntD V3 and V4 at the same time.
 
@@ -31,9 +31,11 @@ It encapsulates the common AntD [Form](https://ant.design/components/form-cn/) a
 
 ## API
 
-useFormTable is based on [useRequest](/async). All [useRquest Pagination](/async?anchor=pagination#api-1) APIs can be used directly. For example `cacheKey`,` manual`, etc.
+useAntdTable is based on [useRequest](/async). All [useRquest Pagination](/async?anchor=pagination#api-1) APIs can be used directly. For example `cacheKey`,` manual`, etc.
 
-useFormTable adds `result.search` and` options.form`.
+As the same as useRequest Pagination mode，The data structure returned by service must be `{list: Item [], total: number}`. If it is not satisfied, it can be converted once by `options.formatResult`.
+
+useAntdTable adds `result.search` and` options.form`.
 
 ```javascript
 const {
@@ -44,7 +46,7 @@ const {
     submit: () => void;
     reset: () => void;
   };
-} = useFormTable(
+} = useAntdTable(
   service,
   {
     ...,
