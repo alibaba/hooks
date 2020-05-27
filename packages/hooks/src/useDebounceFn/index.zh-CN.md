@@ -27,16 +27,7 @@ const {
   cancel
 } = useDebounceFn(
   fn: (...args: any[]) => any,
-  wait: number
-);
-
-const {
-  run,
-  cancel
-} = useDebounceFn(
-  fn: (...args: any[]) => any,
-  deps: any[],
-  wait: number
+  options?: object
 );
 ```
 
@@ -47,12 +38,16 @@ const {
 | run    | 触发执行 fn，函数参数将会传递给 fn | Function |
 | cancel | 取消当前防抖                       | () => void              |
 
-### Params
+### 参数
 
 | 参数 | 说明                                              | 类型                    | 默认值 |
 |------|---------------------------------------------------|-------------------------|--------|
 | fn   | 需要防抖执行的函数                                | (...args: any[]) => any | -      |
-| options  | 配置防抖的行为                                                    | object                  | {}    |
-| options.wait | 超时时间，单位为毫秒 | number | 1000 |
-| options.leading | 是否在上升沿触发副作用函数 | boolean | false |
-| options.trailing | 是否在下降沿触发副作用函数 | boolean | true |
+| options  | 配置防抖的行为，详见下面的 Options                                          | object                  | {}    |
+
+### Options
+
+| 参数  | 说明                     | 类型   | 默认值 |
+| wait | 超时时间，单位为毫秒 | number | 1000 |
+| leading | 是否在上升沿触发副作用函数 | boolean | false |
+| trailing | 是否在下降沿触发副作用函数 | boolean | true |

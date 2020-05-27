@@ -35,8 +35,10 @@ useDebounceEffect(
 |----------|------------------------------------------------------------------------------|-------------------------|---------|
 | effect       |  The effect callback.                                              | Function | -       |
 | deps | The dependencies list. | any[] \| undefined | undefined |
-| options  | Config the debounce behavior.                                                    | object                  | {}    |
-| options.wait | The number of milliseconds to delay. | number | 1000 |
-| options.leading | Specify invoking on the leading edge of the timeout. | boolean | false |
-| options.trailing | Specify invoking on the trailing edge of the timeout. | boolean | true |
+| options  | Config the debounce behavior. See the Options section below.                                                    | object                  | {}    |
 
+### Options
+
+| wait | The number of milliseconds to delay. | number | 1000 |
+| leading | Specify invoking on the leading edge of the timeout. | boolean | false |
+| trailing | Specify invoking on the trailing edge of the timeout. | boolean | true |
