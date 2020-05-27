@@ -1,12 +1,23 @@
 export default {
-  extraBabelPlugins: [[
-    'babel-plugin-import',
-    {
-      libraryName: 'antd',
-      libraryDirectory: 'es',
-      style: true,
-    },
-  ]],
+  extraBabelPlugins: [
+    [
+      'babel-plugin-import',
+      {
+        libraryName: 'antd',
+        libraryDirectory: 'es',
+        style: true,
+      },
+      'antd'
+    ],
+    [
+      'babel-plugin-import',
+      {
+        libraryName: '@alifd/next',
+        style: true
+      },
+      'fusion'
+    ],
+  ],
   mode: 'site',
   title: 'ahooks',
   dynamicImport: {},

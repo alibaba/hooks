@@ -1,5 +1,5 @@
 import { act, renderHook, RenderHookResult } from '@testing-library/react-hooks';
-import useFormTable, { BaseOptions, Result } from '../index';
+import useAntdTable, { BaseOptions, Result } from '../index';
 
 interface Query {
   current: number;
@@ -7,7 +7,7 @@ interface Query {
   [key: string]: any;
 }
 
-describe('useFormTable', () => {
+describe('useAntdTable', () => {
   const originalError = console.error;
   beforeAll(() => {
     console.error = (...args: any) => {
@@ -67,7 +67,7 @@ describe('useFormTable', () => {
   };
 
   const setUp = ({ asyncFn: fn, options }: any) =>
-    renderHook(() => useFormTable(fn, options));
+    renderHook(() => useAntdTable(fn, options));
 
   let hook: RenderHookResult<
     { func: (...args: any[]) => Promise<{}>; opt: BaseOptions<any> },
@@ -75,7 +75,7 @@ describe('useFormTable', () => {
   >;
 
   it('should be defined', () => {
-    expect(useFormTable).toBeDefined();
+    expect(useAntdTable).toBeDefined();
   });
 
   it('should fetch after first render', async () => {

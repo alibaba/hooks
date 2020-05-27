@@ -1,15 +1,16 @@
 /**
  * title: Data caching
- * desc: Form and Table data cache through cacheKey。This is an example of antd v3, see [link](href) for an example of antd v4.
+ * desc: Form and Table data cache through cacheKey. This is an example of antd v3, see [link](https://github.com/ice-lab/ahooks/blob/master/packages/hooks/src/useAntdTable/demo/demo4.tsx) for an example of antd v4.
  *
  * title.zh-CN: 数据缓存
- * desc.zh-CN: 通过 cacheKey 可以实现 Form 和 Table 数据缓存。这是一个 antd v3 示例，antd v4 示例见 [链接](href)。
+ * desc.zh-CN: 通过 cacheKey 可以实现 Form 和 Table 数据缓存。这是一个 antd v3 示例，antd v4 示例见 [链接](https://github.com/ice-lab/ahooks/blob/master/packages/hooks/src/useAntdTable/demo/demo4.tsx)。
  */
 
-import { useFormTable } from 'ahooks';
-import { PaginatedParams } from 'ahooks/lib/useFormTable';
 import { Button, Form, Input, Table } from 'antd';
 import React, { useState } from 'react';
+import { WrappedFormUtils } from 'antd/lib/form/Form';
+import { useAntdTable } from 'ahooks'
+import { PaginatedParams } from 'ahooks/lib/useAntdTable'
 
 interface Item {
   name: {
@@ -23,6 +24,10 @@ interface Item {
 interface Result {
   total: number;
   list: Item[];
+}
+
+interface AppListProps {
+  form: WrappedFormUtils;
 }
 
 const getTableData = ({ current, pageSize }: PaginatedParams[0], formData: Object): Promise<Result> => {
@@ -41,16 +46,13 @@ const getTableData = ({ current, pageSize }: PaginatedParams[0], formData: Objec
     }));
 };
 
-const AppList = () => {
-  const [form] = Form.useForm();
-
-  // TODO filters and sorter
-  const { tableProps, params, search } = useFormTable(getTableData, {
+const AppList = (props: AppListProps) => {
+  const { getFieldDecorator } = props.form;
+  const { tableProps, params, search } = useAntdTable(getTableData, {
     defaultPageSize: 5,
-    form,
+    form: props.form,
     cacheKey: 'tableProps',
   });
-
   const { sorter = {}, filters = {} } = params[0] || ({} as any);
   const { type, changeType, submit, reset } = search || {};
 
@@ -79,19 +81,19 @@ const AppList = () => {
 
   const searchFrom = (
     <div style={{ marginBottom: 16 }}>
-      <Form form={form} style={{ display: 'flex', justifyContent: 'flex-end' }}>
-        <Form.Item name="name">
-          <Input placeholder="enter name" style={{ width: 140, marginRight: 16 }} />
-        </Form.Item>
+      <Form style={{ display: 'flex', justifyContent: 'flex-end' }}>
+        {getFieldDecorator('name')(
+          <Input placeholder="enter name" style={{ width: 140, marginRight: 16 }} />,
+        )}
 
         {type === 'advance' && (
           <>
-            <Form.Item name="email">
-              <Input placeholder="enter email" style={{ width: 140, marginRight: 16 }} />
-              </Form.Item>
-            <Form.Item name="phone">
-              <Input placeholder="enter phone" style={{ width: 140, marginRight: 16 }} />
-              </Form.Item>
+            {getFieldDecorator('email', { initialValue: '2' })(
+              <Input placeholder="enter email" style={{ width: 140, marginRight: 16 }} />,
+            )}
+            {getFieldDecorator('phone')(
+              <Input placeholder="enter phone" style={{ width: 140, marginRight: 16 }} />,
+            )}
           </>
         )}
         <Button type="primary" onClick={submit}>
@@ -115,6 +117,8 @@ const AppList = () => {
   );
 };
 
+const AppListTable = Form.create()(AppList);
+
 const Demo = () => {
   const [show, setShow] = useState(true);
 
@@ -129,7 +133,7 @@ const Demo = () => {
       >
         {show ? 'Click to destroy' : 'Click recovery'}
       </Button>
-      {show && <AppList />}
+      {show && <AppListTable />}
     </div>
   );
 };

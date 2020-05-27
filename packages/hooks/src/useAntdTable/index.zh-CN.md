@@ -1,17 +1,17 @@
 ---
-title: useFormTable
+title: useAntdTable
 order: 1000
 nav:
   title: Hooks
   path: /hooks
 group:
-  title: Ant Design
-  path: /antd
+  title: Table
+  path: /table
   order: 3
-legacy: /zh-CN/antd/use-form-table
+legacy: /zh-CN/table/use-antd-table
 ---
 
-# useFormTable
+# useAntdTable
 
 封装了常用的 AntD [Form](https://ant.design/components/form-cn/) 与 AntD [Table](https://ant.design/components/table-cn/) 联动逻辑，并且同时支持 AntD V3 和 V4。
 
@@ -31,9 +31,11 @@ legacy: /zh-CN/antd/use-form-table
 
 ## API
 
-useFormTable 基于 [useRequest](/zh-CN/async) 实现，所有的 [useRquest Pagination](/zh-CN/async?anchor=pagination#api-1) API 均可以直接使用。比如 `cacheKey`、`manual` 等等。
+useAntdTable 基于 [useRequest](/zh-CN/async) 实现，所有的 [useRquest Pagination](/zh-CN/async?anchor=pagination#api-1) API 均可以直接使用。比如 `cacheKey`、`manual` 等等。
 
-useFormTable 额外增加了 `result.search` 和 `options.form`。
+当然和 useRequest Pagination 模式一样，service 返回的数据结构必须为 `{list: Item[], total: number}` ，如果不满足，可以通过 `options.formatResult` 转换一次。
+
+useAntdTable 额外增加了 `result.search` 和 `options.form`。
 
 ```javascript
 const {
@@ -44,7 +46,7 @@ const {
     submit: () => void;
     reset: () => void;
   };
-} = useFormTable(
+} = useAntdTable(
   service,
   {
     ...,

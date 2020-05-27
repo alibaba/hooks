@@ -51,15 +51,15 @@ export interface OptionsWithFormat<R, Item, U> extends Omit<PaginatedOptionsWith
   defaultType?: 'simple' | 'advance';
 }
 
-function useFormTable<R = any, Item = any, U extends Item = any>(
+function useAntdTable<R = any, Item = any, U extends Item = any>(
   service: CombineService<R, PaginatedParams>,
   options: OptionsWithFormat<R, Item, U>
 ): Result<Item>
-function useFormTable<R = any, Item = any, U extends Item = any>(
+function useAntdTable<R = any, Item = any, U extends Item = any>(
   service: CombineService<PaginatedFormatReturn<Item>, PaginatedParams>,
   options: BaseOptions<U>
 ): Result<Item>
-function useFormTable<R = any, Item = any, U extends Item = any>(
+function useAntdTable<R = any, Item = any, U extends Item = any>(
   service: CombineService<any, any>,
   options: BaseOptions<U> | OptionsWithFormat<R, Item, U>
 ): any {
@@ -207,4 +207,4 @@ function useFormTable<R = any, Item = any, U extends Item = any>(
   }
 }
 
-export default useFormTable;
+export default useAntdTable;

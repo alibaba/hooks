@@ -28,7 +28,8 @@ import useKeyPress from './useKeyPress';
 import useEventListener from './useEventListener';
 import useHover from './useHover';
 import useUnmount from './useUnmount';
-import useFormTable from './useFormTable';
+import useAntdTable from './useAntdTable';
+import useFusionTable from './useFusionTable';
 import useSet from './useSet';
 import usePersistFn from './usePersistFn';
 import useMap from './useMap';
@@ -82,7 +83,7 @@ export {
   useEventListener,
   useHover,
   useRequest,
-  useFormTable,
+  useAntdTable,
   useUnmount,
   useSet,
   usePersistFn,
@@ -95,5 +96,6 @@ export {
   useUpdate,
   useTextSelection,
   useEventTarget,
-  useHistoryTravel
+  useHistoryTravel,
+  useFusionTable
 };
