@@ -7,12 +7,13 @@
  */
 
 
-import React from 'react';
+import React, { useRef } from 'react';
 import { Button } from 'antd';
-import {useFullscreen} from 'ahooks';
+import { useFullscreen } from 'ahooks';
 
 export default () => {
-  const { ref, isFullscreen, setFull, exitFull, toggleFull } = useFullscreen<HTMLDivElement>();
+  const ref = useRef();
+  const [isFullscreen, { setFull, exitFull, toggleFull }] = useFullscreen(ref);
   return (
     <div ref={ref} style={{ background: 'white' }}>
       <div style={{ marginBottom: 16 }}>{isFullscreen ? 'Fullscreen' : 'Not fullscreen'}</div>
