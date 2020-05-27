@@ -47,7 +47,7 @@ const [state,{ toggle, setLeft, setRight }] = useToggle(
 
 | 参数      | 说明   | 类型      |
 | ------- | ---- | ------- |
-| state   | 状态值  | boolean |
+| state   | 状态值  | - |
 | actions | 操作集合 | object  |
 
 ### Actions
