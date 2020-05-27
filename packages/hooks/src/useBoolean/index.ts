@@ -1,19 +1,22 @@
-import { useCallback } from 'react';
+import { useCallback, useMemo } from 'react';
 import useToggle from '../useToggle';
 
-const useBoolean = (defaultValue: boolean = false) => {
-  const { state, toggle } = useToggle(defaultValue);
+type IState = string | number | boolean | undefined;
 
-  const setTrue = useCallback(() => toggle(true), [toggle]);
+export interface Actions {
+  setTrue : () => void;
+  setFalse: () => void;
+  toggle: (value?: boolean | undefined) => void;
+}
 
-  const setFalse = useCallback(() => toggle(false), [toggle]);
+export default function useBoolean(defaultValue = false): [boolean, Actions] {
+    const { state, toggle } = useToggle(defaultValue);
 
-  return {
-    state,
-    toggle,
-    setTrue,
-    setFalse,
-  };
-};
+    const actions: Actions = useMemo(() => {
+        const setTrue = () => toggle(true);
+        const setFalse = () => toggle(false);
+        return { toggle, setTrue, setFalse }
+    }, [toggle]);
 
-export default useBoolean;
+    return [state, actions]
+}

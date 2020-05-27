@@ -30,7 +30,7 @@ export default (target: Target, options?: Options): Result => {
   const onFullRef = useRef(onFull);
   onFullRef.current = onFull;
 
-  const { state, toggle, setTrue, setFalse } = useBoolean(false);
+  const [state, { toggle, setTrue, setFalse }] = useBoolean(false);
 
   useLayoutEffect(() => {
     /* 非全屏时，不需要监听任何全屏事件 */
