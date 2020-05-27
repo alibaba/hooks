@@ -1,17 +1,17 @@
 /**
  * title: Default usage
  * desc: Default as a switch function,or accept a parameter to change state
- * 
+ *
  * title.zh-CN: 默认用法
  * desc.zh-CN: 默认切换布尔值状态，也可以接收一个参数作为新的值
  */
 
 import React from 'react';
 import { Button, Switch } from 'antd';
-import { useBoolean } from '@umijs/hooks';
+import { useBoolean } from 'ahooks';
 
 export default () => {
-  const { state, toggle, setTrue, setFalse } = useBoolean(true);
+  const [state, { toggle, setTrue, setFalse }] = useBoolean(true);
 
   return (
     <div>

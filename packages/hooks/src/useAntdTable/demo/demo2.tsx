@@ -1,15 +1,16 @@
 /**
- * title: Filter And Sorter
- * desc: Retrieve filter and sorter from antd table. Page number will be reset when filter or sorter changes.
+ * title: Data caching
+ * desc: Form and Table data cache through cacheKey. This is an example of antd v3, see [link](https://github.com/ice-lab/ahooks/blob/master/packages/hooks/src/useAntdTable/demo/demo4.tsx) for an example of antd v4.
  *
- * title.zh-CN: 排序与筛选
- * desc.zh-CN: 自动处理 Table 的排序与筛选，在修改排序或筛选时，会初始化到第一页
+ * title.zh-CN: 数据缓存
+ * desc.zh-CN: 通过 cacheKey 可以实现 Form 和 Table 数据缓存。这是一个 antd v3 示例，antd v4 示例见 [链接](https://github.com/ice-lab/ahooks/blob/master/packages/hooks/src/useAntdTable/demo/demo4.tsx)。
  */
 
-import { Table } from 'antd';
-import React from 'react';
-import { useAntdTable } from '@umijs/hooks'
-import { FnParams } from '@umijs/hooks/es/useAntdTable';
+import { Button, Form, Input, Table } from 'antd';
+import React, { useState } from 'react';
+import { WrappedFormUtils } from 'antd/lib/form/Form';
+import { useAntdTable } from 'ahooks'
+import { PaginatedParams } from 'ahooks/lib/useAntdTable'
 
 interface Item {
   name: {
@@ -22,32 +23,38 @@ interface Item {
 
 interface Result {
   total: number;
-  data: Item[];
+  list: Item[];
 }
 
-const getTableData = ({ current, pageSize, sorter, filters }: FnParams<Item>) => {
-  console.log(current, pageSize, sorter, filters);
-  let url = `https://randomuser.me/api?results=55&page=${current}&size=${pageSize}`;
-  if (sorter && sorter.field && sorter.order) {
-    url += `&${sorter.field}=${sorter.order}`;
-  }
-  if (filters) {
-    Object.entries(filters).forEach(i => {
-      url += `&${i[0]}=${i[1]}`;
-    });
-  }
-  return fetch(url)
+interface AppListProps {
+  form: WrappedFormUtils;
+}
+
+const getTableData = ({ current, pageSize }: PaginatedParams[0], formData: Object): Promise<Result> => {
+  let query = `page=${current}&size=${pageSize}`;
+  Object.entries(formData).forEach(([key, value]) => {
+    if (value) {
+      query += `&${key}=${value}`
+    }
+  });
+
+  return fetch(`https://randomuser.me/api?results=55&${query}`)
     .then(res => res.json())
     .then(res => ({
       total: res.info.results,
-      data: res.results,
+      list: res.results,
     }));
 };
 
-export default () => {
-  const { tableProps, filters, sorter } = useAntdTable<Result, Item>(getTableData, {
+const AppList = (props: AppListProps) => {
+  const { getFieldDecorator } = props.form;
+  const { tableProps, params, search } = useAntdTable(getTableData, {
     defaultPageSize: 5,
+    form: props.form,
+    cacheKey: 'tableProps',
   });
+  const { sorter = {}, filters = {} } = params[0] || ({} as any);
+  const { type, changeType, submit, reset } = search || {};
 
   const columns = [
     {
@@ -72,5 +79,63 @@ export default () => {
     },
   ];
 
-  return <Table columns={columns} rowKey="email" {...tableProps} />;
+  const searchFrom = (
+    <div style={{ marginBottom: 16 }}>
+      <Form style={{ display: 'flex', justifyContent: 'flex-end' }}>
+        {getFieldDecorator('name')(
+          <Input placeholder="enter name" style={{ width: 140, marginRight: 16 }} />,
+        )}
+
+        {type === 'advance' && (
+          <>
+            {getFieldDecorator('email', { initialValue: '2' })(
+              <Input placeholder="enter email" style={{ width: 140, marginRight: 16 }} />,
+            )}
+            {getFieldDecorator('phone')(
+              <Input placeholder="enter phone" style={{ width: 140, marginRight: 16 }} />,
+            )}
+          </>
+        )}
+        <Button type="primary" onClick={submit}>
+          Search
+        </Button>
+        <Button onClick={reset} style={{ marginLeft: 8 }}>
+          Reset
+        </Button>
+        <Button type="link" onClick={changeType}>
+          {type === 'simple' ? 'Expand' : 'Close'}
+        </Button>
+      </Form>
+    </div>
+  );
+
+  return (
+    <div>
+      {searchFrom}
+      <Table columns={columns} rowKey="email" {...tableProps} />
+    </div>
+  );
 };
+
+const AppListTable = Form.create()(AppList);
+
+const Demo = () => {
+  const [show, setShow] = useState(true);
+
+  return (
+    <div>
+      <Button
+        type="danger"
+        onClick={() => {
+          setShow(!show);
+        }}
+        style={{ marginBottom: 16 }}
+      >
+        {show ? 'Click to destroy' : 'Click recovery'}
+      </Button>
+      {show && <AppListTable />}
+    </div>
+  );
+};
+
+export default Demo;

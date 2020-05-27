@@ -1,9 +1,9 @@
 {
-  "name": "@umijs/hooks",
+  "name": "ahooks",
   "private": true,
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/umijs/hooks.git"
+    "url": "git+https://github.com/ice-lab/ahooks.git"
   },
   "scripts": {
     "init": "rm -rf node_modules && npm install && npm run clean && npm run bootstrap && npm run build",
@@ -11,7 +11,7 @@
     "dev": "dumi dev",
     "bootstrap": "lerna bootstrap",
     "clean": "lerna clean --yes",
-    "compile": "lerna run --scope @umijs/use-request compile && lerna run --scope @umijs/hooks compile",
+    "compile": "lerna run --scope @ahooksjs/use-request compile && lerna run --scope ahooks compile",
     "build": "node ./scripts/clean-old-build.js && father build && npm run compile && node ./scripts/build-wind-up.js",
     "test": "father test",
     "test:watch": "father test --watch",
@@ -19,16 +19,17 @@
     "help": "father help",
     "precommit": "father pre-commit",
     "build:doc": "dumi build",
-    "pub:doc": "now --prod",
-    "pub": "lerna publish",
-    "now-build": "echo \"hello\""
+    "pub:doc": "cp ./dist/index.html ./dist/200.html && surge ./dist --domain ahooks.js.org",
+    "pub": "lerna publish"
   },
   "devDependencies": {
+    "@testing-library/react": "^10.0.4",
     "@testing-library/react-hooks": "^2.0.1",
     "@types/jest": "^24.0.15",
     "@types/lodash.debounce": "^4.0.6",
     "@types/lodash.isequal": "^4.5.5",
     "@types/lodash.throttle": "^4.1.6",
+    "@umijs/plugin-sass": "^1.1.1",
     "babel-plugin-import": "^1.12.0",
     "babel-plugin-transform-async-to-promises": "^0.8.15",
     "create-test-server": "^3.0.1",
@@ -38,10 +39,10 @@
     "father": "^2.13.3",
     "lerna": "^2.11.0",
     "mockjs": "^1.1.0",
-    "now": "^16.2.0",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-drag-listview": "^0.1.6",
+    "surge": "^0.21.3",
     "typescript": "^3.3.3",
     "umi-request": "^1.2.18"
   }

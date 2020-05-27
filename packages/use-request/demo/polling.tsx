@@ -15,7 +15,7 @@
  *  - 在 `options.manual=true` 时，需要第一次执行 `run` 后，才开始轮询。
  */
 
-import { useRequest } from '@umijs/hooks';
+import { useRequest } from 'ahooks';
 import { Button, Spin } from 'antd';
 import React from 'react';
 import Mock from 'mockjs';

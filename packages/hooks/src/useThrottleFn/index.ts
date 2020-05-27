@@ -1,63 +1,34 @@
-import { DependencyList, useCallback, useEffect, useRef } from 'react';
-import useUpdateEffect from '../useUpdateEffect';
+import { useCreation } from '..';
+import throttle from 'lodash.throttle';
+import { useRef } from 'react';
+import { ThrottleOptions } from '../useThrottle/throttleOptions';
 
-type noop = (...args: any[]) => any;
+type Fn = (...args: any) => any;
 
-export interface ReturnValue<T extends any[]> {
-  run: (...args: T) => void;
+interface ReturnValue<T extends Fn> {
+  run: T;
   cancel: () => void;
 }
 
-function useThrottleFn<T extends any[]>(fn: (...args: T) => any, wait: number): ReturnValue<T>;
-function useThrottleFn<T extends any[]>(
-  fn: (...args: T) => any,
-  deps: DependencyList,
-  wait: number,
-): ReturnValue<T>;
-function useThrottleFn<T extends any[]>(
-  fn: (...args: T) => any,
-  deps: DependencyList | number,
-  wait?: number,
+function useThrottleFn<T extends Fn>(
+  fn: T,
+  options?: ThrottleOptions,
 ): ReturnValue<T> {
-  const _deps: DependencyList = (Array.isArray(deps) ? deps : []) as DependencyList;
-  const _wait: number = typeof deps === 'number' ? deps : wait || 0;
-  const timer = useRef<any>();
-
-  const fnRef = useRef<noop>(fn);
+  const fnRef = useRef<Fn>(fn);
   fnRef.current = fn;
 
-  const currentArgs = useRef<any>([]);
+  const wait = options?.wait ?? 1000
 
-  const cancel = useCallback(() => {
-    if (timer.current) {
-      clearTimeout(timer.current);
-    }
-    timer.current = undefined;
-  }, []);
-
-  const run = useCallback(
-    (...args: any) => {
-      currentArgs.current = args;
-      if (!timer.current) {
-        timer.current = setTimeout(() => {
-          fnRef.current(...currentArgs.current);
-          timer.current = undefined;
-        }, _wait);
-      }
-    },
-    [_wait, cancel],
-  );
-
-  useUpdateEffect(() => {
-    run();
-  }, [..._deps, run]);
-
-  useEffect(() => cancel, []);
+  const throttled = useCreation(() => (
+    throttle((...args: any) => {
+      fnRef.current(...args);
+    }, wait, options)
+  ), [])
 
   return {
-    run,
-    cancel,
-  };
+    run: throttled as any as T,
+    cancel: throttled.cancel,
+  }
 }
 
 export default useThrottleFn;

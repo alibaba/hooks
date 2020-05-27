@@ -8,7 +8,7 @@
 
 import { Button } from 'antd';
 import React from 'react';
-import { useCounter } from '@umijs/hooks';
+import { useCounter } from 'ahooks';
 
 export default () => {
   const [current, { inc, dec, set, reset }] = useCounter(100, { min: 1, max: 10 });

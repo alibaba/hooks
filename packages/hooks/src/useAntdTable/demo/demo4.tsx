@@ -1,18 +1,15 @@
 /**
- * title: Search form and table data binding
- * desc: If options have the form parameter, useAntdTable will take care of form data changing and data caching.
+ * title: Data caching
+ * desc: Form and Table data cache through cacheKey。This is an example of antd v3, see [link](href) for an example of antd v4.
  *
- * title.zh-CN: 搜索表单与列表联动
- * desc.zh-CN: 如果 options 传了 form 参数，则我们会帮你管理 form 数据
+ * title.zh-CN: 数据缓存
+ * desc.zh-CN: 通过 cacheKey 可以实现 Form 和 Table 数据缓存。这是一个 antd v3 示例，antd v4 示例见 [链接](href)。
  */
 
-import React from 'react';
-import { Button, Col, Form, Input, Row, Table, Select } from 'antd';
-import { WrappedFormUtils } from 'antd/lib/form/Form';
-import { useAntdTable } from '@umijs/hooks'
-import { FnParams } from '@umijs/hooks/es/useAntdTable';
-
-const { Option } = Select;
+import { useAntdTable } from 'ahooks';
+import { PaginatedParams } from 'ahooks/lib/useAntdTable';
+import { Button, Form, Input, Table } from 'antd';
+import React, { useState } from 'react';
 
 interface Item {
   name: {
@@ -25,30 +22,36 @@ interface Item {
 
 interface Result {
   total: number;
-  data: Item[];
+  list: Item[];
 }
 
-interface AppListProps {
-  form: WrappedFormUtils;
-}
+const getTableData = ({ current, pageSize }: PaginatedParams[0], formData: Object): Promise<Result> => {
+  let query = `page=${current}&size=${pageSize}`;
+  Object.entries(formData).forEach(([key, value]) => {
+    if (value) {
+      query += `&${key}=${value}`
+    }
+  });
 
-const getTableData = ({ current, pageSize, ...rest }: FnParams<Item>) => {
-  console.log(current, pageSize, rest);
-  return fetch(`https://randomuser.me/api?results=55&page=${current}&size=${pageSize}`)
+  return fetch(`https://randomuser.me/api?results=55&${query}`)
     .then(res => res.json())
     .then(res => ({
       total: res.info.results,
-      data: res.results,
+      list: res.results,
     }));
 };
 
-const AppList = (props: AppListProps) => {
-  const { getFieldDecorator } = props.form;
-  const { tableProps, search } = useAntdTable<Result, Item>(getTableData, {
+const AppList = () => {
+  const [form] = Form.useForm();
+
+  // TODO filters and sorter
+  const { tableProps, params, search } = useAntdTable(getTableData, {
     defaultPageSize: 5,
-    form: props.form,
+    form,
+    cacheKey: 'tableProps',
   });
 
+  const { sorter = {}, filters = {} } = params[0] || ({} as any);
   const { type, changeType, submit, reset } = search || {};
 
   const columns = [
@@ -63,67 +66,42 @@ const AppList = (props: AppListProps) => {
     {
       title: 'phone',
       dataIndex: 'phone',
+      sorter: true,
+      sortOrder: sorter.field === 'phone' && sorter.order,
     },
     {
       title: 'gender',
       dataIndex: 'gender',
+      filters: [{ text: 'male', value: 'male' }, { text: 'female', value: 'female' }],
+      filteredValue: filters.gender,
     },
   ];
 
-  const advanceSearchForm = (
-    <div>
-      <Form>
-        <Row gutter={24}>
-          <Col span={8}>
-            <Form.Item label="name">
-              {getFieldDecorator('name')(<Input placeholder="name" />)}
-            </Form.Item>
-          </Col>
-          <Col span={8}>
-            <Form.Item label="email">
-              {getFieldDecorator('email')(<Input placeholder="email" />)}
-            </Form.Item>
-          </Col>
-          <Col span={8}>
-            <Form.Item label="phone">
-              {getFieldDecorator('phone')(<Input placeholder="phone" />)}
-            </Form.Item>
-          </Col>
-        </Row>
-        <Row>
-          <Form.Item style={{ display: 'flex', justifyContent: 'flex-end' }}>
-            <Button type="primary" onClick={submit}>
-              Search
-            </Button>
-            <Button onClick={reset} style={{ marginLeft: 16 }}>
-              Reset
-            </Button>
-            <Button type="link" onClick={changeType}>
-              Simple Search
-            </Button>
-          </Form.Item>
-        </Row>
-      </Form>
-    </div>
-  );
-
   const searchFrom = (
     <div style={{ marginBottom: 16 }}>
-      <Form style={{ display: 'flex', justifyContent: 'flex-end' }}>
-        {getFieldDecorator('gender', {
-          initialValue: '',
-        })(
-          <Select style={{ width: 120, marginRight: 16 }} onChange={submit}>
-            <Option value="">all</Option>
-            <Option value="male">male</Option>
-            <Option value="female">female</Option>
-          </Select>,
+      <Form form={form} style={{ display: 'flex', justifyContent: 'flex-end' }}>
+        <Form.Item name="name">
+          <Input placeholder="enter name" style={{ width: 140, marginRight: 16 }} />
+        </Form.Item>
+
+        {type === 'advance' && (
+          <>
+            <Form.Item name="email">
+              <Input placeholder="enter email" style={{ width: 140, marginRight: 16 }} />
+              </Form.Item>
+            <Form.Item name="phone">
+              <Input placeholder="enter phone" style={{ width: 140, marginRight: 16 }} />
+              </Form.Item>
+          </>
         )}
-        {getFieldDecorator('name')(
-          <Input.Search placeholder="enter name" style={{ width: 240 }} onSearch={submit} />,
-        )}
+        <Button type="primary" onClick={submit}>
+          Search
+        </Button>
+        <Button onClick={reset} style={{ marginLeft: 8 }}>
+          Reset
+        </Button>
         <Button type="link" onClick={changeType}>
-          Advanced Search
+          {type === 'simple' ? 'Expand' : 'Close'}
         </Button>
       </Form>
     </div>
@@ -131,10 +109,29 @@ const AppList = (props: AppListProps) => {
 
   return (
     <div>
-      {type === 'simple' ? searchFrom : advanceSearchForm}
+      {searchFrom}
       <Table columns={columns} rowKey="email" {...tableProps} />
     </div>
   );
 };
 
-export default Form.create()(AppList);
+const Demo = () => {
+  const [show, setShow] = useState(true);
+
+  return (
+    <div>
+      <Button
+        type="danger"
+        onClick={() => {
+          setShow(!show);
+        }}
+        style={{ marginBottom: 16 }}
+      >
+        {show ? 'Click to destroy' : 'Click recovery'}
+      </Button>
+      {show && <AppList />}
+    </div>
+  );
+};
+
+export default Demo;

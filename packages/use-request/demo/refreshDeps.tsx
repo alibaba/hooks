@@ -6,7 +6,7 @@
  * desc.zh-CN: 当 `options.refreshDeps` 变化时，useRequest 会使用之前的参数重新执行 service。
  */
 
-import { useRequest } from '@umijs/hooks';
+import { useRequest } from 'ahooks';
 import { Spin, Select } from 'antd';
 import React, { useState } from 'react';
 

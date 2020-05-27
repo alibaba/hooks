@@ -1,5 +1,6 @@
 import { act, renderHook, RenderHookResult } from '@testing-library/react-hooks';
-import useThrottleFn, { ReturnValue } from '../index';
+import useThrottleFn from '../index';
+import { sleep } from '../../utils/testingHelpers';
 
 interface ParamsObj {
   fn: (...arg: any) => any;
@@ -7,92 +8,48 @@ interface ParamsObj {
   wait: number;
 }
 
-/* 暂时关闭 act 警告  见：https://github.com/testing-library/react-testing-library/issues/281#issuecomment-480349256 */
-const originalError = console.error;
-beforeAll(() => {
-  console.error = (...args: any) => {
-    if (/Warning.*not wrapped in act/.test(args[0])) {
-      return;
-    }
-    originalError.call(console, ...args);
-  };
-});
-afterAll(() => {
-  console.error = originalError;
-});
+const setUp = ({ fn, wait }: ParamsObj) => renderHook(() => useThrottleFn(fn, {wait}));
 
-let count = 0;
-const debounceFn = (gap: number) => {
-  count += gap;
-};
-
-const setUp = ({ fn, wait }: ParamsObj) => renderHook(() => useThrottleFn(fn, wait));
-
-let hook: RenderHookResult<ParamsObj, ReturnValue>;
+let hook: RenderHookResult<ParamsObj, ReturnType<typeof useThrottleFn>>;
 
 describe('useThrottleFn', () => {
-  beforeEach(() => {
-    jest.useFakeTimers();
-  });
-
-  afterEach(() => {
-    jest.useRealTimers();
-  });
   it('should be defined', () => {
     expect(useThrottleFn).toBeDefined();
   });
 
-  it('run and cancel should work', () => {
+  it('run and cancel should work', async () => {
+    let count = 0;
+    const throttleFn = (gap: number) => {
+      count += gap;
+    };
     act(() => {
       hook = setUp({
-        fn: debounceFn,
+        fn: throttleFn,
         wait: 500,
       });
     });
-    act(() => {
+    await act(async () => {
+      hook.result.current.run(1);
+      expect(count).toBe(1);
+      hook.result.current.run(1);
+      hook.result.current.run(1);
+      hook.result.current.run(1);
+      expect(count).toBe(1);
+      await sleep(450) // t: 450
       hook.result.current.run(2);
+      expect(count).toBe(1);
+      await sleep(100) // t: 550
       hook.result.current.run(2);
-      hook.result.current.run(2);
-      hook.result.current.run(2);
-      jest.advanceTimersByTime(250);
-      expect(count).toBe(0);
-      hook.result.current.run(4);
-      jest.advanceTimersByTime(250);
-      expect(count).toBe(4);
+      expect(count).toBe(3);
+      hook.result.current.run(3);
+      hook.result.current.run(3);
+      await sleep(500) // t: 1050
+      expect(count).toBe(6);
+      hook.result.current.run(1);
       hook.result.current.run(4);
       hook.result.current.cancel();
-      jest.runAllTimers();
-      expect(count).toBe(4);
-    });
-  });
-
-  it('deps should work', () => {
-    let c = 0;
-    let mountedState = 1;
-    act(() => {
-      hook = renderHook(() =>
-        useThrottleFn(
-          () => {
-            c += 1;
-          },
-          [mountedState],
-          500,
-        ),
-      );
-    });
-    act(() => {
-      expect(c).toEqual(0);
-      mountedState = 2;
-      hook.rerender();
-      mountedState = 3;
-      hook.rerender();
-      jest.advanceTimersByTime(250);
-      expect(c).toEqual(0);
-      mountedState = 4;
-      hook.rerender();
-      expect(c).toEqual(0);
-      jest.advanceTimersByTime(250);
-      expect(c).toEqual(1);
+      await sleep(500) // t: 1550
+      expect(count).toBe(7);
     });
   });
 });

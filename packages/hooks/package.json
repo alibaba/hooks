@@ -1,8 +1,9 @@
 {
-  "name": "@umijs/hooks",
-  "version": "1.9.2",
+  "name": "ahooks",
+  "version": "0.1.0",
   "description": "react hooks library",
   "keywords": [
+    "ahooks",
     "umi hooks",
     "react hooks"
   ],
@@ -16,8 +17,8 @@
   "publishConfig": {
     "registry": "https://registry.npmjs.com/"
   },
-  "repository": "https://github.com/umijs/hooks",
-  "homepage": "https://github.com/umijs/hooks",
+  "repository": "https://github.com/ice-lab/ahooks",
+  "homepage": "https://github.com/ice-lab/ahooks",
   "scripts": {
     "compile": "tsc --declarationDir lib && tsc --declarationDir es"
   },
@@ -28,9 +29,11 @@
     "package.json"
   ],
   "dependencies": {
-    "@umijs/use-request": "^1.4.2",
+    "@ahooksjs/use-request": "^0.1.0",
     "intersection-observer": "^0.7.0",
+    "lodash.debounce": "^4.0.8",
     "lodash.isequal": "^4.5.0",
+    "lodash.throttle": "^4.1.1",
     "resize-observer-polyfill": "^1.5.1",
     "screenfull": "^5.0.0"
   },
@@ -38,6 +41,7 @@
     "react": "^16.8.6"
   },
   "devDependencies": {
+    "@alifd/next": "^1.20.6",
     "antd": "^3.26.6",
     "react-drag-listview": "^0.1.6",
     "umi-request": "^1.0.8"

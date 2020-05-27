@@ -1,14 +1,25 @@
 export default {
-  extraBabelPlugins: [[
-    'babel-plugin-import',
-    {
-      libraryName: 'antd',
-      libraryDirectory: 'es',
-      style: true,
-    },
-  ]],
+  extraBabelPlugins: [
+    [
+      'babel-plugin-import',
+      {
+        libraryName: 'antd',
+        libraryDirectory: 'es',
+        style: true,
+      },
+      'antd'
+    ],
+    [
+      'babel-plugin-import',
+      {
+        libraryName: '@alifd/next',
+        style: true
+      },
+      'fusion'
+    ],
+  ],
   mode: 'site',
-  title: 'Umi Hooks',
+  title: 'ahooks',
   dynamicImport: {},
   manifest: {},
   links: [{ rel: "manifest", href: "/asset-manifest.json" }],
@@ -22,13 +33,13 @@ export default {
   navs: {
     'zh-CN': [
       null,
-      { title: 'GitHub', path: 'https://github.com/umijs/hooks' },
-      { title: '更新日志', path: 'https://github.com/umijs/hooks/releases' },
+      { title: 'GitHub', path: 'https://github.com/ice-lab/ahooks' },
+      { title: '更新日志', path: 'https://github.com/ice-lab/ahooks/releases' },
     ],
     'en-US': [
       null,
-      { title: 'GitHub', path: 'https://github.com/umijs/hooks' },
-      { title: 'Changelog', path: 'https://github.com/umijs/hooks/releases' },
+      { title: 'GitHub', path: 'https://github.com/ice-lab/ahooks' },
+      { title: 'Changelog', path: 'https://github.com/ice-lab/ahooks/releases' },
     ],
   },
   headScripts: [

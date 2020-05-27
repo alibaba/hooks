@@ -6,7 +6,7 @@
  * desc.zh-CN: 由于 antd [Table](https://ant.design/components/table-cn/) 使用比较广泛，我们特别支持了 antd Table 需要的分页格式，及 `sorter` 、 `filters` 等。你可以通过 `result.tableProps` ， `result.params[0]?.filters` ， `result.params[0]?.sorter` 访问到这些属性。
  */
 
-import { useRequest } from '@umijs/hooks';
+import { useRequest } from 'ahooks';
 import React from 'react';
 import { Table, Button } from 'antd';
 import Mock from 'mockjs';

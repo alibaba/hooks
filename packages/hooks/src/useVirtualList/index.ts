@@ -1,4 +1,4 @@
-import { useEffect, useState, useMemo } from 'react';
+import { useEffect, useState, useMemo, useRef, MutableRefObject } from 'react';
 import useSize from '../useSize';
 
 export interface OptionType {
@@ -7,7 +7,8 @@ export interface OptionType {
 }
 
 export default <T = any>(list: T[], options: OptionType) => {
-  const [size, containerRef] = useSize<HTMLElement>();
+  const containerRef = useRef<HTMLElement>()
+  const size = useSize(containerRef as MutableRefObject<HTMLElement>);
   // 暂时禁止 cache
   // const distanceCache = useRef<{ [key: number]: number }>({});
   const [state, setState] = useState({ start: 0, end: 10 });
@@ -109,7 +110,8 @@ export default <T = any>(list: T[], options: OptionType) => {
     scrollTo,
     containerProps: {
       ref: (ele: any) => {
-        containerRef.current = ele;
+        // https://github.com/DefinitelyTyped/DefinitelyTyped/issues/31065
+        (containerRef as MutableRefObject<HTMLElement>).current = ele;
       },
       onScroll: (e: any) => {
         e.preventDefault();

@@ -8,7 +8,7 @@
 
 import React from 'react';
 import { Input, Button } from 'antd';
-import { useLocalStorageState } from '@umijs/hooks';
+import { useLocalStorageState } from 'ahooks';
 
 export default function () {
   const [message, setMessage] = useLocalStorageState('user-message', 'Hello~');

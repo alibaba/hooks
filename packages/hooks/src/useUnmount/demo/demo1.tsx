@@ -8,7 +8,7 @@
 
 import React from 'react';
 import { Button, message } from 'antd';
-import { useUnmount, useToggle } from '@umijs/hooks';
+import { useUnmount, useToggle } from 'ahooks';
 
 const MyComponent = () => {
   useUnmount(

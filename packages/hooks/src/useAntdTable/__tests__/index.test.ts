@@ -1,6 +1,5 @@
 import { act, renderHook, RenderHookResult } from '@testing-library/react-hooks';
-import { DependencyList } from 'react';
-import useAntdTable, { Options, ReturnValue } from '../index';
+import useAntdTable, { BaseOptions, Result } from '../index';
 
 interface Query {
   current: number;
@@ -23,8 +22,8 @@ describe('useAntdTable', () => {
   });
   // jest.useFakeTimers();
   let queryArgs: any;
-  const asyncFn = (query: Query) => {
-    queryArgs = query;
+  const asyncFn = (query: Query, formData: any = {}) => {
+    queryArgs = { ...query, ...formData };
     return Promise.resolve({
       current: query.current,
       total: 20,
@@ -32,6 +31,8 @@ describe('useAntdTable', () => {
       data: [],
     });
   };
+
+  let searchType = 'simple';
 
   const form: any = {
     initialValue: {
@@ -44,10 +45,17 @@ describe('useAntdTable', () => {
       return this.fieldsValue;
     },
     getFieldInstance(key: string) {
-      return key in this.fieldsValue;
+      // 根据不同的 type 返回不同的 fieldsValues
+      if (searchType === 'simple') {
+        return ['name'].includes(key);
+      }
+      return ['name', 'email', 'phone'].includes(key);
     },
     setFieldsValue(values: object) {
-      this.fieldsValue = values;
+      this.fieldsValue = {
+        ...this.fieldsValue,
+        ...values
+      };
     },
     resetFields() {
       this.fieldsValue = { ...this.initialValue };
@@ -55,25 +63,15 @@ describe('useAntdTable', () => {
   };
 
   const changeSearchType = (type: any) => {
-    if (type === 'simple') {
-      form.setFieldsValue({
-        name: form.fieldsValue.name,
-      });
-    } else {
-      form.setFieldsValue({
-        name: form.fieldsValue.name,
-        email: form.fieldsValue.email,
-        phone: form.fieldsValue.phone,
-      });
-    }
+    searchType = type;
   };
 
-  const setUp = ({ asyncFn: fn, deps, options }: any) =>
-    renderHook(() => useAntdTable(fn, deps, options));
+  const setUp = ({ asyncFn: fn, options }: any) =>
+    renderHook(() => useAntdTable(fn, options));
 
   let hook: RenderHookResult<
-    { func: (...args: any[]) => Promise<{}>; deps: DependencyList; opt: Options<any, any> },
-    ReturnValue<any>
+    { func: (...args: any[]) => Promise<{}>; opt: BaseOptions<any> },
+    Result<any>
   >;
 
   it('should be defined', () => {
@@ -85,59 +83,21 @@ describe('useAntdTable', () => {
     act(() => {
       hook = setUp({
         asyncFn,
+        options: { form },
       });
     });
-
-    expect(hook.result.current.tableProps.loading).toEqual(true);
-    expect(queryArgs.current).toEqual(1);
-    expect(queryArgs.pageSize).toEqual(10);
     await hook.waitForNextUpdate();
     expect(hook.result.current.tableProps.loading).toEqual(false);
     expect(hook.result.current.tableProps.pagination.current).toEqual(1);
     expect(hook.result.current.tableProps.pagination.pageSize).toEqual(10);
     expect(hook.result.current.tableProps.pagination.total).toEqual(20);
   });
-  it('should sorter, filters work', async () => {
-    queryArgs = undefined;
-    act(() => {
-      hook = setUp({
-        asyncFn,
-      });
-    });
-    await hook.waitForNextUpdate();
-    act(() => {
-      hook.result.current.tableProps.onChange({
-        current: 2,
-        pageSize: 5,
-      });
-    });
-    await hook.waitForNextUpdate();
-    expect(hook.result.current.tableProps.pagination.current).toEqual(2);
-    /* 改变 filter, sorter */
-    act(() => {
-      hook.result.current.tableProps.onChange(
-        {
-          current: 2,
-          pageSize: 5,
-        },
-        { gender: ['male'] },
-        { field: 'email', order: 'ascend' } as any,
-      );
-    });
-    await hook.waitForNextUpdate();
-    expect(queryArgs.current).toEqual(1);
-    expect(queryArgs.pageSize).toEqual(5);
-    expect(queryArgs.sorter.field).toEqual('email');
-    expect(queryArgs.sorter.order).toEqual('ascend');
-    expect(queryArgs.filters.gender[0]).toEqual('male');
-  });
   it('should form, defaultPageSize, id work', async () => {
     queryArgs = undefined;
     act(() => {
       hook = setUp({
         asyncFn,
-        deps: [],
-        options: { form, defaultPageSize: 5, id: 'tableId' },
+        options: { form, defaultPageSize: 5, cacheKey: 'tableId' },
       });
     });
     await hook.waitForNextUpdate();
@@ -270,13 +230,12 @@ describe('useAntdTable', () => {
     act(() => {
       hook = setUp({
         asyncFn,
-        deps: [],
-        options: { form, defaultPageSize: 5, id: 'tableId' },
+        options: { form, defaultPageSize: 5, cacheKey: 'tableId' },
       });
     });
-
+    await hook.waitForNextUpdate();
     if (hook.result.current.search) {
-      expect(hook.result.current.search.type).toEqual('advance');
+      expect(hook.result.current.search.type).toEqual('simple');
     }
     expect(hook.result.current.tableProps.pagination.current).toEqual(3);
     expect(form.fieldsValue.name).toEqual('change name 2');
@@ -299,5 +258,36 @@ describe('useAntdTable', () => {
     expect(form.fieldsValue.name).toEqual('default name');
     expect(form.fieldsValue.phone).toBeUndefined();
     expect(form.fieldsValue.email).toBeUndefined();
+  });
+
+  it('should defaultParams work', async () => {
+    queryArgs = undefined;
+    act(() => {
+      hook = setUp({
+        asyncFn,
+        options: {
+          form,
+          defaultParams: [
+            {
+              current: 2,
+              pageSize: 10
+            },
+            { name: 'hello', phone: '123' }
+          ],
+          defaultType: 'advance'
+        },
+      });
+    });
+    await hook.waitForNextUpdate();
+    const { search } = hook.result.current;
+    expect(hook.result.current.tableProps.loading).toEqual(false);
+    expect(queryArgs.current).toEqual(2);
+    expect(queryArgs.pageSize).toEqual(10);
+    expect(queryArgs.name).toEqual('hello');
+    expect(queryArgs.phone).toEqual('123');
+    expect(search).toBeDefined();
+    if (search) {
+      expect(search.type).toEqual('advance');
+    }
   });
 });

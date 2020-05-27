@@ -8,7 +8,7 @@
 
 import React from 'react';
 import { InputNumber, Button } from 'antd';
-import { useVirtualList } from '@umijs/hooks';
+import { useVirtualList } from 'ahooks';
 
 export default () => {
   const [value, onChange] = React.useState<number>(undefined);
@@ -41,7 +41,7 @@ export default () => {
       </div>
       <div {...containerProps} style={{ height: '300px', overflow: 'auto' }}>
         <div {...wrapperProps}>
-          {list.map((ele, index) => (
+          {list.map(ele => (
             <div
               style={{
                 height: ele.index % 2 === 0 ? 42 : 84,

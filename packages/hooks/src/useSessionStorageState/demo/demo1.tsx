@@ -8,7 +8,7 @@
 
 import React from 'react';
 import { Input, Button } from 'antd';
-import { useSessionStorageState } from '@umijs/hooks';
+import { useSessionStorageState } from 'ahooks';
 
 export default function () {
   const [message, setMessage] = useSessionStorageState('user-message', 'Hello~');

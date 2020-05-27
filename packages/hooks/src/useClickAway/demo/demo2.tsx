@@ -8,7 +8,7 @@
 
 import React, { useState } from 'react';
 import { Button } from 'antd';
-import {useClickAway} from '@umijs/hooks';
+import { useClickAway } from 'ahooks';
 
 export default () => {
   const [counter, setCounter] = useState(0);

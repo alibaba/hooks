@@ -8,7 +8,7 @@
 
 import React from 'react';
 import { Input } from 'antd';
-import { useSessionStorageState } from '@umijs/hooks';
+import { useSessionStorageState } from 'ahooks';
 
 interface IUser {
   id: number;

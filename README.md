@@ -1,6 +1,6 @@
-English | [简体中文](https://github.com/umijs/hooks/blob/master/README.zh-CN.md)
+English | [简体中文](https://github.com/ice-lab/ahooks/blob/master/README.zh-CN.md)
 
-# @umijs/hooks
+# ahooks
 
 React Hooks Library.
 
@@ -8,8 +8,8 @@ React Hooks Library.
 
 ## 📚 Document
 
-* [English](https://hooks.umijs.org/)
-* [中文](https://hooks.umijs.org/zh-CN/)
+* [English](https://ahooks.js.org/)
+* [中文](https://ahooks.js.org/zh-CN/)
 
 ## ✨ Features
 
@@ -18,27 +18,22 @@ React Hooks Library.
 * Contains a wealth of basic Hooks.
 * Written in TypeScript with predictable static types.
 
-## 📣 Explain
-
-**You can use umi hooks anywhere, with any component library.**
-Although our examples are based on ant design, it does not mean that our Hooks can only be used with ant design.
-
 ## 📦 Install
 
 ```
-npm i @umijs/hooks --save
+npm i ahooks --save
 ```
 
 ## 🔨 Usage
 
 ```
-import { useRequest } from '@umijs/hooks';
+import { useRequest } from 'ahooks';
 ```
 
 ## 🖥 Development
 
 ```
-$ git clone git@github.com:umijs/hooks.git
+$ git clone git@github.com:ice-lab/ahooks.git
 $ cd hooks
 $ npm run init
 $ npm start
@@ -47,19 +42,19 @@ Open your browser and visit http://127.0.0.1:8001 , see more at Development.
 
 ## 🤝 Contributing
 
-We welcome all contributions, please read our [CONTRIBUTING.MD](https://github.com/umijs/hooks/blob/master/CONTRIBUTING.MD) first, let's build a better hooks library together.
+We welcome all contributions, please read our [CONTRIBUTING.MD](https://github.com/ice-lab/ahooks/blob/master/CONTRIBUTING.MD) first, let's build a better hooks library together.
 
 ## 👥 Discuss
 
-<img src="https://raw.githubusercontent.com/umijs/hooks/master/dingtalk.jpg" width="300" />
+<img src="https://raw.githubusercontent.com/ice-lab/ahooks/master/dingtalk.jpg" width="300" />
 
 ## ✅ License
 
-[MIT](https://github.com/umijs/umi/blob/master/LICENSE)
+[MIT](https://github.com/ice-lab/ahooks/blob/master/LICENSE)
 
 
-[1]:	https://www.npmjs.com/package/@umijs/hooks
-[2]:	https://npmjs.org/package/@umijs/hooks
+[1]:	https://www.npmjs.com/package/ahooks
+[2]:	https://npmjs.org/package/ahooks
 
-[image-1]:	https://img.shields.io/npm/v/@umijs/hooks.svg?style=flat
-[image-2]:	https://img.shields.io/npm/dm/@umijs/hooks.svg?style=flat
+[image-1]:	https://img.shields.io/npm/v/ahooks.svg?style=flat
+[image-2]:	https://img.shields.io/npm/dm/ahooks.svg?style=flat

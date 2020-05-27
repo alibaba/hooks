@@ -2,7 +2,7 @@ import { IBundleOptions } from 'father-build';
 
 const options: IBundleOptions = {
   umd: {
-    name: 'umijsHooks',
+    name: 'ahooks',
     globals: {
       'react': 'React',
     }

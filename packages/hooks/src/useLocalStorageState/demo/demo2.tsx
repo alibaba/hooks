@@ -8,7 +8,7 @@
 
 import React from 'react';
 import { Cascader } from 'antd';
-import { useLocalStorageState } from '@umijs/hooks';
+import { useLocalStorageState } from 'ahooks';
 
 const options = [
   {

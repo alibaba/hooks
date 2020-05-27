@@ -8,7 +8,7 @@
 
 import React from 'react';
 import { Button } from 'antd';
-import { useSet } from '@umijs/hooks';
+import { useSet } from 'ahooks';
 
 export default () => {
   const [set, { add, has, remove, reset }] = useSet(['Hello']);

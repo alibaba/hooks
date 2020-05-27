@@ -8,7 +8,7 @@
 
 import React from 'react';
 import { Cascader } from 'antd';
-import { useSessionStorageState } from '@umijs/hooks';
+import { useSessionStorageState } from 'ahooks';
 
 const options = [
   {

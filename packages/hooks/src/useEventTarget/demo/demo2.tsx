@@ -7,15 +7,15 @@
 
 import React, { Fragment } from 'react';
 import { Input, Button } from 'antd';
-import { useEventTarget } from '@umijs/hooks'
+import { useEventTarget } from 'ahooks'
 
 export default () => {
-  const [valueProps, reset] = useEventTarget('', (val: string) => {
-    return val.replace(/[^\d]/g, '')
+  const [value, { onChange, reset }] = useEventTarget({
+    transformer: (val: string) => val.replace(/[^\d]/g, '')
   });
 
   return (<Fragment>
-    <Input {...valueProps} style={{ width: 200, marginRight: 20 }} placeholder="请输入"/>
+    <Input value={value} onChange={onChange} style={{ width: 200, marginRight: 20 }} placeholder="请输入"/>
     <Button type="primary" onClick={reset}>重置</Button>
   </Fragment>
   );

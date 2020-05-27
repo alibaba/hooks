@@ -2,11 +2,11 @@
 
 > 参考 ant design [贡献指南](https://ant.design/docs/react/contributing-cn)
 
-这篇指南会指导你如何为 `@umijs/hooks` 贡献一份自己的力量，请在你要提 issue 或者 pull request 之前花几分钟来阅读一遍这篇指南。
+这篇指南会指导你如何为 `ahooks` 贡献一份自己的力量，请在你要提 issue 或者 pull request 之前花几分钟来阅读一遍这篇指南。
 
 ## 透明的开发
 
-我们所有的工作都会放在 [GitHub](https://github.com/umijs/hooks) 上。不管是核心团队的成员还是外部贡献者的 pull request 都需要经过同样流程的 review。
+我们所有的工作都会放在 [GitHub](https://github.com/ice-lab/ahooks) 上。不管是核心团队的成员还是外部贡献者的 pull request 都需要经过同样流程的 review。
 
 ## 分支管理
 
@@ -35,7 +35,7 @@
 
 在你 clone 代码并且使用 `npm run init` 安装完依赖后，你还可以运行下面几个常用的命令：
 
-1. `npm start` 在本地运行 `@umijs/hooks` 网站。
+1. `npm start` 在本地运行 `ahooks` 网站。
 
 2. `npm run test` 运行测试。
 

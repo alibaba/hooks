@@ -8,7 +8,7 @@
 
 import { InputNumber, Button } from 'antd';
 import React, { useState } from 'react';
-import { useControllableValue } from '@umijs/hooks';
+import { useControllableValue } from 'ahooks';
 
 const ControllableComponent = (props: any) => {
   const [state, setState] = useControllableValue(props);

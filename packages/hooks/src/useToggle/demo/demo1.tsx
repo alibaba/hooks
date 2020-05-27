@@ -8,10 +8,10 @@
 
 import React from 'react';
 import { Button, Switch } from 'antd';
-import { useToggle } from '@umijs/hooks';
+import { useToggle } from 'ahooks';
 
 export default () => {
-  const { state, toggle } = useToggle();
+  const [ state, { toggle } ] = useToggle();
 
   return (
     <div>
