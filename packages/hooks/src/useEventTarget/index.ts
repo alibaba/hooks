@@ -11,7 +11,7 @@ interface Params<T, U> {
   transformer?: (value: U) => T;
 }
 
-function useEventTarget<T, U = T>(parmas?: Params<T, U>) {
+function useEventTarget<T, U = T>(params?: Params<T, U>) {
   const { initialValue, transformer } = parmas || {};
   const [value, setValue] = useState(initialValue);
 
