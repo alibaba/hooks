@@ -1,17 +1,17 @@
 ---
-title: useDebounceEffect
+title: useThrottleEffect
 nav:
   title: Hooks
   path: /hooks
 group:
   title: LifeCycle
   path: /life-cycle
-legacy: /life-cycle/use-debounce-effect
+legacy: /life-cycle/use-throttle-effect
 ---
 
-# useDebounceEffect
+# useThrottleEffect
 
-Debounce your `useEffect`.
+Throttle your `useEffect`.
 
 ## Examples
 
@@ -22,7 +22,7 @@ Debounce your `useEffect`.
 ## API
 
 ```javascript
-useDebounceEffect(
+useThrottleEffect(
   effect: () => (void | (() => void | undefined)),
   deps?: any[],
   options?: object
@@ -35,12 +35,12 @@ useDebounceEffect(
 |----------|------------------------------------------------------------------------------|-------------------------|---------|
 | effect       |  The effect callback.                                              | Function | -       |
 | deps | The dependencies list. | any[] \| undefined | undefined |
-| options  | Config the debounce behavior. See the Options section below.                                                    | object                  | {}    |
+| options  | Config the throttle behavior. See the Options section below.                                                    | object                  | {}    |
 
 ### Options
 
 | Property | Description                  | Type   | Default |
 |----------|------------------------------|--------|---------|
 | wait | The number of milliseconds to delay. | number | 1000 |
-| leading | Specify invoking on the leading edge of the timeout. | boolean | false |
+| leading | Specify invoking on the leading edge of the timeout. | boolean | true |
 | trailing | Specify invoking on the trailing edge of the timeout. | boolean | true |
