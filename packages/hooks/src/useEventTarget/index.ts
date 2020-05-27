@@ -1,12 +1,5 @@
 import { useState, useCallback, useRef } from 'react';
 
-type ValueProps<T, U> = T | undefined;
-
-interface Callback<T, U> {
-  onChange: (e: EventTarget<U>) => any;
-  reset: () => void;
-}
-
 interface EventTarget<U> {
   target: {
     value: U;
@@ -18,10 +11,7 @@ interface Params<T, U> {
   transformer?: (value: U) => T;
 }
 
-export default <T, U = T>(parmas?: Params<T, U>): [
-  ValueProps<T, U>,
-  Callback<T, U>
-] => {
+function useEventTarget<T, U = T>(parmas?: Params<T, U>) {
   const { initialValue, transformer } = parmas || {};
   const [value, setValue] = useState(initialValue);
 
@@ -45,5 +35,7 @@ export default <T, U = T>(parmas?: Params<T, U>): [
       onChange,
       reset
     }
-  ]
+  ] as const
 };
+
+export default useEventTarget;
