@@ -23,18 +23,17 @@ A Hook for handling dom full screen
 
 ## API
 
+```ts
+const [isFullscreen, { setFull, exitFull, toggleFull }] = useFullScreen(target, { onExitFull?, onFull? });
 ```
-const {
-   isFullscreen,
-   setFull,
-   exitFull,
-   ref?,
-} = useFullScreen({
-  dom?,
-  onExitFull?,
-  onFull?,
-});
-```
+
+### Params
+
+| Property | Description                                                        | Type                   | Default |
+|---------|----------------------------------------------|------------------------|--------|
+| target | DOM element or Ref Object | HTMLElement \| () => HTMLElement \| React.MutableRefObject | - |
+| onExitFull | listen for exit full screen events  | ()=>void | -      |
+| onFull | listen for full screen events  | ()=>void | -      |
 
 ### Result
 
@@ -44,12 +43,3 @@ const {
 | setFull  | set full screen | ()=>void    |
 | exitFull  | exit full screen                          | ()=>void    |
 | toggleFull  | toggle full screen                          | ()=>void    |
-| ref     | when no dom is passed, the ref is bound to the node that needs to be full screen      | -        |
-
-### Options
-
-| Property | Description                                                        | Type                   | Default |
-|---------|----------------------------------------------|------------------------|--------|
-| dom | optional, if none is passed, this hook will subscibe to the ref that it returns  | HTMLElement \| (() => HTMLElement) \| undefined | -      |
-| onExitFull | listen for exit full screen events  | ()=>void | -      |
-| onFull | listen for full screen events  | ()=>void | -      |

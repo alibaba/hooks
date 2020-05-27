@@ -39,6 +39,7 @@ import useCounter from './useCounter';
 import useUpdate from './useUpdate';
 import useEventTarget from './useEventTarget';
 import useHistoryTravel from './useHistoryTravel';
+import useDebounceEffect from './useDebounceEffect';
 
 const useControlledValue: typeof useControllableValue = function (...args) {
   console.warn(
@@ -68,6 +69,7 @@ export {
   useThrottleFn,
   useDebounce,
   useDebounceFn,
+  useDebounceEffect,
   usePrevious,
   useMouse,
   useScroll,

@@ -1,14 +1,15 @@
-import { useEffect, useCallback, useRef, RefObject } from 'react';
+import { useEffect, useCallback, useRef, MutableRefObject } from 'react';
+import { getTargetElement } from '../utils/dom';
 
 export type KeyPredicate = (event: KeyboardEvent) => boolean;
 export type keyType = KeyboardEvent['keyCode'] | KeyboardEvent['key'];
 export type KeyFilter = keyType | Array<keyType> | ((event: KeyboardEvent) => boolean);
 export type EventHandler = (event: KeyboardEvent) => void;
 export type keyEvent = 'keydown' | 'keyup';
-export type RefType = HTMLElement | (() => HTMLElement | null);
+
 export type EventOption = {
   events?: Array<keyEvent>;
-  target?: Window | RefType;
+  target?: (() => HTMLElement) | HTMLElement | MutableRefObject<HTMLElement> | Document | Window
 };
 
 // 键盘事件 keyCode 别名
@@ -127,13 +128,12 @@ function genKeyFormater(keyFilter: any): KeyPredicate {
 
 const defaultEvents: Array<keyEvent> = ['keydown'];
 
-function useKeyPress<T extends HTMLElement = HTMLInputElement>(
+function useKeyPress(
   keyFilter: KeyFilter,
   eventHandler: EventHandler = noop,
   option: EventOption = {},
-): RefObject<T> {
+) {
   const { events = defaultEvents, target } = option;
-  const element = useRef<T>();
   const callbackRef = useRef(eventHandler);
   callbackRef.current = eventHandler;
 
@@ -148,8 +148,8 @@ function useKeyPress<T extends HTMLElement = HTMLInputElement>(
   );
 
   useEffect(() => {
-    const targetElement = typeof target === 'function' ? target() : target;
-    const el = element.current || targetElement || window;
+    const el = getTargetElement(target, window)!;
+
     for (const eventName of events) {
       el.addEventListener(eventName, callbackHandler);
     }
@@ -158,9 +158,7 @@ function useKeyPress<T extends HTMLElement = HTMLInputElement>(
         el.removeEventListener(eventName, callbackHandler);
       }
     };
-  }, [events, callbackHandler, target]);
-
-  return element as RefObject<T>;
+  }, [events, callbackHandler, typeof target === 'function' ? undefined : target]);
 }
 
 export default useKeyPress;
