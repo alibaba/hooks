@@ -52,7 +52,7 @@ const {
 | 参数 | 说明                                              | 类型                    | 默认值 |
 |------|---------------------------------------------------|-------------------------|--------|
 | fn   | 需要防抖执行的函数                                | (...args: any[]) => any | -      |
-| options  | 配置去抖的行为                                                    | object                  | {}    |
+| options  | 配置防抖的行为                                                    | object                  | {}    |
 | options.wait | 超时时间，单位为毫秒 | number | 1000 |
 | options.leading | 是否在上升沿触发副作用函数 | boolean | false |
 | options.trailing | 是否在下降沿触发副作用函数 | boolean | true |
