@@ -47,7 +47,7 @@ const [state, { toggle, setLeft, setRight }] = useToggle(
 
 | Property | Description   | Type    |
 | -------- | ------------- | ------- |
-| state    | state value   | boolean |
+| state    | state value   | - |
 | actions  | Operation set | object  |
 
 ### Actions
