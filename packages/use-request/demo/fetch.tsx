@@ -10,10 +10,7 @@ import { useRequest } from 'ahooks';
 import React from 'react';
 
 export default () => {
-  const { data, error, loading } = useRequest({
-    url: 'https://helloacm.com/api/random/?n=8&x=4',
-    method: 'get'
-  })
+  const { data, error, loading } = useRequest('https://helloacm.com/api/random/?n=8&x=4')
 
   if (error) {
     return <div>failed to load</div>

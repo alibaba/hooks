@@ -175,7 +175,7 @@ const {
 
 ### 集成请求库
 
-如果 service 是 `string` 、 `object` 、 `(...args)=> string|object`, 我们会自动使用 [fetch](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch) 来发送网络请求。
+如果 service 是 `string` 、 `object` 、 `(...args)=> string|object`, 则自动使用 [fetch](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch) 来发送网络请求。
 
 ```javascript
 // 用法 1
