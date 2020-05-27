@@ -1,9 +1,9 @@
 /**
  * title: Use default fetch
- * desc: If the first parameter of useRequest is a string or object, the network request will be sent by fetch.
+ * desc: If the first parameter of useRequest is string、object or ()=> string|object, the network request will be sent by fetch.
  *
  * title.zh-CN: 使用默认的 fetch
- * desc.zh-CN: 如果 useRequest 第一个参数是字符串或 object，则默认使用 fetch 发送网络请求
+ * desc.zh-CN: 如果 useRequest 第一个参数是 string、object 或 ()=> string|object，则默认使用 fetch 发送网络请求
  */
 
 import { useRequest } from 'ahooks';
