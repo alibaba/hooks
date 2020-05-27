@@ -7,7 +7,7 @@
  */
 
 import React, { useState } from 'react';
-import useEventListener from '../index';
+import { useEventListener } from 'ahooks';
 
 export default () => {
   const [value, setValue] = useState('');
