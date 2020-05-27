@@ -8,7 +8,7 @@ interface Position {
 
 type Target = HTMLElement | (() => HTMLElement) | Document | MutableRefObject<HTMLElement>;
 
-function useScroll(target: Target): Position {
+function useScroll(target?: Target): Position {
   const [position, setPosition] = useState<Position>({
     left: NaN,
     top: NaN,
