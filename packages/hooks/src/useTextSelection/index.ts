@@ -13,7 +13,7 @@ export interface IState extends IRect {
   text: string;
 }
 
-type Target = () => HTMLElement | (() => HTMLElement) | MutableRefObject<HTMLElement>;
+type Target = HTMLElement | (() => HTMLElement) | MutableRefObject<HTMLElement>;
 
 const initRect: IRect = {
   top: NaN,
@@ -67,7 +67,6 @@ function useTextSelection(target?: Target): IState {
 
   useEffect(() => {
     // 获取 target 需要放在 useEffect 里，否则存在组件未加载好的情况而导致元素获取不到
-    // @ts-ignore
     const el = getTargetElement(target, document);
 
     if (!el) {

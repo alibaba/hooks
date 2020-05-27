@@ -1,5 +1,5 @@
 /**
- * title: Set 'dom'  target。
+ * title: Set 'dom'  target
  * desc: Specifies the text selection to listen for an dom
  *
  * title.zh-CN: 指定监听 'dom' 元素
