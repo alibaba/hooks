@@ -76,21 +76,21 @@ describe('useTextSelection', () => {
   it('on textSelection', async () => {
     initGetSelection({ left: 10, top: 10, height: 100, width: 100, text: 'on textSelection' })
 
-    const hook = renderHook(() => useTextSelection(document));
+    const hook = renderHook(() => useTextSelection(() => document));
 
-    expect(hook.result.current[0].text).toBe('');
-    expect(hook.result.current[0].left).toBe(NaN);
-    expect(hook.result.current[0].right).toBe(NaN);
-    expect(hook.result.current[0].top).toBe(NaN);
-    expect(hook.result.current[0].bottom).toBe(NaN);
-    expect(hook.result.current[0].height).toBe(NaN);
-    expect(hook.result.current[0].width).toBe(NaN);
+    expect(hook.result.current.text).toBe('');
+    expect(hook.result.current.left).toBe(NaN);
+    expect(hook.result.current.right).toBe(NaN);
+    expect(hook.result.current.top).toBe(NaN);
+    expect(hook.result.current.bottom).toBe(NaN);
+    expect(hook.result.current.height).toBe(NaN);
+    expect(hook.result.current.width).toBe(NaN);
 
     downMouse(0, 0);
     upMouse(100, 100);
 
-    expect(hook.result.current[0].left).toBe(10);
-    expect(hook.result.current[0].text).toBe('on textSelection');
+    expect(hook.result.current.left).toBe(10);
+    expect(hook.result.current.text).toBe('on textSelection');
     hook.unmount();
   })
 

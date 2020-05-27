@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef, MutableRefObject } from 'react';
-
+import { getTargetElement } from '../utils/dom';
 
 interface IRect {
   top: number;
@@ -13,9 +13,7 @@ export interface IState extends IRect {
   text: string;
 }
 
-type TDom = HTMLElement | Document;
-
-type Arg = TDom | (() => TDom) | null;
+type Target = HTMLElement | (() => HTMLElement) | MutableRefObject<HTMLElement>;
 
 const initRect: IRect = {
   top: NaN,
@@ -61,12 +59,7 @@ function getRectFromSelection(selection: Selection | null): IRect {
 /**
  * 获取用户选取的文本或当前光标插入的位置
  * */
-function useTextSelection<T extends TDom = TDom>(): [IState, MutableRefObject<T>];
-function useTextSelection<T extends TDom = TDom>(arg: Arg): [IState];
-function useTextSelection<T extends TDom = TDom>(...args: [Arg] | []): [IState, MutableRefObject<T>?] {
-  const hasPassedInArg = args.length === 1;
-  const arg = useRef(args[0]);
-  const ref = useRef<T>();
+function useTextSelection(target?: Target): IState {
   const [state, setState] = useState(initState);
 
   const stateRef = useRef(state);
@@ -74,10 +67,9 @@ function useTextSelection<T extends TDom = TDom>(...args: [Arg] | []): [IState, 
 
   useEffect(() => {
     // 获取 target 需要放在 useEffect 里，否则存在组件未加载好的情况而导致元素获取不到
-    const passedInArg = typeof arg.current === 'function' ? arg.current() : arg.current;
-    const target = hasPassedInArg ? passedInArg : ref.current;
+    const el = getTargetElement(target, document);
 
-    if (!target) {
+    if (!el) {
       return () => { };
     }
 
@@ -105,21 +97,17 @@ function useTextSelection<T extends TDom = TDom>(...args: [Arg] | []): [IState, 
       selObj.removeAllRanges();
     }
 
-    target.addEventListener('mouseup', mouseupHandler);
+    el.addEventListener('mouseup', mouseupHandler);
 
     document.addEventListener('mousedown', mousedownHandler)
 
     return () => {
-      target.removeEventListener('mouseup', mouseupHandler);
+      el.removeEventListener('mouseup', mouseupHandler);
       document.removeEventListener('mousedown', mousedownHandler);
     };
-  }, [ref.current, typeof arg.current === 'function' ? undefined : arg.current]);
+  }, [typeof target === 'function' ? undefined : target]);
 
-  if (hasPassedInArg) {
-    return [state];
-  }
-
-  return [state, ref as MutableRefObject<T>];
+  return state;
 }
 
 export default useTextSelection;
