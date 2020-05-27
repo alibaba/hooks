@@ -1,17 +1,10 @@
 import { act, renderHook, RenderHookResult } from '@testing-library/react-hooks';
 import useDebounce from '../index';
+import {sleep} from '../../utils/testingHelpers'
 
 interface ParamsObj {
   value: any;
   wait: number;
-}
-
-function sleep(time: number) {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      resolve()
-    }, time)
-  });
 }
 
 let hook: RenderHookResult<ParamsObj, any>;

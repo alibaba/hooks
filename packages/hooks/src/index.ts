@@ -15,6 +15,7 @@ import useDocumentVisibility from './useDocumentVisibility';
 import useSelections from './useSelections';
 import useThrottle from './useThrottle';
 import useThrottleFn from './useThrottleFn';
+import useThrottleEffect from './useThrottleEffect';
 import useDebounce from './useDebounce';
 import useDebounceFn from './useDebounceFn';
 import usePrevious from './usePrevious';
@@ -67,6 +68,7 @@ export {
   useSelections,
   useThrottle,
   useThrottleFn,
+  useThrottleEffect,
   useDebounce,
   useDebounceFn,
   useDebounceEffect,

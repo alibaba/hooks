@@ -1,18 +1,11 @@
 import { act, renderHook, RenderHookResult } from '@testing-library/react-hooks';
 import useDebounceFn from '../index';
+import { sleep } from '../../utils/testingHelpers';
 
 interface ParamsObj {
   fn: (...arg: any) => any;
   deps?: any[];
   wait: number;
-}
-
-function sleep(time: number) {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      resolve()
-    }, time)
-  });
 }
 
 let count = 0;
