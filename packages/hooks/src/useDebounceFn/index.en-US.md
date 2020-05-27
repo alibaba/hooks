@@ -31,13 +31,6 @@ const {
 );
 ```
 
-### Result
-
-| Property | Description                               | Type                    |
-|----------|-------------------------------------------|-------------------------|
-| run      | trigger fn, parameters will be send to fn | Function |
-| cancel   | cancel current debounce                   | () => void              |
-
 ### Params
 
 | Property | Description                                                                  | Type                    | Default |
@@ -51,3 +44,9 @@ const {
 | leading | Specify invoking on the leading edge of the timeout. | boolean | false |
 | trailing | Specify invoking on the trailing edge of the timeout. | boolean | true |
 
+### Result
+
+| Property | Description                               | Type                    |
+|----------|-------------------------------------------|-------------------------|
+| run      | trigger fn, parameters will be send to fn | Function |
+| cancel   | cancel current debounce                   | () => void              |
