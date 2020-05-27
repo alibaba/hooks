@@ -8,8 +8,7 @@
 
 import React from 'react';
 import { Table, Pagination, Field, Form, Input, Button, Select, Icon } from '@alifd/next';
-// import { useFusionTable } from 'ahooks'
-import useFusionTable from '..'
+import { useFusionTable } from 'ahooks'
 
 
 interface Item {
