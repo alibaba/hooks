@@ -11,7 +11,7 @@ import subscribeFocus from './utils/windowFocus';
 import subscribeVisible from './utils/windowVisible';
 
 
-const DEFAULT_KEY = 'UMIJS_USE_API_DEFAULT_KEY';
+const DEFAULT_KEY = 'AHOOKS_USE_REQUEST_DEFAULT_KEY';
 
 class Fetch<R, P extends any[]> {
   config: FetchConfig<R, P>;
