@@ -25,7 +25,7 @@ group:
 ## API
 
 ```javascript
-const [ { value, onChange }, reset ] = useEventTarget<T, U>(initialValue?: T, transformer?: (value: U) => T );
+const [value, { onChange, reset }  ] = useEventTarget<T, U>(initialValue?: T, transformer?: (value: U) => T );
 ```
 
 ### Result

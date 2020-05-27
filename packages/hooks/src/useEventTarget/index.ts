@@ -1,8 +1,10 @@
 import { useState, useCallback, useRef } from 'react';
 
-interface ValueProps<T, U> {
-  value: T | undefined;
-  onChange: (e: EventTarget<U>) => any
+type ValueProps<T, U> = T | undefined;
+
+interface Callback<T, U> {
+  onChange: (e: EventTarget<U>) => any;
+  reset: () => void;
 }
 
 interface EventTarget<U> {
@@ -11,10 +13,16 @@ interface EventTarget<U> {
   }
 }
 
-export default <T, U = T>(initialValue?: T, transformer?: (value: U) => T): [
+interface Params<T, U> {
+  initialValue?: T;
+  transformer?: (value: U) => T;
+}
+
+export default <T, U = T>(parmas?: Params<T, U>): [
   ValueProps<T, U>,
-  () => void
+  Callback<T, U>
 ] => {
+  const { initialValue, transformer } = parmas || {};
   const [value, setValue] = useState(initialValue);
 
   const reset = useCallback(() => setValue(initialValue), [setValue]);
@@ -31,8 +39,11 @@ export default <T, U = T>(initialValue?: T, transformer?: (value: U) => T): [
     return setValue(_value as unknown as T);
   }, [setValue]);
 
-  return [{
+  return [
     value,
-    onChange,
-  }, reset];
+    {
+      onChange,
+      reset
+    }
+  ]
 };
