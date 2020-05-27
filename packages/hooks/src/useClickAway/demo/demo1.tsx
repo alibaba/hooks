@@ -8,12 +8,11 @@
 
 import React, { useState, useRef } from 'react';
 import { Button } from 'antd';
-// import { useClickAway } from 'ahooks';
 import { useClickAway } from 'ahooks';
 
 export default () => {
   const [counter, setCounter] = useState(0);
-  const ref = useRef();
+  const ref = useRef<HTMLSpanElement>();
   useClickAway(() => {
     setCounter(s => s + 1);
   }, ref);
