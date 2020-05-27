@@ -1,9 +1,9 @@
 /**
  * title: Form and Table data binding
- * desc: useFormTable returns a search object after receiving a form instance. This is an example of alibaba fusion.
+ * desc: useFusionTable returns a search object after receiving a field instance. This is an example of Fusion Design.
  *
  * title.zh-CN: Form 与 Table 联动
- * desc.zh-CN: useFormTable 接收 form 实例后，会返回 search 对象。这是一个 Fusion Design 的示例。
+ * desc.zh-CN: useFusionTable 接收 field 实例后，会返回 search 对象。这是一个 Fusion Design 的示例。
  */
 
 import React from 'react';
