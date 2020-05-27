@@ -1,4 +1,5 @@
 import { act, renderHook } from '@testing-library/react-hooks';
+import { fireEvent } from '@testing-library/react'
 import useRequest from '../index';
 
 describe('useRequest', () => {
@@ -24,14 +25,14 @@ describe('useRequest', () => {
         } else {
           resolve('success');
         }
-      }, 2000);
+      }, 1000);
     });
 
   it('should be defined', () => {
     expect(useRequest).toBeDefined();
   });
 
-  const setUp = (service, options) => renderHook(() => useRequest(service, options))
+  const setUp = (service, options) => renderHook(o => useRequest(service, o || options))
   let hook;
   it('useRequest should auto run', async () => {
     let successValue;
@@ -101,7 +102,8 @@ describe('useRequest', () => {
         callback();
         return request();
       }, {
-        pollingInterval: 100
+        pollingInterval: 100,
+        pollingWhenHidden: true
       });
     });
     expect(hook.result.current.loading).toEqual(true);
@@ -298,6 +300,110 @@ describe('useRequest', () => {
     jest.runAllTimers();
     await hook.waitForNextUpdate();
     expect(hook.result.current.loading).toEqual(false);
+    hook.unmount();
+  })
+
+  it('useRequest refreshDeps should work', async () => {
+    act(() => {
+      hook = setUp(request, {
+        refreshDeps: [1]
+      });
+    });
+    expect(hook.result.current.loading).toEqual(true);
+    jest.runAllTimers();
+    await hook.waitForNextUpdate();
+    expect(hook.result.current.loading).toEqual(false);
+    hook.rerender({
+      refreshDeps: [2]
+    });
+    expect(hook.result.current.loading).toEqual(true);
+    jest.runAllTimers();
+    await hook.waitForNextUpdate();
+    expect(hook.result.current.loading).toEqual(false);
+    hook.unmount();
+  });
+
+  it('useRequest ready should work', async () => {
+    act(() => {
+      hook = setUp(request, {
+        ready: false
+      });
+    });
+    expect(hook.result.current.loading).toEqual(false);
+    hook.rerender({
+      ready: true
+    });
+    expect(hook.result.current.loading).toEqual(true);
+    hook.unmount();
+  })
+
+  it('useRequest initialData should work', async () => {
+    act(() => {
+      hook = setUp(request, {
+        initialData: 'hello'
+      });
+    });
+    expect(hook.result.current.loading).toEqual(true);
+    expect(hook.result.current.data).toEqual('hello');
+    jest.runAllTimers();
+    await hook.waitForNextUpdate();
+
+    expect(hook.result.current.data).toEqual('success');
+    hook.unmount();
+  })
+
+  it('useRequest formatResult should work', async () => {
+    let formarParams = '';
+    act(() => {
+      hook = setUp(request, {
+        formatResult: p => {
+          formarParams = p;
+          return 'hello';
+        }
+      });
+    });
+    expect(hook.result.current.loading).toEqual(true);
+    jest.runAllTimers();
+    await hook.waitForNextUpdate();
+    expect(hook.result.current.loading).toEqual(false);
+    expect(formarParams).toEqual('success');
+    expect(hook.result.current.data).toEqual('hello');
+    hook.unmount();
+  })
+
+  it('useRequest defaultParams should work', async () => {
+    act(() => {
+      hook = setUp(request, {
+        defaultParams: [1, 2, 3]
+      });
+    });
+    expect(hook.result.current.loading).toEqual(true);
+    jest.runAllTimers();
+    await hook.waitForNextUpdate();
+    expect(hook.result.current.params).toEqual([1, 2, 3]);
+    hook.unmount();
+  })
+
+  it('useRequest refreshOnWindowFocus&focusTimespan should work', async () => {
+    act(() => {
+      hook = setUp(request, {
+        refreshOnWindowFocus: true,
+        focusTimespan: 5000
+      });
+    });
+    expect(hook.result.current.loading).toEqual(true);
+    jest.advanceTimersByTime(1001);
+    await hook.waitForNextUpdate();
+    expect(hook.result.current.loading).toEqual(false);
+    fireEvent.focus(window);
+    expect(hook.result.current.loading).toEqual(true);
+    jest.advanceTimersByTime(2000);
+    await hook.waitForNextUpdate();
+    expect(hook.result.current.loading).toEqual(false);
+
+    jest.advanceTimersByTime(3000);
+    fireEvent.focus(window);
+    expect(hook.result.current.loading).toEqual(true);
     hook.unmount();
   })
 })

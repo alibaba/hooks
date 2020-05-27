@@ -31,12 +31,12 @@
   },
   "dependencies": {
     "lodash.debounce": "^4.0.8",
-    "lodash.throttle": "^4.1.1",
-    "umi-request": "^1.2.17"
+    "lodash.throttle": "^4.1.1"
   },
   "devDependencies": {
     "ahooks": "^0.1.0",
-    "axios": "^0.19.2"
+    "axios": "^0.19.2",
+    "umi-request": "^1.2.17"
   },
   "gitHead": "4ea8f5c04c06eff2a33b2be473a8f7460909bebb"
 }
