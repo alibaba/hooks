@@ -12,7 +12,7 @@ interface Params<T, U> {
 }
 
 function useEventTarget<T, U = T>(params?: Params<T, U>) {
-  const { initialValue, transformer } = parmas || {};
+  const { initialValue, transformer } = params || {};
   const [value, setValue] = useState(initialValue);
 
   const reset = useCallback(() => setValue(initialValue), [setValue]);
