@@ -11,9 +11,9 @@ group:
 legacy: /zh-CN/table/use-fusion-table
 ---
 
-# useFormTable
+# useFusionTable
 
-封装了常用的 AntD [Form](https://ant.design/components/form-cn/) 与 AntD [Table](https://ant.design/components/table-cn/) 联动逻辑，并且同时支持 AntD V3 和 V4。
+封装了常用的 Fusion [Form](https://fusion.design/pc/component/basic/form) 与 Fusion [Table](https://fusion.design/pc/component/basic/table) 联动逻辑。
 
 ## 代码演示
 
@@ -24,9 +24,9 @@ legacy: /zh-CN/table/use-fusion-table
 
 ## API
 
-useFormTable 基于 [useRequest](/zh-CN/async) 实现，所有的 [useRquest Pagination](/zh-CN/async?anchor=pagination#api-1) API 均可以直接使用。比如 `cacheKey`、`manual` 等等。
+useFusionTable 基于 [useRequest](/zh-CN/async) 实现，所有的 [useRquest Pagination](/zh-CN/async?anchor=pagination#api-1) API 均可以直接使用。比如 `cacheKey`、`manual` 等等。
 
-useFormTable 额外增加了 `result.search` 和 `options.form`。
+useFusionTable 额外增加了 `result.search` 和 `options.form`。
 
 ```javascript
 const {
@@ -37,11 +37,11 @@ const {
     submit: () => void;
     reset: () => void;
   };
-} = useFormTable(
+} = useFusionTable(
   service,
   {
     ...,
-    form,
+    field,
     defaultType: 'simple' | 'advance',
     defaultParams: [pagination, formData],
   }

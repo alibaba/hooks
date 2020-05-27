@@ -8,8 +8,7 @@
 
 import React from 'react';
 import { Table, Pagination, Field, Form, Input, Button, Select, Icon } from '@alifd/next';
-import useFusionTable from '..'
-// import { useFusionTable } from '@umijs/hooks'
+import { useFusionTable } from '@umijs/hooks'
 
 
 interface Item {
@@ -123,7 +122,7 @@ const AppList = () => {
         <Table.Column title="phone" dataIndex="phone" width={500} />
         <Table.Column title="gender" dataIndex="gender" width={500} />
       </Table>
-      <Pagination {...paginationProps} />
+      <Pagination style={{ marginTop: 16 }} {...paginationProps} />
     </>
   )
 };

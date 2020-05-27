@@ -24,9 +24,9 @@ It encapsulates the common Fusion [Form](https://fusion.design/pc/component/basi
 
 ## API
 
-useFormTable is based on [useRequest](/async). All [useRquest Pagination](/async?anchor=pagination#api-1) APIs can be used directly. For example `cacheKey`,` manual`, etc.
+useFusionTable is based on [useRequest](/async). All [useRquest Pagination](/async?anchor=pagination#api-1) APIs can be used directly. For example `cacheKey`,` manual`, etc.
 
-useFormTable adds `result.search` and` options.form`.
+useFusionTable adds `result.search` and` options.form`.
 
 ```javascript
 const {
@@ -37,11 +37,11 @@ const {
     submit: () => void;
     reset: () => void;
   };
-} = useFormTable(
+} = useFusionTable(
   service,
   {
     ...,
-    form,
+    field,
     defaultType: 'simple' | 'advance',
     defaultParams: [pagination, formData],
   }

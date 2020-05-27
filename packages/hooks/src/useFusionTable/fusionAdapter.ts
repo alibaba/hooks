@@ -25,10 +25,7 @@ export const resultAdapter = (result: any) => {
   };
 
   const paginationProps = {
-    onChange: (page: number) => {
-      console.log('llllll', page)
-      result.tableProps.onChange({ current: page, pageSize: result.pagination.pageSize }, result.filters, result.sorter);
-    },
+    onChange: result.pagination.onChange,
     onPageSizeChange: result.pagination.changePageSize,
     current: result.pagination.current,
     pageSize: result.pagination.pageSize,

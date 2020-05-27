@@ -1,5 +1,5 @@
 ---
-title: useFormTable
+title: useAntdTable
 order: 1000
 nav:
   title: Hooks
@@ -8,7 +8,7 @@ group:
   title: Table
   path: /table
   order: 3
-legacy: /table/use-form-table
+legacy: /table/use-antd-table
 ---
 
 # useFormTable
