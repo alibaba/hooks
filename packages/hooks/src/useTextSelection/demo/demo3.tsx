@@ -6,7 +6,7 @@
  * desc.zh-CN: 配合 Popover 做划词翻译
  */
 
-import { useRequest, useTextSelection } from '@umijs/hooks';
+import { useRequest, useTextSelection } from 'ahooks';
 import { Popover, Spin } from 'antd';
 import React, { useEffect, useState } from 'react';
 

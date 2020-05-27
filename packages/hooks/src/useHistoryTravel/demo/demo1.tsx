@@ -8,7 +8,7 @@
 
 import React, { useState } from 'react';
 import { Input, Button, List, InputNumber } from 'antd';
-import { useEventTarget, useHistoryTravel } from '@umijs/hooks';
+import { useEventTarget, useHistoryTravel } from 'ahooks';
 
 const { Item } = List;
 

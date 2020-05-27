@@ -1,9 +1,4 @@
-import useRequest from '@umijs/use-request';
-import useAntdTable from './useAntdTable';
-import useAPI, { configRequest } from './useAPI';
-import useAsync from './useAsync';
-import useLoadMore from './useLoadMore';
-import useSearch from './useSearch';
+import useRequest from '@ahooksjs/use-request';
 import useControllableValue from './useControllableValue';
 import useDynamicList from './useDynamicList';
 import useEventEmitter from './useEventEmitter';
@@ -14,7 +9,6 @@ import useLocalStorageState from './useLocalStorageState';
 import useSessionStorageState from './useSessionStorageState';
 import useUpdateEffect from './useUpdateEffect';
 import useUpdateLayoutEffect from './useUpdateLayoutEffect';
-import usePagination from './usePagination';
 import useBoolean from './useBoolean';
 import useToggle from './useToggle';
 import useDocumentVisibility from './useDocumentVisibility';
@@ -46,6 +40,7 @@ import useCounter from './useCounter';
 import useUpdate from './useUpdate';
 import useEventTarget from './useEventTarget';
 import useHistoryTravel from './useHistoryTravel';
+import useDebounceEffect from './useDebounceEffect';
 
 const useControlledValue: typeof useControllableValue = function (...args) {
   console.warn(
@@ -55,11 +50,6 @@ const useControlledValue: typeof useControllableValue = function (...args) {
 };
 
 export {
-  useAntdTable,
-  useAPI,
-  useAsync,
-  useLoadMore,
-  useSearch,
   useControlledValue,
   useControllableValue,
   useDynamicList,
@@ -70,10 +60,8 @@ export {
   useSessionStorageState,
   useSize,
   configResponsive,
-  configRequest,
   useUpdateEffect,
   useUpdateLayoutEffect,
-  usePagination,
   useBoolean,
   useToggle,
   useDocumentVisibility,
@@ -82,6 +70,7 @@ export {
   useThrottleFn,
   useDebounce,
   useDebounceFn,
+  useDebounceEffect,
   usePrevious,
   useMouse,
   useScroll,

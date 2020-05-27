@@ -1,9 +1,9 @@
 {
-  "name": "@umijs/hooks",
+  "name": "ahooks",
   "private": true,
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/umijs/hooks.git"
+    "url": "git+https://github.com/ice-lab/ahooks.git"
   },
   "scripts": {
     "init": "rm -rf node_modules && npm install && npm run clean && npm run bootstrap && npm run build",
@@ -11,7 +11,7 @@
     "dev": "dumi dev",
     "bootstrap": "lerna bootstrap",
     "clean": "lerna clean --yes",
-    "compile": "lerna run --scope @umijs/use-request compile && lerna run --scope @umijs/hooks compile",
+    "compile": "lerna run --scope @ahooksjs/use-request compile && lerna run --scope ahooks compile",
     "build": "node ./scripts/clean-old-build.js && father build && npm run compile && node ./scripts/build-wind-up.js",
     "test": "father test",
     "test:watch": "father test --watch",
@@ -24,6 +24,7 @@
     "now-build": "echo \"hello\""
   },
   "devDependencies": {
+    "@testing-library/react": "^10.0.4",
     "@testing-library/react-hooks": "^2.0.1",
     "@types/jest": "^24.0.15",
     "@types/lodash.debounce": "^4.0.6",

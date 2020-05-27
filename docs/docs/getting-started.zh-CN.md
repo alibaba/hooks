@@ -7,13 +7,13 @@ nav:
 
 # 快速上手
 
-Umi Hooks 是一个 React Hooks 库，致力提供常用且高质量的 Hooks。
+ahooks 是一个 React Hooks 库，致力提供常用且高质量的 Hooks。
 
 > 在开始之前，你需要掌握 React 及 React Hooks 基础用法。访问[链接](https://zh-hans.reactjs.org/docs/hooks-intro.html)学习 React Hooks 官方文档。
 
 ## 第一个例子
 
-这是一个最简单的 Umi Hooks 的在线 codesandbox 演示。
+这是一个最简单的 ahooks 的在线 codesandbox 演示。
 
 <code src="./demo.tsx" inline />
 
@@ -21,13 +21,13 @@ Umi Hooks 是一个 React Hooks 库，致力提供常用且高质量的 Hooks。
 
 访问 https://codesandbox.io/s/umi-hooks-template-i8jqc 创建一个 codesandbox 的在线示例，别忘了保存以创建一个新的实例。
 
-### 2. 使用 Umi Hooks
+### 2. 使用 ahooks
 
-直接用下面的代码替换 App.js 的内容，使用 Umi Hooks 中的 [useToggle](/zh-CN/state/use-toggle)。
+直接用下面的代码替换 App.js 的内容，使用 ahooks 中的 [useToggle](/zh-CN/state/use-toggle)。
 
 ```javascript
 import React from "react";
-import { useToggle } from "@umijs/hooks";
+import { useToggle } from "ahooks";
 
 export default () => {
   const { state, toggle } = useToggle();
@@ -53,15 +53,15 @@ export default () => {
 可以通过以下的写法来按需加载 Hooks。
 
 ```javascript
-import useToggle from '@umijs/hooks/es/useToggle';
+import useToggle from 'ahooks/es/useToggle';
 ```
 
-> 注意：Umi Hooks 默认支持基于 ES module 的 tree shaking，对于 js 部分，直接引入 `import { useToggle } from '@umijs/hooks'` 也会有按需加载的效果。
+> 注意：ahooks 默认支持基于 ES module 的 tree shaking，对于 js 部分，直接引入 `import { useToggle } from 'ahooks'` 也会有按需加载的效果。
 
 如果你使用了 babel，那么可以使用 [babel-plugin-import](https://github.com/ant-design/babel-plugin-import) 来进行按需加载，加入这个插件后。你可以仍然这么写：
 
 ```javascript
-import { useToggle } from '@umijs/hooks';
+import { useToggle } from 'ahooks';
 ```
 
-插件会帮你转换成 `@umijs/hooks/es/useToggle` 的写法。
+插件会帮你转换成 `ahooks/es/useToggle` 的写法。

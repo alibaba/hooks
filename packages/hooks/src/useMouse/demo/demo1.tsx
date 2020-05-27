@@ -7,7 +7,7 @@
  */
 
 import React, { useMemo } from 'react';
-import {useMouse} from '@umijs/hooks';
+import {useMouse} from 'ahooks';
 
 export default () => {
   const mouse = useMouse();

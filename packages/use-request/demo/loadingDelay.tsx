@@ -6,7 +6,7 @@
  * desc.zh-CN: 通过设置 `options.loadingDelay` ，可以延迟 `loading` 变成 `true` 的时间，有效防止闪烁。
  */
 
-import { useRequest } from '@umijs/hooks';
+import { useRequest } from 'ahooks';
 import { Spin, Button } from 'antd';
 import React from 'react';
 

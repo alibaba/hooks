@@ -8,8 +8,8 @@
 
 import React, { useRef, FC } from 'react';
 import { Button, Input } from 'antd';
-import { useEventEmitter } from '@umijs/hooks';
-import { EventEmitter } from '@umijs/hooks/lib/useEventEmitter'
+import { useEventEmitter } from 'ahooks';
+import { EventEmitter } from 'ahooks/lib/useEventEmitter'
 
 const MessageBox: FC<{
   focus$: EventEmitter<void>;

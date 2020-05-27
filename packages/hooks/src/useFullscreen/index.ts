@@ -1,33 +1,34 @@
 /* eslint no-empty: 0 */
 
-import { MutableRefObject, useLayoutEffect, useRef } from 'react';
+import { useLayoutEffect, useRef, MutableRefObject } from 'react';
 import screenfull from 'screenfull';
 import useBoolean from '../useBoolean';
+import { getTargetElement } from '../utils/dom';
 
-export interface Options<T> {
-  dom?: T | (() => T) | null;
+type Target = HTMLElement | (() => HTMLElement) | MutableRefObject<HTMLElement>;
+
+export interface Options {
   onExitFull?: () => void;
   onFull?: () => void;
 }
 
-export interface Result<T> {
-  isFullscreen: boolean;
+interface Callback {
   setFull: () => void;
   exitFull: () => void;
   toggleFull: () => void;
-  ref?: MutableRefObject<T>;
 }
 
-export default <T extends HTMLElement = HTMLElement>(options?: Options<T>): Result<T> => {
-  const { dom, onExitFull, onFull } = options || {};
+type Value = boolean;
+type Result = [Value, Callback];
+
+export default (target: Target, options?: Options): Result => {
+  const { onExitFull, onFull } = options || {};
 
   const onExitFullRef = useRef(onExitFull);
   onExitFullRef.current = onExitFull;
 
   const onFullRef = useRef(onFull);
   onFullRef.current = onFull;
-
-  const element = useRef<T>();
 
   const { state, toggle, setTrue, setFalse } = useBoolean(false);
 
@@ -37,9 +38,8 @@ export default <T extends HTMLElement = HTMLElement>(options?: Options<T>): Resu
       return;
     }
 
-    const passedInElement = typeof dom === 'function' ? dom() : dom;
-    const targetElement = passedInElement || element.current;
-    if (!targetElement) {
+    const el = getTargetElement(target);
+    if (!el) {
       return;
     }
 
@@ -53,7 +53,7 @@ export default <T extends HTMLElement = HTMLElement>(options?: Options<T>): Resu
 
     if (screenfull.isEnabled) {
       try {
-        screenfull.request(targetElement);
+        screenfull.request(el as HTMLElement);
         setTrue();
         if (onFullRef.current) {
           onFullRef.current();
@@ -79,20 +79,16 @@ export default <T extends HTMLElement = HTMLElement>(options?: Options<T>): Resu
         onExitFullRef.current();
       }
     };
-  }, [state, typeof dom === 'function' ? undefined : dom]);
+  }, [state, typeof target === 'function' ? undefined : target]);
 
   const toggleFull = () => toggle();
 
-  const result: Result<T> = {
-    isFullscreen: !!state,
-    setFull: setTrue,
-    exitFull: setFalse,
-    toggleFull,
-  };
-
-  if (!dom) {
-    result.ref = element as MutableRefObject<T>;
-  }
-
-  return result;
+  return [
+    !!state,
+    {
+      setFull: setTrue,
+      exitFull: setFalse,
+      toggleFull,
+    }
+  ];
 };

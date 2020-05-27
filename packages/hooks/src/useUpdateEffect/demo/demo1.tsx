@@ -8,7 +8,7 @@
 
 import { Button } from 'antd';
 import React, { useLayoutEffect, useState } from 'react';
-import { useUpdateEffect } from '@umijs/hooks';
+import { useUpdateEffect } from 'ahooks';
 
 export default () => {
   const [count, setCount] = useState(0);

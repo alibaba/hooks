@@ -6,7 +6,7 @@
  * desc.zh-CN: 如果设置了 `options.cacheKey` ， useRequest 会将当前请求结束数据缓存起来。下次组件初始化时，如果有缓存数据，我们会优先返回缓存数据，然后在背后发送新请求，也就是 SWR 的能力。
  */
 
-import { useBoolean, useRequest } from '@umijs/hooks';
+import { useBoolean, useRequest } from 'ahooks';
 import { Button, Spin } from 'antd';
 import Mock from 'mockjs';
 import React from 'react';

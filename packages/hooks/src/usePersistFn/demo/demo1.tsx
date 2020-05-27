@@ -8,7 +8,7 @@
 
 import React, { useState, useCallback, useRef } from 'react';
 import { Button, message } from 'antd';
-import { usePersistFn } from '@umijs/hooks';
+import { usePersistFn } from 'ahooks';
 
 export default () => {
   const [count, setCount] = useState(0);

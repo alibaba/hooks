@@ -6,7 +6,7 @@
  * desc.zh-CN: 普通的分页场景，我们会自动管理 `current` 和 `pageSize`。
  */
 
-import { useRequest } from '@umijs/hooks';
+import { useRequest } from 'ahooks';
 import React from 'react';
 import { List, Pagination } from 'antd';
 import Mock from 'mockjs';

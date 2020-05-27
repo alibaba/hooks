@@ -8,7 +8,7 @@
 
 import React, { useState } from 'react';
 import { Button, Input } from 'antd';
-import { usePrevious } from '@umijs/hooks';
+import { usePrevious } from 'ahooks';
 
 interface Person {
   name: string;

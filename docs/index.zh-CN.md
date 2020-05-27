@@ -1,7 +1,7 @@
 ---
-title: Umi Hooks - React Hooks Library
+title: ahooks - React Hooks Library
 hero:
-  title: Umi Hooks
+  title: ahooks
   desc: 为 React Hooks 而生
   actions:
     - text: 快速上手
@@ -23,12 +23,12 @@ footer: Open-source MIT Licensed | Copyright © 2019-present<br />Powered by [du
 
 ```bash
 // 安装依赖
-npm i @umijs/hooks --save
+npm i ahooks --save
 
 // 使用 Hooks
-import { useRequest } from '@umijs/hooks';
+import { useRequest } from 'ahooks';
 ```
 
 ## 👥 反馈与共建
 
-<img src="https://raw.githubusercontent.com/umijs/hooks/master/dingtalk.jpg" width="300" />
+<img src="https://raw.githubusercontent.com/ice-lab/ahooks/master/dingtalk.jpg" width="300" />

@@ -8,7 +8,7 @@
 
 import React, { Fragment } from 'react';
 import { Input, Button } from 'antd';
-import { useEventTarget } from '@umijs/hooks'
+import { useEventTarget } from 'ahooks'
 
 export default () => {
   const [valueProps, reset] = useEventTarget('this is initial value');

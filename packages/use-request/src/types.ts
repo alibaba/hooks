@@ -83,7 +83,9 @@ export type BaseOptions<R, P extends any[]> = {
 
   initialData?: R;
 
-  requestMethod?: (service: any) => Promise<any>
+  requestMethod?: (service: any) => Promise<any>;
+
+  ready?: boolean;
 }
 
 export type OptionsWithFormat<R, P extends any[], U, UU extends U> = {

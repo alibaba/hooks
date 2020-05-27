@@ -8,7 +8,7 @@
 
 import React, { useState } from 'react';
 import { message } from 'antd';
-import { useDrop, useDrag } from '@umijs/hooks';
+import { useDrop, useDrag } from 'ahooks';
 
 export default () => {
   const getDragProps = useDrag();

@@ -6,7 +6,7 @@
  * desc.zh-CN: 通过设置 cacheKey，可以缓存所有 list 数据。
  */
 
-import { useBoolean, useRequest } from '@umijs/hooks';
+import { useBoolean, useRequest } from 'ahooks';
 import { Button, Spin, List, Typography } from 'antd';
 import React from 'react';
 

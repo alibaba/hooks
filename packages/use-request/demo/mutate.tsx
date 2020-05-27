@@ -6,7 +6,7 @@
  * desc.zh-CN: 你可以通过 `mutate` ，直接修改 `data` 。 `mutate` 函数参数可以为 `newData` 或 `(oldData)=> newData` 。
  */
 
-import { useRequest } from '@umijs/hooks';
+import { useRequest } from 'ahooks';
 import { Button, Input, message } from 'antd';
 import React, { useState } from 'react';
 import Mock from 'mockjs';
