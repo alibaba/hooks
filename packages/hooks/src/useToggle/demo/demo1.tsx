@@ -11,7 +11,7 @@ import { Button, Switch } from 'antd';
 import { useToggle } from 'ahooks';
 
 export default () => {
-  const { state, toggle } = useToggle();
+  const [ state, { toggle } ] = useToggle();
 
   return (
     <div>
