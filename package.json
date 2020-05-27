@@ -19,9 +19,8 @@
     "help": "father help",
     "precommit": "father pre-commit",
     "build:doc": "dumi build",
-    "pub:doc": "now --prod",
-    "pub": "lerna publish",
-    "now-build": "echo \"hello\""
+    "pub:doc": "cp ./dist/index.html ./dist/200.html && surge ./dist --domain ahooks.js.org",
+    "pub": "lerna publish"
   },
   "devDependencies": {
     "@testing-library/react": "^10.0.4",
@@ -39,10 +38,10 @@
     "father": "^2.13.3",
     "lerna": "^2.11.0",
     "mockjs": "^1.1.0",
-    "now": "^16.2.0",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-drag-listview": "^0.1.6",
+    "surge": "^0.21.3",
     "typescript": "^3.3.3",
     "umi-request": "^1.2.18"
   }
