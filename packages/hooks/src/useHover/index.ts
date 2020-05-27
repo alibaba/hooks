@@ -43,5 +43,5 @@ export default (
     }
   }, [typeof target === 'function' ? undefined : target]);
 
-  return !!state;
+  return state;
 };
