@@ -1,6 +1,6 @@
 {
   "name": "@umijs/hooks",
-  "version": "1.9.2",
+  "version": "1.9.3",
   "description": "react hooks library",
   "keywords": [
     "umi hooks",
@@ -28,7 +28,7 @@
     "package.json"
   ],
   "dependencies": {
-    "@umijs/use-request": "^1.4.2",
+    "@umijs/use-request": "^1.4.3",
     "intersection-observer": "^0.7.0",
     "lodash.isequal": "^4.5.0",
     "resize-observer-polyfill": "^1.5.1",
