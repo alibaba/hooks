@@ -56,7 +56,9 @@ function useRequest(service: any, options: any = {}) {
   const finalRequestMethod = requestMethod || request;
 
   let promiseService: () => Promise<any>;
-  if (typeof service === 'string') {
+  if (service === null || service === undefined) {
+    promiseService = () => Promise.resolve();
+  } else if (typeof service === 'string') {
     promiseService = () => finalRequestMethod(service);
   } else if (typeof service === 'object') {
     const { url, ...rest } = service;
@@ -76,6 +78,8 @@ function useRequest(service: any, options: any = {}) {
           const { url, ...rest } = result;
           request(url, rest).then((data: any) => { resolve(data) }).catch((e: any) => reject(e));
         }
+      } else if (result === null || result === undefined) {
+        resolve();
       }
     });
   }
