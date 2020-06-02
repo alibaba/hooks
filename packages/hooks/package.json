@@ -19,7 +19,8 @@
   "repository": "https://github.com/umijs/hooks",
   "homepage": "https://github.com/umijs/hooks",
   "scripts": {
-    "compile": "tsc --declarationDir lib && tsc --declarationDir es"
+    "build:declaration": "tsc --declarationDir lib && tsc --declarationDir es",
+    "build:umd": "webpack-cli"
   },
   "files": [
     "dist",
