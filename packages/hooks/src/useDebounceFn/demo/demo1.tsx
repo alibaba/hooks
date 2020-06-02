@@ -7,7 +7,6 @@
  */
 
 import React, { useState } from 'react';
-import { Button } from 'antd';
 import { useDebounceFn } from 'ahooks';
 
 export default () => {
@@ -21,7 +20,7 @@ export default () => {
   return (
     <div>
       <p style={{ marginTop: 16 }}> Clicked count: {value} </p>
-      <Button onClick={run}>Click fast!</Button>
+      <button type="button" onClick={run}>Click fast!</button>
     </div>
   );
 };

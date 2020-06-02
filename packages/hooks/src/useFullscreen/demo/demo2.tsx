@@ -7,7 +7,6 @@
  */
 
 import React from 'react';
-import { Button } from 'antd';
 import { useFullscreen } from 'ahooks';
 import img from './react-hooks.jpg';
 
@@ -18,7 +17,7 @@ export default () => {
       <div style={{ marginBottom: 16 }}>
         <img id="fullscreen-img" src={img} style={{ width: 320 }} alt="" />
       </div>
-      <Button onClick={setFull}>setFull</Button>
+      <button type="button" onClick={setFull}>setFull</button>
     </div>
   );
 };

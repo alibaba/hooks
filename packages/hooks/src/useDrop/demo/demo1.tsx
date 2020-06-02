@@ -7,26 +7,25 @@
  */
 
 import React, { useState } from 'react';
-import { message } from 'antd';
 import { useDrop, useDrag } from 'ahooks';
 
 export default () => {
   const getDragProps = useDrag();
-  const [ props, { isHovering } ] = useDrop({
+  const [props, { isHovering }] = useDrop({
     onText: (text, e) => {
       console.log(e);
-      message.success(`'text: ${text}' dropped`);
+      alert(`'text: ${text}' dropped`);
     },
     onFiles: (files, e) => {
       console.log(e, files);
-      message.success(`${files.length} file dropped`);
+      alert(`${files.length} file dropped`);
     },
     onUri: (uri, e) => {
       console.log(e);
-      message.success(`uri: ${uri} dropped`);
+      alert(`uri: ${uri} dropped`);
     },
     onDom: (content: string, e) => {
-      message.success(`custom: ${content} dropped`)
+      alert(`custom: ${content} dropped`)
     }
   });
 
