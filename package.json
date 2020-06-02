@@ -11,8 +11,9 @@
     "dev": "dumi dev",
     "bootstrap": "lerna bootstrap",
     "clean": "lerna clean --yes",
-    "compile": "lerna run --scope @umijs/use-request compile && lerna run --scope @umijs/hooks compile",
-    "build": "node ./scripts/clean-old-build.js && father build && npm run compile && node ./scripts/build-wind-up.js",
+    "build:declaration": "lerna run --scope @umijs/use-request build:declaration && lerna run --scope @umijs/hooks build:declaration",
+    "build:umd": "lerna run build:umd",
+    "build": "node ./scripts/clean-old-build.js && father build && npm run build:declaration && npm run build:umd && node ./scripts/build-wind-up.js",
     "test": "father test",
     "test:watch": "father test --watch",
     "cov": "father test --coverage",
@@ -29,6 +30,7 @@
     "@types/lodash.debounce": "^4.0.6",
     "@types/lodash.isequal": "^4.5.5",
     "@types/lodash.throttle": "^4.1.6",
+    "babel-loader": "^8.1.0",
     "babel-plugin-import": "^1.12.0",
     "babel-plugin-transform-async-to-promises": "^0.8.15",
     "create-test-server": "^3.0.1",
@@ -43,6 +45,8 @@
     "react-dom": "^16.8.6",
     "react-drag-listview": "^0.1.6",
     "typescript": "^3.3.3",
-    "umi-request": "^1.2.18"
+    "umi-request": "^1.2.18",
+    "webpack-cli": "^3.3.10",
+    "webpack-merge": "^4.2.2"
   }
 }
