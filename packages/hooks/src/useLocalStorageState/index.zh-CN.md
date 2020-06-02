@@ -35,6 +35,6 @@ const [state, setState] = useLocalStorageState<T>(
   defaultValue?: T | (() => T),
 ): [T?, (value?: T | ((previousState: T) => T)) => void]
 ```
-它的API和 `useState` 非常类似，但是多了一个参数 `key` ，用来指定在 localStorage 中存储时所使用的 `key` 。而它的返回值类型和 `useState` 保持了一致，当调用 `setState` 时，它会自动将新值写入到 localStorage 中。
+它的API和 `useState` 非常类似，但是多了一个参数 `key` ，用来指定在 localStorage 中存储时所使用的 `key` 。而它的返回值类型和 `useState` 保持了一致，当调用 `setState` 时，它会自动将新值写入到 localStorage 中。同时当 localStorage 没有`key`对应的值，`state`会返回默认值，但默认值不会写入 localStorage 。
 
 如果想从 localStorage 中删除这条数据，可以使用 `setState()` 或 `setState(undefined)` 。
