@@ -23,7 +23,9 @@ function useStorageState<T>(
   function getStoredValue() {
     const raw = storage.getItem(key);
     if (raw) {
-      return JSON.parse(raw);
+      try {
+        return JSON.parse(raw);
+      } catch(e) {}
     }
     if (isFunction<IFuncUpdater<T>>(defaultValue)) {
       return defaultValue();

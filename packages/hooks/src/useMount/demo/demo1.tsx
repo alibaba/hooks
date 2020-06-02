@@ -7,7 +7,7 @@
  */
 
 import React from 'react';
-import { Button, message } from 'antd';
+import { message } from 'antd';
 import { useToggle, useMount } from 'ahooks';
 
 const MyComponent = () => {
@@ -21,10 +21,10 @@ const MyComponent = () => {
 }
 
 export default () => {
-  const { state, toggle } = useToggle(false);
+  const [state, { toggle }] = useToggle(false);
 
   return (<>
-    <Button onClick={() => toggle()}>{state ? 'unmount' : 'mount'}</Button>
+    <button onClick={() => toggle()}>{state ? 'unmount' : 'mount'}</button>
     {state && <MyComponent />}
   </>);
 };
