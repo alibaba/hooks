@@ -7,7 +7,7 @@
  */
 
 import { useRequest } from 'ahooks';
-import { Button, message } from 'antd';
+import { message } from 'antd';
 import React from 'react';
 
 export function deleteUser(userId: string): Promise<{ success: boolean }> {
@@ -38,7 +38,9 @@ export default () => {
       <ul>
         {users.map((user => (
           <li key={user.id} style={{ marginTop: 8 }}>
-            <Button loading={fetches[user.id]?.loading} onClick={() => { run(user.id) }}>delete {user.username}</Button>
+            <button type="button" onClick={() => { run(user.id) }} disabled={fetches[user.id]?.loading}>
+              {fetches[user.id]?.loading ? 'loading' : `delete ${user.username}`}
+            </button>
           </li>
         )))}
       </ul>

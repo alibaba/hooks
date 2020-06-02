@@ -49,15 +49,13 @@ export default () => {
   );
   return (
     <div>
-      <List
-        dataSource={data?.list}
-        loading={loading}
-        renderItem={(item: any) => (
-          <List.Item>
-            {item.name} - {item.email}
-          </List.Item>
-        )}
-      />
+      {loading ? <p>loading</p> :
+        <ul>
+          {data?.list?.map(item => (
+            <li key={item.email}>{item.name} - {item.email}</li>
+          ))}
+        </ul>
+      }
       <Pagination
         {...(pagination as any)}
         showQuickJumper

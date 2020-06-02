@@ -7,7 +7,6 @@
  */
 
 import { useRequest } from 'ahooks';
-import { Avatar, Button, List } from 'antd';
 import React, { useRef } from 'react';
 
 interface Item {
@@ -86,44 +85,29 @@ export default () => {
 
   const { list = [] } = data || {};
 
-  const renderFooter = () => (
-    <>
-      {!noMore && (
-        <Button onClick={loadMore} loading={loadingMore}>
-          {loadingMore ? 'Loading more' : 'Click to load more'}
-        </Button>
-      )}
-
-      {noMore && <span>No more data</span>}
-
-      <span style={{ float: 'right', fontSize: 12 }}>total: {data?.total}</span>
-    </>
-  );
-
   return (
-    <div ref={containerRef} style={{ height: 300, overflowY: 'auto' }}>
-      <List
-        header={
-          <Button onClick={reload} loading={loading}>
-            Reload
-          </Button>
-        }
-        footer={!loading && renderFooter()}
-        loading={loading}
-        bordered
-        dataSource={list}
-        renderItem={item => (
-          <List.Item>
-            <List.Item.Meta
-              avatar={
-                <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
-              }
-              title={<a>{item.title}</a>}
-              description="ahooks is a react hooks library"
-            />
-          </List.Item>
+    <div ref={containerRef} style={{ height: 200, overflowY: 'auto' }}>
+      <button type="button" onClick={reload} disabled={loading}>
+        {loading ? 'loading' : 'Reload'}
+      </button>
+      <ul>
+        {list.map(item => (
+          <li style={{ height: 50, borderBottom: '1px', lineHeight: '50px' }}>
+            {item.title}
+          </li>
+        ))}
+      </ul>
+      <div>
+        {!noMore && (
+          <button type="button" onClick={loadMore} disabled={loadingMore}>
+            {loadingMore ? 'Loading more...' : 'Click to load more'}
+          </button>
         )}
-      />
+
+        {noMore && <span>No more data</span>}
+
+        <span style={{ float: 'right', fontSize: 12 }}>total: {data?.total}</span>
+      </div>
     </div>
   );
 };

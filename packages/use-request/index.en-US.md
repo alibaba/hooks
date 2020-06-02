@@ -24,12 +24,10 @@ Production-ready React Hook to manage asynchronous data.
 * Debounce
 * Throttle
 * Concurrent Request
+* Dependent Request
 * Loading Delay
 * Pagination
 * Load more, data recovery and scroll position recovery
-* [ ] Retry on error
-* [ ] Request timeout management
-* [ ] Suspense
 * ......
 
 ## Examples

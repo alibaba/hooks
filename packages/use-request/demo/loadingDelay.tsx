@@ -7,7 +7,6 @@
  */
 
 import { useRequest } from 'ahooks';
-import { Spin, Button } from 'antd';
 import React from 'react';
 
 async function getCurrentTime(): Promise<number> {
@@ -33,19 +32,15 @@ export default () => {
   return (
     <div>
       <p>loadingDelay can set delay loading, which can effectively prevent loading from flickering.</p>
-      <Button onClick={trigger}>
+      <button type="button" onClick={trigger}>
         run
-      </Button>
+      </button>
 
       <div style={{ margin: '24px 0', width: 300 }}>
-        <Spin spinning={getTimeAction.loading}>
-          Double Count: {getTimeAction.data}
-        </Spin>
+        Current Time: {getTimeAction.loading ? 'loading' : getTimeAction.data}
       </div>
       <div>
-        <Spin spinning={withLoadingDelayAction.loading}>
-          Double Count: {withLoadingDelayAction.data}
-        </Spin>
+        Current Time: {withLoadingDelayAction.loading ? 'loading' : withLoadingDelayAction.data}
       </div>
     </div>
   );

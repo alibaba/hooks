@@ -7,7 +7,6 @@
  */
 
 import { useBoolean, useRequest } from 'ahooks';
-import { Button, Spin } from 'antd';
 import Mock from 'mockjs';
 import React from 'react';
 
@@ -23,27 +22,30 @@ async function getArticle(type?: string): Promise<{ data: string, time: number }
   });
 }
 
+const Article = () => {
+  const { data, loading } = useRequest(getArticle, {
+    cacheKey: 'article'
+  });
+  if (!data && loading) {
+    return <p>loading</p>;
+  }
+  return (
+    <>
+      <p>Latest request time: {data?.time}</p>
+      <p>{data?.data}</p>
+    </>
+  )
+}
+
 export default () => {
-  const { state, toggle } = useBoolean();
+  const [state, { toggle }] = useBoolean();
   return (
     <div>
       <p>You can click the button multiple times, the article component will show the cached data first.</p>
       <p>
-        <Button onClick={() => toggle()}>show/hidden</Button>
+        <button type="button" onClick={() => toggle()}>show/hidden</button>
       </p>
       {state && <Article />}
     </div>
   )
 };
-
-const Article = () => {
-  const { data, loading } = useRequest(getArticle, {
-    cacheKey: 'article'
-  });
-  return (
-    <Spin spinning={!data && loading}>
-      <p>Latest request time: {data?.time}</p>
-      <p>{data?.data}</p>
-    </Spin>
-  );
-}
