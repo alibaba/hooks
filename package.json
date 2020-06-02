@@ -11,7 +11,7 @@
     "dev": "dumi dev",
     "bootstrap": "lerna bootstrap",
     "clean": "lerna clean --yes",
-    "build:declaration": "lerna run --scope @ahooksjs/use-request build:declaration && lerna run --scope ahooks build:declaration",
+    "build:declaration": "lerna run --scope @umijs/use-request build:declaration && lerna run --scope @umijs/hooks build:declaration",
     "build:umd": "lerna run build:umd",
     "build": "node ./scripts/clean-old-build.js && father build && npm run build:declaration && npm run build:umd && node ./scripts/build-wind-up.js",
     "test": "father test",
