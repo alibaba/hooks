@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import { Input } from 'antd';
 import useThrottleEffect from '..';
 
 export default () => {
@@ -14,7 +13,7 @@ export default () => {
   })
   return (
     <div>
-      <Input
+      <input
         value={value}
         onChange={e => setValue(e.target.value)}
         placeholder="Typed value"

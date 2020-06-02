@@ -7,7 +7,6 @@
  */
 
 import React from 'react';
-import { Button } from 'antd';
 import { useToggle } from 'ahooks';
 
 export default () => {
@@ -17,21 +16,21 @@ export default () => {
     <div>
       <p>Effects：{state}</p>
       <p>
-        <Button type="default" onClick={() => toggle()}>
+        <button type="default" onClick={() => toggle()}>
           Toggle
-        </Button>
-        <Button type="danger" onClick={() => toggle('Hello')} style={{ margin: '0 16px' }}>
+        </button>
+        <button type="danger" onClick={() => toggle('Hello')} style={{ margin: '0 16px' }}>
           Toggle Hello
-        </Button>
-        <Button type="primary" onClick={() => toggle('World')}>
+        </button>
+        <button type="primary" onClick={() => toggle('World')}>
           Toggle World
-        </Button>
-        <Button type="danger" onClick={setLeft} style={{ margin: '0 16px' }}>
+        </button>
+        <button type="danger" onClick={setLeft} style={{ margin: '0 16px' }}>
           Set Hello
-        </Button>
-        <Button type="primary" onClick={setRight}>
+        </button>
+        <button type="primary" onClick={setRight}>
           Set World
-        </Button>
+        </button>
       </p>
     </div>
   );

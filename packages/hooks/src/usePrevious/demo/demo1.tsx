@@ -1,7 +1,7 @@
 /**
  * title: Default usage
  * desc: Store the previous value.
- * 
+ *
  * title.zh-CN: 基本用法
  * desc.zh-CN: 记录上次的 count 值
  */
@@ -16,11 +16,9 @@ export default () => {
   return (
     <>
       <div>counter current value: {count}</div>
-      <div>counter previous value: {previous}</div>
-      <Button.Group>
-        <Button onClick={() => setCount(c => c + 1)}> increase </Button>
-        <Button onClick={() => setCount(c => c - 1)}> decrease </Button>
-      </Button.Group>
+      <div style={{marginBottom: '10px'}}>counter previous value: {previous}</div>
+      <button onClick={() => setCount(c => c + 1)}> increase </button>
+      <button style={{marginLeft: '10px'}} onClick={() => setCount(c => c - 1)}> decrease </button>
     </>
   );
 };

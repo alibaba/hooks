@@ -7,11 +7,10 @@
  */
 
 import React from 'react';
-import { InputNumber, Button } from 'antd';
 import { useVirtualList } from 'ahooks';
 
 export default () => {
-  const [value, onChange] = React.useState<number>(undefined);
+  const [value, onChange] = React.useState<number>(0);
   const { list, containerProps, wrapperProps, scrollTo } = useVirtualList(
     Array.from(Array(99999).keys()),
     {
@@ -19,25 +18,31 @@ export default () => {
       overscan: 10,
     },
   );
+  const onInputChange = (e) => {
+    const inputNumber = Number(e.target.value);
+    const isNaN = Number.isNaN(inputNumber);
+    // const inputVal = !isNaN ? onChange(e)
+    if(isNaN || inputNumber > 99999 || inputNumber < 0) return;
+    onChange(e.target.value);
+  }
+
   return (
     <div>
       <div style={{ textAlign: 'right', marginBottom: 16 }}>
-        <InputNumber
-          min={0}
-          max={99999}
+        <input
           style={{ width: 120 }}
           placeholder="line number"
           value={value}
-          onChange={e => onChange(e)}
+          onChange={onInputChange}
         />
-        <Button
+        <button
           style={{ marginLeft: 8 }}
           onClick={() => {
             scrollTo(Number(value));
           }}
         >
           scroll to
-        </Button>
+        </button>
       </div>
       <div {...containerProps} style={{ height: '300px', overflow: 'auto' }}>
         <div {...wrapperProps}>
