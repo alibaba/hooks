@@ -37,7 +37,7 @@ export default () => {
     <>
       <p>Username: {loading ? 'loading' : data}</p>
       <button type="button" onClick={run}>start</button>
-      <button type="button" onClick={cancel}>stop</button>
+      <button type="button" onClick={cancel} style={{ marginLeft: 8 }}>stop</button>
     </>
   )
 }
