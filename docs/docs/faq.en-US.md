@@ -2,10 +2,6 @@
 
 Here are the frequently asked questions about ahooks, you should look up before you ask in the community or create a new issue. 
 
-### Can I only use ahooks in ant design?
-
-You can use ahooks anywhere, with any component library.Although our examples are based on ant design, it does not mean that our Hooks can only be used with ant design.
-
 ### When I use ahooks, I get an error `regeneratorRuntime is not defined`, how can I solve it?
 
 ```
