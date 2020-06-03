@@ -5,6 +5,7 @@
   "main": "./lib/index.js",
   "module": "./es/index.js",
   "types": "./lib/index.d.ts",
+  "unpkg": "dist/ahooks-use-request.js",
   "files": [
     "dist",
     "lib",
@@ -16,7 +17,8 @@
     "url": "git+https://github.com/ice-lab/ahooks.git"
   },
   "scripts": {
-    "compile": "tsc --declarationDir ./lib && tsc --declarationDir ./es"
+    "build:declaration": "tsc --declarationDir ./lib && tsc --declarationDir ./es && webpack-cli",
+    "build:umd": "webpack-cli"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.com/"

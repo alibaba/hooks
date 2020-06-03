@@ -10,6 +10,7 @@
   "main": "./lib/index.js",
   "module": "./es/index.js",
   "types": "./lib/index.d.ts",
+  "unpkg": "dist/ahooks.js",
   "authors": {
     "name": "brickspert",
     "email": "brickspert.fjl@alipay.com"
@@ -20,7 +21,8 @@
   "repository": "https://github.com/ice-lab/ahooks",
   "homepage": "https://github.com/ice-lab/ahooks",
   "scripts": {
-    "compile": "tsc --declarationDir lib && tsc --declarationDir es"
+    "build:declaration": "tsc --declarationDir lib && tsc --declarationDir es",
+    "build:umd": "webpack-cli"
   },
   "files": [
     "dist",
