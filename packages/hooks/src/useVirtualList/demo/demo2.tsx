@@ -18,13 +18,6 @@ export default () => {
       overscan: 10,
     },
   );
-  const onInputChange = (e) => {
-    const inputNumber = Number(e.target.value);
-    const isNaN = Number.isNaN(inputNumber);
-    // const inputVal = !isNaN ? onChange(e)
-    if(isNaN || inputNumber > 99999 || inputNumber < 0) return;
-    onChange(e.target.value);
-  }
 
   return (
     <div>
@@ -32,11 +25,13 @@ export default () => {
         <input
           style={{ width: 120 }}
           placeholder="line number"
+          type="number"
           value={value}
-          onChange={onInputChange}
+          onChange={e => onChange(Number(e.target.value))}
         />
         <button
           style={{ marginLeft: 8 }}
+          type="button"
           onClick={() => {
             scrollTo(Number(value));
           }}

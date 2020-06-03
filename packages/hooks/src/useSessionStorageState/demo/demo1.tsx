@@ -6,8 +6,8 @@
  * desc.zh-CN: 刷新页面后，可以看到输入框中的内容被从 sessionStorage 中恢复了。
  */
 
-import React from 'react';
 import { useSessionStorageState } from 'ahooks';
+import React from 'react';
 
 export default function () {
   const [message, setMessage] = useSessionStorageState('user-message', 'Hello~');
@@ -22,6 +22,7 @@ export default function () {
         style={{ width: 200, marginRight: 16 }}
       />
       <button
+        type="button"
         onClick={() => {
           setMessage();
         }}

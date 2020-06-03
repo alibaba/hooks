@@ -30,7 +30,7 @@ export default () => {
       <p>layoutEffectCount: {layoutEffectCount}</p>
       <p>updateLayoutEffectCount: {updateLayoutEffectCount}</p>
       <p>
-        <button type="primary" onClick={() => setCount(c => c + 1)}>
+        <button type="button" onClick={() => setCount(c => c + 1)}>
           reRender
         </button>
       </p>

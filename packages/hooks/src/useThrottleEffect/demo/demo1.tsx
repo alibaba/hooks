@@ -19,7 +19,7 @@ export default () => {
         placeholder="Typed value"
         style={{ width: 280 }}
       />
-      <p style={{marginTop: 16}}>
+      <p style={{ marginTop: 16 }}>
       <ul>
         {records.map((record, index) => (
           <li key={index}>{record}</li>

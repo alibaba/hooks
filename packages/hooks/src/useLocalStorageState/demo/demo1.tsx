@@ -18,7 +18,7 @@ export default function () {
         placeholder="Please enter some words..."
         onChange={e => setMessage(e.target.value)}
       />
-      <button style={{ marginRight: '16px' }} type="button" onClick={() => setMessage('Hello~')}>Reset</button>
+      <button style={{ margin: '0 16px' }} type="button" onClick={() => setMessage('Hello~')}>Reset</button>
       <button type="button" onClick={() => setMessage()}>Clear</button>
     </>
   );

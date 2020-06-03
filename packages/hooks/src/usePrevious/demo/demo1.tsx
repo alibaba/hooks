@@ -6,9 +6,8 @@
  * desc.zh-CN: 记录上次的 count 值
  */
 
-import React, { useState } from 'react';
-import { Button } from 'antd';
 import { usePrevious } from 'ahooks';
+import React, { useState } from 'react';
 
 export default () => {
   const [count, setCount] = useState(0);
@@ -16,9 +15,9 @@ export default () => {
   return (
     <>
       <div>counter current value: {count}</div>
-      <div style={{marginBottom: '10px'}}>counter previous value: {previous}</div>
-      <button onClick={() => setCount(c => c + 1)}> increase </button>
-      <button style={{marginLeft: '10px'}} onClick={() => setCount(c => c - 1)}> decrease </button>
+      <div style={{ marginBottom: '10px' }}>counter previous value: {previous}</div>
+      <button type="button" onClick={() => setCount(c => c + 1)}> increase </button>
+      <button type="button" style={{ marginLeft: '10px' }} onClick={() => setCount(c => c - 1)}> decrease </button>
     </>
   );
 };

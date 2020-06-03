@@ -10,7 +10,7 @@ import React from 'react';
 import { useToggle } from 'ahooks';
 
 export default () => {
-  const [ state, { toggle } ] = useToggle();
+  const [state, { toggle }] = useToggle();
 
   return (
     <div>
@@ -18,13 +18,13 @@ export default () => {
         Effects：{`${state}`}
       </p>
       <p>
-        <button type="default" onClick={() => toggle()}>
+        <button type="button" onClick={() => toggle()}>
           Toggle
         </button>
-        <button type="danger" onClick={() => toggle(false)} style={{ margin: '0 16px' }}>
+        <button type="button" onClick={() => toggle(false)} style={{ margin: '0 16px' }}>
           Toggle False
         </button>
-        <button type="primary" onClick={() => toggle(true)}>
+        <button type="button" onClick={() => toggle(true)}>
           Toggle True
         </button>
       </p>

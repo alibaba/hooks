@@ -14,16 +14,16 @@ export default () => {
 
   return (
     <div>
-      <button onClick={() => set(String(Date.now()), new Date().toJSON())}>
+      <button type="button" onClick={() => set(String(Date.now()), new Date().toJSON())}>
         Add
       </button>
-      <button onClick={() => setAll([['text', 'this is a new Map']])} style={{ margin: '0 16px' }}>
+      <button type="button" onClick={() => setAll([['text', 'this is a new Map']])} style={{ margin: '0 16px' }}>
         Set new Map
       </button>
-      <button onClick={() => remove('msg')} disabled={!get('msg')}>
+      <button type="button" onClick={() => remove('msg')} disabled={!get('msg')}>
         Remove 'msg'
       </button>
-      <button onClick={() => reset()} style={{ margin: '0 16px' }}>
+      <button type="button" onClick={() => reset()} style={{ margin: '0 16px' }}>
         Reset
       </button>
       <div style={{ marginTop: 16 }}>

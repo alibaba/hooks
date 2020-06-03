@@ -8,7 +8,7 @@ export default () => {
   return (
     <>
       <div>Time: {Date.now()}</div>
-      <button onClick={update} style={{ marginTop: 16 }}>update</button>
+      <button type="button" onClick={update} style={{ marginTop: 16 }}>update</button>
     </>
   );
 };

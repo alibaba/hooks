@@ -43,25 +43,25 @@ export default () => {
 
   return (
     <>
-      <div style={{ margin: `8px 0`, border: '1px solid #e8e8e8', padding: 8 }}>
-        current state:
-        <div>name: {state.name}</div>
-        <div>job: {state.job}</div>
+      <div style={{ margin: '8px 0', border: '1px solid #e8e8e8', padding: 8 }}>
+        <div>current name: {state.name}</div>
+        <div>current job: {state.job}</div>
       </div>
       <div>
-        {state.name}&#39;s previous name: {(previousName || {}).name}
+        previous name: {(previousName || {}).name}
       </div>
       <div style={{ marginBottom: 16 }}>
-        {state.name}&#39;s previous job: {(previousJob || {}).job}
+        previous job: {(previousJob || {}).job}
       </div>
-      <div style={{marginTop: '16px'}}>
+      <div style={{ marginTop: '16px' }}>
         <input
           style={{ width: 220 }}
           value={nameInput}
           onChange={e => setNameInput(e.target.value)}
-          placeholder={`${state.name}'s new name`}
+          placeholder="new name"
         />
         <button
+          type="button"
           onClick={() => {
             setState(s => ({ ...s, name: nameInput }));
           }}
@@ -69,14 +69,15 @@ export default () => {
           update
         </button>
       </div>
-      <div style={{marginTop: '16px'}}>
+      <div style={{ marginTop: '16px' }}>
         <input
           style={{ width: 220 }}
           value={jobInput}
           onChange={e => setJobInput(e.target.value)}
-          placeholder={`${state.name}'s new job`}
+          placeholder="new job"
         />
         <button
+          type="button"
           onClick={() => {
             setState(s => ({ ...s, job: jobInput }));
           }}

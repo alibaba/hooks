@@ -25,7 +25,7 @@ function useStorageState<T>(
     if (raw) {
       try {
         return JSON.parse(raw);
-      } catch(e) {}
+      } catch (e) {}
     }
     if (isFunction<IFuncUpdater<T>>(defaultValue)) {
       return defaultValue();

@@ -14,11 +14,11 @@ export default () => {
 
   return (
     <div>
-      <button type="primary" onClick={() => add(String(Date.now()))}>Add Timestamp</button>
-      <button type="default" onClick={() => remove('Hello')} disabled={!has('Hello')} style={{ margin: '0 16px' }}>
+      <button type="button" onClick={() => add(String(Date.now()))}>Add Timestamp</button>
+      <button type="button" onClick={() => remove('Hello')} disabled={!has('Hello')} style={{ margin: '0 16px' }}>
         Remove Hello
       </button>
-      <button type="danger" onClick={() => reset()}>Reset</button>
+      <button type="button" onClick={() => reset()}>Reset</button>
       <div style={{ marginTop: 16 }}>
         <pre>{JSON.stringify(Array.from(set), null, 2)}</pre>
       </div>
