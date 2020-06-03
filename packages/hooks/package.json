@@ -10,6 +10,7 @@
   "main": "./lib/index.js",
   "module": "./es/index.js",
   "types": "./lib/index.d.ts",
+  "unpkg": "dist/ahooks.js",
   "authors": {
     "name": "brickspert",
     "email": "brickspert.fjl@alipay.com"
