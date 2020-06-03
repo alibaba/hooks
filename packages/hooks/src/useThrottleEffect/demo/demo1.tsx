@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import { Input } from 'antd';
 import useThrottleEffect from '..';
 
 export default () => {
@@ -14,13 +13,13 @@ export default () => {
   })
   return (
     <div>
-      <Input
+      <input
         value={value}
         onChange={e => setValue(e.target.value)}
         placeholder="Typed value"
         style={{ width: 280 }}
       />
-      <p style={{marginTop: 16}}>
+      <p style={{ marginTop: 16 }}>
       <ul>
         {records.map((record, index) => (
           <li key={index}>{record}</li>

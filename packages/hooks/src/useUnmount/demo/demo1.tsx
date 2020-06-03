@@ -6,9 +6,9 @@
  * desc.zh-CN: 在组件卸载时，执行方法。
  */
 
+import { useToggle, useUnmount } from 'ahooks';
+import { message } from 'antd';
 import React from 'react';
-import { Button, message } from 'antd';
-import { useUnmount, useToggle } from 'ahooks';
 
 const MyComponent = () => {
   useUnmount(
@@ -21,10 +21,10 @@ const MyComponent = () => {
 }
 
 export default () => {
-  const { state, toggle } = useToggle(true);
+  const [state, { toggle }] = useToggle(true);
 
   return (<>
-    <Button onClick={()=>toggle()}>{state ? 'unmount' : 'mount'}</Button>
+    <button type="button" onClick={() => toggle()}>{state ? 'unmount' : 'mount'}</button>
     {state && <MyComponent />}
   </>);
 };
