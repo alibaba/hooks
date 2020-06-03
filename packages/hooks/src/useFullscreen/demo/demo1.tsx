@@ -8,7 +8,6 @@
 
 
 import React, { useRef } from 'react';
-import { Button } from 'antd';
 import { useFullscreen } from 'ahooks';
 
 export default () => {
@@ -17,11 +16,11 @@ export default () => {
   return (
     <div ref={ref} style={{ background: 'white' }}>
       <div style={{ marginBottom: 16 }}>{isFullscreen ? 'Fullscreen' : 'Not fullscreen'}</div>
-      <Button.Group>
-        <Button onClick={setFull}>setFull</Button>
-        <Button onClick={exitFull}>exitFull</Button>
-        <Button onClick={toggleFull}>toggle</Button>
-      </Button.Group>
+      <div>
+        <button type="button" onClick={setFull}>setFull</button>
+        <button type="button" onClick={exitFull}>exitFull</button>
+        <button type="button" onClick={toggleFull}>toggle</button>
+      </div>
     </div>
   );
 };

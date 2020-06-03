@@ -6,7 +6,6 @@
  * desc.zh-CN: 简单的 count 管理示例。
  */
 
-import { Button } from 'antd';
 import React from 'react';
 import { useCounter } from 'ahooks';
 
@@ -16,12 +15,12 @@ export default () => {
   return (
     <div>
       <p>{current} [max: 10; min: 0;]</p>
-      <Button.Group>
-        <Button onClick={() => { inc() }}>inc()</Button>
-        <Button onClick={() => { dec() }}>dec()</Button>
-        <Button onClick={() => { set(3) }}>set(3)</Button>
-        <Button onClick={() => { reset() }}>reset()</Button>
-      </Button.Group>
+      <div>
+        <button type="button" onClick={() => { inc() }}>inc()</button>
+        <button type="button" onClick={() => { dec() }}>dec()</button>
+        <button type="button" onClick={() => { set(3) }}>set(3)</button>
+        <button type="button" onClick={() => { reset() }}>reset()</button>
+      </div>
     </div>
   );
 };
