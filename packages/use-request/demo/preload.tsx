@@ -7,9 +7,9 @@
  */
 
 import { useBoolean, useRequest } from 'ahooks';
-import { Button, Spin } from 'antd';
-import React from 'react';
+import { Button } from 'antd';
 import Mock from 'mockjs';
+import React from 'react';
 
 async function getArticle(type?: string): Promise<{ data: string, time: number }> {
   console.log(type);
@@ -24,7 +24,7 @@ async function getArticle(type?: string): Promise<{ data: string, time: number }
 }
 
 export default () => {
-  const { state, toggle } = useBoolean();
+  const [state, { toggle }] = useBoolean();
   const { run } = useRequest(getArticle, {
     cacheKey: 'article',
     manual: true
@@ -33,7 +33,7 @@ export default () => {
     <div>
       <p>When the mouse hovers over the button, the article data is preloaded.</p>
       <p>
-        <Button onMouseEnter={() => run()} onClick={() => toggle()}>show/hidden</Button>
+        <button type="button" onMouseEnter={() => run()} onClick={() => toggle()}>show/hidden</button>
       </p>
       {state && <Article />}
     </div>
@@ -44,10 +44,15 @@ const Article = () => {
   const { data, loading } = useRequest(getArticle, {
     cacheKey: 'article'
   });
+
+  if (!data && loading) {
+    return <p>loading</p>;
+  }
+
   return (
-    <Spin spinning={!data && loading}>
+    <>
       <p>Latest request time: {data?.time}</p>
       <p>{data?.data}</p>
-    </Spin>
+    </>
   );
 }

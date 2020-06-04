@@ -16,7 +16,6 @@
  */
 
 import { useRequest } from 'ahooks';
-import { Button, Spin } from 'antd';
 import React from 'react';
 import Mock from 'mockjs';
 
@@ -36,13 +35,9 @@ export default () => {
 
   return (
     <>
-      <Spin spinning={loading}>
-        <p>Username: {data}</p>
-      </Spin>
-      <Button.Group>
-        <Button onClick={run}>start</Button>
-        <Button onClick={cancel}>stop</Button>
-      </Button.Group>
+      <p>Username: {loading ? 'loading' : data}</p>
+      <button type="button" onClick={run}>start</button>
+      <button type="button" onClick={cancel} style={{ marginLeft: 8 }}>stop</button>
     </>
   )
 }

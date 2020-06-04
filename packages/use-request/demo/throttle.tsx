@@ -7,11 +7,8 @@
  */
 
 import { useRequest } from 'ahooks';
-import { Select } from 'antd';
-import React from 'react';
 import Mock from 'mockjs';
-
-const { Option } = Select;
+import React from 'react';
 
 async function getEmail(search: string): Promise<string[]> {
   console.log(search);
@@ -23,7 +20,7 @@ async function getEmail(search: string): Promise<string[]> {
 }
 
 export default () => {
-  const { data, loading, run, cancel } = useRequest(getEmail, {
+  const { data, loading, run } = useRequest(getEmail, {
     throttleInterval: 500,
     manual: true
   });
@@ -31,17 +28,15 @@ export default () => {
   return (
     <div>
       <p>Enter quickly to see the effect</p>
-      <Select
-        showSearch
+      <input
         placeholder="Select Emails"
-        filterOption={false}
-        onSearch={run}
-        onBlur={cancel}
-        loading={loading}
-        style={{ width: 300 }}
-      >
-        {data && data.map(i => <Option key={i}>{i}</Option>)}
-      </Select>
+        onChange={e => run(e.target.value)}
+      />
+      {loading ? <p>loading</p> :
+        <ul style={{ marginTop: 8 }}>
+          {data?.map(i => <li key={i}>{i}</li>)}
+        </ul>
+      }
     </div>
   );
 };

@@ -46,12 +46,12 @@ export async function getLoadMoreList(nextId: any, limit: any): Promise<Result> 
 
 
 export default () => {
-  const { state, toggle } = useBoolean(true);
+  const [state, { toggle }] = useBoolean(true);
   return (
     <div>
       <p>You can click the button multiple times, the loadmore will be cached.</p>
       <p>
-        <Button onClick={() => toggle()}>show/hidden</Button>
+        <button type="button" onClick={() => toggle()}>show/hidden</button>
       </p>
       {state && <LoadMoreComponent />}
     </div>
@@ -66,23 +66,23 @@ const LoadMoreComponent = () => {
 
   return (
     <div>
-      <Spin spinning={loading}>
-        <List
-          dataSource={data?.list}
-          renderItem={item => (
-            <List.Item key={item.id}>
-              <Typography.Text mark>[{item.id}]</Typography.Text> {item.name}
-            </List.Item>
-          )}
-        />
-      </Spin>
-      <Button
-        onClick={loadMore}
-        loading={loadingMore}
-        disabled={!data?.nextId}
-      >
-        click to load more
-      </Button>
+      {loading ? <p>loading</p> :
+        <ul>
+          {data?.list?.map(item => (
+            <li key={item.id}>{item.id} - {item.name}</li>
+          ))}
+        </ul>
+      }
+
+      {loadingMore ? 'load more...' :
+        <button
+          type="button"
+          onClick={loadMore}
+          disabled={!data?.nextId}
+        >
+          {data?.nextId ? 'click to load more' : 'no more'}
+        </button>
+      }
     </div>
   );
 };

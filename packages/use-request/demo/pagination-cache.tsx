@@ -7,9 +7,9 @@
  */
 
 import { useBoolean, useRequest, useUpdateEffect } from 'ahooks';
-import { Button, List, Pagination, Select } from 'antd';
-import React, { useState } from 'react';
+import { Pagination } from 'antd';
 import Mock from 'mockjs';
+import React, { useState } from 'react';
 
 interface UserListItem {
   id: string,
@@ -41,12 +41,12 @@ async function getUserList(params: { current: number, pageSize: number, gender?:
 }
 
 export default () => {
-  const { state, toggle } = useBoolean();
+  const [state, { toggle }] = useBoolean();
   return (
     <div>
       <p>You can click the button multiple times, the conditions of pagination will be cached.</p>
       <p>
-        <Button onClick={() => toggle()}>show/hidden</Button>
+        <button type="button" onClick={() => toggle()}>show/hidden</button>
       </p>
       {state && <PaginationComponent />}
     </div>
@@ -65,35 +65,32 @@ const PaginationComponent = () => {
   const [gender, setGender] = useState<string>(params[1]);
 
   useUpdateEffect(() => {
-      // reload when gender change
-      run({
-        current: 1,
-        pageSize: 10
-      }, gender);
+    // reload when gender change
+    run({
+      current: 1,
+      pageSize: 10
+    }, gender);
   }, [gender])
 
 
   return (
     <div>
-      <Select
+      <select
         value={gender}
         style={{ width: 180, marginBottom: 24 }}
-        onChange={(g: string) => setGender(g)}
+        onChange={e => setGender(e.target.value)}
         placeholder="select gender"
-        allowClear
       >
-        <Select.Option value="male">male</Select.Option>
-        <Select.Option value="female">female</Select.Option>
-      </Select>
-      <List
-        dataSource={data && data.list}
-        loading={loading}
-        renderItem={item => (
-          <List.Item>
-            {item.name} - {item.email}
-          </List.Item>
-        )}
-      />
+        <option value="male">male</option>
+        <option value="female">female</option>
+      </select>
+      {loading ? <p>loading</p> :
+        <ul>
+          {data?.list?.map(item => (
+            <li key={item.email}>{item.name} - {item.email}</li>
+          ))}
+        </ul>
+      }
       <Pagination
         {...(pagination as any)}
         showQuickJumper

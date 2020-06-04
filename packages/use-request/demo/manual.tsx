@@ -7,7 +7,7 @@
  */
 
 import { useRequest } from 'ahooks';
-import { Button, Input, message } from 'antd';
+import { message } from 'antd';
 import React, { useState } from 'react';
 
 function changeUsername(username: string): Promise<{ success: boolean }> {
@@ -33,15 +33,15 @@ export default () => {
 
   return (
     <div>
-      <Input
+      <input
         onChange={e => setState(e.target.value)}
         value={state}
         placeholder="Please enter username"
         style={{ width: 240, marginRight: 16 }}
       />
-      <Button onClick={() => run(state)} loading={loading}>
-        Edit
-      </Button>
+      <button disabled={loading} type="button" onClick={() => run(state)}>
+        {loading ? 'loading' : 'Edit'}
+      </button>
     </div>
   );
 };

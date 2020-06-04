@@ -7,23 +7,13 @@
  */
 
 import { useRequest } from 'ahooks';
-import { Button, Input, message } from 'antd';
-import React, { useState } from 'react';
 import Mock from 'mockjs';
+import React, { useState } from 'react';
 
 function getUsername(): Promise<string> {
   return new Promise(resolve => {
     setTimeout(() => {
       resolve(Mock.mock('@name'));
-    }, 1000);
-  });
-}
-
-function changeUsername(username: string): Promise<{ success: boolean }> {
-  console.log(username);
-  return new Promise(resolve => {
-    setTimeout(() => {
-      resolve({ success: true });
     }, 1000);
   });
 }
@@ -35,28 +25,19 @@ export default () => {
       setState(result);
     }
   });
-  const { loading, run } = useRequest(changeUsername, {
-    manual: true,
-    onSuccess: (result, params) => {
-      if (result.success) {
-        mutate(params[0]);
-        message.success(`The username was changed to "${params[0]}" !`);
-      }
-    }
-  });
 
   return (
     <div>
       <p>usrename: {data}</p>
-      <Input
+      <input
         onChange={e => setState(e.target.value)}
         value={state}
         placeholder="Please enter username"
         style={{ width: 240, marginRight: 16 }}
       />
-      <Button onClick={() => run(state)} loading={loading}>
+      <button type="button" onClick={() => mutate(state)}>
         Edit
-      </Button>
+      </button>
     </div>
   );
 };
