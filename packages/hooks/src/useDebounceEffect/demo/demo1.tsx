@@ -17,7 +17,7 @@ export default () => {
         value={value}
         onChange={e => setValue(e.target.value)}
         placeholder="Typed value"
-        style={{ width: 280, padding: '4px' }}
+        style={{ width: 280 }}
       />
       <p style={{ marginTop: 16 }}>
       <ul>

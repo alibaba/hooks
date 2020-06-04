@@ -24,7 +24,7 @@ export default () => {
   const [state, { toggle }] = useToggle(false);
 
   return (<>
-    <button onClick={() => toggle()}>{state ? 'unmount' : 'mount'}</button>
+    <button type="button" onClick={() => toggle()}>{state ? 'unmount' : 'mount'}</button>
     {state && <MyComponent />}
   </>);
 };
