@@ -28,7 +28,7 @@ export default {
     includes: ['docs', 'packages/hooks/src', 'packages/use-request'],
   },
   styles: [
-    `a[title='站长统计'] { display: none; }`,
+    `a[title='站长统计'] { display: none; } input,button{ padding: 4px }`,
   ],
   navs: {
     'zh-CN': [

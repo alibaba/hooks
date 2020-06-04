@@ -6,7 +6,6 @@
  */
 
 import React, { Fragment } from 'react';
-import { Input, Button } from 'antd';
 import { useEventTarget } from 'ahooks'
 
 export default () => {
@@ -15,8 +14,8 @@ export default () => {
   });
 
   return (<Fragment>
-    <Input value={value} onChange={onChange} style={{ width: 200, marginRight: 20 }} placeholder="请输入"/>
-    <Button type="primary" onClick={reset}>重置</Button>
+    <input value={value || ''} onChange={onChange} style={{ width: 200, marginRight: 20 }} placeholder="请输入"/>
+    <button type="button" onClick={reset}>重置</button>
   </Fragment>
   );
 };

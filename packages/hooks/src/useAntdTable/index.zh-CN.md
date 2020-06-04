@@ -13,7 +13,7 @@ legacy: /zh-CN/table/use-antd-table
 
 # useAntdTable
 
-封装了常用的 AntD [Form](https://ant.design/components/form-cn/) 与 AntD [Table](https://ant.design/components/table-cn/) 联动逻辑，并且同时支持 AntD V3 和 V4。
+封装了常用的 antd [Form](https://ant.design/components/form-cn/) 与 antd [Table](https://ant.design/components/table-cn/) 联动逻辑，并且同时支持 antd V3 和 V4。
 
 ## 代码演示
 

@@ -282,7 +282,7 @@ const {
 | Property   | Description                                                                                                                                  | Type |
 |------------|----------------------------------------------------------------------------------------------------------------------------------------------|------|
 | pagination | Paging data and methods for operating paging                                                                                                 | -    |
-| tableProps | The data structure of the [antd Table] (https://ant.design/components/table-cn/) component can be used directly on the AntD Table component. | -    |
+| tableProps | The data structure of the [antd Table] (https://ant.design/components/table-cn/) component can be used directly on the antd Table component. | -    |
 
 #### Params
 

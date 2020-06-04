@@ -65,6 +65,7 @@ export default () => {
           onClick={() => {
             setState(s => ({ ...s, name: nameInput }));
           }}
+          style={{ marginLeft: 16 }}
         >
           update
         </button>
@@ -81,6 +82,7 @@ export default () => {
           onClick={() => {
             setState(s => ({ ...s, job: jobInput }));
           }}
+          style={{ marginLeft: 16 }}
         >
           update
         </button>

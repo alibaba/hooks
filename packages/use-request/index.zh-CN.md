@@ -282,7 +282,7 @@ const {
 | 参数       | 说明                                                                                                        | 类型 |
 |------------|-------------------------------------------------------------------------------------------------------------|------|
 | pagination | 分页数据及操作分页的方法                                                                                    | -    |
-| tableProps | 适配 [antd Table](https://ant.design/components/table-cn/) 组件的数据结构，可以直接用在 AntD Table 组件上。 | -    |
+| tableProps | 适配 [antd Table](https://ant.design/components/table-cn/) 组件的数据结构，可以直接用在 antd Table 组件上。 | -    |
 
 
 #### Params

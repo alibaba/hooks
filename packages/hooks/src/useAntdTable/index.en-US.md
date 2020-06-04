@@ -13,7 +13,7 @@ legacy: /table/use-antd-table
 
 # useAntdTable
 
-It encapsulates the common AntD [Form](https://ant.design/components/form-cn/) and AntD [Table](https://ant.design/components/table-cn/) linkage logic, and supports AntD V3 and V4 at the same time.
+It encapsulates the common antd [Form](https://ant.design/components/form-cn/) and antd [Table](https://ant.design/components/table-cn/) linkage logic, and supports antd V3 and V4 at the same time.
 
 ## Examples
 
