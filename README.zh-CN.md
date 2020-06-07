@@ -33,7 +33,7 @@ import { useRequest } from 'ahooks';
 ## 🖥 开发
 
 ```
-$ git clone git@github.com:ice-lab/ahooks.git
+$ git clone git@github.com:alibaba/hooks.git
 $ cd hooks
 $ npm run init
 $ npm start

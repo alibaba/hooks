@@ -33,7 +33,7 @@ import { useRequest } from 'ahooks';
 ## 🖥 Development
 
 ```
-$ git clone git@github.com:ice-lab/ahooks.git
+$ git clone git@github.com:alibaba/hooks.git
 $ cd hooks
 $ npm run init
 $ npm start
@@ -46,7 +46,7 @@ We welcome all contributions, please read our [CONTRIBUTING.MD](https://github.c
 
 ## 👥 Discuss
 
-<img src="https://raw.githubusercontent.com/ice-lab/ahooks/master/dingtalk.jpg" width="300" />
+<img src="https://raw.githubusercontent.com/alibaba/hooks/master/dingtalk.jpg" width="300" />
 
 ## ✅ License
 
