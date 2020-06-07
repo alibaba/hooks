@@ -14,7 +14,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ice-lab/ahooks.git"
+    "url": "git+https://github.com/alibaba/hooks.git"
   },
   "scripts": {
     "build:declaration": "tsc --declarationDir ./lib && tsc --declarationDir ./es && webpack-cli",
@@ -25,9 +25,9 @@
   },
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/ice-lab/ahooks/issues"
+    "url": "https://github.com/alibaba/hooks/issues"
   },
-  "homepage": "https://github.com/ice-lab/ahooks",
+  "homepage": "https://github.com/alibaba/hooks",
   "peerDependencies": {
     "react": "^16.8.6"
   },

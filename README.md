@@ -1,4 +1,4 @@
-English | [简体中文](https://github.com/ice-lab/ahooks/blob/master/README.zh-CN.md)
+English | [简体中文](https://github.com/alibaba/hooks/blob/master/README.zh-CN.md)
 
 # ahooks
 
@@ -42,7 +42,7 @@ Open your browser and visit http://127.0.0.1:8001 , see more at Development.
 
 ## 🤝 Contributing
 
-We welcome all contributions, please read our [CONTRIBUTING.MD](https://github.com/ice-lab/ahooks/blob/master/CONTRIBUTING.MD) first, let's build a better hooks library together.
+We welcome all contributions, please read our [CONTRIBUTING.MD](https://github.com/alibaba/hooks/blob/master/CONTRIBUTING.MD) first, let's build a better hooks library together.
 
 ## 👥 Discuss
 
@@ -50,7 +50,7 @@ We welcome all contributions, please read our [CONTRIBUTING.MD](https://github.c
 
 ## ✅ License
 
-[MIT](https://github.com/ice-lab/ahooks/blob/master/LICENSE)
+[MIT](https://github.com/alibaba/hooks/blob/master/LICENSE)
 
 
 [1]:	https://www.npmjs.com/package/ahooks
