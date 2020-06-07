@@ -1,4 +1,4 @@
-[English](https://github.com/ice-lab/ahooks/blob/master/README.md) | 简体中文
+[English](https://github.com/alibaba/hooks/blob/master/README.md) | 简体中文
 
 # ahooks
 
@@ -33,7 +33,7 @@ import { useRequest } from 'ahooks';
 ## 🖥 开发
 
 ```
-$ git clone git@github.com:ice-lab/ahooks.git
+$ git clone git@github.com:alibaba/hooks.git
 $ cd hooks
 $ npm run init
 $ npm start
@@ -42,7 +42,7 @@ $ npm start
 
 ## 🤝 贡献
 
-我们欢迎所有人参与共建，请参考[CONTRIBUTING.MD](https://github.com/ice-lab/ahooks/blob/master/CONTRIBUTING.MD)
+我们欢迎所有人参与共建，请参考[CONTRIBUTING.MD](https://github.com/alibaba/hooks/blob/master/CONTRIBUTING.MD)
 
 ## 👥 讨论
 
@@ -50,7 +50,7 @@ $ npm start
 
 ## ✅ License
 
-[MIT](https://github.com/ice-lab/ahooks/blob/master/LICENSE)
+[MIT](https://github.com/alibaba/hooks/blob/master/LICENSE)
 
 [1]:	https://www.npmjs.com/package/ahooks
 [2]:	https://npmjs.org/package/ahooks

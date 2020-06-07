@@ -31,4 +31,4 @@ import { useRequest } from 'ahooks';
 
 ## 👥 Feedback
 
-<img src="https://raw.githubusercontent.com/ice-lab/ahooks/master/dingtalk.jpg" width="300" />
+<img src="https://raw.githubusercontent.com/alibaba/hooks/master/dingtalk.jpg" width="300" />

@@ -18,8 +18,8 @@
   "publishConfig": {
     "registry": "https://registry.npmjs.com/"
   },
-  "repository": "https://github.com/ice-lab/ahooks",
-  "homepage": "https://github.com/ice-lab/ahooks",
+  "repository": "https://github.com/alibaba/hooks",
+  "homepage": "https://github.com/alibaba/hooks",
   "scripts": {
     "build:declaration": "tsc --declarationDir lib && tsc --declarationDir es",
     "build:umd": "webpack-cli"
