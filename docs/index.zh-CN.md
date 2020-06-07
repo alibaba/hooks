@@ -1,7 +1,7 @@
 ---
 title: ahooks - React Hooks Library
 hero:
-  title: ahooks
+  title: a hooks library
   desc: 为 React Hooks 而生
   actions:
     - text: 快速上手
@@ -31,4 +31,4 @@ import { useRequest } from 'ahooks';
 
 ## 👥 反馈与共建
 
-<img src="https://raw.githubusercontent.com/ice-lab/ahooks/master/dingtalk.jpg" width="300" />
+<img src="https://raw.githubusercontent.com/alibaba/hooks/master/dingtalk.jpg" width="300" />
