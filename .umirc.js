@@ -20,6 +20,8 @@ export default {
   ],
   mode: 'site',
   title: 'ahooks',
+  favicon: '/simple-logo.svg',
+  logo: '/logo.svg',
   dynamicImport: {},
   manifest: {},
   links: [{ rel: "manifest", href: "/asset-manifest.json" }],
@@ -27,9 +29,7 @@ export default {
   resolve: {
     includes: ['docs', 'packages/hooks/src', 'packages/use-request'],
   },
-  styles: [
-    `a[title='站长统计'] { display: none; } input,button{ padding: 4px }`,
-  ],
+  links: [{ rel: 'stylesheet', href: '/style.css' }],
   navs: {
     'zh-CN': [
       null,

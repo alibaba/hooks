@@ -1,7 +1,7 @@
 ---
 title: ahooks - React Hooks Library
 hero:
-  title: ahooks
+  title: a hooks library
   desc: Born for React Hooks
   actions:
     - text: Getting Started
