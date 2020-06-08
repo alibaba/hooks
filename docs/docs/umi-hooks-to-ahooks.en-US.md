@@ -30,6 +30,8 @@ The deleted 6 Hooks can be replaced by useRequest
 
 ### Other
 
+- useFormTable
+   - Rename to useAntdTable
 - useRequest
    - Built-in request Library from `umi-request` Became `fetch`
    - Added `options.ready` Configuration, can easily implement dependency requests
