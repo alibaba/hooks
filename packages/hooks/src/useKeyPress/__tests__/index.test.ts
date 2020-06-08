@@ -4,7 +4,6 @@ import useKeyPress, { KeyFilter, EventHandler, keyEvent } from '../index';
 interface Props {
   keyFilter: KeyFilter;
   eventHandler: EventHandler;
-  events: Array<keyEvent>;
 }
 
 describe('useKeyPress', () => {
@@ -14,12 +13,11 @@ describe('useKeyPress', () => {
 
   it('test on mounted', async () => {
     const { rerender, unmount } = renderHook(
-      (props: Props) => useKeyPress(props.keyFilter, props.eventHandler, props.events),
+      (props: Props) => useKeyPress(props.keyFilter, props.eventHandler),
       {
         initialProps: {
           keyFilter: 'a',
-          eventHandler: event => {},
-          events: ['keydown'],
+          eventHandler: (event) => {},
         },
       },
     );

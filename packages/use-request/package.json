@@ -17,8 +17,7 @@
     "url": "git+https://github.com/ice-lab/ahooks.git"
   },
   "scripts": {
-    "build:declaration": "tsc --declarationDir ./lib && tsc --declarationDir ./es && webpack-cli",
-    "build:umd": "webpack-cli"
+    "build": "gulp && webpack-cli"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.com/"

@@ -12,7 +12,7 @@ describe('useBoolean', () => {
     const { result } = setUp();
     expect(result.current[0]).toBeFalsy();
     act(() => {
-      result.current[1].setTrue(true);
+      result.current[1].setTrue();
     });
     expect(result.current[0]).toBeTruthy();
     act(() => {

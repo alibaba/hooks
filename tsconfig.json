@@ -1,20 +1,19 @@
 {
   "compilerOptions": {
-    "target": "esnext",
-    "module": "esnext",
+    "target": "ES6",
     "moduleResolution": "node",
     "importHelpers": true,
     "jsx": "react",
+    "allowJs": true,
     "esModuleInterop": true,
     "sourceMap": true,
     "baseUrl": ".",
-    "strict": true,
     "paths": {
       "@/*": ["src/*"]
     },
     "allowSyntheticDefaultImports": true,
     "skipLibCheck": true,
-    "declaration": true,
-    "emitDeclarationOnly": true
-  }
+    "declaration": false
+  },
+  "exclude": ["node_modules", "lib", "es", "dist", "**/__tests__", "**/__test__", "**/demo"]
 }
