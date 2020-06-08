@@ -6,7 +6,7 @@ ahooks 是 Umi Hooks 的 2.0 版本，本文档将帮助你快速的从 Umi Hook
 
 - 新增了 3 个 Hooks
 - 删除了 Umi Hooks 中废弃的 6 个 Hooks
-- 制定了 [API 规范](http://localhost:8000/zh-CN/docs/api)，对 Hooks 进行了 API 升级
+- 制定了 [API 规范](/zh-CN/docs/api)，对 Hooks 进行了 API 升级
 - 所有的 DOM 类 Hooks 不再返回 ref
 - 部分 Hooks 不兼容升级
 
@@ -14,9 +14,9 @@ ahooks 是 Umi Hooks 的 2.0 版本，本文档将帮助你快速的从 Umi Hook
 
 ### 新增
 
-- 新增了 [useFusionTable](http://localhost:8000/zh-CN/hooks/table/use-fusion-table)
-- 新增了 [useDebounceEffect](http://localhost:8000/zh-CN/hooks/life-cycle/use-debounce-effect)
-- 新增了 [useThrottleEffect](http://localhost:8000/zh-CN/hooks/life-cycle/use-throttle-effect)
+- 新增了 [useFusionTable](/zh-CN/hooks/table/use-fusion-table)
+- 新增了 [useDebounceEffect](/zh-CN/hooks/life-cycle/use-debounce-effect)
+- 新增了 [useThrottleEffect](/zh-CN/hooks/life-cycle/use-throttle-effect)
 
 ### 删除
 

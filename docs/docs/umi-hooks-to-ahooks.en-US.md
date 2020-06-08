@@ -6,7 +6,7 @@ ahooks is version 2.0 of Umi Hooks. This document will help you quickly upgrade 
 
 - Added 3 Hooks
 - 6 abandoned Hooks in Umi Hooks were deleted
-- Formulated [API specification](http://localhost:8000/zh-CN/docs/api), upgraded the Hooks API
+- Formulated [API specification](/zh-CN/docs/api), upgraded the Hooks API
 - All DOM class Hooks no longer return ref
 - Some Hooks are incompatible with upgrades
 
@@ -14,9 +14,9 @@ ahooks is version 2.0 of Umi Hooks. This document will help you quickly upgrade 
 
 ### Add
 
-- Added [useFusionTable](http://localhost:8000/zh-CN/hooks/table/use-fusion-table)
-- Added [useDebounceEffect](http://localhost:8000/zh-CN/hooks/life-cycle/use-debounce-effect)
-- Added [useThrottleEffect](http://localhost:8000/zh-CN/hooks/life-cycle/use-throttle-effect)
+- Added [useFusionTable](/zh-CN/hooks/table/use-fusion-table)
+- Added [useDebounceEffect](/zh-CN/hooks/life-cycle/use-debounce-effect)
+- Added [useThrottleEffect](/zh-CN/hooks/life-cycle/use-throttle-effect)
 
 ### Delete
 The deleted 6 Hooks can be replaced by useRequest
