@@ -11,7 +11,7 @@
     "dev": "dumi dev",
     "bootstrap": "lerna bootstrap",
     "clean": "lerna clean --yes",
-    "build": "lerna run --scope @ahooksjs/use-request build && lerna run --scope ahooks build",
+    "build": "lerna run build",
     "test": "jest",
     "lint": "eslint \"packages/*/src/**/*.{ts,tsx}\"",
     "build:doc": "dumi build",

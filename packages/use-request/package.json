@@ -35,7 +35,6 @@
     "lodash.throttle": "^4.1.1"
   },
   "devDependencies": {
-    "ahooks": "^1.0.0",
     "axios": "^0.19.2",
     "umi-request": "^1.2.17"
   },
