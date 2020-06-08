@@ -6,7 +6,7 @@
 
 ## 透明的开发
 
-我们所有的工作都会放在 [GitHub](https://github.com/ice-lab/ahooks) 上。不管是核心团队的成员还是外部贡献者的 pull request 都需要经过同样流程的 review。
+我们所有的工作都会放在 [GitHub](https://github.com/alibaba/hooks) 上。不管是核心团队的成员还是外部贡献者的 pull request 都需要经过同样流程的 review。
 
 ## 分支管理
 
@@ -14,7 +14,7 @@
 
 ## 新增功能
 
-如果你想新增一个 Hooks，我们建议你先建立一个 issue，说明该 Hook 的应用场景及用法，参考 [useToggle RFC](https://github.com/ice-lab/ahooks/issues/9)。
+如果你想新增一个 Hooks，我们建议你先建立一个 issue，说明该 Hook 的应用场景及用法，参考 [useToggle RFC](https://github.com/alibaba/hooks/issues/9)。
 
 然后你可以基于已有 Hook 来初始化一个新的 Hook。
 

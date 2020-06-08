@@ -1,6 +1,6 @@
 {
   "name": "ahooks",
-  "version": "1.0.0-beta.2",
+  "version": "1.0.0",
   "description": "react hooks library",
   "keywords": [
     "ahooks",
@@ -18,8 +18,8 @@
   "publishConfig": {
     "registry": "https://registry.npmjs.com/"
   },
-  "repository": "https://github.com/ice-lab/ahooks",
-  "homepage": "https://github.com/ice-lab/ahooks",
+  "repository": "https://github.com/alibaba/hooks",
+  "homepage": "https://github.com/alibaba/hooks",
   "scripts": {
     "build": "gulp && webpack-cli"
   },
@@ -30,7 +30,7 @@
     "package.json"
   ],
   "dependencies": {
-    "@ahooksjs/use-request": "^1.0.0-beta.2",
+    "@ahooksjs/use-request": "^1.0.0",
     "intersection-observer": "^0.7.0",
     "lodash.debounce": "^4.0.8",
     "lodash.isequal": "^4.5.0",
@@ -51,5 +51,5 @@
     "node": ">=8.0.0"
   },
   "license": "MIT",
-  "gitHead": "4ea8f5c04c06eff2a33b2be473a8f7460909bebb"
+  "gitHead": "561ebf0c820fa5fd6f1a8e83d6a8de3474254921"
 }

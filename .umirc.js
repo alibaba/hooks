@@ -33,13 +33,13 @@ export default {
   navs: {
     'zh-CN': [
       null,
-      { title: 'GitHub', path: 'https://github.com/ice-lab/ahooks' },
-      { title: '更新日志', path: 'https://github.com/ice-lab/ahooks/releases' },
+      { title: 'GitHub', path: 'https://github.com/alibaba/hooks' },
+      { title: '更新日志', path: 'https://github.com/alibaba/hooks/releases' },
     ],
     'en-US': [
       null,
-      { title: 'GitHub', path: 'https://github.com/ice-lab/ahooks' },
-      { title: 'Changelog', path: 'https://github.com/ice-lab/ahooks/releases' },
+      { title: 'GitHub', path: 'https://github.com/alibaba/hooks' },
+      { title: 'Changelog', path: 'https://github.com/alibaba/hooks/releases' },
     ],
   },
   headScripts: [
