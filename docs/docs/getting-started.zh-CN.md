@@ -19,7 +19,7 @@ ahooks 是一个 React Hooks 库，致力提供常用且高质量的 Hooks。
 
 ### 1. 创建一个 codesandbox
 
-访问 https://codesandbox.io/s/umi-hooks-template-i8jqc 创建一个 codesandbox 的在线示例，别忘了保存以创建一个新的实例。
+访问 https://codesandbox.io/s/ahooks-template-k5l7x 创建一个 codesandbox 的在线示例，别忘了保存以创建一个新的实例。
 
 ### 2. 使用 ahooks
 
@@ -30,7 +30,7 @@ import React from "react";
 import { useToggle } from "ahooks";
 
 export default () => {
-  const { state, toggle } = useToggle();
+  const [ state, { toggle } ] = useToggle();
 
   return (
     <div>

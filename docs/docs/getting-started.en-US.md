@@ -21,7 +21,7 @@ Here is a simple codesandbox example to show the usage of ahooks.
 
 ### 1. Create one codesandbox
 
-Visit https://codesandbox.io/s/umi-hooks-template-i8jqc to create a codesandbox. Don't forget to press the save button.
+Visit https://codesandbox.io/s/ahooks-template-k5l7x to create a codesandbox. Don't forget to press the save button.
 
 ### 2. Using ahooks
 
@@ -32,7 +32,7 @@ import React from "react";
 import { useToggle } from "ahooks";
 
 export default () => {
-  const { state, toggle } = useToggle();
+  const [ state, { toggle } ] = useToggle();
 
   return (
     <div>
