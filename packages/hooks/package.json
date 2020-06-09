@@ -21,8 +21,7 @@
   "repository": "https://github.com/alibaba/hooks",
   "homepage": "https://github.com/alibaba/hooks",
   "scripts": {
-    "build:declaration": "tsc --declarationDir lib && tsc --declarationDir es",
-    "build:umd": "webpack-cli"
+    "build": "gulp && webpack-cli"
   },
   "files": [
     "dist",

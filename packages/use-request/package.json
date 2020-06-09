@@ -17,8 +17,7 @@
     "url": "git+https://github.com/alibaba/hooks.git"
   },
   "scripts": {
-    "build:declaration": "tsc --declarationDir ./lib && tsc --declarationDir ./es && webpack-cli",
-    "build:umd": "webpack-cli"
+    "build": "gulp && webpack-cli"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.com/"
@@ -36,7 +35,6 @@
     "lodash.throttle": "^4.1.1"
   },
   "devDependencies": {
-    "ahooks": "^1.0.0",
     "axios": "^0.19.2",
     "umi-request": "^1.2.17"
   },
