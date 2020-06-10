@@ -55,7 +55,7 @@ describe('useRequest', () => {
     expect(successValue).toEqual('success');
     expect(errorCallback).not.toHaveBeenCalled();
     act(() => {
-      hook.result.current.run(0);
+      hook.result.current.run(0).catch(() => {});
     });
     expect(hook.result.current.loading).toEqual(true);
     jest.runAllTimers();
