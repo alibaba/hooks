@@ -35,6 +35,7 @@ ahooks 是 Umi Hooks 的 2.0 版本，本文档将帮助你快速的从 Umi Hook
 - useRequest
    - 内置请求库从 `umi-request` 变成了 `fetch` 
    - 增加了 `options.ready` 配置，可以方便的实现依赖请求
+   - 增加了 `options.throwOnError` 配置
    - Provider 从 `UseAPIProvider` 改名为 `UseRequestProvider` 
 - useDebounce
    - 基于 `lodash.debounce` 实现，支持更多参数

@@ -127,6 +127,7 @@ const {
   debounceInterval,
   throttleInterval,
   ready,
+  throwOnError,
 });
 ```
 
@@ -167,6 +168,7 @@ All Options are optional.
 | debounceInterval     | debounce interval, the unit is millisecond. After setting, request to enter debounce mode.                                                                                                                                                                                                                                                                                                                 | `number`                                | -       |
 | throttleInterval     | throttle interval, the unit is millisecond. After setting, request to enter throttle mode.                                                                                                                                                                                                                                                                                                                 | `number`                                | -       |
 | ready     | Only when ready is `true`, will the request be initiated                                                                                                                                                                                                               | `boolean`                                | `true`       |
+| throwOnError     | If the service errors, the error will only be logged. If you want an error to be thrown, pass the throwOnError: true                                    | `boolean`                                | `false`       |
 ## Advanced usage
 
 Based on the basic useRequest, we can further encapsulate and implement more advanced customization requirements. Currently useRequest has three scenarios: `Integrated Request Library`,` Pagination` and `Load More`. You can refer to the code to implement your own encapsulation. Refer to the implementation of [useRequest](./src/useRequest.ts)、[usePaginated](./src/usePaginated.ts)、[useLoadMore](./src/useLoadMore.ts) 的实现。

@@ -45,6 +45,7 @@ export interface FetchConfig<R, P extends any[]> {
   debounceInterval?: number;
   throttleInterval?: number;
 
+  throwOnError?: boolean;
 }
 
 export interface BaseResult<R, P extends any[]> extends FetchResult<R, P> {
@@ -87,6 +88,7 @@ export type BaseOptions<R, P extends any[]> = {
   requestMethod?: (service: any) => Promise<any>;
 
   ready?: boolean;
+  throwOnError?: boolean;
 }
 
 export type OptionsWithFormat<R, P extends any[], U, UU extends U> = {

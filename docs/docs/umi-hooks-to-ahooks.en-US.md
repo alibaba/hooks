@@ -35,6 +35,7 @@ The deleted 6 Hooks can be replaced by useRequest
 - useRequest
    - Built-in request Library from `umi-request` Became `fetch`
    - Added `options.ready` Configuration, can easily implement dependency requests
+   - Added `options.throwOnError`Configuration
    - Change the Provider name from `UseAPIProvider` to `UseRequestProvider`
 - useDebounce
    - Based on `lodash.debounce` Implementation, support more parameters
