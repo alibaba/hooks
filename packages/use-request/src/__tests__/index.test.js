@@ -425,8 +425,8 @@ describe('useRequest', () => {
     });
     jest.runAllTimers();
     await hook.waitForNextUpdate();
-    expect(success).toEqual('');
-    expect(error).toEqual(undefined);
+    expect(success).toEqual(undefined);
+    expect(error).toEqual('');
   })
 
   it('useRequest throwOnError to be true should work', async () => {
