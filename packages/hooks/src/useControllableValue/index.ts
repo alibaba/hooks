@@ -22,7 +22,7 @@ export default function useControllableValue<T>(props: Props = {}, options: Opti
 
   const value = props[valuePropName];
 
-  const initialValue = useMemo(() => {
+  const initialValue = () => {
     if (valuePropName in props) {
       return value;
     }
@@ -30,7 +30,7 @@ export default function useControllableValue<T>(props: Props = {}, options: Opti
       return props[defaultValuePropName];
     }
     return defaultValue;
-  }, []);
+  }
 
   const [state, setState] = useState<T | undefined>(initialValue);
 
