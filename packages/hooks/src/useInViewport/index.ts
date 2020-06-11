@@ -1,5 +1,5 @@
 
-import { useLayoutEffect, useState, MutableRefObject } from 'react';
+import { useEffect, useState, MutableRefObject } from 'react';
 import 'intersection-observer';
 import { getTargetElement } from '../utils/dom';
 
