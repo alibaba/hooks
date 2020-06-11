@@ -146,12 +146,12 @@ class Fetch<R, P extends any[]> {
         if (this.config.onError) {
           this.config.onError(error, args);
         }
-        console.error(error);
         // If throwOnError, user should catch the error self,
         // or the page will crash
         if (this.config.throwOnError) {
           throw error;
         }
+        console.error(error);
       }
     }).finally(() => {
       if (!this.unmountedFlag && currentCount === this.count) {
