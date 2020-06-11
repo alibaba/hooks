@@ -146,9 +146,12 @@ class Fetch<R, P extends any[]> {
         if (this.config.onError) {
           this.config.onError(error, args);
         }
+        // If throwOnError, user should catch the error self,
+        // or the page will crash
+        if (this.config.throwOnError) {
+          throw error;
+        }
         console.error(error);
-        return error;
-        // throw error;
       }
     }).finally(() => {
       if (!this.unmountedFlag && currentCount === this.count) {
@@ -267,6 +270,7 @@ function useAsync<R, P extends any[], U, UU extends U = any>(
     throttleInterval,
     initialData,
     ready = true,
+    throwOnError = false,
   } = _options;
 
   const newstFetchKey = useRef(DEFAULT_KEY);
@@ -298,7 +302,8 @@ function useAsync<R, P extends any[], U, UU extends U = any>(
     refreshOnWindowFocus,
     focusTimespan,
     debounceInterval,
-    throttleInterval
+    throttleInterval,
+    throwOnError
   }
 
 

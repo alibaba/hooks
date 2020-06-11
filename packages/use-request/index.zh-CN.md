@@ -127,6 +127,7 @@ const {
   debounceInterval,
   throttleInterval,
   ready,
+  throwOnError,
 });
 ```
 
@@ -167,6 +168,7 @@ const {
 | debounceInterval     | 防抖间隔, 单位为毫秒，设置后，请求进入防抖模式。                                                                                                                                                                                                                         | `number`                                | -       |
 | throttleInterval     | 节流间隔, 单位为毫秒，设置后，请求进入节流模式。                                                                                                                                                                                                                         | `number`                                | -       |
 | ready     | 只有当 ready 为 `true` 时，才会发起请求                                                                                                                                                                                                                         | `boolean`                                | `true`       |
+| throwOnError     | 如果 service 报错，我们会帮你捕获并打印日志，如果你需要自己处理异常，可以设置 throwOnError 为 true                                   | `boolean`                                | `false`       |
 ## 扩展用法
 
 基于基础的 useRequest，我们可以进一步封装，实现更高级的定制需求。当前 useRequest 内置了 `集成请求库`，`分页` 和 `加载更多` 三种场景。你可以参考代码，实现自己的封装。参考 [useRequest](https://github.com/alibaba/hooks/blob/master/packages/use-request/src/useRequest.ts)、[usePaginated](https://github.com/alibaba/hooks/blob/master/packages/use-request/src/usePaginated.ts)、[useLoadMore](https://github.com/alibaba/hooks/blob/master/packages/use-request/src/useLoadMore.ts) 的实现。

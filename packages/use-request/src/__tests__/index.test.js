@@ -55,7 +55,7 @@ describe('useRequest', () => {
     expect(successValue).toEqual('success');
     expect(errorCallback).not.toHaveBeenCalled();
     act(() => {
-      hook.result.current.run(0);
+      hook.result.current.run(0).catch(() => {});
     });
     expect(hook.result.current.loading).toEqual(true);
     jest.runAllTimers();
@@ -405,5 +405,50 @@ describe('useRequest', () => {
     fireEvent.focus(window);
     expect(hook.result.current.loading).toEqual(true);
     hook.unmount();
+  })
+
+  it('useRequest throwOnError to be false should work', async () => {
+    let success = '';
+    let error = '';
+
+    act(() => {
+      hook = setUp(request, {
+        manual: true
+      });
+    });
+    act(() => {
+      hook.result.current.run(0).then(res => {
+        success = res;
+      }).catch(err => {
+        error = err;
+      });
+    });
+    jest.runAllTimers();
+    await hook.waitForNextUpdate();
+    expect(success).toEqual(undefined);
+    expect(error).toEqual('');
+  })
+
+  it('useRequest throwOnError to be true should work', async () => {
+    let success = '';
+    let error = '';
+
+    act(() => {
+      hook = setUp(request, {
+        manual: true,
+        throwOnError: true,
+      });
+    });
+    act(() => {
+      hook.result.current.run(0).then(res => {
+        success = res;
+      }).catch(err => {
+        error = err;
+      });
+    });
+    jest.runAllTimers();
+    await hook.waitForNextUpdate();
+    expect(success).toEqual('');
+    expect(error).toEqual(new Error('fail'));
   })
 })
