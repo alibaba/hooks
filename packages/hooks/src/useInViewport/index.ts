@@ -3,7 +3,8 @@ import { useLayoutEffect, useState, MutableRefObject } from 'react';
 import 'intersection-observer';
 import { getTargetElement } from '../utils/dom';
 
-type Target = HTMLElement | (() => HTMLElement) | MutableRefObject<HTMLElement>;
+export type Target = (() => (HTMLElement | null)) | HTMLElement | MutableRefObject<HTMLElement | undefined> | null;
+
 type InViewport = boolean | undefined;
 
 function isInViewPort(el: HTMLElement): boolean {

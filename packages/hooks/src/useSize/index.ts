@@ -2,7 +2,7 @@ import { useState, useLayoutEffect, MutableRefObject } from 'react';
 import ResizeObserver from 'resize-observer-polyfill';
 import { getTargetElement } from '../utils/dom';
 
-type Target = HTMLElement | (() => HTMLElement) | MutableRefObject<HTMLElement>;
+export type Target = (() => (HTMLElement | null)) | HTMLElement | MutableRefObject<HTMLElement | undefined> | null;
 
 type Size = { width?: number; height?: number };
 

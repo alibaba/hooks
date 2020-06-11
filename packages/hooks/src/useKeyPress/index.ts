@@ -7,9 +7,11 @@ export type KeyFilter = keyType | Array<keyType> | ((event: KeyboardEvent) => bo
 export type EventHandler = (event: KeyboardEvent) => void;
 export type keyEvent = 'keydown' | 'keyup';
 
+export type Target = (() => (HTMLElement | null)) | HTMLElement | MutableRefObject<HTMLElement | undefined> | null | Document | Window;
+
 export type EventOption = {
   events?: Array<keyEvent>;
-  target?: (() => HTMLElement) | HTMLElement | MutableRefObject<HTMLElement> | Document | Window
+  target?: Target
 };
 
 // 键盘事件 keyCode 别名

@@ -1,6 +1,8 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, MutableRefObject } from 'react';
 import useBoolean from '../useBoolean';
 import { getTargetElement } from '../utils/dom';
+
+export type Target = (() => (HTMLElement | null)) | HTMLElement | MutableRefObject<HTMLElement | undefined> | null;
 
 export interface Options {
   onEnter?: () => void;
@@ -8,7 +10,7 @@ export interface Options {
 }
 
 export default (
-  target: (() => HTMLElement) | HTMLElement | React.MutableRefObject<HTMLElement>,
+  target: Target,
   options?: Options,
 ): boolean => {
   const { onEnter, onLeave } = options || {};
@@ -19,7 +21,7 @@ export default (
   const onLeaveRef = useRef(onLeave);
   onLeaveRef.current = onLeave;
 
-  const [ state, { setTrue, setFalse }] = useBoolean(false);
+  const [state, { setTrue, setFalse }] = useBoolean(false);
 
   useEffect(() => {
     const onMouseEnter = () => {

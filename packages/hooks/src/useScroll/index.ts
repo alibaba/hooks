@@ -6,7 +6,7 @@ interface Position {
   top: number;
 }
 
-type Target = HTMLElement | (() => HTMLElement) | Document | MutableRefObject<HTMLElement>;
+export type Target = (() => (HTMLElement | null)) | HTMLElement | MutableRefObject<HTMLElement | undefined> | null | Document;
 
 function useScroll(target?: Target): Position {
   const [position, setPosition] = useState<Position>({

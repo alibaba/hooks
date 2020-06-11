@@ -5,7 +5,7 @@ import { getTargetElement } from '../utils/dom';
 const defaultEvent = 'click';
 
 type EventType = MouseEvent | TouchEvent;
-type Target = (() => HTMLElement) | HTMLElement | MutableRefObject<HTMLElement>;
+export type Target = (() => (HTMLElement | null)) | HTMLElement | MutableRefObject<HTMLElement | undefined> | null;
 
 export default function useClickAway(
   onClickAway: (event: EventType) => void,

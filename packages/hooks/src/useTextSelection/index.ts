@@ -13,7 +13,7 @@ export interface IState extends IRect {
   text: string;
 }
 
-type Target = HTMLElement | (() => HTMLElement) | MutableRefObject<HTMLElement>;
+export type Target = (() => (HTMLElement | null)) | HTMLElement | MutableRefObject<HTMLElement | undefined> | null;
 
 const initRect: IRect = {
   top: NaN,

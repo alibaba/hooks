@@ -1,7 +1,8 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, MutableRefObject } from 'react';
 import { getTargetElement } from '../utils/dom';
 
-type Target = (() => HTMLElement) | HTMLElement | React.MutableRefObject<HTMLElement> | Window;
+export type Target = (() => (HTMLElement | null)) | HTMLElement | MutableRefObject<HTMLElement | undefined> | null | Window;
+
 type Options = { target?: Target; capture?: boolean; once?: boolean; passive?: boolean; }
 
 function useEventListener(

@@ -5,7 +5,7 @@ import screenfull from 'screenfull';
 import useBoolean from '../useBoolean';
 import { getTargetElement } from '../utils/dom';
 
-type Target = HTMLElement | (() => HTMLElement) | MutableRefObject<HTMLElement>;
+export type Target = (() => (HTMLElement | null)) | HTMLElement | MutableRefObject<HTMLElement | undefined> | null;
 
 export interface Options {
   onExitFull?: () => void;
