@@ -32,7 +32,7 @@ function useInViewport(target: Target): InViewport {
     return isInViewPort(el as HTMLElement);
   });
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     const el = getTargetElement(target);
     if (!el) {
       return () => {};
