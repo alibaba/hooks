@@ -136,7 +136,7 @@ function useAntdTable<R = any, Item = any, U extends Item = any>(
 
     // 如果没有缓存，触发 submit
     if (!manual) {
-      submit(defaultParams);
+      _submit(defaultParams);
     }
   }, [])
 
@@ -150,7 +150,7 @@ function useAntdTable<R = any, Item = any, U extends Item = any>(
   }, [type, allFormData, getActivetFieldValues]);
 
 
-  const submit = useCallback((initParams?: any) => {
+  const _submit = useCallback((initParams?: any) => {
     setTimeout(() => {
       const activeFormData = getActivetFieldValues();
       // 记录全量数据
@@ -184,8 +184,8 @@ function useAntdTable<R = any, Item = any, U extends Item = any>(
     if (form) {
       form.resetFields();
     }
-    submit();
-  }, [form, submit]);
+    _submit();
+  }, [form, _submit]);
 
   const resetPersistFn = usePersistFn(reset);
 
@@ -196,10 +196,17 @@ function useAntdTable<R = any, Item = any, U extends Item = any>(
     }
   }, [...refreshDeps]);
 
+  const submit = usePersistFn((e) => {
+    if (e && e.preventDefault) {
+      e.preventDefault();
+    }
+    _submit();
+  });
+
   return {
     ...result,
     search: {
-      submit: () => { submit() },
+      submit,
       type,
       changeType,
       reset,
