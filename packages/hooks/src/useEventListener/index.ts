@@ -1,7 +1,7 @@
 import { useEffect, useRef, MutableRefObject } from 'react';
-import { getTargetElement } from '../utils/dom';
+import { getTargetElement, BasicTarget } from '../utils/dom';
 
-export type Target = (() => (HTMLElement | null)) | HTMLElement | MutableRefObject<HTMLElement | undefined> | null | Window;
+export type Target = BasicTarget | Window;
 
 type Options = { target?: Target; capture?: boolean; once?: boolean; passive?: boolean; }
 

@@ -3,9 +3,7 @@
 import { useLayoutEffect, useRef, MutableRefObject } from 'react';
 import screenfull from 'screenfull';
 import useBoolean from '../useBoolean';
-import { getTargetElement } from '../utils/dom';
-
-export type Target = (() => (HTMLElement | null)) | HTMLElement | MutableRefObject<HTMLElement | undefined> | null;
+import { getTargetElement, BasicTarget } from '../utils/dom';
 
 export interface Options {
   onExitFull?: () => void;
@@ -21,7 +19,7 @@ interface Callback {
 type Value = boolean;
 type Result = [Value, Callback];
 
-export default (target: Target, options?: Options): Result => {
+export default (target: BasicTarget, options?: Options): Result => {
   const { onExitFull, onFull } = options || {};
 
   const onExitFullRef = useRef(onExitFull);

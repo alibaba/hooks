@@ -1,5 +1,5 @@
-import { useEffect, useCallback, useRef, MutableRefObject } from 'react';
-import { getTargetElement } from '../utils/dom';
+import { useEffect, useCallback, useRef } from 'react';
+import { getTargetElement, BasicTarget } from '../utils/dom';
 
 export type KeyPredicate = (event: KeyboardEvent) => boolean;
 export type keyType = KeyboardEvent['keyCode'] | KeyboardEvent['key'];
@@ -7,7 +7,7 @@ export type KeyFilter = keyType | Array<keyType> | ((event: KeyboardEvent) => bo
 export type EventHandler = (event: KeyboardEvent) => void;
 export type keyEvent = 'keydown' | 'keyup';
 
-export type Target = (() => (HTMLElement | null)) | HTMLElement | MutableRefObject<HTMLElement | undefined> | null | Document | Window;
+export type Target = BasicTarget | Document | Window;
 
 export type EventOption = {
   events?: Array<keyEvent>;

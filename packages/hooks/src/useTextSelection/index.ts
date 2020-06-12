@@ -1,5 +1,5 @@
-import { useState, useEffect, useRef, MutableRefObject } from 'react';
-import { getTargetElement } from '../utils/dom';
+import { useState, useEffect, useRef } from 'react';
+import { getTargetElement, BasicTarget } from '../utils/dom';
 
 interface IRect {
   top: number;
@@ -12,8 +12,6 @@ interface IRect {
 export interface IState extends IRect {
   text: string;
 }
-
-export type Target = (() => (HTMLElement | null)) | HTMLElement | MutableRefObject<HTMLElement | undefined> | null;
 
 const initRect: IRect = {
   top: NaN,
@@ -59,7 +57,7 @@ function getRectFromSelection(selection: Selection | null): IRect {
 /**
  * 获取用户选取的文本或当前光标插入的位置
  * */
-function useTextSelection(target?: Target): IState {
+function useTextSelection(target?: BasicTarget): IState {
   const [state, setState] = useState(initState);
 
   const stateRef = useRef(state);

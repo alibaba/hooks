@@ -1,12 +1,12 @@
 import { useEffect, useState, MutableRefObject } from 'react';
-import { getTargetElement } from '../utils/dom'
+import { getTargetElement, BasicTarget } from '../utils/dom'
 
 interface Position {
   left: number;
   top: number;
 }
 
-export type Target = (() => (HTMLElement | null)) | HTMLElement | MutableRefObject<HTMLElement | undefined> | null | Document;
+export type Target = BasicTarget | Document;
 
 function useScroll(target?: Target): Position {
   const [position, setPosition] = useState<Position>({

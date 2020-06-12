@@ -1,8 +1,6 @@
-import { useEffect, useRef, MutableRefObject } from 'react';
+import { useEffect, useRef } from 'react';
 import useBoolean from '../useBoolean';
-import { getTargetElement } from '../utils/dom';
-
-export type Target = (() => (HTMLElement | null)) | HTMLElement | MutableRefObject<HTMLElement | undefined> | null;
+import { getTargetElement, BasicTarget } from '../utils/dom';
 
 export interface Options {
   onEnter?: () => void;
@@ -10,7 +8,7 @@ export interface Options {
 }
 
 export default (
-  target: Target,
+  target: BasicTarget,
   options?: Options,
 ): boolean => {
   const { onEnter, onLeave } = options || {};

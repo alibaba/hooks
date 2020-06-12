@@ -1,9 +1,7 @@
 
-import { useLayoutEffect, useState, MutableRefObject } from 'react';
+import { useLayoutEffect, useState } from 'react';
 import 'intersection-observer';
-import { getTargetElement } from '../utils/dom';
-
-export type Target = (() => (HTMLElement | null)) | HTMLElement | MutableRefObject<HTMLElement | undefined> | null;
+import { getTargetElement, BasicTarget } from '../utils/dom';
 
 type InViewport = boolean | undefined;
 
@@ -26,7 +24,7 @@ function isInViewPort(el: HTMLElement): boolean {
   return false;
 }
 
-function useInViewport(target: Target): InViewport {
+function useInViewport(target: BasicTarget): InViewport {
   const [inViewPort, setInViewport] = useState<InViewport>(() => {
     const el = getTargetElement(target)
 
@@ -36,7 +34,7 @@ function useInViewport(target: Target): InViewport {
   useLayoutEffect(() => {
     const el = getTargetElement(target);
     if (!el) {
-      return () => {};
+      return () => { };
     }
 
     const observer = new IntersectionObserver(entries => {
