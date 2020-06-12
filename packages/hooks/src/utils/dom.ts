@@ -7,10 +7,9 @@ export type BasicTarget<T = HTMLElement> =
   | MutableRefObject<T | undefined>;
 
 type TargetElement = HTMLElement | Document | Window;
-type TargetParams = BasicTarget | TargetElement;
 
 export function getTargetElement(
-  target?: TargetParams,
+  target?: BasicTarget<TargetElement>,
   defaultElement?: TargetElement,
 ): TargetElement | undefined {
   if (!target) {
