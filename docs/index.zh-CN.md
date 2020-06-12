@@ -15,7 +15,7 @@ features:
     desc: 包含适合全年龄段的丰富的 React Hooks 教程，想学 React Hooks，来这里就够了。
   - icon: https://gw.alipayobjects.com/zos/bmw-prod/6319a122-e8b8-497f-9b45-37cfbe77edaa/k7htfx7t_w144_h144.png
     title: 生产可用
-    desc: 已经受过蚂蚁金服、淘系等平台足够大量的线上系统的考验及打磨，健壮性值得信赖。
+    desc: 已经过蚂蚁金服、淘宝、天猫等平台足够大量的线上系统的考验及打磨，健壮性值得信赖。
 footer: Open-source MIT Licensed | Copyright © 2019-present<br />Powered by [dumi](https://d.umijs.org)
 ---
 
