@@ -1,15 +1,11 @@
 import { useEffect, useRef, MutableRefObject } from 'react';
 import { getTargetElement, BasicTarget } from '../utils/dom';
 
-export type Target = BasicTarget | Window;
+export type Target = BasicTarget<HTMLElement | Window>;
 
-type Options = { target?: Target; capture?: boolean; once?: boolean; passive?: boolean; }
+type Options = { target?: Target; capture?: boolean; once?: boolean; passive?: boolean };
 
-function useEventListener(
-  eventName: string,
-  handler: Function,
-  options?: Options,
-) {
+function useEventListener(eventName: string, handler: Function, options?: Options) {
   const savedHandler = useRef<Function>();
 
   useEffect(() => {
@@ -30,7 +26,7 @@ function useEventListener(
     targetElement.addEventListener(eventName, eventListener, {
       capture: options?.capture,
       once: options?.once,
-      passive: options?.passive
+      passive: options?.passive,
     });
 
     return () => {

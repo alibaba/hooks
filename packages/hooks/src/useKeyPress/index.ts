@@ -7,11 +7,11 @@ export type KeyFilter = keyType | Array<keyType> | ((event: KeyboardEvent) => bo
 export type EventHandler = (event: KeyboardEvent) => void;
 export type keyEvent = 'keydown' | 'keyup';
 
-export type Target = BasicTarget | Document | Window;
+export type Target = BasicTarget<HTMLElement | Document | Window>;
 
 export type EventOption = {
   events?: Array<keyEvent>;
-  target?: Target
+  target?: Target;
 };
 
 // 键盘事件 keyCode 别名
@@ -140,7 +140,7 @@ function useKeyPress(
   callbackRef.current = eventHandler;
 
   const callbackHandler = useCallback(
-    event => {
+    (event) => {
       const genGuard: KeyPredicate = genKeyFormater(keyFilter);
       if (genGuard(event)) {
         return callbackRef.current(event);
