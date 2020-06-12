@@ -1,5 +1,5 @@
 
-import { useLayoutEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import 'intersection-observer';
 import { getTargetElement, BasicTarget } from '../utils/dom';
 
@@ -31,7 +31,7 @@ function useInViewport(target: BasicTarget): InViewport {
     return isInViewPort(el as HTMLElement);
   });
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     const el = getTargetElement(target);
     if (!el) {
       return () => { };
