@@ -43,6 +43,6 @@ export default {
     ],
   },
   headScripts: [
-    'https://v1.cnzz.com/z_stat.php?id=1278602214&web_id=1278602214'
+    'https://s4.cnzz.com/z_stat.php?id=1278992092&web_id=1278992092'
   ],
 }
