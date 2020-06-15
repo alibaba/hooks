@@ -15,7 +15,7 @@
     "test": "jest",
     "lint": "eslint \"packages/*/src/**/*.{ts,tsx}\"",
     "build:doc": "dumi build",
-    "pub:doc": "cp ./dist/index.html ./dist/200.html && surge ./dist --domain ahooks.js.org",
+    "pub:doc": "surge ./dist --domain ahooks.js.org",
     "pub": "lerna publish"
   },
   "husky": {
