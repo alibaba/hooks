@@ -1,4 +1,10 @@
 export default {
+  ssr: {},
+  exportStatic: {},
+  nodeModulesTransform: {
+    type: 'none',
+    exclude: [],
+  },
   extraBabelPlugins: [
     [
       'babel-plugin-import',
@@ -7,15 +13,15 @@ export default {
         libraryDirectory: 'es',
         style: true,
       },
-      'antd'
+      'antd',
     ],
     [
       'babel-plugin-import',
       {
         libraryName: '@alifd/next',
-        style: true
+        style: true,
       },
-      'fusion'
+      'fusion',
     ],
   ],
   mode: 'site',
@@ -24,7 +30,7 @@ export default {
   logo: '/logo.svg',
   dynamicImport: {},
   manifest: {},
-  links: [{ rel: "manifest", href: "/asset-manifest.json" }],
+  links: [{ rel: 'manifest', href: '/asset-manifest.json' }],
   hash: true,
   resolve: {
     includes: ['docs', 'packages/hooks/src', 'packages/use-request'],
@@ -42,7 +48,5 @@ export default {
       { title: 'Changelog', path: 'https://github.com/alibaba/hooks/releases' },
     ],
   },
-  headScripts: [
-    'https://s4.cnzz.com/z_stat.php?id=1278992092&web_id=1278992092'
-  ],
-}
+  headScripts: ['https://s4.cnzz.com/z_stat.php?id=1278992092&web_id=1278992092'],
+};
