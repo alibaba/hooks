@@ -21,20 +21,27 @@ Get the scroll position of an element.
 <code src="./demo/demo2.tsx" />
 
 ## API
-
-```ts
-const pisition = useScroll(target);
 ```
+interface Position {
+  left: number;
+  top: number;
+}
 
-### Params
+type Target = HTMLElement | Document;
 
-| Property | Description                                                        | Type                   | Default |
-|---------|----------------------------------------------|------------------------|--------|
-| target | DOM element or Ref object | HTMLElement \| (() => HTMLElement) \| Document \| React.MutableRefObject  | Document    |
-
+function useScroll<T extends Target>(): [Position, MutableRefObject<T>]
+function useScroll<T extends Target>(arg: Target | (() => Target)): [Position]
+```
 
 ### Result
 
 | Property | Description                                                       | Type                 |
 |------|----------|------|
 | position | The current scroll position of the element. | `{x: number, y: number}`  |
+| ref | When no param is passed, this ref will be listened | `RefObject<HTMLElement>` |
+
+### Params
+
+| Property | Description                                                        | Type                   | Default |
+|---------|----------------------------------------------|------------------------|--------|
+| dom? | optional, if none is passed, this hook will subscibe to the ref that it returns  | HTMLElement \| Document \| (() => HTMLElement) \| (() => Document) \| undefined | -      |

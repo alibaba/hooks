@@ -1,26 +1,36 @@
-import { useState, useLayoutEffect } from 'react';
+import { useState, useRef, MutableRefObject, useLayoutEffect } from 'react';
 import ResizeObserver from 'resize-observer-polyfill';
-import { getTargetElement, BasicTarget } from '../utils/dom';
+
+type Arg = HTMLElement | (() => HTMLElement) | null;
 
 type Size = { width?: number; height?: number };
 
-function useSize(target: BasicTarget): Size {
+function useSize<T extends HTMLElement = HTMLElement>(): [Size, MutableRefObject<T>];
+function useSize<T extends HTMLElement = HTMLElement>(arg: Arg): [Size];
+function useSize<T extends HTMLElement = HTMLElement>(
+  ...args: [Arg] | []
+): [Size, MutableRefObject<T>?] {
+  const hasPassedInElement = args.length === 1;
+  const arg = useRef(args[0]);
+  [arg.current] = args;
+  const element = useRef<T>();
   const [state, setState] = useState<Size>(() => {
-    const el = getTargetElement(target);
+    const initDOM = typeof arg.current === 'function' ? arg.current() : arg.current;
     return {
-      width: ((el || {}) as HTMLElement).clientWidth,
-      height: ((el || {}) as HTMLElement).clientHeight,
+      width: (initDOM || {}).clientWidth,
+      height: (initDOM || {}).clientHeight,
     };
   });
 
   useLayoutEffect(() => {
-    const el = getTargetElement(target);
-    if (!el) {
+    const passedInElement = typeof arg.current === 'function' ? arg.current() : arg.current;
+    const targetElement = hasPassedInElement ? passedInElement : element.current;
+    if (!targetElement) {
       return () => {};
     }
 
-    const resizeObserver = new ResizeObserver((entries) => {
-      entries.forEach((entry) => {
+    const resizeObserver = new ResizeObserver(entries => {
+      entries.forEach(entry => {
         setState({
           width: entry.target.clientWidth,
           height: entry.target.clientHeight,
@@ -28,13 +38,16 @@ function useSize(target: BasicTarget): Size {
       });
     });
 
-    resizeObserver.observe(el as HTMLElement);
+    resizeObserver.observe(targetElement);
     return () => {
       resizeObserver.disconnect();
     };
-  }, [typeof target === 'function' ? undefined : target]);
+  }, [element.current, typeof arg.current === 'function' ? undefined : arg.current]);
 
-  return state;
+  if (hasPassedInElement) {
+    return [state];
+  }
+  return [state, element as MutableRefObject<T>];
 }
 
 export default useSize;

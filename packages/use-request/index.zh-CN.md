@@ -24,10 +24,12 @@ legacy: /zh-CN/async
 * 防抖
 * 节流
 * 并行请求
-* 依赖请求
 * loading delay
 * 分页
 * 加载更多，数据恢复 + 滚动位置恢复
+* [ ] 错误重试
+* [ ] 请求超时管理
+* [ ] suspense
 * ......
 
 ## 代码演示
@@ -47,10 +49,6 @@ legacy: /zh-CN/async
 ### 并行请求
 
 <code src="./demo/concurrent.tsx" />
-
-### 依赖请求
-
-<code src="./demo/ready.tsx" />
 
 ### 防抖
 
@@ -126,8 +124,6 @@ const {
   focusTimespan,
   debounceInterval,
   throttleInterval,
-  ready,
-  throwOnError,
 });
 ```
 
@@ -167,15 +163,14 @@ const {
 | focusTimespan        | <ul><li> 屏幕重新聚焦，如果每次都重新发起请求，不是很好，我们需要有一个时间间隔，在当前时间间隔内，不会重新发起请求 </li><li> 需要配置 `refreshOnWindowFocus` 使用。 </li></ul>                                                                                          | `number`                                | `5000`  |
 | debounceInterval     | 防抖间隔, 单位为毫秒，设置后，请求进入防抖模式。                                                                                                                                                                                                                         | `number`                                | -       |
 | throttleInterval     | 节流间隔, 单位为毫秒，设置后，请求进入节流模式。                                                                                                                                                                                                                         | `number`                                | -       |
-| ready     | 只有当 ready 为 `true` 时，才会发起请求                                                                                                                                                                                                                         | `boolean`                                | `true`       |
-| throwOnError     | 如果 service 报错，我们会帮你捕获并打印日志，如果你需要自己处理异常，可以设置 throwOnError 为 true                                   | `boolean`                                | `false`       |
+
 ## 扩展用法
 
-基于基础的 useRequest，我们可以进一步封装，实现更高级的定制需求。当前 useRequest 内置了 `集成请求库`，`分页` 和 `加载更多` 三种场景。你可以参考代码，实现自己的封装。参考 [useRequest](https://github.com/alibaba/hooks/blob/master/packages/use-request/src/useRequest.ts)、[usePaginated](https://github.com/alibaba/hooks/blob/master/packages/use-request/src/usePaginated.ts)、[useLoadMore](https://github.com/alibaba/hooks/blob/master/packages/use-request/src/useLoadMore.ts) 的实现。
+基于基础的 useRequest，我们可以进一步封装，实现更高级的定制需求。当前 useRequest 内置了 `集成请求库`，`分页` 和 `加载更多` 三种场景。你可以参考代码，实现自己的封装。参考 [useRequest](https://github.com/umijs/hooks/blob/master/packages/use-request/src/useRequest.ts)、[usePaginated](https://github.com/umijs/hooks/blob/master/packages/use-request/src/usePaginated.ts)、[useLoadMore](https://github.com/umijs/hooks/blob/master/packages/use-request/src/useLoadMore.ts) 的实现。
 
 ### 集成请求库
 
-如果 service 是 `string` 、 `object` 、 `(...args)=> string|object`, 则自动使用 [fetch](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch) 来发送网络请求。
+如果 service 是 `string` 、 `object` 、 `(...args)=> string|object`, 我们会自动使用 [umi-request](https://github.com/umijs/umi-request/blob/master/README_zh-CN.md) 来发送网络请求。umi-request 是类似 axios、fetch 的请求库。
 
 ```javascript
 // 用法 1
@@ -200,7 +195,7 @@ const { loading, run } = useRequest((username) => ({
 });
 ```
 
-<code src="./demo/fetch.tsx" />
+<code src="./demo/umiRequest.tsx" />
 
 <br>
 
@@ -219,7 +214,7 @@ const {...} = useRequest<R>(
 
 #### Service
 
-如果 service 是 `string` 、 `object` 、 `(...args)=> string|object`，则自动使用 `fetch` 来发送请求。
+如果 service 是 `string` 、 `object` 、 `(...args)=> string|object`，则自动使用 `umi-request` 来发送请求。
 
 #### Params
 
@@ -284,7 +279,7 @@ const {
 | 参数       | 说明                                                                                                        | 类型 |
 |------------|-------------------------------------------------------------------------------------------------------------|------|
 | pagination | 分页数据及操作分页的方法                                                                                    | -    |
-| tableProps | 适配 [antd Table](https://ant.design/components/table-cn/) 组件的数据结构，可以直接用在 antd Table 组件上。 | -    |
+| tableProps | 适配 [antd Table](https://ant.design/components/table-cn/) 组件的数据结构，可以直接用在 AntD Table 组件上。 | -    |
 
 
 #### Params
@@ -348,21 +343,21 @@ const {
 
 ## 全局配置
 
-### UseRequestProvider
-你可以通过 `UseRequestProvider` 在项目的最外层设置全局 options。
+### UseAPIProvider
+你可以通过 `UseAPIProvider` 在项目的最外层设置全局 options。
 
 ```javascript
-import { UseRequestProvider } from '@ahooksjs/use-request';
+import {UseAPIProvider} from '@umijs/use-request';
 
 export function ({children})=>{
   return (
-    <UseRequestProvider value={{
+    <UseAPIProvider value={{
       refreshOnWindowFocus: true,
       requestMethod: (param)=> axios(param),
       ...
     }}>
       {children}
-    </UseRequestProvider>
+    </UseAPIProvider>
   )
 }
 ```
@@ -375,14 +370,30 @@ export function ({children})=>{
 
 ```javascript
 
-const firstRequest = useReqeust(service);
-const secondRequest = useReqeust(service);
+const firstRequest = useRequest(service);
+const secondRequest = useRequest(service);
 
 // firstRequest.loading
 // firstRequest.data
 
 // secondRequest.loading
 // secondRequest.data
+```
+
+### 2. 我如何使用 umi-request 的 `use` `errorHandler` 等？
+
+你可以将处理完后的 `request` 通过 `requsetMehod` 配置一下即可。
+
+```javascript
+// 你自己封装的 request
+import { request } from '@/utils/request';
+import { UseAPIProvider } from '@umijs/use-request';
+
+<UseAPIProvider value={{
+  requestMethod: request,
+}}>
+
+</UseAPIProvider>
 ```
 
 ## 致谢

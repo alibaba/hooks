@@ -14,40 +14,40 @@
 
 import React, { useState } from 'react';
 import { Icon } from 'antd';
-import { useKeyPress } from 'ahooks';
+import {useKeyPress} from '@umijs/hooks';
 
 export default () => {
-  const [num, setNum] = useState<string>();
-  const [key, setKey] = useState<string>();
-  const [state, setState] = useState<number>();
+  const [num, setNum] = useState();
+  const [key, setKey] = useState();
+  const [state, setState] = useState();
   const filterKey = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
-  useKeyPress(filterKey, (event) => {
+  useKeyPress(filterKey, event => {
     setNum(event.key);
   });
 
   // a s d f, Backspace, 8
-  useKeyPress([65, 83, 68, 70, 8, '8'], (event) => {
+  useKeyPress([65, 83, 68, 70, 8, '8'], event => {
     setKey(event.key);
   });
 
-  useKeyPress(['shift.c'], () => {
+  useKeyPress(['shift.c'], event => {
     setState(1);
   });
 
-  useKeyPress(['meta'], () => {
+  useKeyPress(['meta'], event => {
     setState(2);
   });
 
-  useKeyPress('ctrl.alt.c', () => {
+  useKeyPress('ctrl.alt.c', event => {
     setState(3);
   });
 
-  useKeyPress('ctrl.alt.space', () => {
+  useKeyPress('ctrl.alt.space', event => {
     setState(4);
   });
 
   // Attention: event.key === '0'
-  useKeyPress('ctrl.alt.0', () => {
+  useKeyPress('ctrl.alt.0', event => {
     setState(5);
   });
 

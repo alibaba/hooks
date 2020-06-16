@@ -12,12 +12,10 @@
  *  如常见的监听输入框事件，支持多种 DOM 回调。
  */
 
-import React, { useState, useRef } from 'react';
-import { useKeyPress } from 'ahooks';
+import React, { useState } from 'react';
+import {useKeyPress} from '@umijs/hooks';
 
 export default () => {
-  const inputRef = useRef();
-
   const [text, setText] = useState('');
   const [textRef, setTextRef] = useState('');
   const [textSync, setTextSync] = useState('');
@@ -33,16 +31,10 @@ export default () => {
     },
   );
 
-  useKeyPress(
-    'enter',
-    (event: any) => {
-      const { value } = event.target;
-      setTextRef(value);
-    },
-    {
-      target: inputRef,
-    },
-  );
+  const InputRef = useKeyPress('enter', (event: any) => {
+    const { value } = event.target;
+    setTextRef(value);
+  });
 
   // Make sure the DOM exists
   useKeyPress(
@@ -65,7 +57,7 @@ export default () => {
       </div>
       <div style={{ marginTop: 24 }}>
         <p>Input and pressing enter: {textRef}</p>
-        <input ref={inputRef} style={{ width: 300, marginRight: 24 }} />
+        <input ref={InputRef} style={{ width: 300, marginRight: 24 }} />
       </div>
       <div style={{ marginTop: 24 }}>
         <p>Input after enter change: {textSync}</p>

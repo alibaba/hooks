@@ -7,7 +7,7 @@
  */
 
 import React from 'react';
-import { useVirtualList } from 'ahooks';
+import { useVirtualList } from '@umijs/hooks';
 
 export default () => {
   const { list, containerProps, wrapperProps } = useVirtualList(Array.from(Array(99999).keys()), {
@@ -18,7 +18,7 @@ export default () => {
     <>
       <div {...containerProps} style={{ height: '300px', overflow: 'auto' }}>
         <div {...wrapperProps}>
-          {list.map((ele) => (
+          {list.map((ele, index) => (
             <div
               style={{
                 height: 52,

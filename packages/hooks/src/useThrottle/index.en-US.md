@@ -6,7 +6,6 @@ nav:
 group:
   title: SideEffect
   path: /side-effect
-  order: 7
 legacy: /side-effect/use-throttle
 ---
 
@@ -23,9 +22,9 @@ A hook that handle the throttle value.
 ## API
 
 ```javascript
-const throttledValue = useThrottle(
+const ThrottledValue = useThrottle(
   value: any,
-  options?: object
+  wait: number
 );
 ```
 
@@ -34,12 +33,4 @@ const throttledValue = useThrottle(
 | Property | Description                  | Type   | Default |
 |----------|------------------------------|--------|---------|
 | value    | value that requires throttle | any    | -       |
-| options  | Config the throttle behavior. See the Options section below.                                                    | object                  | {}    |
-
-### Options
-
-| Property | Description                  | Type   | Default |
-|----------|------------------------------|--------|---------|
-| wait | The number of milliseconds to delay. | number | 1000 |
-| leading | Specify invoking on the leading edge of the timeout. | boolean | true |
-| trailing | Specify invoking on the trailing edge of the timeout. | boolean | true |
+| wait     | wait time in milliseconds    | number | 1000    |

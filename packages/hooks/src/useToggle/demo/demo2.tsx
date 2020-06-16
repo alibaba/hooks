@@ -7,30 +7,31 @@
  */
 
 import React from 'react';
-import { useToggle } from 'ahooks';
+import { Button } from 'antd';
+import { useToggle } from '@umijs/hooks';
 
 export default () => {
-  const [state, { toggle, setLeft, setRight }] = useToggle('Hello', 'World');
+  const { state, toggle, setLeft, setRight } = useToggle('Hello', 'World');
 
   return (
     <div>
       <p>Effects：{state}</p>
       <p>
-        <button type="button" onClick={() => toggle()}>
+        <Button type="default" onClick={() => toggle()}>
           Toggle
-        </button>
-        <button type="button" onClick={() => toggle('Hello')} style={{ margin: '0 16px' }}>
+        </Button>
+        <Button type="danger" onClick={() => toggle('Hello')} style={{ margin: '0 16px' }}>
           Toggle Hello
-        </button>
-        <button type="button" onClick={() => toggle('World')}>
+        </Button>
+        <Button type="primary" onClick={() => toggle('World')}>
           Toggle World
-        </button>
-        <button type="button" onClick={setLeft} style={{ margin: '0 16px' }}>
+        </Button>
+        <Button type="danger" onClick={setLeft} style={{ margin: '0 16px' }}>
           Set Hello
-        </button>
-        <button type="button" onClick={setRight}>
+        </Button>
+        <Button type="primary" onClick={setRight}>
           Set World
-        </button>
+        </Button>
       </p>
     </div>
   );

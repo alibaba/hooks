@@ -6,12 +6,11 @@
  * desc.zh-CN: 使用 ref 监听节点在视图变化或者滚动时是否在可视范围之内
  */
 
-import React, { useRef } from 'react';
-import { useInViewport } from 'ahooks';
+import React from 'react';
+import {useInViewport} from '@umijs/hooks';
 
 export default () => {
-  const ref = useRef();
-  const inViewPort = useInViewport(ref);
+  const [inViewPort, ref] = useInViewport<HTMLDivElement>();
   return (
     <div>
       <div ref={ref}>observer dom</div>

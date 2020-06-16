@@ -7,8 +7,8 @@
  */
 
 import React, { useState, useCallback, useRef } from 'react';
-import { message } from 'antd';
-import { usePersistFn } from 'ahooks';
+import { Button, message } from 'antd';
+import { usePersistFn } from '@umijs/hooks';
 
 export default () => {
   const [count, setCount] = useState(0);
@@ -17,20 +17,16 @@ export default () => {
     message.info(`Current count is ${count}`);
   });
 
-  const showCountCommon = useCallback(() => {
-    message.info(`Current count is ${count}`);
-  }, [count]);
+  const showCountCommon = useCallback(
+    () => {
+      message.info(`Current count is ${count}`);
+    },
+    [count],
+  )
 
   return (
     <>
-      <button
-        type="button"
-        onClick={() => {
-          setCount((c) => c + 1);
-        }}
-      >
-        Add Count
-      </button>
+      <Button onClick={() => { setCount(c => c + 1) }}>Add Count</Button>
       <p>You can click the button to see the number of sub-component renderings</p>
 
       <div style={{ marginTop: 32 }}>
@@ -55,9 +51,7 @@ const ExpensiveTree = React.memo<{ [key: string]: any }>(({ showCount }) => {
   return (
     <div>
       <p>Render Count: {renderCountRef.current}</p>
-      <button type="button" onClick={showCount}>
-        showParentCount
-      </button>
+      <Button onClick={showCount}>showParentCount</Button>
     </div>
-  );
-});
+  )
+})

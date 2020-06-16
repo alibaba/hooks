@@ -1,21 +1,32 @@
-import { useState, useMemo } from 'react';
+import { useCallback, useState, useMemo } from 'react';
 
 type IState = string | number | boolean | undefined;
 
-export interface Actions<T = IState> {
+function useToggle<T = boolean | undefined>(): {
+  state: boolean;
+  toggle: (value?: T) => void;
   setLeft: () => void;
   setRight: () => void;
+};
+
+function useToggle<T = IState>(
+  defaultValue: T,
+): {
+  state: T;
   toggle: (value?: T) => void;
-}
-
-function useToggle<T = boolean | undefined>(): [boolean, Actions<T>];
-
-function useToggle<T = IState>(defaultValue: T): [T, Actions<T>];
+  setLeft: () => void;
+  setRight: () => void;
+};
 
 function useToggle<T = IState, U = IState>(
   defaultValue: T,
   reverseValue: U,
-): [T | U, Actions<T | U>];
+): {
+  state: T | U;
+  toggle: (value?: T | U) => void;
+  setLeft: () => void;
+  setRight: () => void;
+};
 
 function useToggle<D extends IState = IState, R extends IState = IState>(
   defaultValue: D = false as D,
@@ -27,28 +38,34 @@ function useToggle<D extends IState = IState, R extends IState = IState>(
     [reverseValue],
   );
 
-  const actions = useMemo(() => {
-    // 切换返回值
-    const toggle = (value?: D | R) => {
+  // 切换返回值
+  const toggle = useCallback((value?: D | R) => {
+    setState((oldState) => {
       // 强制返回状态值，适用于点击操作
       if (value !== undefined) {
-        setState(value);
-        return;
+        return value;
       }
-      setState((s) => (s === defaultValue ? reverseValueOrigin : defaultValue));
-    };
-    // 设置默认值
-    const setLeft = () => setState(defaultValue);
-    // 设置取反值
-    const setRight = () => setState(reverseValueOrigin);
-    return {
-      toggle,
-      setLeft,
-      setRight,
-    };
+
+      return oldState === defaultValue ? reverseValueOrigin : defaultValue;
+    });
+  }, []);
+
+  // 设置默认值
+  const setLeft = useCallback(() => {
+    setState(defaultValue);
   }, [setState]);
 
-  return [state, actions];
+  // 设置取反值
+  const setRight = useCallback(() => {
+    setState(reverseValueOrigin);
+  }, [setState]);
+
+  return {
+    state,
+    toggle,
+    setLeft,
+    setRight,
+  };
 }
 
 export default useToggle;

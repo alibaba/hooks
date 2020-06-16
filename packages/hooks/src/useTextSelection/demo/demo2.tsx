@@ -1,65 +1,24 @@
 /**
- * title: Translate user text selection
- * desc: Use Antd.Popover to translate user text selection
+ * title: Set 'dom'  target。
+ * desc: Specifies the text selection to listen for an dom
  *
- * title.zh-CN: 划词翻译
- * desc.zh-CN: 配合 Popover 做划词翻译
+ * title.zh-CN: 指定监听 'dom' 元素
+ * desc.zh-CN: 指定监听某个元素的文本选取。
  */
 
-import { useRequest, useTextSelection } from 'ahooks';
-import { Popover, Spin } from 'antd';
-import React, { useEffect, useState } from 'react';
-
-const getResult = (keyword: string): Promise<string> => {
-  const trimedText = keyword.trim() !== '';
-  if (!trimedText) {
-    return Promise.resolve('');
-  }
-  return new Promise((resolve) => {
-    setTimeout(() => resolve(`[translate result] ${keyword}`), 2000);
-  });
-};
+import React from 'react';
+import { useTextSelection } from '@umijs/hooks';
 
 export default () => {
-  const { text = '', left = 0, top = 0, height = 0, width = 0 } = useTextSelection(() =>
-    document.querySelector('#translate-dom'),
-  );
-
-  const [visible, setVisible] = useState(false);
-
-  const { data, run, loading } = useRequest(getResult, {
-    manual: true,
-  });
-
-  useEffect(() => {
-    if (text.trim() === '') {
-      setVisible(false);
-      return;
-    }
-    setVisible(true);
-    run(text);
-  }, [text]);
-
+  const [{
+    text
+  }] = useTextSelection(() => document.querySelector('#target-dom'));
   return (
     <div>
-      <p id="translate-dom">
-        Translation of this paragraph;Translation of this paragraph;Translation of this paragraph;
+      <p id="target-dom">
+      Only listen to the text selection of this paragraph.
       </p>
-      <Popover
-        content={<Spin spinning={loading}>{loading ? 'Translating……' : data}</Spin>}
-        visible={visible}
-      >
-        <span
-          style={{
-            position: 'fixed',
-            top: `${top}px`,
-            left: `${left}px`,
-            height: `${height}px`,
-            width: `${width}px`,
-            pointerEvents: 'none',
-          }}
-        />
-      </Popover>
+      <p>Result：{text}</p>
     </div>
   );
 };

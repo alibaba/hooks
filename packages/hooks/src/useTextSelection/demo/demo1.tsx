@@ -1,20 +1,22 @@
 /**
- * title: Set 'dom'  target
- * desc: Specifies the text selection to listen for an dom
+ * title: Default usage
+ * desc: Tracking content, size, position of user text selection
  *
- * title.zh-CN: 指定监听 'dom' 元素
- * desc.zh-CN: 指定监听某个元素的文本选取。
+ * title.zh-CN: 默认用法
+ * desc.zh-CN: 获取用户当前选择的文本内容、大小及其相对于视口的位置。
  */
 
 import React from 'react';
-import { useTextSelection } from 'ahooks';
+import { useTextSelection } from '@umijs/hooks';
 
 export default () => {
-  const { text } = useTextSelection(() => document.querySelector('#target-dom'));
+  const [selection] = useTextSelection(document);
   return (
     <div>
-      <p id="target-dom">Only listen to the text selection of this paragraph.</p>
-      <p>Result：{text}</p>
+      <p>
+        Please swipe your mouse to select any text on the page.
+      </p>
+      <p>Result：{JSON.stringify(selection)}</p>
     </div>
   );
 };

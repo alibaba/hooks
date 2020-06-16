@@ -16,16 +16,14 @@ function isFunction<T>(obj: any): obj is T {
 function useStorageState<T>(
   storage: Storage,
   key: string,
-  defaultValue?: StorageStateDefaultValue<T>,
+  defaultValue?: StorageStateDefaultValue<T>
 ): StorageStateResult<T> {
   const [state, setState] = useState<T | undefined>(() => getStoredValue());
 
   function getStoredValue() {
     const raw = storage.getItem(key);
     if (raw) {
-      try {
-        return JSON.parse(raw);
-      } catch (e) {}
+      return JSON.parse(raw);
     }
     if (isFunction<IFuncUpdater<T>>(defaultValue)) {
       return defaultValue();

@@ -7,18 +7,18 @@
  */
 
 import React, { useState } from 'react';
-import { useKeyPress } from 'ahooks';
+import {useKeyPress} from '@umijs/hooks';
 
 export default () => {
   const [counter, setCounter] = useState(0);
 
-  useKeyPress('ArrowUp', () => {
-    setCounter((s) => s + 1);
+  useKeyPress('ArrowUp', event => {
+    setCounter(s => s + 1);
   });
 
   // keyCode value for ArrowDown
-  useKeyPress(40, () => {
-    setCounter((s) => s - 1);
+  useKeyPress(40, event => {
+    setCounter(s => s - 1);
   });
 
   return (

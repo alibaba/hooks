@@ -1,26 +1,25 @@
 /* eslint no-empty: 0 */
 
-import { useLayoutEffect, useRef, MutableRefObject } from 'react';
+import { MutableRefObject, useLayoutEffect, useRef } from 'react';
 import screenfull from 'screenfull';
 import useBoolean from '../useBoolean';
-import { getTargetElement, BasicTarget } from '../utils/dom';
 
-export interface Options {
+export interface Options<T> {
+  dom?: T | (() => T) | null;
   onExitFull?: () => void;
   onFull?: () => void;
 }
 
-interface Callback {
+export interface Result<T> {
+  isFullscreen: boolean;
   setFull: () => void;
   exitFull: () => void;
   toggleFull: () => void;
+  ref?: MutableRefObject<T>;
 }
 
-type Value = boolean;
-type Result = [Value, Callback];
-
-export default (target: BasicTarget, options?: Options): Result => {
-  const { onExitFull, onFull } = options || {};
+export default <T extends HTMLElement = HTMLElement>(options?: Options<T>): Result<T> => {
+  const { dom, onExitFull, onFull } = options || {};
 
   const onExitFullRef = useRef(onExitFull);
   onExitFullRef.current = onExitFull;
@@ -28,7 +27,9 @@ export default (target: BasicTarget, options?: Options): Result => {
   const onFullRef = useRef(onFull);
   onFullRef.current = onFull;
 
-  const [state, { toggle, setTrue, setFalse }] = useBoolean(false);
+  const element = useRef<T>();
+
+  const { state, toggle, setTrue, setFalse } = useBoolean(false);
 
   useLayoutEffect(() => {
     /* 非全屏时，不需要监听任何全屏事件 */
@@ -36,8 +37,9 @@ export default (target: BasicTarget, options?: Options): Result => {
       return;
     }
 
-    const el = getTargetElement(target);
-    if (!el) {
+    const passedInElement = typeof dom === 'function' ? dom() : dom;
+    const targetElement = passedInElement || element.current;
+    if (!targetElement) {
       return;
     }
 
@@ -51,7 +53,7 @@ export default (target: BasicTarget, options?: Options): Result => {
 
     if (screenfull.isEnabled) {
       try {
-        screenfull.request(el as HTMLElement);
+        screenfull.request(targetElement);
         setTrue();
         if (onFullRef.current) {
           onFullRef.current();
@@ -77,16 +79,20 @@ export default (target: BasicTarget, options?: Options): Result => {
         onExitFullRef.current();
       }
     };
-  }, [state, typeof target === 'function' ? undefined : target]);
+  }, [state, typeof dom === 'function' ? undefined : dom]);
 
   const toggleFull = () => toggle();
 
-  return [
-    !!state,
-    {
-      setFull: setTrue,
-      exitFull: setFalse,
-      toggleFull,
-    },
-  ];
+  const result: Result<T> = {
+    isFullscreen: !!state,
+    setFull: setTrue,
+    exitFull: setFalse,
+    toggleFull,
+  };
+
+  if (!dom) {
+    result.ref = element as MutableRefObject<T>;
+  }
+
+  return result;
 };

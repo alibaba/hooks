@@ -7,23 +7,24 @@
  */
 
 import React, { useState } from 'react';
-import { useClickAway } from 'ahooks';
+import { Button } from 'antd';
+import {useClickAway} from '@umijs/hooks';
 
 export default () => {
   const [counter, setCounter] = useState(0);
 
   useClickAway(
     () => {
-      setCounter((s) => s + 1);
+      setCounter(s => s + 1);
     },
     () => document.getElementById('box2'),
   );
 
   return (
     <div>
-      <button type="button" id="box2">
+      <Button type="primary" id="box2">
         box2
-      </button>
+      </Button>
       <p>counter: {counter}</p>
     </div>
   );

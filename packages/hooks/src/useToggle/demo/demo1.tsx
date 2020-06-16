@@ -7,24 +7,28 @@
  */
 
 import React from 'react';
-import { useToggle } from 'ahooks';
+import { Button, Switch } from 'antd';
+import { useToggle } from '@umijs/hooks';
 
 export default () => {
-  const [state, { toggle }] = useToggle();
+  const { state, toggle } = useToggle();
 
   return (
     <div>
-      <p>Effects：{`${state}`}</p>
       <p>
-        <button type="button" onClick={() => toggle()}>
+        Effects：
+        <Switch checked={state} onChange={toggle} />
+      </p>
+      <p>
+        <Button type="default" onClick={() => toggle()}>
           Toggle
-        </button>
-        <button type="button" onClick={() => toggle(false)} style={{ margin: '0 16px' }}>
+        </Button>
+        <Button type="danger" onClick={() => toggle(false)} style={{ margin: '0 16px' }}>
           Toggle False
-        </button>
-        <button type="button" onClick={() => toggle(true)}>
+        </Button>
+        <Button type="primary" onClick={() => toggle(true)}>
           Toggle True
-        </button>
+        </Button>
       </p>
     </div>
   );

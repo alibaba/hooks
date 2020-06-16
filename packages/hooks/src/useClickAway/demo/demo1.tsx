@@ -6,20 +6,21 @@
  * desc.zh-CN: 请点击按钮或按钮外查看效果。
  */
 
-import React, { useState, useRef } from 'react';
-import { useClickAway } from 'ahooks';
+import React, { useState } from 'react';
+import { Button } from 'antd';
+import {useClickAway} from '@umijs/hooks';
 
 export default () => {
   const [counter, setCounter] = useState(0);
-  const ref = useRef<HTMLSpanElement>();
-  useClickAway(() => {
-    setCounter((s) => s + 1);
-  }, ref);
+
+  const ref = useClickAway(() => {
+    setCounter(s => s + 1);
+  });
 
   return (
     <div>
       <span ref={ref}>
-        <button type="button">box1</button>
+        <Button type="primary">box1</Button>
       </span>
       <p>counter: {counter}</p>
     </div>

@@ -1,14 +1,18 @@
-import { useEffect, useRef } from 'react';
+import { MutableRefObject, useEffect, useRef } from 'react';
 import useBoolean from '../useBoolean';
-import { getTargetElement, BasicTarget } from '../utils/dom';
 
-export interface Options {
+export interface Options<T> {
+  dom?: T | (() => T) | null;
   onEnter?: () => void;
   onLeave?: () => void;
 }
 
-export default (target: BasicTarget, options?: Options): boolean => {
-  const { onEnter, onLeave } = options || {};
+export default <T extends HTMLElement = HTMLElement>(
+  options?: Options<T>,
+): [boolean | undefined, MutableRefObject<T>?] => {
+  const { dom, onEnter, onLeave } = options || {};
+
+  const element = useRef<T>(null);
 
   const onEnterRef = useRef(onEnter);
   onEnterRef.current = onEnter;
@@ -16,7 +20,7 @@ export default (target: BasicTarget, options?: Options): boolean => {
   const onLeaveRef = useRef(onLeave);
   onLeaveRef.current = onLeave;
 
-  const [state, { setTrue, setFalse }] = useBoolean(false);
+  const { state, setTrue, setFalse } = useBoolean(false);
 
   useEffect(() => {
     const onMouseEnter = () => {
@@ -27,18 +31,30 @@ export default (target: BasicTarget, options?: Options): boolean => {
       if (onLeaveRef.current) onLeaveRef.current();
       setFalse();
     };
-
-    const targetElement = getTargetElement(target);
+    const passedInElement = typeof dom === 'function' ? dom() : dom;
     // 如果 传入dom
-    if (targetElement) {
-      targetElement.addEventListener('mouseenter', onMouseEnter);
-      targetElement.addEventListener('mouseleave', onMouseLeave);
+    if (passedInElement) {
+      passedInElement.addEventListener('mouseenter', onMouseEnter);
+      passedInElement.addEventListener('mouseleave', onMouseLeave);
       return () => {
-        targetElement.removeEventListener('mouseenter', onMouseEnter);
-        targetElement.removeEventListener('mouseleave', onMouseLeave);
+        passedInElement.removeEventListener('mouseenter', onMouseEnter);
+        passedInElement.removeEventListener('mouseleave', onMouseLeave);
       };
     }
-  }, [typeof target === 'function' ? undefined : target]);
+    const node = element.current;
+    if (node) {
+      node.addEventListener('mouseenter', onMouseEnter);
+      node.addEventListener('mouseleave', onMouseLeave);
+      return () => {
+        node.removeEventListener('mouseenter', onMouseEnter);
+        node.removeEventListener('mouseleave', onMouseLeave);
+      };
+    }
+  }, [element.current, typeof dom === 'function' ? undefined : dom]);
 
-  return state;
+  if (dom) {
+    return [!!state];
+  }
+
+  return [!!state, element as MutableRefObject<T>];
 };

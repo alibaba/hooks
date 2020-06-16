@@ -1,19 +1,18 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import useThrottleFn from '../useThrottleFn';
-import { ThrottleOptions } from './throttleOptions';
 
-function useThrottle<T>(value: T, options?: ThrottleOptions) {
-  const [throttled, setThrottled] = useState(value);
+function useThrottle<T>(value: T, wait: number) {
+  const [state, setState] = useState(value);
 
-  const { run } = useThrottleFn(() => {
-    setThrottled(value);
-  }, options);
+  useThrottleFn(
+    () => {
+      setState(value);
+    },
+    [value],
+    wait,
+  );
 
-  useEffect(() => {
-    run();
-  }, [value]);
-
-  return throttled;
+  return state;
 }
 
 export default useThrottle;

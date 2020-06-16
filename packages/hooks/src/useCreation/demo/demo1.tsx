@@ -7,29 +7,25 @@
  */
 
 import React, { useState } from 'react';
-import { useCreation } from 'ahooks';
+import { Button } from 'antd';
+import { useCreation } from '@umijs/hooks';
 
 class Foo {
   constructor() {
-    this.data = Math.random();
+    this.data = Math.random()
   }
-  data: number;
+  data: number
 }
 
 export default function () {
-  const foo = useCreation(() => new Foo(), []);
-  const [, setFlag] = useState({});
+  const foo = useCreation(() => new Foo(), [])
+  const [, setFlag] = useState({})
   return (
     <>
-      <p>{foo.data}</p>
-      <button
-        type="button"
-        onClick={() => {
-          setFlag({});
-        }}
-      >
-        Rerender
-      </button>
+      <p>
+        {foo.data}
+      </p>
+      <Button onClick={() => {setFlag({})}}>Rerender</Button>
     </>
   );
 }

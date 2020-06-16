@@ -7,8 +7,9 @@
  */
 
 import React, { useRef, FC } from 'react';
-import { useEventEmitter } from 'ahooks';
-import { EventEmitter } from 'ahooks/lib/useEventEmitter';
+import { Button, Input } from 'antd';
+import { useEventEmitter } from '@umijs/hooks';
+import { EventEmitter } from '@umijs/hooks/lib/useEventEmitter'
 
 const MessageBox: FC<{
   focus$: EventEmitter<void>;
@@ -16,14 +17,13 @@ const MessageBox: FC<{
   return (
     <div style={{ paddingBottom: 24 }}>
       <p>You received a message</p>
-      <button
-        type="button"
+      <Button
         onClick={() => {
           props.focus$.emit();
         }}
       >
         Reply
-      </button>
+      </Button>
     </div>
   );
 };
@@ -35,9 +35,7 @@ const InputBox: FC<{
   props.focus$.useSubscription(() => {
     inputRef.current.focus();
   });
-  return (
-    <input ref={inputRef} placeholder="Enter reply" style={{ width: '100%', padding: '4px' }} />
-  );
+  return <Input ref={inputRef} placeholder="Enter reply" />;
 };
 
 export default function () {

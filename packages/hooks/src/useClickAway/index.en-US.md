@@ -24,16 +24,22 @@ A hook that elegantly manages click outside of target elements.
 
 ## API
 
-```ts
-useClickAway(
+```javascript
+const ref = useClickAway(
   onClickAway: (event: MouseEvent | TouchEvent) => void,
-  target: (() => HTMLElement) | HTMLElement | React.MutableRefObject,
+  dom?: RefType,
 );
 ```
+
+### Result
+
+| Property | Description                                         | Type                 |
+|----------|------------------------------------------|------------|
+| ref     | when no param is passed, this ref will be listened     | -        |
 
 ### Params
 
 | Property | Description                                 | Type                   | Default |
 |---------|----------------------------------------------|------------------------|--------|
 | onClickAway | Trigger Function  | (event) => void | -      |
-| target | DOM element or Ref Object | (() => HTMLElement) \| HTMLElement \| React.MutableRefObject | - |
+| dom | optional, if none is passed, this hook will subscibe to the dom that it returns  | HTMLElement \| (() => HTMLElement) \| undefined | -      |

@@ -1,12 +1,12 @@
 const merge = require('webpack-merge');
-const common = require('../../webpack.common.js');
+const common = require('../../webpack.common.js')
 const path = require('path');
 
 module.exports = merge(common, {
-  entry: './es/index.js',
+  entry: './src/index.ts',
   output: {
-    filename: 'ahooks.js',
-    library: 'ahooks',
+    filename: 'umi-hooks.js',
+    library: 'umiHooks',
     path: path.resolve(__dirname, './dist'),
-  },
-});
+  }
+})

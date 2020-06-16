@@ -7,23 +7,19 @@
  */
 
 import React, { useState } from 'react';
-import { useThrottleFn } from 'ahooks';
+import { Button } from 'antd';
+import { useThrottleFn } from '@umijs/hooks';
 
 export default () => {
   const [value, setValue] = useState(0);
-  const { run } = useThrottleFn(
-    () => {
-      setValue(value + 1);
-    },
-    { wait: 500 },
-  );
+  const { run } = useThrottleFn(() => {
+    setValue(value + 1);
+  }, 500);
 
   return (
     <div>
       <p style={{ marginTop: 16 }}> Clicked count: {value} </p>
-      <button type="button" onClick={run}>
-        Click fast!
-      </button>
+      <Button onClick={run}>Click fast!</Button>
     </div>
   );
 };

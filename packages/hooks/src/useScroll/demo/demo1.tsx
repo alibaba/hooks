@@ -7,11 +7,10 @@
  */
 
 import React, { useRef } from 'react';
-import { useScroll } from 'ahooks';
+import {useScroll} from '@umijs/hooks';
 
 export default () => {
-  const ref = useRef(null);
-  const scroll = useScroll(ref);
+  const [scroll, ref] = useScroll<HTMLDivElement>();
   return (
     <>
       <div>{JSON.stringify(scroll)}</div>

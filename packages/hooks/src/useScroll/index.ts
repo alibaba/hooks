@@ -1,25 +1,33 @@
-import { useEffect, useState, MutableRefObject } from 'react';
-import { getTargetElement, BasicTarget } from '../utils/dom';
+import { MutableRefObject, useEffect, useRef, useState } from 'react';
 
 interface Position {
   left: number;
   top: number;
 }
 
-export type Target = BasicTarget<HTMLElement | Document>;
+type Target = HTMLElement | Document;
 
-function useScroll(target?: Target): Position {
+type Arg = Target | (() => Target) | null;
+
+function useScroll<T extends Target = HTMLElement>(): [Position, MutableRefObject<T>];
+function useScroll<T extends Target = HTMLElement>(arg: Arg): [Position];
+function useScroll<T extends Target = HTMLElement>(...args: [Arg] | []) {
   const [position, setPosition] = useState<Position>({
     left: NaN,
     top: NaN,
   });
+  const ref = useRef<T>();
+
+  const hasPassedInElement = args.length === 1;
+  const arg = args[0];
 
   useEffect(() => {
-    const el = getTargetElement(target, document);
-    if (!el) return;
-    function updatePosition(currentTarget: Target) {
+    const passedInElement = typeof arg === 'function' ? arg() : arg;
+    const element = hasPassedInElement ? passedInElement : ref.current;
+    if (!element) return;
+    function updatePosition(target: Target) {
       let newPosition;
-      if (currentTarget === document) {
+      if (target === document) {
         if (!document.scrollingElement) return;
         newPosition = {
           left: document.scrollingElement.scrollLeft,
@@ -27,23 +35,23 @@ function useScroll(target?: Target): Position {
         };
       } else {
         newPosition = {
-          left: (currentTarget as HTMLElement).scrollLeft,
-          top: (currentTarget as HTMLElement).scrollTop,
+          left: (target as HTMLElement).scrollLeft,
+          top: (target as HTMLElement).scrollTop,
         };
       }
       setPosition(newPosition);
     }
-    updatePosition(el as Target);
+    updatePosition(element);
     function listener(event: Event) {
       if (!event.target) return;
       updatePosition(event.target as Target);
     }
-    el.addEventListener('scroll', listener);
+    element.addEventListener('scroll', listener);
     return () => {
-      el.removeEventListener('scroll', listener);
+      element.removeEventListener('scroll', listener);
     };
-  }, [target]);
-  return position;
+  }, [ref.current, typeof arg === 'function' ? undefined : arg]);
+  return [position, ref];
 }
 
 export default useScroll;

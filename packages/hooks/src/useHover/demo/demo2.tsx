@@ -1,16 +1,17 @@
 /**
- * title: Pass in DOM element
+ * title: Lazy load
  * desc: Pass in a function that returns the DOM element.
  *
- * title.zh-CN: 传入 DOM 元素
- * desc.zh-CN: 传入 function 并返回一个 dom 元素。
+ * title.zh-CN: 懒加载
+ * desc.zh-CN: 传入 function 或者 dom 来监听任意的 dom 节点。
  */
 
 import React from 'react';
-import { useHover } from 'ahooks';
+import { useHover } from '@umijs/hooks';
 
 export default () => {
-  const isHovering = useHover(() => document.getElementById('hover-div'), {
+  const [isHovering] = useHover({
+    dom: () => document.getElementById('hover-div'),
     onEnter: () => {
       console.log('onEnter');
     },

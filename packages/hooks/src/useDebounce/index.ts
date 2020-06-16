@@ -1,19 +1,18 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import useDebounceFn from '../useDebounceFn';
-import { DebounceOptions } from './debounceOptions';
 
-function useDebounce<T>(value: T, options?: DebounceOptions) {
-  const [debounced, setDebounced] = useState(value);
+function useDebounce<T>(value: T, wait: number) {
+  const [state, setState] = useState(value);
 
-  const { run } = useDebounceFn(() => {
-    setDebounced(value);
-  }, options);
+  useDebounceFn(
+    () => {
+      setState(value);
+    },
+    [value],
+    wait,
+  );
 
-  useEffect(() => {
-    run();
-  }, [value]);
-
-  return debounced;
+  return state;
 }
 
 export default useDebounce;

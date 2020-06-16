@@ -9,7 +9,7 @@
 import React, { useState } from 'react';
 import { Form, Input, Button } from 'antd';
 import { FormComponentProps } from 'antd/lib/form';
-import { useDynamicList } from 'ahooks';
+import { useDynamicList } from '@umijs/hooks';
 
 interface CardProps extends FormComponentProps {
   index: number;
@@ -58,10 +58,7 @@ export default Form.create()((props: FormComponentProps) => {
   const { list, push, getKey, sortForm } = useDynamicList<ListItem>([
     {
       name: 'Group 1',
-      list: [
-        { name: 'ad1', value: 2 },
-        { name: 'ad2', value: 1 },
-      ],
+      list: [{ name: 'ad1', value: 2 }, { name: 'ad2', value: 1 }],
     },
   ]);
 

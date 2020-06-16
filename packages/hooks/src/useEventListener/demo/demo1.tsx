@@ -6,8 +6,8 @@
  * desc.zh-CN: 点击按钮查看效果。
  */
 
-import React, { useState, useRef } from 'react';
-import { useEventListener } from 'ahooks';
+import React, { useState } from 'react';
+import useEventListener from '../index';
 
 export default () => {
   const [value, setValue] = useState(0);
@@ -16,12 +16,7 @@ export default () => {
     setValue(value + 1);
   };
 
-  const ref = useRef();
-  useEventListener('click', clickHandler, { target: ref });
+  const ref = useEventListener<HTMLButtonElement>('click', clickHandler);
 
-  return (
-    <button ref={ref} type="button">
-      You click {value} times
-    </button>
-  );
+  return <button ref={ref}>You click {value} times</button>;
 };

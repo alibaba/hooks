@@ -1,13 +1,14 @@
 /**
  * title: Using compare function
  * desc: The stored previous value update only when the compare function returns true.
- *
+ * 
  * title.zh-CN: 使用 compare function
  * desc.zh-CN: 只有 compare function 返回 true 时，才会记录值的变化
  */
 
 import React, { useState } from 'react';
-import { usePrevious } from 'ahooks';
+import { Button, Input } from 'antd';
+import { usePrevious } from '@umijs/hooks';
 
 interface Person {
   name: string;
@@ -43,46 +44,47 @@ export default () => {
 
   return (
     <>
-      <div style={{ margin: '8px 0', border: '1px solid #e8e8e8', padding: 8 }}>
-        <div>current name: {state.name}</div>
-        <div>current job: {state.job}</div>
+      <div style={{ margin: 8, border: '1px solid #e8e8e8', padding: 8 }}>
+        current state:
+        <div>name: {state.name}</div>
+        <div>job: {state.job}</div>
       </div>
-      <div>previous name: {(previousName || {}).name}</div>
-      <div style={{ marginBottom: 16 }}>previous job: {(previousJob || {}).job}</div>
-      <div style={{ marginTop: '16px' }}>
-        <input
+      <div>
+        {state.name}&#39;s previous name: {(previousName || {}).name}
+      </div>
+      <div style={{ marginBottom: 16 }}>
+        {state.name}&#39;s previous job: {(previousJob || {}).job}
+      </div>
+      <Input.Group compact>
+        <Input
           style={{ width: 220 }}
           value={nameInput}
-          onChange={(e) => setNameInput(e.target.value)}
-          placeholder="new name"
+          onChange={e => setNameInput(e.target.value)}
+          placeholder={`${state.name}'s new name`}
         />
-        <button
-          type="button"
+        <Button
           onClick={() => {
-            setState((s) => ({ ...s, name: nameInput }));
+            setState(s => ({ ...s, name: nameInput }));
           }}
-          style={{ marginLeft: 16 }}
         >
           update
-        </button>
-      </div>
-      <div style={{ marginTop: '16px' }}>
-        <input
+        </Button>
+      </Input.Group>
+      <Input.Group compact style={{ marginTop: 16 }}>
+        <Input
           style={{ width: 220 }}
           value={jobInput}
-          onChange={(e) => setJobInput(e.target.value)}
-          placeholder="new job"
+          onChange={e => setJobInput(e.target.value)}
+          placeholder={`${state.name}'s new job`}
         />
-        <button
-          type="button"
+        <Button
           onClick={() => {
-            setState((s) => ({ ...s, job: jobInput }));
+            setState(s => ({ ...s, job: jobInput }));
           }}
-          style={{ marginLeft: 16 }}
         >
           update
-        </button>
-      </div>
+        </Button>
+      </Input.Group>
     </>
   );
 };

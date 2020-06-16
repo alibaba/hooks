@@ -1,17 +1,14 @@
-import { useEffect, useCallback, useRef } from 'react';
-import { getTargetElement, BasicTarget } from '../utils/dom';
+import { useEffect, useCallback, useRef, RefObject } from 'react';
 
 export type KeyPredicate = (event: KeyboardEvent) => boolean;
 export type keyType = KeyboardEvent['keyCode'] | KeyboardEvent['key'];
 export type KeyFilter = keyType | Array<keyType> | ((event: KeyboardEvent) => boolean);
 export type EventHandler = (event: KeyboardEvent) => void;
 export type keyEvent = 'keydown' | 'keyup';
-
-export type Target = BasicTarget<HTMLElement | Document | Window>;
-
+export type RefType = HTMLElement | (() => HTMLElement | null);
 export type EventOption = {
   events?: Array<keyEvent>;
-  target?: Target;
+  target?: Window | RefType;
 };
 
 // 键盘事件 keyCode 别名
@@ -71,6 +68,9 @@ function isType(obj: any) {
  * @returns Boolean
  */
 function genFilterKey(event: any, keyFilter: any) {
+  if (!event.key || !event.keyCode) {
+    return false;
+  }
   const type = isType(keyFilter);
   // 数字类型直接匹配事件的 keyCode
   if (type === 'number') {
@@ -97,10 +97,10 @@ function genFilterKey(event: any, keyFilter: any) {
       (genModifier && genModifier(event)) ||
       (aliasKey && isType(aliasKey) === 'array'
         ? aliasKey.includes(event.key)
-        : aliasKey === event.key) ||
+        : (aliasKey === event.key)) ||
       (aliasKeyCode && isType(aliasKeyCode) === 'array'
         ? aliasKeyCode.includes(event.keyCode)
-        : aliasKeyCode === event.keyCode) ||
+        : (aliasKeyCode === event.keyCode)) ||
       event.key.toUpperCase() === key.toUpperCase()
     ) {
       genLen++;
@@ -130,17 +130,18 @@ function genKeyFormater(keyFilter: any): KeyPredicate {
 
 const defaultEvents: Array<keyEvent> = ['keydown'];
 
-function useKeyPress(
+function useKeyPress<T extends HTMLElement = HTMLInputElement>(
   keyFilter: KeyFilter,
   eventHandler: EventHandler = noop,
   option: EventOption = {},
-) {
+): RefObject<T> {
   const { events = defaultEvents, target } = option;
+  const element = useRef<T>();
   const callbackRef = useRef(eventHandler);
   callbackRef.current = eventHandler;
 
   const callbackHandler = useCallback(
-    (event) => {
+    event => {
       const genGuard: KeyPredicate = genKeyFormater(keyFilter);
       if (genGuard(event)) {
         return callbackRef.current(event);
@@ -150,8 +151,8 @@ function useKeyPress(
   );
 
   useEffect(() => {
-    const el = getTargetElement(target, window)!;
-
+    const targetElement = typeof target === 'function' ? target() : target;
+    const el = element.current || targetElement || window;
     for (const eventName of events) {
       el.addEventListener(eventName, callbackHandler);
     }
@@ -160,7 +161,9 @@ function useKeyPress(
         el.removeEventListener(eventName, callbackHandler);
       }
     };
-  }, [events, callbackHandler, typeof target === 'function' ? undefined : target]);
+  }, [events, callbackHandler, target]);
+
+  return element as RefObject<T>;
 }
 
 export default useKeyPress;

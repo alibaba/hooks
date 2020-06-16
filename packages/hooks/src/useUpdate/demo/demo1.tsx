@@ -1,5 +1,7 @@
 import React from 'react';
-import { useUpdate } from 'ahooks';
+import { Button } from 'antd';
+import { useUpdate } from '@umijs/hooks';
+
 
 export default () => {
   const update = useUpdate();
@@ -7,9 +9,7 @@ export default () => {
   return (
     <>
       <div>Time: {Date.now()}</div>
-      <button type="button" onClick={update} style={{ marginTop: 16 }}>
-        update
-      </button>
+      <Button onClick={update} style={{ marginTop: 16 }}>update</Button>
     </>
   );
 };

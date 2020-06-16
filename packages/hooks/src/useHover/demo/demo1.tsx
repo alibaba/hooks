@@ -6,11 +6,10 @@
  * desc.zh-CN: 使用 ref 设置需要需要监听的元素。
  */
 
-import React, { useRef } from 'react';
-import { useHover } from 'ahooks';
+import React from 'react';
+import { useHover } from '@umijs/hooks';
 
 export default () => {
-  const ref = useRef();
-  const isHovering = useHover(ref);
-  return <div ref={ref}>{isHovering ? 'hover' : 'leaveHover'}</div>;
+  const [isHovering, hoverRef] = useHover<HTMLDivElement>();
+  return <div ref={hoverRef}>{isHovering ? 'hover' : 'leaveHover'}</div>;
 };

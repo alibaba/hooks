@@ -1,52 +1,37 @@
 export default {
-  ssr: {},
-  exportStatic: {},
-  nodeModulesTransform: {
-    type: 'none',
-    exclude: [],
-  },
-  extraBabelPlugins: [
-    [
-      'babel-plugin-import',
-      {
-        libraryName: 'antd',
-        libraryDirectory: 'es',
-        style: true,
-      },
-      'antd',
-    ],
-    [
-      'babel-plugin-import',
-      {
-        libraryName: '@alifd/next',
-        style: true,
-      },
-      'fusion',
-    ],
-  ],
+  extraBabelPlugins: [[
+    'babel-plugin-import',
+    {
+      libraryName: 'antd',
+      libraryDirectory: 'es',
+      style: true,
+    },
+  ]],
   mode: 'site',
-  title: 'ahooks',
-  favicon: '/simple-logo.svg',
-  logo: '/logo.svg',
+  title: 'Umi Hooks',
   dynamicImport: {},
   manifest: {},
-  links: [{ rel: 'manifest', href: '/asset-manifest.json' }],
+  links: [{ rel: "manifest", href: "/asset-manifest.json" }],
   hash: true,
   resolve: {
     includes: ['docs', 'packages/hooks/src', 'packages/use-request'],
   },
-  links: [{ rel: 'stylesheet', href: '/style.css' }],
+  styles: [
+    `a[title='站长统计'] { display: none; }`,
+  ],
   navs: {
     'zh-CN': [
       null,
-      { title: 'GitHub', path: 'https://github.com/alibaba/hooks' },
-      { title: '更新日志', path: 'https://github.com/alibaba/hooks/releases' },
+      { title: 'GitHub', path: 'https://github.com/umijs/hooks' },
+      { title: '更新日志', path: 'https://github.com/umijs/hooks/releases' },
     ],
     'en-US': [
       null,
-      { title: 'GitHub', path: 'https://github.com/alibaba/hooks' },
-      { title: 'Changelog', path: 'https://github.com/alibaba/hooks/releases' },
+      { title: 'GitHub', path: 'https://github.com/umijs/hooks' },
+      { title: 'Changelog', path: 'https://github.com/umijs/hooks/releases' },
     ],
   },
-  headScripts: ['https://s4.cnzz.com/z_stat.php?id=1278992092&web_id=1278992092'],
-};
+  headScripts: [
+    'https://v1.cnzz.com/z_stat.php?id=1278602214&web_id=1278602214'
+  ],
+}
