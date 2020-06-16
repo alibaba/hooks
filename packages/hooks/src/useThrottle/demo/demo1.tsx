@@ -6,19 +6,18 @@
  * desc.zh-CN: ThrottledValue 每隔 500ms 变化一次。
  */
 
-import { Input } from 'antd';
 import React, { useState } from 'react';
-import { useThrottle } from '@umijs/hooks';
+import { useThrottle } from 'ahooks';
 
 export default () => {
-  const [value, setValue] = useState();
+  const [value, setValue] = useState<string>();
   const throttledValue = useThrottle(value, 500);
 
   return (
     <div>
-      <Input
+      <input
         value={value}
-        onChange={e => setValue(e.target.value)}
+        onChange={(e) => setValue(e.target.value)}
         placeholder="Typed value"
         style={{ width: 280 }}
       />

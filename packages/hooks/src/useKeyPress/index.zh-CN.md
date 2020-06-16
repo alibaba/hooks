@@ -28,18 +28,12 @@ legacy: /zh-CN/dom/use-key-press
 ## API
 
 ```javascript
-const ref = useKeyPress(
+useKeyPress(
   keyFilter: KeyFilter, 
   eventHandler: EventHandler = noop, 
   options?: Options
 )
 ```
-
-### Result
-
-| 参数     | 说明                                     | 类型       |
-|----------|------------------------------------------|------------|
-| ref     | 当未传入任何 target 时，将 ref 绑定给需监听的节点      | -        |
 
 ### 参数
 
@@ -56,7 +50,7 @@ const ref = useKeyPress(
 | 参数            | 说明                                                   | 类型                              | 默认值 |
 |-----------------|--------------------------------------------------------|-----------------------------------|--------|
 | events | 触发事件  |  Array<keydown \| keyup\> | ['keydown']     |
-| target | Optional, listens for ref in returned results if not passed in, otherwise listens for incoming nodes, and listens for window by default  | window \| HTMLElement \| (() => HTMLElement) \| undefined | window     |
+| target | DOM 节点或者 Ref 对象  | (() => HTMLElement) \| HTMLElement \| React.MutableRefObject | - |
 
 ## 备注
 

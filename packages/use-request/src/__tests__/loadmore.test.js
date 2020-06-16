@@ -4,46 +4,45 @@ import useRequest from '../index';
 const dataSource = [
   {
     id: 1,
-    title: 'Ant Design Title 1',
+    title: 'ahooks title 1',
   },
   {
     id: 2,
-    title: 'Ant Design Title 2',
+    title: 'ahooks title 2',
   },
   {
     id: 3,
-    title: 'Ant Design Title 3',
+    title: 'ahooks title 3',
   },
   {
     id: 4,
-    title: 'Ant Design Title 4',
+    title: 'ahooks title 4',
   },
   {
     id: 5,
-    title: 'Ant Design Title 5',
+    title: 'ahooks title 5',
   },
   {
     id: 6,
-    title: 'Ant Design Title 6',
+    title: 'ahooks title 6',
   },
   {
     id: 7,
-    title: 'Ant Design Title 7',
+    title: 'ahooks title 7',
   },
   {
     id: 8,
-    title: 'Ant Design Title 8',
+    title: 'ahooks title 8',
   },
   {
     id: 9,
-    title: 'Ant Design Title 9',
+    title: 'ahooks title 9',
   },
   {
     id: 10,
-    title: 'Ant Design Title 10',
+    title: 'ahooks title 10',
   },
 ];
-
 
 describe('useRequest', () => {
   const originalError = console.error;
@@ -61,26 +60,30 @@ describe('useRequest', () => {
   });
 
   const asyncFn = ({ pageSize, offset }) =>
-    new Promise(resolve => {
+    new Promise((resolve) => {
       resolve({
         total: dataSource.length,
         list: dataSource.slice(offset, offset + pageSize),
       });
     });
 
-  const setUp = (service, options) => renderHook(() => useRequest(service, options))
+  const setUp = (service, options) => renderHook(() => useRequest(service, options));
 
   let hook;
 
   it('useRequest loadMore should work', async () => {
     act(() => {
-      hook = setUp(d => asyncFn({
-        offset: d ? d.list.length : 0,
-        pageSize: 3,
-      }), {
-        loadMore: true,
-        isNoMore: d => (d ? d.total <= d.list.length : false)
-      });
+      hook = setUp(
+        (d) =>
+          asyncFn({
+            offset: d ? d.list.length : 0,
+            pageSize: 3,
+          }),
+        {
+          loadMore: true,
+          isNoMore: (d) => (d ? d.total <= d.list.length : false),
+        },
+      );
     });
     expect(hook.result.current.loading).toEqual(true);
     await hook.waitForNextUpdate();

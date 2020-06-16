@@ -6,19 +6,18 @@
  * desc.zh-CN: DebouncedValue 只会在输入结束 500ms 后变化。
  */
 
-import { Input } from 'antd';
 import React, { useState } from 'react';
-import { useDebounce } from '@umijs/hooks';
+import { useDebounce } from 'ahooks';
 
 export default () => {
-  const [value, setValue] = useState();
-  const debouncedValue = useDebounce(value, 500);
+  const [value, setValue] = useState<string>();
+  const debouncedValue = useDebounce(value, { wait: 500 });
 
   return (
     <div>
-      <Input
+      <input
         value={value}
-        onChange={e => setValue(e.target.value)}
+        onChange={(e) => setValue(e.target.value)}
         placeholder="Typed value"
         style={{ width: 280 }}
       />

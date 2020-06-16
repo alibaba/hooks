@@ -7,41 +7,41 @@
  */
 
 import React from 'react';
-import { InputNumber, Button } from 'antd';
-import { useVirtualList } from '@umijs/hooks';
+import { useVirtualList } from 'ahooks';
 
 export default () => {
-  const [value, onChange] = React.useState<number>(undefined);
+  const [value, onChange] = React.useState<number>(0);
   const { list, containerProps, wrapperProps, scrollTo } = useVirtualList(
     Array.from(Array(99999).keys()),
     {
-      itemHeight: i => (i % 2 === 0 ? 42 + 8 : 84 + 8),
+      itemHeight: (i) => (i % 2 === 0 ? 42 + 8 : 84 + 8),
       overscan: 10,
     },
   );
+
   return (
     <div>
       <div style={{ textAlign: 'right', marginBottom: 16 }}>
-        <InputNumber
-          min={0}
-          max={99999}
+        <input
           style={{ width: 120 }}
           placeholder="line number"
+          type="number"
           value={value}
-          onChange={e => onChange(e)}
+          onChange={(e) => onChange(Number(e.target.value))}
         />
-        <Button
+        <button
           style={{ marginLeft: 8 }}
+          type="button"
           onClick={() => {
             scrollTo(Number(value));
           }}
         >
           scroll to
-        </Button>
+        </button>
       </div>
       <div {...containerProps} style={{ height: '300px', overflow: 'auto' }}>
         <div {...wrapperProps}>
-          {list.map((ele, index) => (
+          {list.map((ele) => (
             <div
               style={{
                 height: ele.index % 2 === 0 ? 42 : 84,

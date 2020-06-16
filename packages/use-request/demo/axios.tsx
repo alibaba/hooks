@@ -6,19 +6,19 @@
  * desc.zh-CN: 通过设置 `requstMethod`, 可以使用自己的请求库。
  */
 
-import { useRequest } from '@umijs/hooks';
+import { useRequest } from 'ahooks';
 import React from 'react';
 import axios from 'axios';
 
 export default () => {
   const { data, error, loading } = useRequest('https://helloacm.com/api/random/?n=8&x=4', {
     requestMethod: (param: any) => axios(param),
-  })
+  });
   if (error) {
-    return <div>failed to load</div>
+    return <div>failed to load</div>;
   }
   if (loading) {
-    return <div>loading...</div>
+    return <div>loading...</div>;
   }
-  return <div>Number: {data?.data}</div>
-}
+  return <div>Number: {data?.data}</div>;
+};

@@ -1,6 +1,20 @@
 import { useRef, useContext } from 'react';
-import request from 'umi-request';
-import { BaseOptions, BasePaginatedOptions, BaseResult, CombineService, LoadMoreFormatReturn, LoadMoreOptions, LoadMoreOptionsWithFormat, LoadMoreParams, LoadMoreResult, OptionsWithFormat, PaginatedFormatReturn, PaginatedOptionsWithFormat, PaginatedParams, PaginatedResult } from './types';
+import {
+  BaseOptions,
+  BasePaginatedOptions,
+  BaseResult,
+  CombineService,
+  LoadMoreFormatReturn,
+  LoadMoreOptions,
+  LoadMoreOptionsWithFormat,
+  LoadMoreParams,
+  LoadMoreResult,
+  OptionsWithFormat,
+  PaginatedFormatReturn,
+  PaginatedOptionsWithFormat,
+  PaginatedParams,
+  PaginatedResult,
+} from './types';
 import useAsync from './useAsync';
 import useLoadMore from './useLoadMore';
 import usePaginated from './usePaginated';
@@ -8,30 +22,30 @@ import ConfigContext from './configContext';
 
 function useRequest<R = any, P extends any[] = any, U = any, UU extends U = any>(
   service: CombineService<R, P>,
-  options: OptionsWithFormat<R, P, U, UU>
-): BaseResult<U, P>
+  options: OptionsWithFormat<R, P, U, UU>,
+): BaseResult<U, P>;
 function useRequest<R = any, P extends any[] = any>(
   service: CombineService<R, P>,
-  options?: BaseOptions<R, P>
-): BaseResult<R, P>
+  options?: BaseOptions<R, P>,
+): BaseResult<R, P>;
 
 function useRequest<R extends LoadMoreFormatReturn, RR>(
   service: CombineService<RR, LoadMoreParams<R>>,
-  options: LoadMoreOptionsWithFormat<R, RR>
-): LoadMoreResult<R>
+  options: LoadMoreOptionsWithFormat<R, RR>,
+): LoadMoreResult<R>;
 function useRequest<R extends LoadMoreFormatReturn, RR extends R>(
   service: CombineService<R, LoadMoreParams<R>>,
-  options: LoadMoreOptions<RR>
-): LoadMoreResult<R>
+  options: LoadMoreOptions<RR>,
+): LoadMoreResult<R>;
 
 function useRequest<R = any, Item = any, U extends Item = any>(
   service: CombineService<R, PaginatedParams>,
-  options: PaginatedOptionsWithFormat<R, Item, U>
-): PaginatedResult<Item>
+  options: PaginatedOptionsWithFormat<R, Item, U>,
+): PaginatedResult<Item>;
 function useRequest<R = any, Item = any, U extends Item = any>(
   service: CombineService<PaginatedFormatReturn<Item>, PaginatedParams>,
-  options: BasePaginatedOptions<U>
-): PaginatedResult<Item>
+  options: BasePaginatedOptions<U>,
+): PaginatedResult<Item>;
 
 function useRequest(service: any, options: any = {}) {
   const contextConfig = useContext(ConfigContext);
@@ -53,48 +67,66 @@ function useRequest(service: any, options: any = {}) {
   paginatedRef.current = paginated;
   loadMoreRef.current = loadMore;
 
-  const finalRequestMethod = requestMethod || request;
+  // @ts-ignore
+  const fetchProxy = (...args: any[]) =>
+    fetch(...args).then((res: Response) => {
+      if (res.ok) {
+        return res.json();
+      }
+      throw new Error(res.statusText);
+    });
+
+  const finalRequestMethod = requestMethod || fetchProxy;
 
   let promiseService: () => Promise<any>;
   if (typeof service === 'string') {
     promiseService = () => finalRequestMethod(service);
   } else if (typeof service === 'object') {
     const { url, ...rest } = service;
-    promiseService = () => (requestMethod ? requestMethod(service) : request(url, rest));
+    promiseService = () => (requestMethod ? requestMethod(service) : fetchProxy(url, rest));
   } else {
-    promiseService = (...args: any[]) => new Promise((resolve, reject) => {
-      const result = service(...args);
-      if (result.then) {
-        result.then((data: any) => resolve(data)).catch((e: any) => reject(e))
-      } else if (typeof result === 'string') {
-        finalRequestMethod(result).then((data: any) => { resolve(data) }).catch((e: any) => reject(e));
-      } else if (typeof result === 'object') {
-        // umi-request 需要拆分下字段
-        if (requestMethod) {
-          finalRequestMethod(result).then((data: any) => { resolve(data) }).catch((e: any) => reject(e));
-        } else {
-          const { url, ...rest } = result;
-          request(url, rest).then((data: any) => { resolve(data) }).catch((e: any) => reject(e));
+    promiseService = (...args: any[]) =>
+      new Promise((resolve, reject) => {
+        const result = service(...args);
+        if (result.then) {
+          result.then((data: any) => resolve(data)).catch((e: any) => reject(e));
+        } else if (typeof result === 'string') {
+          finalRequestMethod(result)
+            .then((data: any) => {
+              resolve(data);
+            })
+            .catch((e: any) => reject(e));
+        } else if (typeof result === 'object') {
+          // fetch 需要拆分下字段
+          if (requestMethod) {
+            requestMethod(result)
+              .then((data: any) => {
+                resolve(data);
+              })
+              .catch((e: any) => reject(e));
+          } else {
+            const { url, ...rest } = result;
+            fetchProxy(url, rest)
+              .then((data: any) => {
+                resolve(data);
+              })
+              .catch((e: any) => reject(e));
+          }
         }
-      }
-    });
+      });
   }
 
   if (loadMore) {
     return useLoadMore(promiseService, finalOptions);
-  } if (paginated) {
+  }
+  if (paginated) {
     return usePaginated(promiseService, finalOptions);
   }
   return useAsync(promiseService, finalOptions);
 }
 
-const UseAPIProvider = ConfigContext.Provider;
+const UseRequestProvider = ConfigContext.Provider;
 
-export {
-  useAsync,
-  usePaginated,
-  useLoadMore,
-  UseAPIProvider
-};
+export { useAsync, usePaginated, useLoadMore, UseRequestProvider };
 
 export default useRequest;

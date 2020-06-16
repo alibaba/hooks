@@ -6,8 +6,8 @@
  * desc.zh-CN: 获取鼠标位置。
  */
 
-import React, { useMemo } from 'react';
-import {useMouse} from '@umijs/hooks';
+import { useMouse } from 'ahooks';
+import React from 'react';
 
 export default () => {
   const mouse = useMouse();

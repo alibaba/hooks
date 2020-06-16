@@ -26,38 +26,34 @@ A hook that switch value between two states.
 ## API
 
 ```javascript
-const {
-  state, 
-  toggle,
-  setLeft,
-  setRight
-} = useToggle(
+const [state, { toggle, setLeft, setRight }] = useToggle(
   defaultValue?: boolean,
 );
 
-const {
-  state, 
-  toggle,
-  setLeft,
-  setRight
-} = useToggle(
+const [state, { toggle, setLeft, setRight }] = useToggle(
   defaultValue: any = false,
   reverseValue?: any,
 );
 ```
 
-### Result
-
-| Property | Description                                         | Type                 |
-|----------|--------------------------------------|----------------------|
-| state  | state value                         | boolean              |
-| toggle | Trigger state change, accept two optional parameters | (defaultValue: any = false, reverseValue?: any) => void |
-| setLeft | Set default value | () => void |
-| setRight | Set reverse value | () => void |
-
 ### Params
 
-| Property | Description                                 | Type                   | Default |
-|---------|----------------------------------------------|------------------------|--------|
-| defaultValue | Optional，set a default value  | number \| string \| boolean \| undefined | false      |
-| reverseValue | Optional，set a reverse value  | number \| string \| boolean \| undefined | -      |
+| Property     | Description                  | Type                                     | Default |
+| ------------ | ---------------------------- | ---------------------------------------- | ------- |
+| defaultValue | Optional，set a default value | number \| string \| boolean \| undefined | false   |
+| reverseValue | Optional，set a reverse value | number \| string \| boolean \| undefined | -       |
+
+### Result
+
+| Property | Description   | Type    |
+| -------- | ------------- | ------- |
+| state    | state value   | - |
+| actions  | Operation set | object  |
+
+### Actions
+
+| Property | Description                                          | Type                  |
+| -------- | ---------------------------------------------------- | --------------------- |
+| toggle   | Trigger state change, accept two optional parameters | (state?: any) => void |
+| setLeft  | Set default value                                    | () => void            |
+| setRight | Set reverse value                                    | () => void            |
