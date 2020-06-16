@@ -25,7 +25,7 @@ The hook encapsulates `onChange` and `value` logic for form controls that obtain
 ## API
 
 ```javascript
-const [ { value, onChange }, reset ] = useEventTarget<T, U>(initialValue?: T, transformer?: (value: U) => T );
+const [value, { onChange, reset }] = useEventTarget<T, U>(initialValue?: T, transformer?: (value: U) => T );
 ```
 
 ### Result

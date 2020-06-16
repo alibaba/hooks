@@ -24,12 +24,10 @@ Production-ready React Hook to manage asynchronous data.
 * Debounce
 * Throttle
 * Concurrent Request
+* Dependent Request
 * Loading Delay
 * Pagination
 * Load more, data recovery and scroll position recovery
-* [ ] Retry on error
-* [ ] Request timeout management
-* [ ] Suspense
 * ......
 
 ## Examples
@@ -49,6 +47,10 @@ Production-ready React Hook to manage asynchronous data.
 ### Concurrent Request
 
 <code src="./demo/concurrent.tsx" />
+
+### Dependent Request
+
+<code src="./demo/ready.tsx" />
 
 ### Debounce
 
@@ -124,6 +126,8 @@ const {
   focusTimespan,
   debounceInterval,
   throttleInterval,
+  ready,
+  throwOnError,
 });
 ```
 
@@ -163,14 +167,15 @@ All Options are optional.
 | focusTimespan        | <ul><li>  If the request is re-initiated every time, it is not good. We need to have a time interval. In the current time interval, the request will not be re-initiated. </li><li> Needs to be used with refreshOnWindowFocus. </li></ul>                                                                                                                                                                 | `number`                                | `5000`  |
 | debounceInterval     | debounce interval, the unit is millisecond. After setting, request to enter debounce mode.                                                                                                                                                                                                                                                                                                                 | `number`                                | -       |
 | throttleInterval     | throttle interval, the unit is millisecond. After setting, request to enter throttle mode.                                                                                                                                                                                                                                                                                                                 | `number`                                | -       |
-
+| ready     | Only when ready is `true`, will the request be initiated                                                                                                                                                                                                               | `boolean`                                | `true`       |
+| throwOnError     | If the service errors, the error will only be logged. If you want an error to be thrown, pass the throwOnError: true                                    | `boolean`                                | `false`       |
 ## Advanced usage
 
 Based on the basic useRequest, we can further encapsulate and implement more advanced customization requirements. Currently useRequest has three scenarios: `Integrated Request Library`,` Pagination` and `Load More`. You can refer to the code to implement your own encapsulation. Refer to the implementation of [useRequest](./src/useRequest.ts)、[usePaginated](./src/usePaginated.ts)、[useLoadMore](./src/useLoadMore.ts) 的实现。
 
 ### Integration Request Library
 
-If service is `string`,` object`, `(... args) => string | object`, we will automatically use [umi-request] (https://github.com/umijs/umi-request/blob /master/README_zh-CN.md) to send network requests. umi-request is a request library similar to axios and fetch.
+If service is `string`,` object`, `(... args) => string | object`, we will automatically use [fetch] (https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch) to send network requests. 
 
 ```javascript
 // Usage 1
@@ -195,7 +200,7 @@ const { loading, run } = useRequest((username) => ({
 });
 ```
 
-<code src="./demo/umiRequest.tsx" />
+<code src="./demo/fetch.tsx" />
 
 <br>
 
@@ -214,7 +219,7 @@ const {...} = useRequest<R>(
 
 #### Service
 
-If service is `string`,` object`, `(... args) => string | object`, then automatically use` umi-request` to send the request.
+If service is `string`,` object`, `(... args) => string | object`, then automatically use `fetch` to send the request.
 
 #### Params
 
@@ -279,7 +284,7 @@ const {
 | Property   | Description                                                                                                                                  | Type |
 |------------|----------------------------------------------------------------------------------------------------------------------------------------------|------|
 | pagination | Paging data and methods for operating paging                                                                                                 | -    |
-| tableProps | The data structure of the [antd Table] (https://ant.design/components/table-cn/) component can be used directly on the AntD Table component. | -    |
+| tableProps | The data structure of the [antd Table] (https://ant.design/components/table-cn/) component can be used directly on the antd Table component. | -    |
 
 #### Params
 
@@ -342,21 +347,21 @@ const {
 
 ## Global configuration
 
-### UseAPIProvider
-You can set global options at the outermost level of the project via `UseAPIProvider`.
+### UseRequestProvider
+You can set global options at the outermost level of the project via `UseRequestProvider`.
 
 ```javascript
-import {UseAPIProvider} from '@umijs/use-request';
+import { UseRequestProvider } from '@ahooksjs/use-request';
 
 export function ({children})=>{
   return (
-    <UseAPIProvider value={{
+    <UseRequestProvider value={{
       refreshOnWindowFocus: true,
       requestMethod: (param)=> axios(param),
       ...
     }}>
       {children}
-    </UseAPIProvider>
+    </UseRequestProvider>
   )
 }
 ```
@@ -376,22 +381,6 @@ const secondRequest = useReqeust(service);
 
 // secondRequest.loading
 // secondRequest.data
-```
-
-### 2. How do I use umi-request's `use` `errorHandler` etc.?
-
-You can configure the `request` after processing by `requsetMehod`.
-
-```javascript
-// your request
-import { request } from '@/utils/request';
-import { UseAPIProvider } from '@umijs/use-request';
-
-<UseAPIProvider value={{
-  requestMethod: request,
-}}>
-
-</UseAPIProvider>
 ```
 
 ## Thanks

@@ -7,24 +7,26 @@
  */
 
 import React from 'react';
-import { Button, message } from 'antd';
-import { useToggle, useMount } from '@umijs/hooks';
+import { message } from 'antd';
+import { useToggle, useMount } from 'ahooks';
 
 const MyComponent = () => {
-  useMount(
-    () => {
-      message.info('mount');
-    }
-  );
+  useMount(() => {
+    message.info('mount');
+  });
 
-  return (<div>Hello World</div>)
-}
+  return <div>Hello World</div>;
+};
 
 export default () => {
-  const { state, toggle } = useToggle(false);
+  const [state, { toggle }] = useToggle(false);
 
-  return (<>
-    <Button onClick={() => toggle()}>{state ? 'unmount' : 'mount'}</Button>
-    {state && <MyComponent />}
-  </>);
+  return (
+    <>
+      <button type="button" onClick={() => toggle()}>
+        {state ? 'unmount' : 'mount'}
+      </button>
+      {state && <MyComponent />}
+    </>
+  );
 };

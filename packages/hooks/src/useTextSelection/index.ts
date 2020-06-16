@@ -1,5 +1,5 @@
-import { useState, useEffect, useRef, MutableRefObject } from 'react';
-
+import { useState, useEffect, useRef } from 'react';
+import { getTargetElement, BasicTarget } from '../utils/dom';
 
 interface IRect {
   top: number;
@@ -13,10 +13,6 @@ export interface IState extends IRect {
   text: string;
 }
 
-type TDom = HTMLElement | Document;
-
-type Arg = TDom | (() => TDom) | null;
-
 const initRect: IRect = {
   top: NaN,
   left: NaN,
@@ -24,7 +20,7 @@ const initRect: IRect = {
   right: NaN,
   height: NaN,
   width: NaN,
-}
+};
 
 const initState: IState = {
   text: '',
@@ -40,14 +36,7 @@ function getRectFromSelection(selection: Selection | null): IRect {
     return initRect;
   }
   const range = selection.getRangeAt(0);
-  const {
-    height,
-    width,
-    top,
-    left,
-    right,
-    bottom,
-  } = range.getBoundingClientRect();
+  const { height, width, top, left, right, bottom } = range.getBoundingClientRect();
   return {
     height,
     width,
@@ -55,18 +44,13 @@ function getRectFromSelection(selection: Selection | null): IRect {
     left,
     right,
     bottom,
-  }
+  };
 }
 
 /**
  * 获取用户选取的文本或当前光标插入的位置
  * */
-function useTextSelection<T extends TDom = TDom>(): [IState, MutableRefObject<T>];
-function useTextSelection<T extends TDom = TDom>(arg: Arg): [IState];
-function useTextSelection<T extends TDom = TDom>(...args: [Arg] | []): [IState, MutableRefObject<T>?] {
-  const hasPassedInArg = args.length === 1;
-  const arg = useRef(args[0]);
-  const ref = useRef<T>();
+function useTextSelection(target?: BasicTarget): IState {
   const [state, setState] = useState(initState);
 
   const stateRef = useRef(state);
@@ -74,11 +58,10 @@ function useTextSelection<T extends TDom = TDom>(...args: [Arg] | []): [IState, 
 
   useEffect(() => {
     // 获取 target 需要放在 useEffect 里，否则存在组件未加载好的情况而导致元素获取不到
-    const passedInArg = typeof arg.current === 'function' ? arg.current() : arg.current;
-    const target = hasPassedInArg ? passedInArg : ref.current;
+    const el = getTargetElement(target, document);
 
-    if (!target) {
-      return () => { };
+    if (!el) {
+      return () => {};
     }
 
     const mouseupHandler = () => {
@@ -103,23 +86,19 @@ function useTextSelection<T extends TDom = TDom>(...args: [Arg] | []): [IState, 
       const selObj = window.getSelection();
       if (!selObj) return;
       selObj.removeAllRanges();
-    }
+    };
 
-    target.addEventListener('mouseup', mouseupHandler);
+    el.addEventListener('mouseup', mouseupHandler);
 
-    document.addEventListener('mousedown', mousedownHandler)
+    document.addEventListener('mousedown', mousedownHandler);
 
     return () => {
-      target.removeEventListener('mouseup', mouseupHandler);
+      el.removeEventListener('mouseup', mouseupHandler);
       document.removeEventListener('mousedown', mousedownHandler);
     };
-  }, [ref.current, typeof arg.current === 'function' ? undefined : arg.current]);
+  }, [typeof target === 'function' ? undefined : target]);
 
-  if (hasPassedInArg) {
-    return [state];
-  }
-
-  return [state, ref as MutableRefObject<T>];
+  return state;
 }
 
 export default useTextSelection;
