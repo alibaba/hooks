@@ -1,9 +1,9 @@
 /**
  * title: Pull up to load more
- * desc: If `options.ref` is set, loadMore is automatically triggered when scrolling to the bottom. Of course you must set `isNoMore` at this time so that `useReqeust` will know when to stop.
+ * desc: If `options.ref` is set, loadMore is automatically triggered when scrolling to the bottom. Of course you must set `isNoMore` at this time so that `useRequest` will know when to stop.
  *
  * title.zh-CN: 上拉加载更多
- * desc.zh-CN: 如果 options 中存在 `ref`，则在滚动到底部时，自动触发 loadMore。当然此时你必须设置 `isNoMore`, 以便让 `useReqeust` 知道何时停止。
+ * desc.zh-CN: 如果 options 中存在 `ref`，则在滚动到底部时，自动触发 loadMore。当然此时你必须设置 `isNoMore`, 以便让 `useRequest` 知道何时停止。
  */
 
 import { useRequest } from 'ahooks';
