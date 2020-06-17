@@ -33,7 +33,7 @@ import useFusionTable from './useFusionTable';
 import useSet from './useSet';
 import usePersistFn from './usePersistFn';
 import useMap from './useMap';
-import useCreation from './useCreation'
+import useCreation from './useCreation';
 import { useDrag, useDrop } from './useDrop';
 import useMount from './useMount';
 import useTextSelection from './useTextSelection';
@@ -42,6 +42,7 @@ import useUpdate from './useUpdate';
 import useEventTarget from './useEventTarget';
 import useHistoryTravel from './useHistoryTravel';
 import useDebounceEffect from './useDebounceEffect';
+import useVisibleRatio from './useVisibleRatio';
 
 const useControlledValue: typeof useControllableValue = function (...args) {
   console.warn(
@@ -97,5 +98,6 @@ export {
   useTextSelection,
   useEventTarget,
   useHistoryTravel,
-  useFusionTable
+  useFusionTable,
+  useVisibleRatio,
 };
