@@ -39,11 +39,13 @@ export default {
   navs: {
     'zh-CN': [
       null,
+      { title: 'v1.x', path: 'http://hooks.umijs.org/' },
       { title: 'GitHub', path: 'https://github.com/alibaba/hooks' },
       { title: '更新日志', path: 'https://github.com/alibaba/hooks/releases' },
     ],
     'en-US': [
       null,
+      { title: 'v1.x', path: 'http://hooks.umijs.org/' },
       { title: 'GitHub', path: 'https://github.com/alibaba/hooks' },
       { title: 'Changelog', path: 'https://github.com/alibaba/hooks/releases' },
     ],
