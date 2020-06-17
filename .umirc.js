@@ -22,11 +22,13 @@ export default {
   navs: {
     'zh-CN': [
       null,
+      { title: 'v2.x', path: 'http://ahooks.js.org/' },
       { title: 'GitHub', path: 'https://github.com/umijs/hooks' },
       { title: '更新日志', path: 'https://github.com/umijs/hooks/releases' },
     ],
     'en-US': [
       null,
+      { title: 'v2.x', path: 'http://ahooks.js.org/' },
       { title: 'GitHub', path: 'https://github.com/umijs/hooks' },
       { title: 'Changelog', path: 'https://github.com/umijs/hooks/releases' },
     ],
