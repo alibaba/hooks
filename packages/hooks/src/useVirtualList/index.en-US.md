@@ -29,15 +29,6 @@ A hook that allows you to use virtual list to render huge chunks of list data.
 const result:Result = useVirtualList(originalList: any[], Options);
 ```
 
-### Result
-
-| Property | Description                                         | Type                 |
-|----------|------------------------------------------|------------|
-| list  | The current portion of data need to be rendered to DOM        | {data: T, index: number}[]    |
-| containerProps     | the props of outter container                          | {}        |
-| wrapperProps | the props of inner wrapper   | {} |
-| scrollTo    | scroll to specific index                         | (index: number) => void        |
-
 ### Params
 
 | Property | Description                                                        | Type                   | Default |
@@ -52,3 +43,12 @@ const result:Result = useVirtualList(originalList: any[], Options);
 |------|--------------|--------|--------|
 | itemHeight | item height, accept a pixel value or a function that returns the height  | number \| ((index: number) => number) | -    |
 | overscan | the extra buffer items outside of the view area | number | 10    |
+
+### Result
+
+| Property | Description                                         | Type                 |
+|----------|------------------------------------------|------------|
+| list  | The current portion of data need to be rendered to DOM        | {data: T, index: number}[]    |
+| containerProps     | the props of outter container                          | {}        |
+| wrapperProps | the props of inner wrapper   | {} |
+| scrollTo    | scroll to specific index                         | (index: number) => void        |

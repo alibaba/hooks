@@ -28,18 +28,12 @@ A hook that elegantly manages KeyboardEvent of keyup adn keydown, Keyboard key c
 ## API
 
 ```javascript
-const ref = useKeyPress(
+useKeyPress(
   keyFilter: KeyFilter, 
   eventHandler: EventHandler = noop, 
   options?: Options
 )
 ```
-
-### Result
-
-| Property | Description                                         | Type                 |
-|----------|------------------------------------------|------------|
-| ref     | when no target is passed, this ref will be listened     | -        |
 
 ### Params
 
@@ -56,7 +50,7 @@ const ref = useKeyPress(
 | Property | Description                                                        | Type                   | Default |
 |-----------------|--------------------------------------------------------|---------|--------|
 | events | Trigger Events  |  Array<keydown \| keyup\> | ['keydown']     |
-| target | optional, if none is passed, this hook will subscibe to the dom that it returns  | window \| HTMLElement \| (() => HTMLElement) \| undefined | window     |
+| target | DOM element or Ref Object | (() => HTMLElement) \| HTMLElement \| React.MutableRefObject  | - |
 
 ## Remarks
 

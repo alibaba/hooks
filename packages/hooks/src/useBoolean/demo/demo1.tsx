@@ -1,34 +1,32 @@
 /**
  * title: Default usage
  * desc: Default as a switch function,or accept a parameter to change state
- * 
+ *
  * title.zh-CN: 默认用法
  * desc.zh-CN: 默认切换布尔值状态，也可以接收一个参数作为新的值
  */
 
 import React from 'react';
-import { Button, Switch } from 'antd';
-import { useBoolean } from '@umijs/hooks';
+import { useBoolean } from 'ahooks';
 
 export default () => {
-  const { state, toggle, setTrue, setFalse } = useBoolean(true);
+  const [state, { toggle, setTrue, setFalse }] = useBoolean(true);
 
   return (
     <div>
       <p>
-        Effects：
-        <Switch checked={state} onChange={toggle} />
+        Effects：{JSON.stringify(state)}
       </p>
       <p>
-        <Button type="default" onClick={() => toggle()}>
+        <button type="button" onClick={() => toggle()}>
           Toggle
-        </Button>
-        <Button type="danger" onClick={setFalse} style={{ margin: '0 16px' }}>
+        </button>
+        <button type="button" onClick={setFalse} style={{ margin: '0 16px' }}>
           Set false
-        </Button>
-        <Button type="primary" onClick={setTrue}>
+        </button>
+        <button type="button" onClick={setTrue}>
           Set true
-        </Button>
+        </button>
       </p>
     </div>
   );

@@ -7,8 +7,7 @@
  */
 
 import React, { useState } from 'react';
-import { Button } from 'antd';
-import { useCreation } from '@umijs/hooks';
+import { useCreation } from 'ahooks';
 
 class Foo {
   constructor() {
@@ -25,7 +24,7 @@ export default function () {
       <p>
         {foo.data}
       </p>
-      <Button onClick={() => {setFlag({})}}>Rerender</Button>
+      <button type="button" onClick={() => { setFlag({}) }}>Rerender</button>
     </>
   );
 }

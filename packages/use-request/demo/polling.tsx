@@ -15,8 +15,7 @@
  *  - 在 `options.manual=true` 时，需要第一次执行 `run` 后，才开始轮询。
  */
 
-import { useRequest } from '@umijs/hooks';
-import { Button, Spin } from 'antd';
+import { useRequest } from 'ahooks';
 import React from 'react';
 import Mock from 'mockjs';
 
@@ -36,13 +35,9 @@ export default () => {
 
   return (
     <>
-      <Spin spinning={loading}>
-        <p>Username: {data}</p>
-      </Spin>
-      <Button.Group>
-        <Button onClick={run}>start</Button>
-        <Button onClick={cancel}>stop</Button>
-      </Button.Group>
+      <p>Username: {loading ? 'loading' : data}</p>
+      <button type="button" onClick={run}>start</button>
+      <button type="button" onClick={cancel} style={{ marginLeft: 8 }}>stop</button>
     </>
   )
 }

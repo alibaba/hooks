@@ -1,14 +1,16 @@
 {
-  "name": "@umijs/hooks",
-  "version": "1.9.1",
+  "name": "ahooks",
+  "version": "2.0.0",
   "description": "react hooks library",
   "keywords": [
+    "ahooks",
     "umi hooks",
     "react hooks"
   ],
   "main": "./lib/index.js",
   "module": "./es/index.js",
   "types": "./lib/index.d.ts",
+  "unpkg": "dist/ahooks.js",
   "authors": {
     "name": "brickspert",
     "email": "brickspert.fjl@alipay.com"
@@ -16,10 +18,10 @@
   "publishConfig": {
     "registry": "https://registry.npmjs.com/"
   },
-  "repository": "https://github.com/umijs/hooks",
-  "homepage": "https://github.com/umijs/hooks",
+  "repository": "https://github.com/alibaba/hooks",
+  "homepage": "https://github.com/alibaba/hooks",
   "scripts": {
-    "compile": "tsc --declarationDir lib && tsc --declarationDir es"
+    "build": "gulp && webpack-cli"
   },
   "files": [
     "dist",
@@ -28,9 +30,11 @@
     "package.json"
   ],
   "dependencies": {
-    "@umijs/use-request": "^1.4.1",
+    "@ahooksjs/use-request": "^2.0.0",
     "intersection-observer": "^0.7.0",
+    "lodash.debounce": "^4.0.8",
     "lodash.isequal": "^4.5.0",
+    "lodash.throttle": "^4.1.1",
     "resize-observer-polyfill": "^1.5.1",
     "screenfull": "^5.0.0"
   },
@@ -38,6 +42,7 @@
     "react": "^16.8.6"
   },
   "devDependencies": {
+    "@alifd/next": "^1.20.6",
     "antd": "^3.26.6",
     "react-drag-listview": "^0.1.6",
     "umi-request": "^1.0.8"
@@ -46,5 +51,5 @@
     "node": ">=8.0.0"
   },
   "license": "MIT",
-  "gitHead": "4ea8f5c04c06eff2a33b2be473a8f7460909bebb"
+  "gitHead": "561ebf0c820fa5fd6f1a8e83d6a8de3474254921"
 }

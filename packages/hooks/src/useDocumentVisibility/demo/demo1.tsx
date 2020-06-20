@@ -7,11 +7,10 @@
  */
 
 import React, { useEffect } from 'react';
-import { useDocumentVisibility } from '@umijs/hooks';
+import { useDocumentVisibility } from 'ahooks';
 
 export default () => {
   const documentVisibility = useDocumentVisibility();
-
 
   useEffect(() => {
     if (documentVisibility === 'visible') {
@@ -22,7 +21,7 @@ export default () => {
   }, [documentVisibility]);
   return (
     <div>
-Current document visibility state: {documentVisibility}
+      Current document visibility state: {documentVisibility}
     </div>
   );
 };

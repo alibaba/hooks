@@ -11,7 +11,7 @@ import subscribeFocus from './utils/windowFocus';
 import subscribeVisible from './utils/windowVisible';
 
 
-const DEFAULT_KEY = 'UMIJS_USE_API_DEFAULT_KEY';
+const DEFAULT_KEY = 'AHOOKS_USE_REQUEST_DEFAULT_KEY';
 
 class Fetch<R, P extends any[]> {
   config: FetchConfig<R, P>;
@@ -146,9 +146,12 @@ class Fetch<R, P extends any[]> {
         if (this.config.onError) {
           this.config.onError(error, args);
         }
+        // If throwOnError, user should catch the error self,
+        // or the page will crash
+        if (this.config.throwOnError) {
+          throw error;
+        }
         console.error(error);
-        return error;
-        // throw error;
       }
     }).finally(() => {
       if (!this.unmountedFlag && currentCount === this.count) {
@@ -265,7 +268,9 @@ function useAsync<R, P extends any[], U, UU extends U = any>(
     cacheKey,
     debounceInterval,
     throttleInterval,
-    initialData
+    initialData,
+    ready = true,
+    throwOnError = false,
   } = _options;
 
   const newstFetchKey = useRef(DEFAULT_KEY);
@@ -297,7 +302,8 @@ function useAsync<R, P extends any[], U, UU extends U = any>(
     refreshOnWindowFocus,
     focusTimespan,
     debounceInterval,
-    throttleInterval
+    throttleInterval,
+    throwOnError
   }
 
 
@@ -342,7 +348,15 @@ function useAsync<R, P extends any[], U, UU extends U = any>(
   const fetchesRef = useRef(fetches);
   fetchesRef.current = fetches;
 
+  const readyMemoryParams = useRef<P>();
+
   const run = useCallback((...args: P) => {
+    if (!ready) {
+      // 没有 ready, 记录请求参数，等 ready 后，发起请求用
+      readyMemoryParams.current = args;
+      return;
+    }
+
     if (fetchKeyPersist) {
       const key = fetchKeyPersist(...args);
       newstFetchKey.current = key === undefined ? DEFAULT_KEY : key;
@@ -368,7 +382,9 @@ function useAsync<R, P extends any[], U, UU extends U = any>(
       });
     }
     return currentFetch.run(...args);
-  }, [fetchKey, subscribe])
+  }, [fetchKey, subscribe, ready])
+  const runRef = useRef(run);
+  runRef.current = run;
 
   // cache
   useEffect(() => {
@@ -380,6 +396,16 @@ function useAsync<R, P extends any[], U, UU extends U = any>(
     }
   }, [cacheKey, fetches]);
 
+  // for ready
+  const hasTriggeredByReady = useRef(false);
+  useUpdateEffect(() => {
+    if (ready) {
+      if (!hasTriggeredByReady.current && readyMemoryParams.current) {
+        runRef.current(...readyMemoryParams.current);
+      }
+      hasTriggeredByReady.current = true;
+    }
+  }, [ready]);
 
   // 第一次默认执行
   useEffect(() => {
@@ -392,7 +418,7 @@ function useAsync<R, P extends any[], U, UU extends U = any>(
         });
       } else {
         // 第一次默认执行，可以通过 defaultParams 设置参数
-        run(...defaultParams as any);
+        runRef.current(...defaultParams as any);
       }
     }
   }, []);
@@ -426,18 +452,18 @@ function useAsync<R, P extends any[], U, UU extends U = any>(
   }, []);
 
 
-  const noReady = useCallback((name: string) => () => {
+  const notExecutedWarning = useCallback((name: string) => () => {
     throw new Error(`Cannot call ${name} when service not executed once.`);
   }, [])
 
   return {
-    loading: !manual || defaultLoading,
+    loading: (ready && !manual) || defaultLoading,
     data: initialData,
     error: undefined,
     params: [],
-    cancel: noReady('cancel'),
-    refresh: noReady('refresh'),
-    mutate: noReady('mutate'),
+    cancel: notExecutedWarning('cancel'),
+    refresh: notExecutedWarning('refresh'),
+    mutate: notExecutedWarning('mutate'),
 
     ...(fetches[newstFetchKey.current] || {}),
     run,

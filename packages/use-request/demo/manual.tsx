@@ -6,8 +6,8 @@
  * desc.zh-CN: 通过设置 `options.manual = true` , 则需要手动调用 `run` 时才会触发执行异步函数。
  */
 
-import { useRequest } from '@umijs/hooks';
-import { Button, Input, message } from 'antd';
+import { useRequest } from 'ahooks';
+import { message } from 'antd';
 import React, { useState } from 'react';
 
 function changeUsername(username: string): Promise<{ success: boolean }> {
@@ -33,15 +33,15 @@ export default () => {
 
   return (
     <div>
-      <Input
+      <input
         onChange={e => setState(e.target.value)}
         value={state}
         placeholder="Please enter username"
         style={{ width: 240, marginRight: 16 }}
       />
-      <Button onClick={() => run(state)} loading={loading}>
-        Edit
-      </Button>
+      <button disabled={loading} type="button" onClick={() => run(state)}>
+        {loading ? 'loading' : 'Edit'}
+      </button>
     </div>
   );
 };

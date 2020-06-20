@@ -7,7 +7,7 @@ describe('useControllableValue', () => {
     expect(useControllableValue).toBeDefined();
   });
 
-  const setUp = (props?: Props, options?: Options): any =>
+  const setUp = (props?: Props, options?: Options<any>): any =>
     renderHook(() => useControllableValue(props, options));
 
   it('defaultValue should work', () => {

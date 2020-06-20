@@ -8,7 +8,7 @@
 
 import { Checkbox, Col, Row } from 'antd';
 import React, { useMemo, useState } from 'react';
-import { useSelections } from '@umijs/hooks'
+import { useSelections } from 'ahooks'
 
 export default () => {
   const [hideOdd, setHideOdd] = useState(false);

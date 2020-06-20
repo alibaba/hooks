@@ -1,5 +1,4 @@
-import { renderHook, act } from '@testing-library/react-hooks';
-import { useRef } from 'react';
+import { renderHook } from '@testing-library/react-hooks';
 import useScroll from '../index';
 
 describe('useScroll', () => {
@@ -7,8 +6,8 @@ describe('useScroll', () => {
     expect(useScroll).toBeDefined();
   });
   it('document body', () => {
-    const hook = renderHook(() => useScroll(() => document.body));
-    expect(hook.result.current[0].left).toBe(0);
-    expect(hook.result.current[0].top).toBe(0);
+    const hook = renderHook(() => useScroll(document.body));
+    expect(hook.result.current.left).toBe(0);
+    expect(hook.result.current.top).toBe(0);
   });
 });

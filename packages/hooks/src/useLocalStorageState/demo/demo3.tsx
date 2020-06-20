@@ -1,14 +1,13 @@
 /**
  * title: Persist objects with function updater
  * desc: function updater is also acceptable with useLocalStorageState.
- * 
+ *
  * title.zh-CN: 使用 function updater 存储
  * desc.zh-CN: useLocalStorageState 里也可以用 function updater，就像 useState 那样。
  */
 
 import React from 'react';
-import { Input } from 'antd';
-import { useLocalStorageState } from '@umijs/hooks';
+import { useLocalStorageState } from 'ahooks';
 
 interface IUser {
   id: number;
@@ -25,7 +24,7 @@ export default function () {
 
   return (
     <>
-      <Input
+      <input
         style={{ width: 200 }}
         defaultValue={user.name}
         placeholder="input user name"

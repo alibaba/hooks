@@ -6,7 +6,7 @@
  * desc.zh-CN: 普通的分页场景，我们会自动管理 `current` 和 `pageSize`。
  */
 
-import { useRequest } from '@umijs/hooks';
+import { useRequest } from 'ahooks';
 import React from 'react';
 import { List, Pagination } from 'antd';
 import Mock from 'mockjs';
@@ -49,15 +49,13 @@ export default () => {
   );
   return (
     <div>
-      <List
-        dataSource={data?.list}
-        loading={loading}
-        renderItem={(item: any) => (
-          <List.Item>
-            {item.name} - {item.email}
-          </List.Item>
-        )}
-      />
+      {loading ? <p>loading</p> :
+        <ul>
+          {data?.list?.map(item => (
+            <li key={item.email}>{item.name} - {item.email}</li>
+          ))}
+        </ul>
+      }
       <Pagination
         {...(pagination as any)}
         showQuickJumper

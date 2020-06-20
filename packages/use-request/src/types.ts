@@ -1,5 +1,6 @@
 import { DependencyList, RefObject } from 'react';
 import { PaginationConfig, Filter, Sorter } from './antdTypes';
+import { cachedKeyType } from './utils/cache';
 
 export type noop = (...args: any[]) => void;
 
@@ -44,6 +45,7 @@ export interface FetchConfig<R, P extends any[]> {
   debounceInterval?: number;
   throttleInterval?: number;
 
+  throwOnError?: boolean;
 }
 
 export interface BaseResult<R, P extends any[]> extends FetchResult<R, P> {
@@ -76,14 +78,17 @@ export type BaseOptions<R, P extends any[]> = {
   refreshOnWindowFocus?: boolean;
   focusTimespan?: number;
 
-  cacheKey?: string;
+  cacheKey?: cachedKeyType;
 
   debounceInterval?: number;
   throttleInterval?: number;
 
   initialData?: R;
 
-  requestMethod?: (service: any) => Promise<any>
+  requestMethod?: (service: any) => Promise<any>;
+
+  ready?: boolean;
+  throwOnError?: boolean;
 }
 
 export type OptionsWithFormat<R, P extends any[], U, UU extends U> = {

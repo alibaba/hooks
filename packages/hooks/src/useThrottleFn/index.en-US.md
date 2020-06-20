@@ -11,17 +11,13 @@ legacy: /side-effect/use-throttle-fn
 
 # useThrottleFn
 
-A Hook that handles function throttling.
+A hook that handle the throttle function.
 
 ## Examples
 
 ### Default usage
 
 <code src="./demo/demo1.tsx" />
-
-### Using deps properly
-
-<code src="./demo/demo2.tsx" />
 
 ## API
 
@@ -31,31 +27,28 @@ const {
   cancel
 } = useThrottleFn(
   fn: (...args: any[]) => any,
-  wait: number
-);
-
-const {
-  run,
-  cancel
-} = useThrottleFn(
-  fn: (...args: any[]) => any,
-  deps: any[],
-  wait: number
+  options?: object
 );
 ```
-
-### Result
-
-| Property | Description                               | Type                    |
-|----------|-------------------------------------------|-------------------------|
-| run      | trigger fn, parameters will be send to fn | (...args: any[]) => any |
-| cancel   | cancel current throttle                   | () => void              |
 
 ### Params
 
 | Property | Description                                                                  | Type                    | Default |
 |----------|------------------------------------------------------------------------------|-------------------------|---------|
-| fn       | function that requires throttle                                              | (...args: any[]) => any | -       |
-| deps     | dependent array, if the array changes, it will trigger fn throttling after throttling | any[]                   | -       |
-| wait     | Throttling interval in milliseconds
-                                                    | number                  | 1000    |
+| fn       |  The function to throttle.                                              | Function | -       |
+| options  | Config the throttle behavior. See the Options section below.                                                    | object                  | {}    |
+
+### Options
+
+| Property | Description                  | Type   | Default |
+|----------|------------------------------|--------|---------|
+| wait | The number of milliseconds to delay. | number | 1000 |
+| leading | Specify invoking on the leading edge of the timeout. | boolean | true |
+| trailing | Specify invoking on the trailing edge of the timeout. | boolean | true |
+
+### Result
+
+| Property | Description                               | Type                    |
+|----------|-------------------------------------------|-------------------------|
+| run      | trigger fn, parameters will be send to fn | Function |
+| cancel   | cancel current throttle                   | () => void              |
