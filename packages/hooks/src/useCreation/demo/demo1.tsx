@@ -13,6 +13,7 @@ class Foo {
   constructor() {
     this.data = Math.random();
   }
+
   data: number;
 }
 

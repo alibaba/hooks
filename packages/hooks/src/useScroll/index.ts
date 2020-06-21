@@ -1,5 +1,5 @@
-import { useEffect, useState, MutableRefObject } from 'react';
-import { getTargetElement, BasicTarget } from '../utils/dom';
+import { useEffect, useState } from 'react';
+import { BasicTarget, getTargetElement } from '../utils/dom';
 
 interface Position {
   left: number;

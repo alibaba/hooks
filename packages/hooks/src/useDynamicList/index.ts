@@ -1,4 +1,4 @@
-import { useState, useRef, useCallback, useEffect, useMemo } from 'react';
+import { useCallback, useRef, useState } from 'react';
 
 export default <T>(initialValue: T[]) => {
   const counterRef = useRef(-1);

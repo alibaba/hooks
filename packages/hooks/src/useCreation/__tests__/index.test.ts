@@ -11,13 +11,14 @@ describe('useCreation', () => {
     constructor() {
       this.data = Math.random();
     }
+
     data: number;
   }
 
   const setUp = (): any =>
     renderHook(() => {
       const [count, setCount] = useState(0);
-      const [flag, setFlag] = useState({});
+      const [, setFlag] = useState({});
       const foo = useCreation(() => new Foo(), [count]);
       return {
         foo,
@@ -29,7 +30,7 @@ describe('useCreation', () => {
 
   it('should work', () => {
     const hook = setUp();
-    const foo = hook.result.current.foo;
+    const { foo } = hook.result.current;
     act(() => {
       hook.result.current.setFlag({});
     });

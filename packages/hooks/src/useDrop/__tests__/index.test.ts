@@ -1,4 +1,4 @@
-import { renderHook, act } from '@testing-library/react-hooks';
+import { renderHook } from '@testing-library/react-hooks';
 import { useDrag, useDrop } from '../index';
 
 const mockUriEvent: any = (text: string) => ({

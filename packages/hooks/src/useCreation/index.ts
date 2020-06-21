@@ -16,7 +16,7 @@ export default function useCreation<T>(factory: () => T, deps: any[]) {
 
 function depsAreSame(oldDeps: any[], deps: any[]): boolean {
   if (oldDeps === deps) return true;
-  for (let i in oldDeps) {
+  for (const i in oldDeps) {
     if (oldDeps[i] !== deps[i]) return false;
   }
   return true;

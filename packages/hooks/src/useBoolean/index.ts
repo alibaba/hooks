@@ -1,4 +1,4 @@
-import { useCallback, useMemo } from 'react';
+import { useMemo } from 'react';
 import useToggle from '../useToggle';
 
 type IState = string | number | boolean | undefined;

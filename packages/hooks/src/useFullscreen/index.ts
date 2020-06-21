@@ -1,9 +1,9 @@
 /* eslint no-empty: 0 */
 
-import { useLayoutEffect, useRef, MutableRefObject } from 'react';
+import { useLayoutEffect, useRef } from 'react';
 import screenfull from 'screenfull';
 import useBoolean from '../useBoolean';
-import { getTargetElement, BasicTarget } from '../utils/dom';
+import { BasicTarget, getTargetElement } from '../utils/dom';
 
 export interface Options {
   onExitFull?: () => void;
