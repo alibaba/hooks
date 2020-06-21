@@ -352,7 +352,7 @@ const {
 你可以通过 `UseRequestProvider` 在项目的最外层设置全局 options。
 
 ```javascript
-import { UseRequestProvider } from '@ahooksjs/use-request';
+import { UseRequestProvider } from 'ahooks';
 
 export function ({children})=>{
   return (
