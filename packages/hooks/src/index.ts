@@ -1,4 +1,4 @@
-import useRequest from '@ahooksjs/use-request';
+import useRequest, { UseRequestProvider } from '@ahooksjs/use-request';
 import useControllableValue from './useControllableValue';
 import useDynamicList from './useDynamicList';
 import useEventEmitter from './useEventEmitter';
@@ -33,7 +33,7 @@ import useFusionTable from './useFusionTable';
 import useSet from './useSet';
 import usePersistFn from './usePersistFn';
 import useMap from './useMap';
-import useCreation from './useCreation'
+import useCreation from './useCreation';
 import { useDrag, useDrop } from './useDrop';
 import useMount from './useMount';
 import useTextSelection from './useTextSelection';
@@ -83,6 +83,7 @@ export {
   useEventListener,
   useHover,
   useRequest,
+  UseRequestProvider,
   useAntdTable,
   useUnmount,
   useSet,
@@ -97,5 +98,5 @@ export {
   useTextSelection,
   useEventTarget,
   useHistoryTravel,
-  useFusionTable
+  useFusionTable,
 };

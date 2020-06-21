@@ -351,7 +351,7 @@ const {
 You can set global options at the outermost level of the project via `UseRequestProvider`.
 
 ```javascript
-import { UseRequestProvider } from '@ahooksjs/use-request';
+import { UseRequestProvider } from 'ahooks';
 
 export function ({children})=>{
   return (
