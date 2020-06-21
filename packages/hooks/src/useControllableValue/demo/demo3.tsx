@@ -15,7 +15,7 @@ const ControllableComponent = (props: any) => {
   return (
     <input
       value={state}
-      onChange={e => {
+      onChange={(e) => {
         setState(e.target.value);
       }}
       style={{ width: 300 }}

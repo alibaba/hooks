@@ -7,14 +7,17 @@
  */
 
 import React, { Fragment } from 'react';
-import { useEventTarget } from 'ahooks'
+import { useEventTarget } from 'ahooks';
 
 export default () => {
   const [value, { reset, onChange }] = useEventTarget({ initialValue: 'this is initial value' });
 
-  return (<Fragment>
-      <input value={value} onChange={onChange} style={{ width: 200, marginRight: 20 }}/>
-      <button type="button" onClick={reset}>重置</button>
+  return (
+    <Fragment>
+      <input value={value} onChange={onChange} style={{ width: 200, marginRight: 20 }} />
+      <button type="button" onClick={reset}>
+        重置
+      </button>
     </Fragment>
   );
 };

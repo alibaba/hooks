@@ -6,16 +6,24 @@
  */
 
 import React, { Fragment } from 'react';
-import { useEventTarget } from 'ahooks'
+import { useEventTarget } from 'ahooks';
 
 export default () => {
   const [value, { onChange, reset }] = useEventTarget({
-    transformer: (val: string) => val.replace(/[^\d]/g, '')
+    transformer: (val: string) => val.replace(/[^\d]/g, ''),
   });
 
-  return (<Fragment>
-    <input value={value || ''} onChange={onChange} style={{ width: 200, marginRight: 20 }} placeholder="请输入"/>
-    <button type="button" onClick={reset}>重置</button>
-  </Fragment>
+  return (
+    <Fragment>
+      <input
+        value={value || ''}
+        onChange={onChange}
+        style={{ width: 200, marginRight: 20 }}
+        placeholder="请输入"
+      />
+      <button type="button" onClick={reset}>
+        重置
+      </button>
+    </Fragment>
   );
 };

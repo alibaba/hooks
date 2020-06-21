@@ -12,7 +12,7 @@ import React, { useState } from 'react';
 
 function changeUsername(username: string): Promise<{ success: boolean }> {
   console.log(username);
-  return new Promise(resolve => {
+  return new Promise((resolve) => {
     setTimeout(() => {
       resolve({ success: true });
     }, 1000);
@@ -28,13 +28,13 @@ export default () => {
         setState('');
         message.success(`The username was changed to "${params[0]}" !`);
       }
-    }
+    },
   });
 
   return (
     <div>
       <input
-        onChange={e => setState(e.target.value)}
+        onChange={(e) => setState(e.target.value)}
         value={state}
         placeholder="Please enter username"
         style={{ width: 240, marginRight: 16 }}

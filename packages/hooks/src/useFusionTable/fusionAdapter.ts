@@ -11,25 +11,34 @@ interface UseAntdTableFormUtils {
   [key: string]: any;
 }
 
-export const fieldAdapter = (field: Field) => ({
-  getFieldInstance: (name: string) => field.getNames().includes(name),
-  setFieldsValue: field.setValues,
-  getFieldsValue: field.getValues,
-  resetFields: field.reset,
-} as UseAntdTableFormUtils);
+export const fieldAdapter = (field: Field) =>
+  ({
+    getFieldInstance: (name: string) => field.getNames().includes(name),
+    setFieldsValue: field.setValues,
+    getFieldsValue: field.getValues,
+    resetFields: field.reset,
+  } as UseAntdTableFormUtils);
 
 export const resultAdapter = (result: any) => {
   const tableProps = {
     dataSource: result.tableProps.dataSource,
     loading: result.tableProps.loading,
     onSort: (dataIndex: String, order: String) => {
-      result.tableProps.onChange({ current: result.pagination.current, pageSize: result.pagination.pageSize }, result.filters, {
-        field: dataIndex,
-        order
-      })
+      result.tableProps.onChange(
+        { current: result.pagination.current, pageSize: result.pagination.pageSize },
+        result.filters,
+        {
+          field: dataIndex,
+          order,
+        },
+      );
     },
     onFilter: (filterParams: Object) => {
-      result.tableProps.onChange({ current: result.pagination.current, pageSize: result.pagination.pageSize }, filterParams, result.sorter);
+      result.tableProps.onChange(
+        { current: result.pagination.current, pageSize: result.pagination.pageSize },
+        filterParams,
+        result.sorter,
+      );
     },
   };
 
@@ -44,6 +53,6 @@ export const resultAdapter = (result: any) => {
   return {
     ...result,
     tableProps,
-    paginationProps
-  }
-}
+    paginationProps,
+  };
+};

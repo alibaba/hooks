@@ -3,18 +3,22 @@ import { ThrottleOptions } from '../useThrottle/throttleOptions';
 import useThrottleFn from '../useThrottleFn';
 import useUpdateEffect from '../useUpdateEffect';
 
-function useThrottleEffect(effect: EffectCallback, deps?: DependencyList, options?: ThrottleOptions) {
-  const [flag, setFlag] = useState({})
+function useThrottleEffect(
+  effect: EffectCallback,
+  deps?: DependencyList,
+  options?: ThrottleOptions,
+) {
+  const [flag, setFlag] = useState({});
 
-  const {run} = useThrottleFn(() => {
-    setFlag({})
-  }, options)
+  const { run } = useThrottleFn(() => {
+    setFlag({});
+  }, options);
 
   useEffect(() => {
-    return run()
-  }, deps)
+    return run();
+  }, deps);
 
-  useUpdateEffect(effect, [flag])
+  useUpdateEffect(effect, [flag]);
 }
 
-export default useThrottleEffect
+export default useThrottleEffect;

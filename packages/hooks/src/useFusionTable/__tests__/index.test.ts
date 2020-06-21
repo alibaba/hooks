@@ -47,14 +47,14 @@ describe('useFusionTable', () => {
     getNames: () => {
       // 根据不同的 type 返回不同的 fieldsValues
       if (searchType === 'simple') {
-        return ['name']
+        return ['name'];
       }
-      return ['name', 'email', 'phone']
+      return ['name', 'email', 'phone'];
     },
     setValues: (values: object) => {
       field.fieldsValue = {
         ...field.fieldsValue,
-        ...values
+        ...values,
       };
     },
     reset: () => {
@@ -66,8 +66,7 @@ describe('useFusionTable', () => {
     searchType = type;
   };
 
-  const setUp = ({ asyncFn: fn, options }: any) =>
-    renderHook(() => useFusionTable(fn, options));
+  const setUp = ({ asyncFn: fn, options }: any) => renderHook(() => useFusionTable(fn, options));
 
   let hook: RenderHookResult<
     { func: (...args: any[]) => Promise<{}>; opt: BaseOptions<any> },
@@ -278,11 +277,11 @@ describe('useFusionTable', () => {
           defaultParams: [
             {
               current: 2,
-              pageSize: 10
+              pageSize: 10,
             },
-            { name: 'hello', phone: '123' }
+            { name: 'hello', phone: '123' },
           ],
-          defaultType: 'advance'
+          defaultType: 'advance',
         },
       });
     });

@@ -13,7 +13,7 @@ export default () => {
   const [counter, setCounter] = useState(0);
   const ref = useRef<HTMLSpanElement>();
   useClickAway(() => {
-    setCounter(s => s + 1);
+    setCounter((s) => s + 1);
   }, ref);
 
   return (

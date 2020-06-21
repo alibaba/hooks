@@ -49,14 +49,17 @@ describe('useStorageState', () => {
   const setUp = <T>(props: StorageStateProps<T>) => {
     const storage = new TestStorage();
 
-    return renderHook(({ key, defaultValue }: StorageStateProps<T>) => {
-      const [state, setState] = useStorageState(storage, key, defaultValue);
+    return renderHook(
+      ({ key, defaultValue }: StorageStateProps<T>) => {
+        const [state, setState] = useStorageState(storage, key, defaultValue);
 
-      return { state, setState };
-    }, {
-      initialProps: props
-    });
-  }
+        return { state, setState };
+      },
+      {
+        initialProps: props,
+      },
+    );
+  };
 
   it('should be defined', () => {
     expect(useStorageState);

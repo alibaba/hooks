@@ -11,11 +11,11 @@ describe('useEventEmitter', () => {
     renderHook(() => {
       const event$ = useEventEmitter<number>();
       const [count, setCount] = useState(0);
-      event$.useSubscription(val => {
-        setCount(c => c + val);
+      event$.useSubscription((val) => {
+        setCount((c) => c + val);
       });
-      event$.useSubscription(val => {
-        setCount(c => c + val + 10);
+      event$.useSubscription((val) => {
+        setCount((c) => c + val + 10);
       });
       return {
         event$,

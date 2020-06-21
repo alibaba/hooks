@@ -33,14 +33,15 @@ export default () => {
     },
   );
 
-  useKeyPress('enter',
+  useKeyPress(
+    'enter',
     (event: any) => {
       const { value } = event.target;
       setTextRef(value);
     },
     {
-      target: inputRef
-    }
+      target: inputRef,
+    },
   );
 
   // Make sure the DOM exists

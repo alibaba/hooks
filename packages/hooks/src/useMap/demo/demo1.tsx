@@ -10,14 +10,21 @@ import React from 'react';
 import { useMap } from 'ahooks';
 
 export default () => {
-  const [map, { set, setAll, remove, reset, get }] = useMap<string | number, string>([['msg', 'hello world'], [123, 'number type']]);
+  const [map, { set, setAll, remove, reset, get }] = useMap<string | number, string>([
+    ['msg', 'hello world'],
+    [123, 'number type'],
+  ]);
 
   return (
     <div>
       <button type="button" onClick={() => set(String(Date.now()), new Date().toJSON())}>
         Add
       </button>
-      <button type="button" onClick={() => setAll([['text', 'this is a new Map']])} style={{ margin: '0 16px' }}>
+      <button
+        type="button"
+        onClick={() => setAll([['text', 'this is a new Map']])}
+        style={{ margin: '0 16px' }}
+      >
         Set new Map
       </button>
       <button type="button" onClick={() => remove('msg')} disabled={!get('msg')}>

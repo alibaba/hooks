@@ -17,7 +17,9 @@ export default () => {
       <div style={{ marginBottom: 16 }}>
         <img id="fullscreen-img" src={img} style={{ width: 320 }} alt="" />
       </div>
-      <button type="button" onClick={setFull}>setFull</button>
+      <button type="button" onClick={setFull}>
+        setFull
+      </button>
     </div>
   );
 };

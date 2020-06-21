@@ -1,5 +1,5 @@
-import { renderHook, act } from '@testing-library/react-hooks';
-import useKeyPress, { KeyFilter, EventHandler, keyEvent } from '../index';
+import { renderHook } from '@testing-library/react-hooks';
+import useKeyPress, { EventHandler, KeyFilter } from '../index';
 
 interface Props {
   keyFilter: KeyFilter;

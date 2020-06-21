@@ -1,5 +1,5 @@
-import { useEffect, useRef, MutableRefObject } from 'react';
-import { getTargetElement, BasicTarget } from '../utils/dom';
+import { useEffect, useRef } from 'react';
+import { BasicTarget, getTargetElement } from '../utils/dom';
 
 export type Target = BasicTarget<HTMLElement | Window>;
 

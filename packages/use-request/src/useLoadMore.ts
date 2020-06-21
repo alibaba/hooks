@@ -1,28 +1,27 @@
 import { useRef, useCallback, useMemo, useEffect, useState } from 'react';
 import useAsync from './useAsync';
-import { LoadMoreParams, LoadMoreOptionsWithFormat, LoadMoreResult, LoadMoreFormatReturn, LoadMoreOptions } from './types';
+import {
+  LoadMoreParams,
+  LoadMoreOptionsWithFormat,
+  LoadMoreResult,
+  LoadMoreFormatReturn,
+  LoadMoreOptions,
+} from './types';
 import useUpdateEffect from './utils/useUpdateEffect';
 
 function useLoadMore<R extends LoadMoreFormatReturn, RR>(
   service: (...p: LoadMoreParams<R>) => Promise<RR>,
-  options: LoadMoreOptionsWithFormat<R, RR>
-): LoadMoreResult<R>
+  options: LoadMoreOptionsWithFormat<R, RR>,
+): LoadMoreResult<R>;
 function useLoadMore<R extends LoadMoreFormatReturn, RR extends R = any>(
   service: (...p: LoadMoreParams<RR>) => Promise<R>,
-  options: LoadMoreOptions<R>
-): LoadMoreResult<R>
+  options: LoadMoreOptions<R>,
+): LoadMoreResult<R>;
 function useLoadMore<R extends LoadMoreFormatReturn, RR = any>(
   service: (...p: LoadMoreParams<any>) => Promise<any>,
-  options: LoadMoreOptions<R> | LoadMoreOptionsWithFormat<R, RR>
+  options: LoadMoreOptions<R> | LoadMoreOptionsWithFormat<R, RR>,
 ): LoadMoreResult<R> {
-  const {
-    refreshDeps = [],
-    ref,
-    isNoMore,
-    threshold = 100,
-    fetchKey,
-    ...restOptions
-  } = options;
+  const { refreshDeps = [], ref, isNoMore, threshold = 100, fetchKey, ...restOptions } = options;
 
   const [loadingMore, setLoadingMore] = useState(false);
 
@@ -33,14 +32,14 @@ function useLoadMore<R extends LoadMoreFormatReturn, RR = any>(
   }, []);
 
   const result: any = useAsync(service, {
-    ...restOptions as any,
-    fetchKey: d => d?.list?.length || 0,
+    ...(restOptions as any),
+    fetchKey: (d) => d?.list?.length || 0,
     onSuccess: (...params) => {
       setLoadingMore(false);
       if (options.onSuccess) {
         options.onSuccess(...params);
       }
-    }
+    },
   });
 
   const { data, run, params, reset, loading, fetches } = result;
@@ -49,7 +48,7 @@ function useLoadMore<R extends LoadMoreFormatReturn, RR = any>(
     reset();
     const [, ...restParams] = params;
     run(undefined, ...restParams);
-  }, [run, reset, params])
+  }, [run, reset, params]);
 
   const reloadRef = useRef(reload);
   reloadRef.current = reload;
@@ -60,7 +59,6 @@ function useLoadMore<R extends LoadMoreFormatReturn, RR = any>(
       reloadRef.current();
     }
   }, [...refreshDeps]);
-
 
   const dataGroup = useMemo(() => {
     let listGroup: any[] = [];
@@ -76,11 +74,11 @@ function useLoadMore<R extends LoadMoreFormatReturn, RR = any>(
     });
     return {
       ...lastNoLoadingData,
-      list: listGroup
+      list: listGroup,
     };
   }, [fetches, data]);
 
-  const noMore = isNoMore ? (!loading && !loadingMore && isNoMore(dataGroup)) : false;
+  const noMore = isNoMore ? !loading && !loadingMore && isNoMore(dataGroup) : false;
 
   const loadMore = useCallback(() => {
     if (noMore) {
@@ -104,7 +102,7 @@ function useLoadMore<R extends LoadMoreFormatReturn, RR = any>(
   /* 如果有 ref，则会上拉加载更多 */
   useEffect(() => {
     if (!ref || !ref.current) {
-      return () => { };
+      return () => {};
     }
     ref.current.addEventListener('scroll', scrollMethod);
     return () => {
@@ -121,8 +119,8 @@ function useLoadMore<R extends LoadMoreFormatReturn, RR = any>(
     loading: loading && dataGroup.list.length === 0,
     loadMore,
     loadingMore,
-    noMore
-  }
+    noMore,
+  };
 }
 
 export default useLoadMore;

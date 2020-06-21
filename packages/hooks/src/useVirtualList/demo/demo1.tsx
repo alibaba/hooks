@@ -18,7 +18,7 @@ export default () => {
     <>
       <div {...containerProps} style={{ height: '300px', overflow: 'auto' }}>
         <div {...wrapperProps}>
-          {list.map(ele => (
+          {list.map((ele) => (
             <div
               style={{
                 height: 52,

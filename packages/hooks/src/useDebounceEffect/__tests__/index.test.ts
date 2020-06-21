@@ -16,15 +16,21 @@ describe('useDebounceEffect', () => {
 
   it('useDebounceEffect should work', async () => {
     let mountedState = 1;
-    const mockEffect = jest.fn(() => {})
-    const mockCleanUp = jest.fn(() => {})
+    const mockEffect = jest.fn(() => {});
+    const mockCleanUp = jest.fn(() => {});
     act(() => {
-      hook = renderHook(() => useDebounceEffect(() => {
-        mockEffect()
-        return () => {
-          mockCleanUp()
-        }
-      }, [mountedState], {wait: 200}));
+      hook = renderHook(() =>
+        useDebounceEffect(
+          () => {
+            mockEffect();
+            return () => {
+              mockCleanUp();
+            };
+          },
+          [mountedState],
+          { wait: 200 },
+        ),
+      );
     });
     await act(async () => {
       expect(mockEffect.mock.calls.length).toEqual(0);

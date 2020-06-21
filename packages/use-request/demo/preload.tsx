@@ -11,15 +11,15 @@ import { Button } from 'antd';
 import Mock from 'mockjs';
 import React from 'react';
 
-async function getArticle(type?: string): Promise<{ data: string, time: number }> {
+async function getArticle(type?: string): Promise<{ data: string; time: number }> {
   console.log(type);
-  return new Promise(resolve => {
+  return new Promise((resolve) => {
     setTimeout(() => {
       resolve({
         data: Mock.mock('@paragraph'),
-        time: new Date().getTime()
-      })
-    }, 1000)
+        time: new Date().getTime(),
+      });
+    }, 1000);
   });
 }
 
@@ -27,22 +27,24 @@ export default () => {
   const [state, { toggle }] = useBoolean();
   const { run } = useRequest(getArticle, {
     cacheKey: 'article',
-    manual: true
+    manual: true,
   });
   return (
     <div>
       <p>When the mouse hovers over the button, the article data is preloaded.</p>
       <p>
-        <button type="button" onMouseEnter={() => run()} onClick={() => toggle()}>show/hidden</button>
+        <button type="button" onMouseEnter={() => run()} onClick={() => toggle()}>
+          show/hidden
+        </button>
       </p>
       {state && <Article />}
     </div>
-  )
+  );
 };
 
 const Article = () => {
   const { data, loading } = useRequest(getArticle, {
-    cacheKey: 'article'
+    cacheKey: 'article',
   });
 
   if (!data && loading) {
@@ -55,4 +57,4 @@ const Article = () => {
       <p>{data?.data}</p>
     </>
   );
-}
+};

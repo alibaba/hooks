@@ -11,7 +11,7 @@ import Mock from 'mockjs';
 import React from 'react';
 
 function getUsername(): Promise<string> {
-  return new Promise(resolve => {
+  return new Promise((resolve) => {
     setTimeout(() => {
       resolve(Mock.mock('@name'));
     }, 1000);
@@ -19,13 +19,13 @@ function getUsername(): Promise<string> {
 }
 
 export default () => {
-  const { data, error, loading } = useRequest(getUsername)
+  const { data, error, loading } = useRequest(getUsername);
 
   if (error) {
-    return <div>failed to load</div>
+    return <div>failed to load</div>;
   }
   if (loading) {
-    return <div>loading...</div>
+    return <div>loading...</div>;
   }
-  return <div>Username: {data}</div>
-}
+  return <div>Username: {data}</div>;
+};

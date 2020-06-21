@@ -106,7 +106,7 @@ describe('useLocalStorageState', () => {
     const hook = setUp<string | null>(LOCAL_STORAGE_KEY, 'hello world');
     expect(hook.result.current.state).toEqual('hello world');
     act(() => {
-      hook.result.current.setState(state => `${state}, zhangsan`);
+      hook.result.current.setState((state) => `${state}, zhangsan`);
     });
     expect(hook.result.current.state).toEqual('hello world, zhangsan');
   });

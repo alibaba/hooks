@@ -33,7 +33,7 @@ describe('useHistoryTravel', () => {
     });
     expect(undefHook.result.current.value).toEqual(undefined);
     expect(undefHook.result.current.backLength).toEqual(2);
-  })
+  });
 
   it('should work with initial value', async () => {
     const hook = renderHook(() => useHistoryTravel('abc'));
@@ -63,7 +63,7 @@ describe('useHistoryTravel', () => {
     const hook = renderHook(() => useHistoryTravel());
     act(() => {
       hook.result.current.setValue('ddd');
-    })
+    });
     act(() => {
       hook.result.current.setValue('abc');
     });

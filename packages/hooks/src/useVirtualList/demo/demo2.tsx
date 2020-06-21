@@ -14,7 +14,7 @@ export default () => {
   const { list, containerProps, wrapperProps, scrollTo } = useVirtualList(
     Array.from(Array(99999).keys()),
     {
-      itemHeight: i => (i % 2 === 0 ? 42 + 8 : 84 + 8),
+      itemHeight: (i) => (i % 2 === 0 ? 42 + 8 : 84 + 8),
       overscan: 10,
     },
   );
@@ -27,7 +27,7 @@ export default () => {
           placeholder="line number"
           type="number"
           value={value}
-          onChange={e => onChange(Number(e.target.value))}
+          onChange={(e) => onChange(Number(e.target.value))}
         />
         <button
           style={{ marginLeft: 8 }}
@@ -41,7 +41,7 @@ export default () => {
       </div>
       <div {...containerProps} style={{ height: '300px', overflow: 'auto' }}>
         <div {...wrapperProps}>
-          {list.map(ele => (
+          {list.map((ele) => (
             <div
               style={{
                 height: ele.index % 2 === 0 ? 42 : 84,

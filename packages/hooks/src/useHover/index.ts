@@ -7,10 +7,7 @@ export interface Options {
   onLeave?: () => void;
 }
 
-export default (
-  target: BasicTarget,
-  options?: Options,
-): boolean => {
+export default (target: BasicTarget, options?: Options): boolean => {
   const { onEnter, onLeave } = options || {};
 
   const onEnterRef = useRef(onEnter);

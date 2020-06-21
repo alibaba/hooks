@@ -13,11 +13,11 @@ export default () => {
   const [counter, setCounter] = useState(0);
 
   useKeyPress('left', () => {
-    setCounter(s => s - 1);
+    setCounter((s) => s - 1);
   });
 
   useKeyPress('right', () => {
-    setCounter(s => s + 1);
+    setCounter((s) => s + 1);
   });
 
   return (

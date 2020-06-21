@@ -16,10 +16,42 @@ export default () => {
     <div>
       <p>{current} [max: 10; min: 0;]</p>
       <div>
-        <button type="button" onClick={() => { inc() }} style={{ marginRight: 8 }}>inc()</button>
-        <button type="button" onClick={() => { dec() }} style={{ marginRight: 8 }}>dec()</button>
-        <button type="button" onClick={() => { set(3) }} style={{ marginRight: 8 }}>set(3)</button>
-        <button type="button" onClick={() => { reset() }} style={{ marginRight: 8 }}>reset()</button>
+        <button
+          type="button"
+          onClick={() => {
+            inc();
+          }}
+          style={{ marginRight: 8 }}
+        >
+          inc()
+        </button>
+        <button
+          type="button"
+          onClick={() => {
+            dec();
+          }}
+          style={{ marginRight: 8 }}
+        >
+          dec()
+        </button>
+        <button
+          type="button"
+          onClick={() => {
+            set(3);
+          }}
+          style={{ marginRight: 8 }}
+        >
+          set(3)
+        </button>
+        <button
+          type="button"
+          onClick={() => {
+            reset();
+          }}
+          style={{ marginRight: 8 }}
+        >
+          reset()
+        </button>
       </div>
     </div>
   );

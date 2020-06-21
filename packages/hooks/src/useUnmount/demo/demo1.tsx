@@ -11,20 +11,22 @@ import { message } from 'antd';
 import React from 'react';
 
 const MyComponent = () => {
-  useUnmount(
-    () => {
-      message.info('unmount');
-    }
-  );
+  useUnmount(() => {
+    message.info('unmount');
+  });
 
-  return (<div>Hello World</div>)
-}
+  return <div>Hello World</div>;
+};
 
 export default () => {
   const [state, { toggle }] = useToggle(true);
 
-  return (<>
-    <button type="button" onClick={() => toggle()}>{state ? 'unmount' : 'mount'}</button>
-    {state && <MyComponent />}
-  </>);
+  return (
+    <>
+      <button type="button" onClick={() => toggle()}>
+        {state ? 'unmount' : 'mount'}
+      </button>
+      {state && <MyComponent />}
+    </>
+  );
 };

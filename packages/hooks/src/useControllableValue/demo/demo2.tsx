@@ -17,18 +17,22 @@ const ControllableComponent = (props: any) => {
 const Parent = () => {
   const [state, setState] = useState<number>(0);
   const increment = () => {
-    setState(s => s + 1);
+    setState((s) => s + 1);
   };
 
   const decrease = () => {
-    setState(s => s - 1);
+    setState((s) => s - 1);
   };
 
   return (
     <>
       <ControllableComponent value={state} onChange={setState} />
-      <button type="button" onClick={increment} style={{ margin: '0 4px' }}>+</button>
-      <button type="button" onClick={decrease}>-</button>
+      <button type="button" onClick={increment} style={{ margin: '0 4px' }}>
+        +
+      </button>
+      <button type="button" onClick={decrease}>
+        -
+      </button>
     </>
   );
 };

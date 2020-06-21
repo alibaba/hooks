@@ -13,9 +13,7 @@ export default () => {
   const { text } = useTextSelection(() => document.querySelector('#target-dom'));
   return (
     <div>
-      <p id="target-dom">
-      Only listen to the text selection of this paragraph.
-      </p>
+      <p id="target-dom">Only listen to the text selection of this paragraph.</p>
       <p>Result：{text}</p>
     </div>
   );

@@ -1,4 +1,4 @@
-import { useState, useRef, useCallback, useEffect, useMemo } from 'react';
+import { useCallback, useRef, useState } from 'react';
 
 export default <T>(initialValue: T[]) => {
   const counterRef = useRef(-1);
@@ -30,7 +30,7 @@ export default <T>(initialValue: T[]) => {
   };
 
   const insert = (index: number, obj: T) => {
-    setList(l => {
+    setList((l) => {
       const temp = [...l];
       temp.splice(index, 0, obj);
       setKey(index);
@@ -39,10 +39,10 @@ export default <T>(initialValue: T[]) => {
   };
 
   const getKey = (index: number) => keyList.current[index];
-  const getIndex = (index: number) => keyList.current.findIndex(ele => ele === index);
+  const getIndex = (index: number) => keyList.current.findIndex((ele) => ele === index);
 
   const merge = (index: number, obj: T[]) => {
-    setList(l => {
+    setList((l) => {
       const temp = [...l];
       obj.forEach((_, i) => {
         setKey(index + i);
@@ -53,7 +53,7 @@ export default <T>(initialValue: T[]) => {
   };
 
   const replace = (index: number, obj: T) => {
-    setList(l => {
+    setList((l) => {
       const temp = [...l];
       temp[index] = obj;
       return temp;
@@ -61,7 +61,7 @@ export default <T>(initialValue: T[]) => {
   };
 
   const remove = (index: number) => {
-    setList(l => {
+    setList((l) => {
       const temp = [...l];
       temp.splice(index, 1);
 
@@ -79,7 +79,7 @@ export default <T>(initialValue: T[]) => {
     if (oldIndex === newIndex) {
       return;
     }
-    setList(l => {
+    setList((l) => {
       const newList = [...l];
       const temp = newList.filter((_: {}, index: number) => index !== oldIndex);
       temp.splice(newIndex, 0, newList[oldIndex]);
@@ -98,7 +98,7 @@ export default <T>(initialValue: T[]) => {
   };
 
   const push = (obj: T) => {
-    setList(l => {
+    setList((l) => {
       setKey(l.length);
       return l.concat([obj]);
     });
@@ -112,11 +112,11 @@ export default <T>(initialValue: T[]) => {
       console.error(e);
     }
 
-    setList(l => l.slice(0, l.length - 1));
+    setList((l) => l.slice(0, l.length - 1));
   };
 
   const unshift = (obj: T) => {
-    setList(l => {
+    setList((l) => {
       setKey(0);
       return [obj].concat(l);
     });
@@ -126,8 +126,8 @@ export default <T>(initialValue: T[]) => {
     result
       .map((item, index) => ({ key: index, item })) // add index into obj
       .sort((a, b) => getIndex(a.key) - getIndex(b.key)) // sort based on the index of table
-      .filter(item => !!item.item) // remove undefined(s)
-      .map(item => item.item); // retrive the data
+      .filter((item) => !!item.item) // remove undefined(s)
+      .map((item) => item.item); // retrive the data
 
   const shift = () => {
     // remove keys if necessary
@@ -136,7 +136,7 @@ export default <T>(initialValue: T[]) => {
     } catch (e) {
       console.error(e);
     }
-    setList(l => l.slice(1, l.length));
+    setList((l) => l.slice(1, l.length));
   };
 
   return {

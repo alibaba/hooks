@@ -4,10 +4,16 @@ import useMap from '../index';
 const setUp = (initialMap?: Iterable<[any, any]>) => renderHook(() => useMap(initialMap));
 
 it('should init map and utils', () => {
-  const { result } = setUp([["foo", "bar"], ["a", 1]]);
+  const { result } = setUp([
+    ['foo', 'bar'],
+    ['a', 1],
+  ]);
   const [map, utils] = result.current;
 
-  expect(Array.from(map)).toEqual([["foo", "bar"], ["a", 1]]);
+  expect(Array.from(map)).toEqual([
+    ['foo', 'bar'],
+    ['a', 1],
+  ]);
   expect(utils).toStrictEqual({
     get: expect.any(Function),
     set: expect.any(Function),
@@ -24,7 +30,10 @@ it('should init empty map if not initial object provided', () => {
 });
 
 it('should get corresponding value for initial provided key', () => {
-  const { result } = setUp([["foo", "bar"], ["a", 1]]);
+  const { result } = setUp([
+    ['foo', 'bar'],
+    ['a', 1],
+  ]);
   const [, utils] = result.current;
 
   let value;
@@ -36,7 +45,10 @@ it('should get corresponding value for initial provided key', () => {
 });
 
 it('should get corresponding value for existing provided key', () => {
-  const { result } = setUp([["foo", "bar"], ["a", 1]]);
+  const { result } = setUp([
+    ['foo', 'bar'],
+    ['a', 1],
+  ]);
 
   act(() => {
     result.current[1].set('a', 99);
@@ -51,7 +63,10 @@ it('should get corresponding value for existing provided key', () => {
 });
 
 it('should get undefined for non-existing provided key', () => {
-  const { result } = setUp([["foo", "bar"], ["a", 1]]);
+  const { result } = setUp([
+    ['foo', 'bar'],
+    ['a', 1],
+  ]);
   const [, utils] = result.current;
 
   let value;
@@ -63,34 +78,56 @@ it('should get undefined for non-existing provided key', () => {
 });
 
 it('should set new key-value pair', () => {
-  const { result } = setUp([["foo", "bar"], ["a", 1]]);
+  const { result } = setUp([
+    ['foo', 'bar'],
+    ['a', 1],
+  ]);
   const [, utils] = result.current;
 
   act(() => {
     utils.set('newKey', 99);
   });
 
-  expect([...result.current[0]]).toEqual([['foo', 'bar'], ['a', 1], ['newKey', 99]]);
+  expect([...result.current[0]]).toEqual([
+    ['foo', 'bar'],
+    ['a', 1],
+    ['newKey', 99],
+  ]);
 });
 
 it('should override current value if setting existing key', () => {
-  const { result } = setUp([["foo", "bar"], ["a", 1]]);
+  const { result } = setUp([
+    ['foo', 'bar'],
+    ['a', 1],
+  ]);
   const [, utils] = result.current;
 
   act(() => {
     utils.set('foo', 'qux');
   });
 
-  expect([...result.current[0]]).toEqual([['foo', 'qux'], ['a', 1]]);
+  expect([...result.current[0]]).toEqual([
+    ['foo', 'qux'],
+    ['a', 1],
+  ]);
 });
 
 it('should set new map', () => {
-  const { result } = setUp([["foo", "bar"], ["a", 1]]);
+  const { result } = setUp([
+    ['foo', 'bar'],
+    ['a', 1],
+  ]);
   const [, utils] = result.current;
 
   act(() => {
-    utils.setAll([['foo', 'foo'], ['a', 2]]);
+    utils.setAll([
+      ['foo', 'foo'],
+      ['a', 2],
+    ]);
   });
 
-  expect([...result.current[0]]).toEqual([['foo', 'foo'], ['a', 2]]);
+  expect([...result.current[0]]).toEqual([
+    ['foo', 'foo'],
+    ['a', 2],
+  ]);
 });

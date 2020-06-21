@@ -1,5 +1,4 @@
-import { renderHook, act } from '@testing-library/react-hooks';
-import { useCallback } from 'react';
+import { act, renderHook } from '@testing-library/react-hooks';
 import useControllableValue, { Options, Props } from '../index';
 
 describe('useControllableValue', () => {

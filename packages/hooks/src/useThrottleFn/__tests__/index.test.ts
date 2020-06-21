@@ -8,7 +8,7 @@ interface ParamsObj {
   wait: number;
 }
 
-const setUp = ({ fn, wait }: ParamsObj) => renderHook(() => useThrottleFn(fn, {wait}));
+const setUp = ({ fn, wait }: ParamsObj) => renderHook(() => useThrottleFn(fn, { wait }));
 
 let hook: RenderHookResult<ParamsObj, ReturnType<typeof useThrottleFn>>;
 
@@ -35,20 +35,20 @@ describe('useThrottleFn', () => {
       hook.result.current.run(1);
       hook.result.current.run(1);
       expect(count).toBe(1);
-      await sleep(450) // t: 450
+      await sleep(450); // t: 450
       hook.result.current.run(2);
       expect(count).toBe(1);
-      await sleep(100) // t: 550
+      await sleep(100); // t: 550
       hook.result.current.run(2);
       expect(count).toBe(3);
       hook.result.current.run(3);
       hook.result.current.run(3);
-      await sleep(500) // t: 1050
+      await sleep(500); // t: 1050
       expect(count).toBe(6);
       hook.result.current.run(1);
       hook.result.current.run(4);
       hook.result.current.cancel();
-      await sleep(500) // t: 1550
+      await sleep(500); // t: 1550
       expect(count).toBe(7);
     });
   });

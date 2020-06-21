@@ -1,5 +1,5 @@
 export interface DebounceOptions {
-  wait?: number
-  leading?: boolean
-  trailing?: boolean
+  wait?: number;
+  leading?: boolean;
+  trailing?: boolean;
 }

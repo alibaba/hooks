@@ -17,16 +17,20 @@ export default () => {
     message.info(`Current count is ${count}`);
   });
 
-  const showCountCommon = useCallback(
-    () => {
-      message.info(`Current count is ${count}`);
-    },
-    [count],
-  )
+  const showCountCommon = useCallback(() => {
+    message.info(`Current count is ${count}`);
+  }, [count]);
 
   return (
     <>
-      <button type="button" onClick={() => { setCount(c => c + 1) }}>Add Count</button>
+      <button
+        type="button"
+        onClick={() => {
+          setCount((c) => c + 1);
+        }}
+      >
+        Add Count
+      </button>
       <p>You can click the button to see the number of sub-component renderings</p>
 
       <div style={{ marginTop: 32 }}>
@@ -51,7 +55,9 @@ const ExpensiveTree = React.memo<{ [key: string]: any }>(({ showCount }) => {
   return (
     <div>
       <p>Render Count: {renderCountRef.current}</p>
-      <button type="button" onClick={showCount}>showParentCount</button>
+      <button type="button" onClick={showCount}>
+        showParentCount
+      </button>
     </div>
-  )
-})
+  );
+});

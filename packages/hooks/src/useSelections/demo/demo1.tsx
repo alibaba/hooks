@@ -8,7 +8,7 @@
 
 import { Checkbox, Col, Row } from 'antd';
 import React, { useMemo, useState } from 'react';
-import { useSelections } from 'ahooks'
+import { useSelections } from 'ahooks';
 
 export default () => {
   const [hideOdd, setHideOdd] = useState(false);
@@ -19,10 +19,14 @@ export default () => {
     return [1, 2, 3, 4, 5, 6, 7, 8];
   }, [hideOdd]);
 
-  const { selected, allSelected, isSelected, toggle, toggleAll, partiallySelected } = useSelections(
-    list,
-    [1]
-  );
+  const {
+    selected,
+    allSelected,
+    isSelected,
+    toggle,
+    toggleAll,
+    partiallySelected,
+  } = useSelections(list, [1]);
 
   return (
     <div>
@@ -31,12 +35,12 @@ export default () => {
         <Checkbox checked={allSelected} onClick={toggleAll} indeterminate={partiallySelected}>
           Check all
         </Checkbox>
-        <Checkbox checked={hideOdd} onClick={() => setHideOdd(v => !v)}>
+        <Checkbox checked={hideOdd} onClick={() => setHideOdd((v) => !v)}>
           Hide Odd
         </Checkbox>
       </div>
       <Row style={{ padding: '10px 0' }}>
-        {list.map(o => (
+        {list.map((o) => (
           <Col span={12} key={o}>
             <Checkbox checked={isSelected(o)} onClick={() => toggle(o)}>
               {o}

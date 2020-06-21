@@ -63,7 +63,7 @@ const dataSource = [
 ];
 
 const asyncFn = ({ pageSize, offset }: any): Promise<Result> =>
-  new Promise(resolve => {
+  new Promise((resolve) => {
     setTimeout(() => {
       resolve({
         total: dataSource.length,
@@ -74,14 +74,18 @@ const asyncFn = ({ pageSize, offset }: any): Promise<Result> =>
 
 export default () => {
   const containerRef = useRef<HTMLDivElement>(null);
-  const { data, loading, loadingMore, reload, loadMore, noMore } = useRequest((d: Result | undefined) => asyncFn({
-    offset: d?.list?.length || 0,
-    pageSize: 3,
-  }), {
-    loadMore: true,
-    ref: containerRef,
-    isNoMore: d => (d ? d.list.length >= d.total : false)
-  });
+  const { data, loading, loadingMore, reload, loadMore, noMore } = useRequest(
+    (d: Result | undefined) =>
+      asyncFn({
+        offset: d?.list?.length || 0,
+        pageSize: 3,
+      }),
+    {
+      loadMore: true,
+      ref: containerRef,
+      isNoMore: (d) => (d ? d.list.length >= d.total : false),
+    },
+  );
 
   const { list = [] } = data || {};
 
@@ -91,10 +95,8 @@ export default () => {
         {loading ? 'loading' : 'Reload'}
       </button>
       <ul>
-        {list.map(item => (
-          <li style={{ height: 50, borderBottom: '1px', lineHeight: '50px' }}>
-            {item.title}
-          </li>
+        {list.map((item) => (
+          <li style={{ height: 50, borderBottom: '1px', lineHeight: '50px' }}>{item.title}</li>
         ))}
       </ul>
       <div>

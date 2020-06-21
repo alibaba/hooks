@@ -1,6 +1,6 @@
 import { act, renderHook, RenderHookResult } from '@testing-library/react-hooks';
 import useDebounce from '../index';
-import {sleep} from '../../utils/testingHelpers'
+import { sleep } from '../../utils/testingHelpers';
 
 interface ParamsObj {
   value: any;
@@ -17,7 +17,7 @@ describe('useDebounce', () => {
   it('useDebounce should work', async () => {
     let mountedState = 1;
     act(() => {
-      hook = renderHook(() => useDebounce(mountedState, {wait: 200}));
+      hook = renderHook(() => useDebounce(mountedState, { wait: 200 }));
     });
     await act(async () => {
       expect(hook.result.current).toEqual(1);
