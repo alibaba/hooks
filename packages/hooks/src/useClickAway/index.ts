@@ -12,7 +12,7 @@ export default function useClickAway(
   eventName: string = defaultEvent,
 ) {
   const handler = useCallback(
-    event => {
+    (event) => {
       const targetElement = getTargetElement(target) as HTMLElement;
 
       if (!targetElement || targetElement.contains(event.target)) {

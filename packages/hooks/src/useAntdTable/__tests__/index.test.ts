@@ -54,7 +54,7 @@ describe('useAntdTable', () => {
     setFieldsValue(values: object) {
       this.fieldsValue = {
         ...this.fieldsValue,
-        ...values
+        ...values,
       };
     },
     resetFields() {
@@ -66,8 +66,7 @@ describe('useAntdTable', () => {
     searchType = type;
   };
 
-  const setUp = ({ asyncFn: fn, options }: any) =>
-    renderHook(() => useAntdTable(fn, options));
+  const setUp = ({ asyncFn: fn, options }: any) => renderHook(() => useAntdTable(fn, options));
 
   let hook: RenderHookResult<
     { func: (...args: any[]) => Promise<{}>; opt: BaseOptions<any> },
@@ -270,11 +269,11 @@ describe('useAntdTable', () => {
           defaultParams: [
             {
               current: 2,
-              pageSize: 10
+              pageSize: 10,
             },
-            { name: 'hello', phone: '123' }
+            { name: 'hello', phone: '123' },
           ],
-          defaultType: 'advance'
+          defaultType: 'advance',
         },
       });
     });

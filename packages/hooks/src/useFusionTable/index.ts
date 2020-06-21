@@ -4,7 +4,7 @@ import {
   BasePaginatedOptions,
   PaginatedOptionsWithFormat,
   PaginatedFormatReturn,
-  PaginatedResult
+  PaginatedResult,
 } from '@ahooksjs/use-request/lib/types';
 
 import { useAntdTable } from '..';
@@ -16,7 +16,7 @@ export {
   BasePaginatedOptions,
   PaginatedOptionsWithFormat,
   PaginatedFormatReturn,
-  PaginatedResult
+  PaginatedResult,
 };
 
 export interface Store {
@@ -33,18 +33,18 @@ export interface Field {
 
 export interface Result<Item> extends Omit<PaginatedResult<Item>, 'tableProps'> {
   paginationProps: {
-    onChange: (current: number) => void,
-    onPageSizeChange: (size: number) => void,
-    current: number,
-    pageSize: number,
-    total: number,
-  },
+    onChange: (current: number) => void;
+    onPageSizeChange: (size: number) => void;
+    current: number;
+    pageSize: number;
+    total: number;
+  };
   tableProps: {
-    dataSource: Item[],
-    loading: boolean,
-    onSort: (dataIndex: String, order: String) => void,
-    onFilter: (filterParams: Object) => void,
-  },
+    dataSource: Item[];
+    loading: boolean;
+    onSort: (dataIndex: String, order: String) => void;
+    onFilter: (filterParams: Object) => void;
+  };
   search: {
     type: 'simple' | 'advance';
     changeType: () => void;
@@ -58,23 +58,24 @@ export interface BaseOptions<U> extends Omit<BasePaginatedOptions<U>, 'paginated
   defaultType?: 'simple' | 'advance';
 }
 
-export interface OptionsWithFormat<R, Item, U> extends Omit<PaginatedOptionsWithFormat<R, Item, U>, 'paginated'> {
+export interface OptionsWithFormat<R, Item, U>
+  extends Omit<PaginatedOptionsWithFormat<R, Item, U>, 'paginated'> {
   field?: Field;
   defaultType?: 'simple' | 'advance';
 }
 
 function useFusionTable<R = any, Item = any, U extends Item = any>(
   service: CombineService<R, PaginatedParams>,
-  options: OptionsWithFormat<R, Item, U>
-): Result<Item>
+  options: OptionsWithFormat<R, Item, U>,
+): Result<Item>;
 function useFusionTable<R = any, Item = any, U extends Item = any>(
   service: CombineService<PaginatedFormatReturn<Item>, PaginatedParams>,
-  options: BaseOptions<U>
-): Result<Item>
+  options: BaseOptions<U>,
+): Result<Item>;
 
 function useFusionTable<R = any, Item = any, U extends Item = any>(
   service: CombineService<any, any>,
-  options: BaseOptions<U> | OptionsWithFormat<R, Item, U>
+  options: BaseOptions<U> | OptionsWithFormat<R, Item, U>,
 ): any {
   const ret = useAntdTable(service, {
     ...options,

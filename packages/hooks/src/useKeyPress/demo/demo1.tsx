@@ -13,12 +13,12 @@ export default () => {
   const [counter, setCounter] = useState(0);
 
   useKeyPress('ArrowUp', () => {
-    setCounter(s => s + 1);
+    setCounter((s) => s + 1);
   });
 
   // keyCode value for ArrowDown
   useKeyPress(40, () => {
-    setCounter(s => s - 1);
+    setCounter((s) => s - 1);
   });
 
   return (

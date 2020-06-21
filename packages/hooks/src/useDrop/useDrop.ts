@@ -17,10 +17,10 @@ export interface DropAreaOptions {
   onUri?: (url: string, event?: React.DragEvent) => void;
   onDom?: (content: any, event?: React.DragEvent) => void;
   onText?: (text: string, event?: React.ClipboardEvent) => void;
-};
+}
 
 const getProps = (
-  callback: (dataTransfer: DataTransfer, event: (React.DragEvent | React.ClipboardEvent)) => void, 
+  callback: (dataTransfer: DataTransfer, event: React.DragEvent | React.ClipboardEvent) => void,
   setIsHovering: (over: boolean) => void,
 ): DropProps => ({
   onDragOver: (event: React.DragEvent) => {
@@ -49,35 +49,39 @@ const useDrop = (options: DropAreaOptions = {}): [DropProps, DropAreaState] => {
   const optionsRef = useRef(options);
   optionsRef.current = options;
   const [isHovering, setIsHovering] = useState<boolean>(false);
-  const callback = useCallback((
-    dataTransfer: DataTransfer, event: (React.DragEvent | React.ClipboardEvent)
-  ) => {
-    const uri = dataTransfer.getData('text/uri-list');
-    const dom = dataTransfer.getData('custom');
-  
-    if(dom && optionsRef.current.onDom) {
-      optionsRef.current.onDom(JSON.parse(dom), event as React.DragEvent);
-      return;
-    }
-  
-    if (uri && optionsRef.current.onUri) {
-      optionsRef.current.onUri(uri, event as React.DragEvent);
-      return;
-    }
-  
-    if (dataTransfer.files && dataTransfer.files.length && optionsRef.current.onFiles) {
-      optionsRef.current.onFiles([...dataTransfer.files], event as React.DragEvent);
-      return;
-    }
-  
-    if (dataTransfer.items && dataTransfer.items.length && optionsRef.current.onText) {
-      dataTransfer.items[0].getAsString(text => {
-        optionsRef.current.onText!(text, event as React.ClipboardEvent);
-      });
-    }
-  }, []);
-  
-  const props: DropProps = useMemo(() => getProps(callback, setIsHovering), [callback, setIsHovering]);
+  const callback = useCallback(
+    (dataTransfer: DataTransfer, event: React.DragEvent | React.ClipboardEvent) => {
+      const uri = dataTransfer.getData('text/uri-list');
+      const dom = dataTransfer.getData('custom');
+
+      if (dom && optionsRef.current.onDom) {
+        optionsRef.current.onDom(JSON.parse(dom), event as React.DragEvent);
+        return;
+      }
+
+      if (uri && optionsRef.current.onUri) {
+        optionsRef.current.onUri(uri, event as React.DragEvent);
+        return;
+      }
+
+      if (dataTransfer.files && dataTransfer.files.length && optionsRef.current.onFiles) {
+        optionsRef.current.onFiles([...dataTransfer.files], event as React.DragEvent);
+        return;
+      }
+
+      if (dataTransfer.items && dataTransfer.items.length && optionsRef.current.onText) {
+        dataTransfer.items[0].getAsString((text) => {
+          optionsRef.current.onText!(text, event as React.ClipboardEvent);
+        });
+      }
+    },
+    [],
+  );
+
+  const props: DropProps = useMemo(() => getProps(callback, setIsHovering), [
+    callback,
+    setIsHovering,
+  ]);
 
   return [props, { isHovering }];
 };

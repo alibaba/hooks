@@ -11,20 +11,25 @@ import { useCreation } from 'ahooks';
 
 class Foo {
   constructor() {
-    this.data = Math.random()
+    this.data = Math.random();
   }
-  data: number
+  data: number;
 }
 
 export default function () {
-  const foo = useCreation(() => new Foo(), [])
-  const [, setFlag] = useState({})
+  const foo = useCreation(() => new Foo(), []);
+  const [, setFlag] = useState({});
   return (
     <>
-      <p>
-        {foo.data}
-      </p>
-      <button type="button" onClick={() => { setFlag({}) }}>Rerender</button>
+      <p>{foo.data}</p>
+      <button
+        type="button"
+        onClick={() => {
+          setFlag({});
+        }}
+      >
+        Rerender
+      </button>
     </>
   );
 }

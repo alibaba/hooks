@@ -15,7 +15,7 @@ export default function () {
     <>
       <input
         value={message}
-        onChange={e => {
+        onChange={(e) => {
           setMessage(e.target.value);
         }}
         placeholder="Please enter some words..."

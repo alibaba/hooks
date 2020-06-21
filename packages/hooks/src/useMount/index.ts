@@ -9,7 +9,7 @@ const useMount = (fn: any) => {
     if (fnPersist && typeof fnPersist === 'function') {
       fnPersist();
     }
-  }, [])
+  }, []);
 };
 
 export default useMount;

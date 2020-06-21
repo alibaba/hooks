@@ -16,8 +16,14 @@ export default () => {
     <>
       <div>counter current value: {count}</div>
       <div style={{ marginBottom: '10px' }}>counter previous value: {previous}</div>
-      <button type="button" onClick={() => setCount(c => c + 1)}> increase </button>
-      <button type="button" style={{ marginLeft: '10px' }} onClick={() => setCount(c => c - 1)}> decrease </button>
+      <button type="button" onClick={() => setCount((c) => c + 1)}>
+        {' '}
+        increase{' '}
+      </button>
+      <button type="button" style={{ marginLeft: '10px' }} onClick={() => setCount((c) => c - 1)}>
+        {' '}
+        decrease{' '}
+      </button>
     </>
   );
 };

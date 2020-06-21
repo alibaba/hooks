@@ -9,8 +9,8 @@
 import { Button, Form, Input, Table } from 'antd';
 import React, { useState } from 'react';
 import { WrappedFormUtils } from 'antd/lib/form/Form';
-import { useAntdTable } from 'ahooks'
-import { PaginatedParams } from 'ahooks/lib/useAntdTable'
+import { useAntdTable } from 'ahooks';
+import { PaginatedParams } from 'ahooks/lib/useAntdTable';
 
 interface Item {
   name: {
@@ -30,17 +30,20 @@ interface AppListProps {
   form: WrappedFormUtils;
 }
 
-const getTableData = ({ current, pageSize }: PaginatedParams[0], formData: Object): Promise<Result> => {
+const getTableData = (
+  { current, pageSize }: PaginatedParams[0],
+  formData: Object,
+): Promise<Result> => {
   let query = `page=${current}&size=${pageSize}`;
   Object.entries(formData).forEach(([key, value]) => {
     if (value) {
-      query += `&${key}=${value}`
+      query += `&${key}=${value}`;
     }
   });
 
   return fetch(`https://randomuser.me/api?results=55&${query}`)
-    .then(res => res.json())
-    .then(res => ({
+    .then((res) => res.json())
+    .then((res) => ({
       total: res.info.results,
       list: res.results,
     }));
@@ -74,7 +77,10 @@ const AppList = (props: AppListProps) => {
     {
       title: 'gender',
       dataIndex: 'gender',
-      filters: [{ text: 'male', value: 'male' }, { text: 'female', value: 'female' }],
+      filters: [
+        { text: 'male', value: 'male' },
+        { text: 'female', value: 'female' },
+      ],
       filteredValue: filters.gender,
     },
   ];

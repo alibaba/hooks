@@ -16,7 +16,7 @@ function isFunction<T>(obj: any): obj is T {
 function useStorageState<T>(
   storage: Storage,
   key: string,
-  defaultValue?: StorageStateDefaultValue<T>
+  defaultValue?: StorageStateDefaultValue<T>,
 ): StorageStateResult<T> {
   const [state, setState] = useState<T | undefined>(() => getStoredValue());
 

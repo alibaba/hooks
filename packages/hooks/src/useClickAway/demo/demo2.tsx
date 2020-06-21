@@ -14,7 +14,7 @@ export default () => {
 
   useClickAway(
     () => {
-      setCounter(s => s + 1);
+      setCounter((s) => s + 1);
     },
     () => document.getElementById('box2'),
   );

@@ -10,28 +10,25 @@ import { useRequest, useTextSelection } from 'ahooks';
 import { Popover, Spin } from 'antd';
 import React, { useEffect, useState } from 'react';
 
-
 const getResult = (keyword: string): Promise<string> => {
   const trimedText = keyword.trim() !== '';
-  if (!trimedText) { return Promise.resolve('') }
-  return new Promise(resolve => {
+  if (!trimedText) {
+    return Promise.resolve('');
+  }
+  return new Promise((resolve) => {
     setTimeout(() => resolve(`[translate result] ${keyword}`), 2000);
-  })
-}
+  });
+};
 
 export default () => {
-  const {
-    text = '',
-    left = 0,
-    top = 0,
-    height = 0,
-    width = 0,
-  } = useTextSelection(() => document.querySelector('#translate-dom'));
+  const { text = '', left = 0, top = 0, height = 0, width = 0 } = useTextSelection(() =>
+    document.querySelector('#translate-dom'),
+  );
 
   const [visible, setVisible] = useState(false);
 
   const { data, run, loading } = useRequest(getResult, {
-    manual: true
+    manual: true,
   });
 
   useEffect(() => {
@@ -41,7 +38,7 @@ export default () => {
     }
     setVisible(true);
     run(text);
-  }, [text])
+  }, [text]);
 
   return (
     <div>
@@ -49,21 +46,19 @@ export default () => {
         Translation of this paragraph;Translation of this paragraph;Translation of this paragraph;
       </p>
       <Popover
-        content={
-          <Spin spinning={loading}>
-            {loading ? 'Translating……' : data}
-          </Spin>
-        }
+        content={<Spin spinning={loading}>{loading ? 'Translating……' : data}</Spin>}
         visible={visible}
       >
-        <span style={{
-          position: 'fixed',
-          top: `${top}px`,
-          left: `${left}px`,
-          height: `${height}px`,
-          width: `${width}px`,
-          pointerEvents: 'none',
-        }} />
+        <span
+          style={{
+            position: 'fixed',
+            top: `${top}px`,
+            left: `${left}px`,
+            height: `${height}px`,
+            width: `${width}px`,
+            pointerEvents: 'none',
+          }}
+        />
       </Popover>
     </div>
   );

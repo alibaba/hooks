@@ -87,6 +87,6 @@ export default (target: BasicTarget, options?: Options): Result => {
       setFull: setTrue,
       exitFull: setFalse,
       toggleFull,
-    }
+    },
   ];
 };

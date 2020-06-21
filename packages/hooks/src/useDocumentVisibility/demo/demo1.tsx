@@ -14,14 +14,10 @@ export default () => {
 
   useEffect(() => {
     if (documentVisibility === 'visible') {
-      console.log(`Current document visibility state: ${documentVisibility}`)
+      console.log(`Current document visibility state: ${documentVisibility}`);
     } else {
-      console.log(`Current document visibility state: ${documentVisibility}`)
+      console.log(`Current document visibility state: ${documentVisibility}`);
     }
   }, [documentVisibility]);
-  return (
-    <div>
-      Current document visibility state: {documentVisibility}
-    </div>
-  );
+  return <div>Current document visibility state: {documentVisibility}</div>;
 };

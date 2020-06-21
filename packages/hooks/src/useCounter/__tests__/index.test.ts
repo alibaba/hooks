@@ -34,7 +34,7 @@ it('should max, min, actions work', () => {
   });
   expect(result.current[0]).toEqual(1);
   act(() => {
-    set(c => c + 2);
+    set((c) => c + 2);
   });
   expect(result.current[0]).toEqual(3);
 

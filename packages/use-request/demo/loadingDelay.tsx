@@ -10,10 +10,10 @@ import { useRequest } from 'ahooks';
 import React from 'react';
 
 async function getCurrentTime(): Promise<number> {
-  return new Promise(resolve => {
+  return new Promise((resolve) => {
     setTimeout(() => {
-      resolve(new Date().getTime())
-    }, 100)
+      resolve(new Date().getTime());
+    }, 100);
   });
 }
 
@@ -21,17 +21,19 @@ export default () => {
   const getTimeAction = useRequest(getCurrentTime);
 
   const withLoadingDelayAction = useRequest(getCurrentTime, {
-    loadingDelay: 200
+    loadingDelay: 200,
   });
 
   const trigger = () => {
     getTimeAction.run();
     withLoadingDelayAction.run();
-  }
+  };
 
   return (
     <div>
-      <p>loadingDelay can set delay loading, which can effectively prevent loading from flickering.</p>
+      <p>
+        loadingDelay can set delay loading, which can effectively prevent loading from flickering.
+      </p>
       <button type="button" onClick={trigger}>
         run
       </button>

@@ -20,7 +20,7 @@ const initRect: IRect = {
   right: NaN,
   height: NaN,
   width: NaN,
-}
+};
 
 const initState: IState = {
   text: '',
@@ -36,14 +36,7 @@ function getRectFromSelection(selection: Selection | null): IRect {
     return initRect;
   }
   const range = selection.getRangeAt(0);
-  const {
-    height,
-    width,
-    top,
-    left,
-    right,
-    bottom,
-  } = range.getBoundingClientRect();
+  const { height, width, top, left, right, bottom } = range.getBoundingClientRect();
   return {
     height,
     width,
@@ -51,7 +44,7 @@ function getRectFromSelection(selection: Selection | null): IRect {
     left,
     right,
     bottom,
-  }
+  };
 }
 
 /**
@@ -68,7 +61,7 @@ function useTextSelection(target?: BasicTarget): IState {
     const el = getTargetElement(target, document);
 
     if (!el) {
-      return () => { };
+      return () => {};
     }
 
     const mouseupHandler = () => {
@@ -93,11 +86,11 @@ function useTextSelection(target?: BasicTarget): IState {
       const selObj = window.getSelection();
       if (!selObj) return;
       selObj.removeAllRanges();
-    }
+    };
 
     el.addEventListener('mouseup', mouseupHandler);
 
-    document.addEventListener('mousedown', mousedownHandler)
+    document.addEventListener('mousedown', mousedownHandler);
 
     return () => {
       el.removeEventListener('mouseup', mouseupHandler);

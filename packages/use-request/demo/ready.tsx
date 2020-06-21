@@ -11,7 +11,7 @@ import Mock from 'mockjs';
 import React from 'react';
 
 function getUserId(): Promise<number> {
-  return new Promise(resolve => {
+  return new Promise((resolve) => {
     setTimeout(() => {
       resolve(1011);
     }, 1000);
@@ -20,7 +20,7 @@ function getUserId(): Promise<number> {
 
 function getUsername(id: number): Promise<string> {
   console.log('user id:', id);
-  return new Promise(resolve => {
+  return new Promise((resolve) => {
     setTimeout(() => {
       resolve(Mock.mock('@name'));
     }, 1000);
@@ -28,16 +28,16 @@ function getUsername(id: number): Promise<string> {
 }
 
 export default () => {
-  const userIdRequest = useRequest(getUserId)
+  const userIdRequest = useRequest(getUserId);
 
   const usernameRequest = useRequest(() => getUsername(userIdRequest.data), {
-    ready: !!userIdRequest.data
-  })
+    ready: !!userIdRequest.data,
+  });
 
   return (
     <div>
       <p>UserId: {userIdRequest.loading ? 'loading' : userIdRequest.data}</p>
       <p>Username: {usernameRequest.loading ? 'loading' : usernameRequest.data}</p>
     </div>
-  )
-}
+  );
+};

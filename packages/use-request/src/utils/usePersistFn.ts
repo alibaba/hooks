@@ -9,12 +9,15 @@ function usePersistFn(fn: any, dependencies: any = []) {
     ref.current = fn;
   }, [fn, ...dependencies]);
 
-  const persist = useCallback((...args) => {
-    const refFn = ref.current;
-    if (refFn) {
-      return refFn(...args);
-    }
-  }, [ref]);
+  const persist = useCallback(
+    (...args) => {
+      const refFn = ref.current;
+      if (refFn) {
+        return refFn(...args);
+      }
+    },
+    [ref],
+  );
 
   if (typeof fn === 'function') {
     return persist;

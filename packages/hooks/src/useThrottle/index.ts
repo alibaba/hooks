@@ -5,16 +5,13 @@ import { ThrottleOptions } from './throttleOptions';
 function useThrottle<T>(value: T, options?: ThrottleOptions) {
   const [throttled, setThrottled] = useState(value);
 
-  const {run} = useThrottleFn(
-    () => {
-      setThrottled(value);
-    },
-    options,
-  );
+  const { run } = useThrottleFn(() => {
+    setThrottled(value);
+  }, options);
 
   useEffect(() => {
-    run()
-  }, [value])
+    run();
+  }, [value]);
 
   return throttled;
 }

@@ -14,13 +14,13 @@ function useSize(target: BasicTarget): Size {
   });
 
   useLayoutEffect(() => {
-    const el = getTargetElement(target)
+    const el = getTargetElement(target);
     if (!el) {
       return () => {};
     }
 
-    const resizeObserver = new ResizeObserver(entries => {
-      entries.forEach(entry => {
+    const resizeObserver = new ResizeObserver((entries) => {
+      entries.forEach((entry) => {
         setState({
           width: entry.target.clientWidth,
           height: entry.target.clientHeight,
@@ -33,7 +33,6 @@ function useSize(target: BasicTarget): Size {
       resizeObserver.disconnect();
     };
   }, [typeof target === 'function' ? undefined : target]);
-
 
   return state;
 }

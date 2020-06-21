@@ -19,5 +19,9 @@ export default () => {
   const ref = useRef();
   useEventListener('click', clickHandler, { target: ref });
 
-  return <button ref={ref} type="button">You click {value} times</button>;
+  return (
+    <button ref={ref} type="button">
+      You click {value} times
+    </button>
+  );
 };

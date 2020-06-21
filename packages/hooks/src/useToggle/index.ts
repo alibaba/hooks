@@ -10,9 +10,7 @@ export interface Actions<T = IState> {
 
 function useToggle<T = boolean | undefined>(): [boolean, Actions<T>];
 
-function useToggle<T = IState>(
-  defaultValue: T,
-): [T, Actions<T>];
+function useToggle<T = IState>(defaultValue: T): [T, Actions<T>];
 
 function useToggle<T = IState, U = IState>(
   defaultValue: T,
@@ -37,8 +35,8 @@ function useToggle<D extends IState = IState, R extends IState = IState>(
         setState(value);
         return;
       }
-      setState(s => s === defaultValue ? reverseValueOrigin : defaultValue);
-    }
+      setState((s) => (s === defaultValue ? reverseValueOrigin : defaultValue));
+    };
     // 设置默认值
     const setLeft = () => setState(defaultValue);
     // 设置取反值
@@ -47,13 +45,10 @@ function useToggle<D extends IState = IState, R extends IState = IState>(
       toggle,
       setLeft,
       setRight,
-    }
+    };
   }, [setState]);
 
-  return [
-    state,
-    actions
-  ]
+  return [state, actions];
 }
 
 export default useToggle;

@@ -1,6 +1,6 @@
 export type cachedKeyType = string | number;
 
-const cache: { [key in cachedKeyType ]: { data: any, timer: ReturnType<typeof setTimeout> } } = {};
+const cache: { [key in cachedKeyType]: { data: any; timer: ReturnType<typeof setTimeout> } } = {};
 
 const setCache = (key: cachedKeyType, data: any) => {
   if (cache[key]) {
@@ -14,14 +14,10 @@ const setCache = (key: cachedKeyType, data: any) => {
 
   cache[key] = {
     data,
-    timer
+    timer,
   };
 };
 
-const getCache = (key: cachedKeyType) => cache[key]?.data
+const getCache = (key: cachedKeyType) => cache[key]?.data;
 
-
-export {
-  getCache,
-  setCache
-};
+export { getCache, setCache };

@@ -15,11 +15,11 @@ export default () => {
   const [updateEffectCount, setUpdateEffectCount] = useState(0);
 
   useLayoutEffect(() => {
-    setEffectCount(c => c + 1);
+    setEffectCount((c) => c + 1);
   }, [count]);
 
   useUpdateEffect(() => {
-    setUpdateEffectCount(c => c + 1);
+    setUpdateEffectCount((c) => c + 1);
     return () => {
       // do something
     };
@@ -30,7 +30,7 @@ export default () => {
       <p>effectCount: {effectCount}</p>
       <p>updateEffectCount: {updateEffectCount}</p>
       <p>
-        <button type="button" onClick={() => setCount(c => c + 1)}>
+        <button type="button" onClick={() => setCount((c) => c + 1)}>
           reRender
         </button>
       </p>

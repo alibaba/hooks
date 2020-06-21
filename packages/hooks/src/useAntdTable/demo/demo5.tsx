@@ -12,8 +12,8 @@
 import React from 'react';
 import { Button, Col, Form, Input, Row, Table, Select } from 'antd';
 import { WrappedFormUtils } from 'antd/lib/form/Form';
-import { useAntdTable } from 'ahooks'
-import { PaginatedParams } from 'ahooks/lib/useAntdTable'
+import { useAntdTable } from 'ahooks';
+import { PaginatedParams } from 'ahooks/lib/useAntdTable';
 
 const { Option } = Select;
 
@@ -35,17 +35,20 @@ interface AppListProps {
   form: WrappedFormUtils;
 }
 
-const getTableData = ({ current, pageSize }: PaginatedParams[0], formData: Object): Promise<Result> => {
+const getTableData = (
+  { current, pageSize }: PaginatedParams[0],
+  formData: Object,
+): Promise<Result> => {
   let query = `page=${current}&size=${pageSize}`;
   Object.entries(formData).forEach(([key, value]) => {
     if (value) {
-      query += `&${key}=${value}`
+      query += `&${key}=${value}`;
     }
   });
 
   return fetch(`https://randomuser.me/api?results=55&${query}`)
-    .then(res => res.json())
-    .then(res => ({
+    .then((res) => res.json())
+    .then((res) => ({
       total: res.info.results,
       list: res.results,
     }));
@@ -57,9 +60,9 @@ const AppList = (props: AppListProps) => {
     form: props.form,
     defaultParams: [
       { current: 2, pageSize: 5 },
-      { name: 'hello', email: 'abc@gmail.com', gender: 'female' }
+      { name: 'hello', email: 'abc@gmail.com', gender: 'female' },
     ],
-    defaultType: 'advance'
+    defaultType: 'advance',
   });
 
   const { type, changeType, submit, reset } = search;

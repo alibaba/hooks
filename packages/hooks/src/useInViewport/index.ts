@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from 'react';
 import 'intersection-observer';
 import { getTargetElement, BasicTarget } from '../utils/dom';
@@ -26,7 +25,7 @@ function isInViewPort(el: HTMLElement): boolean {
 
 function useInViewport(target: BasicTarget): InViewport {
   const [inViewPort, setInViewport] = useState<InViewport>(() => {
-    const el = getTargetElement(target)
+    const el = getTargetElement(target);
 
     return isInViewPort(el as HTMLElement);
   });
@@ -34,10 +33,10 @@ function useInViewport(target: BasicTarget): InViewport {
   useEffect(() => {
     const el = getTargetElement(target);
     if (!el) {
-      return () => { };
+      return () => {};
     }
 
-    const observer = new IntersectionObserver(entries => {
+    const observer = new IntersectionObserver((entries) => {
       for (const entry of entries) {
         if (entry.isIntersecting) {
           setInViewport(true);

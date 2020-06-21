@@ -8,7 +8,7 @@
 
 import React, { useState } from 'react';
 import { Table, Pagination, Field, Form, Input, Button } from '@alifd/next';
-import { useFusionTable } from 'ahooks'
+import { useFusionTable } from 'ahooks';
 
 interface Item {
   name: {
@@ -24,19 +24,22 @@ interface Result {
   list: Item[];
 }
 
-const getTableData = ({ current, pageSize, filters, sorter }, formData: Object): Promise<Result> => {
+const getTableData = (
+  { current, pageSize, filters, sorter },
+  formData: Object,
+): Promise<Result> => {
   console.log(sorter, filters);
 
   let query = `page=${current}&size=${pageSize}`;
   Object.entries(formData).forEach(([key, value]) => {
     if (value) {
-      query += `&${key}=${value}`
+      query += `&${key}=${value}`;
     }
   });
 
   return fetch(`https://randomuser.me/api?results=${pageSize}&${query}`)
-    .then(res => res.json())
-    .then(res => ({
+    .then((res) => res.json())
+    .then((res) => ({
       total: 55,
       list: res.results,
     }));
@@ -56,7 +59,11 @@ const AppList = () => {
 
   const searchFrom = (
     <div style={{ marginBottom: 16 }}>
-      <Form field={field} inline style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center' }}>
+      <Form
+        field={field}
+        inline
+        style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center' }}
+      >
         <Form.Item label="name:">
           <Input name="name" placeholder="name" />
         </Form.Item>
@@ -71,7 +78,9 @@ const AppList = () => {
           </>
         )}
         <Form.Item label=" ">
-          <Form.Submit type="primary" onClick={submit}>Search</Form.Submit>
+          <Form.Submit type="primary" onClick={submit}>
+            Search
+          </Form.Submit>
         </Form.Item>
 
         <Form.Item label=" ">
@@ -91,20 +100,16 @@ const AppList = () => {
     <div>
       {searchFrom}
 
-      <Table
-        {...tableProps}
-        filterParams={filters}
-        sort={sorter}
-        primaryKey="email"
-      >
+      <Table {...tableProps} filterParams={filters} sort={sorter} primaryKey="email">
         <Table.Column title="name" dataIndex="name.last" width={140} />
         <Table.Column title="email" dataIndex="email" width={500} />
         <Table.Column title="phone" sortable dataIndex="phone" width={500} />
         <Table.Column
           title="gender"
-          filters={
-            [{ label: 'male', value: 'male' }, { label: 'female', value: 'female' }]
-          }
+          filters={[
+            { label: 'male', value: 'male' },
+            { label: 'female', value: 'female' },
+          ]}
           dataIndex="gender"
           width={500}
         />

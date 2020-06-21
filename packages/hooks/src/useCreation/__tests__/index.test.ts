@@ -9,9 +9,9 @@ describe('useCreation', () => {
 
   class Foo {
     constructor() {
-      this.data = Math.random()
+      this.data = Math.random();
     }
-    data: number
+    data: number;
   }
 
   const setUp = (): any =>

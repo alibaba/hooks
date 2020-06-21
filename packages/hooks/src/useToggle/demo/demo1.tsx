@@ -14,9 +14,7 @@ export default () => {
 
   return (
     <div>
-      <p>
-        Effects：{`${state}`}
-      </p>
+      <p>Effects：{`${state}`}</p>
       <p>
         <button type="button" onClick={() => toggle()}>
           Toggle

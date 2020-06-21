@@ -28,7 +28,7 @@ export default function () {
         style={{ width: 200 }}
         defaultValue={user.name}
         placeholder="input user name"
-        onChange={e => {
+        onChange={(e) => {
           setUser((u: IUser) => ({ ...u, name: e.target.value }));
         }}
       />

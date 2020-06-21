@@ -29,9 +29,11 @@ describe('useEventTarget', () => {
   });
 
   it('should work with transformer', () => {
-    const hook = renderHook(() => useEventTarget({
-      transformer: (str: string) => str.toUpperCase()
-    }));
+    const hook = renderHook(() =>
+      useEventTarget({
+        transformer: (str: string) => str.toUpperCase(),
+      }),
+    );
 
     expect(hook.result.current[0]).toEqual(undefined);
     act(() => {
@@ -41,9 +43,11 @@ describe('useEventTarget', () => {
   });
 
   it('should be able to transform to any type', () => {
-    const hook = renderHook(() => useEventTarget<string, number>({
-      transformer: (num: number) => String(num)
-    }));
+    const hook = renderHook(() =>
+      useEventTarget<string, number>({
+        transformer: (num: number) => String(num),
+      }),
+    );
     expect(hook.result.current[0]).toEqual(undefined);
     act(() => {
       hook.result.current[1].onChange({ target: { value: 123 } });

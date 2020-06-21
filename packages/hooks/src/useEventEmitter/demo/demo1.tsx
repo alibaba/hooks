@@ -8,7 +8,7 @@
 
 import React, { useRef, FC } from 'react';
 import { useEventEmitter } from 'ahooks';
-import { EventEmitter } from 'ahooks/lib/useEventEmitter'
+import { EventEmitter } from 'ahooks/lib/useEventEmitter';
 
 const MessageBox: FC<{
   focus$: EventEmitter<void>;
@@ -35,7 +35,9 @@ const InputBox: FC<{
   props.focus$.useSubscription(() => {
     inputRef.current.focus();
   });
-  return <input ref={inputRef} placeholder="Enter reply" style={{ width: '100%', padding: '4px' }} />;
+  return (
+    <input ref={inputRef} placeholder="Enter reply" style={{ width: '100%', padding: '4px' }} />
+  );
 };
 
 export default function () {

@@ -7,7 +7,7 @@ export interface OptionType {
 }
 
 export default <T = any>(list: T[], options: OptionType) => {
-  const containerRef = useRef<HTMLElement>()
+  const containerRef = useRef<HTMLElement>();
   const size = useSize(containerRef as MutableRefObject<HTMLElement>);
   // 暂时禁止 cache
   // const distanceCache = useRef<{ [key: number]: number }>({});
@@ -26,7 +26,7 @@ export default <T = any>(list: T[], options: OptionType) => {
     let sum = 0;
     let capacity = 0;
     for (let i = start; i < list.length; i++) {
-      const height = (itemHeight as ((index: number) => number))(i);
+      const height = (itemHeight as (index: number) => number)(i);
       sum += height;
       if (sum >= containerHeight) {
         capacity = i;
@@ -43,7 +43,7 @@ export default <T = any>(list: T[], options: OptionType) => {
     let sum = 0;
     let offset = 0;
     for (let i = 0; i < list.length; i++) {
-      const height = (itemHeight as ((index: number) => number))(i);
+      const height = (itemHeight as (index: number) => number)(i);
       sum += height;
       if (sum >= scrollTop) {
         offset = i;

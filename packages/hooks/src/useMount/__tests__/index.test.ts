@@ -7,9 +7,7 @@ describe('useMount', () => {
   });
   it('test mount', async () => {
     const fn = jest.fn();
-    const hook = renderHook(() =>
-      useMount(fn),
-    );
+    const hook = renderHook(() => useMount(fn));
     expect(fn).toBeCalledTimes(1);
     hook.rerender();
     expect(fn).toBeCalledTimes(1);

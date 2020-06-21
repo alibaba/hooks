@@ -15,12 +15,9 @@ export default () => {
   return (
     <div>
       <div ref={ref}>
-        <p>
-          Please swipe your mouse to select any text on this paragraph.
-        </p>
+        <p>Please swipe your mouse to select any text on this paragraph.</p>
       </div>
       <p>Result：{JSON.stringify(selection)}</p>
     </div>
-
   );
 };

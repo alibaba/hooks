@@ -1,5 +1,5 @@
 export interface ThrottleOptions {
-  wait?: number
-  leading?: boolean
-  trailing?: boolean
+  wait?: number;
+  leading?: boolean;
+  trailing?: boolean;
 }

@@ -11,8 +11,7 @@
 
 import React from 'react';
 import { Table, Pagination, Field, Form, Input, Button, Select, Icon } from '@alifd/next';
-import { useFusionTable } from 'ahooks'
-
+import { useFusionTable } from 'ahooks';
 
 interface Item {
   name: {
@@ -32,13 +31,13 @@ const getTableData = ({ current, pageSize }, formData: Object): Promise<Result> 
   let query = `page=${current}&size=${pageSize}`;
   Object.entries(formData).forEach(([key, value]) => {
     if (value) {
-      query += `&${key}=${value}`
+      query += `&${key}=${value}`;
     }
   });
 
   return fetch(`https://randomuser.me/api?results=${pageSize}&${query}`)
-    .then(res => res.json())
-    .then(res => ({
+    .then((res) => res.json())
+    .then((res) => ({
       total: 55,
       list: res.results.slice(0, 10),
     }));
@@ -50,15 +49,19 @@ const AppList = () => {
     field,
     defaultParams: [
       { current: 2, pageSize: 5 },
-      { name: 'hello', email: 'abc@gmail.com', gender: 'female' }
+      { name: 'hello', email: 'abc@gmail.com', gender: 'female' },
     ],
-    defaultType: 'advance'
+    defaultType: 'advance',
   });
   const { type, changeType, submit, reset } = search;
 
   const advanceSearchForm = (
     <div>
-      <Form inline style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end' }} field={field}>
+      <Form
+        inline
+        style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end' }}
+        field={field}
+      >
         <Form.Item label="name:">
           <Input name="name" placeholder="name" />
         </Form.Item>
@@ -70,7 +73,9 @@ const AppList = () => {
         </Form.Item>
 
         <Form.Item label=" ">
-          <Form.Submit loading={loading} type="primary" onClick={submit}>Search</Form.Submit>
+          <Form.Submit loading={loading} type="primary" onClick={submit}>
+            Search
+          </Form.Submit>
         </Form.Item>
 
         <Form.Item label=" ">
@@ -78,7 +83,9 @@ const AppList = () => {
         </Form.Item>
 
         <Form.Item label=" ">
-          <Button text type="primary" onClick={changeType}>Simple Search</Button>
+          <Button text type="primary" onClick={changeType}>
+            Simple Search
+          </Button>
         </Form.Item>
       </Form>
     </div>
@@ -86,7 +93,11 @@ const AppList = () => {
 
   const searchForm = (
     <div>
-      <Form inline style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end' }} field={field}>
+      <Form
+        inline
+        style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end' }}
+        field={field}
+      >
         <Form.Item label=" ">
           <Select name="gender" defaultValue="all" onChange={submit}>
             <Select.Option value="all">all</Select.Option>
@@ -105,9 +116,10 @@ const AppList = () => {
         </Form.Item>
 
         <Form.Item label=" ">
-          <Button text type="primary" onClick={changeType}>Advanced Search</Button>
+          <Button text type="primary" onClick={changeType}>
+            Advanced Search
+          </Button>
         </Form.Item>
-
       </Form>
     </div>
   );
@@ -115,10 +127,7 @@ const AppList = () => {
   return (
     <>
       {type === 'simple' ? searchForm : advanceSearchForm}
-      <Table
-        {...tableProps}
-        primaryKey="email"
-      >
+      <Table {...tableProps} primaryKey="email">
         <Table.Column title="name" dataIndex="name.last" width={140} />
         <Table.Column title="email" dataIndex="email" width={500} />
         <Table.Column title="phone" dataIndex="phone" width={500} />
@@ -126,7 +135,7 @@ const AppList = () => {
       </Table>
       <Pagination style={{ marginTop: 16 }} {...paginationProps} />
     </>
-  )
+  );
 };
 
 export default AppList;

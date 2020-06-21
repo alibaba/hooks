@@ -13,7 +13,7 @@ const debounceFn = (gap: number) => {
   count += gap;
 };
 
-const setUp = ({ fn, wait }: ParamsObj) => renderHook(() => useDebounceFn(fn, {wait}));
+const setUp = ({ fn, wait }: ParamsObj) => renderHook(() => useDebounceFn(fn, { wait }));
 
 let hook: RenderHookResult<ParamsObj, ReturnType<typeof useDebounceFn>>;
 
@@ -35,15 +35,15 @@ describe('useDebounceFn', () => {
       hook.result.current.run(2);
       hook.result.current.run(2);
       expect(count).toBe(0);
-      await sleep(300)
+      await sleep(300);
       expect(count).toBe(2);
       hook.result.current.run(4);
       expect(count).toBe(2);
-      await sleep(300)
+      await sleep(300);
       expect(count).toBe(6);
       hook.result.current.run(4);
       hook.result.current.cancel();
-      await sleep(300)
+      await sleep(300);
       expect(count).toBe(6);
     });
   });

@@ -13,7 +13,7 @@ import Mock from 'mockjs';
 
 function getUsername(): Promise<string> {
   const userInfo = Mock.mock('@name');
-  return new Promise(resolve => {
+  return new Promise((resolve) => {
     setTimeout(() => {
       resolve(userInfo);
     }, 1000);
@@ -22,15 +22,17 @@ function getUsername(): Promise<string> {
 
 export default () => {
   const { data, loading } = useRequest(getUsername, {
-    refreshOnWindowFocus: true
-  })
+    refreshOnWindowFocus: true,
+  });
 
   return (
     <div>
-      <p>You can try to click elsewhere and click back to try. (Or hide the page and show it again)</p>
+      <p>
+        You can try to click elsewhere and click back to try. (Or hide the page and show it again)
+      </p>
       <Spin spinning={loading}>
         <div>Username: {data}</div>
       </Spin>
     </div>
-  )
-}
+  );
+};

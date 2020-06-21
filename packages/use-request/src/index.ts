@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 import { useRef, useContext } from 'react';
 import {
   BaseOptions,
@@ -69,6 +70,7 @@ function useRequest(service: any, options: any = {}) {
 
   // @ts-ignore
   const fetchProxy = (...args: any[]) =>
+    // @ts-ignore
     fetch(...args).then((res: Response) => {
       if (res.ok) {
         return res.json();

@@ -8,12 +8,12 @@ const testHooks = () => {
   const [count, setCount] = useState(0);
 
   const addCount = () => {
-    setCount(c => c + 1);
-  }
+    setCount((c) => c + 1);
+  };
   const persistFn = usePersistFn(() => count);
 
-  return { addCount, persistFn }
-}
+  return { addCount, persistFn };
+};
 
 let hook: RenderHookResult<[], ReturnType<typeof testHooks>>;
 
