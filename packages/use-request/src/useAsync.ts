@@ -328,7 +328,7 @@ function useAsync<R, P extends any[], U, UU extends U = any>(
       s[key] = data;
       return { ...s };
     });
-  }, []) as any;
+  }) as any;
 
   const [fetches, setFeches] = useState<Fetches<U, P>>(() => {
     // 如果有 缓存，则从缓存中读数据
