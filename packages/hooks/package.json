@@ -36,13 +36,15 @@
     "lodash.isequal": "^4.5.0",
     "lodash.throttle": "^4.1.1",
     "resize-observer-polyfill": "^1.5.1",
-    "screenfull": "^5.0.0"
+    "screenfull": "^5.0.0",
+    "whatwg-url": "^8.1.0"
   },
   "peerDependencies": {
     "react": "^16.8.6"
   },
   "devDependencies": {
     "@alifd/next": "^1.20.6",
+    "@types/whatwg-url": "^8.0.0",
     "antd": "^3.26.6",
     "react-drag-listview": "^0.1.6",
     "umi-request": "^1.0.8"
