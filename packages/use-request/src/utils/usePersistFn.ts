@@ -1,13 +1,11 @@
-import { useCallback, useRef, useEffect } from 'react';
+import { useCallback, useRef } from 'react';
 
-function usePersistFn(fn: any, dependencies: any = []) {
+function usePersistFn(fn: any) {
   const ref = useRef<any>(() => {
     throw new Error('Cannot call an event handler while rendering.');
   });
 
-  useEffect(() => {
-    ref.current = fn;
-  }, [fn, ...dependencies]);
+  ref.current = fn;
 
   const persist = useCallback(
     (...args) => {
