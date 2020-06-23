@@ -47,4 +47,9 @@ gulp.task('declaration', function () {
   return tsProject.src().pipe(tsProject()).pipe(gulp.dest('es/')).pipe(gulp.dest('lib/'));
 });
 
-exports.default = gulp.series('clean', 'cjs', 'es', 'declaration');
+
+gulp.task('copyReadme', async function () {
+  await gulp.src('../../README.md').pipe(gulp.dest('../../packages/hooks'));
+});
+
+exports.default = gulp.series('clean', 'cjs', 'es', 'declaration', 'copyReadme');
