@@ -168,6 +168,10 @@ class Fetch<R, P extends any[]> {
             throw error;
           }
           console.error(error);
+          // eslint-disable-next-line prefer-promise-reject-errors
+          return Promise.reject(
+            'useRequest has caught the exception, if you need to handle the exception yourself, you can set options.throwOnError to true.',
+          );
         }
       })
       .finally(() => {
