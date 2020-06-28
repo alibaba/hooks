@@ -82,6 +82,8 @@ export type BaseOptions<R, P extends any[]> = {
   focusTimespan?: number;
 
   cacheKey?: cachedKeyType;
+  cacheTime?: number;
+  staleTime?: number;
 
   debounceInterval?: number;
   throttleInterval?: number;

@@ -283,6 +283,8 @@ function useAsync<R, P extends any[], U, UU extends U = any>(
     focusTimespan = 5000,
     fetchKey,
     cacheKey,
+    cacheTime = 5 * 60 * 1000,
+    staleTime = 0,
     debounceInterval,
     throttleInterval,
     initialData,
@@ -333,13 +335,13 @@ function useAsync<R, P extends any[], U, UU extends U = any>(
   const [fetches, setFeches] = useState<Fetches<U, P>>(() => {
     // 如果有 缓存，则从缓存中读数据
     if (cacheKey) {
-      const cache = getCache(cacheKey);
-      if (cache) {
-        newstFetchKey.current = cache.newstFetchKey;
+      const cacheData = getCache(cacheKey)?.data;
+      if (cacheData) {
+        newstFetchKey.current = cacheData.newstFetchKey;
         /* 使用 initState, 重新 new Fetch */
         const newFetches: any = {};
-        Object.keys(cache.fetches).forEach((key) => {
-          const cacheFetch = cache.fetches[key];
+        Object.keys(cacheData.fetches).forEach((key) => {
+          const cacheFetch = cacheData.fetches[key];
           const newFetch = new Fetch(servicePersist, config, subscribe.bind(null, key), {
             loading: cacheFetch.loading,
             params: cacheFetch.params,
@@ -394,9 +396,9 @@ function useAsync<R, P extends any[], U, UU extends U = any>(
   runRef.current = run;
 
   // cache
-  useEffect(() => {
+  useUpdateEffect(() => {
     if (cacheKey) {
-      setCache(cacheKey, {
+      setCache(cacheKey, cacheTime, {
         fetches,
         newstFetchKey: newstFetchKey.current,
       });
@@ -417,12 +419,17 @@ function useAsync<R, P extends any[], U, UU extends U = any>(
   // 第一次默认执行
   useEffect(() => {
     if (!manual) {
-      // 如果有缓存
+      // 如果有缓存，则重新请求
       if (Object.keys(fetches).length > 0) {
-        /* 重新执行所有的 */
-        Object.values(fetches).forEach((f) => {
-          f.refresh();
-        });
+        // 如果 staleTime 是 -1，则 cache 永不过期
+        // 如果 statleTime 超期了，则重新请求
+        const cacheStartTime = getCache(cacheKey)?.startTime || 0;
+        if (!(staleTime === -1 || new Date().getTime() - cacheStartTime <= staleTime)) {
+          /* 重新执行所有的 cache */
+          Object.values(fetches).forEach((f) => {
+            f.refresh();
+          });
+        }
       } else {
         // 第一次默认执行，可以通过 defaultParams 设置参数
         runRef.current(...(defaultParams as any));
