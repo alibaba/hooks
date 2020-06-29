@@ -42,6 +42,7 @@ import useUpdate from './useUpdate';
 import useEventTarget from './useEventTarget';
 import useHistoryTravel from './useHistoryTravel';
 import useDebounceEffect from './useDebounceEffect';
+import useCookieState from './useCookieState';
 
 const useControlledValue: typeof useControllableValue = function (...args) {
   console.warn(
@@ -99,4 +100,5 @@ export {
   useEventTarget,
   useHistoryTravel,
   useFusionTable,
+  useCookieState,
 };
