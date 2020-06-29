@@ -5,7 +5,7 @@
  */
 
 import React from 'react';
-import useSetState from '..';
+import { useSetState } from 'ahooks';
 
 interface State {
   hello: string;
