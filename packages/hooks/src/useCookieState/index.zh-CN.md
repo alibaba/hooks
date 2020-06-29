@@ -30,10 +30,17 @@ legacy: /zh-CN/state/use-cookie-state
 ## API
 
 ```typescript
+interface IOptions<T = any> {
+  defaultValue?: T | (previousState?: T) => T;
+  timestamp?: number;
+  path?: string;
+  expires?: Date;
+}
+
 const [state, setState] = useCookieState<T>(
   key: string,
-  defaultValue?: T | (() => T),
-): [T?, (value?: T | ((previousState: T) => T)) => void]
+  options?: IOptions,
+): [T | undefined, (value?: T | (previousState?: T) => T) => void]
 ```
 
 如果想从 document.cookie 中删除这条数据，可以使用 `setState()` 或 `setState(undefined)` 。
