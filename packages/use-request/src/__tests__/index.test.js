@@ -413,7 +413,10 @@ describe('useRequest', () => {
     jest.runAllTimers();
     await hook.waitForNextUpdate();
     expect(success).toEqual('');
-    expect(error).toEqual('useRequest has caught the exception, if you need to handle the exception yourself, you can set options.throwOnError to true.');
+    expect(error).toEqual(
+      'useRequest has caught the exception, if you need to handle the exception yourself, you can set options.throwOnError to true.',
+    );
+  });
 
   it('useRequest throwOnError to be true should work', async () => {
     let success = '';

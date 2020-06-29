@@ -1,12 +1,12 @@
-export type cachedKeyType = string | number;
+export type CachedKeyType = string | number;
+export type cachedData = { data: any; timer: ReturnType<typeof setTimeout>; startTime: number };
 
-const cache: {
-  [key in cachedKeyType]: { data: any; timer: ReturnType<typeof setTimeout>; startTime: number };
-} = {};
+const cache = new Map<CachedKeyType, cachedData>();
 
-const setCache = (key: cachedKeyType, cacheTime: number, data: any) => {
-  if (cache[key]?.timer) {
-    clearTimeout(cache[key].timer);
+const setCache = (key: CachedKeyType, cacheTime: number, data: any) => {
+  const currentCache = cache.get(key);
+  if (currentCache?.timer) {
+    clearTimeout(currentCache.timer);
   }
 
   let timer: ReturnType<typeof setTimeout>;
@@ -14,20 +14,23 @@ const setCache = (key: cachedKeyType, cacheTime: number, data: any) => {
   if (cacheTime > -1) {
     // 数据在不活跃 cacheTime 后，删除掉
     timer = setTimeout(() => {
-      delete cache[key];
+      cache.delete(key);
     }, cacheTime);
   }
 
-  cache[key] = {
+  cache.set(key, {
     data,
     timer,
     startTime: new Date().getTime(),
-  };
+  });
 };
 
-const getCache = (key: cachedKeyType) => ({
-  data: cache[key]?.data,
-  startTime: cache[key]?.startTime,
-});
+const getCache = (key: CachedKeyType) => {
+  const currentCache = cache.get(key);
+  return {
+    data: currentCache?.data,
+    startTime: currentCache?.startTime,
+  };
+};
 
 export { getCache, setCache };

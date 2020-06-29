@@ -1,6 +1,6 @@
 import { DependencyList, RefObject } from 'react';
 import { PaginationConfig, Filter, Sorter } from './antdTypes';
-import { cachedKeyType } from './utils/cache';
+import { CachedKeyType } from './utils/cache';
 
 export type noop = (...args: any[]) => void;
 
@@ -81,7 +81,7 @@ export type BaseOptions<R, P extends any[]> = {
   refreshOnWindowFocus?: boolean;
   focusTimespan?: number;
 
-  cacheKey?: cachedKeyType;
+  cacheKey?: CachedKeyType;
   cacheTime?: number;
   staleTime?: number;
 
