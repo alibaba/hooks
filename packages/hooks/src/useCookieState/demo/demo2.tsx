@@ -1,9 +1,9 @@
 /**
- * title: Store complex types such as arrays or objects
- * desc: useCookieState will do the serialization and deserialization work automatically.
+ * title: Persist state with function updater
+ * desc: function updater is also acceptable with useCookieState.
  *
- * title.zh-CN: 存储数组或对象等复杂类型
- * desc.zh-CN: useCookieState 会自动处理序列化和反序列化的操作。
+ * title.zh-CN: 使用 function updater 存储
+ * desc.zh-CN: useCookieState 里也可以用 function updater，就像 useState 那样。
  */
 
 import React from 'react';
