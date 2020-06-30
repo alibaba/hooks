@@ -1,20 +1,19 @@
 /**
- * title: Persist state into localStorage
- * desc: Refresh this page and you will find the value of input box get restored from localStorage.
+ * title: Persist state into cookie
+ * desc: Refresh this page and you will find the value of input box get restored from cookie.
  *
- * title.zh-CN: 将 state 持久化在 localStorage 中
- * desc.zh-CN: 刷新页面后，可以看到输入框中的内容被从 localStorage 中恢复了。
+ * title.zh-CN: 将 state 持久化在 cookie 中
+ * desc.zh-CN: 刷新页面后，可以看到输入框中的内容被从 cookie 中恢复了。
  */
 
 import React from 'react';
 import useCookieState, { IOptions } from '../index';
-// import { IOptions } from '../index'
 
 export default function () {
-  const options: IOptions<string> = {
+  const options: IOptions = {
     defaultValue: 'Hello',
   };
-  const [message, setMessage] = useCookieState<string>('user-message', options);
+  const [message, setMessage] = useCookieState('user-message', options);
   return (
     <>
       <input

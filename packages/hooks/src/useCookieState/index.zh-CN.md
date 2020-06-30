@@ -19,28 +19,26 @@ legacy: /zh-CN/state/use-cookie-state
 
 <code src="./demo/demo1.tsx" />
 
-### 存储对象
-
-<code src="./demo/demo2.tsx" />
-
 ### 使用 function updater 存储
 
-<code src="./demo/demo3.tsx" />
+<code src="./demo/demo2.tsx" />
 
 ## API
 
 ```typescript
-interface IOptions<T = any> {
-  defaultValue?: T | (previousState?: T) => T;
-  timestamp?: number;
-  path?: string;
-  expires?: Date;
+import Cookies from 'js-cookie';
+
+interface IOptions extends Cookies.CookieAttributes{
+  defaultValue?: string | (() => string),
 }
 
-const [state, setState] = useCookieState<T>(
-  key: string,
+function useCookieState(
+  cookieKey: string,
   options?: IOptions,
-): [T | undefined, (value?: T | (previousState?: T) => T) => void]
+): [
+  string | null,
+  (newValue?: string | ((prevState: string) => string), options?: Cookies.CookieAttributes) => void,
+]
 ```
 
-如果想从 document.cookie 中删除这条数据，可以使用 `setState()` 或 `setState(undefined)` 。
+如果想从 document.cookie 中删除这条数据，可以使用 `setState()` 或 `setState(null)` 或 `setState(undefined)`。

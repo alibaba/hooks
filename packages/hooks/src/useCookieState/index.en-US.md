@@ -19,27 +19,25 @@ A Hook for persisting state into cookie.
 
 <code src="./demo/demo1.tsx" />
 
-### Persist objects
-
-<code src="./demo/demo2.tsx" />
-
 ### Persist objects with function updater
 
-<code src="./demo/demo3.tsx" />
+<code src="./demo/demo2.tsx" />
 
 ## API
 
 ```typescript
-interface IOptions<T = any> {
-  defaultValue?: T | (previousState?: T) => T;
-  timestamp?: number;
-  path?: string;
-  expires?: Date;
+import Cookies from 'js-cookie';
+
+interface IOptions extends Cookies.CookieAttributes{
+  defaultValue?: string | (() => string),
 }
 
-const [state, setState] = useCookieState<T>(
-  key: string,
+function useCookieState(
+  cookieKey: string,
   options?: IOptions,
-): [T | undefined, (value?: T | (previousState?: T) => T) => void]
+): [
+  string | null,
+  (newValue?: string | ((prevState: string) => string), options?: Cookies.CookieAttributes) => void,
+]
 ```
-If you want to delete this record from document.cookie, you can use `setState()` or `setState(undefined)`.
+If you want to delete this record from document.cookie, you can use `setState()` or `setState(null)` or `setState(undefined)`.
