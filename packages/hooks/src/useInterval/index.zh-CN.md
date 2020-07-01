@@ -4,8 +4,8 @@ nav:
   title: Hooks
   path: /hooks
 group:
-  title: State
-  path: /state
+  title: SideEffect
+  path: /side-effect
 legacy: /zh-CN/state/use-interval
 ---
 
