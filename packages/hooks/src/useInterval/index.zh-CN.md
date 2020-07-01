@@ -20,7 +20,7 @@ legacy: /zh-CN/state/use-interval
 ## API
 
 ```javascript
-useInterval(fn: () => void, interval: number, options?: options);
+useInterval(fn: () => void, interval: number, options?: Options);
 ```
 
 ### 参数
