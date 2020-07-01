@@ -8,7 +8,7 @@ function useInterval(
   },
 ): void {
   const immediate = options?.immediate;
-  const timerRef = useRef<{ (): void }>();
+  const timerRef = useRef<() => void>();
 
   timerRef.current = fn;
 
