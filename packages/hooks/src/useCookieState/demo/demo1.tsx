@@ -13,7 +13,7 @@ export default function () {
   const options: IOptions = {
     defaultValue: 'Hello',
   };
-  const [message, setMessage] = useCookieState('user-message', options);
+  const [message, setMessage] = useCookieState('useCookieStateString', options);
   return (
     <>
       <input

@@ -6,23 +6,27 @@ function isFunction(obj: any): obj is Function {
 }
 
 export interface IOptions extends Cookies.CookieAttributes {
-  defaultValue?: string | (() => string);
+  defaultValue?: TCookieState | ((cookieState?: string) => TCookieState);
 }
+
+export type TCookieState = string | null | undefined;
+
+export type TCookieOptions = Cookies.CookieAttributes;
 
 function useCookieState(
   cookieKey: string,
   options?: IOptions,
 ): [
-  string | null,
+  TCookieState,
   (
-    newValue?: string | ((prevState: string) => string | null),
+    newValue?: string | ((prevState?: TCookieState) => TCookieState),
     options?: Cookies.CookieAttributes,
   ) => void,
 ] {
-  const [state, setState] = useState<string | null>(() => getDefaultValue());
+  const [state, setState] = useState<TCookieState>(() => getDefaultValue());
 
   // 获取defaultValue
-  function getDefaultValue(): string | null {
+  function getDefaultValue(): TCookieState {
     const cookieValue = Cookies.get(cookieKey);
     if (cookieValue) return cookieValue;
     if (options && options.defaultValue) {
@@ -34,21 +38,21 @@ function useCookieState(
 
   const updateState = useCallback(
     (
-      newValue?: string | ((prevState: string) => string | null),
-      option: Cookies.CookieAttributes = options,
+      newValue?: string | ((prevState: TCookieState) => TCookieState),
+      option?: Cookies.CookieAttributes,
     ) => {
-      const { defaultValue, ...cookieOptions } = option;
-      if (newValue === undefined || newValue === null) {
-        Cookies.remove(cookieKey);
-        setState(null);
-      } else if (isFunction(newValue)) {
-        const currentState = newValue(Cookies.get(cookieKey) || getDefaultValue());
-        Cookies.set(cookieKey, currentState, cookieOptions);
-        setState(currentState);
-      } else {
-        Cookies.set(cookieKey, newValue, cookieOptions);
-        setState(newValue);
-      }
+      const { defaultValue, ...cookieOptions } = option || options || {};
+      setState(
+        (prevState: TCookieState): TCookieState => {
+          const value = isFunction(newValue) ? newValue(prevState) : newValue;
+          if (newValue === undefined || newValue === null) {
+            Cookies.remove(cookieKey);
+          } else {
+            Cookies.set(cookieKey, value, cookieOptions);
+          }
+          return value;
+        },
+      );
     },
     [cookieKey, options],
   );

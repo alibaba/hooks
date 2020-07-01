@@ -8,7 +8,7 @@
 
 import React from 'react';
 import { useCookieState } from 'ahooks';
-import { TCookieState, IOptions } from 'ahooks/lib/useCookieState';
+import { TCookieState, TCookieOptions, IOptions } from 'ahooks/lib/useCookieState';
 
 const inc = (v: TCookieState): TCookieState => {
   return Number.isNaN(Number(v)) ? '0' : `${Number(v) + 1}`;
@@ -19,18 +19,23 @@ const dec = (v: TCookieState): TCookieState => {
 };
 
 export default function App() {
-  const [value, setValue] = useCookieState('useCookieStateUpdater', {
+  const [value, setValue] = useCookieState('useCookieStateOptions', {
     defaultValue: inc,
   } as IOptions);
+
+  const options: TCookieOptions = {
+    path: '/',
+    expires: (() => new Date(+new Date() + 10000))(),
+  };
 
   return (
     <>
       <p>{value || '0'}</p>
-      <button type="button" style={{ marginRight: '16px' }} onClick={() => setValue(inc)}>
-        inc +
+      <button type="button" style={{ marginRight: '16px' }} onClick={() => setValue(inc, options)}>
+        inc + (10s expires)
       </button>
-      <button type="button" style={{ marginRight: '16px' }} onClick={() => setValue(dec)}>
-        dec -
+      <button type="button" style={{ marginRight: '16px' }} onClick={() => setValue(dec, options)}>
+        dec - (10s expires)
       </button>
       <button type="button" onClick={() => setValue('0')}>
         reset
