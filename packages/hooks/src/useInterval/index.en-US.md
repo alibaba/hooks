@@ -31,7 +31,7 @@ useInterval(fn: () => void, interval: number, options?: Options);
 |----------|--------------------------------------|----------------------|
 | fn  | The function to setInterval | () => void |
 | interval | Intervals | () => void |
-| options | Config the interval behavior. See the Options section below.  | options |
+| options | Config the interval behavior. See the Options section below.  | Options |
 
 
 ### Options
