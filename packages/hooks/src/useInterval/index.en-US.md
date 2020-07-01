@@ -30,8 +30,8 @@ useInterval(fn: () => void, interval: number, options?: Options);
 | Property | Description | Type |
 |----------|--------------------------------------|----------------------|
 | fn  | The function to setInterval | () => void |
-| interval | Intervals | () => void |
-| options | Config the interval behavior. See the Options section below.  | Options |
+| delay | The timer should delay in between executions of the specified function or code | number |
+| options | Config the interval behavior. See the Options section below  | Options |
 
 
 ### Options

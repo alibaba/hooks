@@ -2,7 +2,7 @@ import { useEffect, useRef } from 'react';
 
 function useInterval(
   fn: () => void,
-  interval: number,
+  delay: number,
   options?: {
     immediate?: boolean;
   },
@@ -13,19 +13,18 @@ function useInterval(
   timerRef.current = fn;
 
   useEffect(() => {
-    let timer: NodeJS.Timeout;
-    if (typeof interval !== 'undefined' || interval !== null) {
+    if (typeof delay !== 'undefined' || delay !== null) {
       if (immediate) {
-        timerRef?.current();
+        timerRef.current?.()
       }
-      timer = setInterval(() => {
-        timerRef?.current();
-      }, interval);
+      const timer = setInterval(() => {
+        timerRef.current?.()
+      }, delay);
+      return () => {
+        clearInterval(timer);
+      };
     }
-    return () => {
-      clearInterval(timer);
-    };
-  }, [interval]);
+  }, [delay]);
 }
 
 export default useInterval;
