@@ -120,7 +120,12 @@ export default <T = any>(list: T[], options: OptionType) => {
       style: { overflowY: 'auto' as const },
     },
     wrapperProps: {
-      style: { width: '100%', height: totalHeight, paddingTop: getDistanceTop(state.start) },
+      style: {
+        width: '100%',
+        height: totalHeight,
+        paddingTop: getDistanceTop(state.start),
+        boxSizing: 'border-box',
+      },
     },
   };
 };
