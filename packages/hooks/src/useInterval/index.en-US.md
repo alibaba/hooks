@@ -22,7 +22,7 @@ A hook that can handle the setInterval timer function.
 ## API
 
 ```javascript
-useInterval(fn: () => void, interval: number, options?: options);
+useInterval(fn: () => void, interval: number, options?: Options);
 ```
 
 ### Params
