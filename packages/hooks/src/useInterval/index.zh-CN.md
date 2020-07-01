@@ -25,14 +25,15 @@ useInterval(fn: () => void, interval: number, options?: options);
 
 ### 参数
 
-| 参数 | 说明 | 类型 | 默认值 |
-|------|---------------------------|--------|--------|
-| fn   | 需要循环执行的函数 | () => void | - |
-| options  | Config the setInterval behavior. See the Options section below | object  | - |
+| 参数 | 说明 | 类型 |
+|------|---------------------------|--------|
+| fn   | 要重复调用的函数 | () => void |
+| interval | 间隔时间 | number |
+| options  | 配置计时器的行为，详见下面的 Options   | object  |
 
 
 ### Options
 
 | 参数  | 说明 | 类型 | 默认值 |
 |-------|--------------------------|--------|--------|
-| immediate | Whether it is executed immediately for the first time | boolean | false |
+| immediate | 参数可以用来控制是否在首次渲染时立即执行 | boolean | false |

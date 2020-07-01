@@ -25,16 +25,17 @@ A hook that can handle the setInterval timer function.
 useInterval(fn: () => void, interval: number, options?: options);
 ```
 
-### Result
+### Params
 
 | Property | Description | Type |
 |----------|--------------------------------------|----------------------|
 | fn  | The function to setInterval | () => void |
-| options | add key | (key: any) => void |
+| interval | Intervals | () => void |
+| options | Config the interval behavior. See the Options section below.  | options |
 
 
-### Params
+### Options
 
 | Property | Description | Type | Default |
 |---------|---------------------------------------|----------------------|-------｜
-| immediate | Whether it is executed immediately for the first time  | boolean | - |
+| immediate | Whether it is executed immediately for the first time  | boolean | false |
