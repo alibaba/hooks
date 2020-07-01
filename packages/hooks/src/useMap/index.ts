@@ -22,14 +22,14 @@ function useMap<K, T>(initialValue?: Iterable<readonly [K, T]>): [Map<K, T>, Act
     () => ({
       set: (key, entry) => {
         map.set(key, entry);
-        set(new Map([...map]));
+        set(new Map(Array.from(map)));
       },
       setAll: (newMap) => {
         set(new Map(newMap));
       },
       remove: (key) => {
         map.delete(key);
-        set(new Map([...map]));
+        set(new Map(Array.from(map)));
       },
       reset: () => set(initialMap),
     }),

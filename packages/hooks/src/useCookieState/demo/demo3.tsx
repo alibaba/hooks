@@ -6,7 +6,7 @@
  * desc.zh-CN: useCookieState 里也可以用 function updater，就像 useState 那样。
  */
 
-import React from 'react';
+import * as React from 'react';
 import { useCookieState } from 'ahooks';
 import { TCookieState, TCookieOptions, IOptions } from 'ahooks/lib/useCookieState';
 
