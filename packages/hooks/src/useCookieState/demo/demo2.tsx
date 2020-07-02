@@ -8,20 +8,19 @@
 
 import * as React from 'react';
 import { useCookieState } from 'ahooks';
-import { TCookieState, IOptions } from 'ahooks/lib/useCookieState';
 
-const inc = (v: TCookieState): TCookieState => {
+const inc = (v: string | null) => {
   return Number.isNaN(Number(v)) ? '0' : `${Number(v) + 1}`;
 };
 
-const dec = (v: TCookieState): TCookieState => {
+const dec = (v: string | null) => {
   return Number.isNaN(Number(v)) ? '0' : `${Number(v) - 1}`;
 };
 
 export default function App() {
   const [value, setValue] = useCookieState('useCookieStateUpdater', {
     defaultValue: inc,
-  } as IOptions);
+  });
 
   return (
     <>

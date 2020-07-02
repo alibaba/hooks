@@ -7,10 +7,10 @@
  */
 
 import * as React from 'react';
-import useCookieState, { IOptions } from 'ahooks/lib/useCookieState';
+import useCookieState from 'ahooks/lib/useCookieState';
 
 export default function () {
-  const options: IOptions = {
+  const options = {
     defaultValue: 'Hello',
   };
   const [message, setMessage] = useCookieState('useCookieStateString', options);

@@ -1,29 +1,28 @@
 /**
- * title: Persist state with function updater
- * desc: function updater is also acceptable with useCookieState.
+ * title: Use the option property to configure cookie
+ * desc: Can be configured： defaultValue、expires、path、domain、secure、sameSite; Details: Options
  *
- * title.zh-CN: 使用 function updater 存储
- * desc.zh-CN: useCookieState 里也可以用 function updater，就像 useState 那样。
+ * title.zh-CN: 使用otiopn配置cookie
+ * desc.zh-CN: 可配置属性：默认值、有效时间、路径、域名、协议、跨域; 详见: Options
  */
 
 import * as React from 'react';
 import { useCookieState } from 'ahooks';
-import { TCookieState, TCookieOptions, IOptions } from 'ahooks/lib/useCookieState';
 
-const inc = (v: TCookieState): TCookieState => {
+const inc = (v?: string | null) => {
   return Number.isNaN(Number(v)) ? '0' : `${Number(v) + 1}`;
 };
 
-const dec = (v: TCookieState): TCookieState => {
+const dec = (v?: string | null) => {
   return Number.isNaN(Number(v)) ? '0' : `${Number(v) - 1}`;
 };
 
 export default function App() {
   const [value, setValue] = useCookieState('useCookieStateOptions', {
     defaultValue: inc,
-  } as IOptions);
+  });
 
-  const options: TCookieOptions = {
+  const options = {
     path: '/',
     expires: (() => new Date(+new Date() + 10000))(),
   };

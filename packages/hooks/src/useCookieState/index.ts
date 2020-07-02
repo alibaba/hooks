@@ -45,7 +45,7 @@ function useCookieState(
       setState(
         (prevState: TCookieState): TCookieState => {
           const value = isFunction(newValue) ? newValue(prevState) : newValue;
-          if (newValue === undefined || newValue === null) {
+          if (value === undefined || value === null) {
             Cookies.remove(cookieKey);
           } else {
             Cookies.set(cookieKey, value, cookieOptions);

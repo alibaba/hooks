@@ -25,40 +25,6 @@ group:
 ## API
 
 ```typescript
-interface TCookieOptions {
-  /**
-   * Define when the cookie will be removed. Value can be a Number
-   * which will be interpreted as days from time of creation or a
-   * Date instance. If omitted, the cookie becomes a session cookie.
-   */
-  expires?: number | Date;
-  /**
-   * Define the path where the cookie is available. Defaults to '/'
-   */
-  path?: string;
-  /**
-   * Define the domain where the cookie is available. Defaults to
-   * the domain of the page where the cookie was created.
-   */
-  domain?: string;
-  /**
-   * A Boolean indicating if the cookie transmission requires a
-   * secure protocol (https). Defaults to false.
-   */
-  secure?: boolean;
-  /**
-   * Asserts that a cookie must not be sent with cross-origin requests,
-   * providing some protection against cross-site request forgery
-   * attacks (CSRF)
-   */
-  sameSite?: 'strict' | 'Strict' | 'lax' | 'Lax' | 'none' | 'None';
-  [property: string]: any;
-}
-
-interface IOptions extends TCookieOptions{
-  defaultValue?: string | (() => string),
-}
-
 type TCookieState = string | undefined | null;
 
 function useCookieState(
@@ -69,5 +35,29 @@ function useCookieState(
   (newValue?: TCookieState | ((prevState: TCookieState) => TCookieState), options?: TCookieOptions) => void,
 ]
 ```
-
 如果想从 document.cookie 中删除这条数据，可以使用 `setState()` 或 `setState(null)` 或 `setState(undefined)`。
+
+### Params
+
+| 参数         | 说明                     | 类型                 | 默认值 |
+| ------------ | ------------------------ | -------------------- | ------ |
+| cookieKey    | 存储在本地cookie的key值 | string | - |
+| options | 可选项，配置cookie属性, 详见Options | object | - |
+
+### Result
+
+| 参数     | 说明        | 类型                                                                                                 |
+| -------- | ------------ | ---------------------------------------------------------------------------------------------------- |
+| state    | 本地cookie值   | string \| undefined \| null                                                                          |
+| setState | 设置 cookie，根据options属性，同步至本地cookie | (string \| null \| undefined \| ((prevState?: string \| null) => string \| null \| undefined)), options) => void |
+
+### Options
+
+| 参数     | 说明                                              | 类型                  | 默认值 |
+| -------- | ------------------------------------------------- | --------------------- | ------ |
+| defaultValue | 可选，定义cookie默认值，但不同步到本地cookie | string \| null \| undefined \| (() => string \| null \| undefined) | undefined |
+| expires  | 可选，定义cookie存储有效时间，如为数字单位为天 | number \| Date | - |
+| path | 可选，定义cookie可用的路径 | string | '/' |
+| domain | 可选，定义cookie可用的域。默认为 cookie创建的域名 | string | - |
+| secure | 可选，Cookie传输是否需要https 安全协议 | boolean | false |
+| sameSite | 可选，Cookie不能与跨域请求一起发送 | 'strict' \| 'lax' \| 'none' | - |
