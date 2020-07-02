@@ -37,5 +37,5 @@ useInterval(fn: () => void, interval: number, options?: Options);
 ### Options
 
 | Property | Description | Type | Default |
-|---------|---------------------------------------|----------------------|-------｜
+|---------|---------------------------------------|----------------------|-------|
 | immediate | Whether it is executed immediately for the first time  | boolean | false |

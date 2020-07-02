@@ -10,37 +10,54 @@ import React, { useState } from 'react';
 import { useInterval } from 'ahooks';
 
 export default () => {
-  const [count, setCount] = useState(1);
-  const [immediate, setImmediate] = useState(false);
-  const [interval, setInterval] = useState(1000);
+  const [count, setCount] = useState(0);
+  const [immediateCount, setImmediateCount] = useState(0);
+  const [interval, setInterval] = useState(3000);
 
   useInterval(
     () => {
       log();
     },
     interval,
-    { immediate: immediate },
+    { immediate: false },
+  );
+
+  useInterval(
+    () => {
+      immediateLog();
+    },
+    interval,
+    { immediate: true },
   );
 
   function log() {
     setCount(count + 1);
-    console.log('count', count, 'immediate', immediate, 'interval:', interval);
   }
-
+  function immediateLog() {
+    setImmediateCount(immediateCount + 1);
+  }
   return (
     <div>
-      <p style={{ marginTop: 16 }}> count: {count} </p>
+      <p style={{ marginTop: 16 }}>immediate: false count: {count} </p>
+      <p style={{ marginTop: 16 }}>immediate: true count: {immediateCount} </p>
       <p style={{ marginTop: 16 }}> interval: {interval} </p>
+      <button onClick={() => setInterval(interval + 1000)} style={{ marginRight: 12 }}>
+        interval + 1000
+      </button>
       <button
-        type="button"
+        style={{ marginRight: 12 }}
         onClick={() => {
-          setImmediate(!immediate);
+          setInterval(3000);
         }}
       >
-        Click change immediate!
+        reset interval
       </button>
-      <button type="button" onClick={() => setInterval(interval * 2)}>
-        Click change interval!
+      <button
+        onClick={() => {
+          setInterval(null);
+        }}
+      >
+        clear
       </button>
     </div>
   );

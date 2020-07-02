@@ -13,17 +13,16 @@ function useInterval(
   timerRef.current = fn;
 
   useEffect(() => {
-    if (typeof delay !== 'undefined' || delay !== null) {
-      if (immediate) {
-        timerRef.current?.()
-      }
-      const timer = setInterval(() => {
-        timerRef.current?.()
-      }, delay);
-      return () => {
-        clearInterval(timer);
-      };
+    if (delay === undefined || delay === null) return;
+    if (immediate) {
+      timerRef.current?.();
     }
+    const timer = setInterval(() => {
+      timerRef.current?.();
+    }, delay);
+    return () => {
+      clearInterval(timer);
+    };
   }, [delay]);
 }
 
