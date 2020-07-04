@@ -14,7 +14,7 @@ export default () => {
 
   return (
     <div>
-      <p>{current} [max: 10; min: 0;]</p>
+      <p>{current} [max: 10; min: 1;]</p>
       <div>
         <button
           type="button"
