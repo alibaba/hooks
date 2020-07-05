@@ -1,7 +1,7 @@
 import { useEffect, EffectCallback, DependencyList, useState } from 'react';
 import { DebounceOptions } from '../useDebounce/debounceOptions';
-import useDebounceFn from '../useDebounceFn';
-import useUpdateEffect from '../useUpdateEffect';
+import useDebounceFn from '../../useDebounceFn/src';
+import useUpdateEffect from '../../useUpdateEffect';
 
 function useDebounceEffect(
   effect: EffectCallback,

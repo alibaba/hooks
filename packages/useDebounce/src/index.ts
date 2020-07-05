@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import useDebounceFn from '../useDebounceFn';
+import useDebounceFn from '../../useDebounceFn/src';
 import { DebounceOptions } from './debounceOptions';
 
 function useDebounce<T>(value: T, options?: DebounceOptions) {

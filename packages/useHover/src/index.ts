@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react';
-import useBoolean from '../useBoolean';
+import useBoolean from '../useBoolean/src';
 import { getTargetElement, BasicTarget } from '../utils/dom';
 
 export interface Options {

@@ -1,5 +1,5 @@
 import { renderHook } from '@testing-library/react-hooks';
-import useClickAway from '../index';
+import useClickAway from '../../index';
 
 describe('useClickAway', () => {
   it('should be defined', () => {

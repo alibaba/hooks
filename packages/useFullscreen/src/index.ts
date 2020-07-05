@@ -2,7 +2,7 @@
 
 import { useLayoutEffect, useRef } from 'react';
 import screenfull from 'screenfull';
-import useBoolean from '../useBoolean';
+import useBoolean from '../useBoolean/src';
 import { BasicTarget, getTargetElement } from '../utils/dom';
 
 export interface Options {

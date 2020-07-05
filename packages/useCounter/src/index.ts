@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react';
-import useCreation from '../useCreation';
+import useCreation from '../../useCreation/src';
 
 export interface Options {
   min?: number;

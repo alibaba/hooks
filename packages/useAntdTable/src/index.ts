@@ -8,8 +8,8 @@ import {
   PaginatedFormatReturn,
   PaginatedResult,
 } from '@ahooksjs/use-request/lib/types';
-import useUpdateEffect from '../useUpdateEffect';
-import usePersistFn from '../usePersistFn';
+import useUpdateEffect from '../../useUpdateEffect';
+import usePersistFn from '../../usePersistFn';
 
 export {
   CombineService,
