@@ -1,5 +1,5 @@
 ---
-title: useBoolean
+title: useTitle
 nav:
   title: Hooks
   path: /hooks
@@ -10,7 +10,7 @@ group:
 legacy: /state/use-boolean
 ---
 
-# useBoolean
+# useTitle
 
 A hook that sets title of the page.
 
