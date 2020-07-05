@@ -18,7 +18,7 @@ gulp.task('cjs', function () {
     .pipe(tsProject())
     .pipe(
       babel({
-        configFile: '../../.babelrc',
+        configFile: './.babelrc',
       }),
     )
     .pipe(gulp.dest('lib/'));
@@ -33,7 +33,7 @@ gulp.task('es', function () {
     .pipe(tsProject())
     .pipe(
       babel({
-        configFile: '../../.babelrc',
+        configFile: './.babelrc',
       }),
     )
     .pipe(gulp.dest('es/'));
@@ -47,9 +47,8 @@ gulp.task('declaration', function () {
   return tsProject.src().pipe(tsProject()).pipe(gulp.dest('es/')).pipe(gulp.dest('lib/'));
 });
 
+// gulp.task('copyReadme', async function () {
+//   await gulp.src('../../README.md').pipe(gulp.dest('../../packages/hooks'));
+// });
 
-gulp.task('copyReadme', async function () {
-  await gulp.src('../../README.md').pipe(gulp.dest('../../packages/hooks'));
-});
-
-exports.default = gulp.series('clean', 'cjs', 'es', 'declaration', 'copyReadme');
+exports.default = gulp.series('clean', 'cjs', 'es', 'declaration');
