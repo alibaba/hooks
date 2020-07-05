@@ -7,26 +7,16 @@
  */
 
 import * as React from 'react';
-import useCookieState from 'ahooks/lib/useCookieState';
+import { useCookieState } from 'ahooks';
 
-export default function () {
-  const options = {
-    defaultValue: 'Hello',
-  };
-  const [message, setMessage] = useCookieState('useCookieStateString', options);
+export default () => {
+  const [message, setMessage] = useCookieState('useCookieStateString');
   return (
-    <>
-      <input
-        value={message || ''}
-        placeholder="Please enter some words..."
-        onChange={(e) => setMessage(e.target.value)}
-      />
-      <button style={{ margin: '0 16px' }} type="button" onClick={() => setMessage('Hello~')}>
-        Set Hello
-      </button>
-      <button type="button" onClick={() => setMessage()}>
-        clear
-      </button>
-    </>
+    <input
+      value={message || ''}
+      placeholder="Please enter some words..."
+      onChange={(e) => setMessage(e.target.value)}
+      style={{ width: 180 }}
+    />
   );
-}
+};
