@@ -1,5 +1,5 @@
 {
-  "name": "@hooksjs/use-request",
+  "name": "@hooksjs/use-text-selection",
   "version": "2.0.1",
   "description": "",
   "main": "./lib/index.js",
