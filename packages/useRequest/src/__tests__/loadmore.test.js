@@ -44,7 +44,6 @@ const dataSource = [
   },
 ];
 
-
 describe('useRequest', () => {
   const originalError = console.error;
   beforeAll(() => {
@@ -61,26 +60,30 @@ describe('useRequest', () => {
   });
 
   const asyncFn = ({ pageSize, offset }) =>
-    new Promise(resolve => {
+    new Promise((resolve) => {
       resolve({
         total: dataSource.length,
         list: dataSource.slice(offset, offset + pageSize),
       });
     });
 
-  const setUp = (service, options) => renderHook(() => useRequest(service, options))
+  const setUp = (service, options) => renderHook(() => useRequest(service, options));
 
   let hook;
 
   it('useRequest loadMore should work', async () => {
     act(() => {
-      hook = setUp(d => asyncFn({
-        offset: d ? d.list.length : 0,
-        pageSize: 3,
-      }), {
-        loadMore: true,
-        isNoMore: d => (d ? d.total <= d.list.length : false)
-      });
+      hook = setUp(
+        (d) =>
+          asyncFn({
+            offset: d ? d.list.length : 0,
+            pageSize: 3,
+          }),
+        {
+          loadMore: true,
+          isNoMore: (d) => (d ? d.total <= d.list.length : false),
+        },
+      );
     });
     expect(hook.result.current.loading).toEqual(true);
     await hook.waitForNextUpdate();

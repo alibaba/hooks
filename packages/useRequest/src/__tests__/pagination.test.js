@@ -17,7 +17,7 @@ describe('useRequest', () => {
   });
 
   let queryArgs;
-  const asyncFn = query => {
+  const asyncFn = (query) => {
     queryArgs = query;
     return Promise.resolve({
       current: query.current,
@@ -27,7 +27,7 @@ describe('useRequest', () => {
     });
   };
 
-  const setUp = (service, options) => renderHook(() => useRequest(service, options))
+  const setUp = (service, options) => renderHook(() => useRequest(service, options));
 
   let hook;
 
@@ -35,7 +35,7 @@ describe('useRequest', () => {
     queryArgs = undefined;
     act(() => {
       hook = setUp(asyncFn, {
-        paginated: true
+        paginated: true,
       });
     });
     expect(hook.result.current.tableProps.loading).toEqual(true);
@@ -57,7 +57,7 @@ describe('useRequest', () => {
     queryArgs = undefined;
     act(() => {
       hook = setUp(asyncFn, {
-        paginated: true
+        paginated: true,
       });
     });
     await hook.waitForNextUpdate();
