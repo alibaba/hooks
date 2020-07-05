@@ -1,56 +1,14 @@
 {
-  "name": "ahooks",
-  "version": "2.1.0",
-  "description": "react hooks library",
-  "keywords": [
-    "ahooks",
-    "umi hooks",
-    "react hooks"
-  ],
-  "main": "./lib/index.js",
-  "module": "./es/index.js",
-  "types": "./lib/index.d.ts",
-  "unpkg": "dist/ahooks.js",
-  "authors": {
-    "name": "brickspert",
-    "email": "brickspert.fjl@alipay.com"
-  },
-  "publishConfig": {
-    "registry": "https://registry.npmjs.com/"
-  },
-  "repository": "https://github.com/alibaba/hooks",
-  "homepage": "https://github.com/alibaba/hooks",
-  "scripts": {
-    "build": "gulp && webpack-cli"
-  },
-  "files": [
-    "dist",
-    "lib",
-    "es",
-    "package.json",
-    "README.md"
-  ],
-  "dependencies": {
-    "@ahooksjs/use-request": "^2.0.1",
-    "intersection-observer": "^0.7.0",
-    "lodash.debounce": "^4.0.8",
-    "lodash.isequal": "^4.5.0",
-    "lodash.throttle": "^4.1.1",
-    "resize-observer-polyfill": "^1.5.1",
-    "screenfull": "^5.0.0"
-  },
-  "peerDependencies": {
-    "react": "^16.8.6"
-  },
-  "devDependencies": {
-    "@alifd/next": "^1.20.6",
-    "antd": "^3.26.6",
-    "react-drag-listview": "^0.1.6",
-    "umi-request": "^1.0.8"
-  },
-  "engines": {
-    "node": ">=8.0.0"
-  },
-  "license": "MIT",
-  "gitHead": "561ebf0c820fa5fd6f1a8e83d6a8de3474254921"
+	"dependencies": {
+		"@alifd/next": "^1.20.6",
+		"antd": "^3.26.6",
+		"intersection-observer": "^0.7.0",
+		"lodash.debounce": "^4.0.8",
+		"lodash.isequal": "^4.5.0",
+		"lodash.throttle": "^4.1.1",
+		"react-drag-listview": "^0.1.6",
+		"resize-observer-polyfill": "^1.5.1",
+		"screenfull": "^5.0.0",
+		"umi-request": "^1.0.8"
+	}
 }

@@ -1,0 +1,33 @@
+---
+title: useBoolean
+nav:
+  title: Hooks
+  path: /hooks
+group:
+  title: State
+  path: /state
+  order: 11
+legacy: /state/use-boolean
+---
+
+# useBoolean
+
+A hook that sets title of the page.
+
+## Examples
+
+### Default usage
+
+<code src="./demo/demo1.tsx" />
+
+## API
+
+```javascript
+useTitle(value: string);
+```
+
+### Params
+
+| Property | Description                                 | Type                   | Default |
+|---------|----------------------------------------------|------------------------|--------|
+| value | set a title value  | string |       |
