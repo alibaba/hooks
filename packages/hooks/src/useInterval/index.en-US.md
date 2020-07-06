@@ -34,7 +34,7 @@ useInterval(fn: () => void, interval: number, options?: Options);
 | Property | Description | Type |
 |----------|--------------------------------------|----------------------|
 | fn  | The function to setInterval | () => void |
-| delay | The timer should delay in between executions of the specified function or code | number |
+| delay | The timer should delay in between executions of the specified function or code. If delay is `null` or `undefined`, the timer will stop. | number \| undefined \| null |
 | options | Config the interval behavior. See the Options section below  | Options |
 
 
