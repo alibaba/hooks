@@ -17,6 +17,10 @@ legacy: /zh-CN/state/use-interval
 
 <code src="./demo/demo1.tsx" />
 
+## 进阶使用
+
+<code src="./demo/demo2.tsx" />
+
 ## API
 
 ```javascript

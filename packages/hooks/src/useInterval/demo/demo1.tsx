@@ -1,9 +1,9 @@
 /**
  * title: Default usage
- * desc:
+ * desc: Every 1000ms, execute once
  *
  * title.zh-CN: 基础使用
- * desc.zh-CN:
+ * desc.zh-CN: 每1000ms，执行一次
  */
 
 import React, { useState } from 'react';
@@ -11,54 +11,18 @@ import { useInterval } from 'ahooks';
 
 export default () => {
   const [count, setCount] = useState(0);
-  const [immediateCount, setImmediateCount] = useState(0);
-  const [interval, setInterval] = useState(3000);
 
   useInterval(
     () => {
-      log();
+      setCount(count + 1);
     },
-    interval,
+    1000,
     { immediate: false },
   );
 
-  useInterval(
-    () => {
-      immediateLog();
-    },
-    interval,
-    { immediate: true },
-  );
-
-  function log() {
-    setCount(count + 1);
-  }
-  function immediateLog() {
-    setImmediateCount(immediateCount + 1);
-  }
   return (
     <div>
-      <p style={{ marginTop: 16 }}>immediate: false count: {count} </p>
-      <p style={{ marginTop: 16 }}>immediate: true count: {immediateCount} </p>
-      <p style={{ marginTop: 16 }}> interval: {interval} </p>
-      <button onClick={() => setInterval(interval + 1000)} style={{ marginRight: 12 }}>
-        interval + 1000
-      </button>
-      <button
-        style={{ marginRight: 12 }}
-        onClick={() => {
-          setInterval(3000);
-        }}
-      >
-        reset interval
-      </button>
-      <button
-        onClick={() => {
-          setInterval(null);
-        }}
-      >
-        clear
-      </button>
+      <p style={{ marginTop: 16 }}> count: {count} </p>
     </div>
   );
 };

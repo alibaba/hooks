@@ -19,6 +19,10 @@ A hook that can handle the setInterval timer function.
 
 <code src="./demo/demo1.tsx" />
 
+### Advanced usage
+
+<code src="./demo/demo2.tsx" />
+
 ## API
 
 ```javascript
