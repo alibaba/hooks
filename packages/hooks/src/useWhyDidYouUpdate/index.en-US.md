@@ -25,7 +25,7 @@ Help developers troubleshoot what changes have caused component rerender .
 type IProps = {
   [key: string]: any;
 }
-useWhyDidYouUpdate(ComponentName: string, props: IProps): void;
+useWhyDidYouUpdate(componentName: string, props: IProps): void;
 ```
 
 ### Params

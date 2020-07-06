@@ -23,7 +23,7 @@ legacy: /zh-CN/state/use-why-did-you-update
 type IProps = {
   [key: string]: any;
 }
-useWhyDidYouUpdate(ComponentName: string, props: IProps): void;
+useWhyDidYouUpdate(componentName: string, props: IProps): void;
 ```
 
 ### Params
