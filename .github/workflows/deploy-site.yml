@@ -12,8 +12,8 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: 10
-      - run: |
-        npm run init
-        npm install -g surge
-        npm run build:doc
-        surge ./dist ahooks-$(git rev-parse --short HEAD).surge.sh --token ${{ secrets.SURGE_TOKEN }}
+        run: |
+          npm run init
+          npm install -g surge
+          npm run build:doc
+          surge ./dist ahooks-$(git rev-parse --short HEAD).surge.sh --token ${{ secrets.SURGE_TOKEN }}
