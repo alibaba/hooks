@@ -1,0 +1,19 @@
+name: Deploy Site
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    name: Deploying to surge
+    steps:
+      - uses: actions/checkout@v1
+      - name: Install surge and fire deployment
+        uses: actions/setup-node@v1
+        with:
+          node-version: 10
+      - run: |
+        npm run init
+        npm install -g surge
+        npm run build:doc
+        surge ./dist ahooks-$(git rev-parse --short HEAD).surge.sh --token ${{ secrets.SURGE_TOKEN }}
