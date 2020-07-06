@@ -33,7 +33,7 @@ describe('useVirtualList', () => {
         };
         wrapperProps: {
           style: {
-            paddingTop: number;
+            marginTop: number;
             height: number;
           };
         };
@@ -95,8 +95,8 @@ describe('useVirtualList', () => {
       expect((hook.result.current.list[5] as { data: number }).data).toBe(25);
       expect((hook.result.current.list[5] as { index: number }).index).toBe(25);
 
-      expect(hook.result.current.wrapperProps.style.paddingTop).toBe(20 * averageHeight);
-      expect(hook.result.current.wrapperProps.style.height).toBe(99998 * averageHeight + 30);
+      expect(hook.result.current.wrapperProps.style.marginTop).toBe(20 * averageHeight);
+      expect(hook.result.current.wrapperProps.style.height).toBe((99998 - 20) * averageHeight + 30);
     });
   });
 });
