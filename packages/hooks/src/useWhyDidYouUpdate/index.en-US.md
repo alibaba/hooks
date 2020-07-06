@@ -25,7 +25,7 @@ Help developers troubleshoot what changes have caused component rerender .
 type IProps = {
   [key: string]: any;
 }
-useWhyDidYouUpdate('App', props: IProps): void;
+useWhyDidYouUpdate(ComponentName: string, props: IProps): void;
 ```
 
 ### Params
@@ -39,4 +39,3 @@ useWhyDidYouUpdate('App', props: IProps): void;
 ### Result
 
 Please open the browser console, you can see the output of the changed observed `state` or `props`.
-
