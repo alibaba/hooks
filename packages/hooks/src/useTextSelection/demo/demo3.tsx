@@ -1,9 +1,9 @@
 /**
- * title: Default usage
- * desc: Tracking content, size, position of user text selection
+ * title: Listen specified area
+ * desc: useTextSelection can receive dom or ref, for listen specified area.
  *
- * title.zh-CN: 默认用法
- * desc.zh-CN: 获取用户当前选择的文本内容、大小及其相对于视口的位置。
+ * title.zh-CN: 监听特定区域文本选择
+ * desc.zh-CN: useTextSelection 可以接收 dom 或 ref，指定监听区域。
  */
 
 import React, { useRef } from 'react';
@@ -14,7 +14,7 @@ export default () => {
   const selection = useTextSelection(ref);
   return (
     <div>
-      <div ref={ref}>
+      <div ref={ref} style={{ border: '1px solid', padding: 20 }}>
         <p>Please swipe your mouse to select any text on this paragraph.</p>
       </div>
       <p>Result：{JSON.stringify(selection)}</p>

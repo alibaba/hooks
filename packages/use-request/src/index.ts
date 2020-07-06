@@ -81,41 +81,32 @@ function useRequest(service: any, options: any = {}) {
   const finalRequestMethod = requestMethod || fetchProxy;
 
   let promiseService: () => Promise<any>;
-  if (typeof service === 'string') {
-    promiseService = () => finalRequestMethod(service);
-  } else if (typeof service === 'object') {
-    const { url, ...rest } = service;
-    promiseService = () => (requestMethod ? requestMethod(service) : fetchProxy(url, rest));
-  } else {
-    promiseService = (...args: any[]) =>
-      new Promise((resolve, reject) => {
-        const result = service(...args);
-        if (result.then) {
-          result.then((data: any) => resolve(data)).catch((e: any) => reject(e));
-        } else if (typeof result === 'string') {
-          finalRequestMethod(result)
-            .then((data: any) => {
-              resolve(data);
-            })
-            .catch((e: any) => reject(e));
-        } else if (typeof result === 'object') {
-          // fetch 需要拆分下字段
-          if (requestMethod) {
-            requestMethod(result)
-              .then((data: any) => {
-                resolve(data);
-              })
-              .catch((e: any) => reject(e));
-          } else {
-            const { url, ...rest } = result;
-            fetchProxy(url, rest)
-              .then((data: any) => {
-                resolve(data);
-              })
-              .catch((e: any) => reject(e));
+  switch (typeof service) {
+    case 'string':
+      promiseService = () => finalRequestMethod(service);
+      break;
+    case 'object':
+      const { url, ...rest } = service;
+      promiseService = () => (requestMethod ? requestMethod(service) : fetchProxy(url, rest));
+      break;
+    default:
+      promiseService = (...args: any[]) =>
+        new Promise((resolve, reject) => {
+          const s = service(...args);
+          let fn = s;
+          if (!s.then) {
+            switch (typeof s) {
+              case 'string':
+                fn = finalRequestMethod(s);
+                break;
+              case 'object':
+                const { url, ...rest } = s;
+                fn = requestMethod ? requestMethod(s) : fetchProxy(url, rest)
+                break;
+            }
           }
-        }
-      });
+          fn.then(resolve).catch(reject);
+        });
   }
 
   if (loadMore) {
