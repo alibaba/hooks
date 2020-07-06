@@ -15,11 +15,11 @@ legacy: /zh-CN/dom/use-text-selection
 
 ## 代码演示
 
-### 使用 Dom
+### 默认用法
 
 <code src="./demo/demo1.tsx" />
 
-### 使用 Ref
+### 监听特定区域文本选择
 
 <code src="./demo/demo3.tsx" />
 

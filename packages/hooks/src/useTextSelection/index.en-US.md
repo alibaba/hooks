@@ -15,11 +15,11 @@ Tracking content, size, position of user text selection
 
 ## Examples
 
-### Set 'dom'  target
+### Default usage
 
 <code src="./demo/demo1.tsx" />
 
-### Use Ref
+### Listen specified area
 
 <code src="./demo/demo3.tsx" />
 
