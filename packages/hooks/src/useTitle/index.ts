@@ -1,11 +1,11 @@
 import { useEffect, useRef } from 'react';
 
 export interface Options {
-  retainOnUnmount?: boolean;
+  restoreOnUnmount?: boolean;
 }
 
 const DEFAULT_OPTIONS: Options = {
-  retainOnUnmount: false,
+  restoreOnUnmount: false,
 };
 
 export default function useTitle(title: string, options: Options = DEFAULT_OPTIONS) {
@@ -17,7 +17,7 @@ export default function useTitle(title: string, options: Options = DEFAULT_OPTIO
 
   useEffect(() => {
     return () => {
-      if (options && !options.retainOnUnmount) {
+      if (options && options.restoreOnUnmount) {
         document.title = titleRef.current;
       }
     };

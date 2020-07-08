@@ -21,7 +21,7 @@ legacy: /zh-CN/state/use-title
 ## API
 
 ```javascript
-useTitle(value: string);
+useTitle(value: string, options?: object);
 ```
 
 ### Params
@@ -29,3 +29,10 @@ useTitle(value: string);
 | 参数    | 说明                                         | 类型                   | 默认值 |
 |---------|----------------------------------------------|------------------------|--------|
 | value | 页面标题  | string  |       |
+
+
+### Options
+
+| 参数  | 说明                     | 类型   | 默认值 |
+|-------|--------------------------|--------|--------|
+| restoreOnUnmount | 恢复页面标题 | boolean | false |

@@ -23,7 +23,7 @@ A hook that sets title of the page.
 ## API
 
 ```javascript
-useTitle(value: string);
+useTitle(value: string, options?: object);
 ```
 
 ### Params
@@ -31,3 +31,9 @@ useTitle(value: string);
 | Property | Description                                 | Type                   | Default |
 |---------|----------------------------------------------|------------------------|--------|
 | value | set a title value  | string |       |
+
+### Options
+
+| Property | Description                  | Type   | Default |
+|----------|------------------------------|--------|---------|
+| restoreOnUnmount | Restore the title | boolean | false |
