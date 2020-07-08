@@ -1,8 +1,7 @@
 {
   "compilerOptions": {
-    "target": "ES6",
+    "target": "ES5",
     "moduleResolution": "node",
-    "importHelpers": true,
     "jsx": "react",
     "allowJs": true,
     "esModuleInterop": true,
