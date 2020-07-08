@@ -65,7 +65,7 @@ const useDrop = (options: DropAreaOptions = {}): [DropProps, DropAreaState] => {
       }
 
       if (dataTransfer.files && dataTransfer.files.length && optionsRef.current.onFiles) {
-        optionsRef.current.onFiles([...dataTransfer.files], event as React.DragEvent);
+        optionsRef.current.onFiles([...Array.from(dataTransfer.files)], event as React.DragEvent);
         return;
       }
 

@@ -5,6 +5,7 @@
     "jsx": "react",
     "allowJs": true,
     "esModuleInterop": true,
+    "downlevelIteration": true,
     "sourceMap": true,
     "baseUrl": ".",
     "paths": {
