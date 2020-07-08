@@ -474,7 +474,7 @@ function useAsync<R, P extends any[], U, UU extends U = any>(
 
   const notExecutedWarning = useCallback(
     (name: string) => () => {
-      throw new Error(`Cannot call ${name} when service not executed once.`);
+      console.warn(`You should't call ${name} when service not executed once.`);
     },
     [],
   );
