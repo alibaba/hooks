@@ -45,6 +45,7 @@ import useDebounceEffect from './useDebounceEffect';
 import useSetState from './useSetState';
 import useInterval from './useInterval';
 import useWhyDidYouUpdate from './useWhyDidYouUpdate';
+import useEasyReducer from './useEasyReducer';
 
 const useControlledValue: typeof useControllableValue = function (...args) {
   console.warn(
@@ -105,4 +106,5 @@ export {
   useSetState,
   useInterval,
   useWhyDidYouUpdate,
+  useEasyReducer,
 };
