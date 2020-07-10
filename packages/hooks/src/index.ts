@@ -43,6 +43,7 @@ import useEventTarget from './useEventTarget';
 import useHistoryTravel from './useHistoryTravel';
 import useDebounceEffect from './useDebounceEffect';
 import useSetState from './useSetState';
+import useInterval from './useInterval';
 import useWhyDidYouUpdate from './useWhyDidYouUpdate';
 
 const useControlledValue: typeof useControllableValue = function (...args) {
@@ -102,5 +103,6 @@ export {
   useHistoryTravel,
   useFusionTable,
   useSetState,
+  useInterval,
   useWhyDidYouUpdate,
 };
