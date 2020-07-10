@@ -7,7 +7,7 @@ export interface OptionType {
 }
 
 export default <T = any>(list: T[], options: OptionType) => {
-  const containerRef = useRef<HTMLElement>();
+  const containerRef = useRef<HTMLElement | null>();
   const size = useSize(containerRef as MutableRefObject<HTMLElement>);
   // 暂时禁止 cache
   // const distanceCache = useRef<{ [key: number]: number }>({});
@@ -61,7 +61,10 @@ export default <T = any>(list: T[], options: OptionType) => {
 
       const from = offset - overscan;
       const to = offset + viewCapacity + overscan;
-      setState({ start: from < 0 ? 0 : from, end: to > list.length ? list.length : to });
+      setState({
+        start: from < 0 ? 0 : from,
+        end: to > list.length ? list.length : to,
+      });
     }
   };
 
@@ -102,6 +105,8 @@ export default <T = any>(list: T[], options: OptionType) => {
     }
   };
 
+  const offsetTop = useMemo(() => getDistanceTop(state.start), [state.start]);
+
   return {
     list: list.slice(state.start, state.end).map((ele, index) => ({
       data: ele,
@@ -110,8 +115,7 @@ export default <T = any>(list: T[], options: OptionType) => {
     scrollTo,
     containerProps: {
       ref: (ele: any) => {
-        // https://github.com/DefinitelyTyped/DefinitelyTyped/issues/31065
-        (containerRef as MutableRefObject<HTMLElement>).current = ele;
+        containerRef.current = ele;
       },
       onScroll: (e: any) => {
         e.preventDefault();
@@ -120,7 +124,11 @@ export default <T = any>(list: T[], options: OptionType) => {
       style: { overflowY: 'auto' as const },
     },
     wrapperProps: {
-      style: { width: '100%', height: totalHeight, paddingTop: getDistanceTop(state.start) },
+      style: {
+        width: '100%',
+        height: totalHeight - offsetTop,
+        marginTop: offsetTop,
+      },
     },
   };
 };
