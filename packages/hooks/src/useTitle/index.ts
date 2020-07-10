@@ -8,18 +8,17 @@ const DEFAULT_OPTIONS: Options = {
   restoreOnUnmount: false,
 };
 
-export default function useTitle(title: string, options: Options = DEFAULT_OPTIONS) {
+function useTitle(title: string, options: Options = DEFAULT_OPTIONS) {
   const titleRef = useRef(document.title);
+  document.title = title;
 
   useEffect(() => {
-    document.title = title;
-  }, [title]);
-
-  useEffect(() => {
-    return () => {
-      if (options && options.restoreOnUnmount) {
+    if (options && options.restoreOnUnmount) {
+      return () => {
         document.title = titleRef.current;
-      }
-    };
+      };
+    }
   }, []);
 }
+
+export default typeof document !== 'undefined' ? useTitle : (_title: string) => {};
