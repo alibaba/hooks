@@ -2,7 +2,7 @@ import { useEffect, useRef } from 'react';
 
 function useInterval(
   fn: () => void,
-  delay: number,
+  delay: number | null | undefined,
   options?: {
     immediate?: boolean;
   },

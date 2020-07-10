@@ -1,5 +1,4 @@
-import { act, renderHook, RenderHookResult } from '@testing-library/react-hooks';
-import { sleep } from '../../utils/testingHelpers';
+import { renderHook } from '@testing-library/react-hooks';
 import useInterval from '../index';
 
 interface ParamsObj {
@@ -8,30 +7,21 @@ interface ParamsObj {
   options?: { immediate: boolean };
 }
 
-let count = 0;
-const intervalFn = () => {
-  count += 1;
-};
-
 const setUp = ({ fn, delay }: ParamsObj) => renderHook(() => useInterval(fn, delay));
 
-let hook: RenderHookResult<ParamsObj, any>;
-
 describe('useInterval', () => {
+  jest.useFakeTimers();
   it('should be defined', () => {
     expect(useInterval).toBeDefined();
   });
 
-  it('interval should work', async () => {
-    act(() => {
-      hook = setUp({
-        fn: intervalFn,
-        delay: 200,
-      });
-    });
-    await act(async () => {
-      await sleep(700);
-      expect(count).toBe(3);
-    });
+  it('interval should work', () => {
+    const callback = jest.fn();
+
+    setUp({ fn: callback, delay: 20 });
+
+    expect(callback).not.toBeCalled();
+    jest.advanceTimersByTime(70);
+    expect(callback).toHaveBeenCalledTimes(3);
   });
 });
