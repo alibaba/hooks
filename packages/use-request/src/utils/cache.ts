@@ -1,4 +1,4 @@
-type Timer = ReturnType<typeof setTimeout>;
+type Timer = ReturnType<typeof setTimeout> | null;
 
 export type CachedKeyType = string | number;
 export type cachedData = { data: any; timer: Timer; startTime: number };
@@ -11,7 +11,7 @@ const setCache = (key: CachedKeyType, cacheTime: number, data: any) => {
     clearTimeout(currentCache.timer);
   }
 
-  let timer: Timer;
+  let timer: Timer | null = null;
 
   if (cacheTime > -1) {
     // 数据在不活跃 cacheTime 后，删除掉
