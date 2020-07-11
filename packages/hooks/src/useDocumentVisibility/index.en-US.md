@@ -32,4 +32,4 @@ const  documentVisibility = useDocumentVisibility();
 |---------|----------------------------------------------|------------------------|--------|
 | documentVisibility | Determine if the document is visible | string | 'visible' \| 'hidden' \| 'prerender'  \| undefined    |
 
-> If no document environment returns `undefined`
+> If no document environment returns `undefined`; At present，the visibilitychange API is in the Recommendation stage, and only one change will be triggered in the Safari browser, which is different from Chrome and Firefox.
