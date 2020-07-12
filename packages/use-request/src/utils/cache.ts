@@ -11,7 +11,7 @@ const setCache = (key: CachedKeyType, cacheTime: number, data: any) => {
     clearTimeout(currentCache.timer);
   }
 
-  let timer: Timer | null = null;
+  let timer: Timer | undefined = undefined;
 
   if (cacheTime > -1) {
     // 数据在不活跃 cacheTime 后，删除掉
