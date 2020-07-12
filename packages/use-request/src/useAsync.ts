@@ -479,8 +479,6 @@ function useAsync<R, P extends any[], U, UU extends U = any>(
     [],
   );
 
-  const temp = fetches[newstFetchKey.current];
-
   return {
     loading: (ready && !manual) || defaultLoading,
     data: initialData,
