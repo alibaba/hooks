@@ -1,7 +1,7 @@
 type Timer = ReturnType<typeof setTimeout> | null;
 
 export type CachedKeyType = string | number;
-export type cachedData = { data: any; timer: Timer; startTime: number };
+export type cachedData = { data: any; timer: Timer | undefined; startTime: number };
 
 const cache = new Map<CachedKeyType, cachedData>();
 
