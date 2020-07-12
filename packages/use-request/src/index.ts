@@ -68,14 +68,20 @@ function useRequest(service: any, options: any = {}) {
   paginatedRef.current = paginated;
   loadMoreRef.current = loadMore;
 
-  // @ts-ignore
   const fetchProxy = (...args: any[]) =>
     // @ts-ignore
-    fetch(...args).then((res: Response) => {
-      if (res.ok) {
-        return res.json();
-      }
-      throw new Error(res.statusText);
+    fetch(...args).then(async (response: Response) => {
+      return response.json().then((res) => {
+        if (response.ok) {
+          return res;
+        } else {
+          const error = Object.assign({}, res, {
+            status: response.status,
+            statusText: response.statusText,
+          });
+          return Promise.reject(error);
+        }
+      });
     });
 
   const finalRequestMethod = requestMethod || fetchProxy;
@@ -101,7 +107,7 @@ function useRequest(service: any, options: any = {}) {
                 break;
               case 'object':
                 const { url, ...rest } = s;
-                fn = requestMethod ? requestMethod(s) : fetchProxy(url, rest)
+                fn = requestMethod ? requestMethod(s) : fetchProxy(url, rest);
                 break;
             }
           }
