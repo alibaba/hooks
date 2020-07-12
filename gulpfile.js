@@ -3,13 +3,13 @@ const babel = require('gulp-babel');
 const ts = require('gulp-typescript');
 const del = require('del');
 
-gulp.task('clean', async function () {
+gulp.task('clean', async () => {
   await del('lib/**');
   await del('es/**');
   await del('dist/**');
 });
 
-gulp.task('cjs', function () {
+gulp.task('cjs', () => {
   const tsProject = ts.createProject('tsconfig.json', {
     module: 'CommonJS',
   });
@@ -24,7 +24,7 @@ gulp.task('cjs', function () {
     .pipe(gulp.dest('lib/'));
 });
 
-gulp.task('es', function () {
+gulp.task('es', () => {
   const tsProject = ts.createProject('tsconfig.json', {
     module: 'ESNext',
   });
@@ -39,7 +39,7 @@ gulp.task('es', function () {
     .pipe(gulp.dest('es/'));
 });
 
-gulp.task('declaration', function () {
+gulp.task('declaration', () => {
   const tsProject = ts.createProject('tsconfig.json', {
     declaration: true,
     emitDeclarationOnly: true,
@@ -47,8 +47,7 @@ gulp.task('declaration', function () {
   return tsProject.src().pipe(tsProject()).pipe(gulp.dest('es/')).pipe(gulp.dest('lib/'));
 });
 
-
-gulp.task('copyReadme', async function () {
+gulp.task('copyReadme', async () => {
   await gulp.src('../../README.md').pipe(gulp.dest('../../packages/hooks'));
 });
 
