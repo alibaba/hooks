@@ -44,12 +44,14 @@ export interface Result<Item> extends PaginatedResult<Item> {
 export interface BaseOptions<U> extends Omit<BasePaginatedOptions<U>, 'paginated'> {
   form?: UseAntdTableFormUtils;
   defaultType?: 'simple' | 'advance';
+  externalUseRequest?(service: any, options: any): any;
 }
 
 export interface OptionsWithFormat<R, Item, U>
   extends Omit<PaginatedOptionsWithFormat<R, Item, U>, 'paginated'> {
   form?: UseAntdTableFormUtils;
   defaultType?: 'simple' | 'advance';
+  externalUseRequest?(service: any, options: any): any;
 }
 
 function useAntdTable<R = any, Item = any, U extends Item = any>(
@@ -70,9 +72,10 @@ function useAntdTable<R = any, Item = any, U extends Item = any>(
     manual,
     defaultType = 'simple',
     defaultParams,
+    externalUseRequest,
     ...restOptions
   } = options;
-  const result = useRequest(service, {
+  const result = (externalUseRequest || useRequest)(service, {
     ...restOptions,
     paginated: true as true,
     manual: true,
