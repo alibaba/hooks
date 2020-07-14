@@ -13,7 +13,7 @@
     "clean": "lerna clean --yes",
     "build": "lerna run build",
     "test": "jest",
-    "lint": "eslint \"packages/*/src/**/*.{ts,tsx}\"",
+    "lint": "eslint --ignore-pattern **/__tests__/* --ignore-pattern **/demo/* \"packages/*/src/**/*.{ts,tsx}\"",
     "build:doc": "dumi build",
     "pub:doc": "surge ./dist --domain ahooks.js.org",
     "pub": "lerna publish"
