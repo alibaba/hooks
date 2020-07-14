@@ -1,4 +1,4 @@
-type Timer = ReturnType<typeof setTimeout> | null;
+type Timer = ReturnType<typeof setTimeout>;
 
 export type CachedKeyType = string | number;
 export type cachedData = { data: any; timer: Timer | undefined; startTime: number };
