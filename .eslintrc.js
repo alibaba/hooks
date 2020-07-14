@@ -18,4 +18,8 @@ module.exports = {
     'react-hooks/rules-of-hooks': 'error',
     'react-hooks/exhaustive-deps': 'warn',
   },
+  parserOptions: {
+    ...fabric.default.parserOptions,
+    project: './packages/**/tsconfig.json',
+  }
 };
