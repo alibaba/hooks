@@ -65,7 +65,7 @@ function useTextSelection(target?: BasicTarget): IState {
     }
 
     const mouseupHandler = () => {
-      let selObj: Selection | null;
+      let selObj: Selection | null = null;
       let text = '';
       let rect = initRect;
       if (!window.getSelection) return;
