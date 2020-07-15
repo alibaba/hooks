@@ -56,3 +56,17 @@ const {
   }
 );
 ```
+
+## FAQ
+
+### 1. 无法读取或初始化自定义表单组件的值
+
+可以参考 [#496](https://github.com/alibaba/hooks/issues/496)。
+
+antd 表单项如果是自定义函数组件，需要使用 `React.forwardRef` 包裹。
+
+```js
+const CustomInput = React.forwardRef((props, ref) => (
+  <Input ref={ref} value={props.value} onChange={props.onChange} />
+));
+```
