@@ -45,13 +45,13 @@ describe('useHistoryTravel', () => {
   });
 
   it('should work with null and undefined with initial value', async () => {
-    const nullHook = renderHook(() => useHistoryTravel('abc'));
+    const nullHook = renderHook(() => useHistoryTravel<null | string>('abc'));
     act(() => {
       nullHook.result.current.setValue(null);
     });
     expect(nullHook.result.current.value).toEqual(null);
 
-    const undefHook = renderHook(() => useHistoryTravel('abc'));
+    const undefHook = renderHook(() => useHistoryTravel<undefined | string>('abc'));
     act(() => {
       undefHook.result.current.setValue(undefined);
     });
