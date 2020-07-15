@@ -12,8 +12,14 @@ module.exports = {
     '@typescript-eslint/no-object-literal-type-assertion': 'off',
     'consistent-return': 'off',
   },
+  plugins: [...fabric.default.plugins, 'react-hooks'],
+  rules: {
+    ...fabric.default.rules,
+    'react-hooks/rules-of-hooks': 'error',
+    'react-hooks/exhaustive-deps': 'warn',
+  },
   parserOptions: {
     ...fabric.default.parserOptions,
     project: './packages/**/tsconfig.json',
-  },
+  }
 };

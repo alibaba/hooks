@@ -42,6 +42,7 @@
     "dumi": "^1.0.13",
     "enzyme": "^3.10.0",
     "eslint": "^7.2.0",
+    "eslint-plugin-react-hooks": "^4.0.8",
     "gulp": "^4.0.2",
     "gulp-babel": "^8.0.0",
     "gulp-typescript": "^6.0.0-alpha.1",
