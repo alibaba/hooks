@@ -45,6 +45,7 @@ import useDebounceEffect from './useDebounceEffect';
 import useSetState from './useSetState';
 import useInterval from './useInterval';
 import useWhyDidYouUpdate from './useWhyDidYouUpdate';
+import useWebSocket from './useWebSocket';
 import useTitle from './useTitle';
 
 const useControlledValue: typeof useControllableValue = function (...args) {
@@ -107,4 +108,5 @@ export {
   useInterval,
   useWhyDidYouUpdate,
   useTitle,
+  useWebSocket,
 };
