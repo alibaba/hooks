@@ -1,4 +1,3 @@
-useWebSocket;
 /**
  * title: Default usage
  * desc: Update state or props, you can see the output in the console
@@ -7,7 +6,7 @@ useWebSocket;
  * desc.zh-CN: 更新 state 或 props，可以在控制台看到输出
  */
 
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useWebSocket } from 'ahooks';
 import { READY_STATE } from '../../../lib/useWebSocket';
 
