@@ -6,36 +6,71 @@ nav:
 group:
   title: State
   path: /state
-legacy: /state/use-why-did-you-update
+legacy: /zh-CN/state/use-websocket
 ---
 
 # useWebSocket
 
-Help developers troubleshoot what changes have caused component rerender .
+Hooks for webSocket.
 
 ## Examples
-
-### Default usage
 
 <code src="./demo/demo1.tsx" />
 
 ## API
 
 ```typescript
-type IProps = {
-  [key: string]: any;
+declare enum READY_STATE {
+  connecting = 0,
+  open = 1,
+  closing = 2,
+  closed = 3
 }
-useWhyDidYouUpdate(componentName: string, props: IProps): void;
+interface IUseWebSocketOptions {
+  reconnectLimit?: number;
+  reconnectInterval?: number;
+  onOpen?: (event: WebSocketEventMap['open']) => void;
+  onClose?: (event: WebSocketEventMap['close']) => void;
+  onMessage?: (message: MessageEvent) => void;
+  onError?: (event: WebSocketEventMap['error']) => void;
+}
+interface IUseWebSocketReturn {
+  latestMessage?: MessageEvent;
+  sendMessage?: WebSocket['send'];
+  disconnectWebSocket?: () => void;
+  connectWebSocket?: () => void;
+  readyState: READY_STATE;
+  webSocketIns?: WebSocket;
+}
+useWebSocket(socketUrl: string, options?: IUseWebSocketOptions): IUseWebSocketReturn;
 ```
 
 ### Params
 
-| 参数    | 说明                                         | 类型                   | 默认值 |
+| Property | Description | Type | Default |
 |---------|----------------------------------------------|------------------------|--------|
-| componentName | Required, the name of the observation component  | string | - |
-| props | Required, data to be observed (current component `state` or passed-in `props` and other data that may lead to rerender) | object | - |
+| socketUrl | Required, webSocket url | string | - |
+| options | Optionally, connect the configuration item | object | - |
+
+
+#### options Params
+
+| Options Property | Description | Type | Default |
+|---------|----------------------------------------------|------------------------|--------|
+| onOpen | The webSocket connection was successfully called back | Function | - |
+| onClose | Optionally, webSocket close callback | Function | - |
+| onMessage | Optionally, webSocket receive callback | Function | - |
+| onError | Optionally, webSocket error callback | Function | - |
+| reconnectLimit | Optionally, retry times | number | 3 |
+| reconnectInterval | Optionally, retry the interval (ms) | number | 3000 |
 
 
 ### Result
 
-Please open the browser console, you can see the output of the changed observed `state` or `props`.
+| Options Property | Description |
+| ------- | ---- | ------- |
+| latestMessage | latest message | `MessageEvent` |
+| sendMessage | Send message function | Function |
+| disconnectWebSocket | Disconnect webSocket manually | Function |
+| readyState | Current webSocket connection status | `READY_STATE` |
+| webSocketIns | WebSocket instance | `WebSocket` |

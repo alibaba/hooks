@@ -8,7 +8,13 @@
 
 import React from 'react';
 import { useWebSocket } from 'ahooks';
-import { READY_STATE } from '../../../lib/useWebSocket';
+
+enum READY_STATE {
+  connecting = 0,
+  open = 1,
+  closing = 2,
+  closed = 3,
+}
 
 export default () => {
   const {
@@ -21,6 +27,7 @@ export default () => {
 
   return (
     <div>
+      {/* send message */}
       <button
         onClick={() => sendMessage && sendMessage(`${Date.now()}`)}
         disabled={readyState !== READY_STATE.open}
@@ -28,6 +35,7 @@ export default () => {
         ✉️
       </button>
       &nbsp;&nbsp;
+      {/* disconnect */}
       <button
         onClick={() => disconnectWebSocket && disconnectWebSocket()}
         disabled={readyState !== READY_STATE.open}
@@ -35,6 +43,7 @@ export default () => {
         ❌
       </button>
       &nbsp;&nbsp;
+      {/* connect */}
       <button
         onClick={() => connectWebSocket && connectWebSocket()}
         disabled={readyState === READY_STATE.open}
