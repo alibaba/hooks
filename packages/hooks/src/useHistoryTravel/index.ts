@@ -39,15 +39,20 @@ export default function useHistoryTravel<T>(initialValue?: T) {
   const { present, past, future } = history;
 
   const reset = useCallback(
-    () => {
-      if (!past.length) return;
+    (hasNewInitial: boolean = false, newInitialValue?: T) => {
+      const _initial = hasNewInitial
+        ? newInitialValue
+        : past.length
+        ? past.shift()
+        : present;
+
       setHistory({
-        present: past.shift(),
+        present: _initial,
         future: [],
-        past: [],
+        past: []
       });
     },
-    [history, setHistory],
+    [history, setHistory]
   );
 
   const updateValue = useCallback(
