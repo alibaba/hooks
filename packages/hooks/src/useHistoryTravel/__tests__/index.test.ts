@@ -127,4 +127,52 @@ describe('useHistoryTravel', () => {
     });
     expect(hook.result.current.value).toEqual('hij');
   });
+
+  it('reset should reset state to initial by default', () => {
+    const hook = renderHook(() => useHistoryTravel('init'));
+    act(() => {
+      hook.result.current.setValue('abc');
+    });
+    act(() => {
+      hook.result.current.setValue('def');
+    });
+    act(() => {
+      hook.result.current.setValue('hij');
+    });
+    act(() => {
+      hook.result.current.go(-1);
+    });
+    expect(hook.result.current.backLength).toEqual(2);
+    expect(hook.result.current.forwardLength).toEqual(1);
+    act(() => {
+      hook.result.current.reset();
+    });
+    expect(hook.result.current.value).toEqual('init');
+    expect(hook.result.current.backLength).toEqual(0);
+    expect(hook.result.current.forwardLength).toEqual(0);
+  });
+
+  it('reset should reset state to new initial if provided', () => {
+    const hook = renderHook(() => useHistoryTravel('init'));
+    act(() => {
+      hook.result.current.setValue('abc');
+    });
+    act(() => {
+      hook.result.current.setValue('def');
+    });
+    act(() => {
+      hook.result.current.setValue('hij');
+    });
+    act(() => {
+      hook.result.current.go(-1);
+    });
+    expect(hook.result.current.backLength).toEqual(2);
+    expect(hook.result.current.forwardLength).toEqual(1);
+    act(() => {
+      hook.result.current.reset(true, 'new init');
+    });
+    expect(hook.result.current.value).toEqual('new init');
+    expect(hook.result.current.backLength).toEqual(0);
+    expect(hook.result.current.forwardLength).toEqual(0);
+  });
 });
