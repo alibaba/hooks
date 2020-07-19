@@ -1,0 +1,36 @@
+{
+  "name": "@ahooksjs/use-table",
+  "version": "0.1.0",
+  "description": "React Hooks for Table",
+  "main": "./lib/index.js",
+  "module": "./es/index.js",
+  "types": "./lib/index.d.ts",
+  "unpkg": "dist/ahooks-use-table.js",
+  "files": [
+    "dist",
+    "lib",
+    "es",
+    "package.json"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alibaba/hooks.git"
+  },
+  "scripts": {
+    "build": "gulp && webpack-cli"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.com/"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/alibaba/hooks/issues"
+  },
+  "homepage": "https://github.com/alibaba/hooks",
+  "peerDependencies": {
+    "react": "^16.8.6"
+  },
+  "dependencies": {
+    "use-query-display": "^0.1.1"
+  }
+}
