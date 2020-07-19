@@ -25,7 +25,8 @@ export interface Options {
 }
 
 export interface ITableProps {
-  openPagination: boolean;
+  dataSource: any[];
+  loading: boolean;
   paginationProps: {
     total: number;
     pageSize: number;
@@ -75,12 +76,8 @@ export interface IResponse {
 
 export interface IFormTableHelper extends IHelper {
   checkQueryFrom: () => {
-    isFormMount: boolean;
-    isFormReset: boolean;
-    isFormSubmit: boolean;
     isPageSizeChange: boolean;
     isPageChange: boolean;
-    isCustomFieldsSubmit: boolean;
   };
 }
 
@@ -94,7 +91,6 @@ export interface IContext extends IMiddlewareContext {
     [name: string]: any;
   };
   response: any;
-  originResponse: any;
 }
 
 export type FormTableNormalPlugin = NormalPlugin<IContext>;

@@ -3,7 +3,7 @@ import useQueryDisplay from 'use-query-display';
 import { timelines, defaults, methods, PREPARE } from './config';
 import createStore from './store';
 import middlewares from './middlewares/index';
-import { useTableProps, usePaginationProps } from './props/table';
+import useProps from './props/index';
 import { Obj, ReturnValue, RawPlugins, Options, Plugin, IContext } from './type';
 import { addYourMiddlewares } from './shared';
 import { IS_NORMAL_SYMBOL } from './symbol';
@@ -26,7 +26,7 @@ const useParams = (ctx: Obj) => {
   ctx.getParams = ctx.store.paramMap.get;
 };
 
-const propProcessors = [usePaginationProps, useTableProps, useParams];
+const propProcessors = [...useProps, useParams];
 
 const useTableQueryPlugin = (options): Plugin => {
   const [state, setState] = useMutableState({
@@ -101,8 +101,9 @@ function useTable(service, options?) {
   });
 
   const { tableProps, getParams, actions, props } = tableQueryProps;
+  const { paginationProps, ...$tableProps } = tableProps;
 
-  return { ...props, tableProps, query, getParams, actions };
+  return { ...props, tableProps: $tableProps, paginationProps, query, getParams, actions };
 }
 
 export default useTable;
