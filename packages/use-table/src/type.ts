@@ -18,7 +18,7 @@ export interface PluginOptions {
 }
 
 export interface Options {
-  pageIndex?: number;
+  current?: number;
   pageSize?: number;
   autoFirstQuery?: boolean;
   plugins?: RawPlugins<IContext>;
@@ -65,7 +65,7 @@ export interface IStore {
 export interface IResponse {
   data: {
     dataSource: Obj[];
-    pageIndex: number;
+    current: number;
     pageSize: number;
     total: number;
     [name: string]: any;

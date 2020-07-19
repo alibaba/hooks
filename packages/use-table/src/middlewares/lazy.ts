@@ -12,11 +12,13 @@ const lazyMiddleware: Middleware = (ctx, next) => {
   const { queryFrom } = ctx.meta;
 
   if (autoFirstQuery) {
-    if ([methods.ON_MOUNT].includes(queryFrom)) {
-      return Promise.resolve();
-    }
     return next();
   }
+
+  if ([methods.ON_MOUNT].includes(queryFrom)) {
+    return Promise.resolve();
+  }
+
   return next();
 };
 

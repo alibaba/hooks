@@ -24,7 +24,6 @@ const fetchMiddleware: Middleware = (ctx, next) => {
     .then(
       (res: Obj) => {
         ctx.response = res;
-        ctx.rawResponse = res;
         return next().then(() => Promise.resolve(ctx.response));
       },
       (err: Obj = {}) => {

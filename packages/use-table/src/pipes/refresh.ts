@@ -5,12 +5,12 @@ const refreshPipe: Pipe = (ctx) => {
   const { defaults = {} } = config;
   const memoState = store.stateMap.get();
   const { pagination } = memoState;
-  const pageIndex = pagination.current || defaults.pageIndex;
+  const current = pagination.current || defaults.current;
   const pageSize = pagination.pageSize || defaults.pageSize;
 
   ctx.params = {
     ...ctx.params,
-    pageIndex,
+    current,
     pageSize,
   };
 

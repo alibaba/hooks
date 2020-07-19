@@ -10,9 +10,9 @@ const usePaginationProps: Processor = (ctx) => {
     total,
     pageSize,
     current,
-    onChange: (pageIndex: number) => {
+    onChange: ($current: number) => {
       query(
-        { pageIndex },
+        { current: $current },
         {
           queryFrom: methods.ON_PAGE_CHANGE,
         },
@@ -20,7 +20,7 @@ const usePaginationProps: Processor = (ctx) => {
     },
     onPageSizeChange: ($pageSize: number) => {
       query(
-        { pageSize: $pageSize, pageIndex: options.pageIndex },
+        { pageSize: $pageSize, current: options.current },
         {
           queryFrom: methods.ON_PAGE_SIZE_CHANGE,
         },

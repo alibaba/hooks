@@ -9,9 +9,10 @@
 import React from 'react';
 import useTable from '../src/index';
 
-const query = () => {
+const query = (params) => {
+  console.log('params.....', params);
   return new Promise((resolve) => {
-    resolve([]);
+    resolve({ data: { dataSource: [] } });
   });
 };
 

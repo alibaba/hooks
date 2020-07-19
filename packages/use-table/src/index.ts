@@ -34,7 +34,7 @@ const useTableQueryPlugin = (options): Plugin => {
     dataSource: [],
     total: 0,
     pageSize: options.pageSize,
-    current: options.pageIndex,
+    current: options.current,
   });
 
   const store = useMemo(createStore, []);
@@ -88,12 +88,8 @@ function useTable(
 function useTable(service, options?) {
   const realOptions = Array.isArray(options) ? {} : options || {};
 
-  const {
-    plugins = [],
-    pageIndex = defaults.pageIndex,
-    pageSize = defaults.pageSize,
-  } = realOptions;
-  const plugin: RawPlugins = [useTableQueryPlugin({ ...options, pageIndex, pageSize })];
+  const { plugins = [], current = defaults.current, pageSize = defaults.pageSize } = realOptions;
+  const plugin: RawPlugins = [useTableQueryPlugin({ ...options, current, pageSize })];
 
   const { props: tableQueryProps = {}, query } = useQueryDisplay(
     { timelines: [PREPARE].concat(timelines), ...options, service },
