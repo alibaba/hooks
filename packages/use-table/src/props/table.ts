@@ -39,8 +39,6 @@ const useTableProps: Processor = (ctx) => {
     ...pipeCompose(pluginProps)({}),
     dataSource: state.dataSource,
     loading: state.loading,
-    stickyTop: state.height,
-    sticky: true,
     openPagination: true,
     paginationProps,
   };

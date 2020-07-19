@@ -1,5 +1,3 @@
-import { ReturnValue } from './type';
-
 export const isObject = (obj) => ({}.toString.call(obj) === '[object Object]');
 
 export const replace = (data, keyMap) => {
@@ -13,21 +11,6 @@ export const replace = (data, keyMap) => {
     });
   });
   return data;
-};
-
-export const createFormPropsGetter = (
-  formProps: ReturnValue['formProps'],
-): ReturnValue['getFormProps'] => {
-  return ({ effects: $effects }) => {
-    const { effects } = formProps;
-    return {
-      ...formProps,
-      effects: (...args) => {
-        effects(...args);
-        $effects(...args);
-      },
-    };
-  };
 };
 
 /**

@@ -3,19 +3,16 @@ import { Pipe, Obj } from '../type';
 import { PAYLOAD_SYMBOL } from '../symbol';
 
 const normalPipe: Pipe = (ctx) => {
-  const { actions, meta, [PAYLOAD_SYMBOL]: payload, store, config = {} } = ctx;
+  const { actions, [PAYLOAD_SYMBOL]: payload, store, config = {} } = ctx;
   const { stateMap } = store;
   const { defaults } = config;
 
-  const formState = actions.getFormState() || {};
   const { pageSize: $pageSize, current } = actions.getState() || { pageSize: 20, current: 1 };
   const pageIndex = (payload as Obj).pageIndex || current || defaults.pageIndex;
   const pageSize = (payload as Obj).pageSize || $pageSize || defaults.pageSize;
-  const { values = {} } = formState;
 
   ctx.params = {
     ...ctx.params,
-    ...values,
     ...payload,
     pageIndex,
     pageSize,
@@ -26,7 +23,6 @@ const normalPipe: Pipe = (ctx) => {
   // 需要下一次 state 把之前的 playload 也记录下来
   stateMap.set({
     pagination: { current: pageIndex, pageSize },
-    formState: !meta.isFormDataSubmitted ? formState : { values: payload },
   });
 
   return ctx;

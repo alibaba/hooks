@@ -1,11 +1,11 @@
-import { useMemo, useCallback, useState } from 'react';
+import { useMemo, useCallback, useState, useEffect } from 'react';
 import useQueryDisplay from 'use-query-display';
-import { timelines, defaults, PREPARE } from './config';
+import { timelines, defaults, methods, PREPARE } from './config';
 import createStore from './store';
 import middlewares from './middlewares/index';
 import { useTableProps, usePaginationProps } from './props/table';
 import { Obj, ReturnValue, RawPlugins, Options, Plugin, IContext } from './type';
-import { createFormPropsGetter, addYourMiddlewares } from './shared';
+import { addYourMiddlewares } from './shared';
 import { IS_NORMAL_SYMBOL } from './symbol';
 import { checkQueryFrom } from './helper';
 
@@ -16,6 +16,10 @@ const useMutableState = (initalState: Obj = {}) => {
   const mutableState = useMemo(() => ({}), []);
   Object.assign(mutableState, state);
   return [mutableState, setState];
+};
+
+const useMount = (fn) => {
+  useEffect(fn, []);
 };
 
 const useParams = (ctx: Obj) => {
@@ -31,10 +35,6 @@ const useTableQueryPlugin = (options): Plugin => {
     total: 0,
     pageSize: options.pageSize,
     current: options.pageIndex,
-
-    // sticky
-    sticky: false,
-    height: 0,
   });
 
   const store = useMemo(createStore, []);
@@ -95,12 +95,16 @@ function useTable(service, options?) {
   } = realOptions;
   const plugin: RawPlugins = [useTableQueryPlugin({ ...options, pageIndex, pageSize })];
 
-  const { props: formTableQueryProps = {}, query } = useQueryDisplay(
+  const { props: tableQueryProps = {}, query } = useQueryDisplay(
     { timelines: [PREPARE].concat(timelines), ...options, service },
     plugin.concat(addYourMiddlewares(plugins)),
   );
 
-  const { tableProps, getParams, actions, props } = formTableQueryProps;
+  useMount(() => {
+    query({}, { queryFrom: methods.ON_MOUNT });
+  });
+
+  const { tableProps, getParams, actions, props } = tableQueryProps;
 
   return { ...props, tableProps, query, getParams, actions };
 }

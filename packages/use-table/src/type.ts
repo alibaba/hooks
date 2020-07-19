@@ -1,5 +1,3 @@
-import { Dispatch } from 'react';
-import { IFormEffect, IFormActions } from '@formily/react';
 import {
   Obj,
   IApp,
@@ -26,8 +24,6 @@ export interface Options {
   plugins?: RawPlugins<IContext>;
 }
 
-export type Effects = IFormEffect<any, any>;
-
 export interface ITableProps {
   openPagination: boolean;
   paginationProps: {
@@ -39,25 +35,11 @@ export interface ITableProps {
   };
 }
 
-export interface IReturnFormActions extends IFormActions {
-  // TODO 其实可以描述 state 里面有什么值
-  setState?: Dispatch<any>;
-  getState?: () => any;
-}
-
-export interface IReturnFormProps {
-  effects: Effects;
-  actions: IReturnFormActions;
-  ref: React.Ref<undefined>;
-}
-
 export interface ReturnValue {
-  formProps: IReturnFormProps;
-  getFormProps: (args: Obj) => IReturnFormProps;
   tableProps: ITableProps;
   query: IApp['query'];
   getParams: () => {};
-  actions: IReturnFormActions;
+  actions: Obj;
   [name: string]: any;
 }
 
@@ -103,7 +85,6 @@ export interface IFormTableHelper extends IHelper {
 }
 
 export interface IContext extends IMiddlewareContext {
-  actions: IReturnFormActions;
   store: IStore;
   query: IApp['query'];
   helper: IFormTableHelper;
