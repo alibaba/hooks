@@ -1,39 +1,47 @@
 import { renderHook, act } from '@testing-library/react-hooks';
-import useWhyDidYouUpdate from '../index';
-import { useState } from 'react';
+import WS from 'jest-websocket-mock';
+import useWebSocket, { READY_STATE } from '../index';
 
-describe('useWhyDidYouUpdate', () => {
+const promise: Promise<void> = new Promise((resolve) => resolve());
+
+describe('useWebSocket', () => {
   it('should be defined', () => {
-    expect(useWhyDidYouUpdate).toBeDefined();
+    expect(useWebSocket).toBeDefined();
   });
 
-  it('should work', () => {
-    console.log = jest.fn();
-    const setup = () =>
-      renderHook(() => {
-        const [count, setCount] = useState(100);
-        useWhyDidYouUpdate('UseWhyDidYouUpdateComponent', { count });
-        return {
-          setCount,
-        };
-      });
+  it('should work', async () => {
+    const wsUrl = 'ws://localhost:9999';
+    const wsServer = new WS(wsUrl);
+    const hooks = renderHook(() => useWebSocket(wsUrl));
 
-    const hook = setup();
-
-    act(() => {
-      hook.result.current.setCount(1);
+    // connect
+    expect(hooks.result.current.readyState).toBe(READY_STATE.closed);
+    expect(hooks.result.current.latestMessage).toBe(undefined);
+    await act(async () => {
+      await wsServer.connected;
+      return promise;
     });
-    expect(console.log).toHaveBeenCalledWith(
-      '[why-did-you-update]',
-      'UseWhyDidYouUpdateComponent',
-      {
-        count: {
-          from: 100,
-          to: 1,
-        },
-      },
-    );
-  });
+    expect(hooks.result.current.readyState).toBe(READY_STATE.open);
 
-  it('should support component props', () => {});
+    // send message
+    const nowTime = `${Date.now()}`;
+    hooks.result.current.sendMessage && hooks.result.current.sendMessage(nowTime);
+    await expect(wsServer).toReceiveMessage(nowTime);
+
+    // receive message
+    act(() => {
+      wsServer.send(nowTime);
+    });
+    expect(hooks.result.current.latestMessage?.data).toBe(nowTime);
+
+    // disconnect
+    act(() => wsServer.close());
+    await act(async () => {
+      await wsServer.closed;
+      return promise;
+    });
+    expect(hooks.result.current.readyState).toBe(READY_STATE.closed);
+
+    WS.clean();
+  });
 });
