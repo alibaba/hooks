@@ -31,8 +31,8 @@ export interface ITableProps {
     total: number;
     pageSize: number;
     current: number;
-    onChange: (value) => {};
-    onPageSizeChange: () => {};
+    onChange: (current: number, ...any: any[]) => void;
+    onPageSizeChange: (value: number) => void;
   };
 }
 
