@@ -175,7 +175,7 @@ function useAntdTable<R = any, Item = any, U extends Item = any>(
         run(
           {
             pageSize: options.defaultPageSize || 10,
-            ...(params[0] || {}), // 防止 manual 情况下，第一次触发 submit，此时没有 params[0]
+            ...((params[0] as PaginatedParams[0] | undefined) || {}), // 防止 manual 情况下，第一次触发 submit，此时没有 params[0]
             current: 1,
           },
           activeFormData,

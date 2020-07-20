@@ -13,11 +13,11 @@ class TestStorage implements Storage {
     this.length = 0;
   }
 
-  getItem(key: string): string {
-    return this._values.get(key);
+  getItem(key: string): string | null {
+    return this._values.get(key) || null;
   }
 
-  key(index: number): string {
+  key(index: number): string | null {
     if (index >= this._values.size) {
       return null;
     }
