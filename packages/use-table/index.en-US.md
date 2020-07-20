@@ -12,9 +12,5 @@ legacy: /table/use-table
 
 # useTable
 
-## 代码演示
-
-### 基础
-
-<code src="./demo/simple.tsx" />
+A pluggable Hook for Table
 
