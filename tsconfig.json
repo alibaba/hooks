@@ -24,6 +24,6 @@
     "**/__tests__",
     "**/__test__",
     "**/demo",
-    "./gulpfile.js"
+    "gulpfile.js"
   ]
 }
