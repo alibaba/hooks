@@ -77,13 +77,7 @@ const useTableQueryPlugin = (options): Plugin => {
   };
 };
 
-function useTable(service: (params?: Obj) => Promise<any>, deps?: any[]): ReturnValue;
-
-function useTable(
-  service: (params?: Obj) => Promise<any>,
-  options?: Options,
-  deps?: any[],
-): ReturnValue;
+function useTable(service: (params?: Obj) => Promise<any>, options?: Options): ReturnValue;
 
 function useTable(service, options?) {
   const realOptions = Array.isArray(options) ? {} : options || {};

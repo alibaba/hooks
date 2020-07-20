@@ -1,3 +1,3 @@
 import { useTableProps, usePaginationProps } from './table';
 
-export default [useTableProps, usePaginationProps];
+export default [usePaginationProps, useTableProps];

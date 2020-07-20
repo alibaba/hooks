@@ -40,6 +40,7 @@ export interface ReturnValue {
   tableProps: ITableProps;
   query: IApp['query'];
   getParams: () => {};
+  paginationProps: ITableProps['paginationProps'];
   actions: Obj;
   [name: string]: any;
 }
