@@ -23,7 +23,7 @@ legacy: /zh-CN/dom/use-scroll
 ## API
 
 ```ts
-const pisition = useScroll(target);
+const position = useScroll(target);
 ```
 
 ### Params
