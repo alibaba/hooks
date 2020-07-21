@@ -1,9 +1,9 @@
 /**
  * title: Default usage
- * desc: Update state or props, you can see the output in the console
+ * desc: WebSocket hooks used.
  *
  * title.zh-CN: 默认用法
- * desc.zh-CN: 更新 state 或 props，可以在控制台看到输出
+ * desc.zh-CN: webSocket hooks 使用
  */
 
 import React from 'react';
