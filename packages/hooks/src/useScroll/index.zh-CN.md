@@ -23,7 +23,7 @@ legacy: /zh-CN/dom/use-scroll
 ## API
 
 ```ts
-const pisition = useSize(target);
+const pisition = useScroll(target);
 ```
 
 ### Params
@@ -36,4 +36,4 @@ const pisition = useSize(target);
 
 | 参数 | 说明     | 类型 |
 |------|----------|------|
-| position | 滚动容器当前的滚动位置 | `{x: number, y: number}`  |
+| position | 滚动容器当前的滚动位置 | `{left: number, top: number}`  |
