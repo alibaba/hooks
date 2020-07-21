@@ -35,14 +35,20 @@ describe('useTable#plugin', () => {
         tableProps: { isTree: true },
       },
     };
+    const plugin1 = {
+      props: {
+        tableProps: { isZebra: true },
+      },
+    };
     const { waitForNextUpdate, result } = renderHook(() =>
-      useTable(() => service({ dataSource, total: TOTAL }), { plugins: [plugin] }),
+      useTable(() => service({ dataSource, total: TOTAL }), { plugins: [plugin, plugin1] }),
     );
 
     await waitForNextUpdate();
     await waitForNextUpdate();
 
     expect((result.current.tableProps as Obj).isTree).toEqual(true);
+    expect((result.current.tableProps as Obj).isZebra).toEqual(true);
   });
 
   it('paginationProps', async () => {
@@ -70,6 +76,24 @@ describe('useTable#plugin', () => {
       props: {
         test: true,
       },
+    };
+    const { waitForNextUpdate, result } = renderHook(() =>
+      useTable(() => service({ dataSource, total: TOTAL }), { plugins: [plugin] }),
+    );
+
+    await waitForNextUpdate();
+    await waitForNextUpdate();
+
+    expect(result.current.test).toEqual(true);
+  });
+
+  it('function props', async () => {
+    const dataSource = [{ name: 'ahooks' }];
+    const TOTAL = 25;
+    const plugin = {
+      props: () => ({
+        test: true,
+      }),
     };
     const { waitForNextUpdate, result } = renderHook(() =>
       useTable(() => service({ dataSource, total: TOTAL }), { plugins: [plugin] }),
