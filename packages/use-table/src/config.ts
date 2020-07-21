@@ -5,5 +5,4 @@ export const methods = {
   ON_MOUNT: 'onMount',
   ON_PAGE_SIZE_CHANGE: 'onPageSizeChange',
   ON_PAGE_CHANGE: 'onPageChange',
-  ON_CUSTOM_FIELDS_SUBMIT: 'onCustomFieldsSubmit',
 };

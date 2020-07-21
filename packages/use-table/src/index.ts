@@ -4,7 +4,7 @@ import { timelines, defaults, methods, PREPARE } from './config';
 import createStore from './store';
 import middlewares from './middlewares/index';
 import useProps from './props/index';
-import { Obj, ReturnValue, RawPlugins, Options, Plugin, IContext } from './type';
+import { Obj, ReturnValue, RawPlugins, Options, Plugin, IContext, IResponse } from './type';
 import { addYourMiddlewares } from './shared';
 import { IS_NORMAL_SYMBOL } from './symbol';
 import { checkQueryFrom } from './helper';
@@ -97,9 +97,7 @@ const useTableQueryPlugin = (options): Plugin => {
   };
 };
 
-function useTable(service: (params?: Obj) => Promise<any>, options?: Options): ReturnValue;
-
-function useTable(service: (params?: Obj) => Promise<any>, options?: Options) {
+function useTable(service: (params?: Obj) => Promise<IResponse>, options?: Options): ReturnValue {
   const {
     plugins = [],
     current = defaults.current,

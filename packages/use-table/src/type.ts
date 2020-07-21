@@ -33,7 +33,7 @@ export interface ITableProps {
     pageSize: number;
     current: number;
     onChange: (current: number, ...any: any[]) => void;
-    onPageSizeChange: (value: number) => void;
+    onPageSizeChange: (pageSize: number, ...any: any[]) => void;
   };
 }
 
@@ -76,7 +76,7 @@ export interface IResponse {
   [name: string]: any;
 }
 
-export interface IFormTableHelper extends IHelper {
+export interface ITableHelper extends IHelper {
   checkQueryFrom: () => {
     isPageSizeChange: boolean;
     isPageChange: boolean;
@@ -86,13 +86,13 @@ export interface IFormTableHelper extends IHelper {
 export interface IContext extends IMiddlewareContext {
   store: IStore;
   query: IApp['query'];
-  helper: IFormTableHelper;
+  helper: ITableHelper;
   params: Obj;
   meta: {
     queryFrom: string;
     [name: string]: any;
   };
-  response: any;
+  response: IResponse;
 }
 
 export type FormTableNormalPlugin = NormalPlugin<IContext>;
