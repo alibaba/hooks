@@ -53,4 +53,28 @@ describe('useTable#options', () => {
     await sleep(2);
     expect(result.current.tableProps.dataSource).toEqual([]);
   });
+
+  it('refreshDeps', async () => {
+    const dataSource = [{ name: 'ahooks' }];
+    const TOTAL = 25;
+    let status = true;
+    const { result, waitForNextUpdate, rerender } = renderHook(() =>
+      useTable(() => service({ dataSource, total: TOTAL }), { refreshDeps: [status] }),
+    );
+
+    await waitForNextUpdate();
+    await waitForNextUpdate();
+    expect(result.current.tableProps.dataSource).toEqual(dataSource);
+
+    rerender();
+    await sleep(2);
+    expect(result.current.tableProps.dataSource).toEqual(dataSource);
+
+    status = false;
+    dataSource[0].name = 'updated';
+    rerender();
+    await waitForNextUpdate();
+    await waitForNextUpdate();
+    expect(result.current.tableProps.dataSource[0].name).toEqual('updated');
+  });
 });

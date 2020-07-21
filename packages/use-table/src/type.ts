@@ -22,6 +22,7 @@ export interface Options {
   pageSize?: number;
   autoFirstQuery?: boolean;
   plugins?: RawPlugins<IContext>;
+  refreshDeps?: any[];
 }
 
 export interface ITableProps {

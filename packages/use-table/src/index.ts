@@ -1,4 +1,4 @@
-import { useMemo, useCallback, useState, useEffect } from 'react';
+import { useMemo, useRef, useCallback, useState, useEffect } from 'react';
 import useQueryDisplay from 'use-query-display';
 import { timelines, defaults, methods, PREPARE } from './config';
 import createStore from './store';
@@ -20,6 +20,26 @@ const useMutableState = (initalState: Obj = {}) => {
 
 const useMount = (fn) => {
   useEffect(fn, []);
+};
+
+const useStateIsInit = () => {
+  const ref = useRef(true);
+  if (ref.current) {
+    ref.current = false;
+    return true;
+  }
+
+  return ref.current;
+};
+
+const useUpdateEffect = (fn, deps) => {
+  const isInit = useStateIsInit();
+
+  useEffect(() => {
+    if (!isInit) {
+      fn();
+    }
+  }, deps);
 };
 
 const useParams = (ctx: Obj) => {
@@ -79,12 +99,15 @@ const useTableQueryPlugin = (options): Plugin => {
 
 function useTable(service: (params?: Obj) => Promise<any>, options?: Options): ReturnValue;
 
-function useTable(service, options?) {
-  const realOptions = Array.isArray(options) ? {} : options || {};
+function useTable(service: (params?: Obj) => Promise<any>, options?: Options) {
+  const {
+    plugins = [],
+    current = defaults.current,
+    pageSize = defaults.pageSize,
+    refreshDeps = [],
+  } = options || {};
 
-  const { plugins = [], current = defaults.current, pageSize = defaults.pageSize } = realOptions;
   const plugin: RawPlugins = [useTableQueryPlugin({ ...options, current, pageSize })];
-
   const { props: tableQueryProps = {}, query } = useQueryDisplay(
     { timelines: [PREPARE].concat(timelines), ...options, service },
     plugin.concat(addYourMiddlewares(plugins)),
@@ -93,6 +116,8 @@ function useTable(service, options?) {
   useMount(() => {
     query({}, { queryFrom: methods.ON_MOUNT });
   });
+
+  useUpdateEffect(query, refreshDeps);
 
   const { tableProps, getParams, actions, props } = tableQueryProps;
   const { paginationProps, ...$tableProps } = tableProps;
