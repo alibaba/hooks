@@ -45,6 +45,24 @@ describe('useTable#plugin', () => {
     expect((result.current.tableProps as Obj).isTree).toEqual(true);
   });
 
+  it('paginationProps', async () => {
+    const dataSource = [{ name: 'ahooks' }];
+    const TOTAL = 25;
+    const plugin = {
+      props: {
+        paginationProps: { pageSizeSelector: 'dropdown' },
+      },
+    };
+    const { waitForNextUpdate, result } = renderHook(() =>
+      useTable(() => service({ dataSource, total: TOTAL }), { plugins: [plugin] }),
+    );
+
+    await waitForNextUpdate();
+    await waitForNextUpdate();
+
+    expect((result.current.paginationProps as Obj).pageSizeSelector).toEqual('dropdown');
+  });
+
   it('external props', async () => {
     const dataSource = [{ name: 'ahooks' }];
     const TOTAL = 25;
