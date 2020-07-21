@@ -4,10 +4,10 @@ nav:
   title: Hooks
   path: /hooks
 group:
-  title: Test
-  path: /test
+  title: Table
+  path: /table
   order: 1
-legacy: /test
+legacy: /table/use-table
 ---
 
 # useTable
