@@ -427,7 +427,7 @@ function useAsync<R, P extends any[], U, UU extends U = any>(
       if (Object.keys(fetches).length > 0) {
         // 如果 staleTime 是 -1，则 cache 永不过期
         // 如果 statleTime 超期了，则重新请求
-        const cacheStartTime = getCache(cacheKey)?.startTime || 0;
+        const cacheStartTime = (cacheKey && getCache(cacheKey)?.startTime) || 0;
         if (!(staleTime === -1 || new Date().getTime() - cacheStartTime <= staleTime)) {
           /* 重新执行所有的 cache */
           Object.values(fetches).forEach((f) => {
@@ -474,7 +474,7 @@ function useAsync<R, P extends any[], U, UU extends U = any>(
 
   const notExecutedWarning = useCallback(
     (name: string) => () => {
-      throw new Error(`Cannot call ${name} when service not executed once.`);
+      console.warn(`You should't call ${name} when service not executed once.`);
     },
     [],
   );
@@ -488,7 +488,7 @@ function useAsync<R, P extends any[], U, UU extends U = any>(
     refresh: notExecutedWarning('refresh'),
     mutate: notExecutedWarning('mutate'),
 
-    ...(fetches[newstFetchKey.current] || {}),
+    ...((fetches[newstFetchKey.current] as FetchResult<U, P> | undefined) || {}),
     run,
     fetches,
     reset,

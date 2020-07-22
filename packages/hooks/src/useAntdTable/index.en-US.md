@@ -56,3 +56,17 @@ const {
   }
 );
 ```
+
+## FAQ
+
+### 1. Unable to read or initialize the value of the custom component
+
+You can refer to [#496](https://github.com/alibaba/hooks/issues/496).
+
+If the antd form item is a custom function component, you need to use the `React.forwardRef`.
+
+```js
+const CustomInput = React.forwardRef((props, ref) => (
+  <Input ref={ref} value={props.value} onChange={props.onChange} />
+));
+```

@@ -44,6 +44,9 @@ import useHistoryTravel from './useHistoryTravel';
 import useDebounceEffect from './useDebounceEffect';
 import useCookieState from './useCookieState';
 import useSetState from './useSetState';
+import useInterval from './useInterval';
+import useWhyDidYouUpdate from './useWhyDidYouUpdate';
+import useTitle from './useTitle';
 
 const useControlledValue: typeof useControllableValue = function (...args) {
   console.warn(
@@ -103,4 +106,7 @@ export {
   useFusionTable,
   useCookieState,
   useSetState,
+  useInterval,
+  useWhyDidYouUpdate,
+  useTitle,
 };

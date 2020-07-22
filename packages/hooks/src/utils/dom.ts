@@ -11,12 +11,12 @@ type TargetElement = HTMLElement | Document | Window;
 export function getTargetElement(
   target?: BasicTarget<TargetElement>,
   defaultElement?: TargetElement,
-): TargetElement | undefined {
+): TargetElement | undefined | null {
   if (!target) {
     return defaultElement;
   }
 
-  let targetElement: TargetElement;
+  let targetElement: TargetElement | undefined | null;
 
   if (typeof target === 'function') {
     targetElement = target();
