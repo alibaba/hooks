@@ -46,6 +46,7 @@ import useSetState from './useSetState';
 import useInterval from './useInterval';
 import useWhyDidYouUpdate from './useWhyDidYouUpdate';
 import useTitle from './useTitle';
+import useNetwork from './useNetwork';
 
 const useControlledValue: typeof useControllableValue = function (...args) {
   console.warn(
@@ -107,4 +108,5 @@ export {
   useInterval,
   useWhyDidYouUpdate,
   useTitle,
+  useNetwork,
 };
