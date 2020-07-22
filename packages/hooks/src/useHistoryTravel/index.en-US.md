@@ -21,7 +21,7 @@ A hook to manage state change history. It provides encapsulation methods to trav
 ## API
 
 ```javascript
-const { value, setValue, backLength, forwardLength, go, back, forward } = useHistoryTravel<T>(initialValue?: T);
+const { value, setValue, backLength, forwardLength, go, back, forward, reset } = useHistoryTravel<T>(initialValue?: T);
 ```
 
 ### Result
@@ -35,9 +35,12 @@ const { value, setValue, backLength, forwardLength, go, back, forward } = useHis
 | go | move between the history, move backward on step < 0，and move forward on step > 0 | (step: number) => void |
 | back | move one step backward in history | () => void |
 | foward | move one step forward in history | () => void |
+| reset | reset history to initial value by default or provide a new initial value. | (hasNewInitial: boolean = false, newInitialValue?: T) => void |
 
 ### Params
 
 | Property    | Description                                         | Type                   | Default |
 |---------|----------------------------------------------|------------------------|--------|
 | initialValue? | optional initial value  | T |  - |     
+| hasNewInitial | Has new initial value. | boolean | false |
+| newInitialValue? | New initial value to be reset to. hasNewInitial must be true. | T |  - |
