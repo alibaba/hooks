@@ -26,7 +26,7 @@ function useCookieState(cookieKey: string, options?: IOptions) {
 
   const updateState = useCallback(
     (
-      newValue?: string | ((prevState: TCookieState) => TCookieState),
+      newValue?: TCookieState | ((prevState: TCookieState) => TCookieState),
       option?: Cookies.CookieAttributes,
     ) => {
       const { defaultValue, ...cookieOptions } = option || options || {};

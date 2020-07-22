@@ -1,12 +1,12 @@
 import { renderHook, act } from '@testing-library/react-hooks';
-import useCookieState, { Options } from '../index';
+import useCookieState, { IOptions } from '../index';
 
 describe('useCookieState', () => {
   it('should be defined', () => {
     expect(useCookieState).toBeDefined();
   });
 
-  const setUp = (key: string, options: Options) =>
+  const setUp = (key: string, options: IOptions) =>
     renderHook(() => {
       const [state, setState] = useCookieState(key, options);
       return {
@@ -50,6 +50,18 @@ describe('useCookieState', () => {
       defaultValue: 'false',
     });
     expect(anotherHook.result.current.state).toEqual('false');
+  });
+
+  it('should support null string', () => {
+    const COOKIE_KEY = 'test-boolean-key-with-null-string';
+    const hook = setUp(COOKIE_KEY, {
+      defaultValue: 'null',
+    });
+    expect(hook.result.current.state).toEqual('null');
+    act(() => {
+      hook.result.current.setState('');
+    });
+    expect(hook.result.current.state).toEqual('');
   });
 
   it('should support function updater', () => {
