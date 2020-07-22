@@ -13,20 +13,8 @@ export type TCookieState = string | null | undefined;
 
 export type TCookieOptions = Cookies.CookieAttributes;
 
-function useCookieState(
-  cookieKey: string,
-  options?: IOptions,
-): [
-  TCookieState,
-  (
-    newValue?: string | ((prevState?: TCookieState) => TCookieState),
-    options?: Cookies.CookieAttributes,
-  ) => void,
-] {
-  const [state, setState] = useState<TCookieState>(() => getDefaultValue());
-
-  // 获取defaultValue
-  function getDefaultValue(): TCookieState {
+function useCookieState(cookieKey: string, options?: IOptions) {
+  const [state, setState] = useState<TCookieState>(() => {
     const cookieValue = Cookies.get(cookieKey);
     if (cookieValue) return cookieValue;
     if (options && options.defaultValue) {
@@ -34,7 +22,7 @@ function useCookieState(
       return options.defaultValue;
     }
     return null;
-  }
+  });
 
   const updateState = useCallback(
     (
@@ -57,7 +45,7 @@ function useCookieState(
     [cookieKey, options],
   );
 
-  return [state, updateState];
+  return [state, updateState] as const;
 }
 
 export default useCookieState;
