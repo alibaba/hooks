@@ -1,5 +1,5 @@
 export default {
-  ssr: {},
+  // ssr: {},
   exportStatic: {},
   nodeModulesTransform: {
     type: 'none',

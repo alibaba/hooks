@@ -1,12 +1,12 @@
 import { renderHook, act } from '@testing-library/react-hooks';
-import useCookieState, { IOptions } from '../index';
+import useCookieState, { Options } from '../index';
 
 describe('useCookieState', () => {
   it('should be defined', () => {
     expect(useCookieState).toBeDefined();
   });
 
-  const setUp = (key: string, options: IOptions) =>
+  const setUp = (key: string, options: Options) =>
     renderHook(() => {
       const [state, setState] = useCookieState(key, options);
       return {

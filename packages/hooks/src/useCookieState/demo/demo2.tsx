@@ -1,6 +1,6 @@
 /**
  * title: Persist state with function updater
- * desc: function updater is also acceptable with useCookieState.
+ * desc: Function updater is also acceptable with useCookieState.
  *
  * title.zh-CN: 使用 function updater 存储
  * desc.zh-CN: useCookieState 里也可以用 function updater，就像 useState 那样。
@@ -9,26 +9,26 @@
 import * as React from 'react';
 import { useCookieState } from 'ahooks';
 
-const inc = (v: string | null) => {
-  return Number.isNaN(Number(v)) ? '0' : `${Number(v) + 1}`;
-};
-
-const dec = (v: string | null) => {
-  return Number.isNaN(Number(v)) ? '0' : `${Number(v) - 1}`;
-};
-
 export default function App() {
   const [value, setValue] = useCookieState('useCookieStateUpdater', {
-    defaultValue: inc,
+    defaultValue: '0',
   });
 
   return (
     <>
       <p>{value || '0'}</p>
-      <button type="button" style={{ marginRight: '16px' }} onClick={() => setValue(inc)}>
+      <button
+        type="button"
+        style={{ marginRight: '16px' }}
+        onClick={() => setValue((v) => String(Number(v) + 1))}
+      >
         inc +
       </button>
-      <button type="button" style={{ marginRight: '16px' }} onClick={() => setValue(dec)}>
+      <button
+        type="button"
+        style={{ marginRight: '16px' }}
+        onClick={() => setValue((v) => String(Number(v) - 1))}
+      >
         dec -
       </button>
       <button type="button" onClick={() => setValue('0')}>
