@@ -329,14 +329,14 @@ function useAsync<R, P extends any[], U, UU extends U = any>(
   };
 
   const subscribe = usePersistFn((key: string, data: any) => {
-    setFeches((s) => {
+    setFetches((s) => {
       // eslint-disable-next-line no-param-reassign
       s[key] = data;
       return { ...s };
     });
   }) as any;
 
-  const [fetches, setFeches] = useState<Fetches<U, P>>(() => {
+  const [fetches, setFetches] = useState<Fetches<U, P>>(() => {
     // 如果有 缓存，则从缓存中读数据
     if (cacheKey) {
       const cacheData = getCache(cacheKey)?.data;
@@ -386,7 +386,7 @@ function useAsync<R, P extends any[], U, UU extends U = any>(
           data: initialData,
         });
         currentFetch = newFetch.state;
-        setFeches((s) => {
+        setFetches((s) => {
           // eslint-disable-next-line no-param-reassign
           s[currentFetchKey] = currentFetch;
           return { ...s };
@@ -447,10 +447,10 @@ function useAsync<R, P extends any[], U, UU extends U = any>(
       f.unmount();
     });
     newstFetchKey.current = DEFAULT_KEY;
-    setFeches({});
+    setFetches({});
     // 不写会有问题。如果不写，此时立即 run，会是老的数据
     fetchesRef.current = {};
-  }, [setFeches]);
+  }, [setFetches]);
 
   //  refreshDeps 变化，重新执行所有请求
   useUpdateEffect(() => {
