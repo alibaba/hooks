@@ -13,30 +13,28 @@ export type TCookieState = string | null | undefined;
 
 export type TCookieOptions = Cookies.CookieAttributes;
 
-function useCookieState(cookieKey: string, options?: IOptions) {
+function useCookieState(cookieKey: string, options: IOptions = {}) {
   const [state, setState] = useState<TCookieState>(() => {
     const cookieValue = Cookies.get(cookieKey);
     if (typeof cookieValue === 'string') return cookieValue;
-    if (options && options.defaultValue) {
-      if (isFunction(options.defaultValue)) return options.defaultValue();
-      return options.defaultValue;
-    }
-    return null;
+
+    if (isFunction(options.defaultValue)) return options.defaultValue();
+    return options.defaultValue;
   });
 
   const updateState = useCallback(
     (
       newValue?: TCookieState | ((prevState: TCookieState) => TCookieState),
-      option?: Cookies.CookieAttributes,
+      newOptions?: Cookies.CookieAttributes,
     ) => {
-      const { defaultValue, ...cookieOptions } = option || options || {};
+      const { defaultValue, ...initOptions } = options;
       setState(
         (prevState: TCookieState): TCookieState => {
           const value = isFunction(newValue) ? newValue(prevState) : newValue;
           if (value === undefined || value === null) {
             Cookies.remove(cookieKey);
           } else {
-            Cookies.set(cookieKey, value, cookieOptions);
+            Cookies.set(cookieKey, value, { ...initOptions, ...(newOptions || {}) });
           }
           return value;
         },

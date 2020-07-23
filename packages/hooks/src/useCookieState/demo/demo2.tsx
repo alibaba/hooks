@@ -16,7 +16,7 @@ export default function App() {
 
   return (
     <>
-      <p>{value || '0'}</p>
+      <p>{value}</p>
       <button
         type="button"
         style={{ marginRight: '16px' }}

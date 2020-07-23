@@ -60,7 +60,7 @@ const [state, setState] = useCookieState(
 | setState | 设置 cookie，根据 options 属性，同步至本地 cookie | (value?: CookieState \| ((previousState: CookieState, options: Options) => CookieState)) => void |
 
 setState 可以更新 cookie options，会与 `useCookieState` 设置的 options 进行 merge 操作。
-`const targetOptions = {...updateOptions, ...options}`
+`const targetOptions = {...options, ...updateOptions}`
 
 ### Options
 

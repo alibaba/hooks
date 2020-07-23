@@ -59,6 +59,9 @@ If you want to delete this record from document.cookie, you can use `setState()`
 | state    | Local cookie value | string \| undefined \| null                                                                          |
 | setState | Configure cookies. According to the options attribute, sync to the local cookie | (value?: CookieState \| ((previousState: CookieState, options: Options) => CookieState)) => void |
 
+setState can update cookie options, and merge with the options set by `useCookieState`.
+`const targetOptions = {...options, ...updateOptions}`
+
 ### Options
 
 | Property       | Description                 | Type                 | Default |
