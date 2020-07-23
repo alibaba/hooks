@@ -1,5 +1,6 @@
 import { renderHook, act } from '@testing-library/react-hooks';
 import useCookieState, { IOptions } from '../index';
+import Cookies from 'js-cookie';
 
 describe('useCookieState', () => {
   it('should be defined', () => {
@@ -52,14 +53,12 @@ describe('useCookieState', () => {
     expect(anotherHook.result.current.state).toEqual('false');
   });
 
-  it('should support null string', () => {
-    const COOKIE_KEY = 'test-boolean-key-with-null-string';
+  it('should support empty string', () => {
+    Cookies.set('test-key-empty-string', '');
+    expect(Cookies.get('test-key-empty-string')).toBe('');
+    const COOKIE_KEY = 'test-key-empty-string';
     const hook = setUp(COOKIE_KEY, {
-      defaultValue: 'null',
-    });
-    expect(hook.result.current.state).toEqual('null');
-    act(() => {
-      hook.result.current.setState('');
+      defaultValue: 'hello',
     });
     expect(hook.result.current.state).toEqual('');
   });

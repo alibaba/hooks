@@ -16,7 +16,7 @@ export type TCookieOptions = Cookies.CookieAttributes;
 function useCookieState(cookieKey: string, options?: IOptions) {
   const [state, setState] = useState<TCookieState>(() => {
     const cookieValue = Cookies.get(cookieKey);
-    if (cookieValue) return cookieValue;
+    if (typeof cookieValue === 'string') return cookieValue;
     if (options && options.defaultValue) {
       if (isFunction(options.defaultValue)) return options.defaultValue();
       return options.defaultValue;
