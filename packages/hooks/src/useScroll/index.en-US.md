@@ -23,7 +23,7 @@ Get the scroll position of an element.
 ## API
 
 ```ts
-const pisition = useScroll(target);
+const position = useScroll(target);
 ```
 
 ### Params
@@ -37,4 +37,4 @@ const pisition = useScroll(target);
 
 | Property | Description                                                       | Type                 |
 |------|----------|------|
-| position | The current scroll position of the element. | `{x: number, y: number}`  |
+| position | The current scroll position of the element. | `{left: number, top: number}`  |
