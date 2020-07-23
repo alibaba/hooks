@@ -10,7 +10,15 @@ import React, { useState } from 'react';
 import { useDrop, useDrag } from 'ahooks';
 
 export default () => {
-  const getDragProps = useDrag();
+  const [dragging, setDragging] = useState<string | null>(null);
+  const getDragProps = useDrag({
+    onDragStart: (data) => {
+      setDragging(data);
+    },
+    onDragEnd: () => {
+      setDragging(null);
+    },
+  });
   const [props, { isHovering }] = useDrop({
     onText: (text, e) => {
       console.log(e);
@@ -51,6 +59,7 @@ export default () => {
           </div>
         ))}
       </div>
+      <div style={{ marginTop: 8 }}>{dragging ? <>dragging {dragging}</> : 'not dragging'}</div>
     </div>
   );
 };
