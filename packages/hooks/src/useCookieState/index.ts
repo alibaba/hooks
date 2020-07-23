@@ -25,16 +25,16 @@ function useCookieState(cookieKey: string, options: IOptions = {}) {
   const updateState = useCallback(
     (
       newValue?: TCookieState | ((prevState: TCookieState) => TCookieState),
-      newOptions?: Cookies.CookieAttributes,
+      newOptions: Cookies.CookieAttributes = {},
     ) => {
-      const { defaultValue, ...initOptions } = options;
+      const { defaultValue, ...restOptions } = { ...options, ...newOptions };
       setState(
         (prevState: TCookieState): TCookieState => {
           const value = isFunction(newValue) ? newValue(prevState) : newValue;
           if (value === undefined || value === null) {
             Cookies.remove(cookieKey);
           } else {
-            Cookies.set(cookieKey, value, { ...initOptions, ...(newOptions || {}) });
+            Cookies.set(cookieKey, value, restOptions);
           }
           return value;
         },
