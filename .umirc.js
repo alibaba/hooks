@@ -19,7 +19,7 @@ export default {
       'babel-plugin-import',
       {
         libraryName: '@alifd/next',
-        style: true,
+        style: false,
       },
       'fusion',
     ],
@@ -35,7 +35,13 @@ export default {
   resolve: {
     includes: ['docs', 'packages/hooks/src', 'packages/use-request'],
   },
-  links: [{ rel: 'stylesheet', href: '/style.css' }],
+  links: [
+    {
+      rel: 'stylesheet',
+      href: 'https://unpkg.com/@alifd/theme-design-pro@0.6.2/dist/next.min.css',
+    },
+    { rel: 'stylesheet', href: '/style.css' },
+  ],
   navs: {
     'zh-CN': [
       null,
