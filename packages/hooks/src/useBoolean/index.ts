@@ -1,8 +1,6 @@
 import { useMemo } from 'react';
 import useToggle from '../useToggle';
 
-type IState = string | number | boolean | undefined;
-
 export interface Actions {
   setTrue: () => void;
   setFalse: () => void;

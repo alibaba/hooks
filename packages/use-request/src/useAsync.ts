@@ -168,6 +168,10 @@ class Fetch<R, P extends any[]> {
             throw error;
           }
           console.error(error);
+          // eslint-disable-next-line prefer-promise-reject-errors
+          return Promise.reject(
+            'useRequest has caught the exception, if you need to handle the exception yourself, you can set options.throwOnError to true.',
+          );
         }
       })
       .finally(() => {
@@ -283,6 +287,8 @@ function useAsync<R, P extends any[], U, UU extends U = any>(
     focusTimespan = 5000,
     fetchKey,
     cacheKey,
+    cacheTime = 5 * 60 * 1000,
+    staleTime = 0,
     debounceInterval,
     throttleInterval,
     initialData,
@@ -323,23 +329,23 @@ function useAsync<R, P extends any[], U, UU extends U = any>(
   };
 
   const subscribe = usePersistFn((key: string, data: any) => {
-    setFeches((s) => {
+    setFetches((s) => {
       // eslint-disable-next-line no-param-reassign
       s[key] = data;
       return { ...s };
     });
   }) as any;
 
-  const [fetches, setFeches] = useState<Fetches<U, P>>(() => {
+  const [fetches, setFetches] = useState<Fetches<U, P>>(() => {
     // 如果有 缓存，则从缓存中读数据
     if (cacheKey) {
-      const cache = getCache(cacheKey);
-      if (cache) {
-        newstFetchKey.current = cache.newstFetchKey;
+      const cacheData = getCache(cacheKey)?.data;
+      if (cacheData) {
+        newstFetchKey.current = cacheData.newstFetchKey;
         /* 使用 initState, 重新 new Fetch */
         const newFetches: any = {};
-        Object.keys(cache.fetches).forEach((key) => {
-          const cacheFetch = cache.fetches[key];
+        Object.keys(cacheData.fetches).forEach((key) => {
+          const cacheFetch = cacheData.fetches[key];
           const newFetch = new Fetch(servicePersist, config, subscribe.bind(null, key), {
             loading: cacheFetch.loading,
             params: cacheFetch.params,
@@ -380,7 +386,7 @@ function useAsync<R, P extends any[], U, UU extends U = any>(
           data: initialData,
         });
         currentFetch = newFetch.state;
-        setFeches((s) => {
+        setFetches((s) => {
           // eslint-disable-next-line no-param-reassign
           s[currentFetchKey] = currentFetch;
           return { ...s };
@@ -394,9 +400,9 @@ function useAsync<R, P extends any[], U, UU extends U = any>(
   runRef.current = run;
 
   // cache
-  useEffect(() => {
+  useUpdateEffect(() => {
     if (cacheKey) {
-      setCache(cacheKey, {
+      setCache(cacheKey, cacheTime, {
         fetches,
         newstFetchKey: newstFetchKey.current,
       });
@@ -417,12 +423,17 @@ function useAsync<R, P extends any[], U, UU extends U = any>(
   // 第一次默认执行
   useEffect(() => {
     if (!manual) {
-      // 如果有缓存
+      // 如果有缓存，则重新请求
       if (Object.keys(fetches).length > 0) {
-        /* 重新执行所有的 */
-        Object.values(fetches).forEach((f) => {
-          f.refresh();
-        });
+        // 如果 staleTime 是 -1，则 cache 永不过期
+        // 如果 statleTime 超期了，则重新请求
+        const cacheStartTime = (cacheKey && getCache(cacheKey)?.startTime) || 0;
+        if (!(staleTime === -1 || new Date().getTime() - cacheStartTime <= staleTime)) {
+          /* 重新执行所有的 cache */
+          Object.values(fetches).forEach((f) => {
+            f.refresh();
+          });
+        }
       } else {
         // 第一次默认执行，可以通过 defaultParams 设置参数
         runRef.current(...(defaultParams as any));
@@ -436,10 +447,10 @@ function useAsync<R, P extends any[], U, UU extends U = any>(
       f.unmount();
     });
     newstFetchKey.current = DEFAULT_KEY;
-    setFeches({});
+    setFetches({});
     // 不写会有问题。如果不写，此时立即 run，会是老的数据
     fetchesRef.current = {};
-  }, [setFeches]);
+  }, [setFetches]);
 
   //  refreshDeps 变化，重新执行所有请求
   useUpdateEffect(() => {
@@ -463,7 +474,7 @@ function useAsync<R, P extends any[], U, UU extends U = any>(
 
   const notExecutedWarning = useCallback(
     (name: string) => () => {
-      throw new Error(`Cannot call ${name} when service not executed once.`);
+      console.warn(`You should't call ${name} when service not executed once.`);
     },
     [],
   );
@@ -477,7 +488,7 @@ function useAsync<R, P extends any[], U, UU extends U = any>(
     refresh: notExecutedWarning('refresh'),
     mutate: notExecutedWarning('mutate'),
 
-    ...(fetches[newstFetchKey.current] || {}),
+    ...((fetches[newstFetchKey.current] as FetchResult<U, P> | undefined) || {}),
     run,
     fetches,
     reset,

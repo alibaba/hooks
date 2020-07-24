@@ -1,6 +1,6 @@
 # FAQ
 
-Here are the frequently asked questions about ahooks, you should look up before you ask in the community or create a new issue. 
+Here are the frequently asked questions about ahooks, you should look up before you ask in the community or create a new issue.
 
 ### When I use ahooks, I get an error `regeneratorRuntime is not defined`, how can I solve it?
 
@@ -12,7 +12,7 @@ npm i regenerator-runtime --save
 import "regenerator-runtime/runtime";
 ```
 
-### I only want to use `useRquest`, but I have to install the entire `ahooks`?
+### I only want to use `useRequest`, but I have to install the entire `ahooks`?
 
 No, `useRequest` is a independent package, can be used by installing `@ahooksjs/use-request` separately.
 
