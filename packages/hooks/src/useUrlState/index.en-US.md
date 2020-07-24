@@ -22,16 +22,23 @@ A hook that stores the state into url query parameters.
 ## API
 
 ```typescript
-const [ state, setState ] = useUrlState(key, initialState);
+const [state, setState] = useUrlState(key, initialState);
 ```
+
 
 ### Params
 
-| Property | Description                                                        | Type                   | Default |
+| Property | Description                         | Type                   | Default |
 |---------|----------------------------------------------|------------------------|--------|
-| key | query param key | string | -      |
-| initialState | initialState, same as useState                       | S \| () => S                    | -      |
+| initialState | initialState, same as useState      | S \| () => S                    | -      |
+| options | url 配置                       | UrlConfig                    | -      |
 
+### Options
+
+| Property | Description                            | Type                   | Default |
+|------|--------------|--------|--------|
+| historyType | type of history  | 'browser' \| 'hash' |  'browser'    |
+| navigateMode | type of history navigate mode | 'push' \| 'replace' | 'replace'    |
 
 ### Result
 

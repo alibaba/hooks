@@ -11,7 +11,7 @@ legacy: /zh-CN/state/use-url-state
 
 # useUrlState
 
-提供虚拟化列表能力的 Hook，用于解决展示海量数据渲染时首屏渲染缓慢和滚动卡顿问题。
+一个同步组件内部状态和 query 参数的 hook.
 
 ## 代码演示
 
@@ -22,16 +22,22 @@ legacy: /zh-CN/state/use-url-state
 ## API
 
 ```typescript
-const [ state, setState ] = useUrlState(key, initialState);
+const [state, setState] = useUrlState(initialState, config);
 ```
 
 ### 参数
 
 | 参数    | 说明                                         | 类型                   | 默认值 |
 |---------|----------------------------------------------|------------------------|--------|
-| key | query 参数的 key | string | -      |
 | initialState | 初始状态，同 useState                       | S \| () => S                    | -      |
+| options | url 配置                       | UrlConfig                    | -      |
 
+### Options
+
+| 参数    | 说明                                         | 类型                   | 默认值 |
+|------|--------------|--------|--------|
+| historyType | 历史记录类型  | 'browser' \| 'hash' |  'browser'    |
+| navigateMode | 状态变更时对 history 的影响方式 | 'push' \| 'replace' | 'replace'    |
 
 ### 结果
 

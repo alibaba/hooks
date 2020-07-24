@@ -2,11 +2,6 @@
 import { useEffect, useState, useRef, useMemo, useCallback } from 'react';
 import { stringify, parse } from 'query-string';
 
-export interface OptionType {
-  itemHeight: number | ((index: number) => number);
-  overscan?: number;
-}
-
 export interface UrlConfig<S> {
   historyType?:
     | 'browser'
