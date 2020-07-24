@@ -169,7 +169,7 @@ describe('useHistoryTravel', () => {
     expect(hook.result.current.backLength).toEqual(2);
     expect(hook.result.current.forwardLength).toEqual(1);
     act(() => {
-      hook.result.current.reset(true, 'new init');
+      hook.result.current.reset('new init');
     });
     expect(hook.result.current.value).toEqual('new init');
     expect(hook.result.current.backLength).toEqual(0);
@@ -193,7 +193,7 @@ describe('useHistoryTravel', () => {
     expect(hook.result.current.backLength).toEqual(2);
     expect(hook.result.current.forwardLength).toEqual(1);
     act(() => {
-      hook.result.current.reset(true, undefined);
+      hook.result.current.reset(undefined);
     });
     expect(hook.result.current.value).toEqual(undefined);
     expect(hook.result.current.backLength).toEqual(0);

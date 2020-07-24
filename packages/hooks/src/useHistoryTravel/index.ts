@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useRef } from 'react';
 
 interface IData<T> {
   present?: T;
@@ -38,13 +38,12 @@ export default function useHistoryTravel<T>(initialValue?: T) {
 
   const { present, past, future } = history;
 
+  const initialValueRef = useRef(initialValue);
+
   const reset = useCallback(
-    (hasNewInitial: boolean = false, newInitialValue?: T) => {
-      const _initial = hasNewInitial
-        ? newInitialValue
-        : past.length
-        ? past.shift()
-        : present;
+    (...params: any[]) => {
+      const _initial = params.length > 0 ? params[0] : initialValueRef.current;
+      initialValueRef.current = _initial;
 
       setHistory({
         present: _initial,

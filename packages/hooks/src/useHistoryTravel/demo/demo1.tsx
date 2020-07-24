@@ -58,7 +58,7 @@ export default () => {
           {' '}
           Undo{' '}
         </button>
-        <button type="button" disabled={forwardLength <= 0} onClick={forward}>
+        <button type="button" disabled={forwardLength <= 0} onClick={forward} style={{ marginRight: 20 }}>
           {' '}
           Redo{' '}
         </button>
