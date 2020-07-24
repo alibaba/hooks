@@ -4,6 +4,7 @@ import useUrlState from '../index';
 
 /* 暂时关闭 act 警告  见：https://github.com/testing-library/react-testing-library/issues/281#issuecomment-480349256 */
 const originalError = console.error;
+
 beforeAll(() => {
   console.error = (...args: any) => {
     if (/Warning.*not wrapped in act/.test(args[0])) {
@@ -25,31 +26,45 @@ describe('useUrlState', () => {
   describe('test url', () => {
     let hook: RenderHookResult<
       [string, number],
-      [number, ((s: number) => void) | (() => (s: number) => number)]
+      [number, ((s: any) => void) | (() => (s: any) => any)]
     >;
 
     function setup(key: string, value: number) {
       hook = renderHook(() => {
-        return useUrlState.call(this, key, value);
+        return useUrlState({ [key]: value }, { historyType: 'hash' });
       }) as any;
       hook.rerender();
     }
+
+    beforeEach(() => {
+      history.replaceState({}, 'test', 'http://localhost/#/world');
+    });
 
     afterEach(() => {
       hook.unmount();
     });
 
-    it('hash history url should work', () => {
-      location.hash = '#/mock/hash/history';
-      location.search = '';
-      location.href = 'http://localhost/#/mock/hash/history';
-      history.replaceState = (s, t, url) => {
-        location.href = url;
-      };
+    it('hash history url should work', async () => {
       act(() => {
-        setup.call({}, 'test', ['1', '2']);
+        setup('mock', 0);
       });
-      expect(location.hash).toBe('#/mock/hash/history?test=1&test=2');
+      // 使用默认值，不会带到 query 中
+      expect(global.location.hash).toBe('#/world');
+      expect(hook.result.current[0]).toEqual({ mock: 0 });
+      act(() => {
+        hook.result.current[1]({ mock: 1 });
+      });
+      expect(global.location.hash).toBe('#/world?mock=1');
+      expect(hook.result.current[0]).toEqual({ mock: 1 });
+      act(() => {
+        setup('anotherName', 0);
+      });
+      expect(global.location.hash).toBe('#/world?mock=1');
+      expect(hook.result.current[0]).toEqual({ mock: 1, anotherName: 0 });
+      act(() => {
+        hook.result.current[1]({ anotherName: true });
+      });
+      expect(global.location.hash).toBe('#/world?anotherName=true&mock=1');
     });
   });
 });
