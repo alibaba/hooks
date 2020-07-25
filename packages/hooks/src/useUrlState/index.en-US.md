@@ -22,7 +22,7 @@ A hook that stores the state into url query parameters.
 ## API
 
 ```typescript
-const [state, setState] = useUrlState(key, initialState);
+const [state, setState] = useUrlState(initialState, options);
 ```
 
 

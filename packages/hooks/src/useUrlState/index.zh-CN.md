@@ -22,7 +22,7 @@ legacy: /zh-CN/state/use-url-state
 ## API
 
 ```typescript
-const [state, setState] = useUrlState(initialState, config);
+const [state, setState] = useUrlState(initialState, options);
 ```
 
 ### 参数
