@@ -28,6 +28,7 @@ export interface Field {
   setValues: (value: Store) => void;
   getValues: (...args: any) => Store;
   reset: (...args: any) => void;
+  validate: (callback: (errors, values) => void) => void;
   [key: string]: any;
 }
 

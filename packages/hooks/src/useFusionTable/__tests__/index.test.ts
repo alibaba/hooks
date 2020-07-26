@@ -60,6 +60,9 @@ describe('useFusionTable', () => {
     reset: () => {
       field.fieldsValue = { ...field.initialValue };
     },
+    validate: (callback) => {
+      callback(null);
+    },
   };
 
   const changeSearchType = (type: any) => {
