@@ -156,10 +156,12 @@ function useAntdTable<R = any, Item = any, U extends Item = any>(
   }, [type, allFormData, getActivetFieldValues]);
 
   const validateFields = useCallback(() => {
+    const fieldValues = getActivetFieldValues();
     if (!form) {
       return Promise.resolve();
     }
-    return form.validateFields();
+    const fields = Object.keys(fieldValues);
+    return form.validateFields(fields);
   }, [form]);
 
   const _submit = useCallback(

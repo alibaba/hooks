@@ -53,7 +53,7 @@ const getTableData = (
 
 const AppList = (props: AppListProps) => {
   const { getFieldDecorator } = props.form;
-  const { tableProps, search, loading } = useAntdTable(getTableData, {
+  const { tableProps, search } = useAntdTable(getTableData, {
     defaultPageSize: 5,
     form: props.form,
   });
