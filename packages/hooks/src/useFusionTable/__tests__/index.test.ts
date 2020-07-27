@@ -10,7 +10,7 @@ interface Query {
 describe('useFusionTable', () => {
   const originalError = console.error;
   beforeEach(() => {
-    jest.useFakeTimers();
+    // jest.useFakeTimers();
     console.error = (...args: any) => {
       if (/Warning.*not wrapped in act/.test(args[0])) {
         return;
@@ -88,7 +88,6 @@ describe('useFusionTable', () => {
         options: { field },
       });
     });
-    jest.runAllTimers();
     await hook.waitForNextUpdate();
     expect(hook.result.current.tableProps.loading).toEqual(false);
     expect(hook.result.current.paginationProps.current).toEqual(1);
@@ -104,7 +103,6 @@ describe('useFusionTable', () => {
         options: { field, defaultPageSize: 5, cacheKey: 'tableId' },
       });
     });
-    jest.runAllTimers();
     await hook.waitForNextUpdate();
     const { search } = hook.result.current;
     expect(hook.result.current.tableProps.loading).toEqual(false);
@@ -120,7 +118,6 @@ describe('useFusionTable', () => {
     hook.result.current.paginationProps.onChange(2);
     hook.result.current.paginationProps.onPageSizeChange(5);
 
-    jest.runAllTimers();
     await hook.waitForNextUpdate();
     expect(queryArgs.current).toEqual(2);
     expect(queryArgs.pageSize).toEqual(5);
@@ -133,7 +130,6 @@ describe('useFusionTable', () => {
         search.submit();
       }
     });
-    jest.runAllTimers();
     await hook.waitForNextUpdate();
 
     expect(queryArgs.current).toEqual(1);
@@ -155,7 +151,6 @@ describe('useFusionTable', () => {
         hook.result.current.search.submit();
       }
     });
-    jest.runAllTimers();
     await hook.waitForNextUpdate();
 
     expect(queryArgs.current).toEqual(1);
@@ -170,7 +165,6 @@ describe('useFusionTable', () => {
         hook.result.current.search.submit();
       }
     });
-    jest.runAllTimers();
     await hook.waitForNextUpdate();
     expect(queryArgs.current).toEqual(1);
     expect(queryArgs.name).toEqual('change name');
@@ -197,7 +191,6 @@ describe('useFusionTable', () => {
         hook.result.current.search.submit();
       }
     });
-    jest.runAllTimers();
     await hook.waitForNextUpdate();
 
     expect(queryArgs.name).toEqual('change name 2');
@@ -223,7 +216,6 @@ describe('useFusionTable', () => {
       hook.result.current.paginationProps.onPageSizeChange(5);
       hook.result.current.paginationProps.onChange(3);
     });
-    jest.runAllTimers();
     await hook.waitForNextUpdate();
     expect(hook.result.current.paginationProps.current).toEqual(3);
     // /* 卸载重装 */
@@ -241,7 +233,6 @@ describe('useFusionTable', () => {
         options: { field, defaultPageSize: 5, cacheKey: 'tableId' },
       });
     });
-    jest.runAllTimers();
     await hook.waitForNextUpdate();
     if (hook.result.current.search) {
       expect(hook.result.current.search.type).toEqual('simple');
@@ -256,7 +247,6 @@ describe('useFusionTable', () => {
       hook.result.current.refresh();
     });
     expect(hook.result.current.tableProps.loading).toEqual(true);
-    jest.runAllTimers();
     await hook.waitForNextUpdate();
     /* reset */
     act(() => {
@@ -268,10 +258,12 @@ describe('useFusionTable', () => {
     expect(field.fieldsValue.name).toEqual('default name');
     expect(field.fieldsValue.phone).toBeUndefined();
     expect(field.fieldsValue.email).toBeUndefined();
+    changeSearchType('simple');
   });
 
   it('should defaultParams work', async () => {
     queryArgs = undefined;
+    changeSearchType('advance');
     act(() => {
       hook = setUp({
         asyncFn,
@@ -288,7 +280,6 @@ describe('useFusionTable', () => {
         },
       });
     });
-    jest.runAllTimers();
     await hook.waitForNextUpdate();
     const { search } = hook.result.current;
     expect(hook.result.current.tableProps.loading).toEqual(false);
