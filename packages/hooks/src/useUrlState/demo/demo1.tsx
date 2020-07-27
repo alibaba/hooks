@@ -10,17 +10,23 @@ import React from 'react';
 import { useUrlState } from 'ahooks';
 
 export default () => {
-  const [state, setState] = useUrlState(() => ({ count: 1 }));
+  const [state, setState] = useUrlState(() => ({ demo1Count: '1' }));
 
   return (
     <>
-      <button type="button" onClick={() => setState((v) => ({ ...v, count: (v.count || 0) + 1 }))}>
+      <button
+        style={{ marginRight: 8 }}
+        type="button"
+        onClick={() =>
+          setState((v) => ({ ...v, demo1Count: (Number(v.demo1Count || 0) + 1).toString() }))
+        }
+      >
         add
       </button>
-      <button type="button" onClick={() => setState({ count: undefined })}>
+      <button type="button" onClick={() => setState({ demo1Count: undefined })}>
         clear
       </button>
-      <div>state: {state?.count}</div>
+      <div>state: {state?.demo1Count}</div>
     </>
   );
 };

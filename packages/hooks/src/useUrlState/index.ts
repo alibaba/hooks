@@ -1,4 +1,4 @@
-/* eslint-disable no-restricted-globals, no-lonely-if */
+/* eslint-disable no-restricted-globals, no-lonely-if, no-bitwise */
 import { useEffect, useState, useRef, useMemo, useCallback } from 'react';
 import { stringify, parse } from 'query-string';
 
@@ -16,8 +16,8 @@ export interface UrlConfig<S> {
 const parseConfig = {
   skipNull: true,
   skipEmptyString: true,
-  parseNumbers: true,
-  parseBooleans: true,
+  parseNumbers: false,
+  parseBooleans: false,
 };
 
 const getPath = (path: string, query: string, hash: string, type: 'browser' | 'hash') => {
@@ -34,6 +34,18 @@ const getPath = (path: string, query: string, hash: string, type: 'browser' | 'h
   return `${path}${query ? `?${query}` : ''}`;
 };
 
+const getQuery = (path: string) => {
+  const questionMarkIndex = path.lastIndexOf('?');
+  const hashTagIndex = path.lastIndexOf('#');
+  if (~questionMarkIndex) {
+    if (~hashTagIndex && hashTagIndex > questionMarkIndex) {
+      return path.slice(questionMarkIndex, hashTagIndex);
+    }
+    return path.slice(questionMarkIndex);
+  }
+  return '';
+};
+
 export default <S extends Record<string, any> = Record<string, any>>(
   value: S | (() => S),
   config?: UrlConfig<S>,
@@ -42,6 +54,7 @@ export default <S extends Record<string, any> = Record<string, any>>(
     return typeof value === 'function' ? (value as () => S)() : value;
   }, []);
   const [state, _setState] = useState(initialState);
+  const lastUrl = useRef('');
   const latestState = useRef<S>(state);
   latestState.current = state;
   const { historyType = 'browser', navigateMode = 'replace' } = config || {};
@@ -52,19 +65,32 @@ export default <S extends Record<string, any> = Record<string, any>>(
       const { pushState, replaceState } = history;
 
       let updateUrl = () => {
+        const newUrl = location.href;
+        if (getQuery(newUrl) === getQuery(lastUrl.current)) {
+          return;
+        }
+
+        const latestUrlState = parse(getQuery(newUrl));
+        if (
+          Object.keys(latestUrlState).length &&
+          !Object.keys(initialState).some((ele) => Object.keys(latestUrlState).includes(ele))
+        ) {
+          return;
+        }
+        lastUrl.current = newUrl;
         if (
           configRef.current.historyType &&
           typeof configRef.current.historyType !== 'string' &&
-          configRef.current.historyType.setter
+          configRef.current.historyType.getter
         ) {
           // custom 调用 setter
-          configRef.current.historyType.setter(latestState.current);
+          _setState(configRef.current.historyType.getter(location.href));
         } else {
           const [, rawQuery = ''] = location.href.split('?');
           const [query] = rawQuery.split('#');
+          const stateObject = parse(query, parseConfig);
           const needUpdate = stringify(latestState.current, parseConfig) !== query;
           if (needUpdate) {
-            const stateObject = parse(query, parseConfig);
             _setState(stateObject as S);
           }
         }
@@ -84,7 +110,6 @@ export default <S extends Record<string, any> = Record<string, any>>(
       const [query] = rawQuery.split('#');
       const stateObject = parse(query, parseConfig);
       const needUpdate = stringify(latestState.current, parseConfig) !== query;
-      // && Object.keys(initialState).some(ele => Object.keys(stateObject).includes(ele));
       if (needUpdate) {
         _setState({ ...initialState, ...stateObject } as S);
       }
@@ -121,6 +146,9 @@ export default <S extends Record<string, any> = Record<string, any>>(
         history.pushState(history.state, document.title, newPath);
       }
       _setState(nextState);
+      setTimeout(() => {
+        lastUrl.current = location.href;
+      });
     } else if (configRef.current.historyType === 'hash') {
       // hash history
       const [path, rawQuery = ''] = location.href.split('?');
@@ -135,10 +163,19 @@ export default <S extends Record<string, any> = Record<string, any>>(
         history.pushState(history.state, document.title, newPath);
       }
       _setState(nextState);
+      setTimeout(() => {
+        lastUrl.current = location.href;
+      });
     } else {
       // custom
+      if (configRef.current.historyType.setter) {
+        configRef.current.historyType.setter(nextState);
+      }
       if (configRef.current.historyType.getter) {
         _setState(configRef.current.historyType.getter(location.href));
+        setTimeout(() => {
+          lastUrl.current = location.href;
+        });
       }
     }
   }, []) as React.Dispatch<React.SetStateAction<S>>;

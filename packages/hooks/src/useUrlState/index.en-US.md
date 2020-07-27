@@ -19,6 +19,8 @@ A hook that stores the state into url query parameters.
 
 <code src="./demo/demo1.tsx" />
 
+<code src="./demo/demo2.tsx" />
+
 ## API
 
 ```typescript
@@ -31,7 +33,7 @@ const [state, setState] = useUrlState(initialState, options);
 | Property | Description                         | Type                   | Default |
 |---------|----------------------------------------------|------------------------|--------|
 | initialState | initialState, same as useState      | S \| () => S                    | -      |
-| options | url 配置                       | UrlConfig                    | -      |
+| options | url config                  | UrlConfig                    | -      |
 
 ### Options
 
