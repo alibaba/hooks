@@ -100,6 +100,7 @@ export default <S extends Record<string, any> = Record<string, any>>(
         window.removeEventListener('hashchange', updateUrl);
       };
     }
+    return () => {};
   }, []);
 
   const setState = useCallback((arg) => {
