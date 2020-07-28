@@ -24,6 +24,7 @@ describe('useAntdTable', () => {
     };
   });
   afterAll(() => {
+    changeSearchType('simple');
     console.error = originalError;
   });
   // jest.useFakeTimers();
@@ -301,6 +302,7 @@ describe('useAntdTable', () => {
 
   it('should stop the query when validate fields failed', async () => {
     queryArgs = undefined;
+    changeSearchType('advance');
     act(() => {
       hook = setUp({
         asyncFn,

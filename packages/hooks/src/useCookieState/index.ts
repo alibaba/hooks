@@ -27,7 +27,7 @@ function useCookieState(cookieKey: string, options: IOptions = {}) {
       newValue?: TCookieState | ((prevState: TCookieState) => TCookieState),
       newOptions: Cookies.CookieAttributes = {},
     ) => {
-      const { defaultValue, ...restOptions } = { ...options, ...newOptions };
+      const { ...restOptions } = { ...options, ...newOptions };
       setState(
         (prevState: TCookieState): TCookieState => {
           const value = isFunction(newValue) ? newValue(prevState) : newValue;

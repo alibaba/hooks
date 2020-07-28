@@ -19,6 +19,7 @@ describe('useFusionTable', () => {
     };
   });
   afterEach(() => {
+    changeSearchType('simple');
     jest.useRealTimers();
     console.error = originalError;
   });
@@ -258,7 +259,6 @@ describe('useFusionTable', () => {
     expect(field.fieldsValue.name).toEqual('default name');
     expect(field.fieldsValue.phone).toBeUndefined();
     expect(field.fieldsValue.email).toBeUndefined();
-    changeSearchType('simple');
   });
 
   it('should defaultParams work', async () => {
