@@ -166,10 +166,10 @@ function useAntdTable<R = any, Item = any, U extends Item = any>(
   }, [form]);
 
   const _submit = useCallback(
-    (initParams?: any) =>
-      validateFields()
-        .then(() => {
-          setTimeout(() => {
+    (initParams?: any) => {
+      setTimeout(() => {
+        validateFields()
+          .then(() => {
             const activeFormData = getActivetFieldValues();
             // 记录全量数据
             const _allFormData = { ...allFormData, ...activeFormData };
@@ -196,9 +196,10 @@ function useAntdTable<R = any, Item = any, U extends Item = any>(
                 type,
               },
             );
-          });
-        })
-        .catch((err) => err),
+          })
+          .catch((err) => err);
+      });
+    },
     [getActivetFieldValues, run, params, allFormData, type],
   );
 
