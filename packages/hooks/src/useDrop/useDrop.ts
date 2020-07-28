@@ -55,7 +55,13 @@ const useDrop = (options: DropAreaOptions = {}): [DropProps, DropAreaState] => {
       const dom = dataTransfer.getData('custom');
 
       if (dom && optionsRef.current.onDom) {
-        optionsRef.current.onDom(JSON.parse(dom), event as React.DragEvent);
+        let data = dom;
+        try {
+          data = JSON.parse(dom);
+        } catch (e) {
+          data = dom;
+        }
+        optionsRef.current.onDom(data, event as React.DragEvent);
         return;
       }
 
