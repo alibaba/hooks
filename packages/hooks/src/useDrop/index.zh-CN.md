@@ -29,7 +29,7 @@ legacy: /ui/use-drag-and-use-drop
 ## API
 
 ```javascript
-const getDragProps = useDrag();
+const getDragProps = useDrag({ onDragStart, onDragEnd });
 
 <div {...getDragProps(id)}>draggable</div>
 
@@ -53,6 +53,13 @@ const [ props, { isHovering } ] = useDrop({
 |----------|-------------------------------------------|-------------------------|
 | props      | 需要透传给接受拖拽区域 dom 节点的 props | - |
 | isHovering   | 是否是拖拽中，且光标处于释放区域内   | boolean     |
+
+### useDrag Params
+
+| 参数 | 说明                                              | 类型                    | 默认值 |
+|---------|----------------------------------------------|------------------------|--------|
+| onDragStart | 开始拖拽的回调 | (data: any, e: Event) => void | -      |
+| onDragEnd | 结束拖拽的回调 | (data: any, e: Event) => void | -      |
 
 ### useDrop Params
 

@@ -29,7 +29,7 @@ A pair of hooks to help you manage data transfer between drag and drop
 ## API
 
 ```javascript
-const getDragProps = useDrag();
+const getDragProps = useDrag({ onDragStart, onDragEnd });
 
 <div {...getDragProps(id)}>draggable</div>
 
@@ -53,6 +53,13 @@ const [ props, { isHovering } ] = useDrop({
 |----------|-------------------------------------------|-------------------------|
 | props      | Props passed to the drop area | - |
 | isHovering   | Whether the dragging element is on top of the drop area     | boolean     |
+
+### useDrag Params
+
+| 参数 | 说明                                              | 类型                    | 默认值 |
+|---------|----------------------------------------------|------------------------|--------|
+| onDragStart | The callback when a dragging is started | (data: any, e: Event) => void | -      |
+| onDragEnd | The callback when a dragging is ended | (data: any, e: Event) => void | -      |
 
 ### useDrop Params
 
