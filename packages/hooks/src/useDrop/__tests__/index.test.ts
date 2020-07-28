@@ -4,6 +4,7 @@ import { useDrag, useDrop } from '../index';
 const mockUriEvent: any = (text: string) => ({
   dataTransfer: {
     getData: () => text,
+    setData: () => {},
   },
   preventDefault: () => {},
   persist: () => {},
@@ -12,6 +13,7 @@ const mockUriEvent: any = (text: string) => ({
 const mockDomEvent: any = (content: any) => ({
   dataTransfer: {
     getData: () => JSON.stringify(content),
+    setData: () => {},
   },
   preventDefault: () => {},
   persist: () => {},
@@ -20,6 +22,7 @@ const mockDomEvent: any = (content: any) => ({
 const mockTextEvent: any = (content: string) => ({
   dataTransfer: {
     getData: () => null,
+    setData: () => {},
     items: [
       {
         getAsString: (cb) => {
@@ -35,6 +38,7 @@ const mockTextEvent: any = (content: string) => ({
 const mockFileEvent: any = (content: string[]) => ({
   dataTransfer: {
     getData: () => null,
+    setData: () => {},
     files: content,
   },
   preventDefault: () => {},
@@ -45,6 +49,25 @@ describe('useDrag & useDrop', () => {
   it('should be defined', () => {
     expect(useDrag).toBeDefined();
     expect(useDrop).toBeDefined();
+  });
+
+  it('callback should be called', () => {
+    const startFn = jest.fn();
+    const endFn = jest.fn();
+    const hook = renderHook(() =>
+      useDrag({
+        onDragStart: startFn,
+        onDragEnd: endFn,
+      }),
+    );
+
+    const getProps = hook.result.current('');
+    getProps.onDragStart(mockDomEvent());
+    expect(startFn).toBeCalledTimes(1);
+    expect(endFn).toBeCalledTimes(0);
+    getProps.onDragEnd(mockDomEvent());
+    expect(startFn).toBeCalledTimes(1);
+    expect(endFn).toBeCalledTimes(1);
   });
 
   it('test onUri', async () => {
