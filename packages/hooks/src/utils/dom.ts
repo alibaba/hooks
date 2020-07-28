@@ -4,7 +4,7 @@ export type BasicTarget<T = HTMLElement> =
   | (() => T | null)
   | T
   | null
-  | MutableRefObject<T | undefined>;
+  | MutableRefObject<T | null | undefined>;
 
 type TargetElement = HTMLElement | Document | Window;
 
