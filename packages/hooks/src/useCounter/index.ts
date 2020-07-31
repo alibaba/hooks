@@ -18,13 +18,14 @@ function useCounter(initialValue: number = 0, options: Options = {}): [number, A
 
   // get init value
   const init = useCreation(() => {
+    let target = initialValue;
     if (typeof max === 'number') {
-      return Math.min(max, initialValue);
+      target = Math.min(max, initialValue);
     }
     if (typeof min === 'number') {
-      return Math.max(min, initialValue);
+      target = Math.max(min, initialValue);
     }
-    return initialValue;
+    return target;
   }, []);
 
   const [current, setCurrent] = useState(init);
