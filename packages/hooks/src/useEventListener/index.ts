@@ -30,9 +30,11 @@ function useEventListener(eventName: string, handler: Function, options?: Option
     });
 
     return () => {
-      targetElement.removeEventListener(eventName, eventListener, {
-        capture: options?.capture,
-      });
+      if (targetElement.removeEventListener) {
+        targetElement.removeEventListener(eventName, eventListener, {
+          capture: options?.capture,
+        });
+      }
     };
   }, [eventName, options]);
 }
