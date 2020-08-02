@@ -42,6 +42,7 @@ describe('useAntdTable', () => {
   let searchType = 'simple';
 
   const form: any = {
+    getInternalHooks: () => {},
     initialValue: {
       name: 'default name',
     },

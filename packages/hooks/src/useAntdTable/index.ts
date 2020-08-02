@@ -24,12 +24,15 @@ export interface Store {
   [name: string]: any;
 }
 
+type Antd3ValidateFields = (fieldNames: string[], callback: (errors, values) => void) => void;
+type Antd4ValidateFields = (fieldNames?: string[]) => Promise<any>;
+
 export interface UseAntdTableFormUtils {
   getFieldInstance?: (name: string) => {}; // antd 3
   setFieldsValue: (value: Store) => void;
   getFieldsValue: (...args: any) => Store;
   resetFields: (...args: any) => void;
-  validateFields: (nameList?: string[]) => Promise<any>;
+  validateFields: Antd3ValidateFields | Antd4ValidateFields;
   [key: string]: any;
 }
 
@@ -156,13 +159,26 @@ function useAntdTable<R = any, Item = any, U extends Item = any>(
     setType(targetType);
   }, [type, allFormData, getActivetFieldValues]);
 
-  const validateFields = useCallback(() => {
+  const validateFields: () => Promise<any> = useCallback(() => {
     const fieldValues = getActivetFieldValues();
     if (!form) {
       return Promise.resolve();
     }
+
     const fields = Object.keys(fieldValues);
-    return form.validateFields(fields);
+    if (!form.getInternalHooks) {
+      return new Promise((resolve, reject) => {
+        form.validateFields(fields, (errors, values) => {
+          if (errors) {
+            reject(errors);
+          } else {
+            resolve(values);
+          }
+        });
+      });
+    }
+
+    return (form.validateFields as Antd4ValidateFields)(fields);
   }, [form]);
 
   const _submit = useCallback(
