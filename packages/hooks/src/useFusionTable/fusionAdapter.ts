@@ -18,16 +18,8 @@ export const fieldAdapter = (field: Field) =>
     setFieldsValue: field.setValues,
     getFieldsValue: field.getValues,
     resetFields: field.reset,
-    validateFields: () => {
-      return new Promise((resolve, reject) => {
-        field.validate((errors, values) => {
-          if (errors) {
-            reject(errors);
-          } else {
-            resolve(values);
-          }
-        });
-      });
+    validateFields: (fields, callback) => {
+      field.validate(callback);
     },
   } as UseAntdTableFormUtils);
 
