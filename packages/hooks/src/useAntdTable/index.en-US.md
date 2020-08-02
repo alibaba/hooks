@@ -29,6 +29,10 @@ It encapsulates the common antd [Form](https://ant.design/components/form-cn/) a
 
 <code src="./demo/demo5.tsx" />
 
+### Form Validate
+
+<code src="./demo/demo6.tsx" />
+
 ## API
 
 useAntdTable is based on [useRequest](/async). All [useRquest Pagination](/async?anchor=pagination#api-1) APIs can be used directly. For example `cacheKey`,` manual`, etc.
