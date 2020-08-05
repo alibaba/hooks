@@ -2,8 +2,8 @@
  * title: Custom multiple DOM target
  * desc: Support pass multiple DOM elements, or functions which returns the DOM element.
  *
- * title.zh-CN: 支持多个DOM对象
- * desc.zh-CN: 支持直接传入多个目标对象的方式引入。
+ * title.zh-CN: 支持多个 DOM 对象
+ * desc.zh-CN: 支持传入多个目标对象。
  */
 
 import React, { useState, useRef } from 'react';

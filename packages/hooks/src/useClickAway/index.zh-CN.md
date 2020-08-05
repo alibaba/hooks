@@ -37,4 +37,4 @@ useClickAway(
 | 参数    | 说明                                         | 类型                   | 默认值 |
 |---------|----------------------------------------------|------------------------|--------|
 | onClickAway | 触发事件的函数  | (event) => void | -      |
-| target | DOM 节点或者 Ref 对象或者 包含该对象的数组 | (() => HTMLElement) \| HTMLElement \| React.MutableRefObject \| ((() => HTMLElement) \| HTMLElement \| React.MutableRefObject)[] | - |
+| target | DOM 节点或者 Ref 对象，支持数组 | (() => HTMLElement) \| HTMLElement \| React.MutableRefObject \| ((() => HTMLElement) \| HTMLElement \| React.MutableRefObject)[] | - |
