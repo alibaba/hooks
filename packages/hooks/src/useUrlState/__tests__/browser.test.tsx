@@ -1,6 +1,8 @@
 /* eslint-disable no-global-assign, no-restricted-globals */
+import React from 'react';
 import { act, renderHook, RenderHookResult } from '@testing-library/react-hooks';
 import useUrlState from '../index';
+import routeData from 'react-router';
 
 /* 暂时关闭 act 警告  见：https://github.com/testing-library/react-testing-library/issues/281#issuecomment-480349256 */
 const originalError = console.error;
@@ -36,35 +38,47 @@ describe('useUrlState', () => {
       hook.rerender();
     }
 
+    const replaceFn = jest.fn();
+
+    const mockLocation = {
+      pathname: '/',
+      hash: '',
+      search: '',
+      state: '',
+    };
+
+    const mockHistory: any = {
+      replace: ({ search }) => {
+        replaceFn();
+        mockLocation.search = search;
+      },
+    };
+
     beforeEach(() => {
-      history.replaceState({}, 'test', 'http://localhost/hello');
+      jest.spyOn(routeData, 'useLocation').mockReturnValue(mockLocation);
+      jest.spyOn(routeData, 'useHistory').mockReturnValue(mockHistory);
     });
 
     afterEach(() => {
       hook.unmount();
     });
 
-    it('browser history url should work', async () => {
+    it('history replace should work', async () => {
       act(() => {
         setup('mock', 0);
       });
-      // 使用默认值，不会带到 query 中
-      expect(global.location.search).toBeFalsy();
+      expect(replaceFn).toBeCalledTimes(0);
       expect(hook.result.current[0]).toEqual({ mock: 0 });
+      expect(mockLocation.search).toEqual('');
       act(() => {
         hook.result.current[1]({ mock: 1 });
       });
-      expect(global.location.search).toBe('?mock=1');
-      expect(hook.result.current[0]).toEqual({ mock: 1 });
+      expect(replaceFn).toBeCalledTimes(1);
+      expect(mockLocation.search).toEqual('mock=1');
       act(() => {
-        setup('anotherName', 0);
+        hook.result.current[1]({ mock: 2, test: 3 });
       });
-      expect(global.location.search).toBe('?mock=1');
-      expect(hook.result.current[0]).toEqual({ mock: 1, anotherName: 0 });
-      act(() => {
-        hook.result.current[1]({ anotherName: true });
-      });
-      expect(global.location.search).toBe('?anotherName=true&mock=1');
+      expect(mockLocation.search).toEqual('mock=2&test=3');
     });
   });
 });

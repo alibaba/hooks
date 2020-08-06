@@ -23,7 +23,7 @@ export default () => {
       >
         add
       </button>
-      <button type="button" onClick={() => setState({ demo1Count: undefined })}>
+      <button type="button" onClick={() => setState((s) => ({ ...s, demo1Count: undefined }))}>
         clear
       </button>
       <div>state: {state?.demo1Count}</div>

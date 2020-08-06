@@ -39,7 +39,6 @@ const [state, setState] = useUrlState(initialState, options);
 
 | Property | Description                            | Type                   | Default |
 |------|--------------|--------|--------|
-| historyType | type of history  | 'browser' \| 'hash' |  'browser' | { getter: (url: string) => S, setter: (state: S) => string } |
 | navigateMode | type of history navigate mode | 'push' \| 'replace' | 'replace'    |
 
 ### Result

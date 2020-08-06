@@ -38,7 +38,6 @@ const [state, setState] = useUrlState(initialState, options);
 
 | 参数    | 说明                                         | 类型                   | 默认值 |
 |------|--------------|--------|--------|
-| historyType | 历史记录类型  | 'browser' \| 'hash' |  'browser' | { getter: (url: string) => S, setter: (state: S) => string }  |
 | navigateMode | 状态变更时对 history 的影响方式 | 'push' \| 'replace' | 'replace'    |
 
 ### 结果

@@ -2,8 +2,8 @@
  * title: advanced usage
  * desc: customize `state getter from url` and `url setter from state`
  *
- * title.zh-CN: 高级用法
- * desc.zh-CN: 自定义 `设置 state` 和 `url 切换` 的方法
+ * title.zh-CN: 修改 url 切换模式
+ * desc.zh-CN: 使用 push 修改 query 参数
  */
 
 import React from 'react';
@@ -12,26 +12,9 @@ import { useUrlState } from 'ahooks';
 
 export default () => {
   const [state, setState] = useUrlState<{ demo2Count: string | number }>(
-    () => ({ demo2Count: '2' }),
+    { demo2Count: '2' },
     {
-      historyType: {
-        getter: (url) => {
-          return parse((url.split('?')[1] || '').split('#')[0]) as { demo2Count: string };
-        },
-        setter: (state) => {
-          const [path, rawQuery = ''] = location.href.split('?');
-          const [query, hash] = rawQuery.split('#');
-          const hashTagInPath = path.includes('#');
-          const [cleanPath, hashInPath] = path.split('#');
-          const originQuery = parse(query);
-          const stateQuery = stringify({ ...originQuery, ...state });
-
-          const url = hashTagInPath
-            ? `${cleanPath}${stateQuery ? `?${stateQuery}` : ''}#${hashInPath}`
-            : `${path}${stateQuery ? `?${stateQuery}` : ''}${hash ? `#${hash}` : ''}`;
-          history.replaceState(history.state, document.title, url);
-        },
-      },
+      navigateMode: 'push',
     },
   );
 
