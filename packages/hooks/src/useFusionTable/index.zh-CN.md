@@ -15,6 +15,10 @@ legacy: /zh-CN/table/use-fusion-table
 
 封装了常用的 Fusion [Form](https://fusion.design/pc/component/basic/form) 与 Fusion [Table](https://fusion.design/pc/component/basic/table) 联动逻辑。
 
+> 🌈「Table场景解决方案」上线啦！点击图片查看常用的表格场景，区块代码一键下载到本地，快速复用! [使用文档](https://fusion.design/help.html#/dnzud5)
+
+[![](https://img.alicdn.com/tfs/TB1bEbWbQcx_u4jSZFlXXXnUFXa-2326-498.png)](https://fusion.design/pc/block?category=Table)
+
 ## 代码演示
 
 ### Form 与 Table 联动
@@ -28,6 +32,10 @@ legacy: /zh-CN/table/use-fusion-table
 ### 初始化数据
 
 <code src="./demo/demo3.tsx" />
+
+### 表单验证
+
+<code src="./demo/demo4.tsx" />
 
 ## API
 
