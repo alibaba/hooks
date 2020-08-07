@@ -21,7 +21,7 @@ legacy: /zh-CN/state/use-timeout
 ## API
 
 ```javascript
-useTimeout(fn: () => void, delay: number);
+useTimeout(fn: () => void, delay: number | undefined | null);
 ```
 
 ### 参数

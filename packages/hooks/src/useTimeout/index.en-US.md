@@ -23,7 +23,7 @@ A hook that can handle the setTimeout timer function.
 ## API
 
 ```javascript
-useTimeout(fn: () => void, delay: number);
+useTimeout(fn: () => void, delay: number | undefined | null);
 ```
 
 ### Params
