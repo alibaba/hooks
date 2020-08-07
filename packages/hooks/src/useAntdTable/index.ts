@@ -24,11 +24,15 @@ export interface Store {
   [name: string]: any;
 }
 
+type Antd3ValidateFields = (fieldNames: string[], callback: (errors, values) => void) => void;
+type Antd4ValidateFields = (fieldNames?: string[]) => Promise<any>;
+
 export interface UseAntdTableFormUtils {
   getFieldInstance?: (name: string) => {}; // antd 3
   setFieldsValue: (value: Store) => void;
   getFieldsValue: (...args: any) => Store;
   resetFields: (...args: any) => void;
+  validateFields: Antd3ValidateFields | Antd4ValidateFields;
   [key: string]: any;
 }
 
@@ -155,35 +159,61 @@ function useAntdTable<R = any, Item = any, U extends Item = any>(
     setType(targetType);
   }, [type, allFormData, getActivetFieldValues]);
 
+  const validateFields: () => Promise<any> = useCallback(() => {
+    const fieldValues = getActivetFieldValues();
+    if (!form) {
+      return Promise.resolve();
+    }
+
+    const fields = Object.keys(fieldValues);
+    if (!form.getInternalHooks) {
+      return new Promise((resolve, reject) => {
+        form.validateFields(fields, (errors, values) => {
+          if (errors) {
+            reject(errors);
+          } else {
+            resolve(values);
+          }
+        });
+      });
+    }
+
+    return (form.validateFields as Antd4ValidateFields)(fields);
+  }, [form]);
+
   const _submit = useCallback(
     (initParams?: any) => {
       setTimeout(() => {
-        const activeFormData = getActivetFieldValues();
-        // 记录全量数据
-        const _allFormData = { ...allFormData, ...activeFormData };
-        setAllFormData(_allFormData);
+        validateFields()
+          .then(() => {
+            const activeFormData = getActivetFieldValues();
+            // 记录全量数据
+            const _allFormData = { ...allFormData, ...activeFormData };
+            setAllFormData(_allFormData);
 
-        // has defaultParams
-        if (initParams) {
-          run(initParams[0], activeFormData, {
-            allFormData: _allFormData,
-            type,
-          });
-          return;
-        }
+            // has defaultParams
+            if (initParams) {
+              run(initParams[0], activeFormData, {
+                allFormData: _allFormData,
+                type,
+              });
+              return;
+            }
 
-        run(
-          {
-            pageSize: options.defaultPageSize || 10,
-            ...(params[0] || {}), // 防止 manual 情况下，第一次触发 submit，此时没有 params[0]
-            current: 1,
-          },
-          activeFormData,
-          {
-            allFormData: _allFormData,
-            type,
-          },
-        );
+            run(
+              {
+                pageSize: options.defaultPageSize || 10,
+                ...((params[0] as PaginatedParams[0] | undefined) || {}), // 防止 manual 情况下，第一次触发 submit，此时没有 params[0]
+                current: 1,
+              },
+              activeFormData,
+              {
+                allFormData: _allFormData,
+                type,
+              },
+            );
+          })
+          .catch((err) => err);
       });
     },
     [getActivetFieldValues, run, params, allFormData, type],

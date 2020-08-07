@@ -29,6 +29,11 @@ It encapsulates the common Fusion [Form](https://fusion.design/pc/component/basi
 
 <code src="./demo/demo3.tsx" />
 
+### Form Validate
+
+<code src="./demo/demo4.tsx" />
+
+
 ## API
 
 useFusionTable is based on [useRequest](/async). All [useRquest Pagination](/async?anchor=pagination#api-1) APIs can be used directly. For example `cacheKey`, `manual`, etc.

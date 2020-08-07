@@ -30,7 +30,48 @@ npm i ahooks --save
 import { useRequest } from 'ahooks';
 ```
 
-## 🖥 开发
+## 开发团队
+
+<table>
+  <tbody>
+    <tr>
+      <td align="center">
+        <a target="_blank" href="https://github.com/alibaba/ice">
+          <img
+            width="32"
+            src="https://img.alicdn.com/tfs/TB1Jd.tb79l0K4jSZFKXXXFjpXa-482-264.png"
+          />
+          <br>
+          <strong>icejs</strong>
+        </a>
+      </td>
+      <td align="center">
+        <a target="_blank" href="https://github.com/umijs/umi">
+          <img
+            width="32"
+            style="vertical-align: -0.32em; margin-right: 8px;"
+            src="https://img.alicdn.com/tfs/TB1fhqaLAT2gK0jSZFkXXcIQFXa-132-130.png"
+          />
+          <br>
+          <strong>UmiJS</strong>
+        </a>
+      </td>
+       <td align="center">
+        <a target="_blank" href="https://www.alisports.com/">
+          <img
+            width="32"
+            style="vertical-align: -0.32em; margin-right: 8px;"
+            src="https://gw.alicdn.com/tfs/TB13XKjLuL2gK0jSZFmXXc7iXXa-205-59.png"
+          />
+          <br>
+          <strong>阿里体育</strong>
+        </a>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+## 🤝 参与贡献
 
 ```
 $ git clone git@github.com:alibaba/hooks.git
@@ -40,11 +81,9 @@ $ npm start
 ```
 打开浏览器访问 http://127.0.0.1:8001
 
-## 🤝 贡献
-
 我们欢迎所有人参与共建，请参考[CONTRIBUTING.MD](https://github.com/alibaba/hooks/blob/master/CONTRIBUTING.MD)
 
-## 👥 讨论
+## 👥 交流讨论
 
 <img src="https://raw.githubusercontent.com/umijs/hooks/master/dingtalk.jpg" width="300" />
 

@@ -329,14 +329,14 @@ function useAsync<R, P extends any[], U, UU extends U = any>(
   };
 
   const subscribe = usePersistFn((key: string, data: any) => {
-    setFeches((s) => {
+    setFetches((s) => {
       // eslint-disable-next-line no-param-reassign
       s[key] = data;
       return { ...s };
     });
   }) as any;
 
-  const [fetches, setFeches] = useState<Fetches<U, P>>(() => {
+  const [fetches, setFetches] = useState<Fetches<U, P>>(() => {
     // 如果有 缓存，则从缓存中读数据
     if (cacheKey) {
       const cacheData = getCache(cacheKey)?.data;
@@ -386,7 +386,7 @@ function useAsync<R, P extends any[], U, UU extends U = any>(
           data: initialData,
         });
         currentFetch = newFetch.state;
-        setFeches((s) => {
+        setFetches((s) => {
           // eslint-disable-next-line no-param-reassign
           s[currentFetchKey] = currentFetch;
           return { ...s };
@@ -427,7 +427,7 @@ function useAsync<R, P extends any[], U, UU extends U = any>(
       if (Object.keys(fetches).length > 0) {
         // 如果 staleTime 是 -1，则 cache 永不过期
         // 如果 statleTime 超期了，则重新请求
-        const cacheStartTime = getCache(cacheKey)?.startTime || 0;
+        const cacheStartTime = (cacheKey && getCache(cacheKey)?.startTime) || 0;
         if (!(staleTime === -1 || new Date().getTime() - cacheStartTime <= staleTime)) {
           /* 重新执行所有的 cache */
           Object.values(fetches).forEach((f) => {
@@ -447,10 +447,10 @@ function useAsync<R, P extends any[], U, UU extends U = any>(
       f.unmount();
     });
     newstFetchKey.current = DEFAULT_KEY;
-    setFeches({});
+    setFetches({});
     // 不写会有问题。如果不写，此时立即 run，会是老的数据
     fetchesRef.current = {};
-  }, [setFeches]);
+  }, [setFetches]);
 
   //  refreshDeps 变化，重新执行所有请求
   useUpdateEffect(() => {
@@ -488,7 +488,7 @@ function useAsync<R, P extends any[], U, UU extends U = any>(
     refresh: notExecutedWarning('refresh'),
     mutate: notExecutedWarning('mutate'),
 
-    ...(fetches[newstFetchKey.current] || {}),
+    ...((fetches[newstFetchKey.current] as FetchResult<U, P> | undefined) || {}),
     run,
     fetches,
     reset,

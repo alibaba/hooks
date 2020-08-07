@@ -29,7 +29,7 @@ npm i ahooks --save
 import { useRequest } from 'ahooks';
 ```
 
-## Who is using ahooks
+## Core Team
 
 <table>
   <tbody>
@@ -41,7 +41,7 @@ import { useRequest } from 'ahooks';
             src="https://img.alicdn.com/tfs/TB1Jd.tb79l0K4jSZFKXXXFjpXa-482-264.png"
           />
           <br>
-          <strong>icejs</strong>
+          <strong>ice</strong>
         </a>
       </td>
       <td align="center">
@@ -52,7 +52,7 @@ import { useRequest } from 'ahooks';
             src="https://img.alicdn.com/tfs/TB1fhqaLAT2gK0jSZFkXXcIQFXa-132-130.png"
           />
           <br>
-          <strong>UmiJS</strong>
+          <strong>umi</strong>
         </a>
       </td>
        <td align="center">

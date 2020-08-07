@@ -29,6 +29,10 @@ legacy: /zh-CN/table/use-antd-table
 
 <code src="./demo/demo5.tsx" />
 
+### 表单验证
+
+<code src="./demo/demo6.tsx" />
+
 ## API
 
 useAntdTable 基于 [useRequest](/zh-CN/async) 实现，所有的 [useRquest Pagination](/zh-CN/async?anchor=pagination#api-1) API 均可以直接使用。比如 `cacheKey`、`manual` 等等。
@@ -55,4 +59,18 @@ const {
     defaultParams: [pagination, formData],
   }
 );
+```
+
+## FAQ
+
+### 1. 无法读取或初始化自定义表单组件的值
+
+可以参考 [#496](https://github.com/alibaba/hooks/issues/496)。
+
+antd 表单项如果是自定义函数组件，需要使用 `React.forwardRef` 包裹。
+
+```js
+const CustomInput = React.forwardRef((props, ref) => (
+  <Input ref={ref} value={props.value} onChange={props.onChange} />
+));
 ```
