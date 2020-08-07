@@ -31,6 +31,5 @@ useTimeout(fn: () => void, delay: number | undefined | null);
 | Property | Description | Type |
 |----------|--------------------------------------|----------------------|
 | fn  | Is the function you want to execute after the expiration time (delay milliseconds) | () => void |
-| delay | Expire date. If delay is `null` or `undefined`, the timer will stop. | number \| undefined \| null |
-
+| delay | The time to wait, in milliseconds. If delay is `null` or `undefined`, the timer will stop. | number \| undefined \| null |
 
