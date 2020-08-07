@@ -8,17 +8,22 @@ type EventType = MouseEvent | TouchEvent;
 
 export default function useClickAway(
   onClickAway: (event: EventType) => void,
-  target: BasicTarget,
+  target: BasicTarget | BasicTarget[],
   eventName: string = defaultEvent,
 ) {
   const handler = useCallback(
     (event) => {
-      const targetElement = getTargetElement(target) as HTMLElement;
-
-      if (!targetElement || targetElement.contains(event.target)) {
+      const targets = Array.isArray(target) ? target : [target];
+      const targetElements = targets.map((targetItem) =>
+        getTargetElement(targetItem),
+      ) as HTMLElement[];
+      if (
+        targetElements.some(
+          (targetElement) => !targetElement || targetElement.contains(event.target),
+        )
+      ) {
         return;
       }
-
       onClickAway(event);
     },
     [onClickAway, typeof target === 'function' ? undefined : target],
