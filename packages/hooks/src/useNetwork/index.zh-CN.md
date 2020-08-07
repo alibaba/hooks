@@ -55,4 +55,7 @@ const result: INetworkState = useNetwork(
 | since  | 在线与不在线最后改变时间 | Date |
 | downlink  | 有效带宽估算（单位：兆比特/秒） | number |
 | downlinkMax  | 最大下行速度（单位：兆比特/秒） | number |
-| saveData  | 用户代理是否设置了减少数据使用量 | 'slow-2g' \| '2g' \| '3g' \| '4g'  |
+| saveData  | 用户代理是否设置了减少数据使用的选项 | boolean  |
+| effectiveType  | 网络连接的类型 | 'slow-2g' \| '2g' \| '3g' \| '4g'  |
+
+

@@ -24,8 +24,6 @@ function getConnection(): INetworkState | null | undefined {
 function useNetwork(initialState: INetworkState | (() => INetworkState) = {}): INetworkState {
   const [state, setState] = useState(isFunc(initialState) ? initialState() : initialState);
 
-  console.log(getConnection());
-
   useEffect(() => {
     const connection: any = getConnection();
 

@@ -1,36 +1,26 @@
 import { renderHook, act } from '@testing-library/react-hooks';
-import useBoolean from '../index';
+import useNetwork, { INetworkState } from '../index';
 
-const setUp = (defaultValue: boolean = false) => renderHook(() => useBoolean(defaultValue));
+const setUp = (defaultOptional: INetworkState = {}) =>
+  renderHook(() => useNetwork(defaultOptional));
 
-describe('useBoolean', () => {
+describe('useNetwork', () => {
   it('should be defined', () => {
-    expect(useBoolean).toBeDefined();
+    expect(useNetwork).toBeDefined();
   });
 
-  it('test on methods', async () => {
-    const { result } = setUp();
-    expect(result.current[0]).toBeFalsy();
-    act(() => {
-      result.current[1].setTrue();
-    });
-    expect(result.current[0]).toBeTruthy();
-    act(() => {
-      result.current[1].setFalse();
-    });
-    expect(result.current[0]).toBeFalsy();
-    act(() => {
-      result.current[1].toggle();
-    });
-    expect(result.current[0]).toBeTruthy();
-    act(() => {
-      result.current[1].toggle();
-    });
-    expect(result.current[0]).toBeFalsy();
-  });
-
-  it('test on optional', () => {
-    const hook = setUp(true);
-    expect(hook.result.current[0]).toBeTruthy();
+  it('test on default optional', () => {
+    const defaultOptional: INetworkState = {
+      rtt: 100,
+      type: 'wifi',
+      since: new Date(),
+      online: true,
+      downlink: 8.2,
+      downlinkMax: 10,
+      saveData: true,
+      effectiveType: '2g',
+    };
+    const hook = setUp(defaultOptional);
+    expect(hook.result.current).toBe(defaultOptional);
   });
 });
