@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-export interface NetworkState {
+export interface INetworkState {
   rtt?: number;
   since?: Date;
   type?: string;
@@ -11,18 +11,18 @@ export interface NetworkState {
   effectiveType?: string;
 }
 
-function isFunc(v: Function | NetworkState): v is Function {
+function isFunc(v: Function | INetworkState): v is Function {
   return typeof v === 'function';
 }
 
-function getConnection(): NetworkState | null | undefined {
+function getConnection(): INetworkState | null | undefined {
   const nav = navigator as any;
   if (typeof nav !== 'object') return null;
   return nav.connection || nav.mozConnection || nav.webkitConnection;
 }
 
-function useNetwork(initialState: NetworkState | (() => NetworkState) = {}): NetworkState {
-  const [state, setState] = useState(initialState);
+function useNetwork(initialState: INetworkState | (() => INetworkState) = {}): INetworkState {
+  const [state, setState] = useState(isFunc(initialState) ? initialState() : initialState);
 
   useEffect(() => {
     const connection: any = getConnection();
@@ -44,18 +44,17 @@ function useNetwork(initialState: NetworkState | (() => NetworkState) = {}): Net
     };
 
     const onConnectionChange = () => {
-      const currentConnection = getConnection();
       setState({
         ...state,
         since: undefined,
         online: navigator.onLine,
-        ...(currentConnection && {
-          rtt: currentConnection.rtt,
-          type: currentConnection.type,
-          saveData: currentConnection.saveData,
-          downlink: currentConnection.downlink,
-          downlinkMax: currentConnection.downlinkMax,
-          effectiveType: currentConnection.effectiveType,
+        ...(connection && {
+          rtt: connection.rtt,
+          type: connection.type,
+          saveData: connection.saveData,
+          downlink: connection.downlink,
+          downlinkMax: connection.downlinkMax,
+          effectiveType: connection.effectiveType,
         }),
       });
     };

@@ -23,7 +23,7 @@ legacy: /state/use-network
 ## API
 
 ```javascript
-interface NetworkState {
+interface INetworkState {
   rtt?: number;
   since?: Date;
   type?: string;
@@ -34,8 +34,8 @@ interface NetworkState {
   effectiveType?: string;
 }
 
-const result: NetworkState = useNetwork(
-  defaultValue?: NetworkState | (() => NetworkState),
+const result: INetworkState = useNetwork(
+  defaultValue?: INetworkState | (() => INetworkState),
 );
 ```
 
@@ -43,9 +43,9 @@ const result: NetworkState = useNetwork(
 
 | Property | Description                                 | Type                   | Default |
 |---------|----------------------------------------------|------------------------|--------|
-| defaultValue | Optional，set a default networkState value  | NetworkState \| () => NetworkState | {} |
+| defaultValue | Optional，set a default networkState value  | INetworkState \| () => INetworkState | {} |
 
-### 结果（NetworkState）
+### 结果（INetworkState）
 
 | 属性 | 描述                                         | 类型                 |
 |----------|--------------------------------------|----------------------|

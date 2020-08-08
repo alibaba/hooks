@@ -23,7 +23,7 @@ A hook that elegantly return NetworkInformation object containing information ab
 ## API
 
 ```javascript
-interface NetworkState {
+interface INetworkState {
   rtt?: number;
   since?: Date;
   type?: string;
@@ -34,8 +34,8 @@ interface NetworkState {
   effectiveType?: string;
 }
 
-const networkState: NetworkState = useNetwork(
-  defaultValue?: NetworkState | (() => NetworkState),
+const networkState: INetworkState = useNetwork(
+  defaultValue?: INetworkState | (() => INetworkState),
 );
 ```
 
@@ -43,9 +43,9 @@ const networkState: NetworkState = useNetwork(
 
 | Property | Description                                 | Type                   | Default |
 |---------|----------------------------------------------|------------------------|--------|
-| defaultValue | Optional，set a default networkState value  | NetworkState \| () => NetworkState | {} |
+| defaultValue | Optional，set a default networkState value  | INetworkState \| () => INetworkState | {} |
 
-### NetworkState
+### INetworkState
 
 | Property | Description                                         | Type                 |
 |----------|--------------------------------------|----------------------|
