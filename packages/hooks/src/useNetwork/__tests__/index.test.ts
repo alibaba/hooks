@@ -19,7 +19,17 @@ describe('useNetwork', () => {
       saveData: true,
       effectiveType: '2g',
     };
+    const nav = (typeof navigator !== 'object' ? null : navigator) as any;
+    const connection = (nav && (nav.connection || nav.mozConnection || nav.webkitConnection)) || {};
     const hook = setUp(defaultOptional);
-    expect(hook.result.current).toBe(defaultOptional);
+    const result = { ...defaultOptional, ...connection };
+    expect(hook.result.current.rtt).toBe(result.rtt);
+    expect(hook.result.current.type).toBe(result.type);
+    expect(hook.result.current.since).toBe(result.since);
+    expect(hook.result.current.online).toBe(result.online);
+    expect(hook.result.current.downlink).toBe(result.downlink);
+    expect(hook.result.current.downlinkMax).toBe(result.downlinkMax);
+    expect(hook.result.current.saveData).toBe(result.saveData);
+    expect(hook.result.current.effectiveType).toBe(result.effectiveType);
   });
 });

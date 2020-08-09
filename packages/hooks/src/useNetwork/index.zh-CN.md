@@ -41,9 +41,10 @@ const result: NetworkState = useNetwork(
 
 ### 参数
 
-| Property | Description                                 | Type                   | Default |
-|---------|----------------------------------------------|------------------------|--------|
-| defaultValue | Optional，set a default networkState value  | NetworkState \| () => NetworkState | {} |
+| 属性 | 描述                                         | 类型                 | 默认值 |
+|----------|--------------------------------------|----------------------| --- |
+| defaultValue | 可选，设置网络状态默认值  | NetworkState \| () => NetworkState | \{\} |
+
 
 ### 结果（NetworkState）
 

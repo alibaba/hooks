@@ -43,7 +43,7 @@ const networkState: NetworkState = useNetwork(
 
 | Property | Description                                 | Type                   | Default |
 |---------|----------------------------------------------|------------------------|--------|
-| defaultValue | Optional，set a default networkState value  | NetworkState \| () => NetworkState | {} |
+| defaultValue | Optional，set a default networkState value  | NetworkState \| () => NetworkState | \{\} |
 
 ### NetworkState
 

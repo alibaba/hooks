@@ -21,12 +21,28 @@ function getConnection(): NetworkState | null | undefined {
   return nav.connection || nav.mozConnection || nav.webkitConnection;
 }
 
+function getConnectionProperty(o: NetworkState | null): NetworkState {
+  if (!o) return {};
+  return {
+    rtt: o.rtt,
+    type: o.type,
+    saveData: o.saveData,
+    downlink: o.downlink,
+    downlinkMax: o.downlinkMax,
+    effectiveType: o.effectiveType,
+  };
+}
+
 function useNetwork(initialState: NetworkState | (() => NetworkState) = {}): NetworkState {
-  const [state, setState] = useState(initialState);
+  const connection: any = getConnection();
+
+  const defaultOptional = {
+    ...(isFunc(initialState) ? initialState() : initialState),
+    ...getConnectionProperty(connection),
+  };
+  const [state, setState] = useState(defaultOptional);
 
   useEffect(() => {
-    const connection: any = getConnection();
-
     const onOnline = () => {
       setState({
         ...state,
@@ -49,14 +65,7 @@ function useNetwork(initialState: NetworkState | (() => NetworkState) = {}): Net
         ...state,
         since: undefined,
         online: navigator.onLine,
-        ...(currentConnection && {
-          rtt: currentConnection.rtt,
-          type: currentConnection.type,
-          saveData: currentConnection.saveData,
-          downlink: currentConnection.downlink,
-          downlinkMax: currentConnection.downlinkMax,
-          effectiveType: currentConnection.effectiveType,
-        }),
+        ...(currentConnection && getConnectionProperty(currentConnection)),
       });
     };
 
