@@ -1,8 +1,7 @@
 import { renderHook, act } from '@testing-library/react-hooks';
-import useNetwork, { INetworkState } from '../index';
+import useNetwork, { NetworkState } from '../index';
 
-const setUp = (defaultOptional: INetworkState = {}) =>
-  renderHook(() => useNetwork(defaultOptional));
+const setUp = (defaultOptional: NetworkState = {}) => renderHook(() => useNetwork(defaultOptional));
 
 describe('useNetwork', () => {
   it('should be defined', () => {
@@ -10,7 +9,7 @@ describe('useNetwork', () => {
   });
 
   it('test on default optional', () => {
-    const defaultOptional: INetworkState = {
+    const defaultOptional: NetworkState = {
       rtt: 100,
       type: 'wifi',
       since: new Date(),
