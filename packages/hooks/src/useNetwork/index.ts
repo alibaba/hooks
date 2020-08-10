@@ -1,76 +1,72 @@
 import { useEffect, useState } from 'react';
 
 export interface NetworkState {
-  rtt?: number;
   since?: Date;
-  type?: string;
   online?: boolean;
+  rtt?: number;
+  type?: string;
   downlink?: number;
   saveData?: boolean;
   downlinkMax?: number;
   effectiveType?: string;
 }
 
-function isFunc(v: Function | NetworkState): v is Function {
-  return typeof v === 'function';
-}
-
-function getConnection(): NetworkState | null | undefined {
+function getConnection() {
   const nav = navigator as any;
   if (typeof nav !== 'object') return null;
   return nav.connection || nav.mozConnection || nav.webkitConnection;
 }
 
-function getConnectionProperty(o: NetworkState | null): NetworkState {
-  if (!o) return {};
+function getConnectionProperty(): NetworkState {
+  const c = getConnection();
+  if (!c) return {};
   return {
-    rtt: o.rtt,
-    type: o.type,
-    saveData: o.saveData,
-    downlink: o.downlink,
-    downlinkMax: o.downlinkMax,
-    effectiveType: o.effectiveType,
+    rtt: c.rtt,
+    type: c.type,
+    saveData: c.saveData,
+    downlink: c.downlink,
+    downlinkMax: c.downlinkMax,
+    effectiveType: c.effectiveType,
   };
 }
 
-function useNetwork(initialState: NetworkState | (() => NetworkState) = {}): NetworkState {
-  const connection: any = getConnection();
-
-  const defaultOptional = {
-    ...(isFunc(initialState) ? initialState() : initialState),
-    ...getConnectionProperty(connection),
-  };
-  const [state, setState] = useState(defaultOptional);
+function useNetwork(): NetworkState {
+  const [state, setState] = useState(() => {
+    return {
+      since: undefined,
+      online: navigator.onLine,
+      ...getConnectionProperty(),
+    };
+  });
 
   useEffect(() => {
     const onOnline = () => {
-      setState({
-        ...state,
+      setState((prevState) => ({
+        ...prevState,
         online: true,
         since: new Date(),
-      });
+      }));
     };
 
     const onOffline = () => {
-      setState({
-        ...state,
+      setState((prevState) => ({
+        ...prevState,
         online: false,
         since: new Date(),
-      });
+      }));
     };
 
     const onConnectionChange = () => {
-      const currentConnection = getConnection();
-      setState({
-        ...state,
-        since: undefined,
-        online: navigator.onLine,
-        ...(currentConnection && getConnectionProperty(currentConnection)),
-      });
+      setState((prevState) => ({
+        ...prevState,
+        ...getConnectionProperty(),
+      }));
     };
 
     window.addEventListener('online', onOnline);
     window.addEventListener('offline', onOffline);
+
+    const connection = getConnection();
     connection && connection.addEventListener('change', onConnectionChange);
 
     return () => {

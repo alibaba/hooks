@@ -12,7 +12,7 @@ legacy: /state/use-network
 
 # useNetwork
 
-A hook that elegantly return NetworkInformation object containing information about the system's connection.
+A hook that can manage the state of network.
 
 ## Examples
 
@@ -24,35 +24,27 @@ A hook that elegantly return NetworkInformation object containing information ab
 
 ```javascript
 interface NetworkState {
-  rtt?: number;
-  since?: Date;
-  type?: string;
   online?: boolean;
+  since?: Date;
+  rtt?: number;
+  type?: string;
   downlink?: number;
   saveData?: boolean;
   downlinkMax?: number;
   effectiveType?: string;
 }
 
-const networkState: NetworkState = useNetwork(
-  defaultValue?: NetworkState | (() => NetworkState),
-);
+const result: NetworkState = useNetwork();
 ```
-
-### Params
-
-| Property | Description                                 | Type                   | Default |
-|---------|----------------------------------------------|------------------------|--------|
-| defaultValue | Optional，set a default networkState value  | NetworkState \| () => NetworkState | \{\} |
 
 ### NetworkState
 
 | Property | Description                                         | Type                 |
 |----------|--------------------------------------|----------------------|
-| rtt  | Round-trip time | number |
-| type  | Type of connection a device is using to communicate with the network | 'bluetooth' \| 'cellular' \| 'ethernet' \| 'none' \| 'wifi' \| 'wimax' \| 'other' \| 'unknown' |
 | online  | Effective online | boolean |
 | since  | Online and offline last change time | Date |
+| rtt  | Round-trip time | number |
+| type  | Type of connection a device is using to communicate with the network | 'bluetooth' \| 'cellular' \| 'ethernet' \| 'none' \| 'wifi' \| 'wimax' \| 'other' \| 'unknown' |
 | downlink  | Effective bandwidth estimate in megabits per second | number |
 | downlinkMax  | The maximum downlink speed | number |
 | saveData  | Whether the user agent has set the option to reduce data usage | boolean |
