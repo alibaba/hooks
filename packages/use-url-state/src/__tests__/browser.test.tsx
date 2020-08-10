@@ -31,7 +31,7 @@ describe('useUrlState', () => {
       [number, ((s: any) => void) | (() => (s: any) => any)]
     >;
 
-    function setup(key: string, value: number) {
+    function setup(key: string, value: string) {
       hook = renderHook(() => {
         return useUrlState({ [key]: value });
       }) as any;
@@ -65,10 +65,10 @@ describe('useUrlState', () => {
 
     it('history replace should work', async () => {
       act(() => {
-        setup('mock', 0);
+        setup('mock', '0');
       });
       expect(replaceFn).toBeCalledTimes(0);
-      expect(hook.result.current[0]).toEqual({ mock: 0 });
+      expect(hook.result.current[0]).toEqual({ mock: '0' });
       expect(mockLocation.search).toEqual('');
       act(() => {
         hook.result.current[1]({ mock: 1 });
