@@ -13,10 +13,11 @@ const parseConfig = {
   parseBooleans: false,
 };
 
-export default <S extends Record<string, any> = Record<string, any>>(
-  value?: S | (() => S),
-  config?: UrlConfig,
-) => {
+interface UrlState {
+  [key: string]: undefined | null | string | string[] | UrlState | UrlState[];
+}
+
+export default <S extends UrlState = UrlState>(value?: S | (() => S), config?: UrlConfig) => {
   const { navigateMode = 'replace' } = config || {};
   const routerLocation = useLocation();
   const routerHistory = useHistory();
@@ -28,10 +29,10 @@ export default <S extends Record<string, any> = Record<string, any>>(
   const initialState = useRef(typeof value === 'function' ? (value as () => S)() : value || {});
 
   const setState = useCallback(
-    (s) => {
+    (s: React.SetStateAction<S>) => {
       const newState =
         typeof s === 'function'
-          ? s({
+          ? (s as Function)({
               ...initialState.current,
               ...parse(locationFn.current.search, parseConfig),
             })
@@ -53,7 +54,7 @@ export default <S extends Record<string, any> = Record<string, any>>(
     {
       ...initialState.current,
       ...parse(routerLocation.search, parseConfig),
-    },
+    } as S,
     setState,
   ] as const;
 };
