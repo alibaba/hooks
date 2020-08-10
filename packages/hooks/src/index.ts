@@ -42,7 +42,6 @@ import useUpdate from './useUpdate';
 import useEventTarget from './useEventTarget';
 import useHistoryTravel from './useHistoryTravel';
 import useDebounceEffect from './useDebounceEffect';
-import useUrlState from './useUrlState';
 import useCookieState from './useCookieState';
 import useSetState from './useSetState';
 import useInterval from './useInterval';
@@ -105,7 +104,6 @@ export {
   useEventTarget,
   useHistoryTravel,
   useFusionTable,
-  useUrlState,
   useCookieState,
   useSetState,
   useInterval,

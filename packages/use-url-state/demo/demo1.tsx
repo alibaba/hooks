@@ -7,7 +7,7 @@
  */
 
 import React from 'react';
-import { useUrlState } from 'ahooks';
+import useUrlState from '@ahooksjs/use-url-state';
 
 export default () => {
   const [state, setState] = useUrlState(() => ({ demo1Count: '1' }));

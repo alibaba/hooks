@@ -13,6 +13,8 @@ legacy: /zh-CN/state/use-url-state
 
 一个同步组件内部状态和 query 参数的 hook.
 
+> 这个 hook 依赖了 `react-router` 中的 useLocation & useHistory, 需要先安装 `@ahooksjs/use-url-state` 然后通过 `import useUrlState from '@ahooksjs/use-url-state';` 来引入。
+
 ## 代码演示
 
 ### 默认用法

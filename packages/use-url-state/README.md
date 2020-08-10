@@ -1,14 +1,3 @@
----
-title: useUrlState
-nav:
-  title: Hooks
-  path: /hooks
-group:
-  title: State
-  path: /state
-legacy: /state/use-url-state
----
-
 # useUrlState
 
 A hook that stores the state into url query parameters.

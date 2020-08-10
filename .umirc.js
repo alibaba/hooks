@@ -33,7 +33,7 @@ export default {
   links: [{ rel: 'manifest', href: '/asset-manifest.json' }],
   hash: true,
   resolve: {
-    includes: ['docs', 'packages/hooks/src', 'packages/use-request'],
+    includes: ['docs', 'packages/hooks/src', 'packages/use-request', 'packages/use-url-state'],
   },
   links: [
     {
