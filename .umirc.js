@@ -38,7 +38,7 @@ export default {
   links: [
     {
       rel: 'stylesheet',
-      href: 'https://unpkg.com/@alifd/theme-design-pro@0.6.2/dist/next.min.css',
+      href: 'https://unpkg.com/@alifd/theme-design-pro@0.6.2/dist/next-noreset.min.css',
     },
     { rel: 'stylesheet', href: '/style.css' },
   ],
