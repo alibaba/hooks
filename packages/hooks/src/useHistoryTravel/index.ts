@@ -10,7 +10,8 @@ const dumpIndex = <T>(step: number, arr: T[]) => {
   let index =
     step > 0
       ? step - 1 // move forward
-      : arr.length + step; // move backward
+      : // avoid Implicit-Conversion
+        arr.length + Number(step); // move backward
   if (index >= arr.length - 1) {
     index = arr.length - 1;
   }
@@ -48,10 +49,10 @@ export default function useHistoryTravel<T>(initialValue?: T) {
       setHistory({
         present: _initial,
         future: [],
-        past: []
+        past: [],
       });
     },
-    [history, setHistory]
+    [history, setHistory],
   );
 
   const updateValue = useCallback(
@@ -121,6 +122,6 @@ export default function useHistoryTravel<T>(initialValue?: T) {
     forward: useCallback(() => {
       go(1);
     }, [go]),
-    reset
+    reset,
   };
 }
