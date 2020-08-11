@@ -7,7 +7,7 @@ import {
   PaginatedResult,
 } from '@ahooksjs/use-request/lib/types';
 
-import { useAntdTable } from '..';
+import useAntdTable from '../useAntdTable';
 import { fieldAdapter, resultAdapter } from './fusionAdapter';
 
 export {
