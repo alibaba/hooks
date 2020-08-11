@@ -48,7 +48,7 @@ describe('useUrlState', () => {
     };
 
     const mockHistory: any = {
-      replace: ({ search }) => {
+      push: ({ search }) => {
         replaceFn();
         mockLocation.search = search;
       },
