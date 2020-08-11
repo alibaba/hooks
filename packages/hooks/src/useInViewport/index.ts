@@ -24,14 +24,21 @@ function isInViewPort(el: HTMLElement): boolean {
 }
 
 function useInViewport(target: BasicTarget): InViewport {
-  const [inViewPort, setInViewport] = useState<InViewport>(() => {
-    const el = getTargetElement(target);
+  const [el, setEl] = useState(() => getTargetElement(target));
 
+  const [inViewPort, setInViewport] = useState<InViewport>(() => {
     return isInViewPort(el as HTMLElement);
   });
 
   useEffect(() => {
-    const el = getTargetElement(target);
+    const newEl = getTargetElement(target);
+    if (el !== newEl) {
+      setEl(newEl);
+      setInViewport(isInViewPort(newEl as HTMLElement));
+    }
+  });
+
+  useEffect(() => {
     if (!el) {
       return () => {};
     }
@@ -51,7 +58,7 @@ function useInViewport(target: BasicTarget): InViewport {
     return () => {
       observer.disconnect();
     };
-  }, [typeof target === 'function' ? undefined : target]);
+  }, [el]);
 
   return inViewPort;
 }

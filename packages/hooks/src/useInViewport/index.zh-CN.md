@@ -23,6 +23,10 @@ legacy: /zh-CN/dom/use-in-viewport
 
 <code src="./demo/demo2.tsx" />
 
+### 动态绑定
+
+<code src="./demo/demo3.tsx" />
+
 ## API
 
 ```ts

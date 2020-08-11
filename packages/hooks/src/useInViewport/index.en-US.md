@@ -23,6 +23,9 @@ A hook to subscribe DOM element visibility change
 
 <code src="./demo/demo2.tsx" />
 
+### Dynamic binding
+
+<code src="./demo/demo3.tsx" />
 
 ## API
 
