@@ -1,8 +1,8 @@
-import { useRef, useCallback } from 'react';
-import { stringify, parse } from 'query-string';
+import { parse, stringify } from 'query-string';
+import { useMemo, useRef, useState } from 'react';
 import { useHistory, useLocation } from 'react-router';
 
-export interface UrlConfig {
+export interface Options {
   navigateMode?: 'push' | 'replace';
 }
 
@@ -12,49 +12,45 @@ const parseConfig = {
   parseNumbers: false,
   parseBooleans: false,
 };
-
 interface UrlState {
-  [key: string]: undefined | null | string | string[] | UrlState | UrlState[];
+  [key: string]: any;
 }
+export default <S extends UrlState>(initialState?: S | (() => S), options?: Options) => {
+  const { navigateMode = 'push' } = options || {};
+  const location = useLocation();
+  const history = useHistory();
 
-export default <S extends UrlState = UrlState>(value?: S | (() => S), config?: UrlConfig) => {
-  const { navigateMode = 'replace' } = config || {};
-  const routerLocation = useLocation();
-  const routerHistory = useHistory();
+  const [, update] = useState(false);
 
-  const locationFn = useRef(routerLocation);
-  locationFn.current = routerLocation;
-  const historyFn = useRef(routerHistory);
-  historyFn.current = routerHistory;
-  const initialState = useRef(typeof value === 'function' ? (value as () => S)() : value || {});
-
-  const setState = useCallback(
-    (s: React.SetStateAction<S>) => {
-      const newState =
-        typeof s === 'function'
-          ? (s as Function)({
-              ...initialState.current,
-              ...parse(locationFn.current.search, parseConfig),
-            })
-          : s;
-      Object.entries(newState).forEach(([k, v]) => {
-        if (v === undefined || v === null) {
-          delete initialState.current[k];
-        }
-      });
-      historyFn.current[navigateMode]({
-        ...locationFn.current,
-        search: stringify({ ...initialState.current, ...newState }, parseConfig) || '?',
-      });
-    },
-    [navigateMode],
+  const initialStateRef = useRef(
+    typeof initialState === 'function' ? (initialState as () => S)() : initialState || {},
   );
 
-  return [
-    {
-      ...initialState.current,
-      ...parse(routerLocation.search, parseConfig),
-    } as S,
-    setState,
-  ] as const;
+  const queryFromUrl = useMemo(() => {
+    return parse(location.search, parseConfig);
+  }, [location.search, parseConfig]);
+
+  const targetQuery = {
+    ...initialStateRef.current,
+    ...queryFromUrl,
+  };
+
+  const setState = (s: React.SetStateAction<UrlState>) => {
+    const newQuery = typeof s === 'function' ? s(targetQuery) : s;
+    Object.entries(newQuery).forEach(([k, v]) => {
+      if (v === undefined || v === null) {
+        delete initialStateRef.current[k];
+      }
+    });
+
+    // 1. 如果 setState 后，search 没变化，就需要 update 来触发一次更新。比如 demo1 直接点击 clear，就需要 update 来触发更新。
+    // 2. update 和 history 的更新会合并，不会造成多次更新
+    update((s) => !s);
+    history[navigateMode]({
+      hash: location.hash,
+      search: stringify({ ...queryFromUrl, ...newQuery }, parseConfig) || '?',
+    });
+  };
+
+  return [targetQuery, setState] as const;
 };

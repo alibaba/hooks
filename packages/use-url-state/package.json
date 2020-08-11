@@ -32,6 +32,7 @@
     "react-router": "^5.0.0"
   },
   "dependencies": {
+    "@types/query-string": "^6.3.0",
     "query-string": "^6.9.0"
   }
 }

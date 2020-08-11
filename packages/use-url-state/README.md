@@ -2,37 +2,28 @@
 
 A hook that stores the state into url query parameters.
 
-## Examples
+## Installing
 
-### Default usage
+Inside your React project directory, run the following:
 
-<code src="./demo/demo1.tsx" />
-
-<code src="./demo/demo2.tsx" />
-
-## API
-
-```typescript
-const [state, setState] = useUrlState(initialState, options);
+```bash
+yarn add @ahooksjs/use-url-state -S
 ```
 
+Or with npm:
 
-### Params
+```bash
+npm install @ahooksjs/use-url-state -S
+```
 
-| Property | Description                         | Type                   | Default |
-|---------|----------------------------------------------|------------------------|--------|
-| initialState | initialState, same as useState      | S \| () => S                    | -      |
-| options | url config                  | UrlConfig                    | -      |
+## Example
 
-### Options
+```javascript
+import useUrlState from '@ahooksjs/use-url-state';
 
-| Property | Description                            | Type                   | Default |
-|------|--------------|--------|--------|
-| navigateMode | type of history navigate mode | 'push' \| 'replace' | 'replace'    |
+const [state, setState] = useUrlState({ demoCount: '1' });
+```
 
-### Result
+## Documentation
 
-| Property | Description                                         | Type                 |
-|----------|------------------------------------------|------------|
-| state  | same as useState                             | S    |
-| setState     | same as useState                             |  (state: S) => void \| (() => ((state: S) => S))      |
+https://ahooks.js.org/hooks/state/use-url-state

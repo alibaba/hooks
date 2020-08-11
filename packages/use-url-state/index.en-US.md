@@ -6,21 +6,38 @@ nav:
 group:
   title: State
   path: /state
-legacy: /state/use-url-state
 ---
 
 # useUrlState
 
 A hook that stores the state into url query parameters.
 
-> This hook relies on useLocation & useHistory from `react-router`, to use this hook, you need to first install
-`@ahooksjs/use-url-state` and then `import useUrlState from '@ahooksjs/use-url-state'`;
+## Install
+
+```bash
+npm i @ahooksjs/use-url-state -S
+```
+
+> This hook relies on useLocation & useHistory from `react-router`, to use this hook, you need to ensure
+>
+> 1\. Your project has installed `react-router` version 5.0 or higher
+>
+> 2\. Installed @ahooksjs/use-url-state
+
+
+## Usage
+
+```js
+import useUrlState from '@ahooksjs/use-url-state';
+```
 
 ## Examples
 
 ### Default usage
 
 <code src="./demo/demo1.tsx" />
+
+### Multi-state management
 
 <code src="./demo/demo2.tsx" />
 
@@ -36,7 +53,7 @@ const [state, setState] = useUrlState(initialState, options);
 | Property | Description                         | Type                   | Default |
 |---------|----------------------------------------------|------------------------|--------|
 | initialState | initialState, same as useState      | S \| () => S                    | -      |
-| options | url config                  | UrlConfig                    | -      |
+| options | url config                  | Options                    | -      |
 
 ### Options
 
@@ -48,5 +65,5 @@ const [state, setState] = useUrlState(initialState, options);
 
 | Property | Description                                         | Type                 |
 |----------|------------------------------------------|------------|
-| state  | same as useState                             | S    |
-| setState     | same as useState                             |  (state: S) => void \| (() => ((state: S) => S))      |
+| state  | url query object                             | object    |
+| setState     | same as useState, but state should be object      |  (state: S) => void \| (() => ((state: S) => S))      |

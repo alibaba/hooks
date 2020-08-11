@@ -6,20 +6,37 @@ nav:
 group:
   title: State
   path: /state
-legacy: /zh-CN/state/use-url-state
 ---
 
 # useUrlState
 
-一个同步组件内部状态和 query 参数的 hook.
+一个同步组件内部状态和 query 参数的 hook。
 
-> 这个 hook 依赖了 `react-router` 中的 useLocation & useHistory, 需要先安装 `@ahooksjs/use-url-state` 然后通过 `import useUrlState from '@ahooksjs/use-url-state';` 来引入。
+## 安装
+
+```bash
+npm i @ahooksjs/use-url-state -S
+```
+
+> 该 Hooks 基于 `react-router` 的 useLocation & useHistory 进行 query 管理，所以使用该 Hooks 之前，你需要保证
+>
+> 1\. 你的项目安装了 `react-router` 5.0 以上版本
+>
+> 2\. 独立安装了 @ahooksjs/use-url-state
+
+## 使用
+
+```js
+import useUrlState from '@ahooksjs/use-url-state';
+```
 
 ## 代码演示
 
 ### 默认用法
 
 <code src="./demo/demo1.tsx" />
+
+### 多状态管理
 
 <code src="./demo/demo2.tsx" />
 
@@ -33,18 +50,18 @@ const [state, setState] = useUrlState(initialState, options);
 
 | 参数    | 说明                                         | 类型                   | 默认值 |
 |---------|----------------------------------------------|------------------------|--------|
-| initialState | 初始状态，同 useState                       | S \| () => S                    | -      |
-| options | url 配置                       | UrlConfig                    | -      |
+| initialState | 初始状态                       | S \| () => S                    | -      |
+| options | url 配置                       | Options                    | -      |
 
 ### Options
 
 | 参数    | 说明                                         | 类型                   | 默认值 |
 |------|--------------|--------|--------|
-| navigateMode | 状态变更时对 history 的影响方式 | 'push' \| 'replace' | 'replace'    |
+| navigateMode | 状态变更时切换 history 的方式 | 'push' \| 'replace' | 'push'    |
 
 ### 结果
 
 | 参数     | 说明                                     | 类型       |
 |----------|------------------------------------------|------------|
-| state  | 同 useState                             | S    |
-| setState     | 同 useState                             |  (state: S) => void \| (() => ((state: S) => S))      |
+| state  | url query 对象                             | object    |
+| setState     | 用法同 useState，但 state 需要是 object         |  (state: S) => void \| (() => ((state: S) => S))      |
