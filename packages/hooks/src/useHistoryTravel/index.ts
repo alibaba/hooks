@@ -10,8 +10,7 @@ const dumpIndex = <T>(step: number, arr: T[]) => {
   let index =
     step > 0
       ? step - 1 // move forward
-      : // avoid Implicit-Conversion
-        arr.length + Number(step); // move backward
+      : arr.length + step; // move backward
   if (index >= arr.length - 1) {
     index = arr.length - 1;
   }
@@ -26,7 +25,7 @@ const split = <T>(step: number, targetArr: T[]) => {
   return {
     _current: targetArr[index],
     _before: targetArr.slice(0, index),
-    _after: targetArr.slice(index + 1),
+    _after: targetArr.slice(index + 1)
   };
 };
 
@@ -34,7 +33,7 @@ export default function useHistoryTravel<T>(initialValue?: T) {
   const [history, setHistory] = useState<IData<T | undefined>>({
     present: initialValue,
     past: [],
-    future: [],
+    future: []
   });
 
   const { present, past, future } = history;
@@ -49,10 +48,10 @@ export default function useHistoryTravel<T>(initialValue?: T) {
       setHistory({
         present: _initial,
         future: [],
-        past: [],
+        past: []
       });
     },
-    [history, setHistory],
+    [history, setHistory]
   );
 
   const updateValue = useCallback(
@@ -60,10 +59,10 @@ export default function useHistoryTravel<T>(initialValue?: T) {
       setHistory({
         present: val,
         future: [],
-        past: [...past, present],
+        past: [...past, present]
       });
     },
-    [history, setHistory],
+    [history, setHistory]
   );
 
   const _forward = useCallback(
@@ -75,10 +74,10 @@ export default function useHistoryTravel<T>(initialValue?: T) {
       setHistory({
         past: [...past, present, ..._before],
         present: _current,
-        future: _after,
+        future: _after
       });
     },
-    [history, setHistory],
+    [history, setHistory]
   );
 
   const _backward = useCallback(
@@ -91,23 +90,24 @@ export default function useHistoryTravel<T>(initialValue?: T) {
       setHistory({
         past: _before,
         present: _current,
-        future: [..._after, present, ...future],
+        future: [..._after, present, ...future]
       });
     },
-    [history, setHistory],
+    [history, setHistory]
   );
 
   const go = useCallback(
     (step: number) => {
-      if (step === 0) {
+      const stepNum = typeof step === 'number' ? step : Number(step);
+      if (stepNum === 0) {
         return;
       }
-      if (step > 0) {
+      if (stepNum > 0) {
         return _forward(step);
       }
-      _backward(step);
+      _backward(stepNum);
     },
-    [_backward, _forward],
+    [_backward, _forward]
   );
 
   return {
@@ -122,6 +122,6 @@ export default function useHistoryTravel<T>(initialValue?: T) {
     forward: useCallback(() => {
       go(1);
     }, [go]),
-    reset,
+    reset
   };
 }
