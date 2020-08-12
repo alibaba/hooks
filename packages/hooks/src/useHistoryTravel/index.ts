@@ -103,7 +103,7 @@ export default function useHistoryTravel<T>(initialValue?: T) {
         return;
       }
       if (stepNum > 0) {
-        return _forward(step);
+        return _forward(stepNum);
       }
       _backward(stepNum);
     },
