@@ -22,7 +22,7 @@ let responsiveConfig: ResponsiveConfig = {
 };
 
 function init() {
-  if (info || typeof window !== "undefined") return;
+  if (info || typeof window === "undefined") return;
   info = {};
   calculate();
   window.addEventListener('resize', () => {
