@@ -20,7 +20,7 @@ npm i @ahooksjs/use-url-state -S
 
 > 该 Hooks 基于 `react-router` 的 useLocation & useHistory 进行 query 管理，所以使用该 Hooks 之前，你需要保证
 >
-> 1\. 你的项目安装了 `react-router` 5.0 以上版本
+> 1\. 你项目正在使用 `react-router` 5.0 以上版本来管理路由
 >
 > 2\. 独立安装了 @ahooksjs/use-url-state
 

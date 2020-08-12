@@ -20,7 +20,7 @@ npm i @ahooksjs/use-url-state -S
 
 > This hook relies on useLocation & useHistory from `react-router`, to use this hook, you need to ensure
 >
-> 1\. Your project has installed `react-router` version 5.0 or higher
+> 1\. Your project is using `react-router` version 5.0 or higher to manage routing
 >
 > 2\. Installed @ahooksjs/use-url-state
 
