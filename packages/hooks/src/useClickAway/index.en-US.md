@@ -22,12 +22,15 @@ A hook that elegantly manages click outside of target elements.
 
 <code src="./demo/demo2.tsx" />
 
+<code src="./demo/demo3.tsx" />
+
 ## API
 
 ```ts
 useClickAway(
   onClickAway: (event: MouseEvent | TouchEvent) => void,
-  target: (() => HTMLElement) | HTMLElement | React.MutableRefObject,
+  target: (() => HTMLElement) | HTMLElement | React.MutableRefObject | 
+    ((() => HTMLElement) | HTMLElement | React.MutableRefObject)[],
 );
 ```
 
@@ -36,4 +39,4 @@ useClickAway(
 | Property | Description                                 | Type                   | Default |
 |---------|----------------------------------------------|------------------------|--------|
 | onClickAway | Trigger Function  | (event) => void | -      |
-| target | DOM element or Ref Object | (() => HTMLElement) \| HTMLElement \| React.MutableRefObject | - |
+| target | DOM elements or Ref Objects | (() => HTMLElement) \| HTMLElement \| React.MutableRefObject \| ((() => HTMLElement) \| HTMLElement \| React.MutableRefObject)[] | - |

@@ -1,6 +1,12 @@
 import { act, renderHook, RenderHookResult } from '@testing-library/react-hooks';
 import useAntdTable, { BaseOptions, Result } from '../index';
 
+const sleep = (s) => {
+  return new Promise((resolve) => {
+    setTimeout(resolve, s * 1000);
+  });
+};
+
 interface Query {
   current: number;
   pageSize: number;
@@ -18,6 +24,7 @@ describe('useAntdTable', () => {
     };
   });
   afterAll(() => {
+    changeSearchType('simple');
     console.error = originalError;
   });
   // jest.useFakeTimers();
@@ -35,6 +42,7 @@ describe('useAntdTable', () => {
   let searchType = 'simple';
 
   const form: any = {
+    getInternalHooks: () => {},
     initialValue: {
       name: 'default name',
     },
@@ -59,6 +67,9 @@ describe('useAntdTable', () => {
     },
     resetFields() {
       this.fieldsValue = { ...this.initialValue };
+    },
+    validateFields: () => {
+      return Promise.resolve(true);
     },
   };
 
@@ -288,5 +299,29 @@ describe('useAntdTable', () => {
     if (search) {
       expect(search.type).toEqual('advance');
     }
+  });
+
+  it('should stop the query when validate fields failed', async () => {
+    queryArgs = undefined;
+    changeSearchType('advance');
+    act(() => {
+      hook = setUp({
+        asyncFn,
+        options: {
+          form: { ...form, validateFields: () => Promise.reject(false) },
+          defaultParams: [
+            {
+              current: 2,
+              pageSize: 10,
+            },
+            { name: 'hello', phone: '123' },
+          ],
+          defaultType: 'advance',
+        },
+      });
+    });
+
+    await sleep(1);
+    expect(queryArgs).toEqual(undefined);
   });
 });

@@ -7,7 +7,7 @@ import {
   PaginatedResult,
 } from '@ahooksjs/use-request/lib/types';
 
-import { useAntdTable } from '..';
+import useAntdTable from '../useAntdTable';
 import { fieldAdapter, resultAdapter } from './fusionAdapter';
 
 export {
@@ -28,6 +28,7 @@ export interface Field {
   setValues: (value: Store) => void;
   getValues: (...args: any) => Store;
   reset: (...args: any) => void;
+  validate: (callback: (errors, values) => void) => void;
   [key: string]: any;
 }
 

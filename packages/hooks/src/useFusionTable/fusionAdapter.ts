@@ -8,6 +8,7 @@ interface UseAntdTableFormUtils {
   setFieldsValue: (value: Store) => void;
   getFieldsValue: (...args: any) => Store;
   resetFields: (...args: any) => void;
+  validateFields: () => Promise<any>;
   [key: string]: any;
 }
 
@@ -17,6 +18,9 @@ export const fieldAdapter = (field: Field) =>
     setFieldsValue: field.setValues,
     getFieldsValue: field.getValues,
     resetFields: field.reset,
+    validateFields: (fields, callback) => {
+      field.validate(callback);
+    },
   } as UseAntdTableFormUtils);
 
 export const resultAdapter = (result: any) => {

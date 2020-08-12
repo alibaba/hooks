@@ -33,6 +33,10 @@ legacy: /zh-CN/table/use-fusion-table
 
 <code src="./demo/demo3.tsx" />
 
+### 表单验证
+
+<code src="./demo/demo4.tsx" />
+
 ## API
 
 useFusionTable 基于 [useRequest](/zh-CN/async) 实现，所有的 [useRquest Pagination](/zh-CN/async?anchor=pagination#api-1) API 均可以直接使用。比如 `cacheKey`、`manual` 等等。
