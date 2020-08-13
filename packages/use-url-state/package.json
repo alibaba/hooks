@@ -1,0 +1,38 @@
+{
+  "name": "@ahooksjs/use-url-state",
+  "version": "1.0.0",
+  "description": "A hook that stores the state into url query parameters.",
+  "main": "./lib/index.js",
+  "module": "./es/index.js",
+  "types": "./lib/index.d.ts",
+  "unpkg": "dist/ahooks-use-url-state.js",
+  "files": [
+    "dist",
+    "lib",
+    "es",
+    "package.json"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alibaba/hooks.git"
+  },
+  "scripts": {
+    "build": "gulp && webpack-cli"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.com/"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/alibaba/hooks/issues"
+  },
+  "homepage": "https://github.com/alibaba/hooks",
+  "peerDependencies": {
+    "react": "^16.8.6",
+    "react-router": "^5.0.0"
+  },
+  "dependencies": {
+    "@types/query-string": "^6.3.0",
+    "query-string": "^6.9.0"
+  }
+}

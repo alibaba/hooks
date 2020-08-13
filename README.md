@@ -8,15 +8,15 @@ React Hooks Library.
 
 ## 📚 Document
 
-* [English](https://ahooks.js.org/)
-* [中文](https://ahooks.js.org/zh-CN/)
+- [English](https://ahooks.js.org/)
+- [中文](https://ahooks.js.org/zh-CN/)
 
 ## ✨ Features
 
-* Easy to learn and use.
-* Contains a wealth of advanced Hooks that are refined from the app.
-* Contains a wealth of basic Hooks.
-* Written in TypeScript with predictable static types.
+- Easy to learn and use.
+- Contains a wealth of advanced Hooks that are refined from the app.
+- Contains a wealth of basic Hooks.
+- Written in TypeScript with predictable static types.
 
 ## 📦 Install
 
@@ -79,6 +79,7 @@ $ cd hooks
 $ npm run init
 $ npm start
 ```
+
 Open your browser and visit http://127.0.0.1:8001 , see more at Development.
 
 We welcome all contributions, please read our [CONTRIBUTING.MD](https://github.com/alibaba/hooks/blob/master/CONTRIBUTING.MD) first, let's build a better hooks library together.
@@ -91,9 +92,7 @@ We welcome all contributions, please read our [CONTRIBUTING.MD](https://github.c
 
 [MIT](https://github.com/alibaba/hooks/blob/master/LICENSE)
 
-
-[1]:	https://www.npmjs.com/package/ahooks
-[2]:	https://npmjs.org/package/ahooks
-
-[image-1]:	https://img.shields.io/npm/v/ahooks.svg?style=flat
-[image-2]:	https://img.shields.io/npm/dm/ahooks.svg?style=flat
+[1]: https://www.npmjs.com/package/ahooks
+[2]: https://npmjs.org/package/ahooks
+[image-1]: https://img.shields.io/npm/v/ahooks.svg?style=flat
+[image-2]: https://img.shields.io/npm/dm/ahooks.svg?style=flat
