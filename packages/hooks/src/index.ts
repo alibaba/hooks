@@ -47,6 +47,7 @@ import useSetState from './useSetState';
 import useInterval from './useInterval';
 import useWhyDidYouUpdate from './useWhyDidYouUpdate';
 import useTitle from './useTitle';
+import useNetwork from './useNetwork';
 import useTimeout from './useTimeout';
 
 const useControlledValue: typeof useControllableValue = function (...args) {
@@ -110,5 +111,6 @@ export {
   useInterval,
   useWhyDidYouUpdate,
   useTitle,
+  useNetwork,
   useTimeout,
 };

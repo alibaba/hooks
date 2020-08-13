@@ -25,7 +25,7 @@ const split = <T>(step: number, targetArr: T[]) => {
   return {
     _current: targetArr[index],
     _before: targetArr.slice(0, index),
-    _after: targetArr.slice(index + 1),
+    _after: targetArr.slice(index + 1)
   };
 };
 
@@ -33,7 +33,7 @@ export default function useHistoryTravel<T>(initialValue?: T) {
   const [history, setHistory] = useState<IData<T | undefined>>({
     present: initialValue,
     past: [],
-    future: [],
+    future: []
   });
 
   const { present, past, future } = history;
@@ -59,10 +59,10 @@ export default function useHistoryTravel<T>(initialValue?: T) {
       setHistory({
         present: val,
         future: [],
-        past: [...past, present],
+        past: [...past, present]
       });
     },
-    [history, setHistory],
+    [history, setHistory]
   );
 
   const _forward = useCallback(
@@ -74,10 +74,10 @@ export default function useHistoryTravel<T>(initialValue?: T) {
       setHistory({
         past: [...past, present, ..._before],
         present: _current,
-        future: _after,
+        future: _after
       });
     },
-    [history, setHistory],
+    [history, setHistory]
   );
 
   const _backward = useCallback(
@@ -90,23 +90,24 @@ export default function useHistoryTravel<T>(initialValue?: T) {
       setHistory({
         past: _before,
         present: _current,
-        future: [..._after, present, ...future],
+        future: [..._after, present, ...future]
       });
     },
-    [history, setHistory],
+    [history, setHistory]
   );
 
   const go = useCallback(
     (step: number) => {
-      if (step === 0) {
+      const stepNum = typeof step === 'number' ? step : Number(step);
+      if (stepNum === 0) {
         return;
       }
-      if (step > 0) {
-        return _forward(step);
+      if (stepNum > 0) {
+        return _forward(stepNum);
       }
-      _backward(step);
+      _backward(stepNum);
     },
-    [_backward, _forward],
+    [_backward, _forward]
   );
 
   return {
