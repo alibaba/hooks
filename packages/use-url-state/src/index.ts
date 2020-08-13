@@ -28,7 +28,7 @@ export default <S extends UrlState>(initialState?: S | (() => S), options?: Opti
 
   const queryFromUrl = useMemo(() => {
     return parse(location.search, parseConfig);
-  }, [location.search, parseConfig]);
+  }, [location.search]);
 
   const targetQuery = {
     ...initialStateRef.current,
@@ -37,15 +37,10 @@ export default <S extends UrlState>(initialState?: S | (() => S), options?: Opti
 
   const setState = (s: React.SetStateAction<UrlState>) => {
     const newQuery = typeof s === 'function' ? s(targetQuery) : s;
-    Object.entries(newQuery).forEach(([k, v]) => {
-      if (v === undefined || v === null) {
-        delete initialStateRef.current[k];
-      }
-    });
 
     // 1. 如果 setState 后，search 没变化，就需要 update 来触发一次更新。比如 demo1 直接点击 clear，就需要 update 来触发更新。
     // 2. update 和 history 的更新会合并，不会造成多次更新
-    update((s) => !s);
+    update((v) => !v);
     history[navigateMode]({
       hash: location.hash,
       search: stringify({ ...queryFromUrl, ...newQuery }, parseConfig) || '?',
