@@ -11,6 +11,7 @@
   "module": "./es/index.js",
   "types": "./lib/index.d.ts",
   "unpkg": "dist/ahooks.js",
+  "sideEffects": false,
   "authors": {
     "name": "brickspert",
     "email": "brickspert.fjl@alipay.com"
