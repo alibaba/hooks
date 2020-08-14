@@ -28,6 +28,7 @@ export interface FetchResult<R, P extends any[]> {
   // TODO 如果 options 存在 debounceInterval，或 throttleInterval，则 run 和 refresh 不会返回 Promise。类型需要修复。
   run: (...args: P) => Promise<R>;
   unmount: () => void;
+  subscribers: noop[];
 }
 
 export interface FetchConfig<R, P extends any[]> {

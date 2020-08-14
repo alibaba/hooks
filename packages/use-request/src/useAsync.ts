@@ -57,6 +57,7 @@ class Fetch<R, P extends any[]> {
     refresh: this.refresh.bind(this.that),
     cancel: this.cancel.bind(this.that),
     unmount: this.unmount.bind(this.that),
+    subscribers: [],
   };
 
   debounceRun: any;
@@ -102,6 +103,16 @@ class Fetch<R, P extends any[]> {
       ...this.state,
       ...s,
     };
+
+    // 有数据订阅，执行订阅函数
+    if (!this.state.loading && this.state.subscribers.length) {
+      this.state.subscribers.forEach((subscriber) => {
+        subscriber(this.state.data);
+      });
+
+      this.state.subscribers = [];
+    }
+
     this.subscribe(this.state);
   }
 
@@ -238,11 +249,13 @@ class Fetch<R, P extends any[]> {
   mutate(data: any) {
     if (typeof data === 'function') {
       this.setState({
+        loading: false,
         // eslint-disable-next-line react/no-access-state-in-setstate
         data: data(this.state.data) || {},
       });
     } else {
       this.setState({
+        loading: false,
         data,
       });
     }
@@ -352,6 +365,14 @@ function useAsync<R, P extends any[], U, UU extends U = any>(
             data: cacheFetch.data,
             error: cacheFetch.error,
           });
+
+          // 若数据还未加载，订阅更新
+          if (cacheFetch.loading) {
+            cacheFetch.subscribers.push((data) => {
+              newFetch.mutate(data);
+            });
+          }
+
           newFetches[key] = newFetch.state;
         });
         return newFetches;

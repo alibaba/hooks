@@ -559,4 +559,46 @@ describe('useRequest', () => {
     expect(hook3.result.current.data).toEqual('success');
     hook3.unmount();
   });
+
+  it('useRequest staleTime subscribe first resolved data', async () => {
+    MockDate.set(0);
+
+    act(() => {
+      hook = setUp(request, {
+        cacheKey: 'testStaleTimeResolved',
+        staleTime: -1,
+      });
+    });
+
+    expect(hook.result.current.loading).toEqual(true);
+
+    MockDate.set(500);
+
+    let hook2;
+
+    act(() => {
+      hook2 = setUp(request, {
+        cacheKey: 'testStaleTimeResolved',
+        staleTime: -1,
+      });
+    });
+
+    expect(hook2.result.current.loading).toEqual(true);
+
+    jest.runAllTimers();
+
+    await hook.waitForNextUpdate();
+
+    if (hook2.result.current.loading) {
+      await hook2.waitForNextUpdate();
+    }
+
+    expect(hook.result.current.loading).toEqual(false);
+    expect(hook.result.current.data).toEqual('success');
+
+    expect(hook2.result.current.loading).toEqual(false);
+    expect(hook2.result.current.data).toEqual('success');
+    hook.unmount();
+    hook2.unmount();
+  });
 });
