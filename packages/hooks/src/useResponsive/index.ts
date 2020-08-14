@@ -22,7 +22,7 @@ let responsiveConfig: ResponsiveConfig = {
 };
 
 function init() {
-  if (info) return;
+  if (info || typeof window === "undefined") return;
   info = {};
   calculate();
   window.addEventListener('resize', () => {
@@ -58,8 +58,11 @@ export function configResponsive(config: ResponsiveConfig) {
 export function useResponsive() {
   init();
   const [state, setState] = useState<ResponsiveInfo>(info);
+  const windowExists = typeof window !== "undefined";
 
   useEffect(() => {
+    if (!windowExists) return;
+    
     const subscriber = () => {
       setState(info);
     };
@@ -67,7 +70,7 @@ export function useResponsive() {
     return () => {
       subscribers.delete(subscriber);
     };
-  }, []);
+  }, [windowExists]);
 
   return state;
 }
