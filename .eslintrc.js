@@ -21,5 +21,5 @@ module.exports = {
   parserOptions: {
     ...fabric.default.parserOptions,
     project: './packages/**/tsconfig.json',
-  }
+  },
 };

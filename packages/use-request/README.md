@@ -37,7 +37,7 @@ npm install @ahooksjs/use-request
 ## Example
 
 ```javascript
-import { useRequest } from '@ahooksjs/use-request';
+import useRequest from '@ahooksjs/use-request';
 
 const { data, error, loading, run } = useRequest('/api/user');
 ```

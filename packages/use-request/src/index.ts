@@ -101,7 +101,7 @@ function useRequest(service: any, options: any = {}) {
                 break;
               case 'object':
                 const { url, ...rest } = s;
-                fn = requestMethod ? requestMethod(s) : fetchProxy(url, rest)
+                fn = requestMethod ? requestMethod(s) : fetchProxy(url, rest);
                 break;
             }
           }
