@@ -39,7 +39,7 @@
     "babel-plugin-import": "^1.12.0",
     "babel-plugin-transform-async-to-promises": "^0.8.15",
     "del": "^5.1.0",
-    "dumi": "^1.0.13",
+    "dumi": "^1.1.0-beta.8",
     "enzyme": "^3.10.0",
     "eslint": "^7.2.0",
     "eslint-plugin-react-hooks": "^4.0.8",
