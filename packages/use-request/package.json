@@ -1,6 +1,6 @@
 {
   "name": "@ahooksjs/use-request",
-  "version": "2.4.0",
+  "version": "2.5.0",
   "description": "React Hooks for fetching, caching and updating asynchronous data",
   "main": "./lib/index.js",
   "module": "./es/index.js",
