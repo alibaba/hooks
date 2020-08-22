@@ -21,6 +21,10 @@ legacy: /zh-CN/state/use-interval
 
 <code src="./demo/demo2.tsx" />
 
+## 手动控制
+
+<code src="./demo/demo3.tsx" />
+
 ## API
 
 ```javascript
