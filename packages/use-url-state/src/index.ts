@@ -15,7 +15,9 @@ const parseConfig = {
 interface UrlState {
   [key: string]: any;
 }
-export default <S extends UrlState>(initialState?: S | (() => S), options?: Options) => {
+
+export default <S extends UrlState = UrlState>(initialState?: S | (() => S), options?: Options) => {
+  type state = Partial<{ [key in keyof S]: any }>;
   const { navigateMode = 'push' } = options || {};
   const location = useLocation();
   const history = useHistory();
@@ -33,10 +35,10 @@ export default <S extends UrlState>(initialState?: S | (() => S), options?: Opti
   const targetQuery = {
     ...initialStateRef.current,
     ...queryFromUrl,
-  };
+  } as state;
 
-  const setState = (s: React.SetStateAction<UrlState>) => {
-    const newQuery = typeof s === 'function' ? s(targetQuery) : s;
+  const setState = (s: React.SetStateAction<state>) => {
+    const newQuery = typeof s === 'function' ? (s as Function)(targetQuery) : s;
 
     // 1. 如果 setState 后，search 没变化，就需要 update 来触发一次更新。比如 demo1 直接点击 clear，就需要 update 来触发更新。
     // 2. update 和 history 的更新会合并，不会造成多次更新
