@@ -45,12 +45,30 @@ export default {
   navs: {
     'zh-CN': [
       null,
+      {
+        title: '生态',
+        children: [
+          {
+            title: 'useTable',
+            path: 'https://usetable-ahooks.js.org/',
+          },
+        ],
+      },
       { title: 'v1.x', path: 'http://hooks.umijs.org/' },
       { title: 'GitHub', path: 'https://github.com/alibaba/hooks' },
       { title: '更新日志', path: 'https://github.com/alibaba/hooks/releases' },
     ],
     'en-US': [
       null,
+      {
+        title: 'Ecosystem',
+        children: [
+          {
+            title: 'useTable',
+            path: 'https://usetable-ahooks.js.org/',
+          },
+        ],
+      },
       { title: 'v1.x', path: 'http://hooks.umijs.org/' },
       { title: 'GitHub', path: 'https://github.com/alibaba/hooks' },
       { title: 'Changelog', path: 'https://github.com/alibaba/hooks/releases' },
