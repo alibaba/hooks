@@ -31,7 +31,7 @@ interface AppListProps {
 }
 
 const getTableData = (
-  { current, pageSize }: PaginatedParams[0],
+  { current, pageSize, filters, sorter }: PaginatedParams[0],
   formData: Object,
 ): Promise<Result> => {
   let query = `page=${current}&size=${pageSize}`;
@@ -40,6 +40,12 @@ const getTableData = (
       query += `&${key}=${value}`;
     }
   });
+  if (sorter) {
+    query += `&sorterFiled=${sorter.field}&sorterOrder=${sorter.order}`;
+  }
+  if (filters) {
+    query += `&gender=${filters.gender}`;
+  }
 
   return fetch(`https://randomuser.me/api?results=55&${query}`)
     .then((res) => res.json())
