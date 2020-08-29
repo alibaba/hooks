@@ -46,7 +46,7 @@ function useToggle<D extends IState = IState, R extends IState = IState>(
       setLeft,
       setRight,
     };
-  }, [setState]);
+  }, []);
 
   return [state, actions];
 }
