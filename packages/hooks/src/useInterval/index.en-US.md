@@ -23,6 +23,10 @@ A hook that can handle the setInterval timer function.
 
 <code src="./demo/demo2.tsx" />
 
+### Control manually
+
+<code src="./demo/demo3.tsx" />
+
 ## API
 
 ```javascript
@@ -31,15 +35,15 @@ useInterval(fn: () => void, interval: number, options?: Options);
 
 ### Params
 
-| Property | Description | Type |
-|----------|--------------------------------------|----------------------|
-| fn  | The function to setInterval | () => void |
-| delay | The timer should delay in between executions of the specified function or code. If delay is `null` or `undefined`, the timer will stop. | number \| undefined \| null |
-| options | Config the interval behavior. See the Options section below  | Options |
+| Property | Description                                                                                                                             | Type                        |
+| -------- | --------------------------------------------------------------------------------------------------------------------------------------- | --------------------------- |
+| fn       | The function to setInterval                                                                                                             | () => void                  |
+| delay    | The timer should delay in between executions of the specified function or code. If delay is `null` or `undefined`, the timer will stop. | number \| undefined \| null |
+| options  | Config the interval behavior. See the Options section below                                                                             | Options                     |
 
 
 ### Options
 
-| Property | Description | Type | Default |
-|---------|---------------------------------------|----------------------|-------|
-| immediate | Whether it is executed immediately for the first time  | boolean | false |
+| Property  | Description                                           | Type    | Default |
+| --------- | ----------------------------------------------------- | ------- | ------- |
+| immediate | Whether it is executed immediately for the first time | boolean | false   |
