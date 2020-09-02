@@ -10,9 +10,11 @@ const DEFAULT_OPTIONS: Options = {
 
 function useTitle(title: string, options: Options = DEFAULT_OPTIONS) {
   const titleRef = useRef(document.title);
-
   useEffect(() => {
     document.title = title;
+  }, [title]);
+
+  useEffect(() => {
     if (options && options.restoreOnUnmount) {
       return () => {
         document.title = titleRef.current;
