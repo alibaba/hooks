@@ -34,7 +34,6 @@
   "dependencies": {
     "@ahooksjs/use-request": "^2.3.0",
     "@types/js-cookie": "^2.2.6",
-    "@vue/reactivity": "^3.0.0-rc.9",
     "intersection-observer": "^0.7.0",
     "js-cookie": "^2.2.1",
     "lodash.debounce": "^4.0.8",

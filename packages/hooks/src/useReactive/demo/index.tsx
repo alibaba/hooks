@@ -12,24 +12,6 @@ export default () => {
     arr: [1],
   });
 
-  let state2 = useReactive(
-    {
-      val: '',
-    },
-    {
-      debounce: 300,
-    },
-  );
-
-  let state3 = useReactive(
-    {
-      val: '',
-    },
-    {
-      throttle: 300,
-    },
-  );
-
   return (
     <div>
       <p>
@@ -79,35 +61,6 @@ export default () => {
         type="text"
         onChange={(e) => {
           state.val.val1.val2 = e.target.value;
-        }}
-      />
-      <br />
-      <br />
-      <p>
-        支持防抖 state2.val：<span role="debounceVal">{state2.val}</span>
-      </p>
-      <input
-        style={{ width: 220, borderWidth: 1 }}
-        type="text"
-        role="debounceInput"
-        onChange={(e) => {
-          state2.val = e.target.value;
-        }}
-      />
-      <br />
-      <br />
-      <p>
-        支持节流 state3.val：
-        <span role="throttleVal" className="jieliu">
-          {state3.val}
-        </span>
-      </p>
-      <input
-        role="throttleInput"
-        style={{ width: 220, borderWidth: 1 }}
-        type="text"
-        onChange={(e) => {
-          state3.val = e.target.value;
         }}
       />
     </div>

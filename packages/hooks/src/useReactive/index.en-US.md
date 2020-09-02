@@ -23,10 +23,6 @@ It offers data reactivity when manipulating states and views, in which case `use
 
 <code src="./demo/demo2.tsx" />
 
-### debounce and throttle
-
-<code src="./demo/demo3.tsx" />
-
 
 ## API
 
@@ -36,13 +32,7 @@ let state = useReactive(initialValue:object,options?:object);
 
 ## initialState
 
-| 参数         | 说明           | 类型   | 默认值 |
+| Params         | Description           | Type   | Default |
 | ------------ | -------------- | ------ | ------ |
 | initialState | current state | object | none     |
 
-## options
-
-| 参数     | 说明         | 类型   | 默认值 |
-| -------- | ------------ | ------ | ------ |
-| debounce | The number of milliseconds to delay. | number | 0      |
-| throttle | The number of milliseconds to delay.	 | number | 0      |

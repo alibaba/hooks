@@ -24,10 +24,6 @@ legacy: /state/use-reactive
 
 <code src="./demo/demo2.tsx" />
 
-### 定时器和节流
-
-<code src="./demo/demo3.tsx" />
-
 
 ## API
 
@@ -40,10 +36,3 @@ let state = useReactive(initialValue: object,options?:object);
 | 参数         | 说明           | 类型   | 默认值 |
 | ------------ | -------------- | ------ | ------ |
 | initialState | 当前的数据对象 | object | none     |
-
-## options
-
-| 参数     | 说明         | 类型   | 默认值 |
-| -------- | ------------ | ------ | ------ |
-| debounce | 防抖的毫秒数 | number | 0      |
-| throttle | 节流的毫秒数 | number | 0      |
