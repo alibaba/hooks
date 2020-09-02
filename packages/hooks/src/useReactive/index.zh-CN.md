@@ -28,7 +28,7 @@ legacy: /state/use-reactive
 ## API
 
 ```js
-let state = useReactive(initialValue: object,options?:object);
+let state = useReactive(initialValue: object);
 ```
 
 ## initialState

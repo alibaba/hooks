@@ -27,7 +27,7 @@ It offers data reactivity when manipulating states and views, in which case `use
 ## API
 
 ```js
-let state = useReactive(initialValue:object,options?:object);
+let state = useReactive(initialValue:object);
 ```
 
 ## initialState
