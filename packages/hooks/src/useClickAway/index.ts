@@ -13,9 +13,17 @@ export default function useClickAway(
 ) {
   const handler = useCallback(
     (event) => {
-      !(Array.isArray(target) ? target : [target]).some((targetItem) =>
-        (getTargetElement(targetItem) as HTMLElement)?.contains(event.target),
-      ) && onClickAway(event);
+      const targets = Array.isArray(target) ? target : [target];
+
+      if (
+        targets.some((targetItem) =>
+          (getTargetElement(targetItem) as HTMLElement)?.contains(event.target)
+        )
+      ) {
+        return;
+      }
+
+      onClickAway(event);
     },
     [onClickAway, typeof target === 'function' ? undefined : target],
   );
