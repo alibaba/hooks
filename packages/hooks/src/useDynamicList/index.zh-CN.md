@@ -16,6 +16,8 @@ legacy: /zh-CN/ui/use-dynamic-list
 
 ## 代码演示
 
+配合 antd 4.x form 使用, 请参考 [这个例子](https://codesandbox.io/s/beautiful-sound-xpc2v?file=/App.tsx)
+
 ### 动态列表
 
 <code src="./demo/demo1.tsx" />
