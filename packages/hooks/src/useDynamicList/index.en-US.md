@@ -16,6 +16,8 @@ A hook that helps you manage your list data and generate unique key for each ite
 
 ## Examples
 
+Using with antd 4.x form, please check [this](https://codesandbox.io/s/beautiful-sound-xpc2v?file=/App.tsx)
+
 ### Default usage
 
 <code src="./demo/demo1.tsx" />
