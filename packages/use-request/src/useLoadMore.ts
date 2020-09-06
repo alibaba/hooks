@@ -90,27 +90,35 @@ function useLoadMore<R extends LoadMoreFormatReturn, RR = any>(
   }, [noMore, run, dataGroup, params]);
 
   /* 上拉加载的方法 */
-  const scrollMethod = useCallback(() => {
+  const scrollMethod = () => {
     if (loading || loadingMore || !ref || !ref.current) {
       return;
     }
     if (ref.current.scrollHeight - ref.current.scrollTop <= ref.current.clientHeight + threshold) {
       loadMore();
     }
-  }, [loading, ref, loadMore]);
+  };
+
+  // 如果不用 ref，而用之前的 useCallbak，在某些情况下会出问题，造成拿到的 loading 不是最新的。
+  // fix https://github.com/alibaba/hooks/issues/630
+  const scrollMethodRef = useRef(scrollMethod);
+  scrollMethodRef.current = scrollMethod;
 
   /* 如果有 ref，则会上拉加载更多 */
   useEffect(() => {
     if (!ref || !ref.current) {
       return () => {};
     }
-    ref.current.addEventListener('scroll', scrollMethod);
+
+    const scrollTrigger = () => scrollMethodRef.current();
+
+    ref.current.addEventListener('scroll', scrollTrigger);
     return () => {
       if (ref && ref.current) {
-        ref.current.removeEventListener('scroll', scrollMethod);
+        ref.current.removeEventListener('scroll', scrollTrigger);
       }
     };
-  }, [scrollMethod]);
+  }, [scrollMethodRef]);
 
   return {
     ...result,
