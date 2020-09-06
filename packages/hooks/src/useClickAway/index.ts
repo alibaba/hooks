@@ -16,9 +16,10 @@ export default function useClickAway(
       const targets = Array.isArray(target) ? target : [target];
 
       if (
-        targets.some((targetItem) =>
-          (getTargetElement(targetItem) as HTMLElement)?.contains(event.target)
-        )
+        targets.some((targetItem) => {
+          const targetElement = getTargetElement(targetItem) as HTMLElement;
+          return !targetElement || targetElement?.contains(event.target);
+        })
       ) {
         return;
       }
