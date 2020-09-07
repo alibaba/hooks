@@ -9,24 +9,26 @@
 import React from 'react';
 import useCountDown from '../index';
 
-const timeEnd = Date.now() + 5000;
-
 export default () => {
-  const [countdown, setTargetDate, formattedRes] = useCountDown(undefined, {
-    intervalTime: 1000,
-  });
-
-  const { seconds } = formattedRes;
+  const [countdown, setTargetDate] = useCountDown();
 
   return (
     <>
       <button
         onClick={() => {
-          setTargetDate(timeEnd);
+          setTargetDate(Date.now() + 5000);
         }}
-        disabled={seconds !== 0}
+        disabled={countdown !== 0}
       >
-        {seconds === 0 ? 'Start Interval' : `Reset In ${seconds}s`}
+        {countdown === 0 ? 'Start Interval' : `Reset After ${Math.round(countdown / 1000)}s`}
+      </button>
+      <button
+        onClick={() => {
+          setTargetDate(undefined);
+        }}
+        style={{ marginLeft: 8 }}
+      >
+        stop
       </button>
     </>
   );

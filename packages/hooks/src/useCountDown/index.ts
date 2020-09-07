@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef, useCallback } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 
 export const parseMs = (milliseconds: number): FormattedRes => {
   const roundTowardsZero = milliseconds > 0 ? Math.floor : Math.ceil;
@@ -12,12 +12,11 @@ export const parseMs = (milliseconds: number): FormattedRes => {
   };
 };
 
-export type TDate = Date | number | string | undefined | null;
+export type TDate = Date | number | string | undefined;
 
-export type TOpts = {
-  dateFrom?: TDate;
-  intervalTime?: number | null;
-  formatter?: (timeStamp: number, formatted: FormattedRes) => any;
+export type Options = {
+  targetDate?: TDate;
+  intervalTime?: number;
 };
 
 export interface FormattedRes {
@@ -28,58 +27,53 @@ export interface FormattedRes {
   milliseconds: number;
 }
 
-const useCountdown = (
-  dateEnd: TDate,
-  options?: Partial<TOpts>,
-): [number, (target?: any) => void, FormattedRes] => {
-  const intervalTime = options?.intervalTime ?? 1000;
-  const [target, setTarget] = useState(dateEnd);
+const useCountdown = (options?: Options) => {
+  const { targetDate, intervalTime = 1000 } = options || {};
 
-  const formatter = options?.formatter;
+  const calcLeft = useCallback((t?: TDate) => {
+    if (!t) {
+      return 0;
+    }
+    const left = new Date(t).getTime() - new Date().getTime();
+    if (left < 0) {
+      return 0;
+    }
+    return left;
+  }, []);
 
-  const parser = useCallback(
-    (timeLeft: number, formatter?: any) =>
-      formatter ? formatter(timeLeft, parseMs(timeLeft)) : parseMs(timeLeft),
-    [],
-  );
-
-  const dateFrom = options?.dateFrom ? new Date(options?.dateFrom).getTime() : Date.now();
-
-  const calcLeft = useCallback(
-    (targetDate?: TDate) => new Date(targetDate ?? target ?? Date.now()).getTime() - dateFrom,
-    [],
-  );
-
-  const [timeLeft, setTimeLeft] = useState<number>(() => calcLeft());
-
-  const [formattedRes, setFormattedRes] = useState<FormattedRes>(parser(timeLeft, formatter));
-
-  const timerRef = useRef<any>();
-
-  const invoke = (targetDate?: TDate) => {
-    setTarget(targetDate);
-    setTimeLeft(() => calcLeft(targetDate));
-  };
+  const [target, setTargetDate] = useState<TDate>(targetDate);
+  const [timeLeft, setTimeLeft] = useState(() => calcLeft(target));
 
   useEffect(() => {
-    if (!target) return;
+    if (!target) {
+      // for stop
+      setTimeLeft(0);
+      return;
+    }
 
-    setFormattedRes(parser(timeLeft, formatter));
+    // 立即执行一次
+    setTimeLeft(calcLeft(target));
 
-    timerRef.current = setInterval(() => {
-      setTimeLeft((current) => {
-        if (current <= 0) {
-          clearInterval(timerRef.current);
-          return 0;
-        }
-        return current - intervalTime;
-      });
+    const timer = setInterval(() => {
+      const targetLeft = calcLeft(target);
+      setTimeLeft(targetLeft);
+      if (targetLeft === 0) {
+        clearInterval(timer);
+      }
     }, intervalTime);
 
-    return () => clearInterval(timerRef.current || null);
-  }, [intervalTime, dateEnd, timeLeft]);
+    return () => {
+      if (timer) {
+        clearInterval(timer);
+      }
+    };
+  }, [target, intervalTime, calcLeft]);
 
-  return [timeLeft, invoke, formattedRes];
+  const formattedRes = useMemo(() => {
+    return parseMs(timeLeft);
+  }, [timeLeft]);
+
+  return [timeLeft, setTargetDate, formattedRes] as const;
 };
 
 export default useCountdown;

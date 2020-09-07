@@ -10,8 +10,8 @@ import React from 'react';
 import useCountDown from '../index';
 
 export default () => {
-  const [countdown, setTargetDate, formattedRes] = useCountDown('2021-12-31 24:00:00', {
-    intervalTime: 1000,
+  const [countdown, setTargetDate, formattedRes] = useCountDown({
+    targetDate: '2021-12-31 24:00:00',
   });
   const { days, hours, minutes, seconds } = formattedRes;
 

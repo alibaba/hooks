@@ -6,12 +6,11 @@ nav:
 group:
   title: State
   path: /state
-legacy: /zh-CN/state/use-count-down
 ---
 
 # useCountDown
 
-一个用于 管理倒计时 的Hook..
+一个用于管理倒计时的Hook。
 
 ## 到未来某一时间点的计时
 
@@ -21,18 +20,13 @@ legacy: /zh-CN/state/use-count-down
 
 <code src="./demo/demo2.tsx" />
 
-## 格式化返回结果
-
-<code src="./demo/demo3.tsx" />
-
 ## API
 
-```javascript
-const [countdown, setTarget, formattedResult] = useCountDown(
-  dateEnd,
+```typescript
+const [countdown, setTargetDate, formattedRes] = useCountDown(
   {
+    targetDate,
     interval,
-    formatter
   }
 );
 ```
@@ -41,24 +35,23 @@ const [countdown, setTarget, formattedResult] = useCountDown(
 
 | 参数          | 说明                                | 类型                                            |
 | ------------- | ----------------------------------- | ----------------------------------------------- |
-| TDate         | 支持的时间格式                      | Date \| number \| string \| undefined \| null   |
-| TOriginResult | 返回的原始结果, 均为大于等于0的数字 | { days, hours, minutes, seconds, milliseconds } |
+| TDate         | 支持的时间格式                      | Date \| number \| string \| undefined   |
+| FormattedRes | 返回的原始结果, 均为大于等于0的数字 | { days, hours, minutes, seconds, milliseconds } |
 
 
 ## 参数
 
 | 参数      | 说明           | 类型                                                    | 默认值      |
 | --------- | -------------- | ------------------------------------------------------- | ----------- |
-| dateEnd   | 未来时间戳     | `TDate`                                                 | `undefined` |
-| interval  | 时间戳间隔     | `number`                                                | `1000`      |
-| formatter | 格式化返回结果 | `(timeStamp:number, originResult:TOriginResult} => any` | `undefined` |
+| targetDate   | 未来时间     | `TDate`                                                 | `undefined` |
+| interval  | 变化时间间隔（毫秒）     | `number`                                                | `1000`      |
 
 
 ### 返回值
 
 | 参数            | 说明           | 类型                      |
 | --------------- | -------------- | ------------------------- |
-| countdown       | 返回的时间戳   | `number`                  |
-| setTarget       | 手动启用计时器 | `(target?:TDate) => void` |
-| formattedResult | 返回的结果     | `IOriginResult`           |
+| countdown       | 距离 targetDate 的时间戳（毫秒）   | `number`                  |
+| setTarget       | 设置 targetDate | `(target?:TDate) => void` |
+| formattedRes | 格式化返回时间     | `FormattedRes`           |
 
