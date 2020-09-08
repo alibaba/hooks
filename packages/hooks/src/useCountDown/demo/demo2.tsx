@@ -20,7 +20,7 @@ export default () => {
         }}
         disabled={countdown !== 0}
       >
-        {countdown === 0 ? 'Start Interval' : `Reset After ${Math.round(countdown / 1000)}s`}
+        {countdown === 0 ? 'Start Interval' : `Reset After ${Math.ceil(countdown / 1000)}s`}
       </button>
       <button
         onClick={() => {

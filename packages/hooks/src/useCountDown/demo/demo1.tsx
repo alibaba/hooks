@@ -13,12 +13,13 @@ export default () => {
   const [countdown, setTargetDate, formattedRes] = useCountDown({
     targetDate: '2021-12-31 24:00:00',
   });
-  const { days, hours, minutes, seconds } = formattedRes;
+  const { days, hours, minutes, seconds, milliseconds } = formattedRes;
 
   return (
     <>
       <p>
-        距离 2020年12月31日 24:00:00 还有 {days} 天 {hours} 小时 {minutes} 分钟 {seconds} 秒
+        There are {days} days {hours} hours {minutes} minutes {seconds} 秒 {milliseconds}{' '}
+        milliseconds until 2020年12月31日 24:00:00
       </p>
     </>
   );
