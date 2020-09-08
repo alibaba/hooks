@@ -12,12 +12,12 @@ export interface IUseWebSocketOptions {
   reconnectInterval?: number;
   onOpen?: (event: WebSocketEventMap['open']) => void;
   onClose?: (event: WebSocketEventMap['close']) => void;
-  onMessage?: (message: MessageEvent) => void;
+  onMessage?: (message: WebSocketEventMap['message']) => void;
   onError?: (event: WebSocketEventMap['error']) => void;
 }
 
 export interface IUseWebSocketReturn {
-  latestMessage?: MessageEvent;
+  latestMessage?: WebSocketEventMap['message'];
   sendMessage?: WebSocket['send'];
   disconnectWebSocket?: () => void;
   connectWebSocket?: () => void;
@@ -39,7 +39,7 @@ export default function useWebSocket(
   } = options;
   const reconnectTimesRef = useRef(0);
   const reconnectTimerRef = useRef<NodeJS.Timeout>();
-  const [latestMessage, setLatestMessage] = useState<MessageEvent>();
+  const [latestMessage, setLatestMessage] = useState<WebSocketEventMap['message']>();
   const [readyState, setReadyState] = useState<READY_STATE>(READY_STATE.closed);
   const websocketRef = useRef<WebSocket>();
 
@@ -65,7 +65,7 @@ export default function useWebSocket(
         reconnectTimesRef.current = 0;
         setReadyState(websocketRef.current?.readyState || READY_STATE.closed);
       };
-      websocketRef.current.onmessage = (message: MessageEvent) => {
+      websocketRef.current.onmessage = (message: WebSocketEventMap['message']) => {
         onMessage && onMessage(message);
         setReadyState(websocketRef.current?.readyState || READY_STATE.closed);
         setLatestMessage(message);

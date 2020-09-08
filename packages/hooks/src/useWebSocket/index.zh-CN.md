@@ -31,11 +31,11 @@ interface IUseWebSocketOptions {
   reconnectInterval?: number;
   onOpen?: (event: WebSocketEventMap['open']) => void;
   onClose?: (event: WebSocketEventMap['close']) => void;
-  onMessage?: (message: MessageEvent) => void;
+  onMessage?: (message: WebSocketEventMap['message']) => void;
   onError?: (event: WebSocketEventMap['error']) => void;
 }
 interface IUseWebSocketReturn {
-  latestMessage?: MessageEvent;
+  latestMessage?: WebSocketEventMap['message'];
   sendMessage?: WebSocket['send'];
   disconnectWebSocket?: () => void;
   connectWebSocket?: () => void;
@@ -69,7 +69,7 @@ useWebSocket(socketUrl: string, options?: IUseWebSocketOptions): IUseWebSocketRe
 
 | 参数 | 说明 | 类型 |
 | ------- | ---- | ------- |
-| latestMessage | 最新消息 | `MessageEvent` |
+| latestMessage | 最新消息 | `WebSocketEventMap['message']` |
 | sendMessage | 发送消息函数 | Function |
 | disconnectWebSocket | 手动断开 webSocket 连接 | Function |
 | readyState | 当前 webSocket 连接状态 | `READY_STATE` |
