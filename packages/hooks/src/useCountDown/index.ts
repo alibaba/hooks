@@ -60,11 +60,7 @@ const useCountdown = (options?: Options) => {
       }
     }, intervalTime);
 
-    return () => {
-      if (timer) {
-        clearInterval(timer);
-      }
-    };
+    return () => clearInterval(timer);
   }, [target, intervalTime]);
 
   const formattedRes = useMemo(() => {
