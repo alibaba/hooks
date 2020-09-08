@@ -1,5 +1,5 @@
 ---
-title: useCountdown
+title: useTimer
 nav:
   title: Hooks
   path: /hooks
@@ -8,9 +8,9 @@ group:
   path: /state
 ---
 
-# useCountdown
+# useTimer
 
-一个用于管理倒计时的 hook
+一个用于管理计时的 hook
 
 ## 代码演示
 
@@ -19,22 +19,22 @@ group:
 ## API
 
 ```javascript
-const [remaining, {
+const [current, {
   start,
   pause,
   cont,
   reset
-}] = useCounter({ updateRate });
+}] = useTimer({ updateRate });
 ```
 
 ### Result
 
 | 参数       | 说明              | 类型                      |
 |-----------|-------------------|---------------------------|
-| remaining | 当前剩余时间（毫秒）  | `number`                  |
-| start     | 开始倒计时          | `(time:number) => void`   |
-| pause     | 暂停倒计时          | `() => void`              |
-| cont      | 继续倒计时          | `() => void`              |
+| current   | 当前时间（毫秒）     | `number`                  |
+| start     | 开始计时            | `(time:number) => void`   |
+| pause     | 暂停计时            | `() => void`              |
+| cont      | 继续计时            | `() => void`              |
 | reset     | 停止并重置为0       | `() => void`              |
 
 ### Params

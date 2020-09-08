@@ -13,9 +13,10 @@ export interface Actions {
 
 const DEFAULT_UPDATE_RATE = 1000;
 
-function useCountdown(options: Options = {}): [number, Actions] {
-  const [remaining, setRemaining] = useState<number>(0);
-  const target = useRef<number>(1);
+function useTimer(options: Options = {}): [number, Actions] {
+  const [current, setCurrent] = useState<number>(0);
+  const target = useRef<number | null>(null);
+  const lastTime = useRef<number>(0);
   const startTime = useRef<number>(0);
   const timerRef = useRef<NodeJS.Timeout | null>(null);
 
@@ -24,27 +25,30 @@ function useCountdown(options: Options = {}): [number, Actions] {
       clearInterval(timerRef.current);
       timerRef.current = null;
     }
-    setRemaining(0);
+    setCurrent(0);
     startTime.current = 0;
     target.current = 0;
+    lastTime.current = 0;
   }, []);
 
   const start = useCallback(
-    (time: number) => {
+    (time: number | null) => {
+      if (time != null && time < 0) {
+        throw new Error('target time must greater than 0');
+      }
       reset();
-      setRemaining(time);
       target.current = time;
       startTime.current = Date.now();
 
       const timer = setInterval(
         () => {
-          const remainingTime = target.current - Date.now() + startTime.current;
+          const currentTime = lastTime.current + Date.now() - startTime.current;
 
-          if (remainingTime <= 0) {
+          if (target.current && currentTime >= target.current) {
             clearInterval(timer);
-            setRemaining(0);
+            setCurrent(target.current);
           } else {
-            setRemaining(remainingTime);
+            setCurrent(currentTime);
           }
         },
         options.updateRate ? options.updateRate : DEFAULT_UPDATE_RATE,
@@ -59,6 +63,7 @@ function useCountdown(options: Options = {}): [number, Actions] {
     if (timerRef.current) {
       clearInterval(timerRef.current);
       timerRef.current = null;
+      lastTime.current = lastTime.current + Date.now() - startTime.current;
     }
   }, []);
 
@@ -67,26 +72,26 @@ function useCountdown(options: Options = {}): [number, Actions] {
       throw new Error('The timer is currently running');
     }
 
-    target.current = remaining;
     startTime.current = Date.now();
 
     const timer = setInterval(
       () => {
-        const remainingTime = target.current - Date.now() + startTime.current;
-        if (remainingTime <= 0) {
+        const currentTime = lastTime.current + Date.now() - startTime.current;
+
+        if (target.current && currentTime >= target.current) {
           clearInterval(timer);
-          setRemaining(0);
+          setCurrent(target.current);
         } else {
-          setRemaining(remainingTime);
+          setCurrent(currentTime);
         }
       },
       options.updateRate ? options.updateRate : DEFAULT_UPDATE_RATE,
     );
 
     timerRef.current = timer;
-  }, [remaining, options.updateRate]);
+  }, [options.updateRate]);
 
-  return [remaining, { start, pause, cont, reset }];
+  return [current, { start, pause, cont, reset }];
 }
 
-export default useCountdown;
+export default useTimer;

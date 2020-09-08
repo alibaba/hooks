@@ -49,7 +49,7 @@ import useWhyDidYouUpdate from './useWhyDidYouUpdate';
 import useTitle from './useTitle';
 import useNetwork from './useNetwork';
 import useTimeout from './useTimeout';
-import useCountdown from './useCountdown';
+import useTimer from './useTimer';
 
 const useControlledValue: typeof useControllableValue = function (...args) {
   console.warn(
@@ -114,5 +114,5 @@ export {
   useTitle,
   useNetwork,
   useTimeout,
-  useCountdown,
+  useTimer,
 };

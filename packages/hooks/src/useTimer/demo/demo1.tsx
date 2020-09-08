@@ -7,16 +7,16 @@
  */
 
 import React from 'react';
-import { useCountdown } from 'ahooks';
+import { useTimer } from 'ahooks';
 
 export default () => {
-  const [remaining, actions] = useCountdown();
-  const [remaining2, actions2] = useCountdown({ updateRate: 100 });
+  const [current, actions] = useTimer();
+  const [current2, actions2] = useTimer({ updateRate: 100 });
 
   return (
     <div>
       <h3>updateRate: 1000</h3>
-      <p>remaining: {remaining}</p>
+      <p>current: {current}</p>
       <button onClick={() => actions.start(10000)}>start(10000)</button>
       <button style={{ marginLeft: 8 }} onClick={actions.pause}>
         pause()
@@ -28,7 +28,7 @@ export default () => {
         reset()
       </button>
       <h3 style={{ marginTop: 16 }}>updateRate: 100</h3>
-      <p>remaining: {remaining2}</p>
+      <p>current: {current2}</p>
       <button onClick={() => actions2.start(10000)}>start(10000)</button>
       <button style={{ marginLeft: 8 }} onClick={actions2.pause}>
         pause()

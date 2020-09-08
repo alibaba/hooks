@@ -1,5 +1,5 @@
 ---
-title: useCountdown
+title: useTimer
 nav:
   title: Hooks
   path: /hooks
@@ -8,9 +8,9 @@ group:
   path: /state
 ---
 
-# useCountdown
+# useTimer
 
-A hook that can manage the countdown.
+A hook that can manage the timer.
 
 ## Examples
 
@@ -19,22 +19,22 @@ A hook that can manage the countdown.
 ## API
 
 ```javascript
-const [remaining, {
+const [current, {
   start,
   pause,
   cont,
   reset
-}] = useCounter({ updateRate });
+}] = useTimer({ updateRate });
 ```
 
 ### Result
 
 | Property  | Description          | Type                      |
 |-----------|----------------------|---------------------------|
-| remaining | remaining time (ms)  | `number`                  |
-| start     | start countdown      | `(time:number) => void`   |
-| pause     | pause countdown      | `() => void`              |
-| cont      | continue countdown   | `() => void`              |
+| current   | current time (ms)    | `number`                  |
+| start     | start timer          | `(time:number) => void`   |
+| pause     | pause timer          | `() => void`              |
+| cont      | continue timer       | `() => void`              |
 | reset     | stop and reset to 0  | `() => void`              |
 
 ### Params
