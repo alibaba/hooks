@@ -4,7 +4,7 @@ export type TDate = Date | number | string | undefined;
 
 export type Options = {
   targetDate?: TDate;
-  intervalTime?: number;
+  interval?: number;
 };
 
 export interface FormattedRes {
@@ -37,7 +37,7 @@ const parseMs = (milliseconds: number): FormattedRes => {
 };
 
 const useCountdown = (options?: Options) => {
-  const { targetDate, intervalTime = 1000 } = options || {};
+  const { targetDate, interval = 1000 } = options || {};
 
   const [target, setTargetDate] = useState<TDate>(targetDate);
   const [timeLeft, setTimeLeft] = useState(() => calcLeft(target));
@@ -58,10 +58,10 @@ const useCountdown = (options?: Options) => {
       if (targetLeft === 0) {
         clearInterval(timer);
       }
-    }, intervalTime);
+    }, interval);
 
     return () => clearInterval(timer);
-  }, [target, intervalTime]);
+  }, [target, interval]);
 
   const formattedRes = useMemo(() => {
     return parseMs(timeLeft);
