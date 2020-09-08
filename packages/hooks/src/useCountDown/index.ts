@@ -1,14 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from 'react';
-
-export const parseMs = (milliseconds: number): FormattedRes => {
-  return {
-    days: Math.floor(milliseconds / 86400000),
-    hours: Math.floor(milliseconds / 3600000) % 24,
-    minutes: Math.floor(milliseconds / 60000) % 60,
-    seconds: Math.floor(milliseconds / 1000) % 60,
-    milliseconds: Math.floor(milliseconds) % 1000,
-  };
-};
+import { useEffect, useMemo, useState } from 'react';
 
 export type TDate = Date | number | string | undefined;
 
@@ -25,19 +15,29 @@ export interface FormattedRes {
   milliseconds: number;
 }
 
+const calcLeft = (t?: TDate) => {
+  if (!t) {
+    return 0;
+  }
+  const left = new Date(t).getTime() - new Date().getTime();
+  if (left < 0) {
+    return 0;
+  }
+  return left;
+};
+
+const parseMs = (milliseconds: number): FormattedRes => {
+  return {
+    days: Math.floor(milliseconds / 86400000),
+    hours: Math.floor(milliseconds / 3600000) % 24,
+    minutes: Math.floor(milliseconds / 60000) % 60,
+    seconds: Math.floor(milliseconds / 1000) % 60,
+    milliseconds: Math.floor(milliseconds) % 1000,
+  };
+};
+
 const useCountdown = (options?: Options) => {
   const { targetDate, intervalTime = 1000 } = options || {};
-
-  const calcLeft = useCallback((t?: TDate) => {
-    if (!t) {
-      return 0;
-    }
-    const left = new Date(t).getTime() - new Date().getTime();
-    if (left < 0) {
-      return 0;
-    }
-    return left;
-  }, []);
 
   const [target, setTargetDate] = useState<TDate>(targetDate);
   const [timeLeft, setTimeLeft] = useState(() => calcLeft(target));
@@ -65,7 +65,7 @@ const useCountdown = (options?: Options) => {
         clearInterval(timer);
       }
     };
-  }, [target, intervalTime, calcLeft]);
+  }, [target, intervalTime]);
 
   const formattedRes = useMemo(() => {
     return parseMs(timeLeft);

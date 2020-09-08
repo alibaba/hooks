@@ -18,8 +18,8 @@ export default () => {
   return (
     <>
       <p>
-        There are {days} days {hours} hours {minutes} minutes {seconds} 秒 {milliseconds}{' '}
-        milliseconds until 2020年12月31日 24:00:00
+        There are {days} days {hours} hours {minutes} minutes {seconds} seconds {milliseconds}{' '}
+        milliseconds until 2021-12-31 24:00:00
       </p>
     </>
   );
