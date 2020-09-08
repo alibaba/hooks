@@ -4,11 +4,11 @@ import useCountDown, { TDate, Options } from '../index';
 // https://github.com/facebook/jest/issues/2234
 jest.spyOn(Date, 'now').mockImplementation(() => 1479427200000);
 
-const init = (_targetDate?: TDate, _interval?: Options['intervalTime']) =>
-  renderHook(({ targetDate, intervalTime }) => useCountDown({ targetDate, intervalTime }), {
+const init = (_targetDate?: TDate, _interval?: Options['interval']) =>
+  renderHook(({ targetDate, interval }) => useCountDown({ targetDate, interval }), {
     initialProps: {
       targetDate: _targetDate,
-      intervalTime: _interval,
+      interval: _interval,
     },
   });
 

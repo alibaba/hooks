@@ -32,7 +32,16 @@ const [countdown, setTargetDate, formattedRes] = useCountDown(
 );
 ```
 
-## Type defination
+**Remak**
+
+The precision of useCountDown is milliseconds, which may cause the following problems
+
+* Even if the interval time is set to 1000ms, the update interval of useCountDown may not be exactly 1000ms, but about 1000ms.
+* In the second demo, countdown is generally 499x milliseconds at the beginning, because the program execution is delayed.
+
+If you only need to be accurate to the second, you can use it like this `Math.round(countdown / 1000)`.
+
+## Type
 
 | Property      | Description              | Type                                            |
 | ------------- | ------------------------ | ----------------------------------------------- |
