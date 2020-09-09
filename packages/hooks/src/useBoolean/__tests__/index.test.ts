@@ -1,7 +1,7 @@
 import { renderHook, act } from '@testing-library/react-hooks';
 import useBoolean from '../index';
 
-const setUp = (defaultValue: boolean = false) => renderHook(() => useBoolean(defaultValue));
+const setUp = (defaultValue?: boolean) => renderHook(() => useBoolean(defaultValue));
 
 describe('useBoolean', () => {
   it('should be defined', () => {
@@ -27,6 +27,14 @@ describe('useBoolean', () => {
       result.current[1].toggle();
     });
     expect(result.current[0]).toBeFalsy();
+    act(() => {
+      result.current[1].toggle(false);
+    });
+    expect(result.current[0]).toBeFalsy();
+    act(() => {
+      result.current[1].toggle(true);
+    });
+    expect(result.current[0]).toBeTruthy();
   });
 
   it('test on optional', () => {
