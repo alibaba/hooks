@@ -1,9 +1,9 @@
 /**
  * title: Default usage
- * desc: Simple countdown management example.
+ * desc: Simple timer management example.
  *
  * title.zh-CN: 基础使用
- * desc.zh-CN: 简单的 countdown 管理示例。
+ * desc.zh-CN: 简单的计时器管理示例。
  */
 
 import React from 'react';
