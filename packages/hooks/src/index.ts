@@ -49,8 +49,8 @@ import useWhyDidYouUpdate from './useWhyDidYouUpdate';
 import useTitle from './useTitle';
 import useNetwork from './useNetwork';
 import useTimeout from './useTimeout';
-import useCountDown from './useCountDown';
 import useTimer from './useTimer';
+import useCountDown from './useCountDown';
 
 const useControlledValue: typeof useControllableValue = function (...args) {
   console.warn(
