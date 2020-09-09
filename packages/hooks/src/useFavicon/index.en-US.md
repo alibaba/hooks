@@ -29,4 +29,4 @@ useFavicon(faviconURL: string)
 
 | Params     | Description | Type   | Default |
 | ---------- | ----------- | ------ | ------- |
-| faviconURL | favicon地址 | string | 无      |
+| faviconURL | favicon URL | string | none    |

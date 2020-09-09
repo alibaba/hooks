@@ -1,9 +1,9 @@
 /**
  * title: Basic usage
- * desc: Page favicon setup or toggle
+ * desc: Page favicon setup and toggle
  *
  * title.zh-CN: 基本用法
- * desc.zh-CN: 页面标识favicon设置与切换
+ * desc.zh-CN: 页面标识 favicon 设置 与 切换
  */
 
 import React, { useState } from 'react';
@@ -21,7 +21,7 @@ export default () => {
   return (
     <>
       <p>
-        当前Favicon: <span>{url}</span>
+        Current Favicon: <span>{url}</span>
       </p>
       <button
         id="google"

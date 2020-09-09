@@ -10,7 +10,7 @@ group:
 
 # useFavicon
 
-用于 设置 或 切换 页面 favicon。
+用于 设置 与 切换 页面 favicon。
 
 ## 代码演示
 
