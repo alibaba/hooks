@@ -1,6 +1,6 @@
 import debounce from 'lodash.debounce';
 import { useRef } from 'react';
-import { useCreation } from '..';
+import { useCreation } from '../';
 import { DebounceOptions } from '../useDebounce/debounceOptions';
 
 type Fn = (...args: any) => any;
