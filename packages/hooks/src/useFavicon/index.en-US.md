@@ -10,7 +10,7 @@ group:
 
 # useFavicon
 
-Set or Configure Page Favicon URL.
+Set or configure page favicon URL.
 
 ## Example
 
@@ -27,6 +27,6 @@ useFavicon(faviconURL: string)
 
 ### Params
 
-| Params     | Description | Type   | Default |
-| ---------- | ----------- | ------ | ------- |
-| faviconURL | favicon URL | string | none    |
+| Params     | Description                                  | Type   | Default |
+| ---------- | -------------------------------------------- | ------ | ------- |
+| faviconURL | favicon URL, support `svg`/`png`/`ico`/`gif` | string | none    |

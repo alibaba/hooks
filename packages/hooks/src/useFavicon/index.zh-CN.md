@@ -27,6 +27,6 @@ useFavicon(faviconURL: string)
 
 ### Params
 
-| 参数       | 说明        | 类型   | 默认值 |
-| ---------- | ----------- | ------ | ------ |
-| faviconURL | favicon地址 | string | 无     |
+| 参数       | 说明                                               | 类型   | 默认值 |
+| ---------- | -------------------------------------------------- | ------ | ------ |
+| faviconURL | favicon地址, 支持`svg`/`png`/`ico`/`gif`后缀的图片 | string | 无     |
