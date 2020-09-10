@@ -7,7 +7,6 @@ group:
   title: State
   path: /state
   order: 11
-legacy: /state/use-boolean
 ---
 
 # useBoolean
@@ -22,7 +21,7 @@ A hook that elegantly manages boolean values.
 
 ## API
 
-```javascript
+```typescript
 const [ state, { toggle, setTrue, setFalse }] = useBoolean(
   defaultValue?: boolean,
 );
@@ -30,20 +29,20 @@ const [ state, { toggle, setTrue, setFalse }] = useBoolean(
 
 ### Params
 
-| Property | Description                                 | Type                   | Default |
-|---------|----------------------------------------------|------------------------|--------|
-| defaultValue | Optional，set a default value  | boolean \| undefined | false      |
+| Property     | Description                   | Type      | Default |
+|--------------|-------------------------------|-----------|---------|
+| defaultValue | Optional，set a default value | `boolean` | `false` |
 
 ### Result
 
-| Property | Description                                         | Type                 |
-|----------|--------------------------------------|----------------------|
-| state  | State value | boolean |
-| actions | Operation set | object |
+| Property | Description   | Type      |
+|----------|---------------|-----------|
+| state    | State value   | `boolean` |
+| actions  | Operation set | `Actions` |
 
 ### Actions
-| Property | Description                                         | Type                 |
-|----------|--------------------------------------|----------------------|
-| toggle | Trigger state change, accept an optional parameter | (value?: any) => void |
-| setTrue | Set state value true | () => void |
-| setFalse | Set state value false | () => void |
+| Property | Description                                        | Type                        |
+|----------|----------------------------------------------------|-----------------------------|
+| toggle   | Trigger state change, accept an optional parameter | `(value?: boolean) => void` |
+| setTrue  | Set state value true                               | `() => void`                |
+| setFalse | Set state value false                              | `() => void`                |
