@@ -1,5 +1,5 @@
 import { renderHook } from '@testing-library/react-hooks';
-import usePrevious, { compareFunction as comFunc } from '..';
+import usePrevious, { compareFunction as comFunc } from '../';
 
 describe('usePrevious', () => {
   it('should be defined', () => {

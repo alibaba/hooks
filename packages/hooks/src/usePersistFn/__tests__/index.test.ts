@@ -1,6 +1,6 @@
 import { act, renderHook, RenderHookResult } from '@testing-library/react-hooks';
 import { useState } from 'react';
-import usePersistFn from '..';
+import usePersistFn from '../';
 
 // 函数变化，但是地址不变
 
