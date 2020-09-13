@@ -6,7 +6,6 @@ nav:
 group:
   title: State
   path: /state
-legacy: /zh-CN/state/use-websocket
 ---
 
 # useWebSocket
