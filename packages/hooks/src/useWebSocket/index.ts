@@ -67,7 +67,6 @@ export default function useWebSocket(
       };
       websocketRef.current.onmessage = (message: WebSocketEventMap['message']) => {
         onMessage && onMessage(message);
-        setReadyState(websocketRef.current?.readyState || READY_STATE.closed);
         setLatestMessage(message);
       };
       websocketRef.current.onclose = (event) => {
