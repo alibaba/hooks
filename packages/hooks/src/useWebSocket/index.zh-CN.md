@@ -72,5 +72,6 @@ useWebSocket(socketUrl: string, options?: IUseWebSocketOptions): IUseWebSocketRe
 | latestMessage | 最新消息 | `WebSocketEventMap['message']` |
 | sendMessage | 发送消息函数 | Function |
 | disconnectWebSocket | 手动断开 webSocket 连接 | Function |
+| connectWebSocket | 手动连接 webSocket | Function |
 | readyState | 当前 webSocket 连接状态 | `READY_STATE` |
 | webSocketIns | webSocket 实例 | `WebSocket` |

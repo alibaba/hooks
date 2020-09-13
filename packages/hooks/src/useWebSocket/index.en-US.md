@@ -50,19 +50,19 @@ useWebSocket(socketUrl: string, options?: IUseWebSocketOptions): IUseWebSocketRe
 | Property | Description | Type | Default |
 |---------|----------------------------------------------|------------------------|--------|
 | socketUrl | Required, webSocket url | string | - |
-| options | Optionally, connect the configuration item | object | - |
+| options | Optional, connect the configuration item | object | - |
 
 
 #### options Params
 
 | Options Property | Description | Type | Default |
 |---------|----------------------------------------------|------------------------|--------|
-| onOpen | The webSocket connection was successfully called back | Function | - |
-| onClose | Optionally, webSocket close callback | Function | - |
-| onMessage | Optionally, webSocket receive callback | Function | - |
-| onError | Optionally, webSocket error callback | Function | - |
-| reconnectLimit | Optionally, retry times | number | 3 |
-| reconnectInterval | Optionally, retry the interval (ms) | number | 3000 |
+| onOpen | Optional, the webSocket connection was successfully called back | Function | - |
+| onClose | Optional, webSocket close callback | Function | - |
+| onMessage | Optional, webSocket receive callback | Function | - |
+| onError | Optional, webSocket error callback | Function | - |
+| reconnectLimit | Optional, retry times | number | 3 |
+| reconnectInterval | Optional, retry the interval (ms) | number | 3000 |
 
 
 ### Result
@@ -72,5 +72,6 @@ useWebSocket(socketUrl: string, options?: IUseWebSocketOptions): IUseWebSocketRe
 | latestMessage | latest message | `WebSocketEventMap['message']` |
 | sendMessage | Send message function | Function |
 | disconnectWebSocket | Disconnect webSocket manually | Function |
+| connectWebSocket | Connect webSocket manually | Function |
 | readyState | Current webSocket connection status | `READY_STATE` |
 | webSocketIns | WebSocket instance | `WebSocket` |
