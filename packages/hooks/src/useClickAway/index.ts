@@ -28,7 +28,7 @@ export default function useClickAway(
       ) {
         return;
       }
-      onClickAway(event);
+      onClickAwayRef.current(event);
     };
 
     document.addEventListener(eventName, handler);
