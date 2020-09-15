@@ -1,5 +1,5 @@
 /**
- * title: Custom multiple DOM target
+ * title: Support multiple DOM
  * desc: Support pass multiple DOM elements, or functions which returns the DOM element.
  *
  * title.zh-CN: 支持多个 DOM 对象
@@ -22,7 +22,7 @@ export default () => {
       <button type="button" ref={ref1}>
         box1
       </button>
-      <button type="button" ref={ref2}>
+      <button type="button" ref={ref2} style={{ marginLeft: 16 }}>
         box2
       </button>
       <p>counter: {counter}</p>
