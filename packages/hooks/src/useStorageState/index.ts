@@ -5,7 +5,7 @@ export interface IFuncUpdater<T> {
   (previousState?: T): T;
 }
 
-export interface IFuncStorage<Storage> {
+export interface IFuncStorage {
   (): Storage;
 }
 
@@ -18,15 +18,15 @@ function isFunction<T>(obj: any): obj is T {
 }
 
 function useStorageState<T>(
-  storage: Storage | IFuncStorage<Storage>,
+  storage: Storage | IFuncStorage,
   key: string,
   defaultValue?: StorageStateDefaultValue<T>,
 ): StorageStateResult<T> {
   const [state, setState] = useState<T | undefined>(() => getStoredValue());
 
   function getStoredValue() {
-    if (isFunction<IFuncStorage<Storage>>(storage)) {
-      storage = storage()
+    if (isFunction<IFuncStorage>(storage)) {
+      storage = storage();
     }
     const raw = storage.getItem(key);
     if (raw) {
@@ -41,8 +41,8 @@ function useStorageState<T>(
   }
 
   function updateState(value?: T | IFuncUpdater<T>) {
-    if (isFunction<IFuncStorage<Storage>>(storage)) {
-      storage = storage()
+    if (isFunction<IFuncStorage>(storage)) {
+      storage = storage();
     }
     if (typeof value === 'undefined') {
       storage.removeItem(key);
