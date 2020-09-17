@@ -52,3 +52,4 @@ const {
 |----------|-------------------------------------------|-------------------------|
 | run      | trigger fn, parameters will be send to fn | Function |
 | cancel   | cancel current debounce                   | () => void              |
+| flush    | immediately invoke current debounce       | () => void              |
