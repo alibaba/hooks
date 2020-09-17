@@ -8,6 +8,7 @@ type Fn = (...args: any) => any;
 interface ReturnValue<T extends Fn> {
   run: T;
   cancel: () => void;
+  flush: () => void;
 }
 
 function useDebounceFn<T extends Fn>(fn: T, options?: DebounceOptions): ReturnValue<T> {
@@ -31,6 +32,7 @@ function useDebounceFn<T extends Fn>(fn: T, options?: DebounceOptions): ReturnVa
   return {
     run: (debounced as any) as T,
     cancel: debounced.cancel,
+    flush: debounced.flush,
   };
 }
 

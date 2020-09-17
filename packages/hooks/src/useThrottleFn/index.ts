@@ -8,6 +8,7 @@ type Fn = (...args: any) => any;
 interface ReturnValue<T extends Fn> {
   run: T;
   cancel: () => void;
+  flush: () => void;
 }
 
 function useThrottleFn<T extends Fn>(fn: T, options?: ThrottleOptions): ReturnValue<T> {
@@ -31,6 +32,7 @@ function useThrottleFn<T extends Fn>(fn: T, options?: ThrottleOptions): ReturnVa
   return {
     run: (throttled as any) as T,
     cancel: throttled.cancel,
+    flush: throttled.flush,
   };
 }
 
