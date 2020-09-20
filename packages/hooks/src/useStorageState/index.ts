@@ -5,6 +5,10 @@ export interface IFuncUpdater<T> {
   (previousState?: T): T;
 }
 
+export interface IFuncStorage {
+  (): Storage;
+}
+
 export type StorageStateDefaultValue<T> = T | IFuncUpdater<T>;
 
 export type StorageStateResult<T> = [T | undefined, (value: StorageStateDefaultValue<T>) => void];
@@ -14,13 +18,21 @@ function isFunction<T>(obj: any): obj is T {
 }
 
 function useStorageState<T>(
-  storage: Storage,
+  storage: Storage | IFuncStorage,
   key: string,
   defaultValue?: StorageStateDefaultValue<T>,
 ): StorageStateResult<T> {
+  if (typeof window !== 'object') return [isFunction<IFuncUpdater<T>>(defaultValue) ? defaultValue() : defaultValue, () => {}];
+
   const [state, setState] = useState<T | undefined>(() => getStoredValue());
+  useUpdateEffect(() => {
+    setState(getStoredValue());
+  }, [key]);
 
   function getStoredValue() {
+    if (isFunction<IFuncStorage>(storage)) {
+      storage = storage();
+    }
     const raw = storage.getItem(key);
     if (raw) {
       try {
@@ -34,6 +46,9 @@ function useStorageState<T>(
   }
 
   function updateState(value?: T | IFuncUpdater<T>) {
+    if (isFunction<IFuncStorage>(storage)) {
+      storage = storage();
+    }
     if (typeof value === 'undefined') {
       storage.removeItem(key);
       setState(undefined);
@@ -47,10 +62,6 @@ function useStorageState<T>(
       setState(value);
     }
   }
-
-  useUpdateEffect(() => {
-    setState(getStoredValue());
-  }, [key]);
 
   return [state, updateState];
 }
