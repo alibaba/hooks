@@ -1,17 +1,15 @@
-import { useState, useCallback } from 'react';
 import Cookies from 'js-cookie';
+import { useState } from 'react';
+import { usePersistFn } from '../';
+import { isFunction } from '../utils';
 
-function isFunction(obj: any): obj is Function {
-  return typeof obj === 'function';
-}
-
-export interface IOptions extends Cookies.CookieAttributes {
-  defaultValue?: TCookieState | ((cookieState?: string) => TCookieState);
-}
-
-export type TCookieState = string | null | undefined;
-
+// TODO ts 命名不规范，待下个大版本修复
+export type TCookieState = string | undefined | null;
 export type TCookieOptions = Cookies.CookieAttributes;
+
+export interface IOptions extends TCookieOptions {
+  defaultValue?: TCookieState | (() => TCookieState);
+}
 
 function useCookieState(cookieKey: string, options: IOptions = {}) {
   const [state, setState] = useState<TCookieState>(() => {
@@ -22,7 +20,8 @@ function useCookieState(cookieKey: string, options: IOptions = {}) {
     return options.defaultValue;
   });
 
-  const updateState = useCallback(
+  // usePersistFn 保证返回的 updateState 不会变化
+  const updateState = usePersistFn(
     (
       newValue?: TCookieState | ((prevState: TCookieState) => TCookieState),
       newOptions: Cookies.CookieAttributes = {},
@@ -40,7 +39,6 @@ function useCookieState(cookieKey: string, options: IOptions = {}) {
         },
       );
     },
-    [cookieKey, options],
   );
 
   return [state, updateState] as const;
