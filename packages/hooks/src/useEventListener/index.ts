@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react';
 import { BasicTarget, getTargetElement } from '../utils/dom';
 
-export type Target = BasicTarget<HTMLElement | Window>;
+export type Target = BasicTarget<HTMLElement | Element | Window | Document>;
 
 type Options = { target?: Target; capture?: boolean; once?: boolean; passive?: boolean };
 
