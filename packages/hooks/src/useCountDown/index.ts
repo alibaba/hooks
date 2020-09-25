@@ -19,7 +19,8 @@ const calcLeft = (t?: TDate) => {
   if (!t) {
     return 0;
   }
-  const left = new Date(t).getTime() - new Date().getTime();
+  const left =
+    new Date(typeof t === 'string' ? t.replace(/\s/, 'T') : t).getTime() - new Date().getTime();
   if (left < 0) {
     return 0;
   }
