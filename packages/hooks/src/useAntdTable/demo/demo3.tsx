@@ -112,7 +112,7 @@ export default () => {
     </div>
   );
 
-  const searchFrom = (
+  const searchForm = (
     <div style={{ marginBottom: 16 }}>
       <Form form={form} style={{ display: 'flex', justifyContent: 'flex-end' }}>
         <Form.Item name="gender">
@@ -134,7 +134,7 @@ export default () => {
 
   return (
     <div>
-      {type === 'simple' ? searchFrom : advanceSearchForm}
+      {type === 'simple' ? searchForm : advanceSearchForm}
       <Table columns={columns} rowKey="email" {...tableProps} />
     </div>
   );
