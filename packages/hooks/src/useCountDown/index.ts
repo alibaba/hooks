@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
+import dayjs from 'dayjs';
 
 export type TDate = Date | number | string | undefined;
 
@@ -19,7 +20,8 @@ const calcLeft = (t?: TDate) => {
   if (!t) {
     return 0;
   }
-  const left = new Date(t).getTime() - new Date().getTime();
+  // https://stackoverflow.com/questions/4310953/invalid-date-in-safari
+  const left = new Date(dayjs(t).toDate()).getTime() - new Date().getTime();
   if (left < 0) {
     return 0;
   }
