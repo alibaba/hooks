@@ -34,7 +34,7 @@ const [current, {
 | current  | current count              | `number`                  |
 | inc      | increment，default add 1   | `(delta?:number) => void` |
 | dec      | decrement, default minus 1 | `(delta?:number) => void` |
-| set      | set current count          | `(value: number \| ((c: number) => number)) => void` |
+| set      | set current count          | `(value: number` \| `((c: number) => number)) => void` |
 | reset    | reset to initial value     | `() => void`              |
 
 ### Params

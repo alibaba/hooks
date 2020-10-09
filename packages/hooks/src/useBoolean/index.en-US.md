@@ -15,8 +15,6 @@ A hook that elegantly manages boolean values.
 
 ## Examples
 
-### Default usage
-
 <code src="./demo/demo1.tsx" />
 
 ## API
