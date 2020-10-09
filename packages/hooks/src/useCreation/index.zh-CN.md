@@ -26,6 +26,8 @@ const b = useCreation(() => new Subject(), []) // 通过 factory 函数，可以
 
 ## 代码演示
 
+### 基础用法
+
 <code src="./demo/demo1.tsx" />
 
 ## API

@@ -3,7 +3,7 @@ import { useRef } from 'react';
 import { useCreation } from '../';
 import { DebounceOptions } from '../useDebounce/debounceOptions';
 
-type Fn = (...args: any) => any;
+type Fn = (...args: any[]) => any;
 
 interface ReturnValue<T extends Fn> {
   run: T;
@@ -20,7 +20,7 @@ function useDebounceFn<T extends Fn>(fn: T, options?: DebounceOptions): ReturnVa
   const debounced = useCreation(
     () =>
       debounce(
-        (...args: any) => {
+        (...args: any[]) => {
           fnRef.current(...args);
         },
         wait,

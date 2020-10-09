@@ -2,7 +2,7 @@
  * title: Basic Usage
  * desc: Basic countdown management.
  *
- * title.zh-CN: 基础使用
+ * title.zh-CN: 基础用法
  * desc.zh-CN: 基础的倒计时管理。
  */
 

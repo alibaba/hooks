@@ -2,7 +2,7 @@
  * title: Default usage
  * desc: Using ref to listen to visibility change.
  *
- * title.zh-CN: 基本用法
+ * title.zh-CN: 基础用法
  * desc.zh-CN: 使用 ref 监听节点在视图变化或者滚动时是否在可视范围之内
  */
 

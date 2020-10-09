@@ -2,7 +2,7 @@
  * title: Basic usage
  * desc: Page favicon setup and toggle
  *
- * title.zh-CN: 基本用法
+ * title.zh-CN: 基础用法
  * desc.zh-CN: 页面标识 favicon 设置 与 切换
  */
 

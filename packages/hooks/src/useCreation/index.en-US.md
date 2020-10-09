@@ -26,6 +26,8 @@ const b = useCreation(() => new Subject(), []) // By using factory function, Sub
 
 ## Examples
 
+### Default usage
+
 <code src="./demo/demo1.tsx" />
 
 ## API
