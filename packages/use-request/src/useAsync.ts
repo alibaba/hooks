@@ -357,7 +357,7 @@ function useAsync<R, P extends any[], U, UU extends U = any>(
         return newFetches;
       }
     }
-    return [];
+    return {};
   });
 
   const fetchesRef = useRef(fetches);

@@ -10,10 +10,11 @@ import React, { useState } from 'react';
 import { useControllableValue } from 'ahooks';
 
 const ControllableComponent = (props: any) => {
-  const [state, setState] = useControllableValue(props);
+  const [state, setState] = useControllableValue<number>(props);
 
   return <input value={state} onChange={() => setState(state + 1)} style={{ width: 300 }} />;
 };
+
 const Parent = () => {
   const [state, setState] = useState<number>(0);
   const increment = () => {
