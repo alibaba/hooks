@@ -7,7 +7,6 @@ group:
   title: Advanced
   path: /advanced
   order: 15
-legacy: /advanced/use-creation
 ---
 
 # useCreation
@@ -37,8 +36,8 @@ function useCreation<T>(factory: () => T, deps: any[]): T;
 
 ### Params
 
-| Property | Description                  | Type   | Default |
-|---------|----------------------------------------------|------------------------|--------|
-| factory | A function used for creating the object.  | () => any | -      |
-| deps | The dependencies list. | any[] | -      |
+| Property | Description                              | Type      | Default |
+|----------|------------------------------------------|-----------|---------|
+| factory  | A function used for creating the object. | `() => any` | -       |
+| deps     | The dependencies list.                   | `any[]`     | -       |
 
