@@ -1,4 +1,5 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
+import useEventListener from '../useEventListener';
 
 type VisibilityState = 'hidden' | 'visible' | 'prerender' | undefined;
 
@@ -8,17 +9,17 @@ const getVisibility = () => {
 };
 
 function useDocumentVisibility(): VisibilityState {
-  const [documentVisibility, setDocumentVisibility] = useState(getVisibility());
+  const [documentVisibility, setDocumentVisibility] = useState(() => getVisibility());
 
-  useEffect(() => {
-    const handleVisibilityChange = () => {
+  useEventListener(
+    'visibilitychange',
+    () => {
       setDocumentVisibility(getVisibility());
-    };
-    window.addEventListener('visibilitychange', handleVisibilityChange);
-    return () => {
-      window.removeEventListener('visibilitychange', handleVisibilityChange);
-    };
-  }, []);
+    },
+    {
+      target: document,
+    },
+  );
 
   return documentVisibility;
 }

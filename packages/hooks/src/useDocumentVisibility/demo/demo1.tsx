@@ -19,5 +19,6 @@ export default () => {
       console.log(`Current document visibility state: ${documentVisibility}`);
     }
   }, [documentVisibility]);
+
   return <div>Current document visibility state: {documentVisibility}</div>;
 };
