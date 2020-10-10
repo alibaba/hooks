@@ -1,4 +1,3 @@
-import { renderHook } from '@testing-library/react-hooks';
 import useDocumentVisibility from '../index';
 
 describe('useDocumentVisibility', () => {
