@@ -13,7 +13,7 @@ export interface Actions {
   reset: () => void;
 }
 
-function useCounter(initialValue: number = 0, options: Options = {}): [number, Actions] {
+function useCounter(initialValue: number = 0, options: Options = {}) {
   const { min, max } = options;
 
   // get init value
@@ -58,7 +58,7 @@ function useCounter(initialValue: number = 0, options: Options = {}): [number, A
     return { inc, dec, set, reset };
   }, []);
 
-  return [current, actions];
+  return [current, actions] as const;
 }
 
 export default useCounter;

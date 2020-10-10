@@ -2,7 +2,7 @@
  * title: Basic usage
  * desc: redo and undo operations
  *
- * title.zh-CN: 基本用法
+ * title.zh-CN: 基础用法
  * desc.zh: 撤销跟重做操作.
  */
 
@@ -10,9 +10,16 @@ import { useHistoryTravel } from 'ahooks';
 import React, { useState } from 'react';
 
 export default () => {
-  const { value, setValue, backLength, forwardLength, back, forward, go, reset } = useHistoryTravel([
-    'do homework',
-  ]);
+  const {
+    value,
+    setValue,
+    backLength,
+    forwardLength,
+    back,
+    forward,
+    go,
+    reset,
+  } = useHistoryTravel(['do homework']);
 
   const [inputValue, setInputValue] = useState('');
   const [step, setStep] = useState(0);
@@ -31,7 +38,7 @@ export default () => {
     reset();
     setStep(0);
     setInputValue('');
-  }
+  };
 
   return (
     <div>
@@ -58,7 +65,12 @@ export default () => {
           {' '}
           Undo{' '}
         </button>
-        <button type="button" disabled={forwardLength <= 0} onClick={forward} style={{ marginRight: 20 }}>
+        <button
+          type="button"
+          disabled={forwardLength <= 0}
+          onClick={forward}
+          style={{ marginRight: 20 }}
+        >
           {' '}
           Redo{' '}
         </button>

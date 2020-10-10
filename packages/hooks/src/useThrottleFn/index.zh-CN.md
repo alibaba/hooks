@@ -15,7 +15,7 @@ legacy: /zh-CN/side-effect/use-throttle-fn
 
 ## 代码演示
 
-### 基础使用
+### 基础用法
 
 <code src="./demo/demo1.tsx" />
 

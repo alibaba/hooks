@@ -2,7 +2,7 @@
  * title: Default usage
  * desc: Please click button or outside of button to show effects.
  *
- * title.zh-CN: 基本用法
+ * title.zh-CN: 基础用法
  * desc.zh-CN: 请点击按钮或按钮外查看效果。
  */
 

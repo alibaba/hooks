@@ -15,7 +15,7 @@ legacy: /zh-CN/state/use-toggle
 
 ## Examples
 
-### 基本用法
+### 基础用法
 
 <code src="./demo/demo1.tsx" />
 

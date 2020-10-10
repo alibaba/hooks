@@ -2,7 +2,7 @@
  * title: Basic Usage
  * desc: Try to scroll the box below.
  *
- * title.zh-CN: 基本用法
+ * title.zh-CN: 基础用法
  * desc.zh-CN: 尝试滚动一下文字内容。
  */
 
