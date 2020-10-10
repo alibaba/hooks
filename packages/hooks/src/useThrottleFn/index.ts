@@ -5,24 +5,18 @@ import { ThrottleOptions } from '../useThrottle/throttleOptions';
 
 type Fn = (...args: any) => any;
 
-interface ReturnValue<T extends Fn> {
-  run: T;
-  cancel: () => void;
-  flush: () => void;
-}
-
-function useThrottleFn<T extends Fn>(fn: T, options?: ThrottleOptions): ReturnValue<T> {
-  const fnRef = useRef<Fn>(fn);
+function useThrottleFn<T extends Fn>(fn: T, options?: ThrottleOptions) {
+  const fnRef = useRef<T>(fn);
   fnRef.current = fn;
 
   const wait = options?.wait ?? 1000;
 
   const throttled = useCreation(
     () =>
-      throttle(
-        (...args: any) => {
-          fnRef.current(...args);
-        },
+      throttle<T>(
+        ((...args: any[]) => {
+          return fnRef.current(...args);
+        }) as T,
         wait,
         options,
       ),
@@ -30,7 +24,7 @@ function useThrottleFn<T extends Fn>(fn: T, options?: ThrottleOptions): ReturnVa
   );
 
   return {
-    run: (throttled as any) as T,
+    run: throttled,
     cancel: throttled.cancel,
     flush: throttled.flush,
   };
