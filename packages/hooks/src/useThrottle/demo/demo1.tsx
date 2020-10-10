@@ -11,7 +11,7 @@ import { useThrottle } from 'ahooks';
 
 export default () => {
   const [value, setValue] = useState<string>();
-  const throttledValue = useThrottle(value, 500);
+  const throttledValue = useThrottle(value, { wait: 500 });
 
   return (
     <div>
