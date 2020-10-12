@@ -19,7 +19,7 @@ export default () => {
         <button type="button" onClick={setFull}>
           setFull
         </button>
-        <button type="button" onClick={exitFull}>
+        <button type="button" onClick={exitFull} style={{ margin: '0 8px' }}>
           exitFull
         </button>
         <button type="button" onClick={toggleFull}>
