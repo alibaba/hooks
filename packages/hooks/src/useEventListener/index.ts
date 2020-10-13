@@ -35,7 +35,7 @@ function useEventListener(eventName: string, handler: Function, options: Options
   }, [
     eventName,
     // 如果 options.target 是函数类型，比如 ()=>ref.current，则 useEffect 会多执行一次，因为初始化的时候 ref.current 是 undefined
-    typeof options.target === 'function' ? options.target() : options.target,
+    typeof options.target === 'function' ? undefined : options.target,
     options.capture,
     options.once,
     options.passive,
