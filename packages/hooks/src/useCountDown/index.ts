@@ -21,7 +21,7 @@ const calcLeft = (t?: TDate) => {
     return 0;
   }
   // https://stackoverflow.com/questions/4310953/invalid-date-in-safari
-  const left = new Date(dayjs(t).toDate()).getTime() - new Date().getTime();
+  const left = dayjs(t).valueOf() - new Date().getTime();
   if (left < 0) {
     return 0;
   }
