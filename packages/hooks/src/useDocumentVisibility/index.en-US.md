@@ -6,7 +6,6 @@ nav:
 group:
   title: Dom
   path: /dom
-legacy: /dom/use-document-visibility
 ---
 
 # useDocumentVisibility
@@ -17,19 +16,15 @@ A Hook can tell if the page is visible.
 
 ## Examples
 
-
 <code src="./demo/demo1.tsx" />
-
 
 ## API
 
-```
+```typescript
 const  documentVisibility = useDocumentVisibility();
 ```
 
 ### Result
-| Property    | Description                      | Type                   | Value |
-|---------|----------------------------------------------|------------------------|--------|
-| documentVisibility | Determine if the document is visible | string | 'visible' \| 'hidden' \| 'prerender'  \| undefined    |
-
-> If no document environment returns `undefined`; At present，the visibilitychange API is in the Recommendation stage, and only one change will be triggered in the Safari browser, which is different from Chrome and Firefox.
+| Property    | Description                      | Type                   |
+|---------|----------------------------------------------|------------------------|
+| documentVisibility | Determine if the document is visible | `visible`\| `hidden` \| `prerender`  \| `undefined` |

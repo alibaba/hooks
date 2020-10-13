@@ -12,12 +12,12 @@ const ImgTypeMap = {
 
 type ImgTypes = keyof typeof ImgTypeMap;
 
-const useFavicon = (favUrl: string): void => {
-  const cutUrl = favUrl.split('.');
-  const imgSuffix = cutUrl[cutUrl.length - 1].toLocaleUpperCase() as ImgTypes;
-
+const useFavicon = (favUrl: string) => {
   useEffect(() => {
     if (!favUrl) return;
+
+    const cutUrl = favUrl.split('.');
+    const imgSuffix = cutUrl[cutUrl.length - 1].toLocaleUpperCase() as ImgTypes;
 
     const link: HTMLLinkElement =
       document.querySelector("link[rel*='icon']") || document.createElement('link');

@@ -1,6 +1,6 @@
 /* eslint no-empty: 0 */
 
-import { useLayoutEffect, useRef } from 'react';
+import { useCallback, useLayoutEffect, useRef } from 'react';
 import screenfull from 'screenfull';
 import useBoolean from '../useBoolean';
 import { BasicTarget, getTargetElement } from '../utils/dom';
@@ -10,16 +10,7 @@ export interface Options {
   onFull?: () => void;
 }
 
-interface Callback {
-  setFull: () => void;
-  exitFull: () => void;
-  toggleFull: () => void;
-}
-
-type Value = boolean;
-type Result = [Value, Callback];
-
-export default (target: BasicTarget, options?: Options): Result => {
+export default (target: BasicTarget, options?: Options) => {
   const { onExitFull, onFull } = options || {};
 
   const onExitFullRef = useRef(onExitFull);
@@ -77,9 +68,9 @@ export default (target: BasicTarget, options?: Options): Result => {
         onExitFullRef.current();
       }
     };
-  }, [state, typeof target === 'function' ? undefined : target]);
+  }, [state, toggle, setTrue, setFalse, typeof target === 'function' ? undefined : target]);
 
-  const toggleFull = () => toggle();
+  const toggleFull = useCallback(() => toggle(), [toggle]);
 
   return [
     !!state,
@@ -88,5 +79,5 @@ export default (target: BasicTarget, options?: Options): Result => {
       exitFull: setFalse,
       toggleFull,
     },
-  ];
+  ] as const;
 };

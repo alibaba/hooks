@@ -1,6 +1,7 @@
 /**
  * title: Custom transformer function
  * desc: Controlled Input component with number input only
+ *
  * title.zh-CN: 自定义转换函数
  * desc.zh-CN: 只能输入数字的受控Input组件
  */
@@ -22,7 +23,7 @@ export default () => {
         placeholder="请输入"
       />
       <button type="button" onClick={reset}>
-        重置
+        reset
       </button>
     </Fragment>
   );

@@ -24,21 +24,21 @@ The hook encapsulates `onChange` and `value` logic for form controls that obtain
 
 ## API
 
-```javascript
-const [value, { onChange, reset }] = useEventTarget<T, U>(initialValue?: T, transformer?: (value: U) => T );
+```typescript
+const [value, { onChange, reset }  ] = useEventTarget<T, U>(Options);
 ```
 
 ### Result
 
-| Property         | Description              | Type                 |
-|------------------|--------------------|-----------------------|
-| value            | component value         | T |
-| onChange         | callback when value changes | (e: { target: { value: T }}) => void |
-| reset            | function to reset the value to initialValue         | () => void |
+| Property | Description                                 | Type               |
+|----------|---------------------------------------------|--------------------|
+| value    | component value                             | `T`                |
+| onChange | callback when value changes                 | `(e: { target: { value: T }}) => void` |
+| reset    | function to reset the value to initialValue | `() => void`       |
 
-### Params
+### Options
 
-| Property    | Description                                         | Type                   | Default |
-|---------|----------------------------------------------|------------------------|--------|
-| initialValue? | initial value  | T |  - |     
-| transformer? | custom transform function applied to value | (value: U) => T | - |
+| Property     | Description                                | Type              | Default |
+|--------------|--------------------------------------------|-------------------|---------|
+| initialValue | initial value                              | `T`               | -       |
+| transformer  | custom transform function applied to value | `(value: U) => T` | -       |

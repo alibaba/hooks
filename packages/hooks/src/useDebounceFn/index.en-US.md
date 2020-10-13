@@ -49,6 +49,6 @@ const {
 
 | Property | Description                               | Type         |
 |----------|-------------------------------------------|--------------|
-| run      | trigger fn, parameters will be send to fn | `() => void` |
+| run      | trigger fn, parameters will be send to fn | `(...args: any[]) => any` |
 | cancel   | cancel current debounce                   | `() => void` |
 | flush    | immediately invoke current debounce       | `() => void` |
