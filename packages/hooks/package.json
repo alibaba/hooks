@@ -49,6 +49,8 @@
     "@alifd/next": "^1.20.6",
     "@types/enzyme": "^3.10.5",
     "antd": "^3.26.6",
+    "jest-websocket-mock": "^2.1.0",
+    "mock-socket": "^9.0.3",
     "enzyme-adapter-react-16": "^1.15.4",
     "react-drag-listview": "^0.1.6",
     "umi-request": "^1.0.8"
