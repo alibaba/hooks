@@ -99,29 +99,32 @@ export default function useWebSocket(
    * 发送消息
    * @param message
    */
-  const sendMessage: WebSocket['send'] = (message) => {
-    if (readyState === READY_STATE.open) {
-      websocketRef.current?.send(message);
-    } else {
-      throw new Error('WebSocket disconnected');
-    }
-  };
+  const sendMessage: WebSocket['send'] = useCallback(
+    (message) => {
+      if (readyState === READY_STATE.open) {
+        websocketRef.current?.send(message);
+      } else {
+        throw new Error('WebSocket disconnected');
+      }
+    },
+    [readyState],
+  );
 
   /**
    * connect webSocket
    */
-  const connectWebSocket = () => {
+  const connectWebSocket = useCallback(() => {
     reconnectTimesRef.current = 0;
     connectWs();
-  };
+  }, []);
 
   /**
    * disconnect websocket
    */
-  const disconnectWebSocket = () => {
+  const disconnectWebSocket = useCallback(() => {
     reconnectTimesRef.current = reconnectLimit;
     websocketRef.current?.close();
-  };
+  }, []);
 
   return {
     latestMessage,

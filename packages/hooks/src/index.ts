@@ -51,6 +51,7 @@ import useNetwork from './useNetwork';
 import useTimeout from './useTimeout';
 import useFavicon from './useFavicon';
 import useCountDown from './useCountDown';
+import useWebSocket from './useWebSocket';
 
 const useControlledValue: typeof useControllableValue = function (...args) {
   console.warn(
@@ -117,4 +118,5 @@ export {
   useTimeout,
   useFavicon,
   useCountDown,
+  useWebSocket,
 };
