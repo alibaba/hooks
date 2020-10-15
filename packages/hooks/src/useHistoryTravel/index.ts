@@ -4,6 +4,7 @@ interface IData<T> {
   present?: T;
   past: T[];
   future: T[];
+  temp?: T
 }
 
 const dumpIndex = <T>(step: number, arr: T[]) => {
@@ -36,7 +37,7 @@ export default function useHistoryTravel<T>(initialValue?: T) {
     future: []
   });
 
-  const { present, past, future } = history;
+  const { present, past, future, temp } = history;
 
   const initialValueRef = useRef(initialValue);
 
@@ -60,6 +61,18 @@ export default function useHistoryTravel<T>(initialValue?: T) {
         present: val,
         future: [],
         past: [...past, present]
+      });
+    },
+    [history, setHistory]
+  );
+
+  const updateTemp = useCallback(
+    (val: T) => {
+      setHistory({
+        present: present,
+        future: [],
+        past: [...past, present],
+        temp: val
       });
     },
     [history, setHistory]
@@ -111,8 +124,9 @@ export default function useHistoryTravel<T>(initialValue?: T) {
   );
 
   return {
-    value: present,
+    value: temp || present,
     setValue: updateValue,
+    setTemp: updateTemp,
     backLength: past.length,
     forwardLength: future.length,
     go,

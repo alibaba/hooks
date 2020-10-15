@@ -199,4 +199,21 @@ describe('useHistoryTravel', () => {
     expect(hook.result.current.backLength).toEqual(0);
     expect(hook.result.current.forwardLength).toEqual(0);
   });
+
+  it('setTemp value should not to record', () => {
+    const hook = renderHook(() => useHistoryTravel('init'));
+    act(() => {
+      hook.result.current.setTemp('temp');
+    });
+    expect(hook.result.current.value).toEqual('temp');
+    act(() => {
+      hook.result.current.setValue('abc');
+    });
+    expect(hook.result.current.value).toEqual('abc');
+    expect(undefHook.result.current.backLength).toEqual(1);
+    act(() => {
+      hook.result.current.go(-1);
+    });
+    expect(hook.result.current.value).toEqual('init');
+  });
 });
