@@ -29,7 +29,7 @@ function useEventListener(eventName: string, handler: Function, options: Options
 
     return () => {
       targetElement.removeEventListener(eventName, eventListener, {
-        capture: options?.capture,
+        capture: options.capture,
       });
     };
   }, [
