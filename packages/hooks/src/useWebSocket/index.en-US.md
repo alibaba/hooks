@@ -10,9 +10,11 @@ group:
 
 # useWebSocket
 
-Hooks for WebSocket.
+A hook for WebSocket.
 
 ## Examples
+
+### Default usage
 
 <code src="./demo/demo1.tsx" />
 
@@ -25,7 +27,8 @@ declare enum READY_STATE {
   closing = 2,
   closed = 3
 }
-interface IUseWebSocketOptions {
+
+interface Options {
   reconnectLimit?: number;
   reconnectInterval?: number;
   onOpen?: (event: WebSocketEventMap['open']) => void;
@@ -33,35 +36,37 @@ interface IUseWebSocketOptions {
   onMessage?: (message: WebSocketEventMap['message']) => void;
   onError?: (event: WebSocketEventMap['error']) => void;
 }
-interface IUseWebSocketReturn {
+
+interface Result {
   latestMessage?: WebSocketEventMap['message'];
   sendMessage?: WebSocket['send'];
-  disconnectWebSocket?: () => void;
-  connectWebSocket?: () => void;
+  disconnect?: () => void;
+  connect?: () => void;
   readyState: READY_STATE;
   webSocketIns?: WebSocket;
 }
-useWebSocket(socketUrl: string, options?: IUseWebSocketOptions): IUseWebSocketReturn;
+
+useWebSocket(socketUrl: string, options?: Options): Result;
 ```
 
 ### Params
 
 | Property | Description | Type | Default |
 |---------|----------------------------------------------|------------------------|--------|
-| socketUrl | Required, webSocket url | string | - |
-| options | Optional, connect the configuration item | object | - |
+| socketUrl | Required, webSocket url | `string` | - |
+| options | Optional, connect the configuration item | `Options` | - |
 
 
-#### options Params
+#### Options
 
 | Options Property | Description | Type | Default |
 |---------|----------------------------------------------|------------------------|--------|
-| onOpen | Optional, the webSocket connection was successfully called back | Function | - |
-| onClose | Optional, webSocket close callback | Function | - |
-| onMessage | Optional, webSocket receive callback | Function | - |
-| onError | Optional, webSocket error callback | Function | - |
-| reconnectLimit | Optional, retry times | number | 3 |
-| reconnectInterval | Optional, retry the interval (ms) | number | 3000 |
+| onOpen | Optional, the webSocket connection was successfully called back | `(event: WebSocketEventMap['open']) => void` | - |
+| onClose | Optional, webSocket close callback | `(event: WebSocketEventMap['close']) => void` | - |
+| onMessage | Optional, webSocket receive callback | `(message: WebSocketEventMap['message']) => void` | - |
+| onError | Optional, webSocket error callback | `(event: WebSocketEventMap['error']) => void` | - |
+| reconnectLimit | Optional, retry times | `number` | `3` |
+| reconnectInterval | Optional, retry the interval (ms) | `number` | `3000` |
 
 
 ### Result
@@ -69,8 +74,8 @@ useWebSocket(socketUrl: string, options?: IUseWebSocketOptions): IUseWebSocketRe
 | Options Property | Description |
 | ------- | ---- | ------- |
 | latestMessage | latest message | `WebSocketEventMap['message']` |
-| sendMessage | Send message function | Function |
-| disconnectWebSocket | Disconnect webSocket manually | Function |
-| connectWebSocket | Connect webSocket manually | Function |
+| sendMessage | Send message function | `WebSocket['send']` |
+| disconnect | Disconnect webSocket manually | `() => void` |
+| connect | Connect webSocket manually | `() => void` |
 | readyState | Current webSocket connection status | `READY_STATE` |
 | webSocketIns | WebSocket instance | `WebSocket` |

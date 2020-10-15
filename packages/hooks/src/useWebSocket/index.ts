@@ -1,4 +1,5 @@
-import { useEffect, useRef, useState, useCallback } from 'react';
+import { usePersistFn, useUnmount } from '../';
+import { useEffect, useRef, useState } from 'react';
 
 export enum READY_STATE {
   connecting = 0,
@@ -7,7 +8,7 @@ export enum READY_STATE {
   closed = 3,
 }
 
-export interface IUseWebSocketOptions {
+export interface Options {
   reconnectLimit?: number;
   reconnectInterval?: number;
   onOpen?: (event: WebSocketEventMap['open']) => void;
@@ -16,19 +17,16 @@ export interface IUseWebSocketOptions {
   onError?: (event: WebSocketEventMap['error']) => void;
 }
 
-export interface IUseWebSocketReturn {
+export interface Result {
   latestMessage?: WebSocketEventMap['message'];
   sendMessage?: WebSocket['send'];
-  disconnectWebSocket?: () => void;
-  connectWebSocket?: () => void;
+  disconnect?: () => void;
+  connect?: () => void;
   readyState: READY_STATE;
   webSocketIns?: WebSocket;
 }
 
-export default function useWebSocket(
-  socketUrl: string,
-  options: IUseWebSocketOptions = {},
-): IUseWebSocketReturn {
+export default function useWebSocket(socketUrl: string, options: Options = {}): Result {
   const {
     reconnectLimit = 3,
     reconnectInterval = 3 * 1000,
@@ -37,18 +35,34 @@ export default function useWebSocket(
     onMessage,
     onError,
   } = options;
+
   const reconnectTimesRef = useRef(0);
   const reconnectTimerRef = useRef<NodeJS.Timeout>();
-  const [latestMessage, setLatestMessage] = useState<WebSocketEventMap['message']>();
-  const [readyState, setReadyState] = useState<READY_STATE>(READY_STATE.closed);
   const websocketRef = useRef<WebSocket>();
 
-  useEffect(() => {
-    // 初始连接
-    connectWs();
-  }, [socketUrl]);
+  const [latestMessage, setLatestMessage] = useState<WebSocketEventMap['message']>();
+  const [readyState, setReadyState] = useState<READY_STATE>(READY_STATE.closed);
 
-  const connectWs = () => {
+  /**
+   * 重连
+   */
+  const reconnect = usePersistFn(() => {
+    if (
+      reconnectTimesRef.current < reconnectLimit &&
+      websocketRef.current?.readyState !== READY_STATE.open
+    ) {
+      reconnectTimerRef.current && clearTimeout(reconnectTimerRef.current);
+
+      reconnectTimerRef.current = setTimeout(() => {
+        connectWs();
+        reconnectTimesRef.current++;
+      }, reconnectInterval);
+    }
+  });
+
+  const connectWs = usePersistFn(() => {
+    reconnectTimerRef.current && clearTimeout(reconnectTimerRef.current);
+
     if (websocketRef.current) {
       websocketRef.current.close();
       websocketRef.current = undefined;
@@ -56,7 +70,7 @@ export default function useWebSocket(
     try {
       websocketRef.current = new WebSocket(socketUrl);
       websocketRef.current.onerror = (event) => {
-        reConnectWebSocket();
+        reconnect();
         onError && onError(event);
         setReadyState(websocketRef.current?.readyState || READY_STATE.closed);
       };
@@ -70,67 +84,59 @@ export default function useWebSocket(
         setLatestMessage(message);
       };
       websocketRef.current.onclose = (event) => {
-        reConnectWebSocket();
+        reconnect();
         onClose && onClose(event);
         setReadyState(websocketRef.current?.readyState || READY_STATE.closed);
       };
     } catch (error) {
       throw error;
     }
-  };
-
-  /**
-   * 重连
-   */
-  const reConnectWebSocket = () => {
-    if (
-      reconnectTimesRef.current < reconnectLimit &&
-      websocketRef.current?.readyState !== READY_STATE.open
-    ) {
-      reconnectTimerRef.current && clearTimeout(reconnectTimerRef.current);
-      reconnectTimerRef.current = setTimeout(() => {
-        connectWs();
-        reconnectTimesRef.current++;
-      }, reconnectInterval);
-    }
-  };
+  });
 
   /**
    * 发送消息
    * @param message
    */
-  const sendMessage: WebSocket['send'] = useCallback(
-    (message) => {
-      if (readyState === READY_STATE.open) {
-        websocketRef.current?.send(message);
-      } else {
-        throw new Error('WebSocket disconnected');
-      }
-    },
-    [readyState],
-  );
+  const sendMessage: WebSocket['send'] = usePersistFn((message) => {
+    if (readyState === READY_STATE.open) {
+      websocketRef.current?.send(message);
+    } else {
+      throw new Error('WebSocket disconnected');
+    }
+  });
 
   /**
    * connect webSocket
    */
-  const connectWebSocket = useCallback(() => {
+  const connect = usePersistFn(() => {
     reconnectTimesRef.current = 0;
     connectWs();
-  }, []);
+  });
 
   /**
    * disconnect websocket
    */
-  const disconnectWebSocket = useCallback(() => {
+  const disconnect = usePersistFn(() => {
+    reconnectTimerRef.current && clearTimeout(reconnectTimerRef.current);
+
     reconnectTimesRef.current = reconnectLimit;
     websocketRef.current?.close();
-  }, []);
+  });
+
+  useEffect(() => {
+    // 初始连接
+    connectWs();
+  }, [socketUrl]);
+
+  useUnmount(() => {
+    disconnect();
+  });
 
   return {
     latestMessage,
     sendMessage,
-    connectWebSocket,
-    disconnectWebSocket,
+    connect,
+    disconnect,
     readyState,
     webSocketIns: websocketRef.current,
   };

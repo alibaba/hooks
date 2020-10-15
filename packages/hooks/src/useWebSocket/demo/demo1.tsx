@@ -2,11 +2,11 @@
  * title: Default usage
  * desc: WebSocket hooks used.
  *
- * title.zh-CN: 默认用法
+ * title.zh-CN: 基础用法
  * desc.zh-CN: webSocket hooks 使用
  */
 
-import React from 'react';
+import React, { useRef, useMemo } from 'react';
 import { useWebSocket } from 'ahooks';
 
 enum READY_STATE {
@@ -17,13 +17,15 @@ enum READY_STATE {
 }
 
 export default () => {
-  const {
-    readyState,
-    sendMessage,
+  const messageHistory = useRef([]);
+
+  const { readyState, sendMessage, latestMessage, disconnect, connect } = useWebSocket(
+    'wss://echo.websocket.org',
+  );
+
+  messageHistory.current = useMemo(() => messageHistory.current.concat(latestMessage), [
     latestMessage,
-    disconnectWebSocket,
-    connectWebSocket,
-  } = useWebSocket('ws://localhost:3000');
+  ]);
 
   return (
     <div>
@@ -31,27 +33,29 @@ export default () => {
       <button
         onClick={() => sendMessage && sendMessage(`${Date.now()}`)}
         disabled={readyState !== READY_STATE.open}
+        style={{ marginRight: 12 }}
       >
-        ✉️
+        ✉️ send
       </button>
-      &nbsp;&nbsp;
       {/* disconnect */}
       <button
-        onClick={() => disconnectWebSocket && disconnectWebSocket()}
+        onClick={() => disconnect && disconnect()}
         disabled={readyState !== READY_STATE.open}
+        style={{ marginRight: 12 }}
       >
-        ❌
+        ❌ disconnect
       </button>
-      &nbsp;&nbsp;
       {/* connect */}
-      <button
-        onClick={() => connectWebSocket && connectWebSocket()}
-        disabled={readyState === READY_STATE.open}
-      >
-        📞
+      <button onClick={() => connect && connect()} disabled={readyState === READY_STATE.open}>
+        📞 connect
       </button>
-      <p>readyState: {readyState}</p>
-      <p>latestMessage: {latestMessage?.data}</p>
+      <div style={{ marginTop: 8 }}>readyState: {readyState}</div>
+      <div style={{ marginTop: 8 }}>
+        <p>received message: </p>
+        {messageHistory.current.map((message, index) => (
+          <p key={index}>{message?.data}</p>
+        ))}
+      </div>
     </div>
   );
 };
