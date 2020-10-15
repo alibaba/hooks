@@ -210,7 +210,7 @@ describe('useHistoryTravel', () => {
       hook.result.current.setValue('abc');
     });
     expect(hook.result.current.value).toEqual('abc');
-    expect(hook.result.current.backLength).toEqual(1);
+    expect(undefHook.result.current.backLength).toEqual(1);
     act(() => {
       hook.result.current.go(-1);
     });
