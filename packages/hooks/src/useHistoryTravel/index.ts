@@ -70,9 +70,9 @@ export default function useHistoryTravel<T>(initialValue?: T) {
     (val: T) => {
       setHistory({
         present: present,
-        future: [],
-        past: [...past, present],
-        temp: val
+        future: future,
+        past: past,
+        temp: val,
       });
     },
     [history, setHistory]
