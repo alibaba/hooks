@@ -7,13 +7,14 @@
  */
 
 import React, { useRef, useMemo } from 'react';
-import { useWebSocket } from 'ahooks';
+// import { useWebSocket } from 'ahooks';
+import useWebSocket from '../';
 
-enum READY_STATE {
-  connecting = 0,
-  open = 1,
-  closing = 2,
-  closed = 3,
+enum ReadyState {
+  Connecting = 0,
+  Open = 1,
+  Closing = 2,
+  Closed = 3,
 }
 
 export default () => {
@@ -32,21 +33,21 @@ export default () => {
       {/* send message */}
       <button
         onClick={() => sendMessage && sendMessage(`${Date.now()}`)}
-        disabled={readyState !== READY_STATE.open}
-        style={{ marginRight: 12 }}
+        disabled={readyState !== ReadyState.Open}
+        style={{ marginRight: 8 }}
       >
         ✉️ send
       </button>
       {/* disconnect */}
       <button
         onClick={() => disconnect && disconnect()}
-        disabled={readyState !== READY_STATE.open}
-        style={{ marginRight: 12 }}
+        disabled={readyState !== ReadyState.Open}
+        style={{ marginRight: 8 }}
       >
         ❌ disconnect
       </button>
       {/* connect */}
-      <button onClick={() => connect && connect()} disabled={readyState === READY_STATE.open}>
+      <button onClick={() => connect && connect()} disabled={readyState === ReadyState.Open}>
         📞 connect
       </button>
       <div style={{ marginTop: 8 }}>readyState: {readyState}</div>

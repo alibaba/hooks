@@ -1,11 +1,11 @@
 import { usePersistFn, useUnmount } from '../';
 import { useEffect, useRef, useState } from 'react';
 
-export enum READY_STATE {
-  connecting = 0,
-  open = 1,
-  closing = 2,
-  closed = 3,
+export enum ReadyState {
+  Connecting = 0,
+  Open = 1,
+  Closing = 2,
+  Closed = 3,
 }
 
 export interface Options {
@@ -22,7 +22,7 @@ export interface Result {
   sendMessage?: WebSocket['send'];
   disconnect?: () => void;
   connect?: () => void;
-  readyState: READY_STATE;
+  readyState: ReadyState;
   webSocketIns?: WebSocket;
 }
 
@@ -41,7 +41,7 @@ export default function useWebSocket(socketUrl: string, options: Options = {}): 
   const websocketRef = useRef<WebSocket>();
 
   const [latestMessage, setLatestMessage] = useState<WebSocketEventMap['message']>();
-  const [readyState, setReadyState] = useState<READY_STATE>(READY_STATE.closed);
+  const [readyState, setReadyState] = useState<ReadyState>(ReadyState.Closed);
 
   /**
    * 重连
@@ -49,7 +49,7 @@ export default function useWebSocket(socketUrl: string, options: Options = {}): 
   const reconnect = usePersistFn(() => {
     if (
       reconnectTimesRef.current < reconnectLimit &&
-      websocketRef.current?.readyState !== READY_STATE.open
+      websocketRef.current?.readyState !== ReadyState.Open
     ) {
       reconnectTimerRef.current && clearTimeout(reconnectTimerRef.current);
 
@@ -67,17 +67,18 @@ export default function useWebSocket(socketUrl: string, options: Options = {}): 
       websocketRef.current.close();
       websocketRef.current = undefined;
     }
+
     try {
       websocketRef.current = new WebSocket(socketUrl);
       websocketRef.current.onerror = (event) => {
         reconnect();
         onError && onError(event);
-        setReadyState(websocketRef.current?.readyState || READY_STATE.closed);
+        setReadyState(websocketRef.current?.readyState || ReadyState.Closed);
       };
       websocketRef.current.onopen = (event) => {
         onOpen && onOpen(event);
         reconnectTimesRef.current = 0;
-        setReadyState(websocketRef.current?.readyState || READY_STATE.closed);
+        setReadyState(websocketRef.current?.readyState || ReadyState.Closed);
       };
       websocketRef.current.onmessage = (message: WebSocketEventMap['message']) => {
         onMessage && onMessage(message);
@@ -86,7 +87,7 @@ export default function useWebSocket(socketUrl: string, options: Options = {}): 
       websocketRef.current.onclose = (event) => {
         reconnect();
         onClose && onClose(event);
-        setReadyState(websocketRef.current?.readyState || READY_STATE.closed);
+        setReadyState(websocketRef.current?.readyState || ReadyState.Closed);
       };
     } catch (error) {
       throw error;
@@ -98,7 +99,7 @@ export default function useWebSocket(socketUrl: string, options: Options = {}): 
    * @param message
    */
   const sendMessage: WebSocket['send'] = usePersistFn((message) => {
-    if (readyState === READY_STATE.open) {
+    if (readyState === ReadyState.Open) {
       websocketRef.current?.send(message);
     } else {
       throw new Error('WebSocket disconnected');
@@ -106,7 +107,7 @@ export default function useWebSocket(socketUrl: string, options: Options = {}): 
   });
 
   /**
-   * connect webSocket
+   * 手动 connect
    */
   const connect = usePersistFn(() => {
     reconnectTimesRef.current = 0;
@@ -125,7 +126,7 @@ export default function useWebSocket(socketUrl: string, options: Options = {}): 
 
   useEffect(() => {
     // 初始连接
-    connectWs();
+    connect();
   }, [socketUrl]);
 
   useUnmount(() => {

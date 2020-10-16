@@ -21,11 +21,11 @@ A hook for WebSocket.
 ## API
 
 ```typescript
-declare enum READY_STATE {
-  connecting = 0,
-  open = 1,
-  closing = 2,
-  closed = 3
+enum ReadyState {
+  Connecting = 0,
+  Open = 1,
+  Closing = 2,
+  Closed = 3,
 }
 
 interface Options {
@@ -42,7 +42,7 @@ interface Result {
   sendMessage?: WebSocket['send'];
   disconnect?: () => void;
   connect?: () => void;
-  readyState: READY_STATE;
+  readyState: ReadyState;
   webSocketIns?: WebSocket;
 }
 
@@ -77,5 +77,5 @@ useWebSocket(socketUrl: string, options?: Options): Result;
 | sendMessage | Send message function | `WebSocket['send']` |
 | disconnect | Disconnect webSocket manually | `() => void` |
 | connect | Connect webSocket manually | `() => void` |
-| readyState | Current webSocket connection status | `READY_STATE` |
+| readyState | Current webSocket connection status | `ReadyState` |
 | webSocketIns | WebSocket instance | `WebSocket` |
