@@ -2,56 +2,60 @@
  * title: Default usage
  * desc: WebSocket hooks used.
  *
- * title.zh-CN: 默认用法
+ * title.zh-CN: 基础用法
  * desc.zh-CN: webSocket hooks 使用
  */
 
-import React from 'react';
+import React, { useRef, useMemo } from 'react';
 import { useWebSocket } from 'ahooks';
 
-enum READY_STATE {
-  connecting = 0,
-  open = 1,
-  closing = 2,
-  closed = 3,
+enum ReadyState {
+  Connecting = 0,
+  Open = 1,
+  Closing = 2,
+  Closed = 3,
 }
 
 export default () => {
-  const {
-    readyState,
-    sendMessage,
+  const messageHistory = useRef([]);
+
+  const { readyState, sendMessage, latestMessage, disconnect, connect } = useWebSocket(
+    'wss://echo.websocket.org',
+  );
+
+  messageHistory.current = useMemo(() => messageHistory.current.concat(latestMessage), [
     latestMessage,
-    disconnectWebSocket,
-    connectWebSocket,
-  } = useWebSocket('ws://localhost:3000');
+  ]);
 
   return (
     <div>
       {/* send message */}
       <button
         onClick={() => sendMessage && sendMessage(`${Date.now()}`)}
-        disabled={readyState !== READY_STATE.open}
+        disabled={readyState !== ReadyState.Open}
+        style={{ marginRight: 8 }}
       >
-        ✉️
+        ✉️ send
       </button>
-      &nbsp;&nbsp;
       {/* disconnect */}
       <button
-        onClick={() => disconnectWebSocket && disconnectWebSocket()}
-        disabled={readyState !== READY_STATE.open}
+        onClick={() => disconnect && disconnect()}
+        disabled={readyState !== ReadyState.Open}
+        style={{ marginRight: 8 }}
       >
-        ❌
+        ❌ disconnect
       </button>
-      &nbsp;&nbsp;
       {/* connect */}
-      <button
-        onClick={() => connectWebSocket && connectWebSocket()}
-        disabled={readyState === READY_STATE.open}
-      >
-        📞
+      <button onClick={() => connect && connect()} disabled={readyState === ReadyState.Open}>
+        📞 connect
       </button>
-      <p>readyState: {readyState}</p>
-      <p>latestMessage: {latestMessage?.data}</p>
+      <div style={{ marginTop: 8 }}>readyState: {readyState}</div>
+      <div style={{ marginTop: 8 }}>
+        <p>received message: </p>
+        {messageHistory.current.map((message, index) => (
+          <p key={index}>{message?.data}</p>
+        ))}
+      </div>
     </div>
   );
 };
