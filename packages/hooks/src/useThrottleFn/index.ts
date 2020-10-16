@@ -1,6 +1,6 @@
 import throttle from 'lodash.throttle';
 import { useRef } from 'react';
-import { useCreation } from '../';
+import useCreation from '../useCreation';
 import { ThrottleOptions } from '../useThrottle/throttleOptions';
 
 type Fn = (...args: any) => any;

@@ -1,4 +1,6 @@
-import { usePersistFn, useUnmount } from '../';
+import useUnmount from '../useUnmount';
+import usePersistFn from '../usePersistFn';
+
 import { useEffect, useRef, useState } from 'react';
 
 export enum ReadyState {
