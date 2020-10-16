@@ -1,6 +1,6 @@
 import { renderHook, act } from '@testing-library/react-hooks';
 import WS from 'jest-websocket-mock';
-import useWebSocket, { READY_STATE } from '../index';
+import useWebSocket, { ReadyState } from '../index';
 
 const promise: Promise<void> = new Promise((resolve) => resolve());
 
@@ -15,13 +15,13 @@ describe('useWebSocket', () => {
     const hooks = renderHook(() => useWebSocket(wsUrl));
 
     // connect
-    expect(hooks.result.current.readyState).toBe(READY_STATE.closed);
+    expect(hooks.result.current.readyState).toBe(ReadyState.Closed);
     expect(hooks.result.current.latestMessage).toBe(undefined);
     await act(async () => {
       await wsServer.connected;
       return promise;
     });
-    expect(hooks.result.current.readyState).toBe(READY_STATE.open);
+    expect(hooks.result.current.readyState).toBe(ReadyState.Open);
 
     // send message
     const nowTime = `${Date.now()}`;
@@ -40,7 +40,7 @@ describe('useWebSocket', () => {
       await wsServer.closed;
       return promise;
     });
-    expect(hooks.result.current.readyState).toBe(READY_STATE.closed);
+    expect(hooks.result.current.readyState).toBe(ReadyState.Closed);
 
     WS.clean();
   });
