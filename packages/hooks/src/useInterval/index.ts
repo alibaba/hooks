@@ -8,17 +8,17 @@ function useInterval(
   },
 ): void {
   const immediate = options?.immediate;
-  const timerRef = useRef<() => void>();
 
-  timerRef.current = fn;
+  const fnRef = useRef<() => void>();
+  fnRef.current = fn;
 
   useEffect(() => {
     if (delay === undefined || delay === null) return;
     if (immediate) {
-      timerRef.current?.();
+      fnRef.current?.();
     }
     const timer = setInterval(() => {
-      timerRef.current?.();
+      fnRef.current?.();
     }, delay);
     return () => {
       clearInterval(timer);

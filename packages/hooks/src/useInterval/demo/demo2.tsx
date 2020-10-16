@@ -23,13 +23,13 @@ export default () => {
 
   return (
     <div>
-      <p style={{ marginTop: 16 }}> count: {count} </p>
+      <p> count: {count} </p>
       <p style={{ marginTop: 16 }}> interval: {interval} </p>
-      <button onClick={() => setInterval(interval + 1000)} style={{ marginRight: 12 }}>
+      <button onClick={() => setInterval(interval + 1000)} style={{ marginRight: 8 }}>
         interval + 1000
       </button>
       <button
-        style={{ marginRight: 12 }}
+        style={{ marginRight: 8 }}
         onClick={() => {
           setInterval(1000);
         }}

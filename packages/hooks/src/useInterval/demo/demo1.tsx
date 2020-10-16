@@ -16,9 +16,5 @@ export default () => {
     setCount(count + 1);
   }, 1000);
 
-  return (
-    <div>
-      <p style={{ marginTop: 16 }}> count: {count} </p>
-    </div>
-  );
+  return <div>count: {count}</div>;
 };
