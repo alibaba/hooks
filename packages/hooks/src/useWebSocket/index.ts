@@ -67,7 +67,6 @@ export default function useWebSocket(socketUrl: string, options: Options = {}): 
 
     if (websocketRef.current) {
       websocketRef.current.close();
-      websocketRef.current = undefined;
     }
 
     try {
