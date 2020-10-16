@@ -6,11 +6,11 @@ nav:
 group:
   title: Dom
   path: /dom
-legacy: /zh-CN/dom/use-hover
 ---
 
 # useHover
-一个用于追踪 dom 元素是否有鼠标悬停的 Hook
+
+一个用于追踪 dom 元素是否有鼠标悬停的 Hook。
 
 ## 代码演示
 
@@ -34,16 +34,22 @@ const isHovering = useHover(
 );
 ```
 
-### 结果
+### Params
 
-| 参数     | 说明                                     | 类型       |
-|----------|------------------------------------------|------------|
-| isHovering  | 判断鼠标元素是否处于 hover 元素                  | boolean    |
+| 参数    | 说明                  | 类型                | 默认值 |
+|---------|-----------------------|---------------------|--------|
+| target  | DOM 节点或者 Ref 对象 | `() => HTMLElement` \| `HTMLElement` \| `React.RefObject` | -      |
+| options | 额外的配置项 | `Options`                 | `{}`     |
 
-### 参数
+### Options
 
-| 参数    | 说明                                         | 类型                   | 默认值 |
-|---------|----------------------------------------------|------------------------|--------|
-| target | DOM 节点或者 Ref 对象  | (() => HTMLElement) \| HTMLElement \| React.RefObject | - |
-| onEnter | 监听进入 hover  | ()=>void | -      |
-| onLeave | 监听离开 hover  | ()=>void | -      |
+| 参数     | 说明                       | 类型      | 默认值  |
+|----------|----------------------------|-----------|---------|
+| onEnter | 监听进入 hover        | `()=>void`            | -      |
+| onLeave | 监听离开 hover        | `()=>void`            | -      |
+
+### Result
+
+| 参数       | 说明                            | 类型    |
+|------------|---------------------------------|---------|
+| isHovering | 判断鼠标元素是否处于 hover 元素 | `boolean` |

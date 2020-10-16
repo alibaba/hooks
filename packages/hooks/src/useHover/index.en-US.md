@@ -6,10 +6,10 @@ nav:
 group:
   title: Dom
   path: /dom
-legacy: /dom/use-hover
 ---
 
 # useHover
+
 React UI sensor hooks that track if some element is being hovered by a mouse.
 
 ## Examples
@@ -36,15 +36,22 @@ const isHovering = useHover(
 
 ### Params
 
-| Property| Description                                                        | Type                   | Default |
-|---------|----------------------------------------------|------------------------|--------|
-| target | DOM element or Ref Object | (() => HTMLElement) \| HTMLElement \| React.RefObject | - |
-| onEnter | Listen to hover  | ()=>void | -      |
-| onLeave | Listening leave hover  | ()=>void | -      |
+| Property | Description               | Type     | Default |
+|----------|---------------------------|----------|---------|
+| target   | DOM element or Ref Object | `() => HTMLElement` \| `HTMLElement` \| `React.RefObject`         | -       |
+| options  | More configuration items           | `Options` | -       |
+
+### Options
+
+| Property | Description                                           | Type      | Default |
+|----------|-------------------------------------------------------|-----------|---------|
+| onEnter  | Listen to hover           | `()=>void` | -       |
+| onLeave  | Listening leave hover     | `()=>void` | -       |
+
 
 
 ### Result
 
-| Property | Description                                         | Type                 |
-|----------|------------------------------------------|------------|
-| isHovering   | Determine whether the mouse element is in the hover element | boolean    |
+| Property   | Description                                                 | Type    |
+|------------|-------------------------------------------------------------|---------|
+| isHovering | Determine whether the mouse element is in the hover element | `boolean` |
