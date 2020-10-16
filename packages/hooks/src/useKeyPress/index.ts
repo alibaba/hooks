@@ -1,5 +1,6 @@
-import { useEffect, useCallback, useRef } from 'react';
-import { getTargetElement, BasicTarget } from '../utils/dom';
+import { useEffect, useRef } from 'react';
+import usePersistFn from '../usePersistFn';
+import { BasicTarget, getTargetElement } from '../utils/dom';
 
 export type KeyPredicate = (event: KeyboardEvent) => boolean;
 export type keyType = KeyboardEvent['keyCode'] | KeyboardEvent['key'];
@@ -139,15 +140,12 @@ function useKeyPress(
   const callbackRef = useRef(eventHandler);
   callbackRef.current = eventHandler;
 
-  const callbackHandler = useCallback(
-    (event) => {
-      const genGuard: KeyPredicate = genKeyFormater(keyFilter);
-      if (genGuard(event)) {
-        return callbackRef.current(event);
-      }
-    },
-    [keyFilter],
-  );
+  const callbackHandler = usePersistFn((event) => {
+    const genGuard: KeyPredicate = genKeyFormater(keyFilter);
+    if (genGuard(event)) {
+      return callbackRef.current(event);
+    }
+  });
 
   useEffect(() => {
     const el = getTargetElement(target, window)!;
@@ -160,7 +158,7 @@ function useKeyPress(
         el.removeEventListener(eventName, callbackHandler);
       }
     };
-  }, [events, callbackHandler, typeof target === 'function' ? undefined : target]);
+  }, [events.join(''), callbackHandler, typeof target === 'function' ? undefined : target]);
 }
 
 export default useKeyPress;
