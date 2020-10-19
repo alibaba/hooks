@@ -3,7 +3,7 @@
  * desc: Support using key aliases. Please refer to the [document](#remarks) below.
  *
  * title.zh-CN: 使用别名
- * desc.zh-CN: 支持使用别名，更多内容请[查看备注](#备注)。
+ * desc.zh-CN: 支持使用别名，更多内容请[查看备注](#remarks)。
  */
 
 import React, { useState } from 'react';
