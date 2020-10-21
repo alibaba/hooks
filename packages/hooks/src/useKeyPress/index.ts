@@ -1,5 +1,4 @@
 import { useEffect, useRef } from 'react';
-import usePersistFn from '../usePersistFn';
 import { BasicTarget, getTargetElement } from '../utils/dom';
 
 export type KeyPredicate = (event: KeyboardEvent) => boolean;
@@ -140,14 +139,14 @@ function useKeyPress(
   const callbackRef = useRef(eventHandler);
   callbackRef.current = eventHandler;
 
-  const callbackHandler = usePersistFn((event) => {
-    const genGuard: KeyPredicate = genKeyFormater(keyFilter);
-    if (genGuard(event)) {
-      return callbackRef.current(event);
-    }
-  });
-
   useEffect(() => {
+    const callbackHandler = (event) => {
+      const genGuard: KeyPredicate = genKeyFormater(keyFilter);
+      if (genGuard(event)) {
+        return callbackRef.current(event);
+      }
+    };
+
     const el = getTargetElement(target, window)!;
 
     for (const eventName of events) {
@@ -158,7 +157,7 @@ function useKeyPress(
         el.removeEventListener(eventName, callbackHandler);
       }
     };
-  }, [events.join(''), callbackHandler, typeof target === 'function' ? undefined : target]);
+  }, [events, keyFilter, target]);
 }
 
 export default useKeyPress;

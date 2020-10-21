@@ -1,4 +1,3 @@
-import { useRef } from 'react';
 import useBoolean from '../useBoolean';
 import useEventListener from '../useEventListener';
 import { BasicTarget } from '../utils/dom';

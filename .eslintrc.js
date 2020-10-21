@@ -11,13 +11,12 @@ module.exports = {
     '@typescript-eslint/ban-ts-ignore': 'off',
     '@typescript-eslint/no-object-literal-type-assertion': 'off',
     'consistent-return': 'off',
-  },
-  plugins: [...fabric.default.plugins, 'react-hooks'],
-  rules: {
-    ...fabric.default.rules,
+    'import/no-useless-path-segments': 'off',
+    'no-unused-expressions': 'off',
     'react-hooks/rules-of-hooks': 'error',
     'react-hooks/exhaustive-deps': 'warn',
   },
+  plugins: [...fabric.default.plugins, 'react-hooks'],
   parserOptions: {
     ...fabric.default.parserOptions,
     project: './packages/**/tsconfig.json',

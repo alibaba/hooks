@@ -1,6 +1,5 @@
 import Cookies from 'js-cookie';
-import { useState } from 'react';
-import { usePersistFn } from '../';
+import { useCallback, useState } from 'react';
 import { isFunction } from '../utils';
 
 // TODO ts 命名不规范，待下个大版本修复
@@ -21,7 +20,7 @@ function useCookieState(cookieKey: string, options: IOptions = {}) {
   });
 
   // usePersistFn 保证返回的 updateState 不会变化
-  const updateState = usePersistFn(
+  const updateState = useCallback(
     (
       newValue?: TCookieState | ((prevState: TCookieState) => TCookieState),
       newOptions: Cookies.CookieAttributes = {},
@@ -39,6 +38,7 @@ function useCookieState(cookieKey: string, options: IOptions = {}) {
         },
       );
     },
+    [cookieKey, options],
   );
 
   return [state, updateState] as const;
