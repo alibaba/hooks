@@ -7,7 +7,7 @@
  */
 
 import React, { useState } from 'react';
-import useDebounceFn from '../';
+import { useDebounceFn } from 'ahooks';
 
 export default () => {
   const [value, setValue] = useState(0);
