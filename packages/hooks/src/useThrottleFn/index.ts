@@ -24,7 +24,7 @@ function useThrottleFn<T extends Fn>(fn: T, options?: ThrottleOptions) {
   );
 
   return {
-    run: throttled,
+    run: throttled as T,
     cancel: throttled.cancel,
     flush: throttled.flush,
   };
