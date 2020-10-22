@@ -14,12 +14,9 @@ export default function useClickAway(
   const onClickAwayRef = useRef(onClickAway);
   onClickAwayRef.current = onClickAway;
 
-  const targetRef = useRef(target);
-  targetRef.current = target;
-
   useEffect(() => {
     const handler = (event: any) => {
-      const targets = Array.isArray(targetRef.current) ? targetRef.current : [targetRef.current];
+      const targets = Array.isArray(target) ? target : [target];
       if (
         targets.some((targetItem) => {
           const targetElement = getTargetElement(targetItem) as HTMLElement;
@@ -36,5 +33,5 @@ export default function useClickAway(
     return () => {
       document.removeEventListener(eventName, handler);
     };
-  }, [eventName]);
+  }, [target, eventName]);
 }

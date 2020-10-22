@@ -56,7 +56,7 @@ function useCounter(initialValue: number = 0, options: Options = {}) {
       setValue(init);
     };
     return { inc, dec, set, reset };
-  }, []);
+  }, [init, max, min]);
 
   return [current, actions] as const;
 }
