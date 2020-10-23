@@ -15,7 +15,7 @@ group:
 
 ## 代码演示
 
-### 基本用法
+### 基础用法
 
 <code src="./demo/demo1.tsx" />
 

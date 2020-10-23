@@ -2,8 +2,8 @@
  * title: Basic usage
  * desc: Page favicon setup and toggle
  *
- * title.zh-CN: 基本用法
- * desc.zh-CN: 页面标识 favicon 设置 与 切换
+ * title.zh-CN: 基础用法
+ * desc.zh-CN: 页面标识 favicon 设置与切换
  */
 
 import React, { useState } from 'react';
@@ -24,7 +24,6 @@ export default () => {
         Current Favicon: <span>{url}</span>
       </p>
       <button
-        id="google"
         style={{ marginRight: 16 }}
         onClick={() => {
           setUrl(GOOGLE_FAVICON_URL);
@@ -33,7 +32,6 @@ export default () => {
         Change To Google Favicon
       </button>
       <button
-        id="ahooks"
         onClick={() => {
           setUrl(DEFAULT_FAVICON_URL);
         }}

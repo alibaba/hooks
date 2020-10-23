@@ -8,5 +8,9 @@ a[title='站长统计'] {
 
 input,
 button {
-  padding: 4px
+  padding: 4px;
+}
+
+input[type='number'] {
+  border: 1px solid rgb(118, 118, 118);
 }

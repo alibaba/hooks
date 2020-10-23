@@ -2,7 +2,7 @@
  * title: Default usage
  * desc: Execute once after 3000ms
  *
- * title.zh-CN: 基础使用
+ * title.zh-CN: 基础用法
  * desc.zh-CN: 3000ms后执行一次
  */
 

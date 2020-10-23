@@ -6,7 +6,6 @@ nav:
 group:
   title: State Hooks
   path: /state
-legacy: /state/use-session-storage-state
 ---
 
 # useSessionStorageState

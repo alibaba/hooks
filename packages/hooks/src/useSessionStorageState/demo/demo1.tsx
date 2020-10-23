@@ -19,7 +19,7 @@ export default function () {
           setMessage(e.target.value);
         }}
         placeholder="Please enter some words..."
-        style={{ width: 200, marginRight: 16 }}
+        style={{ width: 200, marginRight: 8 }}
       />
       <button
         type="button"

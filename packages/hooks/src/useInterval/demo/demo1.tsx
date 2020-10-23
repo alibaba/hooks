@@ -2,7 +2,7 @@
  * title: Default usage
  * desc: Every 1000ms, execute once
  *
- * title.zh-CN: 基础使用
+ * title.zh-CN: 基础用法
  * desc.zh-CN: 每1000ms，执行一次
  */
 
@@ -16,9 +16,5 @@ export default () => {
     setCount(count + 1);
   }, 1000);
 
-  return (
-    <div>
-      <p style={{ marginTop: 16 }}> count: {count} </p>
-    </div>
-  );
+  return <div>count: {count}</div>;
 };

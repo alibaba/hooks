@@ -1,8 +1,8 @@
 /**
- * title: Examples
+ * title: Listen keydown
  * desc: Press any key to preview.
  *
- * title.zh-CN: 使用示例
+ * title.zh-CN: 监听 keydown 事件
  * desc.zh-CN: 按下键盘查看效果。
  */
 

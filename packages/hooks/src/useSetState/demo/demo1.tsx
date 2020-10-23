@@ -1,7 +1,7 @@
 /**
  * title: Default usage
  *
- * title.zh-CN: 基本用法
+ * title.zh-CN: 基础用法
  */
 
 import React from 'react';

@@ -2,7 +2,7 @@
  * title: Default usage
  * desc: The function is called right after the component mount.
  *
- * title.zh-CN: 基本用法
+ * title.zh-CN: 基础用法
  * desc.zh-CN: 在组件首次渲染时，执行方法。
  */
 

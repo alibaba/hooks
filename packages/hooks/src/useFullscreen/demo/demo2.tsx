@@ -1,9 +1,9 @@
 /**
- * title: Lazy load
- * desc: Pass in a function that returns the DOM element
+ * title: Picture full screen
+ * desc: Picture full screen
  *
- * title.zh-CN: 懒加载
- * desc.zh-CN: 传入 function 来监听任意的 dom 节点
+ * title.zh-CN: 图片全屏
+ * desc.zh-CN: 全屏图片
  */
 
 import React from 'react';

@@ -6,7 +6,6 @@ nav:
 group:
   title: SideEffect
   path: /side-effect
-legacy: /side-effect/use-debounce-fn
 ---
 
 # useDebounceFn
@@ -27,29 +26,29 @@ const {
   cancel
 } = useDebounceFn(
   fn: (...args: any[]) => any,
-  options?: object
+  options?: Options
 );
 ```
 
 ### Params
 
-| Property | Description                                                                  | Type                    | Default |
-|----------|------------------------------------------------------------------------------|-------------------------|---------|
-| fn       |  The function to debounce.                                              | Function | -       |
-| options  | Config the debounce behavior. See the Options section below.                                                    | object                  | {}    |
+| Property | Description                                                  | Type                      | Default |
+|----------|--------------------------------------------------------------|---------------------------|---------|
+| fn       | The function to debounce.                                    | `(...args: any[]) => any` | -       |
+| options  | Config the debounce behavior. See the Options section below. | `Options`                 | `{}`    |
 
 ### Options
 
-| Property | Description                  | Type   | Default |
-|----------|------------------------------|--------|---------|
-| wait | The number of milliseconds to delay. | number | 1000 |
-| leading | Specify invoking on the leading edge of the timeout. | boolean | false |
-| trailing | Specify invoking on the trailing edge of the timeout. | boolean | true |
+| Property | Description                                           | Type      | Default |
+|----------|-------------------------------------------------------|-----------|---------|
+| wait     | The number of milliseconds to delay.                  | `number`  | `1000`  |
+| leading  | Specify invoking on the leading edge of the timeout.  | `boolean` | `false` |
+| trailing | Specify invoking on the trailing edge of the timeout. | `boolean` | `true`  |
 
 ### Result
 
-| Property | Description                               | Type                    |
-|----------|-------------------------------------------|-------------------------|
-| run      | trigger fn, parameters will be send to fn | Function |
-| cancel   | cancel current debounce                   | () => void              |
-| flush    | immediately invoke current debounce       | () => void              |
+| Property | Description                               | Type         |
+|----------|-------------------------------------------|--------------|
+| run      | trigger fn, parameters will be send to fn | `(...args: any[]) => any` |
+| cancel   | cancel current debounce                   | `() => void` |
+| flush    | immediately invoke current debounce       | `() => void` |

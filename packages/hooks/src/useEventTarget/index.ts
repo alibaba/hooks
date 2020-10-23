@@ -6,31 +6,28 @@ interface EventTarget<U> {
   };
 }
 
-interface Params<T, U> {
+export interface Options<T, U> {
   initialValue?: T;
   transformer?: (value: U) => T;
 }
 
-function useEventTarget<T, U = T>(params?: Params<T, U>) {
-  const { initialValue, transformer } = params || {};
+function useEventTarget<T, U = T>(options?: Options<T, U>) {
+  const { initialValue, transformer } = options || {};
   const [value, setValue] = useState(initialValue);
 
-  const reset = useCallback(() => setValue(initialValue), [setValue]);
+  const reset = useCallback(() => setValue(initialValue), []);
 
   const transformerRef = useRef(transformer);
   transformerRef.current = transformer;
 
-  const onChange = useCallback(
-    (e: EventTarget<U>) => {
-      const _value = e.target.value;
-      if (typeof transformerRef.current === 'function') {
-        return setValue(transformerRef.current(_value));
-      }
-      // no transformer => U and T should be the same
-      return setValue((_value as unknown) as T);
-    },
-    [setValue],
-  );
+  const onChange = useCallback((e: EventTarget<U>) => {
+    const _value = e.target.value;
+    if (typeof transformerRef.current === 'function') {
+      return setValue(transformerRef.current(_value));
+    }
+    // no transformer => U and T should be the same
+    return setValue((_value as unknown) as T);
+  }, []);
 
   return [
     value,

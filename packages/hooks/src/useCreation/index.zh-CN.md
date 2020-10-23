@@ -7,7 +7,6 @@ group:
   title: Advanced
   path: /advanced
   order: 15
-legacy: /zh-CN/advanced/use-creation
 ---
 
 # useCreation
@@ -27,6 +26,8 @@ const b = useCreation(() => new Subject(), []) // 通过 factory 函数，可以
 
 ## 代码演示
 
+### 基础用法
+
 <code src="./demo/demo1.tsx" />
 
 ## API
@@ -35,10 +36,10 @@ const b = useCreation(() => new Subject(), []) // 通过 factory 函数，可以
 function useCreation<T>(factory: () => T, deps: any[]): T;
 ```
 
-### 参数
+### Params
 
-| 参数    | 说明                                         | 类型                   | 默认值 |
-|---------|----------------------------------------------|------------------------|--------|
-| factory | 用来创建所需对象的函数  | () => any | -      |
-| deps | 传入依赖变化的对象  | any[] | -      |
+| 参数    | 说明                   | 类型      | 默认值 |
+|---------|------------------------|-----------|--------|
+| factory | 用来创建所需对象的函数 | `() => any` | -      |
+| deps    | 传入依赖变化的对象     | `any[]`     | -      |
 

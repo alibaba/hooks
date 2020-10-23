@@ -18,15 +18,14 @@ Set or configure page favicon URL.
 
 <code src="./demo/demo1.tsx" />
 
-
 ## API
 
-```javascript
+```typescript
 useFavicon(faviconURL: string)
 ```
 
 ### Params
 
-| Params     | Description                                  | Type   | Default |
-| ---------- | -------------------------------------------- | ------ | ------- |
-| faviconURL | favicon URL, support `svg`/`png`/`ico`/`gif` | string | none    |
+| Params     | Description                                  | Type     | Default |
+|------------|----------------------------------------------|----------|---------|
+| faviconURL | favicon URL, support `svg`/`png`/`ico`/`gif` | `string` | -       |

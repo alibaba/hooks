@@ -2,7 +2,7 @@
  * title: Default usage
  * desc: Simple count management example.
  *
- * title.zh-CN: 基础使用
+ * title.zh-CN: 基础用法
  * desc.zh-CN: 简单的 count 管理示例。
  */
 

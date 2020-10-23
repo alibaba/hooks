@@ -51,6 +51,7 @@ import useNetwork from './useNetwork';
 import useTimeout from './useTimeout';
 import useFavicon from './useFavicon';
 import useCountDown from './useCountDown';
+import useWebSocket from './useWebSocket';
 import useTrackedEffect from './useTrackedEffect';
 
 const useControlledValue: typeof useControllableValue = function (...args) {
@@ -119,4 +120,5 @@ export {
   useFavicon,
   useCountDown,
   useTrackedEffect,
+  useWebSocket,
 };

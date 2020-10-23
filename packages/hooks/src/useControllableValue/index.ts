@@ -1,4 +1,4 @@
-import { useMemo, useState, useCallback } from 'react';
+import { useCallback, useState } from 'react';
 import useUpdateEffect from '../useUpdateEffect';
 
 export interface Options<T> {
@@ -22,7 +22,7 @@ export default function useControllableValue<T>(props: Props = {}, options: Opti
 
   const value = props[valuePropName];
 
-  const initialValue = useMemo(() => {
+  const [state, setState] = useState<T | undefined>(() => {
     if (valuePropName in props) {
       return value;
     }
@@ -30,16 +30,14 @@ export default function useControllableValue<T>(props: Props = {}, options: Opti
       return props[defaultValuePropName];
     }
     return defaultValue;
-  }, []);
-
-  const [state, setState] = useState<T | undefined>(initialValue);
+  });
 
   /* init 的时候不用执行了 */
   useUpdateEffect(() => {
     if (valuePropName in props) {
       setState(value);
     }
-  }, [value]);
+  }, [value, valuePropName]);
 
   const handleSetState = useCallback(
     (v: T | undefined) => {
