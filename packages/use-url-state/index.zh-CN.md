@@ -32,13 +32,17 @@ import useUrlState from '@ahooksjs/use-url-state';
 
 ## 代码演示
 
+### Codesandbox 链接
+
+https://codesandbox.io/s/suspicious-feather-cz4e0?file=/App.tsx
+
 ### 默认用法
 
-<code src="./demo/demo1.tsx" />
+<code src="./demo/demo1.tsx" hideActions='["CSB"]' />
 
 ### 多状态管理
 
-<code src="./demo/demo2.tsx" />
+<code src="./demo/demo2.tsx" hideActions='["CSB"]' />
 
 ## API
 
