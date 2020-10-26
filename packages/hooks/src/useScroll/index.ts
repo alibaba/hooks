@@ -7,8 +7,12 @@ interface Position {
 }
 
 export type Target = BasicTarget<HTMLElement | Document>;
+export type ScrollListenController = (val: Position) => boolean;
 
-function useScroll(target?: Target): Position {
+function useScroll(
+  target?: Target,
+  shouldUpdate: ScrollListenController = (val) => true,
+): Position {
   const [position, setPosition] = useState<Position>({
     left: NaN,
     top: NaN,
@@ -17,7 +21,8 @@ function useScroll(target?: Target): Position {
   useEffect(() => {
     const el = getTargetElement(target, document);
     if (!el) return;
-    function updatePosition(currentTarget: Target) {
+
+    function updatePosition(currentTarget: Target): void {
       let newPosition;
       if (currentTarget === document) {
         if (!document.scrollingElement) return;
@@ -31,10 +36,12 @@ function useScroll(target?: Target): Position {
           top: (currentTarget as HTMLElement).scrollTop,
         };
       }
-      setPosition(newPosition);
+      if (shouldUpdate(newPosition)) setPosition(newPosition);
     }
+
     updatePosition(el as Target);
-    function listener(event: Event) {
+
+    function listener(event: Event): void {
       if (!event.target) return;
       updatePosition(event.target as Target);
     }
@@ -43,6 +50,7 @@ function useScroll(target?: Target): Position {
       el.removeEventListener('scroll', listener);
     };
   }, [target]);
+
   return position;
 }
 
