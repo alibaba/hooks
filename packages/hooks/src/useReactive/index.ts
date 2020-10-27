@@ -1,26 +1,28 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 
 import useCreation from '../useCreation';
 
-function observer(initialVal, cb) {
-  return new Proxy(initialVal, {
+function observer<T extends object>(initialVal: T, cb: () => void) {
+  return new Proxy<T>(initialVal, {
     get(target, key, receiver) {
       const res = Reflect.get(target, key, receiver);
       return typeof res === 'object' ? observer(res, cb) : Reflect.get(target, key);
     },
     set(target, key, val) {
+      const ret = Reflect.set(target, key, val);
       cb();
-      return Reflect.set(target, key, val);
+      return ret;
     },
   });
 }
 
 function useReactive<S extends object>(initialState: S): S {
-  const [observerState, setObserverState] = useState<S>(initialState);
+  const [, setFlag] = useState({});
+  const stateRef = useRef<S>(initialState);
 
   let state = useCreation(() => {
-    return observer(observerState, () => {
-      setObserverState({ ...observerState });
+    return observer(stateRef.current, () => {
+      setFlag({});
     });
   }, []);
 
