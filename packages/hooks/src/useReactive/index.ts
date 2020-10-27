@@ -20,7 +20,7 @@ function useReactive<S extends object>(initialState: S): S {
   const [, setFlag] = useState({});
   const stateRef = useRef<S>(initialState);
 
-  let state = useCreation(() => {
+  const state = useCreation(() => {
     return observer(stateRef.current, () => {
       setFlag({});
     });

@@ -4,9 +4,8 @@ nav:
   title: Hooks
   path: /hooks
 group:
-  title: State
-  path: /state
-legacy: /state/use-reactive
+  title: Advanced
+  path: /advanced
 ---
 
 ## useReactive
@@ -32,7 +31,7 @@ let state = useReactive(initialValue:object);
 
 ## initialState
 
-| Params         | Description           | Type   | Default |
-| ------------ | -------------- | ------ | ------ |
-| initialState | current state | object | none     |
+| Params       | Description   | Type     | Default |
+|--------------|---------------|----------|---------|
+| initialState | current state | `object` | -       |
 
