@@ -20,17 +20,21 @@ legacy: /zh-CN/dom/use-scroll
 
 <code src="./demo/demo2.tsx" />
 
+<code src="./demo/demo3.tsx" />
+
 ## API
 
 ```ts
-const position = useScroll(target);
+const position = useScroll(target, shouldUpdate);
 ```
 
 ### Params
 
 | 参数    | 说明                                         | 类型                   | 默认值 |
 |---------|----------------------------------------------|------------------------|--------|
-| target | DOM 节点或者 Ref 对象  |  HTMLElement \| (() => HTMLElement) \| Document \| React.MutableRefObject  | Document    |
+| target | DOM 节点或者 Ref 对象  |  HTMLElement \| (() => HTMLElement) \| Document \| React.MutableRefObject  | `Document`    |
+| shouldUpdate | 控制是否更新滚动信息  |  `({ top: number, left: number}) => boolean  | ({ top: number, left: number}) => true`    |
+
 
 ### Result
 
