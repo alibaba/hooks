@@ -22,7 +22,7 @@ A hook of useEffect that allow us to track which dependencies caused the effect 
 
 ```javascript
 useTrackedEffect(
-  effect: (changes:[]) => (void | (() => void | undefined)),
+  effect: (changes:[], previousDeps:[], currentDeps:[]) => (void | (() => void | undefined)),
   deps?: deps,
 )
 ```
@@ -31,5 +31,5 @@ useTrackedEffect(
 
 | Property | Description                                                        | Type                   | Default |
 |---------|----------------------------------------------|------------------------|--------|
-| effect | Executable function  | (changes:array) => (void | (() => void | undefined)) | -      |
+| effect | Executable function  | (changes:array, previousDeps: array, currentDeps: array) => (void | (() => void | undefined)) | -      |
 | deps | Optionally, pass in objects that depend on changes | array \| undefined | -      |

@@ -13,9 +13,9 @@ const useTrackedEffect = (effect, deps?: DependencyList) => {
       : [];
   };
   useEffect(() => {
-    let changes = diffTwoDeps(initDeps.current, deps);
-    initDeps.current = deps;
-    return effect(changes);
+    let changes = diffTwoDeps(previousDepsRef.current, deps);
+    previousDepsRef.current = deps;
+    return effect(changes, previousDepsRef.current, deps);
   }, deps);
 };
 
