@@ -22,12 +22,10 @@ function useToggle<D extends IState = IState, R extends IState = IState>(
   reverseValue?: R,
 ) {
   const [state, setState] = useState<D | R>(defaultValue);
-  const reverseValueOrigin = useMemo(
-    () => (reverseValue === undefined ? !defaultValue : reverseValue) as D | R,
-    [reverseValue],
-  );
 
   const actions = useMemo(() => {
+    const reverseValueOrigin = (reverseValue === undefined ? !defaultValue : reverseValue) as D | R;
+
     // 切换返回值
     const toggle = (value?: D | R) => {
       // 强制返回状态值，适用于点击操作
@@ -46,7 +44,7 @@ function useToggle<D extends IState = IState, R extends IState = IState>(
       setLeft,
       setRight,
     };
-  }, []);
+  }, [defaultValue, reverseValue]);
 
   return [state, actions];
 }

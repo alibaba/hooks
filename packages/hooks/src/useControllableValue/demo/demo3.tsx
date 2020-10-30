@@ -10,7 +10,7 @@ import React, { useState } from 'react';
 import { useControllableValue } from 'ahooks';
 
 const ControllableComponent = (props: any) => {
-  const [state, setState] = useControllableValue(props);
+  const [state, setState] = useControllableValue<string>(props);
 
   return (
     <input

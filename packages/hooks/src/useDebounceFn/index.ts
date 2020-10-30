@@ -1,27 +1,22 @@
 import debounce from 'lodash.debounce';
 import { useRef } from 'react';
-import { useCreation } from '..';
+import useCreation from '../useCreation';
 import { DebounceOptions } from '../useDebounce/debounceOptions';
 
 type Fn = (...args: any) => any;
 
-interface ReturnValue<T extends Fn> {
-  run: T;
-  cancel: () => void;
-}
-
-function useDebounceFn<T extends Fn>(fn: T, options?: DebounceOptions): ReturnValue<T> {
-  const fnRef = useRef<Fn>(fn);
+function useDebounceFn<T extends Fn>(fn: T, options?: DebounceOptions) {
+  const fnRef = useRef<T>(fn);
   fnRef.current = fn;
 
   const wait = options?.wait ?? 1000;
 
   const debounced = useCreation(
     () =>
-      debounce(
-        (...args: any) => {
-          fnRef.current(...args);
-        },
+      debounce<T>(
+        ((...args: any[]) => {
+          return fnRef.current(...args);
+        }) as T,
         wait,
         options,
       ),
@@ -29,8 +24,9 @@ function useDebounceFn<T extends Fn>(fn: T, options?: DebounceOptions): ReturnVa
   );
 
   return {
-    run: (debounced as any) as T,
+    run: debounced as T,
     cancel: debounced.cancel,
+    flush: debounced.flush,
   };
 }
 

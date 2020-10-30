@@ -6,7 +6,6 @@ nav:
 group:
   title: SideEffect
   path: /side-effect
-legacy: /side-effect/use-throttle-fn
 ---
 
 # useThrottleFn
@@ -21,34 +20,35 @@ A hook that handle the throttle function.
 
 ## API
 
-```javascript
+```typescript
 const {
   run,
   cancel
 } = useThrottleFn(
   fn: (...args: any[]) => any,
-  options?: object
+  options?: Options
 );
 ```
 
 ### Params
 
-| Property | Description                                                                  | Type                    | Default |
-|----------|------------------------------------------------------------------------------|-------------------------|---------|
-| fn       |  The function to throttle.                                              | Function | -       |
-| options  | Config the throttle behavior. See the Options section below.                                                    | object                  | {}    |
+| Property | Description                                                  | Type                      | Default |
+|----------|--------------------------------------------------------------|---------------------------|---------|
+| fn       | The function to throttle.                                    | `(...args: any[]) => any` | `-`     |
+| options  | Config the throttle behavior. See the Options section below. | `Options`                 | `{}`    |
 
 ### Options
 
-| Property | Description                  | Type   | Default |
-|----------|------------------------------|--------|---------|
-| wait | The number of milliseconds to delay. | number | 1000 |
-| leading | Specify invoking on the leading edge of the timeout. | boolean | true |
-| trailing | Specify invoking on the trailing edge of the timeout. | boolean | true |
+| Property | Description                                           | Type      | Default |
+|----------|-------------------------------------------------------|-----------|---------|
+| wait     | The number of milliseconds to delay.                  | `number`  | `1000`  |
+| leading  | Specify invoking on the leading edge of the timeout.  | `boolean` | `true`  |
+| trailing | Specify invoking on the trailing edge of the timeout. | `boolean` | `true`  |
 
 ### Result
 
-| Property | Description                               | Type                    |
-|----------|-------------------------------------------|-------------------------|
-| run      | trigger fn, parameters will be send to fn | Function |
-| cancel   | cancel current throttle                   | () => void              |
+| Property | Description                               | Type                      |
+|----------|-------------------------------------------|---------------------------|
+| run      | trigger fn, parameters will be send to fn | `(...args: any[]) => any` |
+| cancel   | cancel current throttle                   | `() => void`              |
+| flush    | immediately invoke current throttle       | `() => void`              |

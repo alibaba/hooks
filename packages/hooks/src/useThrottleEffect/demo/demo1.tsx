@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import useThrottleEffect from '..';
+import { useThrottleEffect } from 'ahooks';
 
 export default () => {
   const [value, setValue] = useState('hello');

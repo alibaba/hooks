@@ -2,7 +2,7 @@
  * title: Default usage
  * desc: DebouncedValue will change after the input ends 500ms.
  *
- * title.zh-CN: 基础使用
+ * title.zh-CN: 基础用法
  * desc.zh-CN: DebouncedValue 只会在输入结束 500ms 后变化。
  */
 

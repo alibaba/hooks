@@ -2,7 +2,7 @@
  * title: Default usage
  * desc: ThrottledValue will change every 500ms.
  *
- * title.zh-CN: 基础使用
+ * title.zh-CN: 基础用法
  * desc.zh-CN: ThrottledValue 每隔 500ms 变化一次。
  */
 
@@ -11,7 +11,7 @@ import { useThrottle } from 'ahooks';
 
 export default () => {
   const [value, setValue] = useState<string>();
-  const throttledValue = useThrottle(value, 500);
+  const throttledValue = useThrottle(value, { wait: 500 });
 
   return (
     <div>

@@ -6,7 +6,6 @@ nav:
 group:
   title: LifeCycle
   path: /life-cycle
-legacy: /life-cycle/use-throttle-effect
 ---
 
 # useThrottleEffect
@@ -21,26 +20,26 @@ Throttle your `useEffect`.
 
 ## API
 
-```javascript
+```typescript
 useThrottleEffect(
   effect: () => (void | (() => void | undefined)),
   deps?: any[],
-  options?: object
+  options?: Options
 );
 ```
 
 ### Params
 
-| Property | Description                                                                  | Type                    | Default |
-|----------|------------------------------------------------------------------------------|-------------------------|---------|
-| effect       |  The effect callback.                                              | Function | -       |
-| deps | The dependencies list. | any[] \| undefined | undefined |
-| options  | Config the throttle behavior. See the Options section below.                                                    | object                  | {}    |
+| Property | Description                                                  | Type             | Default   |
+|----------|--------------------------------------------------------------|------------------|-----------|
+| effect   | The effect callback.                                         | `() => (void | (() => void | undefined))`     | -         |
+| deps     | The dependencies list.                                       | `any[]` \| `undefined` | `undefined` |
+| options  | Config the throttle behavior. See the Options section below. | `Options`           | `{}`        |
 
 ### Options
 
-| Property | Description                  | Type   | Default |
-|----------|------------------------------|--------|---------|
-| wait | The number of milliseconds to delay. | number | 1000 |
-| leading | Specify invoking on the leading edge of the timeout. | boolean | true |
-| trailing | Specify invoking on the trailing edge of the timeout. | boolean | true |
+| Property | Description                                           | Type    | Default |
+|----------|-------------------------------------------------------|---------|---------|
+| wait     | The number of milliseconds to delay.                  | `number`  | `1000`    |
+| leading  | Specify invoking on the leading edge of the timeout.  | `boolean` | `true`    |
+| trailing | Specify invoking on the trailing edge of the timeout. | `boolean` | `true`    |

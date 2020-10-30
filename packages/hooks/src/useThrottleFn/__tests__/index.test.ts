@@ -17,7 +17,7 @@ describe('useThrottleFn', () => {
     expect(useThrottleFn).toBeDefined();
   });
 
-  it('run and cancel should work', async () => {
+  it('run, cancel and flush should work', async () => {
     let count = 0;
     const throttleFn = (gap: number) => {
       count += gap;
@@ -50,6 +50,13 @@ describe('useThrottleFn', () => {
       hook.result.current.cancel();
       await sleep(500); // t: 1550
       expect(count).toBe(7);
+      hook.result.current.run(1);
+      hook.result.current.run(1);
+      expect(count).toBe(8);
+      hook.result.current.flush();
+      expect(count).toBe(9);
+      await sleep(550); // t: 2100
+      expect(count).toBe(9);
     });
   });
 });

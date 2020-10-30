@@ -53,7 +53,7 @@ const result: Result = useEventEmitter<T>();
 
 ### Result
 
-| Property        | Description                   | Type                                 |
-|-----------------|-------------------------------|--------------------------------------|
-| emit            | Emit a new event.             | (val: T) => void                     |
-| useSubscription | Subscribe to a event emitter. | (callback: (val: T) => void) => void |
+| Property        | Description                   | Type                                   |
+|-----------------|-------------------------------|----------------------------------------|
+| emit            | Emit a new event.             | `(val: T) => void`                     |
+| useSubscription | Subscribe to a event emitter. | `(callback: (val: T) => void) => void` |

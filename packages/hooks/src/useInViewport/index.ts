@@ -51,7 +51,7 @@ function useInViewport(target: BasicTarget): InViewport {
     return () => {
       observer.disconnect();
     };
-  }, [typeof target === 'function' ? undefined : target]);
+  }, [target]);
 
   return inViewPort;
 }

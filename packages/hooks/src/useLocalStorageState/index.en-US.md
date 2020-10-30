@@ -6,7 +6,6 @@ nav:
 group:
   title: State Hooks
   path: /state
-legacy: /state/use-local-storage-state
 ---
 
 # useLocalStorageState

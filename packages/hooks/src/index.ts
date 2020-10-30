@@ -50,6 +50,9 @@ import useTitle from './useTitle';
 import useNetwork from './useNetwork';
 import useTimeout from './useTimeout';
 import useReactive from './useReactive';
+import useFavicon from './useFavicon';
+import useCountDown from './useCountDown';
+import useWebSocket from './useWebSocket';
 
 const useControlledValue: typeof useControllableValue = function (...args) {
   console.warn(
@@ -115,4 +118,7 @@ export {
   useNetwork,
   useTimeout,
   useReactive,
+  useFavicon,
+  useCountDown,
+  useWebSocket,
 };

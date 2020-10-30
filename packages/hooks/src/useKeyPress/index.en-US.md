@@ -6,7 +6,6 @@ nav:
 group:
   title: Dom
   path: /dom
-legacy: /dom/use-key-press
 ---
 
 # useKeyPress
@@ -15,19 +14,29 @@ A hook that elegantly manages KeyboardEvent of keyup adn keydown, Keyboard key c
 
 ## Examples
 
+### Basic usage
+
 <code src="./demo/demo1.tsx" />
+
+### Use key aliases
 
 <code src="./demo/demo2.tsx" />
 
+### Compound mode
+
 <code src="./demo/demo3.tsx" />
 
+### Advanced
+
 <code src="./demo/demo4.tsx" />
+
+### Custom DOM
 
 <code src="./demo/demo5.tsx" />
 
 ## API
 
-```javascript
+```typescript
 useKeyPress(
   keyFilter: KeyFilter, 
   eventHandler: EventHandler = noop, 
@@ -41,20 +50,21 @@ useKeyPress(
 
 | Property | Description                                                        | Type                   | Default |
 |---------|----------------------------------------------|------------------------|--------|
-| keyFilter | Support for key and keyCode in keyboard events,function that return Boolean, key aliases  | keyType \| Array<keyType\> \| ((event: KeyboardEvent) => boolean) | -      |
-| eventHandler | Callback Function  | (event: KeyboardEvent) => void | () => {}      |
-| options | advanced options，see Options below | -              | -              |   |
+| keyFilter | Support for key and keyCode in keyboard events,function that return Boolean, key aliases  | `keyType` \| `Array<keyType>` \| `(event: KeyboardEvent) => boolean` | -      |
+| eventHandler | Callback Function  | `(event: KeyboardEvent) => void` | -      |
+| options | advanced options，see Options below | `Options`              | -              | 
 
 ### Options
 
 | Property | Description                                                        | Type                   | Default |
 |-----------------|--------------------------------------------------------|---------|--------|
-| events | Trigger Events  |  Array<keydown \| keyup\> | ['keydown']     |
-| target | DOM element or Ref Object | (() => HTMLElement) \| HTMLElement \| React.MutableRefObject  | - |
+| events | Trigger Events  |  Array<keydown \| keyup\> | `['keydown']`     |
+| target | DOM element or Ref Object | `() => HTMLElement` \| `HTMLElement` \| `React.MutableRefObject`  | - |
 
 ## Remarks
 
 1.All key aliases
+
 ```javascript
 enter
 tab
@@ -68,6 +78,7 @@ right
 ```
 
 2.Modifier keys
+
 ```javascript
 ctrl
 alt

@@ -6,7 +6,6 @@ nav:
 group:
   title: LifeCycle
   path: /life-cycle
-legacy: /life-cycle/use-debounce-effect
 ---
 
 # useDebounceEffect
@@ -21,11 +20,11 @@ Debounce your `useEffect`.
 
 ## API
 
-```javascript
+```typescript
 useDebounceEffect(
   effect: () => (void | (() => void | undefined)),
   deps?: any[],
-  options?: object
+  options?: Options
 );
 ```
 
@@ -33,14 +32,14 @@ useDebounceEffect(
 
 | Property | Description                                                                  | Type                    | Default |
 |----------|------------------------------------------------------------------------------|-------------------------|---------|
-| effect       |  The effect callback.                                              | Function | -       |
-| deps | The dependencies list. | any[] \| undefined | undefined |
-| options  | Config the debounce behavior. See the Options section below.                                                    | object                  | {}    |
+| effect       |  The effect callback.                                              | `Function` | -       |
+| deps | The dependencies list. | `any[]` \| `undefined` | `undefined` |
+| options  | Config the debounce behavior. See the Options section below.                                                    | `Options`                  | `{}`    |
 
 ### Options
 
 | Property | Description                  | Type   | Default |
 |----------|------------------------------|--------|---------|
-| wait | The number of milliseconds to delay. | number | 1000 |
-| leading | Specify invoking on the leading edge of the timeout. | boolean | false |
-| trailing | Specify invoking on the trailing edge of the timeout. | boolean | true |
+| wait | The number of milliseconds to delay. | `number` | `1000` |
+| leading | Specify invoking on the leading edge of the timeout. | `boolean` | `false` |
+| trailing | Specify invoking on the trailing edge of the timeout. | `boolean` | `true` |

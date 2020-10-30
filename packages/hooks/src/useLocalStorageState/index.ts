@@ -10,7 +10,7 @@ function useLocalStorageState<T>(
 ): [T, (value?: T | ((previousState: T) => T)) => void];
 
 function useLocalStorageState<T>(key: string, defaultValue?: T | (() => T)) {
-  return useStorageState(localStorage, key, defaultValue);
+  return useStorageState(() => localStorage, key, defaultValue);
 }
 
 export default useLocalStorageState;

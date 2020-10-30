@@ -19,7 +19,7 @@ export default function () {
       <p>{value.join('-')}</p>
       <button
         type="button"
-        style={{ marginRight: '16px' }}
+        style={{ marginRight: 8 }}
         onClick={() => setValue([...value, Math.random().toString(36).slice(-1)])}
       >
         push random

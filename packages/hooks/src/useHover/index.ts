@@ -1,6 +1,6 @@
-import { useEffect, useRef } from 'react';
 import useBoolean from '../useBoolean';
-import { getTargetElement, BasicTarget } from '../utils/dom';
+import useEventListener from '../useEventListener';
+import { BasicTarget } from '../utils/dom';
 
 export interface Options {
   onEnter?: () => void;
@@ -10,35 +10,29 @@ export interface Options {
 export default (target: BasicTarget, options?: Options): boolean => {
   const { onEnter, onLeave } = options || {};
 
-  const onEnterRef = useRef(onEnter);
-  onEnterRef.current = onEnter;
-
-  const onLeaveRef = useRef(onLeave);
-  onLeaveRef.current = onLeave;
-
   const [state, { setTrue, setFalse }] = useBoolean(false);
 
-  useEffect(() => {
-    const onMouseEnter = () => {
-      if (onEnterRef.current) onEnterRef.current();
+  useEventListener(
+    'mouseenter',
+    () => {
+      onEnter && onEnter();
       setTrue();
-    };
-    const onMouseLeave = () => {
-      if (onLeaveRef.current) onLeaveRef.current();
-      setFalse();
-    };
+    },
+    {
+      target,
+    },
+  );
 
-    const targetElement = getTargetElement(target);
-    // 如果 传入dom
-    if (targetElement) {
-      targetElement.addEventListener('mouseenter', onMouseEnter);
-      targetElement.addEventListener('mouseleave', onMouseLeave);
-      return () => {
-        targetElement.removeEventListener('mouseenter', onMouseEnter);
-        targetElement.removeEventListener('mouseleave', onMouseLeave);
-      };
-    }
-  }, [typeof target === 'function' ? undefined : target]);
+  useEventListener(
+    'mouseleave',
+    () => {
+      onLeave && onLeave();
+      setFalse();
+    },
+    {
+      target,
+    },
+  );
 
   return state;
 };

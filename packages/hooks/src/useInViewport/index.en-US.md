@@ -6,7 +6,6 @@ nav:
 group:
   title: Dom
   path: /dom
-legacy: /dom/use-in-viewport
 ---
 
 # useInViewport
@@ -32,12 +31,12 @@ const inViewPort = useInViewport(target);
 
 ### Params
 
-| Property | Description                                                        | Type                   | Default |
-|---------|----------------------------------------------|------------------------|--------|
-| target | DOM element or Ref Object | HTMLElement \| (() => HTMLElement) \| React.MutableRefObject | - |
+| Property | Description               | Type | Default |
+|----------|---------------------------|------|---------|
+| target   | DOM element or Ref Object |  `HTMLElement` \| `() => HTMLElement` \| `React.MutableRefObject` | -       |
 
 ### Result
 
-| Property | Description                                         | Type                 |
-|----------|------------------------------------------|------------|
-| inViewPort  | Whether DOM elements are in the visible range                             | boolean    |
+| Property   | Description                                   | Type    |
+|------------|-----------------------------------------------|---------|
+| inViewPort | Whether DOM elements are in the visible range | `boolean` |

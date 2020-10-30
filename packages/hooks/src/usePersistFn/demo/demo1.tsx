@@ -2,7 +2,7 @@
  * title: Default usage
  * desc: With usePersistFn, function references never change.
  *
- * title.zh-CN: 基本用法
+ * title.zh-CN: 基础用法
  * desc.zh-CN: 通过 usePersistFn, 函数引用永远不会变化。
  */
 

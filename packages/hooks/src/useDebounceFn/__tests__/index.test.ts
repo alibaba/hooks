@@ -22,7 +22,7 @@ describe('useDebounceFn', () => {
     expect(useDebounceFn).toBeDefined();
   });
 
-  it('run and cancel should work', async () => {
+  it('run, cancel and flush should work', async () => {
     act(() => {
       hook = setUp({
         fn: debounceFn,
@@ -45,6 +45,11 @@ describe('useDebounceFn', () => {
       hook.result.current.cancel();
       await sleep(300);
       expect(count).toBe(6);
+      hook.result.current.run(1);
+      hook.result.current.flush();
+      expect(count).toBe(7);
+      await sleep(300);
+      expect(count).toBe(7);
     });
   });
 });

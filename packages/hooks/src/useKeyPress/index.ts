@@ -1,5 +1,5 @@
-import { useEffect, useCallback, useRef } from 'react';
-import { getTargetElement, BasicTarget } from '../utils/dom';
+import { useEffect, useRef } from 'react';
+import { BasicTarget, getTargetElement } from '../utils/dom';
 
 export type KeyPredicate = (event: KeyboardEvent) => boolean;
 export type keyType = KeyboardEvent['keyCode'] | KeyboardEvent['key'];
@@ -139,17 +139,14 @@ function useKeyPress(
   const callbackRef = useRef(eventHandler);
   callbackRef.current = eventHandler;
 
-  const callbackHandler = useCallback(
-    (event) => {
+  useEffect(() => {
+    const callbackHandler = (event) => {
       const genGuard: KeyPredicate = genKeyFormater(keyFilter);
       if (genGuard(event)) {
         return callbackRef.current(event);
       }
-    },
-    [keyFilter],
-  );
+    };
 
-  useEffect(() => {
     const el = getTargetElement(target, window)!;
 
     for (const eventName of events) {
@@ -160,7 +157,7 @@ function useKeyPress(
         el.removeEventListener(eventName, callbackHandler);
       }
     };
-  }, [events, callbackHandler, typeof target === 'function' ? undefined : target]);
+  }, [events, keyFilter, target]);
 }
 
 export default useKeyPress;

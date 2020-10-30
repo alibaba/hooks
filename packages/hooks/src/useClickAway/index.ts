@@ -1,5 +1,5 @@
-import { useEffect, useCallback } from 'react';
-import { getTargetElement, BasicTarget } from '../utils/dom';
+import { useEffect, useRef } from 'react';
+import { BasicTarget, getTargetElement } from '../utils/dom';
 
 // 鼠标点击事件，click 不会监听右键
 const defaultEvent = 'click';
@@ -11,29 +11,27 @@ export default function useClickAway(
   target: BasicTarget | BasicTarget[],
   eventName: string = defaultEvent,
 ) {
-  const handler = useCallback(
-    (event) => {
+  const onClickAwayRef = useRef(onClickAway);
+  onClickAwayRef.current = onClickAway;
+
+  useEffect(() => {
+    const handler = (event: any) => {
       const targets = Array.isArray(target) ? target : [target];
-      const targetElements = targets.map((targetItem) =>
-        getTargetElement(targetItem),
-      ) as HTMLElement[];
       if (
-        targetElements.some(
-          (targetElement) => !targetElement || targetElement.contains(event.target),
-        )
+        targets.some((targetItem) => {
+          const targetElement = getTargetElement(targetItem) as HTMLElement;
+          return !targetElement || targetElement?.contains(event.target);
+        })
       ) {
         return;
       }
-      onClickAway(event);
-    },
-    [onClickAway, typeof target === 'function' ? undefined : target],
-  );
+      onClickAwayRef.current(event);
+    };
 
-  useEffect(() => {
     document.addEventListener(eventName, handler);
 
     return () => {
       document.removeEventListener(eventName, handler);
     };
-  }, [eventName, handler]);
+  }, [target, eventName]);
 }
