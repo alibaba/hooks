@@ -2,8 +2,16 @@ import { useRef, useState } from 'react';
 
 import useCreation from '../useCreation';
 
+const proxyMap = new WeakMap();
+
 function observer<T extends object>(initialVal: T, cb: () => void) {
-  return new Proxy<T>(initialVal, {
+  const existingProxy = proxyMap.get(initialVal);
+
+  // 添加缓存 防止重新构建proxy
+  if (existingProxy) {
+    return existingProxy;
+  }
+  const proxy = new Proxy<T>(initialVal, {
     get(target, key, receiver) {
       const res = Reflect.get(target, key, receiver);
       return typeof res === 'object' ? observer(res, cb) : Reflect.get(target, key);
@@ -14,6 +22,9 @@ function observer<T extends object>(initialVal: T, cb: () => void) {
       return ret;
     },
   });
+
+  proxyMap.set(initialVal, proxy);
+  return proxy;
 }
 
 function useReactive<S extends object>(initialState: S): S {
