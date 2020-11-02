@@ -18,18 +18,21 @@ It offers data reactivity when manipulating states and views, in which case `use
 
 <code src="./demo/demo1.tsx" />
 
-### array
+### Array
 
 <code src="./demo/demo2.tsx" />
 
+### notice
+
+<code  src="./demo/demo3.tsx" desc="`useReactive` returns a proxy object which always has the same reference. If `useEffect`, `useMemo`, `useCallback` and props passed to child component rely on the proxy, none of the above will be invoked by any changes to the proxy."  />
 
 ## API
 
 ```js
-let state = useReactive(initialValue:object);
+const state = useReactive(initialValue:object);
 ```
 
-## initialState
+## Params
 
 | Params       | Description   | Type     | Default |
 |--------------|---------------|----------|---------|

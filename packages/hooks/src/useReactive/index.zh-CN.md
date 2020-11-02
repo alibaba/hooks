@@ -21,16 +21,19 @@ group:
 
 ### 数组操作
 
-<code src="./demo/demo2.tsx" />
+<code src="./demo/demo2.tsx"  />
 
+### 注意
+
+<code  src="./demo/demo3.tsx" desc="`useReactive`产生可操作的代理对象一直都是同一个引用，`useEffect` , `useMemo` ,`useCallback` ,`子组件属性传递` 等如果依赖的是这个代理对象是**不会**引起重新执行。"  />
 
 ## API
 
 ```js
-let state = useReactive(initialValue: object);
+const state = useReactive(initialState: object);
 ```
 
-## initialState
+## 参数
 
 | 参数         | 说明           | 类型     | 默认值 |
 |--------------|----------------|----------|--------|
