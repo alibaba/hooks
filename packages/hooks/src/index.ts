@@ -53,6 +53,7 @@ import useReactive from './useReactive';
 import useFavicon from './useFavicon';
 import useCountDown from './useCountDown';
 import useWebSocket from './useWebSocket';
+import useLockFn from './useLockFn';
 
 const useControlledValue: typeof useControllableValue = function (...args) {
   console.warn(
@@ -121,4 +122,5 @@ export {
   useFavicon,
   useCountDown,
   useWebSocket,
+  useLockFn,
 };
