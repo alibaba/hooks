@@ -49,6 +49,7 @@ import useWhyDidYouUpdate from './useWhyDidYouUpdate';
 import useTitle from './useTitle';
 import useNetwork from './useNetwork';
 import useTimeout from './useTimeout';
+import useReactive from './useReactive';
 import useFavicon from './useFavicon';
 import useCountDown from './useCountDown';
 import useWebSocket from './useWebSocket';
@@ -117,6 +118,7 @@ export {
   useTitle,
   useNetwork,
   useTimeout,
+  useReactive,
   useFavicon,
   useCountDown,
   useTrackedEffect,

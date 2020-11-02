@@ -22,7 +22,8 @@ function useStorageState<T>(
   key: string,
   defaultValue?: StorageStateDefaultValue<T>,
 ): StorageStateResult<T> {
-  if (typeof window !== 'object') return [isFunction<IFuncUpdater<T>>(defaultValue) ? defaultValue() : defaultValue, () => {}];
+  if (typeof window !== 'object')
+    return [isFunction<IFuncUpdater<T>>(defaultValue) ? defaultValue() : defaultValue, () => {}];
 
   const [state, setState] = useState<T | undefined>(() => getStoredValue());
   useUpdateEffect(() => {
