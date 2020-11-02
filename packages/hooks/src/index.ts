@@ -53,6 +53,7 @@ import useReactive from './useReactive';
 import useFavicon from './useFavicon';
 import useCountDown from './useCountDown';
 import useWebSocket from './useWebSocket';
+import useLockFn from './useLockFn';
 import useTrackedEffect from './useTrackedEffect';
 
 const useControlledValue: typeof useControllableValue = function (...args) {
@@ -123,4 +124,5 @@ export {
   useCountDown,
   useTrackedEffect,
   useWebSocket,
+  useLockFn,
 };

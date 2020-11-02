@@ -6,6 +6,7 @@ lib
 node_modules
 .history
 .idea
+.vscode
 coverage
 .doc
 .DS_Store
