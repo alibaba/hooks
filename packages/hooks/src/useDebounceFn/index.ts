@@ -24,7 +24,7 @@ function useDebounceFn<T extends Fn>(fn: T, options?: DebounceOptions) {
   );
 
   return {
-    run: debounced as T,
+    run: (debounced as unknown) as T,
     cancel: debounced.cancel,
     flush: debounced.flush,
   };
