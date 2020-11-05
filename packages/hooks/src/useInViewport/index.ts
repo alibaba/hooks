@@ -6,7 +6,7 @@ type InViewport = boolean | undefined;
 
 function isInViewPort(el: HTMLElement): boolean {
   if (!el) {
-    return false;
+    return undefined;
   }
 
   const viewPortWidth =
