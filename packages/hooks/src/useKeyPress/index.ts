@@ -71,6 +71,11 @@ function isType(obj: any) {
  * @returns Boolean
  */
 function genFilterKey(event: any, keyFilter: any) {
+  // 浏览器自动补全 input 的时候，会触发 keyDown、keyUp 事件，但此时 event.key 等为空
+  if (!event.key) {
+    return false;
+  }
+
   const type = isType(keyFilter);
   // 数字类型直接匹配事件的 keyCode
   if (type === 'number') {
