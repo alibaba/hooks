@@ -11,7 +11,7 @@ function useMap<K, T>(initialValue?: Iterable<readonly [K, T]>) {
     () => ({
       set: (key: K, entry: T) => {
         setMap((prev) => {
-          const temp = new Map(Array.from(prev));
+          const temp = new Map(prev);
           temp.set(key, entry);
           return temp;
         });
@@ -21,7 +21,7 @@ function useMap<K, T>(initialValue?: Iterable<readonly [K, T]>) {
       },
       remove: (key: K) => {
         setMap((prev) => {
-          const temp = new Map(Array.from(prev));
+          const temp = new Map(prev);
           temp.delete(key);
           return temp;
         });
