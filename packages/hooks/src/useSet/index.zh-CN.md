@@ -6,7 +6,6 @@ nav:
 group:
   title: State
   path: /state
-legacy: /zh-CN/state/use-set
 ---
 
 # useSet
@@ -19,7 +18,7 @@ legacy: /zh-CN/state/use-set
 
 ## API
 
-```javascript
+```typescript
 const [
   set,
   {
@@ -33,16 +32,16 @@ const [
 
 ### Result
 
-| 参数     | 说明                                 | 类型                 |
-|----------|--------------------------------------|----------------------|
-| set  | Set 对象                         | Set              |
-| add | 添加元素 | (key: any) => void |
-| has | 判断是否存在元素 | (key: any) => Boolean |
-| remove | 移除元素 | (key: any) => void |
-| reset | 重置为默认值 | () => void |
+| 参数   | 说明             | 类型                    |
+|--------|------------------|-------------------------|
+| set    | Set 对象         | `Set`                   |
+| add    | 添加元素         | `(key: any) => void`    |
+| has    | 判断是否存在元素 | `(key: any) => Boolean` |
+| remove | 移除元素         | `(key: any) => void`    |
+| reset  | 重置为默认值     | `() => void`            |
 
 ### Params
 
-| 参数    | 说明                                         | 类型                   | 默认值 |
-|---------|----------------------------------------------|------------------------|--------|
-| initialValue | 可选项，传入默认的 Set 参数  | Iterable<K\> | -      |
+| 参数         | 说明                        | 类型          | 默认值 |
+|--------------|-----------------------------|---------------|--------|
+| initialValue | 可选项，传入默认的 Set 参数 | `Iterable<K>` | -      |
