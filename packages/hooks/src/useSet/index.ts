@@ -10,9 +10,20 @@ function useSet<K>(initialValue?: Iterable<K>) {
 
   const stableActions = useMemo(
     () => ({
-      add: (key: K) => setSet((prevSet) => new Set([...Array.from(prevSet), key])),
-      remove: (key: K) =>
-        setSet((prevSet) => new Set(Array.from(prevSet).filter((i) => i !== key))),
+      add: (key: K) => {
+        setSet((prevSet) => {
+          const temp = new Set(prevSet);
+          temp.add(key);
+          return temp;
+        });
+      },
+      remove: (key: K) => {
+        setSet((prevSet) => {
+          const temp = new Set(prevSet);
+          temp.delete(key);
+          return temp;
+        });
+      },
       reset: () => setSet(initialSet),
     }),
     [setSet, initialSet],
