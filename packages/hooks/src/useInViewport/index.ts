@@ -4,7 +4,7 @@ import { getTargetElement, BasicTarget } from '../utils/dom';
 
 type InViewport = boolean | undefined;
 
-function isInViewPort(el: HTMLElement): boolean | undefined  {
+function isInViewPort(el: HTMLElement): InViewport  {
   if (!el) {
     return undefined;
   }
