@@ -21,7 +21,7 @@ export default () => {
         type="button"
         onClick={() => remove('Hello')}
         disabled={!has('Hello')}
-        style={{ margin: '0 16px' }}
+        style={{ margin: '0 8px' }}
       >
         Remove Hello
       </button>
