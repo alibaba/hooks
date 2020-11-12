@@ -6,7 +6,6 @@ nav:
 group:
   title: State
   path: /state
-legacy: /state/use-set
 ---
 
 # useSet
@@ -21,7 +20,7 @@ A hook that can manage the state of Set.
 
 ## API
 
-```javascript
+```typescript
 const [
   set,
   {
@@ -35,16 +34,16 @@ const [
 
 ### Result
 
-| Property | Description                                         | Type                 |
-|----------|--------------------------------------|----------------------|
-| set  | Set object                         | Set              |
-| add | add key | (key: any) => void |
-| has | Determine whether the element exists | (key: any) => Boolean |
-| remove | remove key | (key: any) => void |
-| reset | reset to default | () => void |
+| Property | Description                          | Type                    |
+|----------|--------------------------------------|-------------------------|
+| set      | Set object                           | `Set`                   |
+| add      | add key                              | `(key: any) => void`    |
+| has      | Determine whether the element exists | `(key: any) => Boolean` |
+| remove   | remove key                           | `(key: any) => void`    |
+| reset    | reset to default                     | `() => void`            |
 
 ### Params
 
-| Property | Description                                 | Type                   | Default |
-|---------|----------------------------------------------|------------------------|--------|
-| initialValue | Optional, Pass in the default Set as parameter  | Iterable<K\> | -      |
+| Property     | Description                                    | Type          | Default |
+|--------------|------------------------------------------------|---------------|---------|
+| initialValue | Optional, Pass in the default Set as parameter | `Iterable<K>` | -       |

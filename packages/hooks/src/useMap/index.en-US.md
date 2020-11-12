@@ -6,7 +6,6 @@ nav:
 group:
   title: State
   path: /state
-legacy: /state/use-map
 ---
 
 # useMap
@@ -21,7 +20,7 @@ A hook that can manage the state of Map.
 
 ## API
 
-```javascript
+```typescript
 const [
   map,
   {
@@ -36,17 +35,17 @@ const [
 
 ### Result
 
-| Property | Description                                         | Type                 |
-|----------|--------------------------------------|----------------------|
-| map  | Map object                         | Map              |
-| set | add key | (key: any, value: any) => void |
-| get | get key | (key: any) => MapItem |
-| setAll | add and reset a new Map | (newMap: Iterable<[any, any]>) => void |
-| remove | remove key | (key: any) => void |
-| reset | reset to default | () => void |
+| Property | Description             | Type                                     |
+|----------|-------------------------|------------------------------------------|
+| map      | Map object              | `Map`                                    |
+| set      | add key                 | `(key: any, value: any) => void`         |
+| get      | get key                 | `(key: any) => MapItem`                  |
+| setAll   | add and reset a new Map | `(newMap: Iterable<[any, any]>) => void` |
+| remove   | remove key              | `(key: any) => void`                     |
+| reset    | reset to default        | `() => void`                             |
 
 ### Params
 
-| Property | Description                                 | Type                   | Default |
-|---------|----------------------------------------------|------------------------|--------|
-| initialValue | Optional, Pass in the default Map as parameter  | Iterable<[any, any]\> | -      |
+| Property     | Description                                    | Type                   | Default |
+|--------------|------------------------------------------------|------------------------|---------|
+| initialValue | Optional, Pass in the default Map as parameter | `Iterable<[any, any]>` | -       |

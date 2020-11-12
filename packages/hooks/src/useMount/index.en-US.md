@@ -11,7 +11,7 @@ group:
 
 # useMount
 
-A hook that executes a function at mount
+A hook that executes a function at mount.
 
 ## Examples
 
@@ -21,12 +21,12 @@ A hook that executes a function at mount
 
 ## API
 
-```javascript
+```typescript
 useMount(fn: () => void);
 ```
 
 ### Params
 
-| Property    | Description                                         | Type                   | Default |
-|---------|----------------------------------------------|------------------------|--------|
-| fn | the function need to be executed | () => void | -      |
+| Property | Description                      | Type         | Default |
+|----------|----------------------------------|--------------|---------|
+| fn       | the function need to be executed | `() => void` | -       |

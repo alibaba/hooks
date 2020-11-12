@@ -23,14 +23,14 @@ export default () => {
       <button
         type="button"
         onClick={() => setAll([['text', 'this is a new Map']])}
-        style={{ margin: '0 16px' }}
+        style={{ margin: '0 8px' }}
       >
         Set new Map
       </button>
       <button type="button" onClick={() => remove('msg')} disabled={!get('msg')}>
         Remove 'msg'
       </button>
-      <button type="button" onClick={() => reset()} style={{ margin: '0 16px' }}>
+      <button type="button" onClick={() => reset()} style={{ margin: '0 8px' }}>
         Reset
       </button>
       <div style={{ marginTop: 16 }}>
