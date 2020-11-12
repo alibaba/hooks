@@ -57,6 +57,7 @@ export default {
       { title: 'v1.x', path: 'http://hooks.umijs.org/' },
       { title: 'GitHub', path: 'https://github.com/alibaba/hooks' },
       { title: '更新日志', path: 'https://github.com/alibaba/hooks/releases' },
+      { title: '国内镜像', path: 'https://ahooks.gitee.io' },
     ],
     'en-US': [
       null,
@@ -72,6 +73,7 @@ export default {
       { title: 'v1.x', path: 'http://hooks.umijs.org/' },
       { title: 'GitHub', path: 'https://github.com/alibaba/hooks' },
       { title: 'Changelog', path: 'https://github.com/alibaba/hooks/releases' },
+      { title: '国内镜像', path: 'https://ahooks.gitee.io' },
     ],
   },
   headScripts: ['https://s4.cnzz.com/z_stat.php?id=1278992092&web_id=1278992092'],
