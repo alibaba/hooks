@@ -1,47 +1,42 @@
-import { useState, useMemo, useCallback } from 'react';
+import { useMemo, useState, useCallback } from 'react';
 
-interface StableActions<U, V> {
-  set: (key: U, value: V) => void;
-  setAll: (newMap: Iterable<readonly [U, V]>) => void;
-  remove: (key: U) => void;
-  reset: () => void;
-}
-
-interface Actions<U, V> extends StableActions<U, V> {
-  get: (key: U) => V;
-}
-
-function useMap<K, T>(initialValue?: Iterable<readonly [K, T]>): [Map<K, T>, Actions<K, T>] {
+function useMap<K, T>(initialValue?: Iterable<readonly [K, T]>) {
   const initialMap = useMemo<Map<K, T>>(
     () => (initialValue === undefined ? new Map() : new Map(initialValue)) as Map<K, T>,
-    [initialValue],
+    [],
   );
-  const [map, set] = useState(initialMap);
+  const [map, setMap] = useState(initialMap);
 
-  const stableActions = useMemo<StableActions<K, T>>(
+  const stableActions = useMemo(
     () => ({
-      set: (key, entry) => {
-        map.set(key, entry);
-        set(new Map(Array.from(map)));
+      set: (key: K, entry: T) => {
+        setMap((prev) => {
+          const temp = new Map(prev);
+          temp.set(key, entry);
+          return temp;
+        });
       },
-      setAll: (newMap) => {
-        set(new Map(newMap));
+      setAll: (newMap: Iterable<readonly [K, T]>) => {
+        setMap(new Map(newMap));
       },
-      remove: (key) => {
-        map.delete(key);
-        set(new Map(Array.from(map)));
+      remove: (key: K) => {
+        setMap((prev) => {
+          const temp = new Map(prev);
+          temp.delete(key);
+          return temp;
+        });
       },
-      reset: () => set(initialMap),
+      reset: () => setMap(initialMap),
     }),
-    [map, set],
+    [setMap, initialMap],
   );
 
   const utils = {
     get: useCallback((key) => map.get(key), [map]),
     ...stableActions,
-  } as Actions<K, T>;
+  };
 
-  return [map, utils];
+  return [map, utils] as const;
 }
 
 export default useMap;
