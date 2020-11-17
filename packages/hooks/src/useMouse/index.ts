@@ -1,4 +1,5 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
+import useEventListener from '../useEventListener';
 
 export interface CursorState {
   screenX: number;
@@ -21,16 +22,16 @@ const initState: CursorState = {
 export default () => {
   const [state, setState] = useState(initState);
 
-  useEffect(() => {
-    const moveHandler = (event: MouseEvent) => {
+  useEventListener(
+    'mousemove',
+    (event: MouseEvent) => {
       const { screenX, screenY, clientX, clientY, pageX, pageY } = event;
       setState({ screenX, screenY, clientX, clientY, pageX, pageY });
-    };
-    document.addEventListener('mousemove', moveHandler);
-    return () => {
-      document.removeEventListener('mousemove', moveHandler);
-    };
-  }, []);
+    },
+    {
+      target: document,
+    },
+  );
 
   return state;
 };
