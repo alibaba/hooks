@@ -67,12 +67,12 @@ function useNetwork(): NetworkState {
     window.addEventListener('offline', onOffline);
 
     const connection = getConnection();
-    connection && connection.addEventListener('change', onConnectionChange);
+    connection?.addEventListener('change', onConnectionChange);
 
     return () => {
       window.removeEventListener('online', onOnline);
       window.removeEventListener('offline', onOffline);
-      connection && connection.removeEventListener('change', onConnectionChange);
+      connection?.removeEventListener('change', onConnectionChange);
     };
   }, []);
 
