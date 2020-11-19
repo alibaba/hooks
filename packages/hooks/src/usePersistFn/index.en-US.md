@@ -6,12 +6,11 @@ nav:
 group:
   title: Advanced
   path: /advanced
-legacy: /advanced/use-persist-fn
 ---
 
 # usePersistFn
 
-Hooks for persistent functions
+Hooks for persistent functions.
 
 > Reference [How to read an often-changing value from useCallback?](https://reactjs.org/docs/hooks-faq.html#how-to-read-an-often-changing-value-from-usecallback)
 >
@@ -41,6 +40,6 @@ const fn = usePersistFn<T extends noop>(
 
 ### Params
 
-| Property       | Description                        | Type                      | Default |
-|----------------|------------------------------------|---------------------------|---------|
-| fn             | Functions that require persistence | `(...args: any[]) => any` | -       |
+| Property | Description                        | Type                      | Default |
+|----------|------------------------------------|---------------------------|---------|
+| fn       | Functions that require persistence | `(...args: any[]) => any` | -       |

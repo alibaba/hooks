@@ -6,12 +6,11 @@ nav:
 group:
   title: Advanced
   path: /advanced
-legacy: /zh-CN/advanced/use-persist-fn
 ---
 
 # usePersistFn
 
-持久化 function 的 Hook
+持久化 function 的 Hook。
 
 > 参考 [如何从 useCallback 读取一个经常变化的值？](https://zh-hans.reactjs.org/docs/hooks-faq.html#how-to-read-an-often-changing-value-from-usecallback)
 >
@@ -25,6 +24,7 @@ legacy: /zh-CN/advanced/use-persist-fn
 <code src="./demo/demo1.tsx" />
 
 ## API
+
 ```typescript
 type noop = (...args: any[]) => any;
 
@@ -41,6 +41,6 @@ const fn = usePersistFn<T extends noop>(
 
 ### Params
 
-| 参数           | 说明             | 类型                      | 默认值 |
-|----------------|------------------|---------------------------|--------|
-| fn             | 需要持久化的函数 | `(...args: any[]) => any` | -      |
+| 参数 | 说明             | 类型                      | 默认值 |
+|------|------------------|---------------------------|--------|
+| fn   | 需要持久化的函数 | `(...args: any[]) => any` | -      |

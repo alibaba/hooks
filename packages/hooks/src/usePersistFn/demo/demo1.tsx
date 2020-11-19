@@ -1,9 +1,9 @@
 /**
  * title: Default usage
- * desc: With usePersistFn, function references never change.
+ * desc: With usePersistFn, function references never change. In the example, `showCountPersistFn` will not change, `showCountCommon` will change when count changes.
  *
  * title.zh-CN: 基础用法
- * desc.zh-CN: 通过 usePersistFn, 函数引用永远不会变化。
+ * desc.zh-CN: 通过 usePersistFn，函数引用永远不会变化，示例中 `showCountPersistFn` 是不会变化的，`showCountCommon` 在 count 变化时变化。
  */
 
 import React, { useState, useCallback, useRef } from 'react';

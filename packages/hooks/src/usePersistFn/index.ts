@@ -1,10 +1,12 @@
-import { useRef } from 'react';
+import { useRef, useEffect } from 'react';
 
 export type noop = (...args: any[]) => any;
 
 function usePersistFn<T extends noop>(fn: T) {
-  const fnRef = useRef<T>();
-  fnRef.current = fn;
+  const fnRef = useRef<T>(fn);
+  useEffect(() => {
+    fnRef.current = fn;
+  }, [fn]);
 
   const persistFn = useRef<T>();
   if (!persistFn.current) {
