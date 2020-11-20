@@ -13,34 +13,41 @@ export interface Actions {
   reset: () => void;
 }
 
+export type ValueParam = number | ((c: number) => number);
+
+function getTargetValue(val: number, options: Options = {}) {
+  const { min, max } = options;
+  if (typeof max === 'number') {
+    return Math.min(max, val);
+  }
+  if (typeof min === 'number') {
+    return Math.max(min, val);
+  }
+  return val;
+}
+
 function useCounter(initialValue: number = 0, options: Options = {}) {
   const { min, max } = options;
 
   // get init value
   const init = useCreation(() => {
-    if (typeof max === 'number') {
-      return Math.min(max, initialValue);
-    }
-    if (typeof min === 'number') {
-      return Math.max(min, initialValue);
-    }
-    return initialValue;
+    return getTargetValue(initialValue, {
+      min,
+      max,
+    });
   }, []);
 
   const [current, setCurrent] = useState(init);
 
   const actions = useMemo(() => {
-    const setValue = (value: number | ((c: number) => number)) => {
-      setCurrent((c: number) => {
+    const setValue = (value: ValueParam) => {
+      setCurrent((c) => {
         // get target value
         let target = typeof value === 'number' ? value : value(c);
-        if (typeof max === 'number') {
-          target = Math.min(max, target);
-        }
-        if (typeof min === 'number') {
-          target = Math.max(min, target);
-        }
-        return target;
+        return getTargetValue(target, {
+          max,
+          min,
+        });
       });
     };
     const inc = (delta: number = 1) => {
@@ -49,7 +56,7 @@ function useCounter(initialValue: number = 0, options: Options = {}) {
     const dec = (delta: number = 1) => {
       setValue((c) => c - delta);
     };
-    const set = (value: number | ((c: number) => number)) => {
+    const set = (value: ValueParam) => {
       setValue(value);
     };
     const reset = () => {
