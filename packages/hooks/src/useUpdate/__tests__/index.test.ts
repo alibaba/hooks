@@ -1,26 +1,24 @@
-import { useState, useEffect } from 'react';
+import { useRef } from 'react';
 import { renderHook, act } from '@testing-library/react-hooks';
 import useUpdate from '..';
-import usePrevious from '../../usePrevious';
+import usePersistFn from '../../usePersistFn';
 
 describe('useUpdate', () => {
   it('should update', () => {
     const hooks = renderHook(() => {
-      const [count, setCount] = useState(0);
-      const previous = usePrevious(count);
+      const ref = useRef(0);
       const update = useUpdate();
-      useEffect(() => {
-        if (count === previous) {
-          setCount(count + 1);
-        }
-      });
       return {
         update,
-        count,
+        count: ref.current,
+        onChange: usePersistFn(() => {
+          ref.current = ref.current + 1;
+          update();
+        }),
       };
     });
     expect(hooks.result.current.count).toEqual(0);
-    act(hooks.result.current.update);
+    act(hooks.result.current.onChange);
     expect(hooks.result.current.count).toEqual(1);
   });
   it('should return same update function', () => {
