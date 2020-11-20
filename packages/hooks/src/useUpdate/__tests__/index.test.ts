@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import { renderHook, act } from '@testing-library/react-hooks';
 import useUpdate from '..';
 import usePrevious from '../../usePrevious';
-import { times } from 'lodash';
 
 describe('useUpdate', () => {
   it('should update', () => {
