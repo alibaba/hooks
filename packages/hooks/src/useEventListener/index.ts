@@ -3,7 +3,33 @@ import { BasicTarget, getTargetElement } from '../utils/dom';
 
 export type Target = BasicTarget<HTMLElement | Element | Window | Document>;
 
-type Options = { target?: Target; capture?: boolean; once?: boolean; passive?: boolean };
+type Options<T extends Target = Target> = {
+  target?: T;
+  capture?: boolean;
+  once?: boolean;
+  passive?: boolean;
+};
+
+function useEventListener<K extends keyof HTMLElementEventMap>(
+  eventName: K,
+  handler: (ev: HTMLElementEventMap[K]) => void,
+  options?: Options<HTMLElement>,
+): void;
+function useEventListener<K extends keyof ElementEventMap>(
+  eventName: K,
+  handler: (ev: ElementEventMap[K]) => void,
+  options?: Options<Element>,
+): void;
+function useEventListener<K extends keyof DocumentEventMap>(
+  eventName: K,
+  handler: (ev: DocumentEventMap[K]) => void,
+  options?: Options<Document>,
+): void;
+function useEventListener<K extends keyof WindowEventMap>(
+  eventName: K,
+  handler: (ev: WindowEventMap[K]) => void,
+  options?: Options<Window>,
+): void;
 
 function useEventListener(eventName: string, handler: Function, options: Options = {}) {
   const handlerRef = useRef<Function>();
