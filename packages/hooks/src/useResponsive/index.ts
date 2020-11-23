@@ -53,14 +53,14 @@ export function configResponsive(config: ResponsiveConfig) {
 }
 
 export function useResponsive() {
-  if (!listening) {
+  const windowExists = typeof window !== 'undefined';
+  if (windowExists && !listening) {
     info = {};
     calculate();
     window.addEventListener('resize', handleResize);
     listening = true;
   }
   const [state, setState] = useState<ResponsiveInfo>(info);
-  const windowExists = typeof window !== 'undefined';
 
   useEffect(() => {
     if (!windowExists) return;
