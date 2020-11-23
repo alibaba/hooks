@@ -6,12 +6,11 @@ nav:
 group:
   title: State
   path: /state
-legacy: /state/use-previous
 ---
 
 # usePrevious
 
-A Hook to store the previous value
+A Hook to store the previous value.
 
 
 ## Examples
@@ -25,7 +24,8 @@ A Hook to store the previous value
 <code src="./demo/demo2.tsx" />
 
 ## API
-```
+
+```typescript
 const previousState: T = usePrevious<T>(
   state: T,
   compareFunction: (prev: T | undefined, next: T) => boolean
@@ -34,13 +34,13 @@ const previousState: T = usePrevious<T>(
 
 ### Result
 
-| Property | Description                                                       | Type                 |
-|------|----------|------|
-| previousState | the previous value | T  |
+| Property      | Description        | Type |
+|---------------|--------------------|------|
+| previousState | the previous value | -    |
 
 ### Params
 
-| Property | Description                                                       | Type                 | Default |
-|---------|----------|------------------------|--------|
-| state | the state need to be tracked | T | -      |
-| compareFunction | optional, customize when the previous value need to be stored | (prev: T \| undefined, next: T) => boolean | -      |
+| Property        | Description                                                   | Type | Default |
+|-----------------|---------------------------------------------------------------|------|---------|
+| state           | the state need to be tracked                                  | -    | -       |
+| compareFunction | optional, customize when the previous value need to be stored |  (prev: T \| undefined, next: T) => boolean    | -       |
