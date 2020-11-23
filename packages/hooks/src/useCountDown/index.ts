@@ -6,6 +6,7 @@ export type TDate = Date | number | string | undefined;
 export type Options = {
   targetDate?: TDate;
   interval?: number;
+  endFn?: () => void;
 };
 
 export interface FormattedRes {
@@ -39,7 +40,7 @@ const parseMs = (milliseconds: number): FormattedRes => {
 };
 
 const useCountdown = (options?: Options) => {
-  const { targetDate, interval = 1000 } = options || {};
+  const { targetDate, interval = 1000, endFn } = options || {};
 
   const [target, setTargetDate] = useState<TDate>(targetDate);
   const [timeLeft, setTimeLeft] = useState(() => calcLeft(target));
@@ -59,6 +60,10 @@ const useCountdown = (options?: Options) => {
       setTimeLeft(targetLeft);
       if (targetLeft === 0) {
         clearInterval(timer);
+        if (endFn) {
+          // 倒计时结束后执行该回调
+          endFn()
+        }
       }
     }, interval);
 

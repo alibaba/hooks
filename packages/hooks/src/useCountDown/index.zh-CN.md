@@ -36,6 +36,7 @@ const [countdown, setTargetDate, formattedRes] = useCountDown(
   {
     targetDate,
     interval,
+    endFn
   }
 );
 ```
@@ -54,6 +55,7 @@ const [countdown, setTargetDate, formattedRes] = useCountDown(
 | --------- | -------------- | ------------------------------------------------------- | ----------- |
 | targetDate   | 未来时间     | `TDate`                                                 | `undefined` |
 | interval  | 变化时间间隔（毫秒）     | `number`                                                | `1000`      |
+| endFn |  未来时间结束后的回调函数  |`Function`                                           |`undefined`|
 
 
 ### Result
