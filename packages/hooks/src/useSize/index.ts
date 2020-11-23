@@ -32,7 +32,7 @@ function useSize(target: BasicTarget): Size {
     return () => {
       resizeObserver.disconnect();
     };
-  }, [typeof target === 'function' ? undefined : target]);
+  }, [target]);
 
   return state;
 }
