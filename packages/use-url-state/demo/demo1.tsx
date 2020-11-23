@@ -2,7 +2,7 @@
  * title: Default usage
  * desc: store the state into url query parameter
  *
- * title.zh-CN: 默认用法
+ * title.zh-CN: 基础用法
  * desc.zh-CN: 将状态同步到 url query 中
  */
 

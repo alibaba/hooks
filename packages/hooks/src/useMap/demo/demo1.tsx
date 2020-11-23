@@ -2,7 +2,7 @@
  * title: Default usage
  * desc: Pass in a Map acceptable parameter.
  *
- * title.zh-CN: 默认用法
+ * title.zh-CN: 基础用法
  * desc.zh-CN: 传入一个 Map 可接受的参数。
  */
 
