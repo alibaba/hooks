@@ -10,7 +10,7 @@ group:
 
 # useUpdate
 
-A hook that executes a function at update
+A hook that executes a function at update.
 
 ## Examples
 
@@ -20,6 +20,6 @@ A hook that executes a function at update
 
 ## API
 
-```javascript
-useUpdate(fn: () => void);
+```typescript
+const update = useUpdate();
 ```
