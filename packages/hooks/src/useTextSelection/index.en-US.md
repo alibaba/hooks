@@ -6,12 +6,11 @@ nav:
 group:
   title: Dom
   path: /dom
-legacy: /dom/use-text-selection
 ---
 
 # useTextSelection
 
-Tracking content, size, position of user text selection
+Tracking content, size, position of user text selection.
 
 ## Examples
 
@@ -29,30 +28,30 @@ Tracking content, size, position of user text selection
 
 ## API
 
-``` ts
+```typescript
 const state = useTextSelection(target);
 ```
 
 ### Params
 
-| Property | Description | Type | Default |
-|-----|-----|-----|-----|
-| target | DOM element or Ref Object | HTMLElement \| (() => HTMLElement) \| React.MutableRefObject \| Document | document |
+| Property | Description               | Type | Default  |
+|----------|---------------------------|------|----------|
+| target   | DOM element or Ref Object | `HTMLElement` \| `(() => HTMLElement)` \| `React.MutableRefObject` \| `Document` | `document` |
 
 ### Result
 
-| Property | Description                                         | Type                 |
-|----------|------------------------------------------|------------|
-| state  | content, size, position of user text selection | detail as fallow 'state' |
+| Property | Description                                    | Type                     |
+|----------|------------------------------------------------|--------------------------|
+| state    | content, size, position of user text selection | detail as follow State |
 
-#### state
+### State
 
-| Property | Description | Type |
-|-----|-----|-----|
-| text | Selected text | string |
-| left | The left coordinate value of text | number |
-| right | The right coordinate value of text | number |
-| top |  The top coordinate value of text | number |
-| bottom | The bottom coordinate value of text | number |
-| height | The height of text | number |
-| width | The width of text | number |
+| Property | Description                         | Type   |
+|----------|-------------------------------------|--------|
+| text     | Selected text                       | `string` |
+| left     | The left coordinate value of text   | `number` |
+| right    | The right coordinate value of text  | `number` |
+| top      | The top coordinate value of text    | `number` |
+| bottom   | The bottom coordinate value of text | `number` |
+| height   | The height of text                  | `number` |
+| width    | The width of text                   | `number` |
