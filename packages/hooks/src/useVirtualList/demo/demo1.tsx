@@ -2,7 +2,7 @@
  * title: Default usage
  * desc: render 100,000 items in a list.
  *
- * title.zh-CN: 默认用法
+ * title.zh-CN: 基础用法
  * desc.zh-CN: 渲染大量数据
  */
 

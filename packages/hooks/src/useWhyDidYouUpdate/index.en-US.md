@@ -6,12 +6,11 @@ nav:
 group:
   title: State
   path: /state
-legacy: /state/use-why-did-you-update
 ---
 
 # useWhyDidYouUpdate
 
-Help developers troubleshoot what changes have caused component rerender .
+Help developers troubleshoot what changes have caused component rerender.
 
 ## Examples
 
@@ -30,10 +29,10 @@ useWhyDidYouUpdate(componentName: string, props: IProps): void;
 
 ### Params
 
-| 参数    | 说明                                         | 类型                   | 默认值 |
-|---------|----------------------------------------------|------------------------|--------|
-| componentName | Required, the name of the observation component  | string | - |
-| props | Required, data to be observed (current component `state` or passed-in `props` and other data that may lead to rerender) | object | - |
+| Property      | Description                                                                                                             | Type     | Default |
+|---------------|-------------------------------------------------------------------------------------------------------------------------|----------|---------|
+| componentName | Required, the name of the observation component                                                                         | `string` | -       |
+| props         | Required, data to be observed (current component `state` or passed-in `props` and other data that may lead to rerender) | `object` | -       |
 
 
 ### Result

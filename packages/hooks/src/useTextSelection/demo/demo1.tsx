@@ -2,7 +2,7 @@
  * title: Default usage
  * desc: Tracking content of user text selection
  *
- * title.zh-CN: 默认用法
+ * title.zh-CN: 基础用法
  * desc.zh-CN: 实时获取页面上选择的文本
  */
 

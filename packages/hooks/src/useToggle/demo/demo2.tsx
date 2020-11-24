@@ -19,13 +19,13 @@ export default () => {
         <button type="button" onClick={() => toggle()}>
           Toggle
         </button>
-        <button type="button" onClick={() => toggle('Hello')} style={{ margin: '0 16px' }}>
+        <button type="button" onClick={() => toggle('Hello')} style={{ margin: '0 8px' }}>
           Toggle Hello
         </button>
         <button type="button" onClick={() => toggle('World')}>
           Toggle World
         </button>
-        <button type="button" onClick={setLeft} style={{ margin: '0 16px' }}>
+        <button type="button" onClick={setLeft} style={{ margin: '0 8px' }}>
           Set Hello
         </button>
         <button type="button" onClick={setRight}>

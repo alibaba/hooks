@@ -1,16 +1,17 @@
-import { useEffect, useRef } from 'react';
+import { useEffect } from 'react';
+import usePersistFn from '../usePersistFn';
+import { isFunction } from '../utils';
 
 const useUnmount = (fn: any) => {
-  const fnRef = useRef(fn);
-  fnRef.current = fn;
+  const fnPersist = usePersistFn(fn);
 
   useEffect(
     () => () => {
-      if (fnRef.current && typeof fnRef.current === 'function') {
-        fnRef.current();
+      if (isFunction(fnPersist)) {
+        fnPersist();
       }
     },
-    [],
+    [fnPersist],
   );
 };
 
