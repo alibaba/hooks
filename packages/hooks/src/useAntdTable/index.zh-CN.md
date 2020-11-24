@@ -8,7 +8,6 @@ group:
   title: Table
   path: /table
   order: 3
-legacy: /zh-CN/table/use-antd-table
 ---
 
 # useAntdTable
