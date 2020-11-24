@@ -2,7 +2,7 @@
  * title: Default usage
  * desc: return network status
  *
- * title.zh-CN: 默认用法
+ * title.zh-CN: 基础用法
  * desc.zh-CN: 返回网络状态信息
  */
 

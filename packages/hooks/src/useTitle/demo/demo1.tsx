@@ -2,7 +2,7 @@
  * title: Default usage
  * desc: sets title of the page.
  *
- * title.zh-CN: 默认用法
+ * title.zh-CN: 基础用法
  * desc.zh-CN: 设置页面标题
  */
 

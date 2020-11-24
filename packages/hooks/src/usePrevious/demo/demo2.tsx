@@ -48,8 +48,8 @@ export default () => {
         <div>current job: {state.job}</div>
       </div>
       <div>previous name: {(previousName || {}).name}</div>
-      <div style={{ marginBottom: 16 }}>previous job: {(previousJob || {}).job}</div>
-      <div style={{ marginTop: '16px' }}>
+      <div style={{ marginBottom: 8 }}>previous job: {(previousJob || {}).job}</div>
+      <div style={{ marginTop: 8 }}>
         <input
           style={{ width: 220 }}
           value={nameInput}
@@ -61,12 +61,12 @@ export default () => {
           onClick={() => {
             setState((s) => ({ ...s, name: nameInput }));
           }}
-          style={{ marginLeft: 16 }}
+          style={{ marginLeft: 8 }}
         >
           update
         </button>
       </div>
-      <div style={{ marginTop: '16px' }}>
+      <div style={{ marginTop: 8 }}>
         <input
           style={{ width: 220 }}
           value={jobInput}
@@ -78,7 +78,7 @@ export default () => {
           onClick={() => {
             setState((s) => ({ ...s, job: jobInput }));
           }}
-          style={{ marginLeft: 16 }}
+          style={{ marginLeft: 8 }}
         >
           update
         </button>

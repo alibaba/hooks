@@ -6,7 +6,6 @@ nav:
 group:
   title: Dom
   path: /dom
-legacy: /zh-CN/dom/use-text-selection
 ---
 
 # useTextSelection
@@ -15,7 +14,7 @@ legacy: /zh-CN/dom/use-text-selection
 
 ## 代码演示
 
-### 默认用法
+### 基础用法
 
 <code src="./demo/demo1.tsx" />
 
@@ -30,30 +29,30 @@ legacy: /zh-CN/dom/use-text-selection
 
 ## API
 
-``` typescript
+```typescript
 const state = useTextSelection(target);
 ```
 
-### 参数
+### Params
 
-| 参数 | 说明 | 类型 | 默认值 |
-|-----|-----|-----|-----|
-| target | DOM element or Ref Object | HTMLElement \| (() => HTMLElement) \| React.MutableRefObject \| Document | document |
+| 参数   | 说明                      | 类型 | 默认值   |
+|--------|---------------------------|------|----------|
+| target | DOM element or Ref Object |  `HTMLElement` \| `(() => HTMLElement)` \| `React.MutableRefObject` \| `Document` | `document` |
 
-### 结果
+### Result
 
-| 参数 | 说明 | 类型 |
-|-----|-----|-----|
-| state | dom 节点内选取文本的内容和位置 | 详见下方 state |
+| 参数  | 说明                           | 类型           |
+|-------|--------------------------------|----------------|
+| state | dom 节点内选取文本的内容和位置 | 详见下方 State |
 
-#### state
+### State
 
-| 参数 | 说明 | 类型 |
-|-----|-----|-----|
-| text | 用户选取的文本值 | string |
-| left | 文本的左坐标 | number |
-| right | 文本的右坐标 | number |
-| top | 文本的顶坐标 | number |
-| bottom | 文本的底坐标 | number |
-| height | 文本的高度 | number |
-| width | 文本的宽度 | number |
+| 参数   | 说明             | 类型   |
+|--------|------------------|--------|
+| text   | 用户选取的文本值 | `string` |
+| left   | 文本的左坐标     | `number` |
+| right  | 文本的右坐标     | `number` |
+| top    | 文本的顶坐标     | `number` |
+| bottom | 文本的底坐标     | `number` |
+| height | 文本的高度       | `number` |
+| width  | 文本的宽度       | `number` |

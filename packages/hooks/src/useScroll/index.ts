@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import usePersistFn from '../usePersistFn';
 import { BasicTarget, getTargetElement } from '../utils/dom';
 
 interface Position {
@@ -9,14 +10,13 @@ interface Position {
 export type Target = BasicTarget<HTMLElement | Document>;
 export type ScrollListenController = (val: Position) => boolean;
 
-function useScroll(
-  target?: Target,
-  shouldUpdate: ScrollListenController = (val) => true,
-): Position {
+function useScroll(target?: Target, shouldUpdate: ScrollListenController = () => true): Position {
   const [position, setPosition] = useState<Position>({
     left: NaN,
     top: NaN,
   });
+
+  const shouldUpdatePersist = usePersistFn(shouldUpdate);
 
   useEffect(() => {
     const el = getTargetElement(target, document);
@@ -36,7 +36,7 @@ function useScroll(
           top: (currentTarget as HTMLElement).scrollTop,
         };
       }
-      if (shouldUpdate(newPosition)) setPosition(newPosition);
+      if (shouldUpdatePersist(newPosition)) setPosition(newPosition);
     }
 
     updatePosition(el as Target);
@@ -49,7 +49,7 @@ function useScroll(
     return () => {
       el.removeEventListener('scroll', listener);
     };
-  }, [target]);
+  }, [target, shouldUpdatePersist]);
 
   return position;
 }

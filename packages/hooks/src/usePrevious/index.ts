@@ -2,7 +2,7 @@ import { useRef } from 'react';
 
 export type compareFunction<T> = (prev: T | undefined, next: T) => boolean;
 
-export default <T>(state: T, compare?: compareFunction<T>): T | undefined => {
+function usePrevious<T>(state: T, compare?: compareFunction<T>): T | undefined {
   const prevRef = useRef<T>();
   const curRef = useRef<T>();
 
@@ -13,4 +13,6 @@ export default <T>(state: T, compare?: compareFunction<T>): T | undefined => {
   }
 
   return prevRef.current;
-};
+}
+
+export default usePrevious;

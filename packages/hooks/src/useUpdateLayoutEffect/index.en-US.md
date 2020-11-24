@@ -20,7 +20,7 @@ A hook of useLayoutEffect that only runs when dependencies update.
 
 ## API
 
-```javascript
+```typescript
 useUpdateLayoutEffect(
   effect: () => (void | (() => void | undefined)),
   deps?: deps,
@@ -29,7 +29,7 @@ useUpdateLayoutEffect(
 
 ### Params
 
-| Property | Description                                                        | Type                   | Default |
-|---------|----------------------------------------------|------------------------|--------|
-| effect | Executable function  | () => (void | (() => void | undefined)) | -      |
-| deps | Optionally, pass in objects that depend on changes | array \| undefined | -      |
+| Property | Description                                        | Type                                      | Default |
+|----------|----------------------------------------------------|-------------------------------------------|---------|
+| effect   | Executable function                                | `() => (void | (() => void | undefined))` | -       |
+| deps     | Optionally, pass in objects that depend on changes |  `array` \| `undefined`                     | -       |

@@ -1,5 +1,5 @@
-import { useState, useEffect, useRef } from 'react';
-import { getTargetElement, BasicTarget } from '../utils/dom';
+import { useEffect, useRef, useState } from 'react';
+import { BasicTarget, getTargetElement } from '../utils/dom';
 
 interface IRect {
   top: number;

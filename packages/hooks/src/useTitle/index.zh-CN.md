@@ -4,10 +4,8 @@ nav:
   title: Hooks
   path: /hooks
 group:
-  title: State
-  path: /state
-  order: 11
-legacy: /zh-CN/state/use-title
+  title: Dom
+  path: /dom
 ---
 
 # useTitle
@@ -16,23 +14,25 @@ legacy: /zh-CN/state/use-title
 
 ## 代码演示
 
+### 基础用法
+
 <code src="./demo/demo1.tsx" />
 
 ## API
 
-```javascript
-useTitle(value: string, options?: object);
+```typescript
+useTitle(value: string, options?: Options);
 ```
 
 ### Params
 
-| 参数    | 说明                                         | 类型                   | 默认值 |
-|---------|----------------------------------------------|------------------------|--------|
-| value | 页面标题  | string  |       |
+| 参数  | 说明     | 类型     | 默认值 |
+|-------|----------|----------|--------|
+| value | 页面标题 | `string` | -      |
 
 
 ### Options
 
-| 参数  | 说明                     | 类型   | 默认值 |
-|-------|--------------------------|--------|--------|
-| restoreOnUnmount | 恢复页面标题 | boolean | false |
+| 参数             | 说明         | 类型      | 默认值  |
+|------------------|--------------|-----------|---------|
+| restoreOnUnmount | 恢复页面标题 | `boolean` | `false` |

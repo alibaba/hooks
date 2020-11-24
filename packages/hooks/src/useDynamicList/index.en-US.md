@@ -7,7 +7,6 @@ group:
   title: UI
   path: /ui
   order: 5
-legacy: /ui/use-dynamic-list
 ---
 
 # useDynamicList
@@ -38,25 +37,25 @@ const result: Result = useDynamicList(initialValue: T[]);
 
 ### Result
 
-| Property | Description                                         | Type                 | Remarks  |
-|--------------|--------------|----------------------|---------------|
-| list      | current list data | T[]              | - |
-| resetList  | reset list current data    | (list: T[]) => void;          | - |
-| insert        | add item at specific position | (index: number, obj: T) => void                | - |
-| merge         | merge items into specific position | (index: number, obj: T) => void | - |
-| replace          | replace item at specific position         | (index: number, obj: T) => void          | - |
-| remove   | delete specific item     | (index: number) => void;          | - |
-| move | move item from old index to new index     | (oldIndex: number, newIndex: number) => void;          | - |
-| getKey  | get the uuid of specific item    | (index: number) => number;           | - |
-| getIndex  | retrieve index from uuid    | (key: number) => number;           | - |
-| sortForm  | sort the form data(using with antd form)     | (list: unknown[]) => unknown[];           | see[`Dyanmic table(draggable)`](#dyanmic-tabledraggable) |
-| push  | push new item at the end of list     | (obj: T) => void;          | - |
-| pop  | remove the last item from the list     | () => void;          | - |
-| unshift  | add new item at the front of the list    | (obj: T) => void;          | - |
-| shift  | remove the first item from the list     | () => void;          | - |
+| Property  | Description                              | Type                                           | Remarks                                                  |
+|-----------|------------------------------------------|------------------------------------------------|----------------------------------------------------------|
+| list      | current list data                        | `T[]`                                          | -                                                        |
+| resetList | reset list current data                  | `(list: T[]) => void`                          | -                                                        |
+| insert    | add item at specific position            | `(index: number, obj: T) => void`              | -                                                        |
+| merge     | merge items into specific position       | `(index: number, obj: T) => void`              | -                                                        |
+| replace   | replace item at specific position        | `(index: number, obj: T) => void`              | -                                                        |
+| remove    | delete specific item                     | `(index: number) => void`                      | -                                                        |
+| move      | move item from old index to new index    | `(oldIndex: number, newIndex: number) => void` | -                                                        |
+| getKey    | get the uuid of specific item            | `(index: number) => number`                    | -                                                        |
+| getIndex  | retrieve index from uuid                 | `(key: number) => number`                      | -                                                        |
+| sortForm  | sort the form data(using with antd form) | `(list: unknown[]) => unknown[]`               | see[`Dyanmic table(draggable)`](#dyanmic-tabledraggable) |
+| push      | push new item at the end of list         | `(obj: T) => void`                             | -                                                        |
+| pop       | remove the last item from the list       | `() => void`                                   | -                                                        |
+| unshift   | add new item at the front of the list    | `(obj: T) => void`                             | -                                                        |
+| shift     | remove the first item from the list      | `() => void`                                   | -                                                        |
 
 ### Params
 
-| Property | Description                                                        | Type                   | Default |
-|--------------|--------------|----------------------|---|
-| initialValue      | initial value of the list | T[]              | -  |
+| Property     | Description               | Type | Default |
+|--------------|---------------------------|------|---------|
+| initialValue | initial value of the list | T[]  | -       |
