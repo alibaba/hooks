@@ -1,5 +1,5 @@
 import { renderHook } from '@testing-library/react-hooks';
-import { useDrag, useDrop } from '../index';
+import { useDrag, useDrop } from '../../index';
 
 const mockUriEvent: any = (text: string) => ({
   dataTransfer: {
