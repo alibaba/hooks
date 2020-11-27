@@ -1,9 +1,10 @@
 import { useRef } from 'react';
+import usePersistFn from '../usePersistFn';
 
 function useLockFn<P extends any[] = any[], V extends any = any>(fn: (...args: P) => Promise<V>) {
   const lockRef = useRef(false);
 
-  return async function (...args: P) {
+  return usePersistFn(async function (...args: P) {
     if (lockRef.current) return;
     lockRef.current = true;
     try {
@@ -14,7 +15,7 @@ function useLockFn<P extends any[] = any[], V extends any = any>(fn: (...args: P
       lockRef.current = false;
       throw e;
     }
-  };
+  });
 }
 
 export default useLockFn;

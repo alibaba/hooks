@@ -38,4 +38,11 @@ describe('useLockFn', () => {
     locked(5);
     expect(countRef.current).toBe(5);
   });
+
+  it('should same', () => {
+    const hook = setUp();
+    const preLocked = hook.result.current.locked;
+    hook.rerender();
+    expect(hook.result.current.locked).toEqual(preLocked);
+  });
 });
