@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import useUpdateEffect from '../useUpdateEffect';
 
 export interface IFuncUpdater<T> {
@@ -22,15 +22,11 @@ function useStorageState<T>(
   key: string,
   defaultValue?: StorageStateDefaultValue<T>,
 ): StorageStateResult<T> {
-  if (typeof window !== 'object')
+  if (typeof window !== 'object') {
     return [isFunction<IFuncUpdater<T>>(defaultValue) ? defaultValue() : defaultValue, () => {}];
+  }
 
-  const [state, setState] = useState<T | undefined>(() => getStoredValue());
-  useUpdateEffect(() => {
-    setState(getStoredValue());
-  }, [key]);
-
-  function getStoredValue() {
+  const getStoredValue = useCallback(() => {
     if (isFunction<IFuncStorage>(storage)) {
       storage = storage();
     }
@@ -44,25 +40,33 @@ function useStorageState<T>(
       return defaultValue();
     }
     return defaultValue;
-  }
+  }, [storage, defaultValue, key]);
 
-  function updateState(value?: T | IFuncUpdater<T>) {
-    if (isFunction<IFuncStorage>(storage)) {
-      storage = storage();
-    }
-    if (typeof value === 'undefined') {
-      storage.removeItem(key);
-      setState(undefined);
-    } else if (isFunction<IFuncUpdater<T>>(value)) {
-      const previousState = getStoredValue();
-      const currentState = value(previousState);
-      storage.setItem(key, JSON.stringify(currentState));
-      setState(currentState);
-    } else {
-      storage.setItem(key, JSON.stringify(value));
-      setState(value);
-    }
-  }
+  const [state, setState] = useState<T | undefined>(() => getStoredValue());
+  useUpdateEffect(() => {
+    setState(getStoredValue());
+  }, [key]);
+
+  const updateState = useCallback(
+    (value?: T | IFuncUpdater<T>) => {
+      if (isFunction<IFuncStorage>(storage)) {
+        storage = storage();
+      }
+      if (typeof value === 'undefined') {
+        storage.removeItem(key);
+        setState(undefined);
+      } else if (isFunction<IFuncUpdater<T>>(value)) {
+        const previousState = getStoredValue();
+        const currentState = value(previousState);
+        storage.setItem(key, JSON.stringify(currentState));
+        setState(currentState);
+      } else {
+        storage.setItem(key, JSON.stringify(value));
+        setState(value);
+      }
+    },
+    [storage, key, getStoredValue],
+  );
 
   return [state, updateState];
 }
