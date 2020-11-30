@@ -45,8 +45,8 @@ const [countdown, setTargetDate, formattedRes] = useCountDown(
 
 | 参数          | 说明                                | 类型                                            |
 | ------------- | ----------------------------------- | ----------------------------------------------- |
-| TDate         | 支持的时间格式                      | Date \| number \| string \| undefined   |
-| FormattedRes | 返回的原始结果, 均为大于等于0的数字 | { days, hours, minutes, seconds, milliseconds } |
+| TDate         | 支持的时间格式                      | `Date` \| `number` \| `string` \| `undefined`   |
+| FormattedRes | 返回的原始结果, 均为大于等于0的数字 | `{ days, hours, minutes, seconds, milliseconds }` |
 
 
 ## Params
