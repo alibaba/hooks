@@ -44,4 +44,17 @@ describe('useWebSocket', () => {
 
     WS.clean();
   });
+
+  it('useWebSocket should be manually triggered', async () => {
+    const wsUrl = 'ws://localhost:9999';
+    const wsServer = new WS(wsUrl);
+    const hooks = renderHook(() => useWebSocket(wsUrl, { manual: true }));
+
+    expect(hooks.result.current.readyState).toBe(ReadyState.Closed);
+    await act(async () => {
+      await wsServer.connected;
+      return promise;
+    });
+    expect(hooks.result.current.readyState).toBe(ReadyState.Closed);
+  });
 });
