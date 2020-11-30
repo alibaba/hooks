@@ -1,6 +1,7 @@
-import { renderHook, act } from '@testing-library/react-hooks';
+import { renderHook } from '@testing-library/react-hooks';
 import { useRef } from 'react';
 import useLockFn from '../index';
+import usePersistFn from '../../usePersistFn';
 import { sleep } from '../../utils/testingHelpers';
 
 describe('useLockFn', () => {
@@ -11,10 +12,11 @@ describe('useLockFn', () => {
   const setUp = (): any =>
     renderHook(() => {
       const countRef = useRef(0);
-      const locked = useLockFn(async (step: number) => {
+      const persistFn = usePersistFn(async (step: number) => {
         countRef.current += step;
         await sleep(50);
       });
+      const locked = useLockFn(persistFn);
 
       return {
         locked,
