@@ -28,6 +28,7 @@ const [countdown, setTargetDate, formattedRes] = useCountDown(
   {
     targetDate,
     interval,
+    onEnd
   }
 );
 ```
@@ -55,7 +56,7 @@ If you only need to be accurate to the second, you can use it like this `Math.ro
 | --------- | -------------------- | ------------------------------------------------------- | ----------- |
 | targetDate   | Future time        | `TDate`                                                 | `undefined` |
 | interval  | Change time interval (ms)        | `number`                                                | `1000`      |
-| endFn |  The callback function after the end of the future time  |`Function`                                           |`undefined`|
+| onEnd |  The callback function after the end of the future time  |`Function`                                           |`undefined`|
 
 ### Return
 

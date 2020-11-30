@@ -1,12 +1,13 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useState, useCallback } from 'react';
 import dayjs from 'dayjs';
+import usePersistFn from '../usePersistFn';
 
 export type TDate = Date | number | string | undefined;
 
 export type Options = {
   targetDate?: TDate;
   interval?: number;
-  endFn?: () => void;
+  onEnd?: () => void;
 };
 
 export interface FormattedRes {
@@ -40,10 +41,18 @@ const parseMs = (milliseconds: number): FormattedRes => {
 };
 
 const useCountdown = (options?: Options) => {
-  const { targetDate, interval = 1000, endFn } = options || {};
+  const { targetDate, interval = 1000, onEnd } = options || {};
 
   const [target, setTargetDate] = useState<TDate>(targetDate);
   const [timeLeft, setTimeLeft] = useState(() => calcLeft(target));
+
+  const onEndCallback = useCallback(() => {
+    if (onEnd) {
+      onEnd();
+    }
+  }, [onEnd]);
+
+  const onEndPersistFn = usePersistFn(onEndCallback);
 
   useEffect(() => {
     if (!target) {
@@ -60,9 +69,9 @@ const useCountdown = (options?: Options) => {
       setTimeLeft(targetLeft);
       if (targetLeft === 0) {
         clearInterval(timer);
-        if (endFn) {
+        if (onEndPersistFn) {
           // 倒计时结束后执行该回调
-          endFn()
+          onEndPersistFn();
         }
       }
     }, interval);

@@ -4,11 +4,12 @@ import useCountDown, { TDate, Options } from '../index';
 // https://github.com/facebook/jest/issues/2234
 jest.spyOn(Date, 'now').mockImplementation(() => 1479427200000);
 
-const init = (_targetDate?: TDate, _interval?: Options['interval']) =>
-  renderHook(({ targetDate, interval }) => useCountDown({ targetDate, interval }), {
+const init = (_targetDate?: TDate, _interval?: Options['interval'], onEnd?: Options['onEnd']) =>
+  renderHook(({ targetDate, interval }) => useCountDown({ targetDate, interval, onEnd }), {
     initialProps: {
       targetDate: _targetDate,
       interval: _interval,
+      onEnd,
     },
   });
 
@@ -95,5 +96,15 @@ describe('useCountDown Hooks', () => {
 
     expect(result.current[0]).toBeLessThanOrEqual(0);
     expect(result.current[2].seconds).toEqual(0);
+  });
+
+  it('it onEnd should work', async () => {
+    let count = 0;
+    const onEnd = () => {
+      count++;
+    };
+    init(Date.now() + 5000, 1000, onEnd);
+    jest.advanceTimersByTime(6000);
+    expect(count).toEqual(1);
   });
 });
