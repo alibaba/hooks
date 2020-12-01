@@ -1,7 +1,6 @@
-import { renderHook } from '@testing-library/react-hooks';
-import { useRef } from 'react';
+import { renderHook, act } from '@testing-library/react-hooks';
+import { useRef, useCallback, useState } from 'react';
 import useLockFn from '../index';
-import usePersistFn from '../../usePersistFn';
 import { sleep } from '../../utils/testingHelpers';
 
 describe('useLockFn', () => {
@@ -11,16 +10,21 @@ describe('useLockFn', () => {
 
   const setUp = (): any =>
     renderHook(() => {
+      const [tag, updateTag] = useState(false);
       const countRef = useRef(0);
-      const persistFn = usePersistFn(async (step: number) => {
-        countRef.current += step;
-        await sleep(50);
-      });
+      const persistFn = useCallback(
+        async (step: number) => {
+          countRef.current += step;
+          await sleep(50);
+        },
+        [tag],
+      );
       const locked = useLockFn(persistFn);
 
       return {
         locked,
         countRef,
+        updateTag: () => updateTag(true),
       };
     });
 
@@ -46,5 +50,7 @@ describe('useLockFn', () => {
     const preLocked = hook.result.current.locked;
     hook.rerender();
     expect(hook.result.current.locked).toEqual(preLocked);
+    act(hook.result.current.updateTag);
+    expect(hook.result.current.locked).not.toEqual(preLocked);
   });
 });
