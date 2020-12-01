@@ -6,7 +6,7 @@
  * desc.zh-CN: 手动启用并控制计时器状态, 适用于验证码或类似场景; 时间结束后触发onEnd回调
  */
 
-import React, { useState } from 'react';
+import React from 'react';
 import useCountDown from '../index';
 
 export default () => {

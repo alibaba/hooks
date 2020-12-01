@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState, useCallback } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import dayjs from 'dayjs';
 import usePersistFn from '../usePersistFn';
 
@@ -46,13 +46,11 @@ const useCountdown = (options?: Options) => {
   const [target, setTargetDate] = useState<TDate>(targetDate);
   const [timeLeft, setTimeLeft] = useState(() => calcLeft(target));
 
-  const onEndCallback = useCallback(() => {
+  const onEndPersistFn = usePersistFn(() => {
     if (onEnd) {
       onEnd();
     }
-  }, [onEnd]);
-
-  const onEndPersistFn = usePersistFn(onEndCallback);
+  });
 
   useEffect(() => {
     if (!target) {
