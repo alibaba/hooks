@@ -1,5 +1,6 @@
-import { useState, useCallback } from 'react';
+import { useState } from 'react';
 import useUpdateEffect from '../useUpdateEffect';
+import usePersistFn from '../usePersistFn';
 
 export interface IFuncUpdater<T> {
   (previousState?: T): T;
@@ -17,16 +18,14 @@ function isFunction<T>(obj: any): obj is T {
   return typeof obj === 'function';
 }
 
+const isWindow = typeof window === 'object';
+
 function useStorageState<T>(
   storage: Storage | IFuncStorage,
   key: string,
   defaultValue?: StorageStateDefaultValue<T>,
 ): StorageStateResult<T> {
-  if (typeof window !== 'object') {
-    return [isFunction<IFuncUpdater<T>>(defaultValue) ? defaultValue() : defaultValue, () => {}];
-  }
-
-  const getStoredValue = useCallback(() => {
+  const getStoredValue = usePersistFn(() => {
     if (isFunction<IFuncStorage>(storage)) {
       storage = storage();
     }
@@ -40,32 +39,38 @@ function useStorageState<T>(
       return defaultValue();
     }
     return defaultValue;
-  }, [storage, defaultValue, key]);
+  });
 
-  const [state, setState] = useState<T | undefined>(() => getStoredValue());
+  const [state, setState] = useState<T | undefined>(() => {
+    if (!isWindow) {
+      return isFunction<IFuncUpdater<T>>(defaultValue) ? defaultValue() : defaultValue;
+    }
+    return getStoredValue();
+  });
   useUpdateEffect(() => {
     setState(getStoredValue());
   }, [key]);
 
-  const updateState = useCallback(
-    (value?: T | IFuncUpdater<T>) => {
-      if (isFunction<IFuncStorage>(storage)) {
-        storage = storage();
-      }
-      if (typeof value === 'undefined') {
-        storage.removeItem(key);
-        setState(undefined);
-      } else if (isFunction<IFuncUpdater<T>>(value)) {
-        const previousState = getStoredValue();
-        const currentState = value(previousState);
-        storage.setItem(key, JSON.stringify(currentState));
-        setState(currentState);
-      } else {
-        storage.setItem(key, JSON.stringify(value));
-        setState(value);
-      }
-    },
-    [storage, key, getStoredValue],
+  const updateState = usePersistFn(
+    !isWindow
+      ? () => {}
+      : (value?: T | IFuncUpdater<T>) => {
+          if (isFunction<IFuncStorage>(storage)) {
+            storage = storage();
+          }
+          if (typeof value === 'undefined') {
+            storage.removeItem(key);
+            setState(undefined);
+          } else if (isFunction<IFuncUpdater<T>>(value)) {
+            const previousState = getStoredValue();
+            const currentState = value(previousState);
+            storage.setItem(key, JSON.stringify(currentState));
+            setState(currentState);
+          } else {
+            storage.setItem(key, JSON.stringify(value));
+            setState(value);
+          }
+        },
   );
 
   return [state, updateState];
