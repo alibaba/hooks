@@ -67,10 +67,7 @@ const useCountdown = (options?: Options) => {
       setTimeLeft(targetLeft);
       if (targetLeft === 0) {
         clearInterval(timer);
-        if (onEndPersistFn) {
-          // 倒计时结束后执行该回调
           onEndPersistFn();
-        }
       }
     }, interval);
 
