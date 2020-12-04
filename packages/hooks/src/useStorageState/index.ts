@@ -17,54 +17,54 @@ function isFunction<T>(obj: any): obj is T {
   return typeof obj === 'function';
 }
 
-function useStorageState<T>(
-  storage: Storage | IFuncStorage,
-  key: string,
-  defaultValue?: StorageStateDefaultValue<T>,
-): StorageStateResult<T> {
-  if (typeof window !== 'object')
-    return [isFunction<IFuncUpdater<T>>(defaultValue) ? defaultValue() : defaultValue, () => {}];
+export function createUseStorageState(nullishStorage: Storage | null) {
+  function useStorageState<T>(
+    key: string,
+    defaultValue?: StorageStateDefaultValue<T>,
+  ): StorageStateResult<T> {
+    const storage = nullishStorage as Storage;
+    const [state, setState] = useState<T | undefined>(() => getStoredValue());
+    useUpdateEffect(() => {
+      setState(getStoredValue());
+    }, [key]);
 
-  const [state, setState] = useState<T | undefined>(() => getStoredValue());
-  useUpdateEffect(() => {
-    setState(getStoredValue());
-  }, [key]);
+    function getStoredValue() {
+      const raw = storage.getItem(key);
+      if (raw) {
+        try {
+          return JSON.parse(raw);
+        } catch (e) {}
+      }
+      if (isFunction<IFuncUpdater<T>>(defaultValue)) {
+        return defaultValue();
+      }
+      return defaultValue;
+    }
 
-  function getStoredValue() {
-    if (isFunction<IFuncStorage>(storage)) {
-      storage = storage();
+    function updateState(value?: T | IFuncUpdater<T>) {
+      if (typeof value === 'undefined') {
+        storage.removeItem(key);
+        setState(undefined);
+      } else if (isFunction<IFuncUpdater<T>>(value)) {
+        const previousState = getStoredValue();
+        const currentState = value(previousState);
+        storage.setItem(key, JSON.stringify(currentState));
+        setState(currentState);
+      } else {
+        storage.setItem(key, JSON.stringify(value));
+        setState(value);
+      }
     }
-    const raw = storage.getItem(key);
-    if (raw) {
-      try {
-        return JSON.parse(raw);
-      } catch (e) {}
-    }
-    if (isFunction<IFuncUpdater<T>>(defaultValue)) {
-      return defaultValue();
-    }
-    return defaultValue;
+
+    return [state, updateState];
   }
-
-  function updateState(value?: T | IFuncUpdater<T>) {
-    if (isFunction<IFuncStorage>(storage)) {
-      storage = storage();
-    }
-    if (typeof value === 'undefined') {
-      storage.removeItem(key);
-      setState(undefined);
-    } else if (isFunction<IFuncUpdater<T>>(value)) {
-      const previousState = getStoredValue();
-      const currentState = value(previousState);
-      storage.setItem(key, JSON.stringify(currentState));
-      setState(currentState);
-    } else {
-      storage.setItem(key, JSON.stringify(value));
-      setState(value);
-    }
+  if (!nullishStorage) {
+    return function (defaultValue: any) {
+      return [
+        isFunction<IFuncUpdater<any>>(defaultValue) ? defaultValue() : defaultValue,
+        () => {},
+      ];
+    } as typeof useStorageState;
   }
-
-  return [state, updateState];
+  return useStorageState;
 }
-
-export default useStorageState;
