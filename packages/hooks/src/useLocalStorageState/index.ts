@@ -1,4 +1,4 @@
-import { createUseStorageState } from '../useStorageState';
+import { createUseStorageState } from '../createUseStorageState';
 
 // function useLocalStorageState<T = undefined>(
 //   key: string,
