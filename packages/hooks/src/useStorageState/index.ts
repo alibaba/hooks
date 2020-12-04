@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import useUpdateEffect from '../useUpdateEffect';
 
 export interface IFuncUpdater<T> {
@@ -41,20 +41,23 @@ export function createUseStorageState(nullishStorage: Storage | null) {
       return defaultValue;
     }
 
-    function updateState(value?: T | IFuncUpdater<T>) {
-      if (typeof value === 'undefined') {
-        storage.removeItem(key);
-        setState(undefined);
-      } else if (isFunction<IFuncUpdater<T>>(value)) {
-        const previousState = getStoredValue();
-        const currentState = value(previousState);
-        storage.setItem(key, JSON.stringify(currentState));
-        setState(currentState);
-      } else {
-        storage.setItem(key, JSON.stringify(value));
-        setState(value);
-      }
-    }
+    const updateState = useCallback(
+      (value?: T | IFuncUpdater<T>) => {
+        if (typeof value === 'undefined') {
+          storage.removeItem(key);
+          setState(undefined);
+        } else if (isFunction<IFuncUpdater<T>>(value)) {
+          const previousState = getStoredValue();
+          const currentState = value(previousState);
+          storage.setItem(key, JSON.stringify(currentState));
+          setState(currentState);
+        } else {
+          storage.setItem(key, JSON.stringify(value));
+          setState(value);
+        }
+      },
+      [key],
+    );
 
     return [state, updateState];
   }
