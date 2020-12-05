@@ -76,6 +76,6 @@ useWebSocket(socketUrl: string, options?: Options): Result;
 | latestMessage | latest message | `WebSocketEventMap['message']` |
 | sendMessage | Send message function | `WebSocket['send']` |
 | disconnect | Disconnect webSocket manually | `() => void` |
-| connect | Connect webSocket manually | `() => void` |
+| connect | Connect webSocket manually. If already connected, close the current one then connect. | `() => void` |
 | readyState | Current webSocket connection status | `ReadyState` |
 | webSocketIns | WebSocket instance | `WebSocket` |
