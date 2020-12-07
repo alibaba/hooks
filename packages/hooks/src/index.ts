@@ -56,6 +56,7 @@ import useCountDown from './useCountDown';
 import useWebSocket from './useWebSocket';
 import useLockFn from './useLockFn';
 import useTrackedEffect from './useTrackedEffect';
+import useExternal from './useExternal';
 
 const useControlledValue: typeof useControllableValue = function (...args) {
   console.warn(
@@ -126,4 +127,5 @@ export {
   useTrackedEffect,
   useWebSocket,
   useLockFn,
+  useExternal,
 };
