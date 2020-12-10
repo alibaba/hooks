@@ -22,6 +22,10 @@ group:
 
 <code src="./demo/demo2.tsx" />
 
+### 迭代模式
+
+<code src="./demo/demo4.tsx" />
+
 ## API
 
 ```typescript
@@ -42,3 +46,4 @@ useInterval(fn: () => void, interval: number, options?: Options);
 | 参数      | 说明                                     | 类型    | 默认值 |
 |-----------|------------------------------------------|---------|--------|
 | immediate | 参数可以用来控制是否在首次渲染时立即执行 | `boolean` | `false`  |
+| iterate | 迭代模式，开启时将在异步 fn 执行完成后再开始下一次迭代（适用在轮询网络请求时避免请求挤压） | `boolean` | `false`  |

@@ -22,6 +22,10 @@ A hook that can handle the setInterval timer function.
 
 <code src="./demo/demo2.tsx" />
 
+### Iterate usage
+
+<code src="./demo/demo4.tsx" />
+
 ## API
 
 ```typescript
@@ -42,3 +46,4 @@ useInterval(fn: () => void, interval: number, options?: Options);
 | Property  | Description                                           | Type    | Default |
 |-----------|-------------------------------------------------------|---------|---------|
 | immediate | Whether it is executed immediately for the first time | `boolean` | `false`   |
+| iterate | Synchronous executed async function and then start next interval(it good for polling request) | `boolean` | `false`   |
