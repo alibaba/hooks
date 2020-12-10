@@ -33,7 +33,7 @@ A Hook for dynamically loading/unloading external resources to page.
 ## API
 
 ```typescript
-const [status, { toggle, unload, load }] = useExternal(path: string, options: Options);
+const [status, { toggle, unload, load }] = useExternal(path: string, options?: Options);
 ```
 
 ### Result
@@ -41,8 +41,8 @@ const [status, { toggle, unload, load }] = useExternal(path: string, options: Op
 | Params    | Description         | Type                                                 |
 |---------|--------------|------------------------------------------------------|
 | status  | The progress of loading the external resources, support `unset`, `loading`, `ready`, `error` | `string` |
-| toggle  | The function for toggling the external resources | `(path?: string) => void`  |
-| load    | The function for loading the external resources | `(path?: string) => void` |
+| toggle  | The function for toggling the external resources | `() => void`  |
+| load    | The function for loading the external resources | `() => void` |
 | unload  | The function for unloading the external resources | `() => void` |
 
 ### Params

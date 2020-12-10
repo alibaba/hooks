@@ -1,21 +1,18 @@
 /**
  * title: Load style dynamically
- * desc: Load a css file to your page such as [bootstrap-badge.css](https://useexternal-q09v1.codesandbox.io/bootstrap-badge.css)
+ * desc: Load a css file to your page such as [bootstrap-badge.css](/useExternal/bootstrap-badge.css)
  *
  * title.zh-CN: 动态加载样式
- * desc.zh-CN: 页面上加载外部 css 文件，例如引入 [bootstrap-badge.css](https://useexternal-q09v1.codesandbox.io/bootstrap-badge.css)
+ * desc.zh-CN: 页面上加载外部 css 文件，例如引入 [bootstrap-badge.css](/useExternal/bootstrap-badge.css)
  */
 
 import React from 'react';
 import { useExternal } from 'ahooks';
 
 export default () => {
-  const [status, { toggle, load, unload }] = useExternal(
-    'https://useexternal-q09v1.codesandbox.io/bootstrap-badge.css',
-    {
-      media: 'all',
-    },
-  );
+  const [status, { toggle, load, unload }] = useExternal('/useExternal/bootstrap-badge.css', {
+    media: 'all',
+  });
 
   return (
     <>
