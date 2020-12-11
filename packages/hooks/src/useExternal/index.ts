@@ -93,9 +93,9 @@ export default function useExternal(path: string, options?: Options): [Status, A
   const action = useMemo(() => {
     const unload = () => setActive(false);
     const load = () => setActive(true);
-    const toggle = () => setActive(!active);
+    const toggle = () => setActive((v) => !v);
     return { toggle, load, unload };
-  }, [active]);
+  }, [setActive]);
 
   return [status, action];
 }
