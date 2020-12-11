@@ -75,6 +75,6 @@ useWebSocket(socketUrl: string, options?: Options): Result;
 | latestMessage | 最新消息                | `WebSocketEventMap['message']` |
 | sendMessage   | 发送消息函数            | `WebSocket['send']`            |
 | disconnect    | 手动断开 webSocket 连接 | `() => void`                   |
-| connect       | 手动连接 webSocket      | `() => void`                   |
+| connect       | 手动连接 webSocket，如果当前已有连接，则关闭后重新连接      | `() => void`                   |
 | readyState    | 当前 webSocket 连接状态 | `ReadyState`                   |
 | webSocketIns  | webSocket 实例          | `WebSocket`                    |
