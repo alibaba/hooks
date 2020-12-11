@@ -17,7 +17,7 @@ export type Action = {
 
 export type ExternalElement = HTMLScriptElement | HTMLLinkElement | HTMLImageElement;
 
-export default function useScript(path: string, options?: Options): [Status, Action] {
+export default function useExternal(path: string, options?: Options): [Status, Action] {
   const isPath = typeof path === 'string' && path !== '';
 
   const [status, setStatus] = useState<Status>(isPath ? 'loading' : 'unset');
