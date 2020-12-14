@@ -57,6 +57,7 @@ import useWebSocket from './useWebSocket';
 import useLockFn from './useLockFn';
 import useTrackedEffect from './useTrackedEffect';
 import useUnmountedRef from './useUnmountedRef';
+import useBindState from './useBindState';
 
 const useControlledValue: typeof useControllableValue = function (...args) {
   console.warn(
@@ -66,6 +67,7 @@ const useControlledValue: typeof useControllableValue = function (...args) {
 };
 
 export {
+  useBindState,
   useControlledValue,
   useControllableValue,
   useDynamicList,
