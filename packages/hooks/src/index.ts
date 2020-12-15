@@ -56,6 +56,7 @@ import useCountDown from './useCountDown';
 import useWebSocket from './useWebSocket';
 import useLockFn from './useLockFn';
 import useTrackedEffect from './useTrackedEffect';
+import useUnmountedRef from './useUnmountedRef';
 import useExternal from './useExternal';
 
 const useControlledValue: typeof useControllableValue = function (...args) {
@@ -127,5 +128,6 @@ export {
   useTrackedEffect,
   useWebSocket,
   useLockFn,
+  useUnmountedRef,
   useExternal,
 };
