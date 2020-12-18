@@ -7,7 +7,7 @@
  */
 
 import React, { useState, useRef } from 'react';
-import useClickAway from '../index';
+import { useClickAway } from 'ahooks';
 
 export default () => {
   const [counter, setCounter] = useState(0);
