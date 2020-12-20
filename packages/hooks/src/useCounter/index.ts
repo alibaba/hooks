@@ -17,13 +17,14 @@ export type ValueParam = number | ((c: number) => number);
 
 function getTargetValue(val: number, options: Options = {}) {
   const { min, max } = options;
+  let target = val;
   if (typeof max === 'number') {
-    return Math.min(max, val);
+    target = Math.min(max, target);
   }
   if (typeof min === 'number') {
-    return Math.max(min, val);
+    target = Math.max(min, target);
   }
-  return val;
+  return target;
 }
 
 function useCounter(initialValue: number = 0, options: Options = {}) {
