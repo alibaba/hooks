@@ -10,7 +10,7 @@
     "start": "npm run dev",
     "dev": "dumi dev",
     "bootstrap": "lerna bootstrap",
-    "link": "leran link",
+    "link": "lerna link",
     "clean": "lerna clean --yes",
     "build": "lerna run build",
     "test": "jest",
