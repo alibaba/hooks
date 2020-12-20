@@ -6,10 +6,11 @@
     "url": "git+https://github.com/alibaba/hooks.git"
   },
   "scripts": {
-    "init": "rm -rf node_modules && npm install && npm run clean && npm run bootstrap && npm run build",
+    "init": "rm -rf node_modules && npm install && npm run clean && npm run bootstrap && npm run link && npm run build",
     "start": "npm run dev",
     "dev": "dumi dev",
     "bootstrap": "lerna bootstrap",
+    "link": "leran link",
     "clean": "lerna clean --yes",
     "build": "lerna run build",
     "test": "jest",
