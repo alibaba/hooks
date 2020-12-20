@@ -11,7 +11,7 @@ legacy: /dom/use-size
 
 # useSize
 
-A hook to subscribe DOM element size change
+A hook to subscribe DOM element size change.
 
 ## Examples
 
@@ -26,7 +26,7 @@ A hook to subscribe DOM element size change
 
 ## API
 
-```ts
+```typescript
 const size = useSize(target);
 ```
 
@@ -34,10 +34,10 @@ const size = useSize(target);
 
 | Property | Description                                                        | Type                   | Default |
 |---------|----------------------------------------------|------------------------|--------|
-| target | DOM element or Ref Object  | HTMLElement \| (() => HTMLElement) \| MutableRefObject | -      |
+| target | DOM element or Ref Object  | `HTMLElement` \| `(() => HTMLElement)` \| `MutableRefObject` | -      |
 
 ### Result
 
 | Property | Description                                         | Type                 |
 |----------|------------------------------------------|------------|
-| size  | size of the DOM                             | { width: number, height: number }    |
+| size  | size of the DOM                             | `{ width: number, height: number }`    |

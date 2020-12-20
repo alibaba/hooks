@@ -2,7 +2,7 @@
  * title: Default usage
  * desc: Tracking cursor position.
  *
- * title.zh-CN: 默认用法
+ * title.zh-CN: 基础用法
  * desc.zh-CN: 获取鼠标位置。
  */
 

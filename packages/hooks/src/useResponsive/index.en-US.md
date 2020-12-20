@@ -6,7 +6,6 @@ nav:
 group:
   title: Dom
   path: /dom
-legacy: /dom/use-responsive
 ---
 
 # useResponsive

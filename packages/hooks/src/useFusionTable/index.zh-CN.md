@@ -8,7 +8,6 @@ group:
   title: Table
   path: /table
   order: 3
-legacy: /zh-CN/table/use-fusion-table
 ---
 
 # useFusionTable
@@ -45,7 +44,7 @@ useFusionTable 基于 [useRequest](/zh-CN/async) 实现，所有的 [useRquest P
 
 useFusionTable 额外增加了 `result.search` 和 `options.filed`。
 
-```javascript
+```typescript
 const {
   ...,
   search: {

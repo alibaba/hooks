@@ -13,6 +13,7 @@ export enum ReadyState {
 export interface Options {
   reconnectLimit?: number;
   reconnectInterval?: number;
+  manual?: boolean;
   onOpen?: (event: WebSocketEventMap['open']) => void;
   onClose?: (event: WebSocketEventMap['close']) => void;
   onMessage?: (message: WebSocketEventMap['message']) => void;
@@ -32,6 +33,7 @@ export default function useWebSocket(socketUrl: string, options: Options = {}): 
   const {
     reconnectLimit = 3,
     reconnectInterval = 3 * 1000,
+    manual = false,
     onOpen,
     onClose,
     onMessage,
@@ -127,8 +129,10 @@ export default function useWebSocket(socketUrl: string, options: Options = {}): 
 
   useEffect(() => {
     // 初始连接
-    connect();
-  }, [socketUrl]);
+    if (!manual) {
+      connect();
+    }
+  }, [socketUrl, manual]);
 
   useUnmount(() => {
     disconnect();

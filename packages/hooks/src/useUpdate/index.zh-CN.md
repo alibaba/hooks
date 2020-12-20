@@ -10,7 +10,7 @@ group:
 
 # useUpdate
 
-强制组件重新渲染的 hook
+强制组件重新渲染的 hook。
 
 ## 代码演示
 
@@ -20,6 +20,6 @@ group:
 
 ## API
 
-```javascript
-useUpdate();
+```typescript
+const update = useUpdate();
 ```

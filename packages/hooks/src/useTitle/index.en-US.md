@@ -4,10 +4,8 @@ nav:
   title: Hooks
   path: /hooks
 group:
-  title: State
-  path: /state
-  order: 11
-legacy: /state/use-boolean
+  title: Dom
+  path: /dom
 ---
 
 # useTitle
@@ -22,18 +20,18 @@ A hook that sets title of the page.
 
 ## API
 
-```javascript
-useTitle(value: string, options?: object);
+```typescript
+useTitle(value: string, options?: Options);
 ```
 
 ### Params
 
-| Property | Description                                 | Type                   | Default |
-|---------|----------------------------------------------|------------------------|--------|
-| value | set a title value  | string |       |
+| Property | Description       | Type     | Default |
+|----------|-------------------|----------|---------|
+| value    | set a title value | `string` | -       |
 
 ### Options
 
-| Property | Description                  | Type   | Default |
-|----------|------------------------------|--------|---------|
-| restoreOnUnmount | Restore the title | boolean | false |
+| Property         | Description       | Type      | Default |
+|------------------|-------------------|-----------|---------|
+| restoreOnUnmount | Restore the title | `boolean` | `false` |

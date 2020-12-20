@@ -4,9 +4,9 @@ import { useState, useMemo } from 'react';
 export default function useSelections<T>(items: T[], defaultSelected: T[] = []) {
   const [selected, setSelected] = useState<T[]>(defaultSelected);
 
-  const { selectedSet, isSelected, select, unSelect, toggle } = useMemo(() => {
-    const selectedSet = new Set<T>(selected);
+  const selectedSet = useMemo(() => new Set<T>(selected), [selected]);
 
+  const singleActions = useMemo(() => {
     const isSelected = (item: T) => selectedSet.has(item);
 
     const select = (item: T) => {
@@ -27,17 +27,10 @@ export default function useSelections<T>(items: T[], defaultSelected: T[] = []) 
       }
     };
 
-    return { selectedSet, isSelected, select, unSelect, toggle };
-  }, [selected]);
+    return { isSelected, select, unSelect, toggle };
+  }, [selectedSet]);
 
-  const {
-    selectAll,
-    unSelectAll,
-    noneSelected,
-    allSelected,
-    partiallySelected,
-    toggleAll,
-  } = useMemo(() => {
+  const allActions = useMemo(() => {
     const selectAll = () => {
       items.forEach((o) => {
         selectedSet.add(o);
@@ -65,16 +58,8 @@ export default function useSelections<T>(items: T[], defaultSelected: T[] = []) 
 
   return {
     selected,
-    isSelected,
-    select,
-    unSelect,
-    toggle,
-    selectAll,
-    unSelectAll,
-    toggleAll,
-    allSelected,
-    noneSelected,
-    partiallySelected,
     setSelected,
+    ...singleActions,
+    ...allActions,
   } as const;
 }

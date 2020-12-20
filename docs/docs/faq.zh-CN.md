@@ -12,7 +12,7 @@ npm i regenerator-runtime --save
 import "regenerator-runtime/runtime";
 ```
 
-### 我只想使用 `useRquest`， 但似乎我必须安装整个 `ahooks`？
+### 我只想使用 `useRequest`， 但似乎我必须安装整个 `ahooks`？
 
 不是的，`useRequest` 在独立包中，可以单独通过安装 `@ahooksjs/use-request` 来使用。
 

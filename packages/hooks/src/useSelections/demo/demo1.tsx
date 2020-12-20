@@ -2,7 +2,7 @@
  * title: Default usage
  * desc: Checkbox group.
  *
- * title.zh-CN: 默认用法
+ * title.zh-CN: 基础用法
  * desc.zh-CN: 常见的 checkbox 联动
  */
 

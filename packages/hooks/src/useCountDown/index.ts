@@ -1,11 +1,13 @@
 import { useEffect, useMemo, useState } from 'react';
 import dayjs from 'dayjs';
+import usePersistFn from '../usePersistFn';
 
 export type TDate = Date | number | string | undefined;
 
 export type Options = {
   targetDate?: TDate;
   interval?: number;
+  onEnd?: () => void;
 };
 
 export interface FormattedRes {
@@ -39,10 +41,16 @@ const parseMs = (milliseconds: number): FormattedRes => {
 };
 
 const useCountdown = (options?: Options) => {
-  const { targetDate, interval = 1000 } = options || {};
+  const { targetDate, interval = 1000, onEnd } = options || {};
 
   const [target, setTargetDate] = useState<TDate>(targetDate);
   const [timeLeft, setTimeLeft] = useState(() => calcLeft(target));
+
+  const onEndPersistFn = usePersistFn(() => {
+    if (onEnd) {
+      onEnd();
+    }
+  });
 
   useEffect(() => {
     if (!target) {
@@ -59,6 +67,7 @@ const useCountdown = (options?: Options) => {
       setTimeLeft(targetLeft);
       if (targetLeft === 0) {
         clearInterval(timer);
+          onEndPersistFn();
       }
     }, interval);
 

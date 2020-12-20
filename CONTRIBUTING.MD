@@ -14,7 +14,7 @@
 
 ## 新增功能
 
-如果你想新增一个 Hooks，我们建议你先建立一个 issue，说明该 Hook 的应用场景及用法，参考 [useHover RFC](https://github.com/alibaba/hooks/issues/16)。
+如果你想新增一个 Hooks，我们建议你先建立一个 issue，说明该 Hook 的应用场景及用法，参考 [[RFC] useLockFn](https://github.com/alibaba/hooks/issues/562)。
 
 然后你可以基于已有 Hook 来初始化一个新的 Hook。
 

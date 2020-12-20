@@ -6,7 +6,6 @@ nav:
 group:
   title: SideEffect
   path: /side-effect
-legacy: /state/use-timeout
 ---
 
 # useTimeout
@@ -22,7 +21,7 @@ A hook that can handle the setTimeout timer function.
 
 ## API
 
-```javascript
+```typescript
 useTimeout(fn: () => void, delay: number | undefined | null);
 ```
 
@@ -30,6 +29,5 @@ useTimeout(fn: () => void, delay: number | undefined | null);
 
 | Property | Description | Type |
 |----------|--------------------------------------|----------------------|
-| fn  | Is the function you want to execute after the expiration time (delay milliseconds) | () => void |
-| delay | The time to wait, in milliseconds. If delay is `null` or `undefined`, the timer will stop. | number \| undefined \| null |
-
+| fn  | Is the function you want to execute after the expiration time (delay milliseconds) | `() => void` |
+| delay | The time to wait, in milliseconds. If delay is `null` or `undefined`, the timer will stop. | `number` \| `undefined` \| `null` |

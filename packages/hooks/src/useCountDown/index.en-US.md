@@ -6,7 +6,6 @@ nav:
 group:
   title: State
   path: /state
-legacy: /en-US/state/use-count-down
 ---
 
 # useCountDown
@@ -28,6 +27,7 @@ const [countdown, setTargetDate, formattedRes] = useCountDown(
   {
     targetDate,
     interval,
+    onEnd
   }
 );
 ```
@@ -45,8 +45,8 @@ If you only need to be accurate to the second, you can use it like this `Math.ro
 
 | Property      | Description              | Type                                            |
 | ------------- | ------------------------ | ----------------------------------------------- |
-| TDate         | supported time pattern   | Date \| number \| string \| undefined   |
-| FormattedRes | formatted result object | { days, hours, minutes, seconds, milliseconds } |
+| TDate         | supported time pattern   | `Date` \| `number` \| `string` \| `undefined`   |
+| FormattedRes | formatted result object | `{ days, hours, minutes, seconds, milliseconds }` |
 
 
 ## Params
@@ -55,6 +55,7 @@ If you only need to be accurate to the second, you can use it like this `Math.ro
 | --------- | -------------------- | ------------------------------------------------------- | ----------- |
 | targetDate   | Future time        | `TDate`                                                 | `undefined` |
 | interval  | Change time interval (ms)        | `number`                                                | `1000`      |
+| onEnd |  The callback function after the end of the future time  |`Function`                                           |`undefined`|
 
 ### Return
 

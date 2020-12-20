@@ -34,7 +34,8 @@ import useSet from './useSet';
 import usePersistFn from './usePersistFn';
 import useMap from './useMap';
 import useCreation from './useCreation';
-import { useDrag, useDrop } from './useDrop';
+import useDrop from './useDrop';
+import useDrag from './useDrag';
 import useMount from './useMount';
 import useTextSelection from './useTextSelection';
 import useCounter from './useCounter';
@@ -55,6 +56,8 @@ import useCountDown from './useCountDown';
 import useWebSocket from './useWebSocket';
 import useLockFn from './useLockFn';
 import useTrackedEffect from './useTrackedEffect';
+import useUnmountedRef from './useUnmountedRef';
+import useExternal from './useExternal';
 
 const useControlledValue: typeof useControllableValue = function (...args) {
   console.warn(
@@ -125,4 +128,6 @@ export {
   useTrackedEffect,
   useWebSocket,
   useLockFn,
+  useUnmountedRef,
+  useExternal,
 };

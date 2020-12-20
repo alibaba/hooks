@@ -7,7 +7,7 @@
  */
 
 import React from 'react';
-import useCountDown from '../index';
+import { useCountDown } from 'ahooks';
 
 export default () => {
   const [countdown, setTargetDate, formattedRes] = useCountDown({

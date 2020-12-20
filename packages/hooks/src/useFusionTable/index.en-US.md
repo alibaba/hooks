@@ -8,7 +8,6 @@ group:
   title: Table
   path: /table
   order: 3
-legacy: /table/use-fusion-table
 ---
 
 # useFusionTable
@@ -42,7 +41,7 @@ As the same as useRequest Pagination mode，The data structure returned by servi
 
 useFusionTable adds `result.search` and `options.filed`.
 
-```javascript
+```typescript
 const {
   ...,
   search: {
