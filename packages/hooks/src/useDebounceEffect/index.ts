@@ -2,6 +2,7 @@ import { useEffect, EffectCallback, DependencyList, useState } from 'react';
 import { DebounceOptions } from '../useDebounce/debounceOptions';
 import useDebounceFn from '../useDebounceFn';
 import useUpdateEffect from '../useUpdateEffect';
+import useUnmount from '../useUnmount';
 
 function useDebounceEffect(
   effect: EffectCallback,
@@ -15,10 +16,10 @@ function useDebounceEffect(
   }, options);
 
   useEffect(() => {
-    run();
-
-    return cancel;
+    return run();
   }, deps);
+
+  useUnmount(cancel);
 
   useUpdateEffect(effect, [flag]);
 }

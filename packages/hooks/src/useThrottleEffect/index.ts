@@ -2,6 +2,7 @@ import { useEffect, EffectCallback, DependencyList, useState } from 'react';
 import { ThrottleOptions } from '../useThrottle/throttleOptions';
 import useThrottleFn from '../useThrottleFn';
 import useUpdateEffect from '../useUpdateEffect';
+import useUnmount from '../useUnmount';
 
 function useThrottleEffect(
   effect: EffectCallback,
@@ -15,10 +16,10 @@ function useThrottleEffect(
   }, options);
 
   useEffect(() => {
-    run();
-
-    return cancel;
+    return run();
   }, deps);
+
+  useUnmount(cancel);
 
   useUpdateEffect(effect, [flag]);
 }
