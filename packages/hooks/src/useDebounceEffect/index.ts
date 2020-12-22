@@ -10,12 +10,14 @@ function useDebounceEffect(
 ) {
   const [flag, setFlag] = useState({});
 
-  const { run } = useDebounceFn(() => {
+  const { run, cancel } = useDebounceFn(() => {
     setFlag({});
   }, options);
 
   useEffect(() => {
-    return run();
+    run();
+
+    return cancel;
   }, deps);
 
   useUpdateEffect(effect, [flag]);

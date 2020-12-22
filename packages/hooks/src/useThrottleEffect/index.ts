@@ -10,12 +10,14 @@ function useThrottleEffect(
 ) {
   const [flag, setFlag] = useState({});
 
-  const { run } = useThrottleFn(() => {
+  const { run, cancel } = useThrottleFn(() => {
     setFlag({});
   }, options);
 
   useEffect(() => {
-    return run();
+    run();
+
+    return cancel;
   }, deps);
 
   useUpdateEffect(effect, [flag]);
