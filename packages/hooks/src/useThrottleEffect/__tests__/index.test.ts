@@ -32,26 +32,57 @@ describe('useThrottleEffect', () => {
         ),
       );
     });
+
     await act(async () => {
       expect(mockEffect.mock.calls.length).toEqual(1);
       expect(mockCleanUp.mock.calls.length).toEqual(0);
+
       mountedState = 2;
       hook.rerender();
-      await sleep(50);
-      mountedState = 3;
-      hook.rerender();
-      expect(mockEffect.mock.calls.length).toEqual(1);
-      expect(mockCleanUp.mock.calls.length).toEqual(0);
       await sleep(300);
       expect(mockEffect.mock.calls.length).toEqual(2);
       expect(mockCleanUp.mock.calls.length).toEqual(1);
-      mountedState = 4;
+
+      mountedState = 3;
       hook.rerender();
       expect(mockEffect.mock.calls.length).toEqual(2);
       expect(mockCleanUp.mock.calls.length).toEqual(1);
+
       await sleep(300);
       expect(mockEffect.mock.calls.length).toEqual(3);
       expect(mockCleanUp.mock.calls.length).toEqual(2);
+    });
+  });
+
+  it('should cancel timeout on unmount', async () => {
+    const mockEffect = jest.fn(() => {});
+    const mockCleanUp = jest.fn(() => {});
+
+    const hook = renderHook(
+      (props) =>
+        useThrottleEffect(
+          () => {
+            mockEffect();
+            return () => {
+              mockCleanUp();
+            };
+          },
+          [props],
+          { wait: 200 },
+        ),
+      { initialProps: 0 },
+    );
+
+    await act(async () => {
+      expect(mockEffect.mock.calls.length).toEqual(1);
+      expect(mockCleanUp.mock.calls.length).toEqual(0);
+
+      hook.rerender(1);
+      await sleep(50);
+      hook.unmount();
+
+      expect(mockEffect.mock.calls.length).toEqual(1);
+      expect(mockCleanUp.mock.calls.length).toEqual(1);
     });
   });
 });
