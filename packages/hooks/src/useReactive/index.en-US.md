@@ -22,9 +22,13 @@ It offers data reactivity when manipulating states and views, in which case `use
 
 <code src="./demo/demo2.tsx" />
 
+### Computed Properties
+
+<code src="./demo/demo3.tsx" />
+
 ### notice
 
-<code  src="./demo/demo3.tsx" desc="`useReactive` returns a proxy object which always has the same reference. If `useEffect`, `useMemo`, `useCallback` and props passed to child component rely on the proxy, none of the above will be invoked by any changes to the proxy."  />
+<code  src="./demo/demo4.tsx" desc="`useReactive` returns a proxy object which always has the same reference. If `useEffect`, `useMemo`, `useCallback` and props passed to child component rely on the proxy, none of the above will be invoked by any changes to the proxy."  />
 
 ## API
 
