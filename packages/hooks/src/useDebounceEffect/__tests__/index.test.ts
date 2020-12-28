@@ -54,4 +54,40 @@ describe('useDebounceEffect', () => {
       expect(mockCleanUp.mock.calls.length).toEqual(1);
     });
   });
+
+  it('should cancel timeout on unmount', async () => {
+    const mockEffect = jest.fn(() => {});
+    const mockCleanUp = jest.fn(() => {});
+
+    const hook = renderHook(
+      (props) =>
+        useDebounceEffect(
+          () => {
+            mockEffect();
+            return () => {
+              mockCleanUp();
+            };
+          },
+          [props],
+          { wait: 200 },
+        ),
+      { initialProps: 0 },
+    );
+
+    await act(async () => {
+      expect(mockEffect.mock.calls.length).toEqual(0);
+      expect(mockCleanUp.mock.calls.length).toEqual(0);
+
+      hook.rerender(1);
+      await sleep(50);
+      expect(mockEffect.mock.calls.length).toEqual(0);
+      expect(mockCleanUp.mock.calls.length).toEqual(0);
+
+      await sleep(300);
+      hook.unmount();
+
+      expect(mockEffect.mock.calls.length).toEqual(1);
+      expect(mockCleanUp.mock.calls.length).toEqual(1);
+    });
+  });
 });
