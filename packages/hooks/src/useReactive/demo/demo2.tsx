@@ -2,7 +2,7 @@ import React from 'react';
 import { useReactive } from 'ahooks';
 
 export default () => {
-  let state = useReactive({
+  const state = useReactive({
     arr: [],
   });
 
