@@ -40,12 +40,12 @@ export default function useControllableValue<T>(props: Props = {}, options: Opti
   }, [value, valuePropName]);
 
   const handleSetState = useCallback(
-    (v: T | undefined) => {
+    (v: T | undefined, args: any[]) => {
       if (!(valuePropName in props)) {
         setState(v);
       }
       if (props[trigger]) {
-        props[trigger](v);
+        props[trigger](v, ...args);
       }
     },
     [props, valuePropName, trigger],
