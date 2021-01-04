@@ -26,7 +26,7 @@ npm i ahooks --save
 
 ## 🔨 Usage
 
-```
+```typescript
 import { useRequest } from 'ahooks';
 ```
 
