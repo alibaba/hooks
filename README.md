@@ -6,7 +6,7 @@ React Hooks Library.
 
 [![NPM version][image-1]][1] [![NPM downloads][image-2]][2]
 
-## 📚 Document
+## 📚 Documentation
 
 - [English](https://ahooks.js.org/)
 - [中文](https://ahooks.js.org/zh-CN/)
