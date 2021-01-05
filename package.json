@@ -17,7 +17,8 @@
     "build:doc": "dumi build",
     "pub:doc": "surge ./dist --domain ahooks.js.org",
     "pub:doc-gitee": "cd ./dist && rm -rf .git && touch .spa && touch .nojekyll && git init && git remote add origin git@gitee.com:ahooks/ahooks.git && git add -A && git commit -m \"publish docs\" && git push origin master -f",
-    "pub": "lerna publish"
+    "pub": "lerna publish",
+    "watch": "jest --watch"
   },
   "husky": {
     "hooks": {

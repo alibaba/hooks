@@ -46,6 +46,7 @@ import useDebounceEffect from './useDebounceEffect';
 import useCookieState from './useCookieState';
 import useSetState from './useSetState';
 import useInterval from './useInterval';
+import useAsyncInterval from './useAsyncInterval';
 import useWhyDidYouUpdate from './useWhyDidYouUpdate';
 import useTitle from './useTitle';
 import useNetwork from './useNetwork';
@@ -116,6 +117,7 @@ export {
   useCookieState,
   useSetState,
   useInterval,
+  useAsyncInterval,
   useWhyDidYouUpdate,
   useTitle,
   useNetwork,
