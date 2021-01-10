@@ -1,5 +1,5 @@
 import { act, renderHook } from '@testing-library/react-hooks';
-import useStorageState, { IFuncUpdater } from '../index';
+import { IFuncUpdater, createUseStorageState } from '../index';
 
 class TestStorage implements Storage {
   [name: string]: any;
@@ -48,10 +48,11 @@ interface StorageStateProps<T> {
 describe('useStorageState', () => {
   const setUp = <T>(props: StorageStateProps<T>) => {
     const storage = new TestStorage();
+    const useStorageState = createUseStorageState(storage);
 
     return renderHook(
       ({ key, defaultValue }: StorageStateProps<T>) => {
-        const [state, setState] = useStorageState(storage, key, defaultValue);
+        const [state, setState] = useStorageState(key, defaultValue);
 
         return { state, setState };
       },
@@ -62,7 +63,7 @@ describe('useStorageState', () => {
   };
 
   it('should be defined', () => {
-    expect(useStorageState);
+    expect(createUseStorageState);
   });
 
   it('should get defaultValue for a given key', () => {
