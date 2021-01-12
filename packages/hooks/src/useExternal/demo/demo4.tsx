@@ -15,7 +15,8 @@ export default () => {
   const [path, setPath] = React.useState('https://picsum.photos/200/100');
 
   const [status] = useExternal(path, {
-    target: ref,
+    type: 'img',
+    target: ref
   });
 
   return (
