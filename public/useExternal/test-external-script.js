@@ -1,4 +1,4 @@
-const TEST_SCRIPT = {
+var TEST_SCRIPT = {
   start: () => {
     return 'Hello World';
   },
