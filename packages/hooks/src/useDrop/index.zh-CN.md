@@ -66,5 +66,5 @@ const [ props, { isHovering } ] = useDrop({
 |---------|---------------------------|-------------------------------------|--------|
 | onText  | 拖拽文字的回调            | `(text: string, e: Event) => void`  | -      |
 | onFiles | 拖拽文件的回调            | `(files: File[], e: Event) => void` | -      |
-| onUri   | 拖拽链接的回调            | (`text: string, e: Event) => void`  | -      |
+| onUri   | 拖拽链接的回调            | `(text: string, e: Event) => void`  | -      |
 | onDom   | 拖拽自定义 dom 节点的回调 | `(content: any, e: Event) => void`  | -      |
