@@ -4,10 +4,10 @@ import usePersistFn from '../usePersistFn';
 import { useEffect, useRef, useState } from 'react';
 
 export enum ReadyState {
-  Connecting = 0,
-  Open = 1,
-  Closing = 2,
-  Closed = 3,
+  Connecting = WebSocket.CONNECTING,
+  Open = WebSocket.OPEN,
+  Closing = WebSocket.CLOSING,
+  Closed = WebSocket.CLOSED,
 }
 
 export interface Options {
