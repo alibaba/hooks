@@ -55,6 +55,7 @@ const [status, { toggle, unload, load }] = useExternal(path: string, options?: O
 
 | 参数     | 说明                                  | 类型     | 默认值 |
 |------------|----------------------------------------------|----------|---------|
+| type | 需引入外部资源的类型，支持 `js`/`css`/`img`  | `string` | -      |
 | async | 引入外链脚本的 `<script>` 的 async 属性 | `boolean` | true       |
 | media | 引入外链样式表 `<link>` 的 media 属性, 如 `all`/`screen`/`print`/`handheld` | `string` | all       |
 | target | 需插入外部图片资源 `<img>` 的父容器 DOM 节点或者 Refs  | `HTMLElement` \| `(() => HTMLElement)` \| `MutableRefObject` | -      |

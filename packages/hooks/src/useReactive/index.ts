@@ -14,7 +14,7 @@ function observer<T extends object>(initialVal: T, cb: () => void) {
   const proxy = new Proxy<T>(initialVal, {
     get(target, key, receiver) {
       const res = Reflect.get(target, key, receiver);
-      return typeof res === 'object' ? observer(res, cb) : Reflect.get(target, key);
+      return (typeof res === 'object' && res !== null) ? observer(res, cb) : Reflect.get(target, key);
     },
     set(target, key, val) {
       const ret = Reflect.set(target, key, val);

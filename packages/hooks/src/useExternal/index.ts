@@ -2,6 +2,7 @@ import { useState, useRef, useEffect, useMemo } from 'react';
 import { getTargetElement, BasicTarget } from '../utils/dom';
 
 export interface Options {
+  type?: 'js' | 'css' | 'img';
   media?: HTMLLinkElement['media'];
   async?: boolean;
   target?: BasicTarget;
@@ -38,7 +39,7 @@ export default function useExternal(path: string, options?: Options): [Status, A
     setStatus('loading');
     // Create external element
     const pathname = path.replace(/[|#].*$/, '');
-    if (/(^css!|\.css$)/.test(pathname)) {
+    if (options?.type === 'css' || /(^css!|\.css$)/.test(pathname)) {
       // css
       ref.current = document.createElement('link');
       ref.current.rel = 'stylesheet';
@@ -53,14 +54,14 @@ export default function useExternal(path: string, options?: Options): [Status, A
       }
       ref.current.setAttribute('data-status', 'loading');
       document.head.appendChild(ref.current);
-    } else if (/(^js!|\.js$)/.test(pathname)) {
+    } else if (options?.type === 'js' || /(^js!|\.js$)/.test(pathname)) {
       // javascript
       ref.current = document.createElement('script');
       ref.current.src = path;
       ref.current.async = options?.async === undefined ? true : options?.async;
       ref.current.setAttribute('data-status', 'loading');
       document.body.appendChild(ref.current);
-    } else {
+    } else if (options?.type === 'img' || /(^img!|\.(png|gif|jpg|svg|webp)$)/.test(pathname)) {
       // image
       ref.current = document.createElement('img');
       ref.current.src = path;
@@ -70,7 +71,16 @@ export default function useExternal(path: string, options?: Options): [Status, A
       if (wrapper) {
         wrapper.appendChild(ref.current);
       }
+    }else{
+      // do nothing
+      console.error(
+        "Cannot infer the type of external resource, and please provide a type ('js' | 'css' | 'img'). " +
+          "Refer to the https://ahooks.js.org/hooks/dom/use-external/#options"
+      )
     }
+
+    if(!ref.current) return
+
     // Bind setAttribute Event
     const setAttributeFromEvent = (event: Event) => {
       ref.current?.setAttribute('data-status', event.type === 'load' ? 'ready' : 'error');
@@ -83,10 +93,8 @@ export default function useExternal(path: string, options?: Options): [Status, A
     ref.current.addEventListener('load', setStateFromEvent);
     ref.current.addEventListener('error', setStateFromEvent);
     return () => {
-      if (ref.current) {
-        ref.current.removeEventListener('load', setStateFromEvent);
-        ref.current.removeEventListener('error', setStateFromEvent);
-      }
+      ref.current?.removeEventListener('load', setStateFromEvent);
+      ref.current?.removeEventListener('error', setStateFromEvent);
     };
   }, [path, active]);
 
