@@ -1,5 +1,5 @@
 import React from 'react';
-import { useReactive } from '../../';
+import { useReactive } from 'ahooks';
 
 export default () => {
   let state = useReactive({
