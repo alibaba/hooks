@@ -20,12 +20,16 @@ export default () => {
         Status: <b>{status}</b>
       </p>
       <p>
-        Response: <i>{status === 'ready' ? TEST_SCRIPT.start() : '-'}</i>
+        Response: <i>{status === 'ready' ? TEST_SCRIPT?.start() : '-'}</i>
       </p>
       <button type="button" style={{ marginRight: 8 }} onClick={() => toggle()}>
         toggle
       </button>
-      <button type="button" style={{ marginRight: 8 }} onClick={() => unload()}>
+      <button type="button" style={{ marginRight: 8 }} onClick={() => { 
+        unload();
+        // Maybe you wanna remove the global variables or functions after run unload()
+        TEST_SCRIPT = undefined;
+      }}>
         unload
       </button>
       <button type="button" style={{ marginRight: 8 }} onClick={() => load()}>
