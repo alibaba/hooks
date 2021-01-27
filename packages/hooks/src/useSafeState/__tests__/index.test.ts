@@ -1,14 +1,14 @@
 import { act, renderHook, RenderHookResult } from '@testing-library/react-hooks';
-import useAsyncState from '../index';
+import useSafeState from '../index';
 
 describe('useSetState', () => {
   it('should be defined', () => {
-    expect(useAsyncState).toBeDefined();
+    expect(useSafeState).toBeDefined();
   });
 
   const setUp = (initialValue: any) =>
     renderHook(() => {
-      const [state, setState] = useAsyncState(initialValue);
+      const [state, setState] = useSafeState(initialValue);
       return {
         state,
         setState,

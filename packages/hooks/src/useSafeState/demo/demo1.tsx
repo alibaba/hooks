@@ -5,12 +5,12 @@
  */
 
 import React, { useState } from 'react';
-import useAsyncState from '../index';
+import useSafeState from '../index';
 
 
 const Child = () => {
 
-  const [value, setValue] = useAsyncState<string>()
+  const [value, setValue] = useSafeState<string>()
   React.useEffect(() => {
     setTimeout(() => {
       setValue('从服务端获取的数据')
@@ -28,7 +28,7 @@ const Child = () => {
 export default () => {
   
 
-  const [visible, setVisible] = useAsyncState(true);
+  const [visible, setVisible] = useSafeState(true);
 
 
   return (

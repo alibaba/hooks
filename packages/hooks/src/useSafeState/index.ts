@@ -2,12 +2,12 @@
 import React, { Dispatch, SetStateAction } from 'react'
 import useUnmountedRef from '../useUnmountedRef'
 
-function useAsyncState<S>(initialState: S | (() => S)): [S, Dispatch<SetStateAction<S>>]
+function useSafeState<S>(initialState: S | (() => S)): [S, Dispatch<SetStateAction<S>>]
 
-function useAsyncState<S = undefined>(): [S | undefined, Dispatch<SetStateAction<S | undefined>>];
+function useSafeState<S = undefined>(): [S | undefined, Dispatch<SetStateAction<S | undefined>>];
 
 
-function useAsyncState(initialState?) {
+function useSafeState(initialState?) {
   const unmountedRef = useUnmountedRef()
   const [state, setState] = React.useState(initialState)
   const setCurrentState = (currentState) => {
@@ -19,4 +19,4 @@ function useAsyncState(initialState?) {
   return [state, setCurrentState] as const
 }
 
-export default useAsyncState
+export default useSafeState
