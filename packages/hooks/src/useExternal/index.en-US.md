@@ -55,6 +55,7 @@ const [status, { toggle, unload, load }] = useExternal(path: string, options?: O
 
 | Params     | Description                                  | Type     | Default |
 |------------|----------------------------------------------|----------|---------|
+| type | The type of extarnal resources which need to load, support `js`/`css`/`img`  | `string` | -      |
 | async | The async properties of extarnal resources `<script>` | `boolean` | true       |
 | media | The media properties of extarnal resources `<link>`, support `all`/`screen`/`print`/`handheld` | `string` | all       |
 | target | The DOM or Refs of container which need to load the `<img>` | `HTMLElement` \| `(() => HTMLElement)` \| `MutableRefObject` | -      |
