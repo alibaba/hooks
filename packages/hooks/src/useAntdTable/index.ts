@@ -100,7 +100,7 @@ function useAntdTable<R = any, Item = any, U extends Item = any>(
       return {};
     }
     // antd 3
-    if (form.getFieldInstance) {
+    if (form.validateFieldsAndScroll) {
       const tempAllFiledsValue = form.getFieldsValue();
       const filterFiledsValue: Store = {};
       Object.keys(tempAllFiledsValue).forEach((key: string) => {
