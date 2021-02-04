@@ -4,7 +4,8 @@ import useEventListener from '../useEventListener';
 type VisibilityState = 'hidden' | 'visible' | 'prerender' | undefined;
 
 const getVisibility = () => {
-  if (typeof document === 'undefined') return;
+  // Default document visibility to true for SSR
+  if (typeof document === 'undefined') return true;
   return document.visibilityState;
 };
 
