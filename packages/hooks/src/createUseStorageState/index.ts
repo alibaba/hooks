@@ -60,7 +60,7 @@ export function createUseStorageState(nullishStorage: Storage | null) {
     return [state, updateState];
   }
   if (!nullishStorage) {
-    return function (defaultValue: any) {
+    return function (_: string, defaultValue: any) {
       return [
         isFunction<IFuncUpdater<any>>(defaultValue) ? defaultValue() : defaultValue,
         () => {},
