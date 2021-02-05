@@ -22,10 +22,14 @@ group:
 
 <code src="./demo/demo2.tsx" />
 
+### 获取所有尺寸系数
+
+<code src="./demo/demo3.tsx" />
+
 ## API
 
 ```typescript
-const size = useSize(target);
+const size = useSize(target, options?: Options);
 ```
 
 ### 参数
@@ -34,8 +38,14 @@ const size = useSize(target);
 |---------|----------------------------------------------|------------------------|--------|
 | target | DOM 节点或者 Refs  | `HTMLElement` \| `(() => HTMLElement)` \| `MutableRefObject` | -      |
 
+### 配置项
+
+| 参数    | 说明                                         | 类型                   | 默认值 |
+|---------|----------------------------------------------|------------------------|--------|
+| observe | 是否启用观察模式  | `boolean` | true      |
+
 ### 结果
 
 | 参数     | 说明                                     | 类型       |
 |----------|------------------------------------------|------------|
-| size  | dom 节点的尺寸                         | `{ width: number, height: number }`    |
+| size  | dom 节点的尺寸                         | `{ x: number, y: number, width: number, height: number, top: number, right: number, bottom: number, left: number }`    |

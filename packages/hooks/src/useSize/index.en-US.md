@@ -23,11 +23,14 @@ A hook to subscribe DOM element size change.
 
 <code src="./demo/demo2.tsx" />
 
+### Get all dimension
+
+<code src="./demo/demo3.tsx" />
 
 ## API
 
 ```typescript
-const size = useSize(target);
+const size = useSize(target, options?: Options);
 ```
 
 ### Params
@@ -36,8 +39,14 @@ const size = useSize(target);
 |---------|----------------------------------------------|------------------------|--------|
 | target | DOM element or Ref Object  | `HTMLElement` \| `(() => HTMLElement)` \| `MutableRefObject` | -      |
 
+### Options
+
+| 参数    | 说明                                         | 类型                   | 默认值 |
+|---------|----------------------------------------------|------------------------|--------|
+| observe | Enable observation mode  | `boolean` | true      |
+
 ### Result
 
 | Property | Description                                         | Type                 |
 |----------|------------------------------------------|------------|
-| size  | size of the DOM                             | `{ width: number, height: number }`    |
+| size  | size of the DOM                             | `{ x: number, y: number, width: number, height: number, top: number, right: number, bottom: number, left: number }`    |

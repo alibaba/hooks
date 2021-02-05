@@ -2,39 +2,49 @@ import { useState, useLayoutEffect } from 'react';
 import ResizeObserver from 'resize-observer-polyfill';
 import { getTargetElement, BasicTarget } from '../utils/dom';
 
-type Size = { width?: number; height?: number };
+type Size = {
+  x?: number;
+  y?: number;
+  width?: number;
+  height?: number;
+  top?: number;
+  right?: number;
+  bottom?: number;
+  left?: number;
+};
 
-function useSize(target: BasicTarget): Size {
-  const [state, setState] = useState<Size>(() => {
-    const el = getTargetElement(target);
-    return {
-      width: ((el || {}) as HTMLElement).clientWidth,
-      height: ((el || {}) as HTMLElement).clientHeight,
+type Options =
+  | {
+      observe?: boolean;
+    }
+  | {
+      observe: true;
     };
-  });
+
+export default function useSize(target: BasicTarget, options?: Options): Size {
+  const [size, setSize] = useState<Size>({});
 
   useLayoutEffect(() => {
-    const el = getTargetElement(target);
+    const el = getTargetElement(target) as HTMLElement;
     if (!el) {
+      return () => {};
+    }
+
+    if (options && !options?.observe) {
+      setSize(el.getBoundingClientRect());
       return () => {};
     }
 
     const resizeObserver = new ResizeObserver((entries) => {
       entries.forEach((entry) => {
-        setState({
-          width: entry.target.clientWidth,
-          height: entry.target.clientHeight,
-        });
+        setSize(entry.target.getBoundingClientRect());
       });
     });
-
     resizeObserver.observe(el as HTMLElement);
     return () => {
       resizeObserver.disconnect();
     };
-  }, [target]);
+  }, [target, options?.observe]);
 
-  return state;
+  return size;
 }
-
-export default useSize;
