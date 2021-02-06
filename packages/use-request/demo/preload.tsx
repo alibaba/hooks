@@ -7,12 +7,10 @@
  */
 
 import { useBoolean, useRequest } from 'ahooks';
-import { Button } from 'antd';
 import Mock from 'mockjs';
 import React from 'react';
 
 async function getArticle(type?: string): Promise<{ data: string; time: number }> {
-  console.log(type);
   return new Promise((resolve) => {
     setTimeout(() => {
       resolve({
