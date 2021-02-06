@@ -1,4 +1,4 @@
-import { useState, useLayoutEffect } from 'react';
+import { useState, useLayoutEffect, useCallback, useMemo } from 'react';
 import ResizeObserver from 'resize-observer-polyfill';
 import { getTargetElement, BasicTarget } from '../utils/dom';
 
@@ -13,24 +13,25 @@ type Size = {
   left?: number;
 };
 
-type Options =
-  | {
-      observe?: boolean;
-    }
-  | {
-      observe: true;
-    };
+type Options = {
+  observe?: boolean
+}
 
 export default function useSize(target: BasicTarget, options?: Options): Size {
   const [size, setSize] = useState<Size>({});
 
+  const getElement = useCallback((t) => {
+    return getTargetElement(t)
+  }, [target])
+
   useLayoutEffect(() => {
-    const el = getTargetElement(target) as HTMLElement;
+    const el = getElement(target) as HTMLElement
+
     if (!el) {
       return () => {};
     }
 
-    if (options && !options?.observe) {
+    if (options && !options.observe) {
       setSize(el.getBoundingClientRect());
       return () => {};
     }
@@ -40,11 +41,13 @@ export default function useSize(target: BasicTarget, options?: Options): Size {
         setSize(entry.target.getBoundingClientRect());
       });
     });
+    
     resizeObserver.observe(el as HTMLElement);
+    
     return () => {
       resizeObserver.disconnect();
     };
-  }, [target, options?.observe]);
+  }, [options?.observe]);
 
   return size;
 }
