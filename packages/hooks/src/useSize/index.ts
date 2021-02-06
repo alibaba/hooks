@@ -47,7 +47,7 @@ export default function useSize(target: BasicTarget, options?: Options): Size {
     return () => {
       resizeObserver.disconnect();
     };
-  }, [options?.observe]);
+  }, [target, options?.observe]);
 
   return size;
 }
