@@ -1,4 +1,4 @@
-import { useState, useLayoutEffect, useCallback, useMemo } from 'react';
+import { useState, useLayoutEffect, useCallback } from 'react';
 import ResizeObserver from 'resize-observer-polyfill';
 import { getTargetElement, BasicTarget } from '../utils/dom';
 
