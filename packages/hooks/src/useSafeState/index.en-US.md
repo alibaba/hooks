@@ -9,13 +9,18 @@ group:
 ---
 
 # useSafeState
-用法与 React.useState 完全一样，但是在组件卸载后异步回调内的 setState 不再执行，避免因组件卸载后更新状态而导致的内存泄漏
+It is exactly the same with React.useState , but after the component is unloaded, the setstate in the asynchronous callback is no longer executed to avoid memory leakage caused by updating the state after the component is unloaded
 
-## 代码演示
 
-### 基础用法，与 React.useState 完全一样
+
+## Examples
+
 
 <code src="./demo/demo1.tsx" />
 
 ## API
+
+```typescript
+const [state, setState] = useSafeState(initialState)
+```
 

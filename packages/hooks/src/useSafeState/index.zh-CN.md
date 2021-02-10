@@ -19,3 +19,7 @@ group:
 
 ## API
 
+```typescript
+const [state, setState] = useSafeState(initialState)
+```
+
