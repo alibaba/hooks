@@ -19,11 +19,6 @@ describe('useControllableValue', () => {
     expect(hook.result.current[0]).toEqual(2);
   });
 
-  it('defaultValue should work when value is undefined', () => {
-    const hook = setUp({ defaultValue: 1, value: undefined });
-    expect(hook.result.current[0]).toEqual(1);
-  });
-
   it('state should be undefined', () => {
     const hook = setUp();
     expect(hook.result.current[0]).toBeUndefined();

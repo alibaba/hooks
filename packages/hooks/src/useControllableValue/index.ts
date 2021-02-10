@@ -23,10 +23,7 @@ export default function useControllableValue<T>(props: Props = {}, options: Opti
   const value = props[valuePropName];
 
   const [state, setState] = useState<T | undefined>(() => {
-    if (
-      (valuePropName in props) &&
-      props[valuePropName] !== undefined
-    ) {
+    if (valuePropName in props) {
       return value;
     }
     if (defaultValuePropName in props) {
