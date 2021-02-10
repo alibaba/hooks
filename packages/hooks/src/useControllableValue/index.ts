@@ -20,7 +20,7 @@ export default function useControllableValue<T>(props: Props = {}, options: Opti
     trigger = 'onChange',
   } = options;
 
-  const value = props[valuePropName];
+  const value = props[valuePropName] as T;
 
   const [state, setState] = useState<T | undefined>(() => {
     if (valuePropName in props) {
@@ -51,5 +51,5 @@ export default function useControllableValue<T>(props: Props = {}, options: Opti
     [props, valuePropName, trigger],
   );
 
-  return [state, handleSetState] as const;
+  return [valuePropName in props ? value : state, handleSetState] as const;
 }
