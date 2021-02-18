@@ -9,23 +9,19 @@ import React from 'react';
 import { useControllableValue } from 'ahooks';
 
 export default (props: any) => {
-  const [state, setState] = useControllableValue<number>(props, {
-    defaultValue: 1,
+  const [state, setState] = useControllableValue<string>(props, {
+    defaultValue: '',
   });
 
   return (
     <>
       <input
-        type="number"
         value={state}
-        onChange={() => setState(state + 1)}
+        onChange={e => setState(e.target.value)}
         style={{ width: 300 }}
       />
-      <button type="button" onClick={() => setState(state + 1)} style={{ margin: '0 4px' }}>
-        +
-      </button>
-      <button type="button" onClick={() => setState(state - 1)}>
-        -
+      <button type="button" onClick={() => setState('')} style={{ margin: '0 4px'}}>
+        Clear
       </button>
     </>
   );
