@@ -99,19 +99,14 @@ function useAntdTable<R = any, Item = any, U extends Item = any>(
     if (!form) {
       return {};
     }
-    // antd 3
-    if (form.validateFieldsAndScroll) {
-      const tempAllFiledsValue = form.getFieldsValue();
-      const filterFiledsValue: Store = {};
-      Object.keys(tempAllFiledsValue).forEach((key: string) => {
-        if (form.getFieldInstance ? form.getFieldInstance(key) : true) {
-          filterFiledsValue[key] = tempAllFiledsValue[key];
-        }
-      });
-      return filterFiledsValue;
-    }
-    // antd 4
-    return form.getFieldsValue(null, () => true);
+    const tempAllFiledsValue = form.getFieldsValue();
+    const filterFiledsValue: Store = {};
+    Object.keys(tempAllFiledsValue).forEach((key: string) => {
+      if (form.getFieldInstance ? form.getFieldInstance(key) : true) {
+        filterFiledsValue[key] = tempAllFiledsValue[key];
+      }
+    });
+    return filterFiledsValue;
   }, [form]);
 
   const formRef = useRef(form);
@@ -121,20 +116,13 @@ function useAntdTable<R = any, Item = any, U extends Item = any>(
     if (!formRef.current) {
       return;
     }
-    // antd 3
-    if (formRef.current.getFieldInstance) {
-      // antd 3 需要判断字段是否存在，否则会抛警告
-      const filterFiledsValue: Store = {};
-      Object.keys(allFormData).forEach((key: string) => {
-        if (formRef.current!.getFieldInstance ? formRef.current!.getFieldInstance(key) : true) {
-          filterFiledsValue[key] = allFormData[key];
-        }
-      });
-      formRef.current.setFieldsValue(filterFiledsValue);
-    } else {
-      // antd 4
-      formRef.current.setFieldsValue(allFormData);
-    }
+    const filterFiledsValue: Store = {};
+    Object.keys(allFormData).forEach((key: string) => {
+      if (formRef.current!.getFieldInstance ? formRef.current!.getFieldInstance(key) : true) {
+        filterFiledsValue[key] = allFormData[key];
+      }
+    });
+    formRef.current.setFieldsValue(filterFiledsValue);
   }, [type]);
 
   // 首次加载，手动提交。为了拿到 form 的 initial values
