@@ -195,8 +195,8 @@ describe('useFusionTable', () => {
     await hook.waitForNextUpdate();
 
     expect(queryArgs.name).toEqual('change name 2');
-    expect(queryArgs.phone).toBe('13344556677');
-    expect(queryArgs.email).toBe('x@qq.com');
+    expect(queryArgs.phone).toBeUndefined();
+    expect(queryArgs.email).toBeUndefined();
 
     // /* 切换回 advance，恢复之前的条件 */
     act(() => {
