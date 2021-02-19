@@ -28,7 +28,7 @@
   },
   "homepage": "https://github.com/alibaba/hooks",
   "peerDependencies": {
-    "react": "^16.8.6"
+    "react": "^16.8 || v17.0"
   },
   "dependencies": {
     "lodash.debounce": "^4.0.8",
