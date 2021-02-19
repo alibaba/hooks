@@ -94,7 +94,8 @@ function useLoadMore<R extends LoadMoreFormatReturn, RR = any>(
     if (loading || loadingMore || !ref || !ref.current) {
       return;
     }
-    if (ref.current.scrollHeight - ref.current.scrollTop <= ref.current.clientHeight + threshold) {
+    const element = typeof ref === 'function' ? ref() : ref.current;
+    if (element.scrollHeight - element.scrollTop <= element.clientHeight + threshold) {
       loadMore();
     }
   };
