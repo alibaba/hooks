@@ -30,10 +30,14 @@ function useScroll(target?: Target, shouldUpdate: ScrollListenController = () =>
     function updatePosition(currentTarget: Target): void {
       let newPosition;
       if (currentTarget === document) {
-        if (!document.scrollingElement) return;
+        const globalOffsetX =
+          typeof window.scrollX === 'undefined' ? window.pageXOffset : window.scrollX;
+        const globalOffsetY =
+          typeof window.scrollY === 'undefined' ? window.pageYOffset : window.scrollY;
+
         newPosition = {
-          left: document.scrollingElement.scrollLeft,
-          top: document.scrollingElement.scrollTop,
+          left: globalOffsetX,
+          top: globalOffsetY,
         };
       } else {
         newPosition = {
@@ -52,7 +56,7 @@ function useScroll(target?: Target, shouldUpdate: ScrollListenController = () =>
     }
     el.addEventListener('scroll', listener);
     return () => {
-      el.removeEventListener('scroll', listener);
+      el?.removeEventListener('scroll', listener);
     };
   }, [target, shouldUpdatePersist]);
 
