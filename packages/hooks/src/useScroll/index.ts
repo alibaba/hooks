@@ -19,7 +19,12 @@ function useScroll(target?: Target, shouldUpdate: ScrollListenController = () =>
   const shouldUpdatePersist = usePersistFn(shouldUpdate);
 
   useEffect(() => {
-    const el = getTargetElement(target, document);
+    let el = getTargetElement(target, document);
+    // 对于document.body，addEventListener添加scroll事件不会生效： https://stackoverflow.com/questions/43632111/why-body-addeventlistenerscroll-doesnt-work-while-body-onscroll-works/43632204
+    if (el === document.body) {
+      el = document;
+    }
+
     if (!el) return;
 
     function updatePosition(currentTarget: Target): void {
