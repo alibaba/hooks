@@ -21,7 +21,7 @@ A Hook can tell if the page is visible.
 ## API
 
 ```typescript
-const  documentVisibility = useDocumentVisibility();
+const documentVisibility = useDocumentVisibility();
 ```
 
 ### Result
