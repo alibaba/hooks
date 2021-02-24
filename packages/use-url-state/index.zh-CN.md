@@ -36,7 +36,7 @@ import useUrlState from '@ahooksjs/use-url-state';
 
 https://codesandbox.io/s/suspicious-feather-cz4e0?file=/App.tsx
 
-### 默认用法
+### 基础用法
 
 <code src="./demo/demo1.tsx" hideActions='["CSB"]' />
 

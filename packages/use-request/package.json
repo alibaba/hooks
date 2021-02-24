@@ -1,6 +1,6 @@
 {
   "name": "@ahooksjs/use-request",
-  "version": "2.8.1",
+  "version": "2.8.3",
   "description": "React Hooks for fetching, caching and updating asynchronous data",
   "main": "./lib/index.js",
   "module": "./es/index.js",
@@ -28,14 +28,14 @@
   },
   "homepage": "https://github.com/alibaba/hooks",
   "peerDependencies": {
-    "react": "^16.8.6"
+    "react": "^16.8 || ^17.0"
   },
   "dependencies": {
     "lodash.debounce": "^4.0.8",
     "lodash.throttle": "^4.1.1"
   },
   "devDependencies": {
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "umi-request": "^1.2.17"
   },
   "gitHead": "561ebf0c820fa5fd6f1a8e83d6a8de3474254921"

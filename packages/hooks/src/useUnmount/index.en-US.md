@@ -11,7 +11,7 @@ group:
 
 # useUnmount
 
-A hook that executes a function at unmount
+A hook that executes a function at unmount.
 
 ## Examples
 
@@ -21,12 +21,12 @@ A hook that executes a function at unmount
 
 ## API
 
-```javascript
+```typescript
 useUnmount(fn: () => void);
 ```
 
 ### Params
 
-| Property    | Description                                         | Type                   | Default |
-|---------|----------------------------------------------|------------------------|--------|
-| fn | the function need to be executed | () => void | -      |
+| Property | Description                      | Type         | Default |
+|----------|----------------------------------|--------------|---------|
+| fn       | the function need to be executed | `() => void` | -       |

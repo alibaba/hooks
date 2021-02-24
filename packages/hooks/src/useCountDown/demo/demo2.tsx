@@ -3,14 +3,18 @@
  * desc: Controll countdown and interval status manually
  *
  * title.zh-CN: 进阶使用
- * desc.zh-CN: 手动启用并控制计时器状态, 适用于验证码或类似场景
+ * desc.zh-CN: 手动启用并控制计时器状态, 适用于验证码或类似场景; 时间结束后触发onEnd回调
  */
 
 import React from 'react';
-import useCountDown from '../index';
+import { useCountDown } from 'ahooks';
 
 export default () => {
-  const [countdown, setTargetDate] = useCountDown();
+  const onEnd = () => {
+    alert('End of the time');
+    console.log('onEnd of the time');
+  };
+  const [countdown, setTargetDate] = useCountDown({ onEnd: onEnd });
 
   return (
     <>

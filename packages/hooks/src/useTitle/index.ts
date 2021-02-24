@@ -1,4 +1,5 @@
 import { useEffect, useRef } from 'react';
+import useUnmount from '../useUnmount';
 
 export interface Options {
   restoreOnUnmount?: boolean;
@@ -14,13 +15,11 @@ function useTitle(title: string, options: Options = DEFAULT_OPTIONS) {
     document.title = title;
   }, [title]);
 
-  useEffect(() => {
+  useUnmount(() => {
     if (options && options.restoreOnUnmount) {
-      return () => {
-        document.title = titleRef.current;
-      };
+      document.title = titleRef.current;
     }
-  }, []);
+  });
 }
 
-export default typeof document !== 'undefined' ? useTitle : (_title: string) => {};
+export default typeof document !== 'undefined' ? useTitle : () => {};

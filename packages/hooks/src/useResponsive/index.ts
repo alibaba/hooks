@@ -21,19 +21,16 @@ let responsiveConfig: ResponsiveConfig = {
   xl: 1200,
 };
 
-function init() {
-  if (info || typeof window === "undefined") return;
-  info = {};
+function handleResize() {
+  const oldInfo = info;
   calculate();
-  window.addEventListener('resize', () => {
-    const oldInfo = info;
-    calculate();
-    if (oldInfo === info) return;
-    for (const subscriber of subscribers) {
-      subscriber();
-    }
-  });
+  if (oldInfo === info) return;
+  for (const subscriber of subscribers) {
+    subscriber();
+  }
 }
+
+let listening = false;
 
 function calculate() {
   const width = window.innerWidth;
@@ -56,21 +53,30 @@ export function configResponsive(config: ResponsiveConfig) {
 }
 
 export function useResponsive() {
-  init();
+  const windowExists = typeof window !== 'undefined';
+  if (windowExists && !listening) {
+    info = {};
+    calculate();
+    window.addEventListener('resize', handleResize);
+    listening = true;
+  }
   const [state, setState] = useState<ResponsiveInfo>(info);
-  const windowExists = typeof window !== "undefined";
 
   useEffect(() => {
     if (!windowExists) return;
-    
+
     const subscriber = () => {
       setState(info);
     };
     subscribers.add(subscriber);
     return () => {
       subscribers.delete(subscriber);
+      if (subscribers.size === 0) {
+        window.removeEventListener('resize', handleResize);
+        listening = false;
+      }
     };
-  }, [windowExists]);
+  }, []);
 
   return state;
 }

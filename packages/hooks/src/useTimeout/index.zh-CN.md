@@ -6,7 +6,6 @@ nav:
 group:
   title: SideEffect
   path: /side-effect
-legacy: /zh-CN/state/use-timeout
 ---
 
 # useTimeout
@@ -15,12 +14,14 @@ legacy: /zh-CN/state/use-timeout
 
 ## 代码演示
 
+### 基础用法
+
 <code src="./demo/demo1.tsx" />
 
 
 ## API
 
-```javascript
+```typescript
 useTimeout(fn: () => void, delay: number | undefined | null);
 ```
 
@@ -28,5 +29,5 @@ useTimeout(fn: () => void, delay: number | undefined | null);
 
 | 参数 | 说明 | 类型 |
 |------|---------------------------|--------|
-| fn   | 是你想要在到期时间(delay毫秒)之后执行的函数 | () => void |
-| delay | 到期时间（单位为毫秒），当取值为 `null` 或 `undefined` 时会停止计时器 | number \| undefined \| null |
+| fn   | 是你想要在到期时间(delay毫秒)之后执行的函数 | `() => void` |
+| delay | 到期时间（单位为毫秒），当取值为 `null` 或 `undefined` 时会停止计时器 | `number` \| `undefined` \| `null` |

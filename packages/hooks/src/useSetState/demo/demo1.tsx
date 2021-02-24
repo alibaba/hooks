@@ -26,7 +26,7 @@ export default () => {
         <button type="button" onClick={() => setState({ hello: 'world' })}>
           set hello
         </button>
-        <button type="button" onClick={() => setState({ foo: 'bar' })} style={{ margin: '0 16px' }}>
+        <button type="button" onClick={() => setState({ foo: 'bar' })} style={{ margin: '0 8px' }}>
           set foo
         </button>
         <button type="button" onClick={() => setState((prev) => ({ count: prev.count + 1 }))}>

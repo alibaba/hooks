@@ -36,6 +36,7 @@ const [countdown, setTargetDate, formattedRes] = useCountDown(
   {
     targetDate,
     interval,
+    onEnd
   }
 );
 ```
@@ -44,8 +45,8 @@ const [countdown, setTargetDate, formattedRes] = useCountDown(
 
 | 参数          | 说明                                | 类型                                            |
 | ------------- | ----------------------------------- | ----------------------------------------------- |
-| TDate         | 支持的时间格式                      | Date \| number \| string \| undefined   |
-| FormattedRes | 返回的原始结果, 均为大于等于0的数字 | { days, hours, minutes, seconds, milliseconds } |
+| TDate         | 支持的时间格式                      | `Date` \| `number` \| `string` \| `undefined`   |
+| FormattedRes | 返回的原始结果, 均为大于等于0的数字 | `{ days, hours, minutes, seconds, milliseconds }` |
 
 
 ## Params
@@ -54,6 +55,7 @@ const [countdown, setTargetDate, formattedRes] = useCountDown(
 | --------- | -------------- | ------------------------------------------------------- | ----------- |
 | targetDate   | 未来时间     | `TDate`                                                 | `undefined` |
 | interval  | 变化时间间隔（毫秒）     | `number`                                                | `1000`      |
+| onEnd |  未来时间结束后的回调函数  |`Function`                                           |`undefined`|
 
 
 ### Result

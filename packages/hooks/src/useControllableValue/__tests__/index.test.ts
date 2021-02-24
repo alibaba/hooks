@@ -25,18 +25,21 @@ describe('useControllableValue', () => {
   });
 
   it('onChange should work', () => {
+    let extraParam: string = ''
     const props = {
       value: 2,
-      onChange(v: any) {
+      onChange(v: any, extra) {
         this.value = v;
+        extraParam = extra
       },
     };
     const hook = setUp(props);
     expect(hook.result.current[0]).toEqual(2);
     act(() => {
-      hook.result.current[1](3);
+      hook.result.current[1](3, 'extraParam');
     });
     expect(props.value).toEqual(3);
+    expect(extraParam).toEqual('extraParam');
   });
 
   it('test on state update', () => {

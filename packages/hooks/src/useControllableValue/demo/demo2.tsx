@@ -10,29 +10,22 @@ import React, { useState } from 'react';
 import { useControllableValue } from 'ahooks';
 
 const ControllableComponent = (props: any) => {
-  const [state, setState] = useControllableValue<number>(props);
+  const [state, setState] = useControllableValue<string>(props);
 
-  return <input value={state} onChange={() => setState(state + 1)} style={{ width: 300 }} />;
+  return <input value={state} onChange={e => setState(e.target.value)} style={{ width: 300 }} />;
 };
 
 const Parent = () => {
-  const [state, setState] = useState<number>(0);
-  const increment = () => {
-    setState((s) => s + 1);
-  };
-
-  const decrease = () => {
-    setState((s) => s - 1);
+  const [state, setState] = useState<string>('');
+  const clear = () => {
+    setState('');
   };
 
   return (
     <>
       <ControllableComponent value={state} onChange={setState} />
-      <button type="button" onClick={increment} style={{ margin: '0 4px' }}>
-        +
-      </button>
-      <button type="button" onClick={decrease}>
-        -
+      <button type="button" onClick={clear} style={{ margin: '0 4px' }}>
+        Clear
       </button>
     </>
   );

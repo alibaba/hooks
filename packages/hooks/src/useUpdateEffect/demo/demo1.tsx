@@ -6,7 +6,7 @@
  * desc.zh-CN: 使用上与 useEffect 完全相同，只是它忽略了首次渲染，且只在依赖项更新时运行。
  */
 
-import React, { useLayoutEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useUpdateEffect } from 'ahooks';
 
 export default () => {
@@ -14,7 +14,7 @@ export default () => {
   const [effectCount, setEffectCount] = useState(0);
   const [updateEffectCount, setUpdateEffectCount] = useState(0);
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     setEffectCount((c) => c + 1);
   }, [count]);
 

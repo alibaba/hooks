@@ -1,3 +1,5 @@
+> The English version of this document is [here](https://github.com/alibaba/hooks/blob/master/CONTRIBUTING.en-US.MD)
+
 # 贡献指南
 
 > 参考 ant design [贡献指南](https://ant.design/docs/react/contributing-cn)
@@ -14,7 +16,7 @@
 
 ## 新增功能
 
-如果你想新增一个 Hooks，我们建议你先建立一个 issue，说明该 Hook 的应用场景及用法，参考 [useHover RFC](https://github.com/alibaba/hooks/issues/16)。
+如果你想新增一个 Hooks，我们建议你先建立一个 issue，说明该 Hook 的应用场景及用法，参考 [[RFC] useLockFn](https://github.com/alibaba/hooks/issues/562)。
 
 然后你可以基于已有 Hook 来初始化一个新的 Hook。
 
@@ -28,7 +30,7 @@
 
 2. 如果你修复了一个 bug 或者新增了一个功能，请确保写了相应的测试，这很重要。
 
-3. 确认所有的测试是通过的 `npm run test`。 
+3. 确认所有的测试是通过的 `npm run test`。
 
 
 ## 开发流程
