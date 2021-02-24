@@ -30,6 +30,7 @@ function useEventListener<K extends keyof WindowEventMap>(
   handler: (ev: WindowEventMap[K]) => void,
   options?: Options<Window>,
 ): void;
+function useEventListener(eventName: string, handler: Function, options: Options): void;
 
 function useEventListener(eventName: string, handler: Function, options: Options = {}) {
   const handlerRef = useRef<Function>();
