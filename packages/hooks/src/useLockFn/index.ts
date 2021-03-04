@@ -4,7 +4,7 @@ function useLockFn<P extends any[] = any[], V extends any = any>(fn: (...args: P
   const lockRef = useRef(false);
 
   return useCallback(
-    async function (...args: P) {
+    async (...args: P) => {
       if (lockRef.current) return;
       lockRef.current = true;
       try {
