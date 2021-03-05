@@ -1,3 +1,5 @@
+> The English version of this document is [here](https://github.com/alibaba/hooks/blob/master/CONTRIBUTING.en-US.MD)
+
 # 贡献指南
 
 > 参考 ant design [贡献指南](https://ant.design/docs/react/contributing-cn)
@@ -28,7 +30,7 @@
 
 2. 如果你修复了一个 bug 或者新增了一个功能，请确保写了相应的测试，这很重要。
 
-3. 确认所有的测试是通过的 `npm run test`。 
+3. 确认所有的测试是通过的 `npm run test`。
 
 
 ## 开发流程
