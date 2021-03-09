@@ -32,10 +32,13 @@ export default <S extends UrlState = UrlState>(initialState?: S | (() => S), opt
     return parse(location.search, parseConfig);
   }, [location.search]);
 
-  const targetQuery = {
-    ...initialStateRef.current,
-    ...queryFromUrl,
-  } as state;
+  const targetQuery: state = useMemo(
+    () => ({
+      ...initialStateRef.current,
+      ...queryFromUrl,
+    }),
+    [queryFromUrl],
+  );
 
   const setState = (s: React.SetStateAction<state>) => {
     const newQuery = typeof s === 'function' ? (s as Function)(targetQuery) : s;
