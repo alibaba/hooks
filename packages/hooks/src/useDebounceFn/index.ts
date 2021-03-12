@@ -2,6 +2,7 @@ import debounce from 'lodash.debounce';
 import { useRef } from 'react';
 import useCreation from '../useCreation';
 import { DebounceOptions } from '../useDebounce/debounceOptions';
+import useUnmount from '../useUnmount';
 
 type Fn = (...args: any) => any;
 
@@ -22,6 +23,10 @@ function useDebounceFn<T extends Fn>(fn: T, options?: DebounceOptions) {
       ),
     [],
   );
+
+  useUnmount(() => {
+    debounced.cancel();
+  });
 
   return {
     run: (debounced as unknown) as T,
