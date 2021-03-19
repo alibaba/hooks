@@ -5,12 +5,13 @@ import { DebounceOptions } from './debounceOptions';
 function useDebounce<T>(value: T, options?: DebounceOptions) {
   const [debounced, setDebounced] = useState(value);
 
-  const { run } = useDebounceFn(() => {
+  const { run, cancel } = useDebounceFn(() => {
     setDebounced(value);
   }, options);
 
   useEffect(() => {
     run();
+    return cancel;
   }, [value]);
 
   return debounced;
