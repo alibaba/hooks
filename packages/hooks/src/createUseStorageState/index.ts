@@ -11,7 +11,7 @@ export interface IFuncStorage {
 
 export type StorageStateResult<T> = [T | undefined, (value?: T | IFuncUpdater<T>) => void];
 
-function isFunction<T>(obj: any): obj is T {
+function isFunction(obj: any): obj is Function {
   return typeof obj === 'function';
 }
 
@@ -33,7 +33,7 @@ export function createUseStorageState(nullishStorage: Storage | null) {
           return JSON.parse(raw);
         } catch (e) {}
       }
-      if (isFunction<IFuncUpdater<T>>(defaultValue)) {
+      if (isFunction(defaultValue)) {
         return defaultValue();
       }
       return defaultValue;
@@ -44,7 +44,7 @@ export function createUseStorageState(nullishStorage: Storage | null) {
         if (typeof value === 'undefined') {
           storage.removeItem(key);
           setState(undefined);
-        } else if (isFunction<IFuncUpdater<T>>(value)) {
+        } else if (isFunction(value)) {
           const previousState = getStoredValue();
           const currentState = value(previousState);
           storage.setItem(key, JSON.stringify(currentState));
@@ -61,10 +61,7 @@ export function createUseStorageState(nullishStorage: Storage | null) {
   }
   if (!nullishStorage) {
     return function (_: string, defaultValue: any) {
-      return [
-        isFunction<IFuncUpdater<any>>(defaultValue) ? defaultValue() : defaultValue,
-        () => {},
-      ];
+      return [isFunction(defaultValue) ? defaultValue() : defaultValue, () => {}];
     } as typeof useStorageState;
   }
   return useStorageState;
