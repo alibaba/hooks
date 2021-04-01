@@ -3,8 +3,8 @@ export default function limit(fn: any, timespan: number) {
   return (...args: any[]) => {
     if (pending) return;
     pending = true;
-    fn(...args);
     setTimeout(() => {
+      fn(...args);
       pending = false;
     }, timespan);
   };
