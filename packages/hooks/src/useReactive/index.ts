@@ -35,6 +35,11 @@ function observer<T extends object>(initialVal: T, cb: () => void): T {
       cb();
       return ret;
     },
+    deleteProperty(target, key) {
+      const ret = Reflect.deleteProperty(target, key);
+      cb();
+      return ret;
+    },
   });
 
   proxyMap.set(initialVal, proxy);
