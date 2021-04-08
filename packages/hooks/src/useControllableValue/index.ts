@@ -12,7 +12,18 @@ export interface Props {
   [key: string]: any;
 }
 
-export default function useControllableValue<T>(props: Props = {}, options: Options<T> = {}) {
+interface StandardProps<T> {
+  value: T;
+  defaultValue: T;
+  onChange: (val: T) => void;
+}
+
+function useControllableValue<T>(props: StandardProps<T>): [T, (val: T) => void];
+function useControllableValue<T>(
+  props?: Props,
+  options?: Options<T>,
+): [T | undefined, (v: T | undefined, ...args: any[]) => void];
+function useControllableValue<T>(props: Props = {}, options: Options<T> = {}) {
   const {
     defaultValue,
     defaultValuePropName = 'defaultValue',
@@ -53,3 +64,5 @@ export default function useControllableValue<T>(props: Props = {}, options: Opti
 
   return [valuePropName in props ? value : state, handleSetState] as const;
 }
+
+export default useControllableValue;
