@@ -1,9 +1,9 @@
 /**
  * title: Listen specified area
- * desc: useTextSelection can receive dom or ref, for listen specified area.
+ * desc: useTextSelection can receive dom or ref or Function, for listen specified area.
  *
  * title.zh-CN: 监听特定区域文本选择
- * desc.zh-CN: useTextSelection 可以接收 dom 或 ref，指定监听区域。
+ * desc.zh-CN: useTextSelection 可以接收 dom、ref或Function，指定监听区域。
  */
 
 import React, { useRef } from 'react';

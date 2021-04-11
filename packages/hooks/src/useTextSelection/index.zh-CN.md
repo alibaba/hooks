@@ -37,7 +37,7 @@ const state = useTextSelection(target);
 
 | 参数   | 说明                      | 类型 | 默认值   |
 |--------|---------------------------|------|----------|
-| target | DOM element or Ref Object |  `HTMLElement` \| `(() => HTMLElement)` \| `React.MutableRefObject` \| `Document` | `document` |
+| target | DOM element or Ref Object or Function |  `HTMLElement` \| `(() => HTMLElement)` \| `React.MutableRefObject` \| `Document` | `document` |
 
 ### Result
 
