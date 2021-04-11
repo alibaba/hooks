@@ -47,7 +47,6 @@ const getProps = (
 
 const useDrop = (options: DropAreaOptions = {}): [DropProps, DropAreaState] => {
   const optionsRef = useRef(options);
-  optionsRef.current = options;
   const [isHovering, setIsHovering] = useState<boolean>(false);
   const callback = useCallback(
     (dataTransfer: DataTransfer, event: React.DragEvent | React.ClipboardEvent) => {
