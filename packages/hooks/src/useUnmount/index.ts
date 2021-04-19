@@ -11,7 +11,7 @@ const useUnmount = (fn: any) => {
         fnPersist();
       }
     },
-    [fnPersist],
+    [],
   );
 };
 
