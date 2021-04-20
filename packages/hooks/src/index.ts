@@ -59,7 +59,7 @@ import useTrackedEffect from './useTrackedEffect';
 import useUnmountedRef from './useUnmountedRef';
 import useExternal from './useExternal';
 
-const useControlledValue: typeof useControllableValue = function (...args) {
+const useControlledValue: typeof useControllableValue = function (...args: any) {
   console.warn(
     'useControlledValue is deprecated and will be removed in the next major version. Please use useControllableValue instead.',
   );

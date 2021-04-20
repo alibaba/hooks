@@ -25,12 +25,12 @@ describe('useControllableValue', () => {
   });
 
   it('onChange should work', () => {
-    let extraParam: string = ''
+    let extraParam: string = '';
     const props = {
       value: 2,
       onChange(v: any, extra) {
         this.value = v;
-        extraParam = extra
+        extraParam = extra;
       },
     };
     const hook = setUp(props);
@@ -68,5 +68,27 @@ describe('useControllableValue', () => {
 
     act(() => setValue(55));
     expect(result.current[0]).toEqual(55);
+  });
+
+  it('type inference should work', async () => {
+    type Value = {
+      foo: number;
+    };
+    const props: {
+      value: Value;
+      defaultValue: Value;
+      onChange: (val: Value) => void;
+    } = {
+      value: {
+        foo: 123,
+      },
+      defaultValue: {
+        foo: 123,
+      },
+      onChange: () => {},
+    };
+    const hook = renderHook(() => useControllableValue(props));
+    const [v, setV] = hook.result.current;
+    expect(v.foo).toBe(123);
   });
 });
