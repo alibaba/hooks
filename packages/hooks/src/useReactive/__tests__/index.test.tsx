@@ -12,6 +12,7 @@ const Demo = () => {
       },
     },
     arr: [1],
+    foo: 'foo',
   });
 
   return (
@@ -19,9 +20,15 @@ const Demo = () => {
       <p>
         counter state.count：<span role="addCount">{state.count}</span>
       </p>
+      <p>
+        delete property：<span role="deleteProperty">{state.foo}</span>
+      </p>
 
       <button role="addCountBtn" onClick={() => (state.count += 1)}>
         state.count++
+      </button>
+      <button role="deletePropertyBtn" onClick={() => delete state.foo}>
+        delete state.foo
       </button>
       <button role="subCountBtn" style={{ marginLeft: '50px' }} onClick={() => (state.count -= 1)}>
         state.count--
@@ -142,5 +149,18 @@ describe('test useReactive feature', () => {
       fireEvent.change(input, { target: { value: 'bbb' } });
     });
     expect(inputVal.textContent).toBe('bbb');
+  });
+
+  it('delete object property', () => {
+    let wrap = render(<Demo />);
+
+    let deleteProperty = wrap.getByRole('deleteProperty');
+    let deletePropertyBtn = wrap.getByRole('deletePropertyBtn');
+    expect(deleteProperty.textContent).toBe('foo');
+
+    act(() => {
+      fireEvent.click(deletePropertyBtn);
+    });
+    expect(deleteProperty.textContent).toBe('');
   });
 });
