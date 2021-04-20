@@ -12,7 +12,17 @@ export interface Props {
   [key: string]: any;
 }
 
-export default function useControllableValue<T>(props: Props = {}, options: Options<T> = {}) {
+interface StandardProps<T> {
+  value: T;
+  defaultValue?: T;
+  onChange: (val: T) => void;
+}
+function useControllableValue<T = any>(props: StandardProps<T>): [T, (val: T) => void];
+function useControllableValue<T = any>(
+  props?: Props,
+  options?: Options<T>,
+): [T, (v: T, ...args: any[]) => void];
+function useControllableValue<T = any>(props: Props = {}, options: Options<T> = {}) {
   const {
     defaultValue,
     defaultValuePropName = 'defaultValue',
@@ -22,7 +32,7 @@ export default function useControllableValue<T>(props: Props = {}, options: Opti
 
   const value = props[valuePropName] as T;
 
-  const [state, setState] = useState<T | undefined>(() => {
+  const [state, setState] = useState<T>(() => {
     if (valuePropName in props) {
       return value;
     }
@@ -40,7 +50,7 @@ export default function useControllableValue<T>(props: Props = {}, options: Opti
   }, [value, valuePropName]);
 
   const handleSetState = useCallback(
-    (v: T | undefined, ...args: any[]) => {
+    (v: T, ...args: any[]) => {
       if (!(valuePropName in props)) {
         setState(v);
       }
@@ -53,3 +63,5 @@ export default function useControllableValue<T>(props: Props = {}, options: Opti
 
   return [valuePropName in props ? value : state, handleSetState] as const;
 }
+
+export default useControllableValue;
