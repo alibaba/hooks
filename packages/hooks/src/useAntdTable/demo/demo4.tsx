@@ -60,7 +60,7 @@ const AppList = () => {
   const columns = [
     {
       title: 'name',
-      dataIndex: 'name.last',
+      dataIndex: ['name', 'last'],
     },
     {
       title: 'email',
