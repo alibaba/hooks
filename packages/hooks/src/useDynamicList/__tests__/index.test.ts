@@ -142,7 +142,14 @@ describe('useDynamicList', () => {
     });
 
     expect(hook.result.current.list[0]).toEqual(2);
-    expect(hook.result.current.getKey(0)).toEqual(0);
+    expect(hook.result.current.getKey(0)).toEqual(1);
+
+    act(() => {
+      hook.result.current.resetList([3]);
+    });
+
+    expect(hook.result.current.list[0]).toEqual(3);
+    expect(hook.result.current.getKey(0)).toEqual(2);
   });
 
   it('sortForm', () => {

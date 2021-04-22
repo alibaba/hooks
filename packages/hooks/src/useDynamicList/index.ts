@@ -18,30 +18,32 @@ export default <T>(initialValue: T[]) => {
     return initialValue || [];
   });
 
-  const resetList = (newList: T[] = []) => {
+  const resetList = useCallback((newList: T[] = []) => {
     keyList.current = [];
-    counterRef.current = -1;
     setList(() => {
       (newList || []).forEach((_, index) => {
         setKey(index);
       });
       return newList || [];
     });
-  };
+  }, []);
 
-  const insert = (index: number, obj: T) => {
+  const insert = useCallback((index: number, obj: T) => {
     setList((l) => {
       const temp = [...l];
       temp.splice(index, 0, obj);
       setKey(index);
       return temp;
     });
-  };
+  }, []);
 
-  const getKey = (index: number) => keyList.current[index];
-  const getIndex = (index: number) => keyList.current.findIndex((ele) => ele === index);
+  const getKey = useCallback((index: number) => keyList.current[index], []);
+  const getIndex = useCallback(
+    (key: number) => keyList.current.findIndex((ele) => ele === key),
+    [],
+  );
 
-  const merge = (index: number, obj: T[]) => {
+  const merge = useCallback((index: number, obj: T[]) => {
     setList((l) => {
       const temp = [...l];
       obj.forEach((_, i) => {
@@ -50,17 +52,17 @@ export default <T>(initialValue: T[]) => {
       temp.splice(index, 0, ...obj);
       return temp;
     });
-  };
+  }, []);
 
-  const replace = (index: number, obj: T) => {
+  const replace = useCallback((index: number, obj: T) => {
     setList((l) => {
       const temp = [...l];
       temp[index] = obj;
       return temp;
     });
-  };
+  }, []);
 
-  const remove = (index: number) => {
+  const remove = useCallback((index: number) => {
     setList((l) => {
       const temp = [...l];
       temp.splice(index, 1);
@@ -73,9 +75,9 @@ export default <T>(initialValue: T[]) => {
       }
       return temp;
     });
-  };
+  }, []);
 
-  const move = (oldIndex: number, newIndex: number) => {
+  const move = useCallback((oldIndex: number, newIndex: number) => {
     if (oldIndex === newIndex) {
       return;
     }
@@ -95,16 +97,16 @@ export default <T>(initialValue: T[]) => {
 
       return temp;
     });
-  };
+  }, []);
 
-  const push = (obj: T) => {
+  const push = useCallback((obj: T) => {
     setList((l) => {
       setKey(l.length);
       return l.concat([obj]);
     });
-  };
+  }, []);
 
-  const pop = () => {
+  const pop = useCallback(() => {
     // remove keys if necessary
     try {
       keyList.current = keyList.current.slice(0, keyList.current.length - 1);
@@ -113,23 +115,26 @@ export default <T>(initialValue: T[]) => {
     }
 
     setList((l) => l.slice(0, l.length - 1));
-  };
+  }, []);
 
-  const unshift = (obj: T) => {
+  const unshift = useCallback((obj: T) => {
     setList((l) => {
       setKey(0);
       return [obj].concat(l);
     });
-  };
+  }, []);
 
-  const sortForm = (result: unknown[]) =>
-    result
-      .map((item, index) => ({ key: index, item })) // add index into obj
-      .sort((a, b) => getIndex(a.key) - getIndex(b.key)) // sort based on the index of table
-      .filter((item) => !!item.item) // remove undefined(s)
-      .map((item) => item.item); // retrive the data
+  const sortForm = useCallback(
+    (result: unknown[]) =>
+      result
+        .map((item, index) => ({ key: index, item })) // add index into obj
+        .sort((a, b) => getIndex(a.key) - getIndex(b.key)) // sort based on the index of table
+        .filter((item) => !!item.item) // remove undefined(s)
+        .map((item) => item.item), // retrive the data
+    [],
+  );
 
-  const shift = () => {
+  const shift = useCallback(() => {
     // remove keys if necessary
     try {
       keyList.current = keyList.current.slice(1, keyList.current.length);
@@ -137,7 +142,7 @@ export default <T>(initialValue: T[]) => {
       console.error(e);
     }
     setList((l) => l.slice(1, l.length));
-  };
+  }, []);
 
   return {
     list,
