@@ -148,6 +148,8 @@ class Fetch<R, P extends any[]> {
           }
           return formattedResult;
         }
+        // prevent run.then when request is canceled
+        return new Promise(() => {});
       })
       .catch((error) => {
         if (!this.unmountedFlag && currentCount === this.count) {
@@ -173,6 +175,8 @@ class Fetch<R, P extends any[]> {
             'useRequest has caught the exception, if you need to handle the exception yourself, you can set options.throwOnError to true.',
           );
         }
+        // prevent run.then when request is canceled
+        return new Promise(() => {});
       })
       .finally(() => {
         if (!this.unmountedFlag && currentCount === this.count) {
