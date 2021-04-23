@@ -133,46 +133,50 @@ class Fetch<R, P extends any[]> {
 
     return this.service(...args)
       .then((res) => {
-        if (!this.unmountedFlag && currentCount === this.count) {
-          if (this.loadingDelayTimer) {
-            clearTimeout(this.loadingDelayTimer);
-          }
-          const formattedResult = this.config.formatResult ? this.config.formatResult(res) : res;
-          this.setState({
-            data: formattedResult,
-            error: undefined,
-            loading: false,
-          });
-          if (this.config.onSuccess) {
-            this.config.onSuccess(formattedResult, args);
-          }
-          return formattedResult;
+        if (this.unmountedFlag || currentCount !== this.count) {
+          // prevent run.then when request is canceled
+          return new Promise(() => {});
         }
+        if (this.loadingDelayTimer) {
+          clearTimeout(this.loadingDelayTimer);
+        }
+        const formattedResult = this.config.formatResult ? this.config.formatResult(res) : res;
+        this.setState({
+          data: formattedResult,
+          error: undefined,
+          loading: false,
+        });
+        if (this.config.onSuccess) {
+          this.config.onSuccess(formattedResult, args);
+        }
+        return formattedResult;
       })
       .catch((error) => {
-        if (!this.unmountedFlag && currentCount === this.count) {
-          if (this.loadingDelayTimer) {
-            clearTimeout(this.loadingDelayTimer);
-          }
-          this.setState({
-            data: undefined,
-            error,
-            loading: false,
-          });
-          if (this.config.onError) {
-            this.config.onError(error, args);
-          }
-          // If throwOnError, user should catch the error self,
-          // or the page will crash
-          if (this.config.throwOnError) {
-            throw error;
-          }
-          console.error(error);
-          // eslint-disable-next-line prefer-promise-reject-errors
-          return Promise.reject(
-            'useRequest has caught the exception, if you need to handle the exception yourself, you can set options.throwOnError to true.',
-          );
+        if (this.unmountedFlag || currentCount !== this.count) {
+          // prevent run.then when request is canceled
+          return new Promise(() => {});
         }
+        if (this.loadingDelayTimer) {
+          clearTimeout(this.loadingDelayTimer);
+        }
+        this.setState({
+          data: undefined,
+          error,
+          loading: false,
+        });
+        if (this.config.onError) {
+          this.config.onError(error, args);
+        }
+        // If throwOnError, user should catch the error self,
+        // or the page will crash
+        if (this.config.throwOnError) {
+          throw error;
+        }
+        console.error(error);
+        // eslint-disable-next-line prefer-promise-reject-errors
+        return Promise.reject(
+          'useRequest has caught the exception, if you need to handle the exception yourself, you can set options.throwOnError to true.',
+        );
       })
       .finally(() => {
         if (!this.unmountedFlag && currentCount === this.count) {
