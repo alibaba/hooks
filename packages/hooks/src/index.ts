@@ -58,6 +58,7 @@ import useLockFn from './useLockFn';
 import useTrackedEffect from './useTrackedEffect';
 import useUnmountedRef from './useUnmountedRef';
 import useExternal from './useExternal';
+import useDidUpdateEffect from './useDidUpdateEffect';
 
 const useControlledValue: typeof useControllableValue = function (...args: any) {
   console.warn(
@@ -130,4 +131,5 @@ export {
   useLockFn,
   useUnmountedRef,
   useExternal,
+  useDidUpdateEffect,
 };
