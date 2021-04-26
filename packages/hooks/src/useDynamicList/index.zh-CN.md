@@ -42,7 +42,7 @@ const result: Result = useDynamicList(initialValue: T[]);
 | list      | 当前的列表             | `T[]`                                          | -                                                 |
 | resetList | 重新设置 list 的值     | `(list: T[]) => void`                          | -                                                 |
 | insert    | 在指定位置插入元素     | `(index: number, obj: T) => void`              | -                                                 |
-| merge     | 在指定位置插入多个元素 | `(index: number, obj: T) => void`              | -                                                 |
+| merge     | 在指定位置插入多个元素 | `(index: number, obj: T[]) => void`              | -                                                 |
 | replace   | 替换指定元素           | `(index: number, obj: T) => void`              | -                                                 |
 | remove    | 删除指定元素           | `(index: number) => void`                      | -                                                 |
 | move      | 移动元素               | `(oldIndex: number, newIndex: number) => void` | -                                                 |
