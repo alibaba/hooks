@@ -42,7 +42,7 @@ const result: Result = useDynamicList(initialValue: T[]);
 | list      | current list data                        | `T[]`                                          | -                                                        |
 | resetList | reset list current data                  | `(list: T[]) => void`                          | -                                                        |
 | insert    | add item at specific position            | `(index: number, obj: T) => void`              | -                                                        |
-| merge     | merge items into specific position       | `(index: number, obj: T) => void`              | -                                                        |
+| merge     | merge items into specific position       | `(index: number, obj: T[]) => void`              | -                                                        |
 | replace   | replace item at specific position        | `(index: number, obj: T) => void`              | -                                                        |
 | remove    | delete specific item                     | `(index: number) => void`                      | -                                                        |
 | move      | move item from old index to new index    | `(oldIndex: number, newIndex: number) => void` | -                                                        |
