@@ -22,7 +22,7 @@ A hook of useEffect that only runs when dependencies update.
 
 ```typescript
 useUpdateEffect(
-  effect: () => (void | (() => void | undefined)),
+  effect: (prevDeps?: deps) => ReturnType<React.EffectCallback>,
   deps?: deps,
 )
 ```
@@ -31,5 +31,5 @@ useUpdateEffect(
 
 | Property | Description                                        | Type                                      | Default |
 |----------|----------------------------------------------------|-------------------------------------------|---------|
-| effect   | Executable function                                | `() => (void | (() => void | undefined))` | -       |
+| effect   | Executable function                                | `(prevDeps?: deps) => ReturnType<React.EffectCallback>` | -       |
 | deps     | Optionally, pass in objects that depend on changes |   `array` \| `undefined`                 | -       |

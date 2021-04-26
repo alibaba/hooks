@@ -22,7 +22,7 @@ group:
 
 ```typescript
 useUpdateEffect(
-  effect: () => (void | (() => void | undefined)),
+  effect: (prevDeps?: deps) => ReturnType<React.EffectCallback>,
   deps?: deps,
 )
 ```
@@ -31,5 +31,5 @@ useUpdateEffect(
 
 | 参数   | 说明                       | 类型                                      | 默认值 |
 |--------|----------------------------|-------------------------------------------|--------|
-| effect | 可执行函数                 | `() => (void | (() => void | undefined))` | -      |
+| effect | 可执行函数                 | `(prevDeps?: deps) => ReturnType<React.EffectCallback>` | -      |
 | deps   | 可选项，传入依赖变化的对象 |  `array` \| `undefined`  | -      |

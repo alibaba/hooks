@@ -18,14 +18,43 @@ describe('useUpdateEffect', () => {
   });
   it('test on optional', () => {
     let mountedState = 1;
+    let prevDeps;
     const hook = renderHook(() =>
-      useUpdateEffect(() => {
+      useUpdateEffect((prev) => {
         mountedState = 3;
+        prevDeps = prev;
       }, [mountedState]),
     );
     expect(mountedState).toEqual(1);
     mountedState = 2;
     hook.rerender();
     expect(mountedState).toEqual(3);
+    expect(prevDeps[0]).toEqual(1);
+  });
+  it('test on unMount', () => {
+    let mountedState = 1;
+    let prevDeps;
+    const hook = renderHook(() =>
+      useUpdateEffect(
+        prev => {
+          mountedState = 3;
+          prevDeps = prev;
+          return () => {
+            mountedState = 4;
+          };
+        },
+        [mountedState],
+      ),
+    );
+    mountedState = 2;
+    hook.rerender();
+    expect(mountedState).toEqual(3);
+    expect(prevDeps[0]).toEqual(1);
+    hook.rerender();
+    expect(mountedState).toEqual(3);
+    expect(prevDeps[0]).toEqual(2);
+    hook.unmount();
+    expect(mountedState).toEqual(4);
+    expect(prevDeps[0]).toEqual(2);
   });
 });

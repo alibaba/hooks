@@ -1,15 +1,26 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, EffectCallback, DependencyList } from 'react';
 
-const useUpdateEffect: typeof useEffect = (effect, deps) => {
+type Deps = DependencyList;
+
+type UseUpdateEffect = (
+  effect: (prevDeps?: Deps) => ReturnType<EffectCallback>,
+  deps?: Deps,
+) => void;
+
+const useUpdateEffect: UseUpdateEffect = (effect, deps) => {
   const isMounted = useRef(false);
+  const prevDeps = useRef(deps);
 
   useEffect(() => {
     if (!isMounted.current) {
       isMounted.current = true;
     } else {
-      return effect();
+      const destructor = effect(prevDeps.current);
+      prevDeps.current = deps;
+      return destructor;
     }
   }, deps);
 };
 
 export default useUpdateEffect;
+

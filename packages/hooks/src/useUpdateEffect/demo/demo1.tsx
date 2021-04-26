@@ -13,13 +13,15 @@ export default () => {
   const [count, setCount] = useState(0);
   const [effectCount, setEffectCount] = useState(0);
   const [updateEffectCount, setUpdateEffectCount] = useState(0);
+  const [prevDeps, setPrevDeps] = useState([count]);
 
   useEffect(() => {
     setEffectCount((c) => c + 1);
   }, [count]);
 
-  useUpdateEffect(() => {
+  useUpdateEffect((prevDeps) => {
     setUpdateEffectCount((c) => c + 1);
+    setPrevDeps(() => prevDeps);
     return () => {
       // do something
     };
@@ -29,6 +31,7 @@ export default () => {
     <div>
       <p>effectCount: {effectCount}</p>
       <p>updateEffectCount: {updateEffectCount}</p>
+      <p>updateEffectPrevDeps: {JSON.stringify(prevDeps)}</p>
       <p>
         <button type="button" onClick={() => setCount((c) => c + 1)}>
           reRender
