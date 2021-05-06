@@ -1,10 +1,11 @@
 import { useState } from 'react';
 import useEventListener from '../useEventListener';
+import canUseDom from '../utils/canUseDom';
 
 type VisibilityState = 'hidden' | 'visible' | 'prerender' | undefined;
 
 const getVisibility = () => {
-  if (typeof document === 'undefined') return;
+  if (!canUseDom()) return 'visible';
   return document.visibilityState;
 };
 
@@ -17,7 +18,7 @@ function useDocumentVisibility(): VisibilityState {
       setDocumentVisibility(getVisibility());
     },
     {
-      target: document,
+      target: () => document,
     },
   );
 
