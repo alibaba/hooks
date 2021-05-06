@@ -1,11 +1,11 @@
 import { useState } from 'react';
 import useEventListener from '../useEventListener';
-import { isBrowser } from '../utils';
+import canUseDom from '../utils/canUseDom';
 
 type VisibilityState = 'hidden' | 'visible' | 'prerender' | undefined;
 
 const getVisibility = () => {
-  if (!isBrowser) return 'visible';
+  if (!canUseDom()) return 'visible';
   return document.visibilityState;
 };
 
