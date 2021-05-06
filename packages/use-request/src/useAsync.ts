@@ -325,7 +325,8 @@ function useAsync<R, P extends any[], U, UU extends U = any>(
     loadingDelay,
     pollingInterval,
     pollingWhenHidden,
-    refreshOnWindowFocus,
+    // refreshOnWindowFocus should not work on manual mode
+    refreshOnWindowFocus: !manual && refreshOnWindowFocus,
     focusTimespan,
     debounceInterval,
     throttleInterval,
