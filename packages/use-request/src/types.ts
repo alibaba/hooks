@@ -38,6 +38,8 @@ export interface FetchConfig<R, P extends any[]> {
 
   loadingDelay?: number; // loading delay
 
+  loadingKeep?: number; // loading keep
+
   // 轮询
   pollingInterval?: number; // 轮询的间隔毫秒
   pollingWhenHidden?: boolean; // 屏幕隐藏时，停止轮询
@@ -67,6 +69,8 @@ export type BaseOptions<R, P extends any[]> = {
   defaultLoading?: boolean; // 默认 loading 状态
 
   loadingDelay?: number; // loading delay
+
+  loadingKeep?: number;
 
   defaultParams?: P;
   // 轮询

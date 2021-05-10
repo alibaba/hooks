@@ -287,6 +287,34 @@ describe('useRequest', () => {
     hook.unmount();
   });
 
+  it('useRequest loadingKeep should work', async () => {
+    act(() => {
+      hook = setUp(request, {
+        loadingKeep: 500,
+      });
+    });
+    expect(hook.result.current.loading).toEqual(true);
+    jest.runAllTimers();
+    await hook.waitForNextUpdate();
+    expect(hook.result.current.loading).toEqual(false);
+    hook.unmount();
+  });
+
+  it('useRequest loadingKeep should delay', async () => {
+    act(() => {
+      hook = setUp(request, {
+        loadingKeep: 2000,
+      });
+    });
+    expect(hook.result.current.loading).toEqual(true);
+    jest.advanceTimersByTime(1001);
+    expect(hook.result.current.loading).toEqual(true);
+    jest.runAllTimers();
+    await hook.waitForNextUpdate();
+    expect(hook.result.current.loading).toEqual(false);
+    hook.unmount();
+  });
+
   it('useRequest refreshDeps should work', async () => {
     act(() => {
       hook = setUp(request, {
