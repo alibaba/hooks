@@ -145,7 +145,7 @@ class Fetch<R, P extends any[]> {
         });
       }, this.config.loadingDelay);
     }
-    if (this.loadingKeepTimer != null) {
+    if (this.config.loadingKeep != null) {
       this.requestTime = Date.now();
     }
 
@@ -158,7 +158,7 @@ class Fetch<R, P extends any[]> {
         if (this.loadingDelayTimer) {
           clearTimeout(this.loadingDelayTimer);
         }
-        if (this.loadingKeepTimer != null) {
+        if (this.config.loadingKeep != null) {
           this.responseTime = Date.now();
         }
         const formattedResult = this.config.formatResult ? this.config.formatResult(res) : res;
