@@ -58,7 +58,7 @@ describe('useFusionTable', () => {
         ...values,
       };
     },
-    reset: () => {
+    resetToDefault: () => {
       field.fieldsValue = { ...field.initialValue };
     },
     validate: (callback) => {
