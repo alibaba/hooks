@@ -17,7 +17,7 @@ export const fieldAdapter = (field: Field) =>
     getFieldInstance: (name: string) => field.getNames().includes(name),
     setFieldsValue: field.setValues,
     getFieldsValue: field.getValues,
-    resetFields: field.reset,
+    resetFields: field.resetToDefault,
     validateFields: (fields, callback) => {
       field.validate(callback);
     },
