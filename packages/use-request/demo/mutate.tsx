@@ -28,7 +28,7 @@ export default () => {
 
   return (
     <div>
-      <p>usrename: {data}</p>
+      <p>username: {data}</p>
       <input
         onChange={(e) => setState(e.target.value)}
         value={state}
