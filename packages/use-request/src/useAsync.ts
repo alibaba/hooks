@@ -31,9 +31,6 @@ class Fetch<R, P extends any[]> {
   // 请求时序
   count = 0;
 
-  // 是否卸载
-  unmountedFlag = false;
-
   // visible 后，是否继续轮询
   pollingWhenVisibleFlag = false;
 
@@ -151,7 +148,7 @@ class Fetch<R, P extends any[]> {
 
     return this.service(...args)
       .then((res) => {
-        if (this.unmountedFlag || currentCount !== this.count) {
+        if (currentCount !== this.count) {
           // prevent run.then when request is canceled
           return new Promise(() => {});
         }
@@ -191,7 +188,7 @@ class Fetch<R, P extends any[]> {
         return formattedResult;
       })
       .catch((error) => {
-        if (this.unmountedFlag || currentCount !== this.count) {
+        if (currentCount !== this.count) {
           // prevent run.then when request is canceled
           return new Promise(() => {});
         }
@@ -221,7 +218,7 @@ class Fetch<R, P extends any[]> {
         );
       })
       .finally(() => {
-        if (!this.unmountedFlag && currentCount === this.count) {
+        if (currentCount === this.count) {
           if (this.config.pollingInterval) {
             // 如果屏幕隐藏，并且 !pollingWhenHidden, 则停止轮询，并记录 flag，等 visible 时，继续轮询
             if (!isDocumentVisible() && !this.config.pollingWhenHidden) {
@@ -299,7 +296,6 @@ class Fetch<R, P extends any[]> {
   }
 
   unmount() {
-    this.unmountedFlag = true;
     this.cancel();
     this.unsubscribe.forEach((s) => {
       s();
