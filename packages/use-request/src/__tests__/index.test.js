@@ -291,7 +291,11 @@ describe('useRequest', () => {
     act(() => {
       hook = setUp(request, {
         loadingKeep: 500,
+        mutate: true,
       });
+    });
+    act(() => {
+      hook.result.current.run(0).catch(() => {});
     });
     expect(hook.result.current.loading).toEqual(true);
     jest.runAllTimers();
@@ -304,10 +308,14 @@ describe('useRequest', () => {
     act(() => {
       hook = setUp(request, {
         loadingKeep: 2000,
+        mutate: true,
       });
     });
+    act(() => {
+      hook.result.current.run(0).catch(() => {});
+    });
     expect(hook.result.current.loading).toEqual(true);
-    jest.advanceTimersByTime(1001);
+    jest.advanceTimersByTime(1999);
     expect(hook.result.current.loading).toEqual(true);
     jest.runAllTimers();
     await hook.waitForNextUpdate();

@@ -165,7 +165,6 @@ class Fetch<R, P extends any[]> {
         this.setState({
           data: formattedResult,
           error: undefined,
-          loading: false,
         });
         if (this.config.loadingKeep == null) {
           clearTimeout(this.loadingKeepTimer);
