@@ -80,6 +80,10 @@ Production-ready React Hook to manage asynchronous data.
 
 <code src="./demo/loadingDelay.tsx" />
 
+### Loading Keep
+
+<code src="./demo/loadingkeep.tsx" />
+
 ### RefreshDeps
 
 When some `state` changes, we need to re-execute the asynchronous request. Generally, we will write code like this:

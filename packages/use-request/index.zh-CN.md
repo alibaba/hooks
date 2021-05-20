@@ -80,6 +80,10 @@ legacy: /zh-CN/async
 
 <code src="./demo/loadingDelay.tsx" />
 
+### Loading Keep
+
+<code src="./demo/loadingkeep.tsx" />
+
 ### refreshDeps
 
 当某些 `state` 变化时，我们需要重新执行异步请求，一般我们会这样写代码：

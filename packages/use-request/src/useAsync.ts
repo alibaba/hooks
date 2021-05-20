@@ -41,6 +41,8 @@ class Fetch<R, P extends any[]> {
 
   loadingDelayTimer: any = undefined;
 
+  loadingKeepTimer: number | undefined = undefined;
+
   subscribe: Subscribe<R, P>;
 
   unsubscribe: noop[] = [];
@@ -65,6 +67,10 @@ class Fetch<R, P extends any[]> {
 
   limitRefresh: any;
 
+  requestTime: number;
+
+  responseTime: number;
+
   constructor(
     service: Service<R, P>,
     config: FetchConfig<R, P>,
@@ -74,6 +80,8 @@ class Fetch<R, P extends any[]> {
     this.service = service;
     this.config = config;
     this.subscribe = subscribe;
+    this.requestTime = 0;
+    this.responseTime = 0;
     if (initState) {
       this.state = {
         ...this.state,
@@ -114,6 +122,13 @@ class Fetch<R, P extends any[]> {
     if (this.loadingDelayTimer) {
       clearTimeout(this.loadingDelayTimer);
     }
+
+    // 取消 loadingKeepTimer
+    if (this.loadingKeepTimer) {
+      clearTimeout(this.loadingKeepTimer);
+      this.setState({ loading: false });
+    }
+
     this.count += 1;
     // 闭包存储当次请求的 count
     const currentCount = this.count;
@@ -130,6 +145,9 @@ class Fetch<R, P extends any[]> {
         });
       }, this.config.loadingDelay);
     }
+    if (this.config.loadingKeep != null) {
+      this.requestTime = Date.now();
+    }
 
     return this.service(...args)
       .then((res) => {
@@ -140,12 +158,33 @@ class Fetch<R, P extends any[]> {
         if (this.loadingDelayTimer) {
           clearTimeout(this.loadingDelayTimer);
         }
+        if (this.config.loadingKeep != null) {
+          this.responseTime = Date.now();
+        }
         const formattedResult = this.config.formatResult ? this.config.formatResult(res) : res;
         this.setState({
           data: formattedResult,
           error: undefined,
-          loading: false,
         });
+        if (this.config.loadingKeep == null) {
+          clearTimeout(this.loadingKeepTimer);
+          this.setState({
+            loading: false,
+          });
+        } else {
+          const fetchDuration = this.responseTime - this.requestTime;
+          if (fetchDuration >= this.config.loadingKeep) {
+            this.setState({
+              loading: false,
+            });
+          } else {
+            this.loadingKeepTimer = window.setTimeout(() => {
+              this.setState({
+                loading: false,
+              });
+            }, this.config.loadingKeep - fetchDuration);
+          }
+        }
         if (this.config.onSuccess) {
           this.config.onSuccess(formattedResult, args);
         }
@@ -158,6 +197,9 @@ class Fetch<R, P extends any[]> {
         }
         if (this.loadingDelayTimer) {
           clearTimeout(this.loadingDelayTimer);
+        }
+        if (this.loadingKeepTimer) {
+          clearTimeout(this.loadingKeepTimer);
         }
         this.setState({
           data: undefined,
@@ -216,6 +258,10 @@ class Fetch<R, P extends any[]> {
     }
     if (this.loadingDelayTimer) {
       clearTimeout(this.loadingDelayTimer);
+    }
+    if (this.loadingKeepTimer) {
+      clearTimeout(this.loadingKeepTimer);
+      this.setState({ loading: false });
     }
     if (this.pollingTimer) {
       clearTimeout(this.pollingTimer);
@@ -282,6 +328,7 @@ function useAsync<R, P extends any[], U, UU extends U = any>(
 
     defaultLoading = false,
     loadingDelay,
+    loadingKeep,
 
     pollingInterval = 0,
     pollingWhenHidden = true,
@@ -323,6 +370,7 @@ function useAsync<R, P extends any[], U, UU extends U = any>(
     onSuccess: onSuccessPersist,
     onError: onErrorPersist,
     loadingDelay,
+    loadingKeep,
     pollingInterval,
     pollingWhenHidden,
     // refreshOnWindowFocus should not work on manual mode
