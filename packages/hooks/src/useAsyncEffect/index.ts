@@ -4,17 +4,15 @@ type CleanUpWith = (cleanUp: () => void) => void;
 
 function useAsyncEffect(effect: (cleanUpWith: CleanUpWith) => Promise<void>, deps: DependencyList) {
   useEffect(() => {
-    const cleanUpContainer = {
-      current: null as (() => void) | null,
-    };
+    let cleanUp: () => void;
     function cleanUpWith(fn: () => void) {
-      cleanUpContainer.current = fn;
+      cleanUp = fn;
     }
     (async function () {
       await effect(cleanUpWith);
     })();
     return () => {
-      cleanUpContainer.current?.();
+      cleanUp?.();
     };
   }, deps);
 }
