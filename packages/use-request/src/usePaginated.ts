@@ -40,8 +40,11 @@ function usePaginated<R, Item, U extends Item = any>(
     ...(restOptions as any),
   });
 
-  const { current = 1, pageSize = defaultPageSize, sorter = {}, filters = {} } =
-    params && params[0] ? params[0] : ({} as any);
+  const { current, pageSize, sorter, filters } = useMemo(() => {
+    const { current = 1, pageSize = defaultPageSize, sorter = {}, filters = {} } =
+      params && params[0] ? params[0] : ({} as any);
+    return { current, pageSize, sorter, filters };
+  }, [params]);
 
   // 只改变 pagination，其他参数原样传递
   const runChangePaination = useCallback(
@@ -115,6 +118,20 @@ function usePaginated<R, Item, U extends Item = any>(
     [filters, sorter, runChangePaination],
   );
 
+  const tableProps = useMemo(
+    () => ({
+      dataSource: data?.list || [],
+      loading,
+      onChange: changeTable,
+      pagination: {
+        current,
+        pageSize,
+        total,
+      },
+    }),
+    [data, loading, changeTable, current, pageSize, total],
+  );
+
   return {
     loading,
     data,
@@ -129,16 +146,7 @@ function usePaginated<R, Item, U extends Item = any>(
       changeCurrent,
       changePageSize,
     },
-    tableProps: {
-      dataSource: data?.list || [],
-      loading,
-      onChange: changeTable,
-      pagination: {
-        current,
-        pageSize,
-        total,
-      },
-    },
+    tableProps,
     sorter,
     filters,
     ...rest,
