@@ -28,7 +28,7 @@
   },
   "homepage": "https://github.com/alibaba/hooks",
   "peerDependencies": {
-    "react": "^16.8.6",
+    "react": "^16.8 || ^17.0",
     "react-router": "^5.0.0"
   },
   "dependencies": {
