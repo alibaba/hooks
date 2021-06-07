@@ -1,23 +1,9 @@
 import { Component } from 'react';
-import { View, Text } from '@tarojs/components';
+import { View } from '@tarojs/components';
 import './index.scss';
 
-export default class Index extends Component {
-  componentWillMount() {}
+const Index = () => {
+  return <View>Taro 测试</View>;
+};
 
-  componentDidMount() {}
-
-  componentWillUnmount() {}
-
-  componentDidShow() {}
-
-  componentDidHide() {}
-
-  render() {
-    return (
-      <View className="index">
-        <Text>Hello world!</Text>
-      </View>
-    );
-  }
-}
+export default Index;
