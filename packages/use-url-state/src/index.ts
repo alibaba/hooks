@@ -1,6 +1,7 @@
 import { parse, stringify } from 'query-string';
-import { useMemo, useRef, useState } from 'react';
+import { useRef, useState, useEffect, useCallback } from 'react';
 import { useHistory, useLocation } from 'react-router';
+import { isEqual } from 'lodash';
 
 export interface Options {
   navigateMode?: 'push' | 'replace';
@@ -21,36 +22,45 @@ export default <S extends UrlState = UrlState>(initialState?: S | (() => S), opt
   const { navigateMode = 'push' } = options || {};
   const location = useLocation();
   const history = useHistory();
+  const [_, forceUpdate] = useState(false);
 
-  const [, update] = useState(false);
+  const ref = useRef({
+    ...(typeof initialState === 'function' ? (initialState as () => S)() : initialState || {}),
+    ...parse(location.search, parseConfig),
+  });
 
-  const initialStateRef = useRef(
-    typeof initialState === 'function' ? (initialState as () => S)() : initialState || {},
+  useEffect(() => {
+    const oldSearch = ref.current;
+
+    // 遵循已有约定，初始值非 undefined，状态更新为 undefined 后，返回初始值
+    const newSearch = {
+      ...(typeof initialState === 'function' ? (initialState as () => S)() : initialState || {}),
+      ...parse(location.search, parseConfig),
+    };
+    if (!isEqual(oldSearch, newSearch)) {
+      ref.current = newSearch;
+
+      // 点击浏览器前进后退按钮时需要触发更新
+      forceUpdate((b) => !b);
+    }
+  }, [initialState, location.search]);
+
+  const setStateMemo = useCallback(
+    (s: React.SetStateAction<state>) => {
+      history[navigateMode]({
+        hash: location.hash,
+        search:
+          stringify(
+            {
+              ...ref.current,
+              ...(typeof s === 'function' ? (s as Function)(ref.current) : s),
+            },
+            parseConfig,
+          ) || '?',
+      });
+    },
+    [history, location.hash, navigateMode],
   );
 
-  const queryFromUrl = useMemo(() => {
-    return parse(location.search, parseConfig);
-  }, [location.search]);
-
-  const targetQuery: state = useMemo(
-    () => ({
-      ...initialStateRef.current,
-      ...queryFromUrl,
-    }),
-    [queryFromUrl],
-  );
-
-  const setState = (s: React.SetStateAction<state>) => {
-    const newQuery = typeof s === 'function' ? (s as Function)(targetQuery) : s;
-
-    // 1. 如果 setState 后，search 没变化，就需要 update 来触发一次更新。比如 demo1 直接点击 clear，就需要 update 来触发更新。
-    // 2. update 和 history 的更新会合并，不会造成多次更新
-    update((v) => !v);
-    history[navigateMode]({
-      hash: location.hash,
-      search: stringify({ ...queryFromUrl, ...newQuery }, parseConfig) || '?',
-    });
-  };
-
-  return [targetQuery, setState] as const;
+  return [ref.current, setStateMemo] as const;
 };
