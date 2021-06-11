@@ -1,5 +1,5 @@
 import { parse, stringify } from 'query-string';
-import { useRef, useState, useEffect, useCallback } from 'react';
+import { useRef, useState, useEffect, useCallback, useMemo } from 'react';
 import { useHistory, useLocation } from 'react-router';
 import { isEqual } from 'lodash';
 
@@ -22,28 +22,28 @@ export default <S extends UrlState = UrlState>(initialState?: S | (() => S), opt
   const { navigateMode = 'push' } = options || {};
   const location = useLocation();
   const history = useHistory();
-  const [_, forceUpdate] = useState(false);
+  const [, forceUpdate] = useState(false);
 
-  const ref = useRef({
-    ...(typeof initialState === 'function' ? (initialState as () => S)() : initialState || {}),
-    ...parse(location.search, parseConfig),
-  });
+  const newSearch = useMemo(
+    () => ({
+      ...(typeof initialState === 'function' ? (initialState as () => S)() : initialState || {}),
+      ...parse(location.search, parseConfig),
+    }),
+    [initialState, location.search],
+  );
+
+  const ref = useRef(newSearch);
 
   useEffect(() => {
     const oldSearch = ref.current;
 
-    // 遵循已有约定，初始值非 undefined，状态更新为 undefined 后，返回初始值
-    const newSearch = {
-      ...(typeof initialState === 'function' ? (initialState as () => S)() : initialState || {}),
-      ...parse(location.search, parseConfig),
-    };
     if (!isEqual(oldSearch, newSearch)) {
       ref.current = newSearch;
 
       // 点击浏览器前进后退按钮时需要触发更新
       forceUpdate((b) => !b);
     }
-  }, [initialState, location.search]);
+  }, [initialState, newSearch]);
 
   const setStateMemo = useCallback(
     (s: React.SetStateAction<state>) => {
