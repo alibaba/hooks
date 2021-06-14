@@ -43,3 +43,4 @@ const debouncedValue = useDebounce(
 | wait     | 超时时间，单位为毫秒       | `number`  | `1000`  |
 | leading  | 是否在上升沿触发副作用函数 | `boolean` | `false` |
 | trailing | 是否在下降沿触发副作用函数 | `boolean` | `true`  |
+| maxWait | 函数调用允许延迟的最长时间 | `() => void` | -  |
