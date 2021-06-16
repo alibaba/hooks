@@ -4,22 +4,25 @@ import useUpdateEffect from '../useUpdateEffect';
 export interface IFuncUpdater<T> {
   (previousState?: T): T;
 }
-
 export interface IFuncStorage {
   (): Storage;
 }
 
 export type StorageStateResult<T> = [T | undefined, (value?: T | IFuncUpdater<T>) => void];
+export type StorageStateResultHasDefaultValue<T> = [T, (value: T | IFuncUpdater<T>) => void];
 
 function isFunction<T>(obj: any): obj is T {
   return typeof obj === 'function';
 }
 
 export function createUseStorageState(nullishStorage: Storage | null) {
+  function useStorageState<T = undefined>(key: string): StorageStateResult<T>;
   function useStorageState<T>(
     key: string,
-    defaultValue?: T | IFuncUpdater<T>,
-  ): StorageStateResult<T> {
+    defaultValue: T | IFuncUpdater<T>,
+  ): StorageStateResultHasDefaultValue<T>;
+
+  function useStorageState<T>(key: string, defaultValue?: T | IFuncUpdater<T>) {
     const storage = nullishStorage as Storage;
     const [state, setState] = useState<T | undefined>(() => getStoredValue());
     useUpdateEffect(() => {
