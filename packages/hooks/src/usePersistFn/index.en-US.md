@@ -10,11 +10,29 @@ group:
 
 # usePersistFn
 
-Hooks for persistent functions.
+Hooks for persistent functions. In theory, usePersistFn can be used instead of useCallback.
 
-> Reference [How to read an often-changing value from useCallback?](https://reactjs.org/docs/hooks-faq.html#how-to-read-an-often-changing-value-from-usecallback)
->
-> In some rare cases you might need to memoize a callback with useCallback but the memoization doesn’t work very well because the inner function has to be re-created too often. For super-complex subcomponents, re-rendering can impact performance. With usePersistFn, you can guarantee that the function reference will never change.
+In some scenarios, we need to use useCallback to cache a function, but when the second parameter deps changes, the function will be regenerated, causing the function reference to change.
+
+```js
+const [state, setState] = useState('');
+
+// When the state changes, the func reference will change
+const func = useCallback(()=>{
+  console.log(state);
+}, [state]);
+```
+
+Using usePersistFn, you can omit the second parameter deps, and ensure that the function reference never change.
+
+```js
+const [state, setState] = useState('');
+
+// func reference nerver change
+const func = usePersistFn(()=>{
+  console.log(state);
+});
+```
 
 ## Examples
 
@@ -22,14 +40,16 @@ Hooks for persistent functions.
 
 <code src="./demo/demo1.tsx" />
 
+### Performance Improvement
+
+<code src="./demo/demo2.tsx" />
+
 ## API
 
 ```typescript
 type noop = (...args: any[]) => any;
 
-const fn = usePersistFn<T extends noop>(
-  fn: T
-);
+const fn = usePersistFn<T extends noop>(fn: T):T;
 ```
 
 ### Result
@@ -40,6 +60,6 @@ const fn = usePersistFn<T extends noop>(
 
 ### Params
 
-| Property | Description                        | Type                      | Default |
-|----------|------------------------------------|---------------------------|---------|
-| fn       | Functions that require persistence | `(...args: any[]) => any` | -       |
+| Property | Description                       | Type                      | Default |
+|----------|-----------------------------------|---------------------------|---------|
+| fn       | Function that require persistence | `(...args: any[]) => any` | -       |
