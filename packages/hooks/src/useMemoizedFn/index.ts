@@ -2,10 +2,10 @@ import { useMemo, useRef } from 'react';
 
 type noop = (...args: any[]) => any;
 
-function usePersistFn<T extends noop>(fn: T) {
+function useMemoizedFn<T extends noop>(fn: T) {
   if (process.env.NODE_ENV === 'development') {
     if (typeof fn !== 'function') {
-      console.error('usePersistFn expected parameter is a function, got ' + typeof fn);
+      console.error('useMemoizedFn expected parameter is a function, got ' + typeof fn);
     }
   }
 
@@ -25,4 +25,4 @@ function usePersistFn<T extends noop>(fn: T) {
   return persistFn.current;
 }
 
-export default usePersistFn;
+export default useMemoizedFn;

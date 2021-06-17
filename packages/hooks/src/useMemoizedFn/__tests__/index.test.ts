@@ -1,6 +1,6 @@
 import { act, renderHook, RenderHookResult } from '@testing-library/react-hooks';
 import { useState } from 'react';
-import usePersistFn from '../';
+import useMemoizedFn from '../';
 
 const useCount = () => {
   const [count, setCount] = useState(0);
@@ -9,19 +9,19 @@ const useCount = () => {
     setCount((c) => c + 1);
   };
 
-  const persistFn = usePersistFn(() => count);
+  const persistFn = useMemoizedFn(() => count);
 
   return { addCount, persistFn };
 };
 
 let hook: RenderHookResult<[], ReturnType<typeof useCount>>;
 
-describe('usePersistFn', () => {
+describe('useMemoizedFn', () => {
   it('should be defined', () => {
-    expect(usePersistFn).toBeDefined();
+    expect(useMemoizedFn).toBeDefined();
   });
 
-  it('usePersistFn should work', () => {
+  it('useMemoizedFn should work', () => {
     act(() => {
       hook = renderHook(() => useCount());
     });

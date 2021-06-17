@@ -1,14 +1,14 @@
 /**
  * title: Default usage
- * desc: usePersistFn is the same as useCallback.
+ * desc: useMemoizedFn is the same as useCallback.
  *
  * title.zh-CN: 基础用法
- * desc.zh-CN: usePersistFn 与 useCallback 可以实现同样的效果。
+ * desc.zh-CN: useMemoizedFn 与 useCallback 可以实现同样的效果。
  */
 
 import React, { useState, useCallback, useRef } from 'react';
 import { message } from 'antd';
-import { usePersistFn } from 'ahooks';
+import { useMemoizedFn } from 'ahooks';
 
 export default () => {
   const [count, setCount] = useState(0);
@@ -17,7 +17,7 @@ export default () => {
     message.info(`Current count is ${count}`);
   }, [count]);
 
-  const persistFn = usePersistFn(() => {
+  const persistFn = useMemoizedFn(() => {
     message.info(`Current count is ${count}`);
   });
 

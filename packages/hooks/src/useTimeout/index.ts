@@ -1,8 +1,8 @@
 import { useEffect } from 'react';
-import usePersistFn from '../usePersistFn';
+import useMemoizedFn from '../useMemoizedFn';
 
 function useTimeout(fn: () => void, delay: number | null | undefined): void {
-  const timerFn = usePersistFn(fn);
+  const timerFn = useMemoizedFn(fn);
 
   useEffect(() => {
     if (delay === undefined || delay === null) return;

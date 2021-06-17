@@ -1,5 +1,5 @@
 ---
-title: usePersistFn
+title: useMemoizedFn
 nav:
   title: Hooks
   path: /hooks
@@ -8,9 +8,9 @@ group:
   path: /advanced
 ---
 
-# usePersistFn
+# useMemoizedFn
 
-Hooks for persistent functions. In theory, usePersistFn can be used instead of useCallback.
+Hooks for persistent functions. In theory, useMemoizedFn can be used instead of useCallback.
 
 In some scenarios, we need to use useCallback to cache a function, but when the second parameter deps changes, the function will be regenerated, causing the function reference to change.
 
@@ -23,13 +23,13 @@ const func = useCallback(()=>{
 }, [state]);
 ```
 
-Using usePersistFn, you can omit the second parameter deps, and ensure that the function reference never change.
+Using useMemoizedFn, you can omit the second parameter deps, and ensure that the function reference never change.
 
 ```js
 const [state, setState] = useState('');
 
 // func reference nerver change
-const func = usePersistFn(()=>{
+const func = useMemoizedFn(()=>{
   console.log(state);
 });
 ```
@@ -49,7 +49,7 @@ const func = usePersistFn(()=>{
 ```typescript
 type noop = (...args: any[]) => any;
 
-const fn = usePersistFn<T extends noop>(fn: T):T;
+const fn = useMemoizedFn<T extends noop>(fn: T):T;
 ```
 
 ### Result

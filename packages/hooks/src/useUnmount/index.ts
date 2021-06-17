@@ -1,9 +1,9 @@
 import { useEffect } from 'react';
-import usePersistFn from '../usePersistFn';
+import useMemoizedFn from '../useMemoizedFn';
 import { isFunction } from '../utils';
 
 const useUnmount = (fn: any) => {
-  const fnPersist = usePersistFn(fn);
+  const fnPersist = useMemoizedFn(fn);
 
   useEffect(
     () => () => {

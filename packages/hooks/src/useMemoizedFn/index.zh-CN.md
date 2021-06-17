@@ -1,5 +1,5 @@
 ---
-title: usePersistFn
+title: useMemoizedFn
 nav:
   title: Hooks
   path: /hooks
@@ -8,9 +8,9 @@ group:
   path: /advanced
 ---
 
-# usePersistFn
+# useMemoizedFn
 
-持久化 function 的 Hook，理论上，可以使用 usePersistFn 完全代替 useCallback。
+持久化 function 的 Hook，理论上，可以使用 useMemoizedFn 完全代替 useCallback。
 
 在某些场景中，我们需要使用 useCallback 来记住一个函数，但是在第二个参数 deps 变化时，会重新生成函数，导致函数地址变化。
 
@@ -23,13 +23,13 @@ const func = useCallback(()=>{
 }, [state]);
 ```
 
-使用 usePersistFn，可以省略第二个参数 deps，同时保证函数地址永远不会变化。
+使用 useMemoizedFn，可以省略第二个参数 deps，同时保证函数地址永远不会变化。
 
 ```js
 const [state, setState] = useState('');
 
 // func 地址永远不会变化
-const func = usePersistFn(()=>{
+const func = useMemoizedFn(()=>{
   console.log(state);
 });
 ```
@@ -49,7 +49,7 @@ const func = usePersistFn(()=>{
 ```typescript
 type noop = (...args: any[]) => any;
 
-const fn = usePersistFn<T extends noop>(fn: T):T;
+const fn = useMemoizedFn<T extends noop>(fn: T):T;
 ```
 
 ### Result

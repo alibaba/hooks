@@ -19,24 +19,22 @@ function useCookieState(cookieKey: string, options: IOptions = {}) {
     return options.defaultValue;
   });
 
-  // usePersistFn 保证返回的 updateState 不会变化
+  // useMemoizedFn 保证返回的 updateState 不会变化
   const updateState = useCallback(
     (
       newValue?: TCookieState | ((prevState: TCookieState) => TCookieState),
       newOptions: Cookies.CookieAttributes = {},
     ) => {
       const { defaultValue, ...restOptions } = { ...options, ...newOptions };
-      setState(
-        (prevState: TCookieState): TCookieState => {
-          const value = isFunction(newValue) ? newValue(prevState) : newValue;
-          if (value === undefined || value === null) {
-            Cookies.remove(cookieKey);
-          } else {
-            Cookies.set(cookieKey, value, restOptions);
-          }
-          return value;
-        },
-      );
+      setState((prevState: TCookieState): TCookieState => {
+        const value = isFunction(newValue) ? newValue(prevState) : newValue;
+        if (value === undefined || value === null) {
+          Cookies.remove(cookieKey);
+        } else {
+          Cookies.set(cookieKey, value, restOptions);
+        }
+        return value;
+      });
     },
     [cookieKey, options],
   );
