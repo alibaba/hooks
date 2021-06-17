@@ -15,14 +15,14 @@ function useMemoizedFn<T extends noop>(fn: T) {
   // https://github.com/alibaba/hooks/issues/728
   fnRef.current = useMemo(() => fn, [fn]);
 
-  const persistFn = useRef<T>();
-  if (!persistFn.current) {
-    persistFn.current = function (...args) {
+  const memoizedFn = useRef<T>();
+  if (!memoizedFn.current) {
+    memoizedFn.current = function (...args) {
       return fnRef.current.apply(this, args);
     } as T;
   }
 
-  return persistFn.current;
+  return memoizedFn.current;
 }
 
 export default useMemoizedFn;

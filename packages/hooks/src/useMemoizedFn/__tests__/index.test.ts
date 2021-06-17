@@ -9,9 +9,9 @@ const useCount = () => {
     setCount((c) => c + 1);
   };
 
-  const persistFn = useMemoizedFn(() => count);
+  const memoizedFn = useMemoizedFn(() => count);
 
-  return { addCount, persistFn };
+  return { addCount, memoizedFn };
 };
 
 let hook: RenderHookResult<[], ReturnType<typeof useCount>>;
@@ -25,14 +25,14 @@ describe('useMemoizedFn', () => {
     act(() => {
       hook = renderHook(() => useCount());
     });
-    const currentFn = hook.result.current.persistFn;
-    expect(hook.result.current.persistFn()).toEqual(0);
+    const currentFn = hook.result.current.memoizedFn;
+    expect(hook.result.current.memoizedFn()).toEqual(0);
 
     act(() => {
       hook.result.current.addCount();
     });
 
-    expect(currentFn).toEqual(hook.result.current.persistFn);
-    expect(hook.result.current.persistFn()).toEqual(1);
+    expect(currentFn).toEqual(hook.result.current.memoizedFn);
+    expect(hook.result.current.memoizedFn()).toEqual(1);
   });
 });

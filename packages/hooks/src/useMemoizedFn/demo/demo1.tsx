@@ -17,7 +17,7 @@ export default () => {
     message.info(`Current count is ${count}`);
   }, [count]);
 
-  const persistFn = useMemoizedFn(() => {
+  const memoizedFn = useMemoizedFn(() => {
     message.info(`Current count is ${count}`);
   });
 
@@ -36,8 +36,8 @@ export default () => {
         <button type="button" onClick={callbackFn}>
           call callbackFn
         </button>
-        <button type="button" onClick={persistFn} style={{ marginLeft: 8 }}>
-          call persistFn
+        <button type="button" onClick={memoizedFn} style={{ marginLeft: 8 }}>
+          call memoizedFn
         </button>
       </div>
     </>

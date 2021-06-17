@@ -1,9 +1,9 @@
 /**
  * title: useMemoizedFn function reference will not change, which can be used for performance optimization.
- * desc: In the example, `persistFn` reference will not change, `callbackFn` will change when count changes.
+ * desc: In the example, `memoizedFn` reference will not change, `callbackFn` will change when count changes.
  *
  * title.zh-CN: useMemoizedFn 函数地址不会变化，可以用于性能优化
- * desc.zh-CN: 示例中 `persistFn` 是不会变化的，`callbackFn` 在 count 变化时变化。
+ * desc.zh-CN: 示例中 `memoizedFn` 是不会变化的，`callbackFn` 在 count 变化时变化。
  */
 
 import { useMemoizedFn } from 'ahooks';
@@ -17,7 +17,7 @@ export default () => {
     message.info(`Current count is ${count}`);
   }, [count]);
 
-  const persistFn = useMemoizedFn(() => {
+  const memoizedFn = useMemoizedFn(() => {
     message.info(`Current count is ${count}`);
   });
 
@@ -37,14 +37,14 @@ export default () => {
 
       <div style={{ marginTop: 32 }}>
         <h3>Component with useCallback function:</h3>
-        {/* without persist function, ExpensiveTree component will re-render on state change */}
+        {/* use callback function, ExpensiveTree component will re-render on state change */}
         <ExpensiveTree showCount={callbackFn} />
       </div>
 
       <div style={{ marginTop: 32 }}>
         <h3>Component with useMemoizedFn function:</h3>
-        {/* use persist function, ExpensiveTree component will only render once */}
-        <ExpensiveTree showCount={persistFn} />
+        {/* use memoized function, ExpensiveTree component will only render once */}
+        <ExpensiveTree showCount={memoizedFn} />
       </div>
     </>
   );
