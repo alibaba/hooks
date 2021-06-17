@@ -10,12 +10,29 @@ group:
 
 # usePersistFn
 
-持久化 function 的 Hook。
+持久化 function 的 Hook，理论上，可以使用 usePersistFn 完全代替 useCallback。
 
-> 参考 [如何从 useCallback 读取一个经常变化的值？](https://zh-hans.reactjs.org/docs/hooks-faq.html#how-to-read-an-often-changing-value-from-usecallback)
->
-> 在某些场景中，你可能会需要用 useCallback 记住一个回调，但由于内部函数必须经常重新创建，记忆效果不是很好，导致子组件重复 render。对于超级复杂的子组件，重新渲染会对性能造成影响。通过 usePersistFn，可以保证函数地址永远不会变化。
+在某些场景中，我们需要使用 useCallback 来记住一个函数，但是在第二个参数 deps 变化时，会重新生成函数，导致函数地址变化。
 
+```js
+const [state, setState] = useState('');
+
+// 在 state 变化时，func 地址会变化
+const func = useCallback(()=>{
+  console.log(state);
+}, [state]);
+```
+
+使用 usePersistFn，可以省略第二个参数 deps，同时保证函数地址永远不会变化。
+
+```js
+const [state, setState] = useState('');
+
+// func 地址永远不会变化
+const func = usePersistFn(()=>{
+  console.log(state);
+});
+```
 
 ## 代码演示
 
@@ -23,14 +40,16 @@ group:
 
 <code src="./demo/demo1.tsx" />
 
+### 性能提升
+
+<code src="./demo/demo2.tsx" />
+
 ## API
 
 ```typescript
 type noop = (...args: any[]) => any;
 
-const fn = usePersistFn<T extends noop>(
-  fn: T,
-);
+const fn = usePersistFn<T extends noop>(fn: T):T;
 ```
 
 ### Result
