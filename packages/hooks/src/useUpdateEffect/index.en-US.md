@@ -20,16 +20,11 @@ A hook of useEffect that only runs when dependencies update.
 
 ## API
 
+The API is exactly the same as React.useEffect.
+
 ```typescript
 useUpdateEffect(
-  effect: () => (void | (() => void | undefined)),
-  deps?: deps,
+  effect: React.EffectCallback,
+  deps?: React.DependencyList,
 )
 ```
-
-### Params
-
-| Property | Description                                        | Type                                      | Default |
-|----------|----------------------------------------------------|-------------------------------------------|---------|
-| effect   | Executable function                                | `() => (void | (() => void | undefined))` | -       |
-| deps     | Optionally, pass in objects that depend on changes |   `array` \| `undefined`                 | -       |
