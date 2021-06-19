@@ -1,31 +1,37 @@
 /**
  * title: Default usage
- * desc: The function is called when the component is first rendered, and the returned object has a property named 'current' which indicates whether the current component has been unmounted
+ * desc: `unmountefRef.current` means whether the component is unmounted
  *
  * title.zh-CN: 基础用法
- * desc.zh-CN: 在组件首次渲染时执行方法，返回一个含有current属性的ref对象，current表示当前组件是否已被卸载
+ * desc.zh-CN: `unmountefRef.current` 代表组件是否已经卸载
  */
 
-import React, { useState } from 'react';
-import { useUnmountedRef } from 'ahooks';
+import { useBoolean, useUnmountedRef } from 'ahooks';
+import React, { useEffect, useState } from 'react';
+import { message } from 'antd';
 
-const Button = ({ setVisible }) => {
-  const unmountRef: { current: boolean } = useUnmountedRef();
-  const [text, setText] = useState('I am mounted');
-  const handleClick = async () => {
-    await setVisible();
-    !unmountRef.current && setText('I am unmounted');
-  };
-  return <button onClick={handleClick}>{text}</button>;
+const MyComponent = () => {
+  const unmountefRef = useUnmountedRef();
+  useEffect(() => {
+    setTimeout(() => {
+      if (!unmountefRef.current) {
+        message.info('component is alive');
+      }
+    }, 3000);
+  }, []);
+
+  return <p>Hello World!</p>;
 };
 
 export default () => {
-  const [visible, setVisible] = useState(true);
+  const [state, { toggle }] = useBoolean(true);
+
   return (
-    <div>
-      click the button to unmount it
-      <br />
-      {visible ? <Button setVisible={() => setVisible(false)} /> : 'nothing'}
-    </div>
+    <>
+      <button type="button" onClick={() => toggle()}>
+        {state ? 'unmount' : 'mount'}
+      </button>
+      {state && <MyComponent />}
+    </>
   );
 };

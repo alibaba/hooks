@@ -59,6 +59,7 @@ import useTrackedEffect from './useTrackedEffect';
 import useUnmountedRef from './useUnmountedRef';
 import useExternal from './useExternal';
 import useSafeState from './useSafeState';
+import useLatest from './useLatest';
 
 export {
   useControllableValue,
@@ -124,4 +125,5 @@ export {
   useUnmountedRef,
   useExternal,
   useSafeState,
+  useLatest,
 };
