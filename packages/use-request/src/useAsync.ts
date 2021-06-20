@@ -1,5 +1,5 @@
-import debounce from 'lodash.debounce';
-import throttle from 'lodash.throttle';
+import debounce from 'lodash/debounce';
+import throttle from 'lodash/throttle';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import {
   BaseOptions,

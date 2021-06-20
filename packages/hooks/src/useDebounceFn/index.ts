@@ -1,4 +1,4 @@
-import debounce from 'lodash.debounce';
+import debounce from 'lodash/debounce';
 import { useRef } from 'react';
 import useCreation from '../useCreation';
 import { DebounceOptions } from '../useDebounce/debounceOptions';
@@ -29,7 +29,7 @@ function useDebounceFn<T extends Fn>(fn: T, options?: DebounceOptions) {
   });
 
   return {
-    run: (debounced as unknown) as T,
+    run: debounced as unknown as T,
     cancel: debounced.cancel,
     flush: debounced.flush,
   };

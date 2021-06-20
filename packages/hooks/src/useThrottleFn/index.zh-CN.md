@@ -42,8 +42,8 @@ const {
 | 参数     | 说明                       | 类型      | 默认值 |
 |----------|----------------------------|-----------|--------|
 | wait     | 超时时间，单位为毫秒       | `number`  | `1000` |
-| leading  | 是否在上升沿触发副作用函数 | `boolean` | `true` |
-| trailing | 是否在下降沿触发副作用函数 | `boolean` | `true` |
+| leading  | 是否在延迟开始前调用函数 | `boolean` | `true` |
+| trailing | 是否在延迟开始后调用函数 | `boolean` | `true` |
 | maxWait | 函数调用允许延迟的最长时间 | `() => void` | -  |
 
 ### Result
