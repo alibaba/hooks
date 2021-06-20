@@ -1,4 +1,4 @@
-import throttle from 'lodash.throttle';
+import throttle from 'lodash/throttle';
 import { useRef } from 'react';
 import useCreation from '../useCreation';
 import { ThrottleOptions } from '../useThrottle/throttleOptions';
@@ -29,7 +29,7 @@ function useThrottleFn<T extends Fn>(fn: T, options?: ThrottleOptions) {
   });
 
   return {
-    run: (throttled as unknown) as T,
+    run: throttled as unknown as T,
     cancel: throttled.cancel,
     flush: throttled.flush,
   };
