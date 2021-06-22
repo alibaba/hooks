@@ -30,7 +30,7 @@ group:
 ## API
 
 ```typescript
-const position = useScroll(target, shouldUpdate);
+const { position, scrollArea } = useScroll(target, shouldUpdate);
 ```
 
 ### Params
@@ -41,8 +41,9 @@ const position = useScroll(target, shouldUpdate);
 | shouldUpdate | 控制是否更新滚动信息  | `({ top: number, left: number}) => boolean` | `({ top: number, left: number}) => true` |
 
 
-### Result
+### Options
 
 | 参数     | 说明                   | 类型                          |
 |----------|------------------------|-------------------------------|
 | position | 滚动容器当前的滚动位置 | `{left: number, top: number}` |
+| scrollArea | 滚动容器宽高 | `{scrollWidth: number, scrollHeight: number}` |

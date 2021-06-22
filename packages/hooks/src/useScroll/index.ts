@@ -7,13 +7,28 @@ interface Position {
   top: number;
 }
 
+interface ScrollArea {
+  scrollWidth: number;
+  scrollHeight: number;
+}
+
+interface Options {
+  position: Position;
+  scrollArea?: ScrollArea;
+}
+
 export type Target = BasicTarget<HTMLElement | Document>;
 export type ScrollListenController = (val: Position) => boolean;
 
-function useScroll(target?: Target, shouldUpdate: ScrollListenController = () => true): Position {
+function useScroll(target?: Target, shouldUpdate: ScrollListenController = () => true): Options {
   const [position, setPosition] = useState<Position>({
     left: NaN,
     top: NaN,
+  });
+
+  const [scrollArea, setScrollArea] = useState<ScrollArea>({
+    scrollWidth: NaN,
+    scrollHeight: NaN,
   });
 
   const shouldUpdatePersist = usePersistFn(shouldUpdate);
@@ -21,7 +36,21 @@ function useScroll(target?: Target, shouldUpdate: ScrollListenController = () =>
   useEffect(() => {
     const el = getTargetElement(target, document);
     if (!el) return;
+    setScrollArea({
+      scrollWidth:
+        (el as Target) === document
+          ? document.scrollingElement!.scrollWidth
+          : (el as HTMLElement).scrollWidth,
+      scrollHeight:
+        (el as Target) === document
+          ? document.scrollingElement!.scrollHeight
+          : (el as HTMLElement).scrollHeight,
+    });
+  }, [target]);
 
+  useEffect(() => {
+    const el = getTargetElement(target, document);
+    if (!el) return;
     function updatePosition(currentTarget: Target): void {
       let newPosition;
       if (currentTarget === document) {
@@ -51,7 +80,10 @@ function useScroll(target?: Target, shouldUpdate: ScrollListenController = () =>
     };
   }, [target, shouldUpdatePersist]);
 
-  return position;
+  return {
+    position,
+    scrollArea,
+  };
 }
 
 export default useScroll;

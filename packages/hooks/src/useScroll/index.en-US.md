@@ -30,7 +30,7 @@ Get the scroll position of an element.
 ## API
 
 ```typescript
-const position = useScroll(target, shouldUpdate);
+const { position, scrollArea } = useScroll(target, shouldUpdate);
 ```
 
 ### Params
@@ -41,8 +41,9 @@ const position = useScroll(target, shouldUpdate);
 | shouldUpdate | controll weather update scroll status | `({ top: number, left: number}) => boolean` | `({ top: number, left: number}) => true` |
 
 
-### Result
+### Options
 
 | Property | Description                                 | Type                          |
 |----------|---------------------------------------------|-------------------------------|
 | position | The current scroll position of the element. | `{left: number, top: number}` |
+| position | The current scroll container width and height. | `{scrollWidth: number, scrollHeight: number}` |
