@@ -17,7 +17,7 @@ Production-ready React Hook to manage asynchronous data.
 **Core Characteristics**
 
 * Auto-triggered request and Manually-triggered Request
-* SWR(stale-while-revalidate)
+* SWR (stale-while-revalidate)
 * Cache / Preload
 * Refresh On Window Focus
 * Polling
@@ -135,11 +135,11 @@ const {
 
 | Property | Description                                                                                                                                                                                                                                                            | Type                                                                    |
 |----------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------|
-| data     | <ul><li> Data returned by the service。</li><li> If `formatResult` is set, the data will be the return of `formatResult`. </li></ul>                                                                                                                                   | `undefined / any`                                                       |
-| error    | exception thrown by service, default is `undefined`                                                                                                                                                                                                                    | `undefined / Error`                                                     |
+| data     | <ul><li> Data returned by the servic. </li><li> If `formatResult` is set, the data will be the return of `formatResult`. </li></ul>                                                                                                                                   | `undefined / any`                                                       |
+| error    | Exception thrown by service, default is `undefined`                                                                                                                                                                                                                    | `undefined / Error`                                                     |
 | loading  | Whether the service is loaded                                                                                                                                                                                                                                          | `boolean`                                                               |
 | run      | <ul><li>Manually trigger the service execution. Its parameters will be passed to the service function. </li><li>In Debounce or Throttle mode, will return `Promise<null>`</li></ul>                                                                                                                                                                          | `(...args: any[]) => Promise`                                           |
-| params   | An array of parameters for the service being executed. For example, you triggered `run (1, 2, 3)`, then params is equal to [[1, 2, 3] `                                                                                          | `any[]`                             |
+| params   | An array of parameters for the service being executed. For example, you triggered `run (1, 2, 3)`, then params is equal to `[1, 2, 3]`                                                                                          | `any[]`                             |
 | cancel   | <ul><li>Cancel the current running request </li><li>This will also stop the polling. </li></ul>                                                                                                                                                                        | `() => void`                                                            |
 | refresh  | Using the last params, re-execute the service                                                                                                                                                                                                                          | `() => Promise`                                                            |
 | mutate   | Modify the returned data directly                                                                                                                                                                                                                                      | `(newData) => void / ((oldData)=>newData) => void`                      |
@@ -152,7 +152,7 @@ All Options are optional.
 | Property             | Description                                                                                                                                                                                                                                                                                                                                                                                                | Type                                    | Default |
 |----------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-----------------------------------------|---------|
 | manual               | <ul><li> The default `false`. That is, the service is automatically executed during initialization.</li><li>If set to `true`, you need to call `run` manually to trigger execution. </li></ul>                                                                                                                                                                                                             | `boolean`                               | false   |
-| initialData          | initial data                                                                                                                                                                                                                                                                                                                                                                                               | `any`                                   | -       |
+| initialData          | Initial data                                                                                                                                                                                                                                                                                                                                                                                               | `any`                                   | -       |
 | refreshDeps          | When `manual = false`,`refreshDeps` changes will trigger the service to re-execute                                                                                                                                                                                                                                                                                                                         | `any[]`                                 | `[]`    |
 | formatResult         | Format request results                                                                                                                                                                                                                                                                                                                                                                                     | `(response: any) => any`                | -       |
 | onSuccess            | <ul><li> Triggered when the service resolved, the parameters are `data` and` params` </li><li> If `formatResult` is present,` data` is the formatted data.</li></ul>                                                                                                                                                                                                                                      | `(data: any, params: any[]) => void`    | -       |
@@ -164,20 +164,21 @@ All Options are optional.
 | pollingWhenHidden    | <ul><li> Whether to continue polling when the page is hidden. Default is `true`, that is, polling will not stop </li><li> If set to `false`, polling is temporarily stopped when the page is hidden, and the last polling is continued when the page is redisplayed      </li></ul>                                                                                                                        | `boolean`                               | `true`  |
 | refreshOnWindowFocus | <ul><li> Whether to re-initiate the request when the screen refocus or revisible. The default is `false`, which means the request will not be re-initiated. </li><li>If set to `true`, the request will be re-initiated when the screen is refocused or revisible.</li></ul>                                                                                                                               | `boolean`                               | `false` |
 | focusTimespan        | <ul><li>  If the request is re-initiated every time, it is not good. We need to have a time interval. In the current time interval, the request will not be re-initiated. </li><li> Needs to be used with refreshOnWindowFocus. </li></ul>                                                                                                                                                                 | `number`                                | `5000`  |
-| debounceInterval     | debounce interval, the unit is millisecond. After setting, request to enter debounce mode.                                                                                                                                                                                                                                                                                                                 | `number`                                | -       |
-| throttleInterval     | throttle interval, the unit is millisecond. After setting, request to enter throttle mode.                                                                                                                                                                                                                                                                                                                 | `number`                                | -       |
+| debounceInterval     | Debounce interval, the unit is millisecond. After setting, request to enter debounce mode.                                                                                                                                                                                                                                                                                                                 | `number`                                | -       |
+| throttleInterval     | Throttle interval, the unit is millisecond. After setting, request to enter throttle mode.                                                                                                                                                                                                                                                                                                                 | `number`                                | -       |
 | ready     | Only when ready is `true`, will the request be initiated                                                                                                                                                                                                               | `boolean`                                | `true`       |
 | throwOnError     | If the service errors, the error will only be logged. If you want an error to be thrown, pass the throwOnError: true                                    | `boolean`                                | `false`       |
 | cacheKey             | <ul><li> Request a unique identifier. If `cacheKey` is set, we will enable the cache mechanism</li><li> We cache `data`,` error`, `params`,` loading` for each request </li><li> Under the cache mechanism, the same request will return the data in the cache first, and a new request will be sent behind the scene. After the new data is returned, the data update will be triggered again. </li></ul> | `string`                                | -       |
-| cacheTime             | <ul><li> the cache data recycling time. Default cache data is recycled after 5 minutes </li><li> If set to `-1`, it means that the cached data will never expire. </li><li> Need to be used with `cacheKey` </li></ul> | `number`                                | `300000`       |
+| cacheTime             | <ul><li> The cache data recycling time. Default cache data is recycled after 5 minutes </li><li> If set to `-1`, it means that the cached data will never expire. </li><li> Need to be used with `cacheKey` </li></ul> | `number`                                | `300000`       |
 | staleTime             | <ul><li> The cached data keeps fresh time. Within this time interval, the data is considered fresh and the request will not be resent </li><li> If set to `-1`, it means the data is always fresh. </li><li> Need to be used with `cacheKey` </li> </ul> | `number`                                | `0`       |
+
 ## Advanced usage
 
-Based on the basic useRequest, we can further encapsulate and implement more advanced customization requirements. Currently useRequest has three scenarios: `Integrated Request Library`,` Pagination` and `Load More`. You can refer to the code to implement your own encapsulation. Refer to the implementation of [useRequest](./src/useRequest.ts)、[usePaginated](./src/usePaginated.ts)、[useLoadMore](./src/useLoadMore.ts) 的实现。
+Based on the basic useRequest, we can further encapsulate and implement more advanced customization requirements. Currently useRequest has three scenarios: `Integrated Request Library`,` Pagination` and `Load More`. You can refer to the code to implement your own encapsulation. Refer to the implementation of [useRequest](./src/useRequest.ts), [usePaginated](./src/usePaginated.ts), [useLoadMore](./src/useLoadMore.ts).
 
 ### Integration Request Library
 
-If service is `string`,` object`, `(... args) => string | object`, we will automatically use [fetch] (https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch) to send network requests. 
+If service is `string`, `object`, `(... args) => string | object`, we will automatically use [fetch] (https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch) to send network requests. 
 
 ```javascript
 // Usage 1
@@ -221,7 +222,7 @@ const {...} = useRequest<R>(
 
 #### Service
 
-If service is `string`,` object`, `(... args) => string | object`, then automatically use `fetch` to send the request.
+If service is `string`, `object`, `(... args) => string | object`, then automatically use `fetch` to send the request.
 
 #### Params
 
@@ -286,13 +287,13 @@ const {
 | Property   | Description                                                                                                                                  | Type |
 |------------|----------------------------------------------------------------------------------------------------------------------------------------------|------|
 | pagination | Paging data and methods for operating paging                                                                                                 | -    |
-| tableProps | The data structure of the [antd Table] (https://ant.design/components/table-cn/) component can be used directly on the antd Table component. | -    |
+| tableProps | The data structure of the [antd Table](https://ant.design/components/table-cn/) component can be used directly on the antd Table component. | -    |
 
 #### Params
 
 | Property        | Description                                                                                                                                                                                                                                                          | Type     | Default |
 |-----------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|----------|------|
-| paginated       | <ul> <li> If set to `true`, paging mode is turned on. In paging mode, the first parameter of service is `{curret, pageSize, sorter, filters}` </li> <li> The service response result or `formatResult` result must be` {list: Item [], total: number} `. </li> </ul>| `boolean`       | false                                                                                                                                                                                                                                |
+| paginated       | <ul> <li> If set to `true`, paging mode is turned on. In paging mode, the first parameter of service is `{curret, pageSize, sorter, filters}`. </li> <li> The service response result or `formatResult` result must be `{list: Item [], total: number}`. </li> </ul>| `boolean`       | false                                                                                                                                                                                                                                |
 | defaultPageSize | default each page size                                                                                                                                                                                                                                               | `number` | `10` |
 | refreshDeps     | In pagination mode, changing refreshDeps will reset current to the first page and re-initiate the request. Generally you can put the dependent conditions here.                                                                                                      | `any[]`  | `[]` |
 
@@ -300,7 +301,7 @@ const {
 
 By setting `options.loadMore = true`, useRequest will run in loadMore mode, which will have the following characteristics:
 
-- useRequest will automatically manage the list data, `result.data.list` is a merged list. The first parameter of service is `result.data | undefined`
+- useRequest will automatically manage the list data, `result.data.list` is a merged list. The first parameter of service is `result.data | undefined`.
 - The data structure returned by the service must contain `{list: Item []}`, if it is not satisfied, it can be converted once by `options.formatResult`.
 - useRequest will return `result.loadingMore` and `result.loadMore` additionally.
 - By setting `options.ref`， `options.isNoMore`, loadMore is automatically triggered when scrolling to the bottom.
@@ -370,8 +371,7 @@ export function ({children})=>{
 ## FAQ
 
 ### 1. Can I use multiple useRequests in a component?
-
-Yes, You shoud use it like this.
+Yes, you should use it like this.
 
 ```javascript
 
