@@ -1,6 +1,6 @@
 /**
  * title: refreshOnWindowFocus
- * desc: Through `options.fetchKey`, you can categorize requests. Each type of request has an independent status. You can find all requests in` fetches`.
+ * desc: Through `options.fetchKey`, you can categorize requests. Each type of request has an independent status. You can find all requests in `fetches`.
  *
  * title.zh-CN: 并行请求
  * desc.zh-CN: 通过 `options.fetchKey` ，可以将请求进行分类，每一类的请求都有独立的状态，你可以在 `fetches` 中找到所有的请求。
