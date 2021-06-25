@@ -59,16 +59,9 @@ import useTrackedEffect from './useTrackedEffect';
 import useUnmountedRef from './useUnmountedRef';
 import useExternal from './useExternal';
 import useSafeState from './useSafeState';
-
-const useControlledValue: typeof useControllableValue = function (...args: any) {
-  console.warn(
-    'useControlledValue is deprecated and will be removed in the next major version. Please use useControllableValue instead.',
-  );
-  return useControllableValue(...args);
-};
+import useLatest from './useLatest';
 
 export {
-  useControlledValue,
   useControllableValue,
   useDynamicList,
   useVirtualList,
@@ -132,4 +125,5 @@ export {
   useUnmountedRef,
   useExternal,
   useSafeState,
+  useLatest,
 };
