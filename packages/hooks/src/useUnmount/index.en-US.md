@@ -11,7 +11,7 @@ group:
 
 # useUnmount
 
-A hook that executes a function at unmount.
+A hook that execute the function at unmount.
 
 ## Examples
 

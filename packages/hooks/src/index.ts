@@ -31,7 +31,7 @@ import useUnmount from './useUnmount';
 import useAntdTable from './useAntdTable';
 import useFusionTable from './useFusionTable';
 import useSet from './useSet';
-import usePersistFn from './usePersistFn';
+import useMemoizedFn from './useMemoizedFn';
 import useMap from './useMap';
 import useCreation from './useCreation';
 import useDrop from './useDrop';
@@ -59,16 +59,9 @@ import useTrackedEffect from './useTrackedEffect';
 import useUnmountedRef from './useUnmountedRef';
 import useExternal from './useExternal';
 import useSafeState from './useSafeState';
-
-const useControlledValue: typeof useControllableValue = function (...args: any) {
-  console.warn(
-    'useControlledValue is deprecated and will be removed in the next major version. Please use useControllableValue instead.',
-  );
-  return useControllableValue(...args);
-};
+import useLatest from './useLatest';
 
 export {
-  useControlledValue,
   useControllableValue,
   useDynamicList,
   useVirtualList,
@@ -104,7 +97,7 @@ export {
   useAntdTable,
   useUnmount,
   useSet,
-  usePersistFn,
+  useMemoizedFn,
   useMap,
   useCreation,
   useDrag,
@@ -132,4 +125,5 @@ export {
   useUnmountedRef,
   useExternal,
   useSafeState,
+  useLatest,
 };

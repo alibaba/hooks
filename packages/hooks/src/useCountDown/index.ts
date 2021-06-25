@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import dayjs from 'dayjs';
-import usePersistFn from '../usePersistFn';
+import useMemoizedFn from '../useMemoizedFn';
 
 export type TDate = Date | number | string | undefined;
 
@@ -46,7 +46,7 @@ const useCountdown = (options?: Options) => {
   const [target, setTargetDate] = useState<TDate>(targetDate);
   const [timeLeft, setTimeLeft] = useState(() => calcLeft(target));
 
-  const onEndPersistFn = usePersistFn(() => {
+  const onEndPersistFn = useMemoizedFn(() => {
     if (onEnd) {
       onEnd();
     }
@@ -67,7 +67,7 @@ const useCountdown = (options?: Options) => {
       setTimeLeft(targetLeft);
       if (targetLeft === 0) {
         clearInterval(timer);
-          onEndPersistFn();
+        onEndPersistFn();
       }
     }, interval);
 

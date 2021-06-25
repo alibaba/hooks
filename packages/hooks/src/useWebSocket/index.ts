@@ -1,5 +1,5 @@
 import useUnmount from '../useUnmount';
-import usePersistFn from '../usePersistFn';
+import useMemoizedFn from '../useMemoizedFn';
 
 import { useEffect, useRef, useState } from 'react';
 
@@ -50,7 +50,7 @@ export default function useWebSocket(socketUrl: string, options: Options = {}): 
   /**
    * 重连
    */
-  const reconnect = usePersistFn(() => {
+  const reconnect = useMemoizedFn(() => {
     if (
       reconnectTimesRef.current < reconnectLimit &&
       websocketRef.current?.readyState !== ReadyState.Open
@@ -64,7 +64,7 @@ export default function useWebSocket(socketUrl: string, options: Options = {}): 
     }
   });
 
-  const connectWs = usePersistFn(() => {
+  const connectWs = useMemoizedFn(() => {
     reconnectTimerRef.current && clearTimeout(reconnectTimerRef.current);
 
     if (websocketRef.current) {
@@ -101,7 +101,7 @@ export default function useWebSocket(socketUrl: string, options: Options = {}): 
    * 发送消息
    * @param message
    */
-  const sendMessage: WebSocket['send'] = usePersistFn((message) => {
+  const sendMessage: WebSocket['send'] = useMemoizedFn((message) => {
     if (readyState === ReadyState.Open) {
       websocketRef.current?.send(message);
     } else {
@@ -112,7 +112,7 @@ export default function useWebSocket(socketUrl: string, options: Options = {}): 
   /**
    * 手动 connect
    */
-  const connect = usePersistFn(() => {
+  const connect = useMemoizedFn(() => {
     reconnectTimesRef.current = 0;
     connectWs();
   });
@@ -120,7 +120,7 @@ export default function useWebSocket(socketUrl: string, options: Options = {}): 
   /**
    * disconnect websocket
    */
-  const disconnect = usePersistFn(() => {
+  const disconnect = useMemoizedFn(() => {
     reconnectTimerRef.current && clearTimeout(reconnectTimerRef.current);
 
     reconnectTimesRef.current = reconnectLimit;
