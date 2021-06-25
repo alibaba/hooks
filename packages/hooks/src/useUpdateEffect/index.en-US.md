@@ -10,6 +10,8 @@ group:
 
 # useUpdateEffect
 
+<Tag lang="en-US" tags="ssr&crossPlatform"></Tag>
+
 A hook of useEffect that only runs when dependencies update.
 
 ## Examples

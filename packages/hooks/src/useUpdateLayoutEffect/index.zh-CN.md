@@ -10,6 +10,8 @@ group:
 
 # useUpdateLayoutEffect
 
+<Tag lang="zh-CN" tags="ssr&crossPlatform"></Tag>
+
 忽略首次执行，只在依赖更新时执行的 useLayoutEffect hook。
 
 ## 代码演示

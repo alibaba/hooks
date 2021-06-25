@@ -8,7 +8,9 @@ group:
   path: /advanced
 ---
 
-# useKeyPress
+# useLatest
+
+<Tag lang="en-US" tags="ssr&crossPlatform"></Tag>
 
 The Hook that returns the latest value, can avoid the closure problem.
 

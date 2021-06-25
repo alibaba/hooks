@@ -25,6 +25,7 @@
     }
   },
   "devDependencies": {
+    "@ant-design/icons": "^4.6.2",
     "@babel/cli": "^7.10.1",
     "@babel/core": "^7.10.2",
     "@testing-library/react": "^10.0.4",
