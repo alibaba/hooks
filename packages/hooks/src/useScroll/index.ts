@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import usePersistFn from '../usePersistFn';
+import useMemoizedFn from '../useMemoizedFn';
 import { BasicTarget, getTargetElement } from '../utils/dom';
 
 interface Position {
@@ -16,7 +16,7 @@ function useScroll(target?: Target, shouldUpdate: ScrollListenController = () =>
     top: NaN,
   });
 
-  const shouldUpdatePersist = usePersistFn(shouldUpdate);
+  const shouldUpdatePersist = useMemoizedFn(shouldUpdate);
 
   useEffect(() => {
     const el = getTargetElement(target, document);

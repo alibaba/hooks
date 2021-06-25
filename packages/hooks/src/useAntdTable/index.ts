@@ -9,7 +9,7 @@ import {
   PaginatedResult,
 } from '@ahooksjs/use-request/lib/types';
 import useUpdateEffect from '../useUpdateEffect';
-import usePersistFn from '../usePersistFn';
+import useMemoizedFn from '../useMemoizedFn';
 
 export {
   CombineService,
@@ -226,7 +226,7 @@ function useAntdTable<R = any, Item = any, U extends Item = any>(
     _submit();
   }, [form, _submit]);
 
-  const resetPersistFn = usePersistFn(reset);
+  const resetPersistFn = useMemoizedFn(reset);
 
   // refreshDeps 变化，reset。
   useUpdateEffect(() => {
@@ -235,7 +235,7 @@ function useAntdTable<R = any, Item = any, U extends Item = any>(
     }
   }, [...refreshDeps]);
 
-  const submit = usePersistFn((e) => {
+  const submit = useMemoizedFn((e) => {
     if (e && e.preventDefault) {
       e.preventDefault();
     }
