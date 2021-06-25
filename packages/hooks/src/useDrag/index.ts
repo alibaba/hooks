@@ -2,7 +2,7 @@ type getDragPropsFn = (
   data: any,
 ) => {
   draggable: 'true';
-  key: string;
+  key?: string;
   onDragStart: (e: React.DragEvent) => void;
   onDragEnd: (e: React.DragEvent) => void;
 };
@@ -12,10 +12,10 @@ interface IConfig {
   onDragEnd?: (data: any, e: React.DragEvent) => void;
 }
 
-const useDrag = (config?: IConfig): getDragPropsFn => {
+const useDrag = (config?: IConfig, getPropsWithKey?: boolean): getDragPropsFn => {
   const getProps = (data: any) => {
     return {
-      key: JSON.stringify(data),
+      key: getPropsWithKey === false ? undefined : JSON.stringify(data),
       draggable: 'true' as const,
       onDragStart: (e: React.DragEvent) => {
         if (config && config.onDragStart) {
