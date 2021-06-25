@@ -70,6 +70,13 @@ describe('useDrag & useDrop', () => {
     expect(endFn).toBeCalledTimes(1);
   });
 
+  it('test getPropsWithKey', () => {
+    const hook = renderHook(() => useDrag({}, false));
+
+    const getProps = hook.result.current('');
+    expect(getProps.key).toBe(undefined);
+  });
+
   it('test onUri', async () => {
     let uri = '';
     const hook = renderHook(() =>
