@@ -5,7 +5,7 @@ type noop = (...args: any[]) => any;
 function useMemoizedFn<T extends noop>(fn: T) {
   if (process.env.NODE_ENV === 'development') {
     if (typeof fn !== 'function') {
-      console.error('useMemoizedFn expected parameter is a function, got ' + typeof fn);
+      console.error(`useMemoizedFn expected parameter is a function, got ${typeof fn}`);
     }
   }
 

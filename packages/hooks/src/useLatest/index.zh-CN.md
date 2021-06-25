@@ -10,6 +10,8 @@ group:
 
 # useLatest
 
+<Tag lang="zh-CN" tags="ssr&crossPlatform"></Tag>
+
 返回当前最新值的 Hook，可以避免闭包问题。
 
 ## 代码演示

@@ -10,6 +10,8 @@ group:
 
 # useUnmountedRef
 
+<Tag lang="zh-CN" tags="ssr&crossPlatform"></Tag>
+
 获取当前组件是否已经卸载的 Hook。
 
 ## 代码演示

@@ -10,6 +10,8 @@ group:
 
 # useUpdateLayoutEffect
 
+<Tag lang="en-US" tags="ssr&crossPlatform"></Tag>
+
 A hook of useLayoutEffect that only runs when dependencies update.
 
 ## Examples

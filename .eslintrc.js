@@ -6,6 +6,7 @@ module.exports = {
     ...fabric.default.rules,
     'no-restricted-syntax': 'off',
     'no-plusplus': 'off',
+    'no-console': 'off',
     'no-underscore-dangle': 'off',
     'consistent-return': 'off',
     '@typescript-eslint/ban-ts-ignore': 'off',

@@ -11,6 +11,8 @@ group:
 
 # useUnmount
 
+<Tag lang="zh-CN" tags="ssr&crossPlatform"></Tag>
+
 在组件 unmount 时执行的 hook。
 
 ## 代码演示
