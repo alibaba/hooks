@@ -14,7 +14,7 @@ module.exports = {
     'import/no-useless-path-segments': 'off',
     'no-unused-expressions': 'off',
     'react-hooks/rules-of-hooks': 'error',
-    'react-hooks/exhaustive-deps': 'warn',
+    'react-hooks/exhaustive-deps': 'off',
   },
   plugins: [...fabric.default.plugins, 'react-hooks'],
   parserOptions: {
