@@ -59,6 +59,7 @@ const [ props, { isHovering } ] = useDrop({
 |-------------|----------------|---------------------------------|--------|
 | onDragStart | 开始拖拽的回调 | `(data: any, e: Event) => void` | -      |
 | onDragEnd   | 结束拖拽的回调 | `(data: any, e: Event) => void` | -      |
+| getPropsWithKey | 是否在 getProps 方法返回的对象中包含默认的 key，默认包含 | `boolean` | - |
 
 ### useDrop Params
 

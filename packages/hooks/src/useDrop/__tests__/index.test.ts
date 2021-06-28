@@ -71,10 +71,14 @@ describe('useDrag & useDrop', () => {
   });
 
   it('test getPropsWithKey', () => {
-    const hook = renderHook(() => useDrag({}, false));
+    const defaultHook = renderHook(() => useDrag());
+    const hook = renderHook(() => useDrag({ getPropsWithKey: false }));
 
+    const defaultGetProps = defaultHook.result.current('');
     const getProps = hook.result.current('');
-    expect(getProps.key).toBe(undefined);
+
+    expect(defaultGetProps.key).toBeDefined();
+    expect(getProps.key).toBeUndefined();
   });
 
   it('test onUri', async () => {
