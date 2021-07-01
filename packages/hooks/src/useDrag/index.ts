@@ -2,7 +2,7 @@ type getDragPropsFn = (
   data: any,
 ) => {
   draggable: 'true';
-  key: string;
+  key?: string;
   onDragStart: (e: React.DragEvent) => void;
   onDragEnd: (e: React.DragEvent) => void;
 };
@@ -10,12 +10,18 @@ type getDragPropsFn = (
 interface IConfig {
   onDragStart?: (data: any, e: React.DragEvent) => void;
   onDragEnd?: (data: any, e: React.DragEvent) => void;
+  /**
+   * 是否在getProps方法返回的对象中包含默认的key
+   *
+   * @default true
+   */
+  getPropsWithKey?: boolean;
 }
 
 const useDrag = (config?: IConfig): getDragPropsFn => {
   const getProps = (data: any) => {
     return {
-      key: JSON.stringify(data),
+      key: config && config.getPropsWithKey === false ? undefined : JSON.stringify(data),
       draggable: 'true' as const,
       onDragStart: (e: React.DragEvent) => {
         if (config && config.onDragStart) {
