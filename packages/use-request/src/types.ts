@@ -10,6 +10,7 @@ export type Mutate<R> = (x: R | undefined | ((data: R) => R)) => void;
 
 export interface RequestServiceObject extends RequestInit {
   readonly url: string;
+  [key: string]: any; // backward compatibility
 }
 export type RequestService = string | RequestServiceObject;
 export type CombineService<R, P extends any[]> =
