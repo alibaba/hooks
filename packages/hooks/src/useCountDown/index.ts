@@ -1,84 +1,107 @@
-import { useEffect, useMemo, useState } from 'react';
-import dayjs from 'dayjs';
-import usePersistFn from '../usePersistFn';
+import { useEffect, useState } from 'react';
 
-export type TDate = Date | number | string | undefined;
-
-export type Options = {
-  targetDate?: TDate;
+export declare interface ICountDownParam {
+  baseTime: number;
   interval?: number;
-  onEnd?: () => void;
-};
-
-export interface FormattedRes {
-  days: number;
-  hours: number;
-  minutes: number;
-  seconds: number;
-  milliseconds: number;
+  decreasing?: number;
 }
 
-const calcLeft = (t?: TDate) => {
-  if (!t) {
-    return 0;
-  }
-  // https://stackoverflow.com/questions/4310953/invalid-date-in-safari
-  const left = dayjs(t).valueOf() - new Date().getTime();
-  if (left < 0) {
-    return 0;
-  }
-  return left;
-};
+export declare interface ICountDownTime {
+  day: number;
+  hour: number;
+  minute: number;
+  second: number;
+}
 
-const parseMs = (milliseconds: number): FormattedRes => {
-  return {
-    days: Math.floor(milliseconds / 86400000),
-    hours: Math.floor(milliseconds / 3600000) % 24,
-    minutes: Math.floor(milliseconds / 60000) % 60,
-    seconds: Math.floor(milliseconds / 1000) % 60,
-    milliseconds: Math.floor(milliseconds) % 1000,
+export declare interface ICountDownHook {
+  time: ICountDownTime;
+  remaining: number;
+  /**
+   * 重新开始任务
+   * restart task
+   * @param newBase 可指定重新开始的新初始值  can specify a new initial value for the restart
+   */
+  restartTask: (newBase?: number) => any;
+  stopTask: () => any;
+  continueTask: () => any;
+  setInterval: (interval: number) => any;
+  setDecreasing: (decreasing: number) => any;
+}
+
+function useCountDown({
+  baseTime,
+  interval = 1000,
+  decreasing = 1000,
+}: ICountDownParam): ICountDownHook {
+  // 最初剩余时间
+  // Initial remaining time
+  const [baseTimeState, setBaseTimeState] = useState(baseTime);
+  // 剩余时间
+  // remaining time
+  const [remaining, setRemaining] = useState(baseTime);
+  // 间隔时间
+  // interval time
+  const [intervalState, setIntervalState] = useState(interval);
+  // 递减值
+  // decreasing value
+  const [decreasingState, setDecreasingState] = useState(decreasing);
+  // start or stop countdown flag
+  const [flag, setFlag] = useState(true);
+
+  const continueTask: ICountDownHook['continueTask'] = function () {
+    setFlag(true);
   };
-};
 
-const useCountdown = (options?: Options) => {
-  const { targetDate, interval = 1000, onEnd } = options || {};
-
-  const [target, setTargetDate] = useState<TDate>(targetDate);
-  const [timeLeft, setTimeLeft] = useState(() => calcLeft(target));
-
-  const onEndPersistFn = usePersistFn(() => {
-    if (onEnd) {
-      onEnd();
+  const restartTask: ICountDownHook['restartTask'] = function (newBase?) {
+    if (newBase) {
+      setBaseTimeState(newBase);
     }
-  });
+    setRemaining(newBase || baseTimeState);
+    setFlag(true);
+  };
+
+  const stopTask: ICountDownHook['stopTask'] = function () {
+    setFlag(false);
+  };
+
+  const setInterval: ICountDownHook['setInterval'] = function (intervalParam) {
+    setIntervalState(intervalParam);
+  };
+
+  const setDecreasing: ICountDownHook['setDecreasing'] = function (decreasingParam) {
+    setDecreasingState(decreasingParam);
+  };
 
   useEffect(() => {
-    if (!target) {
-      // for stop
-      setTimeLeft(0);
-      return;
+    let timeout = setTimeout(() => {}, 0);
+    if (flag) {
+      timeout = setTimeout(() => {
+        if (remaining > 0) {
+          setRemaining(remaining - decreasingState > 0 ? remaining - decreasingState : 0);
+        }
+      }, intervalState);
     }
+    return () => {
+      clearTimeout(timeout);
+    };
+  });
 
-    // 立即执行一次
-    setTimeLeft(calcLeft(target));
+  const time: ICountDownTime = {
+    day: Math.floor(remaining / 1000 / 60 / 60 / 24),
+    hour: Math.floor((remaining / 1000 / 60 / 60) % 24),
+    minute: Math.floor((remaining / 1000 / 60) % 60),
+    second: Math.floor((remaining / 1000) % 60),
+  };
 
-    const timer = setInterval(() => {
-      const targetLeft = calcLeft(target);
-      setTimeLeft(targetLeft);
-      if (targetLeft === 0) {
-        clearInterval(timer);
-          onEndPersistFn();
-      }
-    }, interval);
+  return {
+    time,
+    remaining,
+    restartTask,
+    stopTask,
+    continueTask,
+    setInterval,
+    setDecreasing,
+  };
+}
 
-    return () => clearInterval(timer);
-  }, [target, interval]);
-
-  const formattedRes = useMemo(() => {
-    return parseMs(timeLeft);
-  }, [timeLeft]);
-
-  return [timeLeft, setTargetDate, formattedRes] as const;
-};
-
-export default useCountdown;
+export default useCountDown;
