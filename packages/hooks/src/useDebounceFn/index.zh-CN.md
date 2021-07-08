@@ -44,7 +44,6 @@ const {
 | wait     | 超时时间，单位为毫秒       | `number`  | `1000`  |
 | leading  | 是否在延迟开始前调用函数 | `boolean` | `false` |
 | trailing | 是否在延迟开始后调用函数 | `boolean` | `true`  |
-| maxWait | 函数调用允许延迟的最长时间 | `() => void` | -  |
 
 ### Result
 
@@ -53,5 +52,4 @@ const {
 | run    | 触发执行 fn，函数参数将会传递给 fn | `(...args: any[]) => any` |
 | cancel | 取消当前防抖                       | `() => void` |
 | flush  | 当前防抖立即调用                   | `() => void` |
-| isPending | 是否有正在挂起的函数 | `() => void` | `boolean` |
 

@@ -1,14 +1,19 @@
 import debounce from 'lodash/debounce';
-import { useRef } from 'react';
 import useCreation from '../useCreation';
 import { DebounceOptions } from '../useDebounce/debounceOptions';
+import useLatest from '../useLatest';
 import useUnmount from '../useUnmount';
 
 type Fn = (...args: any) => any;
 
 function useDebounceFn<T extends Fn>(fn: T, options?: DebounceOptions) {
-  const fnRef = useRef<T>(fn);
-  fnRef.current = fn;
+  if (process.env.NODE_ENV === 'development') {
+    if (typeof fn !== 'function') {
+      console.error('useDebounceFn expected parameter is a function, got ' + typeof fn);
+    }
+  }
+
+  const fnRef = useLatest(fn);
 
   const wait = options?.wait ?? 1000;
 
