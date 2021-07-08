@@ -1,4 +1,4 @@
-import { useEffect, useState, useMemo, useRef, MutableRefObject } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import useSize from '../useSize';
 
 export interface OptionType {
@@ -8,7 +8,7 @@ export interface OptionType {
 
 export default <T = any>(list: T[], options: OptionType) => {
   const containerRef = useRef<HTMLElement | null>();
-  const size = useSize(containerRef as MutableRefObject<HTMLElement>);
+  const size = useSize(containerRef);
   // 暂时禁止 cache
   // const distanceCache = useRef<{ [key: number]: number }>({});
   const [state, setState] = useState({ start: 0, end: 10 });
@@ -70,7 +70,7 @@ export default <T = any>(list: T[], options: OptionType) => {
 
   useEffect(() => {
     calculateRange();
-  }, [size.width, size.height]);
+  }, [size?.width, size?.height]);
 
   const totalHeight = useMemo(() => {
     if (typeof itemHeight === 'number') {

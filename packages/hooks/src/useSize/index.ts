@@ -1,22 +1,19 @@
-import { useState, useLayoutEffect } from 'react';
+import { useState } from 'react';
 import ResizeObserver from 'resize-observer-polyfill';
-import { getTargetElement, BasicTarget } from '../utils/dom';
+import useIsomorphicLayoutEffect from '../useIsomorphicLayoutEffect';
+import type { BasicTarget } from '../utils/dom2';
+import { getTargetElement } from '../utils/dom2';
 
-type Size = { width?: number; height?: number };
+type Size = { width: number; height: number };
 
-function useSize(target: BasicTarget): Size {
-  const [state, setState] = useState<Size>(() => {
+function useSize(target: BasicTarget): Size | undefined {
+  const [state, setState] = useState<Size>();
+
+  useIsomorphicLayoutEffect(() => {
     const el = getTargetElement(target);
-    return {
-      width: ((el || {}) as HTMLElement).clientWidth,
-      height: ((el || {}) as HTMLElement).clientHeight,
-    };
-  });
 
-  useLayoutEffect(() => {
-    const el = getTargetElement(target);
     if (!el) {
-      return () => {};
+      return;
     }
 
     const resizeObserver = new ResizeObserver((entries) => {
@@ -28,11 +25,11 @@ function useSize(target: BasicTarget): Size {
       });
     });
 
-    resizeObserver.observe(el as HTMLElement);
+    resizeObserver.observe(el);
     return () => {
       resizeObserver.disconnect();
     };
-  }, [target]);
+  }, [typeof target === 'function' ? undefined : target]);
 
   return state;
 }
