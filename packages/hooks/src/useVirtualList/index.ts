@@ -70,7 +70,7 @@ export default <T = any>(list: T[], options: OptionType) => {
 
   useEffect(() => {
     calculateRange();
-  }, [size?.width, size?.height]);
+  }, [size?.width, size?.height, list.length]);
 
   const totalHeight = useMemo(() => {
     if (typeof itemHeight === 'number') {
