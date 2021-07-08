@@ -1,4 +1,5 @@
-import { useEffect, useRef } from 'react';
+import { useEffect } from 'react';
+import useMemoizedFn from '../useMemoizedFn';
 
 function useInterval(
   fn: () => void,
@@ -9,21 +10,20 @@ function useInterval(
 ): void {
   const immediate = options?.immediate;
 
-  const fnRef = useRef<() => void>();
-  fnRef.current = fn;
+  const memoFn = useMemoizedFn(fn);
 
   useEffect(() => {
     if (delay === undefined || delay === null) return;
     if (immediate) {
-      fnRef.current?.();
+      memoFn();
     }
     const timer = setInterval(() => {
-      fnRef.current?.();
+      memoFn();
     }, delay);
     return () => {
       clearInterval(timer);
     };
-  }, [delay]);
+  }, [delay, memoFn]);
 }
 
 export default useInterval;
