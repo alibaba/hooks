@@ -1,6 +1,6 @@
 /**
  * title: antd Table
- * desc: Since antd [Table] (https://ant.design/components/table-cn/) is widely used, we especially support the paging format required by antd Table, and `sorter`,` filters`, etc. You can access these properties via `result.tableProps`, `result.params[0]?.filters`, `result.params[0]?.sorter`.
+ * desc: Since antd [Table](https://ant.design/components/table-cn/) is widely used, we especially support the paging format required by antd Table, and `sorter`,` filters`, etc. You can access these properties via `result.tableProps`, `result.params[0]?.filters`, `result.params[0]?.sorter`.
  *
  * title.zh-CN: antd Table
  * desc.zh-CN: 由于 antd [Table](https://ant.design/components/table-cn/) 使用比较广泛，我们特别支持了 antd Table 需要的分页格式，及 `sorter` 、 `filters` 等。你可以通过 `result.tableProps` ， `result.params[0]?.filters` ， `result.params[0]?.sorter` 访问到这些属性。
