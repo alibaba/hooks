@@ -6,12 +6,13 @@ nav:
 group:
   title: Dom
   path: /dom
-legacy: /dom/use-size
 ---
 
 # useSize
 
-A hook to subscribe DOM element size change.
+<Tag lang="en-US" tags="ssr"></Tag>
+
+A hook to observe element's size change.
 
 ## Examples
 
@@ -23,7 +24,6 @@ A hook to subscribe DOM element size change.
 
 <code src="./demo/demo2.tsx" />
 
-
 ## API
 
 ```typescript
@@ -34,10 +34,10 @@ const size = useSize(target);
 
 | Property | Description                                                        | Type                   | Default |
 |---------|----------------------------------------------|------------------------|--------|
-| target | DOM element or Ref Object  | `HTMLElement` \| `(() => HTMLElement)` \| `MutableRefObject` | -      |
+| target | DOM element or ref object  | `Element` \| `(() => Element)` \| `MutableRefObject<Element>` | -      |
 
 ### Result
 
 | Property | Description                                         | Type                 |
 |----------|------------------------------------------|------------|
-| size  | size of the DOM                             | `{ width: number, height: number }`    |
+| size  | Size of the element                             | `{ width: number, height: number } \| undefined`    |

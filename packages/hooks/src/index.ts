@@ -60,6 +60,7 @@ import useUnmountedRef from './useUnmountedRef';
 import useExternal from './useExternal';
 import useSafeState from './useSafeState';
 import useLatest from './useLatest';
+import useIsomorphicLayoutEffect from './useIsomorphicLayoutEffect';
 
 export {
   useControllableValue,
@@ -126,4 +127,5 @@ export {
   useExternal,
   useSafeState,
   useLatest,
+  useIsomorphicLayoutEffect,
 };
