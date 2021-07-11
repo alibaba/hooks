@@ -9,7 +9,7 @@ export type Subscribe<R, P extends any[]> = (data: FetchResult<R, P>) => void;
 export type Mutate<R> = (x: R | undefined | ((data: R) => R)) => void;
 
 export interface RequestServiceObject extends RequestInit {
-  readonly url: string;
+  url?: string;
   [key: string]: any; // backward compatibility
 }
 export type RequestService = string | RequestServiceObject;
