@@ -10,7 +10,9 @@ group:
 
 # useTitle
 
-用于设置页面标题的 Hook。
+<Tag lang="zh-CN" tags="ssr"></Tag>
+
+用于设置页面标题。
 
 ## 代码演示
 
@@ -21,18 +23,18 @@ group:
 ## API
 
 ```typescript
-useTitle(value: string, options?: Options);
+useTitle(title: string, options?: Options);
 ```
 
 ### Params
 
 | 参数  | 说明     | 类型     | 默认值 |
 |-------|----------|----------|--------|
-| value | 页面标题 | `string` | -      |
+| title | 页面标题 | `string` | -      |
 
 
 ### Options
 
 | 参数             | 说明         | 类型      | 默认值  |
 |------------------|--------------|-----------|---------|
-| restoreOnUnmount | 恢复页面标题 | `boolean` | `false` |
+| restoreOnUnmount | 组件卸载时，是否恢复上一个页面标题 | `boolean` | `false` |
