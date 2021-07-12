@@ -1,9 +1,9 @@
 /**
- * title: Custom DOM
- * desc: Support pass in a DOM element directly or a function that returns the DOM element.
+ * title: Support DOM
+ * desc: Support pass in a DOM element or function.
  *
- * title.zh-CN: 自定义 DOM
- * desc.zh-CN: 支持直接传入 DOM 对象或通过 function 返回一个对象的方式引入。
+ * title.zh-CN: 支持传入 DOM
+ * desc.zh-CN: 支持直接传入 DOM 对象或 function。
  */
 
 import React, { useState } from 'react';
@@ -16,13 +16,13 @@ export default () => {
     () => {
       setCounter((s) => s + 1);
     },
-    () => document.getElementById('box2'),
+    () => document.getElementById('use-click-away-button'),
   );
 
   return (
     <div>
-      <button type="button" id="box2">
-        box2
+      <button type="button" id="use-click-away-button">
+        box
       </button>
       <p>counter: {counter}</p>
     </div>

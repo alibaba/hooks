@@ -6,12 +6,13 @@ nav:
 group:
   title: Dom
   path: /dom
-  order: 13
 ---
 
 # useClickAway
 
-优雅的管理目标元素外点击事件的 Hook。
+<Tag lang="zh-CN" tags="ssr"></Tag>
+
+监听目标元素外的点击事件。
 
 ## 代码演示
 
@@ -35,7 +36,7 @@ group:
 ## API
 
 ```ts
-type Target = HTMLElement | React.MutableRefObject | () => HTMLElement;
+type Target = Element | () => Element | React.MutableRefObject<Element>;
 
 useClickAway(
   onClickAway: (event: MouseEvent | TouchEvent) => void,
@@ -48,6 +49,6 @@ useClickAway(
 
 | 参数    | 说明                                         | 类型                   | 默认值 |
 |---------|----------------------------------------------|------------------------|--------|
-| onClickAway | 触发事件的函数  | `(event) => void` | -      |
-| target | DOM 节点或者 Ref 对象，支持数组 | `Target` \| `Target[]` | - |
+| onClickAway | 触发函数  | `(event: MouseEvent | TouchEvent) => void` | -      |
+| target | DOM 节点或者 Ref，支持数组 | `Target` \| `Target[]` | - |
 | eventName | 指定需要监听的事件 | `string` | `click` |

@@ -11,16 +11,16 @@ import { useClickAway } from 'ahooks';
 
 export default () => {
   const [counter, setCounter] = useState(0);
-  const ref = useRef<HTMLSpanElement>();
+  const ref = useRef<HTMLButtonElement>();
   useClickAway(() => {
     setCounter((s) => s + 1);
   }, ref);
 
   return (
     <div>
-      <span ref={ref}>
-        <button type="button">box1</button>
-      </span>
+      <button ref={ref} type="button">
+        box
+      </button>
       <p>counter: {counter}</p>
     </div>
   );
