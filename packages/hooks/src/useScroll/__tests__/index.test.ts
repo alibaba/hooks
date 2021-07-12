@@ -7,6 +7,6 @@ describe('useScroll', () => {
   });
   it('document body', () => {
     const hook = renderHook(() => useScroll(document));
-    expect(hook.result.current).toBe(undefined);
+    expect(hook.result.current).toEqual({ left: 0, top: 0 });
   });
 });
