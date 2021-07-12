@@ -10,9 +10,9 @@ group:
 
 # useDocumentVisibility
 
-A Hook can tell if the page is visible.
+<Tag lang="en-US" tags="ssr"></Tag>
 
-[visibilityState API](https://developer.mozilla.org/docs/Web/API/Document/visibilityState)
+A Hook can tell if the page is visible, refer to [visibilityState API](https://developer.mozilla.org/docs/Web/API/Document/visibilityState)
 
 ## Examples
 
@@ -27,4 +27,4 @@ const documentVisibility = useDocumentVisibility();
 ### Result
 | Property    | Description                      | Type                   |
 |---------|----------------------------------------------|------------------------|
-| documentVisibility | Determine if the document is visible | `visible`\| `hidden` \| `prerender`  \| `undefined` |
+| documentVisibility | Whether the document is visible | `visible`\| `hidden` \| `prerender`  \| `undefined` |

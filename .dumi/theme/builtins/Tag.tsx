@@ -24,7 +24,6 @@ const en = {
 };
 
 const SSRTag: React.FC<Props> = ({ lang = 'en-US', tags = '', ...props }) => {
-  console.log('crosPlatform', props);
   const text = lang === 'en-US' ? en : zh;
 
   const tagArr = tags.split('&');
