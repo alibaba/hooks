@@ -36,7 +36,7 @@ group:
 ## API
 
 ```ts
-type Target = Element | () => Element | React.MutableRefObject<Element>;
+type Target = Element | (() => Element) | React.MutableRefObject<Element>;
 
 useClickAway(
   onClickAway: (event: MouseEvent | TouchEvent) => void,

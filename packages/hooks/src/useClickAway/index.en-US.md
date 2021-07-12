@@ -35,7 +35,7 @@ Listen for click events outside the target element.
 ## API
 
 ```ts
-type Target = Element | () => Element | React.MutableRefObject<Element>;
+type Target = Element | (() => Element) | React.MutableRefObject<Element>;
 
 useClickAway(
   onClickAway: (event: MouseEvent | TouchEvent) => void,
