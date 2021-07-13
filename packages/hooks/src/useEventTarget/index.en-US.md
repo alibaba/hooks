@@ -10,7 +10,7 @@ group:
 
 # useEventTarget
 
-<Tag lang="en-US" tags="ssr"></Tag>
+<Tag lang="en-US" tags="ssr&crossPlatform"></Tag>
 
 The hook encapsulates `onChange` and `value` logic for form controls that obtains value through `event.target.value`. It also supports custom transformer and reset functionalities.
 
