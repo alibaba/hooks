@@ -1,109 +1,142 @@
-import { useState, useRef, useEffect, useMemo } from 'react';
-import { getTargetElement, BasicTarget } from '../utils/dom';
+import { useEffect, useRef, useState } from 'react';
+
+type DeepPartial<T> = { [P in keyof T]?: DeepPartial<T[P]> };
 
 export interface Options {
-  type?: 'js' | 'css' | 'img';
-  media?: HTMLLinkElement['media'];
-  async?: boolean;
-  target?: BasicTarget;
+  type?: 'js' | 'css';
+  js?: DeepPartial<HTMLScriptElement>;
+  css?: DeepPartial<HTMLStyleElement>;
 }
+
+// {[path]: count}
+// remove external when no used
+const EXTERNAL_USED_COUNT: Record<string, number> = {};
 
 export type Status = 'unset' | 'loading' | 'ready' | 'error';
 
-export type Action = {
-  toggle: () => void;
-  load: () => void;
-  unload: () => void;
+interface loadResult {
+  ref: Element;
+  status: Status;
+}
+
+const loadScript = (path: string, props = {}): loadResult => {
+  const script = document.querySelector(`script[src="${path}"]`);
+
+  if (!script) {
+    const newScript = document.createElement('script');
+    newScript.src = path;
+
+    Object.keys(props).forEach((key) => {
+      newScript[key] = props[key];
+    });
+
+    newScript.setAttribute('data-status', 'loading');
+    document.body.appendChild(newScript);
+
+    return {
+      ref: newScript,
+      status: 'loading',
+    };
+  }
+
+  return {
+    ref: script,
+    status: (script.getAttribute('data-status') as Status) || 'ready',
+  };
 };
 
-export type ExternalElement = HTMLScriptElement | HTMLLinkElement | HTMLImageElement;
+const loadCss = (path: string, props = {}): loadResult => {
+  const css = document.querySelector(`link[href="${path}"]`);
+  if (!css) {
+    const newCss = document.createElement('link');
 
-export default function useExternal(path: string, options?: Options): [Status, Action] {
-  const isPath = typeof path === 'string' && path !== '';
+    newCss.rel = 'stylesheet';
+    newCss.href = path;
+    Object.keys(props).forEach((key) => {
+      newCss[key] = props[key];
+    });
+    // IE9+
+    const isLegacyIECss = 'hideFocus' in newCss;
+    // use preload in IE Edge (to detect load errors)
+    if (isLegacyIECss && newCss.relList) {
+      newCss.rel = 'preload';
+      newCss.as = 'style';
+    }
+    newCss.setAttribute('data-status', 'loading');
+    document.head.appendChild(newCss);
 
-  const [status, setStatus] = useState<Status>(isPath ? 'loading' : 'unset');
+    return {
+      ref: newCss,
+      status: 'loading',
+    };
+  }
 
-  const [active, setActive] = useState(isPath);
+  return {
+    ref: css,
+    status: (css.getAttribute('data-status') as Status) || 'ready',
+  };
+};
 
-  const ref = useRef<ExternalElement>();
+const useExternal = (path: string, options?: Options) => {
+  const [status, setStatus] = useState<Status>(path ? 'loading' : 'unset');
+
+  const ref = useRef<Element>();
 
   useEffect(() => {
-    ref.current?.remove();
-
-    if (!isPath || !active) {
+    if (!path) {
       setStatus('unset');
-      ref.current = undefined;
+      return;
+    }
+    const pathname = path.replace(/[|#].*$/, '');
+    if (options?.type === 'css' || (!options?.type && /(^css!|\.css$)/.test(pathname))) {
+      const result = loadCss(path, options?.css);
+      ref.current = result.ref;
+      setStatus(result.status);
+    } else if (options?.type === 'js' || (!options?.type && /(^js!|\.js$)/.test(pathname))) {
+      const result = loadScript(path, options?.js);
+      ref.current = result.ref;
+      setStatus(result.status);
+    } else {
+      // do nothing
+      console.error(
+        "Cannot infer the type of external resource, and please provide a type ('js' | 'css'). " +
+          'Refer to the https://ahooks.js.org/hooks/dom/use-external/#options',
+      );
+    }
+
+    if (!ref.current) {
       return;
     }
 
-    setStatus('loading');
-    // Create external element
-    const pathname = path.replace(/[|#].*$/, '');
-    if (options?.type === 'css' || /(^css!|\.css$)/.test(pathname)) {
-      // css
-      ref.current = document.createElement('link');
-      ref.current.rel = 'stylesheet';
-      ref.current.href = path;
-      ref.current.media = options?.media || 'all';
-      // IE9+
-      let isLegacyIECss = 'hideFocus' in ref.current;
-      // use preload in IE Edge (to detect load errors)
-      if (isLegacyIECss && ref.current.relList) {
-        ref.current.rel = 'preload';
-        ref.current.as = 'style';
-      }
-      ref.current.setAttribute('data-status', 'loading');
-      document.head.appendChild(ref.current);
-    } else if (options?.type === 'js' || /(^js!|\.js$)/.test(pathname)) {
-      // javascript
-      ref.current = document.createElement('script');
-      ref.current.src = path;
-      ref.current.async = options?.async === undefined ? true : options?.async;
-      ref.current.setAttribute('data-status', 'loading');
-      document.body.appendChild(ref.current);
-    } else if (options?.type === 'img' || /(^img!|\.(png|gif|jpg|svg|webp)$)/.test(pathname)) {
-      // image
-      ref.current = document.createElement('img');
-      ref.current.src = path;
-      ref.current.setAttribute('data-status', 'loading');
-      // append to wrapper
-      const wrapper = (getTargetElement(options?.target) as HTMLElement) || document.body;
-      if (wrapper) {
-        wrapper.appendChild(ref.current);
-      }
-    }else{
-      // do nothing
-      console.error(
-        "Cannot infer the type of external resource, and please provide a type ('js' | 'css' | 'img'). " +
-          "Refer to the https://ahooks.js.org/hooks/dom/use-external/#options"
-      )
+    if (EXTERNAL_USED_COUNT[path] === undefined) {
+      EXTERNAL_USED_COUNT[path] = 1;
+    } else {
+      EXTERNAL_USED_COUNT[path] += 1;
     }
 
-    if(!ref.current) return
+    const handler = (event: Event) => {
+      const targetStatus = event.type === 'load' ? 'ready' : 'error';
+      ref.current?.setAttribute('data-status', targetStatus);
+      setStatus(targetStatus);
+    };
 
-    // Bind setAttribute Event
-    const setAttributeFromEvent = (event: Event) => {
-      ref.current?.setAttribute('data-status', event.type === 'load' ? 'ready' : 'error');
-    };
-    ref.current.addEventListener('load', setAttributeFromEvent);
-    ref.current.addEventListener('error', setAttributeFromEvent);
-    const setStateFromEvent = (event: Event) => {
-      setStatus(event.type === 'load' ? 'ready' : 'error');
-    };
-    ref.current.addEventListener('load', setStateFromEvent);
-    ref.current.addEventListener('error', setStateFromEvent);
+    ref.current.addEventListener('load', handler);
+    ref.current.addEventListener('error', handler);
     return () => {
-      ref.current?.removeEventListener('load', setStateFromEvent);
-      ref.current?.removeEventListener('error', setStateFromEvent);
+      ref.current?.removeEventListener('load', handler);
+      ref.current?.removeEventListener('error', handler);
+
+      EXTERNAL_USED_COUNT[path] -= 1;
+
+      if (EXTERNAL_USED_COUNT[path] === 0) {
+        ref.current?.remove();
+      }
+
+      ref.current = undefined;
     };
-  }, [path, active]);
+  }, [path]);
 
-  const action = useMemo(() => {
-    const unload = () => setActive(false);
-    const load = () => setActive(true);
-    const toggle = () => setActive((value) => !value);
-    return { toggle, load, unload };
-  }, [setActive]);
+  return status;
+};
 
-  return [status, action];
-}
+export default useExternal;
