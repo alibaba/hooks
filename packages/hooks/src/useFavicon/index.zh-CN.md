@@ -10,6 +10,8 @@ group:
 
 # useFavicon
 
+<Tag lang="zh-CN" tags="ssr"></Tag>
+
 设置页面的 favicon。
 
 ## 代码演示

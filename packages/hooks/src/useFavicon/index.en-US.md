@@ -10,6 +10,8 @@ group:
 
 # useFavicon
 
+<Tag lang="en-US" tags="ssr"></Tag>
+
 Set page favicon.
 
 ## Example
