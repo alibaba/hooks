@@ -10,7 +10,9 @@ group:
 
 # useFavicon
 
-Set or configure page favicon URL.
+<Tag lang="en-US" tags="ssr"></Tag>
+
+Set page favicon.
 
 ## Example
 
@@ -21,11 +23,11 @@ Set or configure page favicon URL.
 ## API
 
 ```typescript
-useFavicon(faviconURL: string)
+useFavicon(href: string)
 ```
 
 ### Params
 
-| Params     | Description                                  | Type     | Default |
-|------------|----------------------------------------------|----------|---------|
-| faviconURL | favicon URL, support `svg`/`png`/`ico`/`gif` | `string` | -       |
+| Params | Description                                  | Type     | Default |
+|--------|----------------------------------------------|----------|---------|
+| href   | favicon URL, support `svg`/`png`/`ico`/`gif` | `string` | -       |

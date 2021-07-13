@@ -1,9 +1,9 @@
 /**
  * title: Basic usage
- * desc: Page favicon setup and toggle
+ * desc: Set favicon
  *
  * title.zh-CN: 基础用法
- * desc.zh-CN: 页面标识 favicon 设置与切换
+ * desc.zh-CN: 设置 favicon
  */
 
 import React, { useState } from 'react';
