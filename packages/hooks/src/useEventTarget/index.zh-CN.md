@@ -10,6 +10,8 @@ group:
 
 # useEventTarget
 
+<Tag lang="zh-CN" tags="ssr&crossPlatform"></Tag>
+
 常见表单控件(通过 e.target.value 获取表单值) 的 onChange 跟 value 逻辑封装，支持自定义值转换和重置功能。
 
 ## 代码演示
@@ -18,7 +20,7 @@ group:
 
 <code src="./demo/demo1.tsx" />
 
-### 自定义值切换
+### 自定义转换函数
 
 <code src="./demo/demo2.tsx" />
 
@@ -30,11 +32,11 @@ const [value, { onChange, reset }  ] = useEventTarget<T, U>(Options);
 
 ### Result
 
-| 参数     | 说明                         | 类型               |
-|----------|------------------------------|--------------------|
-| value    | 表单控件的值                 | `T`                |
+| 参数     | 说明                         | 类型                                   |
+|----------|------------------------------|----------------------------------------|
+| value    | 表单控件的值                 | `T`                                    |
 | onChange | 表单控件值发生变化时候的回调 | `(e: { target: { value: T }}) => void` |
-| reset    | 重置函数                     | `() => void`       |
+| reset    | 重置函数                     | `() => void`                           |
 
 ### Options
 

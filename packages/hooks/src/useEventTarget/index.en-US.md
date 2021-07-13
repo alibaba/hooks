@@ -10,6 +10,8 @@ group:
 
 # useEventTarget
 
+<Tag lang="en-US" tags="ssr&crossPlatform"></Tag>
+
 The hook encapsulates `onChange` and `value` logic for form controls that obtains value through `event.target.value`. It also supports custom transformer and reset functionalities.
 
 ## Example
@@ -30,11 +32,11 @@ const [value, { onChange, reset }  ] = useEventTarget<T, U>(Options);
 
 ### Result
 
-| Property | Description                                 | Type               |
-|----------|---------------------------------------------|--------------------|
-| value    | component value                             | `T`                |
+| Property | Description                                 | Type                                   |
+|----------|---------------------------------------------|----------------------------------------|
+| value    | component value                             | `T`                                    |
 | onChange | callback when value changes                 | `(e: { target: { value: T }}) => void` |
-| reset    | function to reset the value to initialValue | `() => void`       |
+| reset    | function to reset the value to initialValue | `() => void`                           |
 
 ### Options
 
