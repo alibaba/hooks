@@ -10,7 +10,7 @@ group:
 
 # useFavicon
 
-用于设置与切换页面 favicon。
+设置页面的 favicon。
 
 ## 代码演示
 
@@ -21,11 +21,11 @@ group:
 ## API
 
 ```typescript
-useFavicon(faviconURL: string)
+useFavicon(href: string)
 ```
 
 ### Params
 
-| 参数       | 说明                                               | 类型     | 默认值 |
-|------------|----------------------------------------------------|----------|--------|
-| faviconURL | favicon地址, 支持`svg`/`png`/`ico`/`gif`后缀的图片 | `string` | -      |
+| 参数 | 说明                                               | 类型     | 默认值 |
+|------|----------------------------------------------------|----------|--------|
+| href | favicon地址, 支持 `svg`/`png`/`ico`/`gif` 后缀的图片 | `string` | -      |
