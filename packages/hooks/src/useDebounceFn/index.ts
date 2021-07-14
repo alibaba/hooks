@@ -3,16 +3,11 @@ import useCreation from '../useCreation';
 import { DebounceOptions } from '../useDebounce/debounceOptions';
 import useLatest from '../useLatest';
 import useUnmount from '../useUnmount';
+import { devCheckDecorator } from '../utils/check';
 
 type Fn = (...args: any) => any;
 
 function useDebounceFn<T extends Fn>(fn: T, options?: DebounceOptions) {
-  if (process.env.NODE_ENV === 'development') {
-    if (typeof fn !== 'function') {
-      console.error('useDebounceFn expected parameter is a function, got ' + typeof fn);
-    }
-  }
-
   const fnRef = useLatest(fn);
 
   const wait = options?.wait ?? 1000;
@@ -40,4 +35,4 @@ function useDebounceFn<T extends Fn>(fn: T, options?: DebounceOptions) {
   };
 }
 
-export default useDebounceFn;
+export default devCheckDecorator(useDebounceFn);
