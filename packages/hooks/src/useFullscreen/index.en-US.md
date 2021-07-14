@@ -27,7 +27,16 @@ manages DOM full screen.
 ## API
 
 ```typescript
-const [isFullscreen, { setFull, exitFull, toggleFull }] = useFullScreen(target, options?:Options);
+const [
+  isFullscreen, 
+  {
+    enterFullscreen, 
+    exitFullscreen, 
+    toggleFullscreen 
+  }] = useFullScreen(
+    target,
+    options?:Options
+  );
 ```
 
 ### Params
@@ -41,14 +50,14 @@ const [isFullscreen, { setFull, exitFull, toggleFull }] = useFullScreen(target, 
 
 | Property   | Description                        | Type        | Default |
 |------------|------------------------------------|-------------|---------|
-| onExitFull | Exit full screen trigger | `()=>void`    | -       |
-| onFull     | Set full screen trigger     | `()=>void`    | -       |
+| onExit | Exit full screen trigger | `()=>void`    | -       |
+| onEnter     | Enter full screen trigger     | `()=>void`    | -       |
 
 ### Result
 
 | Property     | Description        | Type     |
 |--------------|--------------------|----------|
 | isFullscreen | Is full screen     | `boolean`  |
-| setFull      | Set full screen    | `()=>void` |
-| exitFull     | Exit full screen   | `()=>void` |
-| toggleFull   | Toggle full screen | `()=>void` |
+| enterFullscreen      | Enter full screen    | `()=>void` |
+| exitFullscreen     | Exit full screen   | `()=>void` |
+| toggleFullscreen   | Toggle full screen | `()=>void` |

@@ -7,15 +7,15 @@ import type { BasicTarget } from '../utils/dom2';
 import { getTargetElement } from '../utils/dom2';
 
 export interface Options {
-  onExitFull?: () => void;
-  onFull?: () => void;
+  onExit?: () => void;
+  onEnter?: () => void;
 }
 
 const useFullscreen = (target: BasicTarget, options?: Options) => {
-  const { onExitFull, onFull } = options || {};
+  const { onExit, onEnter } = options || {};
 
-  const onExitFullRef = useLatest(onExitFull);
-  const onFullRef = useLatest(onFull);
+  const onExitRef = useLatest(onExit);
+  const onEnterRef = useLatest(onEnter);
 
   const [state, setState] = useState(false);
 
@@ -23,16 +23,16 @@ const useFullscreen = (target: BasicTarget, options?: Options) => {
     if (screenfull.isEnabled) {
       const { isFullscreen } = screenfull;
       if (isFullscreen) {
-        onFullRef.current?.();
+        onEnterRef.current?.();
       } else {
         screenfull.off('change', onChange);
-        onExitFullRef.current?.();
+        onExitRef.current?.();
       }
       setState(isFullscreen);
     }
   }, []);
 
-  const setFull = useCallback(() => {
+  const enterFullscreen = useCallback(() => {
     const el = getTargetElement(target);
     if (!el) {
       return;
@@ -48,7 +48,7 @@ const useFullscreen = (target: BasicTarget, options?: Options) => {
     }
   }, [target, onChange]);
 
-  const exitFull = useCallback(() => {
+  const exitFullscreen = useCallback(() => {
     if (!state) {
       return;
     }
@@ -57,13 +57,13 @@ const useFullscreen = (target: BasicTarget, options?: Options) => {
     }
   }, [state]);
 
-  const toggleFull = useCallback(() => {
+  const toggleFullscreen = useCallback(() => {
     if (state) {
-      exitFull();
+      exitFullscreen();
     } else {
-      setFull();
+      enterFullscreen();
     }
-  }, [state, setFull, exitFull]);
+  }, [state, enterFullscreen, exitFullscreen]);
 
   useUnmount(() => {
     if (screenfull.isEnabled) {
@@ -74,9 +74,9 @@ const useFullscreen = (target: BasicTarget, options?: Options) => {
   return [
     state,
     {
-      setFull: useMemoizedFn(setFull),
-      exitFull: useMemoizedFn(exitFull),
-      toggleFull: useMemoizedFn(toggleFull),
+      enterFullscreen: useMemoizedFn(enterFullscreen),
+      exitFullscreen: useMemoizedFn(exitFullscreen),
+      toggleFullscreen: useMemoizedFn(toggleFullscreen),
     },
   ] as const;
 };
