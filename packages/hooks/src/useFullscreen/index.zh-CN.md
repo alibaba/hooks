@@ -10,7 +10,9 @@ group:
 
 # useFullscreen
 
-一个用于处理 dom 全屏的 Hook。
+<Tag lang="zh-CN" tags="ssr"></Tag>
+
+管理 DOM 全屏的 Hook。
 
 ## 代码演示
 
@@ -32,15 +34,15 @@ const [isFullscreen, { setFull, exitFull, toggleFull }] = useFullScreen(target, 
 
 | 参数    | 说明                  | 类型          | 默认值 |
 |---------|-----------------------|---------------|--------|
-| target  | DOM 节点或者 Ref 对象 | `HTMLElement` \| `() => HTMLElement` \| `React.MutableRefObject`| -      |
+| target  | DOM 节点或者 ref | `Element` \| `() => Element` \| `MutableRefObject<Element>`| -      |
 | options | 设置(可选)            | `Options`     | -      |
 
 ### Options
 
 | 参数       | 说明         | 类型       | 默认值 |
 |------------|--------------|------------|--------|
-| onExitFull | 监听退出全屏 | `()=>void` | -      |
-| onFull     | 监听全屏     | `()=>void` | -      |
+| onExitFull | 退出全屏触发 | `()=>void` | -      |
+| onFull     | 全屏触发     | `()=>void` | -      |
 
 ### Result
 

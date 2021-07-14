@@ -1,23 +1,21 @@
-/* eslint no-empty: 0 */
-
-import { useCallback, useRef, useState } from 'react';
+import { useCallback, useState } from 'react';
 import screenfull from 'screenfull';
+import useLatest from '../useLatest';
+import useMemoizedFn from '../useMemoizedFn';
 import useUnmount from '../useUnmount';
-import { BasicTarget, getTargetElement } from '../utils/dom';
+import type { BasicTarget } from '../utils/dom2';
+import { getTargetElement } from '../utils/dom2';
 
 export interface Options {
   onExitFull?: () => void;
   onFull?: () => void;
 }
 
-export default (target: BasicTarget, options?: Options) => {
+const useFullscreen = (target: BasicTarget, options?: Options) => {
   const { onExitFull, onFull } = options || {};
 
-  const onExitFullRef = useRef(onExitFull);
-  onExitFullRef.current = onExitFull;
-
-  const onFullRef = useRef(onFull);
-  onFullRef.current = onFull;
+  const onExitFullRef = useLatest(onExitFull);
+  const onFullRef = useLatest(onFull);
 
   const [state, setState] = useState(false);
 
@@ -25,10 +23,10 @@ export default (target: BasicTarget, options?: Options) => {
     if (screenfull.isEnabled) {
       const { isFullscreen } = screenfull;
       if (isFullscreen) {
-        onFullRef.current && onFullRef.current();
+        onFullRef.current?.();
       } else {
         screenfull.off('change', onChange);
-        onExitFullRef.current && onExitFullRef.current();
+        onExitFullRef.current?.();
       }
       setState(isFullscreen);
     }
@@ -42,9 +40,11 @@ export default (target: BasicTarget, options?: Options) => {
 
     if (screenfull.isEnabled) {
       try {
-        screenfull.request(el as HTMLElement);
+        screenfull.request(el);
         screenfull.on('change', onChange);
-      } catch (error) {}
+      } catch (error) {
+        console.error(error);
+      }
     }
   }, [target, onChange]);
 
@@ -74,9 +74,11 @@ export default (target: BasicTarget, options?: Options) => {
   return [
     state,
     {
-      setFull,
-      exitFull,
-      toggleFull,
+      setFull: useMemoizedFn(setFull),
+      exitFull: useMemoizedFn(exitFull),
+      toggleFull: useMemoizedFn(toggleFull),
     },
   ] as const;
 };
+
+export default useFullscreen;
