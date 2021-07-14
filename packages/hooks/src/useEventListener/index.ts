@@ -1,5 +1,9 @@
-import { useEffect, useRef } from 'react';
-import { BasicTarget, getTargetElement } from '../utils/dom';
+import { useEffect } from 'react';
+import useLatest from '../useLatest';
+import type { BasicTarget } from '../utils/dom2';
+import { getTargetElement } from '../utils/dom2';
+
+type noop = (...p: any) => void;
 
 export type Target = BasicTarget<HTMLElement | Element | Window | Document>;
 
@@ -30,22 +34,19 @@ function useEventListener<K extends keyof WindowEventMap>(
   handler: (ev: WindowEventMap[K]) => void,
   options?: Options<Window>,
 ): void;
-function useEventListener(eventName: string, handler: Function, options: Options): void;
+function useEventListener(eventName: string, handler: noop, options: Options): void;
 
-function useEventListener(eventName: string, handler: Function, options: Options = {}) {
-  const handlerRef = useRef<Function>();
-  handlerRef.current = handler;
+function useEventListener(eventName: string, handler: noop, options: Options = {}) {
+  const handlerRef = useLatest(handler);
 
   useEffect(() => {
-    const targetElement = getTargetElement(options.target, window)!;
-    if (!targetElement.addEventListener) {
+    const targetElement = getTargetElement(options.target, window);
+    if (!targetElement?.addEventListener) {
       return;
     }
 
-    const eventListener = (
-      event: Event,
-    ): EventListenerOrEventListenerObject | AddEventListenerOptions => {
-      return handlerRef.current && handlerRef.current(event);
+    const eventListener = (event: Event) => {
+      return handlerRef.current(event);
     };
 
     targetElement.addEventListener(eventName, eventListener, {
@@ -59,7 +60,13 @@ function useEventListener(eventName: string, handler: Function, options: Options
         capture: options.capture,
       });
     };
-  }, [eventName, options.target, options.capture, options.once, options.passive]);
+  }, [
+    eventName,
+    typeof options.target === 'function' ? undefined : options.target,
+    options.capture,
+    options.once,
+    options.passive,
+  ]);
 }
 
 export default useEventListener;
