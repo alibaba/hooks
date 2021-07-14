@@ -1,18 +1,13 @@
 import throttle from 'lodash/throttle';
 import useCreation from '../useCreation';
+import useLatest from '../useLatest';
 import { ThrottleOptions } from '../useThrottle/throttleOptions';
 import useUnmount from '../useUnmount';
-import useLatest from '../useLatest';
+import { devCheckDecorator } from '../utils/check';
 
 type Fn = (...args: any) => any;
 
 function useThrottleFn<T extends Fn>(fn: T, options?: ThrottleOptions) {
-  if (process.env.NODE_ENV === 'development') {
-    if (typeof fn !== 'function') {
-      console.error('useThrottleFn expected parameter is a function, got ' + typeof fn);
-    }
-  }
-
   const fnRef = useLatest(fn);
 
   const wait = options?.wait ?? 1000;
@@ -40,4 +35,4 @@ function useThrottleFn<T extends Fn>(fn: T, options?: ThrottleOptions) {
   };
 }
 
-export default useThrottleFn;
+export default devCheckDecorator(useThrottleFn);
