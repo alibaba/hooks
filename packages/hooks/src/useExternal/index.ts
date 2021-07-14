@@ -1,11 +1,9 @@
 import { useEffect, useRef, useState } from 'react';
 
-type DeepPartial<T> = { [P in keyof T]?: DeepPartial<T[P]> };
-
 export interface Options {
   type?: 'js' | 'css';
-  js?: DeepPartial<HTMLScriptElement>;
-  css?: DeepPartial<HTMLStyleElement>;
+  js?: Partial<HTMLScriptElement>;
+  css?: Partial<HTMLStyleElement>;
 }
 
 // {[path]: count}
@@ -77,7 +75,7 @@ const loadCss = (path: string, props = {}): loadResult => {
   };
 };
 
-const useExternal = (path: string, options?: Options) => {
+const useExternal = (path?: string, options?: Options) => {
   const [status, setStatus] = useState<Status>(path ? 'loading' : 'unset');
 
   const ref = useRef<Element>();
