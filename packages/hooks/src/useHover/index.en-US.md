@@ -10,7 +10,9 @@ group:
 
 # useHover
 
-React UI sensor hooks that track if some element is being hovered by a mouse.
+<Tag lang="en-US" tags="ssr"></Tag>
+
+Monitor whether the DOM element has a mouse hover.
 
 ## Examples
 
@@ -38,20 +40,18 @@ const isHovering = useHover(
 
 | Property | Description               | Type     | Default |
 |----------|---------------------------|----------|---------|
-| target   | DOM element or Ref Object | `() => HTMLElement` \| `HTMLElement` \| `React.RefObject`         | -       |
-| options  | More configuration items           | `Options` | -       |
+| target   | DOM element or ref | `() => Element` \| `Element` \| `MutableRefObject<Element>` | -       |
+| options  | More config   | `Options` | -       |
 
 ### Options
 
 | Property | Description                                           | Type      | Default |
 |----------|-------------------------------------------------------|-----------|---------|
-| onEnter  | Listen to hover           | `()=>void` | -       |
-| onLeave  | Listening leave hover     | `()=>void` | -       |
-
-
+| onEnter  | Triggered on hover          | `()=>void` | -       |
+| onLeave  | Triggered on leave     | `()=>void` | -       |
 
 ### Result
 
 | Property   | Description                                                 | Type    |
 |------------|-------------------------------------------------------------|---------|
-| isHovering | Determine whether the mouse element is in the hover element | `boolean` |
+| isHovering | Whether the element is in hover | `boolean` |

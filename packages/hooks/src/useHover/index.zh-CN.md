@@ -10,7 +10,9 @@ group:
 
 # useHover
 
-一个用于追踪 dom 元素是否有鼠标悬停的 Hook。
+<Tag lang="zh-CN" tags="ssr"></Tag>
+
+监听 DOM 元素是否有鼠标悬停。
 
 ## 代码演示
 
@@ -38,18 +40,18 @@ const isHovering = useHover(
 
 | 参数    | 说明                  | 类型                | 默认值 |
 |---------|-----------------------|---------------------|--------|
-| target  | DOM 节点或者 Ref 对象 | `() => HTMLElement` \| `HTMLElement` \| `React.RefObject` | -      |
-| options | 额外的配置项 | `Options`                 | `{}`     |
+| target  | DOM 节点或者 Ref 对象 | `() => Element` \| `Element` \| `MutableRefObject<Element>` | -      |
+| options | 额外的配置项 | `Options`                 | `-`     |
 
 ### Options
 
 | 参数     | 说明                       | 类型      | 默认值  |
 |----------|----------------------------|-----------|---------|
-| onEnter | 监听进入 hover        | `()=>void`            | -      |
-| onLeave | 监听离开 hover        | `()=>void`            | -      |
+| onEnter | hover 时触发       | `()=>void`            | -      |
+| onLeave | 取消 hover 时触发        | `()=>void`            | -      |
 
 ### Result
 
 | 参数       | 说明                            | 类型    |
 |------------|---------------------------------|---------|
-| isHovering | 判断鼠标元素是否处于 hover 元素 | `boolean` |
+| isHovering | 鼠标元素是否处于 hover | `boolean` |
