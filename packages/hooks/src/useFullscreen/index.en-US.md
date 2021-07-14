@@ -10,7 +10,9 @@ group:
 
 # useFullscreen
 
-A Hook for handling dom full screen.
+<Tag lang="en-US" tags="ssr"></Tag>
+
+manages DOM full screen.
 
 ## Examples
 
@@ -18,35 +20,44 @@ A Hook for handling dom full screen.
 
 <code src="./demo/demo1.tsx" />
 
-### Picture full screen
+### Image full screen
 
 <code src="./demo/demo2.tsx" />
 
 ## API
 
 ```typescript
-const [isFullscreen, { setFull, exitFull, toggleFull }] = useFullScreen(target, options?:Options);
+const [
+  isFullscreen, 
+  {
+    enterFullscreen, 
+    exitFullscreen, 
+    toggleFullscreen 
+  }] = useFullScreen(
+    target,
+    options?:Options
+  );
 ```
 
 ### Params
 
 | Property   | Description                        | Type        | Default |
 |------------|------------------------------------|-------------|---------|
-| target     | DOM element or Ref Object          | `HTMLElement` \| `() => HTMLElement` \| `React.MutableRefObject` | -       |
-| options | setting(optional)            | `Options`     | -      |
+| target     | DOM element or ref          | `Element` \| `() => Element` \| `MutableRefObject<Element>` | -       |
+| options | Setting(optional)            | `Options`     | -      |
 
 ### Options
 
 | Property   | Description                        | Type        | Default |
 |------------|------------------------------------|-------------|---------|
-| onExitFull | listen for exit full screen events | `()=>void`    | -       |
-| onFull     | listen for full screen events      | `()=>void`    | -       |
+| onExit | Exit full screen trigger | `()=>void`    | -       |
+| onEnter     | Enter full screen trigger     | `()=>void`    | -       |
 
 ### Result
 
 | Property     | Description        | Type     |
 |--------------|--------------------|----------|
-| isFullscreen | is full screen     | `boolean`  |
-| setFull      | set full screen    | `()=>void` |
-| exitFull     | exit full screen   | `()=>void` |
-| toggleFull   | toggle full screen | `()=>void` |
+| isFullscreen | Is full screen     | `boolean`  |
+| enterFullscreen      | Enter full screen    | `()=>void` |
+| exitFullscreen     | Exit full screen   | `()=>void` |
+| toggleFullscreen   | Toggle full screen | `()=>void` |
