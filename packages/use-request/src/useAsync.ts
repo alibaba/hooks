@@ -175,7 +175,7 @@ class Fetch<R, P extends any[]> {
           'useRequest has caught the exception, if you need to handle the exception yourself, you can set options.throwOnError to true.',
         );
       })
-      .finally(() => {
+      ?.finally?.(() => {
         if (currentCount === this.count) {
           if (this.config.pollingInterval) {
             // 如果屏幕隐藏，并且 !pollingWhenHidden, 则停止轮询，并记录 flag，等 visible 时，继续轮询
