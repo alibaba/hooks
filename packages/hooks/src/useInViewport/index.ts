@@ -6,7 +6,7 @@ import { getTargetElement } from '../utils/dom2';
 export interface Options {
   rootMargin?: string;
   threshold?: number | number[];
-  root?: BasicTarget<Element | Document>;
+  root?: BasicTarget<Element>;
 }
 
 function useInViewport(target: BasicTarget, options?: Options) {

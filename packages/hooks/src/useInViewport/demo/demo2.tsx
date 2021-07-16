@@ -7,8 +7,7 @@
  */
 
 import React from 'react';
-// import { useInViewport } from 'ahooks';
-import useInViewport from '../';
+import { useInViewport } from 'ahooks';
 
 export default () => {
   const [inViewPort, ratio] = useInViewport(() => document.getElementById('children'), {
