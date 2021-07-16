@@ -1,9 +1,9 @@
 /**
  * title: Default usage
- * desc: Using ref to listen to visibility change.
+ * desc: Observe if the element is visible.
  *
  * title.zh-CN: 基础用法
- * desc.zh-CN: 使用 ref 监听节点在视图变化或者滚动时是否在可视范围之内
+ * desc.zh-CN: 监听元素是否在可见区域内
  */
 
 import React, { useRef } from 'react';
@@ -11,12 +11,28 @@ import { useInViewport } from 'ahooks';
 
 export default () => {
   const ref = useRef();
-  const inViewPort = useInViewport(ref);
+  const [inViewPort] = useInViewport(ref);
   return (
     <div>
-      <div ref={ref}>observer dom</div>
-      <div style={{ marginTop: 70, color: inViewPort ? '#87d068' : '#f50' }}>
-        {inViewPort ? 'visible' : 'hidden'}
+      <div style={{ width: 300, height: 300, overflow: 'scroll', border: '1px solid' }}>
+        scroll here
+        <div style={{ height: 800 }}>
+          <div
+            ref={ref}
+            style={{
+              border: '1px solid',
+              height: 100,
+              width: 100,
+              textAlign: 'center',
+              marginTop: 80,
+            }}
+          >
+            observer dom
+          </div>
+        </div>
+      </div>
+      <div style={{ marginTop: 16, color: inViewPort ? '#87d068' : '#f50' }}>
+        inViewPort: {inViewPort ? 'visible' : 'hidden'}
       </div>
     </div>
   );
