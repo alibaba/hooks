@@ -1,55 +1,69 @@
 import { useEffect, useState } from 'react';
-import useMemoizedFn from '../useMemoizedFn';
-import { BasicTarget, getTargetElement } from '../utils/dom';
+import useLatest from '../useLatest';
+import type { BasicTarget } from '../utils/dom2';
+import { getTargetElement } from '../utils/dom2';
 
-interface Position {
-  left: number;
-  top: number;
-}
+type Position = { left: number; top: number };
 
-export type Target = BasicTarget<HTMLElement | Document>;
+export type Target = BasicTarget<Element | Document>;
 export type ScrollListenController = (val: Position) => boolean;
 
-function useScroll(target?: Target, shouldUpdate: ScrollListenController = () => true): Position {
-  const [position, setPosition] = useState<Position>({
-    left: NaN,
-    top: NaN,
-  });
+function useScroll(
+  target?: Target,
+  shouldUpdate: ScrollListenController = () => true,
+): Position | undefined {
+  const [position, setPosition] = useState<Position>();
 
-  const shouldUpdatePersist = useMemoizedFn(shouldUpdate);
+  const shouldUpdateRef = useLatest(shouldUpdate);
 
   useEffect(() => {
     const el = getTargetElement(target, document);
-    if (!el) return;
-
-    function updatePosition(currentTarget: Target): void {
-      let newPosition;
-      if (currentTarget === document) {
-        if (!document.scrollingElement) return;
-        newPosition = {
-          left: document.scrollingElement.scrollLeft,
-          top: document.scrollingElement.scrollTop,
-        };
+    if (!el) {
+      return;
+    }
+    const updatePosition = () => {
+      let newPosition: Position;
+      if (el === document) {
+        if (document.scrollingElement) {
+          newPosition = {
+            left: document.scrollingElement.scrollLeft,
+            top: document.scrollingElement.scrollTop,
+          };
+        } else {
+          // When in quirks mode, the scrollingElement attribute returns the HTML body element if it exists and is potentially scrollable, otherwise it returns null.
+          // https://developer.mozilla.org/zh-CN/docs/Web/API/Document/scrollingElement
+          // https://stackoverflow.com/questions/28633221/document-body-scrolltop-firefox-returns-0-only-js
+          newPosition = {
+            left: Math.max(
+              window.pageYOffset,
+              document.documentElement.scrollTop,
+              document.body.scrollTop,
+            ),
+            top: Math.max(
+              window.pageXOffset,
+              document.documentElement.scrollLeft,
+              document.body.scrollLeft,
+            ),
+          };
+        }
       } else {
         newPosition = {
-          left: (currentTarget as HTMLElement).scrollLeft,
-          top: (currentTarget as HTMLElement).scrollTop,
+          left: (el as Element).scrollLeft,
+          top: (el as Element).scrollTop,
         };
       }
-      if (shouldUpdatePersist(newPosition)) setPosition(newPosition);
-    }
-
-    updatePosition(el as Target);
-
-    function listener(event: Event): void {
-      if (!event.target) return;
-      updatePosition(event.target as Target);
-    }
-    el.addEventListener('scroll', listener);
-    return () => {
-      el.removeEventListener('scroll', listener);
+      if (shouldUpdateRef.current(newPosition)) {
+        setPosition(newPosition);
+      }
     };
-  }, [target, shouldUpdatePersist]);
+
+    updatePosition();
+
+    el.addEventListener('scroll', updatePosition);
+    return () => {
+      el.removeEventListener('scroll', updatePosition);
+    };
+  }, [typeof target === 'function' ? undefined : target, shouldUpdateRef]);
 
   return position;
 }

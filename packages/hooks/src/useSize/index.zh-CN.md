@@ -34,7 +34,7 @@ const size = useSize(target);
 
 | 参数    | 说明                                         | 类型                   | 默认值 |
 |---------|----------------------------------------------|------------------------|--------|
-| target | DOM 节点或者 Ref  | `Element` \| `(() => Element)` \| `MutableRefObject<Element>` | -      |
+| target | DOM 节点或者 ref  | `Element` \| `(() => Element)` \| `MutableRefObject<Element>` | -      |
 
 ### Result
 

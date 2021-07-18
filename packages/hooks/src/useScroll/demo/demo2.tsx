@@ -1,5 +1,5 @@
 /**
- * title: Detect Whole Page Scroll
+ * title: Listen Page Scroll
  * desc: Try to scroll this webpage.
  *
  * title.zh-CN: 监测整页的滚动
