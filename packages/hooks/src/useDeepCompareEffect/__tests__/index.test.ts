@@ -1,7 +1,7 @@
 import { renderHook } from '@testing-library/react-hooks';
 import useDeepCompareEffect from '../index';
 
-describe('useUpdateEffect', () => {
+describe('useDeepCompareEffect', () => {
   it('should be defined', () => {
     expect(useDeepCompareEffect).toBeDefined();
   });
