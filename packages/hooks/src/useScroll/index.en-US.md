@@ -10,8 +10,9 @@ group:
 
 # useScroll
 
-Get the scroll position of an element.
+<Tag lang="en-US" tags="ssr"></Tag>
 
+Get the scroll position of an element.
 
 ## Examples
 
@@ -37,12 +38,11 @@ const position = useScroll(target, shouldUpdate);
 
 | Property     | Description                           | Type                                      | Default                                  |
 |--------------|---------------------------------------|-------------------------------------------|------------------------------------------|
-| target       | DOM element or Ref object             |  `HTMLElement` \| `(() => HTMLElement)` \| `Document` \| `React.MutableRefObject` | `document`                               |
-| shouldUpdate | controll weather update scroll status | `({ top: number, left: number}) => boolean` | `({ top: number, left: number}) => true` |
-
+| target       | DOM element or ref object             |  `Element` \| `Document`  \| `(() => Element)` \| `MutableRefObject<Element>` | `document` |
+| shouldUpdate | Weather update position | `({ top: number, left: number}) => boolean` | `-` |
 
 ### Result
 
 | Property | Description                                 | Type                          |
 |----------|---------------------------------------------|-------------------------------|
-| position | The current scroll position of the element. | `{left: number, top: number}` |
+| position | The current scroll position of the element. |  `{left: number, top: number} \| undefined` |
