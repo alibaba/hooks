@@ -6,8 +6,7 @@
  * desc.zh-CN: 深度比较
  */
 
-// import { useDeepCompareEffect } from 'ahooks';
-import useDeepCompareEffect from '../';
+import { useDeepCompareEffect } from 'ahooks';
 import React, { useEffect, useState, useRef } from 'react';
 
 export default () => {
