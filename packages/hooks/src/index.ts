@@ -61,6 +61,7 @@ import useExternal from './useExternal';
 import useSafeState from './useSafeState';
 import useLatest from './useLatest';
 import useIsomorphicLayoutEffect from './useIsomorphicLayoutEffect';
+import useDeepCompareEffect from './useDeepCompareEffect';
 
 export {
   useControllableValue,
@@ -128,4 +129,5 @@ export {
   useSafeState,
   useLatest,
   useIsomorphicLayoutEffect,
+  useDeepCompareEffect,
 };
