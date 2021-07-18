@@ -1,7 +1,8 @@
-import { useEffect, useMemo } from 'react';
+import { useMemo } from 'react';
+import useDeepCompareEffect from '../useDeepCompareEffect';
 import useLatest from '../useLatest';
-import type { BasicTarget } from '../utils/dom2';
 import { getTargetElement } from '../utils/dom2';
+import type { BasicTarget } from '../utils/dom2';
 
 type EventType = MouseEvent | TouchEvent;
 
@@ -17,7 +18,7 @@ export default function useClickAway(
     return targets.map((item) => (typeof target === 'function' ? undefined : item));
   }, [target]);
 
-  useEffect(() => {
+  useDeepCompareEffect(() => {
     const handler = (event: any) => {
       const targets = Array.isArray(target) ? target : [target];
       if (
@@ -36,5 +37,5 @@ export default function useClickAway(
     return () => {
       document.removeEventListener(eventName, handler);
     };
-  }, [...deps, eventName]);
+  }, [deps, eventName]);
 }
