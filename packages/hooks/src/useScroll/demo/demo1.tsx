@@ -14,7 +14,7 @@ export default () => {
   const scroll = useScroll(ref);
   return (
     <>
-      <div>{JSON.stringify(scroll)}</div>
+      <p>{JSON.stringify(scroll)}</p>
       <div
         style={{
           height: '160px',
