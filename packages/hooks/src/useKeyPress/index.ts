@@ -7,12 +7,12 @@ export type KeyPredicate = (event: KeyboardEvent) => boolean;
 export type keyType = KeyboardEvent['keyCode'] | KeyboardEvent['key'];
 export type KeyFilter = keyType | keyType[] | ((event: KeyboardEvent) => boolean);
 export type EventHandler = (event: KeyboardEvent) => void;
-export type keyEvent = 'keydown' | 'keyup';
+export type KeyEvent = 'keydown' | 'keyup';
 
 export type Target = BasicTarget<HTMLElement | Document | Window>;
 
 export type Options = {
-  events?: keyEvent[];
+  events?: KeyEvent[];
   target?: Target;
 };
 
@@ -118,7 +118,7 @@ function genKeyFormater(keyFilter: KeyFilter): KeyPredicate {
   return keyFilter ? () => true : () => false;
 }
 
-const defaultEvents: keyEvent[] = ['keydown'];
+const defaultEvents: KeyEvent[] = ['keydown'];
 
 function useKeyPress(
   keyFilter: KeyFilter,
