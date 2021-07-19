@@ -10,7 +10,9 @@ group:
 
 # useMount
 
-只在组件 mount 时执行的 hook。
+<Tag lang="zh-CN" tags="ssr&crossPlatform"></Tag>
+
+只在组件 mount 时执行的 Hook。
 
 ## 代码演示
 
