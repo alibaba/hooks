@@ -10,6 +10,8 @@ group:
 
 # useInterval
 
+<Tag lang="en-US" tags="ssr&crossPlatform"></Tag>
+
 A hook that can handle the setInterval timer function.
 
 ## Examples
@@ -25,7 +27,11 @@ A hook that can handle the setInterval timer function.
 ## API
 
 ```typescript
-useInterval(fn: () => void, interval: number, options?: Options);
+useInterval(
+  fn: () => void, 
+  interval?: number | null, 
+  options?: Options
+);
 ```
 
 ### Params

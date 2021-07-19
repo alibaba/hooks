@@ -6,10 +6,11 @@ nav:
 group:
   title: SideEffect
   path: /side-effect
-  order: 7
 ---
 
 # useDebounce
+
+<Tag lang="en-US" tags="ssr&crossPlatform"></Tag>
 
 A hook that handle the debounce value.
 
@@ -21,7 +22,7 @@ A hook that handle the debounce value.
 
 ## API
 
-```javascript
+```typescript
 const debouncedValue = useDebounce(
   value: any,
   options?: Options
@@ -32,7 +33,7 @@ const debouncedValue = useDebounce(
 
 | Property | Description                                                  | Type      | Default |
 |----------|--------------------------------------------------------------|-----------|---------|
-| value    | value that requires debounce                                 | `any`     | -       |
+| value    | Value that requires debounce                                 | `any`     | -       |
 | options  | Config the debounce behavior. See the Options section below. | `Options` | `{}`    |
 
 ### Options

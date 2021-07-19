@@ -10,6 +10,8 @@ group:
 
 # useInterval
 
+<Tag lang="zh-CN" tags="ssr&crossPlatform"></Tag>
+
 一个可以处理 setInterval 的 Hook。
 
 ## 代码演示
@@ -25,7 +27,11 @@ group:
 ## API
 
 ```typescript
-useInterval(fn: () => void, interval: number, options?: Options);
+useInterval(
+  fn: () => void, 
+  interval?: number | null, 
+  options?: Options
+);
 ```
 
 ### Params

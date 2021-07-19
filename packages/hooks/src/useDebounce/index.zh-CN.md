@@ -6,10 +6,11 @@ nav:
 group:
   title: SideEffect
   path: /side-effect
-  order: 7
 ---
 
 # useDebounce
+
+<Tag lang="zh-CN" tags="ssr&crossPlatform"></Tag>
 
 用来处理防抖值的 Hook。
 
@@ -21,7 +22,7 @@ group:
 
 ## API
 
-```javascript
+```typescript
 const debouncedValue = useDebounce(
   value: any,
   options?: Options

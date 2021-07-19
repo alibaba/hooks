@@ -1,18 +1,23 @@
 import debounce from 'lodash/debounce';
-import useCreation from '../useCreation';
-import { DebounceOptions } from '../useDebounce/debounceOptions';
+import { useMemo } from 'react';
+import type { DebounceOptions } from '../useDebounce/debounceOptions';
 import useLatest from '../useLatest';
 import useUnmount from '../useUnmount';
-import { devCheckDecorator } from '../utils/check';
 
-type Fn = (...args: any) => any;
+type noop = (...args: any) => any;
 
-function useDebounceFn<T extends Fn>(fn: T, options?: DebounceOptions) {
+function useDebounceFn<T extends noop>(fn: T, options?: DebounceOptions) {
+  if (process.env.NODE_ENV === 'development') {
+    if (typeof fn !== 'function') {
+      console.error(`useDebounceFn expected parameter is a function, got ${typeof fn}`);
+    }
+  }
+
   const fnRef = useLatest(fn);
 
   const wait = options?.wait ?? 1000;
 
-  const debounced = useCreation(
+  const debounced = useMemo(
     () =>
       debounce<T>(
         ((...args: any[]) => {
@@ -35,4 +40,4 @@ function useDebounceFn<T extends Fn>(fn: T, options?: DebounceOptions) {
   };
 }
 
-export default devCheckDecorator(useDebounceFn);
+export default useDebounceFn;

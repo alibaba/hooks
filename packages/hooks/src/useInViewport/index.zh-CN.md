@@ -24,7 +24,7 @@ group:
 
 ## API
 
-```ts
+```typescript
 const inViewPort = useInViewport(target);
 ```
 
