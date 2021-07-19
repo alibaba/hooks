@@ -25,7 +25,7 @@ A hook to subscribe DOM element visibility change
 
 ## API
 
-```ts
+```typescript
 const inViewPort = useInViewport(target);
 ```
 

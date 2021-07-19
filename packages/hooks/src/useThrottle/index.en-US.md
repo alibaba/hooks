@@ -6,10 +6,11 @@ nav:
 group:
   title: SideEffect
   path: /side-effect
-  order: 7
 ---
 
 # useThrottle
+
+<Tag lang="en-US" tags="ssr&crossPlatform"></Tag>
 
 A hook that handle the throttle value.
 
@@ -32,7 +33,7 @@ const throttledValue = useThrottle(
 
 | Property | Description                                                  | Type      | Default |
 |----------|--------------------------------------------------------------|-----------|---------|
-| value    | value that requires throttle                                 | `any`     | -       |
+| value    | Value that requires throttle                                 | `any`     | -       |
 | options  | Config the throttle behavior. See the Options section below. | `Options` | `{}`    |
 
 ### Options

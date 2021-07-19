@@ -10,6 +10,8 @@ group:
 
 # useTimeout
 
+<Tag lang="zh-CN" tags="ssr&crossPlatform"></Tag>
+
 一个可以处理 setTimeout 计时器函数的 Hook。
 
 ## 代码演示
@@ -18,16 +20,18 @@ group:
 
 <code src="./demo/demo1.tsx" />
 
-
 ## API
 
 ```typescript
-useTimeout(fn: () => void, delay: number | undefined | null);
+useTimeout(
+  fn: () => void, 
+  delay?: number | null
+);
 ```
 
-### 参数
+### Params
 
 | 参数 | 说明 | 类型 |
 |------|---------------------------|--------|
-| fn   | 是你想要在到期时间(delay毫秒)之后执行的函数 | `() => void` |
-| delay | 到期时间（单位为毫秒），当取值为 `null` 或 `undefined` 时会停止计时器 | `number` \| `undefined` \| `null` |
+| fn   | 执行函数 | `() => void` |
+| delay | 定时时间（单位为毫秒），当取值为 `null` 或 `undefined` 时会停止计时器 | `number` \| `undefined` \| `null` |
