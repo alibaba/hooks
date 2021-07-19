@@ -4,12 +4,8 @@ type Subscriber = () => void;
 
 const subscribers = new Set<Subscriber>();
 
-interface ResponsiveConfig {
-  [key: string]: number;
-}
-interface ResponsiveInfo {
-  [key: string]: boolean;
-}
+type ResponsiveConfig = Record<string, number>;
+type ResponsiveInfo = Record<string, boolean>;
 
 let info: ResponsiveInfo;
 

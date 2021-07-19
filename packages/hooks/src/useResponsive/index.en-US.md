@@ -10,6 +10,8 @@ group:
 
 # useResponsive
 
+<Tag lang="en-US" tags="ssr"></Tag>
+
 React Hook for getting responsive info.
 
 ## Examples
