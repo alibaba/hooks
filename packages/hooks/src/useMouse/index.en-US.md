@@ -10,7 +10,7 @@ group:
 
 # useMouse
 
-A Hook to track cursor position
+Track cursor position
 
 ## Examples
 
@@ -33,11 +33,11 @@ const state: {
 
 ### result
 
-| Property | Description                                                                              | Type   |
-|----------|------------------------------------------------------------------------------------------|--------|
-| screenX  | position left relative to the top left of the physical screen/monitor                    | `number` |
-| screenY  | position top relative to the top left of the physical screen/monitor                     | `number` |
-| clientX  | position left relative to the upper left edge of the content area                        | `number` |
-| clientY  | position top relative to the upper left edge of the content area                         | `number` |
-| pageX    | position left relative to the top left of the fully rendered content area in the browser | `number` |
-| pageY    | position top relative to the top left of the fully rendered content area in the browser  | `number` |
+| Property | Description                                                                              | Type     |
+|----------|------------------------------------------------------------------------------------------|----------|
+| screenX  | Position left relative to the top left of the physical screen/monitor                    | `number` |
+| screenY  | Position top relative to the top left of the physical screen/monitor                     | `number` |
+| clientX  | Position left relative to the upper left edge of the content area                        | `number` |
+| clientY  | Position top relative to the upper left edge of the content area                         | `number` |
+| pageX    | Position left relative to the top left of the fully rendered content area in the browser | `number` |
+| pageY    | Position top relative to the top left of the fully rendered content area in the browser  | `number` |
