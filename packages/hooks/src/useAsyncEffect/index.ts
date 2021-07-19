@@ -1,18 +1,33 @@
 import { useEffect, DependencyList } from 'react';
 
-type CleanUpWith = (cleanUp: () => void) => void;
-
-function useAsyncEffect(effect: (cleanUpWith: CleanUpWith) => Promise<void>, deps: DependencyList) {
+function useAsyncEffect(
+  effect: () => AsyncGenerator<void, void, void> | Promise<void>,
+  deps: DependencyList,
+) {
+  function isGenerator(
+    val: AsyncGenerator<void, void, void> | Promise<void>,
+  ): val is AsyncGenerator<void, void, void> {
+    return typeof val[Symbol.asyncIterator] === 'function';
+  }
   useEffect(() => {
-    let cleanUp: () => void;
-    function cleanUpWith(fn: () => void) {
-      cleanUp = fn;
+    const e = effect();
+    let cancelled = false;
+    async function execute() {
+      if (isGenerator(e)) {
+        while (true) {
+          const result = await e.next();
+          if (cancelled || result.done) {
+            console.log('break');
+            break;
+          }
+        }
+      } else {
+        await e;
+      }
     }
-    (async function () {
-      await effect(cleanUpWith);
-    })();
+    execute();
     return () => {
-      cleanUp?.();
+      cancelled = true;
     };
   }, deps);
 }

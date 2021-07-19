@@ -22,14 +22,13 @@ export default () => {
   const [pass, setPass] = useState<boolean>(null);
 
   useAsyncEffect(
-    async (cleanUpWith) => {
+    async function* () {
+      console.log('start', value);
       setPass(null);
-      let cancelled = false;
-      cleanUpWith(() => {
-        cancelled = true;
-      });
       const result = await mockCheck(value);
-      if (cancelled) return;
+      console.log('result 1', result);
+      yield;
+      console.log('result 2', result);
       setPass(result);
     },
     [value],
