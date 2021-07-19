@@ -55,7 +55,6 @@ import useFavicon from './useFavicon';
 import useCountDown from './useCountDown';
 import useWebSocket from './useWebSocket';
 import useLockFn from './useLockFn';
-import useTrackedEffect from './useTrackedEffect';
 import useUnmountedRef from './useUnmountedRef';
 import useExternal from './useExternal';
 import useSafeState from './useSafeState';
@@ -121,7 +120,6 @@ export {
   useReactive,
   useFavicon,
   useCountDown,
-  useTrackedEffect,
   useWebSocket,
   useLockFn,
   useUnmountedRef,
