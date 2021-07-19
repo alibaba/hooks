@@ -10,6 +10,8 @@ group:
 
 # useTextSelection
 
+<Tag lang="en-US" tags="ssr"></Tag>
+
 Tracking content, size, position of user text selection.
 
 ## Examples
@@ -29,20 +31,20 @@ Tracking content, size, position of user text selection.
 ## API
 
 ```typescript
-const state = useTextSelection(target);
+const state = useTextSelection(target?);
 ```
 
 ### Params
 
 | Property | Description               | Type | Default  |
 |----------|---------------------------|------|----------|
-| target   | DOM element or Ref Object | `HTMLElement` \| `(() => HTMLElement)` \| `React.MutableRefObject` \| `Document` | `document` |
+| target   | DOM element or ref | `Element` \| `Document` \| `(() => Element\Document)` \| `MutableRefObject<Element>` | `document` |
 
 ### Result
 
 | Property | Description                                    | Type                     |
 |----------|------------------------------------------------|--------------------------|
-| state    | content, size, position of user text selection | detail as follow State |
+| state    | Content, size, position of user text selection | Detail as follow State |
 
 ### State
 
