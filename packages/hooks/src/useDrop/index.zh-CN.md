@@ -44,7 +44,7 @@ const [ props, { isHovering } ] = useDrop({
 
 | 参数         | 说明                                                      | 类型                      |
 |--------------|-----------------------------------------------------------|---------------------------|
-| getDragProps | 一个接收拖拽的值，并返回需要透传给被拖拽节点 props 的方法 | `(content: any) => props` |
+| getDragProps | 一个接收拖拽的值，并返回需要透传给被拖拽节点 props 的方法， 默认包含一个由 data 序列化得到的key | `(content: any) => props` |
 
 ### useDrop Result
 
@@ -59,6 +59,7 @@ const [ props, { isHovering } ] = useDrop({
 |-------------|----------------|---------------------------------|--------|
 | onDragStart | 开始拖拽的回调 | `(data: any, e: Event) => void` | -      |
 | onDragEnd   | 结束拖拽的回调 | `(data: any, e: Event) => void` | -      |
+| getPropsWithKey | 是否在 getProps 方法返回的对象中包含默认的 key，默认包含 | `boolean` | - |
 
 ### useDrop Params
 
