@@ -6,16 +6,21 @@ nav:
 group:
   title: SideEffect
   path: /side-effect
-  order: 7
 ---
 
 # useAsyncEffect
 
-用于处理异步的副作用。
+<Tag lang="zh-CN" tags="ssr&crossPlatform"></Tag>
+
+useEffect 支持异步函数。
 
 ## 代码演示
 
+### 基础用法
+
 <code src="./demo/demo1.tsx" />
+
+### 中断执行
 
 <code src="./demo/demo2.tsx" />
 

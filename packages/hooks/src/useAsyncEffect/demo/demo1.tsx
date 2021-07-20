@@ -6,8 +6,8 @@
  * desc.zh-CN: 组件加载时进行异步的检查
  */
 
-import React, { useState } from 'react';
 import { useAsyncEffect } from 'ahooks';
+import React, { useState } from 'react';
 
 function mockCheck(): Promise<boolean> {
   return new Promise((resolve) => {

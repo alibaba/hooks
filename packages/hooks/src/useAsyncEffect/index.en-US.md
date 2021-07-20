@@ -6,25 +6,29 @@ nav:
 group:
   title: SideEffect
   path: /side-effect
-  order: 7
 ---
 
 # useAsyncEffect
 
-Handle the async effect of components.
+<Tag lang="en-US" tags="ssr&crossPlatform"></Tag>
+
+useEffect support async function.
 
 ## 代码演示
 
+### Default usage
+
 <code src="./demo/demo1.tsx" />
+
+### Break off
 
 <code src="./demo/demo2.tsx" />
 
 ## API
 
 ```typescript
-type CleanUpWith = (cleanUp: () => void) => void;
 function useAsyncEffect(
-  effect: (cleanUpWith: CleanUpWith) => Promise<void>,
+  effect: () => AsyncGenerator | Promise,
   deps: DependencyList
 );
 ```

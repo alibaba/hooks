@@ -1,4 +1,5 @@
-import { useEffect, DependencyList } from 'react';
+import type { DependencyList } from 'react';
+import { useEffect } from 'react';
 
 function useAsyncEffect(
   effect: () => AsyncGenerator<void, void, void> | Promise<void>,
