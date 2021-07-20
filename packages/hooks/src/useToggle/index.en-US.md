@@ -10,6 +10,8 @@ group:
 
 # useToggle
 
+<Tag lang="en-US" tags="ssr&crossPlatform"></Tag>
+
 A hook that switch value between two states.
 
 ## Examples
@@ -25,34 +27,35 @@ A hook that switch value between two states.
 ## API
 
 ```typescript
-const [state, { toggle, setLeft, setRight }] = useToggle(
+const [state, { toggle, set, setLeft, setRight }] = useToggle(
   defaultValue?: boolean,
 );
 
-const [state, { toggle, setLeft, setRight }] = useToggle(
-  defaultValue: any = false,
-  reverseValue?: any,
+const [state, { toggle, set, setLeft, setRight }] = useToggle(
+  defaultValue: any,
+  reverseValue: any,
 );
 ```
 
 ### Params
 
-| Property     | Description                  | Type                                     | Default |
-| ------------ | ---------------------------- | ---------------------------------------- | ------- |
-| defaultValue | Optional，set a default value | `number` \| `string` \| `boolean` \| `undefined` | false   |
-| reverseValue | Optional，set a reverse value | `number` \| `string` \| `boolean` \| `undefined` | -       |
+| Property     | Description                   | Type  | Default |
+|--------------|-------------------------------|-------|---------|
+| defaultValue | Optional，set a default value | `any` | false   |
+| reverseValue | Optional，set a reverse value | `any` | -       |
 
 ### Result
 
-| Property | Description   | Type    |
-| -------- | ------------- | ------- |
-| state    | state value   | - |
-| actions  | Operation set | `Actions`  |
+| Property | Description   | Type      |
+|----------|---------------|-----------|
+| state    | state value   | -         |
+| actions  | Operation set | `Actions` |
 
 ### Actions
 
-| Property | Description                                          | Type                  |
-| -------- | ---------------------------------------------------- | --------------------- |
-| toggle   | Trigger state change                                 | `(state?: any) => void` |
-| setLeft  | Set defaultValue                                    | `() => void`            |
-| setRight | Set reverseValue                                    | `() => void`            |
+| Property | Description      | Type                    |
+|----------|------------------|-------------------------|
+| toggle   | Toggle state     | `() => void`            |
+| set      | Set state        | `(state?: any) => void` |
+| setLeft  | Set defaultValue | `() => void`            |
+| setRight | Set reverseValue | `() => void`            |
