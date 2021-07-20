@@ -1,5 +1,5 @@
-import { useMemo, useState } from 'react';
-import useCreation from '../useCreation';
+import { useState } from 'react';
+import useMemoizedFn from '../useMemoizedFn';
 
 export interface Options {
   min?: number;
@@ -30,43 +30,48 @@ function getTargetValue(val: number, options: Options = {}) {
 function useCounter(initialValue: number = 0, options: Options = {}) {
   const { min, max } = options;
 
-  // get init value
-  const init = useCreation(() => {
+  const [current, setCurrent] = useState(() => {
     return getTargetValue(initialValue, {
       min,
       max,
     });
-  }, []);
+  });
 
-  const [current, setCurrent] = useState(init);
-
-  const actions = useMemo(() => {
-    const setValue = (value: ValueParam) => {
-      setCurrent((c) => {
-        // get target value
-        let target = typeof value === 'number' ? value : value(c);
-        return getTargetValue(target, {
-          max,
-          min,
-        });
+  const setValue = (value: ValueParam) => {
+    setCurrent((c) => {
+      const target = typeof value === 'number' ? value : value(c);
+      return getTargetValue(target, {
+        max,
+        min,
       });
-    };
-    const inc = (delta: number = 1) => {
-      setValue((c) => c + delta);
-    };
-    const dec = (delta: number = 1) => {
-      setValue((c) => c - delta);
-    };
-    const set = (value: ValueParam) => {
-      setValue(value);
-    };
-    const reset = () => {
-      setValue(init);
-    };
-    return { inc, dec, set, reset };
-  }, [init, max, min]);
+    });
+  };
 
-  return [current, actions] as const;
+  const inc = (delta: number = 1) => {
+    setValue((c) => c + delta);
+  };
+
+  const dec = (delta: number = 1) => {
+    setValue((c) => c - delta);
+  };
+
+  const set = (value: ValueParam) => {
+    setValue(value);
+  };
+
+  const reset = () => {
+    setValue(getTargetValue(initialValue, { min, max }));
+  };
+
+  return [
+    current,
+    {
+      inc: useMemoizedFn(inc),
+      dec: useMemoizedFn(dec),
+      set: useMemoizedFn(set),
+      reset: useMemoizedFn(reset),
+    },
+  ] as const;
 }
 
 export default useCounter;
