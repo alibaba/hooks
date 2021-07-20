@@ -1,25 +1,29 @@
-import { useEffect, useRef } from 'react';
-import { BasicTarget, getTargetElement } from '../utils/dom';
-
-// 鼠标点击事件，click 不会监听右键
-const defaultEvent = 'click';
+import { useMemo } from 'react';
+import useDeepCompareEffect from '../useDeepCompareEffect';
+import useLatest from '../useLatest';
+import { getTargetElement } from '../utils/dom2';
+import type { BasicTarget } from '../utils/dom2';
 
 type EventType = MouseEvent | TouchEvent;
 
 export default function useClickAway(
   onClickAway: (event: EventType) => void,
   target: BasicTarget | BasicTarget[],
-  eventName: string = defaultEvent,
+  eventName: string = 'click',
 ) {
-  const onClickAwayRef = useRef(onClickAway);
-  onClickAwayRef.current = onClickAway;
+  const onClickAwayRef = useLatest(onClickAway);
 
-  useEffect(() => {
+  const deps = useMemo(() => {
+    const targets = Array.isArray(target) ? target : [target];
+    return targets.map((item) => (typeof target === 'function' ? undefined : item));
+  }, [target]);
+
+  useDeepCompareEffect(() => {
     const handler = (event: any) => {
       const targets = Array.isArray(target) ? target : [target];
       if (
-        targets.some((targetItem) => {
-          const targetElement = getTargetElement(targetItem) as HTMLElement;
+        targets.some((item) => {
+          const targetElement = getTargetElement(item);
           return !targetElement || targetElement?.contains(event.target);
         })
       ) {
@@ -33,5 +37,5 @@ export default function useClickAway(
     return () => {
       document.removeEventListener(eventName, handler);
     };
-  }, [target, eventName]);
+  }, [deps, eventName]);
 }

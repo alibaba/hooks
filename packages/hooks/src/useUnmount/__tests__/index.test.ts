@@ -5,7 +5,7 @@ describe('useUnmount', () => {
   it('should be defined', () => {
     expect(useUnmount).toBeDefined();
   });
-  it('test unmount', async () => {
+  it('useUnmount should work', async () => {
     const fn = jest.fn();
     const hook = renderHook(() => useUnmount(fn));
     expect(fn).toBeCalledTimes(0);

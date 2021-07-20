@@ -1,18 +1,18 @@
 import { useEffect } from 'react';
-import usePersistFn from '../usePersistFn';
+import useLatest from '../useLatest';
 
 function useTimeout(fn: () => void, delay: number | null | undefined): void {
-  const timerFn = usePersistFn(fn);
+  const fnRef = useLatest(fn);
 
   useEffect(() => {
     if (delay === undefined || delay === null) return;
     const timer = setTimeout(() => {
-      timerFn();
+      fnRef.current();
     }, delay);
     return () => {
       clearTimeout(timer);
     };
-  }, [delay, timerFn]);
+  }, [delay]);
 }
 
 export default useTimeout;

@@ -1,6 +1,6 @@
 import useBoolean from '../useBoolean';
 import useEventListener from '../useEventListener';
-import { BasicTarget } from '../utils/dom';
+import type { BasicTarget } from '../utils/dom2';
 
 export interface Options {
   onEnter?: () => void;
@@ -15,7 +15,7 @@ export default (target: BasicTarget, options?: Options): boolean => {
   useEventListener(
     'mouseenter',
     () => {
-      onEnter && onEnter();
+      onEnter?.();
       setTrue();
     },
     {
@@ -26,7 +26,7 @@ export default (target: BasicTarget, options?: Options): boolean => {
   useEventListener(
     'mouseleave',
     () => {
-      onLeave && onLeave();
+      onLeave?.();
       setFalse();
     },
     {

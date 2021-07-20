@@ -19,7 +19,7 @@ function useCookieState(cookieKey: string, options: IOptions = {}) {
     return options.defaultValue;
   });
 
-  // usePersistFn 保证返回的 updateState 不会变化
+  // useMemoizedFn 保证返回的 updateState 不会变化
   const updateState = useCallback(
     (
       newValue?: TCookieState | ((prevState: TCookieState) => TCookieState),

@@ -1,18 +1,18 @@
 /**
  * title: Load style dynamically
- * desc: Load a css file to your page such as [bootstrap-badge.css](/useExternal/bootstrap-badge.css)
+ * desc: Load css file, such as [bootstrap-badge.css](/useExternal/bootstrap-badge.css)
  *
  * title.zh-CN: 动态加载样式
- * desc.zh-CN: 页面上加载外部 css 文件，例如引入 [bootstrap-badge.css](/useExternal/bootstrap-badge.css)
+ * desc.zh-CN: 加载 css 文件，例如引入 [bootstrap-badge.css](/useExternal/bootstrap-badge.css)
  */
 
-import React from 'react';
 import { useExternal } from 'ahooks';
+import React, { useState } from 'react';
 
 export default () => {
-  const [status, { toggle, load, unload }] = useExternal('/useExternal/bootstrap-badge.css', {
-    media: 'all',
-  });
+  const [path, setPath] = useState('/useExternal/bootstrap-badge.css');
+
+  const status = useExternal(path);
 
   return (
     <>
@@ -30,13 +30,14 @@ export default () => {
         <span className="badge badge-pill badge-dark">Dark</span>
       </div>
       <br />
-      <button type="button" style={{ marginRight: 8 }} onClick={() => toggle()}>
-        toggle
-      </button>
-      <button type="button" style={{ marginRight: 8 }} onClick={() => unload()}>
+      <button type="button" style={{ marginRight: 8 }} onClick={() => setPath('')}>
         unload
       </button>
-      <button type="button" style={{ marginRight: 8 }} onClick={() => load()}>
+      <button
+        type="button"
+        style={{ marginRight: 8 }}
+        onClick={() => setPath('/useExternal/bootstrap-badge.css')}
+      >
         load
       </button>
     </>

@@ -11,7 +11,9 @@ group:
 
 # useUnmount
 
-A hook that executes a function at unmount.
+<Tag lang="en-US" tags="ssr&crossPlatform"></Tag>
+
+A hook that execute the function at unmount.
 
 ## Examples
 

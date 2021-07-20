@@ -10,6 +10,8 @@ group:
 
 # useThrottleFn
 
+<Tag lang="en-US" tags="ssr&crossPlatform"></Tag>
+
 A hook that handle the throttle function.
 
 ## Examples
@@ -23,7 +25,8 @@ A hook that handle the throttle function.
 ```typescript
 const {
   run,
-  cancel
+  cancel,
+  flush
 } = useThrottleFn(
   fn: (...args: any[]) => any,
   options?: Options
@@ -49,6 +52,6 @@ const {
 
 | Property | Description                               | Type                      |
 |----------|-------------------------------------------|---------------------------|
-| run      | trigger fn, parameters will be send to fn | `(...args: any[]) => any` |
-| cancel   | cancel current throttle                   | `() => void`              |
-| flush    | immediately invoke current throttle       | `() => void`              |
+| run      | Trigger fn, parameters will be send to fn | `(...args: any[]) => any` |
+| cancel   | Cancel current throttle                   | `() => void`              |
+| flush    | Immediately invoke current throttle       | `() => void`              |

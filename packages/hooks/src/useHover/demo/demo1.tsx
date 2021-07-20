@@ -1,6 +1,6 @@
 /**
  * title: Default usage
- * desc: Use ref to set elements that need listen dom.
+ * desc: Use ref to set element that need listen.
  *
  * title.zh-CN: 基础用法
  * desc.zh-CN: 使用 ref 设置需要需要监听的元素。

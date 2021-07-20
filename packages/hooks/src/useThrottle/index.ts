@@ -1,6 +1,6 @@
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import useThrottleFn from '../useThrottleFn';
-import { ThrottleOptions } from './throttleOptions';
+import type { ThrottleOptions } from './throttleOptions';
 
 function useThrottle<T>(value: T, options?: ThrottleOptions) {
   const [throttled, setThrottled] = useState(value);

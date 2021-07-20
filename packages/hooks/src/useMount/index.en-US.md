@@ -6,10 +6,11 @@ nav:
 group:
   title: LifeCycle
   path: /life-cycle
-  order: 9
 ---
 
 # useMount
+
+<Tag lang="en-US" tags="ssr&crossPlatform"></Tag>
 
 A hook that executes a function at mount.
 
@@ -29,4 +30,4 @@ useMount(fn: () => void);
 
 | Property | Description                      | Type         | Default |
 |----------|----------------------------------|--------------|---------|
-| fn       | the function need to be executed | `() => void` | -       |
+| fn       | The function need to be executed | `() => void` | -       |

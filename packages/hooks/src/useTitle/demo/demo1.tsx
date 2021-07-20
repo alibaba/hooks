@@ -1,6 +1,6 @@
 /**
  * title: Default usage
- * desc: sets title of the page.
+ * desc: Set title of the page.
  *
  * title.zh-CN: 基础用法
  * desc.zh-CN: 设置页面标题
@@ -14,7 +14,7 @@ export default () => {
 
   return (
     <div>
-      <p>sets title of the page.</p>
+      <p>Set title of the page.</p>
     </div>
   );
 };

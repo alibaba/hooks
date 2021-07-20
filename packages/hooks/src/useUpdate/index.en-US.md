@@ -10,6 +10,8 @@ group:
 
 # useUpdate
 
+<Tag lang="en-US" tags="ssr&crossPlatform"></Tag>
+
 A hook that executes a function at update.
 
 ## Examples

@@ -28,7 +28,7 @@ describe('useEventListener', () => {
 
     document.body.click();
     expect(state).toEqual(0);
-    rerender(() => container);
+    rerender();
     container.click();
     expect(state).toEqual(1);
     unmount();

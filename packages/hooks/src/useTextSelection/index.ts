@@ -1,7 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
-import { BasicTarget, getTargetElement } from '../utils/dom';
+import { getTargetElement } from '../utils/dom2';
+import type { BasicTarget } from '../utils/dom2';
 
-interface IRect {
+interface Rect {
   top: number;
   left: number;
   bottom: number;
@@ -9,11 +10,11 @@ interface IRect {
   height: number;
   width: number;
 }
-export interface IState extends IRect {
+export interface State extends Rect {
   text: string;
 }
 
-const initRect: IRect = {
+const initRect: Rect = {
   top: NaN,
   left: NaN,
   bottom: NaN,
@@ -22,12 +23,12 @@ const initRect: IRect = {
   width: NaN,
 };
 
-const initState: IState = {
+const initState: State = {
   text: '',
   ...initRect,
 };
 
-function getRectFromSelection(selection: Selection | null): IRect {
+function getRectFromSelection(selection: Selection | null): Rect {
   if (!selection) {
     return initRect;
   }
@@ -47,21 +48,16 @@ function getRectFromSelection(selection: Selection | null): IRect {
   };
 }
 
-/**
- * 获取用户选取的文本或当前光标插入的位置
- * */
-function useTextSelection(target?: BasicTarget): IState {
+function useTextSelection(target?: BasicTarget<Document | Element>): State {
   const [state, setState] = useState(initState);
 
   const stateRef = useRef(state);
   stateRef.current = state;
 
   useEffect(() => {
-    // 获取 target 需要放在 useEffect 里，否则存在组件未加载好的情况而导致元素获取不到
     const el = getTargetElement(target, document);
-
     if (!el) {
-      return () => {};
+      return;
     }
 
     const mouseupHandler = () => {

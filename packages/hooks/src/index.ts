@@ -31,7 +31,7 @@ import useUnmount from './useUnmount';
 import useAntdTable from './useAntdTable';
 import useFusionTable from './useFusionTable';
 import useSet from './useSet';
-import usePersistFn from './usePersistFn';
+import useMemoizedFn from './useMemoizedFn';
 import useMap from './useMap';
 import useCreation from './useCreation';
 import useDrop from './useDrop';
@@ -55,21 +55,15 @@ import useFavicon from './useFavicon';
 import useCountDown from './useCountDown';
 import useWebSocket from './useWebSocket';
 import useLockFn from './useLockFn';
-import useTrackedEffect from './useTrackedEffect';
 import useUnmountedRef from './useUnmountedRef';
 import useExternal from './useExternal';
 import useSafeState from './useSafeState';
+import useLatest from './useLatest';
+import useIsomorphicLayoutEffect from './useIsomorphicLayoutEffect';
+import useDeepCompareEffect from './useDeepCompareEffect';
 import useAsyncEffect from './useAsyncEffect';
 
-const useControlledValue: typeof useControllableValue = function (...args: any) {
-  console.warn(
-    'useControlledValue is deprecated and will be removed in the next major version. Please use useControllableValue instead.',
-  );
-  return useControllableValue(...args);
-};
-
 export {
-  useControlledValue,
   useControllableValue,
   useDynamicList,
   useVirtualList,
@@ -105,7 +99,7 @@ export {
   useAntdTable,
   useUnmount,
   useSet,
-  usePersistFn,
+  useMemoizedFn,
   useMap,
   useCreation,
   useDrag,
@@ -127,11 +121,13 @@ export {
   useReactive,
   useFavicon,
   useCountDown,
-  useTrackedEffect,
   useWebSocket,
   useLockFn,
   useUnmountedRef,
   useExternal,
   useSafeState,
+  useLatest,
+  useIsomorphicLayoutEffect,
+  useDeepCompareEffect,
   useAsyncEffect,
 };

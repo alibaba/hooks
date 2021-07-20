@@ -10,7 +10,9 @@ group:
 
 # useFullscreen
 
-一个用于处理 dom 全屏的 Hook。
+<Tag lang="zh-CN" tags="ssr"></Tag>
+
+管理 DOM 全屏的 Hook。
 
 ## 代码演示
 
@@ -25,28 +27,37 @@ group:
 ## API
 
 ```typescript
-const [isFullscreen, { setFull, exitFull, toggleFull }] = useFullScreen(target, options?:Options);
+const [
+  isFullscreen, 
+  {
+    enterFullscreen, 
+    exitFullscreen, 
+    toggleFullscreen 
+  }] = useFullScreen(
+    target,
+    options?:Options
+  );
 ```
 
 ### Params
 
 | 参数    | 说明                  | 类型          | 默认值 |
 |---------|-----------------------|---------------|--------|
-| target  | DOM 节点或者 Ref 对象 | `HTMLElement` \| `() => HTMLElement` \| `React.MutableRefObject`| -      |
+| target  | DOM 节点或者 ref | `Element` \| `() => Element` \| `MutableRefObject<Element>`| -      |
 | options | 设置(可选)            | `Options`     | -      |
 
 ### Options
 
 | 参数       | 说明         | 类型       | 默认值 |
 |------------|--------------|------------|--------|
-| onExitFull | 监听退出全屏 | `()=>void` | -      |
-| onFull     | 监听全屏     | `()=>void` | -      |
+| onExit | 退出全屏触发 | `()=>void` | -      |
+| onEnter     | 全屏触发     | `()=>void` | -      |
 
 ### Result
 
 | 参数         | 说明     | 类型       |
 |--------------|----------|------------|
 | isFullscreen | 是否全屏 | `boolean`  |
-| setFull      | 设置全屏 | `()=>void` |
-| exitFull     | 退出全屏 | `()=>void` |
-| toggleFull   | 切换全屏 | `()=>void` |
+| enterFullscreen      | 设置全屏 | `()=>void` |
+| exitFullscreen     | 退出全屏 | `()=>void` |
+| toggleFullscreen   | 切换全屏 | `()=>void` |

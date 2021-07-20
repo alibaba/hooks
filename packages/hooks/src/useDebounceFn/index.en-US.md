@@ -10,6 +10,8 @@ group:
 
 # useDebounceFn
 
+<Tag lang="en-US" tags="ssr&crossPlatform"></Tag>
+
 A hook that handle the debounce function.
 
 ## Examples
@@ -20,10 +22,11 @@ A hook that handle the debounce function.
 
 ## API
 
-```javascript
+```typescript
 const {
   run,
-  cancel
+  cancel,
+  flush
 } = useDebounceFn(
   fn: (...args: any[]) => any,
   options?: Options
@@ -49,6 +52,6 @@ const {
 
 | Property | Description                               | Type         |
 |----------|-------------------------------------------|--------------|
-| run      | trigger fn, parameters will be send to fn | `(...args: any[]) => any` |
-| cancel   | cancel current debounce                   | `() => void` |
-| flush    | immediately invoke current debounce       | `() => void` |
+| run      | Trigger fn, parameters will be send to fn | `(...args: any[]) => any` |
+| cancel   | Cancel current debounce                   | `() => void` |
+| flush    | Immediately invoke current debounce       | `() => void` |

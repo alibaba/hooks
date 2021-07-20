@@ -8,9 +8,11 @@ group:
   path: /dom
 ---
 
+<Tag lang="zh-CN" tags="ssr"></Tag>
+
 # useMouse
 
-一个跟踪鼠标位置的 Hook
+监听鼠标位置
 
 ## 代码演示
 
@@ -31,7 +33,7 @@ const state: {
 } = useMouse();
 ```
 
-### 结果
+### Result
 
 | 参数    | 说明                   | 类型     |
 |---------|------------------------|----------|

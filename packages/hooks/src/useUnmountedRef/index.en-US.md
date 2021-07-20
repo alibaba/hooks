@@ -10,7 +10,9 @@ group:
 
 # useUnmountedRef
 
-a hook of whether the current component has been unmounted, used to avoid memory leaks caused by updating the state after the component has been unmounted
+<Tag lang="en-US" tags="ssr&crossPlatform"></Tag>
+
+A Hook can be used to get whether the component is unmounted.
 
 ## Examples
 
@@ -21,11 +23,11 @@ a hook of whether the current component has been unmounted, used to avoid memory
 ## API
 
 ```typescript
-const unmountRef: { current: boolean } = useUnmountedRef;
+const unmountRef: { current: boolean } = useUnmountedRef();
 ```
 
 ### Result
 
-| Property | Description                      | Type         |
-|----------|----------------------------------|--------------|
-| unmountRef | the object's property 'current' can return whether the current component has been unmounted | `{ current: boolean }` |
+| Property   | Description                      | Type                   |
+|------------|----------------------------------|------------------------|
+| unmountRef | Whether the component is unmounted | `{ current: boolean }` |

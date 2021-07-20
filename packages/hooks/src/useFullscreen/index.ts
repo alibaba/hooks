@@ -1,23 +1,21 @@
-/* eslint no-empty: 0 */
-
-import { useCallback, useRef, useState } from 'react';
+import { useCallback, useState } from 'react';
 import screenfull from 'screenfull';
+import useLatest from '../useLatest';
+import useMemoizedFn from '../useMemoizedFn';
 import useUnmount from '../useUnmount';
-import { BasicTarget, getTargetElement } from '../utils/dom';
+import type { BasicTarget } from '../utils/dom2';
+import { getTargetElement } from '../utils/dom2';
 
 export interface Options {
-  onExitFull?: () => void;
-  onFull?: () => void;
+  onExit?: () => void;
+  onEnter?: () => void;
 }
 
-export default (target: BasicTarget, options?: Options) => {
-  const { onExitFull, onFull } = options || {};
+const useFullscreen = (target: BasicTarget, options?: Options) => {
+  const { onExit, onEnter } = options || {};
 
-  const onExitFullRef = useRef(onExitFull);
-  onExitFullRef.current = onExitFull;
-
-  const onFullRef = useRef(onFull);
-  onFullRef.current = onFull;
+  const onExitRef = useLatest(onExit);
+  const onEnterRef = useLatest(onEnter);
 
   const [state, setState] = useState(false);
 
@@ -25,16 +23,16 @@ export default (target: BasicTarget, options?: Options) => {
     if (screenfull.isEnabled) {
       const { isFullscreen } = screenfull;
       if (isFullscreen) {
-        onFullRef.current && onFullRef.current();
+        onEnterRef.current?.();
       } else {
         screenfull.off('change', onChange);
-        onExitFullRef.current && onExitFullRef.current();
+        onExitRef.current?.();
       }
       setState(isFullscreen);
     }
   }, []);
 
-  const setFull = useCallback(() => {
+  const enterFullscreen = useCallback(() => {
     const el = getTargetElement(target);
     if (!el) {
       return;
@@ -42,13 +40,15 @@ export default (target: BasicTarget, options?: Options) => {
 
     if (screenfull.isEnabled) {
       try {
-        screenfull.request(el as HTMLElement);
+        screenfull.request(el);
         screenfull.on('change', onChange);
-      } catch (error) {}
+      } catch (error) {
+        console.error(error);
+      }
     }
   }, [target, onChange]);
 
-  const exitFull = useCallback(() => {
+  const exitFullscreen = useCallback(() => {
     if (!state) {
       return;
     }
@@ -57,13 +57,13 @@ export default (target: BasicTarget, options?: Options) => {
     }
   }, [state]);
 
-  const toggleFull = useCallback(() => {
+  const toggleFullscreen = useCallback(() => {
     if (state) {
-      exitFull();
+      exitFullscreen();
     } else {
-      setFull();
+      enterFullscreen();
     }
-  }, [state, setFull, exitFull]);
+  }, [state, enterFullscreen, exitFullscreen]);
 
   useUnmount(() => {
     if (screenfull.isEnabled) {
@@ -74,9 +74,11 @@ export default (target: BasicTarget, options?: Options) => {
   return [
     state,
     {
-      setFull,
-      exitFull,
-      toggleFull,
+      enterFullscreen: useMemoizedFn(enterFullscreen),
+      exitFullscreen: useMemoizedFn(exitFullscreen),
+      toggleFullscreen: useMemoizedFn(toggleFullscreen),
     },
   ] as const;
 };
+
+export default useFullscreen;
