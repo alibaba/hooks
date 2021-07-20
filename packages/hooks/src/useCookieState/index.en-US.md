@@ -10,6 +10,8 @@ group:
 
 # useCookieState
 
+<Tag lang="en-US" tags="ssr"></Tag>
+
 A Hook for store state into cookie.
 
 ## Examples
@@ -29,13 +31,14 @@ A Hook for store state into cookie.
 ## API
 
 ```typescript
-type CookieState = string | undefined;
+type State = string | undefined | null;
+
 type SetState = (
-    newValue?: CookieState | ((prevState?: CookieState) => CookieState),
+    newValue?: State | ((prevState?: State) => State),
     options?: Cookies.CookieAttributes,
   ) => void;
 
-const [state, setState]: [CookieState, SetState] = useCookieState(
+const [state, setState]: [State, SetState] = useCookieState(
   cookieKey: string,
   options?: Options,
 )
@@ -54,7 +57,7 @@ If you want to delete this record from document.cookie, you can use `setState()`
 
 | Property       | Description                 | Type                 |
 | -------- | ------------ | ---------------------------------------------------------------------------------------------------- |
-| state    | Local cookie value | `string` \| `undefined`                              |
+| state    | Local cookie value | `string` \| `undefined`  \|`null`                              |
 | setState | Configure cookies. According to the options attribute, sync to the local cookie | `SetState` |
 
 setState can update cookie options, and merge with the options set by `useCookieState`.

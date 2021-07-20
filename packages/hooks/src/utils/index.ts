@@ -1,3 +1,3 @@
-export function isFunction(obj: any): obj is Function {
+export function isFunction(obj: any) {
   return typeof obj === 'function';
 }

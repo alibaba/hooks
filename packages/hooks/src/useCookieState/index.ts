@@ -1,33 +1,33 @@
 import Cookies from 'js-cookie';
-import { useCallback, useState } from 'react';
-import { isFunction } from '../utils';
+import { useState } from 'react';
+import useMemoizedFn from '../useMemoizedFn';
 
-// TODO ts 命名不规范，待下个大版本修复
-export type TCookieState = string | undefined | null;
-export type TCookieOptions = Cookies.CookieAttributes;
-
-export interface IOptions extends TCookieOptions {
-  defaultValue?: TCookieState | (() => TCookieState);
+export type State = string | undefined | null;
+export interface Options extends Cookies.CookieAttributes {
+  defaultValue?: State | (() => State);
 }
 
-function useCookieState(cookieKey: string, options: IOptions = {}) {
-  const [state, setState] = useState<TCookieState>(() => {
+function useCookieState(cookieKey: string, options: Options = {}) {
+  const [state, setState] = useState<State>(() => {
     const cookieValue = Cookies.get(cookieKey);
+
     if (typeof cookieValue === 'string') return cookieValue;
 
-    if (isFunction(options.defaultValue)) return options.defaultValue();
+    if (typeof options.defaultValue === 'function') {
+      return options.defaultValue();
+    }
+
     return options.defaultValue;
   });
 
-  // useMemoizedFn 保证返回的 updateState 不会变化
-  const updateState = useCallback(
+  const updateState = useMemoizedFn(
     (
-      newValue?: TCookieState | ((prevState: TCookieState) => TCookieState),
+      newValue: State | ((prevState: State) => State),
       newOptions: Cookies.CookieAttributes = {},
     ) => {
       const { defaultValue, ...restOptions } = { ...options, ...newOptions };
-      setState((prevState: TCookieState): TCookieState => {
-        const value = isFunction(newValue) ? newValue(prevState) : newValue;
+      setState((prevState) => {
+        const value = typeof newValue === 'function' ? newValue(prevState) : newValue;
         if (value === undefined || value === null) {
           Cookies.remove(cookieKey);
         } else {
@@ -36,7 +36,6 @@ function useCookieState(cookieKey: string, options: IOptions = {}) {
         return value;
       });
     },
-    [cookieKey, options],
   );
 
   return [state, updateState] as const;
