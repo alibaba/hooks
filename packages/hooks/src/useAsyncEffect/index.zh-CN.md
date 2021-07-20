@@ -22,9 +22,8 @@ group:
 ## API
 
 ```typescript
-type CleanUpWith = (cleanUp: () => void) => void;
 function useAsyncEffect(
-  effect: (cleanUpWith: CleanUpWith) => Promise<void>,
+  effect: () => AsyncGenerator | Promise,
   deps: DependencyList
 );
 ```

@@ -15,6 +15,8 @@ module.exports = {
     'no-unused-expressions': 'off',
     'react-hooks/rules-of-hooks': 'error',
     'react-hooks/exhaustive-deps': 'warn',
+    'no-await-in-loop': 'off',
+    'no-constant-condition': ['warn', { checkLoops: false }],
   },
   plugins: [...fabric.default.plugins, 'react-hooks'],
   parserOptions: {

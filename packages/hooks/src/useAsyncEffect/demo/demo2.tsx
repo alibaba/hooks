@@ -1,9 +1,9 @@
 /**
- * title: Clean up
- * desc: Handle the clean up logic of effect.
+ * title: Break off
+ * desc: Use `yield` to stop the execution when effect has been cleaned up.
  *
- * title.zh-CN: 清理逻辑
- * desc.zh-CN: 处理 effect 的清理逻辑
+ * title.zh-CN: 中断执行
+ * desc.zh-CN: 通过 `yield` 语句可以增加一些检查点，如果发现当前 effect 已经被清理，会停止继续往下执行。
  */
 
 import React, { useState } from 'react';
@@ -23,12 +23,9 @@ export default () => {
 
   useAsyncEffect(
     async function* () {
-      console.log('start', value);
       setPass(null);
       const result = await mockCheck(value);
-      console.log('result 1', result);
-      yield;
-      console.log('result 2', result);
+      yield; // Check whether the effect is still valid, if it is has been cleaned up, stop at here.
       setPass(result);
     },
     [value],

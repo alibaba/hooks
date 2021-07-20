@@ -17,7 +17,6 @@ function useAsyncEffect(
         while (true) {
           const result = await e.next();
           if (cancelled || result.done) {
-            console.log('break');
             break;
           }
         }
