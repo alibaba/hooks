@@ -40,11 +40,15 @@ function usePaginated<R, Item, U extends Item = any>(
     ...(restOptions as any),
   });
 
-  const { current = 1, pageSize = defaultPageSize, sorter = {}, filters = {} } =
-    params && params[0] ? params[0] : ({} as any);
+  const {
+    current = 1,
+    pageSize = defaultPageSize,
+    sorter = {},
+    filters = {},
+  } = params && params[0] ? params[0] : ({} as any);
 
   // 只改变 pagination，其他参数原样传递
-  const runChangePaination = useCallback(
+  const runChangePagination = useCallback(
     (paginationParams: any) => {
       const [oldPaginationParams, ...restParams] = params;
       run(
@@ -70,12 +74,12 @@ function usePaginated<R, Item, U extends Item = any>(
       if (toCurrent > tempTotalPage) {
         toCurrent = tempTotalPage;
       }
-      runChangePaination({
+      runChangePagination({
         current: c,
         pageSize: p,
       });
     },
-    [total, runChangePaination],
+    [total, runChangePagination],
   );
 
   const changeCurrent = useCallback(
@@ -105,14 +109,14 @@ function usePaginated<R, Item, U extends Item = any>(
   // 表格翻页 排序 筛选等
   const changeTable = useCallback(
     (p: PaginationConfig, f?: Filter, s?: Sorter) => {
-      runChangePaination({
+      runChangePagination({
         current: p.current,
         pageSize: p.pageSize || defaultPageSize,
         filters: f,
         sorter: s,
       });
     },
-    [filters, sorter, runChangePaination],
+    [filters, sorter, runChangePagination],
   );
 
   return {
