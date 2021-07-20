@@ -6,10 +6,11 @@ nav:
 group:
   title: State
   path: /state
-  order: 11
 ---
 
 # useBoolean
+
+<Tag lang="en-US" tags="ssr&crossPlatform"></Tag>
 
 A hook that elegantly manages boolean values.
 
@@ -22,7 +23,7 @@ A hook that elegantly manages boolean values.
 ## API
 
 ```typescript
-const [ state, { toggle, setTrue, setFalse }] = useBoolean(
+const [ state, { toggle, set, setTrue, setFalse }] = useBoolean(
   defaultValue?: boolean,
 );
 ```
@@ -37,12 +38,13 @@ const [ state, { toggle, setTrue, setFalse }] = useBoolean(
 
 | Property | Description   | Type      |
 |----------|---------------|-----------|
-| state    | State value   | `boolean` |
+| state    | Current State | `boolean` |
 | actions  | Operation set | `Actions` |
 
 ### Actions
-| Property | Description                                        | Type                        |
-|----------|----------------------------------------------------|-----------------------------|
-| toggle   | Trigger state change, accept an optional parameter | `(value?: boolean) => void` |
-| setTrue  | Set state value true                               | `() => void`                |
-| setFalse | Set state value false                              | `() => void`                |
+| Property | Description        | Type                       |
+|----------|--------------------|----------------------------|
+| toggle   | Toggle state       | `() => void`               |
+| set      | Set state          | `(value: boolean) => void` |
+| setTrue  | Set state to true  | `() => void`               |
+| setFalse | Set state to false | `() => void`               |

@@ -6,9 +6,9 @@
  * desc.zh-CN: 在组件首次渲染时，执行方法。
  */
 
-import React from 'react';
+import { useMount, useToggle } from 'ahooks';
 import { message } from 'antd';
-import { useToggle, useMount } from 'ahooks';
+import React from 'react';
 
 const MyComponent = () => {
   useMount(() => {
@@ -23,7 +23,7 @@ export default () => {
 
   return (
     <>
-      <button type="button" onClick={() => toggle()}>
+      <button type="button" onClick={toggle}>
         {state ? 'unmount' : 'mount'}
       </button>
       {state && <MyComponent />}

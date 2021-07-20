@@ -6,10 +6,11 @@ nav:
 group:
   title: State
   path: /state
-  order: 11
 ---
 
 # useBoolean
+
+<Tag lang="zh-CN" tags="ssr&crossPlatform"></Tag>
 
 优雅的管理 boolean 值的 Hook。
 
@@ -22,7 +23,7 @@ group:
 ## API
 
 ```typescript
-const [ state, { toggle, setTrue, setFalse }] = useBoolean(
+const [ state, { toggle, set, setTrue, setFalse }] = useBoolean(
   defaultValue?: boolean,
 );
 ```
@@ -43,8 +44,9 @@ const [ state, { toggle, setTrue, setFalse }] = useBoolean(
 
 ### Actions
 
-| 参数     | 说明                                              | 类型                        |
-|----------|---------------------------------------------------|-----------------------------|
-| toggle   | 触发状态更改的函数,可以接受一个可选参数修改状态值 | `(value?: boolean) => void` |
-| setTrue  | 设置状态值为 true                                 | `() => void`                |
-| setFalse | 设置状态值为 false                                | `() => void`                |
+| 参数     | 说明         | 类型                       |
+|----------|--------------|----------------------------|
+| toggle   | 切换 state   | `() => void`               |
+| set      | 设置 state   | `(value: boolean) => void` |
+| setTrue  | 设置为 true  | `() => void`               |
+| setFalse | 设置为 false | `() => void`               |
