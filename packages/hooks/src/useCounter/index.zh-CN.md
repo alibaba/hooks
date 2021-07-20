@@ -10,7 +10,9 @@ group:
 
 # useCounter
 
-一个可以管理 count 的 Hook。
+<Tag lang="zh-CN" tags="ssr&crossPlatform"></Tag>
+
+管理 count 的 Hook。
 
 ## 代码演示
 
@@ -20,7 +22,7 @@ group:
 
 ## API
 
-```javascript
+```typescript
 const [current, {
   inc,
   dec,
@@ -43,6 +45,6 @@ const [current, {
 
 | 参数         | 说明   | 类型     | 默认值 |
 |--------------|--------|----------|--------|
-| initialValue | 默认值 | `number` | 0      |
+| initialValue | 默认值 | `number` | `0`      |
 | min          | 最小值 | `number` | -      |
 | max          | 最大值 | `number` | -      |
