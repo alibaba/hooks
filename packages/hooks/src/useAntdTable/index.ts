@@ -36,6 +36,10 @@ export interface UseAntdTableFormUtils {
   [key: string]: any;
 }
 
+const test = () => {
+  console.log(111111)
+}
+
 export interface Result<Item> extends PaginatedResult<Item> {
   search: {
     type: 'simple' | 'advance';
