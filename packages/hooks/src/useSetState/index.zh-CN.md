@@ -10,6 +10,8 @@ group:
 
 # useSetState
 
+<Tag lang="zh-CN" tags="ssr&crossPlatform"></Tag>
+
 管理 object 类型 state 的 Hooks，用法与 class 组件的 `this.setState` 基本一致。
 
 ## 代码演示
@@ -21,7 +23,7 @@ group:
 ## API
 
 ```typescript
-const [state, setState] = useSetState<T extends object>(
+const [state, setState] = useSetState<T extends Record<string, any>>(
   initialState: T = {} as T
 ): [T, (patch: Partial<T> | ((prevState: T) => Partial<T>)) => void]
 ```

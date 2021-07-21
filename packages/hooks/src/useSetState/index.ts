@@ -1,7 +1,7 @@
 import { useCallback, useState } from 'react';
 import { isFunction } from '../utils';
 
-const useSetState = <T extends object>(
+const useSetState = <T extends Record<string, any>>(
   initialState: T = {} as T,
 ): [T, (patch: Partial<T> | ((prevState: T) => Partial<T>)) => void] => {
   const [state, setState] = useState<T>(initialState);
