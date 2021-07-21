@@ -10,7 +10,7 @@ import React from 'react';
 import { useInViewport } from 'ahooks';
 
 export default () => {
-  const [inViewPort, ratio] = useInViewport(() => document.getElementById('children'), {
+  const [inViewport, ratio] = useInViewport(() => document.getElementById('children'), {
     threshold: [0, 0.25, 0.5, 0.75, 1],
     root: () => document.getElementById('parent'),
   });
@@ -33,8 +33,8 @@ export default () => {
           </div>
         </div>
       </div>
-      <div style={{ marginTop: 16, color: inViewPort ? '#87d068' : '#f50' }}>
-        <p>inViewPort: {inViewPort ? 'visible' : 'hidden'}</p>
+      <div style={{ marginTop: 16, color: inViewport ? '#87d068' : '#f50' }}>
+        <p>inViewport: {inViewport ? 'visible' : 'hidden'}</p>
         <p>ratio: {ratio}</p>
       </div>
     </div>

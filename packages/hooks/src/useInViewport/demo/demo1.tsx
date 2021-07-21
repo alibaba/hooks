@@ -11,7 +11,7 @@ import { useInViewport } from 'ahooks';
 
 export default () => {
   const ref = useRef();
-  const [inViewPort] = useInViewport(ref);
+  const [inViewport] = useInViewport(ref);
   return (
     <div>
       <div style={{ width: 300, height: 300, overflow: 'scroll', border: '1px solid' }}>
@@ -31,8 +31,8 @@ export default () => {
           </div>
         </div>
       </div>
-      <div style={{ marginTop: 16, color: inViewPort ? '#87d068' : '#f50' }}>
-        inViewPort: {inViewPort ? 'visible' : 'hidden'}
+      <div style={{ marginTop: 16, color: inViewport ? '#87d068' : '#f50' }}>
+        inViewport: {inViewport ? 'visible' : 'hidden'}
       </div>
     </div>
   );

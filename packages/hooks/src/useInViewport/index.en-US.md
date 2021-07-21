@@ -27,7 +27,7 @@ Observe whether the element is in the visible area, and the visible area ratio o
 ## API
 
 ```ts
-const [inViewPort, ratio] = useInViewport(
+const [inViewport, ratio] = useInViewport(
   target, 
   options?: Options
 );
@@ -54,5 +54,5 @@ More information refer to [Intersection Observer API](https://developer.mozilla.
 
 | Property   | Description                                   | Type    |
 |------------|-----------------------------------------------|---------|
-| inViewPort | Is visible | `boolean` |
+| inViewport | Is visible | `boolean` |
 | ratio | Current visible ratio, updated every time the node set by `options.threshold` is reached | `number` \| `undefined` |
