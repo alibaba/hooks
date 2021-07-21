@@ -26,7 +26,7 @@ Observe whether the element is in the visible area, and the visible area ratio o
 
 ## API
 
-```ts
+```typescript
 const [inViewport, ratio] = useInViewport(
   target, 
   options?: Options

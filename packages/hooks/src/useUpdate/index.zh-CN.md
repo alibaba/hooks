@@ -10,7 +10,9 @@ group:
 
 # useUpdate
 
-强制组件重新渲染的 hook。
+<Tag lang="zh-CN" tags="ssr&crossPlatform"></Tag>
+
+强制组件重新渲染的 Hook。
 
 ## 代码演示
 

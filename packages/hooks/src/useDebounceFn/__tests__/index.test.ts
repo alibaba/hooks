@@ -1,6 +1,6 @@
 import { act, renderHook, RenderHookResult } from '@testing-library/react-hooks';
-import useDebounceFn from '../index';
 import { sleep } from '../../utils/testingHelpers';
+import useDebounceFn from '../index';
 
 interface ParamsObj {
   fn: (...arg: any) => any;

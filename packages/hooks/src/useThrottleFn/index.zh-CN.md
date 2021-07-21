@@ -10,6 +10,8 @@ group:
 
 # useThrottleFn
 
+<Tag lang="zh-CN" tags="ssr&crossPlatform"></Tag>
+
 用来处理节流函数的 Hook。
 
 ## 代码演示
@@ -23,7 +25,8 @@ group:
 ```typescript
 const {
   run,
-  cancel
+  cancel,
+  flush
 } = useThrottleFn(
   fn: (...args: any[]) => any,
   options?: Options
@@ -42,8 +45,8 @@ const {
 | 参数     | 说明                       | 类型      | 默认值 |
 |----------|----------------------------|-----------|--------|
 | wait     | 超时时间，单位为毫秒       | `number`  | `1000` |
-| leading  | 是否在上升沿触发副作用函数 | `boolean` | `true` |
-| trailing | 是否在下降沿触发副作用函数 | `boolean` | `true` |
+| leading  | 是否在延迟开始前调用函数 | `boolean` | `true` |
+| trailing | 是否在延迟开始后调用函数 | `boolean` | `true` |
 
 ### Result
 

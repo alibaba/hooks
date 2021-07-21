@@ -1,8 +1,8 @@
 /**
- * title: Controll listen on scroll status
+ * title: Custom update
  * desc: listen on scroll event between 100px ~ 200px in vertical direction
  *
- * title.zh-CN: 控制滚动状态的监听
+ * title.zh-CN: 自定义更新
  * desc.zh-CN: 在垂直方向 100px 到 200px 的滚动范围内监听
  */
 
@@ -16,9 +16,8 @@ export default () => {
 
   return (
     <>
-      <div>{JSON.stringify(scroll)}</div>
+      <p>{JSON.stringify(scroll)}</p>
       <div
-        className={'main'}
         style={{
           height: '160px',
           width: '160px',

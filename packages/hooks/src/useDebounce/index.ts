@@ -1,6 +1,6 @@
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import useDebounceFn from '../useDebounceFn';
-import { DebounceOptions } from './debounceOptions';
+import type { DebounceOptions } from './debounceOptions';
 
 function useDebounce<T>(value: T, options?: DebounceOptions) {
   const [debounced, setDebounced] = useState(value);

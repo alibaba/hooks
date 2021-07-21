@@ -10,6 +10,8 @@ group:
 
 # useResponsive
 
+<Tag lang="zh-CN" tags="ssr"></Tag>
+
 获取响应式信息。
 
 ## 代码演示

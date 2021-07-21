@@ -55,12 +55,13 @@ import useFavicon from './useFavicon';
 import useCountDown from './useCountDown';
 import useWebSocket from './useWebSocket';
 import useLockFn from './useLockFn';
-import useTrackedEffect from './useTrackedEffect';
 import useUnmountedRef from './useUnmountedRef';
 import useExternal from './useExternal';
 import useSafeState from './useSafeState';
 import useLatest from './useLatest';
 import useIsomorphicLayoutEffect from './useIsomorphicLayoutEffect';
+import useDeepCompareEffect from './useDeepCompareEffect';
+import useAsyncEffect from './useAsyncEffect';
 
 export {
   useControllableValue,
@@ -120,7 +121,6 @@ export {
   useReactive,
   useFavicon,
   useCountDown,
-  useTrackedEffect,
   useWebSocket,
   useLockFn,
   useUnmountedRef,
@@ -128,4 +128,6 @@ export {
   useSafeState,
   useLatest,
   useIsomorphicLayoutEffect,
+  useDeepCompareEffect,
+  useAsyncEffect,
 };

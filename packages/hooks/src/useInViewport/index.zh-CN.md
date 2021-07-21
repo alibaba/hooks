@@ -26,7 +26,7 @@ group:
 
 ## API
 
-```ts
+```typescript
 const [inViewport, ratio] = useInViewport(
   target, 
   options?: Options

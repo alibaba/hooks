@@ -1,4 +1,5 @@
-import { useEffect, useRef } from 'react';
+import { useEffect } from 'react';
+import useLatest from '../useLatest';
 
 function useInterval(
   fn: () => void,
@@ -6,19 +7,18 @@ function useInterval(
   options?: {
     immediate?: boolean;
   },
-): void {
+) {
   const immediate = options?.immediate;
 
-  const fnRef = useRef<() => void>();
-  fnRef.current = fn;
+  const fnRef = useLatest(fn);
 
   useEffect(() => {
     if (delay === undefined || delay === null) return;
     if (immediate) {
-      fnRef.current?.();
+      fnRef.current();
     }
     const timer = setInterval(() => {
-      fnRef.current?.();
+      fnRef.current();
     }, delay);
     return () => {
       clearInterval(timer);

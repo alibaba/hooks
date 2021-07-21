@@ -10,8 +10,9 @@ group:
 
 # useKeyPress
 
-A hook that elegantly manages KeyboardEvent of keyup adn keydown, Keyboard key combinations are supported to define key and keyCode alias input for keyboard events.
+<Tag lang="en-US" tags="ssr"></Tag>
 
+Listen the keyboard press, support key combinations, and support alias.
 ## Examples
 
 ### Basic usage
@@ -39,7 +40,7 @@ A hook that elegantly manages KeyboardEvent of keyup adn keydown, Keyboard key c
 ```typescript
 useKeyPress(
   keyFilter: KeyFilter, 
-  eventHandler: EventHandler = noop, 
+  eventHandler: EventHandler, 
   options?: Options
 )
 ```
@@ -50,22 +51,22 @@ useKeyPress(
 
 | Property | Description                                                        | Type                   | Default |
 |---------|----------------------------------------------|------------------------|--------|
-| keyFilter | Support for key and keyCode in keyboard events,function that return Boolean, key aliases  | `keyType` \| `Array<keyType>` \| `(event: KeyboardEvent) => boolean` | -      |
-| eventHandler | Callback Function  | `(event: KeyboardEvent) => void` | -      |
+| keyFilter | Support for key and keyCode in keyboard events,function that return Boolean, key aliases  | `keyType` \| `keyType[]` \| `(event: KeyboardEvent) => boolean` | -      |
+| eventHandler | Callback function  | `(event: KeyboardEvent) => void` | -      |
 | options | advanced options，see Options below | `Options`              | -              | 
 
 ### Options
 
 | Property | Description                                                        | Type                   | Default |
 |-----------------|--------------------------------------------------------|---------|--------|
-| events | Trigger Events  |  Array<keydown \| keyup\> | `['keydown']`     |
-| target | DOM element or Ref Object | `() => HTMLElement` \| `HTMLElement` \| `React.MutableRefObject`  | - |
+| events | Trigger Events  |  `('keydown' \| 'keyup')[]` | `['keydown']`     |
+| target | DOM element or ref | `() => Element` \| `Element` \| `MutableRefObject<Element>`  | - |
 
 ## Remarks
 
 1.All key aliases
 
-```javascript
+```text
 enter
 tab
 delete ('Backspace', 'Delete')
@@ -79,7 +80,7 @@ right
 
 2.Modifier keys
 
-```javascript
+```text
 ctrl
 alt
 shift

@@ -35,7 +35,7 @@ group:
 
 ## API
 
-```ts
+```typescript
 type Target = Element | (() => Element) | React.MutableRefObject<Element>;
 
 useClickAway(

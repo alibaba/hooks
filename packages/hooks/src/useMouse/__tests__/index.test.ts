@@ -1,8 +1,7 @@
 import { renderHook, act } from '@testing-library/react-hooks';
 import useMouse from '../index';
 
-// test about Resize Observer see https://github.com/que-etc/resize-observer-polyfill/tree/master/tests
-describe('useSize', () => {
+describe('useMouse', () => {
   function moveMouse(x: number, y: number) {
     act(() => {
       document.dispatchEvent(

@@ -10,6 +10,8 @@ group:
 
 # useTextSelection
 
+<Tag lang="zh-CN" tags="ssr"></Tag>
+
 实时获取用户当前选取的文本内容及位置。
 
 ## 代码演示
@@ -30,14 +32,14 @@ group:
 ## API
 
 ```typescript
-const state = useTextSelection(target);
+const state = useTextSelection(target?);
 ```
 
 ### Params
 
 | 参数   | 说明                      | 类型 | 默认值   |
 |--------|---------------------------|------|----------|
-| target | DOM element or Ref Object |  `HTMLElement` \| `(() => HTMLElement)` \| `React.MutableRefObject` \| `Document` | `document` |
+| target | DOM element or ref |  `Element` \| `Document` \| `(() => Element\Document)` \| `MutableRefObject<Element>` | `document` |
 
 ### Result
 
