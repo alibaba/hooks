@@ -2,7 +2,7 @@ import { useMemo, useState } from 'react';
 import useMemoizedFn from '../useMemoizedFn';
 
 function useMap<K, T>(initialValue?: Iterable<readonly [K, T]>) {
-  const initValue = useMemo(() => {
+  const initValue = useMemo<Map<K, T>>(() => {
     return initialValue === undefined ? new Map() : new Map(initialValue);
   }, []);
 
