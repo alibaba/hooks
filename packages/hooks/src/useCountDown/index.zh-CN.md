@@ -10,9 +10,11 @@ group:
 
 # useCountDown
 
-一个用于管理倒计时的Hook。
+<Tag lang="zh-CN" tags="ssr&crossPlatform"></Tag>
 
-## 到未来某一时间点的计时
+一个用于管理倒计时的 Hook。
+
+## 到未来某一时间点的倒计时
 
 <code src="./demo/demo1.tsx" />
 
@@ -32,6 +34,16 @@ useCountDown 的精度为毫秒，可能会造成以下几个问题
 ## API
 
 ```typescript
+type TDate = Date | number | string | undefined;
+
+interface FormattedRes {
+  days: number;
+  hours: number;
+  minutes: number;
+  seconds: number;
+  milliseconds: number;
+}
+
 const [countdown, setTargetDate, formattedRes] = useCountDown(
   {
     targetDate,
@@ -41,28 +53,20 @@ const [countdown, setTargetDate, formattedRes] = useCountDown(
 );
 ```
 
-## Type
+### Params
 
-| 参数          | 说明                                | 类型                                            |
-| ------------- | ----------------------------------- | ----------------------------------------------- |
-| TDate         | 支持的时间格式                      | `Date` \| `number` \| `string` \| `undefined`   |
-| FormattedRes | 返回的原始结果, 均为大于等于0的数字 | `{ days, hours, minutes, seconds, milliseconds }` |
-
-
-## Params
-
-| 参数      | 说明           | 类型                                                    | 默认值      |
-| --------- | -------------- | ------------------------------------------------------- | ----------- |
-| targetDate   | 未来时间     | `TDate`                                                 | `undefined` |
-| interval  | 变化时间间隔（毫秒）     | `number`                                                | `1000`      |
-| onEnd |  未来时间结束后的回调函数  |`Function`                                           |`undefined`|
+| 参数       | 说明                 | 类型       | 默认值 |
+|------------|----------------------|------------|--------|
+| targetDate | 目标时间             | `TDate`    | -      |
+| interval   | 变化时间间隔（毫秒） | `number`   | `1000` |
+| onEnd      | 倒计时结束触发       | `()=>void` | -      |
 
 
 ### Result
 
-| 参数            | 说明           | 类型                      |
-| --------------- | -------------- | ------------------------- |
-| countdown       | 距离 targetDate 的时间戳（毫秒）   | `number`                  |
-| setTarget       | 设置 targetDate | `(target?:TDate) => void` |
-| formattedRes | 格式化返回时间     | `FormattedRes`           |
+| 参数          | 说明                 | 类型                      |
+|---------------|----------------------|---------------------------|
+| countdown     | 倒计时时间戳（毫秒） | `number`                  |
+| setTargetDate | 更新目标时间         | `(target?:TDate) => void` |
+| formattedRes  | 格式化后的倒计时     | `FormattedRes`            |
 
