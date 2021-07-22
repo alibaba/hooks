@@ -1,5 +1,5 @@
 // from swr
-import { isDocumentVisible } from './index';
+import { isDocumentVisible } from './utils';
 
 const listeners: any[] = [];
 
