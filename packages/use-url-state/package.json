@@ -28,11 +28,12 @@
   },
   "homepage": "https://github.com/alibaba/hooks",
   "peerDependencies": {
-    "react": "^16.8 || ^17.0",
+    "react": "^16.8.0 || ^17.0.0",
     "react-router": "^5.0.0"
   },
   "dependencies": {
     "@types/query-string": "^6.3.0",
+    "core-js": "^2.6.12",
     "query-string": "^6.9.0"
   }
 }
