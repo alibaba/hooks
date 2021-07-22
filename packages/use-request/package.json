@@ -31,7 +31,6 @@
     "react": "^16.8 || ^17.0"
   },
   "dependencies": {
-    "gulp": "^4.0.2",
     "lodash.debounce": "^4.0.8",
     "lodash.throttle": "^4.1.1"
   },
