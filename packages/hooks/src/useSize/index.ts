@@ -1,11 +1,13 @@
-import { useState, useLayoutEffect } from 'react';
+import { useLayoutEffect } from 'react';
 import ResizeObserver from 'resize-observer-polyfill';
-import { getTargetElement, BasicTarget } from '../utils/dom';
+import type { BasicTarget } from '../utils/dom';
+import { getTargetElement } from '../utils/dom';
+import useRafState from './useRafState';
 
 type Size = { width?: number; height?: number };
 
 function useSize(target: BasicTarget): Size {
-  const [state, setState] = useState<Size>(() => {
+  const [state, setState] = useRafState<Size>(() => {
     const el = getTargetElement(target);
     return {
       width: ((el || {}) as HTMLElement).clientWidth,
