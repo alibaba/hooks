@@ -30,7 +30,7 @@ function useMap<K, T>(initialValue?: Iterable<readonly [K, T]>) {
 
   const reset = () => setMap(initValue);
 
-  const get = (key: string) => map.get(key);
+  const get = (key: K) => map.get(key);
 
   return [
     map,
