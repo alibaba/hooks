@@ -23,7 +23,7 @@ export default () => {
 
   return (
     <>
-      <button type="button" onClick={() => toggle()}>
+      <button type="button" onClick={toggle}>
         {state ? 'unmount' : 'mount'}
       </button>
       {state && <MyComponent />}

@@ -39,7 +39,7 @@ describe('useToggle', () => {
     callToggle(hook);
     expect(hook.result.current[0]).toEqual('World');
     act(() => {
-      hook.result.current[1].toggle('World');
+      hook.result.current[1].set('World');
     });
     expect(hook.result.current[0]).toEqual('World');
     callToggle(hook);
