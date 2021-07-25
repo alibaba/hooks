@@ -62,6 +62,7 @@ import useLatest from './useLatest';
 import useIsomorphicLayoutEffect from './useIsomorphicLayoutEffect';
 import useDeepCompareEffect from './useDeepCompareEffect';
 import useAsyncEffect from './useAsyncEffect';
+import useRafState from './useRafState';
 
 export {
   useControllableValue,
@@ -130,4 +131,5 @@ export {
   useIsomorphicLayoutEffect,
   useDeepCompareEffect,
   useAsyncEffect,
+  useRafState,
 };
