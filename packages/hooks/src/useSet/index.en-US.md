@@ -10,6 +10,8 @@ group:
 
 # useSet
 
+<Tag lang="en-US" tags="ssr&crossPlatform"></Tag>
+
 A hook that can manage the state of Set.
 
 ## Examples
@@ -25,7 +27,6 @@ const [
   set,
   {
     add,
-    has,
     remove,
     reset
   }
@@ -34,13 +35,12 @@ const [
 
 ### Result
 
-| Property | Description                          | Type                    |
-|----------|--------------------------------------|-------------------------|
-| set      | Set object                           | `Set`                   |
-| add      | add key                              | `(key: any) => void`    |
-| has      | Determine whether the element exists | `(key: any) => Boolean` |
-| remove   | remove key                           | `(key: any) => void`    |
-| reset    | reset to default                     | `() => void`            |
+| Property | Description      | Type                 |
+|----------|------------------|----------------------|
+| set      | Set object       | `Set`                |
+| add      | Add key          | `(key: any) => void` |
+| remove   | Remove key       | `(key: any) => void` |
+| reset    | Reset to default | `() => void`         |
 
 ### Params
 

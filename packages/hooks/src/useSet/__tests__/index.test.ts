@@ -9,7 +9,6 @@ it('should init set and utils', () => {
 
   expect(set).toEqual(new Set([1, 2]));
   expect(utils).toStrictEqual({
-    has: expect.any(Function),
     add: expect.any(Function),
     remove: expect.any(Function),
     reset: expect.any(Function),
@@ -24,11 +23,11 @@ it('should init empty set if no initial set provided', () => {
 
 it('should have an initially provided key', () => {
   const { result } = setUp(['a']);
-  const [, utils] = result.current;
+  const [set, utils] = result.current;
 
   let value;
   act(() => {
-    value = utils.has('a');
+    value = set.has('a');
   });
 
   expect(value).toBe(true);
@@ -43,7 +42,7 @@ it('should have an added key', () => {
 
   let value;
   act(() => {
-    value = result.current[1].has('newKey');
+    value = result.current[0].has('newKey');
   });
 
   expect(value).toBe(true);
@@ -51,11 +50,11 @@ it('should have an added key', () => {
 
 it('should get false for non-existing key', () => {
   const { result } = setUp(['a']);
-  const [, utils] = result.current;
+  const [set] = result.current;
 
   let value;
   act(() => {
-    value = utils.has('nonExisting');
+    value = set.has('nonExisting');
   });
 
   expect(value).toBe(false);
