@@ -1,6 +1,7 @@
 import Cookies from 'js-cookie';
 import { useState } from 'react';
 import useMemoizedFn from '../useMemoizedFn';
+import { isFunction } from '../utils';
 
 export type State = string | undefined | null;
 export interface Options extends Cookies.CookieAttributes {
@@ -13,7 +14,7 @@ function useCookieState(cookieKey: string, options: Options = {}) {
 
     if (typeof cookieValue === 'string') return cookieValue;
 
-    if (typeof options.defaultValue === 'function') {
+    if (isFunction(options.defaultValue)) {
       return options.defaultValue();
     }
 
@@ -27,7 +28,7 @@ function useCookieState(cookieKey: string, options: Options = {}) {
     ) => {
       const { defaultValue, ...restOptions } = { ...options, ...newOptions };
       setState((prevState) => {
-        const value = typeof newValue === 'function' ? newValue(prevState) : newValue;
+        const value = isFunction(newValue) ? newValue(prevState) : newValue;
         if (value === undefined || value === null) {
           Cookies.remove(cookieKey);
         } else {
