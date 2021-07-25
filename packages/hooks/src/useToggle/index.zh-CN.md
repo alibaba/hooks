@@ -56,6 +56,6 @@ const [state, { toggle, set, setLeft, setRight }] = useToggle(
 | 参数     | 说明                | 类型                    |
 |----------|---------------------|-------------------------|
 | toggle   | 切换 state          | `() => void`            |
-| set      | 修改 state          | `(state?: any) => void` |
+| set      | 修改 state          | `(state: any) => void` |
 | setLeft  | 设置为 defaultValue | `() => void`            |
 | setRight | 设置为 reverseValue | `() => void`            |
