@@ -10,6 +10,8 @@ group:
 
 # useMap
 
+<Tag lang="en-US" tags="ssr&crossPlatform"></Tag>
+
 A hook that can manage the state of Map.
 
 ## Examples
@@ -38,11 +40,11 @@ const [
 | Property | Description             | Type                                     |
 |----------|-------------------------|------------------------------------------|
 | map      | Map object              | `Map`                                    |
-| set      | add key                 | `(key: any, value: any) => void`         |
-| get      | get key                 | `(key: any) => MapItem`                  |
-| setAll   | add and reset a new Map | `(newMap: Iterable<[any, any]>) => void` |
-| remove   | remove key              | `(key: any) => void`                     |
-| reset    | reset to default        | `() => void`                             |
+| set      | Add key                 | `(key: any, value: any) => void`         |
+| get      | Get key                 | `(key: any) => MapItem`                  |
+| setAll   | Set a new Map | `(newMap: Iterable<[any, any]>) => void` |
+| remove   | Remove key              | `(key: any) => void`                     |
+| reset    | Reset to default        | `() => void`                             |
 
 ### Params
 
