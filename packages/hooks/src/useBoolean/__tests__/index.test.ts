@@ -28,11 +28,11 @@ describe('useBoolean', () => {
     });
     expect(result.current[0]).toBeFalsy();
     act(() => {
-      result.current[1].toggle(false);
+      result.current[1].set(false);
     });
     expect(result.current[0]).toBeFalsy();
     act(() => {
-      result.current[1].toggle(true);
+      result.current[1].set(true);
     });
     expect(result.current[0]).toBeTruthy();
   });

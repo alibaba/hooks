@@ -7,8 +7,8 @@
  */
 
 import { useBoolean, useUnmountedRef } from 'ahooks';
-import React, { useEffect, useState } from 'react';
 import { message } from 'antd';
+import React, { useEffect } from 'react';
 
 const MyComponent = () => {
   const unmountefRef = useUnmountedRef();
@@ -28,7 +28,7 @@ export default () => {
 
   return (
     <>
-      <button type="button" onClick={() => toggle()}>
+      <button type="button" onClick={toggle}>
         {state ? 'unmount' : 'mount'}
       </button>
       {state && <MyComponent />}

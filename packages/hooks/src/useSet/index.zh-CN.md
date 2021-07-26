@@ -10,6 +10,8 @@ group:
 
 # useSet
 
+<Tag lang="zh-CN" tags="ssr&crossPlatform"></Tag>
+
 一个可以管理 Set 类型状态的 Hook。
 
 ## 代码演示
@@ -23,7 +25,6 @@ const [
   set,
   {
     add,
-    has,
     remove,
     reset
   }
@@ -36,7 +37,6 @@ const [
 |--------|------------------|-------------------------|
 | set    | Set 对象         | `Set`                   |
 | add    | 添加元素         | `(key: any) => void`    |
-| has    | 判断是否存在元素 | `(key: any) => Boolean` |
 | remove | 移除元素         | `(key: any) => void`    |
 | reset  | 重置为默认值     | `() => void`            |
 

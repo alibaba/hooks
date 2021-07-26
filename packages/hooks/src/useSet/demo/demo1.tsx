@@ -10,7 +10,7 @@ import React from 'react';
 import { useSet } from 'ahooks';
 
 export default () => {
-  const [set, { add, has, remove, reset }] = useSet(['Hello']);
+  const [set, { add, remove, reset }] = useSet(['Hello']);
 
   return (
     <div>
@@ -20,7 +20,7 @@ export default () => {
       <button
         type="button"
         onClick={() => remove('Hello')}
-        disabled={!has('Hello')}
+        disabled={!set.has('Hello')}
         style={{ margin: '0 8px' }}
       >
         Remove Hello

@@ -10,7 +10,9 @@ group:
 
 # useCookieState
 
-一个可以将状态持久化存储在 cookie 中的 Hook 。
+<Tag lang="zh-CN" tags="ssr"></Tag>
+
+一个可以将状态存储在 cookie 中的 Hook 。
 
 ## 代码演示
 
@@ -29,13 +31,14 @@ group:
 ## API
 
 ```typescript
-type CookieState = string | undefined;
+type State = string | undefined | null;
+
 type SetState = (
-    newValue?: CookieState | ((prevState?: CookieState) => CookieState),
+    newValue?: State | ((prevState?: State) => State),
     options?: Cookies.CookieAttributes,
   ) => void;
 
-const [state, setState]: [CookieState, SetState] = useCookieState(
+const [state, setState]: [State, SetState] = useCookieState(
   cookieKey: string,
   options?: Options,
 )
@@ -47,15 +50,15 @@ const [state, setState]: [CookieState, SetState] = useCookieState(
 
 | 参数         | 说明                     | 类型                 | 默认值 |
 | ------------ | ------------------------ | -------------------- | ------ |
-| cookieKey    | 存储在本地 cookie 的 key 值 | `string` | - |
+| cookieKey    | cookie 的 key 值 | `string` | - |
 | options | 可选项，配置 cookie 属性，详见 Options | `Options` | - |
 
 ### Result
 
 | 参数     | 说明        | 类型                                                                                                 |
 | -------- | ------------ | ---------------------------------------------------------------------------------------------------- |
-| state    | 本地 cookie 值   | `string` \| `undefined`                                                                      |
-| setState | 设置 cookie，根据 options 属性，同步至本地 cookie | `SetState` |
+| state    | 本地 cookie 值   | `string` \| `undefined`  \|`null`                                     |
+| setState | 设置 cookie 值| `SetState` |
 
 setState 可以更新 cookie options，会与 `useCookieState` 设置的 options 进行 merge 操作。
 
