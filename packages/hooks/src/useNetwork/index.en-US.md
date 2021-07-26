@@ -6,10 +6,11 @@ nav:
 group:
   title: State
   path: /state
-  order: 12
 ---
 
 # useNetwork
+
+<Tag lang="en-US" tags="ssr&crossPlatform"></Tag>
 
 A hook that can manage the state of network.
 
