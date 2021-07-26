@@ -10,8 +10,9 @@ group:
 
 # usePrevious
 
-A Hook to store the previous value.
+<Tag lang="en-US" tags="ssr&crossPlatform"></Tag>
 
+A Hook to store the previous value.
 
 ## Examples
 
@@ -19,7 +20,7 @@ A Hook to store the previous value.
 
 <code src="./demo/demo1.tsx" />
 
-### Using compare function
+### Custom shouldUpadte function
 
 <code src="./demo/demo2.tsx" />
 
@@ -28,19 +29,19 @@ A Hook to store the previous value.
 ```typescript
 const previousState: T = usePrevious<T>(
   state: T,
-  compareFunction: (prev: T | undefined, next: T) => boolean
+  shouldUpdate?: (prev: T | undefined, next: T) => boolean
 );
 ```
 
 ### Result
 
-| Property      | Description        | Type |
-|---------------|--------------------|------|
-| previousState | the previous value | -    |
+| Property      | Description        | Type  |
+|---------------|--------------------|-------|
+| previousState | The previous value | `any` |
 
 ### Params
 
-| Property        | Description                                                   | Type | Default |
-|-----------------|---------------------------------------------------------------|------|---------|
-| state           | the state need to be tracked                                  | -    | -       |
-| compareFunction | optional, customize when the previous value need to be stored |  (prev: T \| undefined, next: T) => boolean    | -       |
+| Property     | Description                                                   | Type                                         | Default             |
+|--------------|---------------------------------------------------------------|----------------------------------------------|---------------------|
+| state        | The state need to be tracked                                  | `any`                                        | -                   |
+| shouldUpdate | Optional, customize when the previous value need to be stored | `(prev: T \| undefined, next: T) => boolean` | `(a, b) => a !== b` |
