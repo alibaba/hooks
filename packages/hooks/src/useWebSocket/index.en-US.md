@@ -75,7 +75,7 @@ useWebSocket(socketUrl: string, options?: Options): Result;
 
 | Options Property | Description                                                                          | Type                           |
 |------------------|--------------------------------------------------------------------------------------|--------------------------------|
-| latestMessage    | latest message                                                                       | `WebSocketEventMap['message']` |
+| latestMessage    | Latest message                                                                       | `WebSocketEventMap['message']` |
 | sendMessage      | Send message function                                                                | `WebSocket['send']`            |
 | disconnect       | Disconnect webSocket manually                                                        | `() => void`                   |
 | connect          | Connect webSocket manually. If already connected, close the current one and connect. | `() => void`                   |
