@@ -39,28 +39,22 @@ export function createUseStorageState(getStorage: () => Storage | undefined) {
     // https://github.com/alibaba/hooks/issues/800
     try {
       storage = getStorage();
-    } catch {}
+    } catch (err) {
+      console.error(err);
+    }
 
     const serializer = (value: T) => {
       if (options?.serializer) {
         return options?.serializer(value);
       }
-      try {
-        return JSON.stringify(value);
-      } catch {
-        return '';
-      }
+      return JSON.stringify(value);
     };
 
     const deserializer = (value: string) => {
       if (options?.deserializer) {
         return options?.deserializer(value);
       }
-      try {
-        return JSON.parse(value);
-      } catch {
-        return '';
-      }
+      return JSON.parse(value);
     };
 
     function getStoredValue() {
