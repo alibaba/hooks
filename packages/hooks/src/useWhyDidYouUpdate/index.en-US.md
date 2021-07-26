@@ -10,6 +10,8 @@ group:
 
 # useWhyDidYouUpdate
 
+<Tag lang="en-US" tags="ssr&crossPlatform"></Tag>
+
 Help developers troubleshoot what changes have caused component rerender.
 
 ## Examples
@@ -21,9 +23,8 @@ Help developers troubleshoot what changes have caused component rerender.
 ## API
 
 ```typescript
-type IProps = {
-  [key: string]: any;
-}
+type IProps = Record<string, any>;
+
 useWhyDidYouUpdate(componentName: string, props: IProps): void;
 ```
 

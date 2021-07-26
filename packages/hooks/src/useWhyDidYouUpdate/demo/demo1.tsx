@@ -41,7 +41,7 @@ export default () => {
           count +
         </button>
       </div>
-      <p>Please open the browser console to view the output!</p>
+      <p style={{ marginTop: 8 }}>Please open the browser console to view the output!</p>
     </div>
   );
 };
