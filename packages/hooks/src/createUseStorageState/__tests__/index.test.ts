@@ -48,11 +48,11 @@ interface StorageStateProps<T> {
 describe('useStorageState', () => {
   const setUp = <T>(props: StorageStateProps<T>) => {
     const storage = new TestStorage();
-    const useStorageState = createUseStorageState(storage);
+    const useStorageState = createUseStorageState(() => storage);
 
     return renderHook(
       ({ key, defaultValue }: StorageStateProps<T>) => {
-        const [state, setState] = useStorageState(key, defaultValue);
+        const [state, setState] = useStorageState(key, { defaultValue });
 
         return { state, setState };
       },
