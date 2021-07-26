@@ -10,7 +10,9 @@ group:
 
 # useUrlState
 
-一个同步组件内部状态和 query 参数的 hook。
+<Tag lang="zh-CN" tags="ssr&crossPlatform"></Tag>
+
+一个通过 url query 来管理 state 的 Hook。
 
 ## 安装
 
@@ -20,7 +22,7 @@ npm i @ahooksjs/use-url-state -S
 
 > 该 Hooks 基于 `react-router` 的 useLocation & useHistory 进行 query 管理，所以使用该 Hooks 之前，你需要保证
 >
-> 1\. 你项目正在使用 `react-router` 5.0 以上版本来管理路由
+> 1\. 你项目正在使用 `react-router` 5.0 版本来管理路由
 >
 > 2\. 独立安装了 @ahooksjs/use-url-state
 
@@ -50,22 +52,22 @@ https://codesandbox.io/s/suspicious-feather-cz4e0?file=/App.tsx
 const [state, setState] = useUrlState(initialState, options);
 ```
 
-### 参数
+### Params
 
-| 参数    | 说明                                         | 类型                   | 默认值 |
-|---------|----------------------------------------------|------------------------|--------|
-| initialState | 初始状态                       | S \| () => S                    | -      |
-| options | url 配置                       | Options                    | -      |
+| 参数         | 说明     | 类型           | 默认值 |
+|--------------|----------|----------------|--------|
+| initialState | 初始状态 | `S \| () => S` | -      |
+| options      | url 配置 | `Options`      | -      |
 
 ### Options
 
-| 参数    | 说明                                         | 类型                   | 默认值 |
-|------|--------------|--------|--------|
-| navigateMode | 状态变更时切换 history 的方式 | 'push' \| 'replace' | 'push'    |
+| 参数         | 说明                          | 类型                  | 默认值   |
+|--------------|-------------------------------|-----------------------|----------|
+| navigateMode | 状态变更时切换 history 的方式 | `'push' \| 'replace'` | `'push'` |
 
-### 结果
+### Result
 
-| 参数     | 说明                                     | 类型       |
-|----------|------------------------------------------|------------|
-| state  | url query 对象                             | object    |
-| setState     | 用法同 useState，但 state 需要是 object         |  (state: S) => void \| (() => ((state: S) => S))      |
+| 参数     | 说明                                    | 类型                                              |
+|----------|-----------------------------------------|---------------------------------------------------|
+| state    | url query 对象                          | `object`                                          |
+| setState | 用法同 useState，但 state 需要是 object | `(state: S) => void \| (() => ((state: S) => S))` |
