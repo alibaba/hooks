@@ -32,6 +32,7 @@
     "react-router": "^5.0.0"
   },
   "dependencies": {
+    "ahooks": "^3.0.0-alpha.0",
     "core-js": "^2.6.12",
     "query-string": "^6.9.0"
   }
