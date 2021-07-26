@@ -10,6 +10,8 @@ group:
 
 # useUrlState
 
+<Tag lang="en-US" tags="ssr&crossPlatform"></Tag>
+
 A hook that stores the state into url query parameters.
 
 ## Install
@@ -20,7 +22,7 @@ npm i @ahooksjs/use-url-state -S
 
 > This hook relies on useLocation & useHistory from `react-router`, to use this hook, you need to ensure
 >
-> 1\. Your project is using `react-router` version 5.0 or higher to manage routing
+> 1\. Your project is using `react-router` version 5.0 to manage routing
 >
 > 2\. Installed @ahooksjs/use-url-state
 
@@ -54,20 +56,20 @@ const [state, setState] = useUrlState(initialState, options);
 
 ### Params
 
-| Property | Description                         | Type                   | Default |
-|---------|----------------------------------------------|------------------------|--------|
-| initialState | initialState, same as useState      | S \| () => S                    | -      |
-| options | url config                  | Options                    | -      |
+| Property     | Description                    | Type           | Default |
+|--------------|--------------------------------|----------------|---------|
+| initialState | InitialState, same as useState | `S \| () => S` | -       |
+| options      | Url config                     | `Options`      | -       |
 
 ### Options
 
-| Property | Description                            | Type                   | Default |
-|------|--------------|--------|--------|
-| navigateMode | type of history navigate mode | 'push' \| 'replace' | 'replace'    |
+| Property     | Description                   | Type                  | Default     |
+|--------------|-------------------------------|-----------------------|-------------|
+| navigateMode | Type of history navigate mode | `'push' \| 'replace'` | `'push'` |
 
 ### Result
 
-| Property | Description                                         | Type                 |
-|----------|------------------------------------------|------------|
-| state  | url query object                             | object    |
-| setState     | same as useState, but state should be object      |  (state: S) => void \| (() => ((state: S) => S))      |
+| Property | Description                                  | Type                                              |
+|----------|----------------------------------------------|---------------------------------------------------|
+| state    | Url query object                             | `object`                                          |
+| setState | Same as useState, but state should be object | `(state: S) => void \| (() => ((state: S) => S))` |
