@@ -1,17 +1,17 @@
 import { renderHook } from '@testing-library/react-hooks';
-import usePrevious, { compareFunction as comFunc } from '../';
+import usePrevious, { ShouldUpdateFunc } from '../';
 
 describe('usePrevious', () => {
   it('should be defined', () => {
     expect(usePrevious).toBeDefined();
   });
 
-  function getHook<T>(initialValue?: T, compareFunction?: comFunc<T>) {
+  function getHook<T>(initialValue?: T, compareFunction?: ShouldUpdateFunc<T>) {
     return renderHook(({ val, cmp }) => usePrevious<T>(val as T, cmp), {
       initialProps: {
         val: initialValue || 0,
         cmp: compareFunction,
-      } as { val?: T; cmp?: comFunc<T> },
+      } as { val?: T; cmp?: ShouldUpdateFunc<T> },
     });
   }
 
