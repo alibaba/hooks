@@ -14,7 +14,7 @@ export default () => {
 
   return (
     <div>
-      <p>Effects：{JSON.stringify(networkState)}</p>
+      <p>Network：{JSON.stringify(networkState)}</p>
     </div>
   );
 };

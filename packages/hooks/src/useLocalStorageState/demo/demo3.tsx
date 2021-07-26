@@ -1,37 +1,34 @@
 /**
- * title: Persist objects with function updater
- * desc: function updater is also acceptable with useLocalStorageState.
+ * title: Custom serialization and deserialization functions
+ * desc: You may not need the default `JSON.stringify/JSON.parse` to serialize string.
  *
- * title.zh-CN: 使用 function updater 存储
- * desc.zh-CN: useLocalStorageState 里也可以用 function updater，就像 useState 那样。
+ * title.zh-CN: 自定义序列化和反序列化函数
+ * desc.zh-CN: 对于普通的字符串，可能你不需要默认的 `JSON.stringify/JSON.parse` 来序列化。
  */
 
 import React from 'react';
 import { useLocalStorageState } from 'ahooks';
 
-interface IUser {
-  id: number;
-  name: string;
-  age: number;
-}
-
 export default function () {
-  const [user, setUser] = useLocalStorageState('user', {
-    id: 9234634791,
-    name: 'Zhangsan',
-    age: 33,
-  } as IUser);
+  const [message, setMessage] = useLocalStorageState('use-local-storage-state-demo3', {
+    defaultValue: 'Hello~',
+    serializer: (v) => v,
+    deserializer: (v) => v,
+  });
 
   return (
     <>
       <input
-        style={{ width: 200 }}
-        defaultValue={user.name}
-        placeholder="input user name"
-        onChange={(e) => {
-          setUser((u: IUser) => ({ ...u, name: e.target.value }));
-        }}
+        value={message || ''}
+        placeholder="Please enter some words..."
+        onChange={(e) => setMessage(e.target.value)}
       />
+      <button style={{ margin: '0 8px' }} type="button" onClick={() => setMessage('Hello~')}>
+        Reset
+      </button>
+      <button type="button" onClick={() => setMessage()}>
+        Clear
+      </button>
     </>
   );
 }

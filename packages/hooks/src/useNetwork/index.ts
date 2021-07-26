@@ -34,7 +34,7 @@ function useNetwork(): NetworkState {
   const [state, setState] = useState(() => {
     return {
       since: undefined,
-      online: navigator.onLine,
+      online: navigator?.onLine,
       ...getConnectionProperty(),
     };
   });

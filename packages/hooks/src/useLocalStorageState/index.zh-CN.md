@@ -10,31 +10,45 @@ group:
 
 # useLocalStorageState
 
-一个可以将状态持久化存储在 localStorage 中的 Hook 。
+<Tag lang="zh-CN" tags="ssr&crossPlatform"></Tag>
+
+一个可以将状态存储在 localStorage 中的 Hook 。
 
 ## 代码演示
 
-### 将 state 持久化在 localStorage 中
+### 将 state 存储在 localStorage 中
 
 <code src="./demo/demo1.tsx" />
 
-### 存储对象
+### 存储复杂类型数据
 
 <code src="./demo/demo2.tsx" />
 
-### 使用 function updater 存储
+### 自定义序列化和反序列化函数
 
 <code src="./demo/demo3.tsx" />
 
 ## API
 
+如果想从 localStorage 中删除这条数据，可以使用 `setState()` 或 `setState(undefined)` 。
+
 ```typescript
+interface Options<T> {
+  defaultValue?: T | (() => T);
+  serializer?: (value: T) => string;
+  deserializer?: (value: string) => T;
+}
+
 const [state, setState] = useLocalStorageState<T>(
   key: string,
-  defaultValue?: T | (() => T),
+  options: Options<T>
 ): [T?, (value?: T | ((previousState: T) => T)) => void]
 ```
 
-它的API和 `useState` 非常类似，但是多了一个参数 `key` ，用来指定在 localStorage 中存储时所使用的 `key` 。而它的返回值类型和 `useState` 保持了一致，当调用 `setState` 时，它会自动将新值写入到 localStorage 中。
+### Options
 
-如果想从 localStorage 中删除这条数据，可以使用 `setState()` 或 `setState(undefined)` 。
+| 参数         | 说明               | 类型                     | 默认值           |
+|--------------|--------------------|--------------------------|------------------|
+| defaultValue | 默认值             | `any \| (() => any)`     | -                |
+| serializer   | 自定义序列化方法   | `(value: any) => string` | `JSON.stringify` |
+| deserializer | 自定义反序列化方法 | `(value: string) => any` | `JSON.parse`     |

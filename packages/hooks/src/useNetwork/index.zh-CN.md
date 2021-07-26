@@ -6,17 +6,17 @@ nav:
 group:
   title: State
   path: /state
-  order: 12
 ---
 
 # useNetwork
 
-一个可以管理网络连接状态的 Hook。
+<Tag lang="zh-CN" tags="ssr&crossPlatform"></Tag>
 
+一个可以管理网络连接状态的 Hook。
 
 ## 代码演示
 
-### Default usage
+### 基础用法
 
 <code src="./demo/demo1.tsx" />
 

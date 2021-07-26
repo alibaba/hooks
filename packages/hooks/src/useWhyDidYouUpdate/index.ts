@@ -1,8 +1,6 @@
 import { useEffect, useRef } from 'react';
 
-export type IProps = {
-  [key: string]: any;
-};
+export type IProps = Record<string, any>;
 
 export default function useWhyDidYouUpdate(componentName: string, props: IProps) {
   const prevProps = useRef<IProps>({});
@@ -13,9 +11,9 @@ export default function useWhyDidYouUpdate(componentName: string, props: IProps)
       const changedProps: IProps = {};
 
       allKeys.forEach((key) => {
-        if (prevProps.current![key] !== props[key]) {
+        if (prevProps.current[key] !== props[key]) {
           changedProps[key] = {
-            from: prevProps.current![key],
+            from: prevProps.current[key],
             to: props[key],
           };
         }

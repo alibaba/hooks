@@ -12,7 +12,9 @@ import { useLocalStorageState } from 'ahooks';
 const defaultArray = ['a', 'e', 'i', 'o', 'u'];
 
 export default function () {
-  const [value, setValue] = useLocalStorageState('cascader', defaultArray);
+  const [value, setValue] = useLocalStorageState('use-local-storage-state-demo2', {
+    defaultValue: defaultArray,
+  });
 
   return (
     <>
