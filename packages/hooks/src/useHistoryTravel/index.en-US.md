@@ -10,6 +10,8 @@ group:
 
 # useHistoryTravel
 
+<Tag lang="en-US" tags="ssr&crossPlatform"></Tag>
+
 A hook to manage state change history. It provides encapsulation methods to travel through the history.
 
 ## Examples
@@ -25,24 +27,32 @@ A hook to manage state change history. It provides encapsulation methods to trav
 ## API
 
 ```typescript
-const { value, setValue, backLength, forwardLength, go, back, forward, reset } = useHistoryTravel<T>(initialValue?: T);
+const { 
+  value, 
+  setValue, 
+  backLength, 
+  forwardLength,
+  go, 
+  back, 
+  forward 
+} = useHistoryTravel<T>(initialValue?: T);
 ```
 
 ### Params
 
-| Property      | Description            | Type | Default |
-|---------------|------------------------|------|---------|
-| initialValue? | optional initial value | `T`  | -       |
+| Property     | Description            | Type | Default |
+|--------------|------------------------|------|---------|
+| initialValue | Optional initial value | `T`  | -       |
 
 ### Result
 
 | Property      | Description                                                                       | Type                          |
 |---------------|-----------------------------------------------------------------------------------|-------------------------------|
-| value         | current value                                                                     | `T`                           |
-| setValue      | function to set value                                                             | `T => void`                   |
-| backLength    | the length of backward history                                                    | `number`                      |
-| forwardLength | the length of forward history                                                     | `number`                      |
-| go            | move between the history, move backward on step < 0，and move forward on step > 0 | `(step: number) => void`      |
-| back          | move one step backward in history                                                 | `() => void`                  |
-| foward        | move one step forward in history                                                  | `() => void`                  |
-| reset         | reset history to initial value by default or provide a new initial value.         | (newInitialValue?: T) => void |
+| value         | Current value                                                                     | `T`                           |
+| setValue      | Function to set value                                                             | `(value: T) => void`          |
+| backLength    | The length of backward history                                                    | `number`                      |
+| forwardLength | The length of forward history                                                     | `number`                      |
+| go            | Move between the history, move backward on step < 0，and move forward on step > 0 | `(step: number) => void`      |
+| back          | Move one step backward in history                                                 | `() => void`                  |
+| foward        | Move one step forward in history                                                  | `() => void`                  |
+| reset         | Reset history to initial value by default or provide a new initial value.         | (newInitialValue?: T) => void |
