@@ -1,5 +1,6 @@
+import { useMemoizedFn, useUpdate } from 'ahooks';
 import { parse, stringify } from 'query-string';
-import { useMemo, useRef, useState } from 'react';
+import { useMemo, useRef } from 'react';
 import { useHistory, useLocation } from 'react-router';
 
 export interface Options {
@@ -7,22 +8,21 @@ export interface Options {
 }
 
 const parseConfig = {
-  skipNull: true,
-  skipEmptyString: true,
+  skipNull: false,
+  skipEmptyString: false,
   parseNumbers: false,
   parseBooleans: false,
 };
-interface UrlState {
-  [key: string]: any;
-}
+
+type UrlState = Record<string, any>;
 
 export default <S extends UrlState = UrlState>(initialState?: S | (() => S), options?: Options) => {
-  type state = Partial<{ [key in keyof S]: any }>;
+  type State = Partial<{ [key in keyof S]: any }>;
   const { navigateMode = 'push' } = options || {};
   const location = useLocation();
   const history = useHistory();
 
-  const [, update] = useState(false);
+  const update = useUpdate();
 
   const initialStateRef = useRef(
     typeof initialState === 'function' ? (initialState as () => S)() : initialState || {},
@@ -32,7 +32,7 @@ export default <S extends UrlState = UrlState>(initialState?: S | (() => S), opt
     return parse(location.search, parseConfig);
   }, [location.search]);
 
-  const targetQuery: state = useMemo(
+  const targetQuery: State = useMemo(
     () => ({
       ...initialStateRef.current,
       ...queryFromUrl,
@@ -40,17 +40,17 @@ export default <S extends UrlState = UrlState>(initialState?: S | (() => S), opt
     [queryFromUrl],
   );
 
-  const setState = (s: React.SetStateAction<state>) => {
-    const newQuery = typeof s === 'function' ? (s as Function)(targetQuery) : s;
+  const setState = (s: React.SetStateAction<State>) => {
+    const newQuery = typeof s === 'function' ? s(targetQuery) : s;
 
     // 1. 如果 setState 后，search 没变化，就需要 update 来触发一次更新。比如 demo1 直接点击 clear，就需要 update 来触发更新。
     // 2. update 和 history 的更新会合并，不会造成多次更新
-    update((v) => !v);
+    update();
     history[navigateMode]({
       hash: location.hash,
       search: stringify({ ...queryFromUrl, ...newQuery }, parseConfig) || '?',
     });
   };
 
-  return [targetQuery, setState] as const;
+  return [targetQuery, useMemoizedFn(setState)] as const;
 };
