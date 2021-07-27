@@ -37,15 +37,21 @@ describe('useDebounceFn', () => {
       expect(count).toBe(0);
       await sleep(300);
       expect(count).toBe(2);
+
       hook.result.current.run(4);
       expect(count).toBe(2);
       await sleep(300);
       expect(count).toBe(6);
+
       hook.result.current.run(4);
+      expect(count).toBe(6);
       hook.result.current.cancel();
+      expect(count).toBe(6);
       await sleep(300);
       expect(count).toBe(6);
+
       hook.result.current.run(1);
+      expect(count).toBe(6);
       hook.result.current.flush();
       expect(count).toBe(7);
       await sleep(300);
