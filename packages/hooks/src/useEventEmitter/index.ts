@@ -12,8 +12,10 @@ export class EventEmitter<T> {
   };
 
   useSubscription = (callback: Subscription<T>) => {
+    // eslint-disable-next-line react-hooks/rules-of-hooks
     const callbackRef = useRef<Subscription<T>>();
     callbackRef.current = callback;
+    // eslint-disable-next-line react-hooks/rules-of-hooks
     useEffect(() => {
       function subscription(val: T) {
         if (callbackRef.current) {

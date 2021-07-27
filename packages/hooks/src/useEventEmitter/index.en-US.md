@@ -6,10 +6,11 @@ nav:
 group:
   title: Advanced
   path: /advanced
-legacy: /advanced/use-event-emitter
 ---
 
 # useEventEmitter
+
+<Tag lang="en-US" tags="ssr&crossPlatform"></Tag>
 
 Sometimes it is difficult to pass events between multiple components. By using EventEmitter, this can be simplified.
 
