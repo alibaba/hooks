@@ -37,7 +37,7 @@ describe('useBoolean', () => {
     expect(result.current[0]).toBeTruthy();
   });
 
-  it('test on optional', () => {
+  it('test on default value', () => {
     const hook = setUp(true);
     expect(hook.result.current[0]).toBeTruthy();
   });
