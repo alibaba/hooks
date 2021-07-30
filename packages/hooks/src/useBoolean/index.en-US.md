@@ -12,7 +12,7 @@ group:
 
 <Tag lang="en-US" tags="ssr&crossPlatform"></Tag>
 
-A hook that elegantly manages boolean values.
+A hook that elegantly manages boolean states.
 
 ## Examples
 
@@ -32,19 +32,20 @@ const [ state, { toggle, set, setTrue, setFalse }] = useBoolean(
 
 | Property     | Description                   | Type      | Default |
 |--------------|-------------------------------|-----------|---------|
-| defaultValue | Optional，set a default value | `boolean` | `false` |
+| defaultValue | the default value of the state | `boolean` | `false` |
 
 ### Result
 
 | Property | Description   | Type      |
 |----------|---------------|-----------|
-| state    | Current State | `boolean` |
-| actions  | Operation set | `Actions` |
+| state    | Current value of the state | `boolean` |
+| actions  | A set of methods to change state value | `Actions` |
 
 ### Actions
+
 | Property | Description        | Type                       |
 |----------|--------------------|----------------------------|
-| toggle   | Toggle state       | `() => void`               |
-| set      | Set state          | `(value: boolean) => void` |
-| setTrue  | Set state to true  | `() => void`               |
-| setFalse | Set state to false | `() => void`               |
+| toggle   | A function to toggle state value | `() => void`               |
+| set      | A function to set state value    | `(value: boolean) => void` |
+| setTrue  | A function to set state value to `true`  | `() => void`               |
+| setFalse | A function to set state value to `false` | `() => void`               |
