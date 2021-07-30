@@ -32,14 +32,14 @@ const [ state, { toggle, set, setTrue, setFalse }] = useBoolean(
 
 | Property     | Description                   | Type      | Default |
 |--------------|-------------------------------|-----------|---------|
-| defaultValue | the default value of the state | `boolean` | `false` |
+| defaultValue | the default value of the state. `Optional` | `boolean` | `false` |
 
 ### Result
 
 | Property | Description   | Type      |
 |----------|---------------|-----------|
 | state    | Current value of the state | `boolean` |
-| actions  | A set of methods to change state value | `Actions` |
+| actions  | A set of methods to update state value | `Actions` |
 
 ### Actions
 

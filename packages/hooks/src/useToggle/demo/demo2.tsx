@@ -1,9 +1,9 @@
 /**
- * title: Switch between any two values
- * desc: Accept two parameters, switch between them.
+ * title: Toggle between any two values
+ * desc: Accept two optional parameters and toggle between them.
  *
  * title.zh-CN: 在任意两个值之间切换
- * desc.zh-CN: 接受两个参数，在参数间进行切换。
+ * desc.zh-CN: 接受两个可选参数，在它们之间进行切换。
  */
 
 import React from 'react';
@@ -16,7 +16,7 @@ export default () => {
     <div>
       <p>Effects：{state}</p>
       <p>
-        <button type="button" onClick={() => toggle()}>
+        <button type="button" onClick={toggle}>
           Toggle
         </button>
         <button type="button" onClick={() => set('Hello')} style={{ margin: '0 8px' }}>
