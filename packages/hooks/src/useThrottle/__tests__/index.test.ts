@@ -42,6 +42,7 @@ describe('useThrottle', () => {
       );
     });
     await act(async () => {
+      //Never get the latest value
       mountedState = 1;
       expect(hook.result.current).toEqual(0);
       mountedState = 2;
@@ -68,15 +69,21 @@ describe('useThrottle', () => {
       expect(hook.result.current).toEqual(0);
       mountedState = 1;
       hook.rerender();
+      await sleep(0);
       expect(hook.result.current).toEqual(0);
+
       mountedState = 2;
+      await sleep(200);
       hook.rerender();
-      await sleep(250);
+      await sleep(0);
       expect(hook.result.current).toEqual(0);
+
       mountedState = 3;
+      //Need to wait more than 500ms to get the latest value
+      await sleep(300);
       hook.rerender();
-      await sleep(600);
-      expect(hook.result.current).toEqual(0);
+      await sleep(0);
+      expect(hook.result.current).toEqual(3);
     });
   });
 
@@ -91,11 +98,14 @@ describe('useThrottle', () => {
       expect(hook.result.current).toEqual(0);
       mountedState = 1;
       hook.rerender();
+      await sleep(0);
       expect(hook.result.current).toEqual(0);
+
       mountedState = 2;
       hook.rerender();
       await sleep(250);
       expect(hook.result.current).toEqual(0);
+
       mountedState = 3;
       hook.rerender();
       await sleep(260);
