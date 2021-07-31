@@ -4,32 +4,25 @@
  * title.zh-CN: 基础用法
  */
 
-import React, { useState } from 'react';
-import useSafeState from '../index';
-
+import { useSafeState } from 'ahooks';
+import React, { useEffect, useState } from 'react';
 
 const Child = () => {
+  const [value, setValue] = useSafeState<string>();
 
-  const [value, setValue] = useSafeState<string>()
-  React.useEffect(() => {
+  useEffect(() => {
     setTimeout(() => {
-      setValue('从服务端获取的数据')
-    }, 5000)
-  }, [])
+      setValue('从服务端获取的数据');
+    }, 5000);
+  }, []);
 
-  const text = value || '正在获取数据。。。'
+  const text = value || '正在获取数据。。。';
 
-  return (
-    <div>{text}</div>
-  )
-}
-
+  return <div>{text}</div>;
+};
 
 export default () => {
-  
-
-  const [visible, setVisible] = useSafeState(true);
-
+  const [visible, setVisible] = useState(true);
 
   return (
     <div>

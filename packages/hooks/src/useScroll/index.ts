@@ -1,7 +1,8 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
+import { useRafState } from '..';
 import useLatest from '../useLatest';
-import type { BasicTarget } from '../utils/dom2';
 import { getTargetElement } from '../utils/dom2';
+import type { BasicTarget } from '../utils/dom2';
 
 type Position = { left: number; top: number };
 
@@ -12,7 +13,7 @@ function useScroll(
   target?: Target,
   shouldUpdate: ScrollListenController = () => true,
 ): Position | undefined {
-  const [position, setPosition] = useState<Position>();
+  const [position, setPosition] = useRafState<Position>();
 
   const shouldUpdateRef = useLatest(shouldUpdate);
 

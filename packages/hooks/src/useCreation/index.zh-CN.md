@@ -6,10 +6,11 @@ nav:
 group:
   title: Advanced
   path: /advanced
-  order: 15
 ---
 
 # useCreation
+
+<Tag lang="zh-CN" tags="ssr&crossPlatform"></Tag>
 
 `useCreation` 是 `useMemo` 或 `useRef` 的替代品。
 
@@ -38,8 +39,8 @@ function useCreation<T>(factory: () => T, deps: any[]): T;
 
 ### Params
 
-| 参数    | 说明                   | 类型      | 默认值 |
-|---------|------------------------|-----------|--------|
+| 参数    | 说明                   | 类型        | 默认值 |
+|---------|------------------------|-------------|--------|
 | factory | 用来创建所需对象的函数 | `() => any` | -      |
 | deps    | 传入依赖变化的对象     | `any[]`     | -      |
 
