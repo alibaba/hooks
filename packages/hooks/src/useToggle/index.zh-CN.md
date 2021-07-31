@@ -55,4 +55,4 @@ const [state, { toggle, set, setLeft, setRight }] = useToggle<T, U>(defaultValue
 | toggle   | 切换 state          | `() => void`            |
 | set      | 修改 state          | `(state: T | U) => void` |
 | setLeft  | 设置为 defaultValue | `() => void`            |
-| setRight | 如果传入了reverseValue, 则设置为 reverseValue。 否则设置为 defautValue 的反值 | `() => void` |
+| setRight | 如果传入了 reverseValue,  则设置为 reverseValue。 否则设置为 defautValue 的反值 | `() => void` |
