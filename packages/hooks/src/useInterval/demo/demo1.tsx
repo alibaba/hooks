@@ -1,6 +1,6 @@
 /**
  * title: Basic usage
- * desc: Execute once per every 1000ms
+ * desc: Execute once per 1000ms.
  *
  * title.zh-CN: 基础用法
  * desc.zh-CN: 每1000ms，执行一次
