@@ -1,5 +1,5 @@
 /**
- * title: Default usage
+ * title: Basic usage
  * desc: Default value is boolean，alike useBoolean.
  *
  * title.zh-CN: 基础用法
