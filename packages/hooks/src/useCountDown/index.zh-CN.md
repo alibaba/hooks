@@ -26,7 +26,7 @@ group:
 
 useCountDown 的精度为毫秒，可能会造成以下几个问题
 
-* 即使设置 interval 时间为 1000ms，useCountDown 每次更新间隔也**不一定**正好是 1000 ms，而是 1000 毫秒左右。
+* 即使设置 interval 时间为 1000 毫秒，useCountDown 每次更新间隔也**不一定**正好是 1000 毫秒，而是 1000 毫秒左右。
 * 在第二个 demo 中，countdown 开始一般是 499x 毫秒，因为程序执行有延迟。
 
 如果你的精度只要到秒就好了，可以这样用 `Math.round(countdown / 1000)`。
