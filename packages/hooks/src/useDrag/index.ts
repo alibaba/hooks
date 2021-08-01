@@ -1,3 +1,5 @@
+import useMemoizedFn from '../useMemoizedFn';
+
 type getDragPropsFn = (data: any) => {
   draggable: 'true';
   key?: string;
@@ -5,37 +7,33 @@ type getDragPropsFn = (data: any) => {
   onDragEnd: (e: React.DragEvent) => void;
 };
 
-interface IConfig {
-  onDragStart?: (data: any, e: React.DragEvent) => void;
-  onDragEnd?: (data: any, e: React.DragEvent) => void;
+interface Options<T> {
+  onDragStart?: (data: T, e: React.DragEvent) => void;
+  onDragEnd?: (data: T, e: React.DragEvent) => void;
   /**
-   * 是否在getProps方法返回的对象中包含默认的key
+   * 是否在 getProps 方法返回的对象中包含默认的 key
    *
    * @default true
    */
   getPropsWithKey?: boolean;
 }
 
-const useDrag = (config?: IConfig): getDragPropsFn => {
-  const getProps = (data: any) => {
+const useDrag = <T = any>(options?: Options<T>): getDragPropsFn => {
+  const getProps = (data: T) => {
     return {
-      key: config && config.getPropsWithKey === false ? undefined : JSON.stringify(data),
+      key: options?.getPropsWithKey === false ? undefined : JSON.stringify(data),
       draggable: 'true' as const,
       onDragStart: (e: React.DragEvent) => {
-        if (config && config.onDragStart) {
-          config.onDragStart(data, e);
-        }
+        options?.onDragStart?.(data, e);
         e.dataTransfer.setData('custom', JSON.stringify(data));
       },
       onDragEnd: (e: React.DragEvent) => {
-        if (config && config.onDragEnd) {
-          config.onDragEnd(data, e);
-        }
+        options?.onDragEnd?.(data, e);
       },
     };
   };
 
-  return getProps;
+  return useMemoizedFn(getProps);
 };
 
 export default useDrag;
