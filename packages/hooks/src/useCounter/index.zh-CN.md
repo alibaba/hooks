@@ -12,7 +12,7 @@ group:
 
 <Tag lang="zh-CN" tags="ssr&crossPlatform"></Tag>
 
-管理 count 的 Hook。
+管理 counter 的 Hook。
 
 ## 代码演示
 
