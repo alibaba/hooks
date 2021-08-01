@@ -20,7 +20,7 @@ group:
 
 <code src="./demo/demo1.tsx" />
 
-### 自定义 shouldUpadte function
+### 自定义 shouldUpdate function
 
 <code src="./demo/demo2.tsx" />
 
@@ -37,11 +37,11 @@ const previousState: T = usePrevious<T>(
 
 | 参数          | 说明            | 类型  |
 |---------------|-----------------|-------|
-| previousState | 上次 state 的值 | `any` |
+| previousState | 上次 state 的值 | `T` |
 
 ### Params
 
 | 参数         | 说明                       | 类型                                         | 默认值              |
 |--------------|----------------------------|----------------------------------------------|---------------------|
-| state        | 需要记录变化的值           | `any`                                        | -                   |
+| state        | 需要记录变化的值           | `T`                                        | -                   |
 | shouldUpdate | 可选，自定义判断值是否变化 | `(prev: T \| undefined, next: T) => boolean` | `(a, b) => a !== b` |
