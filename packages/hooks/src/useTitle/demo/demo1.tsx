@@ -1,5 +1,5 @@
 /**
- * title: Default usage
+ * title: Basic usage
  * desc: Set title of the page.
  *
  * title.zh-CN: 基础用法
