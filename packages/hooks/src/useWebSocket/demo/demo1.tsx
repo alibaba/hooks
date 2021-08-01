@@ -23,9 +23,10 @@ export default () => {
     'wss://echo.websocket.org',
   );
 
-  messageHistory.current = useMemo(() => messageHistory.current.concat(latestMessage), [
-    latestMessage,
-  ]);
+  messageHistory.current = useMemo(
+    () => messageHistory.current.concat(latestMessage),
+    [latestMessage],
+  );
 
   return (
     <div>
@@ -47,7 +48,7 @@ export default () => {
       </button>
       {/* connect */}
       <button onClick={() => connect && connect()} disabled={readyState === ReadyState.Open}>
-        📞 connect
+        {readyState === ReadyState.Connecting ? 'connecting' : '📞 connect'}
       </button>
       <div style={{ marginTop: 8 }}>readyState: {readyState}</div>
       <div style={{ marginTop: 8 }}>

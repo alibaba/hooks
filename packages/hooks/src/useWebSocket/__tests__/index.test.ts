@@ -1,8 +1,7 @@
-import { renderHook, act } from '@testing-library/react-hooks';
-import { waitFor } from '@testing-library/react';
+import { act, renderHook } from '@testing-library/react-hooks';
 import WS from 'jest-websocket-mock';
-import useWebSocket, { ReadyState } from '../index';
 import { sleep } from '../../utils/testingHelpers';
+import useWebSocket, { ReadyState } from '../index';
 
 const promise: Promise<void> = new Promise((resolve) => resolve());
 const wsUrl = 'ws://localhost:9999';
@@ -21,7 +20,7 @@ describe('useWebSocket', () => {
     const hooks = renderHook(() => useWebSocket(wsUrl));
 
     // connect
-    expect(hooks.result.current.readyState).toBe(ReadyState.Closed);
+    expect(hooks.result.current.readyState).toBe(ReadyState.Connecting);
     expect(hooks.result.current.latestMessage).toBe(undefined);
     await act(async () => {
       await wsServer.connected;
