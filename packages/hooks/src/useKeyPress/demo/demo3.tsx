@@ -13,7 +13,7 @@
  */
 
 import React, { useState } from 'react';
-import { Icon } from 'antd';
+import { CheckOutlined } from '@ant-design/icons';
 import { useKeyPress } from 'ahooks';
 
 export default () => {
@@ -61,22 +61,20 @@ export default () => {
         2. Press key [a, s, d, f, Backspace, 8]: <span style={{ color: '#f00' }}>{key}</span>
       </div>
       <div>
-        3. Modifier key [shift.c]: {state === 1 && <Icon type="check" style={{ color: '#f00' }} />}
+        3. Modifier key [shift.c]: {state === 1 && <CheckOutlined style={{ color: '#f00' }} />}
       </div>
       <div>
-        4. Modifier key [meta]: {state === 2 && <Icon type="check" style={{ color: '#f00' }} />}
+        4. Modifier key [meta]: {state === 2 && <CheckOutlined style={{ color: '#f00' }} />}
       </div>
       <div>
-        5. Modifier key [ctrl.alt.c]:{' '}
-        {state === 3 && <Icon type="check" style={{ color: '#f00' }} />}
+        5. Modifier key [ctrl.alt.c]: {state === 3 && <CheckOutlined style={{ color: '#f00' }} />}
       </div>
       <div>
         6. Modifier key [ctrl.alt.space]:{' '}
-        {state === 4 && <Icon type="check" style={{ color: '#f00' }} />}
+        {state === 4 && <CheckOutlined style={{ color: '#f00' }} />}
       </div>
       <div>
-        7. Modifier key [ctrl.alt.0]:{' '}
-        {state === 5 && <Icon type="check" style={{ color: '#f00' }} />}
+        7. Modifier key [ctrl.alt.0]: {state === 5 && <CheckOutlined style={{ color: '#f00' }} />}
       </div>
     </div>
   );

@@ -152,7 +152,7 @@ describe('useDynamicList', () => {
     expect(hook.result.current.getKey(0)).toEqual(2);
   });
 
-  it('sortForm', () => {
+  it('sortList', () => {
     const hook = setUp([1, 2, 3, 4]);
     const formData = [
       {
@@ -172,14 +172,14 @@ describe('useDynamicList', () => {
       },
     ];
 
-    let sorted = hook.result.current.sortForm(formData);
+    let sorted = hook.result.current.sortList(formData);
     expect(sorted.length).toEqual(3);
     expect(sorted[0].name).toEqual('my bro');
 
     act(() => {
       hook.result.current.move(3, 0);
     });
-    sorted = hook.result.current.sortForm(formData);
+    sorted = hook.result.current.sortList(formData);
     expect(sorted[0].name).toEqual('新增行');
   });
 });
