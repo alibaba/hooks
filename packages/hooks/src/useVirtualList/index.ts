@@ -1,12 +1,13 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
+import useMemoizedFn from '../useMemoizedFn';
 import useSize from '../useSize';
 
-export interface OptionType {
+export interface Options {
   itemHeight: number | ((index: number) => number);
   overscan?: number;
 }
 
-export default <T = any>(list: T[], options: OptionType) => {
+const useVirtualList = <T = any>(list: T[], options: Options) => {
   const containerRef = useRef<HTMLElement | null>();
   const size = useSize(containerRef);
   // 暂时禁止 cache
@@ -15,7 +16,7 @@ export default <T = any>(list: T[], options: OptionType) => {
   const { itemHeight, overscan = 5 } = options;
 
   if (!itemHeight) {
-    console.warn('please enter a valid itemHeight');
+    console.warn('useVirtualList: please enter a valid itemHeight');
   }
 
   const getViewCapacity = (containerHeight: number) => {
@@ -112,15 +113,15 @@ export default <T = any>(list: T[], options: OptionType) => {
       data: ele,
       index: index + state.start,
     })),
-    scrollTo,
+    scrollTo: useMemoizedFn(scrollTo),
     containerProps: {
-      ref: (ele: any) => {
+      ref: useMemoizedFn((ele: any) => {
         containerRef.current = ele;
-      },
-      onScroll: (e: any) => {
+      }),
+      onScroll: useMemoizedFn((e: any) => {
         e.preventDefault();
         calculateRange();
-      },
+      }),
       style: { overflowY: 'auto' as const },
     },
     wrapperProps: {
@@ -132,3 +133,5 @@ export default <T = any>(list: T[], options: OptionType) => {
     },
   };
 };
+
+export default useVirtualList;
