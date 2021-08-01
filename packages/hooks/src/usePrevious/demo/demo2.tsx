@@ -1,9 +1,9 @@
 /**
- * title: Custom shouldUpadte function
- * desc: The stored previous value update only when the shouldUpadte function returns true.
+ * title: Custom shouldUpdate function
+ * desc: The stored previous value updates only when the shouldUpdate function returns true.
  *
- * title.zh-CN: 自定义 shouldUpadte function
- * desc.zh-CN: 只有 shouldUpadte function 返回 true 时，才会记录值的变化。
+ * title.zh-CN: 自定义 shouldUpdate function
+ * desc.zh-CN: 只有 shouldUpdate function 返回 true 时，才会记录值的变化。
  */
 
 import React, { useState } from 'react';

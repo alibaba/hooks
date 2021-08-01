@@ -12,7 +12,7 @@ group:
 
 <Tag lang="en-US" tags="ssr&crossPlatform"></Tag>
 
-A Hook to store the previous value.
+A Hook to return the previous state.
 
 ## Examples
 
@@ -20,7 +20,7 @@ A Hook to store the previous value.
 
 <code src="./demo/demo1.tsx" />
 
-### Custom shouldUpadte function
+### Custom shouldUpdate function
 
 <code src="./demo/demo2.tsx" />
 
@@ -37,11 +37,11 @@ const previousState: T = usePrevious<T>(
 
 | Property      | Description        | Type  |
 |---------------|--------------------|-------|
-| previousState | The previous value | `any` |
+| previousState | The previous value | `T` |
 
 ### Params
 
 | Property     | Description                                                   | Type                                         | Default             |
 |--------------|---------------------------------------------------------------|----------------------------------------------|---------------------|
-| state        | The state need to be tracked                                  | `any`                                        | -                   |
-| shouldUpdate | Optional, customize when the previous value need to be stored | `(prev: T \| undefined, next: T) => boolean` | `(a, b) => a !== b` |
+| state        | The state that needs to be tracked                            | `T`                                        | -                   |
+| shouldUpdate | `Optional`. Customize whether the state value should be updated | `(prev: T \| undefined, next: T) => boolean` | `(a, b) => a !== b` |
