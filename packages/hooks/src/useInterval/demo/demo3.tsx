@@ -1,6 +1,6 @@
 /**
  * title: Manual Control
- * desc: controll interval status manually
+ * desc: Control interval status manually
  *
  * title.zh-CN: 手动控制
  * desc.zh-CN: 手动控制定时器状态
