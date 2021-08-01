@@ -12,7 +12,7 @@ group:
 
 <Tag lang="en-US" tags="ssr&crossPlatform"></Tag>
 
-The Hook that returns the latest value, can avoid the closure problem.
+A Hook that returns the latest value, effectively avoiding the closure problem.
 
 ## Examples
 
