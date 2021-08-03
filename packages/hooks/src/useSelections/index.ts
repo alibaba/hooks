@@ -1,7 +1,6 @@
 import { useState, useMemo } from 'react';
 import { useMemoizedFn } from '..';
 
-
 export default function useSelections<T>(items: T[], defaultSelected: T[] = []) {
   const [selected, setSelected] = useState<T[]>(defaultSelected);
 
