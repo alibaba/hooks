@@ -1,22 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect } from 'react';
+import { createUpdateEffect } from '../createUpdateEffect';
 
-const useUpdateEffect: typeof useEffect = (effect, deps) => {
-  const isMounted = useRef(false);
-
-  // for react-refresh
-  useEffect(() => {
-    return () => {
-      isMounted.current = false;
-    };
-  }, []);
-
-  useEffect(() => {
-    if (!isMounted.current) {
-      isMounted.current = true;
-    } else {
-      return effect();
-    }
-  }, deps);
-};
-
-export default useUpdateEffect;
+export default createUpdateEffect(useEffect);
