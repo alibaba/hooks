@@ -1,6 +1,6 @@
 /**
- * title: Default usage
- * desc: return network status
+ * title: Basic usage
+ * desc: Return network status
  *
  * title.zh-CN: 基础用法
  * desc.zh-CN: 返回网络状态信息
@@ -14,7 +14,8 @@ export default () => {
 
   return (
     <div>
-      <p>Network：{JSON.stringify(networkState)}</p>
+      <div>Network information: </div>
+      <pre>{JSON.stringify(networkState, null, 2)}</pre>
     </div>
   );
 };
