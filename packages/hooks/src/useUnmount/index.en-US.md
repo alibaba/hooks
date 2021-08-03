@@ -13,7 +13,7 @@ group:
 
 <Tag lang="en-US" tags="ssr&crossPlatform"></Tag>
 
-A hook that execute the function at unmount.
+A hook that executes the function right before the component is unmounted.
 
 ## Examples
 
@@ -31,4 +31,4 @@ useUnmount(fn: () => void);
 
 | Property | Description                      | Type         | Default |
 |----------|----------------------------------|--------------|---------|
-| fn       | the function need to be executed | `() => void` | -       |
+| fn       | The function to be executed | `() => void` | -       |
