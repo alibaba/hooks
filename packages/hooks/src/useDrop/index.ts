@@ -1,8 +1,5 @@
-import { useMemo, useState, useRef, useCallback } from 'react';
-
-export interface DropAreaState {
-  isHovering: boolean;
-}
+import { useCallback, useMemo, useState } from 'react';
+import useLatest from '../useLatest';
 
 export interface DropProps {
   onDragOver: React.DragEventHandler;
@@ -45,10 +42,11 @@ const getProps = (
   },
 });
 
-const useDrop = (options: DropAreaOptions = {}): [DropProps, DropAreaState] => {
-  const optionsRef = useRef(options);
-  optionsRef.current = options;
+const useDrop = (options: DropAreaOptions = {}): [DropProps, boolean] => {
+  const optionsRef = useLatest(options);
+
   const [isHovering, setIsHovering] = useState<boolean>(false);
+
   const callback = useCallback(
     (dataTransfer: DataTransfer, event: React.DragEvent | React.ClipboardEvent) => {
       const uri = dataTransfer.getData('text/uri-list');
@@ -84,12 +82,12 @@ const useDrop = (options: DropAreaOptions = {}): [DropProps, DropAreaState] => {
     [],
   );
 
-  const props: DropProps = useMemo(() => getProps(callback, setIsHovering), [
-    callback,
-    setIsHovering,
-  ]);
+  const props: DropProps = useMemo(
+    () => getProps(callback, setIsHovering),
+    [callback, setIsHovering],
+  );
 
-  return [props, { isHovering }];
+  return [props, isHovering];
 };
 
 export default useDrop;
