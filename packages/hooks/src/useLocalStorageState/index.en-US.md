@@ -12,7 +12,7 @@ group:
 
 <Tag lang="zh-CN" tags="ssr"></Tag>
 
-A Hook can store state into localStorage.
+A Hook that stores state into localStorage.
 
 ## Examples
 
