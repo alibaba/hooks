@@ -1,6 +1,6 @@
 /**
  * title: Custom transformer function
- * desc: Controlled Input component with number input only
+ * desc: Controlled input component with number input only
  *
  * title.zh-CN: 自定义转换函数
  * desc.zh-CN: 只能输入数字的 input 组件
