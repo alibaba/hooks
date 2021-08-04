@@ -12,7 +12,7 @@ group:
 
 <Tag lang="en-US" tags="ssr&crossPlatform"></Tag>
 
-A hook of useLayoutEffect that only runs when dependencies update.
+A hook alike `useLayoutEffect` but skips running the effect for the first time.
 
 ## Examples
 
