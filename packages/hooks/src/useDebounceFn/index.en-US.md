@@ -35,9 +35,9 @@ const {
 
 ### Params
 
-| Property | Description                                                  | Type                      | Default |
-| -------- | ------------------------------------------------------------ | ------------------------- | ------- |
-| fn       | The function to debounce.                                    | `(...args: any[]) => any` | -       |
+| Property | Description                                                                   | Type                      | Default |
+| -------- | ----------------------------------------------------------------------------- | ------------------------- | ------- |
+| fn       | The function to debounce.                                                     | `(...args: any[]) => any` | -       |
 | options  | Config for the debounce behaviors. See the Options section below for details. | `Options`                 | `{}`    |
 
 ### Options
@@ -50,8 +50,8 @@ const {
 
 ### Result
 
-| Property | Description                               | Type         |
-|----------|-------------------------------------------|--------------|
-| run      | Trigger and pass parameters to fn. | `(...args: any[]) => any` |
-| cancel   | Cancel the invocation of currently debounced function. | `() => void` |
-| flush    | Immediately invoke currently debounced function. | `() => void` |
+| Property | Description                                            | Type                      |
+|----------|--------------------------------------------------------|---------------------------|
+| run      | Invode and pass parameters to fn.                      | `(...args: any[]) => any` |
+| cancel   | Cancel the invocation of currently debounced function. | `() => void`              |
+| flush    | Immediately invoke currently debounced function.       | `() => void`              |
