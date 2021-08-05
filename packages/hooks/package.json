@@ -33,8 +33,6 @@
   ],
   "dependencies": {
     "@ahooksjs/use-request": "^3.0.0-alpha.0",
-    "@ant-design/icons": "^4.6.2",
-    "@types/js-cookie": "^2.2.6",
     "core-js": "^2.6.12",
     "dayjs": "^1.9.1",
     "intersection-observer": "^0.7.0",
@@ -47,14 +45,15 @@
     "react": "^16.8.6 || ^17.0"
   },
   "devDependencies": {
+    "@ant-design/icons": "^4.6.2",
+    "@types/js-cookie": "^2.2.6",
     "@alifd/next": "^1.20.6",
     "@types/enzyme": "^3.10.5",
     "antd": "^4.16.9",
     "enzyme-adapter-react-16": "^1.15.4",
     "jest-websocket-mock": "^2.1.0",
     "mock-socket": "^9.0.3",
-    "react-drag-listview": "^0.1.6",
-    "umi-request": "^1.0.8"
+    "react-drag-listview": "^0.1.6"
   },
   "engines": {
     "node": ">=8.0.0"
