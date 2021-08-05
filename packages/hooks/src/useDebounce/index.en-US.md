@@ -12,11 +12,11 @@ group:
 
 <Tag lang="en-US" tags="ssr&crossPlatform"></Tag>
 
-A hook that handle the debounce value.
+A hook that deal with the debounced value.
 
 ## Examples
 
-### Default usage
+### Basic usage
 
 <code src="./demo/demo1.tsx" />
 
@@ -32,14 +32,14 @@ const debouncedValue = useDebounce(
 ### Params
 
 | Property | Description                                                  | Type      | Default |
-|----------|--------------------------------------------------------------|-----------|---------|
-| value    | Value that requires debounce                                 | `any`     | -       |
-| options  | Config the debounce behavior. See the Options section below. | `Options` | `{}`    |
+| -------- | ------------------------------------------------------------ | --------- | ------- |
+| value    | The value to debounce.                                       | `any`     | -       |
+| options  | Config for the debounce behaviors. See the Options section below for details. | `Options` | `{}`    |
 
 ### Options
 
 | Property | Description                                           | Type      | Default |
-|----------|-------------------------------------------------------|-----------|---------|
+| -------- | ----------------------------------------------------- | --------- | ------- |
 | wait     | The number of milliseconds to delay.                  | `number`  | `1000`  |
 | leading  | Specify invoking on the leading edge of the timeout.  | `boolean` | `false` |
 | trailing | Specify invoking on the trailing edge of the timeout. | `boolean` | `true`  |
