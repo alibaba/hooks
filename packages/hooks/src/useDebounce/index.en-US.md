@@ -16,7 +16,7 @@ A hook that deal with the debounced value.
 
 ## Examples
 
-### Basic usage
+### Default usage
 
 <code src="./demo/demo1.tsx" />
 
@@ -31,9 +31,9 @@ const debouncedValue = useDebounce(
 
 ### Params
 
-| Property | Description                                                  | Type      | Default |
-| -------- | ------------------------------------------------------------ | --------- | ------- |
-| value    | The value to debounce.                                       | `any`     | -       |
+| Property | Description                                                                   | Type      | Default |
+| -------- | ----------------------------------------------------------------------------- | --------- | ------- |
+| value    | The value to debounce.                                                        | `any`     | -       |
 | options  | Config for the debounce behaviors. See the Options section below for details. | `Options` | `{}`    |
 
 ### Options
