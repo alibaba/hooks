@@ -1,15 +1,15 @@
 import { renderHook } from '@testing-library/react-hooks';
 import useLatest from '../index';
 
-const setUp = () => renderHook((state) => useLatest(state), { initialProps: 0 });
+const setUp = (val) => renderHook((state) => useLatest(state), { initialProps: val });
 
 describe('useLatest', () => {
   it('should be defined', () => {
     expect(useLatest).toBeDefined();
   });
 
-  it('useLatest should work', async () => {
-    const { result, rerender } = setUp();
+  it('useLatest with basic variable should work', async () => {
+    const { result, rerender } = setUp(0);
 
     rerender(1);
     expect(result.current.current).toEqual(1);
@@ -19,5 +19,14 @@ describe('useLatest', () => {
 
     rerender(3);
     expect(result.current.current).toEqual(3);
+  });
+
+  it('useLatest with reference variable should work', async () => {
+    const { result, rerender } = setUp({});
+
+    expect(result.current.current).toEqual({});
+
+    rerender([]);
+    expect(result.current.current).toEqual([]);
   });
 });
