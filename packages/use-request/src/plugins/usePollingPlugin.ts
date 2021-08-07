@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import type { UseRequestPlugin, UseRequestPluginInitContext, UseRequestState } from '../type';
+import type { UseRequestPlugin, UseRequestPluginInitContext, UseRequestState } from '../types';
 
 /**
  *

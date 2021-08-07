@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
-import type { UseRequest } from './type';
+import type { UseRequest } from './types';
+import { wrapPromise } from './utils';
 
 const useRequestImplement = (fetcher, options) => {
   const { manual, defaultParams, plugins = [], onSuccess, onError } = options;
@@ -110,10 +111,22 @@ const useRequestImplement = (fetcher, options) => {
   };
 };
 
+const pendingMap = new WeakMap();
+const useSuspense = (fetcher, options) => {
+  let f = pendingMap.get(fetcher);
+  if (!f) {
+    f = wrapPromise(fetcher(options.defaultParams));
+    pendingMap.set(fetcher, f);
+  }
+  return {
+    data: f.read(),
+  };
+};
+
 const useRequest: UseRequest = (fetcher, options) => {
   if (options.suspense) {
     // eslint-disable-next-line react-hooks/rules-of-hooks
-    // return useSuspense(fetcher);
+    return useSuspense(fetcher, options);
   }
   // eslint-disable-next-line react-hooks/rules-of-hooks
   return useRequestImplement(fetcher, options);

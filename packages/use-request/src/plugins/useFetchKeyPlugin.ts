@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import type { UseRequestPlugin } from '../type';
+import type { UseRequestPlugin } from '../types';
 
 const useFetchKey: UseRequestPlugin<{ fetchKey: Function }> = ({ fetchKey = (key) => key }) => {
   const [fetches, setFetches] = useState({});

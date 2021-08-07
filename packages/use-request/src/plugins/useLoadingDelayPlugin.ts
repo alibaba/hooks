@@ -1,5 +1,5 @@
 import { useRef } from 'react';
-import type { UseRequestPlugin } from '../type';
+import type { UseRequestPlugin } from '../types';
 import { sleep } from '../utils';
 
 const useLoadingDelayPlugin: UseRequestPlugin<{ time: number }> = ({ time }) => {

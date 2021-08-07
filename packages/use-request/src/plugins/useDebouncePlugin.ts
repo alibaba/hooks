@@ -1,5 +1,5 @@
 import { debounce } from 'lodash';
-import type { UseRequestPlugin } from '../type';
+import type { UseRequestPlugin } from '../types';
 
 const useDebouncePlugin: UseRequestPlugin<{ wait: number }> = ({ wait }) => {
   return {

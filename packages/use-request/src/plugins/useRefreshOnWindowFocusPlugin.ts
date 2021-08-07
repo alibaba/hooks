@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react';
-import type { UseRequestPluginInitContext, UseRequestState, UseRequestPlugin } from '../type';
+import type { UseRequestPluginInitContext, UseRequestState, UseRequestPlugin } from '../types';
 
 const useRefreshOnWindowFocusPlugin: UseRequestPlugin = () => {
   const stateRef = useRef<UseRequestState | null>(null);

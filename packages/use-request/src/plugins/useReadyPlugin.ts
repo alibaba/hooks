@@ -1,4 +1,4 @@
-import type { UseRequestPlugin } from '../type';
+import type { UseRequestPlugin } from '../types';
 
 const useReadyPlugin: UseRequestPlugin<{ ready: boolean }> = (ready) => {
   return {

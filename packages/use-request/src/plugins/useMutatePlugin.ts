@@ -1,5 +1,5 @@
 import { useRef } from 'react';
-import type { UseRequestPlugin } from '../type';
+import type { UseRequestPlugin } from '../types';
 
 const useMutatePlugin: UseRequestPlugin = () => {
   const context = useRef<any>(null);

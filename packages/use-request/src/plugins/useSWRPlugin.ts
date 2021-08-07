@@ -1,5 +1,5 @@
 import { useRef } from 'react';
-import type { UseRequestPlugin, UseRequestPluginInitContext } from '../type';
+import type { UseRequestPlugin, UseRequestPluginInitContext } from '../types';
 
 const WINDOW_CACHE_STORAGE = 'useRequest__window_cache_storage__';
 const CACHE_NAME = 'useRequest__swr_cache__';
