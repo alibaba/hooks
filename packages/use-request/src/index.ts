@@ -1,128 +1,122 @@
-/* eslint-disable react-hooks/rules-of-hooks */
-import { useRef, useContext } from 'react';
-import {
-  BaseOptions,
-  BasePaginatedOptions,
-  BaseResult,
-  CombineService,
-  LoadMoreFormatReturn,
-  LoadMoreOptions,
-  LoadMoreOptionsWithFormat,
-  LoadMoreParams,
-  LoadMoreResult,
-  OptionsWithFormat,
-  PaginatedFormatReturn,
-  PaginatedOptionsWithFormat,
-  PaginatedParams,
-  PaginatedResult,
-} from './types';
-import useAsync from './useAsync';
-import useLoadMore from './useLoadMore';
-import usePaginated from './usePaginated';
-import ConfigContext from './configContext';
+import { useState, useEffect, useRef } from 'react';
+import type { UseRequest } from './type';
 
-function useRequest<R = any, P extends any[] = any, U = any, UU extends U = any>(
-  service: CombineService<R, P>,
-  options: OptionsWithFormat<R, P, U, UU>,
-): BaseResult<U, P>;
-function useRequest<R = any, P extends any[] = any>(
-  service: CombineService<R, P>,
-  options?: BaseOptions<R, P>,
-): BaseResult<R, P>;
+const useRequestImplement = (fetcher, options) => {
+  const { manual, defaultParams, plugins = [], onSuccess, onError } = options;
 
-function useRequest<R extends LoadMoreFormatReturn, RR>(
-  service: CombineService<RR, LoadMoreParams<R>>,
-  options: LoadMoreOptionsWithFormat<R, RR>,
-): LoadMoreResult<R>;
-function useRequest<R extends LoadMoreFormatReturn, RR extends R>(
-  service: CombineService<R, LoadMoreParams<R>>,
-  options: LoadMoreOptions<RR>,
-): LoadMoreResult<R>;
+  // basic
+  const [loading, setLoading] = useState(false);
+  const [data, setData] = useState(null);
+  const [error, setError] = useState(null);
+  const suspended = useRef(false);
+  const paramsCache = useRef<any>(null);
 
-function useRequest<R = any, Item = any, U extends Item = any>(
-  service: CombineService<R, PaginatedParams>,
-  options: PaginatedOptionsWithFormat<R, Item, U>,
-): PaginatedResult<Item>;
-function useRequest<R = any, Item = any, U extends Item = any>(
-  service: CombineService<PaginatedFormatReturn<Item>, PaginatedParams>,
-  options: BasePaginatedOptions<U>,
-): PaginatedResult<Item>;
+  const getParamWithCache = (...params) => {
+    if (!params) {
+      return [];
+    }
+    if (params) {
+      paramsCache.current = params;
+      return params;
+    }
+    return paramsCache.current;
+  };
 
-function useRequest(service: any, options: any = {}) {
-  const contextConfig = useContext(ConfigContext);
-  const finalOptions = { ...contextConfig, ...options };
-
-  const { paginated, loadMore, requestMethod } = finalOptions;
-
-  const paginatedRef = useRef(paginated);
-  const loadMoreRef = useRef(loadMore);
-
-  if (paginatedRef.current !== paginated) {
-    throw Error('You should not modify the paginated of options');
-  }
-
-  if (loadMoreRef.current !== loadMore) {
-    throw Error('You should not modify the loadMore of options');
-  }
-
-  paginatedRef.current = paginated;
-  loadMoreRef.current = loadMore;
-
-  // @ts-ignore
-  const fetchProxy = (...args: any[]) =>
-    // @ts-ignore
-    fetch(...args).then((res: Response) => {
-      if (res.ok) {
-        return res.json();
+  const runPluginHandler = async (event, ...args) => {
+    for (const plugin of plugins) {
+      if (plugin[event]) {
+        await plugin[event](...args);
       }
-      throw new Error(res.statusText);
-    });
+    }
+  };
 
-  const finalRequestMethod = requestMethod || fetchProxy;
-
-  let promiseService: () => Promise<any>;
-  switch (typeof service) {
-    case 'string':
-      promiseService = () => finalRequestMethod(service);
-      break;
-    case 'object':
-      const { url, ...rest } = service;
-      promiseService = () => (requestMethod ? requestMethod(service) : fetchProxy(url, rest));
-      break;
-    default:
-      promiseService = (...args: any[]) =>
-        new Promise((resolve, reject) => {
-          const s = service(...args);
-          let fn = s;
-          if (!s.then) {
-            switch (typeof s) {
-              case 'string':
-                fn = finalRequestMethod(s);
-                break;
-              case 'object':
-                const { url, ...rest } = s;
-                fn = requestMethod ? requestMethod(s) : fetchProxy(url, rest);
-                break;
-            }
+  const runImplement = (params) => {
+    (async () => {
+      const runParams = getParamWithCache(params);
+      console.log('>> runParams', runParams);
+      await runPluginHandler('onBefore', runParams);
+      if (suspended.current) {
+        return;
+      }
+      setLoading(true);
+      fetcher(...runParams)
+        .then(async (res) => {
+          await runPluginHandler('onSuccess', runParams, res);
+          setData(res);
+          if (onSuccess) {
+            onSuccess(res, runParams);
           }
-          fn.then(resolve).catch(reject);
+        })
+        .catch(async (err) => {
+          await runPluginHandler('onError', runParams, err);
+          setError(err);
+          if (onError) {
+            onError(err, runParams);
+          }
+        })
+        .finally(async () => {
+          await runPluginHandler('onComplete', runParams);
+          setLoading(false);
         });
+    })();
+  };
+
+  let run = runImplement;
+  plugins.forEach((plugin) => {
+    if (plugin.run) {
+      run = plugin.run(runImplement);
+    }
+  });
+
+  const runAsync = (...params) => {
+    const runParams = getParamWithCache(...params);
+    return fetcher(...runParams);
+  };
+
+  const state = { loading, data, error, suspended };
+  const ctx = {
+    run,
+    setData,
+    setSuspended: (suspend) => {
+      suspended.current = suspend;
+    },
+  };
+  plugins.forEach((plugin) => {
+    if (plugin.init) {
+      plugin.init(state, ctx, options);
+    }
+  });
+
+  useEffect(() => {
+    if (!manual) {
+      run(defaultParams);
+    }
+  }, []);
+
+  const pluginReturns = plugins.reduce((memo, plugin) => {
+    return {
+      ...memo,
+      ...(plugin.returns || {}),
+    };
+  }, {});
+
+  return {
+    data,
+    error,
+    loading,
+    run,
+    runAsync,
+    ...pluginReturns,
+  };
+};
+
+const useRequest: UseRequest = (fetcher, options) => {
+  if (options.suspense) {
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    // return useSuspense(fetcher);
   }
-
-  if (loadMore) {
-    return useLoadMore(promiseService, finalOptions);
-  }
-  if (paginated) {
-    return usePaginated(promiseService, finalOptions);
-  }
-  return useAsync(promiseService, finalOptions);
-}
-
-const UseRequestProvider = ConfigContext.Provider;
-
-// UseAPIProvider 已经废弃，此处为了兼容 umijs 插件 plugin-request
-const UseAPIProvider = UseRequestProvider;
-
-export { useAsync, usePaginated, useLoadMore, UseRequestProvider, UseAPIProvider };
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  return useRequestImplement(fetcher, options);
+};
 
 export default useRequest;
