@@ -1,42 +1,48 @@
-import { useRef, useMemo } from 'react';
-import useDeepCompareEffect from '../useDeepCompareEffect';
+import { useRef } from 'react';
+import useBoolean from '../useBoolean';
+import useEventListener from '../useEventListener';
 import useLatest from '../useLatest';
-import { getTargetElement } from '../utils/dom2';
 import type { BasicTarget } from '../utils/dom2';
 
 type EventType = MouseEvent | TouchEvent;
 
-function useLongPress(
-  onLongPress: (enent: EventType) => void,
-  target: BasicTarget | BasicTarget[],
-  delay: number,
-) {
-  const onClickAwayRef = useLatest(onLongPress);
+function useLongPress(onLongPress: (event: EventType) => void, target: BasicTarget, delay: number) {
+  const onLongPressRef = useLatest(onLongPress);
   const timer = useRef<ReturnType<typeof setTimeout>>();
+  const [state, { setTrue, setFalse }] = useBoolean(false);
+
   let startTime = 0;
   let endTime = 0;
 
-  const deps = useMemo(() => {
-    const targets = Array.isArray(target) ? target : [target];
-    return targets.map((item) => (typeof target === 'function' ? undefined : item));
-  }, [target]);
-
-  useDeepCompareEffect(() => {
-    document.addEventListener('mousedown', (e) => {
+  useEventListener(
+    'mousedown',
+    (e) => {
       e.preventDefault();
 
       startTime = Date.now();
-      timer.current = setTimeout(() => onClickAwayRef.current(e), delay);
-    });
+      timer.current = setTimeout(() => onLongPressRef.current(e), delay);
 
-    document.addEventListener('mouseup', (e) => {
+      setTrue();
+    },
+    { target },
+  );
+
+  useEventListener(
+    'mouseup',
+    (e) => {
       e.preventDefault();
+
       endTime = Date.now();
       if (endTime - startTime < delay) {
         clearTimeout(timer.current!);
       }
-    });
-  }, [deps]);
+
+      setFalse();
+    },
+    { target },
+  );
+
+  return state;
 }
 
 export default useLongPress;

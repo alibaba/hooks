@@ -23,9 +23,9 @@ group:
 ```typescript
 type Target = Element | (() => Element) | React.MutableRefObject<Element>;
 
-useLongPress(
-  onClickAway: (event: MouseEvent | TouchEvent) => void,
-  target: Target | Target[],
+const isPressing = useLongPress(
+  onLongPress: (event: MouseEvent | TouchEvent) => void,
+  target: Target ,
   delay?: number
 );
 ```
@@ -34,6 +34,12 @@ useLongPress(
 
 | 参数    | 说明                                         | 类型                   | 默认值 |
 |---------|----------------------------------------------|------------------------|--------|
-| onClickAway | 触发函数  | `(event: MouseEvent | TouchEvent) => void` | -      |
-| target | DOM 节点或者 Ref，支持数组 | `Target` \| `Target[]` | - |
+| onLongPress | 触发函数  | `(event: MouseEvent \| TouchEvent) => void` | -      |
+| target | DOM 节点或者 Ref  | `Target`  | - |
 | delay | 长按时间 | `number` |
+
+### Result
+| 参数    | 说明                                         | 类型                   | 默认值 |
+|---------|----------------------------------------------|------------------------|--------|
+| isPressing |  是否处于按压状态 | `boolean` | -      |
+
