@@ -3,134 +3,140 @@ import useSet from '../index';
 
 const setUp = <K>(initialSet?: Iterable<K>) => renderHook(() => useSet(initialSet));
 
-it('should init set and utils', () => {
-  const { result } = setUp([1, 2]);
-  const [set, utils] = result.current;
-
-  expect(set).toEqual(new Set([1, 2]));
-  expect(utils).toStrictEqual({
-    add: expect.any(Function),
-    remove: expect.any(Function),
-    reset: expect.any(Function),
-  });
-});
-
-it('should init empty set if no initial set provided', () => {
-  const { result } = setUp();
-
-  expect(result.current[0]).toEqual(new Set());
-});
-
-it('should have an initially provided key', () => {
-  const { result } = setUp(['a']);
-  const [set, utils] = result.current;
-
-  let value;
-  act(() => {
-    value = set.has('a');
+describe('useSet', () => {
+  it('should be defined', () => {
+    expect(useSet).toBeDefined();
   });
 
-  expect(value).toBe(true);
-});
+  it('should init set and utils', () => {
+    const { result } = setUp([1, 2]);
+    const [set, utils] = result.current;
 
-it('should have an added key', () => {
-  const { result } = setUp();
-
-  act(() => {
-    result.current[1].add('newKey');
+    expect(set).toEqual(new Set([1, 2]));
+    expect(utils).toStrictEqual({
+      add: expect.any(Function),
+      remove: expect.any(Function),
+      reset: expect.any(Function),
+    });
   });
 
-  let value;
-  act(() => {
-    value = result.current[0].has('newKey');
+  it('should init empty set if no initial set provided', () => {
+    const { result } = setUp();
+
+    expect(result.current[0]).toEqual(new Set());
   });
 
-  expect(value).toBe(true);
-});
+  it('should have an initially provided key', () => {
+    const { result } = setUp(['a']);
+    const [set, utils] = result.current;
 
-it('should get false for non-existing key', () => {
-  const { result } = setUp(['a']);
-  const [set] = result.current;
+    let value;
+    act(() => {
+      value = set.has('a');
+    });
 
-  let value;
-  act(() => {
-    value = set.has('nonExisting');
+    expect(value).toBe(true);
   });
 
-  expect(value).toBe(false);
-});
+  it('should have an added key', () => {
+    const { result } = setUp();
 
-it('should add a new key', () => {
-  const { result } = setUp(['oldKey']);
-  const [, utils] = result.current;
+    act(() => {
+      result.current[1].add('newKey');
+    });
 
-  act(() => {
-    utils.add('newKey');
+    let value;
+    act(() => {
+      value = result.current[0].has('newKey');
+    });
+
+    expect(value).toBe(true);
   });
 
-  expect(result.current[0]).toEqual(new Set(['oldKey', 'newKey']));
-});
+  it('should get false for non-existing key', () => {
+    const { result } = setUp(['a']);
+    const [set] = result.current;
 
-it('should work if setting existing key', () => {
-  const { result } = setUp(['oldKey']);
-  const [, utils] = result.current;
+    let value;
+    act(() => {
+      value = set.has('nonExisting');
+    });
 
-  act(() => {
-    utils.add('oldKey');
+    expect(value).toBe(false);
   });
 
-  expect(result.current[0]).toEqual(new Set(['oldKey']));
-});
+  it('should add a new key', () => {
+    const { result } = setUp(['oldKey']);
+    const [, utils] = result.current;
 
-it('should remove existing key', () => {
-  const { result } = setUp([1, 2]);
-  const [, utils] = result.current;
+    act(() => {
+      utils.add('newKey');
+    });
 
-  act(() => {
-    utils.remove(2);
+    expect(result.current[0]).toEqual(new Set(['oldKey', 'newKey']));
   });
 
-  expect(result.current[0]).toEqual(new Set([1]));
-});
+  it('should work if setting existing key', () => {
+    const { result } = setUp(['oldKey']);
+    const [, utils] = result.current;
 
-it('should do nothing if removing non-existing key', () => {
-  const { result } = setUp(['a', 'b']);
-  const [, utils] = result.current;
+    act(() => {
+      utils.add('oldKey');
+    });
 
-  act(() => {
-    utils.remove('nonExisting');
+    expect(result.current[0]).toEqual(new Set(['oldKey']));
   });
 
-  expect(result.current[0]).toEqual(new Set(['a', 'b']));
-});
+  it('should remove existing key', () => {
+    const { result } = setUp([1, 2]);
+    const [, utils] = result.current;
 
-it('should reset to initial set provided', () => {
-  const { result } = setUp([1]);
-  const [, utils] = result.current;
+    act(() => {
+      utils.remove(2);
+    });
 
-  act(() => {
-    utils.add(2);
+    expect(result.current[0]).toEqual(new Set([1]));
   });
 
-  expect(result.current[0]).toEqual(new Set([1, 2]));
+  it('should do nothing if removing non-existing key', () => {
+    const { result } = setUp(['a', 'b']);
+    const [, utils] = result.current;
 
-  act(() => {
-    utils.reset();
+    act(() => {
+      utils.remove('nonExisting');
+    });
+
+    expect(result.current[0]).toEqual(new Set(['a', 'b']));
   });
 
-  expect(result.current[0]).toEqual(new Set([1]));
-});
+  it('should reset to initial set provided', () => {
+    const { result } = setUp([1]);
+    const [, utils] = result.current;
 
-it('should memoized its utils methods', () => {
-  const { result } = setUp(['a', 'b']);
-  const [, utils] = result.current;
-  const { add, remove, reset } = utils;
+    act(() => {
+      utils.add(2);
+    });
 
-  act(() => {
-    add('foo');
+    expect(result.current[0]).toEqual(new Set([1, 2]));
+
+    act(() => {
+      utils.reset();
+    });
+
+    expect(result.current[0]).toEqual(new Set([1]));
   });
 
-  expect(result.current[1].add).toBe(add);
-  expect(result.current[1].remove).toBe(remove);
-  expect(result.current[1].reset).toBe(reset);
+  it('should memoized its utils methods', () => {
+    const { result } = setUp(['a', 'b']);
+    const [, utils] = result.current;
+    const { add, remove, reset } = utils;
+
+    act(() => {
+      add('foo');
+    });
+
+    expect(result.current[1].add).toBe(add);
+    expect(result.current[1].remove).toBe(remove);
+    expect(result.current[1].reset).toBe(reset);
+  });
 });
