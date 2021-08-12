@@ -16,9 +16,11 @@ group:
 
 ## 代码演示
 
+### 基本使用
+
 <code src="./demo/demo1.tsx"/>
 
-## 移除光标不取消事件
+### 移除光标不取消事件
 
 <code src="./demo/demo2.tsx"/>
 
