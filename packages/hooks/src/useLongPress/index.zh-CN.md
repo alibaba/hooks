@@ -18,6 +18,10 @@ group:
 
 <code src="./demo/demo1.tsx"/>
 
+## 移除光标不取消事件
+
+<code src="./demo/demo2.tsx"/>
+
 ## API
 
 ```typescript
@@ -26,7 +30,10 @@ type Target = Element | (() => Element) | React.MutableRefObject<Element>;
 const isPressing = useLongPress(
   onLongPress: (event: MouseEvent | TouchEvent) => void,
   target: Target ,
-  delay?: number
+  options?: {
+    delay?: number,
+    cancelOnMovement?: boolean,
+  }
 );
 ```
 
@@ -36,7 +43,14 @@ const isPressing = useLongPress(
 |---------|----------------------------------------------|------------------------|--------|
 | onLongPress | 触发函数  | `(event: MouseEvent \| TouchEvent) => void` | -      |
 | target | DOM 节点或者 Ref  | `Target`  | - |
-| delay | 长按时间 | `number` |
+| options | 可选配置项，见 Options  | `Options` | - |
+
+### Options
+| 参数    | 说明                                         | 类型                   | 默认值 |
+|---------|----------------------------------------------|------------------------|--------|
+| delay | 长按时间 | `number` | `1500`
+| cancelOnMovement | 当光标移除目标是否失效 | `boolean` | `true`
+
 
 ### Result
 | 参数    | 说明                                         | 类型                   | 默认值 |

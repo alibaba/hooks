@@ -6,13 +6,22 @@ import type { BasicTarget } from '../utils/dom2';
 
 type EventType = MouseEvent | TouchEvent;
 
-function useLongPress(onLongPress: (event: EventType) => void, target: BasicTarget, delay: number) {
+interface LongPressOptions {
+  delay?: number;
+  cancelOnMovement?: boolean;
+}
+
+function useLongPress(
+  onLongPress: (event: EventType) => void,
+  target: BasicTarget,
+  { delay = 1500, cancelOnMovement = true }: LongPressOptions = {},
+) {
+  console.log('ff:', cancelOnMovement);
   const onLongPressRef = useLatest(onLongPress);
   const timer = useRef<ReturnType<typeof setTimeout>>();
   const [state, { setTrue, setFalse }] = useBoolean(false);
 
   let startTime = 0;
-  let endTime = 0;
 
   useEventListener(
     'mousedown',
@@ -32,14 +41,24 @@ function useLongPress(onLongPress: (event: EventType) => void, target: BasicTarg
     (e) => {
       e.preventDefault();
 
-      endTime = Date.now();
-      if (endTime - startTime < delay) {
+      if (e.currentTarget === target) {
         clearTimeout(timer.current!);
       }
 
       setFalse();
     },
-    { target },
+    { target: document },
+  );
+
+  useEventListener(
+    'mouseout',
+    () => {
+      if (cancelOnMovement) {
+        setFalse();
+        clearTimeout(timer.current!);
+      }
+    },
+    { target: document },
   );
 
   return state;
