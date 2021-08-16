@@ -30,12 +30,12 @@ export function createUseStorageState(nullishStorage: Storage | null) {
     }, [key]);
 
     function getStoredValue() {
-      const raw = storage.getItem(key);
-      if (raw) {
-        try {
+      try {
+        const raw = storage.getItem(key);
+        if (raw) {
           return JSON.parse(raw);
-        } catch (e) {}
-      }
+        }
+      } catch (e) {}
       if (isFunction<IFuncUpdater<T>>(defaultValue)) {
         return defaultValue();
       }
@@ -50,11 +50,15 @@ export function createUseStorageState(nullishStorage: Storage | null) {
         } else if (isFunction<IFuncUpdater<T>>(value)) {
           const previousState = getStoredValue();
           const currentState = value(previousState);
-          storage.setItem(key, JSON.stringify(currentState));
-          setState(currentState);
+          try {
+            storage.setItem(key, JSON.stringify(currentState));
+            setState(currentState);
+          } catch (e) {}
         } else {
-          storage.setItem(key, JSON.stringify(value));
-          setState(value);
+          try {
+            storage.setItem(key, JSON.stringify(value));
+            setState(value);
+          } catch (e) {}
         }
       },
       [key],
