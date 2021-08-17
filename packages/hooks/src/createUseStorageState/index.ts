@@ -35,7 +35,9 @@ export function createUseStorageState(nullishStorage: Storage | null) {
         if (raw) {
           return JSON.parse(raw);
         }
-      } catch (e) {}
+      } catch (e) {
+        console.error(e);
+      }
       if (isFunction<IFuncUpdater<T>>(defaultValue)) {
         return defaultValue();
       }
@@ -53,12 +55,16 @@ export function createUseStorageState(nullishStorage: Storage | null) {
           try {
             storage.setItem(key, JSON.stringify(currentState));
             setState(currentState);
-          } catch (e) {}
+          } catch (e) {
+            console.error(e);
+          }
         } else {
           try {
             storage.setItem(key, JSON.stringify(value));
             setState(value);
-          } catch (e) {}
+          } catch (e) {
+            console.error(e);
+          }
         }
       },
       [key],
