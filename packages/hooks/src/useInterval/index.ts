@@ -17,13 +17,18 @@ function useInterval(
     if (immediate) {
       fnRef.current?.();
     }
-    const timer = setInterval(() => {
-      fnRef.current?.();
-    }, delay);
-    return () => {
-      clearInterval(timer);
+    let timer;
+    const run = () => {
+      timer = setTimeout(() => {
+        fnRef.current?.();
+        run();
+      }, delay);
     };
-  }, [delay]);
+    run();
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [delay, immediate]);
 }
 
 export default useInterval;
