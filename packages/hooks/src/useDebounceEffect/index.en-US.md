@@ -36,7 +36,7 @@ useDebounceEffect(
 |----------|--------------------------------------------------------------|------------------|---------|
 | effect   | The effect callback.                                         | `EffectCallback` | -       |
 | deps     | The dependencies list.                                       | `DependencyList` | -       |
-| options  | Config the debounce behavior. See the Options section below. | `Options`        | `{}`    |
+| options  | Config for the debounce behaviors. See the Options section below for details. | `Options`        | `{}`    |
 
 ### Options
 
