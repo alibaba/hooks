@@ -33,6 +33,7 @@ function useLoadMore<R extends LoadMoreFormatReturn, RR = any>(
 
   const result: any = useAsync(service, {
     ...(restOptions as any),
+    refreshDeps,
     fetchKey: (d) => d?.list?.length || 0,
     onSuccess: (...params) => {
       setLoadingMore(false);

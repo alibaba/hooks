@@ -38,10 +38,16 @@ function usePaginated<R, Item, U extends Item = any>(
       },
     ],
     ...(restOptions as any),
+    paginated,
+    refreshDeps,
   });
 
-  const { current = 1, pageSize = defaultPageSize, sorter = {}, filters = {} } =
-    params && params[0] ? params[0] : ({} as any);
+  const {
+    current = 1,
+    pageSize = defaultPageSize,
+    sorter = {},
+    filters = {},
+  } = params && params[0] ? params[0] : ({} as any);
 
   // 只改变 pagination，其他参数原样传递
   const runChangePaination = useCallback(

@@ -282,6 +282,9 @@ function useAsync<R, P extends any[], U, UU extends U = any>(
     pollingInterval = 0,
     pollingWhenHidden = true,
 
+    paginated,
+    loadMore,
+
     defaultParams = [],
     refreshOnWindowFocus = false,
     focusTimespan = 5000,
@@ -413,7 +416,7 @@ function useAsync<R, P extends any[], U, UU extends U = any>(
   // for ready
   const hasTriggeredByReady = useRef(false);
   useUpdateEffect(() => {
-    if (ready) {
+    if (ready && !paginated && !loadMore) {
       if (!hasTriggeredByReady.current && readyMemoryParams.current) {
         runRef.current(...readyMemoryParams.current);
       }
@@ -423,7 +426,7 @@ function useAsync<R, P extends any[], U, UU extends U = any>(
 
   // 第一次默认执行
   useEffect(() => {
-    if (!manual) {
+    if (!manual && !paginated && !loadMore) {
       // 如果有缓存，则重新请求
       if (Object.keys(fetches).length > 0) {
         // 如果 staleTime 是 -1，则 cache 永不过期
