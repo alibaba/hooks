@@ -6,10 +6,11 @@ nav:
 group:
   title: UI
   path: /ui
-  order: 9
 ---
 
 # useDrop & useDrag
+
+<Tag lang="zh-CN" tags="ssr"></Tag>
 
 A pair of hooks to help you manage data transfer between drag and drop
 
@@ -21,47 +22,51 @@ A pair of hooks to help you manage data transfer between drag and drop
 
 ## Examples
 
-### Default Usage
+### Basic Usage
 
 <code src="./demo/demo1.tsx" />
 
 ## API
 
+### useDrag
+
 ```typescript
-const getDragProps = useDrag({ onDragStart, onDragEnd });
+const getDragProps = useDrag<T>({ onDragStart, onDragEnd, getPropsWithKey });
+```
 
-<div {...getDragProps(id)}>draggable</div>
+#### Result
 
-const [ props, { isHovering } ] = useDrop({
+| Property     | Description                                                                                  | Type                    |
+|--------------|----------------------------------------------------------------------------------------------|-------------------------|
+| getDragProps | A function that accept a content as dragging values and return props passed to a dom element | `(content: T) => props` |
+
+
+#### Params
+
+| Property        | Description                                                                  | Type                          | Default |
+|-----------------|------------------------------------------------------------------------------|-------------------------------|---------|
+| onDragStart     | The callback when a dragging is started                                      | `(data: T, e: Event) => void` | -       |
+| onDragEnd       | The callback when a dragging is ended                                        | `(data: T, e: Event) => void` | -       |
+| getPropsWithKey | Whether to include the default key in the object returned by getprops method | `boolean`                     | -       |
+
+### useDrop
+
+```typescript
+const [ props, isHovering ] = useDrop({
   onText: (text: string, e: Event) => void,
   onFiles: (files: File[], e: Event) => void,
   onUri: (uri: string, e: Event) => void,
   onDom: (content: any, e: Event) => void
 });
 ```
-
-### useDrag Result
-
-| Property     | Description                                                                                  | Type                      |
-|--------------|----------------------------------------------------------------------------------------------|---------------------------|
-| getDragProps | A function that accept a content as dragging values and return props passed to a dom element | `(content: any) => props` |
-
-### useDrop Result
+#### Result
 
 | Property   | Description                                             | Type      |
 |------------|---------------------------------------------------------|-----------|
 | props      | Props passed to the drop area                           | -         |
 | isHovering | Whether the dragging element is on top of the drop area | `boolean` |
 
-### useDrag Params
-
-| 参数        | 说明                                    | 类型                            | 默认值 |
-|-------------|-----------------------------------------|---------------------------------|--------|
-| onDragStart | The callback when a dragging is started | `(data: any, e: Event) => void` | -      |
-| onDragEnd   | The callback when a dragging is ended   | `(data: any, e: Event) => void` | -      |
-| getPropsWithKey | Whether to include the default key in the object returned by getprops method | `boolean` | - |
-
-### useDrop Params
+#### Params
 
 | Property | Description                         | Type                                | Default |
 |----------|-------------------------------------|-------------------------------------|---------|

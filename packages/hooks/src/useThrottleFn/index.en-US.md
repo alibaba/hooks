@@ -12,7 +12,7 @@ group:
 
 <Tag lang="en-US" tags="ssr&crossPlatform"></Tag>
 
-A hook that handle the throttle function.
+A hook that deal with the throttled function.
 
 ## Examples
 
@@ -35,10 +35,10 @@ const {
 
 ### Params
 
-| Property | Description                                                  | Type                      | Default |
-|----------|--------------------------------------------------------------|---------------------------|---------|
-| fn       | The function to throttle.                                    | `(...args: any[]) => any` | `-`     |
-| options  | Config the throttle behavior. See the Options section below. | `Options`                 | `{}`    |
+| Property | Description                                                                   | Type                      | Default |
+|----------|-------------------------------------------------------------------------------|---------------------------|---------|
+| fn       | The function to throttle.                                                     | `(...args: any[]) => any` | `-`     |
+| options  | Config for the throttle behaviors. See the Options section below for details. | `Options`                 | `{}`    |
 
 ### Options
 
@@ -50,8 +50,8 @@ const {
 
 ### Result
 
-| Property | Description                               | Type                      |
-|----------|-------------------------------------------|---------------------------|
-| run      | Trigger fn, parameters will be send to fn | `(...args: any[]) => any` |
-| cancel   | Cancel current throttle                   | `() => void`              |
-| flush    | Immediately invoke current throttle       | `() => void`              |
+| Property | Description                                              | Type                      |
+|----------|----------------------------------------------------------|---------------------------|
+| run      | Invoke and pass parameters to fn.                        | `(...args: any[]) => any` |
+| cancel   | Cancel the invocation of currently throttled function.   | `() => void`              |
+| flush    | Immediately invoke currently throttled function          | `() => void`              |

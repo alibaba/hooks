@@ -1,5 +1,5 @@
 import { act, renderHook, RenderHookResult } from '@testing-library/react-hooks';
-import useVirtualList, { OptionType } from '../index';
+import useVirtualList, { Options } from '../index';
 
 /* 暂时关闭 act 警告  见：https://github.com/testing-library/react-testing-library/issues/281#issuecomment-480349256 */
 const originalError = console.error;
@@ -24,7 +24,7 @@ describe('useVirtualList', () => {
   describe('virtual list render', () => {
     let mockRef = { scrollTop: 0, clientHeight: 300 };
     let hook: RenderHookResult<
-      { list: unknown[]; options: OptionType },
+      { list: unknown[]; options: Options },
       {
         list: unknown[];
         scrollTo: (index: number) => void;
@@ -42,7 +42,7 @@ describe('useVirtualList', () => {
 
     const setup = (list: any[] = [], options: {}) => {
       hook = renderHook(() =>
-        useVirtualList(list as unknown[], { itemHeight: 30, ...options } as OptionType),
+        useVirtualList(list as unknown[], { itemHeight: 30, ...options } as Options),
       );
       hook.result.current.containerProps.ref(mockRef);
     };

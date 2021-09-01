@@ -12,7 +12,7 @@ group:
 
 <Tag lang="en-US" tags="ssr&crossPlatform"></Tag>
 
-A hook of useEffect that only runs when dependencies update.
+A hook alike `useEffect` but skips running the effect for the first time.
 
 ## Examples
 

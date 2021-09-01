@@ -1,5 +1,5 @@
 /**
- * title: Default usage
+ * title: Basic usage
  * desc: The drop area can accept files, uri, text or one of the boxes below.
  *
  * title.zh-CN: 基础用法
@@ -19,7 +19,7 @@ export default () => {
       setDragging(null);
     },
   });
-  const [props, { isHovering }] = useDrop({
+  const [props, isHovering] = useDrop({
     onText: (text, e) => {
       console.log(e);
       alert(`'text: ${text}' dropped`);

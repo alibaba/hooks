@@ -42,17 +42,32 @@ describe('useAsyncEffect', () => {
       };
     });
     expect(hook.result.current.y).toBe(0);
+
     await act(async () => {
       await sleep(50);
       hook.result.current.setX(2);
     });
+    expect(hook.result.current.y).toBe(0);
+
+    await act(async () => {
+      await sleep(20);
+    });
+    expect(hook.result.current.y).toBe(0);
+
+    await act(async () => {
+      await sleep(50);
+      hook.result.current.setX(3);
+    });
+    expect(hook.result.current.y).toBe(0);
+
     await act(async () => {
       await sleep(80);
     });
     expect(hook.result.current.y).toBe(0);
+
     await act(async () => {
       await sleep(50);
     });
-    expect(hook.result.current.y).toBe(2);
+    expect(hook.result.current.y).toBe(3);
   });
 });

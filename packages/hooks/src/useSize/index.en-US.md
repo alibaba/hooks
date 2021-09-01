@@ -12,7 +12,7 @@ group:
 
 <Tag lang="en-US" tags="ssr"></Tag>
 
-A hook to observe element's size change.
+A hook that observes size change of an element.
 
 ## Examples
 

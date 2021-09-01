@@ -1,9 +1,9 @@
 /**
- * title: Default usage
- * desc: Simple count management example.
+ * title: Basic usage
+ * desc: Simple example of counter management.
  *
  * title.zh-CN: 基础用法
- * desc.zh-CN: 简单的 count 管理示例。
+ * desc.zh-CN: 简单的 counter 管理示例。
  */
 
 import React from 'react';
@@ -43,13 +43,7 @@ export default () => {
         >
           set(3)
         </button>
-        <button
-          type="button"
-          onClick={() => {
-            reset();
-          }}
-          style={{ marginRight: 8 }}
-        >
+        <button type="button" onClick={reset} style={{ marginRight: 8 }}>
           reset()
         </button>
       </div>

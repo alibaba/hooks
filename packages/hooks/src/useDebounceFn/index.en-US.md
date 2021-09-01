@@ -12,7 +12,7 @@ group:
 
 <Tag lang="en-US" tags="ssr&crossPlatform"></Tag>
 
-A hook that handle the debounce function.
+A hook that deal with the debounced function.
 
 ## Examples
 
@@ -35,10 +35,10 @@ const {
 
 ### Params
 
-| Property | Description                                                  | Type                      | Default |
-|----------|--------------------------------------------------------------|---------------------------|---------|
-| fn       | The function to debounce.                                    | `(...args: any[]) => any` | -       |
-| options  | Config the debounce behavior. See the Options section below. | `Options`                 | `{}`    |
+| Property | Description                                                                   | Type                      | Default |
+| -------- | ----------------------------------------------------------------------------- | ------------------------- | ------- |
+| fn       | The function to debounce.                                                     | `(...args: any[]) => any` | -       |
+| options  | Config for the debounce behaviors. See the Options section below for details. | `Options`                 | `{}`    |
 
 ### Options
 
@@ -50,8 +50,8 @@ const {
 
 ### Result
 
-| Property | Description                               | Type         |
-|----------|-------------------------------------------|--------------|
-| run      | Trigger fn, parameters will be send to fn | `(...args: any[]) => any` |
-| cancel   | Cancel current debounce                   | `() => void` |
-| flush    | Immediately invoke current debounce       | `() => void` |
+| Property | Description                                            | Type                      |
+|----------|--------------------------------------------------------|---------------------------|
+| run      | Invode and pass parameters to fn.                      | `(...args: any[]) => any` |
+| cancel   | Cancel the invocation of currently debounced function. | `() => void`              |
+| flush    | Immediately invoke currently debounced function.       | `() => void`              |

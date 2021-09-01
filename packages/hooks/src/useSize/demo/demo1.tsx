@@ -1,6 +1,6 @@
 /**
- * title: Default usage
- * desc: useSize can receive ref parameters
+ * title: Basic usage
+ * desc: useSize can receive ref as argument
  *
  * title.zh-CN: 基础用法
  * desc.zh-CN: useSize 可以接收 ref 参数

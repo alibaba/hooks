@@ -1,4 +1,5 @@
-import { renderHook } from '@testing-library/react-hooks';
+import { renderHook, act } from '@testing-library/react-hooks';
+import { useState } from 'react';
 import useDeepCompareEffect from '../index';
 
 describe('useDeepCompareEffect', () => {
@@ -6,20 +7,20 @@ describe('useDeepCompareEffect', () => {
     expect(useDeepCompareEffect).toBeDefined();
   });
 
-  it('test deep compare', () => {
-    let mountedState = 1;
-    const hook = renderHook(() =>
+  it('test deep compare', async () => {
+    const hook = renderHook(() => {
+      const [x, setX] = useState(0);
+      const [y, setY] = useState({});
       useDeepCompareEffect(() => {
-        mountedState += 1;
-        return () => {
-          mountedState = 0;
-        };
-      }, [{}]),
-    );
-    expect(mountedState).toEqual(2);
-    hook.rerender();
-    expect(mountedState).toEqual(2);
-    hook.unmount();
-    expect(mountedState).toEqual(0);
+        setX((x) => x + 1);
+      }, [y]);
+      return { x, setY };
+    });
+    expect(hook.result.current.x).toBe(1);
+
+    await act(async () => {
+      hook.result.current.setY({});
+    });
+    expect(hook.result.current.x).toBe(1);
   });
 });

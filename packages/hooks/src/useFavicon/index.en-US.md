@@ -12,7 +12,7 @@ group:
 
 <Tag lang="en-US" tags="ssr"></Tag>
 
-Set page favicon.
+A hook that sets the favicon of the page.
 
 ## Example
 

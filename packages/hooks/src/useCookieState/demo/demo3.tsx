@@ -1,12 +1,12 @@
 /**
  * title: Use the option property to configure cookie
- * desc: Can be configured defaultValue、expires、path、domain、secure、sameSite etc.
+ * desc: Available options: defaultValue、expires、path、domain、secure、sameSite etc.
  *
  * title.zh-CN: 使用 option 配置 cookie
  * desc.zh-CN: 可配置属性：默认值、有效时间、路径、域名、协议、跨域等，详见 Options 文档。
  */
 
-import * as React from 'react';
+import React from 'react';
 import { useCookieState } from 'ahooks';
 
 export default function App() {
