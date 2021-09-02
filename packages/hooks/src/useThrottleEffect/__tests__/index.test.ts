@@ -15,21 +15,22 @@ describe('useThrottleEffect', () => {
   });
 
   it('useThrottleEffect should work', async () => {
-    let mountedState = 1;
     const mockEffect = jest.fn(() => {});
     const mockCleanUp = jest.fn(() => {});
     act(() => {
-      hook = renderHook(() =>
-        useThrottleEffect(
-          () => {
-            mockEffect();
-            return () => {
-              mockCleanUp();
-            };
-          },
-          [mountedState],
-          { wait: 200 },
-        ),
+      hook = renderHook(
+        ({ value, wait }) =>
+          useThrottleEffect(
+            () => {
+              mockEffect();
+              return () => {
+                mockCleanUp();
+              };
+            },
+            [value],
+            { wait },
+          ),
+        { initialProps: { value: 1, wait: 200 } },
       );
     });
 
@@ -37,18 +38,19 @@ describe('useThrottleEffect', () => {
       expect(mockEffect.mock.calls.length).toEqual(1);
       expect(mockCleanUp.mock.calls.length).toEqual(0);
 
-      mountedState = 2;
-      hook.rerender();
-      await sleep(300);
+      hook.rerender({ value: 2, wait: 200 });
+      await sleep(100);
+      expect(mockEffect.mock.calls.length).toEqual(1);
+      expect(mockCleanUp.mock.calls.length).toEqual(0);
+      await sleep(150);
       expect(mockEffect.mock.calls.length).toEqual(2);
       expect(mockCleanUp.mock.calls.length).toEqual(1);
 
-      mountedState = 3;
-      hook.rerender();
-      expect(mockEffect.mock.calls.length).toEqual(2);
-      expect(mockCleanUp.mock.calls.length).toEqual(1);
-
-      await sleep(300);
+      hook.rerender({ value: 3, wait: 100 });
+      await sleep(50);
+      expect(mockEffect.mock.calls.length).toEqual(3);
+      expect(mockCleanUp.mock.calls.length).toEqual(2);
+      await sleep(100);
       expect(mockEffect.mock.calls.length).toEqual(3);
       expect(mockCleanUp.mock.calls.length).toEqual(2);
     });
