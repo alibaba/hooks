@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useRef, useState, isValidElement } from 'react';
 
 import useCreation from '../useCreation';
 
@@ -7,8 +7,9 @@ const proxyMap = new WeakMap();
 // k:v 代理过的对象:原对象
 const rawMap = new WeakMap();
 
-function isObject(val: object): boolean {
-  return typeof val === 'object' && val !== null;
+function isObject(val: any): val is object {
+  const typeString = Object.prototype.toString.call(val);
+  return typeString === '[object Object]' || typeString === '[object Array]';
 }
 
 function observer<T extends object>(initialVal: T, cb: () => void): T {
@@ -22,6 +23,11 @@ function observer<T extends object>(initialVal: T, cb: () => void): T {
   // 防止代理已经代理过的对象
   // https://github.com/alibaba/hooks/issues/839
   if (rawMap.has(initialVal)) {
+    return initialVal;
+  }
+  
+  //虚拟dom不做代理
+  if (isValidElement(initialVal)) {
     return initialVal;
   }
 
