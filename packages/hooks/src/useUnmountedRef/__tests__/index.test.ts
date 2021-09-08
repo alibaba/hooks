@@ -5,12 +5,11 @@ describe('useMountStatus', () => {
   it('should be defined', () => {
     expect(useUnmountedRef).toBeDefined();
   });
-  it('test mount', async () => {
+  it('should work', async () => {
     const hook = renderHook(() => useUnmountedRef());
     expect(hook.result.current.current).toBe(false);
-  });
-  it('test unmounted', async () => {
-    const hook = renderHook(() => useUnmountedRef());
+    hook.rerender();
+    expect(hook.result.current.current).toBe(false);
     hook.unmount();
     expect(hook.result.current.current).toBe(true);
   });

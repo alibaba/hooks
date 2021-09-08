@@ -13,5 +13,8 @@ describe('useMount', () => {
     expect(fn).toBeCalledTimes(1);
     hook.unmount();
     expect(fn).toBeCalledTimes(1);
+
+    renderHook(() => useMount(fn)).unmount();
+    expect(fn).toBeCalledTimes(2);
   });
 });

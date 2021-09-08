@@ -84,10 +84,17 @@ describe('useDebounceEffect', () => {
       expect(mockCleanUp.mock.calls.length).toEqual(0);
 
       await sleep(300);
-      hook.unmount();
-
       expect(mockEffect.mock.calls.length).toEqual(1);
+      expect(mockCleanUp.mock.calls.length).toEqual(0);
+
+      hook.rerender(2);
+      await sleep(300);
+      expect(mockEffect.mock.calls.length).toEqual(2);
       expect(mockCleanUp.mock.calls.length).toEqual(1);
+
+      hook.unmount();
+      expect(mockEffect.mock.calls.length).toEqual(2);
+      expect(mockCleanUp.mock.calls.length).toEqual(2);
     });
   });
 });
