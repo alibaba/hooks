@@ -103,6 +103,41 @@ describe('useDynamicList', () => {
     expect(hook.result.current.list.length).toEqual(7);
   });
 
+  it('reset key', () => {
+    const hook = setUp([
+      { name: 'aaa', age: 18 },
+      { name: 'bbb', age: 19 },
+      { name: 'ccc', age: 20 },
+    ]);
+
+    expect(hook.result.current.getKey(0)).toEqual(0);
+    expect(hook.result.current.getKey(1)).toEqual(1);
+    expect(hook.result.current.getKey(2)).toEqual(2);
+
+    hook.result.current.resetList([
+      { name: 'ddd', age: 18 },
+      { name: 'eee', age: 19 },
+      { name: 'fff', age: 20 },
+    ]);
+
+    expect(hook.result.current.getKey(0)).toEqual(3);
+    expect(hook.result.current.getKey(1)).toEqual(4);
+    expect(hook.result.current.getKey(2)).toEqual(5);
+
+    hook.result.current.resetList(
+      [
+        { name: 'ggg', age: 18 },
+        { name: 'hhh', age: 19 },
+        { name: 'iii', age: 20 },
+      ],
+      true,
+    );
+
+    expect(hook.result.current.getKey(0)).toEqual(0);
+    expect(hook.result.current.getKey(1)).toEqual(1);
+    expect(hook.result.current.getKey(2)).toEqual(2);
+  });
+
   it('same items should have different keys', () => {
     const hook = setUp([1, 1, 1, 1]);
     expect(hook.result.current.getKey(0)).toEqual(0);

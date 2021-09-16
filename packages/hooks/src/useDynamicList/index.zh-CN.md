@@ -40,7 +40,7 @@ const result: Result = useDynamicList(initialValue: T[]);
 | 参数      | 说明                   | 类型                                           | 备注                                              |
 |-----------|------------------------|------------------------------------------------|---------------------------------------------------|
 | list      | 当前的列表             | `T[]`                                          | -                                                 |
-| resetList | 重新设置 list 的值     | `(list: T[]) => void`                          | -                                                 |
+| resetList | 重新设置 list 的值，如果 resetKey 设置为 true, 则 key 会重新从 0 开始    | `(list: T[], resetKey: boolean) => void`                          | -                                                 |
 | insert    | 在指定位置插入元素     | `(index: number, obj: T) => void`              | -                                                 |
 | merge     | 在指定位置插入多个元素 | `(index: number, obj: T[]) => void`              | -                                                 |
 | replace   | 替换指定元素           | `(index: number, obj: T) => void`              | -                                                 |

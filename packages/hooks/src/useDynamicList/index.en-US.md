@@ -40,7 +40,7 @@ const result: Result = useDynamicList(initialValue: T[]);
 | Property  | Description                              | Type                                           | Remarks                                                  |
 |-----------|------------------------------------------|------------------------------------------------|----------------------------------------------------------|
 | list      | current list data                        | `T[]`                                          | -                                                        |
-| resetList | reset list current data                  | `(list: T[]) => void`                          | -                                                        |
+| resetList | reset list current data, if resetKey is true, then the key will start over from 0 again           | `(list: T[], resetKey?: boolean) => void`                          | -                                                        |
 | insert    | add item at specific position            | `(index: number, obj: T) => void`              | -                                                        |
 | merge     | merge items into specific position       | `(index: number, obj: T[]) => void`              | -                                                        |
 | replace   | replace item at specific position        | `(index: number, obj: T) => void`              | -                                                        |

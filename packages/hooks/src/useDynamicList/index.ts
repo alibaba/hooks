@@ -18,8 +18,11 @@ export default <T>(initialValue: T[]) => {
     return initialValue || [];
   });
 
-  const resetList = useCallback((newList: T[] = []) => {
+  const resetList = useCallback((newList: T[] = [], resetKey = false) => {
     keyList.current = [];
+    if (resetKey) {
+      counterRef.current = -1;
+    }
     setList(() => {
       (newList || []).forEach((_, index) => {
         setKey(index);
