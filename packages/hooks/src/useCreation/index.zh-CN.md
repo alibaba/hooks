@@ -30,6 +30,10 @@ const b = useCreation(() => new Subject(), []) // 通过 factory 函数，可以
 
 <code src="./demo/demo1.tsx" />
 
+### 带依赖项的用法
+
+<code src="./demo/demo2.tsx" />
+
 ## API
 
 ```javascript

@@ -30,6 +30,10 @@ const b = useCreation(() => new Subject(), []) // By using factory function, Sub
 
 <code src="./demo/demo1.tsx" />
 
+### With deps usage
+
+<code src="./demo/demo2.tsx" />
+
 ## API
 
 ```javascript
