@@ -76,8 +76,8 @@ import { useRequest } from 'ahooks';
 ```
 $ git clone git@github.com:alibaba/hooks.git
 $ cd hooks
-$ npm run init
-$ npm start
+$ yarn run init
+$ yarn start
 ```
 
 打开浏览器访问 http://127.0.0.1:8001
