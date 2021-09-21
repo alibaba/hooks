@@ -1,6 +1,6 @@
 {
   "name": "ahooks",
-  "version": "2.10.10-beta",
+  "version": "2.10.10",
   "description": "react hooks library",
   "keywords": [
     "ahooks",
@@ -32,7 +32,7 @@
     "README.md"
   ],
   "dependencies": {
-    "@ahooksjs/use-request": "^2.8.11-beta",
+    "@ahooksjs/use-request": "^2.8.11",
     "@types/js-cookie": "^2.2.6",
     "core-js": "^2.6.12",
     "dayjs": "^1.9.1",
