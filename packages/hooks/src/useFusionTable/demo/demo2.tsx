@@ -54,7 +54,7 @@ const AppList = () => {
     cacheKey: 'tableProps',
   });
 
-  const { sorter = {}, filters = {} } = params[0] || {};
+  const { filters = {} } = params[0] || {};
   const { type, changeType, submit, reset } = search || {};
 
   const searchFrom = (
@@ -100,7 +100,7 @@ const AppList = () => {
     <div>
       {searchFrom}
 
-      <Table {...tableProps} filterParams={filters} sort={sorter} primaryKey="email">
+      <Table {...tableProps} filterParams={filters} primaryKey="email">
         <Table.Column title="name" dataIndex="name.last" width={140} />
         <Table.Column title="email" dataIndex="email" width={500} />
         <Table.Column title="phone" sortable dataIndex="phone" width={500} />
