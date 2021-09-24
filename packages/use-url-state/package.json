@@ -33,7 +33,6 @@
   },
   "dependencies": {
     "@types/query-string": "^6.3.0",
-    "core-js": "^2.6.12",
     "query-string": "^6.9.0"
   }
 }

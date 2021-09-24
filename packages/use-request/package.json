@@ -31,7 +31,6 @@
     "react": "^16.8.0 || ^17.0.0"
   },
   "dependencies": {
-    "core-js": "^2.6.12",
     "lodash.debounce": "^4.0.8",
     "lodash.throttle": "^4.1.1"
   },
