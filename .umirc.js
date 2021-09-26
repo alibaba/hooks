@@ -77,4 +77,15 @@ export default {
     ],
   },
   headScripts: ['https://s4.cnzz.com/z_stat.php?id=1278992092&web_id=1278992092'],
+  hire: {
+    title: '招招招招招前端！！！！',
+    content: `
+<ul>
+  <li>ahooks、qiankun、antd mobile、l7 各种开源项目，快来并肩作战！</li>
+  <li>小组介绍：<a href="https://www.yuque.com/docs/share/8f763b3f-acd8-4ebf-a443-a0f45c5db293?#" target="_blank">http://topurl.cn/8wP</a></li>
+  <li>投递邮箱：brickspert.fjl@antfin.com</li>
+</ul>`,
+    email: 'brickspert.fjl@antfin.com',
+    slogan: '招招招招招前端！！！！',
+  },
 };

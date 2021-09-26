@@ -62,6 +62,7 @@
     "surge": "^0.21.3",
     "ts-jest": "^26.1.0",
     "typescript": "^3.3.3",
+    "umi-plugin-hire": "^1.0.6",
     "umi-request": "^1.2.18",
     "webpack": "^4.43.0",
     "webpack-cli": "^3.3.10",
