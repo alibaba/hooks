@@ -1,6 +1,6 @@
 {
   "name": "@ahooksjs/use-request",
-  "version": "2.8.11-beta",
+  "version": "2.8.12",
   "description": "React Hooks for fetching, caching and updating asynchronous data",
   "main": "./lib/index.js",
   "module": "./es/index.js",
@@ -31,7 +31,6 @@
     "react": "^16.8.0 || ^17.0.0"
   },
   "dependencies": {
-    "core-js": "^2.6.12",
     "lodash.debounce": "^4.0.8",
     "lodash.throttle": "^4.1.1"
   },

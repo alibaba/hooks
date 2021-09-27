@@ -4,13 +4,14 @@
       "@babel/env",
       {
         "loose": true,
-        "modules": false,
-        "targets": "> 0.25%, not dead",
-        "useBuiltIns": "usage"
+        "modules": false
       }
     ],
     "@babel/react"
   ],
   "include": "**/*.js",
-  "exclude": "**/*.ts"
+  "exclude": "**/*.ts",
+  "plugins": [
+    "babel-plugin-transform-async-to-promises"
+  ]
 }

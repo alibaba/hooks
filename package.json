@@ -6,8 +6,8 @@
     "url": "git+https://github.com/alibaba/hooks.git"
   },
   "scripts": {
-    "init": "rm -rf node_modules && npm install && npm run clean && npm run bootstrap && npm run build",
-    "start": "npm run dev",
+    "init": "rm -rf node_modules && yarn install && yarn run clean && yarn run bootstrap && yarn run build",
+    "start": "yarn run dev",
     "dev": "dumi dev",
     "bootstrap": "lerna bootstrap",
     "clean": "lerna clean --yes",
@@ -38,6 +38,7 @@
     "antd": "^4.3.3",
     "babel-loader": "^8.1.0",
     "babel-plugin-import": "^1.12.0",
+    "babel-plugin-transform-async-to-promises": "^0.8.15",
     "del": "^5.1.0",
     "dumi": "^1.1.7",
     "enzyme": "^3.10.0",
@@ -61,6 +62,7 @@
     "surge": "^0.21.3",
     "ts-jest": "^26.1.0",
     "typescript": "^3.3.3",
+    "umi-plugin-hire": "^1.0.6",
     "umi-request": "^1.2.18",
     "webpack": "^4.43.0",
     "webpack-cli": "^3.3.10",

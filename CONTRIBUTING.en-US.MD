@@ -28,14 +28,14 @@ Before submitting a pull request, please make sure the following is done:
 
 2. If you've fixed a bug or added code that should be tested, add tests!
 
-3. Ensure the test suite passes `npm run test`。
+3. Ensure the test suite passes `yarn run test`。
 
 ## Development Workflow
 
-After cloning antd, run `npm install` to fetch its dependencies. Then, you can run several commands:
+After cloning antd, run `yarn run init` to fetch its dependencies. Then, you can run several commands:
 
-1. `npm start` runs `ahooks` website locally。
+1. `yarn start` runs `ahooks` website locally。
 
-2. `npm run test` runs the complete test suite。
+2. `yarn run test` runs the complete test suite。
 
-3. `npm run build` creates UMD build of `ahooks`。
+3. `yarn run build` creates UMD build of `ahooks`。

@@ -2,11 +2,11 @@ language: node_js
 node_js:
   - 'lts/*'
 install:
-  - npm install
-  - npm run bootstrap
-  - npm install -g surge
+  - yarn install
+  - yarn run bootstrap
+  - yarn install -g surge
 script:
-  - npm run build:doc
+  - yarn run build:doc
   - surge ./dist ahooks-$(git rev-parse --short HEAD).surge.sh
 cache:
   directories:

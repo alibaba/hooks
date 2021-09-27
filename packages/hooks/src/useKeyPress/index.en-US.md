@@ -10,7 +10,7 @@ group:
 
 # useKeyPress
 
-A hook that elegantly manages KeyboardEvent of keyup adn keydown, Keyboard key combinations are supported to define key and keyCode alias input for keyboard events.
+A hook that elegantly manages KeyboardEvent of keyup and keydown, Keyboard key combinations are supported to define key and keyCode alias input for keyboard events.
 
 ## Examples
 
