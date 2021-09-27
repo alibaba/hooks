@@ -40,7 +40,7 @@ const parseMs = (milliseconds: number): FormattedRes => {
   };
 };
 
-const useCountdown = (options?: Options) => {
+const useCountdown = (options?: Options): [number, React.Dispatch<React.SetStateAction<TDate>>, FormattedRes] => {
   const { targetDate, interval = 1000, onEnd } = options || {};
 
   const [target, setTargetDate] = useState<TDate>(targetDate);
@@ -78,7 +78,7 @@ const useCountdown = (options?: Options) => {
     return parseMs(timeLeft);
   }, [timeLeft]);
 
-  return [timeLeft, setTargetDate, formattedRes] as const;
+  return [timeLeft, setTargetDate, formattedRes];
 };
 
 export default useCountdown;
