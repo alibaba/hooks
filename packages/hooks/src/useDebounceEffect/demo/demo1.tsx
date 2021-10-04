@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import useDebounceEffect from '../';
+import { useDebounceEffect } from 'ahooks';
 
 export default () => {
   const [value, setValue] = useState('hello');
