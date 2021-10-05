@@ -16,3 +16,4 @@ lerna-debug.log
 tsconfig.tsbuildinfo
 packages/hooks/README.md
 yarn-error.log
+package-lock.json
