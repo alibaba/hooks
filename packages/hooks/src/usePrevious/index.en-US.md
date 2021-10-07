@@ -43,4 +43,4 @@ const previousState: T = usePrevious<T>(
 | Property        | Description                                                   | Type | Default |
 |-----------------|---------------------------------------------------------------|------|---------|
 | state           | the state need to be tracked                                  | -    | -       |
-| compareFunction | optional, customize when the previous value need to be stored |  (prev: T \| undefined, next: T) => boolean    | -       |
+| compareFunction | optional, customize when the previous value need to be stored |  `(prev: T \| undefined, next: T) => boolean`    | -       |

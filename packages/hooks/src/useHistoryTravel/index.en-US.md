@@ -45,4 +45,4 @@ const { value, setValue, backLength, forwardLength, go, back, forward, reset } =
 | go            | move between the history, move backward on step < 0，and move forward on step > 0 | `(step: number) => void`      |
 | back          | move one step backward in history                                                 | `() => void`                  |
 | foward        | move one step forward in history                                                  | `() => void`                  |
-| reset         | reset history to initial value by default or provide a new initial value.         | (newInitialValue?: T) => void |
+| reset         | reset history to initial value by default or provide a new initial value.         | `(newInitialValue?: T) => void` |

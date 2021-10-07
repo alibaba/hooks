@@ -25,7 +25,7 @@ const userList = (current, pageSize) =>
     [`list|${pageSize}`]: [
       {
         id: '@guid',
-        name: '@cname',
+        name: '@name',
         'gender|1': ['male', 'female'],
         email: '@email',
         disabled: false,

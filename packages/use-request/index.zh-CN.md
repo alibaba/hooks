@@ -86,7 +86,7 @@ legacy: /zh-CN/async
 
 ```jsx | pure
 const [userId, setUserId] = useState('1');
-const { data, run, loading } = useRequest(()=> getUserSchool(userId));
+const { data, run, loading } = useRequest(() => getUserSchool(userId));
 useEffect(() => {
   run();
 }, [userId]);
@@ -135,15 +135,15 @@ const {
 
 | 参数    | 说明                                                                                                                                                                            | 类型                                                                    |
 |---------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------|
-| data    | <ul><li> service 返回的数据，默认为 `undefined`。</li><li> 如果有 `formatResult`, 则该数据为被格式化后的数据。</li></ul>                                                        | `undefined / any`                                                       |
-| error   | service 抛出的异常，默认为 `undefined`                                                                                                                                          | `undefined / Error`                                                     |
+| data    | <ul><li> service 返回的数据，默认为 `undefined`。</li><li> 如果有 `formatResult`, 则该数据为被格式化后的数据。</li></ul>                                                        | `undefined \| any`                                                       |
+| error   | service 抛出的异常，默认为 `undefined`                                                                                                                                          | `undefined \| Error`                                                     |
 | loading | service 是否正在执行                                                                                                                                                            | `boolean`                                                               |
 | run     | <ul><li>手动触发 service 执行，参数会传递给 service</li><li>debounce 模式与 throttle 模式返回值为 `Promise<null>`</li></ul>                                                                                                                                   | `(...args: any[]) => Promise`                                           |
 | params  | 当次执行的 service 的参数数组。比如你触发了 `run(1, 2, 3)`，则 params 等于 `[1, 2, 3]`                                                                                          | `any[]`                                                                 |
 | cancel  | <ul><li>取消当前请求 </li><li>如果有轮询，停止 </li></ul>                                                                                                                       | `() => void`                                                            |
 | refresh | 使用上一次的 params，重新执行 service                                                                                                                                           | `() => Promise`                                                            |
-| mutate  | 直接修改 data                                                                                                                                                                   | `(newData) => void / ((oldData)=>newData) => void`                      |
-| fetches | <ul><li>默认情况下，新请求会覆盖旧请求。如果设置了 `fetchKey`，则可以实现多个请求并行，`fetches` 存储了多个请求的状态。</li><li>外层的状态为最新触发的 fetches 数据。</li></ul> | `{[key:string]: {loading,data,error,params,cancel,refresh,mutate,run}}` |
+| mutate  | 直接修改 data                                                                                                                                                                   | `(newData) => void \| ((oldData) => newData) => void`                      |
+| fetches | <ul><li>默认情况下，新请求会覆盖旧请求。如果设置了 `fetchKey`，则可以实现多个请求并行，`fetches` 存储了多个请求的状态。</li><li>外层的状态为最新触发的 fetches 数据。</li></ul> | `{[key:string]: {loading, data, error, params, cancel, refresh, mutate, run}}` |
 
 ### Params
 
@@ -177,7 +177,7 @@ const {
 
 ### 集成请求库
 
-如果 service 是 `string` 、 `object` 、 `(...args)=> string|object`, 则自动使用 [fetch](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch) 来发送网络请求。
+如果 service 是 `string` 、 `object` 、 `(...args) => string | object`, 则自动使用 [fetch](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch) 来发送网络请求。
 
 ```javascript
 // 用法 1
@@ -190,7 +190,7 @@ const { data, error, loading } = useRequest({
 });
 
 // 用法 3
-const { data, error, loading } = useRequest((userId)=> `/api/userInfo/${userId}`);
+const { data, error, loading } = useRequest((userId) => `/api/userInfo/${userId}`);
 
 // 用法 4
 const { loading, run } = useRequest((username) => ({
@@ -212,7 +212,7 @@ const { loading, run } = useRequest((username) => ({
 
 ```typescript
 const {...} = useRequest<R>(
-  service: string | object | ((...args:any) => string | object),
+  service: string | object | ((...args: any[]) => string | object),
   {
     ...,
     requestMethod?: (service) => Promise
@@ -221,13 +221,13 @@ const {...} = useRequest<R>(
 
 #### Service
 
-如果 service 是 `string` 、 `object` 、 `(...args)=> string|object`，则自动使用 `fetch` 来发送请求。
+如果 service 是 `string` 、 `object` 、 `(...args) => string | object`，则自动使用 `fetch` 来发送请求。
 
 #### Params
 
 | 参数          | 说明                                                                                               | 类型                                   | 默认值 |
 |---------------|----------------------------------------------------------------------------------------------------|----------------------------------------|--------|
-| requestMethod | 异步请求方法，参数为 service 或 service 返回的参数。如果设置该参数，则默认使用该函数发送网络请求。 | `(service: string/object)) => Promise` | -      |
+| requestMethod | 异步请求方法，参数为 service 或 service 返回的参数。如果设置该参数，则默认使用该函数发送网络请求。 | `(service: string \| object)) => Promise` | -      |
 
 ### 分页
 
@@ -333,10 +333,10 @@ const {
 #### Result
 | 参数        | 说明                                             | 类型       |
 |-------------|--------------------------------------------------|------------|
-| loadMore    | 触发加载更多                                     | `()=>void` |
+| loadMore    | 触发加载更多                                     | `() => void` |
 | loadingMore | 是否正在加载更多                                 | `boolean`  |
 | noMore      | 是否有更多数据，需要配合 `options.isNoMore` 使用 | `boolean`  |
-| reload      | 触发重新加载                                     | `()=>void` |
+| reload      | 触发重新加载                                     | `() => void` |
 
 #### Options
 
@@ -344,7 +344,7 @@ const {
 |-------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------|--------|
 | loadMore    | 是否开启加载更多模式                                                                                                                                        | `boolean`                | false  |
 | ref         | 容器的 ref，如果存在，则在滚动到底部时，自动触发 loadMore                                                                                                   | `RefObject<HTMLElement>` | false  |
-| isNoMore    | 判断是否还有更多数据的函数                                                                                                                                  | `(r: Result)=>boolan`    | false  |
+| isNoMore    | 判断是否还有更多数据的函数                                                                                                                                  | `(r: Result) => boolan`    | false  |
 | threshold   | 下拉自动加载，距离底部距离阈值                                                                                                                              | `number`                 | 100    |
 | refreshDeps | 加载更多模式下， `refreshDeps` 变化，会清空当前数据，并重新发起请求，一般你可以把依赖的条件放这里。                                                         | `any[]`                  | `[]`   |
 
@@ -356,11 +356,11 @@ const {
 ```javascript
 import { UseRequestProvider } from 'ahooks';
 
-export function ({children})=>{
+export function ({children}) => {
   return (
     <UseRequestProvider value={{
       refreshOnWindowFocus: true,
-      requestMethod: (param)=> axios(param),
+      requestMethod: (param) => axios(param),
       ...
     }}>
       {children}

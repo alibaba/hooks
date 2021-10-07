@@ -55,11 +55,11 @@ const [ props, { isHovering } ] = useDrop({
 
 ### useDrag Params
 
-| 参数        | 说明                                    | 类型                            | 默认值 |
-|-------------|-----------------------------------------|---------------------------------|--------|
-| onDragStart | The callback when a dragging is started | `(data: any, e: Event) => void` | -      |
-| onDragEnd   | The callback when a dragging is ended   | `(data: any, e: Event) => void` | -      |
-| getPropsWithKey | Whether to include the default key in the object returned by getprops method | `boolean` | - |
+| Property        | Description                                                                  | Type                            | Default |
+|-----------------|------------------------------------------------------------------------------|---------------------------------|---------|
+| onDragStart     | The callback when a dragging is started                                      | `(data: any, e: Event) => void` | -       |
+| onDragEnd       | The callback when a dragging is ended                                        | `(data: any, e: Event) => void` | -       |
+| getPropsWithKey | Whether to include the default key in the object returned by getprops method | `boolean`                       | -       |
 
 ### useDrop Params
 

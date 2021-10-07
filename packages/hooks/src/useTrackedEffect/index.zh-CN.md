@@ -31,5 +31,5 @@ useTrackedEffect(
 
 | Property | Description                                                        | Type                   | Default |
 |---------|----------------------------------------------|------------------------|--------|
-| effect | 副作用函数  | (changes:array, previousDeps: array, currentDeps: array) => (void | (() => void | undefined)) | -      |
-| deps | effect 所依赖的值数组 | array \| undefined | -      |
+| effect | 副作用函数  | `(changes:array, previousDeps: array, currentDeps: array) => (void \| (() => void \| undefined))` | -      |
+| deps | effect 所依赖的值数组 | `array \| undefined` | -      |
