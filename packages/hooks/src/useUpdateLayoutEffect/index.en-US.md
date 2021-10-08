@@ -29,7 +29,7 @@ useUpdateLayoutEffect(
 
 ### Params
 
-| Property | Description                                        | Type                                      | Default |
-|----------|----------------------------------------------------|-------------------------------------------|---------|
-| effect   | Executable function                                | `() => (void | (() => void | undefined))` | -       |
-| deps     | Optionally, pass in objects that depend on changes |  `array` \| `undefined`                     | -       |
+| Property | Description                                        | Type                                        | Default |
+|----------|----------------------------------------------------|---------------------------------------------|---------|
+| effect   | Executable function                                | `() => (void \| (() => void \| undefined))` | -       |
+| deps     | Optionally, pass in objects that depend on changes | `array` \| `undefined`                      | -       |

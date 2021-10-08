@@ -56,18 +56,18 @@ const [state, setState] = useUrlState(initialState, options);
 
 | Property | Description                         | Type                   | Default |
 |---------|----------------------------------------------|------------------------|--------|
-| initialState | initialState, same as useState      | S \| () => S                    | -      |
-| options | url config                  | Options                    | -      |
+| initialState | initialState, same as useState      | `S` \| `() => S`                    | -      |
+| options | url config                  | `Options`                    | -      |
 
 ### Options
 
 | Property | Description                            | Type                   | Default |
 |------|--------------|--------|--------|
-| navigateMode | type of history navigate mode | 'push' \| 'replace' | 'replace'    |
+| navigateMode | type of history navigate mode | `'push'` \| `'replace'` | `'replace'`    |
 
 ### Result
 
 | Property | Description                                         | Type                 |
 |----------|------------------------------------------|------------|
-| state  | url query object                             | object    |
-| setState     | same as useState, but state should be object      |  (state: S) => void \| (() => ((state: S) => S))      |
+| state  | url query object                             | `object`    |
+| setState     | same as useState, but state should be object      |  `(state: S) => void` \| `((state: S) => S) => void`      |

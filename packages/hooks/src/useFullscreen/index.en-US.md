@@ -39,14 +39,14 @@ const [isFullscreen, { setFull, exitFull, toggleFull }] = useFullScreen(target, 
 
 | Property   | Description                        | Type        | Default |
 |------------|------------------------------------|-------------|---------|
-| onExitFull | listen for exit full screen events | `()=>void`    | -       |
-| onFull     | listen for full screen events      | `()=>void`    | -       |
+| onExitFull | listen for exit full screen events | `() => void`    | -       |
+| onFull     | listen for full screen events      | `() => void`    | -       |
 
 ### Result
 
 | Property     | Description        | Type     |
 |--------------|--------------------|----------|
 | isFullscreen | is full screen     | `boolean`  |
-| setFull      | set full screen    | `()=>void` |
-| exitFull     | exit full screen   | `()=>void` |
-| toggleFull   | toggle full screen | `()=>void` |
+| setFull      | set full screen    | `() => void` |
+| exitFull     | exit full screen   | `() => void` |
+| toggleFull   | toggle full screen | `() => void` |

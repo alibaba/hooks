@@ -20,7 +20,7 @@ export default () => {
         value={value || ''}
         onChange={onChange}
         style={{ width: 200, marginRight: 20 }}
-        placeholder="请输入"
+        placeholder="Please type here"
       />
       <button type="button" onClick={reset}>
         reset

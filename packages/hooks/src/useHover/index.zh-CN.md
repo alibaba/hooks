@@ -26,7 +26,7 @@ group:
 
 ```javascript
 const isHovering = useHover(
-  target, 
+  target,
   {
    onEnter,
    onLeave
@@ -45,8 +45,8 @@ const isHovering = useHover(
 
 | 参数     | 说明                       | 类型      | 默认值  |
 |----------|----------------------------|-----------|---------|
-| onEnter | 监听进入 hover        | `()=>void`            | -      |
-| onLeave | 监听离开 hover        | `()=>void`            | -      |
+| onEnter | 监听进入 hover        | `() => void`            | -      |
+| onLeave | 监听离开 hover        | `() => void`            | -      |
 
 ### Result
 

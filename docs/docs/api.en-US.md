@@ -9,7 +9,7 @@ This is ahooks API specification document.
 Hooks are allowed to have no output, which is generally common in life cycle Hooks.
 
 ```javascript
-useMount(()=>{});
+useMount(() => {});
 ```
 
 ### 2. value type
@@ -101,5 +101,3 @@ Required parameters are before and non-required parameters are after.
 ```javascript
 const result = useTextSelection(items, defaultSelected?);
 ```
-
-

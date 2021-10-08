@@ -29,7 +29,7 @@ useTrackedEffect(
 
 ### Params
 
-| Property | Description                                                        | Type                   | Default |
-|---------|----------------------------------------------|------------------------|--------|
-| effect | Executable function  | (changes:array, previousDeps: array, currentDeps: array) => (void | (() => void | undefined)) | -      |
-| deps | Optionally, pass in objects that depend on changes | array \| undefined | -      |
+| Property | Description                                                           | Type                                           | Default |
+|----------|-----------------------------------------------------------------------|------------------------------------------------|--------|
+| effect   | Executable function  | `(changes:array, previousDeps: array, currentDeps: array) => (void \| (() => void \| undefined))` | -      |
+| deps     | Optionally, pass in objects that depend on changes                    | `array \| undefined`                           | -      |

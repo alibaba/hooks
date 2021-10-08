@@ -54,18 +54,18 @@ const [state, setState] = useUrlState(initialState, options);
 
 | 参数    | 说明                                         | 类型                   | 默认值 |
 |---------|----------------------------------------------|------------------------|--------|
-| initialState | 初始状态                       | S \| () => S                    | -      |
-| options | url 配置                       | Options                    | -      |
+| initialState | 初始状态                       | `S` \| `() => S `                   | -      |
+| options | url 配置                       | `Options`                    | -      |
 
 ### Options
 
 | 参数    | 说明                                         | 类型                   | 默认值 |
 |------|--------------|--------|--------|
-| navigateMode | 状态变更时切换 history 的方式 | 'push' \| 'replace' | 'push'    |
+| navigateMode | 状态变更时切换 history 的方式 | `'push'` \| `'replace'` | `'push'`  |
 
 ### 结果
 
 | 参数     | 说明                                     | 类型       |
 |----------|------------------------------------------|------------|
-| state  | url query 对象                             | object    |
-| setState     | 用法同 useState，但 state 需要是 object         |  (state: S) => void \| (() => ((state: S) => S))      |
+| state  | url query 对象                             | `object `   |
+| setState     | 用法同 useState，但 state 需要是 object         |  `(state: S) => void` \| `((state: S) => S) => void`      |

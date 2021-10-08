@@ -86,7 +86,7 @@ When some `state` changes, we need to re-execute the asynchronous request. Gener
 
 ```jsx | pure
 const [userId, setUserId] = useState('1');
-const { data, run, loading } = useRequest(()=> getUserSchool(userId));
+const { data, run, loading } = useRequest(() => getUserSchool(userId));
 useEffect(() => {
   run();
 }, [userId]);
@@ -135,15 +135,15 @@ const {
 
 | Property | Description                                                                                                                                                                                                                                                            | Type                                                                    |
 |----------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------|
-| data     | <ul><li> Data returned by the service. </li><li> If `formatResult` is set, the data will be the return of `formatResult`. </li></ul>                                                                                                                                   | `undefined / any`                                                       |
-| error    | Exception thrown by service, default is `undefined`                                                                                                                                                                                                                    | `undefined / Error`                                                     |
+| data     | <ul><li> Data returned by the service. </li><li> If `formatResult` is set, the data will be the return of `formatResult`. </li></ul>                                                                                                                                   | `undefined \| any`                                                       |
+| error    | Exception thrown by service, default is `undefined`                                                                                                                                                                                                                    | `undefined \| Error`                                                     |
 | loading  | Whether the service is loaded                                                                                                                                                                                                                                          | `boolean`                                                               |
 | run      | <ul><li>Manually trigger the service execution. Its parameters will be passed to the service function. </li><li>In Debounce or Throttle mode, will return `Promise<null>`</li></ul>                                                                                                                                                                          | `(...args: any[]) => Promise`                                           |
 | params   | An array of parameters for the service being executed. For example, you triggered `run (1, 2, 3)`, then params is equal to `[1, 2, 3]`                                                                                          | `any[]`                             |
 | cancel   | <ul><li>Cancel the current running request </li><li>This will also stop the polling. </li></ul>                                                                                                                                                                        | `() => void`                                                            |
 | refresh  | Using the last params, re-execute the service                                                                                                                                                                                                                          | `() => Promise`                                                            |
-| mutate   | Modify the returned data directly                                                                                                                                                                                                                                      | `(newData) => void / ((oldData)=>newData) => void`                      |
-| fetches  | <ul><li>By default, new requests overwrite old ones. If `fetchKey` is set, multiple requests can be implemented in parallel, and` fetches` stores the status of all the requests.</li><li>The status of the outer layer is the newly triggered fetches data.</li></ul> | `{[key:string]: {loading,data,error,params,cancel,refresh,mutate,run}}` |
+| mutate   | Modify the returned data directly                                                                                                                                                                                                                                      | `(newData) => void \| ((oldData) => newData) => void`                      |
+| fetches  | <ul><li>By default, new requests overwrite old ones. If `fetchKey` is set, multiple requests can be implemented in parallel, and` fetches` stores the status of all the requests.</li><li>The status of the outer layer is the newly triggered fetches data.</li></ul> | `{[key:string]: {loading, data, error, params, cancel, refresh, mutate, run}}` |
 
 ### Params
 
@@ -178,7 +178,7 @@ Based on the basic useRequest, we can further encapsulate and implement more adv
 
 ### Integration Request Library
 
-If service is `string`, `object`, `(... args) => string | object`, we will automatically use [fetch] (https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch) to send network requests. 
+If service is `string`, `object`, `(... args) => string | object`, we will automatically use [fetch] (https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch) to send network requests.
 
 ```javascript
 // Usage 1
@@ -191,7 +191,7 @@ const { data, error, loading } = useRequest({
 });
 
 // Usage 3
-const { data, error, loading } = useRequest((userId)=> `/api/userInfo/${userId}`);
+const { data, error, loading } = useRequest((userId) => `/api/userInfo/${userId}`);
 
 // Usage 4
 const { loading, run } = useRequest((username) => ({
@@ -213,7 +213,7 @@ const { loading, run } = useRequest((username) => ({
 
 ```typescript
 const {...} = useRequest<R>(
-  service: string | object | ((...args:any) => string | object),
+  service: string | object | ((...args: any[]) => string | object),
   {
     ...,
     requestMethod?: (service) => Promise
@@ -228,7 +228,7 @@ If service is `string`, `object`, `(... args) => string | object`, then automati
 
 | Property      | Description                                                                                                                                                                         | Type                                   | Default |
 |---------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|----------------------------------------|---------|
-| requestMethod | Asynchronous request method, the parameters are the service or parameters returned by service. If this parameter is set, this function is used to send network requests by default. | `(service: string/object)) => Promise` | -       |
+| requestMethod | Asynchronous request method, the parameters are the service or parameters returned by service. If this parameter is set, this function is used to send network requests by default. | `(service: string \| object)) => Promise` | -       |
 
 ### Pagination
 
@@ -333,10 +333,10 @@ const {
 #### Result
 | Property    | Description                                          | Type       |
 |-------------|------------------------------------------------------|------------|
-| loadMore    | Trigger load more                                    | `()=>void`  |
+| loadMore    | Trigger load more                                    | `() => void`  |
 | loadingMore | Is loading more                                      | `boolean`   |
 | noMore      | Is there have more data, need use with `options.isNoMore` | `boolean`  |
-| reload      | trigger reload                                       | `()=>void` |
+| reload      | trigger reload                                       | `() => void` |
 
 #### Params
 
@@ -344,7 +344,7 @@ const {
 |-------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------|------|
 | loadMore    | Enable loading more mode | `boolean`   | false  |
 | ref         | The container's ref, if it exists, automatically triggers loadMore when scrolling to the bottom loadMore                                                                                                   | `RefObject<HTMLElement>` | false  |
-| isNoMore    | Is there has more data | `(r: Result)=>boolan`    | false  |
+| isNoMore    | Is there has more data | `(r: Result) => boolan`    | false  |
 | threshold   | Set the distance bottom threshold when pulling down autoload  | `number`                 | 100    |
 | refreshDeps | The `refreshDeps` change will clear the current data and re-initiate the request. Generally, you can put the conditions that loadMore depends on here. | `any[]`                  | `[]`   |
 
@@ -356,11 +356,11 @@ You can set global options at the outermost level of the project via `UseRequest
 ```javascript
 import { UseRequestProvider } from 'ahooks';
 
-export function ({children})=>{
+export function ({children}) => {
   return (
     <UseRequestProvider value={{
       refreshOnWindowFocus: true,
-      requestMethod: (param)=> axios(param),
+      requestMethod: (param) => axios(param),
       ...
     }}>
       {children}

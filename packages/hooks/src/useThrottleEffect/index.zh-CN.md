@@ -30,11 +30,11 @@ useThrottleEffect(
 
 ### Params
 
-| 参数    | 说明                               | 类型                                      | 默认值      |
+| 参数    | 说明                               | 类型                                        | 默认值      |
 |---------|------------------------------------|-------------------------------------------|-------------|
-| effect  | 副作用函数                         | `() => (void | (() => void | undefined))` | -           |
-| deps    | 依赖数组                           | `any[]` \| `undefined`                  | `undefined` |
-| options | 配置节流的行为，详见下面的 Options | `Options`                                 | `{}`        |
+| effect  | 副作用函数                         | `() => (void \| (() => void \| undefined))` | -           |
+| deps    | 依赖数组                           | `any[]` \| `undefined`                      | `undefined` |
+| options | 配置节流的行为，详见下面的 Options | `Options`                                      | `{}`        |
 
 ### Options
 

@@ -9,7 +9,7 @@
 允许 Hooks 无输出，一般常见于生命周期类 Hooks。
 
 ```javascript
-useMount(()=>{});
+useMount(() => {});
 ```
 
 ### 2. value 型
@@ -100,5 +100,3 @@ const result = useRequest(service, {
 ```javascript
 const result = useTextSelection(items, defaultSelected?);
 ```
-
-
