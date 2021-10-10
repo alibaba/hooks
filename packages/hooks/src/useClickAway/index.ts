@@ -16,6 +16,7 @@ export default function useClickAway(
 
   useEffect(() => {
     const handler = (event: any) => {
+      if (!document.contains(event.target)) return;
       const targets = Array.isArray(target) ? target : [target];
       if (
         targets.some((targetItem) => {
