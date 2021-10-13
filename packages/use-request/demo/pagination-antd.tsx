@@ -25,7 +25,7 @@ const userList = (current, pageSize) =>
     [`list|${pageSize}`]: [
       {
         id: '@guid',
-        name: '@cname',
+        name: '@name',
         'gender|1': ['male', 'female'],
         email: '@email',
         disabled: false,
@@ -98,7 +98,7 @@ export default () => {
   return (
     <div>
       <Button onClick={refresh} style={{ marginBottom: 16 }}>
-        刷新
+        Refresh
       </Button>
       <Table columns={columns} rowKey="id" {...tableProps} />
     </div>

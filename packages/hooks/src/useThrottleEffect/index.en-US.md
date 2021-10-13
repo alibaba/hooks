@@ -30,16 +30,16 @@ useThrottleEffect(
 
 ### Params
 
-| Property | Description                                                  | Type             | Default   |
-|----------|--------------------------------------------------------------|------------------|-----------|
-| effect   | The effect callback.                                         | `() => (void | (() => void | undefined))`     | -         |
-| deps     | The dependencies list.                                       | `any[]` \| `undefined` | `undefined` |
-| options  | Config the throttle behavior. See the Options section below. | `Options`           | `{}`        |
+| Property | Description                                                  | Type                                        | Default     |
+|----------|--------------------------------------------------------------|---------------------------------------------|-------------|
+| effect   | The effect callback.                                         | `() => (void \| (() => void \| undefined))` | -           |
+| deps     | The dependencies list.                                       | `any[]` \| `undefined`                      | `undefined` |
+| options  | Config the throttle behavior. See the Options section below. | `Options`                                   | `{}`        |
 
 ### Options
 
-| Property | Description                                           | Type    | Default |
-|----------|-------------------------------------------------------|---------|---------|
+| Property | Description                                           | Type      | Default   |
+|----------|-------------------------------------------------------|-----------|-----------|
 | wait     | The number of milliseconds to delay.                  | `number`  | `1000`    |
 | leading  | Specify invoking on the leading edge of the timeout.  | `boolean` | `true`    |
 | trailing | Specify invoking on the trailing edge of the timeout. | `boolean` | `true`    |

@@ -3,7 +3,7 @@
  * desc: You can use `mutate` to modify `data`. `mutate` parameters can be `newData` or `(oldData) => newData`
  *
  * title.zh-CN: 突变
- * desc.zh-CN: 你可以通过 `mutate` ，直接修改 `data` 。 `mutate` 函数参数可以为 `newData` 或 `(oldData)=> newData` 。
+ * desc.zh-CN: 你可以通过 `mutate` ，直接修改 `data` 。 `mutate` 函数参数可以为 `newData` 或 `(oldData) => newData` 。
  */
 
 import { useRequest } from 'ahooks';

@@ -43,4 +43,4 @@ const previousState: T = usePrevious<T>(
 | 参数            | 说明                     | 类型 | 默认值 |
 |-----------------|--------------------------|------|--------|
 | state           | 需要记录变化的值         | -    | -      |
-| compareFunction | 可选，自定义值变化的规则 |   (prev: T \| undefined, next: T) => boolean   | -      |
+| compareFunction | 可选，自定义值变化的规则 |   `(prev: T \| undefined, next: T) => boolean`   | -      |
