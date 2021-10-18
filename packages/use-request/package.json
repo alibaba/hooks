@@ -35,6 +35,8 @@
     "lodash.throttle": "^4.1.1"
   },
   "devDependencies": {
+    "@types/lodash.debounce": "^4.0.6",
+    "@types/lodash.throttle": "^4.1.6",
     "axios": "^0.21.1",
     "umi-request": "^1.2.17"
   },

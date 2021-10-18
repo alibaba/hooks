@@ -56,9 +56,9 @@ class Fetch<R, P extends any[]> {
     unmount: this.unmount.bind(this.that),
   };
 
-  debounceRun: any;
+  debounceRun: ReturnType<typeof debounce> | undefined;
 
-  throttleRun: any;
+  throttleRun: ReturnType<typeof throttle> | undefined;
 
   limitRefresh: any;
 
