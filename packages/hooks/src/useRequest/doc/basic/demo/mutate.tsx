@@ -6,7 +6,7 @@
 
 import { message } from 'antd';
 import React, { useState, useRef } from 'react';
-import useRequest from 'ahooks';
+import { useRequest } from 'ahooks';
 import Mock from 'mockjs';
 
 function getUsername(): Promise<string> {

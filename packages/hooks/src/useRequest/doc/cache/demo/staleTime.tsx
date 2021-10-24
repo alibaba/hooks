@@ -1,7 +1,7 @@
 import { useBoolean } from 'ahooks';
 import Mock from 'mockjs';
 import React from 'react';
-import useRequest from 'ahooks';
+import { useRequest } from 'ahooks';
 
 async function getArticle(): Promise<{ data: string; time: number }> {
   console.log('cacheKey-staleTime');

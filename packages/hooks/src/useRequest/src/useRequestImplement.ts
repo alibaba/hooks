@@ -1,5 +1,5 @@
 import { useCreation, useMount, useUnmount, useUpdate, useLatest } from '../../index';
-import Fetch from './fetch';
+import Fetch from './Fetch';
 import type { Options, Plugin, Result, Service } from './types';
 
 function useRequestImplement<TData, TParams extends any[]>(

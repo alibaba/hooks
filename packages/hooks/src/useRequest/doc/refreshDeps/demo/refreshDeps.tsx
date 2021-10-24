@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import useRequest from 'ahooks';
+import { useRequest } from 'ahooks';
 
 const userSchool = (id: string) => {
   switch (id) {

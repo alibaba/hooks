@@ -1,4 +1,4 @@
-import useRequest from 'ahooks';
+import { useRequest } from 'ahooks';
 import Mock from 'mockjs';
 import React from 'react';
 

@@ -1,6 +1,6 @@
 import Mock from 'mockjs';
 import React from 'react';
-import useRequest from 'ahooks';
+import { useRequest } from 'ahooks';
 
 function getUsername() {
   return new Promise((resolve) => {

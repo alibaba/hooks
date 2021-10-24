@@ -4,7 +4,7 @@
  * title.zh-CN: 刷新用户名称
  */
 
-import useRequest from 'ahooks';
+import { useRequest } from 'ahooks';
 import Mock from 'mockjs';
 import React, { useEffect } from 'react';
 

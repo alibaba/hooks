@@ -1,4 +1,4 @@
-import useRequest from 'ahooks';
+import { useRequest } from 'ahooks';
 import React, { useState } from 'react';
 import { message } from 'antd';
 
