@@ -15,9 +15,11 @@
     "test": "jest",
     "lint": "eslint --ignore-pattern **/__tests__/* --ignore-pattern **/demo/* \"packages/*/src/**/*.{ts,tsx}\"",
     "build:doc": "dumi build",
-    "pub:doc": "surge ./dist --domain ahooks.js.org",
+    "pub:doc-surge": "surge ./dist --domain ahooks.js.org",
     "pub:doc-gitee": "cd ./dist && rm -rf .git && touch .spa && touch .nojekyll && git init && git remote add origin git@gitee.com:ahooks/ahooks.git && git add -A && git commit -m \"publish docs\" && git push origin master -f",
-    "pub": "lerna publish"
+    "pub:doc": "yarn run build:doc && yarn run pub:doc-surge && yarn run pub:doc-gitee",
+    "pub": "yarn run build && lerna publish",
+    "pub:beta": "yarn run build && lerna publish --dist-tag beta"
   },
   "husky": {
     "hooks": {
@@ -50,7 +52,7 @@
     "husky": "^4.2.5",
     "jest": "^26.0.1",
     "jest-fetch-mock": "^3.0.3",
-    "lerna": "^4.0.0",
+    "lerna": "4.x",
     "mockdate": "^3.0.2",
     "mockjs": "^1.1.0",
     "prettier": "^2.0.5",

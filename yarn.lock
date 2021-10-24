@@ -8741,9 +8741,9 @@ lead@^1.0.0:
   dependencies:
     flush-write-stream "^1.0.2"
 
-lerna@^4.0.0:
+lerna@4.x:
   version "4.0.0"
-  resolved "https://registry.nlark.com/lerna/download/lerna-4.0.0.tgz#b139d685d50ea0ca1be87713a7c2f44a5b678e9e"
+  resolved "https://registry.npm.taobao.org/lerna/download/lerna-4.0.0.tgz?cache=0&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Flerna%2Fdownload%2Flerna-4.0.0.tgz#b139d685d50ea0ca1be87713a7c2f44a5b678e9e"
   integrity sha1-sTnWhdUOoMob6HcTp8L0Sltnjp4=
   dependencies:
     "@lerna/add" "4.0.0"

@@ -45,14 +45,15 @@
     "react": "^16.8.6 || ^17.0"
   },
   "devDependencies": {
-    "@ant-design/icons": "^4.6.2",
-    "@types/js-cookie": "^2.2.6",
     "@alifd/next": "^1.20.6",
+    "@ant-design/icons": "^4.6.2",
     "@types/enzyme": "^3.10.5",
+    "@types/js-cookie": "^2.2.6",
     "antd": "^4.16.9",
     "enzyme-adapter-react-16": "^1.15.4",
     "jest-websocket-mock": "^2.1.0",
     "mock-socket": "^9.0.3",
+    "mockjs": "^1.1.0",
     "react-drag-listview": "^0.1.6"
   },
   "engines": {

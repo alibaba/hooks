@@ -1,4 +1,5 @@
 {
+  "version": "3.0.0-alpha.1",
   "packages": ["packages/*"],
   "npmClient": "yarn",
   "command": {
@@ -7,8 +8,8 @@
       "includeMergedTags": true
     },
     "publish": {
+      "message": "chore(release): publish",
       "registry": "https://registry.npmjs.org/"
     }
-  },
-  "version": "independent"
+  }
 }
