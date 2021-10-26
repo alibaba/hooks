@@ -1,6 +1,5 @@
 import React, { useRef, useMemo } from 'react';
-// import { useWebSocket } from 'ahooks';
-import useWebSocket from '../';
+import { useWebSocket } from 'ahooks';
 
 enum ReadyState {
   Connecting = 0,
