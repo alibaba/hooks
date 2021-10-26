@@ -44,6 +44,8 @@ export default function useWebSocket(socketUrl: string, options: Options = {}): 
   const reconnectTimerRef = useRef<NodeJS.Timeout>();
   const websocketRef = useRef<WebSocket>();
 
+  const unmountedRef = useRef(false);
+
   const [latestMessage, setLatestMessage] = useState<WebSocketEventMap['message']>();
   const [readyState, setReadyState] = useState<ReadyState>(ReadyState.Closed);
 
@@ -88,6 +90,9 @@ export default function useWebSocket(socketUrl: string, options: Options = {}): 
         setLatestMessage(message);
       };
       websocketRef.current.onclose = (event) => {
+        if (unmountedRef.current) {
+          return;
+        }
         reconnect();
         onClose && onClose(event);
         setReadyState(websocketRef.current?.readyState || ReadyState.Closed);
@@ -135,6 +140,7 @@ export default function useWebSocket(socketUrl: string, options: Options = {}): 
   }, [socketUrl, manual]);
 
   useUnmount(() => {
+    unmountedRef.current = true;
     disconnect();
   });
 
