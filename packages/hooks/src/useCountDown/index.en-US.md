@@ -10,15 +10,13 @@ group:
 
 # useCountDown
 
-<Tag lang="en-US" tags="ssr&crossPlatform"></Tag>
+A hook for manage countdown.
 
-A hook for countdown management.
-
-## Countdown to specific time in the future
+## Countdown to target time
 
 <code src="./demo/demo1.tsx" />
 
-## Control timer status manually
+## Dynamic config
 
 <code src="./demo/demo2.tsx" />
 
@@ -35,7 +33,7 @@ interface FormattedRes {
   milliseconds: number;
 }
 
-const [countdown, setTargetDate, formattedRes] = useCountDown(
+const [countdown, formattedRes] = useCountDown(
   {
     targetDate,
     interval,
@@ -55,17 +53,19 @@ If you only need to be accurate to the second, you can use it like this `Math.ro
 
 ### Params
 
-| Property   | Description                                            | Type       | Default |
-|------------|--------------------------------------------------------|------------|---------|
-| targetDate | Target time                                            | `TDate`    | -       |
-| interval   | Time interval between ticks, in milliseconds           | `number`   | `1000`  |
-| onEnd      | Function to call when countdown completes          | `()=>void` | -       |
+| Property   | Description                                  | Type         | Default |
+|------------|----------------------------------------------|--------------|---------|
+| targetDate | Target time                                  | `TDate`      | -       |
+| interval   | Time interval between ticks, in milliseconds | `number`     | `1000`  |
+| onEnd      | Function to call when countdown completes    | `() => void` | -       |
 
 ### Return
 
-| Params          | Description                            | Type                      |
-|-----------------|----------------------------------------|---------------------------|
-| countdown       | Timestamp to targetDate, in milliseconds | `number`                  |
-| setTarget       | Set targetDate                         | `(target?:TDate) => void` |
-| formattedResult | Formatted remaining countdown time     | `IOriginResult`           |
+| Params          | Description                              | Type           |
+|-----------------|------------------------------------------|----------------|
+| countdown       | Timestamp to targetDate, in milliseconds | `number`       |
+| formattedResult | Formatted countdown                      | `FormattedRes` |
 
+## Remark
+
+`targetDate`、`interval`、`onEnd` support dynamic change.

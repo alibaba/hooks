@@ -30,7 +30,7 @@ describe('useWebSocket', () => {
 
     // send message
     const nowTime = `${Date.now()}`;
-    hooks.result.current.sendMessage && hooks.result.current.sendMessage(nowTime);
+    hooks.result.current.sendMessage?.(nowTime);
     await expect(wsServer).toReceiveMessage(nowTime);
 
     // receive message

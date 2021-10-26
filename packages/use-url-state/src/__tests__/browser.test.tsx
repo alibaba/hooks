@@ -1,8 +1,7 @@
-/* eslint-disable no-global-assign, no-restricted-globals */
-import React from 'react';
-import { act, renderHook, RenderHookResult } from '@testing-library/react-hooks';
-import useUrlState from '../index';
+import type { RenderHookResult } from '@testing-library/react-hooks';
+import { act, renderHook } from '@testing-library/react-hooks';
 import routeData from 'react-router';
+import useUrlState from '../index';
 
 /* 暂时关闭 act 警告  见：https://github.com/testing-library/react-testing-library/issues/281#issuecomment-480349256 */
 const originalError = console.error;

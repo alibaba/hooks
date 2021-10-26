@@ -1,8 +1,8 @@
 /**
- * title: Use the option property to configure cookie
+ * title: Use the option property to configure Cookie
  * desc: Available options: defaultValue、expires、path、domain、secure、sameSite etc.
  *
- * title.zh-CN: 使用 option 配置 cookie
+ * title.zh-CN: 使用 option 配置 Cookie
  * desc.zh-CN: 可配置属性：默认值、有效时间、路径、域名、协议、跨域等，详见 Options 文档。
  */
 
@@ -21,7 +21,7 @@ export default function App() {
       <p>{value}</p>
       <button
         type="button"
-        style={{ marginRight: '16px' }}
+        style={{ marginRight: 16 }}
         onClick={() =>
           setValue((v) => String(Number(v) + 1), {
             expires: (() => new Date(+new Date() + 10000))(),
@@ -32,7 +32,7 @@ export default function App() {
       </button>
       <button
         type="button"
-        style={{ marginRight: '16px' }}
+        style={{ marginRight: 16 }}
         onClick={() =>
           setValue((v) => String(Number(v) - 1), {
             expires: (() => new Date(+new Date() + 10000))(),

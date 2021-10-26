@@ -10,8 +10,6 @@ group:
 
 # useSet
 
-<Tag lang="en-US" tags="ssr&crossPlatform"></Tag>
-
 A hook that can manage the state of Set.
 
 ## Examples
@@ -38,12 +36,12 @@ const [
 | Property | Description      | Type                 |
 |----------|------------------|----------------------|
 | set      | Set object       | `Set`                |
-| add      | Add key          | `(key: any) => void` |
-| remove   | Remove key       | `(key: any) => void` |
+| add      | Add item         | `(key: any) => void` |
+| remove   | Remove item      | `(key: any) => void` |
 | reset    | Reset to default | `() => void`         |
 
 ### Params
 
-| Property     | Description                                    | Type          | Default |
-|--------------|------------------------------------------------|---------------|---------|
-| initialValue | Optional, Pass in the default Set as parameter | `Iterable<K>` | -       |
+| Property     | Description                 | Type          | Default |
+|--------------|-----------------------------|---------------|---------|
+| initialValue | Optional, set default value | `Iterable<K>` | -       |

@@ -1,6 +1,6 @@
 /**
  * title: Store state into localStorage
- * desc: Refresh this page and you will find the value of input box get restored from localStorage.
+ * desc: Refresh this page and you will get the state from localStorage.
  *
  * title.zh-CN: 将 state 存储在 localStorage 中
  * desc.zh-CN: 刷新页面后，可以看到输入框中的内容被从 localStorage 中恢复了。

@@ -1,9 +1,9 @@
 /**
  * title: Default usage
- * desc: `unmountefRef.current` means whether the component is unmounted
+ * desc: unmountefRef.current means whether the component is unmounted
  *
  * title.zh-CN: 基础用法
- * desc.zh-CN: `unmountefRef.current` 代表组件是否已经卸载
+ * desc.zh-CN: unmountefRef.current 代表组件是否已经卸载
  */
 
 import { useBoolean, useUnmountedRef } from 'ahooks';

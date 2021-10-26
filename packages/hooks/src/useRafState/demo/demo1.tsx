@@ -4,8 +4,8 @@
  * title.zh-CN: 基础用法
  */
 
-import React, { useRef, useEffect } from 'react';
 import { useRafState } from 'ahooks';
+import React, { useEffect } from 'react';
 
 export default () => {
   const [state, setState] = useRafState({

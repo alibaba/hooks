@@ -1,5 +1,5 @@
 /**
- * title: Store complex types such as arrays or objects
+ * title: Store complex types such as array or object
  * desc: useLocalStorageState will do the serialization and deserialization work automatically.
  *
  * title.zh-CN: 存储数组或对象等复杂类型

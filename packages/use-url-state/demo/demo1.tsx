@@ -1,6 +1,6 @@
 /**
  * title: Default usage
- * desc: store the state into url query parameter. By setting the value to `undefind`, the attribute can be deleted from the url query.
+ * desc: Store the state into url query. By set the value to `undefind`, the attribute can be removed from the url query.
  *
  * title.zh-CN: 基础用法
  * desc.zh-CN: 将状态同步到 url query 中。通过设置值为 `undefind`, 可以从 url query 上彻底删除某个属性，从而使用默认值。

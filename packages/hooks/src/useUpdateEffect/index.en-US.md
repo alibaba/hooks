@@ -10,8 +10,6 @@ group:
 
 # useUpdateEffect
 
-<Tag lang="en-US" tags="ssr&crossPlatform"></Tag>
-
 A hook alike `useEffect` but skips running the effect for the first time.
 
 ## Examples
@@ -22,7 +20,7 @@ A hook alike `useEffect` but skips running the effect for the first time.
 
 ## API
 
-The API is exactly the same as React.useEffect.
+The API is exactly the same as `React.useEffect`.
 
 ```typescript
 useUpdateEffect(

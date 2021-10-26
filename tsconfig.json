@@ -16,5 +16,5 @@
     "declaration": false,
     "strictNullChecks": true
   },
-  "exclude": ["node_modules", "lib", "es", "dist", "**/__tests__", "**/__test__", "**/demo"]
+  "exclude": ["node_modules", "lib", "es", "dist"]
 }

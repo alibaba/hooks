@@ -10,15 +10,13 @@ group:
 
 # useCountDown
 
-<Tag lang="zh-CN" tags="ssr&crossPlatform"></Tag>
-
 一个用于管理倒计时的 Hook。
 
 ## 到未来某一时间点的倒计时
 
 <code src="./demo/demo1.tsx" />
 
-## 手动控制状态
+## 配置项动态变化
 
 <code src="./demo/demo2.tsx" />
 
@@ -44,7 +42,7 @@ interface FormattedRes {
   milliseconds: number;
 }
 
-const [countdown, setTargetDate, formattedRes] = useCountDown(
+const [countdown, formattedRes] = useCountDown(
   {
     targetDate,
     interval,
@@ -55,18 +53,20 @@ const [countdown, setTargetDate, formattedRes] = useCountDown(
 
 ### Params
 
-| 参数       | 说明                 | 类型       | 默认值 |
-|------------|----------------------|------------|--------|
-| targetDate | 目标时间             | `TDate`    | -      |
-| interval   | 变化时间间隔（毫秒） | `number`   | `1000` |
-| onEnd      | 倒计时结束触发       | `()=>void` | -      |
+| 参数       | 说明                 | 类型         | 默认值 |
+|------------|----------------------|--------------|--------|
+| targetDate | 目标时间             | `TDate`      | -      |
+| interval   | 变化时间间隔（毫秒） | `number`     | `1000` |
+| onEnd      | 倒计时结束触发       | `() => void` | -      |
 
 
 ### Result
 
-| 参数          | 说明                 | 类型                      |
-|---------------|----------------------|---------------------------|
-| countdown     | 倒计时时间戳（毫秒） | `number`                  |
-| setTargetDate | 更新目标时间         | `(target?:TDate) => void` |
-| formattedRes  | 格式化后的倒计时     | `FormattedRes`            |
+| 参数         | 说明                 | 类型           |
+|--------------|----------------------|----------------|
+| countdown    | 倒计时时间戳（毫秒） | `number`       |
+| formattedRes | 格式化后的倒计时     | `FormattedRes` |
 
+## 备注
+
+`targetDate`、`interval`、`onEnd` 支持动态变化

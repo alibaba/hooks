@@ -37,16 +37,16 @@ describe('useCookieState', () => {
     expect(hook.result.current.state).toEqual('B');
   });
 
-  it('should support null', () => {
-    const COOKIE_KEY = 'test-boolean-key-with-null';
+  it('should support undefined', () => {
+    const COOKIE_KEY = 'test-boolean-key-with-undefined';
     const hook = setUp(COOKIE_KEY, {
-      defaultValue: 'null',
+      defaultValue: 'undefined',
     });
-    expect(hook.result.current.state).toEqual('null');
+    expect(hook.result.current.state).toEqual('undefined');
     act(() => {
-      hook.result.current.setState(null);
+      hook.result.current.setState(undefined);
     });
-    expect(hook.result.current.state).toEqual(null);
+    expect(hook.result.current.state).toEqual(undefined);
     const anotherHook = setUp(COOKIE_KEY, {
       defaultValue: 'false',
     });

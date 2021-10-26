@@ -3,7 +3,7 @@
  * desc: Forces component to re-render.
  *
  * title.zh-CN: 基础用法
- * desc.zh-CN: 强制组件刷新
+ * desc.zh-CN: 强制组件重新渲染。
  */
 
 import React from 'react';

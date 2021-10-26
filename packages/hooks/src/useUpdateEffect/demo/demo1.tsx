@@ -3,7 +3,7 @@
  * desc: This hook is exactly the same as useEffect, except it skips running the effect for the first time.
  *
  * title.zh-CN: 基础用法
- * desc.zh-CN: 使用上与 useEffect 完全相同，只是它忽略了首次执行，且只在依赖项更新时执行。
+ * desc.zh-CN: 使用上与 useEffect 完全相同，只是它忽略了首次执行，只在依赖项更新时执行。
  */
 
 import React, { useEffect, useState } from 'react';

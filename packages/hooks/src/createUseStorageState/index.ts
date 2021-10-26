@@ -58,9 +58,13 @@ export function createUseStorageState(getStorage: () => Storage | undefined) {
     };
 
     function getStoredValue() {
-      const raw = storage?.getItem(key);
-      if (raw) {
-        return deserializer(raw);
+      try {
+        const raw = storage?.getItem(key);
+        if (raw) {
+          return deserializer(raw);
+        }
+      } catch (e) {
+        console.error(e);
       }
       if (isFunction<IFuncUpdater<T>>(options?.defaultValue)) {
         return options?.defaultValue();
@@ -69,6 +73,7 @@ export function createUseStorageState(getStorage: () => Storage | undefined) {
     }
 
     const [state, setState] = useState<T | undefined>(() => getStoredValue());
+
     useUpdateEffect(() => {
       setState(getStoredValue());
     }, [key]);
@@ -79,11 +84,19 @@ export function createUseStorageState(getStorage: () => Storage | undefined) {
         storage?.removeItem(key);
       } else if (isFunction<IFuncUpdater<T>>(value)) {
         const currentState = value(state);
-        setState(currentState);
-        storage?.setItem(key, serializer(currentState));
+        try {
+          setState(currentState);
+          storage?.setItem(key, serializer(currentState));
+        } catch (e) {
+          console.error(e);
+        }
       } else {
-        setState(value);
-        storage?.setItem(key, serializer(value));
+        try {
+          setState(value);
+          storage?.setItem(key, serializer(value));
+        } catch (e) {
+          console.error(e);
+        }
       }
     };
 

@@ -1,8 +1,8 @@
 /**
  * title: Custom shouldUpdate function
- * desc: The stored previous value updates only when the shouldUpdate function returns true.
+ * desc: Previous value update only when the shouldUpdate function return true.
  *
- * title.zh-CN: 自定义 shouldUpdate function
+ * title.zh-CN: 自定义 shouldUpdate 函数
  * desc.zh-CN: 只有 shouldUpdate function 返回 true 时，才会记录值的变化。
  */
 

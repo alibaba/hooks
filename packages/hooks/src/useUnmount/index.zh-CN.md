@@ -11,9 +11,7 @@ group:
 
 # useUnmount
 
-<Tag lang="zh-CN" tags="ssr&crossPlatform"></Tag>
-
-在组件 unmount 时执行的 hook。
+在组件卸载（unmount）时执行的 Hook。
 
 ## 代码演示
 
@@ -31,4 +29,4 @@ useUnmount(fn: () => void);
 
 | 参数 | 说明                 | 类型         | 默认值 |
 |------|----------------------|--------------|--------|
-| fn   | unmount 时执行的函数 | `() => void` | -      |
+| fn   | 组件卸载时执行的函数 | `() => void` | -      |

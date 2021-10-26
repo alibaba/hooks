@@ -10,9 +10,7 @@ group:
 
 # useLocalStorageState
 
-<Tag lang="zh-CN" tags="ssr"></Tag>
-
-A Hook that stores state into localStorage.
+A Hook that store state into localStorage.
 
 ## Examples
 
@@ -52,3 +50,7 @@ const [state, setState] = useLocalStorageState<T>(
 | defaultValue | Default value                 | `any \| (() => any)`     | -                |
 | serializer   | Custom serialization method   | `(value: any) => string` | `JSON.stringify` |
 | deserializer | Custom deserialization method | `(value: string) => any` | `JSON.parse`     |
+
+## Remark
+
+useLocalStorageState will call `serializer` before write data to localStorage, and call `deserializer` once after read data.

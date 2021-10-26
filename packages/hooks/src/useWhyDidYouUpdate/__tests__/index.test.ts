@@ -34,6 +34,4 @@ describe('useWhyDidYouUpdate', () => {
       },
     );
   });
-
-  it('should support component props', () => {});
 });

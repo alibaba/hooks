@@ -53,6 +53,7 @@ import useThrottleFn from './useThrottleFn';
 import useTimeout from './useTimeout';
 import useTitle from './useTitle';
 import useToggle from './useToggle';
+import useTrackedEffect from './useTrackedEffect';
 import useUnmount from './useUnmount';
 import useUnmountedRef from './useUnmountedRef';
 import useUpdate from './useUpdate';
@@ -127,4 +128,5 @@ export {
   useDeepCompareEffect,
   useAsyncEffect,
   useRafState,
+  useTrackedEffect,
 };

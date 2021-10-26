@@ -10,9 +10,7 @@ group:
 
 # useToggle
 
-<Tag lang="en-US" tags="ssr&crossPlatform"></Tag>
-
-A hook that toggles states.
+A hook that toggle states.
 
 ## Examples
 
@@ -36,23 +34,23 @@ const [state, { toggle, set, setLeft, setRight }] = useToggle<T, U>(defaultValue
 
 ### Params
 
-| Property     | Description                   | Type  | Default |
-|--------------|-------------------------------|-------|---------|
-| defaultValue | The default value. `Optional` | `T` | `false`   |
-| reverseValue | The reverse value. `Optional` | `U` | -       |
+| Property     | Description                   | Type | Default |
+|--------------|-------------------------------|------|---------|
+| defaultValue | The default value. Optional | `T`  | `false` |
+| reverseValue | The reverse value. Optional | `U`  | -       |
 
 ### Result
 
-| Property | Description   | Type      |
-|----------|---------------|-----------|
-| state    | Current value of the state  | -         |
+| Property | Description                            | Type      |
+|----------|----------------------------------------|-----------|
+| state    | Current state                          | -         |
 | actions  | A set of methods to update state value | `Actions` |
 
 ### Actions
 
-| Property | Description      | Type                    |
-|----------|------------------|-------------------------|
-| toggle   | A function to toggle the state     | `() => void`            |
-| set      | A function to set state        | `(state: T | U) => void` |
-| setLeft  | A function to set state to `defaultValue` | `() => void`            |
-| setRight | A function to set state to `reverseValue` if `reverseValue` is available. Otherwise set it to the reverse of `defaultValue` | `() => void`            |
+| Property | Description                                                                                                   | Type                      |
+|----------|---------------------------------------------------------------------------------------------------------------|---------------------------|
+| toggle   | Toggle state                                                                                                  | `() => void`              |
+| set      | Set state                                                                                                     | `(state: T \| U) => void` |
+| setLeft  | Set state to `defaultValue`                                                                                   | `() => void`              |
+| setRight | Set state to `reverseValue` if `reverseValue` is available. Otherwise set it to the reverse of `defaultValue` | `() => void`              |

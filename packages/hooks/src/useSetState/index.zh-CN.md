@@ -10,8 +10,6 @@ group:
 
 # useSetState
 
-<Tag lang="zh-CN" tags="ssr&crossPlatform"></Tag>
-
 管理 object 类型 state 的 Hooks，用法与 class 组件的 `this.setState` 基本一致。
 
 ## 代码演示

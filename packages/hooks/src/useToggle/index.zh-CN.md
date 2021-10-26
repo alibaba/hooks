@@ -10,8 +10,6 @@ group:
 
 # useToggle
 
-<Tag lang="zh-CN" tags="ssr&crossPlatform"></Tag>
-
 用于在两个状态值间切换的 Hook。
 
 ## Examples
@@ -53,6 +51,6 @@ const [state, { toggle, set, setLeft, setRight }] = useToggle<T, U>(defaultValue
 | 参数     | 说明                | 类型                    |
 |----------|---------------------|-------------------------|
 | toggle   | 切换 state          | `() => void`            |
-| set      | 修改 state          | `(state: T | U) => void` |
+| set      | 修改 state          | `(state: T \| U) => void` |
 | setLeft  | 设置为 defaultValue | `() => void`            |
 | setRight | 如果传入了 reverseValue,  则设置为 reverseValue。 否则设置为 defautValue 的反值 | `() => void` |

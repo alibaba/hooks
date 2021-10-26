@@ -10,8 +10,6 @@ group:
 
 # useWhyDidYouUpdate
 
-<Tag lang="zh-CN" tags="ssr&crossPlatform"></Tag>
-
 帮助开发者排查是那个属性改变导致了组件的 rerender。
 
 ## 代码演示

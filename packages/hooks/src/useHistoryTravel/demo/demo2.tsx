@@ -15,7 +15,7 @@ export default () => {
   );
 
   const [inputValue, setInputValue] = useState('');
-  const [step, setStep] = useState(0);
+  const [step, setStep] = useState(-1);
 
   const onAdd = () => {
     setValue([...value, inputValue]);

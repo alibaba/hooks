@@ -10,8 +10,6 @@ group:
 
 # useMount
 
-<Tag lang="en-US" tags="ssr&crossPlatform"></Tag>
-
 A hook that executes a function after the component is mounted.
 
 ## Examples

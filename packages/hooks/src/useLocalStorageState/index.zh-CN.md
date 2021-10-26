@@ -10,9 +10,7 @@ group:
 
 # useLocalStorageState
 
-<Tag lang="zh-CN" tags="ssr&crossPlatform"></Tag>
-
-一个可以将状态存储在 localStorage 中的 Hook 。
+将状态存储在 localStorage 中的 Hook 。
 
 ## 代码演示
 
@@ -52,3 +50,7 @@ const [state, setState] = useLocalStorageState<T>(
 | defaultValue | 默认值             | `any \| (() => any)`     | -                |
 | serializer   | 自定义序列化方法   | `(value: any) => string` | `JSON.stringify` |
 | deserializer | 自定义反序列化方法 | `(value: string) => any` | `JSON.parse`     |
+
+## 备注
+
+useLocalStorageState 在往 localStorage 写入数据前，会先调用一次 `serializer`，在读取数据之后，会先调用一次 `deserializer`。

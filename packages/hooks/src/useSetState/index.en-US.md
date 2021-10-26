@@ -10,8 +10,6 @@ group:
 
 # useSetState
 
-<Tag lang="en-US" tags="ssr&crossPlatform"></Tag>
-
 useSetState works similar to `this.setState` of class component, used to manage the state of object type.
 
 ## Examples

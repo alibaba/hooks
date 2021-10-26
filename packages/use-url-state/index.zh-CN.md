@@ -10,9 +10,7 @@ group:
 
 # useUrlState
 
-<Tag lang="zh-CN" tags="ssr&crossPlatform"></Tag>
-
-一个通过 url query 来管理 state 的 Hook。
+通过 url query 来管理 state 的 Hook。
 
 ## 安装
 

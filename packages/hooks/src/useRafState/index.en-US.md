@@ -10,8 +10,6 @@ group:
 
 # useRafState
 
-<Tag lang="en-US" tags="ssr&crossPlatform"></Tag>
-
 Update the state in [requestAnimationFrame](https://developer.mozilla.org/en-US/docs/Web/API/window/requestAnimationFrame) callback, generally used for performance optimization.
 
 ## Examples
@@ -22,4 +20,4 @@ Update the state in [requestAnimationFrame](https://developer.mozilla.org/en-US/
 
 ### API
 
-Same as useState.
+Same as `React.useState`.

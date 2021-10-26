@@ -1,13 +1,6 @@
-/**
- * title: Default usage
- * desc: WebSocket hooks used.
- *
- * title.zh-CN: 基础用法
- * desc.zh-CN: webSocket hooks 使用
- */
-
 import React, { useRef, useMemo } from 'react';
-import { useWebSocket } from 'ahooks';
+// import { useWebSocket } from 'ahooks';
+import useWebSocket from '../';
 
 enum ReadyState {
   Connecting = 0,
@@ -17,7 +10,7 @@ enum ReadyState {
 }
 
 export default () => {
-  const messageHistory = useRef([]);
+  const messageHistory = useRef<any[]>([]);
 
   const { readyState, sendMessage, latestMessage, disconnect, connect } = useWebSocket(
     'wss://echo.websocket.org',

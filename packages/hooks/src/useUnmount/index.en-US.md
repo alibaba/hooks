@@ -11,8 +11,6 @@ group:
 
 # useUnmount
 
-<Tag lang="en-US" tags="ssr&crossPlatform"></Tag>
-
 A hook that executes the function right before the component is unmounted.
 
 ## Examples

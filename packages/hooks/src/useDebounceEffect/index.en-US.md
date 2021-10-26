@@ -10,8 +10,6 @@ group:
 
 # useDebounceEffect
 
-<Tag lang="en-US" tags="ssr&crossPlatform"></Tag>
-
 Debounce your `useEffect`.
 
 ## Examples
@@ -32,16 +30,16 @@ useDebounceEffect(
 
 ### Params
 
-| Property | Description                                                  | Type             | Default |
-|----------|--------------------------------------------------------------|------------------|---------|
-| effect   | The effect callback.                                         | `EffectCallback` | -       |
-| deps     | The dependencies list.                                       | `DependencyList` | -       |
-| options  | Config for the debounce behaviors. See the Options section below for details. | `Options`        | `{}`    |
+| Property | Description                                                                   | Type             | Default |
+|----------|-------------------------------------------------------------------------------|------------------|---------|
+| effect   | The effect callback.                                                          | `EffectCallback` | -       |
+| deps     | The dependencies list.                                                        | `DependencyList` | -       |
+| options  | Config for the debounce behaviors. See the Options section below for details. | `Options`        | -       |
 
 ### Options
 
 | Property | Description                                           | Type      | Default |
 |----------|-------------------------------------------------------|-----------|---------|
-| wait     | The number of milliseconds to delay.                  | `number`  | `1000`  |
+| wait     | The number of milliseconds to wait.                   | `number`  | `1000`  |
 | leading  | Specify invoking on the leading edge of the timeout.  | `boolean` | `false` |
 | trailing | Specify invoking on the trailing edge of the timeout. | `boolean` | `true`  |

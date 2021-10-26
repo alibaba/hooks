@@ -10,8 +10,6 @@ group:
 
 # useRafState
 
-<Tag lang="zh-CN" tags="ssr&crossPlatform"></Tag>
-
 只在 [requestAnimationFrame](https://developer.mozilla.org/en-US/docs/Web/API/window/requestAnimationFrame) callback 时更新 state，一般用于性能优化。
 
 ## 代码演示
@@ -22,4 +20,4 @@ group:
 
 ### API
 
-与 useState 一致
+与 `React.useState` 一致

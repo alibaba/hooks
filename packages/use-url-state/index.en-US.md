@@ -10,9 +10,7 @@ group:
 
 # useUrlState
 
-<Tag lang="en-US" tags="ssr&crossPlatform"></Tag>
-
-A hook that stores the state into url query parameters.
+A hook that store the state into url query.
 
 ## Install
 
@@ -63,8 +61,8 @@ const [state, setState] = useUrlState(initialState, options);
 
 ### Options
 
-| Property     | Description                   | Type                  | Default     |
-|--------------|-------------------------------|-----------------------|-------------|
+| Property     | Description                   | Type                  | Default  |
+|--------------|-------------------------------|-----------------------|----------|
 | navigateMode | Type of history navigate mode | `'push' \| 'replace'` | `'push'` |
 
 ### Result
