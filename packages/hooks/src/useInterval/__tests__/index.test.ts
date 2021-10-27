@@ -3,7 +3,7 @@ import useInterval from '../index';
 
 interface ParamsObj {
   fn: (...arg: any) => any;
-  delay: number | null | undefined;
+  delay: number | undefined;
   options?: { immediate: boolean };
 }
 
@@ -24,16 +24,10 @@ describe('useInterval', () => {
     expect(callback).toHaveBeenCalledTimes(3);
   });
 
-  it('delay is null or undefined should stop', () => {
-    let delay: number | null | undefined = null;
+  it('delay is undefined should stop', () => {
+    let delay: number | undefined = undefined;
     const callback = jest.fn();
     const { rerender } = setUp({ fn: callback, delay });
-    expect(callback).not.toBeCalled();
-    jest.advanceTimersByTime(50);
-    expect(callback).not.toBeCalled();
-
-    delay = undefined;
-    rerender();
     expect(callback).not.toBeCalled();
     jest.advanceTimersByTime(50);
     expect(callback).not.toBeCalled();
