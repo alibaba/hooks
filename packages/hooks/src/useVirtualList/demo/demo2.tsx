@@ -6,18 +6,18 @@
  * desc.zh-CN: 动态指定每个元素的高度
  */
 
-import React from 'react';
+import React, { useMemo } from 'react';
 import { useVirtualList } from 'ahooks';
 
 export default () => {
+  const originalList = useMemo(() => Array.from(Array(99999).keys()), []);
+
   const [value, onChange] = React.useState<number>(0);
-  const { list, containerProps, wrapperProps, scrollTo } = useVirtualList(
-    Array.from(Array(99999).keys()),
-    {
-      itemHeight: (i) => (i % 2 === 0 ? 42 + 8 : 84 + 8),
-      overscan: 10,
-    },
-  );
+
+  const { list, containerProps, wrapperProps, scrollTo } = useVirtualList(originalList, {
+    itemHeight: (i) => (i % 2 === 0 ? 42 + 8 : 84 + 8),
+    overscan: 10,
+  });
 
   return (
     <div>

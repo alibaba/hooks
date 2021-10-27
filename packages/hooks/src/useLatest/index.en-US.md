@@ -10,8 +10,6 @@ group:
 
 # useLatest
 
-<Tag lang="en-US" tags="ssr&crossPlatform"></Tag>
-
 A Hook that returns the latest value, effectively avoiding the closure problem.
 
 ## Examples

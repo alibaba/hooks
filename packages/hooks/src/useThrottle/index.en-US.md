@@ -10,8 +10,6 @@ group:
 
 # useThrottle
 
-<Tag lang="en-US" tags="ssr&crossPlatform"></Tag>
-
 A hook that deal with the throttled value.
 
 ## Examples
@@ -31,10 +29,10 @@ const throttledValue = useThrottle(
 
 ### Params
 
-| Property | Description                                                       | Type      | Default |
-|----------|-------------------------------------------------------------------|-----------|---------|
-| value    | The value to throttle.                                            | `any`     | -       |
-| options  | Config for the throttle behaviors. See the Options section below. | `Options` | `{}`    |
+| Property | Description                        | Type      | Default |
+|----------|------------------------------------|-----------|---------|
+| value    | The value to throttle.             | `any`     | -       |
+| options  | Config for the throttle behaviors. | `Options` | -       |
 
 ### Options
 

@@ -11,7 +11,7 @@ import { message } from 'antd';
 import React, { useState } from 'react';
 
 function mockApiRequest() {
-  return new Promise((resolve) => {
+  return new Promise<void>((resolve) => {
     setTimeout(() => {
       resolve();
     }, 2000);

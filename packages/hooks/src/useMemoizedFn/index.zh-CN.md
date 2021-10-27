@@ -10,8 +10,6 @@ group:
 
 # useMemoizedFn
 
-<Tag lang="zh-CN" tags="ssr&crossPlatform"></Tag>
-
 持久化 function 的 Hook，理论上，可以使用 useMemoizedFn 完全代替 useCallback。
 
 在某些场景中，我们需要使用 useCallback 来记住一个函数，但是在第二个参数 deps 变化时，会重新生成函数，导致函数地址变化。
@@ -49,9 +47,7 @@ const func = useMemoizedFn(()=>{
 ## API
 
 ```typescript
-type noop = (...args: any[]) => any;
-
-const fn = useMemoizedFn<T extends noop>(fn: T):T;
+const fn = useMemoizedFn<T>(fn: T):T;
 ```
 
 ### Result

@@ -10,8 +10,6 @@ group:
 
 # useCreation
 
-<Tag lang="zh-CN" tags="ssr&crossPlatform"></Tag>
-
 `useCreation` 是 `useMemo` 或 `useRef` 的替代品。
 
 因为 `useMemo` 不能保证被 memo 的值一定不会被重计算，而 `useCreation` 可以保证这一点。以下为 React 官方文档中的介绍：
@@ -33,7 +31,7 @@ const b = useCreation(() => new Subject(), []) // 通过 factory 函数，可以
 
 ## API
 
-```javascript
+```typescript
 function useCreation<T>(factory: () => T, deps: any[]): T;
 ```
 

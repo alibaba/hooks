@@ -10,8 +10,6 @@ group:
 
 # useDrop & useDrag
 
-<Tag lang="zh-CN" tags="ssr"></Tag>
-
 A pair of hooks to help you manage data transfer between drag and drop
 
 > useDrop can be used alone to accept file, text or uri dropping.
@@ -31,7 +29,7 @@ A pair of hooks to help you manage data transfer between drag and drop
 ### useDrag
 
 ```typescript
-const getDragProps = useDrag<T>({ onDragStart, onDragEnd, getPropsWithKey });
+const getDragProps = useDrag<T>({ onDragStart, onDragEnd });
 ```
 
 #### Result
@@ -43,16 +41,15 @@ const getDragProps = useDrag<T>({ onDragStart, onDragEnd, getPropsWithKey });
 
 #### Params
 
-| Property        | Description                                                                  | Type                          | Default |
-|-----------------|------------------------------------------------------------------------------|-------------------------------|---------|
-| onDragStart     | The callback when a dragging is started                                      | `(data: T, e: Event) => void` | -       |
-| onDragEnd       | The callback when a dragging is ended                                        | `(data: T, e: Event) => void` | -       |
-| getPropsWithKey | Whether to include the default key in the object returned by getprops method | `boolean`                     | -       |
+| Property    | Description                             | Type                          | Default |
+|-------------|-----------------------------------------|-------------------------------|---------|
+| onDragStart | The callback when a dragging is started | `(data: T, e: Event) => void` | -       |
+| onDragEnd   | The callback when a dragging is ended   | `(data: T, e: Event) => void` | -       |
 
 ### useDrop
 
 ```typescript
-const [ props, isHovering ] = useDrop({
+const [props, isHovering] = useDrop({
   onText: (text: string, e: Event) => void,
   onFiles: (files: File[], e: Event) => void,
   onUri: (uri: string, e: Event) => void,

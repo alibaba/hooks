@@ -10,8 +10,6 @@ group:
 
 # useEventEmitter
 
-<Tag lang="en-US" tags="ssr&crossPlatform"></Tag>
-
 Sometimes it is difficult to pass events between multiple components. By using EventEmitter, this can be simplified.
 
 To get an instance of `EventEmitter`, you can call `useEventEmitter` in React components.

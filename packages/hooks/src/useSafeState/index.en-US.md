@@ -10,10 +10,7 @@ group:
 
 # useSafeState
 
-<Tag lang="en-US" tags="ssr&crossPlatform"></Tag>
-
-It is exactly the same with useState, but after the component is unloaded, the setstate is no longer executed to avoid memory leakage caused by updating the state after the component is unloaded.
-
+It is exactly the same with useState, but after the component is unmount, the setState is no longer executed to avoid memory leakage.
 
 ## Examples
 

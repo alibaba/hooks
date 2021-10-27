@@ -10,8 +10,6 @@ group:
 
 # useAsyncEffect
 
-<Tag lang="zh-CN" tags="ssr&crossPlatform"></Tag>
-
 useEffect 支持异步函数。
 
 ## 代码演示

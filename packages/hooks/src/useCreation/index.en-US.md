@@ -10,8 +10,6 @@ group:
 
 # useCreation
 
-<Tag lang="en-US" tags="ssr&crossPlatform"></Tag>
-
 `useCreation` is the replacement for `useMemo` or `useRef`.
 
 `useMemo` can't guarantee the memoized value will not be recalculated, while `useCreation` can guarantee that. As the the official document of React.js says:
@@ -43,4 +41,3 @@ function useCreation<T>(factory: () => T, deps: any[]): T;
 |----------|------------------------------------------|-------------|---------|
 | factory  | A function used for creating the object. | `() => any` | -       |
 | deps     | The dependencies list.                   | `any[]`     | -       |
-

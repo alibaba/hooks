@@ -6,11 +6,13 @@
  * desc.zh-CN: 渲染大量数据
  */
 
-import React from 'react';
+import React, { useMemo } from 'react';
 import { useVirtualList } from 'ahooks';
 
 export default () => {
-  const { list, containerProps, wrapperProps } = useVirtualList(Array.from(Array(99999).keys()), {
+  const originalList = useMemo(() => Array.from(Array(99999).keys()), []);
+
+  const { list, containerProps, wrapperProps } = useVirtualList(originalList, {
     overscan: 30,
     itemHeight: 60,
   });

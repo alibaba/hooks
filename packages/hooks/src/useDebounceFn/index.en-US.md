@@ -10,8 +10,6 @@ group:
 
 # useDebounceFn
 
-<Tag lang="en-US" tags="ssr&crossPlatform"></Tag>
-
 A hook that deal with the debounced function.
 
 ## Examples
@@ -35,18 +33,19 @@ const {
 
 ### Params
 
-| Property | Description                                                                   | Type                      | Default |
-| -------- | ----------------------------------------------------------------------------- | ------------------------- | ------- |
-| fn       | The function to debounce.                                                     | `(...args: any[]) => any` | -       |
-| options  | Config for the debounce behaviors. See the Options section below for details. | `Options`                 | `{}`    |
+| Property | Description                        | Type                      | Default |
+|----------|------------------------------------|---------------------------|---------|
+| fn       | The function to debounce.          | `(...args: any[]) => any` | -       |
+| options  | Config for the debounce behaviors. | `Options`                 | -       |
 
 ### Options
 
-| Property | Description                                           | Type      | Default |
-|----------|-------------------------------------------------------|-----------|---------|
-| wait     | The number of milliseconds to delay.                  | `number`  | `1000`  |
-| leading  | Specify invoking on the leading edge of the timeout.  | `boolean` | `false` |
-| trailing | Specify invoking on the trailing edge of the timeout. | `boolean` | `true`  |
+| Property | Description                                                         | Type      | Default |
+|----------|---------------------------------------------------------------------|-----------|---------|
+| wait     | The number of milliseconds to delay.                                | `number`  | `1000`  |
+| leading  | Specify invoking on the leading edge of the timeout.                | `boolean` | `false` |
+| trailing | Specify invoking on the trailing edge of the timeout.               | `boolean` | `true`  |
+| maxWait  | The maximum time func is allowed to be delayed before it’s invoked. | `number`  | -       |
 
 ### Result
 

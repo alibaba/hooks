@@ -47,6 +47,7 @@ export default () => {
         {Array.from(Array(5)).map((e, i) => (
           <div
             {...getDragProps(`box${i}`)}
+            key={e}
             style={{
               border: '1px solid #e8e8e8',
               padding: 16,

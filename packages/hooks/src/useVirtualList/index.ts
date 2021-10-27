@@ -2,12 +2,12 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import useMemoizedFn from '../useMemoizedFn';
 import useSize from '../useSize';
 
-export interface Options {
-  itemHeight: number | ((index: number) => number);
+export interface Options<T> {
+  itemHeight: number | ((index: number, data: T) => number);
   overscan?: number;
 }
 
-const useVirtualList = <T = any>(list: T[], options: Options) => {
+const useVirtualList = <T = any>(list: T[], options: Options<T>) => {
   const containerRef = useRef<HTMLElement | null>();
   const size = useSize(containerRef);
   // 暂时禁止 cache
@@ -27,7 +27,7 @@ const useVirtualList = <T = any>(list: T[], options: Options) => {
     let sum = 0;
     let capacity = 0;
     for (let i = start; i < list.length; i++) {
-      const height = (itemHeight as (index: number) => number)(i);
+      const height = itemHeight(i, list[i]);
       sum += height;
       if (sum >= containerHeight) {
         capacity = i;
@@ -44,7 +44,7 @@ const useVirtualList = <T = any>(list: T[], options: Options) => {
     let sum = 0;
     let offset = 0;
     for (let i = 0; i < list.length; i++) {
-      const height = (itemHeight as (index: number) => number)(i);
+      const height = itemHeight(i, list[i]);
       sum += height;
       if (sum >= scrollTop) {
         offset = i;
@@ -71,14 +71,14 @@ const useVirtualList = <T = any>(list: T[], options: Options) => {
 
   useEffect(() => {
     calculateRange();
-  }, [size?.width, size?.height, list.length]);
+  }, [size?.width, size?.height, list]);
 
   const totalHeight = useMemo(() => {
     if (typeof itemHeight === 'number') {
       return list.length * itemHeight;
     }
-    return list.reduce((sum, _, index) => sum + itemHeight(index), 0);
-  }, [list.length]);
+    return list.reduce((sum, _, index) => sum + itemHeight(index, list[index]), 0);
+  }, [list]);
 
   const getDistanceTop = (index: number) => {
     // 如果有缓存，优先返回缓存值
@@ -92,7 +92,7 @@ const useVirtualList = <T = any>(list: T[], options: Options) => {
       // }
       return height;
     }
-    const height = list.slice(0, index).reduce((sum, _, i) => sum + itemHeight(i), 0);
+    const height = list.slice(0, index).reduce((sum, _, i) => sum + itemHeight(i, list[index]), 0);
     // if (enableCache) {
     //   distanceCache.current[index] = height;
     // }
@@ -106,7 +106,7 @@ const useVirtualList = <T = any>(list: T[], options: Options) => {
     }
   };
 
-  const offsetTop = useMemo(() => getDistanceTop(state.start), [state.start]);
+  const offsetTop = useMemo(() => getDistanceTop(state.start), [state.start, list]);
 
   return {
     list: list.slice(state.start, state.end).map((ele, index) => ({

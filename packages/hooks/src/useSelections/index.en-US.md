@@ -10,9 +10,7 @@ group:
 
 # useSelections
 
-<Tag lang="en-US" tags="ssr&crossPlatform"></Tag>
-
-This hook is used for Checkbox group, supports multiple selection, single selection, select-all, select-none and semi-selected.
+This hook is used for Checkbox group, supports multiple selection, single selection, select-all, select-none and semi-selected etc.
 
 ## Examples
 
@@ -30,7 +28,7 @@ const result: Result= useSelections<T>(items: T[], defaultSelected?: T[]);
 
 | Property          | Description                 | Type                    |
 |-------------------|-----------------------------|-------------------------|
-| selected          | selected Items              | `array`                 |
+| selected          | Selected Items              | `array`                 |
 | allSelected       | Is all items selected       | `boolean`               |
 | noneSelected      | Is no item selected         | `boolean`               |
 | partiallySelected | Is partially items selected | `boolean`               |

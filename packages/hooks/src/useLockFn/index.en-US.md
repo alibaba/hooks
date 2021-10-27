@@ -10,8 +10,6 @@ group:
 
 # useLockFn
 
-<Tag lang="en-US" tags="ssr&crossPlatform"></Tag>
-
 Add lock to an async function to prevent parallel executions.
 
 ## Examples
@@ -39,4 +37,3 @@ function useLockFn<P extends any[] = any[], V extends any = any>(
 | 参数 | 说明              | 类型                               | 默认值 |
 |------|-------------------|------------------------------------|--------|
 | fn   | An async function | `(...args: any[]) => Promise<any>` | -      |
-

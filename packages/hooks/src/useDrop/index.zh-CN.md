@@ -10,8 +10,6 @@ group:
 
 # useDrop & useDrag
 
-<Tag lang="zh-CN" tags="ssr"></Tag>
-
 处理元素拖拽的 Hook。
 
 > useDrop 可以单独使用来接收文件、文字和网址的拖拽。
@@ -31,7 +29,7 @@ group:
 ### useDrag
 
 ```typescript
-const getDragProps = useDrag<T>({ onDragStart, onDragEnd, getPropsWithKey });
+const getDragProps = useDrag<T>({ onDragStart, onDragEnd });
 ```
 
 #### Result
@@ -42,11 +40,10 @@ const getDragProps = useDrag<T>({ onDragStart, onDragEnd, getPropsWithKey });
 
 #### Params
 
-| 参数            | 说明                                                     | 类型                          | 默认值 |
-|-----------------|----------------------------------------------------------|-------------------------------|--------|
-| onDragStart     | 开始拖拽的回调                                           | `(data: T, e: Event) => void` | -      |
-| onDragEnd       | 结束拖拽的回调                                           | `(data: T, e: Event) => void` | -      |
-| getPropsWithKey | 是否在 getProps 方法返回的对象中包含默认的 key，默认包含 | `boolean`                     | -      |
+| 参数        | 说明           | 类型                          | 默认值 |
+|-------------|----------------|-------------------------------|--------|
+| onDragStart | 开始拖拽的回调 | `(data: T, e: Event) => void` | -      |
+| onDragEnd   | 结束拖拽的回调 | `(data: T, e: Event) => void` | -      |
 
 ### useDrop
 

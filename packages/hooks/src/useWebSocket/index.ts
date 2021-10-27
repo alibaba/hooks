@@ -84,16 +84,25 @@ export default function useWebSocket(socketUrl: string, options: Options = {}): 
     setReadyState(ReadyState.Connecting);
 
     websocketRef.current.onerror = (event) => {
+      if (unmountedRef.current) {
+        return;
+      }
       reconnect();
       onErrorRef.current?.(event);
       setReadyState(websocketRef.current?.readyState || ReadyState.Closed);
     };
     websocketRef.current.onopen = (event) => {
+      if (unmountedRef.current) {
+        return;
+      }
       onOpenRef.current?.(event);
       reconnectTimesRef.current = 0;
       setReadyState(websocketRef.current?.readyState || ReadyState.Closed);
     };
     websocketRef.current.onmessage = (message: WebSocketEventMap['message']) => {
+      if (unmountedRef.current) {
+        return;
+      }
       onMessageRef.current?.(message);
       setLatestMessage(message);
     };

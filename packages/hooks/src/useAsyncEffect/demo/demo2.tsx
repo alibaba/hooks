@@ -39,7 +39,6 @@ export default () => {
           setValue(e.target.value);
         }}
       />
-      <button disabled={!pass}>Submit</button>
       <p>
         {pass === null && 'Checking...'}
         {pass === false && 'Check failed.'}

@@ -10,8 +10,6 @@ group:
 
 # useLockFn
 
-<Tag lang="zh-CN" tags="ssr&crossPlatform"></Tag>
-
 用于给一个异步函数增加竞态锁，防止并发执行。
 
 ## 代码演示

@@ -10,11 +10,9 @@ group:
 
 # useDynamicList
 
-A hook that helps you manage your list data and generate unique key for each item.
+A hook that helps you manage dynamic list and generate unique key for each item.
 
 ## Examples
-
-Using with antd 3.x form, please check [ahooks v2](TODO).
 
 ### Basic usage
 
@@ -42,7 +40,7 @@ const result: Result = useDynamicList(initialValue: T[]);
 
 | Property  | Description                              | Type                                           | Remarks                                                                                    |
 |-----------|------------------------------------------|------------------------------------------------|--------------------------------------------------------------------------------------------|
-| list      | current list data                        | `T[]`                                          | -                                                                                          |
+| list      | Current list                             | `T[]`                                          | -                                                                                          |
 | resetList | Reset list current data                  | `(list: T[]) => void`                          | -                                                                                          |
 | insert    | Add item at specific position            | `(index: number, item: T) => void`             | -                                                                                          |
 | merge     | Merge items into specific position       | `(index: number, items: T[]) => void`          | -                                                                                          |
@@ -59,6 +57,6 @@ const result: Result = useDynamicList(initialValue: T[]);
 
 ### Params
 
-| Property     | Description               | Type | Default |
-|--------------|---------------------------|------|---------|
-| initialValue | initial value of the list | T[]  | `[]`    |
+| Property     | Description               | Type  | Default |
+|--------------|---------------------------|-------|---------|
+| initialValue | Initial value of the list | `T[]` | `[]`    |

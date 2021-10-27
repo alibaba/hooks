@@ -24,7 +24,7 @@ describe('useVirtualList', () => {
   describe('virtual list render', () => {
     let mockRef = { scrollTop: 0, clientHeight: 300 };
     let hook: RenderHookResult<
-      { list: unknown[]; options: Options },
+      { list: unknown[]; options: Options<any> },
       {
         list: unknown[];
         scrollTo: (index: number) => void;
@@ -42,7 +42,7 @@ describe('useVirtualList', () => {
 
     const setup = (list: any[] = [], options: {}) => {
       hook = renderHook(() =>
-        useVirtualList(list as unknown[], { itemHeight: 30, ...options } as Options),
+        useVirtualList(list as unknown[], { itemHeight: 30, ...options } as Options<any>),
       );
       hook.result.current.containerProps.ref(mockRef);
     };

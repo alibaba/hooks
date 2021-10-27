@@ -10,11 +10,9 @@ group:
 
 # useDynamicList
 
-一个帮助你管理列表状态，并能生成唯一 key 的 Hook。
+一个帮助你管理动态列表状态，并能生成唯一 key 的 Hook。
 
 ## 代码演示
-
-配合 antd 3.x form 使用, 请参考 [v2 版本](TODO)
 
 ### 基础用法
 
@@ -50,12 +48,13 @@ const result: Result = useDynamicList(initialList?: T[]);
 | remove    | 删除指定元素           | `(index: number) => void`                      | -                                                                                |
 | move      | 移动元素               | `(oldIndex: number, newIndex: number) => void` | -                                                                                |
 | getKey    | 获得某个元素的 uuid    | `(index: number) => number`                    | -                                                                                |
-| getIndex  | 获得某个key的 index    | `(key: number) => number`                      | -                                                                                |
+| getIndex  | 获得某个 key 的 index  | `(key: number) => number`                      | -                                                                                |
 | push      | 在列表末尾添加元素     | `(item: T) => void`                            | -                                                                                |
 | pop       | 移除末尾元素           | `() => void`                                   | -                                                                                |
 | unshift   | 在列表起始位置添加元素 | `(item: T) => void`                            | -                                                                                |
 | shift     | 移除起始位置元素       | `() => void`                                   | -                                                                                |
 | sortList  | 校准排序               | `(list: T[]) => T[]`                           | 使用方法详见 [在 antd Form 中使用的另一种写法](#在-antd-form-中使用的另一种写法) |
+
 ### 参数
 
 | 参数        | 说明         | 类型  | 默认值 |

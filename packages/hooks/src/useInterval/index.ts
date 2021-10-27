@@ -3,7 +3,7 @@ import useLatest from '../useLatest';
 
 function useInterval(
   fn: () => void,
-  delay: number | null | undefined,
+  delay: number | undefined,
   options?: {
     immediate?: boolean;
   },
@@ -13,7 +13,7 @@ function useInterval(
   const fnRef = useLatest(fn);
 
   useEffect(() => {
-    if (delay === undefined || delay === null) return;
+    if (typeof delay !== 'number' || delay <= 0) return;
     if (immediate) {
       fnRef.current();
     }
