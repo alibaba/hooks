@@ -2,7 +2,7 @@ import { useEffect, useState, useMemo, useRef, MutableRefObject } from 'react';
 import useSize from '../useSize';
 
 export interface OptionType {
-  itemHeight: number | ((index: number, data?: any) => number);
+  itemHeight: number | ((index: number, data?: T) => number);
   overscan?: number;
 }
 
@@ -26,7 +26,7 @@ export default <T = any>(list: T[], options: OptionType) => {
     let sum = 0;
     let capacity = 0;
     for (let i = start; i < list.length; i++) {
-      const height = (itemHeight as (index: number, data?: any) => number)(i, list[i]);
+      const height = (itemHeight as (index: number, data?: T) => number)(i, list[i]);
       sum += height;
       if (sum >= containerHeight) {
         capacity = i;
@@ -43,7 +43,7 @@ export default <T = any>(list: T[], options: OptionType) => {
     let sum = 0;
     let offset = 0;
     for (let i = 0; i < list.length; i++) {
-      const height = (itemHeight as (index: number, data?: any) => number)(i, list[i]);
+      const height = (itemHeight as (index: number, data?: T) => number)(i, list[i]);
       sum += height;
       if (sum >= scrollTop) {
         offset = i;
