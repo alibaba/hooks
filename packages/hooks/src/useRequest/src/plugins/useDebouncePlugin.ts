@@ -1,6 +1,6 @@
 import type { DebouncedFunc, DebounceSettings } from 'lodash';
 import debounce from 'lodash/debounce';
-import { useEffect, useRef } from 'react';
+import { useEffect, useMemo, useRef } from 'react';
 import type { Plugin } from '../types';
 
 const useDebouncePlugin: Plugin<any, any[]> = (
@@ -9,16 +9,19 @@ const useDebouncePlugin: Plugin<any, any[]> = (
 ) => {
   const debouncedRef = useRef<DebouncedFunc<any>>();
 
-  const options: DebounceSettings = {};
-  if (debounceLeading !== undefined) {
-    options.leading = debounceLeading;
-  }
-  if (debounceTrailing !== undefined) {
-    options.trailing = debounceTrailing;
-  }
-  if (debounceMaxWait !== undefined) {
-    options.maxWait = debounceMaxWait;
-  }
+  const options = useMemo(() => {
+    const ret: DebounceSettings = {};
+    if (debounceLeading !== undefined) {
+      ret.leading = debounceLeading;
+    }
+    if (debounceTrailing !== undefined) {
+      ret.trailing = debounceTrailing;
+    }
+    if (debounceMaxWait !== undefined) {
+      ret.maxWait = debounceMaxWait;
+    }
+    return ret;
+  }, [debounceLeading, debounceTrailing, debounceMaxWait]);
 
   useEffect(() => {
     if (debounceWait) {
@@ -49,7 +52,7 @@ const useDebouncePlugin: Plugin<any, any[]> = (
         fetchInstance.runAsync = _originRunAsync;
       };
     }
-  }, [debounceWait, debounceLeading, debounceTrailing, debounceMaxWait]);
+  }, [debounceWait, options]);
 
   if (!debounceWait) {
     return {};
