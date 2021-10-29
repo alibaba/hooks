@@ -1,32 +1,41 @@
-import useMemoizedFn from '../useMemoizedFn';
+import { useEffect } from 'react';
+import useLatest from '../useLatest';
+import type { BasicTarget } from '../utils/dom2';
+import { getTargetElement } from '../utils/dom2';
 
-type getDragPropsFn = (data: any) => {
-  draggable: 'true';
-  key?: string;
-  onDragStart: (e: React.DragEvent) => void;
-  onDragEnd: (e: React.DragEvent) => void;
-};
-
-interface Options<T> {
-  onDragStart?: (data: T, e: React.DragEvent) => void;
-  onDragEnd?: (data: T, e: React.DragEvent) => void;
+export interface Options {
+  onDragStart?: (event: React.DragEvent) => void;
+  onDragEnd?: (event: React.DragEvent) => void;
 }
 
-const useDrag = <T = any>(options?: Options<T>): getDragPropsFn => {
-  const getProps = (data: T) => {
-    return {
-      draggable: 'true' as const,
-      onDragStart: (e: React.DragEvent) => {
-        options?.onDragStart?.(data, e);
-        e.dataTransfer.setData('custom', JSON.stringify(data));
-      },
-      onDragEnd: (e: React.DragEvent) => {
-        options?.onDragEnd?.(data, e);
-      },
-    };
-  };
+const useDrag = <T>(data: T, target: BasicTarget, options: Options = {}) => {
+  const optionsRef = useLatest(options);
 
-  return useMemoizedFn(getProps);
+  useEffect(() => {
+    const targetElement = getTargetElement(target);
+    if (!targetElement?.addEventListener) {
+      return;
+    }
+
+    const onDragStart = (event: React.DragEvent) => {
+      optionsRef.current.onDragStart?.(event);
+      event.dataTransfer.setData('custom', JSON.stringify(data));
+    };
+
+    const onDragEnd = (event: React.DragEvent) => {
+      optionsRef.current.onDragEnd?.(event);
+    };
+
+    targetElement.setAttribute('draggable', 'true');
+
+    targetElement.addEventListener('dragstart', onDragStart as any);
+    targetElement.addEventListener('dragend', onDragEnd as any);
+
+    return () => {
+      targetElement.removeEventListener('dragstart', onDragStart as any);
+      targetElement.removeEventListener('dragend', onDragEnd as any);
+    };
+  }, [typeof target === 'function' ? 'undefined' : target]);
 };
 
 export default useDrag;

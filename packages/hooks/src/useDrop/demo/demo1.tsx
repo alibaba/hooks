@@ -6,20 +6,47 @@
  * desc.zh-CN: 拖拽区域可以接受文件，链接，文字，和下方的 box 节点。
  */
 
-import React, { useState } from 'react';
-import { useDrop, useDrag } from 'ahooks';
+import React, { useRef, useState } from 'react';
+// import { useDrop, useDrag } from 'ahooks';
+import useDrop from '../';
+import useDrag from '../../useDrag';
 
-export default () => {
-  const [dragging, setDragging] = useState<string | null>(null);
-  const getDragProps = useDrag({
-    onDragStart: (data) => {
-      setDragging(data);
+const DragItem = ({ data }) => {
+  const dragRef = useRef();
+
+  const [dragging, setDragging] = useState(false);
+
+  useDrag(data, dragRef, {
+    onDragStart: () => {
+      setDragging(true);
     },
     onDragEnd: () => {
-      setDragging(null);
+      setDragging(false);
     },
   });
-  const [props, isHovering] = useDrop({
+
+  return (
+    <div
+      ref={dragRef}
+      style={{
+        border: '1px solid #e8e8e8',
+        padding: 16,
+        width: 80,
+        textAlign: 'center',
+        marginRight: 16,
+      }}
+    >
+      {dragging ? 'dragging' : `box-${data}`}
+    </div>
+  );
+};
+
+export default () => {
+  const [isHovering, setIsHovering] = useState(false);
+
+  const dropRef = useRef();
+
+  useDrop(dropRef, {
     onText: (text, e) => {
       console.log(e);
       alert(`'text: ${text}' dropped`);
@@ -35,32 +62,21 @@ export default () => {
     onDom: (content: string, e) => {
       alert(`custom: ${content} dropped`);
     },
+    onDragEnter: () => setIsHovering(true),
+    onDragLeave: () => setIsHovering(false),
   });
 
   return (
     <div>
-      <div style={{ border: '1px dashed #e8e8e8', padding: 16, textAlign: 'center' }} {...props}>
+      <div ref={dropRef} style={{ border: '1px dashed #e8e8e8', padding: 16, textAlign: 'center' }}>
         {isHovering ? 'release here' : 'drop here'}
       </div>
 
       <div style={{ display: 'flex', marginTop: 8 }}>
-        {Array.from(Array(5)).map((e, i) => (
-          <div
-            {...getDragProps(`box${i}`)}
-            key={e}
-            style={{
-              border: '1px solid #e8e8e8',
-              padding: 16,
-              width: 80,
-              textAlign: 'center',
-              marginRight: 16,
-            }}
-          >
-            box{i}
-          </div>
+        {['1', '2', '3', '4', '5'].map((e, i) => (
+          <DragItem key={e} data={e} />
         ))}
       </div>
-      <div style={{ marginTop: 8 }}>{dragging ? <>dragging {dragging}</> : 'not dragging'}</div>
     </div>
   );
 };
