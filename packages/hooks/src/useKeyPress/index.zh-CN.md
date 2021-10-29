@@ -37,6 +37,9 @@ group:
 ## API
 
 ```typescript
+type keyType = number | string;
+type KeyFilter = keyType | keyType[] | ((event: KeyboardEvent) => boolean);
+
 useKeyPress(
   keyFilter: KeyFilter, 
   eventHandler: EventHandler, 
@@ -45,8 +48,6 @@ useKeyPress(
 ```
 
 ### Params
-
-> Tips: keyType 为键盘事件中的 keyCode 和 别名
 
 | 参数         | 说明                                         | 类型                                                            | 默认值 |
 |--------------|----------------------------------------------|-----------------------------------------------------------------|--------|

@@ -37,6 +37,9 @@ Listen the keyboard press, support key combinations, and support alias.
 ## API
 
 ```typescript
+type keyType = number | string;
+type KeyFilter = keyType | keyType[] | ((event: KeyboardEvent) => boolean);
+
 useKeyPress(
   keyFilter: KeyFilter, 
   eventHandler: EventHandler, 
@@ -45,8 +48,6 @@ useKeyPress(
 ```
 
 ### Params
-
-> Tips: keyType is the key or alias of KeyboardEvent.
 
 | Property     | Description                                                      | Type                                                            | Default |
 |--------------|------------------------------------------------------------------|-----------------------------------------------------------------|---------|

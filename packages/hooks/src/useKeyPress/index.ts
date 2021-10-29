@@ -4,7 +4,7 @@ import { getTargetElement } from '../utils/dom2';
 import type { BasicTarget } from '../utils/dom2';
 
 export type KeyPredicate = (event: KeyboardEvent) => boolean;
-export type keyType = KeyboardEvent['keyCode'] | KeyboardEvent['key'];
+export type keyType = number | string;
 export type KeyFilter = keyType | keyType[] | ((event: KeyboardEvent) => boolean);
 export type EventHandler = (event: KeyboardEvent) => void;
 export type KeyEvent = 'keydown' | 'keyup';
