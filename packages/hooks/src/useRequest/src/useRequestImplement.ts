@@ -18,14 +18,23 @@ function useRequestImplement<TData, TParams extends any[]>(
     ...rest
   } = options;
 
+  const optionsRef = useLatest(options);
+
   const memoizedOptions = {
     manual,
-    onSuccessRef: useLatest(onSuccess),
-    onErrorRef: useLatest(onError),
-    onBeforeRef: useLatest(onBefore),
-    onFinallyRef: useLatest(onFinally),
-    // formatResultRef: useLatest(formatResult),
     ...rest,
+    get onSuccess() {
+      return optionsRef.current.onSuccess;
+    },
+    get onError() {
+      return optionsRef.current.onError;
+    },
+    get onBefore() {
+      return optionsRef.current.onBefore;
+    },
+    get onFinally() {
+      return optionsRef.current.onFinally;
+    },
   };
 
   const serviceRef = useLatest(service);
