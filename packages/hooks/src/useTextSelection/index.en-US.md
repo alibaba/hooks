@@ -10,8 +10,6 @@ group:
 
 # useTextSelection
 
-<Tag lang="en-US" tags="ssr"></Tag>
-
 Tracking content, size, position of user text selection.
 
 ## Examples
@@ -36,20 +34,20 @@ const state = useTextSelection(target?);
 
 ### Params
 
-| Property | Description               | Type | Default  |
-|----------|---------------------------|------|----------|
+| Property | Description        | Type                                                                                 | Default    |
+|----------|--------------------|--------------------------------------------------------------------------------------|------------|
 | target   | DOM element or ref | `Element` \| `Document` \| `(() => Element\Document)` \| `MutableRefObject<Element>` | `document` |
 
 ### Result
 
-| Property | Description                                    | Type                     |
-|----------|------------------------------------------------|--------------------------|
-| state    | Content, size, position of user text selection | Detail as follow State |
+| Property | Description                                    | Type    |
+|----------|------------------------------------------------|---------|
+| state    | Content, size, position of user text selection | `State` |
 
 ### State
 
-| Property | Description                         | Type   |
-|----------|-------------------------------------|--------|
+| Property | Description                         | Type     |
+|----------|-------------------------------------|----------|
 | text     | Selected text                       | `string` |
 | left     | The left coordinate value of text   | `number` |
 | right    | The right coordinate value of text  | `number` |

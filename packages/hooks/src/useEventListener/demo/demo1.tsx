@@ -11,13 +11,15 @@ import { useEventListener } from 'ahooks';
 
 export default () => {
   const [value, setValue] = useState(0);
-
-  const clickHandler = () => {
-    setValue(value + 1);
-  };
-
   const ref = useRef();
-  useEventListener('click', clickHandler, { target: ref });
+
+  useEventListener(
+    'click',
+    () => {
+      setValue(value + 1);
+    },
+    { target: ref },
+  );
 
   return (
     <button ref={ref} type="button">

@@ -1,9 +1,7 @@
 /**
  * title: Image full screen
- * desc: Image full screen
  *
  * title.zh-CN: 图片全屏
- * desc.zh-CN: 全屏图片
  */
 
 import React from 'react';

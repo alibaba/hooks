@@ -10,8 +10,6 @@ group:
 
 # useExternal
 
-<Tag lang="en-US" tags="ssr"></Tag>
-
 Dynamically load JS or CSS, useExternal can ensure that the resource are globally unique.
 
 ## Example

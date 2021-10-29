@@ -10,8 +10,6 @@ group:
 
 # useSize
 
-<Tag lang="zh-CN" tags="ssr"></Tag>
-
 监听 DOM 节点尺寸变化的 Hook。
 
 ## 代码演示

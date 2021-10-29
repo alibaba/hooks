@@ -10,8 +10,6 @@ group:
 
 # useMouse
 
-<Tag lang="en-US" tags="ssr"></Tag>
-
 Track cursor position
 
 ## Examples

@@ -10,24 +10,23 @@ group:
 
 # useKeyPress
 
-<Tag lang="en-US" tags="ssr"></Tag>
-
 Listen the keyboard press, support key combinations, and support alias.
+
 ## Examples
 
 ### Basic usage
 
 <code src="./demo/demo1.tsx" />
 
-### Use key aliases
+### Combination keys
 
-<code src="./demo/demo2.tsx" />
+<code src="./demo/demo6.tsx" />
 
-### Compound mode
+### Multiple keys
 
 <code src="./demo/demo3.tsx" />
 
-### Advanced
+### Custom method
 
 <code src="./demo/demo4.tsx" />
 
@@ -47,38 +46,26 @@ useKeyPress(
 
 ### Params
 
-> Tips: keyType is the key or keyCode of KeyboardEvent.
+> Tips: keyType is the key or alias of KeyboardEvent.
 
-| Property | Description                                                        | Type                   | Default |
-|---------|----------------------------------------------|------------------------|--------|
-| keyFilter | Support for key and keyCode in keyboard events,function that return Boolean, key aliases  | `keyType` \| `keyType[]` \| `(event: KeyboardEvent) => boolean` | -      |
-| eventHandler | Callback function  | `(event: KeyboardEvent) => void` | -      |
-| options | advanced options，see Options below | `Options`              | -              | 
+| Property     | Description                                                      | Type                                                            | Default |
+|--------------|------------------------------------------------------------------|-----------------------------------------------------------------|---------|
+| keyFilter    | Support keyCode、alias、combination keys、array、custom function | `keyType` \| `keyType[]` \| `(event: KeyboardEvent) => boolean` | -       |
+| eventHandler | Callback function                                                | `(event: KeyboardEvent) => void`                                | -       |
+| options      | advanced options                                                 | `Options`                                                       | -       |
 
 ### Options
 
-| Property | Description                                                        | Type                   | Default |
-|-----------------|--------------------------------------------------------|---------|--------|
-| events | Trigger Events  |  `('keydown' \| 'keyup')[]` | `['keydown']`     |
-| target | DOM element or ref | `() => Element` \| `Element` \| `MutableRefObject<Element>`  | - |
+| Property | Description        | Type                                                        | Default       |
+|----------|--------------------|-------------------------------------------------------------|---------------|
+| events   | Trigger Events     | `('keydown' \| 'keyup')[]`                                  | `['keydown']` |
+| target   | DOM element or ref | `() => Element` \| `Element` \| `MutableRefObject<Element>` | -             |
 
 ## Remarks
 
-1.All key aliases
+1. All key alias refer to [代码](TODO)
 
-```text
-enter
-tab
-delete ('Backspace', 'Delete')
-esc
-space
-up
-down
-left
-right
-```
-
-2.Modifier keys
+2. Modifier keys
 
 ```text
 ctrl
