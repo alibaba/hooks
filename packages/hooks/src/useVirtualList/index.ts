@@ -2,7 +2,7 @@ import { useEffect, useState, useMemo, useRef, MutableRefObject } from 'react';
 import useSize from '../useSize';
 
 export interface OptionType {
-  itemHeight: number | ((index: number) => number);
+  itemHeight: number | ((index: number, data?: T) => number);
   overscan?: number;
 }
 
@@ -26,7 +26,7 @@ export default <T = any>(list: T[], options: OptionType) => {
     let sum = 0;
     let capacity = 0;
     for (let i = start; i < list.length; i++) {
-      const height = (itemHeight as (index: number) => number)(i);
+      const height = (itemHeight as (index: number, data?: T) => number)(i, list[i]);
       sum += height;
       if (sum >= containerHeight) {
         capacity = i;
@@ -43,7 +43,7 @@ export default <T = any>(list: T[], options: OptionType) => {
     let sum = 0;
     let offset = 0;
     for (let i = 0; i < list.length; i++) {
-      const height = (itemHeight as (index: number) => number)(i);
+      const height = (itemHeight as (index: number, data?: T) => number)(i, list[i]);
       sum += height;
       if (sum >= scrollTop) {
         offset = i;
@@ -76,7 +76,7 @@ export default <T = any>(list: T[], options: OptionType) => {
     if (typeof itemHeight === 'number') {
       return list.length * itemHeight;
     }
-    return list.reduce((sum, _, index) => sum + itemHeight(index), 0);
+    return list.reduce((sum, _, index) => sum + itemHeight(index, list[index]), 0);
   }, [list.length]);
 
   const getDistanceTop = (index: number) => {
@@ -91,7 +91,7 @@ export default <T = any>(list: T[], options: OptionType) => {
       // }
       return height;
     }
-    const height = list.slice(0, index).reduce((sum, _, i) => sum + itemHeight(i), 0);
+    const height = list.slice(0, index).reduce((sum, _, i) => sum + itemHeight(i, list[i]), 0);
     // if (enableCache) {
     //   distanceCache.current[index] = height;
     // }

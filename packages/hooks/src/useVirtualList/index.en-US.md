@@ -41,7 +41,7 @@ const result:Result = useVirtualList(originalList: any[], options: Options);
 
 | Property   | Description                                                             | Type   | Default |
 |------------|-------------------------------------------------------------------------|--------|---------|
-| itemHeight | item height, accept a pixel value or a function that returns the height |  `number` \| `((index: number) => number)` | -       |
+| itemHeight | item height, accept a pixel value or a function that returns the height |  `number` \| `((index: number, data?:T) => number)` | -       |
 | overscan   | the extra buffer items outside of the view area                         | `number` | `5`      |
 
 ### Result
