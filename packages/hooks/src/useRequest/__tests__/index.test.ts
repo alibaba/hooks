@@ -23,30 +23,38 @@ describe('useRequest', () => {
   const setUp = (service, options) => renderHook((o) => useRequest(service, o || options));
   let hook;
   it('useRequest should auto run', async () => {
-    let successValue;
+    let value;
     const successCallback = (text) => {
-      successValue = text;
+      value = text;
     };
-    let errorCallback;
+    let errorCallback = jest.fn();
+    const beforeCallback = () => {
+      value = 'before';
+    };
+    const finallyCallback = () => {
+      value = 'finally';
+    };
     //auto run success
     act(() => {
-      errorCallback = jest.fn();
       hook = setUp(request, {
         onSuccess: successCallback,
         onError: errorCallback,
+        onBefore: beforeCallback,
+        onFinally: finallyCallback,
       });
     });
     expect(hook.result.current).toEqual(true);
     jest.runAllTimers();
     await hook.waitForNextUpdate();
+    expect(value).toEqual('before');
     expect(hook.result.current.loading).toEqual(false);
     expect(hook.result.current.data).toEqual('success');
-    expect(successValue).toEqual('success');
-    expect(errorCallback).not.toHaveBeenCalled();
+    expect(value).toEqual('success');
+    expect(value).toEqual('finally');
+    expect(errorCallback).toHaveBeenCalledTimes(0);
 
     //manual run fail
     act(() => {
-      errorCallback = jest.fn();
       hook.result.current.run(0).catch(() => {});
     });
     expect(hook.result.current.loading).toEqual(true);
@@ -54,11 +62,10 @@ describe('useRequest', () => {
     await hook.waitForNextUpdate();
     expect(hook.result.current.error).toEqual(new Error('fail'));
     expect(hook.result.current.loading).toEqual(false);
-    expect(errorCallback).toHaveBeenCalled();
+    expect(errorCallback).toHaveBeenCalledTimes(1);
 
     //manual run success
     act(() => {
-      errorCallback = jest.fn();
       hook.result.current.run(1);
     });
     expect(hook.result.current.loading).toEqual(true);
@@ -66,12 +73,11 @@ describe('useRequest', () => {
     await hook.waitForNextUpdate();
     expect(hook.result.current.data).toEqual('success');
     expect(hook.result.current.loading).toEqual(false);
-    expect(errorCallback).not.toHaveBeenCalled();
+    expect(errorCallback).toHaveBeenCalledTimes(1);
     hook.unmount();
 
     //auto run fail
     act(() => {
-      errorCallback = jest.fn();
       hook = setUp(() => request(0), {
         onSuccess: successCallback,
         onError: errorCallback,
@@ -82,7 +88,7 @@ describe('useRequest', () => {
     await hook.waitForNextUpdate();
     expect(hook.result.current.error).toEqual(new Error('fail'));
     expect(hook.result.current.loading).toEqual(false);
-    expect(errorCallback).toHaveBeenCalled();
+    expect(errorCallback).toHaveBeenCalledTimes(2);
     hook.unmount();
   });
 
