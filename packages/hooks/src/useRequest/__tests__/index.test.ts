@@ -174,6 +174,86 @@ describe('useRequest', () => {
     hook.unmount();
   });
 
+  it('useRequest debounceWait should work', async () => {
+    const callback = jest.fn();
+
+    act(() => {
+      hook = setUp(
+        () => {
+          callback();
+          return request({});
+        },
+        {
+          manual: true,
+          debounceWait: 100,
+        },
+      );
+    });
+
+    act(() => {
+      hook.result.current.run(1);
+      jest.advanceTimersByTime(50);
+      hook.result.current.run(2);
+      jest.advanceTimersByTime(50);
+      hook.result.current.run(3);
+      jest.advanceTimersByTime(50);
+      hook.result.current.run(4);
+    });
+
+    jest.runAllTimers();
+    await hook.waitForNextUpdate();
+    expect(callback).toHaveBeenCalledTimes(1);
+
+    act(() => {
+      hook.result.current.run(1);
+      jest.advanceTimersByTime(50);
+      hook.result.current.run(2);
+      jest.advanceTimersByTime(50);
+      hook.result.current.run(3);
+      jest.advanceTimersByTime(50);
+      hook.result.current.run(4);
+    });
+
+    jest.runAllTimers();
+    await hook.waitForNextUpdate();
+    expect(callback).toHaveBeenCalledTimes(2);
+
+    hook.unmount();
+  });
+
+  it('useRequest throttleWait should work', async () => {
+    const callback = jest.fn();
+
+    act(() => {
+      hook = setUp(
+        () => {
+          callback();
+          return request({});
+        },
+        {
+          manual: true,
+          throttleWait: 100,
+        },
+      );
+    });
+
+    act(() => {
+      hook.result.current.run(1);
+      jest.advanceTimersByTime(50);
+      hook.result.current.run(2);
+      jest.advanceTimersByTime(50);
+      hook.result.current.run(3);
+      jest.advanceTimersByTime(50);
+      hook.result.current.run(4);
+    });
+
+    jest.runAllTimers();
+    await hook.waitForNextUpdate();
+    expect(callback).toHaveBeenCalledTimes(2);
+
+    hook.unmount();
+  });
+
   it('useRequest mutate should work', async () => {
     act(() => {
       hook = setUp(request, {});
@@ -437,5 +517,55 @@ describe('useRequest', () => {
     expect(hook3.result.current.loading).toEqual(false);
     expect(hook3.result.current.data).toEqual('success');
     hook3.unmount();
+  });
+
+  it('useRequest retryCount should work', async () => {
+    let errorCallback;
+    act(() => {
+      errorCallback = jest.fn();
+      hook = setUp(() => request(0), {
+        retryCount: 3,
+        onError: errorCallback,
+      });
+    });
+    jest.setTimeout(10000);
+    jest.advanceTimersByTime(500);
+    expect(errorCallback).toHaveBeenCalledTimes(0);
+    jest.runAllTimers();
+    await hook.waitForNextUpdate();
+    expect(errorCallback).toHaveBeenCalledTimes(1);
+    jest.runAllTimers();
+    await hook.waitForNextUpdate();
+    expect(errorCallback).toHaveBeenCalledTimes(2);
+    jest.runAllTimers();
+    await hook.waitForNextUpdate();
+    expect(errorCallback).toHaveBeenCalledTimes(3);
+    jest.runAllTimers();
+    await hook.waitForNextUpdate();
+    expect(errorCallback).toHaveBeenCalledTimes(4);
+    jest.runAllTimers();
+    expect(errorCallback).toHaveBeenCalledTimes(4);
+    hook.unmount();
+
+    //cancel should work
+    let hook2;
+    act(() => {
+      errorCallback = jest.fn();
+      hook2 = setUp(() => request(0), {
+        retryCount: 3,
+        onError: errorCallback,
+      });
+    });
+    expect(errorCallback).toHaveBeenCalledTimes(0);
+    jest.runAllTimers();
+    await hook2.waitForNextUpdate();
+    expect(errorCallback).toHaveBeenCalledTimes(1);
+    jest.runAllTimers();
+    await hook2.waitForNextUpdate();
+    expect(errorCallback).toHaveBeenCalledTimes(2);
+    hook2.result.current.cancel();
+    jest.runAllTimers();
+    expect(errorCallback).toHaveBeenCalledTimes(2);
+    hook2.unmount();
   });
 });
