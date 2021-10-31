@@ -20,14 +20,15 @@ describe('useRequest', () => {
     );
 
   jest.useFakeTimers();
+  // jest.setTimeout(20000)
   const setUp = (service, options) => renderHook((o) => useRequest(service, o || options));
   let hook;
   it('useRequest should auto run', async () => {
-    let value;
+    let value, success;
     const successCallback = (text) => {
-      value = text;
+      success = text;
     };
-    let errorCallback = jest.fn();
+    const errorCallback = jest.fn();
     const beforeCallback = () => {
       value = 'before';
     };
@@ -43,19 +44,20 @@ describe('useRequest', () => {
         onFinally: finallyCallback,
       });
     });
-    expect(hook.result.current).toEqual(true);
+    expect(hook.result.current.loading).toEqual(true);
+    expect(value).toEqual('before');
+    expect(success).toEqual(undefined);
     jest.runAllTimers();
     await hook.waitForNextUpdate();
-    expect(value).toEqual('before');
     expect(hook.result.current.loading).toEqual(false);
+    expect(success).toEqual('success');
     expect(hook.result.current.data).toEqual('success');
-    expect(value).toEqual('success');
     expect(value).toEqual('finally');
     expect(errorCallback).toHaveBeenCalledTimes(0);
 
     //manual run fail
     act(() => {
-      hook.result.current.run(0).catch(() => {});
+      hook.result.current.run(0);
     });
     expect(hook.result.current.loading).toEqual(true);
     jest.runAllTimers();
@@ -83,7 +85,7 @@ describe('useRequest', () => {
         onError: errorCallback,
       });
     });
-    expect(hook.result.current).toEqual(true);
+    expect(hook.result.current.loading).toEqual(true);
     jest.runAllTimers();
     await hook.waitForNextUpdate();
     expect(hook.result.current.error).toEqual(new Error('fail'));
@@ -118,49 +120,59 @@ describe('useRequest', () => {
     hook.unmount();
   });
 
-  // it('useRequest polling should work', async () => {
-  //   const callback = jest.fn();
+  it('useRequest polling should work', async () => {
+    const callback = jest.fn();
+    act(() => {
+      hook = setUp(
+        () => {
+          callback();
+          return request(1);
+        },
+        {
+          pollingInterval: 100,
+          pollingWhenHidden: true,
+        },
+      );
+    });
+    expect(hook.result.current.loading).toEqual(true);
+    jest.runAllTimers();
+    await hook.waitForNextUpdate();
+    expect(hook.result.current.loading).toEqual(false);
+    expect(hook.result.current.data).toEqual('success');
+    expect(callback).toHaveBeenCalledTimes(1);
 
-  //   act(() => {
-  //     hook = setUp(
-  //       () => {
-  //         callback();
-  //         return request();
-  //       },
-  //       {
-  //         pollingInterval: 100,
-  //         pollingWhenHidden: true,
-  //       },
-  //     );
-  //   });
-  //   expect(hook.result.current.loading).toEqual(true);
-  //   jest.runAllTimers();
-  //   await hook.waitForNextUpdate();
-  //   expect(hook.result.current.loading).toEqual(false);
-  //   expect(hook.result.current.data).toEqual('success');
-  //   expect(callback).toHaveBeenCalled();
+    jest.runAllTimers();
+    await hook.waitForNextUpdate();
+    expect(callback).toHaveBeenCalledTimes(2);
 
-  //   jest.runAllTimers();
-  //   await hook.waitForNextUpdate();
-  //   expect(callback).toHaveBeenCalledTimes(2);
+    jest.runAllTimers();
+    await hook.waitForNextUpdate();
+    expect(callback).toHaveBeenCalledTimes(3);
 
-  //   jest.runAllTimers();
-  //   await hook.waitForNextUpdate();
-  //   expect(callback).toHaveBeenCalledTimes(3);
+    act(() => {
+      hook.result.current.cancel();
+    });
+    jest.runAllTimers();
+    expect(callback).toHaveBeenCalledTimes(3);
 
-  //   act(() => {
-  //     hook.result.current.cancel();
-  //   });
-  //   expect(callback).toHaveBeenCalledTimes(3);
+    act(() => {
+      hook.result.current.run();
+    });
+    jest.runAllTimers();
+    await hook.waitForNextUpdate();
+    expect(callback).toHaveBeenCalledTimes(4);
 
-  //   act(() => {
-  //     hook.result.current.run();
-  //   });
-  //   jest.runAllTimers();
-  //   expect(callback).toHaveBeenCalledTimes(4);
+    jest.runAllTimers();
+    await hook.waitForNextUpdate();
+    expect(callback).toHaveBeenCalledTimes(5);
 
-  //   hook.unmount();
-  // });
+    // can't test for pollingWhenHidden
+    // fireEvent.blur(window);
+    // jest.runAllTimers();
+    // await hook.waitForNextUpdate();
+    // expect(callback).toHaveBeenCalledTimes(5);
+    hook.unmount();
+  });
 
   // it('useRequest fetchKey should work', async () => {
   //   act(() => {
