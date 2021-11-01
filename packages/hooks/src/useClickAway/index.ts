@@ -4,10 +4,8 @@ import useLatest from '../useLatest';
 import { getTargetElement } from '../utils/dom2';
 import type { BasicTarget } from '../utils/dom2';
 
-type EventType = MouseEvent | TouchEvent;
-
-export default function useClickAway(
-  onClickAway: (event: EventType) => void,
+export default function useClickAway<T extends Event = Event>(
+  onClickAway: (event: T) => void,
   target: BasicTarget | BasicTarget[],
   eventName: string = 'click',
 ) {

@@ -10,8 +10,6 @@ group:
 
 # useScroll
 
-<Tag lang="en-US" tags="ssr"></Tag>
-
 Get the scroll position of an element.
 
 ## Examples

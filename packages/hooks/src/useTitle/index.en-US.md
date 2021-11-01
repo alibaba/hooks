@@ -10,9 +10,7 @@ group:
 
 # useTitle
 
-<Tag lang="en-US" tags="ssr"></Tag>
-
-A hook that sets title of the page.
+A hook that set title of the page.
 
 ## Examples
 
@@ -34,6 +32,6 @@ useTitle(title: string, options?: Options);
 
 ### Options
 
-| Property         | Description                                                                 | Type      | Default |
-|------------------|-----------------------------------------------------------------------------|-----------|---------|
+| Property         | Description                                                                | Type      | Default |
+|------------------|----------------------------------------------------------------------------|-----------|---------|
 | restoreOnUnmount | Whether to restore the previous page title when the component is unmounted | `boolean` | `false` |

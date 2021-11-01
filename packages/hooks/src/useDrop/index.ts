@@ -1,54 +1,30 @@
-import { useCallback, useMemo, useState } from 'react';
+import { useEffect } from 'react';
 import useLatest from '../useLatest';
+import type { BasicTarget } from '../utils/dom2';
+import { getTargetElement } from '../utils/dom2';
 
-export interface DropProps {
-  onDragOver: React.DragEventHandler;
-  onDragEnter: React.DragEventHandler;
-  onDragLeave: React.DragEventHandler;
-  onDrop: React.DragEventHandler;
-  onPaste: React.ClipboardEventHandler;
-}
-
-export interface DropAreaOptions {
+export interface Options {
   onFiles?: (files: File[], event?: React.DragEvent) => void;
   onUri?: (url: string, event?: React.DragEvent) => void;
   onDom?: (content: any, event?: React.DragEvent) => void;
   onText?: (text: string, event?: React.ClipboardEvent) => void;
+  onDragEnter?: (event?: React.DragEvent) => void;
+  onDragOver?: (event?: React.DragEvent) => void;
+  onDragLeave?: (event?: React.DragEvent) => void;
+  onDrop?: (event?: React.DragEvent) => void;
+  onPaste?: (event?: React.ClipboardEvent) => void;
 }
 
-const getProps = (
-  callback: (dataTransfer: DataTransfer, event: React.DragEvent | React.ClipboardEvent) => void,
-  setIsHovering: (over: boolean) => void,
-): DropProps => ({
-  onDragOver: (event: React.DragEvent) => {
-    event.preventDefault();
-  },
-  onDragEnter: (event: React.DragEvent) => {
-    event.preventDefault();
-    setIsHovering(true);
-  },
-  onDragLeave: () => {
-    setIsHovering(false);
-  },
-  onDrop: (event: React.DragEvent) => {
-    event.preventDefault();
-    event.persist();
-    setIsHovering(false);
-    callback(event.dataTransfer, event);
-  },
-  onPaste: (event: React.ClipboardEvent) => {
-    event.persist();
-    callback(event.clipboardData, event);
-  },
-});
-
-const useDrop = (options: DropAreaOptions = {}): [DropProps, boolean] => {
+const useDrop = (target: BasicTarget, options: Options = {}) => {
   const optionsRef = useLatest(options);
 
-  const [isHovering, setIsHovering] = useState<boolean>(false);
+  useEffect(() => {
+    const targetElement = getTargetElement(target);
+    if (!targetElement?.addEventListener) {
+      return;
+    }
 
-  const callback = useCallback(
-    (dataTransfer: DataTransfer, event: React.DragEvent | React.ClipboardEvent) => {
+    const onData = (dataTransfer: DataTransfer, event: React.DragEvent | React.ClipboardEvent) => {
       const uri = dataTransfer.getData('text/uri-list');
       const dom = dataTransfer.getData('custom');
 
@@ -78,16 +54,47 @@ const useDrop = (options: DropAreaOptions = {}): [DropProps, boolean] => {
           optionsRef.current.onText!(text, event as React.ClipboardEvent);
         });
       }
-    },
-    [],
-  );
+    };
 
-  const props: DropProps = useMemo(
-    () => getProps(callback, setIsHovering),
-    [callback, setIsHovering],
-  );
+    const onDragEnter = (event: React.DragEvent) => {
+      event.preventDefault();
+      optionsRef.current.onDragEnter?.(event);
+    };
 
-  return [props, isHovering];
+    const onDragOver = (event: React.DragEvent) => {
+      event.preventDefault();
+      optionsRef.current.onDragOver?.(event);
+    };
+
+    const onDragLeave = (event: React.DragEvent) => {
+      optionsRef.current.onDragLeave?.(event);
+    };
+
+    const onDrop = (event: React.DragEvent) => {
+      event.preventDefault();
+      onData(event.dataTransfer, event);
+      optionsRef.current.onDrop?.(event);
+    };
+
+    const onPaste = (event: React.ClipboardEvent) => {
+      onData(event.clipboardData, event);
+      optionsRef.current.onPaste?.(event);
+    };
+
+    targetElement.addEventListener('dragenter', onDragEnter as any);
+    targetElement.addEventListener('dragover', onDragOver as any);
+    targetElement.addEventListener('dragleave', onDragLeave as any);
+    targetElement.addEventListener('drop', onDrop as any);
+    targetElement.addEventListener('paste', onPaste as any);
+
+    return () => {
+      targetElement.removeEventListener('dragenter', onDragEnter as any);
+      targetElement.removeEventListener('dragover', onDragOver as any);
+      targetElement.removeEventListener('dragleave', onDragLeave as any);
+      targetElement.removeEventListener('drop', onDrop as any);
+      targetElement.removeEventListener('paste', onPaste as any);
+    };
+  }, [typeof target === 'function' ? 'undefined' : target]);
 };
 
 export default useDrop;

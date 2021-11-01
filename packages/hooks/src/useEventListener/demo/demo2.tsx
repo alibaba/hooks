@@ -12,10 +12,9 @@ import { useEventListener } from 'ahooks';
 export default () => {
   const [value, setValue] = useState('');
 
-  const keyDownHandler = (ev: KeyboardEvent) => {
+  useEventListener('keydown', (ev) => {
     setValue(ev.code);
-  };
-  useEventListener('keydown', keyDownHandler);
+  });
 
   return <p>Your press key is {value}</p>;
 };

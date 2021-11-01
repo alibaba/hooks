@@ -1,50 +1,54 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo } from 'react';
+import useEventListener from '../useEventListener';
+import useLatest from '../useLatest';
 import useMemoizedFn from '../useMemoizedFn';
+import useRafState from '../useRafState';
 import useSize from '../useSize';
+import type { BasicTarget } from '../utils/dom2';
+import { getTargetElement } from '../utils/dom2';
 
 export interface Options<T> {
+  containerTarget: BasicTarget;
+  wrapperTarget: BasicTarget;
   itemHeight: number | ((index: number, data: T) => number);
   overscan?: number;
 }
 
 const useVirtualList = <T = any>(list: T[], options: Options<T>) => {
-  const containerRef = useRef<HTMLElement | null>();
-  const size = useSize(containerRef);
-  // 暂时禁止 cache
-  // const distanceCache = useRef<{ [key: number]: number }>({});
-  const [state, setState] = useState({ start: 0, end: 10 });
-  const { itemHeight, overscan = 5 } = options;
+  const { containerTarget, wrapperTarget, itemHeight, overscan = 5 } = options;
 
-  if (!itemHeight) {
-    console.warn('useVirtualList: please enter a valid itemHeight');
-  }
+  const itemHeightRef = useLatest(itemHeight);
 
-  const getViewCapacity = (containerHeight: number) => {
-    if (typeof itemHeight === 'number') {
-      return Math.ceil(containerHeight / itemHeight);
+  const size = useSize(containerTarget);
+
+  const [targetList, setTargetList] = useRafState<{ index: number; data: T }[]>([]);
+
+  const getVisibleCount = (containerHeight: number, fromIndex: number) => {
+    if (typeof itemHeightRef.current === 'number') {
+      return Math.ceil(containerHeight / itemHeightRef.current);
     }
-    const { start = 0 } = state;
+
     let sum = 0;
-    let capacity = 0;
-    for (let i = start; i < list.length; i++) {
-      const height = itemHeight(i, list[i]);
+    let endIndex = 0;
+    for (let i = fromIndex; i < list.length; i++) {
+      const height = itemHeightRef.current(i, list[i]);
       sum += height;
       if (sum >= containerHeight) {
-        capacity = i;
+        endIndex = i;
         break;
       }
     }
-    return capacity - start;
+    return endIndex - fromIndex;
   };
 
   const getOffset = (scrollTop: number) => {
-    if (typeof itemHeight === 'number') {
-      return Math.floor(scrollTop / itemHeight) + 1;
+    if (typeof itemHeightRef.current === 'number') {
+      return Math.floor(scrollTop / itemHeightRef.current) + 1;
     }
     let sum = 0;
     let offset = 0;
     for (let i = 0; i < list.length; i++) {
-      const height = itemHeight(i, list[i]);
+      const height = itemHeightRef.current(i, list[i]);
       sum += height;
       if (sum >= scrollTop) {
         offset = i;
@@ -54,84 +58,86 @@ const useVirtualList = <T = any>(list: T[], options: Options<T>) => {
     return offset + 1;
   };
 
-  const calculateRange = () => {
-    const element = containerRef.current;
-    if (element) {
-      const offset = getOffset(element.scrollTop);
-      const viewCapacity = getViewCapacity(element.clientHeight);
+  // 获取上部高度
+  const getDistanceTop = (index: number) => {
+    if (typeof itemHeightRef.current === 'number') {
+      const height = index * itemHeightRef.current;
+      return height;
+    }
+    // @ts-ignore
+    const height = list
+      .slice(0, index)
+      .reduce((sum, _, i) => sum + itemHeightRef.current(i, list[index]), 0);
+    return height;
+  };
 
-      const from = offset - overscan;
-      const to = offset + viewCapacity + overscan;
-      setState({
-        start: from < 0 ? 0 : from,
-        end: to > list.length ? list.length : to,
-      });
+  const totalHeight = useMemo(() => {
+    if (typeof itemHeightRef.current === 'number') {
+      return list.length * itemHeightRef.current;
+    }
+    // @ts-ignore
+    return list.reduce((sum, _, index) => sum + itemHeightRef.current(index, list[index]), 0);
+  }, [list]);
+
+  const calculateRange = () => {
+    const container = getTargetElement(containerTarget);
+    const wrapper = getTargetElement(wrapperTarget);
+
+    if (container && wrapper) {
+      const { scrollTop, clientHeight } = container;
+
+      const offset = getOffset(scrollTop);
+      const visibleCount = getVisibleCount(clientHeight, offset);
+
+      const start = offset - overscan < 0 ? 0 : offset - overscan;
+      const end =
+        offset + visibleCount + overscan > list.length
+          ? list.length
+          : offset + visibleCount + overscan;
+
+      const offsetTop = getDistanceTop(start);
+
+      // @ts-ignore
+      wrapper.style.height = totalHeight - offsetTop + 'px';
+      // @ts-ignore
+      wrapper.style.marginTop = offsetTop + 'px';
+
+      setTargetList(
+        list.slice(start, end).map((ele, index) => ({
+          data: ele,
+          index: index + start,
+        })),
+      );
     }
   };
 
   useEffect(() => {
+    if (!size?.width || !size?.height) {
+      return;
+    }
     calculateRange();
   }, [size?.width, size?.height, list]);
 
-  const totalHeight = useMemo(() => {
-    if (typeof itemHeight === 'number') {
-      return list.length * itemHeight;
-    }
-    return list.reduce((sum, _, index) => sum + itemHeight(index, list[index]), 0);
-  }, [list]);
-
-  const getDistanceTop = (index: number) => {
-    // 如果有缓存，优先返回缓存值
-    // if (enableCache && distanceCache.current[index]) {
-    //   return distanceCache.current[index];
-    // }
-    if (typeof itemHeight === 'number') {
-      const height = index * itemHeight;
-      // if (enableCache) {
-      //   distanceCache.current[index] = height;
-      // }
-      return height;
-    }
-    const height = list.slice(0, index).reduce((sum, _, i) => sum + itemHeight(i, list[index]), 0);
-    // if (enableCache) {
-    //   distanceCache.current[index] = height;
-    // }
-    return height;
-  };
+  useEventListener(
+    'scroll',
+    (e) => {
+      e.preventDefault();
+      calculateRange();
+    },
+    {
+      target: containerTarget,
+    },
+  );
 
   const scrollTo = (index: number) => {
-    if (containerRef.current) {
-      containerRef.current.scrollTop = getDistanceTop(index);
+    const container = getTargetElement(containerTarget);
+    if (container) {
+      container.scrollTop = getDistanceTop(index);
       calculateRange();
     }
   };
 
-  const offsetTop = useMemo(() => getDistanceTop(state.start), [state.start, list]);
-
-  return {
-    list: list.slice(state.start, state.end).map((ele, index) => ({
-      data: ele,
-      index: index + state.start,
-    })),
-    scrollTo: useMemoizedFn(scrollTo),
-    containerProps: {
-      ref: useMemoizedFn((ele: any) => {
-        containerRef.current = ele;
-      }),
-      onScroll: useMemoizedFn((e: any) => {
-        e.preventDefault();
-        calculateRange();
-      }),
-      style: { overflowY: 'auto' as const },
-    },
-    wrapperProps: {
-      style: {
-        width: '100%',
-        height: totalHeight - offsetTop,
-        marginTop: offsetTop,
-      },
-    },
-  };
+  return [targetList, useMemoizedFn(scrollTo)] as const;
 };
 
 export default useVirtualList;

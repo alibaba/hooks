@@ -10,8 +10,6 @@ group:
 
 # useExternal
 
-<Tag lang="zh-CN" tags="ssr"></Tag>
-
 动态注入 JS 或 CSS 资源，useExternal 可以保证资源全局唯一。
 
 ## 代码演示
