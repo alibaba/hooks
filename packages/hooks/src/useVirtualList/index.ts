@@ -1,12 +1,12 @@
 import { useEffect, useState, useMemo, useRef, MutableRefObject } from 'react';
 import useSize from '../useSize';
 
-export interface OptionType {
+export interface OptionType<T> {
   itemHeight: number | ((index: number, data?: T) => number);
   overscan?: number;
 }
 
-export default <T = any>(list: T[], options: OptionType) => {
+export default <T = any>(list: T[], options: OptionType<T>) => {
   const containerRef = useRef<HTMLElement | null>();
   const size = useSize(containerRef as MutableRefObject<HTMLElement>);
   // 暂时禁止 cache
