@@ -7,9 +7,7 @@
  */
 
 import React, { useRef, useState } from 'react';
-// import { useDrop, useDrag } from 'ahooks';
-import useDrop from '../';
-import useDrag from '../../useDrag';
+import { useDrop, useDrag } from 'ahooks';
 
 const DragItem = ({ data }) => {
   const dragRef = useRef();
