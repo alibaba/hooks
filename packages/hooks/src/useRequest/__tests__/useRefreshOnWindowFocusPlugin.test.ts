@@ -1,13 +1,8 @@
 import { act, renderHook } from '@testing-library/react-hooks';
 import { fireEvent } from '@testing-library/react';
-import useRefreshOnWindowFocusPlugin from '../src/plugins/useRefreshOnWindowFocusPlugin';
 import useRequest from '../index';
 
 describe('useRefreshOnWindowFocusPlugin', () => {
-  it('should be defined', () => {
-    expect(useRefreshOnWindowFocusPlugin).toBeDefined();
-  });
-
   const request = (req) =>
     new Promise((resolve, reject) =>
       setTimeout(() => {
@@ -21,20 +16,15 @@ describe('useRefreshOnWindowFocusPlugin', () => {
 
   jest.useFakeTimers();
 
-  const setUp = (service, options, plugins) =>
-    renderHook((o) => useRequest(service, o || options, plugins));
+  const setUp = (service, options) => renderHook((o) => useRequest(service, o || options));
 
   let hook;
   it('useRefreshOnWindowFocusPlugin should work', async () => {
     act(() => {
-      hook = setUp(
-        request,
-        {
-          refreshOnWindowFocus: true,
-          focusTimespan: 5000,
-        },
-        useRefreshOnWindowFocusPlugin,
-      );
+      hook = setUp(request, {
+        refreshOnWindowFocus: true,
+        focusTimespan: 5000,
+      });
     });
     expect(hook.result.current.loading).toEqual(true);
     jest.advanceTimersByTime(1001);

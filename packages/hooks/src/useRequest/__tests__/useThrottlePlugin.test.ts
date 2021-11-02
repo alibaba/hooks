@@ -1,12 +1,7 @@
 import { act, renderHook } from '@testing-library/react-hooks';
-import useThrottlePlugin from '../src/plugins/useThrottlePlugin';
 import useRequest from '../index';
 
 describe('useThrottlePlugin', () => {
-  it('should be defined', () => {
-    expect(useThrottlePlugin).toBeDefined();
-  });
-
   const request = (req) =>
     new Promise((resolve, reject) =>
       setTimeout(() => {
@@ -20,8 +15,7 @@ describe('useThrottlePlugin', () => {
 
   jest.useFakeTimers();
 
-  const setUp = (service, options, plugins) =>
-    renderHook((o) => useRequest(service, o || options, plugins));
+  const setUp = (service, options) => renderHook((o) => useRequest(service, o || options));
 
   let hook;
   it('useThrottlePlugin should work', async () => {
@@ -37,7 +31,6 @@ describe('useThrottlePlugin', () => {
           manual: true,
           throttleWait: 100,
         },
-        useThrottlePlugin,
       );
     });
 
@@ -49,6 +42,7 @@ describe('useThrottlePlugin', () => {
       hook.result.current.run(3);
       jest.advanceTimersByTime(50);
       hook.result.current.run(4);
+      jest.advanceTimersByTime(50);
     });
 
     jest.runAllTimers();

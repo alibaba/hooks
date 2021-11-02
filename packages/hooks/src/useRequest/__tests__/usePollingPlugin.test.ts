@@ -1,12 +1,7 @@
 import { act, renderHook } from '@testing-library/react-hooks';
-import usePollingPlugin from '../src/plugins/usePollingPlugin';
 import useRequest from '../index';
 
 describe('usePollingPlugin', () => {
-  it('should be defined', () => {
-    expect(usePollingPlugin).toBeDefined();
-  });
-
   const request = (req) =>
     new Promise((resolve, reject) =>
       setTimeout(() => {
@@ -20,8 +15,7 @@ describe('usePollingPlugin', () => {
 
   jest.useFakeTimers();
 
-  const setUp = (service, options, plugins) =>
-    renderHook((o) => useRequest(service, o || options, plugins));
+  const setUp = (service, options) => renderHook((o) => useRequest(service, o || options));
 
   let hook;
   it('usePollingPlugin should work', async () => {
@@ -36,7 +30,6 @@ describe('usePollingPlugin', () => {
           pollingInterval: 100,
           pollingWhenHidden: true,
         },
-        usePollingPlugin,
       );
     });
     expect(hook.result.current.loading).toEqual(true);

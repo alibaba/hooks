@@ -1,12 +1,7 @@
 import { act, renderHook } from '@testing-library/react-hooks';
-import useRetryPlugin from '../src/plugins/useRetryPlugin';
 import useRequest from '../index';
 
 describe('useRetryPlugin', () => {
-  it('should be defined', () => {
-    expect(useRetryPlugin).toBeDefined();
-  });
-
   const request = (req) =>
     new Promise((resolve, reject) =>
       setTimeout(() => {
@@ -20,22 +15,17 @@ describe('useRetryPlugin', () => {
 
   jest.useFakeTimers();
 
-  const setUp = (service, options, plugins) =>
-    renderHook((o) => useRequest(service, o || options, plugins));
+  const setUp = (service, options) => renderHook((o) => useRequest(service, o || options));
 
   let hook;
   it('useRetryPlugin should work', async () => {
     let errorCallback;
     act(() => {
       errorCallback = jest.fn();
-      hook = setUp(
-        () => request(0),
-        {
-          retryCount: 3,
-          onError: errorCallback,
-        },
-        useRetryPlugin,
-      );
+      hook = setUp(() => request(0), {
+        retryCount: 3,
+        onError: errorCallback,
+      });
     });
     jest.setTimeout(10000);
     jest.advanceTimersByTime(500);
@@ -60,14 +50,10 @@ describe('useRetryPlugin', () => {
     let hook2;
     act(() => {
       errorCallback = jest.fn();
-      hook2 = setUp(
-        () => request(0),
-        {
-          retryCount: 3,
-          onError: errorCallback,
-        },
-        useRetryPlugin,
-      );
+      hook2 = setUp(() => request(0), {
+        retryCount: 3,
+        onError: errorCallback,
+      });
     });
     expect(errorCallback).toHaveBeenCalledTimes(0);
     jest.runAllTimers();

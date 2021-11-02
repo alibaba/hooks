@@ -1,12 +1,7 @@
 import { act, renderHook } from '@testing-library/react-hooks';
-import useDebouncePlugin from '../src/plugins/useDebouncePlugin';
 import useRequest from '../index';
 
 describe('useDebouncePlugin', () => {
-  it('should be defined', () => {
-    expect(useDebouncePlugin).toBeDefined();
-  });
-
   const request = (req) =>
     new Promise((resolve, reject) =>
       setTimeout(() => {
@@ -18,13 +13,11 @@ describe('useDebouncePlugin', () => {
       }, 1000),
     );
 
-  jest.useFakeTimers();
-
-  const setUp = (service, options, plugins) =>
-    renderHook((o) => useRequest(service, o || options, plugins));
+  const setUp = (service, options) => renderHook((o) => useRequest(service, o || options));
 
   let hook;
   it('useDebouncePlugin should work', async () => {
+    jest.useFakeTimers();
     const callback = jest.fn();
 
     act(() => {
@@ -37,7 +30,6 @@ describe('useDebouncePlugin', () => {
           manual: true,
           debounceWait: 100,
         },
-        useDebouncePlugin,
       );
     });
 
@@ -67,6 +59,17 @@ describe('useDebouncePlugin', () => {
 
     jest.runAllTimers();
     await hook.waitForNextUpdate();
+    expect(callback).toHaveBeenCalledTimes(2);
+
+    act(() => {
+      hook.result.current.run(1);
+      jest.advanceTimersByTime(50);
+      hook.result.current.run(2);
+      jest.advanceTimersByTime(50);
+      hook.result.current.cancel();
+    });
+
+    jest.runAllTimers();
     expect(callback).toHaveBeenCalledTimes(2);
 
     hook.unmount();

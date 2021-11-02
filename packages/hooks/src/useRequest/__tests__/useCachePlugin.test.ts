@@ -1,13 +1,8 @@
 import { act, renderHook } from '@testing-library/react-hooks';
 import MockDate from 'mockdate';
-import useCachePlugin from '../src/plugins/useCachePlugin';
 import useRequest from '../index';
 
 describe('useCachePlugin', () => {
-  it('should be defined', () => {
-    expect(useCachePlugin).toBeDefined();
-  });
-
   const request = (req) =>
     new Promise((resolve, reject) =>
       setTimeout(() => {
@@ -21,19 +16,14 @@ describe('useCachePlugin', () => {
 
   jest.useFakeTimers();
 
-  const setUp = (service, options, plugins) =>
-    renderHook((o) => useRequest(service, o || options, plugins));
+  const setUp = (service, options) => renderHook((o) => useRequest(service, o || options));
 
   let hook;
   it('useRequest cacheKey should work', async () => {
     act(() => {
-      hook = setUp(
-        request,
-        {
-          cacheKey: 'testCacheKey',
-        },
-        useCachePlugin,
-      );
+      hook = setUp(request, {
+        cacheKey: 'testCacheKey',
+      });
     });
     jest.runAllTimers();
     await hook.waitForNextUpdate();
@@ -43,13 +33,9 @@ describe('useCachePlugin', () => {
 
     let hook2;
     act(() => {
-      hook2 = setUp(
-        request,
-        {
-          cacheKey: 'testCacheKey',
-        },
-        useCachePlugin,
-      );
+      hook2 = setUp(request, {
+        cacheKey: 'testCacheKey',
+      });
     });
     expect(hook2.result.current.loading).toEqual(true);
     expect(hook2.result.current.data).toEqual('success');
@@ -63,14 +49,10 @@ describe('useCachePlugin', () => {
     MockDate.set(0);
 
     act(() => {
-      hook = setUp(
-        request,
-        {
-          cacheKey: 'testStaleTime',
-          staleTime: 3000,
-        },
-        useCachePlugin,
-      );
+      hook = setUp(request, {
+        cacheKey: 'testStaleTime',
+        staleTime: 3000,
+      });
     });
     expect(hook.result.current.loading).toEqual(true);
     jest.runAllTimers();
@@ -82,14 +64,10 @@ describe('useCachePlugin', () => {
 
     let hook2;
     act(() => {
-      hook2 = setUp(
-        request,
-        {
-          cacheKey: 'testStaleTime',
-          staleTime: 3000,
-        },
-        useCachePlugin,
-      );
+      hook2 = setUp(request, {
+        cacheKey: 'testStaleTime',
+        staleTime: 3000,
+      });
     });
     expect(hook.result.current.loading).toEqual(false);
     expect(hook2.result.current.data).toEqual('success');
@@ -97,14 +75,10 @@ describe('useCachePlugin', () => {
     MockDate.set(3001);
     let hook3;
     act(() => {
-      hook3 = setUp(
-        request,
-        {
-          cacheKey: 'testStaleTime',
-          staleTime: 3000,
-        },
-        useCachePlugin,
-      );
+      hook3 = setUp(request, {
+        cacheKey: 'testStaleTime',
+        staleTime: 3000,
+      });
     });
     expect(hook3.result.current.loading).toEqual(true);
     expect(hook3.result.current.data).toEqual('success');
@@ -118,14 +92,10 @@ describe('useCachePlugin', () => {
     MockDate.set(0);
 
     act(() => {
-      hook = setUp(
-        request,
-        {
-          cacheKey: 'testCacheTime',
-          cacheTime: 5000,
-        },
-        useCachePlugin,
-      );
+      hook = setUp(request, {
+        cacheKey: 'testCacheTime',
+        cacheTime: 5000,
+      });
     });
     expect(hook.result.current.loading).toEqual(true);
     jest.runAllTimers();
@@ -138,14 +108,10 @@ describe('useCachePlugin', () => {
 
     let hook2;
     act(() => {
-      hook2 = setUp(
-        request,
-        {
-          cacheKey: 'testCacheTime',
-          cacheTime: 5000,
-        },
-        useCachePlugin,
-      );
+      hook2 = setUp(request, {
+        cacheKey: 'testCacheTime',
+        cacheTime: 5000,
+      });
     });
     expect(hook2.result.current.loading).toEqual(true);
     expect(hook2.result.current.data).toEqual('success');
@@ -155,14 +121,10 @@ describe('useCachePlugin', () => {
 
     let hook3;
     act(() => {
-      hook3 = setUp(
-        request,
-        {
-          cacheKey: 'testCacheTime',
-          cacheTime: 5000,
-        },
-        useCachePlugin,
-      );
+      hook3 = setUp(request, {
+        cacheKey: 'testCacheTime',
+        cacheTime: 5000,
+      });
     });
     expect(hook3.result.current.loading).toEqual(true);
     expect(hook3.result.current.data).toEqual(undefined);

@@ -1,12 +1,7 @@
 import { act, renderHook } from '@testing-library/react-hooks';
-import useLoadingDelayPlugin from '../src/plugins/useLoadingDelayPlugin';
 import useRequest from '../index';
 
 describe('useLoadingDelayPlugin', () => {
-  it('should be defined', () => {
-    expect(useLoadingDelayPlugin).toBeDefined();
-  });
-
   const request = (req) =>
     new Promise((resolve, reject) =>
       setTimeout(() => {
@@ -20,19 +15,14 @@ describe('useLoadingDelayPlugin', () => {
 
   jest.useFakeTimers();
 
-  const setUp = (service, options, plugins) =>
-    renderHook((o) => useRequest(service, o || options, plugins));
+  const setUp = (service, options) => renderHook((o) => useRequest(service, o || options));
 
   let hook;
   it('useLoadingDelayPlugin should work', async () => {
     act(() => {
-      hook = setUp(
-        request,
-        {
-          loadingDelay: 2000,
-        },
-        useLoadingDelayPlugin,
-      );
+      hook = setUp(request, {
+        loadingDelay: 2000,
+      });
     });
     expect(hook.result.current.loading).toEqual(false);
     jest.runAllTimers();
@@ -41,13 +31,9 @@ describe('useLoadingDelayPlugin', () => {
     hook.unmount();
 
     act(() => {
-      hook = setUp(
-        request,
-        {
-          loadingDelay: 500,
-        },
-        useLoadingDelayPlugin,
-      );
+      hook = setUp(request, {
+        loadingDelay: 500,
+      });
     });
     expect(hook.result.current.loading).toEqual(false);
     jest.advanceTimersByTime(501);
