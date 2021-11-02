@@ -10,8 +10,6 @@ group:
 
 # useHover
 
-<Tag lang="en-US" tags="ssr"></Tag>
-
 A hook that tracks whether the element is being hovered.
 
 ## Examples
@@ -38,20 +36,20 @@ const isHovering = useHover(
 
 ### Params
 
-| Property | Description               | Type     | Default |
-|----------|---------------------------|----------|---------|
+| Property | Description        | Type                                                        | Default |
+|----------|--------------------|-------------------------------------------------------------|---------|
 | target   | DOM element or ref | `() => Element` \| `Element` \| `MutableRefObject<Element>` | -       |
-| options  | More config   | `Options` | -       |
+| options  | More config        | `Options`                                                   | -       |
 
 ### Options
 
-| Property | Description                                           | Type      | Default |
-|----------|-------------------------------------------------------|-----------|---------|
-| onEnter  | Callback to be executed on mouse hover          | `()=>void` | -       |
-| onLeave  | Callback to be executed on mouse leave     | `()=>void` | -       |
+| Property | Description                            | Type         | Default |
+|----------|----------------------------------------|--------------|---------|
+| onEnter  | Callback to be executed on mouse hover | `() => void` | -       |
+| onLeave  | Callback to be executed on mouse leave | `() => void` | -       |
 
 ### Result
 
-| Property   | Description                                                 | Type    |
-|------------|-------------------------------------------------------------|---------|
+| Property   | Description                          | Type      |
+|------------|--------------------------------------|-----------|
 | isHovering | Whether the element is being hovered | `boolean` |

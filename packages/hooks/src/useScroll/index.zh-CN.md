@@ -10,8 +10,6 @@ group:
 
 # useScroll
 
-<Tag lang="zh-CN" tags="ssr"></Tag>
-
 监听元素的滚动位置。
 
 ## 代码演示

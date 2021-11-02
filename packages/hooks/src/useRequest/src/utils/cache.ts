@@ -1,6 +1,6 @@
 type Timer = ReturnType<typeof setTimeout>;
 type CachedKey = string | number;
-type CachedData = { data: any; timer: Timer | undefined; time: number };
+type CachedData = { data: any; params: any; timer: Timer | undefined; time: number };
 
 type Listener = (data: any) => void;
 
@@ -8,7 +8,7 @@ const cache = new Map<CachedKey, CachedData>();
 
 const listeners: Record<string, Listener[]> = {};
 
-const setCache = (key: CachedKey, cacheTime: number, data: any) => {
+const setCache = (key: CachedKey, cacheTime: number, data: any, params: any) => {
   const currentCache = cache.get(key);
   if (currentCache?.timer) {
     clearTimeout(currentCache.timer);
@@ -30,6 +30,7 @@ const setCache = (key: CachedKey, cacheTime: number, data: any) => {
 
   cache.set(key, {
     data,
+    params,
     timer,
     time: new Date().getTime(),
   });

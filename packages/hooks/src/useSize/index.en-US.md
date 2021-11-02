@@ -10,8 +10,6 @@ group:
 
 # useSize
 
-<Tag lang="en-US" tags="ssr"></Tag>
-
 A hook that observes size change of an element.
 
 ## Examples

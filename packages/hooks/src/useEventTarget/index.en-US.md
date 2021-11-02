@@ -10,8 +10,6 @@ group:
 
 # useEventTarget
 
-<Tag lang="en-US" tags="ssr&crossPlatform"></Tag>
-
 A hook that encapsulates `onChange` and `value` logic for form controls that obtains value through `event.target.value`. It also supports custom transformer and reset functionalities.
 
 ## Example
@@ -27,7 +25,7 @@ A hook that encapsulates `onChange` and `value` logic for form controls that obt
 ## API
 
 ```typescript
-const [value, { onChange, reset }  ] = useEventTarget<T, U>(Options);
+const [value, { onChange, reset }  ] = useEventTarget<T, U>(Options<T, U>);
 ```
 
 ### Result

@@ -10,8 +10,6 @@ group:
 
 # useClickAway
 
-<Tag lang="zh-CN" tags="ssr"></Tag>
-
 监听目标元素外的点击事件。
 
 ## 代码演示
@@ -38,8 +36,8 @@ group:
 ```typescript
 type Target = Element | (() => Element) | React.MutableRefObject<Element>;
 
-useClickAway(
-  onClickAway: (event: MouseEvent | TouchEvent) => void,
+useClickAway<T extends Event = Event>(
+  onClickAway: (event: T) => void,
   target: Target | Target[],
   eventName?: string
 );
@@ -47,8 +45,8 @@ useClickAway(
 
 ### Params
 
-| 参数    | 说明                                         | 类型                   | 默认值 |
-|---------|----------------------------------------------|------------------------|--------|
-| onClickAway | 触发函数  | `(event: MouseEvent | TouchEvent) => void` | -      |
-| target | DOM 节点或者 Ref，支持数组 | `Target` \| `Target[]` | - |
-| eventName | 指定需要监听的事件 | `string` | `click` |
+| 参数        | 说明                       | 类型                   | 默认值  |
+|-------------|----------------------------|------------------------|---------|
+| onClickAway | 触发函数                   | `(event: T) => void`   | -       |
+| target      | DOM 节点或者 Ref，支持数组 | `Target` \| `Target[]` | -       |
+| eventName   | 指定需要监听的事件         | `string`               | `click` |

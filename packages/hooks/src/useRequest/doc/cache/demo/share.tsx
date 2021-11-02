@@ -23,7 +23,7 @@ const Article = () => {
   }
   return (
     <>
-      <p>background loading: {loading ? 'true' : 'false'}</p>
+      <p>Background loading: {loading ? 'true' : 'false'}</p>
       <p>
         <button onClick={refresh} type="button">
           更新

@@ -24,7 +24,7 @@ const Article = () => {
   }
   return (
     <>
-      <p>background loading: {loading ? 'true' : 'false'}</p>
+      <p>Background loading: {loading ? 'true' : 'false'}</p>
       <p>Latest request time: {data?.time}</p>
       <p>{data?.data}</p>
     </>

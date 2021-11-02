@@ -13,7 +13,6 @@ function useRequestImplement<TData, TParams extends any[]>(
     onError,
     onBefore,
     onFinally,
-    defaultParams,
     // formatResult = v => v,
     ...rest
   } = options;
@@ -41,8 +40,7 @@ function useRequestImplement<TData, TParams extends any[]>(
 
   useMount(() => {
     if (!manual) {
-      // @ts-ignore
-      fetchInstance.run(...(defaultParams || []));
+      fetchInstance.refresh();
     }
   });
 

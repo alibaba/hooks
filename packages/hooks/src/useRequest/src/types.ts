@@ -8,6 +8,7 @@ export type Subscribe = () => void;
 
 export interface FetchOptions<TData, TParams extends any[]> {
   manual?: boolean;
+  defaultParams?: TParams;
 
   onBeforeRef: MutableRefObject<Options<TData, TParams>['onBefore']>;
   onSuccessRef: MutableRefObject<Options<TData, TParams>['onSuccess']>;
@@ -18,7 +19,7 @@ export interface FetchOptions<TData, TParams extends any[]> {
 
 export interface FetchState<TData, TParams extends any[]> {
   loading: boolean;
-  params: TParams;
+  params?: TParams;
   data?: TData;
   error?: Error;
 }

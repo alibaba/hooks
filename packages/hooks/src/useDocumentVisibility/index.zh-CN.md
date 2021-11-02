@@ -10,8 +10,6 @@ group:
 
 # useDocumentVisibility
 
-<Tag lang="zh-CN" tags="ssr"></Tag>
-
 监听页面是否可见，参考 [visibilityState API](https://developer.mozilla.org/docs/Web/API/Document/visibilityState)
 
 ## 代码演示

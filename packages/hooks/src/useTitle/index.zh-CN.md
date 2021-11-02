@@ -10,8 +10,6 @@ group:
 
 # useTitle
 
-<Tag lang="zh-CN" tags="ssr"></Tag>
-
 用于设置页面标题。
 
 ## 代码演示

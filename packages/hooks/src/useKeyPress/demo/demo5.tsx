@@ -1,15 +1,12 @@
 /**
  * title: Custom DOM
- * desc: |
- *  By default, you listen for events on the window. You can also pass in a DOM object or return an object via function to set listen area.
- *
- *  Supports multiple DOM callbacks, such as the common listening for input box events.
+ * desc: By default, listen for events on the window. You can also pass in a DOM to set listen area. such as the common listening for input box events.
  *
  * title.zh-CN: 自定义 DOM
  * desc.zh-CN: |
- *  默认监听挂载在 window 上的事件，你也可以传入 DOM 对象或通过 function 返回一个对象的方式指定监听区域。
+ *  默认监听挂载在 window 上的事件，你也可以传入 DOM 指定监听区域。
  *
- *  如常见的监听输入框事件，支持多种 DOM 回调。
+ *  如常见的监听输入框事件，支持多种 DOM 指定方式。
  */
 
 import React, { useState, useRef } from 'react';

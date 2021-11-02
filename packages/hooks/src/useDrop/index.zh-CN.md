@@ -29,44 +29,54 @@ group:
 ### useDrag
 
 ```typescript
-const getDragProps = useDrag<T>({ onDragStart, onDragEnd });
+useDrag<T>(
+  data: any,
+  target: (() => Element) | Element | MutableRefObject<Element>,
+  options?: DragOptions
+);
 ```
-
-#### Result
-
-| 参数         | 说明                                                                                             | 类型                    |
-|--------------|--------------------------------------------------------------------------------------------------|-------------------------|
-| getDragProps | 一个接收拖拽的值，并返回需要透传给被拖拽节点 props 的方法， 默认包含一个由 data 序列化得到的 key | `(content: T) => props` |
-
 #### Params
 
-| 参数        | 说明           | 类型                          | 默认值 |
-|-------------|----------------|-------------------------------|--------|
-| onDragStart | 开始拖拽的回调 | `(data: T, e: Event) => void` | -      |
-| onDragEnd   | 结束拖拽的回调 | `(data: T, e: Event) => void` | -      |
+| 参数    | 说明                  | 类型                                                        | 默认值 |
+|---------|-----------------------|-------------------------------------------------------------|--------|
+| data    | 拖拽的内容            | `any`                                                       | -      |
+| target  | DOM 节点或者 Ref 对象 | `() => Element` \| `Element` \| `MutableRefObject<Element>` | -      |
+| options | 额外的配置项          | `DragOptions`                                               | -      |
+
+#### DragOptions
+| 参数        | 说明           | 类型                           | 默认值 |
+|-------------|----------------|--------------------------------|--------|
+| onDragStart | 开始拖拽的回调 | `(e: React.DragEvent) => void` | -      |
+| onDragEnd   | 结束拖拽的回调 | `(e: React.DragEvent) => void` | -      |
 
 ### useDrop
 
-```typescript
-const [props, isHovering] = useDrop({
-  onText: (text: string, e: Event) => void,
-  onFiles: (files: File[], e: Event) => void,
-  onUri: (uri: string, e: Event) => void,
-  onDom: (content: any, e: Event) => void
-});
-```
-#### Result
 
-| 参数       | 说明                                    | 类型      |
-|------------|-----------------------------------------|-----------|
-| props      | 需要透传给接受拖拽区域 dom 节点的 props | -         |
-| isHovering | 是否是拖拽中，且光标处于释放区域内      | `boolean` |
+```typescript
+useDrop<T>(
+  target: (() => Element) | Element | MutableRefObject<Element>,
+  options?: DropOptions
+);
+```
 
 #### Params
 
-| 参数    | 说明                      | 类型                                | 默认值 |
-|---------|---------------------------|-------------------------------------|--------|
-| onText  | 拖拽文字的回调            | `(text: string, e: Event) => void`  | -      |
-| onFiles | 拖拽文件的回调            | `(files: File[], e: Event) => void` | -      |
-| onUri   | 拖拽链接的回调            | `(text: string, e: Event) => void`  | -      |
-| onDom   | 拖拽自定义 dom 节点的回调 | `(content: any, e: Event) => void`  | -      |
+| 参数    | 说明                  | 类型                                                        | 默认值 |
+|---------|-----------------------|-------------------------------------------------------------|--------|
+| target  | DOM 节点或者 Ref 对象 | `() => Element` \| `Element` \| `MutableRefObject<Element>` | -      |
+| options | 额外的配置项          | `DragOptions`                                               | -      |
+
+#### DropOptions
+
+| 参数        | 说明                           | 类型                                          | 默认值 |
+|-------------|--------------------------------|-----------------------------------------------|--------|
+| onText      | 拖拽/粘贴文字的回调            | `(text: string, e: React.DragEvent) => void`  | -      |
+| onFiles     | 拖拽/粘贴文件的回调            | `(files: File[], e: React.DragEvent) => void` | -      |
+| onUri       | 拖拽/粘贴链接的回调            | `(text: string, e: React.DragEvent) => void`  | -      |
+| onDom       | 拖拽/粘贴自定义 dom 节点的回调 | `(content: any, e: React.DragEvent) => void`  | -      |
+| onDrop      | 拖拽任意内容的回调             | `(e: React.DragEvent) => void`                | -      |
+| onPaste     | 粘贴内容的回调                 | `(e: React.DragEvent) => void`                | -      |
+| onDragEnter | 拖拽进入                       | `(e: React.DragEvent) => void`                | -      |
+| onDragOver  | 拖拽中                         | `(e: React.DragEvent) => void`                | -      |
+| onDragLeave | 拖拽出去                       | `(e: React.DragEvent) => void`                | -      |
+

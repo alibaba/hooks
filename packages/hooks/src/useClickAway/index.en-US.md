@@ -11,8 +11,6 @@ group:
 
 # useClickAway
 
-<Tag lang="en-US" tags="ssr"></Tag>
-
 Listen for click events outside the target element.
 ## Examples
 
@@ -37,8 +35,8 @@ Listen for click events outside the target element.
 ```typescript
 type Target = Element | (() => Element) | React.MutableRefObject<Element>;
 
-useClickAway(
-  onClickAway: (event: MouseEvent | TouchEvent) => void,
+useClickAway<T extends Event = Event>(
+  onClickAway: (event: T) => void,
   target: Target | Target[],
   eventName?: string
 );
@@ -46,8 +44,8 @@ useClickAway(
 
 ### Params
 
-| Property | Description                                 | Type                   | Default |
-|---------|----------------------------------------------|------------------------|--------|
-| onClickAway | Trigger Function  | `(event: MouseEvent | TouchEvent) => void` | -      |
-| target | DOM elements or Ref, support array | `Target` \| `Target[]` | - |
-| eventName | Set the event to be listened | `string` | `click` |
+| Property    | Description                        | Type                   | Default |
+|-------------|------------------------------------|------------------------|---------|
+| onClickAway | Trigger Function                   | `(event: T) => void`   | -       |
+| target      | DOM elements or Ref, support array | `Target` \| `Target[]` | -       |
+| eventName   | Set the event to be listened       | `string`               | `click` |

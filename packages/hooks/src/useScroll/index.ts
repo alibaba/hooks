@@ -64,7 +64,7 @@ function useScroll(
     return () => {
       el.removeEventListener('scroll', updatePosition);
     };
-  }, [typeof target === 'function' ? undefined : target, shouldUpdateRef]);
+  }, [typeof target === 'function' ? undefined : target]);
 
   return position;
 }

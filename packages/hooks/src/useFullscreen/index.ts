@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { useState } from 'react';
 import screenfull from 'screenfull';
 import useLatest from '../useLatest';
 import useMemoizedFn from '../useMemoizedFn';
@@ -19,7 +19,7 @@ const useFullscreen = (target: BasicTarget, options?: Options) => {
 
   const [state, setState] = useState(false);
 
-  const onChange = useCallback(() => {
+  const onChange = () => {
     if (screenfull.isEnabled) {
       const { isFullscreen } = screenfull;
       if (isFullscreen) {
@@ -30,9 +30,9 @@ const useFullscreen = (target: BasicTarget, options?: Options) => {
       }
       setState(isFullscreen);
     }
-  }, []);
+  };
 
-  const enterFullscreen = useCallback(() => {
+  const enterFullscreen = () => {
     const el = getTargetElement(target);
     if (!el) {
       return;
@@ -46,24 +46,24 @@ const useFullscreen = (target: BasicTarget, options?: Options) => {
         console.error(error);
       }
     }
-  }, [target, onChange]);
+  };
 
-  const exitFullscreen = useCallback(() => {
+  const exitFullscreen = () => {
     if (!state) {
       return;
     }
     if (screenfull.isEnabled) {
       screenfull.exit();
     }
-  }, [state]);
+  };
 
-  const toggleFullscreen = useCallback(() => {
+  const toggleFullscreen = () => {
     if (state) {
       exitFullscreen();
     } else {
       enterFullscreen();
     }
-  }, [state, enterFullscreen, exitFullscreen]);
+  };
 
   useUnmount(() => {
     if (screenfull.isEnabled) {
