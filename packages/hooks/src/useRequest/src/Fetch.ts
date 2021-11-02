@@ -12,7 +12,7 @@ export default class Fetch<TData, TParams extends any[]> {
 
   state: FetchState<TData, TParams> = {
     loading: false,
-    params: [] as unknown as TParams,
+    params: undefined,
     data: undefined,
     error: undefined,
   };
@@ -29,6 +29,7 @@ export default class Fetch<TData, TParams extends any[]> {
     this.state = {
       ...this.state,
       loading: !options.manual,
+      params: options.defaultParams,
     };
   }
 
@@ -143,11 +144,13 @@ export default class Fetch<TData, TParams extends any[]> {
   }
 
   refresh() {
-    this.run(...this.state.params);
+    // @ts-ignore
+    this.run(...(this.state.params || []));
   }
 
   refreshAsync() {
-    return this.runAsync(...this.state.params);
+    // @ts-ignore
+    return this.runAsync(...(this.state.params || []));
   }
 
   mutate(data?: TData | ((oldData?: TData) => TData | undefined)) {

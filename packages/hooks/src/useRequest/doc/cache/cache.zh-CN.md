@@ -35,12 +35,20 @@ group:
 
 同一个 cacheKey 的内容，在全局是共享的，这会带来以下几个特性
 
-* 请求 Promise 共享，相同的 cacheKey 同时只会有一个在发起请求，后发起的会共用同一个请求 Promise（自己的请求是否能覆盖？）
+* 请求 Promise 共享，相同的 cacheKey 同时只会有一个在发起请求，后发起的会共用同一个请求 Promise
 * 数据同步，任何时候，当我们改变其中某个 cacheKey 的内容时，其它相同 cacheKey 的内容均会同步
 
 下面的示例中，初始化时，两个组件只会发起一个请求。并且两篇文章的内容永远是同步的。
 
 <code src="./demo/share.tsx" />
+
+### 参数缓存
+
+缓存的数据包括 `data` 和 `params`，通过 `params` 缓存机制，我们可以记忆上一次请求的条件，并在下次初始化。
+
+下面的示例中，我们可以从缓存的 `params` 中初始化 `keyword` 
+
+<code src="./demo/params.tsx" />
 
 ## API
 
@@ -55,3 +63,4 @@ group:
 ## 备注
 
 * 只有成功的请求数据才会缓存
+* 缓存的数据包括 `data` 和 `params`
