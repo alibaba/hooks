@@ -39,7 +39,7 @@ useFusionTable is based on [useRequest](/async). All [useRquest Pagination](/asy
 
 As the same as useRequest Pagination mode，The data structure returned by service must be `{list: Item [], total: number}`. If it is not satisfied, it can be converted once by `options.formatResult`.
 
-useFusionTable adds `result.search` and `options.filed`.
+useFusionTable adds `result.search` and `options.field`.
 
 ```typescript
 const {
