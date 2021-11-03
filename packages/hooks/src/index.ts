@@ -34,6 +34,7 @@ import useMemoizedFn from './useMemoizedFn';
 import useMount from './useMount';
 import useMouse from './useMouse';
 import useNetwork from './useNetwork';
+import usePagination from './usePagination';
 import usePrevious from './usePrevious';
 import useRafState from './useRafState';
 import useReactive from './useReactive';
@@ -62,6 +63,7 @@ import useUpdateLayoutEffect from './useUpdateLayoutEffect';
 import useVirtualList from './useVirtualList';
 import useWebSocket from './useWebSocket';
 import useWhyDidYouUpdate from './useWhyDidYouUpdate';
+import useAntdTable from './useAntdTable';
 
 export {
   useRequest,
@@ -129,4 +131,6 @@ export {
   useAsyncEffect,
   useRafState,
   useTrackedEffect,
+  usePagination,
+  useAntdTable,
 };

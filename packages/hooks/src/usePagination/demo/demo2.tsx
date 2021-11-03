@@ -57,7 +57,7 @@ export default () => {
     run(
       {
         current: 1,
-        pageSize: params[0].pageSize,
+        pageSize: params?.[0].pageSize || 10,
       },
       gender,
     );

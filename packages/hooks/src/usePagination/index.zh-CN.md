@@ -50,7 +50,7 @@ group:
 ```typescript
 
 type TData<T> = { total: number; list: T[] };
-type Params = [{ current: number; pageSize: number }, ...any[]];
+type Params = [{ current: number; pageSize: number, [key: string]: any }, ...any[]];
 
 const {
   ...,

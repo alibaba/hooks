@@ -111,6 +111,14 @@ useRequest 提供了 `cancel` 函数，可以取消当前正在进行的请求�
 
 <code src="./demo/cancel.tsx" />
 
+## 参数管理
+
+useRequest 返回的 `params` 会记录当次调用 `service` 的参数数据组。比如你触发了 `run(1, 2, 3)`，则 `params` 等于 `[1, 2, 3]`	。
+
+如果我们设置了 `options.manual = false`，则首次调用 `service` 的参数可以通过 `options.defaultParams` 来设置。
+
+<code src="./demo/params.tsx" />
+
 ## API
 
 ```ts

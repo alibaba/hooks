@@ -29,7 +29,6 @@ export default class Fetch<TData, TParams extends any[]> {
     this.state = {
       ...this.state,
       loading: !options.manual,
-      params: options.defaultParams,
     };
   }
 

@@ -9,6 +9,7 @@ function useRequestImplement<TData, TParams extends any[]>(
 ) {
   const {
     manual = false,
+    defaultParams,
     onSuccess,
     onError,
     onBefore,
@@ -40,7 +41,10 @@ function useRequestImplement<TData, TParams extends any[]>(
 
   useMount(() => {
     if (!manual) {
-      fetchInstance.refresh();
+      // useCachePlugin can set fetchInstance.state.params from cache before init
+      const params = fetchInstance.state.params || defaultParams || [];
+      // @ts-ignore
+      fetchInstance.run(...params);
     }
   });
 

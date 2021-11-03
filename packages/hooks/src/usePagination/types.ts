@@ -2,7 +2,7 @@ import type { Options, Result } from '../useRequest/src/types';
 
 export type TData<T> = { total: number; list: T[] };
 
-export type Params = [{ current: number; pageSize: number }, ...any[]];
+export type Params = [{ current: number; pageSize: number; [key: string]: any }, ...any[]];
 
 export type Service<T, TParams extends Params> = (...args: TParams) => Promise<TData<T>>;
 
