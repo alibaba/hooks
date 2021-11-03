@@ -41,7 +41,7 @@ function useRequestImplement<TData, TParams extends any[]>(
 
   useMount(() => {
     if (!manual) {
-      // useCachePlugin can set fetchInstance.state.params from cache before init
+      // useCachePlugin can set fetchInstance.state.params from cache when init
       const params = fetchInstance.state.params || defaultParams || [];
       // @ts-ignore
       fetchInstance.run(...params);
@@ -56,7 +56,7 @@ function useRequestImplement<TData, TParams extends any[]>(
     loading: fetchInstance.state.loading,
     data: fetchInstance.state.data,
     error: fetchInstance.state.error,
-    params: fetchInstance.state.params,
+    params: fetchInstance.state.params || [],
     cancel: fetchInstance.cancel.bind(fetchInstance),
     refresh: fetchInstance.refresh.bind(fetchInstance),
     refreshAsync: fetchInstance.refreshAsync.bind(fetchInstance),

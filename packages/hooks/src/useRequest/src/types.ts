@@ -107,7 +107,7 @@ export interface Result<TData, TParams extends any[]> {
   loading: boolean;
   data?: TData;
   error?: Error;
-  params?: TParams;
+  params: TParams | [];
   cancel: Fetch<TData, TParams>['cancel'];
   refresh: Fetch<TData, TParams>['refresh'];
   refreshAsync: Fetch<TData, TParams>['refreshAsync'];

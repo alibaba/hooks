@@ -15,7 +15,7 @@ const useAntdTable = <T, TParams extends Params>(
 
   const { params = [], run } = result;
 
-  const cacheFormTableData = params?.[2] || ({} as any);
+  const cacheFormTableData = params[2] || ({} as any);
 
   const [type, setType] = useState(cacheFormTableData.type || defaultType);
   // all form data，include simple and advance
@@ -77,7 +77,7 @@ const useAntdTable = <T, TParams extends Params>(
           // if has defaultParams, use defaultParams's pagination
           const pagination = initParams?.[0] || {
             pageSize: options.defaultPageSize || 10,
-            ...(params?.[0] || {}),
+            ...(params[0] || {}),
             current: 1,
           };
           if (!form) {

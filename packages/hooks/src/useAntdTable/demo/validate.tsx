@@ -90,8 +90,8 @@ export default () => {
       <Table columns={columns} rowKey="email" {...tableProps} />
 
       <div style={{ background: '#f5f5f5', padding: 8 }}>
-        <p>Current Table: {JSON.stringify(params?.[0])}</p>
-        <p>Current Form: {JSON.stringify(params?.[1])}</p>
+        <p>Current Table: {JSON.stringify(params[0])}</p>
+        <p>Current Form: {JSON.stringify(params[1])}</p>
       </div>
     </div>
   );

@@ -13,7 +13,7 @@ const usePagination = <T, TParams extends Params>(
     ...rest,
   });
 
-  const { current = 1, pageSize = defaultPageSize } = result.params?.[0] || {};
+  const { current = 1, pageSize = defaultPageSize } = result.params[0] || {};
 
   const total = result.data?.total || 0;
   const totalPage = useMemo(() => Math.ceil(total / pageSize), [pageSize, total]);

@@ -20,7 +20,7 @@ const Article = () => {
     cacheKey: 'cacheKey-demo',
   });
 
-  const [keyword, setKeyword] = useState(params?.[0] || '');
+  const [keyword, setKeyword] = useState(params[0] || '');
 
   if (!data && loading) {
     return <p>Loading</p>;

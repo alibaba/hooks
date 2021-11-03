@@ -68,13 +68,13 @@ const PaginationComponent = () => {
     },
   );
 
-  const [gender, setGender] = useState<string>(params?.[1] || 'male');
+  const [gender, setGender] = useState<string>(params[1] || 'male');
 
   useUpdateEffect(() => {
     run(
       {
         current: 1,
-        pageSize: params?.[0].pageSize,
+        pageSize: params[0]?.pageSize,
       },
       gender,
     );

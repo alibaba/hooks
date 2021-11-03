@@ -37,7 +37,7 @@ export default () => {
       <button type="button" onClick={onChange}>
         GetUserName
       </button>
-      <p style={{ marginTop: 8 }}>UserId: {params?.[0]}</p>
+      <p style={{ marginTop: 8 }}>UserId: {params[0]}</p>
       <p>Username: {username}</p>
     </div>
   );

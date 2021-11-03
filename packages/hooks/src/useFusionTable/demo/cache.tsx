@@ -46,7 +46,7 @@ const AppList = () => {
     cacheKey: 'tableProps',
   });
 
-  const { filters = {} } = params?.[0] || {};
+  const { filters = {} } = params[0] || {};
   const { type, changeType, submit, reset } = search || {};
 
   const searchFrom = (
@@ -108,8 +108,8 @@ const AppList = () => {
       </Table>
       <Pagination style={{ marginTop: 16 }} {...paginationProps} />
       <div style={{ background: '#f5f5f5', padding: 8, marginTop: 16 }}>
-        <p>Current Table: {JSON.stringify(params?.[0])}</p>
-        <p>Current Form: {JSON.stringify(params?.[1])}</p>
+        <p>Current Table: {JSON.stringify(params[0])}</p>
+        <p>Current Form: {JSON.stringify(params[1])}</p>
       </div>
     </div>
   );
