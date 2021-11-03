@@ -10,9 +10,7 @@ group:
 
 # useBoolean
 
-<Tag lang="zh-CN" tags="ssr&crossPlatform"></Tag>
-
-优雅的管理 boolean 值的 Hook。
+优雅的管理 boolean 状态的 Hook。
 
 ## 代码演示
 

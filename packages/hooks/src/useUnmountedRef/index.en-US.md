@@ -10,8 +10,6 @@ group:
 
 # useUnmountedRef
 
-<Tag lang="en-US" tags="ssr&crossPlatform"></Tag>
-
 A Hook can be used to get whether the component is unmounted.
 
 ## Examples
@@ -28,6 +26,6 @@ const unmountRef: { current: boolean } = useUnmountedRef();
 
 ### Result
 
-| Property   | Description                      | Type                   |
-|------------|----------------------------------|------------------------|
+| Property   | Description                        | Type                   |
+|------------|------------------------------------|------------------------|
 | unmountRef | Whether the component is unmounted | `{ current: boolean }` |

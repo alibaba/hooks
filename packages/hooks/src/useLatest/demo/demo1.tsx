@@ -1,6 +1,6 @@
 /**
  * title: Basic usage
- * desc: useLatest return the latest value
+ * desc: useLatest always returns the latest value
  *
  * title.zh-CN: 基础用法
  * desc.zh-CN: useLatest 返回的永远是最新值

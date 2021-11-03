@@ -10,9 +10,7 @@ group:
 
 # useUpdateEffect
 
-<Tag lang="en-US" tags="ssr&crossPlatform"></Tag>
-
-A hook of useEffect that only runs when dependencies update.
+A hook alike `useEffect` but skips running the effect for the first time.
 
 ## Examples
 
@@ -22,7 +20,7 @@ A hook of useEffect that only runs when dependencies update.
 
 ## API
 
-The API is exactly the same as React.useEffect.
+The API is exactly the same as `React.useEffect`.
 
 ```typescript
 useUpdateEffect(

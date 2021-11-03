@@ -1,12 +1,12 @@
 /**
- * title: Default usage
- * desc: The function is called right after the component mount.
+ * title: Basic usage
+ * desc: The function is called right after the component is mounted.
  *
  * title.zh-CN: 基础用法
  * desc.zh-CN: 在组件首次渲染时，执行方法。
  */
 
-import { useMount, useToggle } from 'ahooks';
+import { useMount, useBoolean } from 'ahooks';
 import { message } from 'antd';
 import React from 'react';
 
@@ -19,7 +19,7 @@ const MyComponent = () => {
 };
 
 export default () => {
-  const [state, { toggle }] = useToggle(false);
+  const [state, { toggle }] = useBoolean(false);
 
   return (
     <>

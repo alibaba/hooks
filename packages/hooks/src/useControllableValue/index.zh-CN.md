@@ -28,8 +28,8 @@ group:
 
 ## API
 
-```javascript
-const [state, setState] = useControllableValue(props: object, options?: Options)
+```typescript
+const [state, setState] = useControllableValue(props: Record<string, any>, options?: Options)
 ```
 
 ### Result
@@ -41,17 +41,17 @@ const [state, setState] = useControllableValue(props: object, options?: Options)
 
 ### Params
 
-| 参数    | 说明                   | 类型     | 默认值 |
-|---------|------------------------|----------|--------|
-| props   | 组件的 props           | `object` | -      |
-| options | 可选配置项，见 Options | -        | -      |
+| 参数    | 说明         | 类型                  | 默认值 |
+|---------|--------------|-----------------------|--------|
+| props   | 组件的 props | `Record<string, any>` | -      |
+| options | 可选配置项   | `Options`             | -      |
 
 
 ### Options
 
-| 参数                 | 说明                                                | 类型     | 默认值         |
-|----------------------|-----------------------------------------------------|----------|----------------|
-| defaultValue         | 默认值，会被 props.defaultValue 和 props.value 覆盖 | -        | -              |
-| defaultValuePropName | 默认值的属性名                                      | `string` | `defaultValue` |
-| valuePropName        | 值的属性名                                          | `string` | `value`        |
-| trigger              | 修改值时，触发的函数                                | `string` | `onChange`     |
+| 参数                 | 说明                                                    | 类型     | 默认值         |
+|----------------------|---------------------------------------------------------|----------|----------------|
+| defaultValue         | 默认值，会被 `props.defaultValue` 和 `props.value` 覆盖 | -        | -              |
+| defaultValuePropName | 默认值的属性名                                          | `string` | `defaultValue` |
+| valuePropName        | 值的属性名                                              | `string` | `value`        |
+| trigger              | 修改值时，触发的函数                                    | `string` | `onChange`     |

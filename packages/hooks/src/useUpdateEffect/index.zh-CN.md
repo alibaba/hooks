@@ -10,9 +10,7 @@ group:
 
 # useUpdateEffect
 
-<Tag lang="zh-CN" tags="ssr&crossPlatform"></Tag>
-
-忽略首次执行，只在依赖更新时执行的 useEffect hook。
+`useUpdateEffect` 用法等同于 `useEffect`，但是会忽略首次执行，只在依赖更新时执行。
 
 ## 代码演示
 
@@ -22,7 +20,7 @@ group:
 
 ## API
 
-API 与 React.useEffect 完全一致。
+API 与 `React.useEffect` 完全一致。
 
 ```typescript
 useUpdateEffect(

@@ -10,8 +10,6 @@ group:
 
 # useMemoizedFn
 
-<Tag lang="en-US" tags="ssr&crossPlatform"></Tag>
-
 Hooks for persistent functions. In theory, useMemoizedFn can be used instead of useCallback.
 
 In some scenarios, we need to use useCallback to cache a function, but when the second parameter deps changes, the function will be regenerated, causing the function reference to change.
@@ -49,9 +47,7 @@ const func = useMemoizedFn(()=>{
 ## API
 
 ```typescript
-type noop = (...args: any[]) => any;
-
-const fn = useMemoizedFn<T extends noop>(fn: T):T;
+const fn = useMemoizedFn<T>(fn: T):T;
 ```
 
 ### Result

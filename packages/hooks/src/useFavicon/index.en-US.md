@@ -10,9 +10,7 @@ group:
 
 # useFavicon
 
-<Tag lang="en-US" tags="ssr"></Tag>
-
-Set page favicon.
+A hook that set the favicon of the page.
 
 ## Example
 

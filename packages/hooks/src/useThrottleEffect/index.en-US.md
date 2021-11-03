@@ -10,8 +10,6 @@ group:
 
 # useThrottleEffect
 
-<Tag lang="en-US" tags="ssr&crossPlatform"></Tag>
-
 Throttle your `useEffect`.
 
 ## Examples
@@ -36,12 +34,12 @@ useThrottleEffect(
 |----------|--------------------------------------------------------------|------------------|---------|
 | effect   | The effect callback.                                         | `EffectCallback` | -       |
 | deps     | The dependencies list.                                       | `DependencyList` | -       |
-| options  | Config the throttle behavior. See the Options section below. | `Options`        | `{}`    |
+| options  | Config the throttle behavior. See the Options section below. | `Options`        | -       |
 
 ### Options
 
 | Property | Description                                           | Type      | Default |
 |----------|-------------------------------------------------------|-----------|---------|
-| wait     | The number of milliseconds to delay.                  | `number`  | `1000`  |
+| wait     | The number of milliseconds to wait.                   | `number`  | `1000`  |
 | leading  | Specify invoking on the leading edge of the timeout.  | `boolean` | `true`  |
 | trailing | Specify invoking on the trailing edge of the timeout. | `boolean` | `true`  |

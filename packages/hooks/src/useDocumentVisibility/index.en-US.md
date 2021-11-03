@@ -10,8 +10,6 @@ group:
 
 # useDocumentVisibility
 
-<Tag lang="en-US" tags="ssr"></Tag>
-
 A Hook can tell if the page is visible, refer to [visibilityState API](https://developer.mozilla.org/docs/Web/API/Document/visibilityState)
 
 ## Examples

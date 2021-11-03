@@ -8,7 +8,7 @@ describe('useLocalStorageState', () => {
 
   const setUp = <T>(key: string, value: T) =>
     renderHook(() => {
-      const [state, setState] = useLocalStorageState<T>(key, value);
+      const [state, setState] = useLocalStorageState<T>(key, { defaultValue: value });
       return {
         state,
         setState,

@@ -3,7 +3,8 @@ import { useState } from 'react';
 import useMemoizedFn from '../useMemoizedFn';
 import { isFunction } from '../utils';
 
-export type State = string | undefined | null;
+export type State = string | undefined;
+
 export interface Options extends Cookies.CookieAttributes {
   defaultValue?: State | (() => State);
 }
@@ -29,7 +30,7 @@ function useCookieState(cookieKey: string, options: Options = {}) {
       const { defaultValue, ...restOptions } = { ...options, ...newOptions };
       setState((prevState) => {
         const value = isFunction(newValue) ? newValue(prevState) : newValue;
-        if (value === undefined || value === null) {
+        if (value === undefined) {
           Cookies.remove(cookieKey);
         } else {
           Cookies.set(cookieKey, value, restOptions);

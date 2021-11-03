@@ -24,6 +24,7 @@ describe('useMouse', () => {
     expect(hook.result.current.pageY).toEqual(NaN);
 
     moveMouse(10, 10);
+    await hook.waitForNextUpdate();
 
     // can't manually set pageX & pageY for mouseEvent, default undefined here.
     expect(hook.result.current.pageX).toEqual(undefined);

@@ -9,12 +9,12 @@ group:
 ---
 
 # useSafeState
-It is exactly the same with React.useState , but after the component is unloaded, the setstate in the asynchronous callback is no longer executed to avoid memory leakage caused by updating the state after the component is unloaded
 
-
+It is exactly the same with useState, but after the component is unmount, the setState is no longer executed to avoid memory leakage.
 
 ## Examples
 
+### Basic usage
 
 <code src="./demo/demo1.tsx" />
 

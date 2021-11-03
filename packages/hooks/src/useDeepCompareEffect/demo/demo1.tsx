@@ -1,11 +1,3 @@
-/**
- * title: Default usage
- * desc: Deep compare.
- *
- * title.zh-CN: 基础用法
- * desc.zh-CN: 深度比较
- */
-
 import { useDeepCompareEffect } from 'ahooks';
 import React, { useEffect, useState, useRef } from 'react';
 

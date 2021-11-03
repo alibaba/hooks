@@ -10,9 +10,7 @@ group:
 
 # useMap
 
-<Tag lang="zh-CN" tags="ssr&crossPlatform"></Tag>
-
-一个可以管理 Map 类型状态的 Hook。
+管理 Map 类型状态的 Hook。
 
 ## 代码演示
 

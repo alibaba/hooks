@@ -25,30 +25,37 @@ A hook that allows you to use virtual list to render huge chunks of list data.
 ## API
 
 ```typescript
-const result:Result = useVirtualList(originalList: any[], options: Options);
+const [list, scrollTo]= useVirtualList<T>(
+  originalList: T[], 
+  options: {
+    containerTarget: (() => Element) | Element | MutableRefObject<Element>,
+    wrapperTarget: (() => Element) | Element | MutableRefObject<Element>,
+    itemHeight: number | ((index: number, data: T) => number),
+    overscan?: number,
+  }
+);
 ```
-
 
 ### Params
 
-| Property     | Description                                           | Type | Default |
-|--------------|-------------------------------------------------------|------|---------|
-| originalList | The original list that contains a lot of data entries | `T[]`  | `[]`      |
-| options      | Optional configuration item, see Options              | -    | -       |
+| Property     | Description                                           | Type      | Default |
+|--------------|-------------------------------------------------------|-----------|---------|
+| originalList | The original list that contains a lot of data entries | `T[]`     | `[]`    |
+| options      | config                                                | `Options` | -       |
 
 
 ### Options
 
-| Property   | Description                                                             | Type   | Default |
-|------------|-------------------------------------------------------------------------|--------|---------|
-| itemHeight | item height, accept a pixel value or a function that returns the height |  `number` \| `((index: number) => number)` | -       |
-| overscan   | the extra buffer items outside of the view area                         | `number` | `5`      |
+| Property        | Description                                                             | Type                                                        | Default |
+|-----------------|-------------------------------------------------------------------------|-------------------------------------------------------------|---------|
+| containerTarget | Outter Container，support DOM element or ref                            | `() => Element` \| `Element` \| `MutableRefObject<Element>` | -       |
+| wrapperTarget   | Inner Container，DOM element or ref                                     | `() => Element` \| `Element` \| `MutableRefObject<Element>` | -       |
+| itemHeight      | Item height, accept a pixel value or a function that returns the height | `number` \| `((index: number) => number)`                   | -       |
+| overscan        | The extra buffer items outside of the view area                         | `number`                                                    | `5`     |
 
 ### Result
 
-| Property       | Description                                            | Type                       |
-|----------------|--------------------------------------------------------|----------------------------|
-| list           | The current portion of data need to be rendered to DOM | `{data: T, index: number}[]` |
-| containerProps | the props of outter container                          | `object`                        |
-| wrapperProps   | the props of inner wrapper                             | `object`                         |
-| scrollTo       | scroll to specific index                               | `(index: number) => void`    |
+| Property | Description                                            | Type                         |
+|----------|--------------------------------------------------------|------------------------------|
+| list     | The current portion of data need to be rendered to DOM | `{data: T, index: number}[]` |
+| scrollTo | Scroll to specific index                               | `(index: number) => void`    |

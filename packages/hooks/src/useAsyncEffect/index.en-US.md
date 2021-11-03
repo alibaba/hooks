@@ -10,8 +10,6 @@ group:
 
 # useAsyncEffect
 
-<Tag lang="en-US" tags="ssr&crossPlatform"></Tag>
-
 useEffect support async function.
 
 ## 代码演示

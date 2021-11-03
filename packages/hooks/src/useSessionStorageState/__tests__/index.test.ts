@@ -8,7 +8,7 @@ describe('useSessionStorageState', () => {
 
   const setUp = <T>(key: string, value: T) =>
     renderHook(() => {
-      const [state, setState] = useSessionStorageState<T>(key, value);
+      const [state, setState] = useSessionStorageState<T>(key, { defaultValue: value });
       return {
         state,
         setState,

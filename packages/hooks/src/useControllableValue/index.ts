@@ -1,5 +1,5 @@
-import { useCallback, useState } from 'react';
-import useUpdateEffect from '../useUpdateEffect';
+import { useState } from 'react';
+import useMemoizedFn from '../useMemoizedFn';
 
 export interface Options<T> {
   defaultValue?: T;
@@ -8,15 +8,14 @@ export interface Options<T> {
   trigger?: string;
 }
 
-export interface Props {
-  [key: string]: any;
-}
+export type Props = Record<string, any>;
 
-interface StandardProps<T> {
+export interface StandardProps<T> {
   value: T;
   defaultValue?: T;
   onChange: (val: T) => void;
 }
+
 function useControllableValue<T = any>(props: StandardProps<T>): [T, (val: T) => void];
 function useControllableValue<T = any>(
   props?: Props,
@@ -42,26 +41,16 @@ function useControllableValue<T = any>(props: Props = {}, options: Options<T> = 
     return defaultValue;
   });
 
-  /* init 的时候不用执行了 */
-  useUpdateEffect(() => {
-    if (valuePropName in props) {
-      setState(value);
+  const handleSetState = (v: T, ...args: any[]) => {
+    if (!(valuePropName in props)) {
+      setState(v);
     }
-  }, [value, valuePropName]);
+    if (props[trigger]) {
+      props[trigger](v, ...args);
+    }
+  };
 
-  const handleSetState = useCallback(
-    (v: T, ...args: any[]) => {
-      if (!(valuePropName in props)) {
-        setState(v);
-      }
-      if (props[trigger]) {
-        props[trigger](v, ...args);
-      }
-    },
-    [props, valuePropName, trigger],
-  );
-
-  return [valuePropName in props ? value : state, handleSetState] as const;
+  return [valuePropName in props ? value : state, useMemoizedFn(handleSetState)] as const;
 }
 
 export default useControllableValue;

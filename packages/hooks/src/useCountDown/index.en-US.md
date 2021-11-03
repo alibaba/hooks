@@ -10,15 +10,13 @@ group:
 
 # useCountDown
 
-<Tag lang="en-US" tags="ssr&crossPlatform"></Tag>
+A hook for manage countdown.
 
-A hook for countdown management.
-
-## Countdown to specific time in the future
+## Countdown to target time
 
 <code src="./demo/demo1.tsx" />
 
-## Controll timer status manually
+## Dynamic config
 
 <code src="./demo/demo2.tsx" />
 
@@ -35,7 +33,7 @@ interface FormattedRes {
   milliseconds: number;
 }
 
-const [countdown, setTargetDate, formattedRes] = useCountDown(
+const [countdown, formattedRes] = useCountDown(
   {
     targetDate,
     interval,
@@ -44,28 +42,30 @@ const [countdown, setTargetDate, formattedRes] = useCountDown(
 );
 ```
 
-**Remak**
+**Remark**
 
 The precision of useCountDown is milliseconds, which may cause the following problems
 
-* Even if the interval time is set to 1000ms, the update interval of useCountDown may not be exactly 1000ms, but about 1000ms.
-* In the second demo, countdown is generally 499x milliseconds at the beginning, because the program execution is delayed.
+* Even if the interval time is set to 1000ms, the update interval of useCountDown may not be exactly 1000ms, but around it.
+* In the second demo, countdown is generally 499x milliseconds at the beginning due to the execution delay of the program.
 
 If you only need to be accurate to the second, you can use it like this `Math.round(countdown / 1000)`.
 
 ### Params
 
-| Property   | Description                                            | Type       | Default |
-|------------|--------------------------------------------------------|------------|---------|
-| targetDate | Target time                                            | `TDate`    | -       |
-| interval   | Change time interval (ms)                              | `number`   | `1000`  |
-| onEnd      | The callback function after the end of the future time | `()=>void` | -       |
+| Property   | Description                                  | Type         | Default |
+|------------|----------------------------------------------|--------------|---------|
+| targetDate | Target time                                  | `TDate`      | -       |
+| interval   | Time interval between ticks, in milliseconds | `number`     | `1000`  |
+| onEnd      | Function to call when countdown completes    | `() => void` | -       |
 
 ### Return
 
-| Params          | Description                            | Type                      |
-|-----------------|----------------------------------------|---------------------------|
-| countdown       | Timestamp to targetDate (milliseconds) | `number`                  |
-| setTarget       | Set targetDate                         | `(target?:TDate) => void` |
-| formattedResult | Format return time                     | `IOriginResult`           |
+| Params          | Description                              | Type           |
+|-----------------|------------------------------------------|----------------|
+| countdown       | Timestamp to targetDate, in milliseconds | `number`       |
+| formattedResult | Formatted countdown                      | `FormattedRes` |
 
+## Remark
+
+`targetDate`、`interval`、`onEnd` support dynamic change.

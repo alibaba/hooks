@@ -1,5 +1,5 @@
 /**
- * title: Default usage
+ * title: Basic usage
  * desc: Execute once after 3000ms
  *
  * title.zh-CN: 基础用法
@@ -15,9 +15,5 @@ export default () => {
     setState(state + 1);
   }, 3000);
 
-  return (
-    <div>
-      {state}
-    </div>
-  );
+  return <div>{state}</div>;
 };

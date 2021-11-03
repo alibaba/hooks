@@ -10,9 +10,7 @@ group:
 
 # useUpdateLayoutEffect
 
-<Tag lang="zh-CN" tags="ssr&crossPlatform"></Tag>
-
-忽略首次执行，只在依赖更新时执行的 useLayoutEffect hook。
+`useUpdateLayoutEffect` 用法等同于 `useLayoutEffect`，但是会忽略首次执行，只在依赖更新时执行。
 
 ## 代码演示
 
@@ -22,7 +20,7 @@ group:
 
 ## API
 
-API 与 React.useLayoutEffect 完全一致。
+API 与 `React.useLayoutEffect` 完全一致。
 
 ```typescript
 useUpdateLayoutEffect(

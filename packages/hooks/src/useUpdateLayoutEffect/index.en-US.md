@@ -10,9 +10,7 @@ group:
 
 # useUpdateLayoutEffect
 
-<Tag lang="en-US" tags="ssr&crossPlatform"></Tag>
-
-A hook of useLayoutEffect that only runs when dependencies update.
+A hook alike `useLayoutEffect` but skips running the effect for the first time.
 
 ## Examples
 
@@ -22,7 +20,7 @@ A hook of useLayoutEffect that only runs when dependencies update.
 
 ## API
 
-The API is exactly the same as React.useLayoutEffect.
+The API is exactly the same as `React.useLayoutEffect`.
 
 ```typescript
 useUpdateEffect(

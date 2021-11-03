@@ -6,7 +6,6 @@ nav:
 group:
   title: Advanced
   path: /advanced
-legacy: /advanced/use-event-emitter
 ---
 
 # useEventEmitter

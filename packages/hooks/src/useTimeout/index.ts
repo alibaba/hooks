@@ -1,11 +1,11 @@
 import { useEffect } from 'react';
 import useLatest from '../useLatest';
 
-function useTimeout(fn: () => void, delay: number | null | undefined): void {
+function useTimeout(fn: () => void, delay: number | undefined): void {
   const fnRef = useLatest(fn);
 
   useEffect(() => {
-    if (delay === undefined || delay === null) return;
+    if (typeof delay !== 'number' || delay <= 0) return;
     const timer = setTimeout(() => {
       fnRef.current();
     }, delay);

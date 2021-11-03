@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useRafState } from '..';
 import useEventListener from '../useEventListener';
 
 export interface CursorState {
@@ -20,7 +20,7 @@ const initState: CursorState = {
 };
 
 export default () => {
-  const [state, setState] = useState(initState);
+  const [state, setState] = useRafState(initState);
 
   useEventListener(
     'mousemove',

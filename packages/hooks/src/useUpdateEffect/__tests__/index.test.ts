@@ -24,6 +24,8 @@ describe('useUpdateEffect', () => {
       }, [mountedState]),
     );
     expect(mountedState).toEqual(1);
+    hook.rerender();
+    expect(mountedState).toEqual(1);
     mountedState = 2;
     hook.rerender();
     expect(mountedState).toEqual(3);

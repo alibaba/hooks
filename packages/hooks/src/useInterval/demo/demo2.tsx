@@ -1,9 +1,9 @@
 /**
  * title: Advanced usage
- * desc: Immediate interval reset、delay increase、clear
+ * desc: Modify the delay to realize the timer interval change and pause.
  *
  * title.zh-CN: 进阶使用
- * desc.zh-CN: 立即执行定时器的重启、间隔时间增加、清除的使用。
+ * desc.zh-CN: 动态修改 delay 以实现定时器间隔变化与暂停。
  */
 
 import React, { useState } from 'react';
@@ -13,19 +13,18 @@ export default () => {
   const [count, setCount] = useState(0);
   const [interval, setInterval] = useState(1000);
 
-  useInterval(
-    () => {
-      setCount(count + 1);
-    },
-    interval,
-    { immediate: true },
-  );
+  useInterval(() => {
+    setCount(count + 1);
+  }, interval);
 
   return (
     <div>
       <p> count: {count} </p>
       <p style={{ marginTop: 16 }}> interval: {interval} </p>
-      <button onClick={() => setInterval(interval + 1000)} style={{ marginRight: 8 }}>
+      <button
+        onClick={() => setInterval((t) => (!!t ? t + 1000 : 1000))}
+        style={{ marginRight: 8 }}
+      >
         interval + 1000
       </button>
       <button
@@ -38,7 +37,7 @@ export default () => {
       </button>
       <button
         onClick={() => {
-          setInterval(null);
+          setInterval(undefined);
         }}
       >
         clear

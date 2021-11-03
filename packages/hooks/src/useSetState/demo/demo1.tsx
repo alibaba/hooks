@@ -1,9 +1,3 @@
-/**
- * title: Default usage
- *
- * title.zh-CN: 基础用法
- */
-
 import React from 'react';
 import { useSetState } from 'ahooks';
 

@@ -10,9 +10,7 @@ group:
 
 # useInterval
 
-<Tag lang="en-US" tags="ssr&crossPlatform"></Tag>
-
-A hook that can handle the setInterval timer function.
+A hook that handles the `setInterval` timer function.
 
 ## Examples
 
@@ -36,15 +34,15 @@ useInterval(
 
 ### Params
 
-| Property | Description                                                                                                                             | Type       |
-|----------|-----------------------------------------------------------------------------------------------------------------------------------------|------------|
-| fn       | The function to setInterval                                                                                                             | `() => void` |
-| delay    | The timer should delay in between executions of the specified function or code. If delay is `null` or `undefined`, the timer will stop. |    `number` \| `undefined` \| `null`        |
-| options  | Config the interval behavior. See the Options section below                                                                             | `Options`    |
+| Property | Description                                                                                                                                                   | Type                    |
+|----------|---------------------------------------------------------------------------------------------------------------------------------------------------------------|-------------------------|
+| fn       | The function to be executed every `delay` milliseconds.                                                                                                       | `() => void`            |
+| delay    | The time in milliseconds, the timer should delay in between executions of the specified function. The timer will be cancelled if delay is set to `undefined`. | `number` \| `undefined` |
+| options  | Config of the interval behavior.                                                                                                                              | `Options`               |
 
 
 ### Options
 
-| Property  | Description                                           | Type    | Default |
-|-----------|-------------------------------------------------------|---------|---------|
-| immediate | Whether it is executed immediately for the first time | `boolean` | `false`   |
+| Property  | Description                                                            | Type      | Default |
+|-----------|------------------------------------------------------------------------|-----------|---------|
+| immediate | Whether the function should be executed immediately on first execution | `boolean` | `false` |

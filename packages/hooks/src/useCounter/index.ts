@@ -60,7 +60,7 @@ function useCounter(initialValue: number = 0, options: Options = {}) {
   };
 
   const reset = () => {
-    setValue(getTargetValue(initialValue, { min, max }));
+    setValue(initialValue);
   };
 
   return [

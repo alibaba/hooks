@@ -14,7 +14,12 @@ export default function useBoolean(defaultValue = false): [boolean, Actions] {
   const actions: Actions = useMemo(() => {
     const setTrue = () => set(true);
     const setFalse = () => set(false);
-    return { toggle, set, setTrue, setFalse };
+    return {
+      toggle,
+      set: (v) => set(!!v),
+      setTrue,
+      setFalse,
+    };
   }, []);
 
   return [state, actions];

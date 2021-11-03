@@ -6,7 +6,6 @@ nav:
 group:
   title: Advanced
   path: /advanced
-  order: 15
 ---
 
 # useCreation
@@ -32,14 +31,14 @@ const b = useCreation(() => new Subject(), []) // 通过 factory 函数，可以
 
 ## API
 
-```javascript
+```typescript
 function useCreation<T>(factory: () => T, deps: any[]): T;
 ```
 
 ### Params
 
-| 参数    | 说明                   | 类型      | 默认值 |
-|---------|------------------------|-----------|--------|
+| 参数    | 说明                   | 类型        | 默认值 |
+|---------|------------------------|-------------|--------|
 | factory | 用来创建所需对象的函数 | `() => any` | -      |
 | deps    | 传入依赖变化的对象     | `any[]`     | -      |
 

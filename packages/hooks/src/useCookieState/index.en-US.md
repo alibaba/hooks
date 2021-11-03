@@ -10,13 +10,11 @@ group:
 
 # useCookieState
 
-<Tag lang="en-US" tags="ssr"></Tag>
-
-A Hook for store state into cookie.
+A Hook that store state into Cookie.
 
 ## Examples
 
-### Store state into cookie
+### Store state into Cookie
 
 <code src="./demo/demo1.tsx" />
 
@@ -24,14 +22,14 @@ A Hook for store state into cookie.
 
 <code src="./demo/demo2.tsx" />
 
-### Use the option property to configure cookie
+### Use the option property to configure Cookie
 
 <code src="./demo/demo3.tsx" />
 
 ## API
 
 ```typescript
-type State = string | undefined | null;
+type State = string | undefined;
 
 type SetState = (
     newValue?: State | ((prevState?: State) => State),
@@ -44,35 +42,35 @@ const [state, setState]: [State, SetState] = useCookieState(
 )
 ```
 
-If you want to delete this record from document.cookie, you can use `setState()` or `setState(null)` or `setState(undefined)`.
+If you want to delete this record from document.cookie, use `setState()` or `setState(undefined)`.
 
 ### Params
 
-| Property       | Description                 | Type                 | Default |
-| ------------ | ------------------------ | -------------------- | ------ |
-| cookieKey    | Local cookie key | `string` | - |
-| options | Optional, Configure cookies, See options for details | `Options` | - |
+| Property  | Description                      | Type      | Default |
+|-----------|----------------------------------|-----------|---------|
+| cookieKey | The key of Cookie                | `string`  | -       |
+| options   | Optional. Cookie configuration | `Options` | -       |
 
 ### Result
 
-| Property       | Description                 | Type                 |
-| -------- | ------------ | ---------------------------------------------------------------------------------------------------- |
-| state    | Local cookie value | `string` \| `undefined`  \|`null`                              |
-| setState | Configure cookies. According to the options attribute, sync to the local cookie | `SetState` |
+| Property | Description         | Type                    |
+|----------|---------------------|-------------------------|
+| state    | Local Cookie value  | `string` \| `undefined` |
+| setState | Update Cookie value | `SetState`              |
 
-setState can update cookie options, and merge with the options set by `useCookieState`.
+setState can update cookie options, which will be merged with the options set by `useCookieState`.
 
 `const targetOptions = {...options, ...updateOptions}`
 
 ### Options
 
-| Property       | Description                 | Type                 | Default |
-| -------- | ------------------------------------------------- | --------------------- | ------ |
-| defaultValue | Optional, default value, but not sync to cookie | `string` \| `undefined` \| `(() => (string \| undefined))` | `undefined`
-| expires  | Optional, Set cookie validity time | `number` \| `Date` | - |
-| path | Optional, Define available paths | `string` | `/` |
-| domain | Optional, Define available domain. Default creation domain| `string` | - |
-| secure | Optional, https security protocol | `boolean` | `false` |
-| sameSite | Optional, Cookies cannot be sent with cross-domain requests | `strict` \| `lax` \| `none` | - |
+| Property     | Description                                                                                  | Type                                                       | Default     |
+|--------------|----------------------------------------------------------------------------------------------|------------------------------------------------------------|-------------|
+| defaultValue | Optional. Default value, but not store to Cookie                                           | `string` \| `undefined` \| `(() => (string \| undefined))` | `undefined` |
+| expires      | Optional. Set Cookie expiration time                                                       | `number` \| `Date`                                         | -           |
+| path         | Optional. Specify available paths                                                          | `string`                                                   | `/`         |
+| domain       | Optional. Specify available domain. Default creation domain                                | `string`                                                   | -           |
+| secure       | Optional. Specify whether the Cookie can only be transmitted over secure protocol as https | `boolean`                                                  | `false`     |
+| sameSite     | Optional. Specify whether the browser can send this Cookie along with cross-site requests  | `strict` \| `lax` \| `none`                                | -           |
 
-Options is same to [js-cookie attributes](https://github.com/js-cookie/js-cookie#cookie-attributes).
+Options is same as [js-cookie attributes](https://github.com/js-cookie/js-cookie#cookie-attributes).

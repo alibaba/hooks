@@ -1,6 +1,6 @@
 {
   "name": "ahooks",
-  "version": "2.10.7",
+  "version": "3.0.0-alpha.0",
   "description": "react hooks library",
   "keywords": [
     "ahooks",
@@ -32,8 +32,7 @@
     "README.md"
   ],
   "dependencies": {
-    "@ahooksjs/use-request": "^2.8.8",
-    "@types/js-cookie": "^2.2.6",
+    "@ahooksjs/use-request": "^3.0.0-alpha.0",
     "core-js": "^2.6.12",
     "dayjs": "^1.9.1",
     "intersection-observer": "^0.7.0",
@@ -47,13 +46,15 @@
   },
   "devDependencies": {
     "@alifd/next": "^1.20.6",
+    "@ant-design/icons": "^4.6.2",
     "@types/enzyme": "^3.10.5",
-    "antd": "^3.26.6",
+    "@types/js-cookie": "^2.2.6",
+    "antd": "^4.16.9",
     "enzyme-adapter-react-16": "^1.15.4",
     "jest-websocket-mock": "^2.1.0",
     "mock-socket": "^9.0.3",
-    "react-drag-listview": "^0.1.6",
-    "umi-request": "^1.0.8"
+    "mockjs": "^1.1.0",
+    "react-drag-listview": "^0.1.6"
   },
   "engines": {
     "node": ">=8.0.0"

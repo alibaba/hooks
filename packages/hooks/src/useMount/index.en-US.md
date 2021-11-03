@@ -10,9 +10,7 @@ group:
 
 # useMount
 
-<Tag lang="en-US" tags="ssr&crossPlatform"></Tag>
-
-A hook that executes a function at mount.
+A hook that executes a function after the component is mounted.
 
 ## Examples
 
@@ -30,4 +28,4 @@ useMount(fn: () => void);
 
 | Property | Description                      | Type         | Default |
 |----------|----------------------------------|--------------|---------|
-| fn       | The function need to be executed | `() => void` | -       |
+| fn       | The function to be executed | `() => void` | -       |

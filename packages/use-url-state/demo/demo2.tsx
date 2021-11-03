@@ -10,12 +10,7 @@ import React from 'react';
 import useUrlState from '@ahooksjs/use-url-state';
 
 export default () => {
-  const [state, setState] = useUrlState(
-    { page: '1', pageSize: '10' },
-    {
-      navigateMode: 'push',
-    },
-  );
+  const [state, setState] = useUrlState({ page: '1', pageSize: '10' });
 
   return (
     <>
@@ -39,7 +34,7 @@ export default () => {
           </button>
           <button
             onClick={() => {
-              setState({ page: 1 });
+              setState({ page: undefined });
             }}
           >
             reset
@@ -67,7 +62,7 @@ export default () => {
           </button>
           <button
             onClick={() => {
-              setState({ pageSize: 10 });
+              setState({ pageSize: undefined });
             }}
           >
             reset

@@ -10,9 +10,7 @@ group:
 
 # useCounter
 
-<Tag lang="en-US" tags="ssr&crossPlatform"></Tag>
-
-A hook that can manage the count.
+A hook that manage counter.
 
 ## Examples
 
@@ -33,18 +31,18 @@ const [current, {
 
 ### Result
 
-| Property | Description                | Type                      |
-|----------|----------------------------|---------------------------|
-| current  | Current count              | `number`                  |
-| inc      | Increment，default add 1   | `(delta?:number) => void` |
-| dec      | Decrement, default minus 1 | `(delta?:number) => void` |
-| set      | Set current count          | `(value: number` \| `((c: number) => number)) => void` |
-| reset    | Reset to initial value     | `() => void`              |
+| Property | Description                          | Type                                                   |
+|----------|--------------------------------------|--------------------------------------------------------|
+| current  | Current value                        | `number`                                               |
+| inc      | Increment, default delta is 1        | `(delta? :number) => void`                             |
+| dec      | Decrement, default delta is 1        | `(delta? :number) => void`                             |
+| set      | Set current value                    | `(value: number` \| `((c: number) => number)) => void` |
+| reset    | Reset current value to initial value | `() => void`                                           |
 
 ### Params
 
-| Property     | Description             | Type     | Default |
-|--------------|-------------------------|----------|---------|
-| initialValue | Initial count           | `number` | `0`       |
-| min          | Min count               | `number` | -       |
-| max          | Max count               | `number` | -       |
+| Property     | Description   | Type     | Default |
+|--------------|---------------|----------|---------|
+| initialValue | Initial count | `number` | `0`     |
+| min          | Min count     | `number` | -       |
+| max          | Max count     | `number` | -       |

@@ -26,11 +26,8 @@ export default () => {
 
   return (
     <div>
-      <button disabled={!pass}>Submit</button>
-      <p>
-        {pass === null && 'Checking...'}
-        {pass === true && 'Check passed.'}
-      </p>
+      {pass === null && 'Checking...'}
+      {pass === true && 'Check passed.'}
     </div>
   );
 };

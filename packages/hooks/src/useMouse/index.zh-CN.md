@@ -8,8 +8,6 @@ group:
   path: /dom
 ---
 
-<Tag lang="zh-CN" tags="ssr"></Tag>
-
 # useMouse
 
 监听鼠标位置
