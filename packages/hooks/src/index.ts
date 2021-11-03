@@ -43,6 +43,7 @@ import useReactive from './useReactive';
 import useRequest from './useRequest';
 import { configResponsive, useResponsive } from './useResponsive';
 import useSafeState from './useSafeState';
+import useLongPress from './useLongPress';
 import useScroll from './useScroll';
 import useSelections from './useSelections';
 import useSessionStorageState from './useSessionStorageState';
@@ -130,6 +131,7 @@ export {
   useIsomorphicLayoutEffect,
   useDeepCompareEffect,
   useAsyncEffect,
+  useLongPress,
   useRafState,
   useTrackedEffect,
   usePagination,
