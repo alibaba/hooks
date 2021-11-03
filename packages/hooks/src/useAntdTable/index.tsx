@@ -23,28 +23,28 @@ const useAntdTable = <T, TParams extends Params>(
     cacheFormTableData.allFormData || defaultParams?.[1] || {},
   );
 
-  // get current active filed values
+  // get current active field values
   const getActivetFieldValues = () => {
     if (!form) {
       return {};
     }
     // antd 3 & antd 4
-    const allFiledsValue = form.getFieldsValue();
-    const activeFiledsValue = {};
-    Object.keys(allFiledsValue).forEach((key: string) => {
+    const allFieldsValue = form.getFieldsValue();
+    const activeFieldsValue = {};
+    Object.keys(allFieldsValue).forEach((key: string) => {
       if (form.getFieldInstance(key)) {
-        activeFiledsValue[key] = allFiledsValue[key];
+        activeFieldsValue[key] = allFieldsValue[key];
       }
     });
-    return activeFiledsValue;
+    return activeFieldsValue;
   };
 
   const validateFields = () => {
     if (!form) {
       return Promise.resolve();
     }
-    const activeFiledsValue = getActivetFieldValues();
-    const fields = Object.keys(activeFiledsValue);
+    const activeFieldsValue = getActivetFieldValues();
+    const fields = Object.keys(activeFieldsValue);
 
     // antd 3
     if (!form.getInternalHooks) {
@@ -63,8 +63,8 @@ const useAntdTable = <T, TParams extends Params>(
   };
 
   const changeType = () => {
-    const activeFiledsValue = getActivetFieldValues();
-    setAllFormData({ ...allFormData, ...activeFiledsValue });
+    const activeFieldsValue = getActivetFieldValues();
+    setAllFormData({ ...allFormData, ...activeFieldsValue });
 
     const targetType = type === 'simple' ? 'advance' : 'simple';
     setType(targetType);
@@ -130,13 +130,13 @@ const useAntdTable = <T, TParams extends Params>(
       return;
     }
 
-    const activeFiledsValue = {};
+    const activeFieldsValue = {};
     Object.keys(allFormData).forEach((key) => {
       if (form.getFieldInstance(key)) {
-        activeFiledsValue[key] = allFormData[key];
+        activeFieldsValue[key] = allFormData[key];
       }
     });
-    form.setFieldsValue(activeFiledsValue);
+    form.setFieldsValue(activeFieldsValue);
   }, [type]);
 
   // init

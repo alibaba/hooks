@@ -5,7 +5,7 @@ export interface Field {
   setValues: (value: Record<string, any>) => void;
   getValues: (...args: any) => Record<string, any>;
   reset: (...args: any) => void;
-  validate: (fileds: any, callback: (errors, values) => void) => void;
+  validate: (fields: any, callback: (errors, values) => void) => void;
   [key: string]: any;
 }
 

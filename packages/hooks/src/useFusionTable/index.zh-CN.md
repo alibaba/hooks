@@ -40,7 +40,7 @@ useFusionTable 会自动管理 `Table` 分页数据，你只需要把返回的 `
 
 ### Form 与 Table 联动
 
-useFusionTable 接收 `filed` 实例后，会返回 search 对象，用来处理表单相关事件。
+useFusionTable 接收 `field` 实例后，会返回 search 对象，用来处理表单相关事件。
 
 * `search.type` 支持 `simple` 和 `advance` 两个表单切换
 * `search.changeType`，切换表单类型
@@ -107,7 +107,7 @@ const {
   service: (...args: TParams) => Promise<TData<T>>, 
   {
     ...,
-    filed?: any;
+    field?: any;
     defaultType?: 'simple' | 'advance';
     defaultParams?: TParams,
     defaultPageSize?: number;
@@ -131,7 +131,7 @@ const {
 
 | 参数            | 说明                                                          | 类型                     | 默认值   |
 |-----------------|---------------------------------------------------------------|--------------------------|----------|
-| filed           | `Form` 实例                                                   | -                        | -        |
+| field           | `Form` 实例                                                   | -                        | -        |
 | defaultType     | 默认表单类型                                                  | `simple` \| `advance`    | `simple` |
 | defaultParams   | 默认参数，第一项为分页数据，第二项为表单数据                  | `[pagiantion, formData]` | -        |
 | defaultPageSize | 默认分页数量                                                  | `number`                 | `10`     |
