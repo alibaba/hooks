@@ -42,7 +42,7 @@ useFusionTable 基于 [useRequest](/zh-CN/async) 实现，所有的 [useRquest P
 
 当然和 useRequest Pagination 模式一样，service 返回的数据结构必须为 `{list: Item[], total: number}` ，如果不满足，可以通过 `options.formatResult` 转换一次。
 
-useFusionTable 额外增加了 `result.search` 和 `options.filed`。
+useFusionTable 额外增加了 `result.search` 和 `options.field`。
 
 ```typescript
 const {
