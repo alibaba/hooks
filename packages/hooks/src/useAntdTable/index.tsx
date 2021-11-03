@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
 import { useMemoizedFn, usePagination } from '..';
-import type { Antd4ValidateFields, Params, Service, TableOptions } from './types';
+import type { Antd4ValidateFields, AntdTableOptions, Params, Service } from './types';
 
 const useAntdTable = <T, TParams extends Params>(
   service: Service<T, TParams>,
-  options: TableOptions<T, TParams> = {},
+  options: AntdTableOptions<T, TParams> = {},
 ) => {
   const { form, defaultType = 'simple', defaultParams, manual = false, ...rest } = options;
 

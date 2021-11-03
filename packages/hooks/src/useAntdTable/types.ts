@@ -21,7 +21,7 @@ export type Antd3ValidateFields = (
 ) => void;
 export type Antd4ValidateFields = (fieldNames?: string[]) => Promise<any>;
 
-export interface UseAntdTableFormUtils {
+export interface AntdFormUtils {
   getFieldInstance: (name: string) => Record<string, any>;
   setFieldsValue: (value: Record<string, any>) => void;
   getFieldsValue: (...args: any) => Record<string, any>;
@@ -31,7 +31,7 @@ export interface UseAntdTableFormUtils {
   [key: string]: any;
 }
 
-export interface TableResult<T, TParams extends Params> extends PaginationResult<T, TParams> {
+export interface AntdTableResult<T, TParams extends Params> extends PaginationResult<T, TParams> {
   tableProps: {
     dataSource: T[];
     loading: boolean;
@@ -47,7 +47,7 @@ export interface TableResult<T, TParams extends Params> extends PaginationResult
   };
 }
 
-export interface TableOptions<T, TParams extends Params> extends PaginationOptions<T, TParams> {
-  form?: UseAntdTableFormUtils;
+export interface AntdTableOptions<T, TParams extends Params> extends PaginationOptions<T, TParams> {
+  form?: AntdFormUtils;
   defaultType?: 'simple' | 'advance';
 }

@@ -1,3 +1,4 @@
+import useAntdTable from './useAntdTable';
 import useAsyncEffect from './useAsyncEffect';
 import useBoolean from './useBoolean';
 import useClickAway from './useClickAway';
@@ -20,6 +21,7 @@ import useEventTarget from './useEventTarget';
 import useExternal from './useExternal';
 import useFavicon from './useFavicon';
 import useFullscreen from './useFullscreen';
+import useFusionTable from './useFusionTable';
 import useHistoryTravel from './useHistoryTravel';
 import useHover from './useHover';
 import useInterval from './useInterval';
@@ -63,7 +65,6 @@ import useUpdateLayoutEffect from './useUpdateLayoutEffect';
 import useVirtualList from './useVirtualList';
 import useWebSocket from './useWebSocket';
 import useWhyDidYouUpdate from './useWhyDidYouUpdate';
-import useAntdTable from './useAntdTable';
 
 export {
   useRequest,
@@ -133,4 +134,5 @@ export {
   useTrackedEffect,
   usePagination,
   useAntdTable,
+  useFusionTable,
 };
