@@ -10,8 +10,6 @@ group:
 
 # useLongPress
 
-<Tag lang="zh-CN" tags="ssr"></Tag>
-
 监听目标元素的长按事件。
 
 ## 代码演示
@@ -20,42 +18,37 @@ group:
 
 <code src="./demo/demo1.tsx"/>
 
-### 移除光标不取消事件
+### 同时监听点击和长按事件
 
 <code src="./demo/demo2.tsx"/>
 
 ## API
 
 ```typescript
-type Target = Element | (() => Element) | React.MutableRefObject<Element>;
-
-const isPressing = useLongPress(
+useLongPress(
   onLongPress: (event: MouseEvent | TouchEvent) => void,
-  target: Target ,
+  target: Target,
   options?: {
     delay?: number,
-    cancelOnMovement?: boolean,
+    onClick?: (event: MouseEvent | TouchEvent) => void,
   }
 );
 ```
 
 ### Params
 
-| 参数    | 说明                                         | 类型                   | 默认值 |
-|---------|----------------------------------------------|------------------------|--------|
-| onLongPress | 触发函数  | `(event: MouseEvent \| TouchEvent) => void` | -      |
-| target | DOM 节点或者 Ref  | `Target`  | - |
-| options | 可选配置项，见 Options  | `Options` | - |
+| 参数        | 说明             | 类型                                                        | 默认值 |
+|-------------|------------------|-------------------------------------------------------------|--------|
+| onLongPress | 触发函数         | `(event: MouseEvent \| TouchEvent) => void`                 | -      |
+| target      | DOM 节点或者 Ref | `Element` \| `() => Element` \| `MutableRefObject<Element>` | -      |
+| options     | 可选配置项       | `Options`                                                   | -      |
 
 ### Options
-| 参数    | 说明                                         | 类型                   | 默认值 |
-|---------|----------------------------------------------|------------------------|--------|
-| delay | 长按时间 | `number` | `1500`
-| cancelOnMovement | 当光标移除目标是否失效 | `boolean` | `true`
+| 参数    | 说明     | 类型      | 默认值 |
+|---------|----------|-----------|--------|
+| delay   | 长按时间 | `number`  | `300` |
+| onClick | 点击事件 | `boolean` | `true` |
 
+### 备注
 
-### Result
-| 参数    | 说明                                         | 类型                   | 默认值 |
-|---------|----------------------------------------------|------------------------|--------|
-| isPressing |  是否处于按压状态 | `boolean` | -      |
-
+禁用在手机上长按选择文本的能力请参考：https://stackoverflow.com/a/11237968

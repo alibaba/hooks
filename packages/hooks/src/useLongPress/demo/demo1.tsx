@@ -12,15 +12,15 @@ import { useLongPress } from 'ahooks';
 export default () => {
   const [counter, setCounter] = useState(0);
   const ref = useRef<HTMLButtonElement>();
-  const isPressing = useLongPress(() => setCounter((s) => s + 1), ref);
+
+  useLongPress(() => setCounter((s) => s + 1), ref);
 
   return (
     <div>
       <button ref={ref} type="button">
-        box
+        Press me
       </button>
       <p>counter: {counter}</p>
-      <p>isPressing: {isPressing + ''}</p>
     </div>
   );
 };

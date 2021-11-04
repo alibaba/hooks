@@ -1,67 +1,77 @@
-import { useRef } from 'react';
-import useBoolean from '../useBoolean';
-import useEventListener from '../useEventListener';
+import { useEffect, useRef } from 'react';
 import useLatest from '../useLatest';
 import type { BasicTarget } from '../utils/dom2';
+import { getTargetElement } from '../utils/dom2';
 
 type EventType = MouseEvent | TouchEvent;
-
-interface LongPressOptions {
+export interface Options {
   delay?: number;
-  cancelOnMovement?: boolean;
+  onClick?: (event: EventType) => void;
 }
+
+// @ts-ignore
+const touchSupported =
+  'ontouchstart' in window || (window.DocumentTouch && document instanceof DocumentTouch);
 
 function useLongPress(
   onLongPress: (event: EventType) => void,
   target: BasicTarget,
-  { delay = 1500, cancelOnMovement = true }: LongPressOptions = {},
+  { delay = 300, onClick }: Options = {},
 ) {
-  console.log('ff:', cancelOnMovement);
   const onLongPressRef = useLatest(onLongPress);
-  const timer = useRef<ReturnType<typeof setTimeout>>();
-  const [state, { setTrue, setFalse }] = useBoolean(false);
 
-  let startTime = 0;
+  const timerRef = useRef<NodeJS.Timeout>();
+  const isTriggeredRef = useRef(false);
 
-  useEventListener(
-    'mousedown',
-    (e) => {
-      e.preventDefault();
+  useEffect(() => {
+    const targetElement = getTargetElement(target);
+    if (!targetElement?.addEventListener) {
+      return;
+    }
 
-      startTime = Date.now();
-      timer.current = setTimeout(() => onLongPressRef.current(e), delay);
+    const onStart = (event: TouchEvent | MouseEvent) => {
+      timerRef.current = setTimeout(() => {
+        onLongPressRef.current(event);
+        isTriggeredRef.current = true;
+      }, delay);
+    };
 
-      setTrue();
-    },
-    { target },
-  );
-
-  useEventListener(
-    'mouseup',
-    (e) => {
-      e.preventDefault();
-
-      if (e.currentTarget === target) {
-        clearTimeout(timer.current!);
+    const onEnd = (event: TouchEvent | MouseEvent, shouldTriggerClick: boolean = false) => {
+      if (timerRef.current) {
+        clearTimeout(timerRef.current);
       }
-
-      setFalse();
-    },
-    { target: document },
-  );
-
-  useEventListener(
-    'mouseout',
-    () => {
-      if (cancelOnMovement) {
-        setFalse();
-        clearTimeout(timer.current!);
+      if (shouldTriggerClick && !isTriggeredRef.current && onClick) {
+        onClick(event);
       }
-    },
-    { target: document },
-  );
+      isTriggeredRef.current = false;
+    };
 
-  return state;
+    const onEndWithClick = (event: TouchEvent | MouseEvent) => onEnd(event, true);
+
+    if (!touchSupported) {
+      targetElement.addEventListener('mousedown', onStart);
+      targetElement.addEventListener('mouseup', onEndWithClick);
+      targetElement.addEventListener('mouseleave', onEnd);
+    } else {
+      targetElement.addEventListener('touchstart', onStart);
+      targetElement.addEventListener('touchend', onEndWithClick);
+    }
+
+    return () => {
+      if (timerRef.current) {
+        clearTimeout(timerRef.current);
+        isTriggeredRef.current = false;
+      }
+      if (!touchSupported) {
+        targetElement.removeEventListener('mousedown', onStart);
+        targetElement.removeEventListener('mouseup', onEndWithClick);
+        targetElement.removeEventListener('mouseleave', onEnd);
+      } else {
+        targetElement.removeEventListener('touchstart', onStart);
+        targetElement.removeEventListener('touchend', onEndWithClick);
+      }
+    };
+  }, [typeof target === 'function' ? undefined : target]);
 }
 
 export default useLongPress;
