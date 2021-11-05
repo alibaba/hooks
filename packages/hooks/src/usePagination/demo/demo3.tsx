@@ -1,4 +1,4 @@
-import usePagination from '../';
+import { usePagination } from 'ahooks';
 import { useUpdateEffect } from 'ahooks';
 import { Pagination } from 'antd';
 import Mock from 'mockjs';

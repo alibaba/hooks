@@ -2,7 +2,7 @@ import { useBoolean, useUpdateEffect } from 'ahooks';
 import { Pagination } from 'antd';
 import Mock from 'mockjs';
 import React, { useState } from 'react';
-import usePagination from '../';
+import { usePagination } from 'ahooks';
 
 interface UserListItem {
   id: string;

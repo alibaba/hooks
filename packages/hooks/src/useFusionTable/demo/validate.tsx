@@ -1,6 +1,6 @@
 import React from 'react';
 import { Table, Pagination, Field, Form, Input, Select, Icon } from '@alifd/next';
-import useFusionTable from '../';
+import { useFusionTable } from 'ahooks';
 
 interface Item {
   name: {

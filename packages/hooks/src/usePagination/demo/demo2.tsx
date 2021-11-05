@@ -1,7 +1,7 @@
 import { Pagination } from 'antd';
 import Mock from 'mockjs';
 import React, { useEffect, useState } from 'react';
-import usePagination from '../';
+import { usePagination } from 'ahooks';
 
 interface UserListItem {
   id: string;

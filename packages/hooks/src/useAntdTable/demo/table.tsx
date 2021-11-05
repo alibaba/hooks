@@ -1,6 +1,6 @@
 import { Table } from 'antd';
 import React from 'react';
-import useAntdTable from '../';
+import { useAntdTable } from 'ahooks';
 
 interface Item {
   name: {

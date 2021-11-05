@@ -1,6 +1,6 @@
 import { Form, Input, Select, Table } from 'antd';
 import React from 'react';
-import useAntdTable from '../';
+import { useAntdTable } from 'ahooks';
 
 const { Option } = Select;
 

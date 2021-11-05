@@ -1,5 +1,5 @@
 import React from 'react';
-import useInfiniteScroll from '../';
+import { useInfiniteScroll } from 'ahooks';
 import { useRequest } from '../../';
 
 interface Result {

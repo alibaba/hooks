@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import useInfiniteScroll from '../';
+import { useInfiniteScroll } from 'ahooks';
 
 interface Result {
   list: string[];
