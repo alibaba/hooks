@@ -1,6 +1,6 @@
 import type { PaginationOptions, PaginationResult } from '../usePagination/types';
 
-export type TData<T> = { total: number; list: T[] };
+export type Data = { total: number; list: any[] };
 
 export type Params = [
   {
@@ -13,7 +13,9 @@ export type Params = [
   ...any[]
 ];
 
-export type Service<T, TParams extends Params> = (...args: TParams) => Promise<TData<T>>;
+export type Service<TData extends Data, TParams extends Params> = (
+  ...args: TParams
+) => Promise<TData>;
 
 export type Antd3ValidateFields = (
   fieldNames: string[],
@@ -31,9 +33,10 @@ export interface AntdFormUtils {
   [key: string]: any;
 }
 
-export interface AntdTableResult<T, TParams extends Params> extends PaginationResult<T, TParams> {
+export interface AntdTableResult<TData extends Data, TParams extends Params>
+  extends PaginationResult<TData, TParams> {
   tableProps: {
-    dataSource: T[];
+    dataSource: any[];
     loading: boolean;
     onChange: (pagination: any, filters?: any, sorter?: any) => void;
     pagination: any;
@@ -47,7 +50,8 @@ export interface AntdTableResult<T, TParams extends Params> extends PaginationRe
   };
 }
 
-export interface AntdTableOptions<T, TParams extends Params> extends PaginationOptions<T, TParams> {
+export interface AntdTableOptions<TData extends Data, TParams extends Params>
+  extends PaginationOptions<TData, TParams> {
   form?: AntdFormUtils;
   defaultType?: 'simple' | 'advance';
 }

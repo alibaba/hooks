@@ -1,4 +1,4 @@
-import type { AntdTableOptions, AntdTableResult, Params } from '../useAntdTable/types';
+import type { AntdTableOptions, AntdTableResult, Data, Params } from '../useAntdTable/types';
 
 export interface Field {
   getFieldInstance?: (name: string) => {};
@@ -9,8 +9,8 @@ export interface Field {
   [key: string]: any;
 }
 
-export interface FusionTableResult<T, TParams extends Params>
-  extends Omit<AntdTableResult<T, TParams>, 'tableProps'> {
+export interface FusionTableResult<TData extends Data, TParams extends Params>
+  extends Omit<AntdTableResult<TData, TParams>, 'tableProps'> {
   paginationProps: {
     onChange: (current: number) => void;
     onPageSizeChange: (size: number) => void;
@@ -19,7 +19,7 @@ export interface FusionTableResult<T, TParams extends Params>
     total: number;
   };
   tableProps: {
-    dataSource: T[];
+    dataSource: any[];
     loading: boolean;
     onSort: (dataIndex: string, order: string) => void;
     onFilter: (filterParams: any) => void;
@@ -32,7 +32,7 @@ export interface FusionTableResult<T, TParams extends Params>
   };
 }
 
-export interface FusionTableOptions<T, TParams extends Params>
-  extends Omit<AntdTableOptions<T, TParams>, 'form'> {
+export interface FusionTableOptions<TData extends Data, TParams extends Params>
+  extends Omit<AntdTableOptions<TData, TParams>, 'form'> {
   field?: Field;
 }

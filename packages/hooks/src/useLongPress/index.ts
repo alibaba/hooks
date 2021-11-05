@@ -9,8 +9,8 @@ export interface Options {
   onClick?: (event: EventType) => void;
 }
 
-// @ts-ignore
 const touchSupported =
+  // @ts-ignore
   'ontouchstart' in window || (window.DocumentTouch && document instanceof DocumentTouch);
 
 function useLongPress(

@@ -79,13 +79,13 @@ useFusionTable 通过 `defaultParams` 设置初始化值，`defaultParams` 是�
 
 ```typescript
 
-type TData<T> = { total: number; list: T[] };
+type Data = { total: number; list: any[] };
 type Params = [{ current: number; pageSize: number, filter?: any, sorter?: any }, {[key: string]: any}];
 
 const {
   ...,
   tableProps: {
-    dataSource: T[];
+    dataSource: any[];
     loading: boolean;
     onSort: (dataIndex: string, order: string) => void;
     onFilter: (filterParams: any) => void;
@@ -103,8 +103,8 @@ const {
     submit: () => void;
     reset: () => void;
   };
-} = useFusionTable<T, TParams extends Params>(
-  service: (...args: TParams) => Promise<TData<T>>, 
+} = useFusionTable<TData extends Data, TParams extends Params>(
+  service: (...args: TParams) => Promise<TData>, 
   {
     ...,
     field?: any;

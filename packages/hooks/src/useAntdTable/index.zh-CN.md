@@ -75,13 +75,13 @@ useAntdTable 通过 `defaultParams` 设置初始化值，`defaultParams` 是一�
 
 ```typescript
 
-type TData<T> = { total: number; list: T[] };
+type Data = { total: number; list: any[] };
 type Params = [{ current: number; pageSize: number, filter?: any, sorter?: any }, {[key: string]: any}];
 
 const {
   ...,
   tableProps: {
-    dataSource: T[];
+    dataSource: any[];
     loading: boolean;
     onChange: (
       pagination: any,
@@ -100,8 +100,8 @@ const {
     submit: () => void;
     reset: () => void;
   };
-} = useAntdTable<T, TParams extends Params>(
-  service: (...args: TParams) => Promise<TData<T>>, 
+} = useAntdTable<TData extends Data, TParams extends Params>(
+  service: (...args: TParams) => Promise<TData>, 
   {
     ...,
     form?: any;

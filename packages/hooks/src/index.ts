@@ -24,6 +24,7 @@ import useFullscreen from './useFullscreen';
 import useFusionTable from './useFusionTable';
 import useHistoryTravel from './useHistoryTravel';
 import useHover from './useHover';
+import useInfiniteScroll from './useInfiniteScroll';
 import useInterval from './useInterval';
 import useInViewport from './useInViewport';
 import useIsomorphicLayoutEffect from './useIsomorphicLayoutEffect';
@@ -31,6 +32,7 @@ import useKeyPress from './useKeyPress';
 import useLatest from './useLatest';
 import useLocalStorageState from './useLocalStorageState';
 import useLockFn from './useLockFn';
+import useLongPress from './useLongPress';
 import useMap from './useMap';
 import useMemoizedFn from './useMemoizedFn';
 import useMount from './useMount';
@@ -43,7 +45,6 @@ import useReactive from './useReactive';
 import useRequest from './useRequest';
 import { configResponsive, useResponsive } from './useResponsive';
 import useSafeState from './useSafeState';
-import useLongPress from './useLongPress';
 import useScroll from './useScroll';
 import useSelections from './useSelections';
 import useSessionStorageState from './useSessionStorageState';
@@ -137,4 +138,5 @@ export {
   usePagination,
   useAntdTable,
   useFusionTable,
+  useInfiniteScroll,
 };

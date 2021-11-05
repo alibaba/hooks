@@ -1,12 +1,15 @@
 import type { Options, Result } from '../useRequest/src/types';
 
-export type TData<T> = { total: number; list: T[] };
+export type Data = { total: number; list: any[] };
 
 export type Params = [{ current: number; pageSize: number; [key: string]: any }, ...any[]];
 
-export type Service<T, TParams extends Params> = (...args: TParams) => Promise<TData<T>>;
+export type Service<TData extends Data, TParams extends Params> = (
+  ...args: TParams
+) => Promise<TData>;
 
-export interface PaginationResult<T, TParams extends Params> extends Result<TData<T>, TParams> {
+export interface PaginationResult<TData extends Data, TParams extends Params>
+  extends Result<TData, TParams> {
   pagination: {
     current: number;
     pageSize: number;
@@ -18,6 +21,7 @@ export interface PaginationResult<T, TParams extends Params> extends Result<TDat
   };
 }
 
-export interface PaginationOptions<T, TParams extends Params> extends Options<TData<T>, TParams> {
+export interface PaginationOptions<TData extends Data, TParams extends Params>
+  extends Options<TData, TParams> {
   defaultPageSize?: number;
 }

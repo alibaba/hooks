@@ -1,10 +1,10 @@
 import { useMemo } from 'react';
 import { useMemoizedFn, useRequest, useUpdateEffect } from '..';
-import type { PaginationOptions, Service, Params } from './types';
+import type { Data, PaginationOptions, Params, Service } from './types';
 
-const usePagination = <T, TParams extends Params>(
-  service: Service<T, TParams>,
-  options: PaginationOptions<T, TParams> = {},
+const usePagination = <TData extends Data, TParams extends Params>(
+  service: Service<TData, TParams>,
+  options: PaginationOptions<TData, TParams> = {},
 ) => {
   const { refreshDeps = [], defaultPageSize = 10, ...rest } = options;
 
