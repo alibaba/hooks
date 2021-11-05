@@ -1,4 +1,4 @@
-import type { DependencyList } from 'React';
+import type { DependencyList } from 'react';
 import type { BasicTarget } from '../utils/dom2';
 
 export type Data = { list: any[]; [key: string]: any };
