@@ -1,6 +1,7 @@
-import { useEffect, useRef, useState } from 'react';
-import { getTargetElement } from '../utils/dom2';
-import type { BasicTarget } from '../utils/dom2';
+import { useRef, useState } from 'react';
+import type { BasicTarget } from '../utils/domTarget';
+import { getTargetElement } from '../utils/domTarget';
+import useEffectWithTarget from '../utils/useEffectWithTarget';
 
 interface Rect {
   top: number;
@@ -54,45 +55,49 @@ function useTextSelection(target?: BasicTarget<Document | Element>): State {
   const stateRef = useRef(state);
   stateRef.current = state;
 
-  useEffect(() => {
-    const el = getTargetElement(target, document);
-    if (!el) {
-      return;
-    }
-
-    const mouseupHandler = () => {
-      let selObj: Selection | null = null;
-      let text = '';
-      let rect = initRect;
-      if (!window.getSelection) return;
-      selObj = window.getSelection();
-      text = selObj ? selObj.toString() : '';
-      if (text) {
-        rect = getRectFromSelection(selObj);
-        setState({ ...state, text, ...rect });
+  useEffectWithTarget(
+    () => {
+      const el = getTargetElement(target, document);
+      if (!el) {
+        return;
       }
-    };
 
-    // 任意点击都需要清空之前的 range
-    const mousedownHandler = () => {
-      if (!window.getSelection) return;
-      if (stateRef.current.text) {
-        setState({ ...initState });
-      }
-      const selObj = window.getSelection();
-      if (!selObj) return;
-      selObj.removeAllRanges();
-    };
+      const mouseupHandler = () => {
+        let selObj: Selection | null = null;
+        let text = '';
+        let rect = initRect;
+        if (!window.getSelection) return;
+        selObj = window.getSelection();
+        text = selObj ? selObj.toString() : '';
+        if (text) {
+          rect = getRectFromSelection(selObj);
+          setState({ ...state, text, ...rect });
+        }
+      };
 
-    el.addEventListener('mouseup', mouseupHandler);
+      // 任意点击都需要清空之前的 range
+      const mousedownHandler = () => {
+        if (!window.getSelection) return;
+        if (stateRef.current.text) {
+          setState({ ...initState });
+        }
+        const selObj = window.getSelection();
+        if (!selObj) return;
+        selObj.removeAllRanges();
+      };
 
-    document.addEventListener('mousedown', mousedownHandler);
+      el.addEventListener('mouseup', mouseupHandler);
 
-    return () => {
-      el.removeEventListener('mouseup', mouseupHandler);
-      document.removeEventListener('mousedown', mousedownHandler);
-    };
-  }, [typeof target === 'function' ? undefined : target]);
+      document.addEventListener('mousedown', mousedownHandler);
+
+      return () => {
+        el.removeEventListener('mouseup', mouseupHandler);
+        document.removeEventListener('mousedown', mousedownHandler);
+      };
+    },
+    [],
+    target,
+  );
 
   return state;
 }

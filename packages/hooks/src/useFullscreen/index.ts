@@ -3,8 +3,8 @@ import screenfull from 'screenfull';
 import useLatest from '../useLatest';
 import useMemoizedFn from '../useMemoizedFn';
 import useUnmount from '../useUnmount';
-import type { BasicTarget } from '../utils/dom2';
-import { getTargetElement } from '../utils/dom2';
+import type { BasicTarget } from '../utils/domTarget';
+import { getTargetElement } from '../utils/domTarget';
 
 export interface Options {
   onExit?: () => void;

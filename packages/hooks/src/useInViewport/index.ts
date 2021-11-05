@@ -1,7 +1,8 @@
 import 'intersection-observer';
-import { useEffect, useState } from 'react';
-import type { BasicTarget } from '../utils/dom2';
-import { getTargetElement } from '../utils/dom2';
+import { useState } from 'react';
+import type { BasicTarget } from '../utils/domTarget';
+import { getTargetElement } from '../utils/domTarget';
+import useEffectWithTarget from '../utils/useEffectWithTarget';
 
 export interface Options {
   rootMargin?: string;
@@ -13,35 +14,39 @@ function useInViewport(target: BasicTarget, options?: Options) {
   const [state, setState] = useState<boolean>();
   const [ratio, setRatio] = useState<number>();
 
-  useEffect(() => {
-    const el = getTargetElement(target);
-    if (!el) {
-      return;
-    }
+  useEffectWithTarget(
+    () => {
+      const el = getTargetElement(target);
+      if (!el) {
+        return;
+      }
 
-    const observer = new IntersectionObserver(
-      (entries) => {
-        for (const entry of entries) {
-          setRatio(entry.intersectionRatio);
-          if (entry.isIntersecting) {
-            setState(true);
-          } else {
-            setState(false);
+      const observer = new IntersectionObserver(
+        (entries) => {
+          for (const entry of entries) {
+            setRatio(entry.intersectionRatio);
+            if (entry.isIntersecting) {
+              setState(true);
+            } else {
+              setState(false);
+            }
           }
-        }
-      },
-      {
-        ...options,
-        root: getTargetElement(options?.root),
-      },
-    );
+        },
+        {
+          ...options,
+          root: getTargetElement(options?.root),
+        },
+      );
 
-    observer.observe(el);
+      observer.observe(el);
 
-    return () => {
-      observer.disconnect();
-    };
-  }, [typeof target === 'function' ? undefined : target]);
+      return () => {
+        observer.disconnect();
+      };
+    },
+    [],
+    target,
+  );
 
   return [state, ratio] as const;
 }

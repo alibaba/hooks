@@ -1,5 +1,6 @@
 import type { DependencyList } from 'react';
 import { useRef } from 'react';
+import depsAreSame from '../utils/depsAreSame';
 
 export default function useCreation<T>(factory: () => T, deps: DependencyList) {
   const { current } = useRef({
@@ -13,12 +14,4 @@ export default function useCreation<T>(factory: () => T, deps: DependencyList) {
     current.initialized = true;
   }
   return current.obj as T;
-}
-
-function depsAreSame(oldDeps: DependencyList, deps: DependencyList): boolean {
-  if (oldDeps === deps) return true;
-  for (let i = 0; i < oldDeps.length; i++) {
-    if (oldDeps[i] !== deps[i]) return false;
-  }
-  return true;
 }

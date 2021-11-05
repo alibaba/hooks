@@ -4,8 +4,8 @@ import useLatest from '../useLatest';
 import useMemoizedFn from '../useMemoizedFn';
 import useRafState from '../useRafState';
 import useSize from '../useSize';
-import type { BasicTarget } from '../utils/dom2';
-import { getTargetElement } from '../utils/dom2';
+import type { BasicTarget } from '../utils/domTarget';
+import { getTargetElement } from '../utils/domTarget';
 
 export interface Options<T> {
   containerTarget: BasicTarget;

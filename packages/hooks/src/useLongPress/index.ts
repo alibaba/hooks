@@ -1,7 +1,8 @@
-import { useEffect, useRef } from 'react';
+import { useRef } from 'react';
 import useLatest from '../useLatest';
-import type { BasicTarget } from '../utils/dom2';
-import { getTargetElement } from '../utils/dom2';
+import type { BasicTarget } from '../utils/domTarget';
+import { getTargetElement } from '../utils/domTarget';
+import useEffectWithTarget from '../utils/useEffectWithTarget';
 
 type EventType = MouseEvent | TouchEvent;
 export interface Options {
@@ -23,55 +24,59 @@ function useLongPress(
   const timerRef = useRef<NodeJS.Timeout>();
   const isTriggeredRef = useRef(false);
 
-  useEffect(() => {
-    const targetElement = getTargetElement(target);
-    if (!targetElement?.addEventListener) {
-      return;
-    }
-
-    const onStart = (event: TouchEvent | MouseEvent) => {
-      timerRef.current = setTimeout(() => {
-        onLongPressRef.current(event);
-        isTriggeredRef.current = true;
-      }, delay);
-    };
-
-    const onEnd = (event: TouchEvent | MouseEvent, shouldTriggerClick: boolean = false) => {
-      if (timerRef.current) {
-        clearTimeout(timerRef.current);
+  useEffectWithTarget(
+    () => {
+      const targetElement = getTargetElement(target);
+      if (!targetElement?.addEventListener) {
+        return;
       }
-      if (shouldTriggerClick && !isTriggeredRef.current && onClick) {
-        onClick(event);
-      }
-      isTriggeredRef.current = false;
-    };
 
-    const onEndWithClick = (event: TouchEvent | MouseEvent) => onEnd(event, true);
+      const onStart = (event: TouchEvent | MouseEvent) => {
+        timerRef.current = setTimeout(() => {
+          onLongPressRef.current(event);
+          isTriggeredRef.current = true;
+        }, delay);
+      };
 
-    if (!touchSupported) {
-      targetElement.addEventListener('mousedown', onStart);
-      targetElement.addEventListener('mouseup', onEndWithClick);
-      targetElement.addEventListener('mouseleave', onEnd);
-    } else {
-      targetElement.addEventListener('touchstart', onStart);
-      targetElement.addEventListener('touchend', onEndWithClick);
-    }
-
-    return () => {
-      if (timerRef.current) {
-        clearTimeout(timerRef.current);
+      const onEnd = (event: TouchEvent | MouseEvent, shouldTriggerClick: boolean = false) => {
+        if (timerRef.current) {
+          clearTimeout(timerRef.current);
+        }
+        if (shouldTriggerClick && !isTriggeredRef.current && onClick) {
+          onClick(event);
+        }
         isTriggeredRef.current = false;
-      }
+      };
+
+      const onEndWithClick = (event: TouchEvent | MouseEvent) => onEnd(event, true);
+
       if (!touchSupported) {
-        targetElement.removeEventListener('mousedown', onStart);
-        targetElement.removeEventListener('mouseup', onEndWithClick);
-        targetElement.removeEventListener('mouseleave', onEnd);
+        targetElement.addEventListener('mousedown', onStart);
+        targetElement.addEventListener('mouseup', onEndWithClick);
+        targetElement.addEventListener('mouseleave', onEnd);
       } else {
-        targetElement.removeEventListener('touchstart', onStart);
-        targetElement.removeEventListener('touchend', onEndWithClick);
+        targetElement.addEventListener('touchstart', onStart);
+        targetElement.addEventListener('touchend', onEndWithClick);
       }
-    };
-  }, [typeof target === 'function' ? undefined : target]);
+
+      return () => {
+        if (timerRef.current) {
+          clearTimeout(timerRef.current);
+          isTriggeredRef.current = false;
+        }
+        if (!touchSupported) {
+          targetElement.removeEventListener('mousedown', onStart);
+          targetElement.removeEventListener('mouseup', onEndWithClick);
+          targetElement.removeEventListener('mouseleave', onEnd);
+        } else {
+          targetElement.removeEventListener('touchstart', onStart);
+          targetElement.removeEventListener('touchend', onEndWithClick);
+        }
+      };
+    },
+    [],
+    target,
+  );
 }
 
 export default useLongPress;

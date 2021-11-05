@@ -1,6 +1,6 @@
-import { isBrowser } from '../utils/dom2';
 import { useState } from 'react';
 import useEventListener from '../useEventListener';
+import isBrowser from '../utils/isBrowser';
 
 type VisibilityState = 'hidden' | 'visible' | 'prerender' | undefined;
 

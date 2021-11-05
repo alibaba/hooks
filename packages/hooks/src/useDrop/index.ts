@@ -1,7 +1,8 @@
 import { useEffect } from 'react';
 import useLatest from '../useLatest';
-import type { BasicTarget } from '../utils/dom2';
-import { getTargetElement } from '../utils/dom2';
+import type { BasicTarget } from '../utils/domTarget';
+import { getTargetElement } from '../utils/domTarget';
+import useEffectWithTarget from '../utils/useEffectWithTarget';
 
 export interface Options {
   onFiles?: (files: File[], event?: React.DragEvent) => void;
@@ -18,83 +19,90 @@ export interface Options {
 const useDrop = (target: BasicTarget, options: Options = {}) => {
   const optionsRef = useLatest(options);
 
-  useEffect(() => {
-    const targetElement = getTargetElement(target);
-    if (!targetElement?.addEventListener) {
-      return;
-    }
+  useEffectWithTarget(
+    () => {
+      const targetElement = getTargetElement(target);
+      if (!targetElement?.addEventListener) {
+        return;
+      }
 
-    const onData = (dataTransfer: DataTransfer, event: React.DragEvent | React.ClipboardEvent) => {
-      const uri = dataTransfer.getData('text/uri-list');
-      const dom = dataTransfer.getData('custom');
+      const onData = (
+        dataTransfer: DataTransfer,
+        event: React.DragEvent | React.ClipboardEvent,
+      ) => {
+        const uri = dataTransfer.getData('text/uri-list');
+        const dom = dataTransfer.getData('custom');
 
-      if (dom && optionsRef.current.onDom) {
-        let data = dom;
-        try {
-          data = JSON.parse(dom);
-        } catch (e) {
-          data = dom;
+        if (dom && optionsRef.current.onDom) {
+          let data = dom;
+          try {
+            data = JSON.parse(dom);
+          } catch (e) {
+            data = dom;
+          }
+          optionsRef.current.onDom(data, event as React.DragEvent);
+          return;
         }
-        optionsRef.current.onDom(data, event as React.DragEvent);
-        return;
-      }
 
-      if (uri && optionsRef.current.onUri) {
-        optionsRef.current.onUri(uri, event as React.DragEvent);
-        return;
-      }
+        if (uri && optionsRef.current.onUri) {
+          optionsRef.current.onUri(uri, event as React.DragEvent);
+          return;
+        }
 
-      if (dataTransfer.files && dataTransfer.files.length && optionsRef.current.onFiles) {
-        optionsRef.current.onFiles(Array.from(dataTransfer.files), event as React.DragEvent);
-        return;
-      }
+        if (dataTransfer.files && dataTransfer.files.length && optionsRef.current.onFiles) {
+          optionsRef.current.onFiles(Array.from(dataTransfer.files), event as React.DragEvent);
+          return;
+        }
 
-      if (dataTransfer.items && dataTransfer.items.length && optionsRef.current.onText) {
-        dataTransfer.items[0].getAsString((text) => {
-          optionsRef.current.onText!(text, event as React.ClipboardEvent);
-        });
-      }
-    };
+        if (dataTransfer.items && dataTransfer.items.length && optionsRef.current.onText) {
+          dataTransfer.items[0].getAsString((text) => {
+            optionsRef.current.onText!(text, event as React.ClipboardEvent);
+          });
+        }
+      };
 
-    const onDragEnter = (event: React.DragEvent) => {
-      event.preventDefault();
-      optionsRef.current.onDragEnter?.(event);
-    };
+      const onDragEnter = (event: React.DragEvent) => {
+        event.preventDefault();
+        optionsRef.current.onDragEnter?.(event);
+      };
 
-    const onDragOver = (event: React.DragEvent) => {
-      event.preventDefault();
-      optionsRef.current.onDragOver?.(event);
-    };
+      const onDragOver = (event: React.DragEvent) => {
+        event.preventDefault();
+        optionsRef.current.onDragOver?.(event);
+      };
 
-    const onDragLeave = (event: React.DragEvent) => {
-      optionsRef.current.onDragLeave?.(event);
-    };
+      const onDragLeave = (event: React.DragEvent) => {
+        optionsRef.current.onDragLeave?.(event);
+      };
 
-    const onDrop = (event: React.DragEvent) => {
-      event.preventDefault();
-      onData(event.dataTransfer, event);
-      optionsRef.current.onDrop?.(event);
-    };
+      const onDrop = (event: React.DragEvent) => {
+        event.preventDefault();
+        onData(event.dataTransfer, event);
+        optionsRef.current.onDrop?.(event);
+      };
 
-    const onPaste = (event: React.ClipboardEvent) => {
-      onData(event.clipboardData, event);
-      optionsRef.current.onPaste?.(event);
-    };
+      const onPaste = (event: React.ClipboardEvent) => {
+        onData(event.clipboardData, event);
+        optionsRef.current.onPaste?.(event);
+      };
 
-    targetElement.addEventListener('dragenter', onDragEnter as any);
-    targetElement.addEventListener('dragover', onDragOver as any);
-    targetElement.addEventListener('dragleave', onDragLeave as any);
-    targetElement.addEventListener('drop', onDrop as any);
-    targetElement.addEventListener('paste', onPaste as any);
+      targetElement.addEventListener('dragenter', onDragEnter as any);
+      targetElement.addEventListener('dragover', onDragOver as any);
+      targetElement.addEventListener('dragleave', onDragLeave as any);
+      targetElement.addEventListener('drop', onDrop as any);
+      targetElement.addEventListener('paste', onPaste as any);
 
-    return () => {
-      targetElement.removeEventListener('dragenter', onDragEnter as any);
-      targetElement.removeEventListener('dragover', onDragOver as any);
-      targetElement.removeEventListener('dragleave', onDragLeave as any);
-      targetElement.removeEventListener('drop', onDrop as any);
-      targetElement.removeEventListener('paste', onPaste as any);
-    };
-  }, [typeof target === 'function' ? 'undefined' : target]);
+      return () => {
+        targetElement.removeEventListener('dragenter', onDragEnter as any);
+        targetElement.removeEventListener('dragover', onDragOver as any);
+        targetElement.removeEventListener('dragleave', onDragLeave as any);
+        targetElement.removeEventListener('drop', onDrop as any);
+        targetElement.removeEventListener('paste', onPaste as any);
+      };
+    },
+    [],
+    target,
+  );
 };
 
 export default useDrop;
