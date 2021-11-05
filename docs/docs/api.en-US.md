@@ -9,7 +9,7 @@ This is ahooks API specification document.
 Hooks are allowed to have no output, which is generally common in life cycle Hooks.
 
 ```javascript
-useMount(()=>{});
+useMount(() => {});
 ```
 
 ### 2. value type
@@ -19,6 +19,7 @@ Hooks have one output value.
 ```javascript
 const documentVisibility = useDocumentVisibility();
 ```
+
 ### 3. value setValue type
 
 The output is value and setValue, the structure is `[value, setValue]` 。
@@ -37,11 +38,12 @@ const [current, { inc, dec, set, reset }] = useCounter(...);
 
 ### 5. values type
 
-The output is multi-value type, the structure is `{...values}` 
+The output is multi-value type, the structure is `{...values}`
 
 ```javascript
 const {text, left, right, ...} = useTextSelection();
 ```
+
 ### 6. values actions type
 
 The output is multi-value and multi-actions type, the structure is `{...values, ...actions}` 。
@@ -49,7 +51,6 @@ The output is multi-value and multi-actions type, the structure is `{...values, 
 ```javascript
 const {data, error, loading, run} = useRequest(...);
 ```
-
 
 ## Parameter
 
@@ -70,12 +71,13 @@ Direct input regardless of whether a single parameter is required.
 ```javascript
 const size = useSize(dom);
 ```
+
 ### 3. Multiple required parameters
 
 The number of required parameters is less than 2, and should be input at the same level.
 
 ```javascript
-const ref = useKeyPress(keyFilter, eventHandler)
+const ref = useKeyPress(keyFilter, eventHandler);
 ```
 
 If there are more than two, they should be entered as an object.
@@ -101,5 +103,3 @@ Required parameters are before and non-required parameters are after.
 ```javascript
 const result = useTextSelection(items, defaultSelected?);
 ```
-
-

@@ -9,7 +9,7 @@
 允许 Hooks 无输出，一般常见于生命周期类 Hooks。
 
 ```javascript
-useMount(()=>{});
+useMount(() => {});
 ```
 
 ### 2. value 型
@@ -19,6 +19,7 @@ Hooks 输出仅有一个值。
 ```javascript
 const documentVisibility = useDocumentVisibility();
 ```
+
 ### 3. value setValue 型
 
 输出值为 value 和 setValue 类型的，结构为 `[value, setValue]` 。
@@ -34,13 +35,15 @@ const [state, setState] = useLocalStorageState(...)
 ```javascript
 const [current, { inc, dec, set, reset }] = useCounter(...);
 ```
+
 ### 5. values 型
 
-输出值为多 value 类型的，结构为 `{...values}` 
+输出值为多 value 类型的，结构为 `{...values}`
 
 ```javascript
 const {text, left, right, ...} = useTextSelection();
 ```
+
 ### 6. values actions 型
 
 输出值为多 value 与多 actions 类型的，结构为 `{...values, ...actions}` 。
@@ -48,7 +51,6 @@ const {text, left, right, ...} = useTextSelection();
 ```javascript
 const {data, error, loading, run} = useRequest(...);
 ```
-
 
 ## 参数
 
@@ -69,12 +71,13 @@ const documentVisibility = useDocumentVisibility();
 ```javascript
 const size = useSize(dom);
 ```
+
 ### 3. 多必选参数
 
 必选参数小于 2 个，应平级输入。
 
 ```javascript
-const ref = useKeyPress(keyFilter, eventHandler)
+const ref = useKeyPress(keyFilter, eventHandler);
 ```
 
 如果多于 2 个，应以 object 形式输入。
@@ -100,5 +103,3 @@ const result = useRequest(service, {
 ```javascript
 const result = useTextSelection(items, defaultSelected?);
 ```
-
-
