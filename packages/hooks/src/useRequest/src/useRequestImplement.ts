@@ -18,23 +18,13 @@ function useRequestImplement<TData, TParams extends any[]>(
     ...rest
   } = options;
 
-  const optionsRef = useLatest(options);
-
-  const memoizedOptions = {
+  const fetchOptions = {
     manual,
+    onSuccess,
+    onError,
+    onBefore,
+    onFinally,
     ...rest,
-    get onSuccess() {
-      return optionsRef.current.onSuccess;
-    },
-    get onError() {
-      return optionsRef.current.onError;
-    },
-    get onBefore() {
-      return optionsRef.current.onBefore;
-    },
-    get onFinally() {
-      return optionsRef.current.onFinally;
-    },
   };
 
   const serviceRef = useLatest(service);
@@ -42,11 +32,11 @@ function useRequestImplement<TData, TParams extends any[]>(
   const update = useUpdate();
 
   const fetchInstance = useCreation(() => {
-    return new Fetch<TData, TParams>(serviceRef, memoizedOptions, update);
+    return new Fetch<TData, TParams>(serviceRef, fetchOptions, update);
   }, []);
-
+  fetchInstance.options = fetchOptions;
   // run all plugins hooks
-  fetchInstance.pluginImpls = plugins.map((p) => p(fetchInstance, memoizedOptions));
+  fetchInstance.pluginImpls = plugins.map((p) => p(fetchInstance, fetchOptions));
 
   useMount(() => {
     if (!manual) {

@@ -2,13 +2,9 @@ import type { MutableRefObject } from 'react';
 import type { Options, FetchState, PluginReturn, Service, Subscribe } from './types';
 
 export default class Fetch<TData, TParams extends any[]> {
-  options: Options<TData, TParams>;
-  serviceRef: MutableRefObject<Service<TData, TParams>>;
-
   pluginImpls: PluginReturn<TData, TParams>[];
 
   count: number = 0;
-  subscribe: Subscribe;
 
   state: FetchState<TData, TParams> = {
     loading: false,
@@ -18,14 +14,10 @@ export default class Fetch<TData, TParams extends any[]> {
   };
 
   constructor(
-    serviceRef: MutableRefObject<Service<TData, TParams>>,
-    options: Options<TData, TParams>,
-    subscribe: Subscribe,
+    public serviceRef: MutableRefObject<Service<TData, TParams>>,
+    public options: Options<TData, TParams>,
+    public subscribe: Subscribe,
   ) {
-    this.serviceRef = serviceRef;
-    this.options = options;
-    this.subscribe = subscribe;
-
     this.state = {
       ...this.state,
       loading: !options.manual,
