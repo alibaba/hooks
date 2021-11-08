@@ -45,7 +45,9 @@ describe('useThrottlePlugin', () => {
       jest.advanceTimersByTime(50);
     });
 
-    jest.runAllTimers();
+    act(() => {
+      jest.runAllTimers();
+    });
     await hook.waitForNextUpdate();
     expect(callback).toHaveBeenCalledTimes(2);
 

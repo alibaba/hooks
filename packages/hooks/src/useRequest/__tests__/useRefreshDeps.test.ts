@@ -26,7 +26,10 @@ describe('useRefreshDeps', () => {
       });
     });
     expect(hook.result.current.loading).toEqual(true);
-    jest.runAllTimers();
+
+    act(() => {
+      jest.runAllTimers();
+    });
     await hook.waitForNextUpdate();
     expect(hook.result.current.loading).toEqual(false);
 
@@ -35,7 +38,10 @@ describe('useRefreshDeps', () => {
       refreshDeps: [dep],
     });
     expect(hook.result.current.loading).toEqual(true);
-    jest.runAllTimers();
+
+    act(() => {
+      jest.runAllTimers();
+    });
     await hook.waitForNextUpdate();
     expect(hook.result.current.loading).toEqual(false);
 

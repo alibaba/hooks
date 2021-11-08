@@ -25,7 +25,10 @@ describe('useLoadingDelayPlugin', () => {
       });
     });
     expect(hook.result.current.loading).toEqual(false);
-    jest.runAllTimers();
+
+    act(() => {
+      jest.runAllTimers();
+    });
     await hook.waitForNextUpdate();
     expect(hook.result.current.loading).toEqual(false);
     hook.unmount();
@@ -36,9 +39,15 @@ describe('useLoadingDelayPlugin', () => {
       });
     });
     expect(hook.result.current.loading).toEqual(false);
-    jest.advanceTimersByTime(501);
+
+    act(() => {
+      jest.advanceTimersByTime(501);
+    });
     expect(hook.result.current.loading).toEqual(true);
-    jest.runAllTimers();
+
+    act(() => {
+      jest.runAllTimers();
+    });
     await hook.waitForNextUpdate();
     expect(hook.result.current.loading).toEqual(false);
     hook.unmount();

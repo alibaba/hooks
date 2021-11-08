@@ -27,17 +27,25 @@ describe('useRefreshOnWindowFocusPlugin', () => {
       });
     });
     expect(hook.result.current.loading).toEqual(true);
-    jest.advanceTimersByTime(1001);
+    act(() => {
+      jest.advanceTimersByTime(1001);
+    });
     await hook.waitForNextUpdate();
     expect(hook.result.current.loading).toEqual(false);
-    fireEvent.focus(window);
+    act(() => {
+      fireEvent.focus(window);
+    });
     expect(hook.result.current.loading).toEqual(true);
-    jest.advanceTimersByTime(2000);
+
+    act(() => {
+      jest.advanceTimersByTime(2000);
+    });
     await hook.waitForNextUpdate();
     expect(hook.result.current.loading).toEqual(false);
-
-    jest.advanceTimersByTime(3000);
-    fireEvent.focus(window);
+    act(() => {
+      jest.advanceTimersByTime(3000);
+      fireEvent.focus(window);
+    });
     expect(hook.result.current.loading).toEqual(true);
     hook.unmount();
   });

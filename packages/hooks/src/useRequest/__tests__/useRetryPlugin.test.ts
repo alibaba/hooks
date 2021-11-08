@@ -27,22 +27,39 @@ describe('useRetryPlugin', () => {
         onError: errorCallback,
       });
     });
-    jest.setTimeout(10000);
-    jest.advanceTimersByTime(500);
+    act(() => {
+      jest.setTimeout(10000);
+      jest.advanceTimersByTime(500);
+    });
     expect(errorCallback).toHaveBeenCalledTimes(0);
-    jest.runAllTimers();
+
+    act(() => {
+      jest.runAllTimers();
+    });
     await hook.waitForNextUpdate();
     expect(errorCallback).toHaveBeenCalledTimes(1);
-    jest.runAllTimers();
+
+    act(() => {
+      jest.runAllTimers();
+    });
     await hook.waitForNextUpdate();
     expect(errorCallback).toHaveBeenCalledTimes(2);
-    jest.runAllTimers();
+
+    act(() => {
+      jest.runAllTimers();
+    });
     await hook.waitForNextUpdate();
     expect(errorCallback).toHaveBeenCalledTimes(3);
-    jest.runAllTimers();
+
+    act(() => {
+      jest.runAllTimers();
+    });
     await hook.waitForNextUpdate();
     expect(errorCallback).toHaveBeenCalledTimes(4);
-    jest.runAllTimers();
+
+    act(() => {
+      jest.runAllTimers();
+    });
     expect(errorCallback).toHaveBeenCalledTimes(4);
     hook.unmount();
 
@@ -56,14 +73,24 @@ describe('useRetryPlugin', () => {
       });
     });
     expect(errorCallback).toHaveBeenCalledTimes(0);
-    jest.runAllTimers();
+
+    act(() => {
+      jest.runAllTimers();
+    });
     await hook2.waitForNextUpdate();
     expect(errorCallback).toHaveBeenCalledTimes(1);
-    jest.runAllTimers();
+
+    act(() => {
+      jest.runAllTimers();
+    });
     await hook2.waitForNextUpdate();
     expect(errorCallback).toHaveBeenCalledTimes(2);
-    hook2.result.current.cancel();
-    jest.runAllTimers();
+    act(() => {
+      hook2.result.current.cancel();
+    });
+    act(() => {
+      jest.runAllTimers();
+    });
     expect(errorCallback).toHaveBeenCalledTimes(2);
     hook2.unmount();
   });
