@@ -1,14 +1,10 @@
 import type { MutableRefObject } from 'react';
-import type { FetchOptions, FetchState, PluginReturn, Service, Subscribe } from './types';
+import type { Options, FetchState, PluginReturn, Service, Subscribe } from './types';
 
 export default class Fetch<TData, TParams extends any[]> {
-  options: FetchOptions<TData, TParams>;
-  serviceRef: MutableRefObject<Service<TData, TParams>>;
-
   pluginImpls: PluginReturn<TData, TParams>[];
 
   count: number = 0;
-  subscribe: Subscribe;
 
   state: FetchState<TData, TParams> = {
     loading: false,
@@ -18,14 +14,10 @@ export default class Fetch<TData, TParams extends any[]> {
   };
 
   constructor(
-    serviceRef: MutableRefObject<Service<TData, TParams>>,
-    options: FetchOptions<TData, TParams>,
-    subscribe: Subscribe,
+    public serviceRef: MutableRefObject<Service<TData, TParams>>,
+    public options: Options<TData, TParams>,
+    public subscribe: Subscribe,
   ) {
-    this.serviceRef = serviceRef;
-    this.options = options;
-    this.subscribe = subscribe;
-
     this.state = {
       ...this.state,
       loading: !options.manual,
@@ -72,7 +64,7 @@ export default class Fetch<TData, TParams extends any[]> {
       return Promise.resolve(state.data);
     }
 
-    this.options.onBeforeRef?.current?.(params);
+    this.options.onBefore?.(params);
 
     try {
       // replace service
@@ -97,10 +89,10 @@ export default class Fetch<TData, TParams extends any[]> {
         loading: false,
       });
 
-      this.options.onSuccessRef.current?.(res, params);
+      this.options.onSuccess?.(res, params);
       this.runPluginHandler('onSuccess', res, params);
 
-      this.options.onFinallyRef.current?.(params, res, undefined);
+      this.options.onFinally?.(params, res, undefined);
       this.runPluginHandler('onFinally', params, res, undefined);
 
       return res;
@@ -115,10 +107,10 @@ export default class Fetch<TData, TParams extends any[]> {
         loading: false,
       });
 
-      this.options.onErrorRef.current?.(error, params);
+      this.options.onError?.(error, params);
       this.runPluginHandler('onError', error, params);
 
-      this.options.onFinallyRef.current?.(params, undefined, error);
+      this.options.onFinally?.(params, undefined, error);
       this.runPluginHandler('onFinally', params, undefined, error);
 
       throw error;
@@ -127,7 +119,7 @@ export default class Fetch<TData, TParams extends any[]> {
 
   run(...params: TParams) {
     this.runAsync(...params).catch((error) => {
-      if (!this.options.onErrorRef.current) {
+      if (!this.options.onError) {
         console.error(error);
       }
     });
