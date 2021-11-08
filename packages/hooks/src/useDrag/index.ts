@@ -1,7 +1,7 @@
-import { useEffect } from 'react';
 import useLatest from '../useLatest';
-import type { BasicTarget } from '../utils/dom2';
-import { getTargetElement } from '../utils/dom2';
+import type { BasicTarget } from '../utils/domTarget';
+import { getTargetElement } from '../utils/domTarget';
+import useEffectWithTarget from '../utils/useEffectWithTarget';
 
 export interface Options {
   onDragStart?: (event: React.DragEvent) => void;
@@ -11,31 +11,35 @@ export interface Options {
 const useDrag = <T>(data: T, target: BasicTarget, options: Options = {}) => {
   const optionsRef = useLatest(options);
 
-  useEffect(() => {
-    const targetElement = getTargetElement(target);
-    if (!targetElement?.addEventListener) {
-      return;
-    }
+  useEffectWithTarget(
+    () => {
+      const targetElement = getTargetElement(target);
+      if (!targetElement?.addEventListener) {
+        return;
+      }
 
-    const onDragStart = (event: React.DragEvent) => {
-      optionsRef.current.onDragStart?.(event);
-      event.dataTransfer.setData('custom', JSON.stringify(data));
-    };
+      const onDragStart = (event: React.DragEvent) => {
+        optionsRef.current.onDragStart?.(event);
+        event.dataTransfer.setData('custom', JSON.stringify(data));
+      };
 
-    const onDragEnd = (event: React.DragEvent) => {
-      optionsRef.current.onDragEnd?.(event);
-    };
+      const onDragEnd = (event: React.DragEvent) => {
+        optionsRef.current.onDragEnd?.(event);
+      };
 
-    targetElement.setAttribute('draggable', 'true');
+      targetElement.setAttribute('draggable', 'true');
 
-    targetElement.addEventListener('dragstart', onDragStart as any);
-    targetElement.addEventListener('dragend', onDragEnd as any);
+      targetElement.addEventListener('dragstart', onDragStart as any);
+      targetElement.addEventListener('dragend', onDragEnd as any);
 
-    return () => {
-      targetElement.removeEventListener('dragstart', onDragStart as any);
-      targetElement.removeEventListener('dragend', onDragEnd as any);
-    };
-  }, [typeof target === 'function' ? 'undefined' : target]);
+      return () => {
+        targetElement.removeEventListener('dragstart', onDragStart as any);
+        targetElement.removeEventListener('dragend', onDragEnd as any);
+      };
+    },
+    [],
+    target,
+  );
 };
 
 export default useDrag;

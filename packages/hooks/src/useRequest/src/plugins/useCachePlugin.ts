@@ -1,4 +1,5 @@
-import { useMemo, useRef } from 'react';
+import { useRef } from 'react';
+import useCreation from '../../../useCreation';
 import useUnmount from '../../../useUnmount';
 import type { Plugin } from '../types';
 import * as cache from '../utils/cache';
@@ -19,7 +20,7 @@ const useCachePlugin: Plugin<any, any[]> = (
 
   const currentPromiseRef = useRef<Promise<any>>();
 
-  useMemo(() => {
+  useCreation(() => {
     if (!cacheKey) {
       return;
     }

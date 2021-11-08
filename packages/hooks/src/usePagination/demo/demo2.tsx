@@ -1,7 +1,7 @@
 import { Pagination } from 'antd';
 import Mock from 'mockjs';
 import React, { useEffect, useState } from 'react';
-import usePagination from '../';
+import { usePagination } from 'ahooks';
 
 interface UserListItem {
   id: string;
@@ -57,7 +57,7 @@ export default () => {
     run(
       {
         current: 1,
-        pageSize: params[0].pageSize,
+        pageSize: params[0]?.pageSize || 10,
       },
       gender,
     );

@@ -1,5 +1,5 @@
 import { createUseStorageState } from '../createUseStorageState';
-import { isBrowser } from '../utils/dom2';
+import isBrowser from '../utils/isBrowser';
 
 const useLocalStorageState = createUseStorageState(() => (isBrowser ? localStorage : undefined));
 

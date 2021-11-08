@@ -1,4 +1,5 @@
-import { useBoolean, useRequest } from 'ahooks';
+import { useBoolean } from 'ahooks';
+import useRequest from '../../../';
 import Mock from 'mockjs';
 import React, { useState } from 'react';
 
@@ -19,7 +20,7 @@ const Article = () => {
     cacheKey: 'cacheKey-demo',
   });
 
-  const [keyword, setKeyword] = useState(params?.[0] || '');
+  const [keyword, setKeyword] = useState(params[0] || '');
 
   if (!data && loading) {
     return <p>Loading</p>;

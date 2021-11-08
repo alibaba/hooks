@@ -1,6 +1,6 @@
 import useBoolean from '../useBoolean';
 import useEventListener from '../useEventListener';
-import type { BasicTarget } from '../utils/dom2';
+import type { BasicTarget } from '../utils/domTarget';
 
 export interface Options {
   onEnter?: () => void;

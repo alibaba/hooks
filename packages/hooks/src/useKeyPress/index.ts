@@ -1,7 +1,7 @@
-import useDeepCompareEffect from '../useDeepCompareEffect';
 import useLatest from '../useLatest';
-import { getTargetElement } from '../utils/dom2';
-import type { BasicTarget } from '../utils/dom2';
+import type { BasicTarget } from '../utils/domTarget';
+import { getTargetElement } from '../utils/domTarget';
+import useDeepCompareEffectWithTarget from '../utils/useDeepCompareWithTarget';
 
 export type KeyPredicate = (event: KeyboardEvent) => boolean;
 export type keyType = number | string;
@@ -185,28 +185,32 @@ function useKeyPress(keyFilter: KeyFilter, eventHandler: EventHandler, option?: 
   const eventHandlerRef = useLatest(eventHandler);
   const keyFilterRef = useLatest(keyFilter);
 
-  useDeepCompareEffect(() => {
-    const el = getTargetElement(target, window);
-    if (!el) {
-      return;
-    }
-
-    const callbackHandler = (event: KeyboardEvent) => {
-      const genGuard: KeyPredicate = genKeyFormater(keyFilterRef.current);
-      if (genGuard(event)) {
-        return eventHandlerRef.current?.(event);
+  useDeepCompareEffectWithTarget(
+    () => {
+      const el = getTargetElement(target, window);
+      if (!el) {
+        return;
       }
-    };
 
-    for (const eventName of events) {
-      el.addEventListener(eventName, callbackHandler);
-    }
-    return () => {
+      const callbackHandler = (event: KeyboardEvent) => {
+        const genGuard: KeyPredicate = genKeyFormater(keyFilterRef.current);
+        if (genGuard(event)) {
+          return eventHandlerRef.current?.(event);
+        }
+      };
+
       for (const eventName of events) {
-        el.removeEventListener(eventName, callbackHandler);
+        el.addEventListener(eventName, callbackHandler);
       }
-    };
-  }, [events, typeof target === 'function' ? undefined : target]);
+      return () => {
+        for (const eventName of events) {
+          el.removeEventListener(eventName, callbackHandler);
+        }
+      };
+    },
+    [events],
+    target,
+  );
 }
 
 export default useKeyPress;

@@ -1,3 +1,4 @@
+import useAntdTable from './useAntdTable';
 import useAsyncEffect from './useAsyncEffect';
 import useBoolean from './useBoolean';
 import useClickAway from './useClickAway';
@@ -20,8 +21,10 @@ import useEventTarget from './useEventTarget';
 import useExternal from './useExternal';
 import useFavicon from './useFavicon';
 import useFullscreen from './useFullscreen';
+import useFusionTable from './useFusionTable';
 import useHistoryTravel from './useHistoryTravel';
 import useHover from './useHover';
+import useInfiniteScroll from './useInfiniteScroll';
 import useInterval from './useInterval';
 import useInViewport from './useInViewport';
 import useIsomorphicLayoutEffect from './useIsomorphicLayoutEffect';
@@ -29,11 +32,13 @@ import useKeyPress from './useKeyPress';
 import useLatest from './useLatest';
 import useLocalStorageState from './useLocalStorageState';
 import useLockFn from './useLockFn';
+import useLongPress from './useLongPress';
 import useMap from './useMap';
 import useMemoizedFn from './useMemoizedFn';
 import useMount from './useMount';
 import useMouse from './useMouse';
 import useNetwork from './useNetwork';
+import usePagination from './usePagination';
 import usePrevious from './usePrevious';
 import useRafState from './useRafState';
 import useReactive from './useReactive';
@@ -127,6 +132,11 @@ export {
   useIsomorphicLayoutEffect,
   useDeepCompareEffect,
   useAsyncEffect,
+  useLongPress,
   useRafState,
   useTrackedEffect,
+  usePagination,
+  useAntdTable,
+  useFusionTable,
+  useInfiniteScroll,
 };

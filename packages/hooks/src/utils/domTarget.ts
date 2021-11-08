@@ -1,10 +1,5 @@
 import type { MutableRefObject } from 'react';
-
-export const isBrowser = !!(
-  typeof window !== 'undefined' &&
-  window.document &&
-  window.document.createElement
-);
+import isBrowser from './isBrowser';
 
 type Target<T> = T | undefined | null;
 

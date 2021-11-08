@@ -111,6 +111,14 @@ useRequest 提供了 `cancel` 函数，可以取消当前正在进行的请求�
 
 <code src="./demo/cancel.tsx" />
 
+## 参数管理
+
+useRequest 返回的 `params` 会记录当次调用 `service` 的参数数据组。比如你触发了 `run(1, 2, 3)`，则 `params` 等于 `[1, 2, 3]`	。
+
+如果我们设置了 `options.manual = false`，则首次调用 `service` 的参数可以通过 `options.defaultParams` 来设置。
+
+<code src="./demo/params.tsx" />
+
 ## API
 
 ```ts
@@ -118,7 +126,7 @@ const {
   loading: boolean,
   data?: TData,
   error?: Error,
-  params?: TParams,
+  params: TParams || [],
   run: (...params: TParams) => void,
   runAsync: (...params: TParams) => Promise<TData>,
   refresh: () => void,
@@ -145,7 +153,7 @@ const {
 | data         | service 返回的数据                                                                                       | `TData` \| `undefind`                                                 |
 | error        | service 抛出的异常                                                                                       | `Error` \| `undefind`                                                 |
 | loading      | service 是否正在执行                                                                                     | `boolean`                                                             |
-| params       | 当次执行的 service 的参数数组。比如你触发了 `run(1, 2, 3)`，则 params 等于 `[1, 2, 3]`                   | `TParams`  \| `undefined`                                             |
+| params       | 当次执行的 service 的参数数组。比如你触发了 `run(1, 2, 3)`，则 params 等于 `[1, 2, 3]`                   | `TParams`  \| `[]`                                             |
 | run          | <ul><li> 手动触发 service 执行，参数会传递给 service</li><li>异常自动处理，通过 `onError` 反馈</li></ul> | `(...params: TParams) => void`                                        |
 | runAsync     | 与 `run` 用法一致，但返回的是 Promise，需要自行处理异常。                                                | `(...params: TParams) => Promise<TData>`                              |
 | refresh      | 使用上一次的 params，重新调用 `run`                                                                      | `() => void`                                                          |

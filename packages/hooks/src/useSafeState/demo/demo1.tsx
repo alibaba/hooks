@@ -6,11 +6,11 @@ const Child = () => {
 
   useEffect(() => {
     setTimeout(() => {
-      setValue('从服务端获取的数据');
+      setValue('data loaded from server');
     }, 5000);
   }, []);
 
-  const text = value || '正在获取数据。。。';
+  const text = value || 'Loading...';
 
   return <div>{text}</div>;
 };
@@ -20,7 +20,7 @@ export default () => {
 
   return (
     <div>
-      <button onClick={() => setVisible(false)}>卸载</button>
+      <button onClick={() => setVisible(false)}>Unmount</button>
       {visible && <Child />}
     </div>
   );

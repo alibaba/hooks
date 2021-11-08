@@ -49,8 +49,8 @@ group:
 
 ```typescript
 
-type TData<T> = { total: number; list: T[] };
-type Params = [{ current: number; pageSize: number }, ...any[]];
+type Data<T> = { total: number; list: T[] };
+type Params = [{ current: number; pageSize: number, [key: string]: any }, ...any[]];
 
 const {
   ...,
@@ -63,8 +63,8 @@ const {
     changeCurrent: (current: number) => void;
     changePageSize: (pageSize: number) => void;
   }
-} = usePagination<T, TParams extends Params>(
-  service: (...args: TParams) => Promise<TData<T>>, 
+} = usePagination<TData extends Data, TParams extends Params>(
+  service: (...args: TParams) => Promise<TData>, 
   {
     ...,
     defaultPageSize?: number;
