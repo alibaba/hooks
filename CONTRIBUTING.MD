@@ -1,44 +1,35 @@
-> The English version of this document is [here](https://github.com/alibaba/hooks/blob/master/CONTRIBUTING.en-US.MD)
+# Contributing
 
-# 贡献指南
+The following is a set of guidelines for contributing to `ahooks`. Please spend several minutes reading these guidelines before you create an issue or pull request.
 
-> 参考 ant design [贡献指南](https://ant.design/docs/react/contributing-cn)
+## Open Development
 
-这篇指南会指导你如何为 `ahooks` 贡献一份自己的力量，请在你要提 issue 或者 pull request 之前花几分钟来阅读一遍这篇指南。
+All work on ahooks happens directly on [GitHub](https://github.com/alibaba/hooks). Both core team members and external contributors send pull requests which go through the same review process.
 
-## 透明的开发
+## New Features
 
-我们所有的工作都会放在 [GitHub](https://github.com/alibaba/hooks) 上。不管是核心团队的成员还是外部贡献者的 pull request 都需要经过同样流程的 review。
+If you want to add a new Hook，we recommend that you first create an issue that describes the application scenario and usage of the Hook, see [[RFC] useLockFn](https://github.com/alibaba/hooks/issues/562)。
 
-## 分支管理
-
-我们长期维护两个分支 master 和 feature。如果你要修一个 bug，那么请发 pull request 到 master；如果你要提一个增加新功能的 pull request，那么请基于 feature 分支来做。
-
-## 新增功能
-
-如果你想新增一个 Hooks，我们建议你先建立一个 issue，说明该 Hook 的应用场景及用法，参考 [[RFC] useLockFn](https://github.com/alibaba/hooks/issues/562)。
-
-然后你可以基于已有 Hook 来初始化一个新的 Hook。
+Then you can initialize a new Hook based on an existing Hook.
 
 ## Pull Request
 
-我们会关注所有的 pull request，会 review 以及合并你的代码，也有可能要求你做一些修改或者告诉你我们为什么不能接受这样的修改。
+We are monitoring for pull requests. We will review your pull request and either merge it, request changes to it, or close it with an explanation.
 
-在你发送 Pull Request 之前，请确认你是按照下面的步骤来做的：
+Before submitting a pull request, please make sure the following is done:
 
-1. 基于 [正确的分支](#分支管理) 做修改。
+1. create your branch from the master.
 
-2. 如果你修复了一个 bug 或者新增了一个功能，请确保写了相应的测试，这很重要。
+2. If you've fixed a bug or added code that should be tested, add tests!
 
-3. 确认所有的测试是通过的 `yarn run test`。
+3. Ensure the test suite passes `yarn run test`。
 
+## Development Workflow
 
-## 开发流程
+After cloning ahooks, run `yarn run init` to fetch its dependencies. Then, you can run several commands:
 
-在你 clone 代码并且使用 `yarn run init` 安装完依赖后，你还可以运行下面几个常用的命令：
+1. `yarn start` runs `ahooks` website locally。
 
-1. `yarn start` 在本地运行 `ahooks` 网站。
+2. `yarn run test` runs the complete test suite。
 
-2. `yarn run test` 运行测试。
-
-3. `yarn run build` 构建编译。
+3. `yarn run build` to build。
