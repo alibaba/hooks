@@ -25,7 +25,10 @@ describe('useCachePlugin', () => {
         cacheKey: 'testCacheKey',
       });
     });
-    jest.runAllTimers();
+
+    act(() => {
+      jest.runAllTimers();
+    });
     await hook.waitForNextUpdate();
     expect(hook.result.current.loading).toEqual(false);
     expect(hook.result.current.data).toEqual('success');
@@ -39,7 +42,10 @@ describe('useCachePlugin', () => {
     });
     expect(hook2.result.current.loading).toEqual(true);
     expect(hook2.result.current.data).toEqual('success');
-    jest.runAllTimers();
+
+    act(() => {
+      jest.runAllTimers();
+    });
     await hook2.waitForNextUpdate();
     expect(hook2.result.current.loading).toEqual(false);
     hook2.unmount();
@@ -55,7 +61,10 @@ describe('useCachePlugin', () => {
       });
     });
     expect(hook.result.current.loading).toEqual(true);
-    jest.runAllTimers();
+
+    act(() => {
+      jest.runAllTimers();
+    });
     await hook.waitForNextUpdate();
     expect(hook.result.current.loading).toEqual(false);
     expect(hook.result.current.data).toEqual('success');
@@ -82,29 +91,37 @@ describe('useCachePlugin', () => {
     });
     expect(hook3.result.current.loading).toEqual(true);
     expect(hook3.result.current.data).toEqual('success');
-    jest.runAllTimers();
+
+    act(() => {
+      jest.runAllTimers();
+    });
     await hook3.waitForNextUpdate();
     expect(hook3.result.current.loading).toEqual(false);
     hook3.unmount();
   });
 
   it('useRequest cacheTime should work', async () => {
-    MockDate.set(0);
-
     act(() => {
+      MockDate.set(0);
       hook = setUp(request, {
         cacheKey: 'testCacheTime',
         cacheTime: 5000,
       });
     });
     expect(hook.result.current.loading).toEqual(true);
-    jest.runAllTimers();
+
+    act(() => {
+      jest.runAllTimers();
+    });
     await hook.waitForNextUpdate();
     expect(hook.result.current.loading).toEqual(false);
     expect(hook.result.current.data).toEqual('success');
     hook.unmount();
-    MockDate.set(1000);
-    jest.advanceTimersByTime(1000);
+
+    act(() => {
+      MockDate.set(1000);
+      jest.advanceTimersByTime(1000);
+    });
 
     let hook2;
     act(() => {
@@ -116,8 +133,10 @@ describe('useCachePlugin', () => {
     expect(hook2.result.current.loading).toEqual(true);
     expect(hook2.result.current.data).toEqual('success');
     hook2.unmount();
-    MockDate.set(6001);
-    jest.advanceTimersByTime(5001);
+    act(() => {
+      MockDate.set(6001);
+      jest.advanceTimersByTime(5001);
+    });
 
     let hook3;
     act(() => {
@@ -128,7 +147,10 @@ describe('useCachePlugin', () => {
     });
     expect(hook3.result.current.loading).toEqual(true);
     expect(hook3.result.current.data).toEqual(undefined);
-    jest.runAllTimers();
+
+    act(() => {
+      jest.runAllTimers();
+    });
     await hook3.waitForNextUpdate();
     expect(hook3.result.current.loading).toEqual(false);
     expect(hook3.result.current.data).toEqual('success');

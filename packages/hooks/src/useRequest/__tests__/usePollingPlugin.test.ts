@@ -33,34 +33,48 @@ describe('usePollingPlugin', () => {
       );
     });
     expect(hook.result.current.loading).toEqual(true);
-    jest.runAllTimers();
+
+    act(() => {
+      jest.runAllTimers();
+    });
     await hook.waitForNextUpdate();
     expect(hook.result.current.loading).toEqual(false);
     expect(hook.result.current.data).toEqual('success');
     expect(callback).toHaveBeenCalledTimes(1);
 
-    jest.runAllTimers();
+    act(() => {
+      jest.runAllTimers();
+    });
     await hook.waitForNextUpdate();
     expect(callback).toHaveBeenCalledTimes(2);
 
-    jest.runAllTimers();
+    act(() => {
+      jest.runAllTimers();
+    });
     await hook.waitForNextUpdate();
     expect(callback).toHaveBeenCalledTimes(3);
 
     act(() => {
       hook.result.current.cancel();
     });
-    jest.runAllTimers();
+
+    act(() => {
+      jest.runAllTimers();
+    });
     expect(callback).toHaveBeenCalledTimes(3);
 
     act(() => {
       hook.result.current.run();
     });
-    jest.runAllTimers();
+    act(() => {
+      jest.runAllTimers();
+    });
     await hook.waitForNextUpdate();
     expect(callback).toHaveBeenCalledTimes(4);
 
-    jest.runAllTimers();
+    act(() => {
+      jest.runAllTimers();
+    });
     await hook.waitForNextUpdate();
     expect(callback).toHaveBeenCalledTimes(5);
 

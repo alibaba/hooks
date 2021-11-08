@@ -43,7 +43,9 @@ describe('useDebouncePlugin', () => {
       hook.result.current.run(4);
     });
 
-    jest.runAllTimers();
+    act(() => {
+      jest.runAllTimers();
+    });
     await hook.waitForNextUpdate();
     expect(callback).toHaveBeenCalledTimes(1);
 
@@ -57,7 +59,9 @@ describe('useDebouncePlugin', () => {
       hook.result.current.run(4);
     });
 
-    jest.runAllTimers();
+    act(() => {
+      jest.runAllTimers();
+    });
     await hook.waitForNextUpdate();
     expect(callback).toHaveBeenCalledTimes(2);
 
@@ -69,7 +73,9 @@ describe('useDebouncePlugin', () => {
       hook.result.current.cancel();
     });
 
-    jest.runAllTimers();
+    act(() => {
+      jest.runAllTimers();
+    });
     expect(callback).toHaveBeenCalledTimes(2);
 
     hook.unmount();
