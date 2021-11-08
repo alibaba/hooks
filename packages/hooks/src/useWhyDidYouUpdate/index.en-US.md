@@ -1,11 +1,6 @@
 ---
-title: useWhyDidYouUpdate
 nav:
-  title: Hooks
   path: /hooks
-group:
-  title: State
-  path: /state
 ---
 
 # useWhyDidYouUpdate

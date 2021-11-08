@@ -1,11 +1,6 @@
 ---
-title: useTimeout
 nav:
-  title: Hooks
   path: /hooks
-group:
-  title: SideEffect
-  path: /side-effect
 ---
 
 # useTimeout

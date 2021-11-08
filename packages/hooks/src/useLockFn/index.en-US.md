@@ -1,11 +1,6 @@
 ---
-title: useLockFn
 nav:
-  title: Hooks
   path: /hooks
-group:
-  title: Advanced
-  path: /advanced
 ---
 
 # useLockFn

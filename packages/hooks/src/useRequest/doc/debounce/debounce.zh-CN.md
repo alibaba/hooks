@@ -1,11 +1,7 @@
 ---
-title: 防抖
-order: 6
 nav:
-  title: Hooks
-  path: /zh-CN/hooks
+  path: /hooks
 group:
-  title: useRequest
   path: /use-request
 ---
 

@@ -11,6 +11,7 @@ module.exports = {
     'consistent-return': 'off',
     '@typescript-eslint/ban-ts-ignore': 'off',
     '@typescript-eslint/no-object-literal-type-assertion': 'off',
+    '@typescript-eslint/no-parameter-properties': 'off',
     'consistent-return': 'off',
     'import/no-useless-path-segments': 'off',
     'no-unused-expressions': 'off',

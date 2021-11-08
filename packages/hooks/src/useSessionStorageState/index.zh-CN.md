@@ -1,11 +1,6 @@
 ---
-title: useSessionStorageState
 nav:
-  title: Hooks
   path: /hooks
-group:
-  title: State Hooks
-  path: /state
 ---
 
 # useSessionStorageState

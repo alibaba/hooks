@@ -1,1 +1,5 @@
+---
+nav:
+  path: /hooks
+---
 # useFusionTable

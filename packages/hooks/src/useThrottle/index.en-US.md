@@ -1,11 +1,6 @@
 ---
-title: useThrottle
 nav:
-  title: Hooks
   path: /hooks
-group:
-  title: SideEffect
-  path: /side-effect
 ---
 
 # useThrottle

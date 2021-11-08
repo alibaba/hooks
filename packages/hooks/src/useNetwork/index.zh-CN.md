@@ -1,11 +1,6 @@
 ---
-title: useNetwork
 nav:
-  title: Hooks
   path: /hooks
-group:
-  title: State
-  path: /state
 ---
 
 # useNetwork

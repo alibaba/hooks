@@ -1,21 +1,12 @@
----
-order: 1
-nav:
-  title: Guide
-  order: 1
----
-
 # Getting Started
 
 ahooks is a React Hooks library dedicated to providing commonly used and high quality Hooks.
 
 > Before start, you need to know the basic usage of React and React Hooks. Follow the [link](https://reactjs.org/docs/hooks-intro.html) to learn the official React Hooks documentation.
 
-
 ## First Example
 
 Here is a simple codesandbox example to show the usage of ahooks.
-
 
 <code src="./demo.tsx" inline />
 
@@ -28,11 +19,11 @@ Visit https://codesandbox.io/s/ahooks-template-k5l7x to create a codesandbox. Do
 Replace the content of App.js with the following code, use the [useToggle](/state/use-toggle) of ahooks.
 
 ```javascript
-import React from "react";
-import { useToggle } from "ahooks";
+import React from 'react';
+import { useToggle } from 'ahooks';
 
 export default () => {
-  const [ state, { toggle } ] = useToggle();
+  const [state, { toggle }] = useToggle();
 
   return (
     <div>

@@ -1,11 +1,6 @@
 ---
-title: useInterval
 nav:
-  title: Hooks
   path: /hooks
-group:
-  title: SideEffect
-  path: /side-effect
 ---
 
 # useInterval

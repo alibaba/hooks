@@ -1,11 +1,6 @@
 ---
-title: useSelections
 nav:
-  title: Hooks
   path: /hooks
-group:
-  title: UI
-  path: /ui
 ---
 
 # useSelections

@@ -1,12 +1,6 @@
 ---
-title: useUnmount
 nav:
-  title: Hooks
   path: /hooks
-group:
-  title: LifeCycle
-  path: /life-cycle
-  order: 9
 ---
 
 # useUnmount

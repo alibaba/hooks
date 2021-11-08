@@ -1,11 +1,6 @@
 ---
-title: useFullscreen
 nav:
-  title: Hooks
   path: /hooks
-group:
-  title: Dom
-  path: /dom
 ---
 
 # useFullscreen

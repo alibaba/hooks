@@ -1,1 +1,6 @@
+---
+nav:
+  path: /hooks
+---
+
 # usePagination

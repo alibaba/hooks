@@ -1,11 +1,6 @@
 ---
-title: useExternal
 nav:
-  title: Hooks
   path: /hooks
-group:
-  title: Dom
-  path: /dom
 ---
 
 # useExternal

@@ -1,14 +1,8 @@
 ---
-title: useInfiniteScroll
 nav:
-  title: Hooks
   path: /hooks
-group:
-  title: Dom
-  path: /dom
 ---
-
-## useInfiniteScroll
+# useInfiniteScroll
 
 useInfiniteScroll 封装了常见的无限滚动逻辑。
 

@@ -1,14 +1,7 @@
 ---
-title: useFusionTable
 nav:
-  title: Hooks
   path: /hooks
-group:
-  title: Table
-  path: /table
-  order: 3
 ---
-
 # useFusionTable
 
 封装了常用的 Fusion [Form](https://fusion.design/pc/component/basic/form) 与 Fusion [Table](https://fusion.design/pc/component/basic/table) 联动逻辑。

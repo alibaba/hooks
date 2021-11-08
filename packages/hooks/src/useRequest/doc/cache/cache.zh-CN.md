@@ -1,11 +1,7 @@
 ---
-title: 缓存 & SWR
-order: 10
 nav:
-  title: Hooks
-  path: /zh-CN/hooks
+  path: /hooks
 group:
-  title: useRequest
   path: /use-request
 ---
 

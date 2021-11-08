@@ -1,11 +1,7 @@
 ---
-title: 错误重试
-order: 8
 nav:
-  title: Hooks
-  path: /zh-CN/hooks
+  path: /hooks
 group:
-  title: useRequest
   path: /use-request
 ---
 

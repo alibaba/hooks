@@ -1,13 +1,8 @@
 ---
-title: 基础能力
-order: 2
 nav:
-  title: Hooks
-  path: /zh-CN/hooks
+  path: /hooks
 group:
-  title: useRequest
   path: /use-request
-  order: 2
 ---
 
 # 基础用法

@@ -1,11 +1,7 @@
 ---
-title: 依赖刷新
-order: 9
 nav:
-  title: Hooks
-  path: /zh-CN/hooks
+  path: /hooks
 group:
-  title: useRequest
   path: /use-request
 ---
 

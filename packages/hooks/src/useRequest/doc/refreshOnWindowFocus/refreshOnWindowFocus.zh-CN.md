@@ -1,11 +1,7 @@
 ---
-title: 屏幕聚焦重新请求
-order: 5
 nav:
-  title: Hooks
-  path: /zh-CN/hooks
+  path: /hooks
 group:
-  title: useRequest
   path: /use-request
 ---
 

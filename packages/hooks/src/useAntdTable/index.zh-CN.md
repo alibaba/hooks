@@ -1,13 +1,8 @@
 ---
-title: useAntdTable
 nav:
   title: Hooks
   path: /hooks
-group:
-  title: Dom
-  path: /dom
 ---
-
 # useAntdTable
 
 `useAntdTable` 基于 `useRequest` 实现，封装了常用的 antd [Form](https://ant.design/components/form-cn/) 与 [Table](https://ant.design/components/table-cn/) 联动逻辑，并且同时支持 antd V3 和 V4。
