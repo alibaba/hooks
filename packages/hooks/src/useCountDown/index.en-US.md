@@ -1,11 +1,6 @@
 ---
-title: useCountDown
 nav:
-  title: Hooks
   path: /hooks
-group:
-  title: State
-  path: /state
 ---
 
 # useCountDown

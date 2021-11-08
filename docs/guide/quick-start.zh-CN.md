@@ -1,10 +1,3 @@
----
-order: 1
-nav:
-  title: 指南
-  order: 1
----
-
 # 快速上手
 
 ahooks 是一个 React Hooks 库，致力提供常用且高质量的 Hooks。
@@ -26,11 +19,11 @@ ahooks 是一个 React Hooks 库，致力提供常用且高质量的 Hooks。
 直接用下面的代码替换 App.js 的内容，使用 ahooks 中的 [useToggle](/zh-CN/state/use-toggle)。
 
 ```javascript
-import React from "react";
-import { useToggle } from "ahooks";
+import React from 'react';
+import { useToggle } from 'ahooks';
 
 export default () => {
-  const [ state, { toggle } ] = useToggle();
+  const [state, { toggle }] = useToggle();
 
   return (
     <div>
@@ -46,7 +39,6 @@ export default () => {
 ### 3. 探索更多 Hooks 用法
 
 你可以在左侧菜单查看 Hooks 列表，比如 useRequest、useHover 等。我们的文档中提供了各类演示，每个代码演示的例子，都可以点击右下角的图标查看代码，同时文档最下方有 Hooks API 文档可以查阅，快去试试吧。
-
 
 ## 按需加载
 

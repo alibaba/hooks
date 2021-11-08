@@ -6,6 +6,12 @@ import type { BasicTarget } from './domTarget';
 import { getTargetElement } from './domTarget';
 
 const createEffectWithTarget = (useEffectType: typeof useEffect | typeof useLayoutEffect) => {
+  /**
+   *
+   * @param effect
+   * @param deps
+   * @param target target should compare ref.current vs ref.current, dom vs dom, ()=>dom vs ()=>dom
+   */
   const useEffectWithTarget = (
     effect: EffectCallback,
     deps: DependencyList,

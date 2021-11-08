@@ -1,13 +1,8 @@
 ---
-title: 轮询
-order: 4
 nav:
-  title: Hooks
-  path: /zh-CN/hooks
+  path: /hooks
 group:
-  title: useRequest
   path: /use-request
-  order: 4
 ---
 
 # 轮询

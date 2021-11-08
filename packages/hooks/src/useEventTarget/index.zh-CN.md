@@ -1,11 +1,6 @@
 ---
-title: useEventTarget
 nav:
-  title: Hooks
   path: /hooks
-group:
-  title: Dom
-  path: /dom
 ---
 
 # useEventTarget

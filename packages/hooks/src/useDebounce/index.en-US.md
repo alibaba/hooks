@@ -1,11 +1,6 @@
 ---
-title: useDebounce
 nav:
-  title: Hooks
   path: /hooks
-group:
-  title: SideEffect
-  path: /side-effect
 ---
 
 # useDebounce

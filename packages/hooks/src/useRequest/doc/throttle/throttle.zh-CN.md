@@ -1,11 +1,7 @@
 ---
-title: 节流
-order: 7
 nav:
-  title: Hooks
-  path: /zh-CN/hooks
+  path: /hooks
 group:
-  title: useRequest
   path: /use-request
 ---
 

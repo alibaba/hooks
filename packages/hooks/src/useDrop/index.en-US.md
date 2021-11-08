@@ -1,11 +1,6 @@
 ---
-title: useDrag & useDrop
 nav:
-  title: Hooks
   path: /hooks
-group:
-  title: UI
-  path: /ui
 ---
 
 # useDrop & useDrag

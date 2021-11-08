@@ -1,13 +1,8 @@
 ---
-title: Loading Delay
-order: 3
 nav:
-  title: Hooks
-  path: /zh-CN/hooks
+  path: /hooks
 group:
-  title: useRequest
   path: /use-request
-  order: 3
 ---
 
 # Loading Delay

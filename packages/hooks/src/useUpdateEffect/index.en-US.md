@@ -1,11 +1,6 @@
 ---
-title: useUpdateEffect
 nav:
-  title: Hooks
   path: /hooks
-group:
-  title: LifeCycle
-  path: /life-cycle
 ---
 
 # useUpdateEffect

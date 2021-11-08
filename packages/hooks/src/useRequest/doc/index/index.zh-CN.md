@@ -1,15 +1,11 @@
 ---
-title: 快速上手
-order: 1
 nav:
-  title: Hooks
-  path: /zh-CN/hooks
+  path: /hooks
 group:
-  title: useRequest
   path: /use-request
 ---
 
-# useRequest
+# 快速上手
 
 useRequest 是一个强大的异步数据管理的 Hooks，React 项目中的网络请求场景使用 useRequest 就够了。
 

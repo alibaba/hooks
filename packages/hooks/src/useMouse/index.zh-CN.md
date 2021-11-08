@@ -1,11 +1,6 @@
 ---
-title: useMouse
 nav:
-  title: Hooks
   path: /hooks
-group:
-  title: Dom
-  path: /dom
 ---
 
 # useMouse

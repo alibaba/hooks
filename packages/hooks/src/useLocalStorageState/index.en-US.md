@@ -1,11 +1,6 @@
 ---
-title: useLocalStorageState
 nav:
-  title: Hooks
   path: /hooks
-group:
-  title: State Hooks
-  path: /state
 ---
 
 # useLocalStorageState
