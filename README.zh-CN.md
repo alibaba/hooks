@@ -56,7 +56,7 @@ $ yarn start
 
 我们欢迎所有人参与共建，请参考[CONTRIBUTING.MD](https://github.com/alibaba/hooks/blob/master/CONTRIBUTING.zh-CN.md)
 
-感谢所有贡献者:
+感谢所有贡献者：
 
 <a href="https://github.com/alibaba/hooks/graphs/contributors">
   <img src="https://opencollective.com/ahooks/contributors.svg?width=960&button=false" alt="contributors" />

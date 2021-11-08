@@ -13,7 +13,7 @@ A high-quality & reliable React Hooks library.
 ![gzip size](https://img.badgesize.io/https:/unpkg.com/ahooks@next/dist/ahooks.js?label=gzip%20size&compression=gzip)
 ![GitHub](https://img.shields.io/github/license/alibaba/hooks)
 
-[English](https://github.com/alibaba/hooks/blob/master/README.md) | 简体中文
+English | [简体中文](https://github.com/alibaba/hooks/blob/master/README.zh-CN.md)
 
 </div>
 
