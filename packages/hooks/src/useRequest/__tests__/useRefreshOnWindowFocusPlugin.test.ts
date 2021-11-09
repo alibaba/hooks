@@ -1,19 +1,9 @@
 import { act, renderHook } from '@testing-library/react-hooks';
 import { fireEvent } from '@testing-library/react';
 import useRequest from '../index';
+import { request } from '../../utils/testingHelpers';
 
 describe('useRefreshOnWindowFocusPlugin', () => {
-  const request = (req) =>
-    new Promise((resolve, reject) =>
-      setTimeout(() => {
-        if (req === 0) {
-          reject(new Error('fail'));
-        } else {
-          resolve('success');
-        }
-      }, 1000),
-    );
-
   jest.useFakeTimers();
 
   const setUp = (service, options) => renderHook((o) => useRequest(service, o || options));
