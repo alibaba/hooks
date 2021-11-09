@@ -39,9 +39,9 @@ const useAntdTable = <TData extends Data, TParams extends Params>(
     return activeFieldsValue;
   };
 
-  const validateFields = () => {
+  const validateFields = (): Promise<Record<string, any>> => {
     if (!form) {
-      return Promise.resolve();
+      return Promise.resolve({});
     }
     const activeFieldsValue = getActivetFieldValues();
     const fields = Object.keys(activeFieldsValue);
