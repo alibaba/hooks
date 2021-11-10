@@ -4,7 +4,7 @@
   "npmClient": "yarn",
   "command": {
     "version": {
-      "allowBranch": "master",
+      "allowBranch": "next",
       "includeMergedTags": true
     },
     "publish": {
