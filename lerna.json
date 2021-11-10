@@ -3,7 +3,7 @@
   "npmClient": "yarn",
   "command": {
     "version": {
-      "allowBranch": "master",
+      "allowBranch": "release/v2.x",
       "includeMergedTags": true
     },
     "publish": {
