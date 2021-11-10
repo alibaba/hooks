@@ -53,7 +53,7 @@ export default {
         children: [
           {
             title: 'v2.x',
-            path: 'https://ahooks.js.org/',
+            path: 'https://ahooks-v2.surge.sh/',
           },
           {
             title: 'v1.x',
@@ -73,7 +73,7 @@ export default {
         children: [
           {
             title: 'v2.x',
-            path: 'https://ahooks.js.org/',
+            path: 'https://ahooks-v2.surge.sh/',
           },
           {
             title: 'v1.x',

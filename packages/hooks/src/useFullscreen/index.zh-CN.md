@@ -25,7 +25,8 @@ const [
   {
     enterFullscreen, 
     exitFullscreen, 
-    toggleFullscreen 
+    toggleFullscreen,
+    isEnabled,
   }] = useFullScreen(
     target,
     options?:Options
@@ -48,9 +49,10 @@ const [
 
 ### Result
 
-| 参数             | 说明     | 类型         |
-|------------------|----------|--------------|
-| isFullscreen     | 是否全屏 | `boolean`    |
-| enterFullscreen  | 设置全屏 | `() => void` |
-| exitFullscreen   | 退出全屏 | `() => void` |
-| toggleFullscreen | 切换全屏 | `() => void` |
+| 参数             | 说明         | 类型         |
+|------------------|--------------|--------------|
+| isFullscreen     | 是否全屏     | `boolean`    |
+| enterFullscreen  | 设置全屏     | `() => void` |
+| exitFullscreen   | 退出全屏     | `() => void` |
+| toggleFullscreen | 切换全屏     | `() => void` |
+| isEnabled        | 是否支持全屏 | `boolean`    |

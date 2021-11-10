@@ -77,6 +77,7 @@ const useFullscreen = (target: BasicTarget, options?: Options) => {
       enterFullscreen: useMemoizedFn(enterFullscreen),
       exitFullscreen: useMemoizedFn(exitFullscreen),
       toggleFullscreen: useMemoizedFn(toggleFullscreen),
+      isEnabled: screenfull.isEnabled,
     },
   ] as const;
 };

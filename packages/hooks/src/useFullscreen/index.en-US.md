@@ -25,7 +25,8 @@ const [
   {
     enterFullscreen, 
     exitFullscreen, 
-    toggleFullscreen 
+    toggleFullscreen,
+    isEnabled,
   }] = useFullScreen(
     target,
     options?:Options
@@ -48,9 +49,10 @@ const [
 
 ### Result
 
-| Property         | Description        | Type         |
-|------------------|--------------------|--------------|
-| isFullscreen     | Is full screen     | `boolean`    |
-| enterFullscreen  | Enter full screen  | `() => void` |
-| exitFullscreen   | Exit full screen   | `() => void` |
-| toggleFullscreen | Toggle full screen | `() => void` |
+| Property         | Description          | Type         |
+|------------------|----------------------|--------------|
+| isFullscreen     | Is full screen       | `boolean`    |
+| enterFullscreen  | Enter full screen    | `() => void` |
+| exitFullscreen   | Exit full screen     | `() => void` |
+| toggleFullscreen | Toggle full screen   | `() => void` |
+| isEnabled        | Is enable screenfull | `boolean`    |

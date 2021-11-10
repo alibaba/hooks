@@ -2,11 +2,11 @@
 
 ahooks，发音 [eɪ hʊks]，是一套高质量可靠的 React Hooks 库。在当前 React 项目研发过程中，一套好用的 React Hooks 库是必不可少的，希望 ahooks 能成为您的选择。
 
-相较于社区上其它 Hooks 库，ahooks 有以下几大优势。
+相较于社区上其它 Hooks 库，ahooks 有以下几个优势。
 
 ## 内容丰富
 
-ahooks 提供了超过 70+ Hooks，其中不仅包括一些常见的基础 Hooks，更是提供了大量从业务中提炼的高级 Hooks。比如：
+ahooks 提供了 70+ Hooks，其中不仅包括一些常见的基础 Hooks，更是提供了大量从业务中提炼的高级 Hooks。比如：
 
 - useRequest：强大的异步数据管理的 Hooks，React 项目中的网络请求场景使用它就够了。
 - useInfiniteScroll：封装了常见的无限滚动逻辑。

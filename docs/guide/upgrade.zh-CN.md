@@ -8,7 +8,7 @@
 - DOM 类 Hooks 支持 target 动态变化
 - 解决了在严格模式（Strict Mode）下的问题
 - 解决了在 react-refresh（HRM）模式下的问题
-- 修复了更多已知问题
+- 修复了已知问题
 - 新增了更多的 Hooks
 
 ## 全新的 useRequest
@@ -35,6 +35,7 @@ useRequest 完全进行了重写：
 - 新增了 `runAsync` 和 `refreshAsync`。
 - 所有参数支持动态变化。
 - 防抖/节流模式下，`runAsync` 可以返回正常 Promise。
+- 防抖/节流支持更多参数。
 - 只有成功的请求数据才会缓存。
 
 ## SSR 支持

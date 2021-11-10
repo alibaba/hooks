@@ -21,6 +21,7 @@ export default <S extends UrlState = UrlState>(initialState?: S | (() => S), opt
   const { navigateMode = 'push' } = options || {};
 
   // react-router v5
+  // @ts-ignore
   const history = rc.useHistory?.();
   // react-router v6
   // @ts-ignore

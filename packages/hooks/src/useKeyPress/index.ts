@@ -200,11 +200,11 @@ function useKeyPress(keyFilter: KeyFilter, eventHandler: EventHandler, option?: 
       };
 
       for (const eventName of events) {
-        el.addEventListener(eventName, callbackHandler);
+        el?.addEventListener?.(eventName, callbackHandler);
       }
       return () => {
         for (const eventName of events) {
-          el.removeEventListener(eventName, callbackHandler);
+          el?.removeEventListener?.(eventName, callbackHandler);
         }
       };
     },

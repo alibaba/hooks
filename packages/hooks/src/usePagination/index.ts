@@ -23,7 +23,7 @@ const usePagination = <TData extends Data, TParams extends Params>(
     const toPageSize = p <= 0 ? 1 : p;
     const tempTotalPage = Math.ceil(total / toPageSize);
     if (toCurrent > tempTotalPage) {
-      toCurrent = tempTotalPage;
+      toCurrent = Math.max(1, tempTotalPage);
     }
 
     const [oldPaginationParams = {}, ...restParams] = result.params || [];
