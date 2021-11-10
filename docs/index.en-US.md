@@ -1,75 +1,71 @@
 ---
 title: ahooks - React Hooks Library
 hero:
-  title: a hooks library
-  desc: Born for React Hooks
+  image: /logo.svg
+  desc: A high-quality & reliable React Hooks library
   actions:
-    - text: Getting Started
-      link: /docs/getting-started
-features:
-  - icon: https://gw.alipayobjects.com/zos/bmw-prod/813f5ed9-6bc4-43d4-9f74-ec81ecf35733/k7htg6n4_w144_h144.png
-    title: Rich Collection
-    desc: ahooks contains a large set of essential react hooks, with demos and examples for each one of them.
-  - icon: https://gw.alipayobjects.com/zos/bmw-prod/7659205c-6637-4fa2-8529-d32e5818304b/k7htflfb_w144_h144.png
-    title: Detailed Tutorial
-    desc: Providing tutorials about using hooks in practice. An all-in-one place to learn for pro coders and newcomers.
-  - icon: https://gw.alipayobjects.com/zos/bmw-prod/6319a122-e8b8-497f-9b45-37cfbe77edaa/k7htfx7t_w144_h144.png
-    title: Ready for Production
-    desc: Used in hundreds of products in Alipay、Taobao、Tmall etc, with high quality and robustness.
+    - text: Quick Start
+      link: /guide/quick-start
+    - text: Hooks List
+      link: /zh-CN/hooks
 footer: Open-source MIT Licensed | Copyright © 2019-present<br />Powered by [dumi](https://d.umijs.org)
 ---
 
-## Easy to get started
+[![NPM version next][image-1]][1]
+&nbsp;
+[![NPM downloads][image-2]][2]
+&nbsp;
+![gzip size](https://img.badgesize.io/https:/unpkg.com/ahooks@next/dist/ahooks.js?label=gzip%20size&compression=gzip)
+&nbsp;
+![GitHub](https://img.shields.io/github/license/alibaba/hooks)
+
+## ✨ Features
+
+- Easy to learn and use
+- Support SSR
+- Special treatment for functions, avoid closure problems
+- Contains a wealth of advanced Hooks that are refined from the app
+- Contains a wealth of basic Hooks
+- Written in TypeScript with predictable static types
+
+## 📦 Install
 
 ```bash
-// Install dependency
-npm i ahooks --save
+$ npm install --save ahooks@next
+# or
+$ yarn add ahooks@next
+```
 
-// Use Hooks
+## 🔨 Usage
+
+```js
 import { useRequest } from 'ahooks';
 ```
 
-## Core Team
+## 💻 Online Experience
 
-<table>
-  <tbody>
-    <tr>
-      <td align="center">
-        <a target="_blank" href="https://github.com/alibaba/ice">
-          <img
-            width="32"
-            src="https://img.alicdn.com/tfs/TB1Jd.tb79l0K4jSZFKXXXFjpXa-482-264.png"
-          />
-          <br>
-          <strong>ice</strong>
-        </a>
-      </td>
-      <td align="center">
-        <a target="_blank" href="https://github.com/umijs/umi">
-          <img
-            width="32"
-            style="vertical-align: -0.32em; margin-right: 8px;"
-            src="https://img.alicdn.com/tfs/TB1fhqaLAT2gK0jSZFkXXcIQFXa-132-130.png"
-          />
-          <br>
-          <strong>umi</strong>
-        </a>
-      </td>
-       <td align="center">
-        <a target="_blank" href="https://www.alisports.com/">
-          <img
-            width="32"
-            style="vertical-align: -0.32em; margin-right: 8px;"
-            src="https://gw.alicdn.com/tfs/TB13XKjLuL2gK0jSZFmXXc7iXXa-205-59.png"
-          />
-          <br>
-          <strong>Alisports</strong>
-        </a>
-      </td>
-    </tr>
-  </tbody>
-</table>
+[![Edit demo for ahooks](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/demo-for-ahooks-t7o7v?fontsize=14&hidenavigation=1&theme=dark)
 
-## 👥 Feedback
+## 🤝 Contributing
 
-<img src="https://raw.githubusercontent.com/alibaba/hooks/master/dingtalk.jpg" width="300" />
+```bash
+$ git clone git@github.com:alibaba/hooks.git
+$ cd hooks
+$ yarn run init
+$ yarn start
+```
+
+Open your browser and visit http://127.0.0.1:8000
+
+We welcome all contributions, please read our [CONTRIBUTING.MD](https://github.com/alibaba/hooks/blob/master/CONTRIBUTING.md) first, let's build a better hooks library together.
+
+Thanks to all the contributors:
+
+<a href="https://github.com/alibaba/hooks/graphs/contributors">
+  <img src="https://opencollective.com/ahooks/contributors.svg?width=960&button=false" alt="contributors" />
+</a>
+
+[1]: https://www.npmjs.com/package/ahooks
+[2]: https://npmjs.org/package/ahooks
+[image-1]: https://img.shields.io/npm/v/ahooks.svg?style=flat
+[image-2]: https://img.shields.io/npm/dm/ahooks.svg?style=flat

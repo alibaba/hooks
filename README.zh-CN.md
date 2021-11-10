@@ -25,13 +25,15 @@
 ## ✨ 特性
 
 - 易学易用
+- 支持 SSR
+- 对输入输出函数做了特殊处理，避免闭包问题
 - 包含大量提炼自业务的高级 Hooks
 - 包含丰富的基础 Hooks
 - 使用 TypeScript 构建，提供完整的类型定义文件
 
 ## 📦 安装
 
-```
+```bash
 $ npm install --save ahooks@next
 # or
 $ yarn add ahooks@next
@@ -39,13 +41,17 @@ $ yarn add ahooks@next
 
 ## 🔨 使用
 
-```
+```js
 import { useRequest } from 'ahooks';
 ```
 
+## 💻 在线体验
+
+[![Edit demo for ahooks](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/demo-for-ahooks-t7o7v?fontsize=14&hidenavigation=1&theme=dark)
+
 ## 🤝 参与共建
 
-```
+```bash
 $ git clone git@github.com:alibaba/hooks.git
 $ cd hooks
 $ yarn run init

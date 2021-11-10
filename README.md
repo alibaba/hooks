@@ -25,13 +25,15 @@ English | [简体中文](https://github.com/alibaba/hooks/blob/master/README.zh-
 ## ✨ Features
 
 - Easy to learn and use
+- Support SSR
+- Special treatment for functions, avoid closure problems
 - Contains a wealth of advanced Hooks that are refined from the app
 - Contains a wealth of basic Hooks
 - Written in TypeScript with predictable static types
 
 ## 📦 Install
 
-```
+```bash
 $ npm install --save ahooks@next
 # or
 $ yarn add ahooks@next
@@ -39,13 +41,17 @@ $ yarn add ahooks@next
 
 ## 🔨 Usage
 
-```typescript
+```js
 import { useRequest } from 'ahooks';
 ```
 
+## 💻 Online Experience
+
+[![Edit demo for ahooks](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/demo-for-ahooks-t7o7v?fontsize=14&hidenavigation=1&theme=dark)
+
 ## 🤝 Contributing
 
-```
+```bash
 $ git clone git@github.com:alibaba/hooks.git
 $ cd hooks
 $ yarn run init

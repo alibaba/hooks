@@ -2,6 +2,10 @@
   color: transparent !important;
 }
 
+.__dumi-default-layout-hero img {
+  width: 250px;
+}
+
 a[title='站长统计'] {
   display: none;
 }

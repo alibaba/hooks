@@ -101,14 +101,72 @@ export default {
     ],
     '/guide': [
       {
-        title: 'Quick Start',
-        path: '/guide/quick-start',
+        title: 'Intro',
+        path: '/guide',
+      },
+      {
+        title: 'v2 to v3',
+        path: '/guide/upgrade',
+      },
+      {
+        title: 'ahooks 输入输出函数处理规范',
+        path: '/guide/function',
+      },
+      {
+        title: 'Dom 类 Hooks 使用规范',
+        path: '/guide/dom',
+      },
+      {
+        title: 'Blog',
+        children: [
+          {
+            title: 'React Hooks 在 SSR 模式下常见问题及解决方案',
+            path: '/guide/blog/ssr',
+          },
+          {
+            title: 'React Hooks 在 react-refresh 模块热替换（HMR）下的异常行为',
+            path: '/guide/blog/hmr',
+          },
+          {
+            title: 'React Hooks 在严格模式下的常见问题和解决方案',
+            path: '/guide/blog/strict',
+          },
+        ],
       },
     ],
     '/zh-CN/guide': [
       {
-        title: '快速上手',
-        path: '/guide/quick-start',
+        title: '介绍',
+        path: '/guide',
+      },
+      {
+        title: 'v2 to v3',
+        path: '/guide/upgrade',
+      },
+      {
+        title: 'ahooks 输入输出函数处理规范',
+        path: '/guide/function',
+      },
+      {
+        title: 'Dom 类 Hooks 使用规范',
+        path: '/guide/dom',
+      },
+      {
+        title: 'Blog',
+        children: [
+          {
+            title: 'React Hooks 在 SSR 模式下常见问题及解决方案',
+            path: '/zh-CN/guide/blog/ssr',
+          },
+          {
+            title: 'React Hooks 在 react-refresh 模块热替换（HMR）下的异常行为',
+            path: '/zh-CN/guide/blog/hmr',
+          },
+          {
+            title: 'React Hooks 在严格模式下的常见问题和解决方案',
+            path: '/zh-CN/guide/blog/strict',
+          },
+        ],
       },
     ],
     '/hooks': menus,
