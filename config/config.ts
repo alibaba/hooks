@@ -62,7 +62,7 @@ export default {
         ],
       },
       { title: '更新日志', path: 'https://github.com/alibaba/hooks/releases' },
-      { title: '国内镜像', path: 'https://ahooks.gitee.io/zh-CN' },
+      { title: '国内镜像', path: 'https://ahooks-next.gitee.io/zh-CN' },
       { title: 'GitHub', path: 'https://github.com/alibaba/hooks' },
     ],
     'en-US': [
@@ -82,7 +82,7 @@ export default {
         ],
       },
       { title: 'Releases', path: 'https://github.com/alibaba/hooks/releases' },
-      { title: '国内镜像', path: 'https://ahooks.gitee.io/zh-CN' },
+      { title: '国内镜像', path: 'https://ahooks-next.gitee.io/zh-CN' },
       { title: 'GitHub', path: 'https://github.com/alibaba/hooks' },
     ],
   },

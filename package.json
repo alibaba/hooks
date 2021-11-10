@@ -15,8 +15,8 @@
     "test": "jest",
     "lint": "eslint --ignore-pattern **/__tests__/* --ignore-pattern **/demo/* \"packages/*/src/**/*.{ts,tsx}\"",
     "build:doc": "dumi build",
-    "pub:doc-surge": "surge ./dist --domain ahooks.js.org",
-    "pub:doc-gitee": "cd ./dist && rm -rf .git && touch .spa && touch .nojekyll && git init && git remote add origin git@gitee.com:ahooks/ahooks.git && git add -A && git commit -m \"publish docs\" && git push origin master -f",
+    "pub:doc-surge": "surge ./dist --domain ahooks-next.surge.sh",
+    "pub:doc-gitee": "cd ./dist && rm -rf .git && touch .spa && touch .nojekyll && git init && git remote add origin git@gitee.com:ahooks/ahooks-next.git && git add -A && git commit -m \"publish docs\" && git push origin master -f",
     "pub:doc": "yarn run build:doc && yarn run pub:doc-surge && yarn run pub:doc-gitee",
     "pub": "yarn run build && lerna publish",
     "pub:beta": "yarn run build && lerna publish --dist-tag beta"
