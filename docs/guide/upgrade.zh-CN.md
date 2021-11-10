@@ -11,6 +11,15 @@
 - 修复了已知问题
 - 新增了更多的 Hooks
 
+## 升级建议
+
+我们发布了 `ahooks-v2` 包，你可以同时安装 v2 和 v3 依赖，以过渡升级。
+
+```
+npm install ahooks-v2 --save
+npm install ahooks@next --save
+```
+
 ## 全新的 useRequest
 
 useRequest 完全进行了重写：
@@ -29,10 +38,9 @@ useRequest 完全进行了重写：
 - 删除了 `fetchKey`，也就是删除了并行能力。
 - 删除了 `formatResult`、`initialData`、`ready`、`thrownError`。
 - 不再默认集成请求库，`service` 不再支持字符换或对象。
-
+- 新增了 `runAsync` 和 `refreshAsync`，原来的 `run` 不再返回 Promise。
 - 新增了错误重试能力。
 - 新增了 `onBefore`、`onFinally` 生命周期。
-- 新增了 `runAsync` 和 `refreshAsync`。
 - 所有参数支持动态变化。
 - 防抖/节流模式下，`runAsync` 可以返回正常 Promise。
 - 防抖/节流支持更多参数。
@@ -94,14 +102,14 @@ v3 修复了在 react-refresh（HRM）模式下的一些问题。参考《[React
 
 ### 新增 Hooks
 
-- useRafState
-- useAsyncEffect
-- useDeepCompareEffect
-- useIsomorphicLayoutEffect
-- useLatest
-- usePagination
-- useLongPress
-- useInfiniteScroll
+- [useRafState](/zh-CN/hooks/use-raf-state)
+- [useAsyncEffect](/zh-CN/hooks/use-async-effect)
+- [useDeepCompareEffect](/zh-CN/hooks/use-deep-compare-effect)
+- [useIsomorphicLayoutEffect](/zh-CN/hooks/use-isomorphic-layout-effect)
+- [useLatest](/zh-CN/hooks/use-latest)
+- [usePagination](/zh-CN/hooks/use-pagination)
+- [useLongPress](/zh-CN/hooks/use-long-press)
+- [useInfiniteScroll](/zh-CN/hooks/use-infinite-scroll)
 
 ### Break Change
 
@@ -130,6 +138,7 @@ v3 修复了在 react-refresh（HRM）模式下的一些问题。参考《[React
 - useLocalStorageState / useSessionStorate
 
   - 第二个参数从 `defaultValue` 变为了 `Options`，使用 `options.defaultValue` 代替
+  - 增加了 `options.serializer` 和 `options.deserializer`，支持自定义序列法方法
 
 - useDynamicList
 
@@ -152,6 +161,7 @@ v3 修复了在 react-refresh（HRM）模式下的一些问题。参考《[React
 - useVirtualList
 
   - API 重新设计，需要对照新的文档做升级
+  - `options.itemHeight` 参数增加了 `data` 参数
 
 - useInViewport
 
@@ -173,10 +183,12 @@ v3 修复了在 react-refresh（HRM）模式下的一些问题。参考《[React
 - useAntdTable
 
   - 删除了 `options.formatResult`
+  - 更多变更同 useRequest
 
 - useFusionTable
 
   - 删除了 `options.formatResult`
+  - 更多变更同 useRequest
 
 - usePersistFn 更名为 useMemoizedFn
 
@@ -192,9 +204,4 @@ v3 修复了在 react-refresh（HRM）模式下的一些问题。参考《[React
 
   - 受控模式下，不再维护内部状态，避免额外的 rerender
 
-- useLocalStorageState / useSessionStorate
-
-  - 增加了 `options.serializer` 和 `options.deserializer`，支持自定义序列法方法
-
-- useVirtualList
-  - `options.itemHeight` 参数增加了 `data` 参数
+- 更多其它优化

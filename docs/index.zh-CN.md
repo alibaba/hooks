@@ -4,8 +4,8 @@ hero:
   image: /logo.svg
   desc: 一套高质量可靠的 React Hooks 库
   actions:
-    - text: 快速上手
-      link: /zh-CN/guide/quick-start
+    - text: 指南
+      link: /zh-CN/guide
     - text: Hooks 列表
       link: /zh-CN/hooks
 footer: Open-source MIT Licensed | Copyright © 2019-present<br />Powered by [dumi](https://d.umijs.org)
@@ -44,7 +44,7 @@ import { useRequest } from 'ahooks';
 
 ## 💻 在线体验
 
-[![Edit demo for ahooks](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/demo-for-ahooks-t7o7v?fontsize=14&hidenavigation=1&theme=dark)
+[![Edit demo for ahooks](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/demo-for-ahooks-forked-fg79k?file=/src/App.js)
 
 ## 🤝 参与共建
 

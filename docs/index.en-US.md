@@ -4,8 +4,8 @@ hero:
   image: /logo.svg
   desc: A high-quality & reliable React Hooks library
   actions:
-    - text: Quick Start
-      link: /guide/quick-start
+    - text: Guide
+      link: /guide
     - text: Hooks List
       link: /zh-CN/hooks
 footer: Open-source MIT Licensed | Copyright © 2019-present<br />Powered by [dumi](https://d.umijs.org)
@@ -44,7 +44,7 @@ import { useRequest } from 'ahooks';
 
 ## 💻 Online Experience
 
-[![Edit demo for ahooks](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/demo-for-ahooks-t7o7v?fontsize=14&hidenavigation=1&theme=dark)
+[![Edit demo for ahooks](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/demo-for-ahooks-forked-fg79k?file=/src/App.js)
 
 ## 🤝 Contributing
 
