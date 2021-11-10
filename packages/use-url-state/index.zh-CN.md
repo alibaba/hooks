@@ -13,9 +13,9 @@ nav:
 npm i @ahooksjs/use-url-state -S
 ```
 
-> 该 Hooks 基于 `react-router` 的 useLocation & useHistory 进行 query 管理，所以使用该 Hooks 之前，你需要保证
+> 该 Hooks 基于 `react-router` 的 useLocation & useHistory & useNavigate 进行 query 管理，所以使用该 Hooks 之前，你需要保证
 >
-> 1\. 你项目正在使用 `react-router` 5.0 版本来管理路由
+> 1\. 你项目正在使用 `react-router` 5.x 或 6.x 版本来管理路由
 >
 > 2\. 独立安装了 @ahooksjs/use-url-state
 
@@ -27,9 +27,12 @@ import useUrlState from '@ahooksjs/use-url-state';
 
 ## 代码演示
 
-### Codesandbox 链接
+### 在线演示
 
-https://codesandbox.io/s/suspicious-feather-cz4e0?file=/App.tsx
+React Router V5：https://codesandbox.io/s/suspicious-feather-cz4e0?file=/App.tsx
+
+<!-- TODO demo 优化 -->
+React Router V6：https://codesandbox.io/s/autumn-shape-odrt9?file=/App.tsx
 
 ### 基础用法
 

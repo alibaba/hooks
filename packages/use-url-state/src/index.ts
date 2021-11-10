@@ -1,7 +1,7 @@
 import { useMemoizedFn, useUpdate } from 'ahooks';
 import { parse, stringify } from 'query-string';
 import { useMemo, useRef } from 'react';
-import { useHistory, useLocation } from 'react-router';
+import * as rc from 'react-router';
 
 export interface Options {
   navigateMode?: 'push' | 'replace';
@@ -19,8 +19,12 @@ type UrlState = Record<string, any>;
 export default <S extends UrlState = UrlState>(initialState?: S | (() => S), options?: Options) => {
   type State = Partial<{ [key in keyof S]: any }>;
   const { navigateMode = 'push' } = options || {};
-  const location = useLocation();
-  const history = useHistory();
+
+  // react-router v5
+  const history = rc.useHistory?.();
+  // react-router v6
+  // @ts-ignore
+  const navigate = rc.useNavigate?.();
 
   const update = useUpdate();
 
@@ -46,10 +50,23 @@ export default <S extends UrlState = UrlState>(initialState?: S | (() => S), opt
     // 1. 如果 setState 后，search 没变化，就需要 update 来触发一次更新。比如 demo1 直接点击 clear，就需要 update 来触发更新。
     // 2. update 和 history 的更新会合并，不会造成多次更新
     update();
-    history[navigateMode]({
-      hash: location.hash,
-      search: stringify({ ...queryFromUrl, ...newQuery }, parseConfig) || '?',
-    });
+    if (history) {
+      history[navigateMode]({
+        hash: location.hash,
+        search: stringify({ ...queryFromUrl, ...newQuery }, parseConfig) || '?',
+      });
+    }
+    if (navigate) {
+      navigate(
+        {
+          hash: location.hash,
+          search: stringify({ ...queryFromUrl, ...newQuery }, parseConfig) || '?',
+        },
+        {
+          replace: navigateMode === 'replace',
+        },
+      );
+    }
   };
 
   return [targetQuery, useMemoizedFn(setState)] as const;

@@ -183,6 +183,10 @@ v3 修复了在 react-refresh（HRM）模式下的一些问题。参考《[React
 
 ### 优化
 
+- useUrlState
+
+  - 支持了 React Rouer v6
+
 - useControllableValue
 
   - 受控模式下，不再维护内部状态，避免额外的 rerender

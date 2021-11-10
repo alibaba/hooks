@@ -13,9 +13,9 @@ A hook that store the state into url query.
 npm i @ahooksjs/use-url-state -S
 ```
 
-> This hook relies on useLocation & useHistory from `react-router`, to use this hook, you need to ensure
+> This hook relies on useLocation & useHistory & useNavigate from `react-router`, to use this hook, you need to ensure
 >
-> 1\. Your project is using `react-router` version 5.0 to manage routing
+> 1\. Your project is using `react-router` version 5.0 or 6.0 to manage routing
 >
 > 2\. Installed @ahooksjs/use-url-state
 
@@ -28,9 +28,11 @@ import useUrlState from '@ahooksjs/use-url-state';
 
 ## Examples
 
-### Codesandbox link
+### Codesandbox Demo
 
-https://codesandbox.io/s/suspicious-feather-cz4e0?file=/App.tsx
+React Router V5：https://codesandbox.io/s/suspicious-feather-cz4e0?file=/App.tsx
+
+React Router V6：https://codesandbox.io/s/autumn-shape-odrt9?file=/App.tsx
 
 ### Default usage
 
