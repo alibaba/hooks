@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Hello World</title>
+    <script src="https://unpkg.com/react@17/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+
+    <!-- Don't use this in production: -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script src="./packages/hooks/dist/ahooks.js"></script>
+
+    <script type="text/babel">
+      const { useToggle } = window.ahooks;
+      const Demo = () => {
+        const [show, { toggle }] = useToggle(false);
+        return (
+          <div>
+            <button onClick={toggle}>Toggle</button>
+            {show && <div>Hello World</div>}
+          </div>
+        );
+      };
+      ReactDOM.render(<Demo />, document.getElementById('root'));
+    </script>
+  </body>
+</html>

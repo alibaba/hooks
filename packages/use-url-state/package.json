@@ -33,7 +33,7 @@
   },
   "dependencies": {
     "ahooks": "^3.0.0-alpha.2",
-    "core-js": "^2.6.12",
+    "core-js": "^3.19.1",
     "query-string": "^6.9.0"
   }
 }
