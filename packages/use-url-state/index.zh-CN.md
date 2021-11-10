@@ -10,7 +10,7 @@ nav:
 ## 安装
 
 ```bash
-npm i @ahooksjs/use-url-state -S
+npm i @ahooksjs/use-url-state@next -S
 ```
 
 > 该 Hooks 基于 `react-router` 的 useLocation & useHistory & useNavigate 进行 query 管理，所以使用该 Hooks 之前，你需要保证
@@ -31,7 +31,6 @@ import useUrlState from '@ahooksjs/use-url-state';
 
 React Router V5：https://codesandbox.io/s/suspicious-feather-cz4e0?file=/App.tsx
 
-<!-- TODO demo 优化 -->
 React Router V6：https://codesandbox.io/s/autumn-shape-odrt9?file=/App.tsx
 
 ### 基础用法

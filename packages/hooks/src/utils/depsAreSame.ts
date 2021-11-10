@@ -1,6 +1,5 @@
 import type { DependencyList } from 'react';
 
-// TODO
 if (!Object.is) {
   Object.is = function (x, y) {
     // SameValue algorithm

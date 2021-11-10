@@ -10,7 +10,7 @@ A hook that store the state into url query.
 ## Install
 
 ```bash
-npm i @ahooksjs/use-url-state -S
+npm i @ahooksjs/use-url-state@next -S
 ```
 
 > This hook relies on useLocation & useHistory & useNavigate from `react-router`, to use this hook, you need to ensure
@@ -47,7 +47,6 @@ React Router V6：https://codesandbox.io/s/autumn-shape-odrt9?file=/App.tsx
 ```typescript
 const [state, setState] = useUrlState(initialState, options);
 ```
-
 
 ### Params
 
