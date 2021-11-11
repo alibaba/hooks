@@ -27,7 +27,7 @@ export default {
     ],
   ],
   mode: 'site',
-  title: 'ahooks',
+  title: 'ahooks 3.0',
   favicon: '/simple-logo.svg',
   logo: '/logo.svg',
   dynamicImport: {},
@@ -46,7 +46,6 @@ export default {
   navs: {
     'zh-CN': [
       { title: '指南', path: '/zh-CN/guide' },
-      // TODO how to set default url
       { title: 'Hooks', path: '/zh-CN/hooks' },
       {
         title: '历史版本',
