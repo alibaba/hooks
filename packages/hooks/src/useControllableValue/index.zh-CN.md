@@ -50,3 +50,7 @@ const [state, setState] = useControllableValue(props: Record<string, any>, optio
 | defaultValuePropName | 默认值的属性名                                          | `string` | `defaultValue` |
 | valuePropName        | 值的属性名                                              | `string` | `value`        |
 | trigger              | 修改值时，触发的函数                                    | `string` | `onChange`     |
+
+### 备注
+
+`value` 不传或者值为 `undefined` 时，为非受控模式。其余情况均为受控模式。
