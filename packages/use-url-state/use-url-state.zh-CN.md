@@ -1,8 +1,8 @@
 ---
 nav:
-  path: /
-group:
   path: /hooks
+group:
+  path: /
 ---
 
 # useUrlState

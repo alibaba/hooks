@@ -202,6 +202,6 @@ v3 修复了在 react-refresh（HRM）模式下的一些问题。参考《[React
 
 - useControllableValue
 
-  - 受控模式下，不再维护内部状态，避免额外的 rerender
+  - 优化了代码逻辑，避免了不必要的 rerennder
 
 - 更多其它优化

@@ -202,6 +202,6 @@ v3 fixes some problems in react-refresh (HRM) mode. Refer to "[React Hooks & rea
 
 - useControllableValue
 
-  - In the controlled mode, the internal state is no longer maintained to avoid additional rerender
+  - Optimized logic to avoid unnecessary rerennder
 
 - More other optimizations

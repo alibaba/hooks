@@ -1,5 +1,6 @@
-import { useState } from 'react';
+import { useMemo, useRef } from 'react';
 import useMemoizedFn from '../useMemoizedFn';
+import useUpdate from '../useUpdate';
 
 export interface Options<T> {
   defaultValue?: T;
@@ -30,27 +31,36 @@ function useControllableValue<T = any>(props: Props = {}, options: Options<T> = 
   } = options;
 
   const value = props[valuePropName] as T;
+  const isControlled = valuePropName in props;
 
-  const [state, setState] = useState<T>(() => {
-    if (valuePropName in props) {
+  const initialValue = useMemo(() => {
+    if (isControlled) {
       return value;
     }
     if (defaultValuePropName in props) {
       return props[defaultValuePropName];
     }
     return defaultValue;
-  });
+  }, []);
 
-  const handleSetState = (v: T, ...args: any[]) => {
-    if (!(valuePropName in props)) {
-      setState(v);
+  const stateRef = useRef(initialValue);
+  if (isControlled) {
+    stateRef.current = value;
+  }
+
+  const update = useUpdate();
+
+  const setState = (v: T, ...args: any[]) => {
+    if (!isControlled) {
+      stateRef.current = v;
+      update();
     }
     if (props[trigger]) {
       props[trigger](v, ...args);
     }
   };
 
-  return [valuePropName in props ? value : state, useMemoizedFn(handleSetState)] as const;
+  return [stateRef.current, useMemoizedFn(setState)] as const;
 }
 
 export default useControllableValue;
