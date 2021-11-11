@@ -10,7 +10,7 @@ group:
 通过设置 `options.refreshOnWindowFocus`，在浏览器窗口 `refocus` 和 `revisible` 时，会重新发起请求。
 
 ```tsx | pure
-const { data, } = useRequest(getUsername, {
+const { data } = useRequest(getUsername, {
   refreshOnWindowFocus: true,
 });
 ```

@@ -1,1 +1,52 @@
-## Dom 类 Hooks 使用规范
+## Hooks of dom specification
+
+Most of the Dom Hooks will receive the `target` parameter, which indicates the element to be processed.
+
+`target` supports three types `React.MutableRefObject`, `HTMLElement`, `() => HTMLElement`.
+
+1. Support `React.MutableRefObject`
+
+```ts
+export default () => {
+  const ref = useRef();
+  const isHovering = useHover(ref);
+  return <div ref={ref}>{isHovering ? 'hover' : 'leaveHover'}</div>;
+};
+```
+
+2. Support `HTMLElement`
+
+```ts
+export default () => {
+  const isHovering = useHover(document.getElementById('test'));
+  return <div id="test">{isHovering ? 'hover' : 'leaveHover'}</div>;
+};
+```
+
+3. Support `() => HTMLElement`, generally applicable in SSR scenarios
+
+```ts
+export default () => {
+  const isHovering = useHover(() => document.getElementById('test'));
+  return <div id="test">{isHovering ? 'hover' : 'leaveHover'}</div>;
+};
+```
+
+In addition, **the `target` of Dom class Hooks supports dynamic changes**. for example:
+
+```ts
+export default () => {
+  const [boolean, { toggle }] = useBoolean();
+
+  const ref = useRef();
+  const ref2 = useRef();
+
+  const isHovering = useHover(boolean ? ref : ref2);
+  return (
+    <>
+      <div ref={ref}>{isHovering ? 'hover' : 'leaveHover'}</div>
+      <div ref={ref2}>{isHovering ? 'hover' : 'leaveHover'}</div>
+    </>
+  );
+};
+```

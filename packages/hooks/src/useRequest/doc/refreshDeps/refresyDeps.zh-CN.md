@@ -24,10 +24,10 @@ const { data, run } = useRequest(()=> getUserSchool(userId), {
 ```tsx | pure
 const [userId, setUserId] = useState('1');
 
-const { data, run } = useRequest(()=> getUserSchool(userId));
+const { data, refresh } = useRequest(()=> getUserSchool(userId));
 
 useEffect(()=> {
-  run();
+  refresh();
 }, [userId]);
 ```
 

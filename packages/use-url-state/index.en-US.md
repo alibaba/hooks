@@ -1,5 +1,7 @@
 ---
 nav:
+  path: /
+group:
   path: /hooks
 ---
 

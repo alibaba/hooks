@@ -1,4 +1,4 @@
-# React Hooks 在 SSR 模式下常见问题及解决方案
+# React Hooks & SSR
 
 服务端渲染（Server-Side Rendering），是指由服务侧完成页面的 HTML 结构拼接的页面处理技术。一般用于解决 SEO 问题和首屏加载速度问题。
 
@@ -39,7 +39,7 @@ export default () => {
 };
 ```
 
-2. 通过 [isBrowser](https://github.com/alibaba/hooks/blob/master/packages/hooks/src/utils/canUseDom.ts) 来做环境判断
+2. 通过 isBrowser 来做环境判断
 
 ```js
 import React, { useState } from 'react';

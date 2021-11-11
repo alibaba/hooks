@@ -1,4 +1,4 @@
-# React Hooks 在严格模式下的常见问题和解决方案
+# React Hooks & strict mode
 
 ## 什么是严格模式
 

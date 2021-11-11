@@ -109,26 +109,26 @@ export default {
         path: '/guide/upgrade',
       },
       {
-        title: 'ahooks 输入输出函数处理规范',
+        title: 'ahooks function specification',
         path: '/guide/function',
       },
       {
-        title: 'Dom 类 Hooks 使用规范',
+        title: 'Hooks of dom specification',
         path: '/guide/dom',
       },
       {
         title: 'Blog',
         children: [
           {
-            title: 'React Hooks 在 SSR 模式下常见问题及解决方案',
+            title: 'React Hooks & SSR',
             path: '/guide/blog/ssr',
           },
           {
-            title: 'React Hooks 在 react-refresh 模块热替换（HMR）下的异常行为',
+            title: 'React Hooks & react-refresh（HMR）',
             path: '/guide/blog/hmr',
           },
           {
-            title: 'React Hooks 在严格模式下的常见问题和解决方案',
+            title: 'React Hooks & strict mode',
             path: '/guide/blog/strict',
           },
         ],
@@ -155,15 +155,15 @@ export default {
         title: 'Blog',
         children: [
           {
-            title: 'React Hooks 在 SSR 模式下常见问题及解决方案',
+            title: 'React Hooks & SSR',
             path: '/zh-CN/guide/blog/ssr',
           },
           {
-            title: 'React Hooks 在 react-refresh 模块热替换（HMR）下的异常行为',
+            title: 'React Hooks & react-refresh（HMR）',
             path: '/zh-CN/guide/blog/hmr',
           },
           {
-            title: 'React Hooks 在严格模式下的常见问题和解决方案',
+            title: 'React Hooks & strict mode',
             path: '/zh-CN/guide/blog/strict',
           },
         ],

@@ -15,7 +15,7 @@
 
 我们发布了 `ahooks-v2` 包，你可以同时安装 v2 和 v3 依赖，以过渡升级。
 
-```
+```bash
 npm install ahooks-v2 --save
 npm install ahooks@next --save
 ```
@@ -48,11 +48,11 @@ useRequest 完全进行了重写：
 
 ## SSR 支持
 
-ahooks v3 全面支持 SSR，相关文档可见《[React Hooks 在 SSR 模式下常见问题及解决方案](/zh-CN/guide/blog/ssr)》。
+ahooks v3 全面支持 SSR，相关文档可见《[React Hooks & SSR](/zh-CN/guide/blog/ssr)》。
 
 ## DOM 类 Hooks 支持 target 动态变化
 
-DOM 类 Hooks 支持 target 动态变化，相关文档可见《[Dom 类 Hooks 使用规范](zh-CN/guide/dom)》
+DOM 类 Hooks 支持 target 动态变化，相关文档可见《[Dom 类 Hooks 使用规范](zh-CN/dom)》
 
 ## 避免闭包问题
 
@@ -88,15 +88,15 @@ useInterval(() => {
 
 比如以上示例，`useInterval` 调用的函数永远是最新的。
 
-相关文档可见《[ahooks 输入输出函数处理规范](/zh-CN/guide/blog/function)》。
+相关文档可见《[ahooks 输入输出函数处理规范](/zh-CN/guide/function)》。
 
 ## 支持严格模式
 
-v3 修复了在严格模式下的一些问题。参考《[React Hooks 在严格模式下的常见问题和解决方案](/zh-CN/guide/blog/strict)》
+v3 修复了在严格模式下的一些问题。参考《[React Hooks & strict mode](/zh-CN/guide/blog/strict)》
 
 ## 支持 react-refresh（HRM）模式
 
-v3 修复了在 react-refresh（HRM）模式下的一些问题。参考《[React Hooks 在 react-refresh（HMR）模式下常见问题及解决方案](/zh-CN/guide/blog/hmr)》
+v3 修复了在 react-refresh（HRM）模式下的一些问题。参考《[React Hooks & react-refresh（HMR）](/zh-CN/guide/blog/hmr)》
 
 ## 更多变更
 

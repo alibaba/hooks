@@ -1,8 +1,34 @@
 ---
 nav:
-  path: /hooks
+   path: /hooks
 group:
-  path: /use-request
+   path: /use-request
 ---
 
 # Loading Delay
+
+By setting `options.loadingDelay`, you can delay the time `loading` to  `true`, effectively prevent flush.
+
+```tsx | pure
+const {loading, data} = useRequest(getUsername, {
+   loadingDelay: 300
+});
+
+return <div>{ loading? 'Loading' : data }</div>
+```
+
+For example, in the above scenario, if getUsername returns within 300ms, `loading` will not become `true`, avoiding the page displays `loading`.
+
+You can quickly click the button in the example below to experience the effect
+
+<code src="./demo/loadingDelay.tsx" />
+
+## API
+
+| Property     | Description                                       | Type     | Default |
+|--------------|---------------------------------------------------|----------|---------|
+| loadingDelay | Set the delay time for `loading` to become `true` | `number` | `0`     |
+
+## Remark
+
+`options.loadingDelay` supports dynamic changes.

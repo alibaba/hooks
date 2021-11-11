@@ -32,7 +32,7 @@ export default () => {
 };
 ```
 
-另外，Dom 类 Hooks 的 `target` 是支持动态变化的。比如：
+另外，**Dom 类 Hooks 的 `target` 是支持动态变化的**。比如：
 
 ```ts
 export default () => {

@@ -17,6 +17,8 @@ nav:
 
 ## 代码演示
 
+以下展示的是 antd v4 的 demo，v3 请参考：https://ahooks-v2.surge.sh/hooks/table/use-antd-table
+
 ### Table 管理
 
 useAntdTable 会自动管理 `Table` 分页数据，你只需要把返回的 `tableProps` 传递给 `Table` 组件就可以了。

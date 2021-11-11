@@ -15,7 +15,7 @@ ahooks 提供了 70+ Hooks，其中不仅包括一些常见的基础 Hooks，更
 
 ## 支持 SSR
 
-ahooks 全面支持 SSR，相关文档可见《[React Hooks 在 SSR 模式下常见问题及解决方案](/zh-CN/guide/blog/ssr)》。
+ahooks 全面支持 SSR，相关文档可见《[React Hooks & SSR](/zh-CN/guide/blog/ssr)》。
 
 ## 避免闭包问题
 
