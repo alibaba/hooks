@@ -190,10 +190,6 @@ v3 fixes some problems in react-refresh (HRM) mode. Refer to "[React Hooks & rea
   - Removed `options.formatResult`
   - More changes are the same as useRequest
 
-- useControllableValue
-
-  - The value is `undefined`, which is also considered to be an uncontrolled mode
-
 - usePersistFn was renamed to useMemoizedFn
 
 - Deprecated the useControlledValue naming left over from 1.0, please use useControllableValue instead
@@ -203,5 +199,9 @@ v3 fixes some problems in react-refresh (HRM) mode. Refer to "[React Hooks & rea
 - useUrlState
 
   - Support React Rouer v6
+
+- useControllableValue
+
+  - Optimized logic to avoid unnecessary rerennder
 
 - More other optimizations

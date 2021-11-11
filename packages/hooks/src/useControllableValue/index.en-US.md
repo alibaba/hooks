@@ -49,7 +49,3 @@ const [state, setState] = useControllableValue(props: Record<string, any>, optio
 | defaultValuePropName | Custom defaultVlue attribute name                                               | `string` | `defaultValue` |
 | valuePropName        | Custom value attribute name                                                     | `string` | `value`        |
 | trigger              | Custom trigger attribute name                                                   | `string` | `onChange`     |
-
-### 备注
-
-When `value` is not passed or the value is `undefined`, it is uncontrolled mode. The rest are in controlled mode.

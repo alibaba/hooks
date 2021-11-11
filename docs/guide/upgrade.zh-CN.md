@@ -190,10 +190,6 @@ v3 修复了在 react-refresh（HRM）模式下的一些问题。参考《[React
   - 删除了 `options.formatResult`
   - 更多变更同 useRequest
 
-- useControllableValue
-
-  - value 为 `undefined`，也认为是非受控模式
-
 - usePersistFn 更名为 useMemoizedFn
 
 - 废弃了 1.0 遗留的 useControlledValue 命名，请使用 useControllableValue 代替
@@ -203,5 +199,9 @@ v3 修复了在 react-refresh（HRM）模式下的一些问题。参考《[React
 - useUrlState
 
   - 支持了 React Rouer v6
+
+- useControllableValue
+
+  - 优化了代码逻辑，避免了不必要的 rerennder
 
 - 更多其它优化

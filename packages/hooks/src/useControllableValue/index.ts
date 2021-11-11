@@ -31,7 +31,7 @@ function useControllableValue<T = any>(props: Props = {}, options: Options<T> = 
   } = options;
 
   const value = props[valuePropName] as T;
-  const isControlled = value !== undefined;
+  const isControlled = valuePropName in props;
 
   const initialValue = useMemo(() => {
     if (isControlled) {
@@ -44,7 +44,7 @@ function useControllableValue<T = any>(props: Props = {}, options: Options<T> = 
   }, []);
 
   const stateRef = useRef(initialValue);
-  if (value !== undefined) {
+  if (isControlled) {
     stateRef.current = value;
   }
 
