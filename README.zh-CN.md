@@ -6,6 +6,8 @@ React Hooks Library.
 
 [![NPM version][image-1]][1] [![NPM downloads][image-2]][2]
 
+> :warning: ahooks 3.0 is comming! welcome to try it <a href="https://ahooks-next.surge.sh/" target="_blank">https://ahooks-next.surge.sh/</a>
+
 ## 📚 文档
 
 - [English](https://ahooks.js.org/)

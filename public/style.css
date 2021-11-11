@@ -14,3 +14,30 @@ button {
 input[type='number'] {
   border: 1px solid rgb(118, 118, 118);
 }
+
+.notice {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 2147483647;
+  width: 100%;
+  padding: 8px 0;
+  color: rgb(97, 52, 0);
+  font-size: 18px;
+  font-family: Consolas, Menlo, Courier, monospace;
+  text-align: center;
+  background: rgb(255, 242, 240);
+  box-shadow: rgb(0 0 0 / 10%) 0px 4px 8px;
+}
+
+.__dumi-default-navbar {
+  top: 38px !important;
+}
+
+.__dumi-default-layout[data-site-mode='true'] {
+  padding-top: 152px;
+}
+
+.__dumi-default-menu {
+  top: 102px !important;
+}
