@@ -9,7 +9,7 @@ export interface IFuncStorage {
 }
 
 export type StorageStateResult<T> = [T | undefined, (value?: T | IFuncUpdater<T>) => void];
-export type StorageStateResultHasDefaultValue<T> = [T, (value: T | IFuncUpdater<T>) => void];
+export type StorageStateResultHasDefaultValue<T> = [T, (value?: T | IFuncUpdater<T>) => void];
 
 function isFunction<T>(obj: any): obj is T {
   return typeof obj === 'function';
