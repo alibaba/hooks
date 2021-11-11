@@ -18,3 +18,11 @@ button {
 input[type='number'] {
   border: 1px solid rgb(118, 118, 118);
 }
+
+#logo-version {
+  flex: 1;
+  margin-top: 10px;
+  margin-left: -30px;
+  color: #a8a8ad;
+  font-size: 16px;
+}

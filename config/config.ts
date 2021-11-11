@@ -1,5 +1,7 @@
 import { menus } from './hooks';
 
+const packages = require('../packages/hooks/package.json');
+
 export default {
   // ssr: {},
   exportStatic: {},
@@ -171,5 +173,16 @@ export default {
     '/hooks': menus,
     '/zh-CN/hooks': menus,
   },
-  headScripts: ['https://s4.cnzz.com/z_stat.php?id=1278992092&web_id=1278992092'],
+  scripts: [
+    'https://s4.cnzz.com/z_stat.php?id=1278992092&web_id=1278992092',
+    `
+  setTimeout(()=>{
+    const dom = document.createElement('span');
+    dom.id = 'logo-version';
+    dom.innerHTML = '${packages.version}';
+    const logo = document.querySelector('.__dumi-default-navbar-logo');
+    logo.parentNode.insertBefore(dom, logo.nextSibling);
+  }, 1000)
+  `,
+  ],
 };
