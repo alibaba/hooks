@@ -1,18 +1,8 @@
 import { act, renderHook } from '@testing-library/react-hooks';
 import useRequest from '../index';
+import { request } from '../../utils/testingHelpers';
 
 describe('useThrottlePlugin', () => {
-  const request = (req) =>
-    new Promise((resolve, reject) =>
-      setTimeout(() => {
-        if (req === 0) {
-          reject(new Error('fail'));
-        } else {
-          resolve('success');
-        }
-      }, 1000),
-    );
-
   jest.useFakeTimers();
 
   const setUp = (service, options) => renderHook((o) => useRequest(service, o || options));
