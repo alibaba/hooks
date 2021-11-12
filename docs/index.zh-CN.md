@@ -38,7 +38,7 @@ $ yarn add ahooks@next
 
 ## 🔨 使用
 
-```
+```js
 import { useRequest } from 'ahooks';
 ```
 
@@ -48,7 +48,7 @@ import { useRequest } from 'ahooks';
 
 ## 🤝 参与共建
 
-```
+```bash
 $ git clone git@github.com:alibaba/hooks.git
 $ cd hooks
 $ yarn run init
