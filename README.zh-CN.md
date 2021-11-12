@@ -6,6 +6,8 @@ React Hooks Library.
 
 [![NPM version][image-1]][1] [![NPM downloads][image-2]][2]
 
+> :warning: ahooks 3.0 来了! 欢迎尝鲜 <a href="https://ahooks-next.surge.sh/" target="_blank">https://ahooks-next.surge.sh/</a>
+
 ## 📚 文档
 
 - [English](https://ahooks.js.org/)
@@ -86,7 +88,7 @@ $ yarn start
 
 ## 👥 交流讨论
 
-<img src="https://raw.githubusercontent.com/umijs/hooks/master/dingtalk.jpg" width="300" />
+<img src="https://user-images.githubusercontent.com/12526493/141303172-68f25577-c7b7-4ff7-bdff-25fd0f4d5214.JPG" width="300" />
 
 ## ✅ License
 

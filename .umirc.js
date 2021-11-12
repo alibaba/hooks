@@ -76,7 +76,15 @@ export default {
       { title: '国内镜像', path: 'https://ahooks.gitee.io/zh-CN' },
     ],
   },
-  headScripts: ['https://s4.cnzz.com/z_stat.php?id=1278992092&web_id=1278992092'],
+  headScripts: [
+    'https://s4.cnzz.com/z_stat.php?id=1278992092&web_id=1278992092',
+    `
+    let notice = document.createElement('div');
+    notice.className = 'notice';
+    notice.innerHTML = '<div class="notice-content">ahooks 3.0 is comming! welcome to try it <a href="https://ahooks-next.surge.sh/" target="_blank">https://ahooks-next.surge.sh/</a></div>';
+    document.body.appendChild(notice);
+  `,
+  ],
   hire: {
     title: '招招招招招前端！！！！',
     content: `
