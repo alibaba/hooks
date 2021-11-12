@@ -340,11 +340,6 @@ core-js@^2.4.0, core-js@^2.6.12:
   resolved "https://registry.npmmirror.com/core-js/download/core-js-2.6.12.tgz?cache=0&sync_timestamp=1632696208678&other_urls=https%3A%2F%2Fregistry.npmmirror.com%2Fcore-js%2Fdownload%2Fcore-js-2.6.12.tgz#d9333dfa7b065e347cc5682219d6f690859cc2ec"
   integrity sha1-2TM9+nsGXjR8xWgiGdb2kIWcwuw=
 
-core-js@^3.19.1:
-  version "3.19.1"
-  resolved "https://registry.yarnpkg.com/core-js/-/core-js-3.19.1.tgz#f6f173cae23e73a7d88fa23b6e9da329276c6641"
-  integrity sha512-Tnc7E9iKd/b/ff7GFbhwPVzJzPztGrChB8X8GLqoYGdEOG8IpLnK1xPyo3ZoO3HsK6TodJS58VGPOxA+hLHQMg==
-
 csstype@^3.0.2:
   version "3.0.9"
   resolved "https://registry.nlark.com/csstype/download/csstype-3.0.9.tgz?cache=0&sync_timestamp=1631540709509&other_urls=https%3A%2F%2Fregistry.nlark.com%2Fcsstype%2Fdownload%2Fcsstype-3.0.9.tgz#6410af31b26bd0520933d02cbc64fce9ce3fbf0b"

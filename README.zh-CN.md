@@ -17,10 +17,12 @@
 
 </div>
 
+> :warning: This is v3 branch, find v2 from <a href="https://github.com/alibaba/hooks/tree/release/v2.x" target="_blank">https://github.com/alibaba/hooks/tree/release/v2.x</a>
+
 ## 📚 文档
 
-- [English](https://ahooks.js.org/)
-- [中文](https://ahooks.js.org/zh-CN/)
+- [English](https://ahooks-next.surge.sh/)
+- [中文](https://ahooks-next.surge.sh/zh-CN/)
 
 ## ✨ 特性
 
