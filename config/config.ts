@@ -110,16 +110,16 @@ export default {
         path: '/guide/upgrade',
       },
       {
-        title: 'ahooks function specification',
-        path: '/guide/function',
-      },
-      {
         title: 'Hooks of dom specification',
         path: '/guide/dom',
       },
       {
         title: 'Blog',
         children: [
+          {
+            title: 'ahooks function specification',
+            path: '/guide/blog/function',
+          },
           {
             title: 'React Hooks & SSR',
             path: '/guide/blog/ssr',
@@ -145,16 +145,16 @@ export default {
         path: '/guide/upgrade',
       },
       {
-        title: 'ahooks 输入输出函数处理规范',
-        path: '/guide/function',
-      },
-      {
-        title: 'Dom 类 Hooks 使用规范',
+        title: 'DOM 类 Hooks 使用规范',
         path: '/guide/dom',
       },
       {
         title: 'Blog',
         children: [
+          {
+            title: 'ahooks 输入输出函数处理规范',
+            path: '/zh-CN/guide/blog/function',
+          },
           {
             title: 'React Hooks & SSR',
             path: '/zh-CN/guide/blog/ssr',
@@ -176,13 +176,20 @@ export default {
   scripts: [
     'https://s4.cnzz.com/z_stat.php?id=1278992092&web_id=1278992092',
     `
-  setTimeout(()=>{
+  const insertVersion = function(){
     const dom = document.createElement('span');
     dom.id = 'logo-version';
     dom.innerHTML = '${packages.version}';
     const logo = document.querySelector('.__dumi-default-navbar-logo');
-    logo.parentNode.insertBefore(dom, logo.nextSibling);
-  }, 1000)
+    if(logo){
+      logo.parentNode.insertBefore(dom, logo.nextSibling);
+    }else{
+      setTimeout(()=>{
+        insertVersion();
+      }, 1000)
+    }
+  }
+  insertVersion();
   `,
   ],
 };

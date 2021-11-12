@@ -1,6 +1,6 @@
-## Dom 类 Hooks 使用规范
+## DOM 类 Hooks 使用规范
 
-ahooks 大部分 Dom 类 Hooks 都会接收 `target` 参数，表示要处理的元素。
+ahooks 大部分 DOM 类 Hooks 都会接收 `target` 参数，表示要处理的元素。
 
 `target` 支持三种类型 `React.MutableRefObject`、`HTMLElement`、`() => HTMLElement`。
 
@@ -32,7 +32,7 @@ export default () => {
 };
 ```
 
-另外，**Dom 类 Hooks 的 `target` 是支持动态变化的**。比如：
+另外，**DOM 类 Hooks 的 `target` 是支持动态变化的**。比如：
 
 ```ts
 export default () => {

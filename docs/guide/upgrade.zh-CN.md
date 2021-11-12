@@ -37,7 +37,7 @@ useRequest 完全进行了重写：
 - 删除了 `loadMore` 相关属性，建议使用 `useInfiniteScroll` 来实现无限加载能力。
 - 删除了 `fetchKey`，也就是删除了并行能力。
 - 删除了 `formatResult`、`initialData`、`ready`、`thrownError`。
-- 不再默认集成请求库，`service` 不再支持字符换或对象。
+- 不再默认集成请求库，`service` 不再支持字符或对象。
 - 新增了 `runAsync` 和 `refreshAsync`，原来的 `run` 不再返回 Promise。
 - 新增了错误重试能力。
 - 新增了 `onBefore`、`onFinally` 生命周期。
@@ -52,7 +52,7 @@ ahooks v3 全面支持 SSR，相关文档可见《[React Hooks & SSR](/zh-CN/gui
 
 ## DOM 类 Hooks 支持 target 动态变化
 
-DOM 类 Hooks 支持 target 动态变化，相关文档可见《[Dom 类 Hooks 使用规范](zh-CN/dom)》
+DOM 类 Hooks 支持 target 动态变化，相关文档可见《[DOM 类 Hooks 使用规范](/zh-CN/dom)》
 
 ## 避免闭包问题
 
@@ -88,7 +88,7 @@ useInterval(() => {
 
 比如以上示例，`useInterval` 调用的函数永远是最新的。
 
-相关文档可见《[ahooks 输入输出函数处理规范](/zh-CN/guide/function)》。
+相关文档可见《[ahooks 输入输出函数处理规范](/zh-CN/guide/blog/function)》。
 
 ## 支持严格模式
 

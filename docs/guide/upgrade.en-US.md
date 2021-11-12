@@ -88,7 +88,7 @@ useInterval(() => {
 
 For example, in the above example, the function called by `useInterval` is always the latest.
 
-Related documents can be found in "[ahooks function specification](//guide/blog/function)".
+Related documents can be found in "[ahooks function specification](/guide/blog/function)".
 
 ## Support strict mode
 

@@ -1,6 +1,6 @@
-## Hooks of dom specification
+## Hooks of DOM specification
 
-Most of the Dom Hooks will receive the `target` parameter, which indicates the element to be processed.
+Most of the DOM Hooks will receive the `target` parameter, which indicates the element to be processed.
 
 `target` supports three types `React.MutableRefObject`, `HTMLElement`, `() => HTMLElement`.
 
@@ -32,7 +32,7 @@ export default () => {
 };
 ```
 
-In addition, **the `target` of Dom class Hooks supports dynamic changes**. for example:
+In addition, **the `target` of DOM class Hooks supports dynamic changes**. for example:
 
 ```ts
 export default () => {
