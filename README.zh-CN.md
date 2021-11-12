@@ -17,7 +17,7 @@
 
 </div>
 
-> :warning: This is v3 branch, find v2 from <a href="https://github.com/alibaba/hooks/tree/release/v2.x" target="_blank">https://github.com/alibaba/hooks/tree/release/v2.x</a>
+> :warning: 当前是 v3 版本，如果你想找 v2 版本，去这里 <a href="https://github.com/alibaba/hooks/tree/release/v2.x" target="_blank">https://github.com/alibaba/hooks/tree/release/v2.x</a>
 
 ## 📚 文档
 
