@@ -12,8 +12,8 @@ export interface Options {
 }
 
 const touchSupported =
-  // @ts-ignore
   isBrowser &&
+  // @ts-ignore
   ('ontouchstart' in window || (window.DocumentTouch && document instanceof DocumentTouch));
 
 function useLongPress(
