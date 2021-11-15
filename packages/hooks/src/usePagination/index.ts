@@ -2,7 +2,7 @@ import { useMemo } from 'react';
 import { useMemoizedFn, useRequest, useUpdateEffect } from '..';
 import type { Data, PaginationOptions, Params, Service } from './types';
 
-const usePagination = <TData extends Data, TParams extends Params>(
+const usePagination = <TData extends Data, TParams extends any[] = Params>(
   service: Service<TData, TParams>,
   options: PaginationOptions<TData, TParams> = {},
 ) => {

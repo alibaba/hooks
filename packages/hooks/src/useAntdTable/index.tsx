@@ -2,13 +2,13 @@ import { useEffect, useState } from 'react';
 import { useMemoizedFn, usePagination } from '..';
 import type { Antd4ValidateFields, AntdTableOptions, Data, Params, Service } from './types';
 
-const useAntdTable = <TData extends Data, TParams extends Params>(
+const useAntdTable = <TData extends Data, TParams extends any[] = Params>(
   service: Service<TData, TParams>,
   options: AntdTableOptions<TData, TParams> = {},
 ) => {
   const { form, defaultType = 'simple', defaultParams, manual = false, ...rest } = options;
 
-  const result = usePagination(service, {
+  const result = usePagination<TData, TParams>(service, {
     manual: true,
     ...rest,
   });
@@ -70,7 +70,7 @@ const useAntdTable = <TData extends Data, TParams extends Params>(
     setType(targetType);
   };
 
-  const _submit = (initParams?: Params) => {
+  const _submit = (initParams?: TParams) => {
     setTimeout(() => {
       validateFields()
         .then((values = {}) => {

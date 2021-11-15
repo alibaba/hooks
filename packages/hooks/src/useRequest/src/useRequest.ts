@@ -25,7 +25,7 @@ function useRequest<TData, TParams extends any[]>(
   options?: Options<TData, TParams>,
   plugins?: Plugin<TData, TParams>[],
 ) {
-  return useRequestImplement(service, options, [
+  return useRequestImplement<TData, TParams>(service, options, [
     ...(plugins || []),
     useDebouncePlugin,
     useLoadingDelayPlugin,
@@ -35,7 +35,7 @@ function useRequest<TData, TParams extends any[]>(
     useRefreshDeps,
     useCachePlugin,
     useRetryPlugin,
-  ]);
+  ] as Plugin<TData, TParams>[]);
 }
 
 export default useRequest;

@@ -13,7 +13,7 @@ export type Params = [
   ...any[]
 ];
 
-export type Service<TData extends Data, TParams extends Params> = (
+export type Service<TData extends Data, TParams extends any[]> = (
   ...args: TParams
 ) => Promise<TData>;
 
@@ -33,7 +33,7 @@ export interface AntdFormUtils {
   [key: string]: any;
 }
 
-export interface AntdTableResult<TData extends Data, TParams extends Params>
+export interface AntdTableResult<TData extends Data, TParams extends any[]>
   extends PaginationResult<TData, TParams> {
   tableProps: {
     dataSource: any[];
@@ -50,7 +50,7 @@ export interface AntdTableResult<TData extends Data, TParams extends Params>
   };
 }
 
-export interface AntdTableOptions<TData extends Data, TParams extends Params>
+export interface AntdTableOptions<TData extends Data, TParams extends any[]>
   extends PaginationOptions<TData, TParams> {
   form?: AntdFormUtils;
   defaultType?: 'simple' | 'advance';

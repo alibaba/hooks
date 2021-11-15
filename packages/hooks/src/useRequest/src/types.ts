@@ -1,4 +1,4 @@
-import type { DependencyList, MutableRefObject } from 'react';
+import type { DependencyList } from 'react';
 import type Fetch from './Fetch';
 
 export type Service<TData, TParams extends any[]> = (...args: TParams) => Promise<TData>;
