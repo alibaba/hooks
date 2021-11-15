@@ -1,4 +1,11 @@
-import { useCreation, useMount, useUnmount, useUpdate, useLatest } from '../../index';
+import {
+  useCreation,
+  useLatest,
+  useMemoizedFn,
+  useMount,
+  useUnmount,
+  useUpdate,
+} from '../../index';
 import Fetch from './Fetch';
 import type { Options, Plugin, Result, Service } from './types';
 
@@ -56,12 +63,12 @@ function useRequestImplement<TData, TParams extends any[]>(
     data: fetchInstance.state.data,
     error: fetchInstance.state.error,
     params: fetchInstance.state.params || [],
-    cancel: fetchInstance.cancel.bind(fetchInstance),
-    refresh: fetchInstance.refresh.bind(fetchInstance),
-    refreshAsync: fetchInstance.refreshAsync.bind(fetchInstance),
-    run: fetchInstance.run.bind(fetchInstance),
-    runAsync: fetchInstance.runAsync.bind(fetchInstance),
-    mutate: fetchInstance.mutate.bind(fetchInstance),
+    cancel: useMemoizedFn(fetchInstance.cancel.bind(fetchInstance)),
+    refresh: useMemoizedFn(fetchInstance.refresh.bind(fetchInstance)),
+    refreshAsync: useMemoizedFn(fetchInstance.refreshAsync.bind(fetchInstance)),
+    run: useMemoizedFn(fetchInstance.run.bind(fetchInstance)),
+    runAsync: useMemoizedFn(fetchInstance.runAsync.bind(fetchInstance)),
+    mutate: useMemoizedFn(fetchInstance.mutate.bind(fetchInstance)),
   } as Result<TData, TParams>;
 }
 
