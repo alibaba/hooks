@@ -4940,6 +4940,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"babel-plugin-transform-async-to-promises@npm:^0.8.15":
+  version: 0.8.15
+  resolution: "babel-plugin-transform-async-to-promises@npm:0.8.15"
+  checksum: d3a2e9fd125b1ecf0acb34d4b3f2a5fae4d9888ed83fc071498154dd9479aac34e739c0cae7b1c928e9840a9dc612412456cf1c9474f70c9293fcefe621f43bf
+  languageName: node
+  linkType: hard
+
 "babel-preset-current-node-syntax@npm:^1.0.0":
   version: 1.0.1
   resolution: "babel-preset-current-node-syntax@npm:1.0.1"
