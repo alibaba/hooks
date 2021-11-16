@@ -8,7 +8,7 @@ const useMount = (fn: () => void) => {
   }
 
   useEffect(() => {
-    fn && fn();
+    fn?.();
   }, []);
 };
 
