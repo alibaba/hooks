@@ -3,3 +3,5 @@ packages/**/*.mdx
 package.json
 .umi
 .umi-production
+/.yarn/
+/.yarnrc.yml

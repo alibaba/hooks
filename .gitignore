@@ -17,3 +17,12 @@ tsconfig.tsbuildinfo
 packages/hooks/README.md
 yarn-error.log
 package-lock.json
+
+# yarn https://yarnpkg.com/getting-started/qa#which-files-should-be-gitignored
+.yarn/*
+!.yarn/patches
+!.yarn/releases
+!.yarn/plugins
+!.yarn/sdks
+!.yarn/versions
+.pnp.*
