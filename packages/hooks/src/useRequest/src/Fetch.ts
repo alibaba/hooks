@@ -38,7 +38,7 @@ export default class Fetch<TData, TParams extends any[]> {
     return Object.assign({}, ...r);
   }
 
-  async runAsync(...params: TParams) {
+  async runAsync(...params: TParams): Promise<TData> {
     this.count += 1;
     const currentCount = this.count;
 
