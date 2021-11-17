@@ -1,11 +1,10 @@
-import { useEffect, useMemo } from 'react';
+import { useEffect, useMemo, useState, useRef } from 'react';
 import useEventListener from '../useEventListener';
 import useLatest from '../useLatest';
 import useMemoizedFn from '../useMemoizedFn';
-import useRafState from '../useRafState';
 import useSize from '../useSize';
-import type { BasicTarget } from '../utils/domTarget';
 import { getTargetElement } from '../utils/domTarget';
+import type { BasicTarget } from '../utils/domTarget';
 
 export interface Options<T> {
   containerTarget: BasicTarget;
@@ -21,7 +20,9 @@ const useVirtualList = <T = any>(list: T[], options: Options<T>) => {
 
   const size = useSize(containerTarget);
 
-  const [targetList, setTargetList] = useRafState<{ index: number; data: T }[]>([]);
+  const scrollTriggerByScrollToFunc = useRef(false);
+
+  const [targetList, setTargetList] = useState<{ index: number; data: T }[]>([]);
 
   const getVisibleCount = (containerHeight: number, fromIndex: number) => {
     if (typeof itemHeightRef.current === 'number') {
@@ -121,6 +122,10 @@ const useVirtualList = <T = any>(list: T[], options: Options<T>) => {
   useEventListener(
     'scroll',
     (e) => {
+      if (scrollTriggerByScrollToFunc.current) {
+        scrollTriggerByScrollToFunc.current = false;
+        return;
+      }
       e.preventDefault();
       calculateRange();
     },
@@ -132,6 +137,7 @@ const useVirtualList = <T = any>(list: T[], options: Options<T>) => {
   const scrollTo = (index: number) => {
     const container = getTargetElement(containerTarget);
     if (container) {
+      scrollTriggerByScrollToFunc.current = true;
       container.scrollTop = getDistanceTop(index);
       calculateRange();
     }
