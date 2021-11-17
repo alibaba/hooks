@@ -5,7 +5,7 @@ nav:
 
 # ueGetState
 
-with `useRef`, add a getter method to the return value of `React.useState` to get the latest value
+Add a getter method to the return value of `React.useState` to get the latest value
 
 ## Examples
 
