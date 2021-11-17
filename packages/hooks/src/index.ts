@@ -67,6 +67,7 @@ import useUpdateLayoutEffect from './useUpdateLayoutEffect';
 import useVirtualList from './useVirtualList';
 import useWebSocket from './useWebSocket';
 import useWhyDidYouUpdate from './useWhyDidYouUpdate';
+import useGetState from './useGetState';
 
 export {
   useRequest,
@@ -139,4 +140,5 @@ export {
   useAntdTable,
   useFusionTable,
   useInfiniteScroll,
+  useGetState,
 };
