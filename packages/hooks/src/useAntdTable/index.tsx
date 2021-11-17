@@ -1,12 +1,19 @@
 import { useEffect, useState } from 'react';
-import { useMemoizedFn, usePagination } from '..';
+import { useMemoizedFn, usePagination, useUpdateEffect } from '..';
 import type { Antd4ValidateFields, AntdTableOptions, Data, Params, Service } from './types';
 
 const useAntdTable = <TData extends Data, TParams extends any[] = Params>(
   service: Service<TData, TParams>,
   options: AntdTableOptions<TData, TParams> = {},
 ) => {
-  const { form, defaultType = 'simple', defaultParams, manual = false, ...rest } = options;
+  const {
+    form,
+    defaultType = 'simple',
+    defaultParams,
+    manual = false,
+    refreshDeps = [],
+    ...rest
+  } = options;
 
   const result = usePagination<TData, TParams>(service, {
     manual: true,
@@ -152,6 +159,12 @@ const useAntdTable = <TData extends Data, TParams extends any[] = Params>(
       _submit(defaultParams);
     }
   }, []);
+
+  useUpdateEffect(() => {
+    if (!manual) {
+      result.pagination.changeCurrent(1);
+    }
+  }, [...refreshDeps]);
 
   return {
     ...result,

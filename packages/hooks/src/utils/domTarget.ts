@@ -1,11 +1,16 @@
 import type { MutableRefObject } from 'react';
 import isBrowser from './isBrowser';
 
-type Target<T> = T | undefined | null;
+type TargetValue<T> = T | undefined | null;
 
-export type BasicTarget<T = Element> = (() => Target<T>) | Target<T> | MutableRefObject<Target<T>>;
+type TargetType = HTMLElement | Element | Window | Document;
 
-export function getTargetElement<T>(target: BasicTarget<T>, defaultElement?: T) {
+export type BasicTarget<T extends TargetType = Element> =
+  | (() => TargetValue<T>)
+  | TargetValue<T>
+  | MutableRefObject<TargetValue<T>>;
+
+export function getTargetElement<T extends TargetType>(target: BasicTarget<T>, defaultElement?: T) {
   if (!isBrowser) {
     return undefined;
   }
@@ -14,10 +19,9 @@ export function getTargetElement<T>(target: BasicTarget<T>, defaultElement?: T) 
     return defaultElement;
   }
 
-  let targetElement: Target<T>;
+  let targetElement: TargetValue<T>;
 
   if (typeof target === 'function') {
-    // @ts-ignore
     targetElement = target();
   } else if ('current' in target) {
     targetElement = target.current;
