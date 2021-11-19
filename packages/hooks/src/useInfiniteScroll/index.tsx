@@ -32,6 +32,7 @@ const useInfiniteScroll = <TData extends Data>(
       const currentData = await service(lastData);
       if (!lastData) {
         setFinalData(currentData);
+        return;
       }
       setFinalData({
         ...currentData,
@@ -52,6 +53,7 @@ const useInfiniteScroll = <TData extends Data>(
           // eslint-disable-next-line @typescript-eslint/no-use-before-define
           scrollMethod();
         });
+        console.log('onSuccess');
         onSuccess?.(d);
       },
       onError: (e) => onError?.(e),
