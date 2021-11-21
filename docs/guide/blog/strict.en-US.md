@@ -29,20 +29,20 @@ function ExampleApplication() {
 }
 ```
 
-For more documents, please refer to "[Strict Mode](https://zh-hans.reactjs.org/docs/strict-mode.html)"
+For more documents, please refer to "[Strict Mode](https://reactjs.org/docs/strict-mode.html)"
 
 ## Points to note in React Hooks
 
-One of the most important capabilities of strict mode is "[Detecting Unexpected Side Effects](https://zh-hans.reactjs.org/docs/strict-mode.html#detecting-unexpected-side-effects)", in the future concurrent mode, the component is divided into two stages:
+One of the most important capabilities of strict mode is "[Detecting Unexpected Side Effects](https://reactjs.org/docs/strict-mode.html#detecting-unexpected-side-effects)", in the upcoming concurrent mode, the component is divided into two phases:
 
-- **Render phase**: Generate dom tree, will execute constructor, componentWillMount, componentWillReceiveProps, componentWillUpdate, getDerivedStateFromProps, shouldComponentUpdate, render, **useState, useMemo, useCallback** and other life cycles
-- **Commit stage**: Commit dom, trigger componentDidMount, componentDidUpdate, **useEffect** and other life cycles
+- **Render phase**: Generate DOM tree, will execute constructor, componentWillMount, componentWillReceiveProps, componentWillUpdate, getDerivedStateFromProps, shouldComponentUpdate, render, **useState, useMemo, useCallback** and other life cycles
+- **Commit stage**: Apply DOM changes, trigger componentDidMount, componentDidUpdate, **useEffect** and other life cycles
 
-Generally, the render phase is time-consuming, and the commit phase is executed quickly. Therefore, in the future concurrent mode, the render phase may be suspended and re-executed. That is, the life cycle of the rendering phase may be executed multiple times.
+Generally, the render phase is time-consuming, and the commit phase is executed quickly. Therefore, in the upcoming concurrent mode, the render phase may be suspended and re-executed. That is, the life cycle of the rendering phase may be executed multiple times.
 
 ```javascript
 constructor(){
-  services.getUserInfo().then(()=>{
+  services.getUserInfo().then(() => {
     .....
   });
 }
@@ -50,7 +50,7 @@ constructor(){
 
 As above, if we initiate a network request in the constructor, it may be executed multiple times. So **do not perform operations with side effects during the render phase.**
 
-But if you perform side-effect operations during the rendering phase, React will not be able to perceive it. **But in strict mode, React will deliberately repeat the render phase method, making it easier for us to find such bugs in the development phase** (not all the life cycles of the rendering phase will be re-executed, see [Official Documentation](https://zh-hans.reactjs.org/docs/strict-mode.html#detecting-unexpected-side-effects)).
+But if you perform side-effect operations during the rendering phase, React will not be able to perceive it. **But in strict mode, React will intentionally repeat the render phase method, making it easier for us to find such bugs in the development phase** (not all the life cycles of the rendering phase will be re-executed, see [Official Documentation](https://reactjs.org/docs/strict-mode.html#detecting-unexpected-side-effects)).
 
 ```javascript
 const useTest = () => {
@@ -58,6 +58,7 @@ const useTest = () => {
     console.log('get state');
     return 'state';
   });
+
   const memoState = useMemo(() => {
     console.log('get memo state');
     return 'state';
@@ -69,6 +70,8 @@ const useTest = () => {
 };
 ```
 
-In the above code, the first parameter of useState, useMemo, and function body are all executed twice.
+In the above code, the first parameter of `useState`, `useMemo` and the Hook function body are all executed twice.
 
-Please remember the conclusion: **In strict mode, the first parameter of useState, useMemo, useReduder, and function body will be executed twice. Do not perform operations with side effects here.**
+[Demo](https://codesandbox.io/s/xvv55893mp?file=/src/index.js)
+
+Please remember the conclusion: **In strict mode, the first parameter of `useState`, `useMemo`, `useReducer` and the Hook function body will be executed twice. Do not perform operations with side effects here.**

@@ -4,7 +4,7 @@ nav:
 ---
 # useFusionTable
 
-封装了常用的 Fusion [Form](https://fusion.design/pc/component/basic/form) 与 Fusion [Table](https://fusion.design/pc/component/basic/table) 联动逻辑。
+封装了常用的 [Fusion Form](https://fusion.design/pc/component/basic/form) 与 [Fusion Table](https://fusion.design/pc/component/basic/table) 联动逻辑。
 
 > 🌈「Table场景解决方案」上线啦！点击图片查看常用的表格场景，区块代码一键下载到本地，快速复用! [使用文档](https://fusion.design/help.html#/dnzud5)
 
@@ -12,8 +12,8 @@ nav:
 
 `useFusionTable` 基于 `useRequest` 实现，在使用之前，你需要了解它与 `useRequest` 不同的几个点：
 
-1. `service` 接收两个参数，第一个参数为分页数据 `{current, pageSize, sorter, filters}`，第二个参数为表单数据。
-2. `service` 返回的数据结构为 `{total: number, list: Item[]}`。
+1. `service` 接收两个参数，第一个参数为分页数据 `{ current, pageSize, sorter, filters }`，第二个参数为表单数据。
+2. `service` 返回的数据结构为 `{ total: number, list: Item[] }`。
 3. 会额外返回 `tableProps`、`paginationProps` 和 `search` 字段，管理表格和表单。
 4. `refreshDeps` 变化，会重置 `current` 到第一页，并重新发起请求。
 
@@ -21,7 +21,7 @@ nav:
 
 ### Table 管理
 
-useFusionTable 会自动管理 `Table` 分页数据，你只需要把返回的 `tableProps` 与 `paginationProps` 传递给相应组件即可。
+`useFusionTable` 会自动管理 `Table` 分页数据，你只需要把返回的 `tableProps` 与 `paginationProps` 传递给相应组件即可。
 
 ```tsx | pure
 <Table columns={columns} rowKey="email" {...tableProps} />
@@ -33,7 +33,7 @@ useFusionTable 会自动管理 `Table` 分页数据，你只需要把返回的 `
 
 ### Form 与 Table 联动
 
-useFusionTable 接收 `field` 实例后，会返回 search 对象，用来处理表单相关事件。
+`useFusionTable` 接收 `field` 实例后，会返回 search 对象，用来处理表单相关事件。
 
 * `search.type` 支持 `simple` 和 `advance` 两个表单切换
 * `search.changeType`，切换表单类型
@@ -46,7 +46,7 @@ useFusionTable 接收 `field` 实例后，会返回 search 对象，用来处理
 
 ### 初始化数据
 
-useFusionTable 通过 `defaultParams` 设置初始化值，`defaultParams` 是一个数组，第一项为分页相关参数，第二项为表单相关数据。如果有第二个值，我们会帮您初始化表单！
+`useFusionTable` 通过 `defaultParams` 设置初始化值，`defaultParams` 是一个数组，第一项为分页相关参数，第二项为表单相关数据。如果有第二个值，我们会帮您初始化表单！
 
 需要注意的是，初始化的表单数据可以填写 `simple` 和 `advance` 全量的表单数据，我们会帮您挑选当前激活的类型中的表单数据。
 
@@ -73,7 +73,7 @@ useFusionTable 通过 `defaultParams` 设置初始化值，`defaultParams` 是�
 ```typescript
 
 type Data = { total: number; list: any[] };
-type Params = [{ current: number; pageSize: number, filter?: any, sorter?: any }, {[key: string]: any}];
+type Params = [{ current: number; pageSize: number, filter?: any, sorter?: any }, { [key: string]: any }];
 
 const {
   ...,
@@ -97,7 +97,7 @@ const {
     reset: () => void;
   };
 } = useFusionTable<TData extends Data, TParams extends Params>(
-  service: (...args: TParams) => Promise<TData>, 
+  service: (...args: TParams) => Promise<TData>,
   {
     ...,
     field?: any;

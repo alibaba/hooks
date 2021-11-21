@@ -20,7 +20,7 @@ Listen for click events outside the target element.
 
 <code src="./demo/demo3.tsx" />
 
-### Listen to other events
+### Listen for other events
 
 <code src="./demo/demo4.tsx" />
 

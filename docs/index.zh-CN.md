@@ -38,7 +38,7 @@ $ yarn add ahooks@next
 
 ## 🔨 使用
 
-```js
+```ts
 import { useRequest } from 'ahooks';
 ```
 

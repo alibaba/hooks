@@ -13,7 +13,7 @@ Use addEventListener elegant by Hook.
 
 <code src="./demo/demo1.tsx" />
 
-### Listen keydown
+### Listen for keydown
 
 <code src="./demo/demo2.tsx" />
 

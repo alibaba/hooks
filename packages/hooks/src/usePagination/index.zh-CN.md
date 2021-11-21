@@ -7,8 +7,8 @@ nav:
 
 `usePagination` 基于 `useRequest` 实现，封装了常见的分页逻辑。与 `useRequest` 不同的点有以下几点：
 
-1. `service` 的第一个参数为 `{current: number, pageSize: number}`
-2. `service` 返回的数据结构为 `{total: number, list: Item[]}`
+1. `service` 的第一个参数为 `{ current: number, pageSize: number }`
+2. `service` 返回的数据结构为 `{ total: number, list: Item[] }`
 3. 会额外返回 `pagination` 字段，包含所有分页信息，及操作分页的函数。
 4. `refreshDeps` 变化，会重置 `current` 到第一页，并重新发起请求，一般你可以把 `pagination` 依赖的条件放这里
 
@@ -59,7 +59,7 @@ const {
     changePageSize: (pageSize: number) => void;
   }
 } = usePagination<TData extends Data, TParams extends Params>(
-  service: (...args: TParams) => Promise<TData>, 
+  service: (...args: TParams) => Promise<TData>,
   {
     ...,
     defaultPageSize?: number;
@@ -70,13 +70,13 @@ const {
 
 ### Result
 
-| 参数       | 说明                     | 类型 |
-|------------|--------------------------|------|
+| 参数       | 说明                  | 类型 |
+|------------|----------------------|------|
 | pagination | 分页数据及操作分页的方法 | `-`  |
 
 ### Params
 
-| 参数            | 说明                                                                                        | 类型      | 默认值  |
-|-----------------|---------------------------------------------------------------------------------------------|-----------|---------|
-| defaultPageSize | 默认分页数量                                                                                | `number`  | -       |
+| 参数            | 说明                                                                              | 类型      | 默认值   |
+|-----------------|----------------------------------------------------------------------------------|-----------|---------|
+| defaultPageSize | 默认分页数量                                                                       | `number`  | -       |
 | refreshDeps     | `refreshDeps` 变化，会重置 current 到第一页，并重新发起请求，一般你可以把依赖的条件放这里。 | `boolean` | `false` |

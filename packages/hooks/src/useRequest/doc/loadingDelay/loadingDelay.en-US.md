@@ -7,17 +7,17 @@ group:
 
 # Loading Delay
 
-By setting `options.loadingDelay`, you can delay the time `loading` to  `true`, effectively prevent flush.
+By setting `options.loadingDelay`, you can delay the time when `loading` turns to  `true`, effectively prevent UI flashing.
 
 ```tsx | pure
-const {loading, data} = useRequest(getUsername, {
+const { loading, data } = useRequest(getUsername, {
    loadingDelay: 300
 });
 
-return <div>{ loading? 'Loading' : data }</div>
+return <div>{ loading ? 'Loading...' : data }</div>
 ```
 
-For example, in the above scenario, if getUsername returns within 300ms, `loading` will not become `true`, avoiding the page displays `loading`.
+For example, in the above scenario, if `getUsername` returns within 300ms, `loading` will not become `true`, avoiding the page displays `Loading...`.
 
 You can quickly click the button in the example below to experience the effect
 

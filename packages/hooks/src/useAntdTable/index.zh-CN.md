@@ -5,12 +5,12 @@ nav:
 ---
 # useAntdTable
 
-`useAntdTable` 基于 `useRequest` 实现，封装了常用的 antd [Form](https://ant.design/components/form-cn/) 与 [Table](https://ant.design/components/table-cn/) 联动逻辑，并且同时支持 antd V3 和 V4。
+`useAntdTable` 基于 `useRequest` 实现，封装了常用的 [Ant Design Form](https://ant.design/components/form-cn/) 与 [Ant Design Table](https://ant.design/components/table-cn/) 联动逻辑，并且同时支持 antd v3 和 v4。
 
 在使用之前，你需要了解它与 `useRequest` 不同的几个点：
 
-1. `service` 接收两个参数，第一个参数为分页数据 `{current, pageSize, sorter, filters}`，第二个参数为表单数据。
-2. `service` 返回的数据结构为 `{total: number, list: Item[]}`。
+1. `service` 接收两个参数，第一个参数为分页数据 `{ current, pageSize, sorter, filters }`，第二个参数为表单数据。
+2. `service` 返回的数据结构为 `{ total: number, list: Item[] }`。
 3. 会额外返回 `tableProps` 和 `search` 字段，管理表格和表单。
 4. `refreshDeps` 变化，会重置 `current` 到第一页，并重新发起请求。
 
@@ -21,7 +21,7 @@ nav:
 
 ### Table 管理
 
-useAntdTable 会自动管理 `Table` 分页数据，你只需要把返回的 `tableProps` 传递给 `Table` 组件就可以了。
+`useAntdTable` 会自动管理 `Table` 分页数据，你只需要把返回的 `tableProps` 传递给 `Table` 组件就可以了。
 
 ```tsx | pure
 <Table columns={columns} rowKey="email" {...tableProps} />
@@ -32,7 +32,7 @@ useAntdTable 会自动管理 `Table` 分页数据，你只需要把返回的 `ta
 
 ### Form 与 Table 联动
 
-useAntdTable 接收 `form` 实例后，会返回 search 对象，用来处理表单相关事件。
+`useAntdTable` 接收 `form` 实例后，会返回 search 对象，用来处理表单相关事件。
 
 * `search.type` 支持 `simple` 和 `advance` 两个表单切换
 * `search.changeType`，切换表单类型
@@ -45,7 +45,7 @@ useAntdTable 接收 `form` 实例后，会返回 search 对象，用来处理表
 
 ### 初始化数据
 
-useAntdTable 通过 `defaultParams` 设置初始化值，`defaultParams` 是一个数组，第一项为分页相关参数，第二项为表单相关数据。如果有第二个值，我们会帮您初始化表单！
+`useAntdTable` 通过 `defaultParams` 设置初始化值，`defaultParams` 是一个数组，第一项为分页相关参数，第二项为表单相关数据。如果有第二个值，我们会帮您初始化表单！
 
 需要注意的是，初始化的表单数据可以填写 `simple` 和 `advance` 全量的表单数据，我们会帮您挑选当前激活的类型中的表单数据。
 
@@ -73,7 +73,7 @@ useAntdTable 通过 `defaultParams` 设置初始化值，`defaultParams` 是一�
 ```typescript
 
 type Data = { total: number; list: any[] };
-type Params = [{ current: number; pageSize: number, filter?: any, sorter?: any }, {[key: string]: any}];
+type Params = [{ current: number; pageSize: number, filter?: any, sorter?: any }, { [key: string]: any }];
 
 const {
   ...,
@@ -98,7 +98,7 @@ const {
     reset: () => void;
   };
 } = useAntdTable<TData extends Data, TParams extends Params>(
-  service: (...args: TParams) => Promise<TData>, 
+  service: (...args: TParams) => Promise<TData>,
   {
     ...,
     form?: any;

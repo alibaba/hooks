@@ -28,7 +28,7 @@ const [value, { onChange, reset }  ] = useEventTarget<T, U>(Options<T, U>);
 | 参数     | 说明                         | 类型                                   |
 |----------|------------------------------|----------------------------------------|
 | value    | 表单控件的值                 | `T`                                    |
-| onChange | 表单控件值发生变化时候的回调 | `(e: { target: { value: T }}) => void` |
+| onChange | 表单控件值发生变化时候的回调 | `(e: { target: { value: T } }) => void` |
 | reset    | 重置函数                     | `() => void`                           |
 
 ### Options

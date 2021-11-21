@@ -28,7 +28,7 @@ const result: Result= useSelections<T>(items: T[], defaultSelected?: T[]);
 | noneSelected      | 是否一个都没有选择 | `boolean`               |
 | partiallySelected | 是否半选           | `boolean`               |
 | isSelected        | 是否被选择         | `(value: T) => boolean` |
-| setSelected       | 设置选择的元素     | `(value:T[]) => void`   |
+| setSelected       | 设置选择的元素     | `(value: T[]) => void`   |
 | select            | 选择元素           | `(value: T) => void`    |
 | unSelect          | 取消选择元素       | `(value: T) => void`    |
 | toggle            | 反选元素           | `(value: T) => void`    |

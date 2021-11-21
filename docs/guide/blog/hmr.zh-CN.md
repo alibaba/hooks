@@ -55,7 +55,7 @@ export default () => {
 
 ### 第二个问题
 
-如果你使用了 [ahooks v2](https://github.com/alibaba/hooks/blob/master/packages/hooks/src/useUpdateEffect/index.ts) 或者 [react-use](https://github.com/streamich/react-use/blob/master/docs/useUpdateEffect.md) 的 `useUpdateEffect`，在热更新模式下也会有不符合预期的行为。
+如果你使用了 [ahooks v2](https://github.com/alibaba/hooks/blob/release/v2.x/packages/hooks/src/useUpdateEffect/index.ts) 或者 [react-use](https://github.com/streamich/react-use/blob/master/docs/useUpdateEffect.md) 的 `useUpdateEffect`，在热更新模式下也会有不符合预期的行为。
 
 ```javascript
 import React, { useEffect } from 'react';
@@ -106,7 +106,7 @@ export default useUpdateEffect;
 
 ### 第三个问题
 
-最初发现这个问题，是 ahooks 的 `useRequest` 在热更新后，`loading` 会一直为 true。经过分析，原因就是使用 `isUnmount` ref 来标记组件是否卸载。
+最初发现这个问题，是 ahooks 的 `useRequest` 在热更新后，`loading` 会一直为 `true`。经过分析，原因就是使用 `isUnmount` ref 来标记组件是否卸载。
 
 ```javascript
 import React, { useEffect, useState } from 'react';
@@ -139,7 +139,7 @@ export default function IndexPage() {
 }
 ```
 
-如上代码所示，在热更新时，`isUnmount.current` 变为了 true，导致二次执行时，代码以为组件已经卸载了，不再响应异步操作。
+如上代码所示，在热更新时，`isUnmount.current` 变为了 `true`，导致二次执行时，代码以为组件已经卸载了，不再响应异步操作。
 
 ## 如何解决这些问题
 

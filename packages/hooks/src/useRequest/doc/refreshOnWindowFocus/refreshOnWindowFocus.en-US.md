@@ -7,7 +7,7 @@ group:
 
 # RefreshOnWindowFocus
 
-By setting `options.refreshOnWindowFocus`, the request will be refresh when the browser is `refocus` and `revisible`.
+By setting `options.refreshOnWindowFocus`, the request will be refreshed when the browser is `refocus` and `revisible`.
 
 ```tsx | pure
 const { data } = useRequest(getUsername, {
@@ -31,4 +31,4 @@ You can click outside the browser, and then click the current page to experience
 ## Remark
 
 * `options.refreshOnWindowFocus`, `options.focusTimespan` support dynamic changes.
-* Monitor browser events for `visibilitychange` and `focus`.
+* Listen for browser events `visibilitychange` and `focus`.

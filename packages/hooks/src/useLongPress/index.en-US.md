@@ -5,7 +5,7 @@ nav:
 
 # useLongPress
 
-Monitor the long press event of the target element.
+Listen for the long press event of the target element.
 
 ## Examples
 
@@ -13,7 +13,7 @@ Monitor the long press event of the target element.
 
 <code src="./demo/demo1.tsx"/>
 
-### Monitor click and long press events at the same time
+### Listen for click and long press events at the same time
 
 <code src="./demo/demo2.tsx"/>
 
@@ -39,7 +39,7 @@ useLongPress(
 | options     | Optional configuration items | `Options`                                                   | -       |
 
 ### Options
-| Parameters | Description     | Type      | Default Value |
+| Property   | Description     | Type      | Default       |
 |------------|-----------------|-----------|---------------|
 | delay      | Long press time | `number`  | `300`         |
 | onClick    | Click event     | `boolean` | `true`        |

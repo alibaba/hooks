@@ -6,11 +6,11 @@ Compared with other Hooks libraries in the community, ahooks has the following a
 
 ## Rich content
 
-ahooks provides 70+ Hooks, which not only include some basic Hooks, but also provide a large number of advanced Hooks refined from the app. for example:
+ahooks provides 70+ Hooks, which not only include some basic Hooks, but also provide a large number of advanced Hooks refined from business scenarios. for example:
 
-- useRequest: a powerful async data management Hooks, it is enough for network request scenarios in React projects.
-- useInfiniteScroll: encapsulates the common infinite scroll logic.
-- useVirtualList: allows you to use virtual list to render huge chunks of list data.
+- `useRequest`: a powerful async data management Hook, it is sufficient enough for network request scenarios in React projects.
+- `useInfiniteScroll`: encapsulates the common infinite scroll logic.
+- `useVirtualList`: allows you to use virtual list to render huge chunks of list data.
 - ...
 
 ## Support SSR
@@ -51,4 +51,4 @@ useInterval(() => {
 
 For example, in the above example, the function called by `useInterval` is always the latest.
 
-Related documents can be found in "[ahooks function specification](//guide/blog/function)".
+Related documents can be found in "[ahooks function specification](/guide/blog/function)".

@@ -29,10 +29,10 @@ export default () => {
       </button>
 
       <div style={{ margin: '24px 0', width: 300 }}>
-        Username: {action.loading ? 'Loading' : action.data}
+        Username: {action.loading ? 'Loading...' : action.data}
       </div>
       <div>
-        Username: {withLoadingDelayAction.loading ? 'Loading' : withLoadingDelayAction.data}
+        Username: {withLoadingDelayAction.loading ? 'Loading...' : withLoadingDelayAction.data}
       </div>
     </div>
   );

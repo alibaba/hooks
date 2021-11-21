@@ -1,6 +1,6 @@
 /**
  * title: Edit username
- * desc: In this example, we use `runAsync(username)` to modify the user name. At this time, we must catch the exception through catch.
+ * desc: In this example, we use `runAsync(username)` to edit the user name. At this time, we must catch the exception through catch.
  *
  * title.zh-CN: 修改用户名
  * desc.zh-CN: 在这个例子中，我们通过 `runAsync(username)` 来修改用户名，此时必须通过 catch 来自行处理异常。

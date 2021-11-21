@@ -1,8 +1,8 @@
-## V2 to V3
+## v2 to v3
 
 相较于 ahooks v2 版本，ahooks v3 版本的变更主要包括：
 
-- 全新的 useRequest
+- 全新的 `useRequest`
 - 全面支持 SSR
 - 对输入输出函数做特殊处理，避免闭包问题
 - DOM 类 Hooks 支持 target 动态变化
@@ -28,7 +28,7 @@ useRequest 完全进行了重写：
 - 提供了循序渐进的文档。
 - 彻底修复了异常处理方式，提供了 `run` 和 `runAsync` 两种触发函数。
 - `options` 参数支持动态变化。
-- 删除了 `pagination`、`loadMore`、`formatResult` 属性，避免了 `useRequest` typescript 重载，可以更方便的基于 `useRequest` 封装更高级的 Hooks。
+- 删除了 `pagination`、`loadMore`、`formatResult` 属性，避免了 `useRequest` TypeScript 重载，可以更方便的基于 `useRequest` 封装更高级的 Hooks。
 
 ### 详细变更
 
@@ -52,7 +52,7 @@ ahooks v3 全面支持 SSR，相关文档可见《[React Hooks & SSR](/zh-CN/gui
 
 ## DOM 类 Hooks 支持 target 动态变化
 
-DOM 类 Hooks 支持 target 动态变化，相关文档可见《[DOM 类 Hooks 使用规范](/zh-CN/dom)》
+DOM 类 Hooks 支持 target 动态变化，相关文档可见《[DOM 类 Hooks 使用规范](/zh-CN/guide/dom)》
 
 ## 避免闭包问题
 
@@ -111,7 +111,7 @@ v3 修复了在 react-refresh（HRM）模式下的一些问题。参考《[React
 - [useLongPress](/zh-CN/hooks/use-long-press)
 - [useInfiniteScroll](/zh-CN/hooks/use-infinite-scroll)
 
-### Break Change
+### Breaking Changes
 
 - useBoolean
 
@@ -135,7 +135,7 @@ v3 修复了在 react-refresh（HRM）模式下的一些问题。参考《[React
 
   - 删除了 `setTargetDate` 返回值，可以动态改变 `options.targetDate` 实现相同效果
 
-- useLocalStorageState / useSessionStorate
+- useLocalStorageState / useSessionStorageState
 
   - 第二个参数从 `defaultValue` 变为了 `Options`，使用 `options.defaultValue` 代替
   - 增加了 `options.serializer` 和 `options.deserializer`，支持自定义序列法方法
@@ -161,7 +161,7 @@ v3 修复了在 react-refresh（HRM）模式下的一些问题。参考《[React
 - useVirtualList
 
   - API 重新设计，需要对照新的文档做升级
-  - `options.itemHeight` 参数增加了 `data` 参数
+  - `options.itemHeight` 函数型参数增加了 `data` 参数
 
 - useInViewport
 
@@ -170,11 +170,11 @@ v3 修复了在 react-refresh（HRM）模式下的一些问题。参考《[React
 
 - useScroll
 
-  - 返回值类型从 `{left?: number, top?: number}` 改为 `{left: number, top: number} | undefined`
+  - 返回值类型从 `{ left?: number, top?: number }` 改为 `{ left: number, top: number } | undefined`
 
 - useSize
 
-  - 返回值类型从 `{width?: number, height?: number}` 改为 `{width: number, height: number} | undefined`
+  - 返回值类型从 `{ width?: number, height?: number }` 改为 `{ width: number, height: number } | undefined`
 
 - useKeyPress
 
@@ -198,10 +198,10 @@ v3 修复了在 react-refresh（HRM）模式下的一些问题。参考《[React
 
 - useUrlState
 
-  - 支持了 React Rouer v6
+  - 支持了 React Router v6
 
 - useControllableValue
 
-  - 优化了代码逻辑，避免了不必要的 rerennder
+  - 优化了代码逻辑，避免了不必要的 re-render
 
 - 更多其它优化

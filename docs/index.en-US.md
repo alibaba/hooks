@@ -7,7 +7,7 @@ hero:
     - text: Guide
       link: /guide
     - text: Hooks List
-      link: /zh-CN/hooks
+      link: /hooks
 footer: Open-source MIT Licensed | Copyright © 2019-present<br />Powered by [dumi](https://d.umijs.org)
 ---
 
@@ -22,10 +22,10 @@ footer: Open-source MIT Licensed | Copyright © 2019-present<br />Powered by [du
 ## ✨ Features
 
 - Easy to learn and use
-- Support SSR
+- Supports SSR
 - Special treatment for functions, avoid closure problems
-- Contains a wealth of advanced Hooks that are refined from the app
-- Contains a wealth of basic Hooks
+- Contains a large number of advanced Hooks that are refined from business scenarios
+- Contains a comprehensive collection of basic Hooks
 - Written in TypeScript with predictable static types
 
 ## 📦 Install
@@ -38,11 +38,11 @@ $ yarn add ahooks@next
 
 ## 🔨 Usage
 
-```js
+```ts
 import { useRequest } from 'ahooks';
 ```
 
-## 💻 Online Experience
+## 💻 Online Demo
 
 [![Edit demo for ahooks](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/demo-for-ahooks-forked-fg79k?file=/src/App.js)
 

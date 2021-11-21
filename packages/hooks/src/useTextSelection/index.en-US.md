@@ -13,7 +13,7 @@ Tracking content, size, position of user text selection.
 
 <code src="./demo/demo1.tsx" />
 
-### Listen specified area
+### Listen for specified area
 
 <code src="./demo/demo3.tsx" />
 
