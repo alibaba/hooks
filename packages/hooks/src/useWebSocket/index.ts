@@ -18,6 +18,8 @@ export interface Options {
   onClose?: (event: WebSocketEventMap['close']) => void;
   onMessage?: (message: WebSocketEventMap['message']) => void;
   onError?: (event: WebSocketEventMap['error']) => void;
+
+  protocols?: string | string[];
 }
 
 export interface Result {
@@ -38,6 +40,7 @@ export default function useWebSocket(socketUrl: string, options: Options = {}): 
     onClose,
     onMessage,
     onError,
+    protocols,
   } = options;
 
   const onOpenRef = useLatest(onOpen);
@@ -80,7 +83,7 @@ export default function useWebSocket(socketUrl: string, options: Options = {}): 
       websocketRef.current.close();
     }
 
-    websocketRef.current = new WebSocket(socketUrl);
+    websocketRef.current = new WebSocket(socketUrl, protocols);
     setReadyState(ReadyState.Connecting);
 
     websocketRef.current.onerror = (event) => {
