@@ -7,8 +7,8 @@ nav:
 
 `usePagination` is implemented based on `useRequest` and encapsulates common paging logic. The differences from `useRequest` are as follows:
 
-1. The first parameter of `service` is `{current: number, pageSize: number}`
-2. The data structure returned by `service` is `{total: number, list: Item[]}`
+1. The first parameter of `service` is `{ current: number, pageSize: number }`
+2. The data structure returned by `service` is `{ total: number, list: Item[] }`
 3. It will additionally return the `pagination` field, which contains all the pagination information and functions to operate the pagination.
 4. When `refreshDeps` changes, it will reset `current` to the first page and re-initiate the request. Generally, you can put the conditions that `pagination` depends on here
 
@@ -44,7 +44,7 @@ All parameters and returned results of `useRequest` are applicable to `usePagina
 
 ```typescript
 
-type Data<T> = {total: number; list: T[] };
+type Data<T> = { total: number; list: T[] };
 type Params = [{ current: number; pageSize: number, [key: string]: any }, ...any[]];
 
 const {

@@ -21,15 +21,15 @@ nav:
 
 ```typescript
 const [
-  isFullscreen, 
+  isFullscreen,
   {
-    enterFullscreen, 
-    exitFullscreen, 
+    enterFullscreen,
+    exitFullscreen,
     toggleFullscreen,
     isEnabled,
   }] = useFullScreen(
     target,
-    options?:Options
+    options?: Options
   );
 ```
 

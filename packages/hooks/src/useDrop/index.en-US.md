@@ -67,7 +67,7 @@ useDrop<T>(
 | onText      | The callback when text is dropped	or pasted | `(text: string, e: React.DragEvent) => void`  | -       |
 | onFiles     | The callback when file is dropped	or pasted | `(files: File[], e: React.DragEvent) => void` | -       |
 | onUri       | The callback when uri is dropped	or pasted  | `(text: string, e: React.DragEvent) => void`  | -       |
-| onDom       | The callback when dom is dropped	or pasted  | `(content: any, e: React.DragEvent) => void`  | -       |
+| onDom       | The callback when DOM is dropped	or pasted  | `(content: any, e: React.DragEvent) => void`  | -       |
 | onDrop      | The callback when any is dropped           | `(e: React.DragEvent) => void`                | -       |
 | onPaste     | The callback when any is pasted            | `(e: React.DragEvent) => void`                | -       |
 | onDragEnter | On drag enter callback                     | `(e: React.DragEvent) => void`                | -       |

@@ -1,11 +1,11 @@
-## V2 to V3
+## v2 to v3
 
 Compared with the ahooks v2 version, the changes in the ahooks v3 version mainly include:
 
-- New useRequest
+- New `useRequest`
 - Support SSR
 - Special treatment for input and output functions to avoid closure problems
-- Hooks of dom support dynamic target
+- Hooks of DOM support dynamic target
 - Solved the problem in Strict Mode
 - Solved the problem in react-refresh (HRM) mode
 - Fixed known issues
@@ -24,17 +24,17 @@ npm install ahooks@next --save
 
 useRequest has been rewritten:
 
-- Through plug-in organization code, the core code is extremely simple, and can easily expand more advanced capabilities.
+- Organized the source code through a plug-in pattern, the core code is extremely simple, and can be easily extended for more advanced features.
 - Provides step-by-step documentation.
-- Fixed the way of exception handling, provide `run` and `runAsync`.
+- Fixed the way of exception handling, provides `run` and `runAsync` two trigger functions.
 - The `options` parameter supports dynamic changes.
-- Deleted `pagination`, `loadMore`, `formatResult` attributes, avoiding the overload of typescript, and encapsulating more advanced Hooks based on `useRequest` more conveniently.
+- Deleted `pagination`, `loadMore`, `formatResult` options to avoid the overload of TypeScript, it is more convenient for encapsulating more advanced Hooks based on `useRequest`.
 
 ### Detailed changes
 
 - Deleted `UseRequestProvider`, it is recommended to encapsulate advanced Hooks based on `useRequest` instead.
-- Removed `pagination` related attributes, it is recommended to use `usePagination` or `useAntdTable` to achieve paging capability.
-- Removed `loadMore` related attributes, it is recommended to use `useInfiniteScroll` to achieve unlimited loading capacity.
+- Removed `pagination` related options, it is recommended to use `usePagination` or `useAntdTable` to achieve paging ability.
+- Removed `loadMore` related options, it is recommended to use `useInfiniteScroll` to achieve unlimited loading ability.
 - Removed `fetchKey`, that is, deleted concurrent request.
 - Removed `formatResult`, `initialData`, `ready`, and `thrownError`.
 - The request library is no longer integrated by default, and `service` no longer supports string or object.
@@ -42,17 +42,17 @@ useRequest has been rewritten:
 - Added error retry ability.
 - Added `onBefore` and `onFinally` life cycles.
 - All options support dynamic changes.
-- In debounce/throttling mode, `runAsync` can return current Promise.
-- Debounce/throttling mode supports more parameters.
+- In debounce/throttle mode, `runAsync` can return current Promise.
+- Debounce/throttle mode supports more options.
 - Only successful request data will be cached.
 
 ## Support SSR
 
 ahooks v3 fully supports SSR, and related documents can be found in "[React Hooks & SSR](/guide/blog/ssr)".
 
-## Hooks of dom support dynamic target
+## Hooks of DOM support dynamic target
 
-Hooks of dom support dynamic target, and related documents can be found in "[Hooks of dom specification](/guide/dom)".
+Hooks of DOM support dynamic target, and related documents can be found in "[Hooks of DOM specification](/guide/dom)".
 
 ## Avoid closure problems
 
@@ -92,11 +92,11 @@ Related documents can be found in "[ahooks function specification](/guide/blog/f
 
 ## Support strict mode
 
-v3 fixes some problems in strict mode. Refer to "[React Hooks & strict mode](/guide/blog/strict)"
+v3 fixed some problems in strict mode. Refer to "[React Hooks & strict mode](/guide/blog/strict)"
 
 ## Support react-refresh (HRM) mode
 
-v3 fixes some problems in react-refresh (HRM) mode. Refer to "[React Hooks & react-refresh (HMR)](/guide/blog/hmr)"
+v3 fixed some problems in react-refresh (HRM) mode. Refer to "[React Hooks & react-refresh (HMR)](/guide/blog/hmr)"
 
 ## More changes
 
@@ -111,7 +111,7 @@ v3 fixes some problems in react-refresh (HRM) mode. Refer to "[React Hooks & rea
 - [useLongPress](/hooks/use-long-press)
 - [useInfiniteScroll](/hooks/use-infinite-scroll)
 
-### Break Change
+### Breaking Changes
 
 - useBoolean
 
@@ -135,7 +135,7 @@ v3 fixes some problems in react-refresh (HRM) mode. Refer to "[React Hooks & rea
 
   - Deleted the return value of `setTargetDate`, you can dynamically change `options.targetDate` to achieve the same effect
 
-- useLocalStorageState / useSessionStorate
+- useLocalStorageState / useSessionStorageState
 
   - The second parameter changed from `defaultValue` to `Options`, use `options.defaultValue` instead
   - Added `options.serializer` and `options.deserializer` to support custom sequence method
@@ -152,7 +152,7 @@ v3 fixes some problems in react-refresh (HRM) mode. Refer to "[React Hooks & rea
 
   - API has undergone major adjustments, please refer to the documentation
   - No longer supports image type resources
-  - The resource becomes unique globally and will not be loaded repeatedly. At the same time, if there are multiple references, the resource will be deleted only after all references are unloaded
+  - The resource becomes globally unique and will not be loaded repeatedly. At the same time, if there are multiple references, the resource will be deleted only after all references are unloaded
 
 - useFullscreen
 
@@ -161,7 +161,7 @@ v3 fixes some problems in react-refresh (HRM) mode. Refer to "[React Hooks & rea
 - useVirtualList
 
   - API is redesigned and needs to be upgraded according to the new document
-  - Added the `data` parameter to the `options.itemHeight` parameter
+  - Added a `data` parameter to the function type `options.itemHeight` parameter
 
 - useInViewport
 
@@ -170,11 +170,11 @@ v3 fixes some problems in react-refresh (HRM) mode. Refer to "[React Hooks & rea
 
 - useScroll
 
-  - The return value type is changed from `{left?: number, top?: number}` to `{left: number, top: number} | undefined`
+  - The return value type is changed from `{ left?: number, top?: number }` to `{ left: number, top: number } | undefined`
 
 - useSize
 
-  - The return value type is changed from `{width?: number, height?: number}` to `{width: number, height: number} | undefined`
+  - The return value type is changed from `{ width?: number, height?: number }` to `{ width: number, height: number } | undefined`
 
 - useKeyPress
 
@@ -198,10 +198,10 @@ v3 fixes some problems in react-refresh (HRM) mode. Refer to "[React Hooks & rea
 
 - useUrlState
 
-  - Support React Rouer v6
+  - Supported React Router v6
 
 - useControllableValue
 
-  - Optimized logic to avoid unnecessary rerennder
+  - Optimized logic to avoid unnecessary re-render
 
 - More other optimizations

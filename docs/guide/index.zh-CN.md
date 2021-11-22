@@ -8,9 +8,9 @@ ahooks，发音 [eɪ hʊks]，是一套高质量可靠的 React Hooks 库。在�
 
 ahooks 提供了 70+ Hooks，其中不仅包括一些常见的基础 Hooks，更是提供了大量从业务中提炼的高级 Hooks。比如：
 
-- useRequest：强大的异步数据管理的 Hooks，React 项目中的网络请求场景使用它就够了。
-- useInfiniteScroll：封装了常见的无限滚动逻辑。
-- useVirtualList：提供了虚拟化长列表能力。
+- `useRequest`：强大的异步数据管理的 Hook，React 项目中的网络请求场景使用它就够了。
+- `useInfiniteScroll`：封装了常见的无限滚动逻辑。
+- `useVirtualList`：提供了虚拟化长列表能力。
 - ......
 
 ## 支持 SSR

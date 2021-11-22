@@ -17,7 +17,7 @@ A hook of useEffect that allow us to track which dependencies caused the effect 
 
 ```typescript
 useTrackedEffect(
-  effect: (changes:[], previousDeps:[], currentDeps:[]) => (void | (() => void | undefined)),
+  effect: (changes: [], previousDeps: [], currentDeps: []) => (void | (() => void | undefined)),
   deps?: deps,
 )
 ```

@@ -37,7 +37,7 @@ const state = useTextSelection(target?);
 
 | 参数  | 说明                           | 类型    |
 |-------|--------------------------------|---------|
-| state | dom 节点内选取文本的内容和位置 | `State` |
+| state | DOM 节点内选取文本的内容和位置 | `State` |
 
 ### State
 

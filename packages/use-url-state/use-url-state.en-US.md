@@ -30,7 +30,7 @@ import useUrlState from '@ahooksjs/use-url-state';
 
 ## Examples
 
-### Codesandbox Demo
+### CodeSandbox Demo
 
 React Router V5：https://codesandbox.io/s/suspicious-feather-cz4e0?file=/App.tsx
 

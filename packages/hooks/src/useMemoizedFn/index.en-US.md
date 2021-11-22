@@ -13,7 +13,7 @@ In some scenarios, we need to use useCallback to cache a function, but when the 
 const [state, setState] = useState('');
 
 // When the state changes, the func reference will change
-const func = useCallback(()=>{
+const func = useCallback(() => {
   console.log(state);
 }, [state]);
 ```
@@ -23,8 +23,8 @@ Using useMemoizedFn, you can omit the second parameter deps, and ensure that the
 ```js
 const [state, setState] = useState('');
 
-// func reference nerver change
-const func = useMemoizedFn(()=>{
+// func reference never change
+const func = useMemoizedFn(() => {
   console.log(state);
 });
 ```
@@ -42,7 +42,7 @@ const func = useMemoizedFn(()=>{
 ## API
 
 ```typescript
-const fn = useMemoizedFn<T>(fn: T):T;
+const fn = useMemoizedFn<T>(fn: T): T;
 ```
 
 ### Result

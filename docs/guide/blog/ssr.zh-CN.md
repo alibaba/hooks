@@ -39,7 +39,7 @@ export default () => {
 };
 ```
 
-2. 通过 isBrowser 来做环境判断
+2. 通过 `isBrowser` 来做环境判断
 
 ```js
 import React, { useState } from 'react';
@@ -76,7 +76,7 @@ export default useIsomorphicLayoutEffect;
 
 1. 不要在非 useEffect/useLayoutEffect 中，直接使用 DOM/BOM 属性
 2. 在非 useEffect/useLayoutEffect 使用 DOM/BOM 属性时，使用 `isBrowser` 判断是否在浏览器环境执行
-3. 如果某个 Hooks 需要接收 DOM/BOM 属性，需要支持函数形式传参。以 ahooks 的 useEventListener 举例，必须支持函数形式来指定 target 属性。
+3. 如果某个 Hook 需要接收 DOM/BOM 属性，需要支持函数形式传参。以 ahooks 的 useEventListener 举例，必须支持函数形式来指定 target 属性。
 
 ```diff
 import React, { useState } from 'react';
@@ -93,8 +93,8 @@ export default () => {
     'click',
     clickHandler,
     {
--       target: document.getElemenetById('click-btn')
-+       target: () => document.getElemenetById('click-btn')
+-       target: document.getElementById('click-btn')
++       target: () => document.getElementById('click-btn')
     }
   );
 

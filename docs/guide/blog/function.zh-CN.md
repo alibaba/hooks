@@ -29,7 +29,7 @@ const useUnmount = (fn) => {
 
 在上面的代码中，由于我们通过 ref 来记忆最新的函数，解决闭包问题。
 
-然后我们把这两行代码封装一下，封装成 useLatest
+然后我们把这两行代码封装一下，封装成 `useLatest`:
 
 ```js
 const useUnmount = (fn) => {
@@ -47,9 +47,9 @@ const useUnmount = (fn) => {
 
 ## 输出函数
 
-任何输出给用户的函数，都需要用 useMemoizedFn 包裹一下，保证地址永远不会变化。
+任何输出给用户的函数，都需要用 `useMemoizedFn` 包裹一下，保证地址永远不会变化。
 
-举一个比较简单的例子，假如我们有一个 useToggle，代码是这样的
+举一个比较简单的例子，假如我们有一个 `useToggle` Hook，代码是这样的
 
 ```js
 const useToggle = (left, right) => {
@@ -70,11 +70,12 @@ const useToggle = (left, right) => {
 ```js
 const useToggle = (left, right) => {
   const [state, setState] = useState(left);
-  const toggle = () => {
-    setState((s) => (s === left ? right : left));
-  };
 
-  return [state, useMemoizedFn(toggle)];
+  const toggle = useMemoizedFn(() => {
+    setState((s) => (s === left ? right : left));
+  });
+
+  return [state, toggle];
 };
 ```
 

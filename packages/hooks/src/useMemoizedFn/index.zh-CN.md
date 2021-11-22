@@ -13,7 +13,7 @@ nav:
 const [state, setState] = useState('');
 
 // 在 state 变化时，func 地址会变化
-const func = useCallback(()=>{
+const func = useCallback(() => {
   console.log(state);
 }, [state]);
 ```
@@ -24,7 +24,7 @@ const func = useCallback(()=>{
 const [state, setState] = useState('');
 
 // func 地址永远不会变化
-const func = useMemoizedFn(()=>{
+const func = useMemoizedFn(() => {
   console.log(state);
 });
 ```
@@ -42,7 +42,7 @@ const func = useMemoizedFn(()=>{
 ## API
 
 ```typescript
-const fn = useMemoizedFn<T>(fn: T):T;
+const fn = useMemoizedFn<T>(fn: T): T;
 ```
 
 ### Result

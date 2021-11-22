@@ -6,7 +6,7 @@
 
 > A Webpack plugin to enable "Fast Refresh" (also previously known as Hot Reloading) for React components.
 
-In the development, react-refresh can keep state in component, and only change the edited part. [umi](https://umijs.org/zh-CN/docs/fast-refresh) can enable this feature by config `fastRefresh: {}`.
+In the development, react-refresh can keep state in component, and only change the edited part. In [umi](https://umijs.org/zh-CN/docs/fast-refresh), can enable this feature by config `fastRefresh: {}`.
 
 ![fast-refresh.gif](https://camo.githubusercontent.com/244b53f735f2a78cfbce79a3914600840cdedac545e5f309d32ac7be4fdb2517/68747470733a2f2f63646e2e6e6c61726b2e636f6d2f79757175652f302f323032312f6769662f3138393335302f313632303631353937363932382d33633832353564642d396165342d343933342d613833322d3965643934636565353762632e67696623636c69656e7449643d7563376235663533362d656661652d342666726f6d3d64726f702669643d753234363633316564266d617267696e3d2535426f626a6563742532304f626a656374253544266e616d653d666173742d726566726573682e676966266f726967696e4865696768743d363136266f726967696e57696474683d31303030266f726967696e616c547970653d62696e6172792673697a653d35313534393234267374617475733d646f6e65267374796c653d6e6f6e65267461736b49643d7565316263613762312d393035362d343431392d613438382d6231393365366236643936)
 
@@ -16,7 +16,7 @@ This gif shows the development experience of using the react-refresh. After edit
 
 For the Class component, react-refresh are always refresh (remount), existing state will be reset. For function components, react-refresh retains the existing state. Therefore, react-refresh provides a better experience for function components.
 
-This article mainly explains the weird behavior of React Hooks in react-refresh mode. Now let me look at the working mechanism of react-refresh on function components.
+This article mainly explains the weird behavior of React Hooks in react-refresh mode. Now let us look at the working mechanism of react-refresh on function components.
 
 - To maintain the state during hot replacement, the value of `useState` and `useRef` will not update.
 - During hot replacement, [To avoid some problems](<(https://github.com/facebook/react/issues/21019#issuecomment-800650091)>), `useEffect`、`useCallback`、`useMemoRun` will re-executed.
@@ -57,7 +57,7 @@ As shown in the gif, `count` increases with each hot replacement.
 
 ### Second problem
 
-If you used [ahooks v2](https://github.com/alibaba/hooks/blob/master/packages/hooks/src/useUpdateEffect/index.ts) or [react-use](https://github.com/streamich/react-use/blob/master/docs/useUpdateEffect.md) `useUpdateEffect` will also have unexpected behavior in HMR.
+If you used [ahooks v2](https://github.com/alibaba/hooks/blob/release/v2.x/packages/hooks/src/useUpdateEffect/index.ts) or [react-use](https://github.com/streamich/react-use/blob/master/docs/useUpdateEffect.md) `useUpdateEffect` will also have unexpected behavior in HMR.
 
 ```javascript
 import React, { useEffect } from 'react';
@@ -103,12 +103,12 @@ export default useUpdateEffect;
 
 The key of the above code is `isMounted`.
 
-- During initialization, `useEffect` is executed, and the flag `isMounted` is `true`
-- After the HMR, `useEffect` is re-executed, at this time `isMounted` is `true`, and then it is executed again.
+- During initialization, after the `useEffect` is executed, the `isMounted` is changed to `true`
+- After the HMR, when the `useEffect` is re-executing, because the `isMounted` is already `true`, so the whole effect is executed again.
 
 ### Third problem
 
-I first discovered this problem because the `useRequest` of ahooks, after HMR, the `loading` would always be true. After analysis, the reason is use the `isUnmount` ref to mark whether the component is unmount.
+The first time discovered this problem is the `useRequest` of ahooks, after HMR, the `loading` would always be `true`. After an inspection, the reason is use the `isUnmount` ref to mark whether the component is unmount.
 
 ```javascript
 import React, { useEffect, useState } from 'react';
@@ -141,7 +141,7 @@ export default function IndexPage() {
 }
 ```
 
-As the code above, during the hot replacement, `isUnmount.current` becomes true, causing the code to think that the component has been unmounted during the second execution.
+As the code above, during the hot replacement, `isUnmount.current` becomes `true`, causing the code to think that the component has been unmounted during the second execution.
 
 ## How to solve these problems
 
