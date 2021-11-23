@@ -93,7 +93,10 @@ export default class Fetch<TData, TParams extends any[]> {
       this.runPluginHandler('onSuccess', res, params);
 
       this.options.onFinally?.(params, res, undefined);
-      this.runPluginHandler('onFinally', params, res, undefined);
+
+      if (currentCount === this.count) {
+        this.runPluginHandler('onFinally', params, res, undefined);
+      }
 
       return res;
     } catch (error) {
@@ -111,7 +114,10 @@ export default class Fetch<TData, TParams extends any[]> {
       this.runPluginHandler('onError', error, params);
 
       this.options.onFinally?.(params, undefined, error);
-      this.runPluginHandler('onFinally', params, undefined, error);
+
+      if (currentCount === this.count) {
+        this.runPluginHandler('onFinally', params, undefined, error);
+      }
 
       throw error;
     }
