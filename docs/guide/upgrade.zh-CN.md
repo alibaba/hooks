@@ -103,6 +103,7 @@ v3 修复了在 react-refresh（HRM）模式下的一些问题。参考《[React
 ### 新增 Hooks
 
 - [useRafState](/zh-CN/hooks/use-raf-state)
+- [useSetState](/zh-CN/hooks/use-set-state)
 - [useAsyncEffect](/zh-CN/hooks/use-async-effect)
 - [useDeepCompareEffect](/zh-CN/hooks/use-deep-compare-effect)
 - [useIsomorphicLayoutEffect](/zh-CN/hooks/use-isomorphic-layout-effect)
