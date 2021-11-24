@@ -1,5 +1,5 @@
 import type { MutableRefObject } from 'react';
-import type { Options, FetchState, PluginReturn, Service, Subscribe } from './types';
+import type { FetchState, Options, PluginReturn, Service, Subscribe } from './types';
 
 export default class Fetch<TData, TParams extends any[]> {
   pluginImpls: PluginReturn<TData, TParams>[];
@@ -17,10 +17,12 @@ export default class Fetch<TData, TParams extends any[]> {
     public serviceRef: MutableRefObject<Service<TData, TParams>>,
     public options: Options<TData, TParams>,
     public subscribe: Subscribe,
+    public initState: Partial<FetchState<TData, TParams>> = {},
   ) {
     this.state = {
       ...this.state,
       loading: !options.manual,
+      ...initState,
     };
   }
 

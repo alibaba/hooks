@@ -82,13 +82,19 @@ export interface Options<TData, TParams extends any[]> {
   retryCount?: number;
   retryInterval?: number;
 
+  // ready
+  ready?: boolean;
+
   // [key: string]: any;
 }
 
-export type Plugin<TData, TParams extends any[]> = (
-  fetchInstance: Fetch<TData, TParams>,
-  options: Options<TData, TParams>,
-) => PluginReturn<TData, TParams>;
+export type Plugin<TData, TParams extends any[]> = {
+  (fetchInstance: Fetch<TData, TParams>, options: Options<TData, TParams>): PluginReturn<
+    TData,
+    TParams
+  >;
+  onInit?: (options: Options<TData, TParams>) => Partial<FetchState<TData, TParams>>;
+};
 
 // for index
 // export type OptionsWithoutFormat<TData, TParams extends any[]> = Omit<Options<TData, TParams>, 'formatResult'>;

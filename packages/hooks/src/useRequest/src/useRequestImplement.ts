@@ -14,23 +14,10 @@ function useRequestImplement<TData, TParams extends any[]>(
   options: Options<TData, TParams> = {},
   plugins: Plugin<TData, TParams>[] = [],
 ) {
-  const {
-    manual = false,
-    defaultParams,
-    onSuccess,
-    onError,
-    onBefore,
-    onFinally,
-    // formatResult = v => v,
-    ...rest
-  } = options;
+  const { manual = false, ...rest } = options;
 
   const fetchOptions = {
     manual,
-    onSuccess,
-    onError,
-    onBefore,
-    onFinally,
     ...rest,
   };
 
@@ -39,7 +26,14 @@ function useRequestImplement<TData, TParams extends any[]>(
   const update = useUpdate();
 
   const fetchInstance = useCreation(() => {
-    return new Fetch<TData, TParams>(serviceRef, fetchOptions, update);
+    const initState = plugins.map((p) => p?.onInit?.(fetchOptions)).filter(Boolean);
+
+    return new Fetch<TData, TParams>(
+      serviceRef,
+      fetchOptions,
+      update,
+      Object.assign({}, ...initState),
+    );
   }, []);
   fetchInstance.options = fetchOptions;
   // run all plugins hooks
@@ -48,7 +42,7 @@ function useRequestImplement<TData, TParams extends any[]>(
   useMount(() => {
     if (!manual) {
       // useCachePlugin can set fetchInstance.state.params from cache when init
-      const params = fetchInstance.state.params || defaultParams || [];
+      const params = fetchInstance.state.params || options.defaultParams || [];
       // @ts-ignore
       fetchInstance.run(...params);
     }
