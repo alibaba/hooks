@@ -30,6 +30,33 @@ useRequest 完全进行了重写：
 - `options` 参数支持动态变化。
 - 删除了 `pagination`、`loadMore`、`formatResult` 属性，避免了 `useRequest` TypeScript 重载，可以更方便的基于 `useRequest` 封装更高级的 Hooks。
 
+## 兼容 useRequest formatResult API
+
+```ts
+import { useRequest as useRequestBase } from 'ahooks';
+import { Options, Service, Plugin, Result } from 'ahooks/lib/useRequest/src/types';
+
+function useRequest<TData, TParams extends any[], TFormat = TData>(
+  service: Service<TData, TParams>,
+  options?: Options<TData, TParams> & { formatResult?: (data?: TData) => TFormat },
+  plugins?: Plugin<TData, TParams>[],
+): Result<TFormat, TParams>;
+
+function useRequest(service: any, options?: any, plugins?: any) {
+  const { formatResult, ...restOptions } = options || {};
+  const result = useRequestBase(
+    async (...args) => {
+      const data = await service(...args);
+      return formatResult ? formatResult?.(data) : data;
+    },
+    restOptions,
+    plugins,
+  );
+  return result;
+}
+export default useRequest;
+```
+
 ### 详细变更
 
 - 删除了 `UseRequestProvider`，建议自行基于 `useRequest` 封装高级 Hooks 来代替。

@@ -30,6 +30,33 @@ useRequest has been rewritten:
 - The `options` parameter supports dynamic changes.
 - Deleted `pagination`, `loadMore`, `formatResult` options to avoid the overload of TypeScript, it is more convenient for encapsulating more advanced Hooks based on `useRequest`.
 
+## Compatible useRequest formatResult API
+
+```ts
+import { useRequest as useRequestBase } from 'ahooks';
+import { Options, Service, Plugin, Result } from 'ahooks/lib/useRequest/src/types';
+
+function useRequest<TData, TParams extends any[], TFormat = TData>(
+  service: Service<TData, TParams>,
+  options?: Options<TData, TParams> & { formatResult?: (data?: TData) => TFormat },
+  plugins?: Plugin<TData, TParams>[],
+): Result<TFormat, TParams>;
+
+function useRequest(service: any, options?: any, plugins?: any) {
+  const { formatResult, ...restOptions } = options || {};
+  const result = useRequestBase(
+    async (...args) => {
+      const data = await service(...args);
+      return formatResult ? formatResult?.(data) : data;
+    },
+    restOptions,
+    plugins,
+  );
+  return result;
+}
+export default useRequest;
+```
+
 ### Detailed changes
 
 - Deleted `UseRequestProvider`, it is recommended to encapsulate advanced Hooks based on `useRequest` instead.
