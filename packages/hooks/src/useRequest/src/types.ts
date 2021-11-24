@@ -78,6 +78,10 @@ export interface Options<TData, TParams extends any[]> {
   cacheTime?: number;
   staleTime?: number;
 
+  // retry
+  retryCount?: number;
+  retryInterval?: number;
+
   // [key: string]: any;
 }
 
