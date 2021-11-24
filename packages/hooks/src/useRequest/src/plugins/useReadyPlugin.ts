@@ -1,23 +1,31 @@
-// import useUpdateEffect from '../../../useUpdateEffect';
-// import type { Plugin } from '../types';
+import useUpdateEffect from '../../../useUpdateEffect';
+import type { Plugin } from '../types';
 
-// // TODO  等待重新确定 ready 逻辑，暂时不支持
-// const useReadyPlugin: Plugin<any, any[]> = (fetchInstance, { manual, ready = true }) => {
-//   useUpdateEffect(() => {
-//     if (!manual && ready) {
-//       fetchInstance.refresh();
-//     }
-//   }, [ready]);
+const useReadyPlugin: Plugin<any, any[]> = (
+  fetchInstance,
+  { manual, ready = true, defaultParams = [] },
+) => {
+  useUpdateEffect(() => {
+    if (!manual && ready) {
+      fetchInstance.run(...defaultParams);
+    }
+  }, [ready]);
 
-//   return {
-//     onBefore: () => {
-//       if (!ready) {
-//         return {
-//           stopNow: true,
-//         };
-//       }
-//     },
-//   };
-// };
+  return {
+    onBefore: () => {
+      if (!ready) {
+        return {
+          stopNow: true,
+        };
+      }
+    },
+  };
+};
 
-// export default useReadyPlugin;
+useReadyPlugin.onInit = ({ ready = true, manual }) => {
+  return {
+    loading: !manual && ready,
+  };
+};
+
+export default useReadyPlugin;
