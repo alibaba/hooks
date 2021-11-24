@@ -37,8 +37,10 @@ import { useRequest as useRequestBase } from 'ahooks';
 import { Options, Service, Plugin, Result } from 'ahooks/lib/useRequest/src/types';
 
 function useRequest<TData, TParams extends any[], TFormat = TData>(
-  service: Service<TData, TParams>,
-  options?: Options<TData, TParams> & { formatResult?: (data?: TData) => TFormat },
+  service:
+    | Service<TData, TParams>
+    | { service: Service<TData, TParams>; formatResult?: (data?: TData) => TFormat },
+  options?: Options<TData, TParams>,
   plugins?: Plugin<TData, TParams>[],
 ): Result<TFormat, TParams>;
 
@@ -55,6 +57,12 @@ function useRequest(service: any, options?: any, plugins?: any) {
   return result;
 }
 export default useRequest;
+
+// 使用
+const { data, runAsync: fetchUser } = useRequest({
+  service: fetchData,
+  formatResult: (data) => data,
+});
 ```
 
 ### 详细变更
