@@ -46,15 +46,18 @@ function useRequest<TData, TParams extends any[], TFormat = TData>(
 
 function useRequest(service: any, options?: any, plugins?: any) {
   const { formatResult, ...restOptions } = options || {};
-  const result = useRequestBase(
+  return useRequest(
     async (...args) => {
+      if (typeof service === 'object') {
+        const data = await service.service(...args);
+        return service.formatResult ? service.formatResult?.(data) : data;
+      }
       const data = await service(...args);
-      return formatResult ? formatResult?.(data) : data;
+      return data;
     },
-    restOptions,
+    options,
     plugins,
   );
-  return result;
 }
 export default useRequest;
 
