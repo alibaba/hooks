@@ -62,10 +62,7 @@ function useRequest(service: any, options?: any, plugins?: any) {
 export default useRequest;
 
 // 使用
-const { data, runAsync: fetchUser } = useRequest({
-  service: fetchData,
-  formatResult: (data) => data,
-});
+const { data } = useRequest({ service: fetchData, formatResult: (data) => data });
 ```
 
 ### 详细变更
