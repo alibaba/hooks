@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useGetState } from 'ahooks';
 
 export default () => {
@@ -14,9 +14,5 @@ export default () => {
     };
   }, []);
 
-  return (
-    <button onClick={() => setCount(count => count + 1)}>
-      count: {count}
-    </button>
-  );
+  return <button onClick={() => setCount((count) => count + 1)}>count: {count}</button>;
 };

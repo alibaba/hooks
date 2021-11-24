@@ -3,7 +3,7 @@ nav:
   path: /hooks
 ---
 
-# ueGetState
+# useGetState
 
 Add a getter method to the return value of `React.useState` to get the latest value
 
@@ -16,5 +16,5 @@ Add a getter method to the return value of `React.useState` to get the latest va
 ## API
 
 ```typescript
-const [state, setState, getState] = ueGetState<S>(initialState: S | (() => S)): [S, (nextState: S | ((prevState: S) => S)) => void, () => S]
+const [state, setState, getState] = useGetState<S>(initialState: S | (() => S)): [S, (nextState: S | ((prevState: S) => S)) => void, () => S]
 ```
