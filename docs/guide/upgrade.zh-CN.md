@@ -45,7 +45,6 @@ function useRequest<TData, TParams extends any[], TFormat = TData>(
 ): Result<TFormat, TParams>;
 
 function useRequest(service: any, options?: any, plugins?: any) {
-  const { formatResult, ...restOptions } = options || {};
   return useRequest(
     async (...args) => {
       if (typeof service === 'object') {
