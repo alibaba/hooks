@@ -78,7 +78,7 @@ export interface Options<TData, TParams extends any[]> {
   cacheTime?: number;
   staleTime?: number;
 
-  [key: string]: any;
+  // [key: string]: any;
 }
 
 export type Plugin<TData, TParams extends any[]> = (
