@@ -29,6 +29,7 @@ export default {
   favicon: '/simple-logo.svg',
   logo: '/logo.svg',
   dynamicImport: {},
+  runtimePublicPath: true,
   manifest: {},
   links: [{ rel: 'manifest', href: '/asset-manifest.json' }],
   hash: true,
@@ -83,6 +84,11 @@ export default {
     notice.className = 'notice';
     notice.innerHTML = '<div class="notice-content">ahooks 3.0 is comming! welcome to try it <a href="https://ahooks-next.surge.sh/" target="_blank">https://ahooks-next.surge.sh/</a></div>';
     document.body.appendChild(notice);
+  `,
+    `
+  if(window.location.pathname.indexOf('/ahooks-v2') > -1) {
+    window.routerBase = '/ahooks-v2/'
+  }
   `,
   ],
   hire: {
