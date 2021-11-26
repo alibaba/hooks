@@ -94,9 +94,9 @@ useInterval(() => {
 
 v3 修复了在严格模式下的一些问题。参考《[React Hooks & strict mode](/zh-CN/guide/blog/strict)》
 
-## 支持 react-refresh（HRM）模式
+## 支持 react-refresh（HMR）模式
 
-v3 修复了在 react-refresh（HRM）模式下的一些问题。参考《[React Hooks & react-refresh（HMR）](/zh-CN/guide/blog/hmr)》
+v3 修复了在 react-refresh（HMR）模式下的一些问题。参考《[React Hooks & react-refresh（HMR）](/zh-CN/guide/blog/hmr)》
 
 ## 更多变更
 
