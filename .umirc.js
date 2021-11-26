@@ -85,6 +85,11 @@ export default {
     notice.innerHTML = '<div class="notice-content">ahooks 3.0 is comming! welcome to try it <a href="https://ahooks-next.surge.sh/" target="_blank">https://ahooks-next.surge.sh/</a></div>';
     document.body.appendChild(notice);
   `,
+    `
+    if(window.location.pathname.indexOf('/ahooks-v2') > -1){
+      window.routerBase='/ahooks-v2/'
+    }
+  `,
   ],
   hire: {
     title: '招招招招招前端！！！！',
