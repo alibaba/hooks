@@ -7,7 +7,7 @@
 - 对输入输出函数做特殊处理，避免闭包问题
 - DOM 类 Hooks 支持 target 动态变化
 - 解决了在严格模式（Strict Mode）下的问题
-- 解决了在 react-refresh（HRM）模式下的问题
+- 解决了在 react-refresh（HMR）模式下的问题
 - 修复了已知问题
 - 新增了更多的 Hooks
 
