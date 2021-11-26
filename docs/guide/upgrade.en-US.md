@@ -7,7 +7,7 @@ Compared with the ahooks v2 version, the changes in the ahooks v3 version mainly
 - Special treatment for input and output functions to avoid closure problems
 - Hooks of DOM support dynamic target
 - Solved the problem in Strict Mode
-- Solved the problem in react-refresh (HRM) mode
+- Solved the problem in react-refresh (HMR) mode
 - Fixed known issues
 - Added more Hooks
 
@@ -94,9 +94,9 @@ Related documents can be found in "[ahooks function specification](/guide/blog/f
 
 v3 fixed some problems in strict mode. Refer to "[React Hooks & strict mode](/guide/blog/strict)"
 
-## Support react-refresh (HRM) mode
+## Support react-refresh (HMR) mode
 
-v3 fixed some problems in react-refresh (HRM) mode. Refer to "[React Hooks & react-refresh (HMR)](/guide/blog/hmr)"
+v3 fixed some problems in react-refresh (HMR) mode. Refer to "[React Hooks & react-refresh (HMR)](/guide/blog/hmr)"
 
 ## More changes
 
