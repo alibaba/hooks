@@ -29,7 +29,7 @@ export default {
   favicon: '/simple-logo.svg',
   logo: '/logo.svg',
   dynamicImport: {},
-  runtimePublicPath: true,
+  // publicPath: 'https://ahooks.gitee.io/ahooks-v2/',
   manifest: {},
   links: [{ rel: 'manifest', href: '/asset-manifest.json' }],
   hash: true,
@@ -58,7 +58,7 @@ export default {
       { title: 'v1.x', path: 'http://hooks.umijs.org/' },
       { title: 'GitHub', path: 'https://github.com/alibaba/hooks' },
       { title: '更新日志', path: 'https://github.com/alibaba/hooks/releases' },
-      { title: '国内镜像', path: 'https://ahooks.gitee.io/zh-CN' },
+      { title: '国内镜像', path: 'https://ahooks.gitee.io/ahooks-v2/zh-CN' },
     ],
     'en-US': [
       null,
@@ -74,7 +74,7 @@ export default {
       { title: 'v1.x', path: 'http://hooks.umijs.org/' },
       { title: 'GitHub', path: 'https://github.com/alibaba/hooks' },
       { title: 'Changelog', path: 'https://github.com/alibaba/hooks/releases' },
-      { title: '国内镜像', path: 'https://ahooks.gitee.io/zh-CN' },
+      { title: '国内镜像', path: 'https://ahooks.gitee.io/ahooks-v2/zh-CN' },
     ],
   },
   headScripts: [
@@ -84,11 +84,6 @@ export default {
     notice.className = 'notice';
     notice.innerHTML = '<div class="notice-content">ahooks 3.0 is comming! welcome to try it <a href="https://ahooks-next.surge.sh/" target="_blank">https://ahooks-next.surge.sh/</a></div>';
     document.body.appendChild(notice);
-  `,
-    `
-  if(window.location.pathname.indexOf('/ahooks-v2') > -1) {
-    window.routerBase = '/ahooks-v2/'
-  }
   `,
   ],
   hire: {
