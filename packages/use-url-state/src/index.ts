@@ -1,7 +1,8 @@
 import { useMemoizedFn, useUpdate } from 'ahooks';
 import { parse, stringify } from 'query-string';
 import { useMemo, useRef } from 'react';
-import * as rc from 'react-router';
+
+const rc = require('react-router');
 
 export interface Options {
   navigateMode?: 'push' | 'replace';
