@@ -1,10 +1,34 @@
 # ahooks function specification
 
-Inside ahooks, we have made special treatment for the functions input by the user and the functions returned, to avoid the closure problem as much as possible.
+ahooks tries its best to help everyone avoid the closure problem by specially processing the input and output functions.
 
-## Input function
+**1. All the output functions of ahooks, the references are stable**
 
-The function input by the user needs to be memorized before being used to avoid the closure problem.
+```ts
+const [state, setState] = useState();
+```
+
+As we all know, the reference of the `setState` function returned by `React.useState` is fixed, and there is no need to consider weird problems when using it, and there is no need to put `setState` in the dependencies of other Hooks.
+
+All functions returned by ahooks Hooks have the same characteristics as `setState`, the reference will not change, just feel free to use it.
+
+**2. For all user input functions, always use the latest one**
+
+For the received function, ahooks will do a special process to ensure that the function called each time is always the latest.
+
+```ts
+const [state, setState] = useState();
+
+useInterval(() => {
+  console.log(state);
+}, 1000);
+```
+
+For example, in the above example, the function called by `useInterval` at any time is always the latest, that is, the state is always the latest.
+
+## Principle
+
+For the input function, we use `useRef` to make a record to ensure that the latest function can be accessed anywhere.
 
 ```js
 const fnRef = useRef(fn);
@@ -29,25 +53,7 @@ const useUnmount = (fn) => {
 
 In the above code, because we use ref for memorizing the latest function to solve the closure problem.
 
-Then we encapsulate these two lines of code into `useLatest`:
-
-```js
-const useUnmount = (fn) => {
-  const fnRef = useLatest(fn);
-
-  useEffect(
-    () => () => {
-      fnRef.current();
-    },
-    [],
-  );
-```
-
-**All functions input by the user need to be wrapped with useLatest before being used.**
-
-## Output function
-
-Any function output to the user needs to be wrapped with `useMemoizedFn` to ensure that the reference address will never change.
+For the output function, we use the [useMemoizedFn](/zh-CN/hooks/use-memoized-fn) wrapped to ensure that the reference address will never change.
 
 For a simple example, given a `useToggle` Hook, the code is like this:
 
@@ -65,7 +71,7 @@ const useToggle = (left, right) => {
 
 The `toggle` function returned in this demo will change according to the changes of `left/right`, which is uncomfortable for users to use.
 
-As we all know, the `setState` reference address returned by `React.useState` will not change. Our goal is: the reference addresses of all returned functions remain unchanged.
+Then we replace `useCallback` with `useMemoizedFn` to realize that the `toggle` reference will never change.
 
 ```js
 const useToggle = (left, right) => {
@@ -78,5 +84,3 @@ const useToggle = (left, right) => {
   return [state, toggle];
 };
 ```
-
-By using the [useMemoizedFn](/hooks/use-memoized-fn), we can ensure that the function reference address will not change.

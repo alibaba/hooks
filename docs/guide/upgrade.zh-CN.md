@@ -36,7 +36,7 @@ useRequest 完全进行了重写：
 - 删除了 `pagination` 相关属性，建议使用 `usePagination` 或 `useAntdTable` 来实现分页能力。
 - 删除了 `loadMore` 相关属性，建议使用 `useInfiniteScroll` 来实现无限加载能力。
 - 删除了 `fetchKey`，也就是删除了并行能力。
-- 删除了 `formatResult`、`initialData`、`ready`、`thrownError`。
+- 删除了 `formatResult`、`initialData`、`thrownError`。
 - 不再默认集成请求库，`service` 不再支持字符或对象。
 - 新增了 `runAsync` 和 `refreshAsync`，原来的 `run` 不再返回 Promise。
 - 新增了错误重试能力。
@@ -45,6 +45,7 @@ useRequest 完全进行了重写：
 - 防抖/节流模式下，`runAsync` 可以返回正常 Promise。
 - 防抖/节流支持更多参数。
 - 只有成功的请求数据才会缓存。
+- `ready` 行为升级
 
 ## SSR 支持
 

@@ -45,6 +45,7 @@ useRequest has been rewritten:
 - In debounce/throttle mode, `runAsync` can return current Promise.
 - Debounce/throttle mode supports more options.
 - Only successful request data will be cached.
+- Upgraded `ready` behavior
 
 ## Support SSR
 
