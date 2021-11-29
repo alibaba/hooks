@@ -46,6 +46,13 @@ group:
 
 <code src="./demo/params.tsx" />
 
+
+### 自定义缓存
+
+可以通过设置 `setCache` 来自定义缓存方案，并通过 `getCache` 来获取自定义的存储结果。使用自定义换筹，`staleTime` 的过期时间需要自行判断。建议两者配合使用
+
+<code src="./demo/customCache.tsx" />
+
 ## API
 
 ### Options
