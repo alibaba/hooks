@@ -112,7 +112,7 @@ const useAntdTable = <TData extends Data, TParams extends any[] = Params>(
     _submit();
   };
 
-  const submit = (e: any) => {
+  const submit = (e?: any) => {
     e?.preventDefault?.();
     _submit();
   };
