@@ -52,6 +52,8 @@ const createEffectWithTarget = (useEffectType: typeof useEffect | typeof useLayo
 
     useUnmount(() => {
       unLoadRef.current?.();
+      // for react-refresh
+      hasInitRef.current = false;
     });
   };
 
