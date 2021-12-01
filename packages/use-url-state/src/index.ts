@@ -1,7 +1,10 @@
 import { useMemoizedFn, useUpdate } from 'ahooks';
 import { parse, stringify } from 'query-string';
 import { useMemo, useRef } from 'react';
-import * as rc from 'react-router';
+
+import type * as React from 'react';
+
+const rc = require('react-router');
 
 export interface Options {
   navigateMode?: 'push' | 'replace';
@@ -16,7 +19,10 @@ const parseConfig = {
 
 type UrlState = Record<string, any>;
 
-export default <S extends UrlState = UrlState>(initialState?: S | (() => S), options?: Options) => {
+const useUrlState = <S extends UrlState = UrlState>(
+  initialState?: S | (() => S),
+  options?: Options,
+) => {
   type State = Partial<{ [key in keyof S]: any }>;
   const { navigateMode = 'push' } = options || {};
 
@@ -72,3 +78,5 @@ export default <S extends UrlState = UrlState>(initialState?: S | (() => S), opt
 
   return [targetQuery, useMemoizedFn(setState)] as const;
 };
+
+export default useUrlState;
