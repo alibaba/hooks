@@ -22,6 +22,7 @@ import useExternal from './useExternal';
 import useFavicon from './useFavicon';
 import useFullscreen from './useFullscreen';
 import useFusionTable from './useFusionTable';
+import useGetState from './useGetState';
 import useHistoryTravel from './useHistoryTravel';
 import useHover from './useHover';
 import useInfiniteScroll from './useInfiniteScroll';
@@ -67,7 +68,6 @@ import useUpdateLayoutEffect from './useUpdateLayoutEffect';
 import useVirtualList from './useVirtualList';
 import useWebSocket from './useWebSocket';
 import useWhyDidYouUpdate from './useWhyDidYouUpdate';
-import useGetState from './useGetState';
 
 export {
   useRequest,
