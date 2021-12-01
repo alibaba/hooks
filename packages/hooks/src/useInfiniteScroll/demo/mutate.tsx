@@ -1,6 +1,5 @@
 import React from 'react';
-import { useInfiniteScroll } from 'ahooks';
-import { useRequest } from '../../';
+import { useInfiniteScroll, useRequest } from 'ahooks';
 
 interface Result {
   list: string[];
