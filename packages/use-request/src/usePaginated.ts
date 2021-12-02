@@ -72,11 +72,11 @@ function usePaginated<R, Item, U extends Item = any>(
 
       const tempTotalPage = Math.ceil(total / toPageSize);
       if (toCurrent > tempTotalPage) {
-        toCurrent = tempTotalPage;
+        toCurrent = Math.max(1, tempTotalPage);
       }
       runChangePagination({
-        current: c,
-        pageSize: p,
+        current: toCurrent,
+        pageSize: toPageSize,
       });
     },
     [total, runChangePagination],
