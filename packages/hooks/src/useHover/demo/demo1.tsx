@@ -3,7 +3,7 @@
  * desc: Use ref to set element that needs monitoring.
  *
  * title.zh-CN: 基础用法
- * desc.zh-CN: 使用 ref 设置需要需要监听的元素。
+ * desc.zh-CN: 使用 ref 设置需要监听的元素。
  */
 
 import React, { useRef } from 'react';
