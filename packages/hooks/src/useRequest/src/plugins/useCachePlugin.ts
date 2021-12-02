@@ -1,4 +1,5 @@
 import { useRef } from 'react';
+import useLatest from '../../../useLatest';
 import useCreation from '../../../useCreation';
 import useUnmount from '../../../useUnmount';
 import type { Plugin } from '../types';
@@ -20,23 +21,26 @@ const useCachePlugin: Plugin<any, any[]> = (
 
     const currentPromiseRef = useRef<Promise<any>>();
 
-    // get|set data from custom cache when seted in options
-    const customCache = useCreation(() => ({
+    // use the lastest custom cache
+    const customCache = useLatest({ setCache, getCache });
+    // custom cache or default cache
+    const totalCache = useCreation(() => ({
         setCache: (cacheKey, cacheTime, data, params) => {
-            return !!setCache ? setCache(cacheKey, data) : cache.setCache(cacheKey, cacheTime, data, params);
+            return !!setCache ? cache.setCustomCache(cacheKey, data, params, customCache) : cache.setCache(cacheKey, cacheTime, data, params);
         },
         getCache: (cacheKey) => {
-            return !!getCache ? { data: getCache(cacheKey), params: null, time: 0 } : cache.getCache(cacheKey);
+            return !!getCache ? cache.getCustomCache(cacheKey) : cache.getCache(cacheKey);
         }
     }), [])
 
     useCreation(() => {
         if (!cacheKey) {
             return;
+
         }
 
         // get data from cache when init
-        const cacheData = customCache.getCache(cacheKey);
+        const cacheData = totalCache.getCache(cacheKey);
 
         if (cacheData) {
             fetchInstance.state.data = cacheData.data;
@@ -59,7 +63,7 @@ const useCachePlugin: Plugin<any, any[]> = (
 
     return {
         onBefore: () => {
-            const cacheData = customCache.getCache(cacheKey);
+            const cacheData = totalCache.getCache(cacheKey);
 
             if (!cacheData) {
                 return {};
@@ -96,7 +100,7 @@ const useCachePlugin: Plugin<any, any[]> = (
             if (cacheKey) {
                 // cancel subscribe, avoid trgger self
                 unSubscribeRef.current?.();
-                customCache.setCache(cacheKey, cacheTime, data, params);
+                totalCache.setCache(cacheKey, cacheTime, data, params);
                 // resubscribe
                 unSubscribeRef.current = cache.subscribe(cacheKey, (d) => {
                     fetchInstance.setState({ data: d });
@@ -107,7 +111,7 @@ const useCachePlugin: Plugin<any, any[]> = (
             if (cacheKey) {
                 // cancel subscribe, avoid trgger self
                 unSubscribeRef.current?.();
-                customCache.setCache(cacheKey, cacheTime, data, fetchInstance.state.params);
+                totalCache.setCache(cacheKey, cacheTime, data, fetchInstance.state.params);
                 // resubscribe
                 unSubscribeRef.current = cache.subscribe(cacheKey, (d) => {
                     fetchInstance.setState({ data: d });

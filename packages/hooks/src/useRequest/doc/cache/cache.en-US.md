@@ -46,6 +46,12 @@ In the following example, we can initialize the `keyword` from the cached `param
 
 <code src="./demo/params.tsx" />
 
+## Custom cache
+
+You can customize the cache by setting `setcache`, and get customized storage results through `getcache`.
+
+<code src="./demo/customCache.tsx" />
+
 ## API
 
 ### Options

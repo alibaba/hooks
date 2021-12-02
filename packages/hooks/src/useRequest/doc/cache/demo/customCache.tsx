@@ -1,10 +1,9 @@
 import { useBoolean } from 'ahooks';
 import Mock from 'mockjs';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useRequest } from 'ahooks';
 
 async function getArticle(): Promise<{ data: string; time: number }> {
-    console.log('cacheKey');
     return new Promise((resolve) => {
         setTimeout(() => {
             resolve({
@@ -15,13 +14,15 @@ async function getArticle(): Promise<{ data: string; time: number }> {
     });
 }
 
+let getCache = (cacheKey) => {
+    return JSON.parse(localStorage.getItem(cacheKey));
+};
+
 const Article = () => {
     const { data, loading } = useRequest(getArticle, {
         cacheKey: 'cacheKey-demo',
-        getCache: (cacheKey) => {
-            console.log('AAAAAAAAAAA', cacheKey)
-            return JSON.parse(localStorage.getItem(cacheKey));
-        },
+        staleTime: -1,
+        getCache,
         setCache: (cacheKey, data) => {
             localStorage.setItem(cacheKey, JSON.stringify(data));
         }
@@ -39,6 +40,13 @@ const Article = () => {
 
 export default () => {
     const [state, { toggle }] = useBoolean();
+    // useEffect(() => {
+    //     setTimeout(() => {
+    //         getCache = (cacheKey) => {
+    //             return { data: cacheKey + 'hahahhaa' }
+    //         }
+    //     }, 3000)
+    // }, [])
     return (
         <div>
             <button type="button" onClick={() => toggle()}>
