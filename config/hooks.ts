@@ -12,6 +12,7 @@ export const menus = [
       'useRequest/doc/debounce',
       'useRequest/doc/throttle',
       'useRequest/doc/cache',
+      'useRequest/doc/clearCache',
       'useRequest/doc/retry',
     ],
   },

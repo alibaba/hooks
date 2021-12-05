@@ -52,4 +52,13 @@ const subscribe = (key: string, listener: Listener) => {
   };
 };
 
-export { getCache, setCache, subscribe };
+const clearCache = (key?: string | string[]) => {
+  if (key) {
+    const cacheKeys = Array.isArray(key) ? key : [key];
+    cacheKeys.forEach((cacheKey) => cache.delete(cacheKey));
+  } else {
+    cache.clear();
+  }
+};
+
+export { getCache, setCache, subscribe, clearCache };

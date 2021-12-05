@@ -1,6 +1,6 @@
 import { act, renderHook } from '@testing-library/react-hooks';
 import { fireEvent } from '@testing-library/react';
-import useRequest from '../index';
+import { useRequest } from '../index';
 import { request } from '../../utils/testingHelpers';
 
 describe('useRefreshOnWindowFocusPlugin', () => {
