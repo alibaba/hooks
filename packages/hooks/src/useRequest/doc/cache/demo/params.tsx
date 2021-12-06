@@ -1,5 +1,5 @@
 import { useBoolean } from 'ahooks';
-import { useRequest } from '../../../';
+import useRequest from '../../../';
 import Mock from 'mockjs';
 import React, { useState } from 'react';
 

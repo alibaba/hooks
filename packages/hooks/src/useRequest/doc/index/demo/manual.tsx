@@ -8,7 +8,7 @@
 
 import { message } from 'antd';
 import React, { useState } from 'react';
-import { useRequest } from '../../../';
+import useRequest from '../../../';
 
 function changeUsername(username: string): Promise<{ success: boolean }> {
   return new Promise((resolve) => {

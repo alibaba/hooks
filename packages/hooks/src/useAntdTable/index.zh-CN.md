@@ -63,9 +63,6 @@ nav:
 
 通过设置 `cacheKey`，我们可以实现 `Form` 与 `Table` 数据缓存。
 
-通过调用 `clearCache`，我们可以清空 `Form` 与 `Table` 的数据缓存。
-
-
 <code src="./demo/cache.tsx" />
 
 

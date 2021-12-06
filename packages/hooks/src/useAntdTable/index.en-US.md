@@ -61,8 +61,6 @@ Before the form is submitted, we will call `form.validateFields` to validate the
 
 By setting `cacheKey`, we can apply the data caching for the `Form` and `Table`.
 
-By calling `clearCache`, we can clear the cached data for the `Form` and `Table`.
-
 <code src="./demo/cache.tsx" />
 
 ## API

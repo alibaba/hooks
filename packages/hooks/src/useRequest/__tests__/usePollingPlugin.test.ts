@@ -1,5 +1,5 @@
 import { act, renderHook } from '@testing-library/react-hooks';
-import { useRequest } from '../index';
+import useRequest from '../index';
 import { request } from '../../utils/testingHelpers';
 
 describe('usePollingPlugin', () => {

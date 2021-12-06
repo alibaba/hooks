@@ -1,8 +1,7 @@
 import { act, renderHook } from '@testing-library/react-hooks';
 import MockDate from 'mockdate';
-import { useRequest } from '../index';
+import useRequest, { clearCache } from '../index';
 import { request } from '../../utils/testingHelpers';
-import { clearCache } from '../src/utils/cache';
 
 describe('useCachePlugin', () => {
   jest.useFakeTimers();
