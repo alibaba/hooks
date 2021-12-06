@@ -4,7 +4,10 @@ import { useMemo, useRef } from 'react';
 
 import type * as React from 'react';
 
-const rc = require('react-router');
+import * as tmp from 'react-router';
+
+// ignore waring `"export 'useNavigate' (imported as 'rc') was not found in 'react-router'`
+const rc = tmp as any;
 
 export interface Options {
   navigateMode?: 'push' | 'replace';
@@ -27,10 +30,8 @@ const useUrlState = <S extends UrlState = UrlState>(
   const { navigateMode = 'push' } = options || {};
 
   // react-router v5
-  // @ts-ignore
   const history = rc.useHistory?.();
   // react-router v6
-  // @ts-ignore
   const navigate = rc.useNavigate?.();
 
   const update = useUpdate();
