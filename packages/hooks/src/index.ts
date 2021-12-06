@@ -43,7 +43,7 @@ import usePagination from './usePagination';
 import usePrevious from './usePrevious';
 import useRafState from './useRafState';
 import useReactive from './useReactive';
-import useRequest from './useRequest';
+import useRequest, { clearCache } from './useRequest';
 import { configResponsive, useResponsive } from './useResponsive';
 import useSafeState from './useSafeState';
 import useScroll from './useScroll';
@@ -141,4 +141,5 @@ export {
   useFusionTable,
   useInfiniteScroll,
   useGetState,
+  clearCache,
 };

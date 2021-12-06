@@ -1,6 +1,6 @@
 import { act, renderHook } from '@testing-library/react-hooks';
 import MockDate from 'mockdate';
-import useRequest from '../index';
+import useRequest, { clearCache } from '../index';
 import { request } from '../../utils/testingHelpers';
 
 describe('useCachePlugin', () => {
@@ -145,5 +145,33 @@ describe('useCachePlugin', () => {
     expect(hook3.result.current.loading).toEqual(false);
     expect(hook3.result.current.data).toEqual('success');
     hook3.unmount();
+  });
+
+  it('clearCache should work', async () => {
+    MockDate.set(0);
+    act(() => {
+      hook = setUp(request, {
+        cacheKey: 'testClearCache',
+      });
+    });
+
+    act(() => {
+      jest.runAllTimers();
+    });
+    await hook.waitForNextUpdate();
+    expect(hook.result.current.loading).toEqual(false);
+    expect(hook.result.current.data).toEqual('success');
+    hook.unmount();
+
+    let hook2;
+    act(() => {
+      clearCache('testClearCache');
+      hook2 = setUp(request, {
+        cacheKey: 'testClearCache',
+      });
+    });
+    expect(hook2.result.current.loading).toEqual(true);
+    expect(hook2.result.current.data).toEqual(undefined);
+    hook2.unmount();
   });
 });
