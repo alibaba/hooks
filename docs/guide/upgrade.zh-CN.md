@@ -41,6 +41,7 @@ useRequest 完全进行了重写：
 - 新增了 `runAsync` 和 `refreshAsync`，原来的 `run` 不再返回 Promise。
 - 新增了错误重试能力。
 - 新增了 `onBefore`、`onFinally` 生命周期。
+- 新增了缓存清理能力。
 - 所有参数支持动态变化。
 - 防抖/节流模式下，`runAsync` 可以返回正常 Promise。
 - 防抖/节流支持更多参数。

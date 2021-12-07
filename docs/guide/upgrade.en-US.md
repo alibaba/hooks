@@ -41,6 +41,7 @@ useRequest has been rewritten:
 - Added `runAsync` and `refreshAsync`, the original `run` no longer returns Promise.
 - Added error retry ability.
 - Added `onBefore` and `onFinally` life cycles.
+- Added cache clear ability.
 - All options support dynamic changes.
 - In debounce/throttle mode, `runAsync` can return current Promise.
 - Debounce/throttle mode supports more options.
