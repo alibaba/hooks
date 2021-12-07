@@ -82,7 +82,7 @@ export default {
     `
     let notice = document.createElement('div');
     notice.className = 'notice';
-    notice.innerHTML = '<div class="notice-content">ahooks 3.0 is comming! welcome to try it <a href="https://ahooks-next.surge.sh/" target="_blank">https://ahooks-next.surge.sh/</a></div>';
+    notice.innerHTML = '<div class="notice-content">ahooks 3.0 is comming! welcome to try it <a href="https://ahooks.js.org/" target="_blank">https://ahooks.js.org/</a></div>';
     document.body.appendChild(notice);
   `,
     `
