@@ -17,7 +17,7 @@ We have released the `ahooks-v2` package, you can install v2 and v3 dependencies
 
 ```bash
 npm install ahooks-v2 --save
-npm install ahooks@next --save
+npm install ahooks --save
 ```
 
 ## New useRequest

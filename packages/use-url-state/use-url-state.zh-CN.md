@@ -12,7 +12,7 @@ group:
 ## 安装
 
 ```bash
-npm i @ahooksjs/use-url-state@next -S
+npm i @ahooksjs/use-url-state -S
 ```
 
 > 该 Hooks 基于 `react-router` 的 useLocation & useHistory & useNavigate 进行 query 管理，所以使用该 Hooks 之前，你需要保证

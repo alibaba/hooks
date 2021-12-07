@@ -8,9 +8,9 @@
 
 一套高质量可靠的 React Hooks 库
 
-[![NPM version next][image-1]][1]
+[![NPM version][image-1]][1]
 [![NPM downloads][image-2]][2]
-![gzip size](https://img.badgesize.io/https:/unpkg.com/ahooks@next/dist/ahooks.js?label=gzip%20size&compression=gzip)
+![gzip size](https://img.badgesize.io/https:/unpkg.com/ahooks/dist/ahooks.js?label=gzip%20size&compression=gzip)
 ![GitHub](https://img.shields.io/github/license/alibaba/hooks)
 
 [English](https://github.com/alibaba/hooks/blob/master/README.md) | 简体中文
@@ -21,8 +21,8 @@
 
 ## 📚 文档
 
-- [English](https://ahooks-next.surge.sh/)
-- [中文](https://ahooks-next.surge.sh/zh-CN/)
+- [English](https://ahooks.js.org/)
+- [中文](https://ahooks.js.org/zh-CN/)
 
 ## ✨ 特性
 
@@ -36,9 +36,9 @@
 ## 📦 安装
 
 ```bash
-$ npm install --save ahooks@next
+$ npm install --save ahooks
 # or
-$ yarn add ahooks@next
+$ yarn add ahooks
 ```
 
 ## 🔨 使用

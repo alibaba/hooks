@@ -12,7 +12,7 @@ A hook that store the state into url query.
 ## Install
 
 ```bash
-npm i @ahooksjs/use-url-state@next -S
+npm i @ahooksjs/use-url-state -S
 ```
 
 > This hook relies on useLocation & useHistory & useNavigate from `react-router`, to use this hook, you need to ensure

@@ -17,7 +17,7 @@
 
 ```bash
 npm install ahooks-v2 --save
-npm install ahooks@next --save
+npm install ahooks --save
 ```
 
 ## 全新的 useRequest
