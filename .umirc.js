@@ -78,7 +78,7 @@ export default {
     ],
   },
   headScripts: [
-    'https://s4.cnzz.com/z_stat.php?id=1278992092&web_id=1278992092',
+    'https://v1.cnzz.com/z_stat.php?id=1280574354&web_id=1280574354',
     `
     let notice = document.createElement('div');
     notice.className = 'notice';
