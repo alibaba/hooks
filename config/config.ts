@@ -174,7 +174,7 @@ export default {
     '/zh-CN/hooks': menus,
   },
   scripts: [
-    'https://v1.cnzz.com/z_stat.php?id=1280577701&web_id=1280577701',
+    'https://s4.cnzz.com/z_stat.php?id=1278992092&web_id=1278992092',
     `
   const insertVersion = function(){
     const dom = document.createElement('span');
