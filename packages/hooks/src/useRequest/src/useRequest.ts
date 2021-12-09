@@ -1,9 +1,8 @@
+import useAutoRunPlugin from './plugins/useAutoRunPlugin';
 import useCachePlugin from './plugins/useCachePlugin';
 import useDebouncePlugin from './plugins/useDebouncePlugin';
 import useLoadingDelayPlugin from './plugins/useLoadingDelayPlugin';
 import usePollingPlugin from './plugins/usePollingPlugin';
-import useReadyPlugin from './plugins/useReadyPlugin';
-import useRefreshDeps from './plugins/useRefreshDeps';
 import useRefreshOnWindowFocusPlugin from './plugins/useRefreshOnWindowFocusPlugin';
 import useRetryPlugin from './plugins/useRetryPlugin';
 import useThrottlePlugin from './plugins/useThrottlePlugin';
@@ -32,10 +31,9 @@ function useRequest<TData, TParams extends any[]>(
     usePollingPlugin,
     useRefreshOnWindowFocusPlugin,
     useThrottlePlugin,
-    useRefreshDeps,
+    useAutoRunPlugin,
     useCachePlugin,
     useRetryPlugin,
-    useReadyPlugin,
   ] as Plugin<TData, TParams>[]);
 }
 
