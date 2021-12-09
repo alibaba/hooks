@@ -1,11 +1,11 @@
 import { useMemo, useState } from 'react';
 import { useEventListener, useMemoizedFn, useRequest, useUpdateEffect } from '../';
 import { getTargetElement } from '../utils/domTarget';
-import type { Data, InfiniteSrollOptions, Service } from './types';
+import type { Data, InfiniteScrollOptions, Service } from './types';
 
 const useInfiniteScroll = <TData extends Data>(
   service: Service<TData>,
-  options: InfiniteSrollOptions<TData> = {},
+  options: InfiniteScrollOptions<TData> = {},
 ) => {
   const {
     target,
