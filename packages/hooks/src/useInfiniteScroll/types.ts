@@ -5,7 +5,7 @@ export type Data = { list: any[]; [key: string]: any };
 
 export type Service<TData extends Data> = (currentData?: TData) => Promise<TData>;
 
-export interface InfiniteSrollResult<TData extends Data> {
+export interface InfiniteScrollResult<TData extends Data> {
   data: TData;
   loading: boolean;
   loadingMore: boolean;
@@ -19,7 +19,7 @@ export interface InfiniteSrollResult<TData extends Data> {
   mutate: (data?: TData) => void;
 }
 
-export interface InfiniteSrollOptions<TData extends Data> {
+export interface InfiniteScrollOptions<TData extends Data> {
   target?: BasicTarget;
   isNoMore?: (data?: TData) => boolean;
   threshold?: number;
