@@ -22,7 +22,7 @@ export default <S extends UrlState = UrlState>(initialState?: S | (() => S), opt
   const location = useLocation();
   const history = useHistory();
 
-  const [, update] = useState(false);
+  const [updateFlag, update] = useState(false);
 
   const initialStateRef = useRef(
     typeof initialState === 'function' ? (initialState as () => S)() : initialState || {},
@@ -37,7 +37,7 @@ export default <S extends UrlState = UrlState>(initialState?: S | (() => S), opt
       ...initialStateRef.current,
       ...queryFromUrl,
     }),
-    [queryFromUrl],
+    [queryFromUrl, updateFlag],
   );
 
   const setState = (s: React.SetStateAction<state>) => {
