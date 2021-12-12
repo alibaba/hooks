@@ -90,11 +90,8 @@ const useVirtualList = <T = any>(list: T[], options: Options<T>) => {
       const offset = getOffset(scrollTop);
       const visibleCount = getVisibleCount(clientHeight, offset);
 
-      const start = offset - overscan < 0 ? 0 : offset - overscan;
-      const end =
-        offset + visibleCount + overscan > list.length
-          ? list.length
-          : offset + visibleCount + overscan;
+      const start = Math.max(0, offset - overscan);
+      const end = Math.min(list.length, offset + visibleCount + overscan);
 
       const offsetTop = getDistanceTop(start);
 
