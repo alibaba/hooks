@@ -39,7 +39,7 @@ const useAntdTable = <TData extends Data, TParams extends any[] = Params>(
     const allFieldsValue = form.getFieldsValue();
     const activeFieldsValue = {};
     Object.keys(allFieldsValue).forEach((key: string) => {
-      if (form.getFieldInstance(key)) {
+      if (form.getFieldInstance ? form.getFieldInstance(key) : true) {
         activeFieldsValue[key] = allFieldsValue[key];
       }
     });
@@ -139,7 +139,7 @@ const useAntdTable = <TData extends Data, TParams extends any[] = Params>(
 
     const activeFieldsValue = {};
     Object.keys(allFormData).forEach((key) => {
-      if (form.getFieldInstance(key)) {
+      if (form.getFieldInstance ? form.getFieldInstance(key) : true) {
         activeFieldsValue[key] = allFormData[key];
       }
     });
