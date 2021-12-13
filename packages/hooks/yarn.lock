@@ -11,11 +11,12 @@
     prop-types "^15.5.8"
 
 "@alifd/next@^1.20.6":
-  version "1.24.18"
-  resolved "https://registry.yarnpkg.com/@alifd/next/-/next-1.24.18.tgz#5189f6439e156ccbd99e1bfa51322894ae5f4578"
-  integrity sha512-qfpkZxz/81WxloxAJ9ZR3YRwVh7oR9HM0GbChaSAYAJXaawkZcs7obvgmmePq285Qv5agOzmLpFdJwJ8oRTmIQ==
+  version "1.25.6"
+  resolved "https://registry.yarnpkg.com/@alifd/next/-/next-1.25.6.tgz#49810d649871d634eefd2cb0d86eb2fc46a32f71"
+  integrity sha512-KkRi3GcRHEAbFqLzqX4HwyVOW72mk2w+CY5m2KN0781hAZcxusdoWgJfhaZox++QNnZZcmBmXDgnLqUKjPowZw==
   dependencies:
     "@alifd/field" "~1.5.5"
+    "@alifd/overlay" "^0.2.2"
     "@alifd/validate" "~1.2.0"
     babel-runtime "^6.26.0"
     bignumber.js "^9.0.1"
@@ -28,6 +29,13 @@
     react-transition-group "^2.2.1"
     resize-observer-polyfill "^1.5.1"
     shallow-element-equals "^1.0.1"
+
+"@alifd/overlay@^0.2.2":
+  version "0.2.4"
+  resolved "https://registry.yarnpkg.com/@alifd/overlay/-/overlay-0.2.4.tgz#47513da807a1ffcfc2566af977a47f3012751e52"
+  integrity sha512-0plk1wzCuq7raoab+vH/RW474R1CQnxXVV4o6i+d1rSj4C4wmk1synoGS0szhICyOuYmlUMeVkLxxqwhjVoJHw==
+  dependencies:
+    resize-observer-polyfill "^1.5.1"
 
 "@alifd/validate@^1.2.0":
   version "1.3.1"
