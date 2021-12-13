@@ -176,6 +176,106 @@ describe('useAutoRunPlugin', () => {
     hook.unmount();
   });
 
+  it('useAutoRunPlugin manual=false refreshDeps should work', async () => {
+    let dep = 1;
+    act(() => {
+      hook = setUp(request, {
+        refreshDeps: [dep],
+      });
+    });
+    expect(hook.result.current.loading).toEqual(true);
+
+    act(() => {
+      jest.runAllTimers();
+    });
+    await hook.waitForNextUpdate();
+    expect(hook.result.current.loading).toEqual(false);
+
+    dep = 2;
+    hook.rerender({
+      refreshDeps: [dep],
+    });
+    expect(hook.result.current.loading).toEqual(true);
+
+    act(() => {
+      jest.runAllTimers();
+    });
+    await hook.waitForNextUpdate();
+    expect(hook.result.current.loading).toEqual(false);
+
+    hook.rerender({
+      refreshDeps: [dep],
+    });
+    expect(hook.result.current.loading).toEqual(false);
+    hook.unmount();
+  });
+
+  it('useAutoRunPlugin manual=true refreshDeps should work', async () => {
+    let dep = 1;
+    act(() => {
+      hook = setUp(request, {
+        manual: true,
+        refreshDeps: [dep],
+      });
+    });
+    expect(hook.result.current.loading).toEqual(false);
+
+    dep = 2;
+    hook.rerender({
+      manual: true,
+      refreshDeps: [dep],
+    });
+    expect(hook.result.current.loading).toEqual(false);
+
+    hook.unmount();
+  });
+
+  it('useAutoRunPlugin refreshDepsAction should work', async () => {
+    let dep = 1;
+    let count = 0;
+    let refreshDepsAction = () => {
+      count += 1;
+    };
+    act(() => {
+      hook = setUp(request, {
+        refreshDeps: [dep],
+        refreshDepsAction,
+      });
+    });
+    expect(hook.result.current.loading).toEqual(true);
+
+    act(() => {
+      jest.runAllTimers();
+    });
+    await hook.waitForNextUpdate();
+    expect(hook.result.current.loading).toEqual(false);
+
+    dep = 2;
+    hook.rerender({
+      refreshDeps: [dep],
+      refreshDepsAction,
+    });
+    expect(hook.result.current.loading).toEqual(false);
+    expect(count).toEqual(1);
+
+    hook.rerender({
+      refreshDeps: [dep],
+      refreshDepsAction,
+    });
+    expect(hook.result.current.loading).toEqual(false);
+    expect(count).toEqual(1);
+
+    dep = 3;
+    hook.rerender({
+      refreshDeps: [dep],
+      refreshDepsAction,
+    });
+    expect(hook.result.current.loading).toEqual(false);
+    expect(count).toEqual(2);
+
+    hook.unmount();
+  });
+
   it('useAutoRunPlugin ready & refreshDeps change same time work fine', async () => {
     const fn = jest.fn();
 

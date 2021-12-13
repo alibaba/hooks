@@ -50,6 +50,7 @@ export interface Options<TData, TParams extends any[]> {
 
   // refreshDeps
   refreshDeps?: DependencyList;
+  refreshDepsAction?: () => void;
 
   // loading delay
   loadingDelay?: number;
