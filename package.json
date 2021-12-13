@@ -17,7 +17,8 @@
     "build:doc": "dumi build",
     "pub:doc": "surge ./dist --domain ahooks-v2.surge.sh",
     "pub:doc-gitee": "cd ./dist && rm -rf .git && touch .spa && touch .nojekyll && git init && git remote add origin git@gitee.com:ahooks/ahooks-v2.git && git add -A && git commit -m \"publish docs\" && git push origin master -f && echo https://gitee.com/ahooks/ahooks-v2/pages",
-    "pub": "lerna publish"
+    "pub": "lerna publish && yarn run pub-v2",
+    "pub-v2": "node scripts/pub-v2.js"
   },
   "husky": {
     "hooks": {
@@ -66,6 +67,9 @@
     "umi-request": "^1.2.18",
     "webpack": "^4.43.0",
     "webpack-cli": "^3.3.10",
-    "webpack-merge": "^4.2.2"
+    "webpack-merge": "^4.2.2",
+    "jsonfile": "^6.1.0",
+    "semver": "^7.3.5",
+    "execa": "^5.1.1"
   }
 }
