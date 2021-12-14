@@ -36,7 +36,7 @@ useRequest has been rewritten:
 - Removed `pagination` related options, it is recommended to use `usePagination` or `useAntdTable` to achieve paging ability.
 - Removed `loadMore` related options, it is recommended to use `useInfiniteScroll` to achieve unlimited loading ability.
 - Removed `fetchKey`, that is, deleted concurrent request.
-- Removed `formatResult`, `initialData`, `ready`, and `thrownError`.
+- Removed `formatResult`, `initialData`, and `thrownError`.
 - The request library is no longer integrated by default, and `service` no longer supports string or object.
 - Added `runAsync` and `refreshAsync`, the original `run` no longer returns Promise.
 - Added error retry ability.
@@ -47,6 +47,8 @@ useRequest has been rewritten:
 - Debounce/throttle mode supports more options.
 - Only successful request data will be cached.
 - Upgraded `ready` behavior
+
+[How is useRequest compatible with deleted capabilities?](#how-is-userequest-compatible-with-deleted-capabilities)
 
 ## Support SSR
 
@@ -208,3 +210,36 @@ v3 fixed some problems in react-refresh (HMR) mode. Refer to "[React Hooks & rea
   - Optimized logic to avoid unnecessary re-render
 
 - More other optimizations
+
+## FAQ
+
+### How is useRequest compatible with deleted capabilities?
+
+The new version of useRequest only provides the underlying capabilities of Promise management, and more advanced capabilities can be supported by encapsulating advanced Hooks based on useRequest.
+
+1. `options.formatResult` is deleted, and the service is expected to return the data in the final format. for example:
+
+```ts
+const { data } = useRequest(async () => {
+  const result = await getData();
+  return result.data;
+});
+```
+
+2. The original concurrent mode of `options.fetchKey` is deleted. It is expected that each request action and UI will be encapsulated as a component instead of placing all requests in the parent.
+
+3. `options.initialData` is deleted, you can do this
+
+```ts
+const { data = initialData } = useRequest(getData);
+```
+
+4. The request library is no longer integrated by default, and `service` no longer supports string or object. It is expected to be supported by encapsulating advanced Hooks based on useReqeust. for example:
+
+```ts
+const useCustomHooks = (pathname, options) => {
+  return useRequest(() => {
+    return axios(pathname);
+  }, options);
+};
+```

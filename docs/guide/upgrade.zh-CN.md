@@ -48,6 +48,8 @@ useRequest 完全进行了重写：
 - 只有成功的请求数据才会缓存。
 - `ready` 行为升级
 
+[被删除的参数如何兼容？](#userequest-被删除的能力如何兼容)
+
 ## SSR 支持
 
 ahooks v3 全面支持 SSR，相关文档可见《[React Hooks & SSR](/zh-CN/guide/blog/ssr)》。
@@ -208,3 +210,36 @@ v3 修复了在 react-refresh（HMR）模式下的一些问题。参考《[React
   - 优化了代码逻辑，避免了不必要的 re-render
 
 - 更多其它优化
+
+## FAQ
+
+### useRequest 被删除的能力如何兼容？
+
+新版 useRequest 只做 Promise 管理的底层能力，更多高级能力可以基于 useRequest 封装高级 Hooks 来支持。
+
+1. 原 `options.formatResult` 删除，期望 service 返回最终格式的数据。比如：
+
+```ts
+const { data } = useRequest(async () => {
+  const result = await getData();
+  return result.data;
+});
+```
+
+2. 原 `options.fetchKey` 并行模式删除，期望将每个请求动作和 UI 封装为一个组件，而不是把所有请求都放到父级。
+
+3. 原 `options.initialData` 删除，可以这样做
+
+```ts
+const { data = initialData } = useRequest(getData);
+```
+
+4. 不再默认集成请求库，`service` 不再支持字符或对象。期望基于 useReqeust 封装高级 Hooks 来支持。比如：
+
+```ts
+const useCustomHooks = (pathname, options) => {
+  return useRequest(() => {
+    return axios(pathname);
+  }, options);
+};
+```
