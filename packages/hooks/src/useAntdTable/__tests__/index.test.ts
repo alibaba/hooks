@@ -10,6 +10,8 @@ interface Query {
 
 describe('useAntdTable', () => {
   // jest.useFakeTimers();
+  jest.setTimeout(30000);
+
   let queryArgs: any;
   const asyncFn = (query: Query, formData: any = {}) => {
     queryArgs = { ...query, ...formData };
