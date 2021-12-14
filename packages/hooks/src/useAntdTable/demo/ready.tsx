@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Button, Col, Form, Input, Row, Table, Select } from 'antd';
 import { useAntdTable } from 'ahooks';
 
@@ -37,11 +37,15 @@ const getTableData = ({ current, pageSize }, formData: Object): Promise<Result> 
 export default () => {
   const [form] = Form.useForm();
 
-  const { loading, tableProps, search, params } = useAntdTable(getTableData, {
+  const [ready, setReady] = useState(false);
+
+  const { tableProps, search, params } = useAntdTable(getTableData, {
     form,
+    ready,
+    cacheKey: 'demo-ready',
     defaultParams: [
-      { current: 2, pageSize: 5 },
-      { name: 'hello', email: 'abc@gmail.com', gender: 'female' },
+      { current: ready ? 2 : 1, pageSize: 5 },
+      { name: ready ? 'hello' : '', email: 'abc@gmail.com', gender: 'female' },
     ],
     defaultType: 'advance',
   });
@@ -124,6 +128,7 @@ export default () => {
 
   return (
     <div>
+      <Button onClick={() => setReady((r) => !r)}>toggle ready</Button>
       {type === 'simple' ? searchForm : advanceSearchForm}
       <Table columns={columns} rowKey="email" {...tableProps} />
 

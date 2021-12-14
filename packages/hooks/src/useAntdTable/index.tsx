@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useMemoizedFn, usePagination, useUpdateEffect } from '..';
 import type { Antd4ValidateFields, AntdTableOptions, Data, Params, Service } from './types';
 
@@ -12,6 +12,7 @@ const useAntdTable = <TData extends Data, TParams extends any[] = Params>(
     defaultParams,
     manual = false,
     refreshDeps = [],
+    ready = true,
     ...rest
   } = options;
 
@@ -24,11 +25,9 @@ const useAntdTable = <TData extends Data, TParams extends any[] = Params>(
 
   const cacheFormTableData = params[2] || ({} as any);
 
-  const [type, setType] = useState(cacheFormTableData.type || defaultType);
-  // all form data，include simple and advance
-  const [allFormData, setAllFormData] = useState<Record<string, any>>(
-    cacheFormTableData.allFormData || defaultParams?.[1] || {},
-  );
+  const [type, setType] = useState(cacheFormTableData?.type || defaultType);
+
+  const allFormDataRef = useRef<Record<string, any>>({});
 
   // get current active field values
   const getActivetFieldValues = () => {
@@ -69,22 +68,39 @@ const useAntdTable = <TData extends Data, TParams extends any[] = Params>(
     return (form.validateFields as Antd4ValidateFields)(fields);
   };
 
-  const changeType = () => {
-    const activeFieldsValue = getActivetFieldValues();
-    setAllFormData({ ...allFormData, ...activeFieldsValue });
+  const restoreForm = () => {
+    if (!form) {
+      return;
+    }
 
-    const targetType = type === 'simple' ? 'advance' : 'simple';
-    setType(targetType);
+    const activeFieldsValue = {};
+    Object.keys(allFormDataRef.current).forEach((key) => {
+      if (form.getFieldInstance(key)) {
+        activeFieldsValue[key] = allFormDataRef.current[key];
+      }
+    });
+    form.setFieldsValue(activeFieldsValue);
   };
 
-  const _submit = (initParams?: TParams) => {
+  const changeType = () => {
+    const activeFieldsValue = getActivetFieldValues();
+    allFormDataRef.current = {
+      ...allFormDataRef.current,
+      ...activeFieldsValue,
+    };
+    setType((t) => (t === 'simple' ? 'advance' : 'simple'));
+  };
+
+  const _submit = (initPagination?: TParams[0]) => {
+    if (!ready) {
+      return;
+    }
     setTimeout(() => {
       validateFields()
         .then((values = {}) => {
-          // if has defaultParams, use defaultParams's pagination
-          const pagination = initParams?.[0] || {
+          const pagination = initPagination || {
             pageSize: options.defaultPageSize || 10,
-            ...(params[0] || {}),
+            ...(params?.[0] || {}),
             current: 1,
           };
           if (!form) {
@@ -93,11 +109,13 @@ const useAntdTable = <TData extends Data, TParams extends any[] = Params>(
           }
 
           // record all form data
-          const _allFormData = { ...allFormData, ...values };
-          setAllFormData(_allFormData);
+          allFormDataRef.current = {
+            ...allFormDataRef.current,
+            ...values,
+          };
 
           run(pagination, values, {
-            allFormData: _allFormData,
+            allFormData: allFormDataRef.current,
             type,
           });
         })
@@ -131,37 +149,52 @@ const useAntdTable = <TData extends Data, TParams extends any[] = Params>(
     );
   };
 
-  // init or change search type, restore form data
-  useEffect(() => {
-    if (!form) {
-      return;
-    }
-
-    const activeFieldsValue = {};
-    Object.keys(allFormData).forEach((key) => {
-      if (form.getFieldInstance(key)) {
-        activeFieldsValue[key] = allFormData[key];
-      }
-    });
-    form.setFieldsValue(activeFieldsValue);
-  }, [type]);
-
   // init
   useEffect(() => {
-    // if has cache, use cached params
+    // if has cache, use cached params. ignore manual and ready.
     if (params.length > 0) {
+      allFormDataRef.current = cacheFormTableData?.allFormData || {};
+      restoreForm();
       run(...params);
       return;
     }
-
-    // if no cache, trigger submit
-    if (!manual) {
-      _submit(defaultParams);
+    if (!manual && ready) {
+      allFormDataRef.current = defaultParams?.[1] || {};
+      restoreForm();
+      _submit(defaultParams?.[0]);
     }
   }, []);
 
+  // change search type, restore form data
   useUpdateEffect(() => {
+    if (!ready) {
+      return;
+    }
+    restoreForm();
+  }, [type]);
+
+  // refresh & ready change on the same time
+  const hasAutoRun = useRef(false);
+  hasAutoRun.current = false;
+
+  useUpdateEffect(() => {
+    if (!manual && ready) {
+      hasAutoRun.current = true;
+      if (form) {
+        form.resetFields();
+      }
+      allFormDataRef.current = defaultParams?.[1] || {};
+      restoreForm();
+      _submit(defaultParams?.[0]);
+    }
+  }, [ready]);
+
+  useUpdateEffect(() => {
+    if (hasAutoRun.current) {
+      return;
+    }
     if (!manual) {
+      hasAutoRun.current = true;
       result.pagination.changeCurrent(1);
     }
   }, [...refreshDeps]);
@@ -179,10 +212,10 @@ const useAntdTable = <TData extends Data, TParams extends any[] = Params>(
       },
     },
     search: {
-      submit,
+      submit: useMemoizedFn(submit),
       type,
-      changeType,
-      reset,
+      changeType: useMemoizedFn(changeType),
+      reset: useMemoizedFn(reset),
     },
   };
 };
