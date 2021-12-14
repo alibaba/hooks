@@ -1,6 +1,7 @@
 import { useMemo, useState } from 'react';
 import { useEventListener, useMemoizedFn, useRequest, useUpdateEffect } from '../';
 import { getTargetElement } from '../utils/domTarget';
+import { getClientHeight, getScrollHeight, getScrollTop } from '../utils/rect';
 import type { Data, InfiniteScrollOptions, Service } from './types';
 
 const useInfiniteScroll = <TData extends Data>(
@@ -84,7 +85,11 @@ const useInfiniteScroll = <TData extends Data>(
       return;
     }
 
-    if (el.scrollHeight - el.scrollTop <= el.clientHeight + threshold) {
+    const scrollTop = getScrollTop(el);
+    const scrollHeight = getScrollHeight(el);
+    const clientHeight = getClientHeight(el);
+
+    if (scrollHeight - scrollTop <= clientHeight + threshold) {
       loadMore();
     }
   };

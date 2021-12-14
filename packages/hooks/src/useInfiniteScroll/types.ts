@@ -20,7 +20,7 @@ export interface InfiniteScrollResult<TData extends Data> {
 }
 
 export interface InfiniteScrollOptions<TData extends Data> {
-  target?: BasicTarget;
+  target?: BasicTarget<Element | Document>;
   isNoMore?: (data?: TData) => boolean;
   threshold?: number;
 
