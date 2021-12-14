@@ -24,7 +24,7 @@ export type Antd3ValidateFields = (
 export type Antd4ValidateFields = (fieldNames?: string[]) => Promise<Record<string, any>>;
 
 export interface AntdFormUtils {
-  getFieldInstance: (name: string) => Record<string, any>;
+  getFieldInstance?: (name: string) => Record<string, any>;
   setFieldsValue: (value: Record<string, any>) => void;
   getFieldsValue: (...args: any) => Record<string, any>;
   resetFields: (...args: any) => void;
