@@ -29,12 +29,20 @@ const useAntdTable = <TData extends Data, TParams extends any[] = Params>(
 
   const allFormDataRef = useRef<Record<string, any>>({});
 
+  const isAntdV4 = !!form?.getInternalHooks;
+
   // get current active field values
   const getActivetFieldValues = () => {
     if (!form) {
       return {};
     }
-    // antd 3 & antd 4
+
+    // antd 4
+    if (isAntdV4) {
+      return form.getFieldsValue(null, () => true);
+    }
+
+    // antd 3
     const allFieldsValue = form.getFieldsValue();
     const activeFieldsValue = {};
     Object.keys(allFieldsValue).forEach((key: string) => {
@@ -42,6 +50,7 @@ const useAntdTable = <TData extends Data, TParams extends any[] = Params>(
         activeFieldsValue[key] = allFieldsValue[key];
       }
     });
+
     return activeFieldsValue;
   };
 
@@ -52,20 +61,20 @@ const useAntdTable = <TData extends Data, TParams extends any[] = Params>(
     const activeFieldsValue = getActivetFieldValues();
     const fields = Object.keys(activeFieldsValue);
 
-    // antd 3
-    if (!form.getInternalHooks) {
-      return new Promise((resolve, reject) => {
-        form.validateFields(fields, (errors, values) => {
-          if (errors) {
-            reject(errors);
-          } else {
-            resolve(values);
-          }
-        });
-      });
+    // antd 4
+    if (isAntdV4) {
+      return (form.validateFields as Antd4ValidateFields)(fields);
     }
-
-    return (form.validateFields as Antd4ValidateFields)(fields);
+    // antd 3
+    return new Promise((resolve, reject) => {
+      form.validateFields(fields, (errors, values) => {
+        if (errors) {
+          reject(errors);
+        } else {
+          resolve(values);
+        }
+      });
+    });
   };
 
   const restoreForm = () => {
@@ -73,6 +82,12 @@ const useAntdTable = <TData extends Data, TParams extends any[] = Params>(
       return;
     }
 
+    // antd v4
+    if (isAntdV4) {
+      return form.setFieldsValue(allFormDataRef.current);
+    }
+
+    // antd v3
     const activeFieldsValue = {};
     Object.keys(allFormDataRef.current).forEach((key) => {
       if (form.getFieldInstance(key)) {
