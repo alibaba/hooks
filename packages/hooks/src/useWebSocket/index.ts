@@ -49,7 +49,7 @@ export default function useWebSocket(socketUrl: string, options: Options = {}): 
   const onErrorRef = useLatest(onError);
 
   const reconnectTimesRef = useRef(0);
-  const reconnectTimerRef = useRef<NodeJS.Timeout>();
+  const reconnectTimerRef = useRef<ReturnType<typeof setTimeout>>();
   const websocketRef = useRef<WebSocket>();
 
   const unmountedRef = useRef(false);

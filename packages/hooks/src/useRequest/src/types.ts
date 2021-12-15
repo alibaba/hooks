@@ -116,3 +116,5 @@ export interface Result<TData, TParams extends any[]> {
   runAsync: Fetch<TData, TParams>['runAsync'];
   mutate: Fetch<TData, TParams>['mutate'];
 }
+
+export type Timeout = ReturnType<typeof setTimeout>;
