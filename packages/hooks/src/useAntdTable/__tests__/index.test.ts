@@ -10,7 +10,6 @@ interface Query {
 
 describe('useAntdTable', () => {
   // jest.useFakeTimers();
-  jest.setTimeout(30000);
 
   let queryArgs: any;
   const asyncFn = (query: Query, formData: any = {}) => {
@@ -227,7 +226,7 @@ describe('useAntdTable', () => {
     expect(form.fieldsValue.name).toEqual('default name');
     expect(form.fieldsValue.phone).toBeUndefined();
     expect(form.fieldsValue.email).toBeUndefined();
-  });
+  }, 30000);
 
   it('should defaultParams work', async () => {
     queryArgs = undefined;
