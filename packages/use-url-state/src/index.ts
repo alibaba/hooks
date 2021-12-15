@@ -29,6 +29,8 @@ const useUrlState = <S extends UrlState = UrlState>(
   type State = Partial<{ [key in keyof S]: any }>;
   const { navigateMode = 'push' } = options || {};
 
+  const location = rc.useLocation();
+
   // react-router v5
   const history = rc.useHistory?.();
   // react-router v6
