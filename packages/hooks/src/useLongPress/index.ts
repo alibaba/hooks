@@ -23,7 +23,7 @@ function useLongPress(
 ) {
   const onLongPressRef = useLatest(onLongPress);
 
-  const timerRef = useRef<NodeJS.Timeout>();
+  const timerRef = useRef<ReturnType<typeof setTimeout>>();
   const isTriggeredRef = useRef(false);
 
   useEffectWithTarget(
