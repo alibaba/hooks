@@ -1,8 +1,8 @@
 import { useMemo } from 'react';
 import { useMemoizedFn, useRequest } from '..';
-import type { Data, PaginationOptions, Params, Service } from './types';
+import type { Data, PaginationOptions, Params, Service, PaginationResult } from './types';
 
-const usePagination = <TData extends Data, TParams extends any[] = Params>(
+const usePagination = <TData extends Data, TParams extends Params>(
   service: Service<TData, TParams>,
   options: PaginationOptions<TData, TParams> = {},
 ) => {
@@ -61,7 +61,7 @@ const usePagination = <TData extends Data, TParams extends any[] = Params>(
       changeCurrent: useMemoizedFn(changeCurrent),
       changePageSize: useMemoizedFn(changePageSize),
     },
-  };
+  } as PaginationResult<TData, TParams>;
 };
 
 export default usePagination;

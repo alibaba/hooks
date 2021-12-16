@@ -1,8 +1,15 @@
 import { useEffect, useRef, useState } from 'react';
 import { useMemoizedFn, usePagination, useUpdateEffect } from '..';
-import type { Antd4ValidateFields, AntdTableOptions, Data, Params, Service } from './types';
+import type {
+  Antd4ValidateFields,
+  AntdTableOptions,
+  Data,
+  Params,
+  Service,
+  AntdTableResult,
+} from './types';
 
-const useAntdTable = <TData extends Data, TParams extends any[] = Params>(
+const useAntdTable = <TData extends Data, TParams extends Params>(
   service: Service<TData, TParams>,
   options: AntdTableOptions<TData, TParams> = {},
 ) => {
@@ -119,6 +126,7 @@ const useAntdTable = <TData extends Data, TParams extends any[] = Params>(
             current: 1,
           };
           if (!form) {
+            // @ts-ignore
             run(pagination);
             return;
           }
@@ -129,6 +137,7 @@ const useAntdTable = <TData extends Data, TParams extends any[] = Params>(
             ...values,
           };
 
+          // @ts-ignore
           run(pagination, values, {
             allFormData: allFormDataRef.current,
             type,
@@ -152,6 +161,7 @@ const useAntdTable = <TData extends Data, TParams extends any[] = Params>(
 
   const onTableChange = (pagination: any, filters: any, sorter: any) => {
     const [oldPaginationParams, ...restParams] = params || [];
+    // @ts-ignore
     run(
       {
         ...oldPaginationParams,
@@ -170,6 +180,7 @@ const useAntdTable = <TData extends Data, TParams extends any[] = Params>(
     if (params.length > 0) {
       allFormDataRef.current = cacheFormTableData?.allFormData || {};
       restoreForm();
+      // @ts-ignore
       run(...params);
       return;
     }
@@ -232,7 +243,7 @@ const useAntdTable = <TData extends Data, TParams extends any[] = Params>(
       changeType: useMemoizedFn(changeType),
       reset: useMemoizedFn(reset),
     },
-  };
+  } as AntdTableResult<TData, TParams>;
 };
 
 export default useAntdTable;
