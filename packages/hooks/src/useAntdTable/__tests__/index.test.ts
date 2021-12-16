@@ -90,145 +90,145 @@ describe('useAntdTable', () => {
     hook.unmount();
   });
 
-  it('should form, defaultPageSize, cacheKey work', async () => {
-    queryArgs = undefined;
-    form.resetFields();
-    changeSearchType('simple');
-    act(() => {
-      hook = setUp(asyncFn, { form, defaultPageSize: 5, cacheKey: 'tableId' });
-    });
-    await hook.waitForNextUpdate();
-    const { search } = hook.result.current;
-    expect(hook.result.current.tableProps.loading).toEqual(false);
-    expect(queryArgs.current).toEqual(1);
-    expect(queryArgs.pageSize).toEqual(5);
-    expect(queryArgs.name).toEqual('default name');
-    expect(search.type).toEqual('simple');
+  // it('should form, defaultPageSize, cacheKey work', async () => {
+  //   queryArgs = undefined;
+  //   form.resetFields();
+  //   changeSearchType('simple');
+  //   act(() => {
+  //     hook = setUp(asyncFn, { form, defaultPageSize: 5, cacheKey: 'tableId' });
+  //   });
+  //   await hook.waitForNextUpdate();
+  //   const { search } = hook.result.current;
+  //   expect(hook.result.current.tableProps.loading).toEqual(false);
+  //   expect(queryArgs.current).toEqual(1);
+  //   expect(queryArgs.pageSize).toEqual(5);
+  //   expect(queryArgs.name).toEqual('default name');
+  //   expect(search.type).toEqual('simple');
 
-    // /* 切换 分页 */
-    act(() => {
-      hook.result.current.tableProps.onChange({
-        current: 2,
-        pageSize: 5,
-      });
-    });
-    await hook.waitForNextUpdate();
-    expect(queryArgs.current).toEqual(2);
-    expect(queryArgs.pageSize).toEqual(5);
-    expect(queryArgs.name).toEqual('default name');
+  //   // /* 切换 分页 */
+  //   act(() => {
+  //     hook.result.current.tableProps.onChange({
+  //       current: 2,
+  //       pageSize: 5,
+  //     });
+  //   });
+  //   await hook.waitForNextUpdate();
+  //   expect(queryArgs.current).toEqual(2);
+  //   expect(queryArgs.pageSize).toEqual(5);
+  //   expect(queryArgs.name).toEqual('default name');
 
-    /* 改变 name， 提交表单 */
-    form.fieldsValue.name = 'change name';
-    act(() => {
-      search.submit();
-    });
-    await hook.waitForNextUpdate();
-    expect(queryArgs.current).toEqual(1);
-    expect(queryArgs.pageSize).toEqual(5);
-    expect(queryArgs.name).toEqual('change name');
+  //   /* 改变 name， 提交表单 */
+  //   form.fieldsValue.name = 'change name';
+  //   act(() => {
+  //     search.submit();
+  //   });
+  //   await hook.waitForNextUpdate();
+  //   expect(queryArgs.current).toEqual(1);
+  //   expect(queryArgs.pageSize).toEqual(5);
+  //   expect(queryArgs.name).toEqual('change name');
 
-    // /* 切换 searchType 到 advance */
-    act(() => {
-      if (search) {
-        search.changeType();
-        changeSearchType('advance');
-      }
-    });
-    expect(hook.result.current.search.type).toEqual('advance');
-    act(() => {
-      hook.result.current.search.submit();
-    });
-    await hook.waitForNextUpdate();
+  //   // /* 切换 searchType 到 advance */
+  //   act(() => {
+  //     if (search) {
+  //       search.changeType();
+  //       changeSearchType('advance');
+  //     }
+  //   });
+  //   expect(hook.result.current.search.type).toEqual('advance');
+  //   act(() => {
+  //     hook.result.current.search.submit();
+  //   });
+  //   await hook.waitForNextUpdate();
 
-    expect(queryArgs.current).toEqual(1);
-    expect(queryArgs.name).toEqual('change name');
+  //   expect(queryArgs.current).toEqual(1);
+  //   expect(queryArgs.name).toEqual('change name');
 
-    // /* 手动改变其他两个字段的值 */
-    form.fieldsValue.phone = '13344556677';
-    form.fieldsValue.email = 'x@qq.com';
+  //   // /* 手动改变其他两个字段的值 */
+  //   form.fieldsValue.phone = '13344556677';
+  //   form.fieldsValue.email = 'x@qq.com';
 
-    act(() => {
-      hook.result.current.search.submit();
-    });
-    await hook.waitForNextUpdate();
-    expect(queryArgs.current).toEqual(1);
-    expect(queryArgs.name).toEqual('change name');
-    expect(queryArgs.phone).toEqual('13344556677');
-    expect(queryArgs.email).toEqual('x@qq.com');
+  //   act(() => {
+  //     hook.result.current.search.submit();
+  //   });
+  //   await hook.waitForNextUpdate();
+  //   expect(queryArgs.current).toEqual(1);
+  //   expect(queryArgs.name).toEqual('change name');
+  //   expect(queryArgs.phone).toEqual('13344556677');
+  //   expect(queryArgs.email).toEqual('x@qq.com');
 
-    // /* 改变 name，但是不提交，切换到 simple 去 */
-    form.fieldsValue.name = 'change name 2';
-    act(() => {
-      hook.result.current.search.changeType();
-      changeSearchType('simple');
-    });
-    expect(hook.result.current.search.type).toEqual('simple');
-    expect(form.fieldsValue.name).toEqual('change name 2');
-    // /* 提交 */
-    act(() => {
-      hook.result.current.search.submit();
-    });
-    await hook.waitForNextUpdate();
+  //   // /* 改变 name，但是不提交，切换到 simple 去 */
+  //   form.fieldsValue.name = 'change name 2';
+  //   act(() => {
+  //     hook.result.current.search.changeType();
+  //     changeSearchType('simple');
+  //   });
+  //   expect(hook.result.current.search.type).toEqual('simple');
+  //   expect(form.fieldsValue.name).toEqual('change name 2');
+  //   // /* 提交 */
+  //   act(() => {
+  //     hook.result.current.search.submit();
+  //   });
+  //   await hook.waitForNextUpdate();
 
-    expect(queryArgs.name).toEqual('change name 2');
-    expect(queryArgs.phone).toBeUndefined();
-    expect(queryArgs.email).toBeUndefined();
+  //   expect(queryArgs.name).toEqual('change name 2');
+  //   expect(queryArgs.phone).toBeUndefined();
+  //   expect(queryArgs.email).toBeUndefined();
 
-    // /* 切换回 advance，恢复之前的条件 */
-    act(() => {
-      hook.result.current.search.changeType();
-      changeSearchType('advance');
-    });
+  //   // /* 切换回 advance，恢复之前的条件 */
+  //   act(() => {
+  //     hook.result.current.search.changeType();
+  //     changeSearchType('advance');
+  //   });
 
-    if (hook.result.current.search) {
-      expect(hook.result.current.search.type).toEqual('advance');
-    }
-    expect(form.fieldsValue.name).toEqual('change name 2');
-    expect(form.fieldsValue.phone).toEqual('13344556677');
-    expect(form.fieldsValue.email).toEqual('x@qq.com');
+  //   if (hook.result.current.search) {
+  //     expect(hook.result.current.search.type).toEqual('advance');
+  //   }
+  //   expect(form.fieldsValue.name).toEqual('change name 2');
+  //   expect(form.fieldsValue.phone).toEqual('13344556677');
+  //   expect(form.fieldsValue.email).toEqual('x@qq.com');
 
-    act(() => {
-      hook.result.current.tableProps.onChange({
-        current: 3,
-        pageSize: 5,
-      });
-    });
-    await hook.waitForNextUpdate();
-    // /* 卸载重装 */
-    form.fieldsValue = {
-      name: '',
-      phone: '',
-      email: '',
-    };
-    act(() => {
-      hook.unmount();
-    });
-    act(() => {
-      hook = setUp(asyncFn, { form, defaultPageSize: 5, cacheKey: 'tableId' });
-    });
-    await hook.waitForNextUpdate();
-    expect(hook.result.current.search.type).toEqual('simple');
-    expect(hook.result.current.tableProps.pagination.current).toEqual(3);
-    expect(form.fieldsValue.name).toEqual('change name 2');
-    expect(form.fieldsValue.phone).toEqual('13344556677');
-    expect(form.fieldsValue.email).toEqual('x@qq.com');
+  //   act(() => {
+  //     hook.result.current.tableProps.onChange({
+  //       current: 3,
+  //       pageSize: 5,
+  //     });
+  //   });
+  //   await hook.waitForNextUpdate();
+  //   // /* 卸载重装 */
+  //   form.fieldsValue = {
+  //     name: '',
+  //     phone: '',
+  //     email: '',
+  //   };
+  //   act(() => {
+  //     hook.unmount();
+  //   });
+  //   act(() => {
+  //     hook = setUp(asyncFn, { form, defaultPageSize: 5, cacheKey: 'tableId' });
+  //   });
+  //   await hook.waitForNextUpdate();
+  //   expect(hook.result.current.search.type).toEqual('simple');
+  //   expect(hook.result.current.tableProps.pagination.current).toEqual(3);
+  //   expect(form.fieldsValue.name).toEqual('change name 2');
+  //   expect(form.fieldsValue.phone).toEqual('13344556677');
+  //   expect(form.fieldsValue.email).toEqual('x@qq.com');
 
-    /* refresh */
-    act(() => {
-      hook.result.current.refresh();
-    });
-    // expect(hook.result.current.tableProps.loading).toEqual(true);
-    await hook.waitForNextUpdate();
-    /* reset */
-    act(() => {
-      hook.result.current.search.reset();
-    });
+  //   /* refresh */
+  //   act(() => {
+  //     hook.result.current.refresh();
+  //   });
+  //   // expect(hook.result.current.tableProps.loading).toEqual(true);
+  //   await hook.waitForNextUpdate();
+  //   /* reset */
+  //   act(() => {
+  //     hook.result.current.search.reset();
+  //   });
 
-    expect(form.fieldsValue.name).toEqual('default name');
-    expect(form.fieldsValue.phone).toBeUndefined();
-    expect(form.fieldsValue.email).toBeUndefined();
-    hook.unmount();
-  }, 60000);
+  //   expect(form.fieldsValue.name).toEqual('default name');
+  //   expect(form.fieldsValue.phone).toBeUndefined();
+  //   expect(form.fieldsValue.email).toBeUndefined();
+  //   hook.unmount();
+  // }, 60000);
 
   it('should defaultParams work', async () => {
     queryArgs = undefined;
