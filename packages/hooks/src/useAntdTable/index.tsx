@@ -161,8 +161,8 @@ const useAntdTable = <TData extends Data, TParams extends Params>(
 
   const onTableChange = (pagination: any, filters: any, sorter: any) => {
     const [oldPaginationParams, ...restParams] = params || [];
-    // @ts-ignore
     run(
+      // @ts-ignore
       {
         ...oldPaginationParams,
         current: pagination.current,
