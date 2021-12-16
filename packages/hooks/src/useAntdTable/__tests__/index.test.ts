@@ -226,7 +226,7 @@ describe('useAntdTable', () => {
     expect(form.fieldsValue.name).toEqual('default name');
     expect(form.fieldsValue.phone).toBeUndefined();
     expect(form.fieldsValue.email).toBeUndefined();
-  }, 30000);
+  }, 60000);
 
   it('should defaultParams work', async () => {
     queryArgs = undefined;
