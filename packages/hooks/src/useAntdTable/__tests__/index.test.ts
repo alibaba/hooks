@@ -87,6 +87,7 @@ describe('useAntdTable', () => {
     expect(hook.result.current.tableProps.pagination.current).toEqual(1);
     expect(hook.result.current.tableProps.pagination.pageSize).toEqual(10);
     expect(hook.result.current.tableProps.pagination.total).toEqual(20);
+    hook.unmount();
   });
 
   it('should form, defaultPageSize, cacheKey work', async () => {
@@ -226,6 +227,7 @@ describe('useAntdTable', () => {
     expect(form.fieldsValue.name).toEqual('default name');
     expect(form.fieldsValue.phone).toBeUndefined();
     expect(form.fieldsValue.email).toBeUndefined();
+    hook.unmount();
   }, 60000);
 
   it('should defaultParams work', async () => {
@@ -253,6 +255,7 @@ describe('useAntdTable', () => {
     expect(queryArgs.name).toEqual('hello');
     expect(queryArgs.phone).toEqual('123');
     expect(search.type).toEqual('advance');
+    hook.unmount();
   });
 
   it('should stop the query when validate fields failed', async () => {
@@ -275,6 +278,7 @@ describe('useAntdTable', () => {
 
     await sleep(1);
     expect(queryArgs).toEqual(undefined);
+    hook.unmount();
   });
 
   it('should ready work', async () => {
@@ -320,6 +324,7 @@ describe('useAntdTable', () => {
     expect(queryArgs.name).toEqual('hello');
     expect(queryArgs.phone).toEqual('456');
     expect(search.type).toEqual('advance');
+    hook.unmount();
   });
 
   it('should antd v3 work', async () => {
@@ -378,5 +383,6 @@ describe('useAntdTable', () => {
     expect(queryArgs.current).toEqual(1);
     expect(queryArgs.pageSize).toEqual(5);
     expect(queryArgs.name).toEqual('change name');
+    hook.unmount();
   });
 });
