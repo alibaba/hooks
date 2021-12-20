@@ -53,6 +53,7 @@
     "husky": "^4.2.5",
     "jest": "^26.0.1",
     "jest-fetch-mock": "^3.0.3",
+    "jest-localstorage-mock": "^2.4.18",
     "lerna": "4.x",
     "mockdate": "^3.0.2",
     "mockjs": "^1.1.0",

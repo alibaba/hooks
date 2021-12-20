@@ -2,6 +2,7 @@ import { act, renderHook } from '@testing-library/react-hooks';
 import MockDate from 'mockdate';
 import useRequest, { clearCache } from '../index';
 import { request } from '../../utils/testingHelpers';
+import 'jest-localstorage-mock';
 
 describe('useCachePlugin', () => {
   jest.useFakeTimers();
@@ -172,6 +173,47 @@ describe('useCachePlugin', () => {
     });
     expect(hook2.result.current.loading).toEqual(true);
     expect(hook2.result.current.data).toEqual(undefined);
+    hook2.unmount();
+  });
+
+  it('setCache/getCache should work', async () => {
+    MockDate.set(0);
+
+    const cacheKey = `setCacheKey`;
+
+    act(() => {
+      hook = setUp(request, {
+        cacheKey,
+        setCache: (data) => localStorage.setItem(cacheKey, JSON.stringify(data)),
+        getCache: () => JSON.parse(localStorage.getItem(cacheKey) || '{}'),
+      });
+    });
+
+    act(() => {
+      jest.runAllTimers();
+    });
+    await hook.waitForNextUpdate();
+    expect(hook.result.current.loading).toEqual(false);
+    expect(hook.result.current.data).toEqual('success');
+    hook.unmount();
+
+    let hook2;
+    act(() => {
+      MockDate.set(1000);
+      hook2 = setUp(request, {
+        cacheKey,
+        setCache: (data) => localStorage.setItem(cacheKey, JSON.stringify(data)),
+        getCache: () => JSON.parse(localStorage.getItem(cacheKey) || '{}'),
+      });
+    });
+    expect(hook2.result.current.loading).toEqual(true);
+    expect(hook2.result.current.data).toEqual('success');
+
+    act(() => {
+      jest.runAllTimers();
+    });
+    await hook2.waitForNextUpdate();
+    expect(hook2.result.current.loading).toEqual(false);
     hook2.unmount();
   });
 });

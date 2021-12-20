@@ -8314,6 +8314,11 @@ jest-leak-detector@^26.6.2:
     jest-get-type "^26.3.0"
     pretty-format "^26.6.2"
 
+jest-localstorage-mock@^2.4.18:
+  version "2.4.18"
+  resolved "https://registry.nlark.com/jest-localstorage-mock/download/jest-localstorage-mock-2.4.18.tgz#6cf5f84fdc5d8e279f2b45a9417bac1d4fc765d6"
+  integrity sha1-bPX4T9xdjiefK0WpQXusHU/HZdY=
+
 jest-matcher-utils@^26.6.2:
   version "26.6.2"
   resolved "https://registry.yarnpkg.com/jest-matcher-utils/-/jest-matcher-utils-26.6.2.tgz#8e6fd6e863c8b2d31ac6472eeb237bc595e53e7a"
