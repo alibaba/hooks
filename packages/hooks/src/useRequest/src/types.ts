@@ -1,5 +1,6 @@
 import type { DependencyList } from 'react';
 import type Fetch from './Fetch';
+import type { CachedData } from './utils/cache';
 
 export type Service<TData, TParams extends any[]> = (...args: TParams) => Promise<TData>;
 export type Subscribe = () => void;
@@ -78,6 +79,8 @@ export interface Options<TData, TParams extends any[]> {
   cacheKey?: string;
   cacheTime?: number;
   staleTime?: number;
+  setCache?: (data: CachedData<TData, TParams>) => void;
+  getCache?: () => CachedData<TData, TParams> | undefined;
 
   // retry
   retryCount?: number;
