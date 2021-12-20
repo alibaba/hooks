@@ -10,9 +10,16 @@ const setCachePromise = (cacheKey: CachedKey, promise: Promise<any>) => {
   // Because the promise.finally will change the reference of the promise
   cachePromise.set(cacheKey, promise);
 
-  promise.finally(() => {
-    cachePromise.delete(cacheKey);
-  });
+  // no use promise.finally for compatibility
+  promise
+    .then((res) => {
+      cachePromise.delete(cacheKey);
+      return res;
+    })
+    .catch((err) => {
+      cachePromise.delete(cacheKey);
+      throw err;
+    });
 };
 
 export { getCachePromise, setCachePromise };
