@@ -47,6 +47,9 @@ const useCachePlugin: Plugin<any, any[]> = (
     if (cacheData && Object.hasOwnProperty.call(cacheData, 'data')) {
       fetchInstance.state.data = cacheData.data;
       fetchInstance.state.params = cacheData.params;
+      if (staleTime === -1 || new Date().getTime() - cacheData.time <= staleTime) {
+        fetchInstance.state.loading = false;
+      }
     }
 
     // subscribe same cachekey update, trigger update
