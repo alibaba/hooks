@@ -17,8 +17,6 @@ English | [简体中文](https://github.com/alibaba/hooks/blob/master/README.zh-
 
 </div>
 
-> :warning: This is v3 branch, find v2 from <a href="https://github.com/alibaba/hooks/tree/release/v2.x" target="_blank">https://github.com/alibaba/hooks/tree/release/v2.x</a>
-
 ## 📚 Documentation
 
 - [English](https://ahooks.js.org/)

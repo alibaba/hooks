@@ -30,9 +30,9 @@ const useCachePlugin: Plugin<any, any[]> = (
     cacheSubscribe.trigger(key, cachedData.data);
   };
 
-  const _getCache = (key: string) => {
+  const _getCache = (key: string, params: any[] = []) => {
     if (customGetCache) {
-      return customGetCache();
+      return customGetCache(params);
     }
     return cache.getCache(key);
   };
@@ -47,6 +47,9 @@ const useCachePlugin: Plugin<any, any[]> = (
     if (cacheData && Object.hasOwnProperty.call(cacheData, 'data')) {
       fetchInstance.state.data = cacheData.data;
       fetchInstance.state.params = cacheData.params;
+      if (staleTime === -1 || new Date().getTime() - cacheData.time <= staleTime) {
+        fetchInstance.state.loading = false;
+      }
     }
 
     // subscribe same cachekey update, trigger update
@@ -64,8 +67,8 @@ const useCachePlugin: Plugin<any, any[]> = (
   }
 
   return {
-    onBefore: () => {
-      const cacheData = _getCache(cacheKey);
+    onBefore: (params) => {
+      const cacheData = _getCache(cacheKey, params);
 
       if (!cacheData || !Object.hasOwnProperty.call(cacheData, 'data')) {
         return {};

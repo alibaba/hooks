@@ -80,7 +80,7 @@ export interface Options<TData, TParams extends any[]> {
   cacheTime?: number;
   staleTime?: number;
   setCache?: (data: CachedData<TData, TParams>) => void;
-  getCache?: () => CachedData<TData, TParams> | undefined;
+  getCache?: (params: TParams) => CachedData<TData, TParams> | undefined;
 
   // retry
   retryCount?: number;
