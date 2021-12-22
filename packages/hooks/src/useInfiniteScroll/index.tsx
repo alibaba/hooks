@@ -72,10 +72,6 @@ const useInfiniteScroll = <TData extends Data>(
     return runAsync(finalData);
   };
 
-  const mutate = (data?: TData) => {
-    setFinalData(data);
-  };
-
   const reload = () => run();
   const reloadAsync = () => runAsync();
 
@@ -119,7 +115,7 @@ const useInfiniteScroll = <TData extends Data>(
     loadMoreAsync: useMemoizedFn(loadMoreAsync),
     reload: useMemoizedFn(reload),
     reloadAsync: useMemoizedFn(reloadAsync),
-    mutate: useMemoizedFn(mutate),
+    mutate: setFinalData,
     cancel,
   };
 };
