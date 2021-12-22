@@ -20,6 +20,7 @@ import useEventListener from './useEventListener';
 import useEventTarget from './useEventTarget';
 import useExternal from './useExternal';
 import useFavicon from './useFavicon';
+import useFocusWithin from './useFocusWithin';
 import useFullscreen from './useFullscreen';
 import useFusionTable from './useFusionTable';
 import useGetState from './useGetState';
@@ -142,4 +143,5 @@ export {
   useInfiniteScroll,
   useGetState,
   clearCache,
+  useFocusWithin,
 };
