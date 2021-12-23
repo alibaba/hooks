@@ -60,7 +60,7 @@ $ yarn start
 
 打开浏览器访问 http://127.0.0.1:8000
 
-我们欢迎所有人参与共建，请参考[CONTRIBUTING.MD](https://github.com/alibaba/hooks/blob/master/CONTRIBUTING.zh-CN.md)
+我们欢迎所有人参与共建，请参考[CONTRIBUTING.MD](https://github.com/alibaba/hooks/blob/master/CONTRIBUTING.zh-CN.MD)
 
 感谢所有贡献者：
 
