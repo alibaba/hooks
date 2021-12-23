@@ -43,7 +43,7 @@ const isFocusWithin = useFocusWithin(
 |----------|-----------------------------------------|------------------------------|---------|
 | onFocus  | Callback to be executed on focus        | `(e: FocusEvent) => void`    | -       |
 | onBlur   | Callback to be executed on blur         | `(e: FocusEvent) => void`    | -       |
-| onChange | Callback to be executed on focus change | `(focused: boolean) => void` | -       |
+| onChange | Callback to be executed on focus change | `(isFocusWithin: boolean) => void` | -       |
 
 ### Result
 

@@ -43,7 +43,7 @@ const isFocusWithin = useFocusWithin(
 |----------|----------------|------------------------------|--------|
 | onFocus  | 获取焦点时触发 | `(e: FocusEvent) => void`    | -      |
 | onBlur   | 失去焦点时触发 | `(e: FocusEvent) => void`    | -      |
-| onChange | 焦点变化时触发 | `(focused: boolean) => void` | -      |
+| onChange | 焦点变化时触发 | `(isFocusWithin: boolean) => void` | -      |
 
 ### Result
 
