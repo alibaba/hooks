@@ -34,13 +34,10 @@ const useVirtualList = <T = any>(list: T[], options: Options<T>) => {
     for (let i = fromIndex; i < list.length; i++) {
       const height = itemHeightRef.current(i, list[i]);
       sum += height;
+      endIndex = i;
       if (sum >= containerHeight) {
-        endIndex = i;
-        break;
-      }
-      if (i === list.length - 1) {
-        endIndex = list.length - 1
-      }
+            break;
+       }
     }
     return endIndex - fromIndex;
   };
