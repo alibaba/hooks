@@ -38,6 +38,9 @@ const useVirtualList = <T = any>(list: T[], options: Options<T>) => {
         endIndex = i;
         break;
       }
+      if (i === list.length - 1) {
+        endIndex = list.length - 1
+      }
     }
     return endIndex - fromIndex;
   };
