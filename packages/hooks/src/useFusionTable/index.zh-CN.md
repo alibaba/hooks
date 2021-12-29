@@ -128,4 +128,4 @@ const {
 | defaultType     | 默认表单类型                                                  | `simple` \| `advance`    | `simple` |
 | defaultParams   | 默认参数，第一项为分页数据，第二项为表单数据                  | `[pagiantion, formData]` | -        |
 | defaultPageSize | 默认分页数量                                                  | `number`                 | `10`     |
-| refreshDeps     | `refreshDeps` 变化，会重置 current 到第一页，并重新发起请求。 | `boolean`                | `false`  |
+| refreshDeps     | `refreshDeps` 变化，会重置 current 到第一页，并重新发起请求。 | `React.DependencyList`                | `[]`  |
