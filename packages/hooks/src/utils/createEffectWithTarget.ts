@@ -17,8 +17,6 @@ const createEffectWithTarget = (useEffectType: typeof useEffect | typeof useLayo
     deps: DependencyList,
     target: BasicTarget<any> | BasicTarget<any>[],
   ) => {
-    const hasInitRef = useRef(false);
-
     const lastElementRef = useRef<(Element | null)[]>([]);
     const lastDepsRef = useRef<DependencyList>([]);
 
@@ -27,15 +25,6 @@ const createEffectWithTarget = (useEffectType: typeof useEffect | typeof useLayo
     useEffectType(() => {
       const targets = Array.isArray(target) ? target : [target];
       const els = targets.map((item) => getTargetElement(item));
-
-      // init run
-      if (!hasInitRef.current) {
-        hasInitRef.current = true;
-        lastElementRef.current = els;
-        lastDepsRef.current = deps;
-
-        unLoadRef.current = effect();
-      }
 
       if (
         els.length !== lastElementRef.current.length ||
@@ -52,8 +41,6 @@ const createEffectWithTarget = (useEffectType: typeof useEffect | typeof useLayo
 
     useUnmount(() => {
       unLoadRef.current?.();
-      // for react-refresh
-      hasInitRef.current = false;
     });
   };
 
