@@ -35,6 +35,7 @@ const createEffectWithTarget = (useEffectType: typeof useEffect | typeof useLayo
         lastDepsRef.current = deps;
 
         unLoadRef.current = effect();
+        return;
       }
 
       if (
