@@ -6,7 +6,7 @@ import useEffectWithTarget from '../utils/useEffectWithTarget';
 export default function useClickAway<T extends Event = Event>(
   onClickAway: (event: T) => void,
   target: BasicTarget | BasicTarget[],
-  eventName: string = 'click',
+  eventName: string | string[] = 'click',
 ) {
   const onClickAwayRef = useLatest(onClickAway);
 
@@ -25,13 +25,15 @@ export default function useClickAway<T extends Event = Event>(
         onClickAwayRef.current(event);
       };
 
-      document.addEventListener(eventName, handler);
+      const eventNames = Array.isArray(eventName) ? eventName : [eventName];
+
+      eventNames.forEach((event) => document.addEventListener(event, handler));
 
       return () => {
-        document.removeEventListener(eventName, handler);
+        eventNames.forEach((event) => document.removeEventListener(event, handler));
       };
     },
-    [eventName],
+    Array.isArray(eventName) ? eventName : [eventName],
     target,
   );
 }
