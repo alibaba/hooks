@@ -2,8 +2,8 @@ import { useState, useRef, useCallback, Dispatch, SetStateAction } from 'react';
 
 type GetState<S> = () => S;
 
-function useGetState<S>(initialState: S | (() => S)): [S, Dispatch<SetStateAction<S>>, GetState<S>] {
-  const [state, setState] = useState<S>(initialState);
+function useGetState<S = undefined>(initialState?: S | (() => S)): [S, Dispatch<SetStateAction<S>>, GetState<S>] {
+  const [state, setState] = useState<S>(initialState as S);
   const stateRef = useRef<S>(state);
   stateRef.current = state;
 
