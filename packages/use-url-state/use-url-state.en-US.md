@@ -44,6 +44,10 @@ React Router V6：https://codesandbox.io/s/autumn-shape-odrt9?file=/App.tsx
 
 <code src="./demo/demo2.tsx" hideActions='["CSB"]' />
 
+### Array url query
+
+<code src="./demo/demo3.tsx" hideActions='["CSB"]' />
+
 ## API
 
 ```typescript
@@ -62,6 +66,8 @@ const [state, setState] = useUrlState(initialState, options);
 | Property     | Description                   | Type                  | Default  |
 |--------------|-------------------------------|-----------------------|----------|
 | navigateMode | Type of history navigate mode | `'push' \| 'replace'` | `'push'` |
+| parseOptions | parse options of `query-string` | `ParseOptions` | - |
+| stringifyOptions | stringify options of  `query-string`| `StringifyOptions` | - |
 
 ### Result
 
