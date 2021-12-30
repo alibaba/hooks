@@ -17,7 +17,7 @@ Get the scroll position of an element.
 
 <code src="./demo/demo2.tsx" />
 
-### Controll listen on scroll status
+### Control listen on scroll status
 
 <code src="./demo/demo3.tsx" />
 
@@ -32,10 +32,10 @@ const position = useScroll(target, shouldUpdate);
 | Property     | Description                           | Type                                      | Default                                  |
 |--------------|---------------------------------------|-------------------------------------------|------------------------------------------|
 | target       | DOM element or ref object             |  `Element` \| `Document`  \| `(() => Element)` \| `MutableRefObject<Element>` | `document` |
-| shouldUpdate | Weather update position | `({ top: number, left: number}) => boolean` | `-` |
+| shouldUpdate | Weather update position | `({ top: number, left: number }) => boolean` | `-` |
 
 ### Result
 
 | Property | Description                                 | Type                          |
 |----------|---------------------------------------------|-------------------------------|
-| position | The current scroll position of the element. |  `{left: number, top: number} \| undefined` |
+| position | The current scroll position of the element. |  `{ left: number, top: number } \| undefined` |

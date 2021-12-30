@@ -32,7 +32,7 @@ export default () => {
 };
 ```
 
-In addition, **the `target` of DOM class Hooks supports dynamic changes**. for example:
+In addition, **the `target` of DOM Hooks supports dynamic changes**. for example:
 
 ```ts
 export default () => {

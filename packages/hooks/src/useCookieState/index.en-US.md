@@ -55,7 +55,7 @@ If you want to delete this record from document.cookie, use `setState()` or `set
 
 setState can update cookie options, which will be merged with the options set by `useCookieState`.
 
-`const targetOptions = {...options, ...updateOptions}`
+`const targetOptions = { ...options, ...updateOptions }`
 
 ### Options
 

@@ -30,6 +30,7 @@ interface Options {
   onClose?: (event: WebSocketEventMap['close']) => void;
   onMessage?: (message: WebSocketEventMap['message']) => void;
   onError?: (event: WebSocketEventMap['error']) => void;
+  protocols?: string | string[];
 }
 
 interface Result {
@@ -63,6 +64,7 @@ useWebSocket(socketUrl: string, options?: Options): Result;
 | reconnectLimit    | Retry times                        | `number`                                          | `3`     |
 | reconnectInterval | Retry interval(ms)                 | `number`                                          | `3000`  |
 | manual            | Manually starts connection         | `boolean`                                         | `false` |
+| protocols         | Sub protocols                      | `string` \| `string[]`                            | -       |
 
 ### Result
 

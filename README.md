@@ -8,46 +8,44 @@
 
 A high-quality & reliable React Hooks library.
 
-[![NPM version next][image-1]][1]
+[![NPM version][image-1]][1]
 [![NPM downloads][image-2]][2]
-![gzip size](https://img.badgesize.io/https:/unpkg.com/ahooks@next/dist/ahooks.js?label=gzip%20size&compression=gzip)
+![gzip size](https://img.badgesize.io/https:/unpkg.com/ahooks/dist/ahooks.js?label=gzip%20size&compression=gzip)
 ![GitHub](https://img.shields.io/github/license/alibaba/hooks)
 
 English | [简体中文](https://github.com/alibaba/hooks/blob/master/README.zh-CN.md)
 
 </div>
 
-> :warning: This is v3 branch, find v2 from <a href="https://github.com/alibaba/hooks/tree/release/v2.x" target="_blank">https://github.com/alibaba/hooks/tree/release/v2.x</a>
-
 ## 📚 Documentation
 
-- [English](https://ahooks-next.surge.sh/)
-- [中文](https://ahooks-next.surge.sh/zh-CN/)
+- [English](https://ahooks.js.org/)
+- [中文](https://ahooks.js.org/zh-CN/)
 
 ## ✨ Features
 
 - Easy to learn and use
-- Support SSR
+- Supports SSR
 - Special treatment for functions, avoid closure problems
-- Contains a wealth of advanced Hooks that are refined from the app
-- Contains a wealth of basic Hooks
+- Contains a large number of advanced Hooks that are refined from business scenarios
+- Contains a comprehensive collection of basic Hooks
 - Written in TypeScript with predictable static types
 
 ## 📦 Install
 
 ```bash
-$ npm install --save ahooks@next
+$ npm install --save ahooks
 # or
-$ yarn add ahooks@next
+$ yarn add ahooks
 ```
 
 ## 🔨 Usage
 
-```js
+```ts
 import { useRequest } from 'ahooks';
 ```
 
-## 💻 Online Experience
+## 💻 Online Demo
 
 [![Edit demo for ahooks](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/demo-for-ahooks-forked-fg79k?file=/src/App.js)
 
@@ -62,7 +60,7 @@ $ yarn start
 
 Open your browser and visit http://127.0.0.1:8000
 
-We welcome all contributions, please read our [CONTRIBUTING.MD](https://github.com/alibaba/hooks/blob/master/CONTRIBUTING.md) first, let's build a better hooks library together.
+We welcome all contributions, please read our [CONTRIBUTING.MD](https://github.com/alibaba/hooks/blob/master/CONTRIBUTING.MD) first, let's build a better hooks library together.
 
 Thanks to all the contributors:
 

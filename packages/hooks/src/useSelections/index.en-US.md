@@ -28,7 +28,7 @@ const result: Result= useSelections<T>(items: T[], defaultSelected?: T[]);
 | noneSelected      | Is no item selected         | `boolean`               |
 | partiallySelected | Is partially items selected | `boolean`               |
 | isSelected        | Whether item is selected    | `(value: T) => boolean` |
-| setSelected       | Set selected items          | `(value:T[]) => void`   |
+| setSelected       | Set selected items          | `(value: T[]) => void`   |
 | select            | Select item                 | `(value: T) => void`    |
 | unSelect          | UnSelect item               | `(value: T) => void`    |
 | toggle            | Toggle item select status   | `(value: T) => void`    |

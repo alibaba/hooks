@@ -1,5 +1,5 @@
 import type { MutableRefObject } from 'react';
-import type { Options, FetchState, PluginReturn, Service, Subscribe } from './types';
+import type { FetchState, Options, PluginReturn, Service, Subscribe } from './types';
 
 export default class Fetch<TData, TParams extends any[]> {
   pluginImpls: PluginReturn<TData, TParams>[];
@@ -17,10 +17,12 @@ export default class Fetch<TData, TParams extends any[]> {
     public serviceRef: MutableRefObject<Service<TData, TParams>>,
     public options: Options<TData, TParams>,
     public subscribe: Subscribe,
+    public initState: Partial<FetchState<TData, TParams>> = {},
   ) {
     this.state = {
       ...this.state,
       loading: !options.manual,
+      ...initState,
     };
   }
 
@@ -93,7 +95,10 @@ export default class Fetch<TData, TParams extends any[]> {
       this.runPluginHandler('onSuccess', res, params);
 
       this.options.onFinally?.(params, res, undefined);
-      this.runPluginHandler('onFinally', params, res, undefined);
+
+      if (currentCount === this.count) {
+        this.runPluginHandler('onFinally', params, res, undefined);
+      }
 
       return res;
     } catch (error) {
@@ -111,7 +116,10 @@ export default class Fetch<TData, TParams extends any[]> {
       this.runPluginHandler('onError', error, params);
 
       this.options.onFinally?.(params, undefined, error);
-      this.runPluginHandler('onFinally', params, undefined, error);
+
+      if (currentCount === this.count) {
+        this.runPluginHandler('onFinally', params, undefined, error);
+      }
 
       throw error;
     }

@@ -1,7 +1,13 @@
 import { useMemoizedFn, useUpdate } from 'ahooks';
 import { parse, stringify } from 'query-string';
 import { useMemo, useRef } from 'react';
-import * as rc from 'react-router';
+
+import type * as React from 'react';
+
+import * as tmp from 'react-router';
+
+// ignore waring `"export 'useNavigate' (imported as 'rc') was not found in 'react-router'`
+const rc = tmp as any;
 
 export interface Options {
   navigateMode?: 'push' | 'replace';
@@ -16,15 +22,18 @@ const parseConfig = {
 
 type UrlState = Record<string, any>;
 
-export default <S extends UrlState = UrlState>(initialState?: S | (() => S), options?: Options) => {
+const useUrlState = <S extends UrlState = UrlState>(
+  initialState?: S | (() => S),
+  options?: Options,
+) => {
   type State = Partial<{ [key in keyof S]: any }>;
   const { navigateMode = 'push' } = options || {};
 
+  const location = rc.useLocation();
+
   // react-router v5
-  // @ts-ignore
   const history = rc.useHistory?.();
   // react-router v6
-  // @ts-ignore
   const navigate = rc.useNavigate?.();
 
   const update = useUpdate();
@@ -72,3 +81,5 @@ export default <S extends UrlState = UrlState>(initialState?: S | (() => S), opt
 
   return [targetQuery, useMemoizedFn(setState)] as const;
 };
+
+export default useUrlState;

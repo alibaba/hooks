@@ -21,7 +21,7 @@ const [current, {
   dec,
   set,
   reset
-}] = useCounter(initialValue, {min, max});
+}] = useCounter(initialValue, { min, max });
 ```
 
 ### Result

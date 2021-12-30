@@ -33,4 +33,4 @@ const size = useSize(target);
 
 | 参数     | 说明                                     | 类型       |
 |----------|------------------------------------------|------------|
-| size  | dom 节点的尺寸                         | `{ width: number, height: number } \| undefined`    |
+| size  | DOM 节点的尺寸                         | `{ width: number, height: number } \| undefined`    |

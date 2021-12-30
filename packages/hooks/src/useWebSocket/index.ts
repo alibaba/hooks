@@ -18,6 +18,8 @@ export interface Options {
   onClose?: (event: WebSocketEventMap['close']) => void;
   onMessage?: (message: WebSocketEventMap['message']) => void;
   onError?: (event: WebSocketEventMap['error']) => void;
+
+  protocols?: string | string[];
 }
 
 export interface Result {
@@ -38,6 +40,7 @@ export default function useWebSocket(socketUrl: string, options: Options = {}): 
     onClose,
     onMessage,
     onError,
+    protocols,
   } = options;
 
   const onOpenRef = useLatest(onOpen);
@@ -46,7 +49,7 @@ export default function useWebSocket(socketUrl: string, options: Options = {}): 
   const onErrorRef = useLatest(onError);
 
   const reconnectTimesRef = useRef(0);
-  const reconnectTimerRef = useRef<NodeJS.Timeout>();
+  const reconnectTimerRef = useRef<ReturnType<typeof setTimeout>>();
   const websocketRef = useRef<WebSocket>();
 
   const unmountedRef = useRef(false);
@@ -80,7 +83,7 @@ export default function useWebSocket(socketUrl: string, options: Options = {}): 
       websocketRef.current.close();
     }
 
-    websocketRef.current = new WebSocket(socketUrl);
+    websocketRef.current = new WebSocket(socketUrl, protocols);
     setReadyState(ReadyState.Connecting);
 
     websocketRef.current.onerror = (event) => {

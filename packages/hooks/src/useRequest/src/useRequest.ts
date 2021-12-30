@@ -1,13 +1,12 @@
+import useAutoRunPlugin from './plugins/useAutoRunPlugin';
+import useCachePlugin from './plugins/useCachePlugin';
 import useDebouncePlugin from './plugins/useDebouncePlugin';
 import useLoadingDelayPlugin from './plugins/useLoadingDelayPlugin';
 import usePollingPlugin from './plugins/usePollingPlugin';
 import useRefreshOnWindowFocusPlugin from './plugins/useRefreshOnWindowFocusPlugin';
-import useThrottlePlugin from './plugins/useThrottlePlugin';
-import useRefreshDeps from './plugins/useRefreshDeps';
-
-import type { Options, Plugin, Service } from './types';
-import useCachePlugin from './plugins/useCachePlugin';
 import useRetryPlugin from './plugins/useRetryPlugin';
+import useThrottlePlugin from './plugins/useThrottlePlugin';
+import type { Options, Plugin, Service } from './types';
 import useRequestImplement from './useRequestImplement';
 
 // function useRequest<TData, TParams extends any[], TFormated, TTFormated extends TFormated = any>(
@@ -32,7 +31,7 @@ function useRequest<TData, TParams extends any[]>(
     usePollingPlugin,
     useRefreshOnWindowFocusPlugin,
     useThrottlePlugin,
-    useRefreshDeps,
+    useAutoRunPlugin,
     useCachePlugin,
     useRetryPlugin,
   ] as Plugin<TData, TParams>[]);

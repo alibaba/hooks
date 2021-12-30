@@ -3,9 +3,11 @@ module.exports = {
   clearMocks: true,
   testPathIgnorePatterns: ['/.history/'],
   modulePathIgnorePatterns: ['<rootDir>/package.json'],
+  resetMocks: false,
+  setupFiles: ['jest-localstorage-mock'],
   globals: {
     'ts-jest': {
-      tsConfig: 'tsconfig.json',
+      tsconfig: 'tsconfig.json',
     },
   },
 };

@@ -5,7 +5,7 @@ nav:
 
 # useKeyPress
 
-Listen the keyboard press, support key combinations, and support alias.
+Listen for the keyboard press, support key combinations, and support alias.
 
 ## Examples
 
@@ -36,8 +36,8 @@ type keyType = number | string;
 type KeyFilter = keyType | keyType[] | ((event: KeyboardEvent) => boolean);
 
 useKeyPress(
-  keyFilter: KeyFilter, 
-  eventHandler: EventHandler, 
+  keyFilter: KeyFilter,
+  eventHandler: EventHandler,
   options?: Options
 )
 ```

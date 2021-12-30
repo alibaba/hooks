@@ -31,4 +31,4 @@ const { data } = useRequest(getUsername, {
 ## 备注
 
 * `options.refreshOnWindowFocus`、`options.focusTimespan` 支持动态变化。
-* 监听浏览器事件为 `visibilitychange` 和 `focus`。
+* 监听的浏览器事件为 `visibilitychange` 和 `focus`。

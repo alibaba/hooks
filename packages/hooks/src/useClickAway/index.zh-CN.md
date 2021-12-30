@@ -25,6 +25,9 @@ nav:
 
 <code src="./demo/demo4.tsx" />
 
+### 支持多个事件
+
+<code src="./demo/demo5.tsx">
 
 ## API
 
@@ -34,7 +37,7 @@ type Target = Element | (() => Element) | React.MutableRefObject<Element>;
 useClickAway<T extends Event = Event>(
   onClickAway: (event: T) => void,
   target: Target | Target[],
-  eventName?: string
+  eventName?: string | string[]
 );
 ```
 
@@ -44,4 +47,4 @@ useClickAway<T extends Event = Event>(
 |-------------|----------------------------|------------------------|---------|
 | onClickAway | 触发函数                   | `(event: T) => void`   | -       |
 | target      | DOM 节点或者 Ref，支持数组 | `Target` \| `Target[]` | -       |
-| eventName   | 指定需要监听的事件         | `string`               | `click` |
+| eventName   | 指定需要监听的事件，支持数组    | `string` \| `string[]` | `click` |

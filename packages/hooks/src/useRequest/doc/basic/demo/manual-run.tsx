@@ -1,6 +1,6 @@
 /**
  * title: Edit username
- * desc: In this example, we use `run(username)` to modify the username, and use `onSuccess` and `onError` to handle success and failure.
+ * desc: In this example, we use `run(username)` to edit the username, and use `onSuccess` and `onError` to handle success and failure.
  *
  * title.zh-CN: 修改用户名
  * desc.zh-CN: 在这个例子中，我们通过 `run(username)` 来修改用户名，通过 `onSuccess` 和 `onError` 来处理成功和失败。

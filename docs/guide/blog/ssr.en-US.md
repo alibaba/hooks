@@ -6,9 +6,9 @@ Since SSR executes JS code in a non-browser environment, there will be many prob
 
 ## Problem 1: DOM/BOM is missing
 
-SSR is to run React code in a node environment, while global properties such as window, document, and navigator are not available at this time. If you use these attributes directly, you will get errors like `window is not defined, document is not defined, navigator is not defined`, etc.
+SSR is to run React code in a node environment, while global properties such as window, document, and navigator are not available at this time. If you use these properties directly, you will get errors like `window is not defined, document is not defined, navigator is not defined`, etc.
 
-A common misuse is that global attributes such as document are used directly during the execution of Hooks.
+A common misuse is that global properties, such as document, are used directly during the execution of Hooks.
 
 ```js
 import React, { useState } from 'react';
@@ -21,7 +21,7 @@ export default () => {
 
 ### Solution
 
-1. Put the method of accessing the DOM/BOM in useEffect/useLayoutEffect (the server will not execute it) to avoid errors when the server executes, for example:
+1. Put the code of accessing the DOM/BOM in useEffect/useLayoutEffect (the server will not execute it) to avoid errors when the server executes, for example:
 
 ```js
 import React, { useState, useEffect } from 'react';
@@ -37,7 +37,7 @@ export default () => {
 };
 ```
 
-2. Make environmental judgments through isBrowser
+2. Differentiate the environments by `isBrowser`
 
 ```js
 import React, { useState } from 'react';
@@ -72,9 +72,9 @@ export default useIsomorphicLayoutEffect;
 
 ## Summary: Need to pay attention when writing Hooks
 
-1. Do not use DOM/BOM attributes directly in non-useEffect/useLayoutEffect
-2. When using DOM/BOM attributes other than useEffect/useLayoutEffect, use `isBrowser` to determine whether to execute in the browser environment
-3. If a Hooks needs to receive DOM/BOM attributes, it needs to support function parameter passing. Take the useEventListener of ahooks as an example, it must support the function form to specify the target attribute.
+1. Do not use DOM/BOM properties directly in non-useEffect/useLayoutEffect
+2. When using DOM/BOM properties other than useEffect/useLayoutEffect, use `isBrowser` to determine whether to execute in the browser environment
+3. If a Hook needs to receive DOM/BOM properties, it needs to support passing the properties via a function type parameter. Take the useEventListener of ahooks as an example, it must support the function type to specify the target option.
 
 ```diff
 import React, { useState } from 'react';
@@ -91,8 +91,8 @@ export default () => {
     'click',
     clickHandler,
     {
--       target: document.getElemenetById('click-btn')
-+       target: () => document.getElemenetById('click-btn')
+-       target: document.getElementById('click-btn')
++       target: () => document.getElementById('click-btn')
     }
   );
 
@@ -109,5 +109,5 @@ export default () => {
 ## Reference
 
 - [fix: useDocumentVisiblility support ssr](https://github.com/alibaba/hooks/pull/935/files)
-- [UmiJS 服务端渲染](https://umijs.org/zh-CN/docs/ssr#window-is-not-defined-document-is-not-defined-navigator-is-not-defined)
+- [UmiJS 服务端渲染](https://umijs.org/docs/ssr#window-is-not-defined-document-is-not-defined-navigator-is-not-defined)
 - [useLayoutEffect and SSR](https://medium.com/@alexandereardon/uselayouteffect-and-ssr-192986cdcf7a)

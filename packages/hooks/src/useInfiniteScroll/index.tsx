@@ -1,11 +1,12 @@
-import { useEffect, useMemo, useState } from 'react';
-import { useEventListener, useMemoizedFn, useRequest } from '../';
+import { useMemo, useState } from 'react';
+import { useEventListener, useMemoizedFn, useRequest, useUpdateEffect } from '../';
 import { getTargetElement } from '../utils/domTarget';
-import type { Data, InfiniteSrollOptions, Service } from './types';
+import { getClientHeight, getScrollHeight, getScrollTop } from '../utils/rect';
+import type { Data, InfiniteScrollOptions, Service } from './types';
 
 const useInfiniteScroll = <TData extends Data>(
   service: Service<TData>,
-  options: InfiniteSrollOptions<TData> = {},
+  options: InfiniteScrollOptions<TData> = {},
 ) => {
   const {
     target,
@@ -32,12 +33,13 @@ const useInfiniteScroll = <TData extends Data>(
       const currentData = await service(lastData);
       if (!lastData) {
         setFinalData(currentData);
+      } else {
+        setFinalData({
+          ...currentData,
+          // @ts-ignore
+          list: [...lastData.list, ...currentData.list],
+        });
       }
-      setFinalData({
-        ...currentData,
-        // @ts-ignore
-        list: [...lastData.list, ...currentData.list],
-      });
       return currentData;
     },
     {
@@ -70,10 +72,6 @@ const useInfiniteScroll = <TData extends Data>(
     return runAsync(finalData);
   };
 
-  const mutate = (data?: TData) => {
-    setFinalData(data);
-  };
-
   const reload = () => run();
   const reloadAsync = () => runAsync();
 
@@ -83,7 +81,11 @@ const useInfiniteScroll = <TData extends Data>(
       return;
     }
 
-    if (el.scrollHeight - el.scrollTop <= el.clientHeight + threshold) {
+    const scrollTop = getScrollTop(el);
+    const scrollHeight = getScrollHeight(el);
+    const clientHeight = getClientHeight(el);
+
+    if (scrollHeight - scrollTop <= clientHeight + threshold) {
       loadMore();
     }
   };
@@ -99,7 +101,7 @@ const useInfiniteScroll = <TData extends Data>(
     { target },
   );
 
-  useEffect(() => {
+  useUpdateEffect(() => {
     run();
   }, [...reloadDeps]);
 
@@ -113,7 +115,7 @@ const useInfiniteScroll = <TData extends Data>(
     loadMoreAsync: useMemoizedFn(loadMoreAsync),
     reload: useMemoizedFn(reload),
     reloadAsync: useMemoizedFn(reloadAsync),
-    mutate: useMemoizedFn(mutate),
+    mutate: setFinalData,
     cancel,
   };
 };

@@ -1,8 +1,8 @@
 import { useRef } from 'react';
-import type { Plugin } from '../types';
+import type { Plugin, Timeout } from '../types';
 
 const useRetryPlugin: Plugin<any, any[]> = (fetchInstance, { retryInterval, retryCount }) => {
-  const timerRef = useRef<NodeJS.Timeout>();
+  const timerRef = useRef<Timeout>();
   const countRef = useRef(0);
 
   const triggerByRetry = useRef(false);

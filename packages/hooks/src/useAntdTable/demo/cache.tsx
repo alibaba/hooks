@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Button, Col, Form, Input, Row, Table, Select } from 'antd';
-import { useAntdTable } from 'ahooks';
+import { useAntdTable, clearCache } from 'ahooks';
 
 const { Option } = Select;
 
@@ -158,6 +158,15 @@ const Demo = () => {
         style={{ marginBottom: 16 }}
       >
         {show ? 'Click to destroy' : 'Click recovery'}
+      </Button>
+      <Button
+        danger
+        onClick={() => {
+          clearCache('useAntdTableCache');
+        }}
+        style={{ marginBottom: 16, marginLeft: 8 }}
+      >
+        Click to clearCache
       </Button>
       {show && <UserList />}
     </div>

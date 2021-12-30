@@ -55,7 +55,7 @@ const [state, setState]: [State, SetState] = useCookieState(
 
 setState 可以更新 cookie options，会与 `useCookieState` 设置的 options 进行 merge 操作。
 
-`const targetOptions = {...options, ...updateOptions}`
+`const targetOptions = { ...options, ...updateOptions }`
 
 ### Options
 

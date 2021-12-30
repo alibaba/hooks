@@ -6,12 +6,13 @@ export const menus = [
       'useRequest/doc/basic',
       'useRequest/doc/loadingDelay',
       'useRequest/doc/polling',
+      'useRequest/doc/ready',
+      'useRequest/doc/refreshDeps',
       'useRequest/doc/refreshOnWindowFocus',
       'useRequest/doc/debounce',
       'useRequest/doc/throttle',
-      'useRequest/doc/retry',
-      'useRequest/doc/refreshDeps',
       'useRequest/doc/cache',
+      'useRequest/doc/retry',
     ],
   },
   {
@@ -53,6 +54,7 @@ export const menus = [
       'usePrevious',
       'useRafState',
       'useSafeState',
+      'useGetState',
     ],
   },
   {
@@ -92,6 +94,7 @@ export const menus = [
       'useResponsive',
       'useScroll',
       'useSize',
+      'useFocusWithin',
     ],
   },
   {

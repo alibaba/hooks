@@ -19,7 +19,7 @@ export const resultAdapter = (result: any) => {
     onSort: (dataIndex: string, order: string) => {
       result.tableProps.onChange(
         { current: result.pagination.current, pageSize: result.pagination.pageSize },
-        result.filters,
+        result.params[0]?.filters,
         {
           field: dataIndex,
           order,
@@ -30,7 +30,7 @@ export const resultAdapter = (result: any) => {
       result.tableProps.onChange(
         { current: result.pagination.current, pageSize: result.pagination.pageSize },
         filterParams,
-        result.sorter,
+        result.params[0]?.sorter,
       );
     },
   };

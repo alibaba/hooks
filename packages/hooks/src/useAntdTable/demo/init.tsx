@@ -37,7 +37,7 @@ const getTableData = ({ current, pageSize }, formData: Object): Promise<Result> 
 export default () => {
   const [form] = Form.useForm();
 
-  const { tableProps, search, params } = useAntdTable(getTableData, {
+  const { loading, tableProps, search, params } = useAntdTable(getTableData, {
     form,
     defaultParams: [
       { current: 2, pageSize: 5 },

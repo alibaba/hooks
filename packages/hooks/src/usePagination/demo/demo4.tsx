@@ -46,7 +46,7 @@ export default () => {
       <p>You can click the button multiple times, the conditions of pagination will be cached.</p>
       <p>
         <button type="button" onClick={() => toggle()}>
-          show/hidden
+          show/hide
         </button>
       </p>
       {state && <PaginationComponent />}
