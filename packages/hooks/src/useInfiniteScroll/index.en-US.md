@@ -24,6 +24,12 @@ In the first example, we demonstrate the implementation of a most basic infinite
 
 <code src="./demo/default.tsx" />
 
+## Pagination
+
+In the data fixation scenario, we sometimes use `page` and `pageSize` to request new data.
+
+<code src="./demo/pagination.tsx" />
+
 ## Scrolling to automatically load
 
 In the infinite scrolling scenario, the most common case is to automatically load when scrolling to the bottom. By configuring the following properties, you can achieve scrolling to automatically load.
@@ -92,7 +98,7 @@ const {
 
 | Property      | Description                                                                                                                                       | Type                     |
 |---------------|---------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------|
-| data          | The data returned by the service, where the `list` attribute is the aggregated data                                                               | `TData` \| `undefined`    |
+| data          | The data returned by the service, where the `list` attribute is the aggregated data                                                               | `TData` \| `undefined`   |
 | loading       | Is the first request in progress                                                                                                                  | `boolean`                |
 | loadingMore   | Is more data request in progress                                                                                                                  | `boolean`                |
 | noMore        | Whether there is no more data, it will take effect after configuring `options.isNoMore`                                                           | `boolean`                |
@@ -107,7 +113,7 @@ const {
 
 | Property   | Description                                                                                                                                                                                                      | Type                                                        | Default |
 |------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------|---------|
-| target     | specifies the parent element. If it exists, it will trigger the `loadMore` when scrolling to the bottom. Needs to work with `isNoMore` to know when there is no more data to load                                 | `() => Element` \| `Element` \| `MutableRefObject<Element>` | -       |
+| target     | specifies the parent element. If it exists, it will trigger the `loadMore` when scrolling to the bottom. Needs to work with `isNoMore` to know when there is no more data to load                                | `() => Element` \| `Element` \| `MutableRefObject<Element>` | -       |
 | isNoMore   | determines if there is no more data, the input parameter is the latest merged `data`                                                                                                                             | `(data?: TData) => boolean`                                 | -       |
 | threshold  | The pixel threshold to the bottom for the scrolling to load                                                                                                                                                      | `number`                                                    | `100`   |
 | reloadDeps | When the content of the array changes, `reload` will be triggered                                                                                                                                                | `any[]`                                                     | -       |
