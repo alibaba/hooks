@@ -72,8 +72,14 @@ const useInfiniteScroll = <TData extends Data>(
     return runAsync(finalData);
   };
 
-  const reload = () => run();
-  const reloadAsync = () => runAsync();
+  const reload = () => {
+    setFinalData(undefined);
+    run();
+  };
+  const reloadAsync = () => {
+    setFinalData(undefined);
+    runAsync();
+  };
 
   const scrollMethod = () => {
     const el = getTargetElement(target);
