@@ -1,8 +1,8 @@
-import { useLatest, useMemoizedFn, useUpdate } from 'ahooks';
-import type { ParseOptions, StringifyOptions } from 'query-string';
+import { useMemoizedFn, useUpdate } from 'ahooks';
 import { parse, stringify } from 'query-string';
-import type * as React from 'react';
+import type { ParseOptions, StringifyOptions } from 'query-string';
 import { useMemo, useRef } from 'react';
+import type * as React from 'react';
 import * as tmp from 'react-router';
 
 // ignore waring `"export 'useNavigate' (imported as 'rc') was not found in 'react-router'`
@@ -33,8 +33,8 @@ const useUrlState = <S extends UrlState = UrlState>(
   type State = Partial<{ [key in keyof S]: any }>;
   const { navigateMode = 'push', parseOptions, stringifyOptions } = options || {};
 
-  const mergedParseOptionsRef = useLatest({ ...baseParseConfig, ...parseOptions });
-  const mergedStringifyOptionsRef = useLatest({ ...baseStringifyConfig, ...stringifyOptions });
+  const mergedParseOptions = { ...baseParseConfig, ...parseOptions };
+  const mergedStringifyOptions = { ...baseStringifyConfig, ...stringifyOptions };
 
   const location = rc.useLocation();
 
@@ -50,7 +50,7 @@ const useUrlState = <S extends UrlState = UrlState>(
   );
 
   const queryFromUrl = useMemo(() => {
-    return parse(location.search, mergedParseOptionsRef.current);
+    return parse(location.search, mergedParseOptions);
   }, [location.search]);
 
   const targetQuery: State = useMemo(
@@ -70,16 +70,14 @@ const useUrlState = <S extends UrlState = UrlState>(
     if (history) {
       history[navigateMode]({
         hash: location.hash,
-        search:
-          stringify({ ...queryFromUrl, ...newQuery }, mergedStringifyOptionsRef.current) || '?',
+        search: stringify({ ...queryFromUrl, ...newQuery }, mergedStringifyOptions) || '?',
       });
     }
     if (navigate) {
       navigate(
         {
           hash: location.hash,
-          search:
-            stringify({ ...queryFromUrl, ...newQuery }, mergedStringifyOptionsRef.current) || '?',
+          search: stringify({ ...queryFromUrl, ...newQuery }, mergedStringifyOptions) || '?',
         },
         {
           replace: navigateMode === 'replace',

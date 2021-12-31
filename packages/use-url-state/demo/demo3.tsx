@@ -1,9 +1,9 @@
 /**
- * title: Array url query
- * desc: Customize the way of parsing and serialization by passing in the configuration of <a href="https://github.com/sindresorhus/query-string#arrayformat">query-string</a>.
+ * title: Custom query-string options
+ * desc: The rules can be customized by passing in parseOptions and stringifyOptions.
  *
- * title.zh-CN: 处理数组类型的url query
- * desc.zh-CN: 可以通过传入<a href="https://github.com/sindresorhus/query-string#arrayformat">query-string</a>的配置来自定义解析和序列化的方式。
+ * title.zh-CN: 自定义 query-string 配置
+ * desc.zh-CN: 可以通过传入 parseOptions 和 stringifyOptions 自定义转换规则。
  */
 
 import React from 'react';
@@ -34,7 +34,7 @@ export default () => {
       >
         变更数组state
       </button>
-      ids: {JSON.stringify(state.ids)}
+      <div>ids: {JSON.stringify(state.ids)}</div>
     </div>
   );
 };
