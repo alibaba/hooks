@@ -2,21 +2,6 @@ import { act, renderHook } from '@testing-library/react-hooks';
 import { useState } from 'react';
 import useSelections from '../index';
 
-/* 暂时关闭 act 警告  见：https://github.com/testing-library/react-testing-library/issues/281#issuecomment-480349256 */
-const originalError = console.error;
-beforeAll(() => {
-  console.error = (...args: any) => {
-    if (/Warning.*not wrapped in act/.test(args[0])) {
-      return;
-    }
-    originalError.call(console, ...args);
-  };
-});
-
-afterAll(() => {
-  console.error = originalError;
-});
-
 const data = [1, 2, 3];
 
 describe('useSelections', () => {
@@ -26,7 +11,7 @@ describe('useSelections', () => {
 
   function useTestUseSelections() {
     const [items, setItems] = useState(data);
-    const useSelectionsResult = useSelections(items, [1]);
+    const useSelectionsResult = useSelections(items, [1], [2]);
     return [useSelectionsResult, setItems] as const;
   }
 
@@ -43,9 +28,58 @@ describe('useSelections', () => {
 
   describe('test helper ', () => {
     const hook = setUp();
+    afterEach(() => {
+      hookUtils(hook).helper.setSelected([1]);
+      hookUtils(hook).helper.setDisabled([2]);
+    });
     it('defaultSelected should work correct', async () => {
       expect(hookUtils(hook).seleected).toEqual([1]);
       expect(hookUtils(hook).helper.isSelected(1)).toEqual(true);
+    });
+    it('defaultDisabled should work correct', async () => {
+      act(() => {
+        hookUtils(hook).helper.select(2);
+      });
+      expect(hookUtils(hook).seleected).toEqual([1]);
+      expect(hookUtils(hook).helper.isSelected(2)).toEqual(false);
+      act(() => {
+        hookUtils(hook).helper.toggle(2);
+      });
+      expect(hookUtils(hook).helper.isSelected(2)).toEqual(false);
+    });
+    it('disable should work correct', async () => {
+      act(() => {
+        hookUtils(hook).helper.disable(3);
+        hookUtils(hook).helper.select(3);
+        hookUtils(hook).helper.select(1);
+        hookUtils(hook).helper.disable(1);
+        hookUtils(hook).helper.unSelect(1);
+      });
+      expect(hookUtils(hook).helper.isSelected(1)).toEqual(true);
+      expect(hookUtils(hook).helper.isSelected(3)).toEqual(false);
+      act(() => {
+        hookUtils(hook).helper.toggleAll();
+      });
+      expect(hookUtils(hook).helper.isSelected(3)).toEqual(false);
+      act(() => {
+        hookUtils(hook).helper.selectAll();
+      });
+      expect(hookUtils(hook).helper.isSelected(3)).toEqual(false);
+    });
+    it('enable should work correct', async () => {
+      act(() => {
+        hookUtils(hook).helper.enable(2);
+        hookUtils(hook).helper.select(2);
+      });
+      expect(hookUtils(hook).helper.isSelected(2)).toEqual(true);
+    });
+
+    it('isdisable and disable should work correct', async () => {
+      expect(hookUtils(hook).helper.isDisabled(2)).toEqual(true);
+      act(() => {
+        hookUtils(hook).helper.disable(3);
+      });
+      expect(hookUtils(hook).helper.isDisabled(3)).toEqual(true);
     });
     it('select and unSelect should work correct', async () => {
       act(() => {
@@ -69,20 +103,21 @@ describe('useSelections', () => {
       act(() => {
         hookUtils(hook).helper.toggle(1);
       });
-      expect(hookUtils(hook).seleected).toEqual([1]);
-      expect(hookUtils(hook).helper.isSelected(1)).toEqual(true);
+      expect(hookUtils(hook).seleected).toEqual([]);
+      expect(hookUtils(hook).helper.isSelected(1)).toEqual(false);
       expect(hookUtils(hook).helper.allSelected).toEqual(false);
       act(() => {
         hookUtils(hook).helper.toggle(1);
       });
-      expect(hookUtils(hook).seleected).toEqual([]);
-      expect(hookUtils(hook).helper.isSelected(1)).toEqual(false);
+      expect(hookUtils(hook).seleected).toEqual([1]);
+      expect(hookUtils(hook).helper.isSelected(1)).toEqual(true);
       expect(hookUtils(hook).helper.allSelected).toEqual(false);
     });
 
     it('selectAll and unSelectAll should work correct', async () => {
-      expect(hookUtils(hook).helper.noneSelected).toEqual(true);
+      expect(hookUtils(hook).helper.noneSelected).toEqual(false);
       act(() => {
+        hookUtils(hook).helper.enable(2);
         hookUtils(hook).helper.selectAll();
       });
       expect(hookUtils(hook).seleected).toEqual([1, 2, 3]);
@@ -100,8 +135,9 @@ describe('useSelections', () => {
     });
 
     it('toggleAll should work correct', async () => {
-      expect(hookUtils(hook).helper.noneSelected).toEqual(true);
+      expect(hookUtils(hook).helper.noneSelected).toEqual(false);
       act(() => {
+        hookUtils(hook).helper.enable(2);
         hookUtils(hook).helper.toggleAll();
       });
       expect(hookUtils(hook).seleected).toEqual([1, 2, 3]);
@@ -119,8 +155,9 @@ describe('useSelections', () => {
     });
 
     it('setSelected should work correct', async () => {
-      expect(hookUtils(hook).helper.noneSelected).toEqual(true);
+      expect(hookUtils(hook).helper.noneSelected).toEqual(false);
       act(() => {
+        hookUtils(hook).helper.enable(2);
         hookUtils(hook).helper.setSelected([1]);
       });
       expect(hookUtils(hook).seleected).toEqual([1]);
