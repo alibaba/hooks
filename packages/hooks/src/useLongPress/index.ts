@@ -22,6 +22,7 @@ function useLongPress(
   { delay = 300, onClick }: Options = {},
 ) {
   const onLongPressRef = useLatest(onLongPress);
+  const onClickRef = useLatest(onClick);
 
   const timerRef = useRef<ReturnType<typeof setTimeout>>();
   const isTriggeredRef = useRef(false);
@@ -44,8 +45,8 @@ function useLongPress(
         if (timerRef.current) {
           clearTimeout(timerRef.current);
         }
-        if (shouldTriggerClick && !isTriggeredRef.current && onClick) {
-          onClick(event);
+        if (shouldTriggerClick && !isTriggeredRef.current && onClickRef.current) {
+          onClickRef.current(event);
         }
         isTriggeredRef.current = false;
       };
