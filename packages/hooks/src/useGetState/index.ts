@@ -9,7 +9,7 @@ function useGetState<S>(initialState?: S) {
   const stateRef = useRef<S>(state)
   stateRef.current = state
 
-  const getState = useCallback<GetState<S>>(() => stateRef.current, [])
+  const getState = useCallback<GetStateAction<S>>(() => stateRef.current, [])
 
   return [state, setState, getState]
 }
