@@ -13,8 +13,18 @@ nav:
 
 <code src="./demo/demo1.tsx" />
 
+## 类型定义
+
+```typescript
+import { Dispatch, SetStateAction } from 'react';
+type GetStateAction<S> = () => S;
+
+function useGetState<S>(initialState: S | (() => S)): [S, Dispatch<SetStateAction<S>>, GetStateAction<S>]
+function useGetState<S = undefined>(): [S | undefined, Dispatch<SetStateAction<S | undefined>>, GetStateAction<S | undefined>]
+```
+
 ## API
 
 ```typescript
-const [state, setState, getState] = useGetState<S>(initialState: S | (() => S)): [S, (nextState: S | ((prevState: S) => S)) => void, () => S]
+const [state, setState, getState] = useGetState<S>(initialState)
 ```
