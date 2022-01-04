@@ -43,6 +43,10 @@ React Router V6：https://codesandbox.io/s/autumn-shape-odrt9?file=/App.tsx
 
 <code src="./demo/demo2.tsx" hideActions='["CSB"]' />
 
+### 自定义 query-string 配置
+
+<code src="./demo/demo3.tsx" hideActions='["CSB"]' />
+
 ## API
 
 ```typescript
@@ -58,9 +62,11 @@ const [state, setState] = useUrlState(initialState, options);
 
 ### Options
 
-| 参数         | 说明                          | 类型                  | 默认值   |
-|--------------|-------------------------------|-----------------------|----------|
-| navigateMode | 状态变更时切换 history 的方式 | `'push' \| 'replace'` | `'push'` |
+| 参数             | 说明                                                                                                    | 类型                  | 默认值   |
+|------------------|---------------------------------------------------------------------------------------------------------|-----------------------|----------|
+| navigateMode     | 状态变更时切换 history 的方式                                                                           | `'push' \| 'replace'` | `'push'` |
+| parseOptions     | `query-string` [parse](https://github.com/sindresorhus/query-string#parsestring-options) 的配置         | `ParseOptions`        | -        |
+| stringifyOptions | `query-string` [stringify](https://github.com/sindresorhus/query-string#stringifyobject-options) 的配置 | `StringifyOptions`    | -        |
 
 ### Result
 

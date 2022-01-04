@@ -16,9 +16,8 @@ const setCachePromise = (cacheKey: CachedKey, promise: Promise<any>) => {
       cachePromise.delete(cacheKey);
       return res;
     })
-    .catch((err) => {
+    .catch(() => {
       cachePromise.delete(cacheKey);
-      throw err;
     });
 };
 
