@@ -219,7 +219,7 @@ const useAntdTable = <TData extends Data, TParams extends Params>(
     if (hasAutoRun.current) {
       return;
     }
-    if (!manual) {
+    if (!manual && ready) {
       hasAutoRun.current = true;
       result.pagination.changeCurrent(1);
     }
