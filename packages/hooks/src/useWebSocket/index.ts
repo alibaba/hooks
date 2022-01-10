@@ -100,7 +100,7 @@ export default function useWebSocket(socketUrl: string, options: Options = {}): 
       }
       onOpenRef.current?.(event);
       reconnectTimesRef.current = 0;
-      setReadyState(websocketRef.current?.readyState || ReadyState.Closed);
+      setReadyState(websocketRef.current?.readyState || ReadyState.Open);
     };
     websocketRef.current.onmessage = (message: WebSocketEventMap['message']) => {
       if (unmountedRef.current) {
