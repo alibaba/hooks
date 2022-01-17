@@ -35,7 +35,7 @@
     "ahooks-v3-count": "^1.0.0",
     "dayjs": "^1.9.1",
     "intersection-observer": "^0.12.0",
-    "js-cookie": "^3.0.0",
+    "js-cookie": "^2.x.x",
     "lodash": "^4.17.21",
     "resize-observer-polyfill": "^1.5.1",
     "screenfull": "^5.0.0"
@@ -47,7 +47,7 @@
     "@alifd/next": "^1.20.6",
     "@ant-design/icons": "^4.6.2",
     "@types/enzyme": "^3.10.5",
-    "@types/js-cookie": "^3.0.0",
+    "@types/js-cookie": "^2.x.x",
     "antd": "^4.16.9",
     "enzyme-adapter-react-16": "^1.15.4",
     "jest-websocket-mock": "^2.1.0",
