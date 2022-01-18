@@ -12,5 +12,17 @@ import React from 'react';
 export default () => {
   const mouse = useMouse();
 
-  return <div>Mouse Pos: {JSON.stringify(mouse)}</div>;
+  return (
+    <div>
+      <p>
+        client - x: {mouse.clientX}, y: {mouse.clientY}
+      </p>
+      <p>
+        page - x: {mouse.pageX}, y: {mouse.pageY}
+      </p>
+      <p>
+        screen - x: {mouse.screenX}, y: {mouse.screenY}
+      </p>
+    </div>
+  );
 };
