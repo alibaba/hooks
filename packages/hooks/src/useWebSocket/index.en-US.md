@@ -13,10 +13,6 @@ A hook for WebSocket.
 
 <code src="./demo/demo1.tsx" />
 
-### Options Provided
-
-<code src="./demo/demo2.tsx" />
-
 ## API
 
 ```typescript

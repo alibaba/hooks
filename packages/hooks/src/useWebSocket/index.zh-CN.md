@@ -13,10 +13,6 @@ nav:
 
 <code src="./demo/demo1.tsx" />
 
-### Options配置
-
-<code src="./demo/demo2.tsx" />
-
 ## API
 
 ```typescript
