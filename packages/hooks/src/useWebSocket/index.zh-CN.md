@@ -26,10 +26,10 @@ enum ReadyState {
 interface Options {
   reconnectLimit?: number;
   reconnectInterval?: number;
-  onOpen?: (event: WebSocketEventMap['open']) => void;
-  onClose?: (event: WebSocketEventMap['close']) => void;
-  onMessage?: (message: WebSocketEventMap['message']) => void;
-  onError?: (event: WebSocketEventMap['error']) => void;
+  onOpen?: (event: WebSocketEventMap['open'], instance: WebSocket) => void;
+  onClose?: (event: WebSocketEventMap['close'], instance: WebSocket) => void;
+  onMessage?: (message: WebSocketEventMap['message'], instance: WebSocket) => void;
+  onError?: (event: WebSocketEventMap['error'], instance: WebSocket) => void;
   protocols?: string | string[];
 }
 
@@ -56,10 +56,10 @@ useWebSocket(socketUrl: string, options?: Options): Result;
 
 | 参数              | 说明                   | 类型                                              | 默认值  |
 |-------------------|------------------------|---------------------------------------------------|---------|
-| onOpen            | webSocket 连接成功回调 | `(event: WebSocketEventMap['open']) => void`      | -       |
-| onClose           | webSocket 关闭回调     | `(event: WebSocketEventMap['close']) => void`     | -       |
-| onMessage         | webSocket 收到消息回调 | `(message: WebSocketEventMap['message']) => void` | -       |
-| onError           | webSocket 错误回调     | `(event: WebSocketEventMap['error']) => void`     | -       |
+| onOpen            | webSocket 连接成功回调 | `(event: WebSocketEventMap['open'], instance: WebSocket) => void`      | -       |
+| onClose           | webSocket 关闭回调     | `(event: WebSocketEventMap['close'], instance: WebSocket) => void`     | -       |
+| onMessage         | webSocket 收到消息回调 | `(message: WebSocketEventMap['message'], instance: WebSocket) => void` | -       |
+| onError           | webSocket 错误回调     | `(event: WebSocketEventMap['error'], instance: WebSocket) => void`     | -       |
 | reconnectLimit    | 重试次数               | `number`                                          | `3`     |
 | reconnectInterval | 重试时间间隔（ms）     | `number`                                          | `3000`  |
 | manual            | 手动启动连接           | `boolean`                                         | `false` |

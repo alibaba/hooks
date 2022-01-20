@@ -26,10 +26,10 @@ enum ReadyState {
 interface Options {
   reconnectLimit?: number;
   reconnectInterval?: number;
-  onOpen?: (event: WebSocketEventMap['open']) => void;
-  onClose?: (event: WebSocketEventMap['close']) => void;
-  onMessage?: (message: WebSocketEventMap['message']) => void;
-  onError?: (event: WebSocketEventMap['error']) => void;
+  onOpen?: (event: WebSocketEventMap['open'], instance: WebSocket) => void;
+  onClose?: (event: WebSocketEventMap['close'], instance: WebSocket) => void;
+  onMessage?: (message: WebSocketEventMap['message'], instance: WebSocket) => void;
+  onError?: (event: WebSocketEventMap['error'], instance: WebSocket) => void;
   protocols?: string | string[];
 }
 
@@ -57,10 +57,10 @@ useWebSocket(socketUrl: string, options?: Options): Result;
 
 | Options Property  | Description                        | Type                                              | Default |
 |-------------------|------------------------------------|---------------------------------------------------|---------|
-| onOpen            | The webSocket connect callback     | `(event: WebSocketEventMap['open']) => void`      | -       |
-| onClose           | WebSocket close callback           | `(event: WebSocketEventMap['close']) => void`     | -       |
-| onMessage         | WebSocket receive message callback | `(message: WebSocketEventMap['message']) => void` | -       |
-| onError           | WebSocket error callback           | `(event: WebSocketEventMap['error']) => void`     | -       |
+| onOpen            | The webSocket connect callback     | `(event: WebSocketEventMap['open'], instance: WebSocket) => void`      | -       |
+| onClose           | WebSocket close callback           | `(event: WebSocketEventMap['close'], instance: WebSocket) => void`     | -       |
+| onMessage         | WebSocket receive message callback | `(message: WebSocketEventMap['message'], instance: WebSocket) => void` | -       |
+| onError           | WebSocket error callback           | `(event: WebSocketEventMap['error'], instance: WebSocket) => void`     | -       |
 | reconnectLimit    | Retry times                        | `number`                                          | `3`     |
 | reconnectInterval | Retry interval(ms)                 | `number`                                          | `3000`  |
 | manual            | Manually starts connection         | `boolean`                                         | `false` |

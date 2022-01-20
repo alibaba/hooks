@@ -14,10 +14,10 @@ export interface Options {
   reconnectLimit?: number;
   reconnectInterval?: number;
   manual?: boolean;
-  onOpen?: (event: WebSocketEventMap['open']) => void;
-  onClose?: (event: WebSocketEventMap['close']) => void;
-  onMessage?: (message: WebSocketEventMap['message']) => void;
-  onError?: (event: WebSocketEventMap['error']) => void;
+  onOpen?: (event: WebSocketEventMap['open'], instance: WebSocket) => void;
+  onClose?: (event: WebSocketEventMap['close'], instance: WebSocket) => void;
+  onMessage?: (message: WebSocketEventMap['message'], instance: WebSocket) => void;
+  onError?: (event: WebSocketEventMap['error'], instance: WebSocket) => void;
 
   protocols?: string | string[];
 }
@@ -83,40 +83,42 @@ export default function useWebSocket(socketUrl: string, options: Options = {}): 
       websocketRef.current.close();
     }
 
-    websocketRef.current = new WebSocket(socketUrl, protocols);
+    const ws = new WebSocket(socketUrl, protocols);
     setReadyState(ReadyState.Connecting);
 
-    websocketRef.current.onerror = (event) => {
+    ws.onerror = (event) => {
       if (unmountedRef.current) {
         return;
       }
       reconnect();
-      onErrorRef.current?.(event);
-      setReadyState(websocketRef.current?.readyState || ReadyState.Closed);
+      onErrorRef.current?.(event, ws);
+      setReadyState(ws.readyState || ReadyState.Closed);
     };
-    websocketRef.current.onopen = (event) => {
+    ws.onopen = (event) => {
       if (unmountedRef.current) {
         return;
       }
-      onOpenRef.current?.(event);
+      onOpenRef.current?.(event, ws);
       reconnectTimesRef.current = 0;
-      setReadyState(websocketRef.current?.readyState || ReadyState.Open);
+      setReadyState(ws.readyState || ReadyState.Open);
     };
-    websocketRef.current.onmessage = (message: WebSocketEventMap['message']) => {
+    ws.onmessage = (message: WebSocketEventMap['message']) => {
       if (unmountedRef.current) {
         return;
       }
-      onMessageRef.current?.(message);
+      onMessageRef.current?.(message, ws);
       setLatestMessage(message);
     };
-    websocketRef.current.onclose = (event) => {
+    ws.onclose = (event) => {
       if (unmountedRef.current) {
         return;
       }
       reconnect();
-      onCloseRef.current?.(event);
-      setReadyState(websocketRef.current?.readyState || ReadyState.Closed);
+      onCloseRef.current?.(event, ws);
+      setReadyState(ws.readyState || ReadyState.Closed);
     };
+
+    websocketRef.current = ws;
   };
 
   const sendMessage: WebSocket['send'] = (message) => {
