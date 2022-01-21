@@ -15,13 +15,13 @@ export default () => {
   return (
     <div>
       <p>
-        client - x: {mouse.clientX}, y: {mouse.clientY}
+        Client - x: {mouse.clientX}, y: {mouse.clientY}
       </p>
       <p>
-        page - x: {mouse.pageX}, y: {mouse.pageY}
+        Page - x: {mouse.pageX}, y: {mouse.pageY}
       </p>
       <p>
-        screen - x: {mouse.screenX}, y: {mouse.screenY}
+        Screen - x: {mouse.screenX}, y: {mouse.screenY}
       </p>
     </div>
   );

@@ -1,9 +1,9 @@
 /**
- * title: Pass in DOM element
- * desc: Tracking cursor and incoming DOM element position.
+ * title: Mouse position relative to the element
+ * desc: By passing in the target element, you can get the position of the mouse relative to the element.
  *
- * title.zh-CN: 传入 DOM 元素
- * desc.zh-CN: 获取鼠标和传入 DOM 元素的位置。
+ * title.zh-CN: 获取鼠标相对于元素的位置
+ * desc.zh-CN: 通过传入目标元素，可以获取鼠标相对于元素的位置。
  */
 
 import React, { useRef } from 'react';
@@ -30,22 +30,13 @@ export default () => {
       </div>
       <div>
         <p>
-          client - x: {mouse.clientX}, y: {mouse.clientY}
+          Mouse In Element - x: {mouse.elementX}, y: {mouse.elementY}
         </p>
         <p>
-          page - x: {mouse.pageX}, y: {mouse.pageY}
+          Element Position - x: {mouse.elementPosX}, y: {mouse.elementPosY}
         </p>
         <p>
-          screen - x: {mouse.screenX}, y: {mouse.screenY}
-        </p>
-        <p>
-          elementPos - x: {mouse.elementPosX}, y: {mouse.elementPosY}
-        </p>
-        <p>
-          element - x: {mouse.elementX}, y: {mouse.elementY}
-        </p>
-        <p>
-          element dimensions - {mouse.elementW} x {mouse.elementH}
+          Element Dimensions - width: {mouse.elementW}, height: {mouse.elementH}
         </p>
       </div>
     </>
