@@ -147,10 +147,21 @@ function genFilterKey(event: KeyboardEvent, keyFilter: keyType) {
   // 字符串依次判断是否有组合键
   const genArr = keyFilter.split('.');
   let genLen = 0;
+  // 是否点击了修饰键
+  let pressModifier = false;
+
+  for (const modifier of Object.values(modifierKey)) {
+    if (modifier(event)) {
+      pressModifier = true;
+    }
+  }
 
   for (const key of genArr) {
     // 组合键
     const genModifier = modifierKey[key];
+    if (pressModifier && genArr.length === 1) {
+      return false;
+    }
     // keyCode 别名
     const aliasKeyCode = aliasKeyCodeMap[key.toLowerCase()];
     if ((genModifier && genModifier(event)) || (aliasKeyCode && aliasKeyCode === event.keyCode)) {
