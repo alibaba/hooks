@@ -4,6 +4,10 @@ import type { CachedData } from './utils/cache';
 
 export type Service<TData, TParams extends any[]> = (...args: TParams) => Promise<TData>;
 export type Subscribe = () => void;
+export type FetchSubscribe<TData, TParams extends any[]> = (
+  fetchKey: string,
+  fetchState: FetchState<TData, TParams>,
+) => void;
 
 // for Fetch
 
@@ -88,7 +92,7 @@ export interface Options<TData, TParams extends any[]> {
 
   // ready
   ready?: boolean;
-
+  fetchKey?: (...params: TParams) => string;
   // [key: string]: any;
 }
 

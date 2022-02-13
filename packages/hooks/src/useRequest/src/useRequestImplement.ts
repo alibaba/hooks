@@ -1,3 +1,4 @@
+import { useState, useCallback } from 'react';
 import {
   useCreation,
   useLatest,
@@ -7,7 +8,8 @@ import {
   useUpdate,
 } from '../../index';
 import Fetch from './Fetch';
-import type { Options, Plugin, Result, Service } from './types';
+import type { Options, Plugin, Result, Service, Subscribe, FetchState } from './types';
+import type { FetchSubscribe } from './types';
 
 function useRequestImplement<TData, TParams extends any[]>(
   service: Service<TData, TParams>,
@@ -22,16 +24,37 @@ function useRequestImplement<TData, TParams extends any[]>(
   };
 
   const serviceRef = useLatest(service);
+  const [fetches, setFetches] = useState<{ [key: string]: FetchState<TData, TParams> }>({});
 
-  const update = useUpdate();
+  const fetchUpdate: FetchSubscribe<TData, TParams> = useCallback(
+    (fetchKey: string, fetchState: FetchState<TData, TParams>) => {
+      setFetches((s) => {
+        s[fetchKey] = {
+          loading: fetchState.loading,
+          data: fetchState.data,
+          error: fetchState.error,
+          params: (fetchState.params || []) as TParams,
+        };
+        return { ...s };
+      });
+    },
+    [],
+  );
+
+  const update = useUpdate() as Subscribe;
 
   const fetchInstance = useCreation(() => {
     const initState = plugins.map((p) => p?.onInit?.(fetchOptions)).filter(Boolean);
-
+    let subscribe: Subscribe | FetchSubscribe<TData, TParams>;
+    if (fetchOptions.fetchKey) {
+      subscribe = fetchUpdate;
+    } else {
+      subscribe = update;
+    }
     return new Fetch<TData, TParams>(
       serviceRef,
       fetchOptions,
-      update,
+      subscribe,
       Object.assign({}, ...initState),
     );
   }, []);
@@ -52,7 +75,7 @@ function useRequestImplement<TData, TParams extends any[]>(
     fetchInstance.cancel();
   });
 
-  return {
+  const result: Result<TData, TParams> = {
     loading: fetchInstance.state.loading,
     data: fetchInstance.state.data,
     error: fetchInstance.state.error,
@@ -63,7 +86,30 @@ function useRequestImplement<TData, TParams extends any[]>(
     run: useMemoizedFn(fetchInstance.run.bind(fetchInstance)),
     runAsync: useMemoizedFn(fetchInstance.runAsync.bind(fetchInstance)),
     mutate: useMemoizedFn(fetchInstance.mutate.bind(fetchInstance)),
-  } as Result<TData, TParams>;
+  };
+
+  if (fetchInstance.options.fetchKey) {
+    return {
+      fetches: Object.keys(fetches).reduce((final, fetchKey) => {
+        const fetch = {
+          ...fetches[fetchKey],
+          cancel: result.cancel,
+          refresh: result.refresh,
+          refreshAsync: result.refreshAsync,
+          run: result.run,
+          runAsync: result.runAsync,
+          mutate: result.mutate,
+        };
+        return {
+          ...final,
+          [fetchKey]: fetch,
+        };
+      }, {}),
+      runAsync: fetchInstance.runAsync,
+    };
+  }
+
+  return result;
 }
 
 export default useRequestImplement;

@@ -1,5 +1,12 @@
 import type { MutableRefObject } from 'react';
-import type { FetchState, Options, PluginReturn, Service, Subscribe } from './types';
+import type {
+  FetchState,
+  Options,
+  PluginReturn,
+  Service,
+  Subscribe,
+  FetchSubscribe,
+} from './types';
 
 export default class Fetch<TData, TParams extends any[]> {
   pluginImpls: PluginReturn<TData, TParams>[];
@@ -16,7 +23,7 @@ export default class Fetch<TData, TParams extends any[]> {
   constructor(
     public serviceRef: MutableRefObject<Service<TData, TParams>>,
     public options: Options<TData, TParams>,
-    public subscribe: Subscribe,
+    public subscribe: Subscribe | FetchSubscribe<TData, TParams>,
     public initState: Partial<FetchState<TData, TParams>> = {},
   ) {
     this.state = {
@@ -27,11 +34,14 @@ export default class Fetch<TData, TParams extends any[]> {
   }
 
   setState(s: Partial<FetchState<TData, TParams>> = {}) {
-    this.state = {
+    const newState = {
       ...this.state,
       ...s,
     };
-    this.subscribe();
+    this.state = newState;
+    if (newState.params && this.options.fetchKey) {
+      this.subscribe(this.options.fetchKey(...newState.params), this.state);
+    }
   }
 
   runPluginHandler(event: keyof PluginReturn<TData, TParams>, ...rest: any[]) {
