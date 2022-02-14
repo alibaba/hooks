@@ -19,7 +19,7 @@ const usePollingPlugin: Plugin<any, any[]> = (
   };
 
   useUpdateEffect(() => {
-    // stop polling immediately, if coming pollingInterval is legal, then schedule a new timer with it
+    // stop polling immediately, if coming pollingInterval is legal. then schedule a new timer with it
     stopPolling();
     if (pollingInterval) {
       timerRef.current = setTimeout(() => {
