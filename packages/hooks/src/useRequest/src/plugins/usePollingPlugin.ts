@@ -8,21 +8,23 @@ const usePollingPlugin: Plugin<any, any[]> = (
   fetchInstance,
   { pollingInterval, pollingWhenHidden = true },
 ) => {
-  const timerRef = useRef<Timeout>(-1);
+  const timerRef = useRef<Timeout>();
   const unsubscribeRef = useRef<() => void>();
 
   const stopPolling = () => {
     if (timerRef.current) {
       clearTimeout(timerRef.current);
+      timerRef.current = undefined;
     }
     unsubscribeRef.current?.();
   };
 
   useUpdateEffect(() => {
-    // stop polling immediately, if coming pollingInterval is legal, then schedule a new timer with it
-    // if timer is cancel or ducument is hidden(when pollingWhenHidden is false), do nothing
-    clearTimeout(timerRef.current)
-    if (pollingInterval && timerRef.current !== -1 && (pollingWhenHidden || isDocumentVisible())) {
+    if (!pollingInterval) {
+      stopPolling();
+    } else if (timerRef.current) {
+      // if pollingInterval is changed, restart polling
+      clearTimeout(timerRef.current);
       timerRef.current = setTimeout(() => {
         fetchInstance.refresh();
       }, pollingInterval);
@@ -52,7 +54,6 @@ const usePollingPlugin: Plugin<any, any[]> = (
     },
     onCancel: () => {
       stopPolling();
-      timerRef.current = -1
     },
   };
 };
