@@ -20,13 +20,14 @@ const usePollingPlugin: Plugin<any, any[]> = (
 
   useUpdateEffect(() => {
     // stop polling immediately, if coming pollingInterval is legal, then schedule a new timer with it
-    // if timer is cancel, do nothing
-    stopPolling();
+    // if timer is cancel or ducument is hidden, do nothing
+    clearTimeout(timerRef.current)
     if (pollingInterval && timerRef.current !== -1) {
       timerRef.current = setTimeout(() => {
         fetchInstance.refresh();
       }, pollingInterval);
     }
+    
   }, [pollingInterval]);
 
   if (!pollingInterval) {
@@ -47,7 +48,7 @@ const usePollingPlugin: Plugin<any, any[]> = (
       }
 
       timerRef.current = setTimeout(() => {
-        fetchInstance.refresh();
+        fetchInstance.refresh(); 
       }, pollingInterval);
     },
     onCancel: () => {
