@@ -14,7 +14,7 @@ const usePollingPlugin: Plugin<any, any[]> = (
   const stopPolling = () => {
     if (timerRef.current) {
       clearTimeout(timerRef.current);
-      timerRef.current = undefined
+      timerRef.current = undefined;
     }
     unsubscribeRef.current?.();
   };
@@ -24,7 +24,7 @@ const usePollingPlugin: Plugin<any, any[]> = (
       stopPolling();
     } else if (timerRef.current !== -1 && (isDocumentVisible() || pollingWhenHidden)) {
       clearTimeout(timerRef.current);
-      timerRef.current = window.setTimeout(() => {
+      timerRef.current = setTimeout(() => {
         fetchInstance.refresh();
       }, pollingInterval);
     }
@@ -53,7 +53,6 @@ const usePollingPlugin: Plugin<any, any[]> = (
     },
     onCancel: () => {
       stopPolling();
-      timerRef.current = -1
     },
   };
 };
