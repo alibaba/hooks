@@ -53,6 +53,7 @@ const usePollingPlugin: Plugin<any, any[]> = (
     },
     onCancel: () => {
       stopPolling();
+      timerRef.current = -1
     },
   };
 };
