@@ -19,19 +19,28 @@ const usePollingPlugin: Plugin<any, any[]> = (
     unsubscribeRef.current?.();
   };
 
+  const cancelPolling = () => {
+    stopPolling();
+    timerRef.current = -1;
+  };
+
   useUpdateEffect(() => {
+    if (timerRef.current === -1) return;
+
     if (!pollingInterval) {
       stopPolling();
-    } else if (timerRef.current !== -1 && (isDocumentVisible() || pollingWhenHidden)) {
+    } else if (isDocumentVisible() || pollingWhenHidden) {
       clearTimeout(timerRef.current);
-      timerRef.current = setTimeout(() => {
+      timerRef.current = window.setTimeout(() => {
         fetchInstance.refresh();
       }, pollingInterval);
     }
   }, [pollingInterval]);
 
   if (!pollingInterval) {
-    return {};
+    return {
+    onCancel: cancelPolling
+    };
   }
 
   return {
@@ -51,10 +60,7 @@ const usePollingPlugin: Plugin<any, any[]> = (
         fetchInstance.refresh();
       }, pollingInterval);
     },
-    onCancel: () => {
-      stopPolling();
-      timerRef.current = -1
-    },
+    onCancel: cancelPolling
   };
 };
 
