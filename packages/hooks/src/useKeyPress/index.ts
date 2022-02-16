@@ -139,9 +139,18 @@ function genFilterKey(event: KeyboardEvent, keyFilter: keyType) {
     return false;
   }
 
+  // 点击的修饰键
+  const pressModifier: string[] = [];
+
+  for (const key of Object.keys(modifierKey)) {
+    if (modifierKey[key](event)) {
+      pressModifier.push(key);
+    }
+  }
+
   // 数字类型直接匹配事件的 keyCode
   if (typeof keyFilter === 'number') {
-    return event.keyCode === keyFilter;
+    return !pressModifier.length && event.keyCode === keyFilter;
   }
 
   // 字符串依次判断是否有组合键
@@ -151,12 +160,20 @@ function genFilterKey(event: KeyboardEvent, keyFilter: keyType) {
   for (const key of genArr) {
     // 组合键
     const genModifier = modifierKey[key];
+    if (pressModifier.length && genArr.length === 1) {
+      return false;
+    }
     // keyCode 别名
     const aliasKeyCode = aliasKeyCodeMap[key.toLowerCase()];
     if ((genModifier && genModifier(event)) || (aliasKeyCode && aliasKeyCode === event.keyCode)) {
       genLen++;
     }
   }
+
+  if (!(genArr.slice(0, pressModifier.length).toString() === pressModifier.toString())) {
+    return false;
+  }
+
   return genLen === genArr.length;
 }
 
