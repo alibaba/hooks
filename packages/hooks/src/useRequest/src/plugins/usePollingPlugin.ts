@@ -39,14 +39,13 @@ const usePollingPlugin: Plugin<any, any[]> = (
 
   if (!pollingInterval) {
     return {
+      onBefore: stopPolling,
       onCancel: cancelPolling
     };
   }
 
   return {
-    onBefore: () => {
-      stopPolling();
-    },
+    onBefore: stopPolling,
     onFinally: () => {
       // if pollingWhenHidden = false && document is hidden, then stop polling and subscribe revisible
       if (!pollingWhenHidden && !isDocumentVisible()) {
