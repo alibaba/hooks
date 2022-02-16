@@ -39,7 +39,7 @@ const usePollingPlugin: Plugin<any, any[]> = (
 
   if (!pollingInterval) {
     return {
-    onCancel: cancelPolling
+      onCancel: cancelPolling
     };
   }
 
