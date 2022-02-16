@@ -31,7 +31,7 @@ const usePollingPlugin: Plugin<any, any[]> = (
       stopPolling();
     } else if (isDocumentVisible() || pollingWhenHidden) {
       clearTimeout(timerRef.current);
-      timerRef.current = window.setTimeout(() => {
+      timerRef.current = setTimeout(() => {
         fetchInstance.refresh();
       }, pollingInterval);
     }
