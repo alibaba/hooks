@@ -1,6 +1,6 @@
 import { useMemo, useRef } from 'react';
 
-type noop = (...args: any[]) => any;
+type noop = (this: any, ...args: any[]) => any;
 
 function useMemoizedFn<T extends noop>(fn: T) {
   if (process.env.NODE_ENV === 'development') {
@@ -17,8 +17,7 @@ function useMemoizedFn<T extends noop>(fn: T) {
 
   const memoizedFn = useRef<T>();
   if (!memoizedFn.current) {
-    memoizedFn.current = function (...args) {
-      // eslint-disable-next-line @typescript-eslint/no-invalid-this
+    memoizedFn.current = function (this, ...args) {
       return fnRef.current.apply(this, args);
     } as T;
   }
