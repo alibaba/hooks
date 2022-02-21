@@ -127,6 +127,32 @@ const modifierKey = {
   meta: (event: KeyboardEvent) => event.metaKey,
 };
 
+// 根据 event 计算修饰键数量
+function countModifierKeyByEvent(event: KeyboardEvent) {
+  return Object.keys(modifierKey).reduce((total, key) => {
+    if (modifierKey[key](event)) {
+      return total + 1;
+    }
+
+    return total;
+  }, 0);
+}
+
+// 根据 keyFilter 计算修饰键数量
+function countModifierKeyByKeyFilter(keyFilter: KeyFilter) {
+  if (typeof keyFilter === 'number') {
+    return 0;
+  }
+
+  if (typeof keyFilter === 'string') {
+    const genArr = keyFilter.split('.');
+    const modifierKeyArr = genArr.filter((item) => item in modifierKey);
+    return modifierKeyArr.length;
+  }
+
+  return 0;
+}
+
 /**
  * 判断按键是否激活
  * @param [event: KeyboardEvent]键盘事件
@@ -157,7 +183,12 @@ function genFilterKey(event: KeyboardEvent, keyFilter: keyType) {
       genLen++;
     }
   }
-  return genLen === genArr.length;
+
+  // 不仅要保证键都激活，还要保证修饰键数量相等，保证 event 里有且仅有 keyFilter 的键位，精确触发事件
+  return (
+    genLen === genArr.length &&
+    countModifierKeyByEvent(event) === countModifierKeyByKeyFilter(keyFilter)
+  );
 }
 
 /**
