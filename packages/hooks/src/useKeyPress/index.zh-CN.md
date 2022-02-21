@@ -11,13 +11,13 @@ nav:
 
 ### 基础用法
 
-<!-- <code src="./demo/demo1.tsx" /> -->
+<code src="./demo/demo1.tsx" />
 
 ### 监听组合按键
 
 <code src="./demo/demo6.tsx" />
 
-<!-- ### 监听多个按键
+### 监听多个按键
 
 <code src="./demo/demo3.tsx" />
 
@@ -27,7 +27,7 @@ nav:
 
 ### 自定义 DOM
 
-<code src="./demo/demo5.tsx" /> -->
+<code src="./demo/demo5.tsx" />
 
 ## API
 
