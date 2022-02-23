@@ -138,21 +138,6 @@ function countModifierKeyByEvent(event: KeyboardEvent) {
   }, 0);
 }
 
-// 根据 keyFilter 计算修饰键数量
-function countModifierKeyByKeyFilter(keyFilter: KeyFilter) {
-  if (typeof keyFilter === 'number') {
-    return 0;
-  }
-
-  if (typeof keyFilter === 'string') {
-    const genArr = keyFilter.split('.');
-    const modifierKeyArr = genArr.filter((item) => item in modifierKey);
-    return modifierKeyArr.length;
-  }
-
-  return 0;
-}
-
 /**
  * 判断按键是否激活
  * @param [event: KeyboardEvent]键盘事件
@@ -160,6 +145,8 @@ function countModifierKeyByKeyFilter(keyFilter: KeyFilter) {
  * @returns Boolean
  */
 function genFilterKey(event: KeyboardEvent, keyFilter: keyType) {
+  // keyFilter 里面修饰键的数量
+  let numberOfModifierKeyByKeyFilter = 0;
   // 浏览器自动补全 input 的时候，会触发 keyDown、keyUp 事件，但此时 event.key 等为空
   if (!event.key) {
     return false;
@@ -177,8 +164,13 @@ function genFilterKey(event: KeyboardEvent, keyFilter: keyType) {
   for (const key of genArr) {
     // 组合键
     const genModifier = modifierKey[key];
-    // keyCode 别名
     const aliasKeyCode = aliasKeyCodeMap[key.toLowerCase()];
+
+    if (genModifier) {
+      numberOfModifierKeyByKeyFilter++;
+    }
+
+    // keyCode 别名
     if ((genModifier && genModifier(event)) || (aliasKeyCode && aliasKeyCode === event.keyCode)) {
       genLen++;
     }
@@ -186,8 +178,7 @@ function genFilterKey(event: KeyboardEvent, keyFilter: keyType) {
 
   // 不仅要保证键都激活，还要保证修饰键数量相等，保证 event 里有且仅有 keyFilter 的键位，精确触发事件
   return (
-    genLen === genArr.length &&
-    countModifierKeyByEvent(event) === countModifierKeyByKeyFilter(keyFilter)
+    genLen === genArr.length && countModifierKeyByEvent(event) === numberOfModifierKeyByKeyFilter
   );
 }
 
