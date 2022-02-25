@@ -69,6 +69,7 @@ import useUpdateLayoutEffect from './useUpdateLayoutEffect';
 import useVirtualList from './useVirtualList';
 import useWebSocket from './useWebSocket';
 import useWhyDidYouUpdate from './useWhyDidYouUpdate';
+import { createUpdateEffect } from './createUpdateEffect';
 
 export {
   useRequest,
@@ -144,4 +145,5 @@ export {
   useGetState,
   clearCache,
   useFocusWithin,
+  createUpdateEffect,
 };
