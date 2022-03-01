@@ -127,7 +127,7 @@ const modifierKey = {
   meta: (event: KeyboardEvent) => event.metaKey,
 };
 
-// 根据 event 计算修饰键数量
+// 根据 event 计算激活键数量
 function countKeyByEvent(event: KeyboardEvent) {
   const countOfModifier = Object.keys(modifierKey).reduce((total, key) => {
     if (modifierKey[key](event)) {
