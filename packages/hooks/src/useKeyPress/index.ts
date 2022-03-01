@@ -128,14 +128,16 @@ const modifierKey = {
 };
 
 // 根据 event 计算修饰键数量
-function countModifierKeyByEvent(event: KeyboardEvent) {
-  return Object.keys(modifierKey).reduce((total, key) => {
+function countKeyByEvent(event: KeyboardEvent) {
+  const countOfModifier = Object.keys(modifierKey).reduce((total, key) => {
     if (modifierKey[key](event)) {
       return total + 1;
     }
 
     return total;
   }, 0);
+
+  return event.keyCode ? countOfModifier + 1 : countOfModifier;
 }
 
 /**
@@ -145,8 +147,6 @@ function countModifierKeyByEvent(event: KeyboardEvent) {
  * @returns Boolean
  */
 function genFilterKey(event: KeyboardEvent, keyFilter: keyType) {
-  // keyFilter 里面修饰键的数量
-  let numberOfModifierKeyByKeyFilter = 0;
   // 浏览器自动补全 input 的时候，会触发 keyDown、keyUp 事件，但此时 event.key 等为空
   if (!event.key) {
     return false;
@@ -166,20 +166,19 @@ function genFilterKey(event: KeyboardEvent, keyFilter: keyType) {
     const genModifier = modifierKey[key];
     const aliasKeyCode = aliasKeyCodeMap[key.toLowerCase()];
 
-    if (genModifier) {
-      numberOfModifierKeyByKeyFilter++;
-    }
-
     // keyCode 别名
     if ((genModifier && genModifier(event)) || (aliasKeyCode && aliasKeyCode === event.keyCode)) {
       genLen++;
     }
   }
 
-  // 不仅要保证键都激活，还要保证修饰键数量相等，保证 event 里有且仅有 keyFilter 的键位，精确触发事件
-  return (
-    genLen === genArr.length && countModifierKeyByEvent(event) === numberOfModifierKeyByKeyFilter
-  );
+  /**
+   * 需要判断触发的键位和监听的键位完全一致，判断方法就是触发的键位里有且等于监听的键位
+   * genLen === genArr.length 能判断出来触发的键位里有监听的键位
+   * countKeyByEvent(event) === genArr.length 判断出来触发的键位数量里有且等于监听的键位数量
+   * 主要用来防止按组合键其子集也会触发的情况，例如监听 ctrl+a 会触发监听 ctrl 和 a 两个键的事件。
+   */
+  return genLen === genArr.length && countKeyByEvent(event) === genArr.length;
 }
 
 /**
