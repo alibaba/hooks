@@ -164,9 +164,9 @@ function genFilterKey(event: KeyboardEvent, keyFilter: keyType) {
   for (const key of genArr) {
     // 组合键
     const genModifier = modifierKey[key];
+    // keyCode 别名
     const aliasKeyCode = aliasKeyCodeMap[key.toLowerCase()];
 
-    // keyCode 别名
     if ((genModifier && genModifier(event)) || (aliasKeyCode && aliasKeyCode === event.keyCode)) {
       genLen++;
     }
