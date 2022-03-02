@@ -187,7 +187,14 @@ const useAntdTable = <TData extends Data, TParams extends Params>(
     if (!manual && ready) {
       allFormDataRef.current = defaultParams?.[1] || {};
       restoreForm();
-      _submit(defaultParams?.[0]);
+      const paginationData = defaultParams?.[0];
+      if (paginationData?.defaultCurrent && !paginationData?.current) {
+        paginationData.current = paginationData.defaultCurrent;
+      }
+      if (paginationData && options?.defaultPageSize && !paginationData?.pageSize) {
+        paginationData.pageSize = paginationData?.defaultPageSize || options.defaultPageSize;
+      }
+      _submit(paginationData);
     }
   }, []);
 

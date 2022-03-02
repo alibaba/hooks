@@ -385,4 +385,30 @@ describe('useAntdTable', () => {
     expect(queryArgs.name).toEqual('change name');
     hook.unmount();
   });
+
+  it('should defaultPageSize, defaultParams work', async () => {
+    queryArgs = undefined;
+    form.resetFields();
+    changeSearchType('simple');
+    act(() => {
+      hook = setUp(asyncFn, {
+        defaultPageSize: 5,
+        defaultParams: [{ defaultCurrent: 2 }],
+      });
+    });
+    await hook.waitForNextUpdate();
+    expect(queryArgs.current).toEqual(2);
+    expect(queryArgs.pageSize).toEqual(5);
+    expect(hook.result.current.pagination.current).toEqual(2);
+    expect(hook.result.current.pagination.pageSize).toEqual(5);
+    act(() => {
+      hook.result.current.run({
+        current: 3,
+        pageSize: 20,
+      });
+    });
+    await hook.waitForNextUpdate();
+    expect(hook.result.current.pagination.current).toEqual(3);
+    expect(hook.result.current.pagination.pageSize).toEqual(20);
+  }, 60000);
 });
