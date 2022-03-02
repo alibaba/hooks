@@ -43,7 +43,7 @@ useLongPress(
 |---------|----------|-----------|--------|
 | delay   | 长按时间 | `number`  | `300` |
 | onClick | 点击事件 | `(event: MouseEvent \| TouchEvent) => void` | - |
-| onEnd   | 结束事件 | `(event: MouseEvent \| TouchEvent) => void` | - |
+| onLongPressEnd | 长按结束事件 | `(event: MouseEvent \| TouchEvent) => void` | - |
 
 ### 备注
 

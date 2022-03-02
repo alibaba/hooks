@@ -43,7 +43,7 @@ useLongPress(
 |------------|-----------------|-----------|---------------|
 | delay      | Long press time | `number`  | `300`         |
 | onClick    | Click event     | `(event: MouseEvent \| TouchEvent) => void` |  -  |
-| onEnd      | End event       | `(event: MouseEvent \| TouchEvent) => void` |  -  |
+| onLongPressEnd | Long press end event       | `(event: MouseEvent \| TouchEvent) => void` |  -  |
 
 ### Remark
 

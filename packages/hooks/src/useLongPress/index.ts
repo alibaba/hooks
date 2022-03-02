@@ -9,7 +9,7 @@ type EventType = MouseEvent | TouchEvent;
 export interface Options {
   delay?: number;
   onClick?: (event: EventType) => void;
-  onEnd?: (event: EventType) => void;
+  onLongPressEnd?: (event: EventType) => void;
 }
 
 const touchSupported =
@@ -20,11 +20,11 @@ const touchSupported =
 function useLongPress(
   onLongPress: (event: EventType) => void,
   target: BasicTarget,
-  { delay = 300, onClick, onEnd }: Options = {},
+  { delay = 300, onClick, onLongPressEnd }: Options = {},
 ) {
   const onLongPressRef = useLatest(onLongPress);
   const onClickRef = useLatest(onClick);
-  const onEndRef = useLatest(onEnd);
+  const onLongPressEndRef = useLatest(onLongPressEnd);
 
   const timerRef = useRef<ReturnType<typeof setTimeout>>();
   const isTriggeredRef = useRef(false);
@@ -43,12 +43,12 @@ function useLongPress(
         }, delay);
       };
 
-      const onEndFn = (event: TouchEvent | MouseEvent, shouldTriggerClick: boolean = false) => {
+      const onEnd = (event: TouchEvent | MouseEvent, shouldTriggerClick: boolean = false) => {
         if (timerRef.current) {
           clearTimeout(timerRef.current);
         }
         if (shouldTriggerClick && isTriggeredRef.current) {
-          onEndRef.current?.(event);
+          onLongPressEndRef.current?.(event);
         }
         if (shouldTriggerClick && !isTriggeredRef.current && onClickRef.current) {
           onClickRef.current(event);
@@ -56,12 +56,12 @@ function useLongPress(
         isTriggeredRef.current = false;
       };
 
-      const onEndWithClick = (event: TouchEvent | MouseEvent) => onEndFn(event, true);
+      const onEndWithClick = (event: TouchEvent | MouseEvent) => onEnd(event, true);
 
       if (!touchSupported) {
         targetElement.addEventListener('mousedown', onStart);
         targetElement.addEventListener('mouseup', onEndWithClick);
-        targetElement.addEventListener('mouseleave', onEndFn);
+        targetElement.addEventListener('mouseleave', onEnd);
       } else {
         targetElement.addEventListener('touchstart', onStart);
         targetElement.addEventListener('touchend', onEndWithClick);
@@ -75,7 +75,7 @@ function useLongPress(
         if (!touchSupported) {
           targetElement.removeEventListener('mousedown', onStart);
           targetElement.removeEventListener('mouseup', onEndWithClick);
-          targetElement.removeEventListener('mouseleave', onEndFn);
+          targetElement.removeEventListener('mouseleave', onEnd);
         } else {
           targetElement.removeEventListener('touchstart', onStart);
           targetElement.removeEventListener('touchend', onEndWithClick);
