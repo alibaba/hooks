@@ -42,7 +42,8 @@ useLongPress(
 | Property   | Description     | Type      | Default       |
 |------------|-----------------|-----------|---------------|
 | delay      | Long press time | `number`  | `300`         |
-| onClick    | Click event     | `boolean` | `true`        |
+| onClick    | Click event     | `(event: MouseEvent \| TouchEvent) => void` |  -  |
+| onLongPressEnd | Long press end event       | `(event: MouseEvent \| TouchEvent) => void` |  -  |
 
 ### Remark
 

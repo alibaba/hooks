@@ -42,7 +42,8 @@ useLongPress(
 | 参数    | 说明     | 类型      | 默认值 |
 |---------|----------|-----------|--------|
 | delay   | 长按时间 | `number`  | `300` |
-| onClick | 点击事件 | `boolean` | `true` |
+| onClick | 点击事件 | `(event: MouseEvent \| TouchEvent) => void` | - |
+| onLongPressEnd | 长按结束事件 | `(event: MouseEvent \| TouchEvent) => void` | - |
 
 ### 备注
 
