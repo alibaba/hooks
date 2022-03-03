@@ -123,6 +123,6 @@ const {
 |-----------------|--------------------------------------------------------------------------------------------|--------------------------|----------|
 | form            | `Form` instance                                                                            | -                        | -        |
 | defaultType     | Default form type                                                                          | `simple` \| `advance`    | `simple` |
-| defaultParams   | Default parameters, the first item is paging data, the second item is form data            | `[pagiantion, formData]` | -        |
+| defaultParams   | Default parameters, the first item is paging data, the second item is form data            | `[pagination, formData]` | -        |
 | defaultPageSize | Default page size                                                                          | `number`                 | `10`     |
 | refreshDeps     | Changes in `refreshDeps` will reset current to the first page and re-initiate the request. | `React.DependencyList`   | `[]`     |
