@@ -47,7 +47,7 @@ function useLongPress(
         if (timerRef.current) {
           clearTimeout(timerRef.current);
         }
-        if (shouldTriggerClick && isTriggeredRef.current) {
+        if (isTriggeredRef.current) {
           onLongPressEndRef.current?.(event);
         }
         if (shouldTriggerClick && !isTriggeredRef.current && onClickRef.current) {
