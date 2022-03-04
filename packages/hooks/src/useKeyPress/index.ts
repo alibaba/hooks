@@ -137,7 +137,8 @@ function countKeyByEvent(event: KeyboardEvent) {
     return total;
   }, 0);
 
-  return event.keyCode ? countOfModifier + 1 : countOfModifier;
+  // 16 17 18 91 92 是修饰键的 keyCode，如果 keyCode 是修饰键，那么激活数量就是修饰键的数量，如果不是，那么就需要 +1
+  return [16, 17, 18, 91, 92].includes(event.keyCode) ? countOfModifier : countOfModifier + 1;
 }
 
 /**
