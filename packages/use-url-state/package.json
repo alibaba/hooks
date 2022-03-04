@@ -1,6 +1,6 @@
 {
   "name": "@ahooksjs/use-url-state",
-  "version": "3.1.11",
+  "version": "3.1.12",
   "description": "A hook that stores the state into url query parameters.",
   "main": "./lib/index.js",
   "module": "./es/index.js",
@@ -32,7 +32,7 @@
     "react-router": "^5.0.0 || ^6.0.0"
   },
   "dependencies": {
-    "ahooks": "^3.1.11",
+    "ahooks": "^3.1.12",
     "query-string": "^6.9.0"
   }
 }
