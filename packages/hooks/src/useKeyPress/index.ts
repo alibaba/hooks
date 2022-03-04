@@ -127,6 +127,20 @@ const modifierKey = {
   meta: (event: KeyboardEvent) => event.metaKey,
 };
 
+// 根据 event 计算激活键数量
+function countKeyByEvent(event: KeyboardEvent) {
+  const countOfModifier = Object.keys(modifierKey).reduce((total, key) => {
+    if (modifierKey[key](event)) {
+      return total + 1;
+    }
+
+    return total;
+  }, 0);
+
+  // 16 17 18 91 92 是修饰键的 keyCode，如果 keyCode 是修饰键，那么激活数量就是修饰键的数量，如果不是，那么就需要 +1
+  return [16, 17, 18, 91, 92].includes(event.keyCode) ? countOfModifier : countOfModifier + 1;
+}
+
 /**
  * 判断按键是否激活
  * @param [event: KeyboardEvent]键盘事件
@@ -153,11 +167,19 @@ function genFilterKey(event: KeyboardEvent, keyFilter: keyType) {
     const genModifier = modifierKey[key];
     // keyCode 别名
     const aliasKeyCode = aliasKeyCodeMap[key.toLowerCase()];
+
     if ((genModifier && genModifier(event)) || (aliasKeyCode && aliasKeyCode === event.keyCode)) {
       genLen++;
     }
   }
-  return genLen === genArr.length;
+
+  /**
+   * 需要判断触发的键位和监听的键位完全一致，判断方法就是触发的键位里有且等于监听的键位
+   * genLen === genArr.length 能判断出来触发的键位里有监听的键位
+   * countKeyByEvent(event) === genArr.length 判断出来触发的键位数量里有且等于监听的键位数量
+   * 主要用来防止按组合键其子集也会触发的情况，例如监听 ctrl+a 会触发监听 ctrl 和 a 两个键的事件。
+   */
+  return genLen === genArr.length && countKeyByEvent(event) === genArr.length;
 }
 
 /**
