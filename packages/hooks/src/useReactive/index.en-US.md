@@ -21,6 +21,9 @@ It offers data reactivity when manipulating states and views, in which case `use
 
 <code src="./demo/demo3.tsx" />
 
+### It provides the same function as usesafestate. After the component is unloaded, the state change in the asynchronous callback is no longer executed, so as to avoid memory leakage caused by updating the state after the component is unloaded.
+<code src="./demo/demo5.tsx"/>
+
 ### notice
 
 <code  src="./demo/demo4.tsx" />
@@ -28,7 +31,12 @@ It offers data reactivity when manipulating states and views, in which case `use
 ## API
 
 ```js
-const state = useReactive(initialValue: Record<string, any>);
+const state = useReactive(
+  initialState: Record<string, any>,
+  options?: {
+    safe?: boolean
+  }
+);
 ```
 
 ## Params
@@ -36,4 +44,16 @@ const state = useReactive(initialValue: Record<string, any>);
 | Params       | Description   | Type                  | Default |
 |--------------|---------------|-----------------------|---------|
 | initialState | Current state | `Record<string, any>` | -       |
+
+
+| Params         | Description           | Type                  | Default |
+|--------------|----------------|-----------------------|--------|
+| initialState | Current state | `Record<string, any>` | -      |
+| options | Configure state behavior within asynchronous callbacks after component unmount    | `Record<string, boolean>`  | -            |
+
+### Options
+
+| Params      | Description                     | Type      | Default  |
+|-----------|--------------------------|-----------|---------|
+| safe      | Set whether the status update in the asynchronous callback needs to be executed after the component is unmount                     | `boolean` | `false` |
 
