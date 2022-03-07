@@ -17,6 +17,9 @@ Listen for the keyboard press, support key combinations, and support alias.
 
 <code src="./demo/demo6.tsx" />
 
+### Exact match
+<code src="./demo/demo7.tsx"/>
+
 ### Multiple keys
 
 <code src="./demo/demo3.tsx" />
@@ -56,6 +59,7 @@ useKeyPress(
 |----------|--------------------|-------------------------------------------------------------|---------------|
 | events   | Trigger Events     | `('keydown' \| 'keyup')[]`                                  | `['keydown']` |
 | target   | DOM element or ref | `() => Element` \| `Element` \| `MutableRefObject<Element>` | -             |
+| exactMatch | Enable exact match, the trigger key only triggers an event if it matches the listener key exactly. For example,`[shift + c]` is triggered, and listening to `[c]` does not trigger an event. Not turned on by defaultEnable exact matching, a subset of which will not be listened to when listening for the key combination after opening, not turned on by default | `boolean`                                                       | `false`       |
 
 ## Remarks
 

@@ -17,6 +17,9 @@ nav:
 
 <code src="./demo/demo6.tsx" />
 
+### 精确匹配
+<code src="./demo/demo7.tsx">
+
 ### 监听多个按键
 
 <code src="./demo/demo3.tsx" />
@@ -56,6 +59,7 @@ useKeyPress(
 |--------|------------------|-------------------------------------------------------------|---------------|
 | events | 触发事件         | `('keydown' \| 'keyup')[]`                                  | `['keydown']` |
 | target | DOM 节点或者 ref | `() => Element` \| `Element` \| `MutableRefObject<Element>` | -             |
+| exactMatch | 开启精确匹配,触发的键只有在精确匹配监听的键才会触发事件,比如触发的是 `[shift + c]`，监听 `[c]` 是不会触发事件的，默认不开启 | `boolean`  | `false`       |
 
 ## Remarks
 
