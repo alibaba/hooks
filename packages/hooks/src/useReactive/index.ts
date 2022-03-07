@@ -1,6 +1,7 @@
 import { useRef } from 'react';
 import useCreation from '../useCreation';
 import useUpdate from '../useUpdate';
+import useUnmountedRef from '../useUnmountedRef';
 
 // k:v 原对象:代理过的对象
 const proxyMap = new WeakMap();
@@ -48,12 +49,20 @@ function observer<T extends Record<string, any>>(initialVal: T, cb: () => void):
   return proxy;
 }
 
-function useReactive<S extends Record<string, any>>(initialState: S): S {
+function useReactive<S extends Record<string, any>>(
+  initialState: S,
+  options?: {
+    safe?: boolean;
+  },
+): S {
+  const safe = options?.safe;
   const update = useUpdate();
+  const unmountedRef = useUnmountedRef();
   const stateRef = useRef<S>(initialState);
 
   const state = useCreation(() => {
     return observer(stateRef.current, () => {
+      if (safe && unmountedRef.current) return;
       update();
     });
   }, []);
