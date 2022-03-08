@@ -1,9 +1,9 @@
 /**
  * title: Exact match
- * desc: By configuring `exactMatch`, press [shift + c], listen on [c] will not trigger.
+ * desc: Enable exact matching by setting `exactMatch`. For example, press [shift + c], will not trigger [c].
  *
  * title.zh-CN: 精确匹配
- * desc.zh-CN: 通过配置 `exactMatch`, 开启精确匹配，按 [shift + c] ，监听的 [c] 将不会触发。
+ * desc.zh-CN: 通过配置 `exactMatch`, 开启精确匹配。比如按 [shift + c] ，不会触发 [c]。
  */
 
 import { CheckOutlined } from '@ant-design/icons';
@@ -14,18 +14,13 @@ export default () => {
   const [state, setState] = useState<number>();
 
   useKeyPress(['shift.c'], () => {
-    console.log(22);
     setState(1);
-  });
-
-  useKeyPress(['shift'], () => {
-    setState(2);
   });
 
   useKeyPress(
     ['c'],
     () => {
-      setState(3);
+      setState(2);
     },
     {
       exactMatch: true,
@@ -38,10 +33,7 @@ export default () => {
       <div>
         1. Modifier key [shift.c]: {state === 1 && <CheckOutlined style={{ color: '#f00' }} />}
       </div>
-      <div>
-        2. Modifier key [shift]: {state === 2 && <CheckOutlined style={{ color: '#f00' }} />}
-      </div>
-      <div>3. Modifier key [c]: {state === 3 && <CheckOutlined style={{ color: '#f00' }} />}</div>
+      <div>2. Modifier key [c]: {state === 2 && <CheckOutlined style={{ color: '#f00' }} />}</div>
     </div>
   );
 };

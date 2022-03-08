@@ -18,6 +18,7 @@ Listen for the keyboard press, support key combinations, and support alias.
 <code src="./demo/demo6.tsx" />
 
 ### Exact match
+
 <code src="./demo/demo7.tsx"/>
 
 ### Multiple keys
@@ -59,11 +60,11 @@ useKeyPress(
 |----------|--------------------|-------------------------------------------------------------|---------------|
 | events   | Trigger Events     | `('keydown' \| 'keyup')[]`                                  | `['keydown']` |
 | target   | DOM element or ref | `() => Element` \| `Element` \| `MutableRefObject<Element>` | -             |
-| exactMatch | Enable exact match, the trigger key only triggers an event if it matches the listener key exactly. For example,`[shift + c]` is triggered, and listening to `[c]` does not trigger an event. Not turned on by defaultEnable exact matching, a subset of which will not be listened to when listening for the key combination after opening, not turned on by default | `boolean`                                                       | `false`       |
+| exactMatch | Exact match. If set `true`, the event will only be trigger when the keys match exactly. For example, pressing [shif + c] will not trigger [c] | `boolean`                                                       | `false`       |
 
 ## Remarks
 
-1. All key alias refer to [代码](TODO)
+1. All key alias refer to [代码](https://github.com/alibaba/hooks/blob/master/packages/hooks/src/useKeyPress/index.ts#L21)
 
 2. Modifier keys
 
