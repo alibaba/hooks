@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { useSetState } from 'ahooks';
 
 interface State {
@@ -23,7 +23,17 @@ export default () => {
         <button type="button" onClick={() => setState({ foo: 'bar' })} style={{ margin: '0 8px' }}>
           set foo
         </button>
-        <button type="button" onClick={() => setState((prev) => ({ count: prev.count + 1 }))}>
+        <button
+          type="button"
+          onClick={() =>
+            setState(
+              (prev) => ({ count: prev.count + 1 }),
+              (state) => {
+                console.log(state);
+              },
+            )
+          }
+        >
           count + 1
         </button>
       </p>

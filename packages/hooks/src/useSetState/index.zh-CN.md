@@ -18,5 +18,5 @@ nav:
 ```typescript
 const [state, setState] = useSetState<T extends Record<string, any>>(
   initialState: T = {} as T
-): [T, (patch: Partial<T> | ((prevState: T) => Partial<T>)) => void]
+): [T, (patch: Partial<T> | ((prevState: T) => Partial<T>), (state: T) => void) => void]
 ```
