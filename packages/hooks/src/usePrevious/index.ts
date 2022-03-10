@@ -1,8 +1,9 @@
+import isEqual from 'lodash/isEqual';
 import { useRef } from 'react';
 
 export type ShouldUpdateFunc<T> = (prev: T | undefined, next: T) => boolean;
 
-const defaultShouldUpdate = <T>(a?: T, b?: T) => a !== b;
+const defaultShouldUpdate = <T>(a?: T, b?: T) => !isEqual(a, b);
 
 function usePrevious<T>(
   state: T,
