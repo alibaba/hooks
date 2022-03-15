@@ -38,3 +38,4 @@ useDebounceEffect(
 | wait     | 等待时间，单位为毫秒   | `number`  | `1000`  |
 | leading  | 是否在在延迟开始前调用 | `boolean` | `false` |
 | trailing | 是否在在延迟结束后调用 | `boolean` | `true`  |
+| maxWait  | 最大等待时间，单位为毫秒 | `number`  | -       |
