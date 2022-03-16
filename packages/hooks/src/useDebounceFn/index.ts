@@ -19,10 +19,10 @@ function useDebounceFn<T extends noop>(fn: T, options?: DebounceOptions) {
 
   const debounced = useMemo(
     () =>
-      debounce<T>(
-        ((...args: any[]) => {
+      debounce(
+        ((...args: Parameters<T>): ReturnType<T> => {
           return fnRef.current(...args);
-        }) as T,
+        }),
         wait,
         options,
       ),
@@ -34,7 +34,7 @@ function useDebounceFn<T extends noop>(fn: T, options?: DebounceOptions) {
   });
 
   return {
-    run: debounced as unknown as T,
+    run: debounced,
     cancel: debounced.cancel,
     flush: debounced.flush,
   };
