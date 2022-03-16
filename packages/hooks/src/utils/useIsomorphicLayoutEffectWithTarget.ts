@@ -1,4 +1,4 @@
-import isBrowser from '../utils/isBrowser';
+import isBrowser from './isBrowser';
 import useEffectWithTarget from './useEffectWithTarget';
 import useLayoutEffectWithTarget from './useLayoutEffectWithTarget';
 

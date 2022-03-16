@@ -11,11 +11,11 @@ hero:
 footer: Open-source MIT Licensed | Copyright © 2019-present<br />Powered by [dumi](https://d.umijs.org)
 ---
 
-[![NPM version next][image-1]][1]
+[![NPM version][image-1]][1]
 &nbsp;
 [![NPM downloads][image-2]][2]
 &nbsp;
-![gzip size](https://img.badgesize.io/https:/unpkg.com/ahooks@next/dist/ahooks.js?label=gzip%20size&compression=gzip)
+![gzip size](https://img.badgesize.io/https:/unpkg.com/ahooks/dist/ahooks.js?label=gzip%20size&compression=gzip)
 &nbsp;
 ![GitHub](https://img.shields.io/github/license/alibaba/hooks)
 
@@ -31,9 +31,9 @@ footer: Open-source MIT Licensed | Copyright © 2019-present<br />Powered by [du
 ## 📦 Install
 
 ```bash
-$ npm install --save ahooks@next
+$ npm install --save ahooks
 # or
-$ yarn add ahooks@next
+$ yarn add ahooks
 ```
 
 ## 🔨 Usage
@@ -57,7 +57,7 @@ $ yarn start
 
 Open your browser and visit http://127.0.0.1:8000
 
-We welcome all contributions, please read our [CONTRIBUTING.MD](https://github.com/alibaba/hooks/blob/master/CONTRIBUTING.md) first, let's build a better hooks library together.
+We welcome all contributions, please read our [CONTRIBUTING.MD](https://github.com/alibaba/hooks/blob/master/CONTRIBUTING.MD) first, let's build a better hooks library together.
 
 Thanks to all the contributors:
 

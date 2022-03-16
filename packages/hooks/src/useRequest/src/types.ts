@@ -1,5 +1,6 @@
 import type { DependencyList } from 'react';
 import type Fetch from './Fetch';
+import type { CachedData } from './utils/cache';
 
 export type Service<TData, TParams extends any[]> = (...args: TParams) => Promise<TData>;
 export type Subscribe = () => void;
@@ -50,6 +51,7 @@ export interface Options<TData, TParams extends any[]> {
 
   // refreshDeps
   refreshDeps?: DependencyList;
+  refreshDepsAction?: () => void;
 
   // loading delay
   loadingDelay?: number;
@@ -77,6 +79,8 @@ export interface Options<TData, TParams extends any[]> {
   cacheKey?: string;
   cacheTime?: number;
   staleTime?: number;
+  setCache?: (data: CachedData<TData, TParams>) => void;
+  getCache?: (params: TParams) => CachedData<TData, TParams> | undefined;
 
   // retry
   retryCount?: number;
@@ -115,3 +119,5 @@ export interface Result<TData, TParams extends any[]> {
   runAsync: Fetch<TData, TParams>['runAsync'];
   mutate: Fetch<TData, TParams>['mutate'];
 }
+
+export type Timeout = ReturnType<typeof setTimeout>;

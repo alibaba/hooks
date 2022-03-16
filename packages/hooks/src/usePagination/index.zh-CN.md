@@ -79,4 +79,4 @@ const {
 | 参数            | 说明                                                                              | 类型      | 默认值   |
 |-----------------|----------------------------------------------------------------------------------|-----------|---------|
 | defaultPageSize | 默认分页数量                                                                       | `number`  | -       |
-| refreshDeps     | `refreshDeps` 变化，会重置 current 到第一页，并重新发起请求，一般你可以把依赖的条件放这里。 | `boolean` | `false` |
+| refreshDeps     | `refreshDeps` 变化，会重置 current 到第一页，并重新发起请求，一般你可以把依赖的条件放这里。 | `React.DependencyList` | `[]` |

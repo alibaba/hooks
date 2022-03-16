@@ -94,6 +94,7 @@ export const menus = [
       'useResponsive',
       'useScroll',
       'useSize',
+      'useFocusWithin',
     ],
   },
   {

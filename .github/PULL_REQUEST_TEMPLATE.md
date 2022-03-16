@@ -1,7 +1,7 @@
 <!--
 First of all, thank you for your contribution! 😄
 
-New feature please send a pull request to next branch, and rest to master branch.
+New feature please send a pull request to master branch.
 Pull requests will be merged after one of the collaborators approve.
 Please makes sure that these forms are filled before submitting your pull request, thank you!
 -->

@@ -1,15 +1,19 @@
 import { useMemo } from 'react';
-import { useMemoizedFn, useRequest, useUpdateEffect } from '..';
-import type { Data, PaginationOptions, Params, Service } from './types';
+import { useMemoizedFn, useRequest } from '..';
+import type { Data, PaginationOptions, Params, Service, PaginationResult } from './types';
 
-const usePagination = <TData extends Data, TParams extends any[] = Params>(
+const usePagination = <TData extends Data, TParams extends Params>(
   service: Service<TData, TParams>,
   options: PaginationOptions<TData, TParams> = {},
 ) => {
-  const { refreshDeps = [], defaultPageSize = 10, ...rest } = options;
+  const { defaultPageSize = 10, ...rest } = options;
 
   const result = useRequest(service, {
     defaultParams: [{ current: 1, pageSize: defaultPageSize }],
+    refreshDepsAction: () => {
+      // eslint-disable-next-line @typescript-eslint/no-use-before-define
+      changeCurrent(1);
+    },
     ...rest,
   });
 
@@ -46,12 +50,6 @@ const usePagination = <TData extends Data, TParams extends any[] = Params>(
     onChange(current, p);
   };
 
-  useUpdateEffect(() => {
-    if (!options.manual) {
-      changeCurrent(1);
-    }
-  }, [...refreshDeps]);
-
   return {
     ...result,
     pagination: {
@@ -63,7 +61,7 @@ const usePagination = <TData extends Data, TParams extends any[] = Params>(
       changeCurrent: useMemoizedFn(changeCurrent),
       changePageSize: useMemoizedFn(changePageSize),
     },
-  };
+  } as PaginationResult<TData, TParams>;
 };
 
 export default usePagination;

@@ -14,9 +14,9 @@ ahooks，发音 [eɪ hʊks]，是一套高质量可靠的 React Hooks 库。在�
 ## 安装
 
 ```bash
-$ npm install --save ahooks@next
+$ npm install --save ahooks
 # or
-$ yarn add ahooks@next
+$ yarn add ahooks
 ```
 
 ## 使用

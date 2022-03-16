@@ -13,7 +13,7 @@ export type Params = [
   ...any[]
 ];
 
-export type Service<TData extends Data, TParams extends any[]> = (
+export type Service<TData extends Data, TParams extends Params> = (
   ...args: TParams
 ) => Promise<TData>;
 
@@ -24,7 +24,7 @@ export type Antd3ValidateFields = (
 export type Antd4ValidateFields = (fieldNames?: string[]) => Promise<Record<string, any>>;
 
 export interface AntdFormUtils {
-  getFieldInstance: (name: string) => Record<string, any>;
+  getFieldInstance?: (name: string) => Record<string, any>;
   setFieldsValue: (value: Record<string, any>) => void;
   getFieldsValue: (...args: any) => Record<string, any>;
   resetFields: (...args: any) => void;
@@ -33,7 +33,7 @@ export interface AntdFormUtils {
   [key: string]: any;
 }
 
-export interface AntdTableResult<TData extends Data, TParams extends any[]>
+export interface AntdTableResult<TData extends Data, TParams extends Params>
   extends PaginationResult<TData, TParams> {
   tableProps: {
     dataSource: any[];
@@ -50,7 +50,7 @@ export interface AntdTableResult<TData extends Data, TParams extends any[]>
   };
 }
 
-export interface AntdTableOptions<TData extends Data, TParams extends any[]>
+export interface AntdTableOptions<TData extends Data, TParams extends Params>
   extends PaginationOptions<TData, TParams> {
   form?: AntdFormUtils;
   defaultType?: 'simple' | 'advance';

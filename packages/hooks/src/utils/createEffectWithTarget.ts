@@ -35,6 +35,7 @@ const createEffectWithTarget = (useEffectType: typeof useEffect | typeof useLayo
         lastDepsRef.current = deps;
 
         unLoadRef.current = effect();
+        return;
       }
 
       if (
@@ -52,6 +53,8 @@ const createEffectWithTarget = (useEffectType: typeof useEffect | typeof useLayo
 
     useUnmount(() => {
       unLoadRef.current?.();
+      // for react-refresh
+      hasInitRef.current = false;
     });
   };
 

@@ -41,4 +41,4 @@ You can experience the effect through the following example
 
 | Property    | Description                                             | Type    | Default |
 |-------------|---------------------------------------------------------|---------|---------|
-| refreshDeps | When the content of the array changes, trigger refresh. | `any[]` | `[]`    |
+| refreshDeps | When the content of the array changes, trigger refresh. | `React.DependencyList` | `[]`    |

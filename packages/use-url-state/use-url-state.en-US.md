@@ -12,7 +12,7 @@ A hook that store the state into url query.
 ## Install
 
 ```bash
-npm i @ahooksjs/use-url-state@next -S
+npm i @ahooksjs/use-url-state -S
 ```
 
 > This hook relies on useLocation & useHistory & useNavigate from `react-router`, to use this hook, you need to ensure
@@ -44,6 +44,10 @@ React Router V6：https://codesandbox.io/s/autumn-shape-odrt9?file=/App.tsx
 
 <code src="./demo/demo2.tsx" hideActions='["CSB"]' />
 
+### Custom query-string options
+
+<code src="./demo/demo3.tsx" hideActions='["CSB"]' />
+
 ## API
 
 ```typescript
@@ -59,9 +63,11 @@ const [state, setState] = useUrlState(initialState, options);
 
 ### Options
 
-| Property     | Description                   | Type                  | Default  |
-|--------------|-------------------------------|-----------------------|----------|
-| navigateMode | Type of history navigate mode | `'push' \| 'replace'` | `'push'` |
+| Property         | Description                                                                                                  | Type                  | Default  |
+|------------------|--------------------------------------------------------------------------------------------------------------|-----------------------|----------|
+| navigateMode     | Type of history navigate mode                                                                                | `'push' \| 'replace'` | `'push'` |
+| parseOptions     | [parse](https://github.com/sindresorhus/query-string#parsestring-options) options of `query-string`          | `ParseOptions`        | -        |
+| stringifyOptions | [stringify](https://github.com/sindresorhus/query-string#stringifyobject-options) options of  `query-string` | `StringifyOptions`    | -        |
 
 ### Result
 

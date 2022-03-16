@@ -9,6 +9,7 @@ type EventType = MouseEvent | TouchEvent;
 export interface Options {
   delay?: number;
   onClick?: (event: EventType) => void;
+  onLongPressEnd?: (event: EventType) => void;
 }
 
 const touchSupported =
@@ -19,11 +20,13 @@ const touchSupported =
 function useLongPress(
   onLongPress: (event: EventType) => void,
   target: BasicTarget,
-  { delay = 300, onClick }: Options = {},
+  { delay = 300, onClick, onLongPressEnd }: Options = {},
 ) {
   const onLongPressRef = useLatest(onLongPress);
+  const onClickRef = useLatest(onClick);
+  const onLongPressEndRef = useLatest(onLongPressEnd);
 
-  const timerRef = useRef<NodeJS.Timeout>();
+  const timerRef = useRef<ReturnType<typeof setTimeout>>();
   const isTriggeredRef = useRef(false);
 
   useEffectWithTarget(
@@ -44,8 +47,11 @@ function useLongPress(
         if (timerRef.current) {
           clearTimeout(timerRef.current);
         }
-        if (shouldTriggerClick && !isTriggeredRef.current && onClick) {
-          onClick(event);
+        if (isTriggeredRef.current) {
+          onLongPressEndRef.current?.(event);
+        }
+        if (shouldTriggerClick && !isTriggeredRef.current && onClickRef.current) {
+          onClickRef.current(event);
         }
         isTriggeredRef.current = false;
       };

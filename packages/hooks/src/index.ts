@@ -20,8 +20,10 @@ import useEventListener from './useEventListener';
 import useEventTarget from './useEventTarget';
 import useExternal from './useExternal';
 import useFavicon from './useFavicon';
+import useFocusWithin from './useFocusWithin';
 import useFullscreen from './useFullscreen';
 import useFusionTable from './useFusionTable';
+import useGetState from './useGetState';
 import useHistoryTravel from './useHistoryTravel';
 import useHover from './useHover';
 import useInfiniteScroll from './useInfiniteScroll';
@@ -42,7 +44,7 @@ import usePagination from './usePagination';
 import usePrevious from './usePrevious';
 import useRafState from './useRafState';
 import useReactive from './useReactive';
-import useRequest from './useRequest';
+import useRequest, { clearCache } from './useRequest';
 import { configResponsive, useResponsive } from './useResponsive';
 import useSafeState from './useSafeState';
 import useScroll from './useScroll';
@@ -67,7 +69,7 @@ import useUpdateLayoutEffect from './useUpdateLayoutEffect';
 import useVirtualList from './useVirtualList';
 import useWebSocket from './useWebSocket';
 import useWhyDidYouUpdate from './useWhyDidYouUpdate';
-import useGetState from './useGetState';
+import { createUpdateEffect } from './createUpdateEffect';
 
 export {
   useRequest,
@@ -141,4 +143,7 @@ export {
   useFusionTable,
   useInfiniteScroll,
   useGetState,
+  clearCache,
+  useFocusWithin,
+  createUpdateEffect,
 };

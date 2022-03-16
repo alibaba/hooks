@@ -46,15 +46,53 @@ In the following example, we can initialize the `keyword` from the cached `param
 
 <code src="./demo/params.tsx" />
 
+### Clear cache
+
+ahooks provides a `clearCache` method, which can clear the cache data of the specified `cacheKey`.
+
+<code src="./demo/clearCache.tsx" />
+
+### Custom cache
+
+By setting `setCache` and `getCache`, you can customize the cache, for example, you can store data in `localStorage`, `IndexDB`, etc.
+
+Please note:
+
+1. `setCache` and `getCache` need to be used together.
+2. In the custom cache mode, `cacheTime` and `clearCache` will be unused, please implement it yourself according to the actual situation.
+
+<code src="./demo/setCache.tsx" />
+
 ## API
+
+```ts
+interface CachedData<TData, TParams> {
+  data: TData; 
+  params: TParams; 
+  time: number;
+}
+```
 
 ### Options
 
-| Property  | Description                                                                                                                                                                                                         | Type     | Default  |
-|-----------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|----------|----------|
-| cacheKey  |  A unique ID of the request. If `cacheKey` is set, we will enable the caching mechanism. The data of the same `cacheKey` is globally synchronized.                                                                      | `string` | `[]`     |
-| cacheTime | <ul><li> Set the cache time. By default, the cached data will be cleared after 5 minutes.</li><li> If set to `-1`, the cached data will never expire</li></ul>                                       | `number` | `300000` |
-| staleTime | <ul><li> Time to consider the cached data is fresh. Within this time interval, the request will not be re-initiated</li><li> If set to `-1`, it means that the data is always fresh</li></ul> | `number` | `0`      |
+| Property  | Description                                                                                                                                                                                                                                   | Type                              | Default  |
+|-----------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-----------------------------------|----------|
+| cacheKey  | A unique ID of the request. If `cacheKey` is set, we will enable the caching mechanism. The data of the same `cacheKey` is globally synchronized.                                                                                             | `string`                          | `[]`     |
+| cacheTime | <ul><li> Set the cache time. By default, the cached data will be cleared after 5 minutes.</li><li> If set to `-1`, the cached data will never expire</li></ul>                                                                                | `number`                          | `300000` |
+| staleTime | <ul><li> Time to consider the cached data is fresh. Within this time interval, the request will not be re-initiated</li><li> If set to `-1`, it means that the data is always fresh</li></ul>                                                 | `number`                          | `0`      |
+| setCache  | <ul><li> Custom set cache </li><li> `setCache` and `getCache` need to be used together</li><li> In the custom cache mode, `cacheTime` and `clearCache` are useless, please implement it yourself according to the actual situation.</li></ul> | `(data: CachedData) => void;`     | -        |
+| getCache  | Custom get cache                                                                                                                                                                                                                              | `(params: TParams) => CachedData` | -        |
+
+### clearCache
+
+```tsx | pure
+import { clearCache } from 'ahooks';
+
+clearCache(cacheKey?: string | string[]);
+```
+
+1. Support clearing a single cache, or a group of caches
+2. If `cacheKey` is empty, all cached data will be cleared
 
 ## Remark
 
