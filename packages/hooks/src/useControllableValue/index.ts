@@ -51,12 +51,14 @@ function useControllableValue<T = any>(props: Props = {}, options: Options<T> = 
   const update = useUpdate();
 
   const setState = (v: T, ...args: any[]) => {
+    const r = typeof v === 'function' ? v(stateRef.current) : v;
+
     if (!isControlled) {
-      stateRef.current = v;
+      stateRef.current = r;
       update();
     }
     if (props[trigger]) {
-      props[trigger](v, ...args);
+      props[trigger](r, ...args);
     }
   };
 
