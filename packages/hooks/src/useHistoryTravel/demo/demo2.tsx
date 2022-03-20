@@ -38,7 +38,7 @@ export default () => {
       <div style={{ border: '1px solid #ebedf1', padding: 16, marginBottom: 16 }}>
         <h3>TODO List</h3>
         <ul>
-          {value.map((it, index) => (
+          {value?.map((it, index) => (
             <li key={index}>{it}</li>
           ))}
         </ul>
