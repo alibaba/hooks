@@ -11,7 +11,7 @@ import { useEventListener } from 'ahooks';
 
 export default () => {
   const [value, setValue] = useState(0);
-  const ref = useRef();
+  const ref = useRef(null);
 
   useEventListener(
     'click',

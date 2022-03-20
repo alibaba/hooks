@@ -46,9 +46,11 @@ export default () => {
   } = useRequest(deleteItem, {
     manual: true,
     onSuccess: (_, [id]) => {
-      const index = data.list.findIndex((i) => i === id);
-      data.list.splice(index, 1);
-      mutate({ ...data });
+      if (data) {
+        const index = data.list.findIndex((i) => i === id);
+        data?.list.splice(index, 1);
+        mutate({ ...data });
+      }
     },
   });
 
