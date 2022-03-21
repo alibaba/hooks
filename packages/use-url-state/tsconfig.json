@@ -2,6 +2,5 @@
   "extends": "../../tsconfig.json",
   "compilerOptions": {
     "rootDir": "src"
-  },
-  "exclude": ["../../gulpfile.js"]
+  }
 }
