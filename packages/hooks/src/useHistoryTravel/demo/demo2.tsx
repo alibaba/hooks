@@ -10,15 +10,22 @@ import { useHistoryTravel } from 'ahooks';
 import React, { useState } from 'react';
 
 export default () => {
-  const { value, setValue, backLength, forwardLength, back, forward, go, reset } = useHistoryTravel(
-    ['do homework'],
-  );
+  const {
+    value = [],
+    setValue,
+    backLength,
+    forwardLength,
+    back,
+    forward,
+    go,
+    reset,
+  } = useHistoryTravel(['do homework']);
 
   const [inputValue, setInputValue] = useState('');
   const [step, setStep] = useState(-1);
 
   const onAdd = () => {
-    setValue([...(value || []), inputValue]);
+    setValue([...value, inputValue]);
     setInputValue('');
   };
 
@@ -38,7 +45,7 @@ export default () => {
       <div style={{ border: '1px solid #ebedf1', padding: 16, marginBottom: 16 }}>
         <h3>TODO List</h3>
         <ul>
-          {value?.map((it, index) => (
+          {value.map((it, index) => (
             <li key={index}>{it}</li>
           ))}
         </ul>
