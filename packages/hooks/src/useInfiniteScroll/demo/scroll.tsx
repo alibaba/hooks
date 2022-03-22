@@ -27,7 +27,7 @@ function getLoadMoreList(nextId: string | undefined, limit: number): Promise<Res
 }
 
 export default () => {
-  const ref = useRef<HTMLDivElement>();
+  const ref = useRef<HTMLDivElement>(null);
 
   const { data, loading, loadMore, loadingMore, noMore } = useInfiniteScroll(
     (d) => getLoadMoreList(d?.nextId, 4),

@@ -11,8 +11,8 @@ import { useClickAway } from 'ahooks';
 
 export default () => {
   const [counter, setCounter] = useState(0);
-  const ref1 = useRef();
-  const ref2 = useRef();
+  const ref1 = useRef(null);
+  const ref2 = useRef(null);
   useClickAway(() => {
     setCounter((s) => s + 1);
   }, [ref1, ref2]);

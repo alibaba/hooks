@@ -10,7 +10,7 @@ import React, { useRef } from 'react';
 import { useSize } from 'ahooks';
 
 export default () => {
-  const ref = useRef();
+  const ref = useRef(null);
   const size = useSize(ref);
   return (
     <div ref={ref}>

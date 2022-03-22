@@ -10,7 +10,7 @@ import React, { useRef } from 'react';
 import { useFullscreen } from 'ahooks';
 
 export default () => {
-  const ref = useRef();
+  const ref = useRef(null);
   const [isFullscreen, { enterFullscreen, exitFullscreen, toggleFullscreen }] = useFullscreen(ref);
   return (
     <div ref={ref} style={{ background: 'white' }}>
