@@ -10,7 +10,7 @@ import React, { useRef } from 'react';
 import { useMouse } from 'ahooks';
 
 export default () => {
-  const ref = useRef();
+  const ref = useRef(null);
   const mouse = useMouse(ref.current);
 
   return (

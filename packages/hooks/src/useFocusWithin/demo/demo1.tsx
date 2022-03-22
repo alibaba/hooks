@@ -11,7 +11,7 @@ import { useFocusWithin } from 'ahooks';
 import { message } from 'antd';
 
 export default () => {
-  const ref = useRef();
+  const ref = useRef(null);
   const isFocusWithin = useFocusWithin(ref, {
     onFocus: () => {
       message.info('focus');

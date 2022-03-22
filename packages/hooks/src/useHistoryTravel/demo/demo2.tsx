@@ -10,9 +10,16 @@ import { useHistoryTravel } from 'ahooks';
 import React, { useState } from 'react';
 
 export default () => {
-  const { value, setValue, backLength, forwardLength, back, forward, go, reset } = useHistoryTravel(
-    ['do homework'],
-  );
+  const {
+    value = [],
+    setValue,
+    backLength,
+    forwardLength,
+    back,
+    forward,
+    go,
+    reset,
+  } = useHistoryTravel(['do homework']);
 
   const [inputValue, setInputValue] = useState('');
   const [step, setStep] = useState(-1);

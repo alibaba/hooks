@@ -38,3 +38,4 @@ useDebounceEffect(
 | wait     | The number of milliseconds to wait.                   | `number`  | `1000`  |
 | leading  | Specify invoking on the leading edge of the timeout.  | `boolean` | `false` |
 | trailing | Specify invoking on the trailing edge of the timeout. | `boolean` | `true`  |
+| maxWait  | The maximum time func is allowed to be delayed before it’s invoked. | `number`  | -       |
