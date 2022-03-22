@@ -19,7 +19,8 @@ const getScrollHeight = (el: Document | Element) => {
 const getClientHeight = (el: Document | Element) => {
   return (
     (el as Element).clientHeight ||
-    Math.max(document.documentElement.clientHeight, document.body.clientHeight)
+    document.documentElement.clientHeight || 
+    document.body.clientHeight
   );
 };
 
