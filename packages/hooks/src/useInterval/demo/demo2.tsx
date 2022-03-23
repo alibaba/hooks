@@ -11,7 +11,7 @@ import { useInterval } from 'ahooks';
 
 export default () => {
   const [count, setCount] = useState(0);
-  const [interval, setInterval] = useState(1000);
+  const [interval, setInterval] = useState<number | undefined>(1000);
 
   useInterval(() => {
     setCount(count + 1);

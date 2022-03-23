@@ -14,6 +14,7 @@ export type Target = BasicTarget<HTMLElement | Document | Window>;
 export type Options = {
   events?: KeyEvent[];
   target?: Target;
+  exactMatch?: boolean;
 };
 
 // 键盘事件 keyCode 别名
@@ -127,13 +128,27 @@ const modifierKey = {
   meta: (event: KeyboardEvent) => event.metaKey,
 };
 
+// 根据 event 计算激活键数量
+function countKeyByEvent(event: KeyboardEvent) {
+  const countOfModifier = Object.keys(modifierKey).reduce((total, key) => {
+    if (modifierKey[key](event)) {
+      return total + 1;
+    }
+
+    return total;
+  }, 0);
+
+  // 16 17 18 91 92 是修饰键的 keyCode，如果 keyCode 是修饰键，那么激活数量就是修饰键的数量，如果不是，那么就需要 +1
+  return [16, 17, 18, 91, 92].includes(event.keyCode) ? countOfModifier : countOfModifier + 1;
+}
+
 /**
  * 判断按键是否激活
  * @param [event: KeyboardEvent]键盘事件
  * @param [keyFilter: any] 当前键
  * @returns Boolean
  */
-function genFilterKey(event: KeyboardEvent, keyFilter: keyType) {
+function genFilterKey(event: KeyboardEvent, keyFilter: keyType, exactMatch: boolean) {
   // 浏览器自动补全 input 的时候，会触发 keyDown、keyUp 事件，但此时 event.key 等为空
   if (!event.key) {
     return false;
@@ -153,9 +168,20 @@ function genFilterKey(event: KeyboardEvent, keyFilter: keyType) {
     const genModifier = modifierKey[key];
     // keyCode 别名
     const aliasKeyCode = aliasKeyCodeMap[key.toLowerCase()];
+
     if ((genModifier && genModifier(event)) || (aliasKeyCode && aliasKeyCode === event.keyCode)) {
       genLen++;
     }
+  }
+
+  /**
+   * 需要判断触发的键位和监听的键位完全一致，判断方法就是触发的键位里有且等于监听的键位
+   * genLen === genArr.length 能判断出来触发的键位里有监听的键位
+   * countKeyByEvent(event) === genArr.length 判断出来触发的键位数量里有且等于监听的键位数量
+   * 主要用来防止按组合键其子集也会触发的情况，例如监听 ctrl+a 会触发监听 ctrl 和 a 两个键的事件。
+   */
+  if (exactMatch) {
+    return genLen === genArr.length && countKeyByEvent(event) === genArr.length;
   }
   return genLen === genArr.length;
 }
@@ -165,15 +191,16 @@ function genFilterKey(event: KeyboardEvent, keyFilter: keyType) {
  * @param [keyFilter: any] 当前键
  * @returns () => Boolean
  */
-function genKeyFormater(keyFilter: KeyFilter): KeyPredicate {
+function genKeyFormater(keyFilter: KeyFilter, exactMatch: boolean): KeyPredicate {
   if (typeof keyFilter === 'function') {
     return keyFilter;
   }
   if (typeof keyFilter === 'string' || typeof keyFilter === 'number') {
-    return (event: KeyboardEvent) => genFilterKey(event, keyFilter);
+    return (event: KeyboardEvent) => genFilterKey(event, keyFilter, exactMatch);
   }
   if (Array.isArray(keyFilter)) {
-    return (event: KeyboardEvent) => keyFilter.some((item) => genFilterKey(event, item));
+    return (event: KeyboardEvent) =>
+      keyFilter.some((item) => genFilterKey(event, item, exactMatch));
   }
   return keyFilter ? () => true : () => false;
 }
@@ -181,7 +208,7 @@ function genKeyFormater(keyFilter: KeyFilter): KeyPredicate {
 const defaultEvents: KeyEvent[] = ['keydown'];
 
 function useKeyPress(keyFilter: KeyFilter, eventHandler: EventHandler, option?: Options) {
-  const { events = defaultEvents, target } = option || {};
+  const { events = defaultEvents, target, exactMatch = false } = option || {};
   const eventHandlerRef = useLatest(eventHandler);
   const keyFilterRef = useLatest(keyFilter);
 
@@ -193,7 +220,7 @@ function useKeyPress(keyFilter: KeyFilter, eventHandler: EventHandler, option?: 
       }
 
       const callbackHandler = (event: KeyboardEvent) => {
-        const genGuard: KeyPredicate = genKeyFormater(keyFilterRef.current);
+        const genGuard: KeyPredicate = genKeyFormater(keyFilterRef.current, exactMatch);
         if (genGuard(event)) {
           return eventHandlerRef.current?.(event);
         }

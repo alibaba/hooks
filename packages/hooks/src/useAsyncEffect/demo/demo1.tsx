@@ -18,7 +18,7 @@ function mockCheck(): Promise<boolean> {
 }
 
 export default () => {
-  const [pass, setPass] = useState<boolean>(null);
+  const [pass, setPass] = useState<boolean>();
 
   useAsyncEffect(async () => {
     setPass(await mockCheck());

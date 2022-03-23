@@ -8,7 +8,7 @@ ahooks 大部分 DOM 类 Hooks 都会接收 `target` 参数，表示要处理的
 
 ```ts
 export default () => {
-  const ref = useRef();
+  const ref = useRef(null);
   const isHovering = useHover(ref);
   return <div ref={ref}>{isHovering ? 'hover' : 'leaveHover'}</div>;
 };
@@ -38,8 +38,8 @@ export default () => {
 export default () => {
   const [boolean, { toggle }] = useBoolean();
 
-  const ref = useRef();
-  const ref2 = useRef();
+  const ref = useRef(null);
+  const ref2 = useRef(null);
 
   const isHovering = useHover(boolean ? ref : ref2);
   return (

@@ -8,7 +8,7 @@ Most of the DOM Hooks will receive the `target` parameter, which indicates the e
 
 ```ts
 export default () => {
-  const ref = useRef();
+  const ref = useRef(null);
   const isHovering = useHover(ref);
   return <div ref={ref}>{isHovering ? 'hover' : 'leaveHover'}</div>;
 };
@@ -38,8 +38,8 @@ In addition, **the `target` of DOM Hooks supports dynamic changes**. for example
 export default () => {
   const [boolean, { toggle }] = useBoolean();
 
-  const ref = useRef();
-  const ref2 = useRef();
+  const ref = useRef(null);
+  const ref2 = useRef(null);
 
   const isHovering = useHover(boolean ? ref : ref2);
   return (

@@ -1,6 +1,11 @@
 import { useMemo, useRef } from 'react';
 
-type noop = (...args: any[]) => any;
+type noop = (this: any, ...args: any[]) => any;
+
+type PickFunction<T extends noop> = (
+  this: ThisParameterType<T>,
+  ...args: Parameters<T>
+) => ReturnType<T>;
 
 function useMemoizedFn<T extends noop>(fn: T) {
   if (process.env.NODE_ENV === 'development') {
@@ -15,12 +20,11 @@ function useMemoizedFn<T extends noop>(fn: T) {
   // https://github.com/alibaba/hooks/issues/728
   fnRef.current = useMemo(() => fn, [fn]);
 
-  const memoizedFn = useRef<T>();
+  const memoizedFn = useRef<PickFunction<T>>();
   if (!memoizedFn.current) {
-    memoizedFn.current = function (...args) {
-      // eslint-disable-next-line @typescript-eslint/no-invalid-this
+    memoizedFn.current = function (this, ...args) {
       return fnRef.current.apply(this, args);
-    } as T;
+    };
   }
 
   return memoizedFn.current;
