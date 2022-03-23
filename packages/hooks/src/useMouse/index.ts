@@ -1,4 +1,4 @@
-import { useRafState } from '..';
+import useRafState from '../useRafState';
 import useEventListener from '../useEventListener';
 import type { BasicTarget } from '../utils/domTarget';
 import { getTargetElement } from '../utils/domTarget';
