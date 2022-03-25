@@ -1,5 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
-import { useMemoizedFn, usePagination, useUpdateEffect } from '..';
+import useMemoizedFn from '../useMemoizedFn';
+import usePagination from '../usePagination';
+import useUpdateEffect from '../useUpdateEffect';
+
 import type {
   Antd4ValidateFields,
   AntdTableOptions,
