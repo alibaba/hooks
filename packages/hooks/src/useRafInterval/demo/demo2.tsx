@@ -7,13 +7,13 @@
  */
 
 import React, { useState } from 'react';
-import { useInterval } from 'ahooks';
+import { useRafInterval } from 'ahooks';
 
 export default () => {
   const [count, setCount] = useState(0);
   const [interval, setInterval] = useState(1000);
 
-  useInterval(() => {
+  useRafInterval(() => {
     setCount(count + 1);
   }, interval);
 

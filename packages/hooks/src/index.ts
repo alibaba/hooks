@@ -70,6 +70,7 @@ import useVirtualList from './useVirtualList';
 import useWebSocket from './useWebSocket';
 import useWhyDidYouUpdate from './useWhyDidYouUpdate';
 import { createUpdateEffect } from './createUpdateEffect';
+import useRafInterval from './useRafInterval';
 
 export {
   useRequest,
@@ -146,4 +147,5 @@ export {
   clearCache,
   useFocusWithin,
   createUpdateEffect,
+  useRafInterval,
 };

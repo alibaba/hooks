@@ -1,14 +1,18 @@
 import { useEffect } from 'react';
 import useLatest from '../useLatest';
 
-const requestInterval = function (callback: Function, delay: number = 0) {
+interface Handle {
+  id: number;
+}
+
+const setRafInterval = function (callback: () => void, delay: number = 0) {
   let start = new Date().getTime();
-  let handle = {
+  const handle: Handle = {
     id: 0,
   };
   const loop = () => {
     const current = new Date().getTime();
-    if (current - start > delay) {
+    if (current - start >= delay) {
       callback(); // 执行回调
       start = new Date().getTime();
     }
@@ -18,11 +22,11 @@ const requestInterval = function (callback: Function, delay: number = 0) {
   return handle;
 };
 
-const clearRequestInterval = function (handle: any) {
+const clearRafInterval = function (handle: Handle) {
   cancelAnimationFrame(handle.id);
 };
 
-function useRequestInterval(
+function useRafInterval(
   fn: () => void,
   delay: number | undefined,
   options?: {
@@ -38,13 +42,13 @@ function useRequestInterval(
     if (immediate) {
       fnRef.current();
     }
-    const timer = requestInterval(() => {
+    const timer = setRafInterval(() => {
       fnRef.current();
     }, delay);
     return () => {
-      clearRequestInterval(timer);
+      clearRafInterval(timer);
     };
   }, [delay]);
 }
 
-export default useRequestInterval;
+export default useRafInterval;
