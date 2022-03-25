@@ -2,15 +2,17 @@ import { useEffect } from 'react';
 import useLatest from '../useLatest';
 
 interface Handle {
-  id: number;
+  id: number | NodeJS.Timer;
 }
 
-const setRafInterval = function (callback: () => void, delay: number = 0) {
+const setRafInterval = function (callback: () => void, delay: number = 0): Handle {
   if (typeof requestAnimationFrame === typeof undefined) {
-    return setInterval(callback, delay);
+    return {
+      id: setInterval(callback, delay),
+    };
   }
   let start = new Date().getTime();
-  const handle: Handle | number = {
+  const handle: Handle = {
     id: 0,
   };
   const loop = () => {
@@ -25,9 +27,13 @@ const setRafInterval = function (callback: () => void, delay: number = 0) {
   return handle;
 };
 
+function cancelAnimationFrameIsNotDefined(t: any): t is NodeJS.Timer {
+  return typeof cancelAnimationFrame === typeof undefined;
+}
+
 const clearRafInterval = function (handle: Handle) {
-  if (typeof cancelAnimationFrame === typeof undefined) {
-    return clearInterval(handle as any);
+  if (cancelAnimationFrameIsNotDefined(handle.id)) {
+    return clearInterval(handle.id);
   }
   cancelAnimationFrame(handle.id);
 };
