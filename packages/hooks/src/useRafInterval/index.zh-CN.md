@@ -11,6 +11,8 @@ nav:
 - 时间间隔小于 `16ms` 
 - 希望页面不渲染的情况喜爱依然执行定时器。
 
+*Node 环境下 `requestAnimationFrame` 会自动降级到 `setInterval`*
+
 ## 代码演示
 
 ### 基础用法

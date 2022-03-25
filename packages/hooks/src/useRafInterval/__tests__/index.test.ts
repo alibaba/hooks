@@ -12,7 +12,12 @@ const setUp = ({ fn, delay, options }: ParamsObj) =>
 
 const FRAME_TIME = 16;
 describe('useRafInterval', () => {
-  jest.useFakeTimers('modern');
+  beforeAll(() => {
+    jest.useFakeTimers('modern');
+  });
+  afterAll(() => {
+    jest.restoreAllMocks();
+  });
   it('should be defined', () => {
     expect(useRafInterval).toBeDefined();
   });

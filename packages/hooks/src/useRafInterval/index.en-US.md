@@ -12,6 +12,7 @@ Please note that the following two cases are likely to be inapplicable, and `use
 - the time interval is less than `16ms`
 - want to execute the timer when page is not rendering;
 
+*`requestAnimationFrame` will automatically downgrade to `setInterval` in node enviraonment*
 
 ## Examples
 

@@ -6,8 +6,11 @@ interface Handle {
 }
 
 const setRafInterval = function (callback: () => void, delay: number = 0) {
+  if (typeof requestAnimationFrame === typeof undefined) {
+    return setInterval(callback, delay);
+  }
   let start = new Date().getTime();
-  const handle: Handle = {
+  const handle: Handle | number = {
     id: 0,
   };
   const loop = () => {
@@ -23,6 +26,9 @@ const setRafInterval = function (callback: () => void, delay: number = 0) {
 };
 
 const clearRafInterval = function (handle: Handle) {
+  if (typeof cancelAnimationFrame === typeof undefined) {
+    return clearInterval(handle as any);
+  }
   cancelAnimationFrame(handle.id);
 };
 
@@ -46,7 +52,7 @@ function useRafInterval(
       fnRef.current();
     }, delay);
     return () => {
-      clearRafInterval(timer);
+      clearRafInterval(timer as any);
     };
   }, [delay]);
 }
