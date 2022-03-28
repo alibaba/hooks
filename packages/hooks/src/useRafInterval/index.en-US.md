@@ -3,9 +3,15 @@ nav:
   path: /hooks
 ---
 
-# useInterval
+# useRafInterval
 
-A hook that handles the `setInterval` timer function.
+A hook implements with `requestAnimationFrame` for better performance. The API is consistent with `useInterval`, the advantage is that the execution of the timer can be stopped when the page is not rendering, such as page hiding or minimization. 
+
+Please note that the following two cases are likely to be inapplicable, and `useInterval` is preferred:
+- the time interval is less than `16ms`
+- want to execute the timer when page is not rendering;
+
+> `requestAnimationFrame` will automatically downgrade to `setInterval` in node enviraonment
 
 ## Examples
 
@@ -20,7 +26,7 @@ A hook that handles the `setInterval` timer function.
 ## API
 
 ```typescript
-useInterval(
+useRafInterval(
   fn: () => void, 
   delay?: number | undefined, 
   options?: Options
