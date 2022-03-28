@@ -3,9 +3,15 @@ nav:
   path: /hooks
 ---
 
-# useInterval
+# useRafInterval
 
-一个可以处理 setInterval 的 Hook。
+用 `requestAnimationFrame` 模拟实现 `setInterval`，API 和 `useInterval` 保持一致，好处是可以在页面不渲染的时候停止执行定时器，比如页面隐藏或最小化等。
+
+请注意，如下两种情况下很可能是不适用的，优先考虑 `useInterval` ：
+- 时间间隔小于 `16ms` 
+- 希望页面不渲染的情况下依然执行定时器
+
+> Node 环境下 `requestAnimationFrame` 会自动降级到 `setInterval`
 
 ## 代码演示
 
@@ -20,7 +26,7 @@ nav:
 ## API
 
 ```typescript
-useInterval(
+useRafInterval(
   fn: () => void, 
   delay?: number | undefined, 
   options?: Options

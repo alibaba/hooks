@@ -69,6 +69,7 @@ export const menus = [
       'useThrottleEffect',
       'useDeepCompareEffect',
       'useInterval',
+      'useRafInterval',
       'useTimeout',
       'useLockFn',
       'useUpdate',

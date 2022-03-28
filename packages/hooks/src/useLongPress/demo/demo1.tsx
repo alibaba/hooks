@@ -11,7 +11,7 @@ import { useLongPress } from 'ahooks';
 
 export default () => {
   const [counter, setCounter] = useState(0);
-  const ref = useRef<HTMLButtonElement>();
+  const ref = useRef<HTMLButtonElement>(null);
 
   useLongPress(() => setCounter((s) => s + 1), ref);
 

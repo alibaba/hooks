@@ -2,7 +2,7 @@ import { useRequest } from 'ahooks';
 import Mock from 'mockjs';
 import React, { useState } from 'react';
 
-function getUsername(id: number): Promise<string> {
+function getUsername(id: string): Promise<string> {
   return new Promise((resolve) => {
     setTimeout(() => {
       resolve(Mock.mock('@name'));
@@ -19,7 +19,7 @@ export default () => {
     run,
     params,
   } = useRequest(getUsername, {
-    defaultParams: [1],
+    defaultParams: ['1'],
   });
 
   const onChange = () => {

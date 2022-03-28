@@ -32,7 +32,7 @@
     "@babel/core": "^7.10.2",
     "@testing-library/react": "^10.0.4",
     "@testing-library/react-hooks": "^2.0.1",
-    "@types/jest": "^24.9.1",
+    "@types/jest": "^26.0.1",
     "@types/lodash.debounce": "^4.0.6",
     "@types/lodash.isequal": "^4.5.5",
     "@types/lodash.throttle": "^4.1.6",
