@@ -22,7 +22,7 @@ nav:
 ```typescript
 useInterval(
   fn: () => void, 
-  interval?: number | null, 
+  delay?: number | undefined, 
   options?: Options
 );
 ```

@@ -18,7 +18,7 @@ const setRafInterval = function (callback: () => void, delay: number = 0): Handl
   const loop = () => {
     const current = new Date().getTime();
     if (current - start >= delay) {
-      callback(); // 执行回调
+      callback();
       start = new Date().getTime();
     }
     handle.id = requestAnimationFrame(loop);

@@ -22,7 +22,7 @@ A hook that handles the `setInterval` timer function.
 ```typescript
 useInterval(
   fn: () => void, 
-  interval?: number | null, 
+  delay?: number | undefined, 
   options?: Options
 );
 ```
