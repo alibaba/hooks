@@ -50,7 +50,7 @@ function useControllableValue<T = any>(props: Props = {}, options: Options<T> = 
 
   const update = useUpdate();
 
-  const setState = (v: T, ...args: any[]) => {
+  function setState<T>(v: T extends any ? T | (() => T) : never, ...args: any[]) {
     const r = typeof v === 'function' ? v(stateRef.current) : v;
 
     if (!isControlled) {
@@ -60,7 +60,7 @@ function useControllableValue<T = any>(props: Props = {}, options: Options<T> = 
     if (props[trigger]) {
       props[trigger](r, ...args);
     }
-  };
+  }
 
   return [stateRef.current, useMemoizedFn(setState)] as const;
 }
