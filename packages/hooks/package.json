@@ -42,7 +42,7 @@
     "screenfull": "^5.0.0"
   },
   "peerDependencies": {
-    "react": "^16.8.6 || ^17.0"
+    "react": "^16.8.0 || ^17.0.0 || ^18.0.0"
   },
   "devDependencies": {
     "@alifd/next": "^1.20.6",
