@@ -15,7 +15,7 @@ function useCookieState(cookieKey: string, options: Options = {}) {
 
     if (typeof cookieValue === 'string') return cookieValue;
 
-    if (isFunction(options.defaultValue)) {
+    if (isFunction<Function>(options.defaultValue)) {
       return options.defaultValue();
     }
 
@@ -29,7 +29,7 @@ function useCookieState(cookieKey: string, options: Options = {}) {
     ) => {
       const { defaultValue, ...restOptions } = { ...options, ...newOptions };
       setState((prevState) => {
-        const value = isFunction(newValue) ? newValue(prevState) : newValue;
+        const value = isFunction<Function>(newValue) ? newValue(prevState) : newValue;
         if (value === undefined) {
           Cookies.remove(cookieKey);
         } else {

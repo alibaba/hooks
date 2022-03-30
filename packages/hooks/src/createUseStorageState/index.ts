@@ -2,6 +2,7 @@
 import { useState } from 'react';
 import useMemoizedFn from '../useMemoizedFn';
 import useUpdateEffect from '../useUpdateEffect';
+import { isFunction } from '../utils';
 
 export interface IFuncUpdater<T> {
   (previousState?: T): T;
@@ -21,10 +22,6 @@ export interface OptionsWithDefaultValue<T> extends Options<T> {
 
 export type StorageStateResult<T> = [T | undefined, (value?: T | IFuncUpdater<T>) => void];
 export type StorageStateResultHasDefaultValue<T> = [T, (value?: T | IFuncUpdater<T>) => void];
-
-function isFunction<T>(obj: any): obj is T {
-  return typeof obj === 'function';
-}
 
 export function createUseStorageState(getStorage: () => Storage | undefined) {
   function useStorageState<T = any>(key: string, options?: Options<T>): StorageStateResult<T>;
