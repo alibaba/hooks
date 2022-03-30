@@ -5,7 +5,7 @@ nav:
 
 # useRafTimeout
 
-用 `requestAnimationFrame` 模拟实现 `setTimeout`，API 和 `useTimeout` 保持一致
+用 `requestAnimationFrame` 模拟实现 `setTimeout`，API 和 `useTimeout` 保持一致，好处是可以在页面不渲染的时候不触发函数执行，比如页面隐藏或最小化等。
 
 > Node 环境下 `requestAnimationFrame` 会自动降级到 `setTimeout`
 
@@ -30,7 +30,7 @@ useRafTimeout(
 
 ### Params
 
-| 参数    | 说明                                        | 类型                    |
-|---------|---------------------------------------------|-------------------------|
-| fn      | 要定时调用的函数                            | `() => void`            |
-| delay   | 间隔时间，当取值 `undefined` 时会停止计时器 | `number` \| `undefined` |
+| 参数  | 说明                                                                       | 类型                    |
+|-------|----------------------------------------------------------------------------|-------------------------|
+| fn    | 待执行函数                                                                 | `() => void`            |
+| delay | 定时时间（单位为毫秒）,支持动态变化，，当取值为 `undefined` 时会停止计时器 | `number` \| `undefined` |
