@@ -63,7 +63,7 @@ export function createUseStorageState(getStorage: () => Storage | undefined) {
       } catch (e) {
         console.error(e);
       }
-      if (isFunction<IFuncUpdater<T>>(options?.defaultValue)) {
+      if (isFunction(options?.defaultValue)) {
         return options?.defaultValue();
       }
       return options?.defaultValue;
@@ -79,7 +79,7 @@ export function createUseStorageState(getStorage: () => Storage | undefined) {
       if (typeof value === 'undefined') {
         setState(undefined);
         storage?.removeItem(key);
-      } else if (isFunction<IFuncUpdater<T>>(value)) {
+      } else if (isFunction(value)) {
         const currentState = value(state);
         try {
           setState(currentState);
