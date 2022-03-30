@@ -5,7 +5,7 @@ nav:
 
 # useRafTimeout
 
-A hook implements with `requestAnimationFrame` for better performance. The API is consistent with `useTimeout`.
+A hook implements with `requestAnimationFrame` for better performance. The API is consistent with `useTimeout`. the advantage is that will not trigger function when the page is not rendering, such as page hiding or minimization.
 
 > `requestAnimationFrame` will automatically downgrade to `setTimeout` in node environment
 
@@ -33,4 +33,3 @@ useRafTimeout(
 | Property | Description                                                                                                                                                   | Type                    |
 |----------|---------------------------------------------------------------------------------------------------------------------------------------------------------------|-------------------------|
 | fn       | The function to be executed every `delay` milliseconds.                                                                                                       | `() => void`            |
-| delay    | The time in milliseconds, the timer should delay in between executions of the specified function. The timer will be cancelled if delay is set to `undefined`. | `number` \| `undefined` |

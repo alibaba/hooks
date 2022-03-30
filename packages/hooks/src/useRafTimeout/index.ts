@@ -5,7 +5,7 @@ interface Handle {
   id: number | NodeJS.Timeout;
 }
 
-const setRafTimeout = function (callback: () => void, delay: number = 16.7): Handle {
+const setRafTimeout = function (callback: () => void, delay: number = 0): Handle {
   if (typeof requestAnimationFrame === typeof undefined) {
     return {
       id: setTimeout(callback, delay),
@@ -15,16 +15,14 @@ const setRafTimeout = function (callback: () => void, delay: number = 16.7): Han
     id: 0,
   };
 
-  const now = Date.now;
-  let startTime = now();
-  let endTime = startTime;
+  const startTime = new Date().getTime();
 
   const loop = () => {
-    handle.id = requestAnimationFrame(loop);
-    endTime = now();
-    if (endTime - startTime >= delay) {
+    const current = new Date().getTime();
+    if (current - startTime >= delay) {
       callback();
-      clearRafTimeout(handle);
+    } else {
+      handle.id = requestAnimationFrame(loop);
     }
   };
   handle.id = requestAnimationFrame(loop);
