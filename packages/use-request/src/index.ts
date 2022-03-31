@@ -105,7 +105,7 @@ function useRequest(service: any, options: any = {}) {
                 break;
             }
           }
-          fn.then(resolve).catch(reject);
+          fn?.then(resolve).catch(reject);
         });
   }
 
