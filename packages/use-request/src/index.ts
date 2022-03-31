@@ -69,9 +69,9 @@ function useRequest(service: any, options: any = {}) {
   loadMoreRef.current = loadMore;
 
   // @ts-ignore
-  const fetchProxy = (...args: any[]) =>
+  const async fetchProxy = (...args: any[]) =>
     // @ts-ignore
-    fetch(...args).then((res: Response) => {
+    return fetch(...args).then((res: Response) => {
       if (res.ok) {
         return res.json();
       }
