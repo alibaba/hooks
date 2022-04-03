@@ -1,12 +1,18 @@
-import { AntdTableOptions, AntdTableResult, Data, Params, Service } from '../useAntdTable/types';
+import type {
+  AntdTableOptions,
+  AntdTableResult,
+  Data,
+  Params,
+  Service,
+} from '../useAntdTable/types';
 import { useMemoizedFn, usePagination } from 'ahooks';
 import { useEffect } from 'react';
 
-const useAmadeusTable = <TData extends Data, TParams extends Params>(
+const useNoFormTable = <TData extends Data, TParams extends Params>(
   service: Service<TData, TParams>,
   options: AntdTableOptions<TData, TParams> = {},
 ) => {
-  const { ...rest } = options;
+  const { defaultParams, isResetSorter = false, onReset, ...rest } = options;
 
   const result = usePagination<TData, TParams>(service, {
     manual: true,
@@ -31,7 +37,11 @@ const useAmadeusTable = <TData extends Data, TParams extends Params>(
     );
   };
 
-  const _submit = (initPagination?: TParams[0]) => {
+  /**
+   * 加载表格数据
+   * @param initPagination 第一次加载表格的页码信息
+   */
+  const _reloadAndReset = (initPagination?: TParams[0]) => {
     const pagination = initPagination || {
       pageSize: options.defaultPageSize || 10,
       ...(params?.[0] || {}),
@@ -39,20 +49,22 @@ const useAmadeusTable = <TData extends Data, TParams extends Params>(
     };
 
     // @ts-ignore
-    run(pagination);
+    run(pagination, defaultParams?.[1]);
   };
 
-  const submit = (e?: any) => {
-    e?.preventDefault?.();
-    _submit();
+  //搜索第一页
+  const submit = () => {
+    _reloadAndReset();
   };
 
+  //重置条件并到第一页
   const reset = () => {
-    _submit();
+    onReset?.();
+    _reloadAndReset(isResetSorter ? defaultParams?.[0] : undefined);
   };
 
   useEffect(() => {
-    _submit();
+    _reloadAndReset(defaultParams?.[0]);
   }, []);
 
   return {
@@ -74,4 +86,4 @@ const useAmadeusTable = <TData extends Data, TParams extends Params>(
   } as AntdTableResult<TData, TParams>;
 };
 
-export default useAmadeusTable;
+export default useNoFormTable;
