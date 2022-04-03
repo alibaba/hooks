@@ -1,7 +1,8 @@
 ---
 nav:
-path: /hooks
+  path: /hooks
 ---
+
 # useNoFormTable
 
 `useNoFormTable` 基于 `useRequest` 实现，封装了常用的`Ant Design Table` 联动逻辑。派生于`useAntdTable`，但不需要和`Ant Form`配合，可以自行设计提交的表单结构。

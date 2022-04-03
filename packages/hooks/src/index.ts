@@ -143,6 +143,7 @@ export {
   useTrackedEffect,
   usePagination,
   useAntdTable,
+  useNoFormTable,
   useFusionTable,
   useInfiniteScroll,
   useGetState,
@@ -151,5 +152,4 @@ export {
   createUpdateEffect,
   useRafInterval,
   useRafTimeout,
-  useNoFormTable,
 };

@@ -8,7 +8,7 @@ import type {
 import { useMemoizedFn, usePagination } from 'ahooks';
 import { useEffect } from 'react';
 
-const useNoFormTable = <TData extends Data, TParams extends Params>(
+export default <TData extends Data, TParams extends Params>(
   service: Service<TData, TParams>,
   options: AntdTableOptions<TData, TParams> = {},
 ) => {
@@ -85,5 +85,3 @@ const useNoFormTable = <TData extends Data, TParams extends Params>(
     },
   } as AntdTableResult<TData, TParams>;
 };
-
-export default useNoFormTable;
