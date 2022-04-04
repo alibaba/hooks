@@ -37,8 +37,8 @@ nav:
 | 参数              | 说明                                                | 类型                  |
 |-------------------|-----------------------------------------------------|-----------------------|
 | tableProps        | `Table` 组件需要的数据，直接透传给 `Table` 组件即可 | -                     |
-| search.submit     | 提交表单                                            | `() => void`          |
-| search.reset      | 重置当前表单                                        | `() => void`          |
+| search.submit     | 提交表单                                            | `(customForm?: any) => void`          |
+| search.reset      | 重置当前表单                                        | `(defaultCustomForm?: any) => void`          |
 
 ### Params
 
