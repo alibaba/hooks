@@ -1,16 +1,12 @@
-import type {
-  AntdTableOptions,
-  AntdTableResult,
-  Data,
-  Params,
-  Service,
-} from '../useAntdTable/types';
-import { useMemoizedFn, usePagination } from 'ahooks';
+import type { Data, Params, Service } from '../useAntdTable/types';
+import useMemoizedFn from '../useMemoizedFn';
+import usePagination from '../usePagination';
 import { useEffect } from 'react';
+import type { NoFormTableOptions, NoFormTableResult } from './types';
 
 export default <TData extends Data, TParams extends Params>(
   service: Service<TData, TParams>,
-  options: AntdTableOptions<TData, TParams> = {},
+  options: NoFormTableOptions<TData, TParams> = {},
 ) => {
   const { defaultParams, isResetSorter = false, onReset, ...rest } = options;
 
@@ -38,10 +34,11 @@ export default <TData extends Data, TParams extends Params>(
   };
 
   /**
-   * 加载表格数据
-   * @param initPagination 第一次加载表格的页码信息
+   * 使用默认条件回到第一页数据
+   * @param initPagination 加载表格的页码信息
+   * @param defaultCustomForm 默认的自定义表单值
    */
-  const _reloadAndReset = (initPagination?: TParams[0]) => {
+  const _reloadAndReset = (initPagination?: TParams[0], defaultCustomForm?: any) => {
     const pagination = initPagination || {
       pageSize: options.defaultPageSize || 10,
       ...(params?.[0] || {}),
@@ -49,18 +46,31 @@ export default <TData extends Data, TParams extends Params>(
     };
 
     // @ts-ignore
-    run(pagination, defaultParams?.[1]);
+    run(pagination, defaultCustomForm ?? defaultParams?.[1]);
   };
 
-  //搜索第一页
-  const submit = () => {
-    _reloadAndReset();
+  /**
+   * 使用当前表单条件回到第一页数据
+   * @param customForm 自定义表单值
+   */
+  const submit = (customForm?: any) => {
+    const pagination = {
+      pageSize: options.defaultPageSize || 10,
+      ...(params?.[0] || {}),
+      current: 1,
+    };
+
+    // @ts-ignore
+    run(pagination, customForm ?? defaultParams?.[1]);
   };
 
-  //重置条件并到第一页
-  const reset = () => {
+  /**
+   * 重置条件并到第一页
+   * @param defaultCustomForm 默认的自定义表单值
+   */
+  const reset = (defaultCustomForm?: any) => {
     onReset?.();
-    _reloadAndReset(isResetSorter ? defaultParams?.[0] : undefined);
+    _reloadAndReset(isResetSorter ? defaultParams?.[0] : undefined, defaultCustomForm);
   };
 
   useEffect(() => {
@@ -83,5 +93,5 @@ export default <TData extends Data, TParams extends Params>(
       submit: useMemoizedFn(submit),
       reset: useMemoizedFn(reset),
     },
-  } as AntdTableResult<TData, TParams>;
+  } as NoFormTableResult<TData, TParams>;
 };

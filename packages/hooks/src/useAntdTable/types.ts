@@ -54,8 +54,4 @@ export interface AntdTableOptions<TData extends Data, TParams extends Params>
   extends PaginationOptions<TData, TParams> {
   form?: AntdFormUtils;
   defaultType?: 'simple' | 'advance';
-  /**重置时触发*/
-  onReset?: () => void;
-  /**重置时，是否重置filter*/
-  isResetSorter?: boolean;
 }

@@ -5,18 +5,28 @@ nav:
 
 # useNoFormTable
 
-`useNoFormTable` 基于 `useRequest` 实现，封装了常用的`Ant Design Table` 联动逻辑。派生于`useAntdTable`，但不需要和`Ant Form`配合，可以自行设计提交的表单结构。
+`useNoFormTable` 派生于`useAntdTable`。
 
-在使用之前，你需要了解它与 `useRequest` 不同的几个点：
+在使用之前，你需要了解它与 `useAntdTable` 不同的几个点：
 
-1. `service` 接收两个参数，第一个参数为分页数据 `{ current, pageSize, sorter, filters }`，第二个参数为表单数据。
-2. `service` 返回的数据结构为 `{ total: number, list: Item[] }`。
-3. 会额外返回 `tableProps` 和 `search` 字段，管理表格和表单。
+1. 不需要和`Ant Form`配合，可以自行设计提交的表单结构。
+2. 增加了重置相关的操作细节。
 
 ## 代码演示
+### Table 管理
+
+`useAntdTable` 会自动管理 `Table` 分页数据，你只需要把返回的 `tableProps` 传递给 `Table` 组件就可以了。
+
+```tsx | pure
+<Table columns={columns} rowKey="email" {...tableProps} />
+```
+<br />
+
+<code src="./demo/table.tsx" />
+
 ### 基本使用
 `options`中的`onReset` 表格重置时触发
-<code src="./demo/table.tsx" />
+<code src="./demo/basic.tsx" />
 
 ### 带有排序功能的表格
 `options`中可以设置`isResetSorter`决定重置的同时，是否恢复为默认排序

@@ -1,5 +1,5 @@
-import { Button, Table, Rate, Row, Col, Space } from 'antd';
-import React, { useState } from 'react';
+import { Table } from 'antd';
+import React from 'react';
 import { useNoFormTable } from 'ahooks';
 
 interface Item {
@@ -16,11 +16,8 @@ interface Result {
   list: Item[];
 }
 
-const desc = ['terrible', 'bad', 'normal', 'good', 'wonderful'];
-const defaultRate = 3;
-
-const getTableData = ({ current, pageSize }, { rate }: { rate: number }): Promise<Result> => {
-  const query = `page=${current}&size=${pageSize}&rate=${rate}`;
+const getTableData = ({ current, pageSize }): Promise<Result> => {
+  const query = `page=${current}&size=${pageSize}`;
 
   return fetch(`https://randomuser.me/api?results=55&${query}`)
     .then((res) => res.json())
@@ -31,17 +28,7 @@ const getTableData = ({ current, pageSize }, { rate }: { rate: number }): Promis
 };
 
 export default () => {
-  const [rate, setRate] = useState(defaultRate);
-
-  const handleReset = () => {
-    setRate(defaultRate);
-  };
-
-  const { tableProps, search } = useNoFormTable(getTableData, {
-    defaultPageSize: 5,
-    defaultParams: [{ current: 1, pageSize: 5 }, { rate: defaultRate }],
-    onReset: () => handleReset(),
-  });
+  const { tableProps } = useNoFormTable(getTableData);
 
   const columns = [
     {
@@ -62,22 +49,5 @@ export default () => {
     },
   ];
 
-  return (
-    <>
-      <Row style={{ marginBottom: 8 }}>
-        <Col span={12}>
-          {' '}
-          <Rate tooltips={desc} onChange={(v) => setRate(v)} value={rate} />
-        </Col>
-        <Col span={12}>
-          <Space>
-            <Button onClick={() => search.submit()}>搜索</Button>
-            <Button onClick={() => search.reset()}>重置</Button>
-          </Space>
-        </Col>
-      </Row>
-
-      <Table columns={columns} rowKey="email" {...tableProps} />
-    </>
-  );
+  return <Table columns={columns} rowKey="email" {...tableProps} />;
 };
