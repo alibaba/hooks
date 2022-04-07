@@ -1,13 +1,13 @@
 import { useEffect } from 'react';
 
-interface IDisableHistory {
+export interface IUseDisableHistory {
   callback?: (url: string) => void;
   url?: string;
   shouldRefresh?: boolean;
 }
 
 // disable browser history
-const useDisableHistory = (props?: IDisableHistory) => {
+const useDisableHistory = (props?: IUseDisableHistory) => {
   const { callback, url = document.URL, shouldRefresh = false } = props || {};
   useEffect(() => {
     window.history.pushState(null, '', url);
