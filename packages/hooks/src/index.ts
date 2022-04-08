@@ -72,6 +72,7 @@ import useWhyDidYouUpdate from './useWhyDidYouUpdate';
 import { createUpdateEffect } from './createUpdateEffect';
 import useRafInterval from './useRafInterval';
 import useRafTimeout from './useRafTimeout';
+import useDisableHistory from './useDisableHistory';
 
 export {
   useRequest,
@@ -150,4 +151,5 @@ export {
   createUpdateEffect,
   useRafInterval,
   useRafTimeout,
+  useDisableHistory,
 };
