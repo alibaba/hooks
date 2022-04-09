@@ -66,7 +66,7 @@ describe('useVirtualList', () => {
       expect(container.scrollTop).toBe(80 * 30);
     });
 
-    it('test with fixed height', () => {
+    it('test with fixed height when overscan equals 0', () => {
       setup(Array.from(Array(99999).keys()), {
         overscan: 0,
         itemHeight: 30,
@@ -79,10 +79,28 @@ describe('useVirtualList', () => {
       });
 
       expect(hook.result.current[0].length).toBe(10);
+      expect(wrapper.style.marginTop).toBe(20 * 30 + 'px');
       expect(container.scrollTop).toBe(20 * 30);
     });
 
-    it('test with dynamic height', () => {
+    it('test with fixed height when overscan equals 1', () => {
+      setup(Array.from(Array(99999).keys()), {
+        overscan: 1,
+        itemHeight: 30,
+        containerTarget: () => container,
+        wrapperTarget: () => wrapper,
+      });
+
+      act(() => {
+        hook.result.current[1](20);
+      });
+
+      expect(hook.result.current[0].length).toBe(300 / 30 + 2);
+      expect(wrapper.style.marginTop).toBe(20 * 30 - 30 * 1 + 'px');
+      expect(container.scrollTop).toBe(20 * 30);
+    });
+
+    it('test with dynamic height when overscan equals 0', () => {
       setup(Array.from(Array(99999).keys()), {
         overscan: 0,
         containerTarget: () => container,
@@ -97,7 +115,7 @@ describe('useVirtualList', () => {
       // average height for easy calculation
       const averageHeight = (30 + 60) / 2;
 
-      expect(hook.result.current[0].length).toBe(Math.floor(300 / averageHeight));
+      expect(hook.result.current[0].length).toBe(Math.ceil(300 / averageHeight));
       expect(container.scrollTop).toBe(10 * 30 + 10 * 60);
       expect((hook.result.current[0][0] as { data: number }).data).toBe(20);
       expect((hook.result.current[0][0] as { index: number }).index).toBe(20);
@@ -106,6 +124,28 @@ describe('useVirtualList', () => {
 
       expect(wrapper.style.marginTop).toBe(20 * averageHeight + 'px');
       expect(wrapper.style.height).toBe((99998 - 20) * averageHeight + 30 + 'px');
+    });
+
+    it('test with dynamic height when overscan equals 1', () => {
+      setup(Array.from(Array(99999).keys()), {
+        overscan: 1,
+        containerTarget: () => container,
+        wrapperTarget: () => wrapper,
+        itemHeight: (i: number) => (i % 2 === 0 ? 30 : 60),
+      });
+
+      act(() => {
+        hook.result.current[1](20);
+      });
+
+      // average height for easy calculation
+      const averageHeight = (30 + 60) / 2;
+
+      expect(hook.result.current[0].length).toBe(Math.ceil(300 / averageHeight) + 2);
+      expect(container.scrollTop).toBe(10 * 30 + 10 * 60);
+
+      expect(wrapper.style.marginTop).toBe(20 * averageHeight - 60 + 'px');
+      expect(container.scrollTop).toBe(20 * averageHeight);
     });
   });
 });

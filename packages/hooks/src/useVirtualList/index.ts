@@ -13,10 +13,18 @@ export interface Options<T> {
   overscan?: number;
 }
 
+const DEFAULT_OVERSCAN = 5;
+
 const useVirtualList = <T = any>(list: T[], options: Options<T>) => {
-  const { containerTarget, wrapperTarget, itemHeight, overscan = 5 } = options;
+  const { containerTarget, wrapperTarget, itemHeight, overscan = DEFAULT_OVERSCAN } = options;
 
   const itemHeightRef = useLatest(itemHeight);
+  const floorOverscan = Math.floor(overscan);
+  const formatOverscan = isNaN(floorOverscan)
+    ? DEFAULT_OVERSCAN
+    : floorOverscan >= 0
+    ? floorOverscan
+    : 0;
 
   const size = useSize(containerTarget);
 
@@ -36,27 +44,34 @@ const useVirtualList = <T = any>(list: T[], options: Options<T>) => {
       sum += height;
       endIndex = i;
       if (sum >= containerHeight) {
-          break;
+        break;
       }
     }
-    return endIndex - fromIndex;
+    return endIndex - fromIndex + 1;
   };
 
   const getOffset = (scrollTop: number) => {
+    if (scrollTop === 0) return 0;
+
     if (typeof itemHeightRef.current === 'number') {
-      return Math.floor(scrollTop / itemHeightRef.current) + 1;
+      return Math.floor(scrollTop / itemHeightRef.current);
     }
+
     let sum = 0;
     let offset = 0;
     for (let i = 0; i < list.length; i++) {
       const height = itemHeightRef.current(i, list[i]);
       sum += height;
-      if (sum >= scrollTop) {
+      if (sum === scrollTop) {
+        offset = i + 1;
+        break;
+      } else if (sum > scrollTop) {
         offset = i;
         break;
       }
     }
-    return offset + 1;
+
+    return offset;
   };
 
   // 获取上部高度
@@ -68,8 +83,23 @@ const useVirtualList = <T = any>(list: T[], options: Options<T>) => {
     const height = list
       .slice(0, index)
       // @ts-ignore
-      .reduce((sum, _, i) => sum + itemHeightRef.current(i, list[index]), 0);
+      .reduce((sum, _, i) => sum + itemHeightRef.current(i, list[i]), 0);
     return height;
+  };
+
+  // 获取可视区域第一个节点滚动的距离
+  const getVisibleAreaFirstItemScrollDistance = (scrollTop: number, start: number) => {
+    if (start === 0) return scrollTop;
+
+    if (typeof itemHeightRef.current === 'number') {
+      return scrollTop % itemHeightRef.current;
+    }
+    const height = list
+      .slice(start, start + formatOverscan)
+      // @ts-ignore
+      .reduce((sum, _, i) => sum + itemHeightRef.current(start + i, list[start + i]), 0);
+
+    return scrollTop - height;
   };
 
   const totalHeight = useMemo(() => {
@@ -88,12 +118,18 @@ const useVirtualList = <T = any>(list: T[], options: Options<T>) => {
       const { scrollTop, clientHeight } = container;
 
       const offset = getOffset(scrollTop);
-      const visibleCount = getVisibleCount(clientHeight, offset);
-
-      const start = Math.max(0, offset - overscan);
-      const end = Math.min(list.length, offset + visibleCount + overscan);
-
+      const start = Math.max(0, offset - formatOverscan);
       const offsetTop = getDistanceTop(start);
+      const visibleAreaFirstItemScrollDistance = getVisibleAreaFirstItemScrollDistance(
+        scrollTop - offsetTop,
+        start,
+      );
+
+      const visibleCount = getVisibleCount(
+        clientHeight + visibleAreaFirstItemScrollDistance,
+        offset,
+      );
+      const end = Math.min(list.length, offset + visibleCount + formatOverscan);
 
       // @ts-ignore
       wrapper.style.height = totalHeight - offsetTop + 'px';
