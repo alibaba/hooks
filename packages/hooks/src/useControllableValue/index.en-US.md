@@ -21,6 +21,10 @@ In some components, we need the state to be managed by itself or controlled by i
 
 <code src="./demo/demo3.tsx" />
 
+### Support functional params 
+
+<code src="./demo/demo4.tsx" />
+
 ## API
 
 ```typescript

@@ -70,6 +70,23 @@ describe('useControllableValue', () => {
     expect(result.current[0]).toEqual(55);
   });
 
+  it('test set state support functional params  ', async () => {
+    const { result } = setUp({
+      newValue: 1,
+    });
+    const [, setValue] = result.current;
+    expect(result.current[0]).toBe(undefined);
+
+    act(() => setValue((v) => v + 100));
+    expect(result.current[0]).toBe(NaN); // since we don't have a init state
+
+    act(() => setValue(100));
+    expect(result.current[0]).toBe(100);
+
+    act(() => setValue((v) => v + 100));
+    expect(result.current[0]).toEqual(200);
+  });
+
   it('type inference should work', async () => {
     type Value = {
       foo: number;

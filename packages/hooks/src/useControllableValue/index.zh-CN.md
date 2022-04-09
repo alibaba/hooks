@@ -21,6 +21,11 @@ nav:
 
 <code src="./demo/demo3.tsx" />
 
+### 支持函数化参数更新
+
+<code src="./demo/demo4.tsx" />
+
+
 ## API
 
 ```typescript

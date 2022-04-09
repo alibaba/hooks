@@ -1,4 +1,6 @@
 import { useMemo, useRef } from 'react';
+import type { SetStateAction } from 'react';
+import { isFunction } from '../utils';
 import useMemoizedFn from '../useMemoizedFn';
 import useUpdate from '../useUpdate';
 
@@ -50,13 +52,13 @@ function useControllableValue<T = any>(props: Props = {}, options: Options<T> = 
 
   const update = useUpdate();
 
-  const setState = (v: T, ...args: any[]) => {
+  const setState = (v: SetStateAction<T>, ...args: any[]): void => {
     if (!isControlled) {
-      stateRef.current = v;
+      stateRef.current = isFunction(v) ? v(stateRef.current) : v;
       update();
     }
     if (props[trigger]) {
-      props[trigger](v, ...args);
+      props[trigger](isFunction(v) ? v(stateRef.current) : v, ...args);
     }
   };
 
