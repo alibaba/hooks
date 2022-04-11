@@ -32,7 +32,7 @@ const [state, setState] = useControllableValue(props: Record<string, any>, optio
 | Property | Description  | Type                   |
 |----------|--------------|------------------------|
 | state    | State        | -                      |
-| setState | Set state | `(value: any) => void` |
+| setState | Set state | `(value: any \| ((prevState: any) => any)) => void` |
 
 ### Params
 
