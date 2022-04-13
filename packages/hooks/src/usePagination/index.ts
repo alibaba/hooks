@@ -21,7 +21,9 @@ const usePagination = <TData extends Data, TParams extends Params>(
 
   const { current = 1, pageSize = defaultPageSize } = result.params[0] || {};
 
-  const total = result.data?.total || 0;
+  const defaultTotal = options?.defaultParams?.[0]?.total;
+
+  const total = result.data?.total ?? defaultTotal ?? 0;
   const totalPage = useMemo(() => Math.ceil(total / pageSize), [pageSize, total]);
 
   const onChange = (c: number, p: number) => {

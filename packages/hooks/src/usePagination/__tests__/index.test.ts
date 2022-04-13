@@ -132,4 +132,19 @@ describe('usePagination', () => {
     expect(hook.result.current.pagination.current).toEqual(1);
     expect(hook.result.current.pagination.pageSize).toEqual(20);
   });
+
+  it('should pagination total initial work', async () => {
+    queryArgs = undefined;
+    hook = setUp(asyncFn, {
+      defaultParams: [{ total: 20 }],
+    });
+
+    expect(hook.result.current.pagination.total).toEqual(20);
+
+    act(() => {
+      hook.result.current.pagination.changeCurrent(2);
+    });
+
+    expect(hook.result.current.pagination.current).toEqual(2);
+  });
 });
