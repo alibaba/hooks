@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import useMemoizedFn from '../useMemoizedFn';
 
 function useSet<K>(initialValue?: Iterable<K>) {
@@ -31,6 +31,15 @@ function useSet<K>(initialValue?: Iterable<K>) {
   };
 
   const reset = () => setSet(getInitValue());
+
+  const operateMap = useMemo(
+    () => ({
+      add: useMemoizedFn(add),
+      remove: useMemoizedFn(remove),
+      reset: useMemoizedFn(reset),
+    }),
+    [],
+  );
 
   return [
     set,

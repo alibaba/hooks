@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import useMemoizedFn from '../useMemoizedFn';
 
 function useMap<K, T>(initialValue?: Iterable<readonly [K, T]>) {
@@ -32,16 +32,18 @@ function useMap<K, T>(initialValue?: Iterable<readonly [K, T]>) {
 
   const get = (key: K) => map.get(key);
 
-  return [
-    map,
-    {
+  const operateMap = useMemo(
+    () => ({
       set: useMemoizedFn(set),
       setAll: useMemoizedFn(setAll),
       remove: useMemoizedFn(remove),
       reset: useMemoizedFn(reset),
       get: useMemoizedFn(get),
-    },
-  ] as const;
+    }),
+    [],
+  );
+
+  return [map, operateMap] as const;
 }
 
 export default useMap;
