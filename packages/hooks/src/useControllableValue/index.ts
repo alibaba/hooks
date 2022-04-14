@@ -1,6 +1,7 @@
 import { useMemo, useRef } from 'react';
 import useMemoizedFn from '../useMemoizedFn';
 import useUpdate from '../useUpdate';
+import { isFunction } from '../utils';
 
 export interface Options<T> {
   defaultValue?: T;
@@ -17,7 +18,9 @@ export interface StandardProps<T> {
   onChange: (val: T) => void;
 }
 
-function useControllableValue<T = any>(props: StandardProps<T>): [T, (val: T) => void];
+function useControllableValue<T = any>(
+  props: StandardProps<T>,
+): [T, (val: T | ((val: T) => T)) => void];
 function useControllableValue<T = any>(
   props?: Props,
   options?: Options<T>,
@@ -50,13 +53,14 @@ function useControllableValue<T = any>(props: Props = {}, options: Options<T> = 
 
   const update = useUpdate();
 
-  const setState = (v: T, ...args: any[]) => {
+  const setState = (v: T | ((val: T) => T), ...args: any[]) => {
+    const newVal = isFunction(v) ? v(stateRef.current) : v;
     if (!isControlled) {
-      stateRef.current = v;
+      stateRef.current = newVal;
       update();
     }
     if (props[trigger]) {
-      props[trigger](v, ...args);
+      props[trigger](newVal, ...args);
     }
   };
 

@@ -32,7 +32,7 @@ const [state, setState] = useControllableValue(props: Record<string, any>, optio
 | 参数     | 说明              | 类型                   |
 |----------|-------------------|------------------------|
 | state    | 状态值            | -                      |
-| setState | 修改 state 的函数 | `(value: any) => void` |
+| setState | 修改 state 的函数 | `(value: any \| (value: any => any)) => void` |
 
 ### Params
 
