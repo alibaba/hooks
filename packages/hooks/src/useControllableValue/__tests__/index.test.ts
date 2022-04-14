@@ -68,6 +68,9 @@ describe('useControllableValue', () => {
 
     act(() => setValue(55));
     expect(result.current[0]).toEqual(55);
+
+    act(() => setValue((prevState) => prevState + 1));
+    expect(result.current[0]).toEqual(56);
   });
 
   it('type inference should work', async () => {
@@ -88,7 +91,7 @@ describe('useControllableValue', () => {
       onChange: () => {},
     };
     const hook = renderHook(() => useControllableValue(props));
-    const [v, setV] = hook.result.current;
+    const [v] = hook.result.current;
     expect(v.foo).toBe(123);
   });
 });
