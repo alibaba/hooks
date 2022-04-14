@@ -72,6 +72,7 @@ import useWhyDidYouUpdate from './useWhyDidYouUpdate';
 import { createUpdateEffect } from './createUpdateEffect';
 import useRafInterval from './useRafInterval';
 import useRafTimeout from './useRafTimeout';
+import useNoFormTable from './useNoFormTable';
 
 export {
   useRequest,
@@ -142,6 +143,7 @@ export {
   useTrackedEffect,
   usePagination,
   useAntdTable,
+  useNoFormTable,
   useFusionTable,
   useInfiniteScroll,
   useGetState,
