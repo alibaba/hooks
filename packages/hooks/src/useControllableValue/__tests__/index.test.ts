@@ -68,15 +68,6 @@ describe('useControllableValue', () => {
 
     act(() => setValue(55));
     expect(result.current[0]).toEqual(55);
-
-    function fn(value) {
-      return `${value} changed`;
-    }
-    const expectValue = fn(result.current[0]);
-    act(() => {
-      result.current[1](fn);
-    });
-    expect(result.current[0]).toEqual(expectValue);
   });
 
   it('type inference should work', async () => {
