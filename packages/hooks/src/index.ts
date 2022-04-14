@@ -71,6 +71,7 @@ import useWebSocket from './useWebSocket';
 import useWhyDidYouUpdate from './useWhyDidYouUpdate';
 import { createUpdateEffect } from './createUpdateEffect';
 import useRafInterval from './useRafInterval';
+import useRafTimeout from './useRafTimeout';
 
 export {
   useRequest,
@@ -148,4 +149,5 @@ export {
   useFocusWithin,
   createUpdateEffect,
   useRafInterval,
+  useRafTimeout,
 };

@@ -1,6 +1,6 @@
 {
   "name": "ahooks",
-  "version": "3.2.0",
+  "version": "3.3.0",
   "description": "react hooks library",
   "keywords": [
     "ahooks",
@@ -28,6 +28,7 @@
     "dist",
     "lib",
     "es",
+    "metadata.json",
     "package.json",
     "README.md"
   ],
@@ -42,7 +43,7 @@
     "screenfull": "^5.0.0"
   },
   "peerDependencies": {
-    "react": "^16.8.6 || ^17.0"
+    "react": "^16.8.0 || ^17.0.0 || ^18.0.0"
   },
   "devDependencies": {
     "@alifd/next": "^1.20.6",
