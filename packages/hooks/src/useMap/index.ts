@@ -8,42 +8,45 @@ function useMap<K, T>(initialValue?: Iterable<readonly [K, T]>) {
 
   const [map, setMap] = useState<Map<K, T>>(() => getInitValue());
 
-  const set = (key: K, entry: T) => {
+  const set = useMemoizedFn((key: K, entry: T) => {
     setMap((prev) => {
       const temp = new Map(prev);
       temp.set(key, entry);
       return temp;
     });
-  };
+  });
 
-  const setAll = (newMap: Iterable<readonly [K, T]>) => {
+  const setAll = useMemoizedFn((newMap: Iterable<readonly [K, T]>) => {
     setMap(new Map(newMap));
-  };
+  });
 
-  const remove = (key: K) => {
+  const remove = useMemoizedFn((key: K) => {
     setMap((prev) => {
       const temp = new Map(prev);
       temp.delete(key);
       return temp;
     });
-  };
+  });
 
-  const reset = () => setMap(getInitValue());
+  const reset = useMemoizedFn(() => setMap(getInitValue()));
 
-  const get = (key: K) => map.get(key);
+  const get = useMemoizedFn((key: K) => map.get(key));
 
-  const operateMap = useMemo(
-    () => ({
-      set: useMemoizedFn(set),
-      setAll: useMemoizedFn(setAll),
-      remove: useMemoizedFn(remove),
-      reset: useMemoizedFn(reset),
-      get: useMemoizedFn(get),
-    }),
-    [],
+  const mapRes = useMemo(
+    () => [
+      map,
+      {
+        set,
+        setAll,
+        remove,
+        reset,
+        get,
+      },
+    ],
+    [set, setAll, remove, reset, get, map],
   );
 
-  return [map, operateMap] as const;
+  return mapRes;
 }
 
 export default useMap;

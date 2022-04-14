@@ -8,7 +8,7 @@ function useSet<K>(initialValue?: Iterable<K>) {
 
   const [set, setSet] = useState<Set<K>>(() => getInitValue());
 
-  const add = (key: K) => {
+  const add = useMemoizedFn((key: K) => {
     if (set.has(key)) {
       return;
     }
@@ -17,9 +17,9 @@ function useSet<K>(initialValue?: Iterable<K>) {
       temp.add(key);
       return temp;
     });
-  };
+  });
 
-  const remove = (key: K) => {
+  const remove = useMemoizedFn((key: K) => {
     if (!set.has(key)) {
       return;
     }
@@ -28,27 +28,23 @@ function useSet<K>(initialValue?: Iterable<K>) {
       temp.delete(key);
       return temp;
     });
-  };
+  });
 
-  const reset = () => setSet(getInitValue());
+  const reset = useMemoizedFn(() => setSet(getInitValue()));
 
-  const operateMap = useMemo(
-    () => ({
-      add: useMemoizedFn(add),
-      remove: useMemoizedFn(remove),
-      reset: useMemoizedFn(reset),
-    }),
-    [],
+  const setRes = useMemo(
+    () => [
+      set,
+      {
+        add,
+        remove,
+        reset,
+      },
+    ],
+    [set, add, remove, reset],
   );
 
-  return [
-    set,
-    {
-      add: useMemoizedFn(add),
-      remove: useMemoizedFn(remove),
-      reset: useMemoizedFn(reset),
-    },
-  ] as const;
+  return setRes;
 }
 
 export default useSet;
