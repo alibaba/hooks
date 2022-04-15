@@ -1,3 +1,4 @@
+import { createUpdateEffect } from './createUpdateEffect';
 import useAntdTable from './useAntdTable';
 import useAsyncEffect from './useAsyncEffect';
 import useBoolean from './useBoolean';
@@ -42,7 +43,9 @@ import useMouse from './useMouse';
 import useNetwork from './useNetwork';
 import usePagination from './usePagination';
 import usePrevious from './usePrevious';
+import useRafInterval from './useRafInterval';
 import useRafState from './useRafState';
+import useRafTimeout from './useRafTimeout';
 import useReactive from './useReactive';
 import useRequest, { clearCache } from './useRequest';
 import { configResponsive, useResponsive } from './useResponsive';
@@ -69,9 +72,6 @@ import useUpdateLayoutEffect from './useUpdateLayoutEffect';
 import useVirtualList from './useVirtualList';
 import useWebSocket from './useWebSocket';
 import useWhyDidYouUpdate from './useWhyDidYouUpdate';
-import { createUpdateEffect } from './createUpdateEffect';
-import useRafInterval from './useRafInterval';
-import useRafTimeout from './useRafTimeout';
 
 export {
   useRequest,
