@@ -1,6 +1,6 @@
 {
   "name": "ahooks",
-  "version": "3.3.5",
+  "version": "3.3.6",
   "description": "react hooks library",
   "keywords": [
     "ahooks",
@@ -60,5 +60,5 @@
     "node": ">=8.0.0"
   },
   "license": "MIT",
-  "gitHead": "d2fa8540a72ae1a9a315f2dcfba763bc5982f23b"
+  "gitHead": "11f6ad571bd365c95ecb9409ca3050cbbfc9b34a"
 }
