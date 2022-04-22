@@ -26,7 +26,7 @@ export default () => {
 
   return (
     <div>
-      {pass === null && 'Checking...'}
+      {pass === undefined && 'Checking...'}
       {pass === true && 'Check passed.'}
     </div>
   );
