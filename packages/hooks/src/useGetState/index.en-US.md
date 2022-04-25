@@ -14,7 +14,7 @@ Add a getter method to the return value of `React.useState` to get the latest va
 <code src="./demo/demo1.tsx" />
 
 
-## Typescript definition
+## TypeScript definition
 
 ```typescript
 import { Dispatch, SetStateAction } from 'react';
