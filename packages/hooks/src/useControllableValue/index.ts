@@ -54,7 +54,7 @@ function useControllableValue<T = any>(props: Props = {}, options: Options<T> = 
 
   const update = useUpdate();
 
-  function setState<T>(v: SetStateAction<T>, ...args: any[]) {
+  function setState(v: SetStateAction<T>, ...args: any[]) {
     const r = isFunction(v) ? v(stateRef.current) : v;
 
     if (!isControlled) {
