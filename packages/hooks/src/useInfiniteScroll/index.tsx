@@ -64,13 +64,13 @@ const useInfiniteScroll = <TData extends Data>(
   );
 
   const loadMore = () => {
-    if (noMore) return;
+    // if (noMore) return;
     setLoadingMore(true);
     run(finalData);
   };
 
   const loadMoreAsync = () => {
-    if (noMore) return;
+    // if (noMore) return;
     setLoadingMore(true);
     return runAsync(finalData);
   };
