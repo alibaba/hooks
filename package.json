@@ -15,7 +15,7 @@
     "test": "jest",
     "lint": "eslint --ignore-pattern **/__tests__/* --ignore-pattern **/demo/* \"packages/*/src/**/*.{ts,tsx}\"",
     "build:doc": "dumi build",
-    "pub:doc": "surge ./dist --domain ahooks-v2.surge.sh",
+    "pub:doc": "surge ./dist --domain ahooks-v2.js.org",
     "pub:doc-gitee": "cd ./dist && rm -rf .git && touch .spa && touch .nojekyll && git init && git remote add origin git@gitee.com:ahooks/ahooks-v2.git && git add -A && git commit -m \"publish docs\" && git push origin master -f && echo https://gitee.com/ahooks/ahooks-v2/pages",
     "pub": "lerna publish && yarn run pub-v2",
     "pub-v2": "node scripts/pub-v2.js"
