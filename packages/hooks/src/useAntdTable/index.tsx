@@ -38,7 +38,7 @@ const useAntdTable = <TData extends Data, TParams extends Params>(
   const [type, setType] = useState(cacheFormTableData?.type || defaultType);
 
   const allFormDataRef = useRef<Record<string, any>>({});
-  const defaultDataSource = useRef([]);
+  const defaultDataSourceRef = useRef([]);
 
   const isAntdV4 = !!form?.getInternalHooks;
 
