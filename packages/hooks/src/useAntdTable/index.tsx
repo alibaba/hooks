@@ -235,7 +235,7 @@ const useAntdTable = <TData extends Data, TParams extends Params>(
   return {
     ...result,
     tableProps: {
-      dataSource: result.data?.list || defaultDataSource.current,
+      dataSource: result.data?.list || defaultDataSourceRef.current,
       loading: result.loading,
       onChange: useMemoizedFn(onTableChange),
       pagination: {
