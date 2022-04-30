@@ -17,7 +17,7 @@ nav:
 
 ## 代码演示
 
-以下展示的是 antd v4 的 demo，v3 请参考：https://ahooks-v2.surge.sh/hooks/table/use-antd-table
+以下展示的是 antd v4 的 demo，v3 请参考：https://ahooks-v2.js.org/hooks/table/use-antd-table
 
 ### Table 管理
 

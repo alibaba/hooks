@@ -15,7 +15,7 @@ Before using it, you need to understand a few points that are different from `us
 
 ## Examples
 
-The following demos are for antd v4. For v3, please refer to: https://ahooks-v2.surge.sh/hooks/table/use-antd-table
+The following demos are for antd v4. For v3, please refer to: https://ahooks-v2.js.org/hooks/table/use-antd-table
 
 ### Table management
 
