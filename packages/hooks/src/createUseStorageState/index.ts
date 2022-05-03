@@ -1,5 +1,5 @@
 /* eslint-disable no-empty */
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import useMemoizedFn from '../useMemoizedFn';
 import useUpdateEffect from '../useUpdateEffect';
 import { isFunction } from '../utils';
@@ -96,6 +96,27 @@ export function createUseStorageState(getStorage: () => Storage | undefined) {
         }
       }
     };
+
+    useEffect(() => {
+      const handleStorage = (event: StorageEvent) => {
+        if (event.storageArea === storage) {
+          // handle clear event
+          if (event.key === null) {
+            setState(undefined);
+          } else if (event.key === key) {
+            // handle removeItem event
+            if (event.newValue === null) {
+              setState(undefined);
+            } else {
+              setState(deserializer(event.newValue));
+            }
+          }
+        }
+      };
+
+      window.addEventListener('storage', handleStorage);
+      return () => window.removeEventListener('storage', handleStorage);
+    }, []);
 
     return [state, useMemoizedFn(updateState)];
   }
