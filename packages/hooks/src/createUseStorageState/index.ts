@@ -67,6 +67,16 @@ export function createUseStorageState(getStorage: () => Storage | undefined) {
         return options?.defaultValue();
       }
       return options?.defaultValue;
+
+      // if (options?.defaultValue === undefined) {
+      //   return;
+      // }
+      // const value = isFunction(options?.defaultValue)
+      //   ? options?.defaultValue()
+      //   : options?.defaultValue;
+
+      // storage?.setItem(key, serializer(value));
+      // return value;
     }
 
     const [state, setState] = useState<T | undefined>(() => getStoredValue());
@@ -78,11 +88,35 @@ export function createUseStorageState(getStorage: () => Storage | undefined) {
     const updateState = (value?: T | IFuncUpdater<T>) => {
       if (typeof value === 'undefined') {
         setState(undefined);
+
+        const se = new StorageEvent('storage', {
+          cancelable: false,
+          bubbles: false,
+          key,
+          newValue: null,
+          oldValue: storage?.getItem(key),
+          storageArea: storage,
+          url: location.href,
+        });
+        window.dispatchEvent(se);
+
         storage?.removeItem(key);
       } else if (isFunction(value)) {
         const currentState = value(state);
         try {
           setState(currentState);
+
+          const se = new StorageEvent('storage', {
+            cancelable: false,
+            bubbles: false,
+            key,
+            newValue: serializer(currentState),
+            oldValue: storage?.getItem(key),
+            storageArea: storage,
+            url: location.href,
+          });
+          window.dispatchEvent(se);
+
           storage?.setItem(key, serializer(currentState));
         } catch (e) {
           console.error(e);
@@ -90,6 +124,18 @@ export function createUseStorageState(getStorage: () => Storage | undefined) {
       } else {
         try {
           setState(value);
+
+          const se = new StorageEvent('storage', {
+            cancelable: false,
+            bubbles: false,
+            key,
+            newValue: serializer(value),
+            oldValue: storage?.getItem(key),
+            storageArea: storage,
+            url: location.href,
+          });
+          window.dispatchEvent(se);
+
           storage?.setItem(key, serializer(value));
         } catch (e) {
           console.error(e);
