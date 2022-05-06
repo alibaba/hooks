@@ -38,6 +38,7 @@ const useAntdTable = <TData extends Data, TParams extends Params>(
   const [type, setType] = useState(cacheFormTableData?.type || defaultType);
 
   const allFormDataRef = useRef<Record<string, any>>({});
+  const defaultDataSourceRef = useRef([]);
 
   const isAntdV4 = !!form?.getInternalHooks;
 
@@ -234,7 +235,7 @@ const useAntdTable = <TData extends Data, TParams extends Params>(
   return {
     ...result,
     tableProps: {
-      dataSource: result.data?.list || [],
+      dataSource: result.data?.list || defaultDataSourceRef.current,
       loading: result.loading,
       onChange: useMemoizedFn(onTableChange),
       pagination: {
