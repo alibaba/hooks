@@ -1,7 +1,7 @@
 import Cookies from 'js-cookie';
 import { useState } from 'react';
 import useMemoizedFn from '../useMemoizedFn';
-import { isFunction } from '../utils';
+import { isFunction, isString } from '../utils';
 
 export type State = string | undefined;
 
@@ -13,7 +13,7 @@ function useCookieState(cookieKey: string, options: Options = {}) {
   const [state, setState] = useState<State>(() => {
     const cookieValue = Cookies.get(cookieKey);
 
-    if (typeof cookieValue === 'string') return cookieValue;
+    if (isString(cookieValue)) return cookieValue;
 
     if (isFunction(options.defaultValue)) {
       return options.defaultValue();

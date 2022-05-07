@@ -1,7 +1,5 @@
-const isBrowser = !!(
-  typeof window !== 'undefined' &&
-  window.document &&
-  window.document.createElement
-);
+import { isUndef } from './index';
+
+const isBrowser = !!(!isUndef(window) && window.document && window.document.createElement);
 
 export default isBrowser;

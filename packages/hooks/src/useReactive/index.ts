@@ -1,15 +1,12 @@
 import { useRef } from 'react';
 import useCreation from '../useCreation';
 import useUpdate from '../useUpdate';
+import { isObject } from '../utils';
 
 // k:v 原对象:代理过的对象
 const proxyMap = new WeakMap();
 // k:v 代理过的对象:原对象
 const rawMap = new WeakMap();
-
-function isObject(val: Record<string, any>): boolean {
-  return typeof val === 'object' && val !== null;
-}
 
 function observer<T extends Record<string, any>>(initialVal: T, cb: () => void): T {
   const existingProxy = proxyMap.get(initialVal);

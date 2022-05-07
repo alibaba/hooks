@@ -1,3 +1,5 @@
+import { isUndef } from './index';
+
 export default function canUseDom() {
-  return !!(typeof window !== 'undefined' && window.document && window.document.createElement);
+  return !!(!isUndef(window) && window.document && window.document.createElement);
 }

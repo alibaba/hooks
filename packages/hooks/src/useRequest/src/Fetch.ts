@@ -1,3 +1,4 @@
+import { isFunction } from '../../utils';
 import type { MutableRefObject } from 'react';
 import type { FetchState, Options, PluginReturn, Service, Subscribe } from './types';
 
@@ -154,7 +155,7 @@ export default class Fetch<TData, TParams extends any[]> {
 
   mutate(data?: TData | ((oldData?: TData) => TData | undefined)) {
     let targetData: TData | undefined;
-    if (typeof data === 'function') {
+    if (isFunction(data)) {
       // @ts-ignore
       targetData = data(this.state.data);
     } else {

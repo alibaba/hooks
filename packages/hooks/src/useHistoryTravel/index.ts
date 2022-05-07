@@ -1,5 +1,6 @@
 import { useRef, useState } from 'react';
 import useMemoizedFn from '../useMemoizedFn';
+import { isNumber } from '../utils';
 
 interface IData<T> {
   present?: T;
@@ -86,7 +87,7 @@ export default function useHistoryTravel<T>(initialValue?: T) {
   };
 
   const go = (step: number) => {
-    const stepNum = typeof step === 'number' ? step : Number(step);
+    const stepNum = isNumber(step) ? step : Number(step);
     if (stepNum === 0) {
       return;
     }
