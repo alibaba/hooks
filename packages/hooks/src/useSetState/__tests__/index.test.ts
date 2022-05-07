@@ -41,4 +41,16 @@ describe('useSetState', () => {
     });
     expect(hook.result.current.state).toEqual({ count: 1 });
   });
+
+  it('should support function update throw error', () => {
+    const hook = setUp({
+      count: 0,
+    });
+    act(() => {
+      hook.result.current.setState(() => {
+        throw 'error';
+      });
+    });
+    expect(hook.result.current.state).toEqual({ count: 0 });
+  });
 });
