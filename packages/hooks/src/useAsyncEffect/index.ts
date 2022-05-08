@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 
 function useAsyncEffect(
   effect: () => AsyncGenerator<void, void, void> | Promise<void>,
-  deps: DependencyList,
+  deps?: DependencyList,
 ) {
   function isGenerator(
     val: AsyncGenerator<void, void, void> | Promise<void>,
