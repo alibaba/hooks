@@ -17,7 +17,7 @@ function useAsyncEffect(
       if (isAsyncGenerator(e)) {
         while (true) {
           const result = await e.next();
-          if (cancelled || result.done) {
+          if (result.done || cancelled) {
             break;
           }
         }
