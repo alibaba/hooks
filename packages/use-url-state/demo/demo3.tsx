@@ -29,7 +29,7 @@ export default () => {
           const arr = Array(3)
             .fill(1)
             .map(() => Math.floor(Math.random() * 10));
-          setState({ ids: arr });
+          setState({ ids: arr.map((e) => e + '') });
         }}
       >
         变更数组state

@@ -19,14 +19,14 @@ export default () => {
         <span style={{ paddingLeft: 8 }}>
           <button
             onClick={() => {
-              setState((s) => ({ page: Number(s.page) + 1 }));
+              setState((s) => ({ page: String(Number(s.page) + 1) }));
             }}
           >
             +
           </button>
           <button
             onClick={() => {
-              setState((s) => ({ page: Number(s.page) - 1 }));
+              setState((s) => ({ page: String(Number(s.page) - 1) }));
             }}
             style={{ margin: '0 8px' }}
           >
@@ -47,14 +47,14 @@ export default () => {
         <span style={{ paddingLeft: 8 }}>
           <button
             onClick={() => {
-              setState((s) => ({ pageSize: Number(s.pageSize) + 1 }));
+              setState((s) => ({ pageSize: String(Number(s.pageSize) + 1) }));
             }}
           >
             +
           </button>
           <button
             onClick={() => {
-              setState((s) => ({ pageSize: Number(s.pageSize) - 1 }));
+              setState((s) => ({ pageSize: String(Number(s.pageSize) - 1) }));
             }}
             style={{ margin: '0 8px' }}
           >

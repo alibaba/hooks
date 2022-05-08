@@ -17,7 +17,7 @@ export default () => {
       <button
         style={{ marginRight: 8 }}
         type="button"
-        onClick={() => setState({ count: Number(state.count || 0) + 1 })}
+        onClick={() => setState({ count: String(Number(state.count || 0) + 1) })}
       >
         add
       </button>

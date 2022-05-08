@@ -30,7 +30,7 @@ const useUrlState = <S extends UrlState = UrlState>(
   initialState?: S | (() => S),
   options?: Options,
 ) => {
-  type State = Partial<{ [key in keyof S]: any }>;
+  type State = Partial<{ [key in keyof S]: S[key] }>;
   const { navigateMode = 'push', parseOptions, stringifyOptions } = options || {};
 
   const mergedParseOptions = { ...baseParseConfig, ...parseOptions };
