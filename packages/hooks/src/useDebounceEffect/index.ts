@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import type { DependencyList, EffectCallback } from 'react';
 import type { DebounceOptions } from '../useDebounce/debounceOptions';
 import useDebounceFn from '../useDebounceFn';
-import useUnmount from '../useUnmount';
 import useUpdateEffect from '../useUpdateEffect';
 
 function useDebounceEffect(
@@ -12,15 +11,13 @@ function useDebounceEffect(
 ) {
   const [flag, setFlag] = useState({});
 
-  const { run, cancel } = useDebounceFn(() => {
+  const { run } = useDebounceFn(() => {
     setFlag({});
   }, options);
 
   useEffect(() => {
     return run();
   }, deps);
-
-  useUnmount(cancel);
 
   useUpdateEffect(effect, [flag]);
 }
