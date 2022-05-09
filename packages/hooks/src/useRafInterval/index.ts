@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import useLatest from '../useLatest';
+import { isNumber } from '../utils';
 
 interface Handle {
   id: number | NodeJS.Timer;
@@ -50,7 +51,7 @@ function useRafInterval(
   const fnRef = useLatest(fn);
 
   useEffect(() => {
-    if (typeof delay !== 'number' || delay < 0) return;
+    if (!isNumber(delay) || delay < 0) return;
     if (immediate) {
       fnRef.current();
     }

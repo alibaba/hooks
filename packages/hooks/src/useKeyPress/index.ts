@@ -1,4 +1,5 @@
 import useLatest from '../useLatest';
+import { isNumber, isString } from '../utils';
 import type { BasicTarget } from '../utils/domTarget';
 import { getTargetElement } from '../utils/domTarget';
 import useDeepCompareEffectWithTarget from '../utils/useDeepCompareWithTarget';
@@ -155,7 +156,7 @@ function genFilterKey(event: KeyboardEvent, keyFilter: keyType, exactMatch: bool
   }
 
   // 数字类型直接匹配事件的 keyCode
-  if (typeof keyFilter === 'number') {
+  if (isNumber(keyFilter)) {
     return event.keyCode === keyFilter;
   }
 
@@ -195,7 +196,7 @@ function genKeyFormater(keyFilter: KeyFilter, exactMatch: boolean): KeyPredicate
   if (typeof keyFilter === 'function') {
     return keyFilter;
   }
-  if (typeof keyFilter === 'string' || typeof keyFilter === 'number') {
+  if (isString(keyFilter) || isNumber(keyFilter)) {
     return (event: KeyboardEvent) => genFilterKey(event, keyFilter, exactMatch);
   }
   if (Array.isArray(keyFilter)) {

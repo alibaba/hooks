@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import useLatest from '../useLatest';
+import { isNumber } from '../utils';
 
 interface Handle {
   id: number | NodeJS.Timeout;
@@ -45,7 +46,7 @@ function useRafTimeout(fn: () => void, delay: number | undefined) {
   const fnRef = useLatest(fn);
 
   useEffect(() => {
-    if (typeof delay !== 'number' || delay < 0) return;
+    if (!isNumber(delay) || delay < 0) return;
     const timer = setRafTimeout(() => {
       fnRef.current();
     }, delay);

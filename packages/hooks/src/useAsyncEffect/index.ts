@@ -1,5 +1,6 @@
 import type { DependencyList } from 'react';
 import { useEffect } from 'react';
+import { isFunction } from '../utils';
 
 function useAsyncEffect(
   effect: () => AsyncGenerator<void, void, void> | Promise<void>,
@@ -8,7 +9,7 @@ function useAsyncEffect(
   function isAsyncGenerator(
     val: AsyncGenerator<void, void, void> | Promise<void>,
   ): val is AsyncGenerator<void, void, void> {
-    return typeof val[Symbol.asyncIterator] === 'function';
+    return isFunction(val[Symbol.asyncIterator]);
   }
   useEffect(() => {
     const e = effect();

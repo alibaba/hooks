@@ -1,5 +1,6 @@
 import { useCallback, useState } from 'react';
 import useLatest from '../useLatest';
+import { isFunction } from '../utils';
 
 interface EventTarget<U> {
   target: {
@@ -22,7 +23,7 @@ function useEventTarget<T, U = T>(options?: Options<T, U>) {
 
   const onChange = useCallback((e: EventTarget<U>) => {
     const _value = e.target.value;
-    if (typeof transformerRef.current === 'function') {
+    if (isFunction(transformerRef.current)) {
       return setValue(transformerRef.current(_value));
     }
     // no transformer => U and T should be the same

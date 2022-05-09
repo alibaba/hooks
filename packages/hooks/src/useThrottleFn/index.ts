@@ -3,12 +3,13 @@ import { useMemo } from 'react';
 import useLatest from '../useLatest';
 import type { ThrottleOptions } from '../useThrottle/throttleOptions';
 import useUnmount from '../useUnmount';
+import { isFunction } from '../utils';
 
 type noop = (...args: any) => any;
 
 function useThrottleFn<T extends noop>(fn: T, options?: ThrottleOptions) {
   if (process.env.NODE_ENV === 'development') {
-    if (typeof fn !== 'function') {
+    if (!isFunction(fn)) {
       console.error(`useThrottleFn expected parameter is a function, got ${typeof fn}`);
     }
   }
@@ -20,9 +21,9 @@ function useThrottleFn<T extends noop>(fn: T, options?: ThrottleOptions) {
   const throttled = useMemo(
     () =>
       throttle(
-        ((...args: Parameters<T>): ReturnType<T> => {
+        (...args: Parameters<T>): ReturnType<T> => {
           return fnRef.current(...args);
-        }),
+        },
         wait,
         options,
       ),
