@@ -24,13 +24,16 @@ describe('useInterval', () => {
     expect(callback).toHaveBeenCalledTimes(3);
   });
 
-  it('delay is undefined should stop', () => {
-    let delay: number | undefined = undefined;
+  it('interval should stop', () => {
     const callback = jest.fn();
-    const { rerender } = setUp({ fn: callback, delay });
-    expect(callback).not.toBeCalled();
+    setUp({ fn: callback, delay: undefined });
+
     jest.advanceTimersByTime(50);
-    expect(callback).not.toBeCalled();
+    expect(callback).toHaveBeenCalledTimes(0);
+
+    setUp({ fn: callback, delay: -2 });
+    jest.advanceTimersByTime(50);
+    expect(callback).toHaveBeenCalledTimes(0);
   });
 
   it('immediate in options should work', () => {
