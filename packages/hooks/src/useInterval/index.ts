@@ -14,7 +14,7 @@ function useInterval(
   const fnRef = useLatest(fn);
 
   useEffect(() => {
-    if (!isNumber(delay) || delay < 0) {
+    if (!isNumber(delay) || delay < 0 || isNaN(delay)) {
       console.warn(`delay should be a valid number but get ${delay}`);
       return;
     }

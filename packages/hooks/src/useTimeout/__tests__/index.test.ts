@@ -39,5 +39,10 @@ describe('useTimeout', () => {
     jest.advanceTimersByTime(50);
     expect(callback).toHaveBeenCalledTimes(0);
     expect(consoleWarnMock).toHaveBeenLastCalledWith('delay should be a valid number but get -2');
+
+    setUp({ fn: callback, delay: NaN });
+    jest.advanceTimersByTime(50);
+    expect(callback).toHaveBeenCalledTimes(0);
+    expect(consoleWarnMock).toHaveBeenLastCalledWith('delay should be a valid number but get NaN');
   });
 });
