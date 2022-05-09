@@ -2,7 +2,7 @@
 import { useState } from 'react';
 import useMemoizedFn from '../useMemoizedFn';
 import useUpdateEffect from '../useUpdateEffect';
-import { isFunction } from '../utils';
+import { isFunction, isUndef } from '../utils';
 
 export interface IFuncUpdater<T> {
   (previousState?: T): T;
@@ -76,7 +76,7 @@ export function createUseStorageState(getStorage: () => Storage | undefined) {
     }, [key]);
 
     const updateState = (value?: T | IFuncUpdater<T>) => {
-      if (typeof value === 'undefined') {
+      if (isUndef(value)) {
         setState(undefined);
         storage?.removeItem(key);
       } else if (isFunction(value)) {

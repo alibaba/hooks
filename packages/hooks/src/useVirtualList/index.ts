@@ -5,6 +5,7 @@ import useMemoizedFn from '../useMemoizedFn';
 import useSize from '../useSize';
 import { getTargetElement } from '../utils/domTarget';
 import type { BasicTarget } from '../utils/domTarget';
+import { isNumber } from '../utils';
 
 export interface Options<T> {
   containerTarget: BasicTarget;
@@ -25,7 +26,7 @@ const useVirtualList = <T = any>(list: T[], options: Options<T>) => {
   const [targetList, setTargetList] = useState<{ index: number; data: T }[]>([]);
 
   const getVisibleCount = (containerHeight: number, fromIndex: number) => {
-    if (typeof itemHeightRef.current === 'number') {
+    if (isNumber(itemHeightRef.current)) {
       return Math.ceil(containerHeight / itemHeightRef.current);
     }
 
@@ -36,14 +37,14 @@ const useVirtualList = <T = any>(list: T[], options: Options<T>) => {
       sum += height;
       endIndex = i;
       if (sum >= containerHeight) {
-          break;
+        break;
       }
     }
     return endIndex - fromIndex;
   };
 
   const getOffset = (scrollTop: number) => {
-    if (typeof itemHeightRef.current === 'number') {
+    if (isNumber(itemHeightRef.current)) {
       return Math.floor(scrollTop / itemHeightRef.current) + 1;
     }
     let sum = 0;
@@ -61,7 +62,7 @@ const useVirtualList = <T = any>(list: T[], options: Options<T>) => {
 
   // 获取上部高度
   const getDistanceTop = (index: number) => {
-    if (typeof itemHeightRef.current === 'number') {
+    if (isNumber(itemHeightRef.current)) {
       const height = index * itemHeightRef.current;
       return height;
     }
@@ -73,7 +74,7 @@ const useVirtualList = <T = any>(list: T[], options: Options<T>) => {
   };
 
   const totalHeight = useMemo(() => {
-    if (typeof itemHeightRef.current === 'number') {
+    if (isNumber(itemHeightRef.current)) {
       return list.length * itemHeightRef.current;
     }
     // @ts-ignore

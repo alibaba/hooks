@@ -3,12 +3,13 @@ import { useMemo } from 'react';
 import type { DebounceOptions } from '../useDebounce/debounceOptions';
 import useLatest from '../useLatest';
 import useUnmount from '../useUnmount';
+import { isFunction } from '../utils';
 
 type noop = (...args: any) => any;
 
 function useDebounceFn<T extends noop>(fn: T, options?: DebounceOptions) {
   if (process.env.NODE_ENV === 'development') {
-    if (typeof fn !== 'function') {
+    if (!isFunction(fn)) {
       console.error(`useDebounceFn expected parameter is a function, got ${typeof fn}`);
     }
   }
@@ -20,9 +21,9 @@ function useDebounceFn<T extends noop>(fn: T, options?: DebounceOptions) {
   const debounced = useMemo(
     () =>
       debounce(
-        ((...args: Parameters<T>): ReturnType<T> => {
+        (...args: Parameters<T>): ReturnType<T> => {
           return fnRef.current(...args);
-        }),
+        },
         wait,
         options,
       ),

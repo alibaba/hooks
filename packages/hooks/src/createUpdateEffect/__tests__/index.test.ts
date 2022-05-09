@@ -1,5 +1,5 @@
 import { renderHook } from '@testing-library/react-hooks';
-import { useEffect, useLayoutEffect, useRef } from 'react';
+import { useEffect, useLayoutEffect } from 'react';
 import { createUpdateEffect } from '../index';
 
 describe('createUpdateEffect', () => {
