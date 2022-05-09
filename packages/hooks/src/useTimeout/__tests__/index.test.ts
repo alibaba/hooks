@@ -3,7 +3,7 @@ import useTimeout from '../index';
 
 interface ParamsObj {
   fn: (...arg: any) => any;
-  delay: number;
+  delay: number | undefined;
 }
 
 const setUp = ({ fn, delay }: ParamsObj) => renderHook(() => useTimeout(fn, delay));
@@ -22,5 +22,17 @@ describe('useTimeout', () => {
     expect(callback).not.toBeCalled();
     jest.advanceTimersByTime(70);
     expect(callback).toHaveBeenCalledTimes(1);
+  });
+
+  it('timeout should stop', () => {
+    const callback = jest.fn();
+    setUp({ fn: callback, delay: undefined });
+
+    jest.advanceTimersByTime(50);
+    expect(callback).toHaveBeenCalledTimes(0);
+
+    setUp({ fn: callback, delay: -2 });
+    jest.advanceTimersByTime(50);
+    expect(callback).toHaveBeenCalledTimes(0);
   });
 });
