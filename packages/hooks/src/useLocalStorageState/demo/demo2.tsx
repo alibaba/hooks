@@ -18,7 +18,7 @@ export default function () {
 
   return (
     <>
-      <p>{value.join('-')}</p>
+      <p>{value?.join('-')}</p>
       <button
         type="button"
         style={{ marginRight: '16px' }}

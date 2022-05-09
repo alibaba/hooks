@@ -14,23 +14,11 @@ export interface IFuncStorage {
 export interface Options<T> {
   serializer?: (value: T) => string;
   deserializer?: (value: string) => T;
+  defaultValue?: T | IFuncUpdater<T>;
 }
-
-export interface OptionsWithDefaultValue<T> extends Options<T> {
-  defaultValue: T | IFuncUpdater<T>;
-}
-
-export type StorageStateResult<T> = [T | undefined, (value?: T | IFuncUpdater<T>) => void];
-export type StorageStateResultHasDefaultValue<T> = [T, (value?: T | IFuncUpdater<T>) => void];
 
 export function createUseStorageState(getStorage: () => Storage | undefined) {
-  function useStorageState<T = any>(key: string, options?: Options<T>): StorageStateResult<T>;
-  function useStorageState<T>(
-    key: string,
-    options: OptionsWithDefaultValue<T>,
-  ): StorageStateResultHasDefaultValue<T>;
-
-  function useStorageState<T>(key: string, options?: Options<T> & OptionsWithDefaultValue<T>) {
+  function useStorageState<T>(key: string, options?: Options<T>) {
     let storage: Storage | undefined;
 
     // https://github.com/alibaba/hooks/issues/800
@@ -97,7 +85,7 @@ export function createUseStorageState(getStorage: () => Storage | undefined) {
       }
     };
 
-    return [state, useMemoizedFn(updateState)];
+    return [state, useMemoizedFn(updateState)] as const;
   }
   return useStorageState;
 }
