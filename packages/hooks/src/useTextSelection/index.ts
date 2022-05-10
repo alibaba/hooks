@@ -1,4 +1,5 @@
 import { useRef, useState } from 'react';
+import useIsomorphicLayoutEffect from '../useIsomorphicLayoutEffect';
 import type { BasicTarget } from '../utils/domTarget';
 import { getTargetElement } from '../utils/domTarget';
 import useEffectWithTarget from '../utils/useEffectWithTarget';
@@ -53,7 +54,10 @@ function useTextSelection(target?: BasicTarget<Document | Element>): State {
   const [state, setState] = useState(initState);
 
   const stateRef = useRef(state);
-  stateRef.current = state;
+
+  useIsomorphicLayoutEffect(() => {
+    stateRef.current = state;
+  });
 
   useEffectWithTarget(
     () => {

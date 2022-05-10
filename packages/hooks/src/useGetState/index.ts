@@ -1,5 +1,6 @@
 import type { Dispatch, SetStateAction } from 'react';
 import { useState, useRef, useCallback } from 'react';
+import useIsomorphicLayoutEffect from '../useIsomorphicLayoutEffect';
 
 type GetStateAction<S> = () => S;
 
@@ -14,7 +15,10 @@ function useGetState<S = undefined>(): [
 function useGetState<S>(initialState?: S) {
   const [state, setState] = useState(initialState);
   const stateRef = useRef(state);
-  stateRef.current = state;
+
+  useIsomorphicLayoutEffect(() => {
+    stateRef.current = state;
+  }, [state]);
 
   const getState = useCallback(() => stateRef.current, []);
 

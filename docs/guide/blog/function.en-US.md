@@ -32,15 +32,27 @@ For the input function, we use `useRef` to make a record to ensure that the late
 
 ```js
 const fnRef = useRef(fn);
-fnRef.current = fn;
+useIsomorphicLayoutEffect(() => {
+  fnRef.current = fn;
+});
 ```
+
+We have wrapped the `fnRef.current = fn;` inside the `useIsomorphicLayoutEffect`, according to [the React documentation](https://beta.reactjs.org/apis/useref):
+
+> Do not write or read `ref.current` during rendering.
+> React expects that the body of your component behaves like a pure function:
+> If the inputs (props, state, and context) are the same, it should return exactly the same JSX.
+> Calling it in a different order or with different arguments should not affect the results of other calls.
+> Reading or writing a ref during rendering breaks these expectations.
 
 For example, the useUnmount code is as follows:
 
 ```js
 const useUnmount = (fn) => {
   const fnRef = useRef(fn);
-  fnRef.current = fn;
+  useIsomorphicLayoutEffect(() => {
+    fnRef.current = fn;
+  });
 
   useEffect(
     () => () => {

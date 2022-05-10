@@ -1,4 +1,5 @@
 import { useRef } from 'react';
+import useIsomorphicLayoutEffect from '../../../useIsomorphicLayoutEffect';
 import useUpdateEffect from '../../../useUpdateEffect';
 import type { Plugin } from '../types';
 
@@ -8,7 +9,10 @@ const useAutoRunPlugin: Plugin<any, any[]> = (
   { manual, ready = true, defaultParams = [], refreshDeps = [], refreshDepsAction },
 ) => {
   const hasAutoRun = useRef(false);
-  hasAutoRun.current = false;
+
+  useIsomorphicLayoutEffect(() => {
+    hasAutoRun.current = false;
+  });
 
   useUpdateEffect(() => {
     if (!manual && ready) {

@@ -32,15 +32,27 @@ useInterval(() => {
 
 ```js
 const fnRef = useRef(fn);
-fnRef.current = fn;
+useIsomorphicLayoutEffect(() => {
+  fnRef.current = fn;
+});
 ```
+
+我们将 `fnRef.current = fn;` 包裹在 `useIsomorphicLayoutEffect` 中，根据 [React 官方文档](https://beta.reactjs.org/apis/useref)
+
+> 在渲染过程中不要写或者读 `ref.current`
+> React 期望你的组件主体的行为和纯函数接近
+> 如果输入（props、state 和 context）是相同的，输出的的 JSX 应该完全相同。
+> 以不同的顺序或不同的参数来调用组件，不应该影响其它调用的结果。
+> 在渲染过程中读写 ref 会打破这些期望。
 
 比如 useUnmount 代码如下：
 
 ```js
 const useUnmount = (fn) => {
   const fnRef = useRef(fn);
-  fnRef.current = fn;
+  useIsomorphicLayoutEffect(() => {
+    fnRef.current = fn;
+  });
 
   useEffect(
     () => () => {
