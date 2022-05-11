@@ -1,5 +1,6 @@
 import type { DependencyList, EffectCallback, useEffect, useLayoutEffect } from 'react';
 import { useRef } from 'react';
+import { isArray } from './index';
 import useUnmount from '../useUnmount';
 import depsAreSame from './depsAreSame';
 import type { BasicTarget } from './domTarget';
@@ -25,7 +26,7 @@ const createEffectWithTarget = (useEffectType: typeof useEffect | typeof useLayo
     const unLoadRef = useRef<any>();
 
     useEffectType(() => {
-      const targets = Array.isArray(target) ? target : [target];
+      const targets = isArray(target) ? target : [target];
       const els = targets.map((item) => getTargetElement(item));
 
       // init run
