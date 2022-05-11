@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import isBrowser from '../utils/isBrowser';
 
 export interface Options {
   type?: 'js' | 'css';
@@ -81,6 +82,8 @@ const useExternal = (path?: string, options?: Options) => {
   const ref = useRef<Element>();
 
   useEffect(() => {
+    if (!isBrowser) return;
+
     if (!path) {
       setStatus('unset');
       return;

@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import isBrowser from '../utils/isBrowser';
 
 const ImgTypeMap = {
   SVG: 'image/svg+xml',
@@ -11,7 +12,7 @@ type ImgTypes = keyof typeof ImgTypeMap;
 
 const useFavicon = (href: string) => {
   useEffect(() => {
-    if (!href) return;
+    if (!href || !isBrowser) return;
 
     const cutUrl = href.split('.');
     const imgSuffix = cutUrl[cutUrl.length - 1].toLocaleUpperCase() as ImgTypes;

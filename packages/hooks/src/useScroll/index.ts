@@ -3,6 +3,7 @@ import useLatest from '../useLatest';
 import type { BasicTarget } from '../utils/domTarget';
 import { getTargetElement } from '../utils/domTarget';
 import useEffectWithTarget from '../utils/useEffectWithTarget';
+import isBrowser from '../utils/isBrowser';
 
 type Position = { left: number; top: number };
 
@@ -19,6 +20,8 @@ function useScroll(
 
   useEffectWithTarget(
     () => {
+      if (!isBrowser) return;
+
       const el = getTargetElement(target, document);
       if (!el) {
         return;

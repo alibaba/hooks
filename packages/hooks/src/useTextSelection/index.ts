@@ -2,6 +2,7 @@ import { useRef, useState } from 'react';
 import type { BasicTarget } from '../utils/domTarget';
 import { getTargetElement } from '../utils/domTarget';
 import useEffectWithTarget from '../utils/useEffectWithTarget';
+import isBrowser from '../utils/isBrowser';
 
 interface Rect {
   top: number;
@@ -57,6 +58,8 @@ function useTextSelection(target?: BasicTarget<Document | Element>): State {
 
   useEffectWithTarget(
     () => {
+      if (!isBrowser) return;
+
       const el = getTargetElement(target, document);
       if (!el) {
         return;
