@@ -17,7 +17,7 @@ export default function useClickAway<T extends Event = Event>(
         if (
           targets.some((item) => {
             const targetElement = getTargetElement(item);
-            return !targetElement || targetElement?.contains(event.target);
+            return !targetElement || targetElement.contains(event.target);
           })
         ) {
           return;
