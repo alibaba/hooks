@@ -1,4 +1,4 @@
-export const isArray = (value: unknown) => {
+export const isArray = (value: unknown): value is any[] => {
   if (Array.isArray) {
     return Array.isArray(value);
   }
