@@ -1,9 +1,10 @@
-import { useEffect } from 'react';
+import { useCallback, useEffect, useRef } from 'react';
 import useLatest from '../useLatest';
 import { isNumber } from '../utils';
 
-function useTimeout(fn: () => void, delay: number | undefined): void {
+function useTimeout(fn: () => void, delay: number | undefined) {
   const fnRef = useLatest(fn);
+  const timerRef = useRef<ReturnType<typeof setTimeout>>();
 
   useEffect(() => {
     if (!isNumber(delay) || delay < 0 || isNaN(delay)) {
@@ -11,13 +12,23 @@ function useTimeout(fn: () => void, delay: number | undefined): void {
       return;
     }
 
-    const timer = setTimeout(() => {
+    timerRef.current = setTimeout(() => {
       fnRef.current();
     }, delay);
     return () => {
-      clearTimeout(timer);
+      if (timerRef.current) {
+        clearTimeout(timerRef.current);
+      }
     };
   }, [delay]);
+
+  const clear = useCallback(() => {
+    if (timerRef.current) {
+      clearTimeout(timerRef.current);
+    }
+  }, []);
+
+  return clear;
 }
 
 export default useTimeout;

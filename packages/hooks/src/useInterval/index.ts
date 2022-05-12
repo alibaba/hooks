@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useCallback, useEffect, useRef } from 'react';
 import useLatest from '../useLatest';
 import { isNumber } from '../utils';
 
@@ -12,6 +12,7 @@ function useInterval(
   const immediate = options?.immediate;
 
   const fnRef = useLatest(fn);
+  const timerRef = useRef<ReturnType<typeof setInterval>>();
 
   useEffect(() => {
     if (!isNumber(delay) || delay < 0 || isNaN(delay)) {
@@ -22,13 +23,23 @@ function useInterval(
     if (immediate) {
       fnRef.current();
     }
-    const timer = setInterval(() => {
+    timerRef.current = setInterval(() => {
       fnRef.current();
     }, delay);
     return () => {
-      clearInterval(timer);
+      if (timerRef.current) {
+        clearInterval(timerRef.current);
+      }
     };
   }, [delay]);
+
+  const clear = useCallback(() => {
+    if (timerRef.current) {
+      clearTimeout(timerRef.current);
+    }
+  }, []);
+
+  return clear;
 }
 
 export default useInterval;
