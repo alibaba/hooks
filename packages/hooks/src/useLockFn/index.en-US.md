@@ -28,6 +28,6 @@ function useLockFn<P extends any[] = any[], V extends any = any>(
 
 ### Params
 
-| Property | Description              | Type                               | 默认值  |
+| Property | Description              | Type                               | Default  |
 |----------|--------------------------|------------------------------------|--------|
 | fn       | An async function        | `(...args: any[]) => Promise<any>` | -      |
