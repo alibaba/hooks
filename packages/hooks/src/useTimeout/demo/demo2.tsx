@@ -1,39 +1,36 @@
 /**
  * title: Advanced usage
- * desc: Modify the delay to realize the timer interval change and pause.
+ * desc: Modify the delay to realize the timer timeout change and pause.
  *
  * title.zh-CN: 进阶使用
  * desc.zh-CN: 动态修改 delay 以实现定时器间隔变化与暂停。
  */
 
 import React, { useState } from 'react';
-import { useInterval } from 'ahooks';
+import { useTimeout } from 'ahooks';
 
 export default () => {
   const [count, setCount] = useState(0);
-  const [interval, setInterval] = useState<number | undefined>(1000);
+  const [delay, setDelay] = useState<number | undefined>(1000);
 
-  const clear = useInterval(() => {
+  const clear = useTimeout(() => {
     setCount(count + 1);
-  }, interval);
+  }, delay);
 
   return (
     <div>
       <p> count: {count} </p>
-      <p style={{ marginTop: 16 }}> interval: {interval} </p>
-      <button
-        onClick={() => setInterval((t) => (!!t ? t + 1000 : 1000))}
-        style={{ marginRight: 8 }}
-      >
-        interval + 1000
+      <p style={{ marginTop: 16 }}> Delay: {delay} </p>
+      <button onClick={() => setDelay((t) => (!!t ? t + 1000 : 1000))} style={{ marginRight: 8 }}>
+        Delay + 1000
       </button>
       <button
         style={{ marginRight: 8 }}
         onClick={() => {
-          setInterval(1000);
+          setDelay(1000);
         }}
       >
-        reset interval
+        reset Delay
       </button>
       <button
         onClick={() => {
