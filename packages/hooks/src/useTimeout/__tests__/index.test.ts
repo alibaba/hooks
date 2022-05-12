@@ -45,4 +45,15 @@ describe('useTimeout', () => {
     expect(callback).toHaveBeenCalledTimes(0);
     expect(consoleWarnMock).toHaveBeenLastCalledWith('delay should be a valid number but get NaN');
   });
+
+  it('timeout should be clear', () => {
+    const callback = jest.fn();
+
+    const hook = setUp({ fn: callback, delay: 20 });
+    expect(callback).not.toBeCalled();
+
+    hook.result.current();
+    jest.advanceTimersByTime(30);
+    expect(callback).toHaveBeenCalledTimes(0);
+  });
 });

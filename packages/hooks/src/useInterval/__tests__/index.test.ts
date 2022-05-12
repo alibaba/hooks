@@ -54,4 +54,19 @@ describe('useInterval', () => {
     jest.advanceTimersByTime(50);
     expect(callback).toHaveBeenCalledTimes(3);
   });
+
+  it('interval should be clear', () => {
+    const callback = jest.fn();
+    const hook = setUp({ fn: callback, delay: 20 });
+
+    expect(callback).not.toBeCalled();
+
+    jest.advanceTimersByTime(25);
+    expect(callback).toHaveBeenCalledTimes(1);
+
+    jest.advanceTimersByTime(10);
+    hook.result.current();
+    // not to be called
+    expect(callback).toHaveBeenCalledTimes(1);
+  });
 });
