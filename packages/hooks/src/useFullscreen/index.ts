@@ -33,6 +33,11 @@ const useFullscreen = (target: BasicTarget, options?: Options) => {
   };
 
   const enterFullscreen = () => {
+    // if it's isFullScreen, don't need to request and listen again
+    if (state) {
+      return;
+    }
+
     const el = getTargetElement(target);
     if (!el) {
       return;
