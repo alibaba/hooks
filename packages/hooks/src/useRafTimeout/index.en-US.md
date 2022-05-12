@@ -25,7 +25,7 @@ A hook implements with `requestAnimationFrame` for better performance. The API i
 useRafTimeout(
   fn: () => void, 
   delay?: number | undefined, 
-);
+): fn: () => void;
 ```
 
 ### Params
@@ -34,3 +34,9 @@ useRafTimeout(
 |----------|------------------------------------------------------------------------------------------------------------------------|-------------------------|
 | fn       | The function to be executed after `delay` milliseconds.                                                                | `() => void`            |
 | delay    | The number of milliseconds to wait before executing the function. The timer will be cancelled if delay is `undefined`. | `number` \| `undefined` |
+
+### Result
+
+| Property     | Description   | Type                                                       |
+|--------------|---------------|------------------------------------------------------------|
+| clearTimeout | clear timeout | `() => void` |
