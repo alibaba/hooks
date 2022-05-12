@@ -61,12 +61,9 @@ describe('useInterval', () => {
 
     expect(callback).not.toBeCalled();
 
-    jest.advanceTimersByTime(25);
-    expect(callback).toHaveBeenCalledTimes(1);
-
-    jest.advanceTimersByTime(10);
     hook.result.current();
+    jest.advanceTimersByTime(70);
     // not to be called
-    expect(callback).toHaveBeenCalledTimes(1);
+    expect(callback).toHaveBeenCalledTimes(0);
   });
 });
