@@ -49,17 +49,17 @@ const useInfiniteScroll = <TData extends Data>(
       manual,
       onFinally: (_, d, e) => {
         setLoadingMore(false);
-        onFinally?.(d, e);
+        onFinally && onFinally(d, e);
       },
-      onBefore: () => onBefore?.(),
+      onBefore: () => onBefore && onBefore(),
       onSuccess: (d) => {
         setTimeout(() => {
           // eslint-disable-next-line @typescript-eslint/no-use-before-define
           scrollMethod();
         });
-        onSuccess?.(d);
+        onSuccess && onSuccess(d);
       },
-      onError: (e) => onError?.(e),
+      onError: (e) => onError && onError(e),
     },
   );
 

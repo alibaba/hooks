@@ -33,17 +33,21 @@ const useThrottlePlugin: Plugin<any, any[]> = (
       // https://github.com/lodash/lodash/issues/4400#issuecomment-834800398
       fetchInstance.runAsync = (...args) => {
         return new Promise((resolve, reject) => {
-          throttledRef.current?.(() => {
-            _originRunAsync(...args)
-              .then(resolve)
-              .catch(reject);
-          });
+          if (throttledRef.current) {
+            throttledRef.current(() => {
+              _originRunAsync(...args)
+                .then(resolve)
+                .catch(reject);
+            });
+          }
         });
       };
 
       return () => {
         fetchInstance.runAsync = _originRunAsync;
-        throttledRef.current?.cancel();
+        if (throttledRef.current) {
+          throttledRef.current.cancel();
+        }
       };
     }
   }, [throttleWait, throttleLeading, throttleTrailing]);
@@ -54,7 +58,9 @@ const useThrottlePlugin: Plugin<any, any[]> = (
 
   return {
     onCancel: () => {
-      throttledRef.current?.cancel();
+      if (throttledRef.current) {
+        throttledRef.current.cancel();
+      }
     },
   };
 };

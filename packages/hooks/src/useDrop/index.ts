@@ -25,7 +25,7 @@ const useDrop = (target: BasicTarget, options: Options = {}) => {
   useEffectWithTarget(
     () => {
       const targetElement = getTargetElement(target);
-      if (!targetElement?.addEventListener) {
+      if (!(targetElement && targetElement.addEventListener)) {
         return;
       }
 
@@ -69,29 +69,39 @@ const useDrop = (target: BasicTarget, options: Options = {}) => {
         event.stopPropagation();
 
         dragEnterTarget.current = event.target;
-        optionsRef.current.onDragEnter?.(event);
+        if (optionsRef.current.onDragEnter) {
+          optionsRef.current.onDragEnter(event);
+        }
       };
 
       const onDragOver = (event: React.DragEvent) => {
         event.preventDefault();
-        optionsRef.current.onDragOver?.(event);
+        if (optionsRef.current.onDragOver) {
+          optionsRef.current.onDragOver(event);
+        }
       };
 
       const onDragLeave = (event: React.DragEvent) => {
         if (event.target === dragEnterTarget.current) {
-          optionsRef.current.onDragLeave?.(event);
+          if (optionsRef.current.onDragLeave) {
+            optionsRef.current.onDragLeave(event);
+          }
         }
       };
 
       const onDrop = (event: React.DragEvent) => {
         event.preventDefault();
         onData(event.dataTransfer, event);
-        optionsRef.current.onDrop?.(event);
+        if (optionsRef.current.onDrop) {
+          optionsRef.current.onDrop(event);
+        }
       };
 
       const onPaste = (event: React.ClipboardEvent) => {
         onData(event.clipboardData, event);
-        optionsRef.current.onPaste?.(event);
+        if (optionsRef.current.onPaste) {
+          optionsRef.current.onPaste(event);
+        }
       };
 
       targetElement.addEventListener('dragenter', onDragEnter as any);

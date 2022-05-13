@@ -16,8 +16,8 @@ export default function useFocusWithin(target: BasicTarget, options?: Options) {
     'focusin',
     (e: FocusEvent) => {
       if (!isFocusWithin) {
-        onFocus?.(e);
-        onChange?.(true);
+        onFocus && onFocus(e);
+        onChange && onChange(true);
         setIsFocusWithin(true);
       }
     },
@@ -29,10 +29,13 @@ export default function useFocusWithin(target: BasicTarget, options?: Options) {
   useEventListener(
     'focusout',
     (e: FocusEvent) => {
-      // @ts-ignore
-      if (isFocusWithin && !e.currentTarget?.contains?.(e.relatedTarget)) {
-        onBlur?.(e);
-        onChange?.(false);
+      if (
+        isFocusWithin &&
+        // @ts-ignore
+        !(e.currentTarget && e.currentTarget.contains && e.currentTarget.contains(e.relatedTarget))
+      ) {
+        onBlur && onBlur(e);
+        onChange && onChange(false);
         setIsFocusWithin(false);
       }
     },

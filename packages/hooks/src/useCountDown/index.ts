@@ -62,7 +62,9 @@ const useCountdown = (options?: Options) => {
       setTimeLeft(targetLeft);
       if (targetLeft === 0) {
         clearInterval(timer);
-        onEndRef.current?.();
+        if (onEndRef.current) {
+          onEndRef.current();
+        }
       }
     }, interval);
 

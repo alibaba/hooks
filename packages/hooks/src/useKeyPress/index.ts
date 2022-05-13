@@ -223,16 +223,22 @@ function useKeyPress(keyFilter: KeyFilter, eventHandler: EventHandler, option?: 
       const callbackHandler = (event: KeyboardEvent) => {
         const genGuard: KeyPredicate = genKeyFormater(keyFilterRef.current, exactMatch);
         if (genGuard(event)) {
-          return eventHandlerRef.current?.(event);
+          if (eventHandlerRef.current) {
+            return eventHandlerRef.current(event);
+          }
         }
       };
 
       for (const eventName of events) {
-        el?.addEventListener?.(eventName, callbackHandler);
+        if (el && el.addEventListener) {
+          el.addEventListener(eventName, callbackHandler);
+        }
       }
       return () => {
         for (const eventName of events) {
-          el?.removeEventListener?.(eventName, callbackHandler);
+          if (el && el.removeEventListener) {
+            el.removeEventListener(eventName, callbackHandler);
+          }
         }
       };
     },

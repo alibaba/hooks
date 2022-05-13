@@ -34,7 +34,7 @@ function useInViewport(target: BasicTarget, options?: Options) {
         },
         {
           ...options,
-          root: getTargetElement(options?.root),
+          root: getTargetElement(options && options.root),
         },
       );
 

@@ -23,10 +23,14 @@ const useFullscreen = (target: BasicTarget, options?: Options) => {
     if (screenfull.isEnabled) {
       const { isFullscreen } = screenfull;
       if (isFullscreen) {
-        onEnterRef.current?.();
+        if (onEnterRef.current) {
+          onEnterRef.current();
+        }
       } else {
         screenfull.off('change', onChange);
-        onExitRef.current?.();
+        if (onExitRef.current) {
+          onExitRef.current();
+        }
       }
       setState(isFullscreen);
     }

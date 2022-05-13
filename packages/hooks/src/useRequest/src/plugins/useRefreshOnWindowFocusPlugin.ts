@@ -11,7 +11,9 @@ const useRefreshOnWindowFocusPlugin: Plugin<any, any[]> = (
   const unsubscribeRef = useRef<() => void>();
 
   const stopSubscribe = () => {
-    unsubscribeRef.current?.();
+    if (unsubscribeRef.current) {
+      unsubscribeRef.current();
+    }
   };
 
   useEffect(() => {

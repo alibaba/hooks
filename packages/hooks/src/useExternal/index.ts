@@ -86,12 +86,14 @@ const useExternal = (path?: string, options?: Options) => {
       return;
     }
     const pathname = path.replace(/[|#].*$/, '');
-    if (options?.type === 'css' || (!options?.type && /(^css!|\.css$)/.test(pathname))) {
-      const result = loadCss(path, options?.css);
+
+    const { type, css, js } = options || {};
+    if (type === 'css' || (!type && /(^css!|\.css$)/.test(pathname))) {
+      const result = loadCss(path, css);
       ref.current = result.ref;
       setStatus(result.status);
-    } else if (options?.type === 'js' || (!options?.type && /(^js!|\.js$)/.test(pathname))) {
-      const result = loadScript(path, options?.js);
+    } else if (type === 'js' || (!type && /(^js!|\.js$)/.test(pathname))) {
+      const result = loadScript(path, js);
       ref.current = result.ref;
       setStatus(result.status);
     } else {
@@ -114,20 +116,26 @@ const useExternal = (path?: string, options?: Options) => {
 
     const handler = (event: Event) => {
       const targetStatus = event.type === 'load' ? 'ready' : 'error';
-      ref.current?.setAttribute('data-status', targetStatus);
+      if (ref.current) {
+        ref.current.setAttribute('data-status', targetStatus);
+      }
       setStatus(targetStatus);
     };
 
     ref.current.addEventListener('load', handler);
     ref.current.addEventListener('error', handler);
     return () => {
-      ref.current?.removeEventListener('load', handler);
-      ref.current?.removeEventListener('error', handler);
+      if (ref.current) {
+        ref.current.removeEventListener('load', handler);
+        ref.current.removeEventListener('error', handler);
+      }
 
       EXTERNAL_USED_COUNT[path] -= 1;
 
       if (EXTERNAL_USED_COUNT[path] === 0) {
-        ref.current?.remove();
+        if (ref.current) {
+          ref.current.remove();
+        }
       }
 
       ref.current = undefined;

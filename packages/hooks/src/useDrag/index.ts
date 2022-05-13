@@ -14,17 +14,21 @@ const useDrag = <T>(data: T, target: BasicTarget, options: Options = {}) => {
   useEffectWithTarget(
     () => {
       const targetElement = getTargetElement(target);
-      if (!targetElement?.addEventListener) {
+      if (!(targetElement && targetElement.addEventListener)) {
         return;
       }
 
       const onDragStart = (event: React.DragEvent) => {
-        optionsRef.current.onDragStart?.(event);
+        if (optionsRef.current.onDragStart) {
+          optionsRef.current.onDragStart(event);
+        }
         event.dataTransfer.setData('custom', JSON.stringify(data));
       };
 
       const onDragEnd = (event: React.DragEvent) => {
-        optionsRef.current.onDragEnd?.(event);
+        if (optionsRef.current.onDragEnd) {
+          optionsRef.current.onDragEnd(event);
+        }
       };
 
       targetElement.setAttribute('draggable', 'true');

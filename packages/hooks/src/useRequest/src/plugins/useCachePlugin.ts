@@ -59,7 +59,9 @@ const useCachePlugin: Plugin<any, any[]> = (
   }, []);
 
   useUnmount(() => {
-    unSubscribeRef.current?.();
+    if (unSubscribeRef.current) {
+      unSubscribeRef.current();
+    }
   });
 
   if (!cacheKey) {
@@ -78,13 +80,13 @@ const useCachePlugin: Plugin<any, any[]> = (
       if (staleTime === -1 || new Date().getTime() - cacheData.time <= staleTime) {
         return {
           loading: false,
-          data: cacheData?.data,
+          data: cacheData && cacheData.data,
           returnNow: true,
         };
       } else {
         // If the data is stale, return data, and request continue
         return {
-          data: cacheData?.data,
+          data: cacheData && cacheData.data,
         };
       }
     },
@@ -104,7 +106,9 @@ const useCachePlugin: Plugin<any, any[]> = (
     onSuccess: (data, params) => {
       if (cacheKey) {
         // cancel subscribe, avoid trgger self
-        unSubscribeRef.current?.();
+        if (unSubscribeRef.current) {
+          unSubscribeRef.current();
+        }
         _setCache(cacheKey, {
           data,
           params,
@@ -119,7 +123,9 @@ const useCachePlugin: Plugin<any, any[]> = (
     onMutate: (data) => {
       if (cacheKey) {
         // cancel subscribe, avoid trgger self
-        unSubscribeRef.current?.();
+        if (unSubscribeRef.current) {
+          unSubscribeRef.current();
+        }
         _setCache(cacheKey, {
           data,
           params: fetchInstance.state.params,

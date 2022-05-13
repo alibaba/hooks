@@ -39,9 +39,9 @@ const useUrlState = <S extends UrlState = UrlState>(
   const location = rc.useLocation();
 
   // react-router v5
-  const history = rc.useHistory?.();
+  const history = rc.useHistory && rc.useHistory();
   // react-router v6
-  const navigate = rc.useNavigate?.();
+  const navigate = rc.useNavigate && rc.useNavigate();
 
   const update = useUpdate();
 

@@ -9,7 +9,7 @@ function useInterval(
     immediate?: boolean;
   },
 ) {
-  const immediate = options?.immediate;
+  const immediate = options && options.immediate;
 
   const fnRef = useLatest(fn);
 

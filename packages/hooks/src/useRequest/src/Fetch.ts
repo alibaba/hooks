@@ -37,7 +37,7 @@ export default class Fetch<TData, TParams extends any[]> {
 
   runPluginHandler(event: keyof PluginReturn<TData, TParams>, ...rest: any[]) {
     // @ts-ignore
-    const r = this.pluginImpls.map((i) => i[event]?.(...rest)).filter(Boolean);
+    const r = this.pluginImpls.map((i) => i[event] && i[event](...rest)).filter(Boolean);
     return Object.assign({}, ...r);
   }
 
@@ -67,7 +67,9 @@ export default class Fetch<TData, TParams extends any[]> {
       return Promise.resolve(state.data);
     }
 
-    this.options.onBefore?.(params);
+    const { onBefore, onSuccess, onFinally, onError } = this.options;
+
+    onBefore && onBefore(params);
 
     try {
       // replace service
@@ -92,10 +94,10 @@ export default class Fetch<TData, TParams extends any[]> {
         loading: false,
       });
 
-      this.options.onSuccess?.(res, params);
+      onSuccess && onSuccess(res, params);
       this.runPluginHandler('onSuccess', res, params);
 
-      this.options.onFinally?.(params, res, undefined);
+      onFinally && onFinally(params, res, undefined);
 
       if (currentCount === this.count) {
         this.runPluginHandler('onFinally', params, res, undefined);
@@ -113,10 +115,10 @@ export default class Fetch<TData, TParams extends any[]> {
         loading: false,
       });
 
-      this.options.onError?.(error, params);
+      onError && onError(error, params);
       this.runPluginHandler('onError', error, params);
 
-      this.options.onFinally?.(params, undefined, error);
+      onFinally && onFinally(params, undefined, error);
 
       if (currentCount === this.count) {
         this.runPluginHandler('onFinally', params, undefined, error);

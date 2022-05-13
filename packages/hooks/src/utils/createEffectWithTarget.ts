@@ -44,7 +44,9 @@ const createEffectWithTarget = (useEffectType: typeof useEffect | typeof useLayo
         !depsAreSame(els, lastElementRef.current) ||
         !depsAreSame(deps, lastDepsRef.current)
       ) {
-        unLoadRef.current?.();
+        if (unLoadRef.current) {
+          unLoadRef.current();
+        }
 
         lastElementRef.current = els;
         lastDepsRef.current = deps;
@@ -53,7 +55,9 @@ const createEffectWithTarget = (useEffectType: typeof useEffect | typeof useLayo
     });
 
     useUnmount(() => {
-      unLoadRef.current?.();
+      if (unLoadRef.current) {
+        unLoadRef.current();
+      }
       // for react-refresh
       hasInitRef.current = false;
     });

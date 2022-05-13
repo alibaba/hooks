@@ -41,7 +41,7 @@ function useNetwork(): NetworkState {
   const [state, setState] = useState(() => {
     return {
       since: undefined,
-      online: navigator?.onLine,
+      online: navigator && navigator.onLine,
       ...getConnectionProperty(),
     };
   });
@@ -74,12 +74,12 @@ function useNetwork(): NetworkState {
     window.addEventListener(NetworkEventType.OFFLINE, onOffline);
 
     const connection = getConnection();
-    connection?.addEventListener(NetworkEventType.CHANGE, onConnectionChange);
+    connection && connection.addEventListener(NetworkEventType.CHANGE, onConnectionChange);
 
     return () => {
       window.removeEventListener(NetworkEventType.ONLINE, onOnline);
       window.removeEventListener(NetworkEventType.OFFLINE, onOffline);
-      connection?.removeEventListener(NetworkEventType.CHANGE, onConnectionChange);
+      connection && connection.removeEventListener(NetworkEventType.CHANGE, onConnectionChange);
     };
   }, []);
 

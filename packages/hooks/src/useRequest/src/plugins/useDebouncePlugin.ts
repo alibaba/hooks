@@ -39,16 +39,20 @@ const useDebouncePlugin: Plugin<any, any[]> = (
       // https://github.com/lodash/lodash/issues/4400#issuecomment-834800398
       fetchInstance.runAsync = (...args) => {
         return new Promise((resolve, reject) => {
-          debouncedRef.current?.(() => {
-            _originRunAsync(...args)
-              .then(resolve)
-              .catch(reject);
-          });
+          if (debouncedRef.current) {
+            debouncedRef.current(() => {
+              _originRunAsync(...args)
+                .then(resolve)
+                .catch(reject);
+            });
+          }
         });
       };
 
       return () => {
-        debouncedRef.current?.cancel();
+        if (debouncedRef.current) {
+          debouncedRef.current.cancel();
+        }
         fetchInstance.runAsync = _originRunAsync;
       };
     }
@@ -60,7 +64,9 @@ const useDebouncePlugin: Plugin<any, any[]> = (
 
   return {
     onCancel: () => {
-      debouncedRef.current?.cancel();
+      if (debouncedRef.current) {
+        debouncedRef.current.cancel();
+      }
     },
   };
 };

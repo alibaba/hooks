@@ -35,12 +35,12 @@ const useAntdTable = <TData extends Data, TParams extends Params>(
 
   const cacheFormTableData = params[2] || ({} as any);
 
-  const [type, setType] = useState(cacheFormTableData?.type || defaultType);
+  const [type, setType] = useState((cacheFormTableData && cacheFormTableData.type) || defaultType);
 
   const allFormDataRef = useRef<Record<string, any>>({});
   const defaultDataSourceRef = useRef([]);
 
-  const isAntdV4 = !!form?.getInternalHooks;
+  const isAntdV4 = !!(form && form.getInternalHooks);
 
   // get current active field values
   const getActivetFieldValues = () => {
@@ -126,7 +126,7 @@ const useAntdTable = <TData extends Data, TParams extends Params>(
         .then((values = {}) => {
           const pagination = initPagination || {
             pageSize: options.defaultPageSize || 10,
-            ...(params?.[0] || {}),
+            ...((params && params[0]) || {}),
             current: 1,
           };
           if (!form) {
@@ -159,7 +159,9 @@ const useAntdTable = <TData extends Data, TParams extends Params>(
   };
 
   const submit = (e?: any) => {
-    e?.preventDefault?.();
+    if (e && e.preventDefault) {
+      e.preventDefault();
+    }
     _submit();
   };
 
@@ -182,16 +184,16 @@ const useAntdTable = <TData extends Data, TParams extends Params>(
   useEffect(() => {
     // if has cache, use cached params. ignore manual and ready.
     if (params.length > 0) {
-      allFormDataRef.current = cacheFormTableData?.allFormData || {};
+      allFormDataRef.current = (cacheFormTableData && cacheFormTableData.allFormData) || {};
       restoreForm();
       // @ts-ignore
       run(...params);
       return;
     }
     if (!manual && ready) {
-      allFormDataRef.current = defaultParams?.[1] || {};
+      allFormDataRef.current = (defaultParams && defaultParams[1]) || {};
       restoreForm();
-      _submit(defaultParams?.[0]);
+      _submit(defaultParams && defaultParams[0]);
     }
   }, []);
 
@@ -213,9 +215,9 @@ const useAntdTable = <TData extends Data, TParams extends Params>(
       if (form) {
         form.resetFields();
       }
-      allFormDataRef.current = defaultParams?.[1] || {};
+      allFormDataRef.current = (defaultParams && defaultParams[1]) || {};
       restoreForm();
-      _submit(defaultParams?.[0]);
+      _submit(defaultParams && defaultParams[0]);
     }
   }, [ready]);
 
@@ -235,7 +237,7 @@ const useAntdTable = <TData extends Data, TParams extends Params>(
   return {
     ...result,
     tableProps: {
-      dataSource: result.data?.list || defaultDataSourceRef.current,
+      dataSource: (result.data && result.data.list) || defaultDataSourceRef.current,
       loading: result.loading,
       onChange: useMemoizedFn(onTableChange),
       pagination: {

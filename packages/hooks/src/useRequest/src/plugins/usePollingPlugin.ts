@@ -15,7 +15,9 @@ const usePollingPlugin: Plugin<any, any[]> = (
     if (timerRef.current) {
       clearTimeout(timerRef.current);
     }
-    unsubscribeRef.current?.();
+    if (unsubscribeRef.current) {
+      unsubscribeRef.current();
+    }
   };
 
   useUpdateEffect(() => {

@@ -60,7 +60,7 @@ export default function useWebSocket(socketUrl: string, options: Options = {}): 
   const reconnect = () => {
     if (
       reconnectTimesRef.current < reconnectLimit &&
-      websocketRef.current?.readyState !== ReadyState.Open
+      (websocketRef.current && websocketRef.current.readyState) !== ReadyState.Open
     ) {
       if (reconnectTimerRef.current) {
         clearTimeout(reconnectTimerRef.current);
@@ -91,14 +91,18 @@ export default function useWebSocket(socketUrl: string, options: Options = {}): 
         return;
       }
       reconnect();
-      onErrorRef.current?.(event, ws);
+      if (onErrorRef.current) {
+        onErrorRef.current(event, ws);
+      }
       setReadyState(ws.readyState || ReadyState.Closed);
     };
     ws.onopen = (event) => {
       if (unmountedRef.current) {
         return;
       }
-      onOpenRef.current?.(event, ws);
+      if (onOpenRef.current) {
+        onOpenRef.current(event, ws);
+      }
       reconnectTimesRef.current = 0;
       setReadyState(ws.readyState || ReadyState.Open);
     };
@@ -106,7 +110,9 @@ export default function useWebSocket(socketUrl: string, options: Options = {}): 
       if (unmountedRef.current) {
         return;
       }
-      onMessageRef.current?.(message, ws);
+      if (onMessageRef.current) {
+        onMessageRef.current(message, ws);
+      }
       setLatestMessage(message);
     };
     ws.onclose = (event) => {
@@ -114,7 +120,9 @@ export default function useWebSocket(socketUrl: string, options: Options = {}): 
         return;
       }
       reconnect();
-      onCloseRef.current?.(event, ws);
+      if (onCloseRef.current) {
+        onCloseRef.current(event, ws);
+      }
       setReadyState(ws.readyState || ReadyState.Closed);
     };
 
@@ -123,7 +131,9 @@ export default function useWebSocket(socketUrl: string, options: Options = {}): 
 
   const sendMessage: WebSocket['send'] = (message) => {
     if (readyState === ReadyState.Open) {
-      websocketRef.current?.send(message);
+      if (websocketRef.current) {
+        websocketRef.current.send(message);
+      }
     } else {
       throw new Error('WebSocket disconnected');
     }
@@ -140,7 +150,9 @@ export default function useWebSocket(socketUrl: string, options: Options = {}): 
     }
 
     reconnectTimesRef.current = reconnectLimit;
-    websocketRef.current?.close();
+    if (websocketRef.current) {
+      websocketRef.current.close();
+    }
   };
 
   useEffect(() => {

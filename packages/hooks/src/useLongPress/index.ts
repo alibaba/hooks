@@ -32,7 +32,7 @@ function useLongPress(
   useEffectWithTarget(
     () => {
       const targetElement = getTargetElement(target);
-      if (!targetElement?.addEventListener) {
+      if (!(targetElement && targetElement.addEventListener)) {
         return;
       }
 
@@ -48,7 +48,9 @@ function useLongPress(
           clearTimeout(timerRef.current);
         }
         if (isTriggeredRef.current) {
-          onLongPressEndRef.current?.(event);
+          if (onLongPressEndRef.current) {
+            onLongPressEndRef.current(event);
+          }
         }
         if (shouldTriggerClick && !isTriggeredRef.current && onClickRef.current) {
           onClickRef.current(event);

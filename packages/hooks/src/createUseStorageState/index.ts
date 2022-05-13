@@ -19,6 +19,8 @@ export interface Options<T> {
 
 export function createUseStorageState(getStorage: () => Storage | undefined) {
   function useStorageState<T>(key: string, options?: Options<T>) {
+    const { serializer, deserializer, defaultValue } = options || {};
+
     let storage: Storage | undefined;
 
     // https://github.com/alibaba/hooks/issues/800
@@ -28,33 +30,33 @@ export function createUseStorageState(getStorage: () => Storage | undefined) {
       console.error(err);
     }
 
-    const serializer = (value: T) => {
-      if (options?.serializer) {
-        return options?.serializer(value);
+    const serializerFn = (value: T) => {
+      if (serializer) {
+        return serializer(value);
       }
       return JSON.stringify(value);
     };
 
-    const deserializer = (value: string) => {
-      if (options?.deserializer) {
-        return options?.deserializer(value);
+    const deserializerFn = (value: string) => {
+      if (deserializer) {
+        return deserializer(value);
       }
       return JSON.parse(value);
     };
 
     function getStoredValue() {
       try {
-        const raw = storage?.getItem(key);
+        const raw = storage && storage.getItem(key);
         if (raw) {
-          return deserializer(raw);
+          return deserializerFn(raw);
         }
       } catch (e) {
         console.error(e);
       }
-      if (isFunction(options?.defaultValue)) {
-        return options?.defaultValue();
+      if (isFunction(defaultValue)) {
+        return defaultValue();
       }
-      return options?.defaultValue;
+      return defaultValue;
     }
 
     const [state, setState] = useState<T | undefined>(() => getStoredValue());
@@ -66,19 +68,19 @@ export function createUseStorageState(getStorage: () => Storage | undefined) {
     const updateState = (value?: T | IFuncUpdater<T>) => {
       if (isUndef(value)) {
         setState(undefined);
-        storage?.removeItem(key);
+        storage && storage.removeItem(key);
       } else if (isFunction(value)) {
         const currentState = value(state);
         try {
           setState(currentState);
-          storage?.setItem(key, serializer(currentState));
+          storage && storage.setItem(key, serializerFn(currentState));
         } catch (e) {
           console.error(e);
         }
       } else {
         try {
           setState(value);
-          storage?.setItem(key, serializer(value));
+          storage && storage.setItem(key, serializerFn(value));
         } catch (e) {
           console.error(e);
         }

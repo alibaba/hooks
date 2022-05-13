@@ -15,7 +15,7 @@ export default (target: BasicTarget, options?: Options): boolean => {
   useEventListener(
     'mouseenter',
     () => {
-      onEnter?.();
+      onEnter && onEnter();
       setTrue();
     },
     {
@@ -26,7 +26,7 @@ export default (target: BasicTarget, options?: Options): boolean => {
   useEventListener(
     'mouseleave',
     () => {
-      onLeave?.();
+      onLeave && onLeave();
       setFalse();
     },
     {

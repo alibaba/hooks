@@ -111,11 +111,11 @@ const useVirtualList = <T = any>(list: T[], options: Options<T>) => {
   };
 
   useEffect(() => {
-    if (!size?.width || !size?.height) {
+    if (!size || !size.width || !size.height) {
       return;
     }
     calculateRange();
-  }, [size?.width, size?.height, list]);
+  }, [size && size.width, size && size.height, list]);
 
   useEventListener(
     'scroll',
