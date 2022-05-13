@@ -26,7 +26,7 @@ function getLoadMoreList(nextId: string | undefined, limit: number): Promise<Res
   });
 }
 
-function deleteItem(id: string) {
+function deleteItem() {
   return new Promise<void>((resolve) => {
     setTimeout(() => {
       resolve();
