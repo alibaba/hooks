@@ -29,7 +29,9 @@ const useRetryPlugin: Plugin<any, any[]> = (fetchInstance, { retryInterval, retr
       countRef.current += 1;
       if (retryCount === -1 || countRef.current <= retryCount) {
         // Exponential backoff
-        const timeout = retryInterval ?? Math.min(1000 * 2 ** countRef.current, 30000);
+        const timeout = retryInterval
+          ? retryInterval
+          : Math.min(1000 * 2 ** countRef.current, 30000);
         timerRef.current = setTimeout(() => {
           triggerByRetry.current = true;
           fetchInstance.refresh();

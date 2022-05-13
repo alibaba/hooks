@@ -16,7 +16,7 @@ function useDebounceFn<T extends noop>(fn: T, options?: DebounceOptions) {
 
   const fnRef = useLatest(fn);
 
-  const wait = options?.wait ?? 1000;
+  const wait = options && options.wait != undefined ? options.wait : 1000;
 
   const debounced = useMemo(
     () =>

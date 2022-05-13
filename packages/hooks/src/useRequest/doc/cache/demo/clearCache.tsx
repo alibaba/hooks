@@ -33,7 +33,7 @@ const Article = ({ cacheKey }) => {
 const clear = (cacheKey?: string | string[]) => {
   clearCache(cacheKey);
   const tips = Array.isArray(cacheKey) ? cacheKey.join('、') : cacheKey;
-  message.success(`Clear ${tips ?? 'All'} finished`);
+  message.success(`Clear ${tips ? tips : 'All'} finished`);
 };
 
 export default () => {

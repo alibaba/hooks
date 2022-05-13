@@ -16,7 +16,7 @@ function useThrottleFn<T extends noop>(fn: T, options?: ThrottleOptions) {
 
   const fnRef = useLatest(fn);
 
-  const wait = options?.wait ?? 1000;
+  const wait = options && options.wait != undefined ? options.wait : 1000;
 
   const throttled = useMemo(
     () =>
