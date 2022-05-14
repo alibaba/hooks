@@ -1,10 +1,4 @@
-export const isArray = (value: unknown): value is any[] => {
-  if (Array.isArray) {
-    return Array.isArray(value);
-  }
-
-  return toString.call(value) === '[object Array]';
-};
+export const isArray = Array.isArray;
 export const isObject = (value: unknown): value is Record<any, any> =>
   value !== null && typeof value === 'object';
 export const isFunction = (value: unknown): value is Function => typeof value === 'function';
