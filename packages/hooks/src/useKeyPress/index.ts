@@ -1,5 +1,5 @@
 import useLatest from '../useLatest';
-import { isArray, isFunction, isNumber, isString } from '../utils';
+import { isFunction, isNumber, isString } from '../utils';
 import type { BasicTarget } from '../utils/domTarget';
 import { getTargetElement } from '../utils/domTarget';
 import useDeepCompareEffectWithTarget from '../utils/useDeepCompareWithTarget';
@@ -199,7 +199,7 @@ function genKeyFormater(keyFilter: KeyFilter, exactMatch: boolean): KeyPredicate
   if (isString(keyFilter) || isNumber(keyFilter)) {
     return (event: KeyboardEvent) => genFilterKey(event, keyFilter, exactMatch);
   }
-  if (isArray(keyFilter)) {
+  if (Array.isArray(keyFilter)) {
     return (event: KeyboardEvent) =>
       keyFilter.some((item) => genFilterKey(event, item, exactMatch));
   }
