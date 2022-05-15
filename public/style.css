@@ -19,6 +19,10 @@ input[type='number'] {
   border: 1px solid rgb(118, 118, 118);
 }
 
+[data-prefers-color='dark'] button {
+  color: #141414;
+}
+
 #logo-version {
   flex: 1;
   margin-top: 10px;
