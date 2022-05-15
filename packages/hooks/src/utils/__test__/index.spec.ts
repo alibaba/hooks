@@ -5,11 +5,6 @@ describe('shared utils methods', () => {
     expect(isArray([])).toBe(true);
     expect(isArray({})).toBe(false);
     expect(isArray(1)).toBe(false);
-
-    (Array as any).isArray = null;
-    expect(isArray([])).toBe(true);
-    expect(isArray({})).toBe(false);
-    expect(isArray(1)).toBe(false);
   });
 
   test('isBoolean', () => {
