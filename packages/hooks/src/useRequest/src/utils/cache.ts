@@ -1,5 +1,3 @@
-import { isArray } from '../../../utils';
-
 type Timer = ReturnType<typeof setTimeout>;
 type CachedKey = string | number;
 
@@ -41,7 +39,7 @@ const getCache = (key: CachedKey) => {
 
 const clearCache = (key?: string | string[]) => {
   if (key) {
-    const cacheKeys = isArray(key) ? key : [key];
+    const cacheKeys = Array.isArray(key) ? key : [key];
     cacheKeys.forEach((cacheKey) => cache.delete(cacheKey));
   } else {
     cache.clear();

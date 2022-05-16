@@ -1,12 +1,6 @@
-import { isArray, isBoolean, isFunction, isNumber, isObject, isString, isUndef } from '../index';
+import { isBoolean, isFunction, isNumber, isObject, isString, isUndef } from '../index';
 
 describe('shared utils methods', () => {
-  test('isArray', () => {
-    expect(isArray([])).toBe(true);
-    expect(isArray({})).toBe(false);
-    expect(isArray(1)).toBe(false);
-  });
-
   test('isBoolean', () => {
     expect(isBoolean(true)).toBe(true);
     expect(isBoolean(false)).toBe(true);
