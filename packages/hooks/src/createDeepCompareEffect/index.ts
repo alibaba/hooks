@@ -1,13 +1,11 @@
 import { useRef } from 'react';
-import type { DependencyList, EffectCallback, useEffect, useLayoutEffect } from 'react';
+import type { DependencyList, useEffect, useLayoutEffect } from 'react';
 import isEqual from 'lodash/isEqual';
 
 type EffectHookType = typeof useEffect | typeof useLayoutEffect;
-type CreateUpdateEffect = (
-  hook: EffectHookType,
-) => (effect: EffectCallback, deps: DependencyList) => void;
+type CreateUpdateEffect = (hook: EffectHookType) => EffectHookType;
 
-const depsEqual = (aDeps: DependencyList, bDeps: DependencyList = []) => {
+const depsEqual = (aDeps: DependencyList = [], bDeps: DependencyList = []) => {
   return isEqual(aDeps, bDeps);
 };
 
@@ -15,7 +13,7 @@ export const createDeepCompareEffect: CreateUpdateEffect = (hook) => (effect, de
   const ref = useRef<DependencyList>();
   const signalRef = useRef<number>(0);
 
-  if (!depsEqual(deps, ref.current)) {
+  if (deps === undefined || !depsEqual(deps, ref.current)) {
     ref.current = deps;
     signalRef.current += 1;
   }

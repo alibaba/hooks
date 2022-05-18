@@ -60,4 +60,36 @@ describe('createDeepCompareEffect', () => {
 
     expect(hook.result.current.x).toBe(2);
   });
+
+  it('deps is undefined should rerender in useEffect', async () => {
+    const useDeepCompareLayoutEffect = createDeepCompareEffect(useEffect);
+    let count = 0;
+    const hook = renderHook(() => {
+      useDeepCompareLayoutEffect(() => {
+        count++;
+      });
+    });
+
+    expect(count).toBe(1);
+    hook.rerender();
+    expect(count).toBe(2);
+    hook.rerender();
+    expect(count).toBe(3);
+  });
+
+  it('deps is undefined should rerender in useLayoutEffect', async () => {
+    const useDeepCompareLayoutEffect = createDeepCompareEffect(useLayoutEffect);
+    let count = 0;
+    const hook = renderHook(() => {
+      useDeepCompareLayoutEffect(() => {
+        count++;
+      });
+    });
+
+    expect(count).toBe(1);
+    hook.rerender();
+    expect(count).toBe(2);
+    hook.rerender();
+    expect(count).toBe(3);
+  });
 });
