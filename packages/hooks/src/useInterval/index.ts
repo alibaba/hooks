@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import useLatest from '../useLatest';
+import { isNumber } from '../utils';
 
 function useInterval(
   fn: () => void,
@@ -13,7 +14,11 @@ function useInterval(
   const fnRef = useLatest(fn);
 
   useEffect(() => {
-    if (typeof delay !== 'number' || delay < 0) return;
+    if (!isNumber(delay) || delay < 0 || isNaN(delay)) {
+      console.warn(`delay should be a valid number but get ${delay}`);
+      return;
+    }
+
     if (immediate) {
       fnRef.current();
     }

@@ -24,13 +24,26 @@ describe('useInterval', () => {
     expect(callback).toHaveBeenCalledTimes(3);
   });
 
-  it('delay is undefined should stop', () => {
-    let delay: number | undefined = undefined;
+  it('interval should stop', () => {
     const callback = jest.fn();
-    const { rerender } = setUp({ fn: callback, delay });
-    expect(callback).not.toBeCalled();
+    const consoleWarnMock = jest.spyOn(console, 'warn').mockImplementation();
+
+    setUp({ fn: callback, delay: undefined });
     jest.advanceTimersByTime(50);
-    expect(callback).not.toBeCalled();
+    expect(callback).toHaveBeenCalledTimes(0);
+    expect(consoleWarnMock).toHaveBeenLastCalledWith(
+      'delay should be a valid number but get undefined',
+    );
+
+    setUp({ fn: callback, delay: -2 });
+    jest.advanceTimersByTime(50);
+    expect(callback).toHaveBeenCalledTimes(0);
+    expect(consoleWarnMock).toHaveBeenLastCalledWith('delay should be a valid number but get -2');
+
+    setUp({ fn: callback, delay: NaN });
+    jest.advanceTimersByTime(50);
+    expect(callback).toHaveBeenCalledTimes(0);
+    expect(consoleWarnMock).toHaveBeenLastCalledWith('delay should be a valid number but get NaN');
   });
 
   it('immediate in options should work', () => {

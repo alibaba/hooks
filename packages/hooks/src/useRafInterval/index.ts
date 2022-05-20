@@ -59,7 +59,7 @@ function useRafInterval(
       fnRef.current();
     }, delay);
     return () => {
-      clearRafInterval(timer as any);
+      clearRafInterval(timer);
     };
   }, [delay]);
 }

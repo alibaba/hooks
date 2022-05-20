@@ -11,7 +11,7 @@ export default function useWhyDidYouUpdate(componentName: string, props: IProps)
       const changedProps: IProps = {};
 
       allKeys.forEach((key) => {
-        if (prevProps.current[key] !== props[key]) {
+        if (!Object.is(prevProps.current[key], props[key])) {
           changedProps[key] = {
             from: prevProps.current[key],
             to: props[key],

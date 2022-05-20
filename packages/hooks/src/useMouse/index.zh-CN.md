@@ -56,5 +56,5 @@ const state: {
 | elementY    | 距离指定元素顶部的距离           | `number` |
 | elementH    | 指定元素的高                     | `number` |
 | elementW    | 指定元素的宽                     | `number` |
-| elementPosX | 指定元素点距离完整页面左侧的距离 | `number` |
+| elementPosX | 指定元素距离完整页面左侧的距离 | `number` |
 | elementPosY | 指定元素距离完整页面顶部的距离   | `number` |

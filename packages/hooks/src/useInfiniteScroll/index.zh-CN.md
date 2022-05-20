@@ -77,7 +77,7 @@ const {
   reloadAsync: () => Promise<TData>;
   cancel: () => void;
   mutate: (data?: TData) => void;
-} = useRequest<TData extends Data>(
+} = useInfiniteScroll<TData extends Data>(
   service: (currentData?: TData) => Promise<TData>,
   {
     target?: BasicTarget;
