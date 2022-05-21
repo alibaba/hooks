@@ -67,7 +67,7 @@ export default (target?: BasicTarget) => {
       setState(newState);
     },
     {
-      target: typeof document == 'undefined' ? null : document,
+      target: () => document,
     },
   );
 
