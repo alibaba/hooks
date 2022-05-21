@@ -67,7 +67,7 @@ export default (target?: BasicTarget) => {
       setState(newState);
     },
     {
-      target: document,
+      target: () => document,
     },
   );
 
