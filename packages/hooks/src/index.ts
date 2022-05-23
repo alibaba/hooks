@@ -12,6 +12,7 @@ import useDebounce from './useDebounce';
 import useDebounceEffect from './useDebounceEffect';
 import useDebounceFn from './useDebounceFn';
 import useDeepCompareEffect from './useDeepCompareEffect';
+import useDeepCompareLayoutEffect from './useDeepCompareLayoutEffect';
 import useDocumentVisibility from './useDocumentVisibility';
 import useDrag from './useDrag';
 import useDrop from './useDrop';
@@ -136,6 +137,7 @@ export {
   useLatest,
   useIsomorphicLayoutEffect,
   useDeepCompareEffect,
+  useDeepCompareLayoutEffect,
   useAsyncEffect,
   useLongPress,
   useRafState,

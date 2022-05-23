@@ -1,9 +1,9 @@
 import { useRef } from 'react';
 import type { useEffect, useLayoutEffect } from 'react';
 
-type effectHookType = typeof useEffect | typeof useLayoutEffect;
+type EffectHookType = typeof useEffect | typeof useLayoutEffect;
 
-export const createUpdateEffect: (hook: effectHookType) => effectHookType =
+export const createUpdateEffect: (hook: EffectHookType) => EffectHookType =
   (hook) => (effect, deps) => {
     const isMounted = useRef(false);
 
