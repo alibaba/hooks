@@ -15,9 +15,7 @@ function useInterval(
   const timerRef = useRef<ReturnType<typeof setInterval>>();
 
   useEffect(() => {
-    if (!isNumber(delay) || delay < 0) {
-      return;
-    }
+    if (!isNumber(delay) || delay < 0) return;
 
     if (immediate) {
       fnRef.current();

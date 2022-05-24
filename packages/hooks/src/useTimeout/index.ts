@@ -7,9 +7,7 @@ function useTimeout(fn: () => void, delay: number | undefined) {
   const timerRef = useRef<ReturnType<typeof setTimeout>>();
 
   useEffect(() => {
-    if (!isNumber(delay) || delay < 0) {
-      return;
-    }
+    if (!isNumber(delay) || delay < 0) return;
 
     timerRef.current = setTimeout(() => {
       fnRef.current();
