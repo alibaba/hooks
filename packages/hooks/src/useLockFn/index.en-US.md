@@ -22,13 +22,12 @@ function useLockFn<P extends any[] = any[], V extends any = any>(
 ```
 
 ### Result
-
-| 参数 | 说明                         | 类型                               |
+| Property | Description              | Type                               |
 |------|------------------------------|------------------------------------|
 | fn   | The async function with lock | `(...args: any[]) => Promise<any>` |
 
 ### Params
 
-| 参数 | 说明              | 类型                               | 默认值 |
-|------|-------------------|------------------------------------|--------|
-| fn   | An async function | `(...args: any[]) => Promise<any>` | -      |
+| Property | Description              | Type                               | Default  |
+|----------|--------------------------|------------------------------------|--------|
+| fn       | An async function        | `(...args: any[]) => Promise<any>` | -      |

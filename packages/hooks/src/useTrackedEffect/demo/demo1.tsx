@@ -25,11 +25,11 @@ export default () => {
       <p>Please open the browser console to view the output!</p>
       <div>
         <p>Count: {count}</p>
-        <button onClick={() => setCount((c) => c + 1)}>新增</button>
+        <button onClick={() => setCount((c) => c + 1)}>count + 1</button>
       </div>
       <div style={{ marginTop: 16 }}>
         <p>Count2: {count2}</p>
-        <button onClick={() => setCount2((c) => c + 1)}>新增</button>
+        <button onClick={() => setCount2((c) => c + 1)}>count + 1</button>
       </div>
     </div>
   );

@@ -7,8 +7,7 @@ function useTimeout(fn: () => void, delay: number | undefined) {
   const timerRef = useRef<ReturnType<typeof setTimeout>>();
 
   useEffect(() => {
-    if (!isNumber(delay) || delay < 0 || isNaN(delay)) {
-      console.warn(`delay should be a valid number but get ${delay}`);
+    if (!isNumber(delay) || delay < 0) {
       return;
     }
 
