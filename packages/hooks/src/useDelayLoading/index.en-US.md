@@ -15,7 +15,7 @@ If it is set to 'false' within the delay time, the logic of setting 'true' will 
 
 1. When the page data request speed is fast, the page flicker caused by the short occurrence of 'loading' can be avoided.
 
-2. When the page data request data is fast, it can effectively reduce the number of component rendering and improve the performance.
+2. When the page data request speed is fast, it can effectively reduce the number of component rendering and improve the performance.
 
 ## Examples
 

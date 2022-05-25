@@ -2,34 +2,35 @@ import React, { useEffect, useRef, useState } from 'react';
 import { unstable_batchedUpdates as batchedUpdates } from 'react-dom';
 import { useDelayLoading } from 'ahooks';
 
-let list = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+const list = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
 export default () => {
-  useEffect(() => getData(1), []);
-
   // 使用延迟loading
   const [loading, setLoading] = useDelayLoading(true, 200);
 
   const [time, setTime] = useState(0);
   const renderCount = useRef(0);
 
-  const getData = (pageNumber: number) => {
+  const [pageNumber, setPageNumber] = useState(1);
+
+  const getData = (pageNum: number) => {
     setLoading(true);
-    let now = performance.now();
+    const now = performance.now();
     setTimeout(() => {
       batchedUpdates(() => {
-        setPageNumber(pageNumber);
+        setPageNumber(pageNum);
         setTime(Math.floor(performance.now() - now));
         setLoading(false);
       });
     }, Math.random() * 500);
   };
 
-  const [pageNumber, setPageNumber] = useState(1);
-  const onChange = (pageNumber: number) => {
+  const onChange = (pageNum: number) => {
     renderCount.current = 0;
-    getData(pageNumber);
+    getData(pageNum);
   };
+
+  useEffect(() => getData(1), []);
 
   renderCount.current++;
 
@@ -41,8 +42,8 @@ export default () => {
         </p>
       ) : (
         <ul>
-          {list.map((_, index) => (
-            <li key={index}>
+          {list.map((item) => (
+            <li key={item}>
               第{pageNumber}页数据，本次请求时间{time}毫秒，
               {time > 200 ? '大于200毫秒，会显示loading' : '小于200毫秒，不会显示loading'},
               渲染次数：{renderCount.current}次
@@ -51,7 +52,7 @@ export default () => {
         </ul>
       )}
       <div>
-        {list.map((item, index) => {
+        {list.map((item) => {
           return (
             <div
               onClick={() => onChange(item)}
@@ -66,7 +67,7 @@ export default () => {
                 cursor: 'pointer',
                 color: pageNumber === item ? '#37f' : '#333',
               }}
-              key={index}
+              key={item}
             >
               {item}
             </div>

@@ -1,5 +1,6 @@
 import { renderHook, act } from '@testing-library/react-hooks';
 import useDelayLoading from '../index';
+jest.useFakeTimers();
 
 const setUp = (initValue: boolean, lazy?: number) =>
   renderHook(() => useDelayLoading(initValue, lazy));
@@ -9,41 +10,29 @@ describe('useDelayLoading', () => {
     expect(useDelayLoading).toBeDefined();
   });
 
-  jest.useFakeTimers();
-
-  it('test on set false', async () => {
-    const { result } = setUp(true, 200);
-    expect(result.current[0]).toBe(true);
-
-    act(() => {
-      result.current[1](false);
-    });
+  /** 测试初始值为false，在延迟时间200ms内设置为true, 期望loading值依然为false */
+  it('test on delay time internal set true', async () => {
+    const { result } = setUp(false, 200);
     expect(result.current[0]).toBe(false);
 
-    // act(() => {
-    //   result.current[1](true);
-    // });
-    // expect(result.current[0]).toBe(false);
+    act(() => {
+      result.current[1](true);
+      jest.advanceTimersByTime(100);
+    });
+    expect(result.current[0]).toBe(false);
   });
 
-  // it('test on no set false', () => {
+  /** 测试初始值为false，在超出延迟时间200ms后设置为true, 期望loading值变为true */
+  it('test on delay time external set true', () => {
+    const { result } = setUp(false, 200);
+    expect(result.current[0]).toBe(false);
 
-  //   const { result } = setUp(true, 200);
-  //   expect(result.current[0]).toBe(true);
-
-  //   act(() => {
-  //     result.current[1](false);
-  //   });
-  //   expect(result.current[0]).toBe(false);
-
-  // act(() => {
-  //   result.current[1](true);
-  // });
-  // expect(result.current[0]).toBe(false);
-
-  // jest.advanceTimersByTime(300)
-  // expect(result.current[0]).toBe(true)
-  // });
+    act(() => {
+      result.current[1](true);
+      jest.advanceTimersByTime(300);
+    });
+    expect(result.current[0]).toBe(true);
+  });
 
   it('test on default value', () => {
     const hook = setUp(true);

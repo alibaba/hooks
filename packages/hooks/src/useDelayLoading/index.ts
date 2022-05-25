@@ -1,26 +1,23 @@
 import { useRef, useState } from 'react';
 
-type IUseTimeOutLoading = (
-  initValue: boolean,
-  lazy?: number,
-) => [boolean, (value: boolean) => void];
+type UseDelayLoading = (initValue: boolean, lazy?: number) => [boolean, (value: boolean) => void];
 
-const useDelayLoading: IUseTimeOutLoading = (initValue, Lazy = 200) => {
+const useDelayLoading: UseDelayLoading = (initValue, lazy = 200) => {
   const timer = useRef<NodeJS.Timeout>();
 
   const [loading, setLoading] = useState<boolean>(initValue);
 
-  const setValueTimeOut = (value: boolean) => {
+  const setDelayLoading = (value: boolean) => {
     if (timer.current) clearTimeout(timer.current);
 
     if (!value) {
       setLoading(value);
     } else {
-      timer.current = setTimeout(() => setLoading(value), Lazy);
+      timer.current = setTimeout(() => setLoading(value), lazy);
     }
   };
 
-  return [loading, setValueTimeOut];
+  return [loading, setDelayLoading];
 };
 
 export default useDelayLoading;
