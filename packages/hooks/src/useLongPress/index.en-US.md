@@ -24,8 +24,10 @@ useLongPress(
   onLongPress: (event: MouseEvent | TouchEvent) => void,
   target: Target,
   options?: {
-    delay?: number,
-    onClick?: (event: MouseEvent | TouchEvent) => void,
+    delay?: number;
+    moveThreshold?: { x?: number; y?: number };
+    onClick?: (event: MouseEvent | TouchEvent) => void;
+    onLongPressEnd?: (event: MouseEvent | TouchEvent) => void;
   }
 );
 ```
@@ -42,6 +44,7 @@ useLongPress(
 | Property   | Description     | Type      | Default       |
 |------------|-----------------|-----------|---------------|
 | delay      | Long press time | `number`  | `300`         |
+| moveThreshold   | Move threshold after press. If exceeded, the long press function won't be triggered  | `{ x?: number; y?: number }`  | - |
 | onClick    | Click event     | `(event: MouseEvent \| TouchEvent) => void` |  -  |
 | onLongPressEnd | Long press end event       | `(event: MouseEvent \| TouchEvent) => void` |  -  |
 
