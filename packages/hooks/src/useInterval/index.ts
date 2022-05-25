@@ -12,7 +12,7 @@ function useInterval(
   const immediate = options?.immediate;
 
   const fnRef = useLatest(fn);
-  const timerRef = useRef<ReturnType<typeof setInterval>>();
+  const timerRef = useRef<number | NodeJS.Timer>();
 
   useEffect(() => {
     if (!isNumber(delay) || delay < 0) return;
@@ -25,14 +25,14 @@ function useInterval(
     }, delay);
     return () => {
       if (timerRef.current) {
-        clearInterval(timerRef.current);
+        clearInterval(timerRef.current as NodeJS.Timer);
       }
     };
   }, [delay]);
 
   const clear = useCallback(() => {
     if (timerRef.current) {
-      clearTimeout(timerRef.current);
+      clearTimeout(timerRef.current as NodeJS.Timer);
     }
   }, []);
 

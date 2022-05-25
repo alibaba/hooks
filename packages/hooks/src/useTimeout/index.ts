@@ -4,7 +4,7 @@ import { isNumber } from '../utils';
 
 function useTimeout(fn: () => void, delay: number | undefined) {
   const fnRef = useLatest(fn);
-  const timerRef = useRef<ReturnType<typeof setTimeout>>();
+  const timerRef = useRef<number | NodeJS.Timer>();
 
   useEffect(() => {
     if (!isNumber(delay) || delay < 0) return;
@@ -14,14 +14,14 @@ function useTimeout(fn: () => void, delay: number | undefined) {
     }, delay);
     return () => {
       if (timerRef.current) {
-        clearTimeout(timerRef.current);
+        clearTimeout(timerRef.current as NodeJS.Timer);
       }
     };
   }, [delay]);
 
   const clear = useCallback(() => {
     if (timerRef.current) {
-      clearTimeout(timerRef.current);
+      clearTimeout(timerRef.current as NodeJS.Timer);
     }
   }, []);
 

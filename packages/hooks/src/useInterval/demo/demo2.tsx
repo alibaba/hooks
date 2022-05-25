@@ -35,13 +35,7 @@ export default () => {
       >
         reset interval
       </button>
-      <button
-        onClick={() => {
-          clear();
-        }}
-      >
-        clear
-      </button>
+      <button onClick={clear}>clear</button>
     </div>
   );
 };
