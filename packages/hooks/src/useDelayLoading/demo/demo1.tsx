@@ -1,36 +1,49 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { unstable_batchedUpdates as batchedUpdates } from 'react-dom';
 import { useDelayLoading } from 'ahooks';
+import { Pagination } from 'antd';
 
-const list = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+const getListApi = () => {
+  return new Promise<number[]>((resolve) =>
+    setTimeout(() => resolve([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]), Math.random() * 300),
+  );
+};
 
 export default () => {
-  // 使用延迟loading
   const [loading, setLoading] = useDelayLoading(true, 200);
 
-  const [time, setTime] = useState(0);
+  const renderTime = useRef(0);
+
+  const [list, setList] = useState<number[]>([]);
+  const getList = async () => {
+    const now = new Date().getTime();
+    const res = await getListApi();
+    renderTime.current = Math.floor(new Date().getTime() - now);
+    setLoading(false);
+    setList(res);
+  };
+
   const renderCount = useRef(0);
 
-  const [pageNumber, setPageNumber] = useState(1);
-
-  const getData = (pageNum: number) => {
-    setLoading(true);
-    const now = performance.now();
-    setTimeout(() => {
-      batchedUpdates(() => {
-        setPageNumber(pageNum);
-        setTime(Math.floor(performance.now() - now));
-        setLoading(false);
-      });
-    }, Math.random() * 500);
-  };
-
-  const onChange = (pageNum: number) => {
+  useEffect(() => {
     renderCount.current = 0;
-    getData(pageNum);
+    getList();
+  }, []);
+
+  const pageNumber = useRef(1);
+
+  const onDelayChange = (pageNum: number) => {
+    renderCount.current = 0;
+    pageNumber.current = pageNum;
+    setLoading(true);
+    getList();
   };
 
-  useEffect(() => getData(1), []);
+  const onImmediateChange = (pageNum: number) => {
+    renderCount.current = 0;
+    pageNumber.current = pageNum;
+    setLoading(true, true);
+    getList();
+  };
 
   renderCount.current++;
 
@@ -44,36 +57,18 @@ export default () => {
         <ul>
           {list.map((item) => (
             <li key={item}>
-              第{pageNumber}页数据，本次请求时间{time}毫秒，
-              {time > 200 ? '大于200毫秒，会显示loading' : '小于200毫秒，不会显示loading'},
-              渲染次数：{renderCount.current}次
+              第{pageNumber.current}页数据，本次请求时间{renderTime.current}毫秒，
+              {renderTime.current > 200 ? '大于200毫秒' : '小于200毫秒'}， 组件渲染次数：
+              {renderCount.current}次
             </li>
           ))}
         </ul>
       )}
-      <div>
-        {list.map((item) => {
-          return (
-            <div
-              onClick={() => onChange(item)}
-              style={{
-                width: 30,
-                height: 30,
-                display: 'inline-block',
-                margin: 5,
-                border: '1px solid rgb(238, 238, 238)',
-                textAlign: 'center',
-                lineHeight: '30px',
-                cursor: 'pointer',
-                color: pageNumber === item ? '#37f' : '#333',
-              }}
-              key={item}
-            >
-              {item}
-            </div>
-          );
-        })}
-      </div>
+      <h4>延迟改变loading状态</h4>
+      <Pagination total={50} onChange={onDelayChange} showSizeChanger={false} />
+      <br />
+      <h4>立即改变loading状态</h4>
+      <Pagination total={50} onChange={onImmediateChange} showSizeChanger={false} />
     </>
   );
 };

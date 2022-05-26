@@ -34,6 +34,18 @@ describe('useDelayLoading', () => {
     expect(result.current[0]).toBe(true);
   });
 
+  /** 测试初始值为false，在延迟时间200ms内以立即设置的方式设置为true, 期望loading值变为true */
+  it('test on delay time external immediate set true', () => {
+    const { result } = setUp(false, 200);
+    expect(result.current[0]).toBe(false);
+
+    act(() => {
+      result.current[1](true, true);
+      jest.advanceTimersByTime(100);
+    });
+    expect(result.current[0]).toBe(true);
+  });
+
   it('test on default value', () => {
     const hook = setUp(true);
     expect(hook.result.current[0]).toBe(true);
