@@ -17,6 +17,10 @@ nav:
 
 <code src="./demo/demo2.tsx"/>
 
+### 按下后移动阈值
+
+<code src="./demo/demo3.tsx"/>
+
 ## API
 
 ```typescript

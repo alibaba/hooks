@@ -17,6 +17,10 @@ Listen for the long press event of the target element.
 
 <code src="./demo/demo2.tsx"/>
 
+### Move threshold after press
+
+<code src="./demo/demo3.tsx"/>
+
 ## API
 
 ```typescript
