@@ -18,18 +18,6 @@ const touchSupported =
   // @ts-ignore
   ('ontouchstart' in window || (window.DocumentTouch && document instanceof DocumentTouch));
 
-const getCurrentPosition = (event: EventType) => {
-  const position = { x: 0, y: 0 };
-  if (!touchSupported) {
-    position.x = (event as MouseEvent).clientX;
-    position.y = (event as MouseEvent).clientY;
-  } else {
-    position.x = (event as TouchEvent).touches[0].clientX;
-    position.y = (event as TouchEvent).touches[0].clientY;
-  }
-  return position;
-};
-
 function useLongPress(
   onLongPress: (event: EventType) => void,
   target: BasicTarget,
@@ -42,8 +30,11 @@ function useLongPress(
   const timerRef = useRef<ReturnType<typeof setTimeout>>();
   const isTriggeredRef = useRef(false);
 
-  const hasMoveThreshold = !!(moveThreshold?.x || moveThreshold?.y);
+  const hasMoveThreshold =
+    !!((moveThreshold?.x && moveThreshold.x > 0) || (moveThreshold?.y && moveThreshold.y > 0)) &&
+    touchSupported;
   const positionRef = useRef({ x: 0, y: 0 });
+  const isMovedOutRef = useRef(false);
 
   useEffectWithTarget(
     () => {
@@ -54,18 +45,28 @@ function useLongPress(
 
       const onStart = (event: EventType) => {
         if (hasMoveThreshold) {
-          positionRef.current = getCurrentPosition(event);
+          isMovedOutRef.current = false;
+          positionRef.current.x = (event as TouchEvent).touches[0].clientX;
+          positionRef.current.y = (event as TouchEvent).touches[0].clientY;
         }
         timerRef.current = setTimeout(() => {
-          if (hasMoveThreshold) {
-            const offsetX = getCurrentPosition(event).x - positionRef.current.x;
-            const offsetY = getCurrentPosition(event).y - positionRef.current.y;
-            if (moveThreshold?.x && moveThreshold.x > 0 && offsetX > moveThreshold.x) return;
-            if (moveThreshold?.y && moveThreshold.y > 0 && offsetY > moveThreshold.y) return;
-          }
+          if (isMovedOutRef.current) return;
           onLongPressRef.current(event);
           isTriggeredRef.current = true;
         }, delay);
+      };
+
+      const onMove = (event: TouchEvent) => {
+        if (hasMoveThreshold) {
+          const offsetX = Math.abs(event.touches[0].clientX - positionRef.current.x);
+          const offsetY = Math.abs(event.touches[0].clientY - positionRef.current.y);
+          if (moveThreshold?.x && offsetX > moveThreshold.x) {
+            isMovedOutRef.current = true;
+          }
+          if (moveThreshold?.y && offsetY > moveThreshold.y) {
+            isMovedOutRef.current = true;
+          }
+        }
       };
 
       const onEnd = (event: EventType, shouldTriggerClick: boolean = false) => {
@@ -88,6 +89,7 @@ function useLongPress(
         targetElement.addEventListener('mouseup', onEndWithClick);
         targetElement.addEventListener('mouseleave', onEnd);
       } else {
+        targetElement.addEventListener('touchmove', onMove);
         targetElement.addEventListener('touchstart', onStart);
         targetElement.addEventListener('touchend', onEndWithClick);
       }
@@ -102,6 +104,7 @@ function useLongPress(
           targetElement.removeEventListener('mouseup', onEndWithClick);
           targetElement.removeEventListener('mouseleave', onEnd);
         } else {
+          targetElement.removeEventListener('touchmove', onMove);
           targetElement.removeEventListener('touchstart', onStart);
           targetElement.removeEventListener('touchend', onEndWithClick);
         }

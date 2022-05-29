@@ -6,7 +6,9 @@ export default () => {
 
   const ref = useRef<HTMLButtonElement>(null);
 
-  useLongPress(() => setPressCounter((s) => s + 1), ref, { moveThreshold: { x: 100, y: 100 } });
+  useLongPress(() => setPressCounter((s) => s + 1), ref, {
+    moveThreshold: { x: 30, y: 30 },
+  });
 
   return (
     <div>
