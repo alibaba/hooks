@@ -57,7 +57,6 @@ function useLongPress(
       };
 
       const onMove = (event: TouchEvent) => {
-        if (!hasMoveThreshold) return;
         isMovedOutRef.current = false;
         const offsetX = Math.abs(event.touches[0].clientX - positionRef.current.x);
         const offsetY = Math.abs(event.touches[0].clientY - positionRef.current.y);
@@ -89,11 +88,10 @@ function useLongPress(
         targetElement.addEventListener('mouseup', onEndWithClick);
         targetElement.addEventListener('mouseleave', onEnd);
       } else {
-        targetElement.addEventListener('touchmove', onMove);
         targetElement.addEventListener('touchstart', onStart);
         targetElement.addEventListener('touchend', onEndWithClick);
+        if (hasMoveThreshold) targetElement.addEventListener('touchmove', onMove);
       }
-
       return () => {
         if (timerRef.current) {
           clearTimeout(timerRef.current);
@@ -104,9 +102,9 @@ function useLongPress(
           targetElement.removeEventListener('mouseup', onEndWithClick);
           targetElement.removeEventListener('mouseleave', onEnd);
         } else {
-          targetElement.removeEventListener('touchmove', onMove);
           targetElement.removeEventListener('touchstart', onStart);
           targetElement.removeEventListener('touchend', onEndWithClick);
+          if (hasMoveThreshold) targetElement.removeEventListener('touchmove', onMove);
         }
       };
     },
