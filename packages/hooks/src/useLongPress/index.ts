@@ -57,15 +57,15 @@ function useLongPress(
       };
 
       const onMove = (event: TouchEvent) => {
-        if (hasMoveThreshold) {
-          const offsetX = Math.abs(event.touches[0].clientX - positionRef.current.x);
-          const offsetY = Math.abs(event.touches[0].clientY - positionRef.current.y);
-          if (moveThreshold?.x && offsetX > moveThreshold.x) {
-            isMovedOutRef.current = true;
-          }
-          if (moveThreshold?.y && offsetY > moveThreshold.y) {
-            isMovedOutRef.current = true;
-          }
+        if (!hasMoveThreshold) return;
+        isMovedOutRef.current = false;
+        const offsetX = Math.abs(event.touches[0].clientX - positionRef.current.x);
+        const offsetY = Math.abs(event.touches[0].clientY - positionRef.current.y);
+        if (moveThreshold?.x && offsetX > moveThreshold.x) {
+          isMovedOutRef.current = true;
+        }
+        if (moveThreshold?.y && offsetY > moveThreshold.y) {
+          isMovedOutRef.current = true;
         }
       };
 
