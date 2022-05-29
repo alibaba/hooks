@@ -35,4 +35,15 @@ describe('useTimeout', () => {
     jest.advanceTimersByTime(50);
     expect(callback).toHaveBeenCalledTimes(0);
   });
+
+  it('timeout should be clear', () => {
+    const callback = jest.fn();
+
+    const hook = setUp({ fn: callback, delay: 20 });
+    expect(callback).not.toBeCalled();
+
+    hook.result.current();
+    jest.advanceTimersByTime(30);
+    expect(callback).toHaveBeenCalledTimes(0);
+  });
 });

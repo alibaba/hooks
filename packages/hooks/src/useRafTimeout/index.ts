@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useCallback, useEffect, useRef } from 'react';
 import useLatest from '../useLatest';
 import { isNumber } from '../utils';
 
@@ -44,16 +44,27 @@ const clearRafTimeout = function (handle: Handle) {
 
 function useRafTimeout(fn: () => void, delay: number | undefined) {
   const fnRef = useLatest(fn);
+  const timerRef = useRef<Handle>();
 
   useEffect(() => {
     if (!isNumber(delay) || delay < 0) return;
-    const timer = setRafTimeout(() => {
+    timerRef.current = setRafTimeout(() => {
       fnRef.current();
     }, delay);
     return () => {
-      clearRafTimeout(timer);
+      if (timerRef.current) {
+        clearRafTimeout(timerRef.current);
+      }
     };
   }, [delay]);
+
+  const clear = useCallback(() => {
+    if (timerRef.current) {
+      clearRafTimeout(timerRef.current);
+    }
+  }, []);
+
+  return clear;
 }
 
 export default useRafTimeout;

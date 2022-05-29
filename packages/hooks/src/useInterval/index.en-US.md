@@ -24,7 +24,7 @@ useInterval(
   fn: () => void, 
   delay?: number | undefined, 
   options?: Options
-);
+): fn: () => void;
 ```
 
 ### Params
@@ -41,3 +41,9 @@ useInterval(
 | Property  | Description                                                            | Type      | Default |
 |-----------|------------------------------------------------------------------------|-----------|---------|
 | immediate | Whether the function should be executed immediately on first execution | `boolean` | `false` |
+
+### Result
+
+| Property    | Description                  | Type                                |
+|--------|-----------------------|------------------------------------|
+| clearInterval | clear interval | `() => void` |
