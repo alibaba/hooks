@@ -17,7 +17,7 @@ Listen for the long press event of the target element.
 
 <code src="./demo/demo2.tsx"/>
 
-### (Mobile Only) Move threshold after press
+### (Mobile Only) Move threshold
 
 <code src="./demo/demo3.tsx"/>
 

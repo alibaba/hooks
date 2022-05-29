@@ -29,12 +29,11 @@ function useLongPress(
 
   const timerRef = useRef<ReturnType<typeof setTimeout>>();
   const isTriggeredRef = useRef(false);
-
+  const pervPositionRef = useRef({ x: 0, y: 0 });
+  const overThresholdRef = useRef(false);
   const hasMoveThreshold =
     !!((moveThreshold?.x && moveThreshold.x > 0) || (moveThreshold?.y && moveThreshold.y > 0)) &&
     touchSupported;
-  const pervPositionRef = useRef({ x: 0, y: 0 });
-  const overThresholdRef = useRef(false);
 
   useEffectWithTarget(
     () => {
@@ -45,7 +44,6 @@ function useLongPress(
 
       const onStart = (event: EventType) => {
         if (hasMoveThreshold) {
-          overThresholdRef.current = false;
           pervPositionRef.current.x = (event as TouchEvent).touches[0].clientX;
           pervPositionRef.current.y = (event as TouchEvent).touches[0].clientY;
         }
@@ -57,15 +55,14 @@ function useLongPress(
       };
 
       const onMove = (event: TouchEvent) => {
-        overThresholdRef.current = false;
+        // 如果已经触发过长按事件，下面的计算就没有意义了
+        if (isTriggeredRef.current) return;
+
         const offsetX = Math.abs(event.touches[0].clientX - pervPositionRef.current.x);
         const offsetY = Math.abs(event.touches[0].clientY - pervPositionRef.current.y);
-        if (moveThreshold?.x && offsetX > moveThreshold.x) {
-          overThresholdRef.current = true;
-        }
-        if (moveThreshold?.y && offsetY > moveThreshold.y) {
-          overThresholdRef.current = true;
-        }
+        overThresholdRef.current =
+          (moveThreshold?.x && offsetX > moveThreshold.x) ||
+          (moveThreshold?.y && offsetY > moveThreshold.y);
       };
 
       const onEnd = (event: EventType, shouldTriggerClick: boolean = false) => {

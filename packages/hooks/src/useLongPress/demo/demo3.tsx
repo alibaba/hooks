@@ -1,3 +1,10 @@
+/**
+ * title: Basic usage
+ * desc: After the movement threshold is exceeded, the long press event will not be triggered
+ *
+ * title.zh-CN: 超出移动阈值
+ * desc.zh-CN: 超出移动阈值之后，长按事件将不会触发
+ */
 import React, { useRef, useState } from 'react';
 import { useLongPress } from 'ahooks';
 
@@ -7,7 +14,7 @@ export default () => {
   const ref = useRef<HTMLButtonElement>(null);
 
   useLongPress(() => setPressCounter((s) => s + 1), ref, {
-    moveThreshold: { x: 30, y: 30 },
+    moveThreshold: { x: 30 },
   });
 
   return (
