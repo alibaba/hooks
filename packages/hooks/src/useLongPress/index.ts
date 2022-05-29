@@ -33,7 +33,7 @@ function useLongPress(
   const hasMoveThreshold =
     !!((moveThreshold?.x && moveThreshold.x > 0) || (moveThreshold?.y && moveThreshold.y > 0)) &&
     touchSupported;
-  const positionRef = useRef({ x: 0, y: 0 });
+  const pervPositionRef = useRef({ x: 0, y: 0 });
   const isMovedOutRef = useRef(false);
 
   useEffectWithTarget(
@@ -46,8 +46,8 @@ function useLongPress(
       const onStart = (event: EventType) => {
         if (hasMoveThreshold) {
           isMovedOutRef.current = false;
-          positionRef.current.x = (event as TouchEvent).touches[0].clientX;
-          positionRef.current.y = (event as TouchEvent).touches[0].clientY;
+          pervPositionRef.current.x = (event as TouchEvent).touches[0].clientX;
+          pervPositionRef.current.y = (event as TouchEvent).touches[0].clientY;
         }
         timerRef.current = setTimeout(() => {
           if (isMovedOutRef.current) return;
@@ -58,8 +58,8 @@ function useLongPress(
 
       const onMove = (event: TouchEvent) => {
         isMovedOutRef.current = false;
-        const offsetX = Math.abs(event.touches[0].clientX - positionRef.current.x);
-        const offsetY = Math.abs(event.touches[0].clientY - positionRef.current.y);
+        const offsetX = Math.abs(event.touches[0].clientX - pervPositionRef.current.x);
+        const offsetY = Math.abs(event.touches[0].clientY - pervPositionRef.current.y);
         if (moveThreshold?.x && offsetX > moveThreshold.x) {
           isMovedOutRef.current = true;
         }
