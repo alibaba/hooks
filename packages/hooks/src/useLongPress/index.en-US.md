@@ -17,7 +17,7 @@ Listen for the long press event of the target element.
 
 <code src="./demo/demo2.tsx"/>
 
-### Move threshold after press
+### (Mobile Only) Move threshold after press
 
 <code src="./demo/demo3.tsx"/>
 
@@ -48,7 +48,7 @@ useLongPress(
 | Property   | Description     | Type      | Default       |
 |------------|-----------------|-----------|---------------|
 | delay      | Long press time | `number`  | `300`         |
-| moveThreshold   | Move threshold after press. If exceeded, the long press function won't be triggered  | `{ x?: number; y?: number }`  | - |
+| moveThreshold   | (Mobile Only) Move threshold after press. If exceeded, the long press function won't be triggered  | `{ x?: number; y?: number }`  | - |
 | onClick    | Click event     | `(event: MouseEvent \| TouchEvent) => void` |  -  |
 | onLongPressEnd | Long press end event       | `(event: MouseEvent \| TouchEvent) => void` |  -  |
 
