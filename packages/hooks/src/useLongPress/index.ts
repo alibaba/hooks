@@ -60,9 +60,14 @@ function useLongPress(
 
         const offsetX = Math.abs(event.touches[0].clientX - pervPositionRef.current.x);
         const offsetY = Math.abs(event.touches[0].clientY - pervPositionRef.current.y);
-        overThresholdRef.current =
+        if (
           (moveThreshold?.x && offsetX > moveThreshold.x) ||
-          (moveThreshold?.y && offsetY > moveThreshold.y);
+          (moveThreshold?.y && offsetY > moveThreshold.y)
+        ) {
+          overThresholdRef.current = true;
+        } else {
+          overThresholdRef.current = false;
+        }
       };
 
       const onEnd = (event: EventType, shouldTriggerClick: boolean = false) => {
