@@ -8,6 +8,7 @@ import useEffectWithTarget from '../utils/useEffectWithTarget';
 type EventType = MouseEvent | TouchEvent;
 export interface Options {
   delay?: number;
+  moveThreshold?: { x?: number; y?: number };
   onClick?: (event: EventType) => void;
   onLongPressEnd?: (event: EventType) => void;
 }
@@ -20,7 +21,7 @@ const touchSupported =
 function useLongPress(
   onLongPress: (event: EventType) => void,
   target: BasicTarget,
-  { delay = 300, onClick, onLongPressEnd }: Options = {},
+  { delay = 300, moveThreshold, onClick, onLongPressEnd }: Options = {},
 ) {
   const onLongPressRef = useLatest(onLongPress);
   const onClickRef = useLatest(onClick);
@@ -28,6 +29,11 @@ function useLongPress(
 
   const timerRef = useRef<ReturnType<typeof setTimeout>>();
   const isTriggeredRef = useRef(false);
+  const pervPositionRef = useRef({ x: 0, y: 0 });
+  const overThresholdRef = useRef(false);
+  const hasMoveThreshold =
+    !!((moveThreshold?.x && moveThreshold.x > 0) || (moveThreshold?.y && moveThreshold.y > 0)) &&
+    touchSupported;
 
   useEffectWithTarget(
     () => {
@@ -36,14 +42,35 @@ function useLongPress(
         return;
       }
 
-      const onStart = (event: TouchEvent | MouseEvent) => {
+      const onStart = (event: EventType) => {
+        if (hasMoveThreshold) {
+          pervPositionRef.current.x = (event as TouchEvent).touches[0].clientX;
+          pervPositionRef.current.y = (event as TouchEvent).touches[0].clientY;
+        }
         timerRef.current = setTimeout(() => {
+          if (overThresholdRef.current) return;
           onLongPressRef.current(event);
           isTriggeredRef.current = true;
         }, delay);
       };
 
-      const onEnd = (event: TouchEvent | MouseEvent, shouldTriggerClick: boolean = false) => {
+      const onMove = (event: TouchEvent) => {
+        // 如果已经触发过长按事件，下面的计算就没有意义了
+        if (isTriggeredRef.current) return;
+
+        const offsetX = Math.abs(event.touches[0].clientX - pervPositionRef.current.x);
+        const offsetY = Math.abs(event.touches[0].clientY - pervPositionRef.current.y);
+        if (
+          (moveThreshold?.x && offsetX > moveThreshold.x) ||
+          (moveThreshold?.y && offsetY > moveThreshold.y)
+        ) {
+          overThresholdRef.current = true;
+        } else {
+          overThresholdRef.current = false;
+        }
+      };
+
+      const onEnd = (event: EventType, shouldTriggerClick: boolean = false) => {
         if (timerRef.current) {
           clearTimeout(timerRef.current);
         }
@@ -56,7 +83,7 @@ function useLongPress(
         isTriggeredRef.current = false;
       };
 
-      const onEndWithClick = (event: TouchEvent | MouseEvent) => onEnd(event, true);
+      const onEndWithClick = (event: EventType) => onEnd(event, true);
 
       if (!touchSupported) {
         targetElement.addEventListener('mousedown', onStart);
@@ -65,8 +92,8 @@ function useLongPress(
       } else {
         targetElement.addEventListener('touchstart', onStart);
         targetElement.addEventListener('touchend', onEndWithClick);
+        if (hasMoveThreshold) targetElement.addEventListener('touchmove', onMove);
       }
-
       return () => {
         if (timerRef.current) {
           clearTimeout(timerRef.current);
@@ -79,6 +106,7 @@ function useLongPress(
         } else {
           targetElement.removeEventListener('touchstart', onStart);
           targetElement.removeEventListener('touchend', onEndWithClick);
+          if (hasMoveThreshold) targetElement.removeEventListener('touchmove', onMove);
         }
       };
     },

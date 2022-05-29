@@ -11,8 +11,8 @@ const mockTarget = {
   addEventListener: jest.fn((event, callback) => {
     events[event] = callback;
   }),
-  removeEventListener: jest.fn((event, callback) => {
-    delete events[event];
+  removeEventListener: jest.fn((event) => {
+    Reflect.deleteProperty(events, event);
   }),
 };
 
