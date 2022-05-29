@@ -34,7 +34,7 @@ function useLongPress(
     !!((moveThreshold?.x && moveThreshold.x > 0) || (moveThreshold?.y && moveThreshold.y > 0)) &&
     touchSupported;
   const pervPositionRef = useRef({ x: 0, y: 0 });
-  const isMovedOutRef = useRef(false);
+  const overThresholdRef = useRef(false);
 
   useEffectWithTarget(
     () => {
@@ -45,26 +45,26 @@ function useLongPress(
 
       const onStart = (event: EventType) => {
         if (hasMoveThreshold) {
-          isMovedOutRef.current = false;
+          overThresholdRef.current = false;
           pervPositionRef.current.x = (event as TouchEvent).touches[0].clientX;
           pervPositionRef.current.y = (event as TouchEvent).touches[0].clientY;
         }
         timerRef.current = setTimeout(() => {
-          if (isMovedOutRef.current) return;
+          if (overThresholdRef.current) return;
           onLongPressRef.current(event);
           isTriggeredRef.current = true;
         }, delay);
       };
 
       const onMove = (event: TouchEvent) => {
-        isMovedOutRef.current = false;
+        overThresholdRef.current = false;
         const offsetX = Math.abs(event.touches[0].clientX - pervPositionRef.current.x);
         const offsetY = Math.abs(event.touches[0].clientY - pervPositionRef.current.y);
         if (moveThreshold?.x && offsetX > moveThreshold.x) {
-          isMovedOutRef.current = true;
+          overThresholdRef.current = true;
         }
         if (moveThreshold?.y && offsetY > moveThreshold.y) {
-          isMovedOutRef.current = true;
+          overThresholdRef.current = true;
         }
       };
 
