@@ -42,7 +42,7 @@ function useLongPress(
   const timerRef = useRef<ReturnType<typeof setTimeout>>();
   const isTriggeredRef = useRef(false);
 
-  const checkMovement = !!(moveThreshold?.x || moveThreshold?.y);
+  const hasMoveThreshold = !!(moveThreshold?.x || moveThreshold?.y);
   const positionRef = useRef({ x: 0, y: 0 });
 
   useEffectWithTarget(
@@ -53,11 +53,11 @@ function useLongPress(
       }
 
       const onStart = (event: EventType) => {
-        if (checkMovement) {
+        if (hasMoveThreshold) {
           positionRef.current = getCurrentPosition(event);
         }
         timerRef.current = setTimeout(() => {
-          if (checkMovement) {
+          if (hasMoveThreshold) {
             const offsetX = getCurrentPosition(event).x - positionRef.current.x;
             const offsetY = getCurrentPosition(event).y - positionRef.current.y;
             if (moveThreshold?.x && moveThreshold.x > 0 && offsetX > moveThreshold.x) return;
