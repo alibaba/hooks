@@ -17,7 +17,7 @@ nav:
 
 <code src="./demo/demo2.tsx"/>
 
-### (仅支持移动端) 移动阈值
+### 移动阈值
 
 <code src="./demo/demo3.tsx"/>
 
@@ -48,7 +48,7 @@ useLongPress(
 | 参数    | 说明     | 类型      | 默认值 |
 |---------|----------|-----------|--------|
 | delay   | 长按时间 | `number`  | `300` |
-| moveThreshold   | (仅支持移动端) 按下后移动阈值，超出则不触发长按事件 | `{ x?: number; y?: number }`  | - |
+| moveThreshold   | 按下后移动阈值，超出则不触发长按事件 | `{ x?: number; y?: number }`  | - |
 | onClick | 点击事件 | `(event: MouseEvent \| TouchEvent) => void` | - |
 | onLongPressEnd | 长按结束事件 | `(event: MouseEvent \| TouchEvent) => void` | - |
 
