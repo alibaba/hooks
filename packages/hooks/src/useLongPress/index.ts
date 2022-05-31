@@ -31,9 +31,10 @@ function useLongPress(
   const isTriggeredRef = useRef(false);
   const pervPositionRef = useRef({ x: 0, y: 0 });
   const overThresholdRef = useRef(false);
-  const hasMoveThreshold =
-    !!((moveThreshold?.x && moveThreshold.x > 0) || (moveThreshold?.y && moveThreshold.y > 0)) &&
-    touchSupported;
+  const hasMoveThreshold = !!(
+    (moveThreshold?.x && moveThreshold.x > 0) ||
+    (moveThreshold?.y && moveThreshold.y > 0)
+  );
 
   useEffectWithTarget(
     () => {
@@ -42,10 +43,43 @@ function useLongPress(
         return;
       }
 
+      const overThreshold = (event: EventType) => {
+        const { clientX, clientY } = getClientPosition(event);
+        const offsetX = Math.abs(clientX - pervPositionRef.current.x);
+        const offsetY = Math.abs(clientY - pervPositionRef.current.y);
+
+        return !!(
+          (moveThreshold?.x && offsetX > moveThreshold.x) ||
+          (moveThreshold?.y && offsetY > moveThreshold.y)
+        );
+      };
+
+      function getClientPosition(event: EventType) {
+        if (event instanceof TouchEvent) {
+          return {
+            clientX: event.touches[0].clientX,
+            clientY: event.touches[0].clientY,
+          };
+        }
+
+        if (event instanceof MouseEvent) {
+          return {
+            clientX: event.clientX,
+            clientY: event.clientY,
+          };
+        }
+
+        console.warn('Unsupported event type');
+
+        return { clientX: 0, clientY: 0 };
+      }
+
       const onStart = (event: EventType) => {
         if (hasMoveThreshold) {
-          pervPositionRef.current.x = (event as TouchEvent).touches[0].clientX;
-          pervPositionRef.current.y = (event as TouchEvent).touches[0].clientY;
+          overThresholdRef.current = false;
+          const { clientX, clientY } = getClientPosition(event);
+          pervPositionRef.current.x = clientX;
+          pervPositionRef.current.y = clientY;
         }
         timerRef.current = setTimeout(() => {
           if (overThresholdRef.current) return;
@@ -55,19 +89,7 @@ function useLongPress(
       };
 
       const onMove = (event: TouchEvent) => {
-        // 如果已经触发过长按事件，下面的计算就没有意义了
-        if (isTriggeredRef.current) return;
-
-        const offsetX = Math.abs(event.touches[0].clientX - pervPositionRef.current.x);
-        const offsetY = Math.abs(event.touches[0].clientY - pervPositionRef.current.y);
-        if (
-          (moveThreshold?.x && offsetX > moveThreshold.x) ||
-          (moveThreshold?.y && offsetY > moveThreshold.y)
-        ) {
-          overThresholdRef.current = true;
-        } else {
-          overThresholdRef.current = false;
-        }
+        overThresholdRef.current = overThreshold(event);
       };
 
       const onEnd = (event: EventType, shouldTriggerClick: boolean = false) => {
@@ -89,6 +111,7 @@ function useLongPress(
         targetElement.addEventListener('mousedown', onStart);
         targetElement.addEventListener('mouseup', onEndWithClick);
         targetElement.addEventListener('mouseleave', onEnd);
+        if (hasMoveThreshold) targetElement.addEventListener('mousemove', onMove);
       } else {
         targetElement.addEventListener('touchstart', onStart);
         targetElement.addEventListener('touchend', onEndWithClick);
@@ -103,6 +126,7 @@ function useLongPress(
           targetElement.removeEventListener('mousedown', onStart);
           targetElement.removeEventListener('mouseup', onEndWithClick);
           targetElement.removeEventListener('mouseleave', onEnd);
+          if (hasMoveThreshold) targetElement.removeEventListener('mousemove', onMove);
         } else {
           targetElement.removeEventListener('touchstart', onStart);
           targetElement.removeEventListener('touchend', onEndWithClick);
