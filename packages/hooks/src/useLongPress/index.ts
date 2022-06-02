@@ -88,6 +88,7 @@ function useLongPress(
       const onMove = (event: TouchEvent) => {
         if (timerRef.current && overThreshold(event)) {
           clearInterval(timerRef.current);
+          timerRef.current = undefined;
         }
       };
 
