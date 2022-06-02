@@ -8,6 +8,7 @@ install:
 script:
   - yarn run build:doc
   - surge ./dist ahooks-$(git rev-parse --short HEAD).surge.sh
+  - yarn coveralls # generate static files
 cache:
   directories:
     - 'node_modules'
