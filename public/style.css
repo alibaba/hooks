@@ -23,6 +23,10 @@ input[type='number'] {
   color: #141414;
 }
 
+[data-prefers-color='dark'] input {
+  color: #141414;
+}
+
 #logo-version {
   flex: 1;
   margin-top: 10px;
