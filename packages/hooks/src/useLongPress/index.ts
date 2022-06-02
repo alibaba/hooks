@@ -30,7 +30,6 @@ function useLongPress(
   const timerRef = useRef<ReturnType<typeof setTimeout>>();
   const isTriggeredRef = useRef(false);
   const pervPositionRef = useRef({ x: 0, y: 0 });
-  const overThresholdRef = useRef(false);
   const hasMoveThreshold = !!(
     (moveThreshold?.x && moveThreshold.x > 0) ||
     (moveThreshold?.y && moveThreshold.y > 0)
@@ -76,20 +75,21 @@ function useLongPress(
 
       const onStart = (event: EventType) => {
         if (hasMoveThreshold) {
-          overThresholdRef.current = false;
           const { clientX, clientY } = getClientPosition(event);
           pervPositionRef.current.x = clientX;
           pervPositionRef.current.y = clientY;
         }
         timerRef.current = setTimeout(() => {
-          if (overThresholdRef.current) return;
           onLongPressRef.current(event);
           isTriggeredRef.current = true;
         }, delay);
       };
 
       const onMove = (event: TouchEvent) => {
-        overThresholdRef.current = overThreshold(event);
+        if (timerRef.current && overThreshold(event)) {
+          clearInterval(timerRef.current);
+          timerRef.current = undefined;
+        }
       };
 
       const onEnd = (event: EventType, shouldTriggerClick: boolean = false) => {
