@@ -6,7 +6,7 @@
     "url": "git+https://github.com/alibaba/hooks.git"
   },
   "scripts": {
-    "init": "pnpm clean && pnpm i --registry=https://registry.npmmirror.com && pnpm run build",
+    "init": "pnpm clean && pnpm install  && pnpm run build",
     "start": "pnpm run dev",
     "dev": "dumi dev",
     "clean": "rm -rf node_modules **/*/node_modules",
