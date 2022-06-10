@@ -18,6 +18,7 @@ importers:
       babel-loader: ^8.1.0
       babel-plugin-import: ^1.12.0
       babel-plugin-transform-async-to-promises: ^0.8.15
+      coveralls: ^3.1.1
       del: ^5.1.0
       dumi: ^1.1.7
       enzyme: ^3.10.0
@@ -64,6 +65,7 @@ importers:
       babel-loader: 8.2.5_lzsemofhph6vepnub4bnemnm6m
       babel-plugin-import: 1.13.5
       babel-plugin-transform-async-to-promises: 0.8.18
+      coveralls: 3.1.1
       del: 5.1.0
       dumi: 1.1.42_s6y3adu5ghf3bzbuy4lgr7s7ry
       enzyme: 3.11.0
@@ -6276,6 +6278,21 @@ packages:
       yaml: 1.10.2
     dev: true
 
+  /coveralls/3.1.1:
+    resolution:
+      {
+        integrity: sha512-+dxnG2NHncSD1NrqbSM3dn/lE57O6Qf/koe9+I7c+wzkqRmEvcp0kgJdxKInzYzkICKkFMZsX3Vct3++tsF9ww==,
+      }
+    engines: { node: '>=6' }
+    hasBin: true
+    dependencies:
+      js-yaml: 3.14.1
+      lcov-parse: 1.0.0
+      log-driver: 1.2.7
+      minimist: 1.2.6
+      request: 2.88.2
+    dev: true
+
   /create-ecdh/4.0.4:
     resolution:
       {
@@ -8826,7 +8843,7 @@ packages:
       fs.realpath: 1.0.0
       inflight: 1.0.6
       inherits: 2.0.4
-      minimatch: 3.0.4
+      minimatch: 3.1.2
       once: 1.4.0
       path-is-absolute: 1.0.1
     dev: true
@@ -11591,6 +11608,14 @@ packages:
       invert-kv: 3.0.1
     dev: true
 
+  /lcov-parse/1.0.0:
+    resolution:
+      {
+        integrity: sha512-aprLII/vPzuQvYZnDRU78Fns9I2Ag3gi4Ipga/hxnVMCZC8DnR2nI7XBqrPoywGfxqIx/DgarGvDJZAD3YBTgQ==,
+      }
+    hasBin: true
+    dev: true
+
   /lead/1.0.0:
     resolution:
       {
@@ -11809,6 +11834,14 @@ packages:
       {
         integrity: sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg==,
       }
+
+  /log-driver/1.2.7:
+    resolution:
+      {
+        integrity: sha512-U7KCmLdqsGHBLeWqYlFA0V0Sl6P08EE1ZrmA9cxjUE0WVqT9qnyVDPz1kzpFEP0jdJuFnasWIfSd7fsaNXkpbg==,
+      }
+    engines: { node: '>=0.8.6' }
+    dev: true
 
   /log-symbols/4.0.0:
     resolution:
@@ -19677,7 +19710,7 @@ packages:
       require-directory: 2.1.1
       string-width: 4.2.3
       y18n: 5.0.8
-      yargs-parser: 20.2.4
+      yargs-parser: 20.2.9
     dev: true
 
   /yargs/7.1.2:
