@@ -18,7 +18,7 @@ npm install @ahooksjs/use-url-state -S
 Or with pnpm
 
 ```bash
-pnpm install @ahooksjs/use-url-state
+pnpm add @ahooksjs/use-url-state
 ```
 
 ## Example
