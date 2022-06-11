@@ -21,6 +21,20 @@ const { data, run, cancel } = useRequest(getUsername, {
 
 <code src="./demo/polling.tsx" />
 
+## 轮询错误重试
+通过 `options.pollingErrorRetryCount` 轮询错误重试次数。
+
+```tsx | pure
+const { data, run, cancel } = useRequest(getUsername, {
+  pollingInterval: 3000,
+  pollingErrorRetryCount: 3,
+});
+```
+
+你可以通过下面的示例来体验效果。
+
+<code src="./demo/pollingError.tsx" />
+
 ## API
 
 ### Return

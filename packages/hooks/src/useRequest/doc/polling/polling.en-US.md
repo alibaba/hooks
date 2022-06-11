@@ -21,6 +21,20 @@ You can experience the effect through the following example
 
 <code src="./demo/polling.tsx" />
 
+## Polling error retry
+Polling by `options. PollingErrorRetryCount` configuration error retry count.
+
+```tsx | pure
+const { data, run, cancel } = useRequest(getUsername, {
+  pollingInterval: 3000,
+  pollingErrorRetryCount: 3,
+});
+```
+
+You can experience the effect through the following example.
+
+<code src="./demo/pollingError.tsx" />
+
 ## API
 
 ### Return
