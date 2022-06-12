@@ -42,6 +42,8 @@
 $ npm install --save ahooks
 # or
 $ yarn add ahooks
+# or
+$ pnpm add ahooks
 ```
 
 ## 🔨 使用
@@ -59,8 +61,8 @@ import { useRequest } from 'ahooks';
 ```bash
 $ git clone git@github.com:alibaba/hooks.git
 $ cd hooks
-$ yarn run init
-$ yarn start
+$ pnpm run init
+$ pnpm start
 ```
 
 打开浏览器访问 http://127.0.0.1:8000

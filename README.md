@@ -42,6 +42,8 @@ English | [简体中文](https://github.com/alibaba/hooks/blob/master/README.zh-
 $ npm install --save ahooks
 # or
 $ yarn add ahooks
+# or
+$ pnpm add ahooks
 ```
 
 ## 🔨 Usage
@@ -59,8 +61,8 @@ import { useRequest } from 'ahooks';
 ```bash
 $ git clone git@github.com:alibaba/hooks.git
 $ cd hooks
-$ yarn run init
-$ yarn start
+$ pnpm run init
+$ pnpm start
 ```
 
 Open your browser and visit http://127.0.0.1:8000

@@ -2,11 +2,10 @@ language: node_js
 node_js:
   - 'lts/*'
 install:
-  - yarn install
-  - yarn run bootstrap
-  - yarn install -g surge
+  - pnpm install
+  - pnpm install -g surge
 script:
-  - yarn run build:doc
+  - pnpm run build:doc
   - surge ./dist ahooks-$(git rev-parse --short HEAD).surge.sh
   - yarn coveralls # generate static files
 cache:
