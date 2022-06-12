@@ -8,7 +8,7 @@ describe('usePollingPlugin', () => {
   const setUp = (service, options) => renderHook((o) => useRequest(service, o || options));
 
   let hook;
-  it('usePollingPlugin should work', async () => {
+  it('usePollingPlugin pollingInterval=100 pollingWhenHidden=true  should work', async () => {
     const callback = jest.fn();
     act(() => {
       hook = setUp(
@@ -69,10 +69,12 @@ describe('usePollingPlugin', () => {
     expect(callback).toHaveBeenCalledTimes(5);
 
     hook.unmount();
+  });
 
+  let hook2;
+  it('usePollingPlugin pollingErrorRetryCount=3 should work', async () => {
     // if request error and set pollingErrorRetryCount
     // and the number of consecutive failures exceeds pollingErrorRetryCount, polling stops
-    let hook2;
     let errorCallback;
     act(() => {
       errorCallback = jest.fn();
