@@ -29,10 +29,6 @@ const usePollingPlugin: Plugin<any, any[]> = (
     return {};
   }
 
-  if (pollingErrorRetryCount !== -1 && countRef.current > pollingErrorRetryCount) {
-    return {};
-  }
-
   return {
     onBefore: () => {
       stopPolling();
@@ -60,6 +56,8 @@ const usePollingPlugin: Plugin<any, any[]> = (
         timerRef.current = setTimeout(() => {
           fetchInstance.refresh();
         }, pollingInterval);
+      } else {
+        countRef.current = 0;
       }
     },
     onCancel: () => {
