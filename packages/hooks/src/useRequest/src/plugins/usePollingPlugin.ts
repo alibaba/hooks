@@ -14,24 +14,38 @@ const usePollingPlugin: Plugin<any, any[]> = (
   const stopPolling = () => {
     if (timerRef.current) {
       clearTimeout(timerRef.current);
+      timerRef.current = undefined;
     }
     unsubscribeRef.current?.();
   };
 
+  const cancelPolling = () => {
+    stopPolling();
+    timerRef.current = -1;
+  };
+
   useUpdateEffect(() => {
+    if (timerRef.current === -1) return;
+
     if (!pollingInterval) {
       stopPolling();
+    } else if (isDocumentVisible() || pollingWhenHidden) {
+      clearTimeout(timerRef.current);
+      timerRef.current = setTimeout(() => {
+        fetchInstance.refresh();
+      }, pollingInterval);
     }
   }, [pollingInterval]);
 
   if (!pollingInterval) {
-    return {};
+    return {
+      onBefore: stopPolling,
+      onCancel: cancelPolling
+    };
   }
 
   return {
-    onBefore: () => {
-      stopPolling();
-    },
+    onBefore: stopPolling,
     onFinally: () => {
       // if pollingWhenHidden = false && document is hidden, then stop polling and subscribe revisable
       if (!pollingWhenHidden && !isDocumentVisible()) {
@@ -45,9 +59,7 @@ const usePollingPlugin: Plugin<any, any[]> = (
         fetchInstance.refresh();
       }, pollingInterval);
     },
-    onCancel: () => {
-      stopPolling();
-    },
+    onCancel: cancelPolling
   };
 };
 
