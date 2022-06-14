@@ -179,4 +179,25 @@ describe('useFusionTable', () => {
     expect(hook2.result.current.loading).toBeFalsy();
     expect(hook2.result.current.tableProps.dataSource).toHaveLength(5);
   });
+
+  it('onSort should be work', async () => {
+    const { result } = setup(getTableData);
+    act(() => {
+      result.current.tableProps.onSort('dataIndex', 'asc');
+    });
+    expect(result.current.loading).toBeTruthy();
+    expect(result.current.params[0]?.sorter).toMatchObject({ field: 'dataIndex', order: 'asc' });
+  });
+
+  it('onFilter should be work', async () => {
+    const { result } = setup(getTableData);
+    const filterParams = {
+      version: 3,
+    };
+    act(() => {
+      result.current.tableProps.onFilter(filterParams);
+    });
+    expect(result.current.loading).toBeTruthy();
+    expect(result.current.params[0]?.filters).toMatchObject(filterParams);
+  });
 });
