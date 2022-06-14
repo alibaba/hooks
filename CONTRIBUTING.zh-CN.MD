@@ -22,14 +22,14 @@
 
 2. 如果你修复了一个 bug 或者新增了一个功能，请确保写了相应的测试，这很重要。
 
-3. 确认所有的测试是通过的 `yarn run test`。
+3. 确认所有的测试是通过的 `pnpm run test`。
 
 ## 开发流程
 
-在你 clone 代码并且使用 `yarn run init` 安装完依赖后，你还可以运行下面几个常用的命令：
+在你 clone 代码并且使用 `pnpm run init` 安装完依赖后，你还可以运行下面几个常用的命令：
 
-1. `yarn start` 在本地运行 `ahooks` 网站。
+1. `pnpm start` 在本地运行 `ahooks` 网站。
 
-2. `yarn run test` 运行测试。
+2. `pnpm run test` 运行测试。
 
-3. `yarn run build` 构建编译。
+3. `pnpm run build` 构建编译。

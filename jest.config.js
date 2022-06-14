@@ -10,4 +10,11 @@ module.exports = {
       tsconfig: 'tsconfig.json',
     },
   },
+  collectCoverageFrom: [
+    '<rootDir>/**/src/**/*.{js,jsx,ts,tsx}',
+    '!**/demo/**',
+    '!**/example/**',
+    '!**/es/**',
+    '!**/lib/**',
+  ],
 };
