@@ -105,6 +105,7 @@ const useInfiniteScroll = <TData extends Data>(
   );
 
   useUpdateEffect(() => {
+    setFinalData(undefined);
     run();
   }, [...reloadDeps]);
 
