@@ -13,7 +13,7 @@ export default () => {
   const [count, setCount] = useState(0);
   const [interval, setInterval] = useState(1000);
 
-  useRafInterval(() => {
+  const clear = useRafInterval(() => {
     setCount(count + 1);
   }, interval);
 
@@ -37,7 +37,7 @@ export default () => {
       </button>
       <button
         onClick={() => {
-          setInterval(undefined);
+          clear();
         }}
       >
         clear

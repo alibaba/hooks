@@ -10,7 +10,12 @@
 
 [![NPM version][image-1]][1]
 [![NPM downloads][image-2]][2]
+[![npm](https://img.shields.io/npm/dw/ahooks-v2?label=downloads%28v2%29)](https://www.npmjs.com/package/ahooks-v2)
+[![Coverage Status](https://coveralls.io/repos/github/alibaba/hooks/badge.svg?branch=doc/beautify)](https://coveralls.io/github/alibaba/hooks?branch=doc/beautify)
+[![npm](https://img.shields.io/github/issues/alibaba/hooks)](https://github.com/alibaba/hooks/issues)
 ![gzip size](https://img.badgesize.io/https:/unpkg.com/ahooks/dist/ahooks.js?label=gzip%20size&compression=gzip)
+[![Percentage of issues still open](http://isitmaintained.com/badge/open/alibaba/hooks.svg)](http://isitmaintained.com/project/alibaba/hooks 'Percentage of issues still open')
+[![Average time to resolve an issue](http://isitmaintained.com/badge/resolution/alibaba/hooks.svg)](http://isitmaintained.com/project/alibaba/hooks 'Average time to resolve an issue')
 ![GitHub](https://img.shields.io/github/license/alibaba/hooks)
 
 [English](https://github.com/alibaba/hooks/blob/master/README.md) | 简体中文
@@ -37,6 +42,8 @@
 $ npm install --save ahooks
 # or
 $ yarn add ahooks
+# or
+$ pnpm add ahooks
 ```
 
 ## 🔨 使用
@@ -54,8 +61,8 @@ import { useRequest } from 'ahooks';
 ```bash
 $ git clone git@github.com:alibaba/hooks.git
 $ cd hooks
-$ yarn run init
-$ yarn start
+$ pnpm run init
+$ pnpm start
 ```
 
 打开浏览器访问 http://127.0.0.1:8000
@@ -75,4 +82,4 @@ $ yarn start
 [1]: https://www.npmjs.com/package/ahooks
 [2]: https://npmjs.org/package/ahooks
 [image-1]: https://img.shields.io/npm/v/ahooks.svg?style=flat
-[image-2]: https://img.shields.io/npm/dm/ahooks.svg?style=flat
+[image-2]: https://img.shields.io/npm/dw/ahooks.svg?style=flat

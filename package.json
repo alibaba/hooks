@@ -6,25 +6,23 @@
     "url": "git+https://github.com/alibaba/hooks.git"
   },
   "scripts": {
-    "init": "rm -rf node_modules && yarn install && yarn run clean && yarn run bootstrap && yarn run build",
-    "start": "yarn run dev",
+    "init": "pnpm clean && pnpm install && pnpm run build",
+    "start": "pnpm run dev",
     "dev": "dumi dev",
-    "bootstrap": "lerna bootstrap",
-    "clean": "lerna clean --yes",
-    "build": "lerna run build",
+    "clean": "rm -rf node_modules **/*/node_modules",
+    "build": "pnpm -r --filter=./packages/* run build",
     "test": "jest",
+    "coveralls": "jest --coverage --coverageReporters=text-lcov | coveralls",
     "lint": "eslint --ignore-pattern **/__tests__/* --ignore-pattern **/demo/* \"packages/*/src/**/*.{ts,tsx}\"",
+    "pretty": "pretty-quick --staged",
     "build:doc": "dumi build",
     "pub:doc-surge": "surge ./dist --domain ahooks.js.org",
     "pub:doc-gitee": "cd ./dist && rm -rf .git && touch .spa && touch .nojekyll && git init && git remote add origin git@gitee.com:ahooks/ahooks.git && git add -A && git commit -m \"publish docs\" && git push origin master -f && echo https://gitee.com/ahooks/ahooks/pages",
-    "pub:doc": "yarn run build:doc && yarn run pub:doc-surge && yarn run pub:doc-gitee",
-    "pub": "yarn run build && lerna publish",
-    "pub:beta": "yarn run build && lerna publish --dist-tag beta"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "pretty-quick --staged"
-    }
+    "pub:doc": "pnpm run build:doc && pnpm run pub:doc-surge && pnpm run pub:doc-gitee",
+    "pub": "pnpm run build && pnpm -r --filter=./packages/* publish",
+    "pub:beta": "pnpm run build && pnpm -r --filter=./packages/* publish --tag beta",
+    "preinstall": "npx only-allow pnpm",
+    "prepare": "husky install"
   },
   "devDependencies": {
     "@ant-design/icons": "^4.6.2",
@@ -42,6 +40,7 @@
     "babel-loader": "^8.1.0",
     "babel-plugin-import": "^1.12.0",
     "babel-plugin-transform-async-to-promises": "^0.8.15",
+    "coveralls": "^3.1.1",
     "del": "^5.1.0",
     "dumi": "^1.1.7",
     "enzyme": "^3.10.0",
@@ -53,15 +52,14 @@
     "gulp": "^4.0.2",
     "gulp-babel": "^8.0.0",
     "gulp-typescript": "^6.0.0-alpha.1",
-    "husky": "^4.2.5",
+    "husky": "^8.0.0",
     "jest": "^26.0.1",
     "jest-fetch-mock": "^3.0.3",
     "jest-localstorage-mock": "^2.4.18",
-    "lerna": "4.x",
     "mockdate": "^3.0.2",
     "mockjs": "^1.1.0",
     "prettier": "^2.0.5",
-    "pretty-quick": "^2.0.1",
+    "pretty-quick": "^3.1.3",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-drag-listview": "^0.1.6",
@@ -73,5 +71,6 @@
     "webpack": "^4.43.0",
     "webpack-cli": "^3.3.10",
     "webpack-merge": "^4.2.2"
-  }
+  },
+  "packageManager": "pnpm@7.1.9"
 }

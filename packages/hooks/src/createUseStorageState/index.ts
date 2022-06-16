@@ -57,28 +57,21 @@ export function createUseStorageState(getStorage: () => Storage | undefined) {
       return options?.defaultValue;
     }
 
-    const [state, setState] = useState<T | undefined>(() => getStoredValue());
+    const [state, setState] = useState<T>(() => getStoredValue());
 
     useUpdateEffect(() => {
       setState(getStoredValue());
     }, [key]);
 
-    const updateState = (value?: T | IFuncUpdater<T>) => {
-      if (isUndef(value)) {
-        setState(undefined);
+    const updateState = (value: T | IFuncUpdater<T>) => {
+      const currentState = isFunction(value) ? value(state) : value;
+      setState(currentState);
+
+      if (isUndef(currentState)) {
         storage?.removeItem(key);
-      } else if (isFunction(value)) {
-        const currentState = value(state);
-        try {
-          setState(currentState);
-          storage?.setItem(key, serializer(currentState));
-        } catch (e) {
-          console.error(e);
-        }
       } else {
         try {
-          setState(value);
-          storage?.setItem(key, serializer(value));
+          storage?.setItem(key, serializer(currentState));
         } catch (e) {
           console.error(e);
         }

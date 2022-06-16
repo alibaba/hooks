@@ -1,23 +1,31 @@
-import { useEffect } from 'react';
+import { useCallback, useEffect, useRef } from 'react';
 import useLatest from '../useLatest';
 import { isNumber } from '../utils';
 
-function useTimeout(fn: () => void, delay: number | undefined): void {
+function useTimeout(fn: () => void, delay: number | undefined) {
   const fnRef = useLatest(fn);
+  const timerRef = useRef<number | NodeJS.Timer>();
 
   useEffect(() => {
-    if (!isNumber(delay) || delay < 0 || isNaN(delay)) {
-      console.warn(`delay should be a valid number but get ${delay}`);
-      return;
-    }
+    if (!isNumber(delay) || delay < 0) return;
 
-    const timer = setTimeout(() => {
+    timerRef.current = setTimeout(() => {
       fnRef.current();
     }, delay);
     return () => {
-      clearTimeout(timer);
+      if (timerRef.current) {
+        clearTimeout(timerRef.current as NodeJS.Timer);
+      }
     };
   }, [delay]);
+
+  const clear = useCallback(() => {
+    if (timerRef.current) {
+      clearTimeout(timerRef.current as NodeJS.Timer);
+    }
+  }, []);
+
+  return clear;
 }
 
 export default useTimeout;

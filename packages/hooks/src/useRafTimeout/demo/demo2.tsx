@@ -13,7 +13,7 @@ export default () => {
   const [count, setCount] = useState(0);
   const [delay, setDelay] = useState<number | undefined>(1000);
 
-  useRafTimeout(() => {
+  const clear = useRafTimeout(() => {
     setCount(count + 1);
   }, delay);
 
@@ -34,7 +34,7 @@ export default () => {
       </button>
       <button
         onClick={() => {
-          setDelay(undefined);
+          clear();
         }}
       >
         clear

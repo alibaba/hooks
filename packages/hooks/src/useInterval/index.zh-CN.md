@@ -24,7 +24,7 @@ useInterval(
   fn: () => void, 
   delay?: number | undefined, 
   options?: Options
-);
+): fn: () => void;
 ```
 
 ### Params
@@ -41,3 +41,9 @@ useInterval(
 | 参数      | 说明                     | 类型      | 默认值  |
 |-----------|--------------------------|-----------|---------|
 | immediate | 是否在首次渲染时立即执行 | `boolean` | `false` |
+
+### Result
+
+| 参数    | 说明                  | 类型                                |
+|--------|-----------------------|------------------------------------|
+| clearInterval | 清除定时器 | `() => void` |

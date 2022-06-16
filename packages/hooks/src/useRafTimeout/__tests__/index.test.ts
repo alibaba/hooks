@@ -36,4 +36,15 @@ describe('useRafTimeout', () => {
     jest.advanceTimersByTime(FRAME_TIME * 1.5);
     expect(callback).not.toBeCalled();
   });
+
+  it('timeout should be clear', () => {
+    const callback = jest.fn();
+
+    const hook = setUp({ fn: callback, delay: FRAME_TIME });
+    expect(callback).not.toBeCalled();
+
+    hook.result.current();
+    jest.advanceTimersByTime(FRAME_TIME * 2.5);
+    expect(callback).toHaveBeenCalledTimes(0);
+  });
 });
