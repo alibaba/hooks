@@ -21,6 +21,20 @@ const { data, run, cancel } = useRequest(getUsername, {
 
 <code src="./demo/polling.tsx" />
 
+## 轮询错误重试
+通过 `options.pollingErrorRetryCount` 轮询错误重试次数。
+
+```tsx | pure
+const { data, run, cancel } = useRequest(getUsername, {
+  pollingInterval: 3000,
+  pollingErrorRetryCount: 3,
+});
+```
+
+你可以通过下面的示例来体验效果。
+
+<code src="./demo/pollingError.tsx" />
+
 ## API
 
 ### Return
@@ -37,6 +51,7 @@ const { data, run, cancel } = useRequest(getUsername, {
 |-------------------|--------------------------------------------------------------------------------------------------------|-----------|--------|
 | pollingInterval   | 轮询间隔，单位为毫秒。如果值大于 0，则启动轮询模式。                                                   | `number`  | `0`    |
 | pollingWhenHidden | 在页面隐藏时，是否继续轮询。如果设置为 false，在页面隐藏时会暂时停止轮询，页面重新显示时继续上次轮询。 | `boolean` | `true` |
+| pollingErrorRetryCount | 轮询错误重试次数。如果设置为 -1，则无限次 | `number` | `-1` |
 
 ## 备注
 
