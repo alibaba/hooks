@@ -32,7 +32,7 @@ export default function useFocusWithin(target: BasicTarget, options?: Options) {
       if (
         isFocusWithin &&
         e.currentTarget instanceof Element &&
-        !e.currentTarget.contains?.(e.relatedTarget as Node | null)
+        !e.currentTarget?.contains?.(e.relatedTarget as Node | null)
       ) {
         onBlur?.(e);
         onChange?.(false);
