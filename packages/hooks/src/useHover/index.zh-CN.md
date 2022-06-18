@@ -24,7 +24,8 @@ const isHovering = useHover(
   target, 
   {
    onEnter,
-   onLeave
+   onLeave,
+   onChange
   }
 );
 ```
@@ -42,6 +43,7 @@ const isHovering = useHover(
 |---------|-------------------|--------------|--------|
 | onEnter | hover 时触发      | `() => void` | -      |
 | onLeave | 取消 hover 时触发 | `() => void` | -      |
+| onChange | hover 状态变化时触发 | `(isHovering: boolean) => void` | -      |
 
 ### Result
 
