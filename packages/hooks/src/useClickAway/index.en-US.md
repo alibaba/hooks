@@ -28,6 +28,10 @@ Listen for click events outside the target element.
 
 <code src="./demo/demo5.tsx"/>
 
+### Support shadow DOM
+
+<code src="./demo/demo6.tsx"/>
+
 ## API
 
 ```typescript
