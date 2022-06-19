@@ -22,14 +22,14 @@ Before submitting a pull request, please make sure the following is done:
 
 2. If you've fixed a bug or added code that should be tested, add tests!
 
-3. Ensure the test suite passes `yarn run test`.
+3. Ensure the test suite passes `pnpm run test`.
 
 ## Development Workflow
 
-After cloning `ahooks`, run `yarn run init` to fetch its dependencies. Then, you can run several commands:
+After cloning `ahooks`, run `pnpm run init` to fetch its dependencies. Then, you can run several commands:
 
-1. `yarn start` runs `ahooks` website locally.
+1. `pnpm start` runs `ahooks` website locally.
 
-2. `yarn run test` runs the complete test suite.
+2. `pnpm run test` runs the complete test suite.
 
-3. `yarn run build` to build.
+3. `pnpm run build` to build.
