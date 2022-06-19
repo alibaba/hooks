@@ -50,7 +50,7 @@ export function configResponsive(config: ResponsiveConfig) {
 }
 
 export function useResponsive() {
-  if (!isBrowser) return {};
+  if (!isBrowser) return;
 
   if (!listening) {
     info = {};
