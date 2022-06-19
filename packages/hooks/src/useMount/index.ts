@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { isFunction } from '../utils';
 
 const useMount = (fn: () => void) => {
@@ -10,8 +10,13 @@ const useMount = (fn: () => void) => {
     }
   }
 
+  const executedRef = useRef(false);
+
   useEffect(() => {
-    fn?.();
+    if (!executedRef.current) {
+      fn?.();
+      executedRef.current = true;
+    }
   }, []);
 };
 
