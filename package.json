@@ -70,7 +70,8 @@
     "umi-request": "^1.2.18",
     "webpack": "^4.43.0",
     "webpack-cli": "^3.3.10",
-    "webpack-merge": "^4.2.2"
+    "webpack-merge": "^4.2.2",
+    "react-shadow": "^19.0.3"
   },
   "packageManager": "pnpm@7.1.9"
 }
