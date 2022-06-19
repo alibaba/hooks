@@ -27,7 +27,11 @@ nav:
 
 ### 支持多个事件
 
-<code src="./demo/demo5.tsx">
+<code src="./demo/demo5.tsx" />
+
+### 支持 shadow DOM
+
+<code src="./demo/demo6.tsx" />
 
 ## API
 
