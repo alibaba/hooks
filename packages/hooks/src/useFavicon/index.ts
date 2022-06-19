@@ -11,10 +11,12 @@ type ImgTypes = keyof typeof ImgTypeMap;
 
 const useFavicon = (href: string) => {
   useEffect(() => {
-    if (!href || typeof href !== 'string') {
+    if (!href) {
       return;
     }
-
+    if (typeof href !== 'string') {
+      throw new Error(`Expect to get a string, but got ${typeof href}`)
+    }
     const cutUrl = href.split('.');
     const imgSuffix = cutUrl[cutUrl.length - 1].toLocaleUpperCase() as ImgTypes;
 
