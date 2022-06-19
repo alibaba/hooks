@@ -29,7 +29,7 @@ nav:
 
 <code src="./demo/demo5.tsx" />
 
-### 支持影子 DOM
+### 支持 shadow DOM
 
 <code src="./demo/demo6.tsx" />
 

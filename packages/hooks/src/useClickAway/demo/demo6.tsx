@@ -2,8 +2,8 @@
  * title: Support shadow DOM
  * desc: Add the addEventListener to shadow DOM root instead of the document
  *
- * title.zh-CN: 支持影子 DOM
- * desc.zh-CN: 将 addEventListener 添加到 shadow DOM root 而不是文档
+ * title.zh-CN: 支持 shadow DOM
+ * desc.zh-CN: 将 addEventListener 添加到 shadow DOM root 
  */
 
 import React, { useState, useRef } from 'react';
