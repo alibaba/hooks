@@ -50,9 +50,7 @@ export function configResponsive(config: ResponsiveConfig) {
 }
 
 export function useResponsive() {
-  if (!isBrowser) return;
-
-  if (!listening) {
+  if (isBrowser && !listening) {
     info = {};
     calculate();
     window.addEventListener('resize', handleResize);
@@ -61,6 +59,8 @@ export function useResponsive() {
   const [state, setState] = useState<ResponsiveInfo>(info);
 
   useEffect(() => {
+    if (!isBrowser) return;
+
     const subscriber = () => {
       setState(info);
     };
