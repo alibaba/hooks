@@ -22,13 +22,13 @@ const result: Result= useSelections<T>(items: T[], defaultSelected?: T[]);
 ### Result
 
 | 参数              | 说明               | 类型                    |
-|-------------------|--------------------|-------------------------|
+| ----------------- | ------------------ | ----------------------- |
 | selected          | 已经选择的元素     | `array`                 |
 | allSelected       | 是否全选           | `boolean`               |
 | noneSelected      | 是否一个都没有选择 | `boolean`               |
 | partiallySelected | 是否半选           | `boolean`               |
 | isSelected        | 是否被选择         | `(value: T) => boolean` |
-| setSelected       | 设置选择的元素     | `(value: T[]) => void`   |
+| setSelected       | 设置选择的元素     | `(value: T[]) => void`  |
 | select            | 选择元素           | `(value: T) => void`    |
 | unSelect          | 取消选择元素       | `(value: T) => void`    |
 | toggle            | 反选元素           | `(value: T) => void`    |

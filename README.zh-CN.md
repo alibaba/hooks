@@ -11,7 +11,7 @@
 [![NPM version][image-1]][1]
 [![NPM downloads][image-2]][2]
 [![npm](https://img.shields.io/npm/dw/ahooks-v2?label=downloads%28v2%29)](https://www.npmjs.com/package/ahooks-v2)
-[![Coverage Status](https://coveralls.io/repos/github/alibaba/hooks/badge.svg?branch=doc/beautify)](https://coveralls.io/github/alibaba/hooks?branch=doc/beautify)
+[![Coverage Status](https://coveralls.io/repos/github/alibaba/hooks/badge.svg?branch=master)](https://coveralls.io/github/alibaba/hooks?branch=master)
 [![npm](https://img.shields.io/github/issues/alibaba/hooks)](https://github.com/alibaba/hooks/issues)
 ![gzip size](https://img.badgesize.io/https:/unpkg.com/ahooks/dist/ahooks.js?label=gzip%20size&compression=gzip)
 [![Percentage of issues still open](http://isitmaintained.com/badge/open/alibaba/hooks.svg)](http://isitmaintained.com/project/alibaba/hooks 'Percentage of issues still open')

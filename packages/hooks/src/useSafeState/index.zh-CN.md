@@ -18,4 +18,3 @@ nav:
 ```typescript
 const [state, setState] = useSafeState(initialState)
 ```
-
