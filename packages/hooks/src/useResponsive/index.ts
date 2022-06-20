@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import isBrowser from '../utils/isBrowser';
 
 type Subscriber = () => void;
 
@@ -49,8 +50,9 @@ export function configResponsive(config: ResponsiveConfig) {
 }
 
 export function useResponsive() {
-  const windowExists = typeof window !== 'undefined';
-  if (windowExists && !listening) {
+  if (!isBrowser) return;
+
+  if (!listening) {
     info = {};
     calculate();
     window.addEventListener('resize', handleResize);
@@ -59,8 +61,6 @@ export function useResponsive() {
   const [state, setState] = useState<ResponsiveInfo>(info);
 
   useEffect(() => {
-    if (!windowExists) return;
-
     const subscriber = () => {
       setState(info);
     };
