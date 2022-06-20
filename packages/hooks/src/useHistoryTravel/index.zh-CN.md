@@ -20,28 +20,27 @@ nav:
 ## API
 
 ```typescript
-const { 
-  value, 
-  setValue, 
-  backLength, 
+const {
+  value,
+  setValue,
+  backLength,
   forwardLength,
-  go, 
-  back, 
-  forward 
+  go,
+  back,
+  forward
 } = useHistoryTravel<T>(initialValue?: T);
 ```
 
 ### Params
 
 | 参数         | 说明         | 类型  | 默认值 |
-|--------------|--------------|-------|--------|
+| ------------ | ------------ | ----- | ------ |
 | initialValue | 可选，初始值 | `any` | -      |
-
 
 ### Result
 
 | 参数          | 说明                                          | 类型                            |
-|---------------|-----------------------------------------------|---------------------------------|
+| ------------- | --------------------------------------------- | ------------------------------- |
 | value         | 当前值                                        | `T`                             |
 | setValue      | 设置 value                                    | `(value: T) => void`            |
 | backLength    | 可回退历史长度                                | `number`                        |

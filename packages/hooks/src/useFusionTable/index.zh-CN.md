@@ -2,11 +2,12 @@
 nav:
   path: /hooks
 ---
+
 # useFusionTable
 
 封装了常用的 [Fusion Form](https://fusion.design/pc/component/basic/form) 与 [Fusion Table](https://fusion.design/pc/component/basic/table) 联动逻辑。
 
-> 🌈「Table场景解决方案」上线啦！点击图片查看常用的表格场景，区块代码一键下载到本地，快速复用! [使用文档](https://fusion.design/help.html#/dnzud5)
+> 🌈「Table 场景解决方案」上线啦！点击图片查看常用的表格场景，区块代码一键下载到本地，快速复用! [使用文档](https://fusion.design/help.html#/dnzud5)
 
 [![](https://img.alicdn.com/tfs/TB1bEbWbQcx_u4jSZFlXXXnUFXa-2326-498.png)](https://fusion.design/pc/block?category=Table)
 
@@ -27,6 +28,7 @@ nav:
 <Table columns={columns} rowKey="email" {...tableProps} />
 <Pagination {...paginationProps} />
 ```
+
 <br />
 
 <code src="./demo/table.tsx" />
@@ -35,10 +37,10 @@ nav:
 
 `useFusionTable` 接收 `field` 实例后，会返回 search 对象，用来处理表单相关事件。
 
-* `search.type` 支持 `simple` 和 `advance` 两个表单切换
-* `search.changeType`，切换表单类型
-* `search.submit` 提交表单行为
-* `search.reset` 重置当前表单
+- `search.type` 支持 `simple` 和 `advance` 两个表单切换
+- `search.changeType`，切换表单类型
+- `search.submit` 提交表单行为
+- `search.reset` 重置当前表单
 
 以下示例你可以体验表单与表格联动。
 
@@ -112,7 +114,7 @@ const {
 ### Result
 
 | 参数              | 说明                                                          | 类型                  |
-|-------------------|---------------------------------------------------------------|-----------------------|
+| ----------------- | ------------------------------------------------------------- | --------------------- |
 | tableProps        | `Table` 组件需要的数据，直接透传给 `Table` 组件即可           | -                     |
 | paginationProps   | `Pagination` 组件需要的数据，直接透传给 `Pagination` 组件即可 | -                     |
 | search.type       | 当前表单类型                                                  | `simple` \| `advance` |
@@ -123,9 +125,9 @@ const {
 ### Params
 
 | 参数            | 说明                                                          | 类型                     | 默认值   |
-|-----------------|---------------------------------------------------------------|--------------------------|----------|
+| --------------- | ------------------------------------------------------------- | ------------------------ | -------- |
 | field           | `Form` 实例                                                   | -                        | -        |
 | defaultType     | 默认表单类型                                                  | `simple` \| `advance`    | `simple` |
 | defaultParams   | 默认参数，第一项为分页数据，第二项为表单数据                  | `[pagination, formData]` | -        |
 | defaultPageSize | 默认分页数量                                                  | `number`                 | `10`     |
-| refreshDeps     | `refreshDeps` 变化，会重置 current 到第一页，并重新发起请求。 | `React.DependencyList`                | `[]`  |
+| refreshDeps     | `refreshDeps` 变化，会重置 current 到第一页，并重新发起请求。 | `React.DependencyList`   | `[]`     |

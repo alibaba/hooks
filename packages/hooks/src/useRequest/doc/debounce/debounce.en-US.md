@@ -28,15 +28,15 @@ You can quickly enter text in the input box below to experience the effect
 
 The usage and effect of all debounce property are the same as [lodash.debounce](https://lodash.com/docs/4.17.15#debounce)
 
-| Property         | Description                                                                 | Type      | Default Value |
-|------------------|-----------------------------------------------------------------------------|-----------|---------------|
+| Property         | Description                                                                  | Type      | Default Value |
+| ---------------- | ---------------------------------------------------------------------------- | --------- | ------------- |
 | debounceWait     | Debounce delay time, in milliseconds. After setting, enter the debounce mode | `number`  | -             |
-| debounceLeading  | Execute the request before the delay starts                            `            | `boolean` | `false`       |
-| debounceTrailing | Execute the request after the delay ends                                           | `boolean` | `true`        |
-| debounceMaxWait  | The maximum time request is allowed to be delayed before it’s executed          | `number`  | -             |
+| debounceLeading  | Execute the request before the delay starts `                                | `boolean` | `false`       |
+| debounceTrailing | Execute the request after the delay ends                                     | `boolean` | `true`        |
+| debounceMaxWait  | The maximum time request is allowed to be delayed before it’s executed       | `number`  | -             |
 
 ## Remark
 
-* `options.debounceWait`, `options.debounceLeading`, `options.debounceTrailing`, `options.debounceMaxWait` support dynamic changes.
-* `runAsync` will return a `Promise` when it is actually executed. When it is not executed, there will be no return.
-* `cancel` can abort a function waiting to be executed.
+- `options.debounceWait`, `options.debounceLeading`, `options.debounceTrailing`, `options.debounceMaxWait` support dynamic changes.
+- `runAsync` will return a `Promise` when it is actually executed. When it is not executed, there will be no return.
+- `cancel` can abort a function waiting to be executed.

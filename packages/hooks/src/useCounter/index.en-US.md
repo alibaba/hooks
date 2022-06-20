@@ -27,7 +27,7 @@ const [current, {
 ### Result
 
 | Property | Description                          | Type                                                   |
-|----------|--------------------------------------|--------------------------------------------------------|
+| -------- | ------------------------------------ | ------------------------------------------------------ |
 | current  | Current value                        | `number`                                               |
 | inc      | Increment, default delta is 1        | `(delta?: number) => void`                             |
 | dec      | Decrement, default delta is 1        | `(delta?: number) => void`                             |
@@ -37,7 +37,7 @@ const [current, {
 ### Params
 
 | Property     | Description   | Type     | Default |
-|--------------|---------------|----------|---------|
+| ------------ | ------------- | -------- | ------- |
 | initialValue | Initial count | `number` | `0`     |
 | min          | Min count     | `number` | -       |
 | max          | Max count     | `number` | -       |

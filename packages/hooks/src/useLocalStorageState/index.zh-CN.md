@@ -41,7 +41,7 @@ const [state, setState] = useLocalStorageState<T>(
 ### Options
 
 | 参数         | 说明               | 类型                     | 默认值           |
-|--------------|--------------------|--------------------------|------------------|
+| ------------ | ------------------ | ------------------------ | ---------------- |
 | defaultValue | 默认值             | `any \| (() => any)`     | -                |
 | serializer   | 自定义序列化方法   | `(value: any) => string` | `JSON.stringify` |
 | deserializer | 自定义反序列化方法 | `(value: string) => any` | `JSON.parse`     |

@@ -20,27 +20,27 @@ A hook to manage state change history. It provides encapsulation methods to trav
 ## API
 
 ```typescript
-const { 
-  value, 
-  setValue, 
-  backLength, 
+const {
+  value,
+  setValue,
+  backLength,
   forwardLength,
-  go, 
-  back, 
-  forward 
+  go,
+  back,
+  forward
 } = useHistoryTravel<T>(initialValue?: T);
 ```
 
 ### Params
 
 | Property     | Description            | Type | Default |
-|--------------|------------------------|------|---------|
+| ------------ | ---------------------- | ---- | ------- |
 | initialValue | Optional initial value | `T`  | -       |
 
 ### Result
 
 | Property      | Description                                                                       | Type                            |
-|---------------|-----------------------------------------------------------------------------------|---------------------------------|
+| ------------- | --------------------------------------------------------------------------------- | ------------------------------- |
 | value         | Current value                                                                     | `T`                             |
 | setValue      | Set value                                                                         | `(value: T) => void`            |
 | backLength    | The length of backward history                                                    | `number`                        |
