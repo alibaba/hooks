@@ -34,23 +34,22 @@ const [list, scrollTo]= useVirtualList<T>(
 ### Params
 
 | Property     | Description                                           | Type      | Default |
-|--------------|-------------------------------------------------------|-----------|---------|
+| ------------ | ----------------------------------------------------- | --------- | ------- |
 | originalList | The original list that contains a lot of data entries | `T[]`     | `[]`    |
 | options      | config                                                | `Options` | -       |
-
 
 ### Options
 
 | Property        | Description                                                             | Type                                                        | Default |
-|-----------------|-------------------------------------------------------------------------|-------------------------------------------------------------|---------|
+| --------------- | ----------------------------------------------------------------------- | ----------------------------------------------------------- | ------- |
 | containerTarget | Outter Container，support DOM element or ref                            | `() => Element` \| `Element` \| `MutableRefObject<Element>` | -       |
 | wrapperTarget   | Inner Container，DOM element or ref                                     | `() => Element` \| `Element` \| `MutableRefObject<Element>` | -       |
-| itemHeight      | Item height, accept a pixel value or a function that returns the height | `number` \| `((index: number, data: T) => number)`                   | -       |
+| itemHeight      | Item height, accept a pixel value or a function that returns the height | `number` \| `((index: number, data: T) => number)`          | -       |
 | overscan        | The extra buffer items outside of the view area                         | `number`                                                    | `5`     |
 
 ### Result
 
-| Property | Description                                            | Type                         |
-|----------|--------------------------------------------------------|------------------------------|
+| Property | Description                                            | Type                           |
+| -------- | ------------------------------------------------------ | ------------------------------ |
 | list     | The current portion of data need to be rendered to DOM | `{ data: T, index: number }[]` |
-| scrollTo | Scroll to specific index                               | `(index: number) => void`    |
+| scrollTo | Scroll to specific index                               | `(index: number) => void`      |

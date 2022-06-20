@@ -2,6 +2,7 @@
 nav:
   path: /hooks
 ---
+
 # useFusionTable
 
 useFusionTable encapsulates the commonly used [Fusion Form](https://fusion.design/pc/component/basic/form) and [Fusion Table](https://fusion.design/pc/component/basic/table) data binding logic.
@@ -23,6 +24,7 @@ useFusionTable encapsulates the commonly used [Fusion Form](https://fusion.desig
 <Table columns={columns} rowKey="email" {...tableProps} />
 <Pagination {...paginationProps} />
 ```
+
 <br />
 
 <code src="./demo/table.tsx" />
@@ -31,10 +33,10 @@ useFusionTable encapsulates the commonly used [Fusion Form](https://fusion.desig
 
 When `useFusionTable` receives the `field` instance, it will return a search object to handle form related events.
 
-* `search.type` supports switching between `simple` and `advance`
-* `search.changeType`, switch form type
-* `search.submit` submit form
-* `search.reset` reset the current form
+- `search.type` supports switching between `simple` and `advance`
+- `search.changeType`, switch form type
+- `search.submit` submit form
+- `search.reset` reset the current form
 
 In the following example, you can experience the data binding between form and table.
 
@@ -61,7 +63,6 @@ Before the form is submitted, we will automatically validate the form data. If t
 By setting `cacheKey`, we can apply the data caching for the `Form` and `Table` .
 
 <code src="./demo/cache.tsx" />
-
 
 ## API
 
@@ -109,7 +110,7 @@ const {
 ### Result
 
 | Property          | Description                                     | Type                  |
-|-------------------|-------------------------------------------------|-----------------------|
+| ----------------- | ----------------------------------------------- | --------------------- |
 | tableProps        | The data required by the `Table` component      | -                     |
 | paginationProps   | The data required by the `Pagination` component | -                     |
 | search.type       | Current form type                               | `simple` \| `advance` |
@@ -120,9 +121,9 @@ const {
 ### Params
 
 | Property        | Description                                                                                | Type                     | Default  |
-|-----------------|--------------------------------------------------------------------------------------------|--------------------------|----------|
+| --------------- | ------------------------------------------------------------------------------------------ | ------------------------ | -------- |
 | field           | `Form` instance                                                                            | -                        | -        |
 | defaultType     | Default form type                                                                          | `simple` \| `advance`    | `simple` |
 | defaultParams   | Default parameters, the first item is paging data, the second item is form data            | `[pagination, formData]` | -        |
 | defaultPageSize | Default page size                                                                          | `number`                 | `10`     |
-| refreshDeps     | Changes in `refreshDeps` will reset current to the first page and re-initiate the request. | `React.DependencyList`                | `[]`  |
+| refreshDeps     | Changes in `refreshDeps` will reset current to the first page and re-initiate the request. | `React.DependencyList`   | `[]`     |

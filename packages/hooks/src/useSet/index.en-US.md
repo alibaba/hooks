@@ -29,7 +29,7 @@ const [
 ### Result
 
 | Property | Description      | Type                 |
-|----------|------------------|----------------------|
+| -------- | ---------------- | -------------------- |
 | set      | Set object       | `Set`                |
 | add      | Add item         | `(key: any) => void` |
 | remove   | Remove item      | `(key: any) => void` |
@@ -38,5 +38,5 @@ const [
 ### Params
 
 | Property     | Description                 | Type          | Default |
-|--------------|-----------------------------|---------------|---------|
+| ------------ | --------------------------- | ------------- | ------- |
 | initialValue | Optional, set default value | `Iterable<K>` | -       |

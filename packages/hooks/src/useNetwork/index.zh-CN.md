@@ -33,7 +33,7 @@ const result: NetworkState = useNetwork();
 ### Result
 
 | 属性          | 描述                                   | 类型                                                                                           |
-|---------------|----------------------------------------|------------------------------------------------------------------------------------------------|
+| ------------- | -------------------------------------- | ---------------------------------------------------------------------------------------------- |
 | online        | 网络是否为在线                         | `boolean`                                                                                      |
 | since         | `online` 最后改变时间                  | `Date`                                                                                         |
 | rtt           | 当前连接下评估的往返时延               | `number`                                                                                       |
@@ -42,6 +42,5 @@ const result: NetworkState = useNetwork();
 | downlinkMax   | 最大下行速度（单位：兆比特/秒）        | `number`                                                                                       |
 | saveData      | 用户代理是否设置了减少数据使用的选项   | `boolean`                                                                                      |
 | effectiveType | 网络连接的类型                         | `slow-2g` \| `2g` \| `3g` \| `4g`                                                              |
-
 
 更多信息参考：[MDN NetworkInformation](https://developer.mozilla.org/en-US/docs/Web/API/NetworkInformation)

@@ -47,8 +47,8 @@ useClickAway<T extends Event = Event>(
 
 ### Params
 
-| 参数        | 说明                       | 类型                   | 默认值  |
-|-------------|----------------------------|------------------------|---------|
-| onClickAway | 触发函数                   | `(event: T) => void`   | -       |
-| target      | DOM 节点或者 Ref，支持数组 | `Target` \| `Target[]` | -       |
-| eventName   | 指定需要监听的事件，支持数组    | `string` \| `string[]` | `click` |
+| 参数        | 说明                         | 类型                   | 默认值  |
+| ----------- | ---------------------------- | ---------------------- | ------- |
+| onClickAway | 触发函数                     | `(event: T) => void`   | -       |
+| target      | DOM 节点或者 Ref，支持数组   | `Target` \| `Target[]` | -       |
+| eventName   | 指定需要监听的事件，支持数组 | `string` \| `string[]` | `click` |
