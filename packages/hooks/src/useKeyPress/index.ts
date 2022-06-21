@@ -7,7 +7,7 @@ import useDeepCompareEffectWithTarget from '../utils/useDeepCompareWithTarget';
 export type KeyPredicate = (event: KeyboardEvent) => boolean;
 export type keyType = number | string;
 export type KeyFilter = keyType | keyType[] | ((event: KeyboardEvent) => boolean);
-export type EventHandler = (event: KeyboardEvent) => void;
+export type EventHandler = (event: KeyboardEvent, keyFilter: KeyFilter) => void;
 export type KeyEvent = 'keydown' | 'keyup';
 
 export type Target = BasicTarget<HTMLElement | Document | Window>;
@@ -223,7 +223,7 @@ function useKeyPress(keyFilter: KeyFilter, eventHandler: EventHandler, option?: 
       const callbackHandler = (event: KeyboardEvent) => {
         const genGuard: KeyPredicate = genKeyFormater(keyFilterRef.current, exactMatch);
         if (genGuard(event)) {
-          return eventHandlerRef.current?.(event);
+          return eventHandlerRef.current?.(event, keyFilter);
         }
       };
 

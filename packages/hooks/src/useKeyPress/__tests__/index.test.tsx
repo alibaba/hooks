@@ -76,4 +76,22 @@ describe('useKeyPress ', () => {
     expect(callback.mock.calls.length).toBe(2);
     unmount();
   });
+
+  it('get keys from callback', async () => {
+    const callback = jest.fn((_, key) => key);
+
+    const hooks1 = renderHook(() => useKeyPress(['uparrow'], callback));
+    const hooks2 = renderHook(() => useKeyPress(['shift.c'], callback, { exactMatch: true }));
+
+    fireEvent.keyDown(document, { key: 'uparrow', keyCode: 38 });
+    expect(callback.mock.results[0].value).toStrictEqual(['uparrow']);
+
+    fireEvent.keyDown(document, { key: 'c', shiftKey: true, keyCode: 67 });
+    expect(callback.mock.results[1].value).toStrictEqual(['shift.c']);
+
+    hooks1.unmount();
+    hooks2.unmount();
+
+    callback.mockClear();
+  });
 });
