@@ -55,5 +55,6 @@ describe('useInterval', () => {
     jest.advanceTimersByTime(70);
     // not to be called
     expect(callback).toHaveBeenCalledTimes(0);
+    expect(clearInterval).toHaveBeenCalledTimes(1);
   });
 });

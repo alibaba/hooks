@@ -192,7 +192,7 @@ function genFilterKey(event: KeyboardEvent, keyFilter: keyType, exactMatch: bool
  * @param [keyFilter: any] 当前键
  * @returns () => Boolean
  */
-function genKeyFormater(keyFilter: KeyFilter, exactMatch: boolean): KeyPredicate {
+function genKeyFormatter(keyFilter: KeyFilter, exactMatch: boolean): KeyPredicate {
   if (isFunction(keyFilter)) {
     return keyFilter;
   }
@@ -221,7 +221,7 @@ function useKeyPress(keyFilter: KeyFilter, eventHandler: EventHandler, option?: 
       }
 
       const callbackHandler = (event: KeyboardEvent) => {
-        const genGuard: KeyPredicate = genKeyFormater(keyFilterRef.current, exactMatch);
+        const genGuard: KeyPredicate = genKeyFormatter(keyFilterRef.current, exactMatch);
         if (genGuard(event)) {
           return eventHandlerRef.current?.(event);
         }
