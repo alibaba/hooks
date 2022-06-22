@@ -25,12 +25,12 @@ const size = useSize(target);
 
 ### Params
 
-| Property | Description                                                        | Type                   | Default |
-|---------|----------------------------------------------|------------------------|--------|
-| target | DOM element or ref object  | `Element` \| `(() => Element)` \| `MutableRefObject<Element>` | -      |
+| Property | Description               | Type                                                          | Default |
+| -------- | ------------------------- | ------------------------------------------------------------- | ------- |
+| target   | DOM element or ref object | `Element` \| `(() => Element)` \| `MutableRefObject<Element>` | -       |
 
 ### Result
 
-| Property | Description                                         | Type                 |
-|----------|------------------------------------------|------------|
-| size  | Size of the element                             | `{ width: number, height: number } \| undefined`    |
+| Property | Description         | Type                                             |
+| -------- | ------------------- | ------------------------------------------------ |
+| size     | Size of the element | `{ width: number, height: number } \| undefined` |

@@ -5,7 +5,7 @@ nav:
 
 ## useReactive
 
-It offers data reactivity when manipulating states and views, in which case `useState`  is unnecessary for state definition. Modifying properties will automatically lead to view rerendering.
+It offers data reactivity when manipulating states and views, in which case `useState` is unnecessary for state definition. Modifying properties will automatically lead to view rerendering.
 
 ## Examples
 
@@ -34,6 +34,5 @@ const state = useReactive(initialValue: Record<string, any>);
 ## Params
 
 | Params       | Description   | Type                  | Default |
-|--------------|---------------|-----------------------|---------|
+| ------------ | ------------- | --------------------- | ------- |
 | initialState | Current state | `Record<string, any>` | -       |
-

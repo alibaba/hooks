@@ -2,6 +2,7 @@
 nav:
   path: /hooks
 ---
+
 # useAntdTable
 
 `useAntdTable` is implemented based on `useRequest` and encapsulates the commonly used [Ant Design Form](https://ant.design/components/form/) and [Ant Design Table](https://ant.design/components/table/) data binding logic, and supports both antd v3 and v4.
@@ -24,6 +25,7 @@ The following demos are for antd v4. For v3, please refer to: https://ahooks-v2.
 ```tsx | pure
 <Table columns={columns} rowKey="email" {...tableProps} />
 ```
+
 <br />
 
 <code src="./demo/table.tsx" />
@@ -32,10 +34,10 @@ The following demos are for antd v4. For v3, please refer to: https://ahooks-v2.
 
 When `useAntdTable` receives the `form` instance, it will return a search object to handle form related events.
 
-* `search.type` supports switching between `simple` and `advance`
-* `search.changeType`, switch form type
-* `search.submit` submit form
-* `search.reset` reset the current form
+- `search.type` supports switching between `simple` and `advance`
+- `search.changeType`, switch form type
+- `search.submit` submit form
+- `search.reset` reset the current form
 
 In the following example, you can try out the data binding between form and table.
 
@@ -110,7 +112,7 @@ const {
 ### Result
 
 | Property          | Description                                | Type                  |
-|-------------------|--------------------------------------------|-----------------------|
+| ----------------- | ------------------------------------------ | --------------------- |
 | tableProps        | The data required by the `Table` component | -                     |
 | search.type       | Current form type                          | `simple` \| `advance` |
 | search.changeType | Switch form type                           | `() => void`          |
@@ -120,7 +122,7 @@ const {
 ### Params
 
 | Property        | Description                                                                                | Type                     | Default  |
-|-----------------|--------------------------------------------------------------------------------------------|--------------------------|----------|
+| --------------- | ------------------------------------------------------------------------------------------ | ------------------------ | -------- |
 | form            | `Form` instance                                                                            | -                        | -        |
 | defaultType     | Default form type                                                                          | `simple` \| `advance`    | `simple` |
 | defaultParams   | Default parameters, the first item is paging data, the second item is form data            | `[pagination, formData]` | -        |

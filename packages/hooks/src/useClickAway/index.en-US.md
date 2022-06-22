@@ -6,6 +6,7 @@ nav:
 # useClickAway
 
 Listen for click events outside the target element.
+
 ## Examples
 
 ### Default usage
@@ -28,6 +29,10 @@ Listen for click events outside the target element.
 
 <code src="./demo/demo5.tsx"/>
 
+### Support shadow DOM
+
+<code src="./demo/demo6.tsx"/>
+
 ## API
 
 ```typescript
@@ -42,8 +47,8 @@ useClickAway<T extends Event = Event>(
 
 ### Params
 
-| Property    | Description                        | Type                   | Default |
-|-------------|------------------------------------|------------------------|---------|
-| onClickAway | Trigger Function                   | `(event: T) => void`   | -       |
-| target      | DOM elements or Ref, support array | `Target` \| `Target[]` | -       |
-| eventName   | Set the event to be listened, support array   | `string` \|  `string[]` | `click` |
+| Property    | Description                                 | Type                   | Default |
+| ----------- | ------------------------------------------- | ---------------------- | ------- |
+| onClickAway | Trigger Function                            | `(event: T) => void`   | -       |
+| target      | DOM elements or Ref, support array          | `Target` \| `Target[]` | -       |
+| eventName   | Set the event to be listened, support array | `string` \| `string[]` | `click` |

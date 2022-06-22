@@ -33,7 +33,7 @@ const result: NetworkState = useNetwork();
 ### Result
 
 | Property      | Description                                                    | Type                                                                                           |
-|---------------|----------------------------------------------------------------|------------------------------------------------------------------------------------------------|
+| ------------- | -------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- |
 | online        | Whether connected to network                                   | `boolean`                                                                                      |
 | since         | `online` latest update time                                    | `Date`                                                                                         |
 | rtt           | The effective round-trip time estimate in milliseconds         | `number`                                                                                       |

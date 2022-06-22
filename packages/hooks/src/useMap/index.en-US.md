@@ -19,10 +19,10 @@ A hook that can manage the state of Map.
 const [
   map,
   {
-    set, 
-    setAll, 
-    remove, 
-    reset, 
+    set,
+    setAll,
+    remove,
+    reset,
     get
   }
 ] = useMap(initialValue?: Iterable<[any, any]>);
@@ -31,7 +31,7 @@ const [
 ### Result
 
 | Property | Description      | Type                                     |
-|----------|------------------|------------------------------------------|
+| -------- | ---------------- | ---------------------------------------- |
 | map      | Map object       | `Map`                                    |
 | set      | Add item         | `(key: any, value: any) => void`         |
 | get      | Get item         | `(key: any) => MapItem`                  |
@@ -42,5 +42,5 @@ const [
 ### Params
 
 | Property     | Description                 | Type                   | Default |
-|--------------|-----------------------------|------------------------|---------|
+| ------------ | --------------------------- | ---------------------- | ------- |
 | initialValue | Optional, set default value | `Iterable<[any, any]>` | -       |

@@ -12,11 +12,13 @@ footer: Open-source MIT Licensed | Copyright © 2019-present<br />Powered by [du
 ---
 
 [![NPM version][image-1]][1]
-&nbsp;
 [![NPM downloads][image-2]][2]
-&nbsp;
+[![npm](https://img.shields.io/npm/dw/ahooks-v2?label=downloads%28v2%29)](https://www.npmjs.com/package/ahooks-v2)
+[![npm](https://img.shields.io/github/issues/alibaba/hooks)](https://github.com/alibaba/hooks/issues)
+[![Coverage Status](https://coveralls.io/repos/github/alibaba/hooks/badge.svg?branch=master)](https://coveralls.io/github/alibaba/hooks?branch=master)
 ![gzip size](https://img.badgesize.io/https:/unpkg.com/ahooks/dist/ahooks.js?label=gzip%20size&compression=gzip)
-&nbsp;
+[![Percentage of issues still open](http://isitmaintained.com/badge/open/alibaba/hooks.svg)](http://isitmaintained.com/project/alibaba/hooks 'Percentage of issues still open')
+[![Average time to resolve an issue](http://isitmaintained.com/badge/resolution/alibaba/hooks.svg)](http://isitmaintained.com/project/alibaba/hooks 'Average time to resolve an issue')
 ![GitHub](https://img.shields.io/github/license/alibaba/hooks)
 
 ## ✨ 特性
@@ -51,8 +53,8 @@ import { useRequest } from 'ahooks';
 ```bash
 $ git clone git@github.com:alibaba/hooks.git
 $ cd hooks
-$ yarn run init
-$ yarn start
+$ pnpm run init
+$ pnpm start
 ```
 
 打开浏览器访问 http://127.0.0.1:8000
