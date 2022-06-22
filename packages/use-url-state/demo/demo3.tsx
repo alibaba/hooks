@@ -28,7 +28,7 @@ export default () => {
         onClick={() => {
           const arr = Array(3)
             .fill(1)
-            .map(() => Math.floor(Math.random() * 10));
+            .map(() => String(Math.floor(Math.random() * 10)));
           setState({ ids: arr });
         }}
       >
