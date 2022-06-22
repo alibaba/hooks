@@ -21,6 +21,23 @@ const { data, run, cancel } = useRequest(getUsername, {
 
 <code src="./demo/polling.tsx" />
 
+## 轮询继续进行的条件判断
+
+通过 `options.pollingCondition` 函数判断轮询是否需要继续进行，返回 true 则继续，否则轮询结束
+
+```tsx | pure
+const { data, loading, refresh } = useRequest(getNum, {
+  pollingInterval: 1000,
+  pollingCondition: (d) => d !== 5
+});
+```
+
+例如上面的场景，getNum 请求会一直轮询，直到返回的结果是 5。
+
+你可以通过下面的示例来体验效果。
+
+<code src="./demo/pollingCondition.tsx" />
+
 ## 轮询错误重试
 
 通过 `options.pollingErrorRetryCount` 轮询错误重试次数。
@@ -48,11 +65,12 @@ const { data, run, cancel } = useRequest(getUsername, {
 
 ### Options
 
-| 参数                   | 说明                                                                                                   | 类型      | 默认值 |
-| ---------------------- | ------------------------------------------------------------------------------------------------------ | --------- | ------ |
-| pollingInterval        | 轮询间隔，单位为毫秒。如果值大于 0，则启动轮询模式。                                                   | `number`  | `0`    |
-| pollingWhenHidden      | 在页面隐藏时，是否继续轮询。如果设置为 false，在页面隐藏时会暂时停止轮询，页面重新显示时继续上次轮询。 | `boolean` | `true` |
-| pollingErrorRetryCount | 轮询错误重试次数。如果设置为 -1，则无限次                                                              | `number`  | `-1`   |
+| 参数                   | 说明                                                                                                   | 类型                                             | 默认值       |
+| ---------------------- | ------------------------------------------------------------------------------------------------------ | ------------------------------------------------ | ------------ |
+| pollingInterval        | 轮询间隔，单位为毫秒。如果值大于 0，则启动轮询模式。                                                   | `number`                                         | `0`          |
+| pollingWhenHidden      | 在页面隐藏时，是否继续轮询。如果设置为 false，在页面隐藏时会暂时停止轮询，页面重新显示时继续上次轮询。 | `boolean`                                        | `true`       |
+| pollingErrorRetryCount | 轮询错误重试次数。如果设置为 -1，则无限次                                                              | `number`                                         | `-1`         |
+| pollingCondition       | 可以根据返回结果或已轮询次数判断是否需要继续轮询。如果返回 true，则继续，否则停止                      | `(data: TData, pollingCount: number) => boolean` | `() => true` |
 
 ## 备注
 

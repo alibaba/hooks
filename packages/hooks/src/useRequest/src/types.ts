@@ -60,6 +60,7 @@ export interface Options<TData, TParams extends any[]> {
   pollingInterval?: number;
   pollingWhenHidden?: boolean;
   pollingErrorRetryCount?: number;
+  pollingCondition?: (data: TData, pollingCount: number) => boolean;
 
   // refresh on window focus
   refreshOnWindowFocus?: boolean;
