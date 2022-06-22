@@ -1,6 +1,6 @@
 /**
  * title: Use the option property to configure Cookie
- * desc: Available options&#58; defaultValue、expires、path、domain、secure、sameSite etc.
+ * desc: Available options:&nbsp;defaultValue、expires、path、domain、secure、sameSite etc.
  *
  * title.zh-CN: 使用 option 配置 Cookie
  * desc.zh-CN: 可配置属性：默认值、有效时间、路径、域名、协议、跨域等，详见 Options 文档。
