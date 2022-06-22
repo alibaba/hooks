@@ -45,5 +45,6 @@ describe('useTimeout', () => {
     hook.result.current();
     jest.advanceTimersByTime(30);
     expect(callback).toHaveBeenCalledTimes(0);
+    expect(clearTimeout).toHaveBeenCalledTimes(1);
   });
 });
