@@ -41,15 +41,15 @@ const [countdown, formattedRes] = useCountDown(
 
 The precision of useCountDown is milliseconds, which may cause the following problems
 
-* Even if the interval time is set to 1000ms, the update interval of useCountDown may not be exactly 1000ms, but around it.
-* In the second demo, countdown is generally 499x milliseconds at the beginning due to the execution delay of the program.
+- Even if the interval time is set to 1000ms, the update interval of useCountDown may not be exactly 1000ms, but around it.
+- In the second demo, countdown is generally 499x milliseconds at the beginning due to the execution delay of the program.
 
 If you only need to be accurate to the second, you can use it like this `Math.round(countdown / 1000)`.
 
 ### Params
 
 | Property   | Description                                  | Type         | Default |
-|------------|----------------------------------------------|--------------|---------|
+| ---------- | -------------------------------------------- | ------------ | ------- |
 | targetDate | Target time                                  | `TDate`      | -       |
 | interval   | Time interval between ticks, in milliseconds | `number`     | `1000`  |
 | onEnd      | Function to call when countdown completes    | `() => void` | -       |
@@ -57,7 +57,7 @@ If you only need to be accurate to the second, you can use it like this `Math.ro
 ### Return
 
 | Params          | Description                              | Type           |
-|-----------------|------------------------------------------|----------------|
+| --------------- | ---------------------------------------- | -------------- |
 | countdown       | Timestamp to targetDate, in milliseconds | `number`       |
 | formattedResult | Formatted countdown                      | `FormattedRes` |
 

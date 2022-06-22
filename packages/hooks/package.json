@@ -1,6 +1,6 @@
 {
   "name": "ahooks",
-  "version": "3.4.1",
+  "version": "3.5.0",
   "description": "react hooks library",
   "keywords": [
     "ahooks",
@@ -17,7 +17,7 @@
     "email": "brickspert.fjl@alipay.com"
   },
   "publishConfig": {
-    "registry": "https://registry.npmjs.com/"
+    "registry": "https://registry.npmjs.org/"
   },
   "repository": "https://github.com/alibaba/hooks",
   "homepage": "https://github.com/alibaba/hooks",

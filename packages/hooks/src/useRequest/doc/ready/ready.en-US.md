@@ -31,5 +31,5 @@ The following example demonstrates the behavior of `ready` in manual mode. Only 
 ### Options
 
 | Property | Description                  | Type      | Default |
-|----------|------------------------------|-----------|---------|
+| -------- | ---------------------------- | --------- | ------- |
 | ready    | Is the current request ready | `boolean` | `true`  |

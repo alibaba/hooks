@@ -37,8 +37,8 @@ const { loading, run, runAsync } = useRequest(service, {
 
 The difference between `run` and `runAsync` is:
 
-* `run` is a normal synchronous function, we will automatically catch the exception, you can use `options.onError` to handle the behavior of the exception.
-* `runAsync` is a asynchronous function that returns a `Promise`. If you use `runAsync` to call it, it means you need to catch the exception yourself.
+- `run` is a normal synchronous function, we will automatically catch the exception, you can use `options.onError` to handle the behavior of the exception.
+- `runAsync` is a asynchronous function that returns a `Promise`. If you use `runAsync` to call it, it means you need to catch the exception yourself.
 
   ```ts
   runAsync().then((data) => {
@@ -58,10 +58,10 @@ Next, we will demonstrate the difference between `run` and `runAsync` through th
 
 `useRequest` provides the following life cycle for you to do some processing in different stages of asynchronous functions.
 
-* `onBefore`: Triggered before the request
-* `onSuccess`: Triggered when the request is resolved
-* `onError`: Triggered when the request is rejected
-* `onFinally`: Triggered when the request is completed
+- `onBefore`: Triggered before the request
+- `onSuccess`: Triggered when the request is resolved
+- `onError`: Triggered when the request is rejected
+- `onFinally`: Triggered when the request is completed
 
 <code src="./demo/lifeCycle.tsx" />
 
@@ -101,8 +101,8 @@ We have modified the user name, but we do not want to wait for the request to be
 
 `useRequest` provides a `cancel` function, which can cancel the request. At the same time, `useRequest` will automatically cancel the current request at the following timing:
 
-* When the component is unmounting, the ongoing request will be cancelled
-* Race cancellation, when the previous request has not returned, if the next request is initiated, the previous request will be cancelled
+- When the component is unmounting, the ongoing request will be cancelled
+- Race cancellation, when the previous request has not returned, if the next request is initiated, the previous request will be cancelled
 
 <code src="./demo/cancel.tsx" />
 
@@ -113,7 +113,6 @@ The `params` returned by `useRequest` will record the parameters of `service`. F
 If we set `options.manual = false`, the parameters of calling `service` for the first time can be set by `options.defaultParams`.
 
 <code src="./demo/params.tsx" />
-
 
 ## API
 
@@ -145,9 +144,9 @@ const {
 ### Result
 
 | Property     | Description                                                                                                                                                                             | Type                                                                  |
-|--------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------|
-| data         | Data returned by service                                                                                                                                                                | `TData` \| `undefined`                                                 |
-| error        | Exception thrown by service                                                                                                                                                             | `Error` \| `undefined`                                                 |
+| ------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------- |
+| data         | Data returned by service                                                                                                                                                                | `TData` \| `undefined`                                                |
+| error        | Exception thrown by service                                                                                                                                                             | `Error` \| `undefined`                                                |
 | loading      | Is the service being executed                                                                                                                                                           | `boolean`                                                             |
 | params       | An array of parameters for the service being executed. For example, you triggered `run(1, 2, 3)`, then params is equal to `[1, 2, 3]`                                                   | `TParams` \| `[]`                                                     |
 | run          | <ul><li> Manually trigger the execution of the service, and the parameters will be passed to the service</li><li>Automatic handling of exceptions, feedback through `onError`</li></ul> | `(...params : TParams) => void`                                       |
@@ -160,13 +159,12 @@ const {
 ### Options
 
 | Property      | Description                                                                                                                                                                                                      | Type                                                 | Default |
-|---------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|------------------------------------------------------|---------|
+| ------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------- | ------- |
 | manual        | <ul><li> The default is `false`. That is, the service is automatically executed during initialization. </li><li>If set to `true`, you need to manually call `run` or `runAsync` to trigger execution. </li></ul> | `boolean`                                            | `false` |
 | defaultParams | The parameters passed to the service at the first default execution                                                                                                                                              | `TParams`                                            | -       |
 | onBefore      | Triggered before service execution                                                                                                                                                                               | `(params: TParams) => void`                          | -       |
 | onSuccess     | Triggered when service resolve                                                                                                                                                                                   | `(data: TData, params: TParams) => void`             | -       |
 | onError       | Triggered when service reject                                                                                                                                                                                    | `(e: Error, params: TParams) => void`                | -       |
 | onFinally     | Triggered when service execution is complete                                                                                                                                                                     | `(params: TParams, data?: TData, e?: Error) => void` | -       |
-
 
 Above we have introduced the most basic functionalities of useRequest, and then we will introduce some more advanced functionalities.

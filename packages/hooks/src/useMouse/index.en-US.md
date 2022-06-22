@@ -21,9 +21,9 @@ Track cursor position
 
 ```typescript
 const state: {
-  screenX: number, 
-  screenY: number, 
-  clientX: number, 
+  screenX: number,
+  screenY: number,
+  clientX: number,
   clientY: number,
   pageX: number,
   pageY: number,
@@ -39,13 +39,13 @@ const state: {
 ### Params
 
 | Property | Description        | Type                                                        | Default |
-|----------|--------------------|-------------------------------------------------------------|---------|
+| -------- | ------------------ | ----------------------------------------------------------- | ------- |
 | target   | DOM element or ref | `() => Element` \| `Element` \| `MutableRefObject<Element>` | -       |
 
 ### result
 
 | Property    | Description                                                                                                        | Type     |
-|-------------|--------------------------------------------------------------------------------------------------------------------|----------|
+| ----------- | ------------------------------------------------------------------------------------------------------------------ | -------- |
 | screenX     | Position left relative to the top left of the physical screen/monitor                                              | `number` |
 | screenY     | Position top relative to the top left of the physical screen/monitor                                               | `number` |
 | clientX     | Position left relative to the upper left edge of the content area                                                  | `number` |

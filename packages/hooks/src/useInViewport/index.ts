@@ -25,11 +25,7 @@ function useInViewport(target: BasicTarget, options?: Options) {
         (entries) => {
           for (const entry of entries) {
             setRatio(entry.intersectionRatio);
-            if (entry.isIntersecting) {
-              setState(true);
-            } else {
-              setState(false);
-            }
+            setState(entry.isIntersecting);
           }
         },
         {

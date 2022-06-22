@@ -13,7 +13,6 @@ Add a getter method to the return value of `React.useState` to get the latest va
 
 <code src="./demo/demo1.tsx" />
 
-
 ## TypeScript definition
 
 ```typescript

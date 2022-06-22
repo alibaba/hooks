@@ -41,7 +41,7 @@ const [state, setState] = useLocalStorageState<T>(
 ### Options
 
 | Property     | Description                   | Type                     | Default          |
-|--------------|-------------------------------|--------------------------|------------------|
+| ------------ | ----------------------------- | ------------------------ | ---------------- |
 | defaultValue | Default value                 | `any \| (() => any)`     | -                |
 | serializer   | Custom serialization method   | `(value: any) => string` | `JSON.stringify` |
 | deserializer | Custom deserialization method | `(value: string) => any` | `JSON.parse`     |
