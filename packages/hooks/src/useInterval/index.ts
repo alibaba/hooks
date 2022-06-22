@@ -32,7 +32,7 @@ function useInterval(
 
   const clear = useCallback(() => {
     if (timerRef.current) {
-      clearTimeout(timerRef.current as NodeJS.Timer);
+      clearInterval(timerRef.current as NodeJS.Timer);
     }
   }, []);
 
