@@ -130,4 +130,50 @@ describe('usePollingPlugin', () => {
 
     hook2.unmount();
   });
+
+  it('usePollingPlugin pollingCondition should work', async () => {
+    let hook3;
+    const callback = jest
+      .fn()
+      .mockResolvedValueOnce(0)
+      .mockResolvedValueOnce(0)
+      .mockResolvedValue(1);
+    act(() => {
+      hook3 = setUp(callback, {
+        pollingInterval: 100,
+        pollingWhenHidden: true,
+        pollingCondition: (data) => data === 0,
+      });
+    });
+
+    expect(hook3.result.current.loading).toEqual(true);
+
+    act(() => {
+      jest.runAllTimers();
+    });
+    await hook3.waitForNextUpdate();
+    expect(hook3.result.current.loading).toEqual(false);
+    expect(callback).toHaveBeenCalledTimes(1);
+
+    act(() => {
+      jest.runAllTimers();
+    });
+    await hook3.waitForNextUpdate();
+    expect(callback).toHaveBeenCalledTimes(2);
+
+    act(() => {
+      jest.runAllTimers();
+    });
+    await hook3.waitForNextUpdate();
+    expect(callback).toHaveBeenCalledTimes(3);
+
+    act(() => {
+      jest.runAllTimers();
+    });
+    expect(jest.getTimerCount()).toBe(0);
+    expect(hook3.result.current.data).toBe(1);
+    expect(callback).toHaveBeenCalledTimes(3);
+
+    hook3.unmount();
+  });
 });
