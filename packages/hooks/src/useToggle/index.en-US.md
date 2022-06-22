@@ -29,22 +29,22 @@ const [state, { toggle, set, setLeft, setRight }] = useToggle<T, U>(defaultValue
 
 ### Params
 
-| Property     | Description                   | Type | Default |
-|--------------|-------------------------------|------|---------|
+| Property     | Description                 | Type | Default |
+| ------------ | --------------------------- | ---- | ------- |
 | defaultValue | The default value. Optional | `T`  | `false` |
 | reverseValue | The reverse value. Optional | `U`  | -       |
 
 ### Result
 
 | Property | Description                            | Type      |
-|----------|----------------------------------------|-----------|
+| -------- | -------------------------------------- | --------- |
 | state    | Current state                          | -         |
 | actions  | A set of methods to update state value | `Actions` |
 
 ### Actions
 
 | Property | Description                                                                                                   | Type                      |
-|----------|---------------------------------------------------------------------------------------------------------------|---------------------------|
+| -------- | ------------------------------------------------------------------------------------------------------------- | ------------------------- |
 | toggle   | Toggle state                                                                                                  | `() => void`              |
 | set      | Set state                                                                                                     | `(state: T \| U) => void` |
 | setLeft  | Set state to `defaultValue`                                                                                   | `() => void`              |

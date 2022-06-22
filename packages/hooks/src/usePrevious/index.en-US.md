@@ -29,12 +29,12 @@ const previousState: T = usePrevious<T>(
 ### Result
 
 | Property      | Description        | Type |
-|---------------|--------------------|------|
+| ------------- | ------------------ | ---- |
 | previousState | The previous value | `T`  |
 
 ### Params
 
 | Property     | Description                                                   | Type                                         | Default             |
-|--------------|---------------------------------------------------------------|----------------------------------------------|---------------------|
+| ------------ | ------------------------------------------------------------- | -------------------------------------------- | ------------------- |
 | state        | The state that needs to be tracked                            | `T`                                          | -                   |
 | shouldUpdate | Optional. Customize whether the state value should be updated | `(prev: T \| undefined, next: T) => boolean` | `(a, b) => a !== b` |

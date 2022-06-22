@@ -31,8 +31,8 @@ By setting `staleTime`, we can specify the data retention time, during which tim
 
 The content of the same `cacheKey` is shared globally, which will bring the following features
 
-* Sharing request `Promise`, only one of the same `cacheKey` will initiate a request at the same time, and the subsequent ones will share the same request `Promise`.
-* Data synchronization. At any time, when we change the content of one of the `cacheKey`, the content of the other `cacheKey` will be synchronized.
+- Sharing request `Promise`, only one of the same `cacheKey` will initiate a request at the same time, and the subsequent ones will share the same request `Promise`.
+- Data synchronization. At any time, when we change the content of one of the `cacheKey`, the content of the other `cacheKey` will be synchronized.
 
 In the following example, the two components will only initiate one request during initialization. And the content of the two articles is always synchronized.
 
@@ -67,8 +67,8 @@ Please note:
 
 ```ts
 interface CachedData<TData, TParams> {
-  data: TData; 
-  params: TParams; 
+  data: TData;
+  params: TParams;
   time: number;
 }
 ```
@@ -76,7 +76,7 @@ interface CachedData<TData, TParams> {
 ### Options
 
 | Property  | Description                                                                                                                                                                                                                                   | Type                              | Default  |
-|-----------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-----------------------------------|----------|
+| --------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------- | -------- |
 | cacheKey  | A unique ID of the request. If `cacheKey` is set, we will enable the caching mechanism. The data of the same `cacheKey` is globally synchronized.                                                                                             | `string`                          | -        |
 | cacheTime | <ul><li> Set the cache time. By default, the cached data will be cleared after 5 minutes.</li><li> If set to `-1`, the cached data will never expire</li></ul>                                                                                | `number`                          | `300000` |
 | staleTime | <ul><li> Time to consider the cached data is fresh. Within this time interval, the request will not be re-initiated</li><li> If set to `-1`, it means that the data is always fresh</li></ul>                                                 | `number`                          | `0`      |
@@ -96,5 +96,5 @@ clearCache(cacheKey?: string | string[]);
 
 ## Remark
 
-* Only successful request data will be cached
-* Cached data includes `data` and `params`
+- Only successful request data will be cached
+- Cached data includes `data` and `params`

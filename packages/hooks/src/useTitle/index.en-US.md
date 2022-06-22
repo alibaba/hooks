@@ -22,11 +22,11 @@ useTitle(title: string, options?: Options);
 ### Params
 
 | Property | Description | Type     | Default |
-|----------|-------------|----------|---------|
+| -------- | ----------- | -------- | ------- |
 | title    | Page title  | `string` | -       |
 
 ### Options
 
 | Property         | Description                                                                | Type      | Default |
-|------------------|----------------------------------------------------------------------------|-----------|---------|
+| ---------------- | -------------------------------------------------------------------------- | --------- | ------- |
 | restoreOnUnmount | Whether to restore the previous page title when the component is unmounted | `boolean` | `false` |

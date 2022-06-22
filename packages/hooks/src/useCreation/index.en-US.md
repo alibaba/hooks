@@ -33,6 +33,6 @@ function useCreation<T>(factory: () => T, deps: any[]): T;
 ### Params
 
 | Property | Description                              | Type        | Default |
-|----------|------------------------------------------|-------------|---------|
+| -------- | ---------------------------------------- | ----------- | ------- |
 | factory  | A function used for creating the object. | `() => any` | -       |
 | deps     | The dependencies list.                   | `any[]`     | -       |
