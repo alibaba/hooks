@@ -24,7 +24,7 @@ useEventListener(
   eventName: string,
   handler: (ev: Event) => void,
   options?: Options,
-)
+);
 ```
 
 ### Property

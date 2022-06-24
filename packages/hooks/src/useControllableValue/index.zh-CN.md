@@ -24,7 +24,7 @@ nav:
 ## API
 
 ```typescript
-const [state, setState] = useControllableValue(props: Record<string, any>, options?: Options)
+const [state, setState] = useControllableValue(props: Record<string, any>, options?: Options);
 ```
 
 ### Result

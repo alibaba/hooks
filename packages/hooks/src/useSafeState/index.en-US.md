@@ -16,5 +16,5 @@ It is exactly the same with `React.useState` , but after the component is unmoun
 ## API
 
 ```typescript
-const [state, setState] = useSafeState(initialState)
+const [state, setState] = useSafeState(initialState);
 ```

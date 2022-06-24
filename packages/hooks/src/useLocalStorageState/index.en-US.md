@@ -35,7 +35,7 @@ interface Options<T> {
 const [state, setState] = useLocalStorageState<T>(
   key: string,
   options: Options<T>
-): [T?, (value?: T | ((previousState: T) => T)) => void]
+): [T?, (value?: T | ((previousState: T) => T)) => void];
 ```
 
 ### Options

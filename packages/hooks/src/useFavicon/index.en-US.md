@@ -16,7 +16,7 @@ A hook that set the favicon of the page.
 ## API
 
 ```typescript
-useFavicon(href: string)
+useFavicon(href: string);
 ```
 
 ### Params

@@ -27,14 +27,14 @@ A Hook that store state into Cookie.
 type State = string | undefined;
 
 type SetState = (
-    newValue?: State | ((prevState?: State) => State),
-    options?: Cookies.CookieAttributes,
-  ) => void;
+  newValue?: State | ((prevState?: State) => State),
+  options?: Cookies.CookieAttributes,
+) => void;
 
 const [state, setState]: [State, SetState] = useCookieState(
   cookieKey: string,
   options?: Options,
-)
+);
 ```
 
 If you want to delete this record from document.cookie, use `setState()` or `setState(undefined)`.

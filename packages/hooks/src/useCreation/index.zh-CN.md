@@ -14,8 +14,8 @@ nav:
 而相比于 `useRef`，你可以使用 `useCreation` 创建一些常量，这些常量和 `useRef` 创建出来的 ref 有很多使用场景上的相似，但对于复杂常量的创建，`useRef` 却容易出现潜在的性能隐患。
 
 ```javascript
-const a = useRef(new Subject()) // 每次重渲染，都会执行实例化 Subject 的过程，即便这个实例立刻就被扔掉了
-const b = useCreation(() => new Subject(), []) // 通过 factory 函数，可以避免性能隐患
+const a = useRef(new Subject()); // 每次重渲染，都会执行实例化 Subject 的过程，即便这个实例立刻就被扔掉了
+const b = useCreation(() => new Subject(), []); // 通过 factory 函数，可以避免性能隐患
 ```
 
 ## 代码演示

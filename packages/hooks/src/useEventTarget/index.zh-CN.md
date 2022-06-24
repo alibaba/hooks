@@ -20,7 +20,7 @@ nav:
 ## API
 
 ```typescript
-const [value, { onChange, reset }  ] = useEventTarget<T, U>(Options<T, U>);
+const [value, { onChange, reset }] = useEventTarget<T, U>(Options<T, U>);
 ```
 
 ### Result

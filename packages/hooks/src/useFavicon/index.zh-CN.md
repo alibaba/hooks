@@ -16,7 +16,7 @@ nav:
 ## API
 
 ```typescript
-useFavicon(href: string)
+useFavicon(href: string);
 ```
 
 ### Params

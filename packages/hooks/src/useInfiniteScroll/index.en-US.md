@@ -62,7 +62,6 @@ With `mutate`, we can directly modify the current `data`. The following example 
 ## API
 
 ```ts
-
 export type Data = { list: any[];[key: string]: any; };
 export type Service<TData extends Data> = (currentData?: TData) => Promise<TData>;
 

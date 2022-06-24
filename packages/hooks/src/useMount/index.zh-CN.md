@@ -16,7 +16,7 @@ nav:
 ## API
 
 ```typescript
-useMount(fn: () => void );
+useMount(fn: () => void);
 ```
 
 ### 参数

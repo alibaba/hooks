@@ -16,7 +16,7 @@ nav:
 ## API
 
 ```typescript
-const [ state, { toggle, set, setTrue, setFalse }] = useBoolean(
+const [state, { toggle, set, setTrue, setFalse }] = useBoolean(
   defaultValue?: boolean,
 );
 ```

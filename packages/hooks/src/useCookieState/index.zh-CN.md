@@ -27,14 +27,14 @@ nav:
 type State = string | undefined;
 
 type SetState = (
-    newValue?: State | ((prevState?: State) => State),
-    options?: Cookies.CookieAttributes,
-  ) => void;
+  newValue?: State | ((prevState?: State) => State),
+  options?: Cookies.CookieAttributes,
+) => void;
 
 const [state, setState]: [State, SetState] = useCookieState(
   cookieKey: string,
   options?: Options,
-)
+);
 ```
 
 注意：如果想从 document.cookie 中删除这条数据，可以使用 `setState()` 或 `setState(undefined)`。

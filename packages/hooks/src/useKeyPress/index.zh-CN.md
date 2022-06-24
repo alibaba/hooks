@@ -43,7 +43,7 @@ useKeyPress(
   keyFilter: KeyFilter,
   eventHandler: EventHandler,
   options?: Options
-)
+);
 ```
 
 ### Params
