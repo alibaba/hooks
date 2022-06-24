@@ -40,7 +40,7 @@ importers:
       pretty-quick: ^3.1.3
       react: ^16.8.6
       react-dom: ^16.8.6
-      react-drag-listview: ^0.2.1
+      react-drag-listview: ^0.1.6
       react-shadow: ^19.0.3
       react-test-renderer: ^16.13.1
       surge: ^0.21.3
@@ -88,7 +88,7 @@ importers:
       pretty-quick: 3.1.3_prettier@2.6.2
       react: 16.14.0
       react-dom: 16.14.0_react@16.14.0
-      react-drag-listview: 0.2.1
+      react-drag-listview: 0.1.9
       react-shadow: 19.0.3_ccrd4luiijsxnlhe6bgkvyy2z4
       react-test-renderer: 16.14.0_react@16.14.0
       surge: 0.21.7
@@ -115,7 +115,7 @@ importers:
       lodash: ^4.17.21
       mock-socket: ^9.0.3
       mockjs: ^1.1.0
-      react-drag-listview: ^0.2.1
+      react-drag-listview: ^0.1.6
       resize-observer-polyfill: ^1.5.1
       screenfull: ^5.0.0
     dependencies:
@@ -136,7 +136,7 @@ importers:
       jest-websocket-mock: 2.3.0
       mock-socket: 9.1.5
       mockjs: 1.1.0
-      react-drag-listview: 0.2.1
+      react-drag-listview: 0.1.9
 
   packages/use-url-state:
     specifiers:
@@ -15796,7 +15796,7 @@ packages:
       scheduler: 0.19.1
     dev: true
 
-  /react-drag-listview/0.2.1:
+  /react-drag-listview/0.1.9:
     resolution:
       {
         integrity: sha512-/OsYevKtCUlw4FhJIfZPH7INHEmyl89sSC5COzonHW5Z2c8rHg4DNYFnUxOyqH+65o7sHweL13oaf6wr7dFvPA==,
