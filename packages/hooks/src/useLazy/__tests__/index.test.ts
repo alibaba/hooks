@@ -6,7 +6,24 @@ describe('useLazy', () => {
     expect(useLazy).toBeDefined();
   });
 
-  function getHook(shouldRun: boolean = true) {
+  function getNonCalledHook() {
+    const fn = jest.fn();
+
+    const hook = renderHook(
+      ({ val }: { val: string }) => {
+        useLazy(() => fn('run:' + val), [val]);
+      },
+      { initialProps: { val: 'test1' } },
+    );
+    return { hook, fn };
+  }
+
+  it('should not be called', () => {
+    const { fn } = getNonCalledHook();
+    expect(fn).not.toBeCalled();
+  });
+
+  function getHook() {
     const fn = jest.fn();
     fn.mockImplementation((v: string) => v);
     const results: { get: any; result: string }[] = [];
@@ -14,21 +31,12 @@ describe('useLazy', () => {
     const hook = renderHook(
       ({ val }: { val: string; val2: string }) => {
         const get = useLazy(() => fn('run:' + val), [val]);
-        if (shouldRun)
-          results.push({
-            get,
-            result: get(),
-          });
+        results.push({ get, result: get() });
       },
       { initialProps: { val: 'test1', val2: 'any1' } },
     );
     return { hook, fn, results };
   }
-
-  it('should not be called', () => {
-    const { fn } = getHook(false);
-    expect(fn).not.toBeCalled();
-  });
 
   it('test fn called', () => {
     const { hook, fn, results } = getHook();
