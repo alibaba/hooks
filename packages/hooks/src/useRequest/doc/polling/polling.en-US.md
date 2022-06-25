@@ -40,11 +40,12 @@ You can experience the effect through the following example.
 
 ### Return
 
-| Property | Description   | Type                                     |
-| -------- | ------------- | ---------------------------------------- |
-| run      | Start polling | `(...params: TParams) => void`           |
-| runAsync | Start polling | `(...params: TParams) => Promise<TData>` |
-| cancel   | Stop polling  | `() => void`                             |
+| Property  | Description                    | Type                                     |
+| --------- | ------------------------------ | ---------------------------------------- |
+| run       | Start polling                  | `(...params: TParams) => void`           |
+| runAsync  | Start polling                  | `(...params: TParams) => Promise<TData>` |
+| cancel    | Stop polling                   | `() => void`                             |
+| isPolling | Whether the service is polling | `boolean`                                |
 
 ### Options
 

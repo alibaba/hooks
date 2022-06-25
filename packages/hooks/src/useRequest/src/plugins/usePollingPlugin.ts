@@ -58,6 +58,9 @@ const usePollingPlugin: Plugin<any, any[]> = (
         }, pollingInterval);
       } else {
         countRef.current = 0;
+        return {
+          isStopPolling: true,
+        };
       }
     },
     onCancel: () => {

@@ -13,7 +13,7 @@ function getUsername() {
 }
 
 export default () => {
-  const { data, loading, run, cancel } = useRequest(getUsername, {
+  const { data, loading, run, cancel, isPolling } = useRequest(getUsername, {
     pollingInterval: 1000,
     pollingWhenHidden: false,
     pollingErrorRetryCount: 3,
@@ -32,6 +32,7 @@ export default () => {
       <button type="button" onClick={cancel} style={{ marginLeft: 16 }}>
         stop
       </button>
+      <p>Whether polling is in progress: {String(isPolling)}</p>
     </>
   );
 };
