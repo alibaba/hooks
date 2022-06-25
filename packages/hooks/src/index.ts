@@ -34,6 +34,7 @@ import useInViewport from './useInViewport';
 import useIsomorphicLayoutEffect from './useIsomorphicLayoutEffect';
 import useKeyPress from './useKeyPress';
 import useLatest from './useLatest';
+import useLazy from './useLazy';
 import useLocalStorageState from './useLocalStorageState';
 import useLockFn from './useLockFn';
 import useLongPress from './useLongPress';
@@ -135,6 +136,7 @@ export {
   useExternal,
   useSafeState,
   useLatest,
+  useLazy,
   useIsomorphicLayoutEffect,
   useDeepCompareEffect,
   useDeepCompareLayoutEffect,

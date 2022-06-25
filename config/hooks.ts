@@ -110,6 +110,7 @@ export const menus = [
       'useLatest',
       'useMemoizedFn',
       'useReactive',
+      'useLazy',
     ],
   },
   {
