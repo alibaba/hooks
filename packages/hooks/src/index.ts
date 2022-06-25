@@ -44,6 +44,7 @@ import useMouse from './useMouse';
 import useNetwork from './useNetwork';
 import usePagination from './usePagination';
 import usePrevious from './usePrevious';
+import usePromise from './usePromise';
 import useRafInterval from './useRafInterval';
 import useRafState from './useRafState';
 import useRafTimeout from './useRafTimeout';
@@ -98,6 +99,7 @@ export {
   useDebounceFn,
   useDebounceEffect,
   usePrevious,
+  usePromise,
   useMouse,
   useScroll,
   useClickAway,
