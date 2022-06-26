@@ -16,7 +16,7 @@ nav:
 ## API
 
 ```typescript
-const result: Result= useSelections<T>(items: T[], defaultSelected?: T[]);
+const result: Result = useSelections<T>(items: T[], defaultSelected?: T[]);
 ```
 
 ### Result

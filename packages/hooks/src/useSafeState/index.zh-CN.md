@@ -16,5 +16,5 @@ nav:
 ## API
 
 ```typescript
-const [state, setState] = useSafeState(initialState)
+const [state, setState] = useSafeState(initialState);
 ```

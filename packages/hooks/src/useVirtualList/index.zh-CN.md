@@ -20,7 +20,7 @@ nav:
 ## API
 
 ```typescript
-const [list, scrollTo]= useVirtualList<T>(
+const [list, scrollTo] = useVirtualList<T>(
   originalList: T[],
   options: {
     containerTarget: (() => Element) | Element | MutableRefObject<Element>,

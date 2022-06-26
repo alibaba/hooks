@@ -16,7 +16,7 @@ This hook is used for Checkbox group, supports multiple selection, single select
 ## API
 
 ```typescript
-const result: Result= useSelections<T>(items: T[], defaultSelected?: T[]);
+const result: Result = useSelections<T>(items: T[], defaultSelected?: T[]);
 ```
 
 ### Result

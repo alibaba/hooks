@@ -62,7 +62,6 @@ const result = useInfiniteScroll(service, {
 ## API
 
 ```ts
-
 export type Data = { list: any[];[key: string]: any; };
 export type Service<TData extends Data> = (currentData?: TData) => Promise<TData>;
 

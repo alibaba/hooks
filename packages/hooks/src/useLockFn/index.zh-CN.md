@@ -18,7 +18,7 @@ nav:
 ```typescript
 function useLockFn<P extends any[] = any[], V extends any = any>(
   fn: (...args: P) => Promise<V>
-): fn: (...args: P) => Promise<V | undefined>
+): fn: (...args: P) => Promise<V | undefined>;
 ```
 
 ### Result

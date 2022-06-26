@@ -16,7 +16,7 @@ A hook that elegantly manages boolean state.
 ## API
 
 ```typescript
-const [ state, { toggle, set, setTrue, setFalse }] = useBoolean(
+const [state, { toggle, set, setTrue, setFalse }] = useBoolean(
   defaultValue?: boolean,
 );
 ```

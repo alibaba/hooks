@@ -10,7 +10,7 @@ Sometimes it is difficult to pass events between multiple components. By using E
 To get an instance of `EventEmitter`, you can call `useEventEmitter` in React components.
 
 ```js
-const event$ = useEventEmitter()
+const event$ = useEventEmitter();
 ```
 
 > If the component renders multiple times, the return value of `useEventEmitter` in every render process will stay unchanged and no extra `EventEmitter` instance will be created.
@@ -18,13 +18,13 @@ const event$ = useEventEmitter()
 Then we can share `event$` to other components via `props` or `Context`. To push a event, just call the `emit` method of `EventEmitter`. To subscribe to a series of events, call the `useSubscription` method.
 
 ```js
-event$.emit('hello')
+event$.emit('hello');
 ```
 
 ```js
 event$.useSubscription(val => {
-  console.log(val)
-})
+  console.log(val);
+});
 ```
 
 > `useSubscription` will automatically register the subscription and unsubscription.

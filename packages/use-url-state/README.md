@@ -15,6 +15,7 @@ Or with npm:
 ```bash
 npm install @ahooksjs/use-url-state -S
 ```
+
 Or with pnpm
 
 ```bash
