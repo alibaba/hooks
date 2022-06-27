@@ -3,9 +3,6 @@ import useUpdate from '..';
 import useMemoizedFn from '../../useMemoizedFn';
 
 describe('useUpdate', () => {
-  it('should be defined', () => {
-    expect(useUpdate).toBeDefined();
-  });
   it('should update', () => {
     let count = 0;
     const hooks = renderHook(() => {

@@ -5,10 +5,6 @@ import { render, fireEvent } from '@testing-library/react';
 import useHover from '../index';
 
 describe('useHover', () => {
-  it('should be defined', () => {
-    expect(useHover).toBeDefined();
-  });
-
   it('should work', () => {
     const { getByText } = render(<button>Hover</button>);
     let trigger = 0;

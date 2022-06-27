@@ -2,10 +2,6 @@ import { renderHook } from '@testing-library/react-hooks';
 import useClickAway from '../index';
 
 describe('useClickAway', () => {
-  it('should be defined', () => {
-    expect(useClickAway).toBeDefined();
-  });
-
   let container: HTMLDivElement;
   let container1: HTMLDivElement;
 

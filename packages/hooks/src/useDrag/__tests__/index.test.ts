@@ -17,10 +17,6 @@ const mockTarget = {
 };
 
 describe('useDrag', () => {
-  it('should be defined', () => {
-    expect(useDrag).toBeDefined();
-  });
-
   it('should add/remove listener on mount/unmount', () => {
     const { unmount } = setup(1, mockTarget as any);
     expect(mockTarget.addEventListener).toBeCalled();

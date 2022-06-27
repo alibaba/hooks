@@ -17,9 +17,6 @@ const mockTarget = {
 };
 
 describe('useLongPress', () => {
-  it('should be defined', () => {
-    expect(useLongPress).toBeDefined();
-  });
   it('longPress callback correct', async () => {
     renderHook(() =>
       useLongPress(mockCallback, mockTarget as any, {

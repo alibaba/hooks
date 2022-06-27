@@ -2,10 +2,6 @@ import { renderHook, act } from '@testing-library/react-hooks';
 import useDynamicList from '../index';
 
 describe('useDynamicList', () => {
-  it('should be defined', () => {
-    expect(useDynamicList).toBeDefined();
-  });
-
   const setUp = (props: any): any => renderHook(() => useDynamicList(props));
 
   it('getKey should work', () => {

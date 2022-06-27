@@ -3,10 +3,6 @@ import useRequest from '../index';
 import { request } from '../../utils/testingHelpers';
 
 describe('useRequest', () => {
-  it('should be defined', () => {
-    expect(useRequest).toBeDefined();
-  });
-
   jest.useFakeTimers();
   const setUp = (service, options) => renderHook((o) => useRequest(service, o || options));
   let hook;

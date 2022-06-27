@@ -62,10 +62,6 @@ describe('useStorageState', () => {
     );
   };
 
-  it('should be defined', () => {
-    expect(createUseStorageState);
-  });
-
   it('should get defaultValue for a given key', () => {
     const hook = setUp({ key: 'key1', defaultValue: 'value1' });
     expect(hook.result.current.state).toEqual('value1');

@@ -10,10 +10,6 @@ describe('useExternal', () => {
     document.head.innerHTML = '';
   });
 
-  it('should be defined', () => {
-    expect(useExternal).toBeDefined();
-  });
-
   it('should load a script', () => {
     const path = 'https://ahooks.js.org/useExternal/test-external-script.js';
     const { result } = setup(path, {

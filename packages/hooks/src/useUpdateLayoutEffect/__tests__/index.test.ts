@@ -2,9 +2,6 @@ import { renderHook } from '@testing-library/react-hooks';
 import useUpdateLayoutEffect from '../index';
 
 describe('useUpdateLayoutEffect', () => {
-  it('should be defined', () => {
-    expect(useUpdateLayoutEffect).toBeDefined();
-  });
   it('test on mounted', async () => {
     let mountedState = 1;
     const hook = renderHook(() =>

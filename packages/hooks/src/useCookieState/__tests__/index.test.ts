@@ -3,10 +3,6 @@ import useCookieState, { Options } from '../index';
 import Cookies from 'js-cookie';
 
 describe('useCookieState', () => {
-  it('should be defined', () => {
-    expect(useCookieState).toBeDefined();
-  });
-
   const setUp = (key: string, options: Options) =>
     renderHook(() => {
       const [state, setState] = useCookieState(key, options);

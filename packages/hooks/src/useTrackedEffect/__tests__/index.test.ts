@@ -15,9 +15,6 @@ describe('useTrackedEffect', () => {
     currentDependencies = curDeps;
     return mockEffectCleanup;
   });
-  it('should be defined', () => {
-    expect(useTrackedEffect).toBeDefined();
-  });
   it("should run provided effect and return single changed dependecy's index ", () => {
     let var1 = 0;
     let var2 = '0';

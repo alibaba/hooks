@@ -10,10 +10,6 @@ interface ParamsObj {
 let hook: RenderHookResult<ParamsObj, any>;
 
 describe('useThrottle', () => {
-  it('should be defined', () => {
-    expect(useThrottle).toBeDefined();
-  });
-
   it('default useThrottle should work', async () => {
     let mountedState = 1;
     act(() => {

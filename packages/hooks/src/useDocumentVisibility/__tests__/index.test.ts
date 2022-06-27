@@ -18,10 +18,6 @@ afterAll(() => {
 });
 
 describe('useDocumentVisibility', () => {
-  it('should be defined', () => {
-    expect(useDocumentVisibility).toBeDefined();
-  });
-
   it('isBrowser effect corrent', async () => {
     mockDocumentVisibilityState.mockReturnValue('hidden');
     // Object.defineProperty(document, 'visibilityState', { value: 'hidden', writable: true });

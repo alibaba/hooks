@@ -4,10 +4,6 @@ import useMap from '../index';
 const setUp = (initialMap?: Iterable<[any, any]>) => renderHook(() => useMap(initialMap));
 
 describe('useMap', () => {
-  it('should be defined', () => {
-    expect(useMap).toBeDefined();
-  });
-
   it('should init map and utils', () => {
     const { result } = setUp([
       ['foo', 'bar'],

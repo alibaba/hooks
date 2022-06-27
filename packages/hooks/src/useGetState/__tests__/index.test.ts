@@ -2,10 +2,6 @@ import { act, renderHook } from '@testing-library/react-hooks';
 import useGetState from '../index';
 
 describe('useGetState', () => {
-  it('should be defined', () => {
-    expect(useGetState).toBeDefined();
-  });
-
   const setUp = <T>(initialValue: T) =>
     renderHook(() => {
       const [state, setState, getState] = useGetState<T>(initialValue);

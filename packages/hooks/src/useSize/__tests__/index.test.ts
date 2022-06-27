@@ -3,9 +3,6 @@ import useSize from '../index';
 
 // test about Resize Observer see https://github.com/que-etc/resize-observer-polyfill/tree/master/tests
 describe('useSize', () => {
-  it('should be defined', () => {
-    expect(useSize).toBeDefined();
-  });
   it('with argument', () => {
     const hook = renderHook(() => useSize(document.body));
     expect(hook.result.current).toEqual(undefined);

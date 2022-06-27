@@ -8,10 +8,6 @@ const callToggle = (hook: any) => {
 };
 
 describe('useToggle', () => {
-  it('should be defined', () => {
-    expect(useToggle).toBeDefined();
-  });
-
   it('test on init', async () => {
     const hook = renderHook(() => useToggle());
     expect(hook.result.current[0]).toBeFalsy();

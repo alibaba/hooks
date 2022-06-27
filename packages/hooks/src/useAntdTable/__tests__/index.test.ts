@@ -70,10 +70,6 @@ describe('useAntdTable', () => {
   //   hook?.unmount();
   // });
 
-  it('should be defined', () => {
-    expect(useAntdTable).toBeDefined();
-  });
-
   it('should fetch after first render', async () => {
     queryArgs = undefined;
     form.resetFields();

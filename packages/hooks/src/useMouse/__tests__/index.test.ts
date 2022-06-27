@@ -15,9 +15,6 @@ describe('useMouse', () => {
     });
   }
 
-  it('should be defined', () => {
-    expect(useMouse).toBeDefined();
-  });
   it('on mouseMove', async () => {
     const hook = renderHook(() => useMouse());
     expect(hook.result.current.pageX).toEqual(NaN);

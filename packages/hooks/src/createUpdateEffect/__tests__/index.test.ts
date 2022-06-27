@@ -3,10 +3,6 @@ import { useEffect, useLayoutEffect } from 'react';
 import { createUpdateEffect } from '../index';
 
 describe('createUpdateEffect', () => {
-  it('should be defined', () => {
-    expect(createUpdateEffect).toBeDefined();
-  });
-
   it('should work for useEffect', () => {
     const useUpdateEffect = createUpdateEffect(useEffect);
 
