@@ -1,8 +1,10 @@
 import { useCallback, useState } from 'react';
 import { isFunction } from '../utils';
 
+type State<S, K extends keyof S> = Pick<S, K> | S | null;
+
 export type SetState<S extends Record<string, any>> = <K extends keyof S>(
-  state: Pick<S, K> | null | ((prevState: Readonly<S>) => Pick<S, K> | S | null),
+  state: State<S, K> | ((prevState: Readonly<S>) => State<S, K>),
 ) => void;
 
 const useSetState = <S extends Record<string, any>>(
