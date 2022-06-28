@@ -2,9 +2,6 @@ import { renderHook } from '@testing-library/react-hooks';
 import useUnmount from '../index';
 
 describe('useUnmount', () => {
-  it('should be defined', () => {
-    expect(useUnmount).toBeDefined();
-  });
   it('useUnmount should work', async () => {
     const fn = jest.fn();
     const hook = renderHook(() => useUnmount(fn));

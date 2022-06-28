@@ -18,9 +18,6 @@ describe('useRafInterval', () => {
   afterAll(() => {
     jest.restoreAllMocks();
   });
-  it('should be defined', () => {
-    expect(useRafInterval).toBeDefined();
-  });
 
   it('interval should work', () => {
     const callback = jest.fn();

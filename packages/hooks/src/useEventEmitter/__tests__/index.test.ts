@@ -3,10 +3,6 @@ import { useState } from 'react';
 import useEventEmitter from '../index';
 
 describe('useEventEmitter', () => {
-  it('should be defined', () => {
-    expect(useEventEmitter).toBeDefined();
-  });
-
   const setUp = (): any =>
     renderHook(() => {
       const event$ = useEventEmitter<number>();

@@ -17,10 +17,6 @@ afterAll(() => {
 });
 
 describe('useVirtualList', () => {
-  it('should be defined', () => {
-    expect(useVirtualList).toBeDefined();
-  });
-
   describe('virtual list render', () => {
     let hook: any;
     let container: HTMLDivElement;

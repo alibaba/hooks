@@ -2,10 +2,6 @@ import { renderHook } from '@testing-library/react-hooks';
 import usePrevious, { ShouldUpdateFunc } from '../';
 
 describe('usePrevious', () => {
-  it('should be defined', () => {
-    expect(usePrevious).toBeDefined();
-  });
-
   function getHook<T>(initialValue?: T, compareFunction?: ShouldUpdateFunc<T>) {
     return renderHook(({ val, cmp }) => usePrevious<T>(val as T, cmp), {
       initialProps: {

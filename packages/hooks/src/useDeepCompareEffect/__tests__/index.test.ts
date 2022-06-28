@@ -3,10 +3,6 @@ import { useState } from 'react';
 import useDeepCompareEffect from '../index';
 
 describe('useDeepCompareEffect', () => {
-  it('should be defined', () => {
-    expect(useDeepCompareEffect).toBeDefined();
-  });
-
   it('test deep compare', async () => {
     const hook = renderHook(() => {
       const [x, setX] = useState(0);

@@ -12,10 +12,6 @@ const mockIntersectionObserver = jest.fn().mockReturnValue({
 window.IntersectionObserver = mockIntersectionObserver;
 
 describe('useInViewport', () => {
-  it('should be defined', () => {
-    expect(useInViewport).toBeDefined();
-  });
-
   it('should work when target is in viewport', async () => {
     const { result } = renderHook(() => useInViewport(targetEl));
     const calls = mockIntersectionObserver.mock.calls;

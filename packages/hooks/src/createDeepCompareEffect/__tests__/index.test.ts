@@ -3,10 +3,6 @@ import { useEffect, useLayoutEffect, useState } from 'react';
 import { createDeepCompareEffect } from '../index';
 
 describe('createDeepCompareEffect', () => {
-  it('should be defined', () => {
-    expect(createDeepCompareEffect).toBeDefined();
-  });
-
   it('should work for useEffect', async () => {
     const useDeepCompareEffect = createDeepCompareEffect(useEffect);
 

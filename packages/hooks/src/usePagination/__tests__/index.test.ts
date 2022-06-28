@@ -7,10 +7,6 @@ import usePagination from '../';
 // cache
 
 describe('usePagination', () => {
-  it('should be defined', () => {
-    expect(usePagination).toBeDefined();
-  });
-
   let queryArgs;
   const asyncFn = (query) => {
     queryArgs = query;

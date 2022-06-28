@@ -3,10 +3,6 @@ import useDebounce from '../index';
 import { sleep } from '../../utils/testingHelpers';
 
 describe('useDebounce', () => {
-  it('should be defined', () => {
-    expect(useDebounce).toBeDefined();
-  });
-
   it('useDebounce wait:200ms', async () => {
     let mountedState = 0;
     const { result, rerender } = renderHook(() => useDebounce(mountedState, { wait: 200 }));

@@ -2,10 +2,6 @@ import { renderHook, act } from '@testing-library/react-hooks';
 import useLocalStorageState from '../index';
 
 describe('useLocalStorageState', () => {
-  it('should be defined', () => {
-    expect(useLocalStorageState).toBeDefined();
-  });
-
   const setUp = <T>(key: string, value: T) =>
     renderHook(() => {
       const [state, setState] = useLocalStorageState<T>(key, { defaultValue: value });

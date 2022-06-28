@@ -16,9 +16,6 @@ describe('useRafTimeout', () => {
   afterAll(() => {
     jest.restoreAllMocks();
   });
-  it('should be defined', () => {
-    expect(useRafTimeout).toBeDefined();
-  });
 
   it('timeout should work', () => {
     const callback = jest.fn();

@@ -7,10 +7,6 @@ const promise: Promise<void> = new Promise((resolve) => resolve());
 const wsUrl = 'ws://localhost:9999';
 
 describe('useWebSocket', () => {
-  it('should be defined', () => {
-    expect(useWebSocket).toBeDefined();
-  });
-
   afterAll(() => {
     WS.clean();
   });

@@ -35,10 +35,6 @@ describe('useInfiniteScroll', () => {
     jest.useRealTimers();
   });
 
-  it('should be defined', () => {
-    expect(useInfiniteScroll).toBeDefined();
-  });
-
   it('should auto load', async () => {
     const { result } = setup(mockRequest);
     expect(result.current.loading).toBeTruthy();
