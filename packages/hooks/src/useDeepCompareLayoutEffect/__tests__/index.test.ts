@@ -3,10 +3,6 @@ import { useState } from 'react';
 import useDeepCompareLayoutEffect from '../index';
 
 describe('useDeepCompareLayoutEffect', () => {
-  it('should be defined', () => {
-    expect(useDeepCompareLayoutEffect).toBeDefined();
-  });
-
   it('test deep compare', async () => {
     const hook = renderHook(() => {
       const [x, setX] = useState(0);

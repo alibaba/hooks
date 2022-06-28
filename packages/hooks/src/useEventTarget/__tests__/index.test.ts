@@ -2,10 +2,6 @@ import { renderHook, act } from '@testing-library/react-hooks';
 import useEventTarget from '../index';
 
 describe('useEventTarget', () => {
-  it('should be defined', () => {
-    expect(useEventTarget).toBeDefined();
-  });
-
   it('should work without initial value', async () => {
     const hook = renderHook(() => useEventTarget());
     expect(hook.result.current[0]).toEqual(undefined);

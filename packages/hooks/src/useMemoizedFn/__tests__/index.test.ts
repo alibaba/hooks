@@ -17,10 +17,6 @@ const useCount = () => {
 let hook: RenderHookResult<[], ReturnType<typeof useCount>>;
 
 describe('useMemoizedFn', () => {
-  it('should be defined', () => {
-    expect(useMemoizedFn).toBeDefined();
-  });
-
   it('useMemoizedFn should work', () => {
     act(() => {
       hook = renderHook(() => useCount());

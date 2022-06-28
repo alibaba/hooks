@@ -2,10 +2,6 @@ import { renderHook, act } from '@testing-library/react-hooks';
 import useHistoryTravel from '../index';
 
 describe('useHistoryTravel', () => {
-  it('should be defined', () => {
-    expect(useHistoryTravel).toBeDefined();
-  });
-
   it('should work without initial value', async () => {
     const hook = renderHook(() => useHistoryTravel());
     expect(hook.result.current.value).toEqual(undefined);

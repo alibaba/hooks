@@ -2,9 +2,6 @@ import { renderHook } from '@testing-library/react-hooks';
 import useUpdateEffect from '../index';
 
 describe('useUpdateEffect', () => {
-  it('should be defined', () => {
-    expect(useUpdateEffect).toBeDefined();
-  });
   it('test on mounted', async () => {
     let mountedState = 1;
     const hook = renderHook(() =>

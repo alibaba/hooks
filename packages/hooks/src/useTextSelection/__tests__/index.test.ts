@@ -70,10 +70,6 @@ describe('useTextSelection', () => {
     };
   }
 
-  it('should be defined', () => {
-    expect(useTextSelection).toBeDefined();
-  });
-
   it('on textSelection', async () => {
     initGetSelection({ left: 10, top: 10, height: 100, width: 100, text: 'on textSelection' });
 

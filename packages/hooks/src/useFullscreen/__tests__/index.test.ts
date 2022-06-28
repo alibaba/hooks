@@ -45,10 +45,6 @@ describe('useFullscreen', () => {
     jest.resetAllMocks();
   });
 
-  it('should be defined', () => {
-    expect(useFullscreen).toBeDefined();
-  });
-
   it('enterFullscreen/exitFullscreen should be work', () => {
     const { result } = setup(targetEl);
     const { enterFullscreen, exitFullscreen } = result.current[1];

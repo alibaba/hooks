@@ -67,10 +67,6 @@ describe('useFusionTable', () => {
     jest.useRealTimers();
   });
 
-  it('should be defined', () => {
-    expect(useFusionTable).toBeDefined();
-  });
-
   it('should get table & pagination props', async () => {
     const { result } = setup(getTableData);
     await act(async () => {

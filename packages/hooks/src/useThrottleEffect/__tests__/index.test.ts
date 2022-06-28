@@ -10,10 +10,6 @@ interface ParamsObj {
 let hook: RenderHookResult<ParamsObj, any>;
 
 describe('useThrottleEffect', () => {
-  it('should be defined', () => {
-    expect(useThrottleEffect).toBeDefined();
-  });
-
   it('useThrottleEffect should work', async () => {
     const mockEffect = jest.fn(() => {});
     const mockCleanUp = jest.fn(() => {});

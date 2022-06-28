@@ -12,9 +12,6 @@ const setUp = ({ fn, delay, options }: ParamsObj) =>
 
 describe('useInterval', () => {
   jest.useFakeTimers();
-  it('should be defined', () => {
-    expect(useInterval).toBeDefined();
-  });
 
   it('interval should work', () => {
     const callback = jest.fn();

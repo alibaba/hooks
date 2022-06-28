@@ -4,10 +4,6 @@ import useLockFn from '../index';
 import { sleep } from '../../utils/testingHelpers';
 
 describe('useLockFn', () => {
-  it('should be defined', () => {
-    expect(useLockFn).toBeDefined();
-  });
-
   const setUp = (): any =>
     renderHook(() => {
       const [tag, updateTag] = useState(false);

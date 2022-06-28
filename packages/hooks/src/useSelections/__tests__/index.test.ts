@@ -20,10 +20,6 @@ afterAll(() => {
 const data = [1, 2, 3];
 
 describe('useSelections', () => {
-  it('should be defined', () => {
-    expect(useSelections).toBeDefined();
-  });
-
   function useTestUseSelections() {
     const [items, setItems] = useState(data);
     const useSelectionsResult = useSelections(items, [1]);

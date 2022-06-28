@@ -9,10 +9,6 @@ afterEach(() => {
 });
 
 describe('useKeyPress ', () => {
-  it('should be defined', () => {
-    expect(useKeyPress).toBeDefined();
-  });
-
   it('test single key', async () => {
     const { unmount } = renderHook(() => useKeyPress(['c'], callback));
     fireEvent.keyDown(document, { key: 'c', keyCode: 67 });

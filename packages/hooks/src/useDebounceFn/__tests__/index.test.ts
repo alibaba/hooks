@@ -18,10 +18,6 @@ const setUp = ({ fn, wait }: ParamsObj) => renderHook(() => useDebounceFn(fn, { 
 let hook: RenderHookResult<ParamsObj, ReturnType<typeof useDebounceFn>>;
 
 describe('useDebounceFn', () => {
-  it('should be defined', () => {
-    expect(useDebounceFn).toBeDefined();
-  });
-
   it('run, cancel and flush should work', async () => {
     act(() => {
       hook = setUp({

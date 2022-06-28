@@ -2,10 +2,6 @@ import { renderHook } from '@testing-library/react-hooks';
 import useEventListener from '../index';
 
 describe('useEventListener', () => {
-  it('should be defined', () => {
-    expect(useEventListener).toBeDefined();
-  });
-
   let container: HTMLDivElement;
 
   beforeEach(() => {

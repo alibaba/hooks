@@ -2,10 +2,6 @@ import { act, renderHook, RenderHookResult } from '@testing-library/react-hooks'
 import useSafeState from '../index';
 
 describe('useSetState', () => {
-  it('should be defined', () => {
-    expect(useSafeState).toBeDefined();
-  });
-
   const setUp = (initialValue: any) =>
     renderHook(() => {
       const [state, setState] = useSafeState(initialValue);

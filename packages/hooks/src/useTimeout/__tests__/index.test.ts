@@ -10,9 +10,6 @@ const setUp = ({ fn, delay }: ParamsObj) => renderHook(() => useTimeout(fn, dela
 
 describe('useTimeout', () => {
   jest.useFakeTimers();
-  it('should be defined', () => {
-    expect(useTimeout).toBeDefined();
-  });
 
   it('timeout should work', () => {
     const callback = jest.fn();
