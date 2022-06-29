@@ -13,7 +13,7 @@ function subscribe(listener: () => void) {
   };
 }
 
-if (canUseDom()) {
+if (canUseDom() && typeof window.addEventListener !== 'undefined') {
   const revalidate = () => {
     if (!isDocumentVisible() || !isOnline()) return;
     for (let i = 0; i < listeners.length; i++) {
