@@ -5,7 +5,7 @@ nav:
 
 # useTrackedEffect
 
-追踪是哪个依赖变化触发了 `useEffect` 的执行。
+追踪是哪个依赖变化触发了 `useEffect` 的执行，只会在开发模式下运行。
 
 ## 代码演示
 
