@@ -6,6 +6,9 @@ export default function useWhyDidYouUpdate(componentName: string, props: IProps)
   const prevProps = useRef<IProps>({});
 
   useEffect(() => {
+    if (process.env.NODE_ENV !== 'development') {
+      return;
+    }
     if (prevProps.current) {
       const allKeys = Object.keys({ ...prevProps.current, ...props });
       const changedProps: IProps = {};

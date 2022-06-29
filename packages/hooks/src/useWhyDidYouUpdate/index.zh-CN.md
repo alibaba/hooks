@@ -5,7 +5,7 @@ nav:
 
 # useWhyDidYouUpdate
 
-帮助开发者排查是那个属性改变导致了组件的 rerender。
+帮助开发者排查是那个属性改变导致了组件的 rerender，只会在开发模式下追踪。
 
 ## 代码演示
 

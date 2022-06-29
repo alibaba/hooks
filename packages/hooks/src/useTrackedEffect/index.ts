@@ -24,6 +24,9 @@ const useTrackedEffect = (effect: Effect, deps?: DependencyList) => {
   const previousDepsRef = useRef<DependencyList>();
 
   useEffect(() => {
+    if (process.env.NODE_ENV !== 'development') {
+      return;
+    }
     const changes = diffTwoDeps(previousDepsRef.current, deps);
     const previousDeps = previousDepsRef.current;
     previousDepsRef.current = deps;

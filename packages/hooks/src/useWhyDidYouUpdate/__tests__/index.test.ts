@@ -3,6 +3,7 @@ import useWhyDidYouUpdate from '../index';
 import { useState } from 'react';
 
 describe('useWhyDidYouUpdate', () => {
+  process.env.NODE_ENV = 'development';
   it('should work', () => {
     console.log = jest.fn();
     const setup = () =>
