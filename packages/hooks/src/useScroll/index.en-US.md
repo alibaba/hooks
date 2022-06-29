@@ -1,17 +1,11 @@
 ---
-title: useScroll
 nav:
-  title: Hooks
   path: /hooks
-group:
-  title: Dom
-  path: /dom
 ---
 
 # useScroll
 
 Get the scroll position of an element.
-
 
 ## Examples
 
@@ -23,7 +17,7 @@ Get the scroll position of an element.
 
 <code src="./demo/demo2.tsx" />
 
-### Controll listen on scroll status
+### Control listen on scroll status
 
 <code src="./demo/demo3.tsx" />
 
@@ -35,14 +29,13 @@ const position = useScroll(target, shouldUpdate);
 
 ### Params
 
-| Property     | Description                           | Type                                      | Default                                  |
-|--------------|---------------------------------------|-------------------------------------------|------------------------------------------|
-| target       | DOM element or Ref object             |  `HTMLElement` \| `(() => HTMLElement)` \| `Document` \| `React.MutableRefObject` | `document`                               |
-| shouldUpdate | controll weather update scroll status | `({ top: number, left: number}) => boolean` | `({ top: number, left: number}) => true` |
-
+| Property     | Description               | Type                                                                        | Default    |
+| ------------ | ------------------------- | --------------------------------------------------------------------------- | ---------- |
+| target       | DOM element or ref object | `Element` \| `Document` \| `(() => Element)` \| `MutableRefObject<Element>` | `document` |
+| shouldUpdate | Weather update position   | `({ top: number, left: number }) => boolean`                                | `-`        |
 
 ### Result
 
-| Property | Description                                 | Type                          |
-|----------|---------------------------------------------|-------------------------------|
-| position | The current scroll position of the element. | `{left: number, top: number}` |
+| Property | Description                                 | Type                                         |
+| -------- | ------------------------------------------- | -------------------------------------------- |
+| position | The current scroll position of the element. | `{ left: number, top: number } \| undefined` |

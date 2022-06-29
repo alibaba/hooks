@@ -1,16 +1,11 @@
 ---
-title: useHover
 nav:
-  title: Hooks
   path: /hooks
-group:
-  title: Dom
-  path: /dom
 ---
 
 # useHover
 
-React UI sensor hooks that track if some element is being hovered by a mouse.
+A hook that tracks whether the element is being hovered.
 
 ## Examples
 
@@ -26,32 +21,32 @@ React UI sensor hooks that track if some element is being hovered by a mouse.
 
 ```javascript
 const isHovering = useHover(
-  target, 
+  target,
   {
    onEnter,
-   onLeave
+   onLeave,
+   onChange
   }
 );
 ```
 
 ### Params
 
-| Property | Description               | Type     | Default |
-|----------|---------------------------|----------|---------|
-| target   | DOM element or Ref Object | `() => HTMLElement` \| `HTMLElement` \| `React.RefObject`         | -       |
-| options  | More configuration items           | `Options` | -       |
+| Property | Description        | Type                                                        | Default |
+| -------- | ------------------ | ----------------------------------------------------------- | ------- |
+| target   | DOM element or ref | `() => Element` \| `Element` \| `MutableRefObject<Element>` | -       |
+| options  | More config        | `Options`                                                   | -       |
 
 ### Options
 
-| Property | Description                                           | Type      | Default |
-|----------|-------------------------------------------------------|-----------|---------|
-| onEnter  | Listen to hover           | `()=>void` | -       |
-| onLeave  | Listening leave hover     | `()=>void` | -       |
-
-
+| Property | Description                             | Type                            | Default |
+| -------- | --------------------------------------- | ------------------------------- | ------- |
+| onEnter  | Callback to be executed on mouse hover  | `() => void`                    | -       |
+| onLeave  | Callback to be executed on mouse leave  | `() => void`                    | -       |
+| onChange | Callback to be executed on hover change | `(isHovering: boolean) => void` | -       |
 
 ### Result
 
-| Property   | Description                                                 | Type    |
-|------------|-------------------------------------------------------------|---------|
-| isHovering | Determine whether the mouse element is in the hover element | `boolean` |
+| Property   | Description                          | Type      |
+| ---------- | ------------------------------------ | --------- |
+| isHovering | Whether the element is being hovered | `boolean` |

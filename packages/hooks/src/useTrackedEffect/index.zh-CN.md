@@ -1,16 +1,11 @@
 ---
-title: useTrackedEffect
 nav:
-  title: Hooks
   path: /hooks
-group:
-  title: LifeCycle
-  path: /life-cycle
 ---
 
 # useTrackedEffect
 
-在 `useEffect` 的基础上，追踪触发 effect 的依赖变化。
+追踪是哪个依赖变化触发了 `useEffect` 的执行。
 
 ## 代码演示
 
@@ -20,16 +15,15 @@ group:
 
 ## API
 
-```javascript
+```typescript
 useTrackedEffect(
-  effect: (changes:[], previousDeps:[], currentDeps:[]) => (void | (() => void | undefined)),
+  effect: (changes: [], previousDeps: [], currentDeps: []) => (void | (() => void | undefined)),
   deps?: deps,
 )
 ```
 
-### Params
+API 与 `React.useEffect` 基本一致，不过第一个函数会接收 `changes`、`previousDeps`、`currentDeps` 三个参数。
 
-| Property | Description                                                        | Type                   | Default |
-|---------|----------------------------------------------|------------------------|--------|
-| effect | 副作用函数  | (changes:array, previousDeps: array, currentDeps: array) => (void | (() => void | undefined)) | -      |
-| deps | effect 所依赖的值数组 | array \| undefined | -      |
+- changes：变化的依赖 index 数组
+- previousDeps：上一个依赖
+- currentDeps：当前依赖

@@ -1,17 +1,11 @@
 ---
-title: usePrevious
 nav:
-  title: Hooks
   path: /hooks
-group:
-  title: State
-  path: /state
 ---
 
 # usePrevious
 
-A Hook to store the previous value.
-
+A Hook to return the previous state.
 
 ## Examples
 
@@ -19,7 +13,7 @@ A Hook to store the previous value.
 
 <code src="./demo/demo1.tsx" />
 
-### Using compare function
+### Custom shouldUpdate function
 
 <code src="./demo/demo2.tsx" />
 
@@ -28,19 +22,19 @@ A Hook to store the previous value.
 ```typescript
 const previousState: T = usePrevious<T>(
   state: T,
-  compareFunction: (prev: T | undefined, next: T) => boolean
+  shouldUpdate?: (prev: T | undefined, next: T) => boolean
 );
 ```
 
 ### Result
 
 | Property      | Description        | Type |
-|---------------|--------------------|------|
-| previousState | the previous value | -    |
+| ------------- | ------------------ | ---- |
+| previousState | The previous value | `T`  |
 
 ### Params
 
-| Property        | Description                                                   | Type | Default |
-|-----------------|---------------------------------------------------------------|------|---------|
-| state           | the state need to be tracked                                  | -    | -       |
-| compareFunction | optional, customize when the previous value need to be stored |  (prev: T \| undefined, next: T) => boolean    | -       |
+| Property     | Description                                                   | Type                                         | Default             |
+| ------------ | ------------------------------------------------------------- | -------------------------------------------- | ------------------- |
+| state        | The state that needs to be tracked                            | `T`                                          | -                   |
+| shouldUpdate | Optional. Customize whether the state value should be updated | `(prev: T \| undefined, next: T) => boolean` | `(a, b) => a !== b` |

@@ -2,10 +2,6 @@ import { renderHook } from '@testing-library/react-hooks';
 import useClickAway from '../index';
 
 describe('useClickAway', () => {
-  it('should be defined', () => {
-    expect(useClickAway).toBeDefined();
-  });
-
   let container: HTMLDivElement;
   let container1: HTMLDivElement;
 
@@ -30,13 +26,13 @@ describe('useClickAway', () => {
       }, dom),
     );
 
-    rerender(() => container);
+    rerender(container);
     container.click();
     expect(state).toEqual(0);
     document.body.click();
     expect(state).toEqual(1);
 
-    rerender(() => container1);
+    rerender(container1);
     container1.click();
     expect(state).toEqual(1);
     document.body.click();

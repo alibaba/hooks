@@ -1,6 +1,6 @@
 /**
  * title: Basic usage
- * desc: redo and undo operations，click back and forward after input something.
+ * desc: Redo and undo operations，click back and forward after input something.
  *
  * title.zh-CN: 基础用法
  * desc.zh-CN: 撤销跟重做操作，输入内容后，点击 back 和 forward。

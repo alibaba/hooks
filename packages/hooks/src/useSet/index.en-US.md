@@ -1,11 +1,6 @@
 ---
-title: useSet
 nav:
-  title: Hooks
   path: /hooks
-group:
-  title: State
-  path: /state
 ---
 
 # useSet
@@ -25,7 +20,6 @@ const [
   set,
   {
     add,
-    has,
     remove,
     reset
   }
@@ -34,16 +28,15 @@ const [
 
 ### Result
 
-| Property | Description                          | Type                    |
-|----------|--------------------------------------|-------------------------|
-| set      | Set object                           | `Set`                   |
-| add      | add key                              | `(key: any) => void`    |
-| has      | Determine whether the element exists | `(key: any) => Boolean` |
-| remove   | remove key                           | `(key: any) => void`    |
-| reset    | reset to default                     | `() => void`            |
+| Property | Description      | Type                 |
+| -------- | ---------------- | -------------------- |
+| set      | Set object       | `Set`                |
+| add      | Add item         | `(key: any) => void` |
+| remove   | Remove item      | `(key: any) => void` |
+| reset    | Reset to default | `() => void`         |
 
 ### Params
 
-| Property     | Description                                    | Type          | Default |
-|--------------|------------------------------------------------|---------------|---------|
-| initialValue | Optional, Pass in the default Set as parameter | `Iterable<K>` | -       |
+| Property     | Description                 | Type          | Default |
+| ------------ | --------------------------- | ------------- | ------- |
+| initialValue | Optional, set default value | `Iterable<K>` | -       |

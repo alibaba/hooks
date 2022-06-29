@@ -1,73 +1,81 @@
-import useRequest, { UseRequestProvider } from '@ahooksjs/use-request';
+import { createUpdateEffect } from './createUpdateEffect';
+import useAntdTable from './useAntdTable';
+import useAsyncEffect from './useAsyncEffect';
+import useBoolean from './useBoolean';
+import useClickAway from './useClickAway';
 import useControllableValue from './useControllableValue';
+import useCookieState from './useCookieState';
+import useCountDown from './useCountDown';
+import useCounter from './useCounter';
+import useCreation from './useCreation';
+import useDebounce from './useDebounce';
+import useDebounceEffect from './useDebounceEffect';
+import useDebounceFn from './useDebounceFn';
+import useDeepCompareEffect from './useDeepCompareEffect';
+import useDeepCompareLayoutEffect from './useDeepCompareLayoutEffect';
+import useDocumentVisibility from './useDocumentVisibility';
+import useDrag from './useDrag';
+import useDrop from './useDrop';
 import useDynamicList from './useDynamicList';
 import useEventEmitter from './useEventEmitter';
-import useVirtualList from './useVirtualList';
-import { configResponsive, useResponsive } from './useResponsive';
-import useSize from './useSize';
+import useEventListener from './useEventListener';
+import useEventTarget from './useEventTarget';
+import useExternal from './useExternal';
+import useFavicon from './useFavicon';
+import useFocusWithin from './useFocusWithin';
+import useFullscreen from './useFullscreen';
+import useFusionTable from './useFusionTable';
+import useGetState from './useGetState';
+import useHistoryTravel from './useHistoryTravel';
+import useHover from './useHover';
+import useInfiniteScroll from './useInfiniteScroll';
+import useInterval from './useInterval';
+import useInViewport from './useInViewport';
+import useIsomorphicLayoutEffect from './useIsomorphicLayoutEffect';
+import useKeyPress from './useKeyPress';
+import useLatest from './useLatest';
 import useLocalStorageState from './useLocalStorageState';
+import useLockFn from './useLockFn';
+import useLongPress from './useLongPress';
+import useMap from './useMap';
+import useMemoizedFn from './useMemoizedFn';
+import useMount from './useMount';
+import useMouse from './useMouse';
+import useNetwork from './useNetwork';
+import usePagination from './usePagination';
+import usePrevious from './usePrevious';
+import useRafInterval from './useRafInterval';
+import useRafState from './useRafState';
+import useRafTimeout from './useRafTimeout';
+import useReactive from './useReactive';
+import useRequest, { clearCache } from './useRequest';
+import { configResponsive, useResponsive } from './useResponsive';
+import useSafeState from './useSafeState';
+import useScroll from './useScroll';
+import useSelections from './useSelections';
 import useSessionStorageState from './useSessionStorageState';
+import useSet from './useSet';
+import useSetState from './useSetState';
+import useSize from './useSize';
+import useTextSelection from './useTextSelection';
+import useThrottle from './useThrottle';
+import useThrottleEffect from './useThrottleEffect';
+import useThrottleFn from './useThrottleFn';
+import useTimeout from './useTimeout';
+import useTitle from './useTitle';
+import useToggle from './useToggle';
+import useTrackedEffect from './useTrackedEffect';
+import useUnmount from './useUnmount';
+import useUnmountedRef from './useUnmountedRef';
+import useUpdate from './useUpdate';
 import useUpdateEffect from './useUpdateEffect';
 import useUpdateLayoutEffect from './useUpdateLayoutEffect';
-import useBoolean from './useBoolean';
-import useToggle from './useToggle';
-import useDocumentVisibility from './useDocumentVisibility';
-import useSelections from './useSelections';
-import useThrottle from './useThrottle';
-import useThrottleFn from './useThrottleFn';
-import useThrottleEffect from './useThrottleEffect';
-import useDebounce from './useDebounce';
-import useDebounceFn from './useDebounceFn';
-import usePrevious from './usePrevious';
-import useMouse from './useMouse';
-import useScroll from './useScroll';
-import useClickAway from './useClickAway';
-import useFullscreen from './useFullscreen';
-import useInViewport from './useInViewport';
-import useKeyPress from './useKeyPress';
-import useEventListener from './useEventListener';
-import useHover from './useHover';
-import useUnmount from './useUnmount';
-import useAntdTable from './useAntdTable';
-import useFusionTable from './useFusionTable';
-import useSet from './useSet';
-import usePersistFn from './usePersistFn';
-import useMap from './useMap';
-import useCreation from './useCreation';
-import useDrop from './useDrop';
-import useDrag from './useDrag';
-import useMount from './useMount';
-import useTextSelection from './useTextSelection';
-import useCounter from './useCounter';
-import useUpdate from './useUpdate';
-import useEventTarget from './useEventTarget';
-import useHistoryTravel from './useHistoryTravel';
-import useDebounceEffect from './useDebounceEffect';
-import useCookieState from './useCookieState';
-import useSetState from './useSetState';
-import useInterval from './useInterval';
-import useWhyDidYouUpdate from './useWhyDidYouUpdate';
-import useTitle from './useTitle';
-import useNetwork from './useNetwork';
-import useTimeout from './useTimeout';
-import useReactive from './useReactive';
-import useFavicon from './useFavicon';
-import useCountDown from './useCountDown';
+import useVirtualList from './useVirtualList';
 import useWebSocket from './useWebSocket';
-import useLockFn from './useLockFn';
-import useTrackedEffect from './useTrackedEffect';
-import useUnmountedRef from './useUnmountedRef';
-import useExternal from './useExternal';
-
-const useControlledValue: typeof useControllableValue = function (...args) {
-  console.warn(
-    'useControlledValue is deprecated and will be removed in the next major version. Please use useControllableValue instead.',
-  );
-  return useControllableValue(...args);
-};
+import useWhyDidYouUpdate from './useWhyDidYouUpdate';
 
 export {
-  useControlledValue,
+  useRequest,
   useControllableValue,
   useDynamicList,
   useVirtualList,
@@ -98,12 +106,9 @@ export {
   useKeyPress,
   useEventListener,
   useHover,
-  useRequest,
-  UseRequestProvider,
-  useAntdTable,
   useUnmount,
   useSet,
-  usePersistFn,
+  useMemoizedFn,
   useMap,
   useCreation,
   useDrag,
@@ -114,7 +119,6 @@ export {
   useTextSelection,
   useEventTarget,
   useHistoryTravel,
-  useFusionTable,
   useCookieState,
   useSetState,
   useInterval,
@@ -125,9 +129,27 @@ export {
   useReactive,
   useFavicon,
   useCountDown,
-  useTrackedEffect,
   useWebSocket,
   useLockFn,
   useUnmountedRef,
   useExternal,
+  useSafeState,
+  useLatest,
+  useIsomorphicLayoutEffect,
+  useDeepCompareEffect,
+  useDeepCompareLayoutEffect,
+  useAsyncEffect,
+  useLongPress,
+  useRafState,
+  useTrackedEffect,
+  usePagination,
+  useAntdTable,
+  useFusionTable,
+  useInfiniteScroll,
+  useGetState,
+  clearCache,
+  useFocusWithin,
+  createUpdateEffect,
+  useRafInterval,
+  useRafTimeout,
 };

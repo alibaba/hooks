@@ -1,29 +1,42 @@
-import { useEffect, useRef } from 'react';
+import { useCallback, useEffect, useRef } from 'react';
+import useLatest from '../useLatest';
+import { isNumber } from '../utils';
 
 function useInterval(
   fn: () => void,
-  delay: number | null | undefined,
+  delay: number | undefined,
   options?: {
     immediate?: boolean;
   },
-): void {
+) {
   const immediate = options?.immediate;
 
-  const fnRef = useRef<() => void>();
-  fnRef.current = fn;
+  const fnRef = useLatest(fn);
+  const timerRef = useRef<number | NodeJS.Timer>();
 
   useEffect(() => {
-    if (delay === undefined || delay === null) return;
+    if (!isNumber(delay) || delay < 0) return;
+
     if (immediate) {
-      fnRef.current?.();
+      fnRef.current();
     }
-    const timer = setInterval(() => {
-      fnRef.current?.();
+    timerRef.current = setInterval(() => {
+      fnRef.current();
     }, delay);
     return () => {
-      clearInterval(timer);
+      if (timerRef.current) {
+        clearInterval(timerRef.current as NodeJS.Timer);
+      }
     };
   }, [delay]);
+
+  const clear = useCallback(() => {
+    if (timerRef.current) {
+      clearInterval(timerRef.current as NodeJS.Timer);
+    }
+  }, []);
+
+  return clear;
 }
 
 export default useInterval;

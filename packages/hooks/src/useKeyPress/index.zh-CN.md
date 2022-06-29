@@ -1,16 +1,11 @@
 ---
-title: useKeyPress
 nav:
-  title: Hooks
   path: /hooks
-group:
-  title: Dom
-  path: /dom
 ---
 
 # useKeyPress
 
-一个优雅的管理 keyup 和 keydown 键盘事件的 Hook，支持键盘组合键，定义键盘事件的 key 和 keyCode 别名输入 。
+监听键盘按键，支持组合键，支持按键别名。
 
 ## 代码演示
 
@@ -18,15 +13,19 @@ group:
 
 <code src="./demo/demo1.tsx" />
 
-### 使用别名
+### 监听组合按键
 
-<code src="./demo/demo2.tsx" />
+<code src="./demo/demo6.tsx" />
 
-### 组合方式
+### 精确匹配
+
+<code src="./demo/demo7.tsx">
+
+### 监听多个按键
 
 <code src="./demo/demo3.tsx" />
 
-### 进阶使用
+### 自定义监听方式
 
 <code src="./demo/demo4.tsx" />
 
@@ -37,49 +36,39 @@ group:
 ## API
 
 ```typescript
+type keyType = number | string;
+type KeyFilter = keyType | keyType[] | ((event: KeyboardEvent) => boolean);
+
 useKeyPress(
-  keyFilter: KeyFilter, 
-  eventHandler: EventHandler = noop, 
+  keyFilter: KeyFilter,
+  eventHandler: EventHandler,
   options?: Options
-)
+);
 ```
 
 ### Params
 
-> Tips: keyType 为键盘事件中的 key 和 keyCode
-
-| 参数    | 说明                                         | 类型                   | 默认值 |
-|---------|----------------------------------------------|------------------------|--------|
-| keyFilter | 支持键盘事件中的 key 和 keyCode，支持回调方式返回 boolean 判断，支持别名使用  | `keyType` \| `Array<keyType>` \| `(event: KeyboardEvent) => boolean` | -      |
-| eventHandler | 事件回调函数  | `(event: KeyboardEvent) => void` | -      |
-| options | 可选配置项，见 Options | `Options`               | -              |
+| 参数         | 说明                                         | 类型                                                            | 默认值 |
+| ------------ | -------------------------------------------- | --------------------------------------------------------------- | ------ |
+| keyFilter    | 支持 keyCode、别名、组合键、数组，自定义函数 | `keyType` \| `keyType[]` \| `(event: KeyboardEvent) => boolean` | -      |
+| eventHandler | 回调函数                                     | `(event: KeyboardEvent) => void`                                | -      |
+| options      | 可选配置项                                   | `Options`                                                       | -      |
 
 ### Options
 
-| 参数            | 说明                                                   | 类型                              | 默认值 |
-|-----------------|--------------------------------------------------------|-----------------------------------|--------|
-| events | 触发事件  |  Array<keydown \| keyup\> | `['keydown']`     |
-| target | DOM 节点或者 Ref 对象  | `() => HTMLElement` \| `HTMLElement` \| `React.MutableRefObject` | - |
+| 参数       | 说明                                                                                       | 类型                                                        | 默认值        |
+| ---------- | ------------------------------------------------------------------------------------------ | ----------------------------------------------------------- | ------------- |
+| events     | 触发事件                                                                                   | `('keydown' \| 'keyup')[]`                                  | `['keydown']` |
+| target     | DOM 节点或者 ref                                                                           | `() => Element` \| `Element` \| `MutableRefObject<Element>` | -             |
+| exactMatch | 精确匹配。如果开启，则只有在按键完全匹配的情况下触发事件。比如按键 [shif + c] 不会触发 [c] | `boolean`                                                   | `false`       |
 
 ## Remarks
 
-1.全部的按键别名
+1. 按键别名见 [代码](https://github.com/alibaba/hooks/blob/master/packages/hooks/src/useKeyPress/index.ts#L21)
 
-```javascript
-enter
-tab
-delete (捕获“删除”和“退格”键)
-esc
-space
-up
-down
-left
-right
-```
+2. 修饰键
 
-2.修饰键
-
-```javascript
+```text
 ctrl
 alt
 shift

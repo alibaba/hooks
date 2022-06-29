@@ -1,16 +1,11 @@
 ---
-title: useTitle
 nav:
-  title: Hooks
   path: /hooks
-group:
-  title: Dom
-  path: /dom
 ---
 
 # useTitle
 
-A hook that sets title of the page.
+A hook that set title of the page.
 
 ## Examples
 
@@ -21,17 +16,17 @@ A hook that sets title of the page.
 ## API
 
 ```typescript
-useTitle(value: string, options?: Options);
+useTitle(title: string, options?: Options);
 ```
 
 ### Params
 
-| Property | Description       | Type     | Default |
-|----------|-------------------|----------|---------|
-| value    | set a title value | `string` | -       |
+| Property | Description | Type     | Default |
+| -------- | ----------- | -------- | ------- |
+| title    | Page title  | `string` | -       |
 
 ### Options
 
-| Property         | Description       | Type      | Default |
-|------------------|-------------------|-----------|---------|
-| restoreOnUnmount | Restore the title | `boolean` | `false` |
+| Property         | Description                                                                | Type      | Default |
+| ---------------- | -------------------------------------------------------------------------- | --------- | ------- |
+| restoreOnUnmount | Whether to restore the previous page title when the component is unmounted | `boolean` | `false` |

@@ -13,10 +13,6 @@ const setUp = ({ fn, wait }: ParamsObj) => renderHook(() => useThrottleFn(fn, { 
 let hook: RenderHookResult<ParamsObj, ReturnType<typeof useThrottleFn>>;
 
 describe('useThrottleFn', () => {
-  it('should be defined', () => {
-    expect(useThrottleFn).toBeDefined();
-  });
-
   it('run, cancel and flush should work', async () => {
     let count = 0;
     const throttleFn = (gap: number) => {

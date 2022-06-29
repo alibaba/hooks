@@ -3,7 +3,7 @@
  * desc: Supports receiving a Boolean callback function to handle preprocessing operations.
  *
  * title.zh-CN: 进阶使用
- * desc.zh-CN: 支持接收一个返回 boolean 的回调函数，处理预处理操作。
+ * desc.zh-CN: 支持接收一个返回 boolean 的回调函数，自己处理逻辑。
  */
 
 import React, { useState } from 'react';

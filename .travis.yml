@@ -2,12 +2,12 @@ language: node_js
 node_js:
   - 'lts/*'
 install:
-  - npm install
-  - npm run bootstrap
-  - npm install -g surge
+  - pnpm install
+  - pnpm install -g surge
 script:
-  - npm run build:doc
+  - pnpm run build:doc
   - surge ./dist ahooks-$(git rev-parse --short HEAD).surge.sh
+  - pnpm run coveralls # generate static files
 cache:
   directories:
     - 'node_modules'

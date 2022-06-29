@@ -1,11 +1,3 @@
-/**
- * title: Default usage
- * desc: Pass in a Map acceptable parameter.
- *
- * title.zh-CN: 基础用法
- * desc.zh-CN: 传入一个 Map 可接受的参数。
- */
-
 import React from 'react';
 import { useMap } from 'ahooks';
 

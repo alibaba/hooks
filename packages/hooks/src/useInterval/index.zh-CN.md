@@ -1,11 +1,6 @@
 ---
-title: useInterval
 nav:
-  title: Hooks
   path: /hooks
-group:
-  title: SideEffect
-  path: /side-effect
 ---
 
 # useInterval
@@ -25,20 +20,29 @@ group:
 ## API
 
 ```typescript
-useInterval(fn: () => void, interval: number, options?: Options);
+useInterval(
+  fn: () => void,
+  delay?: number | undefined,
+  options?: Options
+): fn: () => void;
 ```
 
 ### Params
 
-| 参数    | 说明                                                    | 类型       |
-|---------|---------------------------------------------------------|------------|
-| fn      | 要重复调用的函数                                        | `() => void` |
-| delay   | 间隔时间，当取值为 `null` 或 `undefined` 时会停止计时器 |   `number` \| `undefined` \| `null`    |
-| options | 配置计时器的行为，详见下面的 Options                    | `Options`     |
-
+| 参数    | 说明                                        | 类型                    |
+| ------- | ------------------------------------------- | ----------------------- |
+| fn      | 要定时调用的函数                            | `() => void`            |
+| delay   | 间隔时间，当取值 `undefined` 时会停止计时器 | `number` \| `undefined` |
+| options | 配置计时器的行为                            | `Options`               |
 
 ### Options
 
-| 参数      | 说明                                     | 类型    | 默认值 |
-|-----------|------------------------------------------|---------|--------|
-| immediate | 参数可以用来控制是否在首次渲染时立即执行 | `boolean` | `false`  |
+| 参数      | 说明                     | 类型      | 默认值  |
+| --------- | ------------------------ | --------- | ------- |
+| immediate | 是否在首次渲染时立即执行 | `boolean` | `false` |
+
+### Result
+
+| 参数          | 说明       | 类型         |
+| ------------- | ---------- | ------------ |
+| clearInterval | 清除定时器 | `() => void` |

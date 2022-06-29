@@ -8,17 +8,22 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [10.x, 12.x]
+        node-version: [14.x, 16.x]
 
     steps:
       - uses: actions/checkout@v1
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v2.2.2
+
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node-version }}
-      - name: npm intall, build, and test
+
+      - name: pnpm run intall, build, and test
         run: |
-          npm run init
-          npm run test
+          pnpm run init
+          pnpm run test
         env:
           CI: true

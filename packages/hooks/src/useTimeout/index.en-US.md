@@ -1,33 +1,37 @@
 ---
-title: useTimeout
 nav:
-  title: Hooks
   path: /hooks
-group:
-  title: SideEffect
-  path: /side-effect
 ---
 
 # useTimeout
 
-A hook that can handle the setTimeout timer function.
+A hook that handles the `setTimeout` timer function.
 
 ## Examples
 
 ### Default usage
 
 <code src="./demo/demo1.tsx" />
-
+<code src="./demo/demo2.tsx" />
 
 ## API
 
 ```typescript
-useTimeout(fn: () => void, delay: number | undefined | null);
+useTimeout(
+  fn: () => void,
+  delay?: number | null
+): fn: () => void;
 ```
 
 ### Params
 
-| Property | Description | Type |
-|----------|--------------------------------------|----------------------|
-| fn  | Is the function you want to execute after the expiration time (delay milliseconds) | `() => void` |
-| delay | The time to wait, in milliseconds. If delay is `null` or `undefined`, the timer will stop. | `number` \| `undefined` \| `null` |
+| Property | Description                                                                                                            | Type                    |
+| -------- | ---------------------------------------------------------------------------------------------------------------------- | ----------------------- |
+| fn       | The function to be executed after `delay` milliseconds.                                                                | `() => void`            |
+| delay    | The number of milliseconds to wait before executing the function. The timer will be cancelled if delay is `undefined`. | `number` \| `undefined` |
+
+### Result
+
+| Property     | Description   | Type         |
+| ------------ | ------------- | ------------ |
+| clearTimeout | clear timeout | `() => void` |

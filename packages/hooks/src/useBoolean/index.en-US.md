@@ -1,17 +1,11 @@
 ---
-title: useBoolean
 nav:
-  title: Hooks
   path: /hooks
-group:
-  title: State
-  path: /state
-  order: 11
 ---
 
 # useBoolean
 
-A hook that elegantly manages boolean values.
+A hook that elegantly manages boolean state.
 
 ## Examples
 
@@ -22,27 +16,29 @@ A hook that elegantly manages boolean values.
 ## API
 
 ```typescript
-const [ state, { toggle, setTrue, setFalse }] = useBoolean(
+const [state, { toggle, set, setTrue, setFalse }] = useBoolean(
   defaultValue?: boolean,
 );
 ```
 
 ### Params
 
-| Property     | Description                   | Type      | Default |
-|--------------|-------------------------------|-----------|---------|
-| defaultValue | Optional，set a default value | `boolean` | `false` |
+| Property     | Description                               | Type      | Default |
+| ------------ | ----------------------------------------- | --------- | ------- |
+| defaultValue | The default value of the state. Optional. | `boolean` | `false` |
 
 ### Result
 
-| Property | Description   | Type      |
-|----------|---------------|-----------|
-| state    | State value   | `boolean` |
-| actions  | Operation set | `Actions` |
+| Property | Description                            | Type      |
+| -------- | -------------------------------------- | --------- |
+| state    | Current value                          | `boolean` |
+| actions  | A set of methods to update state value | `Actions` |
 
 ### Actions
-| Property | Description                                        | Type                        |
-|----------|----------------------------------------------------|-----------------------------|
-| toggle   | Trigger state change, accept an optional parameter | `(value?: boolean) => void` |
-| setTrue  | Set state value true                               | `() => void`                |
-| setFalse | Set state value false                              | `() => void`                |
+
+| Property | Description          | Type                       |
+| -------- | -------------------- | -------------------------- |
+| toggle   | Toggle state         | `() => void`               |
+| set      | Set state            | `(value: boolean) => void` |
+| setTrue  | Set state to `true`  | `() => void`               |
+| setFalse | Set state to `false` | `() => void`               |

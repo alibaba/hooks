@@ -1,16 +1,8 @@
-/**
- * title: Default usage
- * desc: Pass in a Set acceptable parameter.
- *
- * title.zh-CN: 基础用法
- * desc.zh-CN: 传入一个 Set 可接受的参数。
- */
-
 import React from 'react';
 import { useSet } from 'ahooks';
 
 export default () => {
-  const [set, { add, has, remove, reset }] = useSet(['Hello']);
+  const [set, { add, remove, reset }] = useSet(['Hello']);
 
   return (
     <div>
@@ -20,7 +12,7 @@ export default () => {
       <button
         type="button"
         onClick={() => remove('Hello')}
-        disabled={!has('Hello')}
+        disabled={!set.has('Hello')}
         style={{ margin: '0 8px' }}
       >
         Remove Hello

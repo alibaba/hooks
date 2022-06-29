@@ -1,18 +1,17 @@
-import { useRef } from 'react';
 import { renderHook, act } from '@testing-library/react-hooks';
 import useUpdate from '..';
-import usePersistFn from '../../usePersistFn';
+import useMemoizedFn from '../../useMemoizedFn';
 
 describe('useUpdate', () => {
   it('should update', () => {
+    let count = 0;
     const hooks = renderHook(() => {
-      const ref = useRef(0);
       const update = useUpdate();
       return {
         update,
-        count: ref.current,
-        onChange: usePersistFn(() => {
-          ref.current = ref.current + 1;
+        count,
+        onChange: useMemoizedFn(() => {
+          count++;
           update();
         }),
       };

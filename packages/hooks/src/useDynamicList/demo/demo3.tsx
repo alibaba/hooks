@@ -1,106 +1,74 @@
 /**
- * title: Dyanmic table(draggable)
- * desc: using antd table to build dynamic table form.
+ * title: Used in antd Form
+ * desc: Pay attention to the use of sortList. The data of antd Form is not sorted correctly. sortList can be used to calibrate the sorting.
  *
- * title.zh-CN: 动态表格(可拖拽)
- * desc.zh-CN: 使用 antd table 构建动态表格
+ * title.zh-CN: 在 antd Form 中使用的另一种写法
+ * desc.zh-CN: 注意 sortList 的使用，antd Form 获取的数据排序不对，通过 sortList 可以校准排序。
  */
 
 import React, { useState } from 'react';
-import { Form, Button, Input, Icon, Table } from 'antd';
-import { FormComponentProps } from 'antd/lib/form';
-import ReactDragListView from 'react-drag-listview';
+import { Form, Button, Input } from 'antd';
+import { MinusCircleOutlined, PlusCircleOutlined } from '@ant-design/icons';
 import { useDynamicList } from 'ahooks';
 
-interface Item {
-  name?: string;
-  age?: string;
-  memo?: string;
-}
+export default () => {
+  const { list, remove, getKey, insert, resetList, sortList } = useDynamicList(['David', 'Jack']);
+  const [form] = Form.useForm();
 
-export default Form.create()((props: FormComponentProps) => {
-  const { list, remove, getKey, move, push, sortForm } = useDynamicList<Item>([
-    { name: 'my bro', age: '23', memo: "he's my bro" },
-    { name: 'my sis', age: '21', memo: "she's my sis" },
-    {},
-  ]);
-  const { getFieldDecorator, getFieldsValue } = props.form;
   const [result, setResult] = useState('');
 
-  const columns = [
-    {
-      title: 'Name',
-      dataIndex: 'name',
-      key: 'name',
-      render: (text: string, row: Item, index: number) => (
-        <>
-          <Icon style={{ cursor: 'move', marginRight: 8 }} type="drag" />
-          {getFieldDecorator(`params[${getKey(index)}].name`, { initialValue: text })(
-            <Input style={{ width: 120, marginRight: 16 }} placeholder="name" />,
-          )}
-        </>
-      ),
-    },
-    {
-      title: 'Age',
-      dataIndex: 'age',
-      key: 'age',
-      render: (text: string, row: Item, index: number) => (
-        <>
-          {getFieldDecorator(`params[${getKey(index)}].age`, { initialValue: text })(
-            <Input style={{ width: 120, marginRight: 16 }} placeholder="age" />,
-          )}
-        </>
-      ),
-    },
-    {
-      key: 'memo',
-      title: 'Memo',
-      dataIndex: 'memo',
-      render: (text: string, row: Item, index: number) => (
-        <>
-          {getFieldDecorator(`params[${getKey(index)}].memo`, { initialValue: text })(
-            <Input style={{ width: 300, marginRight: 16 }} placeholder="please input the memo" />,
-          )}
-          <Button.Group>
-            <Button type="danger" onClick={() => remove(index)}>
-              Delete
-            </Button>
-          </Button.Group>
-        </>
-      ),
-    },
-  ];
+  const Row = (index: number, item: any) => (
+    <div style={{ display: 'flex' }} key={getKey(index)}>
+      <div>
+        <Form.Item
+          rules={[{ required: true, message: 'required' }]}
+          name={['names', getKey(index)]}
+          initialValue={item}
+        >
+          <Input style={{ width: 300 }} placeholder="Please enter your name" />
+        </Form.Item>
+      </div>
+      <div style={{ marginTop: 4 }}>
+        {list.length > 1 && (
+          <MinusCircleOutlined
+            style={{ marginLeft: 8 }}
+            onClick={() => {
+              remove(index);
+            }}
+          />
+        )}
+        <PlusCircleOutlined
+          style={{ marginLeft: 8 }}
+          onClick={() => {
+            insert(index + 1, '');
+          }}
+        />
+      </div>
+    </div>
+  );
 
   return (
     <>
-      <ReactDragListView
-        onDragEnd={(oldIndex: number, newIndex: number) => move(oldIndex, newIndex)}
-        handleSelector={'i[aria-label="icon: drag"]'}
-      >
-        <Table
-          columns={columns}
-          dataSource={list}
-          rowKey={(r: Item, index: number) => getKey(index).toString()}
-          pagination={false}
-        />
-      </ReactDragListView>
-      <Button
-        style={{ marginTop: 8 }}
-        block
-        type="dashed"
-        onClick={() => push({ name: 'new row', age: '25' })}
-      >
-        + Add row
-      </Button>
+      <Form form={form}>{list.map((ele, index) => Row(index, ele))}</Form>
       <Button
         type="primary"
-        style={{ marginTop: 16 }}
-        onClick={() => setResult(JSON.stringify(sortForm(getFieldsValue().params), null, 2))}
+        onClick={() =>
+          form
+            .validateFields()
+            .then((val) => {
+              const sortedResult = sortList(val.names);
+              setResult(JSON.stringify(sortedResult, null, 2));
+            })
+            .catch(() => {})
+        }
       >
         Submit
       </Button>
-      <div style={{ whiteSpace: 'pre' }}>{result && `content: ${result}`}</div>
+      <Button style={{ marginLeft: 16 }} onClick={() => resetList(['David', 'Jack'])}>
+        Reset
+      </Button>
+
+      <div>{result}</div>
     </>
   );
-});
+};

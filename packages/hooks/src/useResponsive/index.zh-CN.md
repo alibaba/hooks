@@ -1,11 +1,6 @@
 ---
-title: useResponsive
 nav:
-  title: Hooks
   path: /hooks
-group:
-  title: Dom
-  path: /dom
 ---
 
 # useResponsive
@@ -27,8 +22,8 @@ interface ResponsiveConfig {
 interface ResponsiveInfo {
   [key: string]: boolean;
 }
-function configResponsive(config: ResponsiveConfig): void
-function useResponsive(): ResponsiveInfo
+function configResponsive(config: ResponsiveConfig): void;
+function useResponsive(): ResponsiveInfo;
 ```
 
 ### 配置

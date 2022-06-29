@@ -1,8 +1,7 @@
 import { renderHook, act } from '@testing-library/react-hooks';
 import useMouse from '../index';
 
-// test about Resize Observer see https://github.com/que-etc/resize-observer-polyfill/tree/master/tests
-describe('useSize', () => {
+describe('useMouse', () => {
   function moveMouse(x: number, y: number) {
     act(() => {
       document.dispatchEvent(
@@ -16,15 +15,13 @@ describe('useSize', () => {
     });
   }
 
-  it('should be defined', () => {
-    expect(useMouse).toBeDefined();
-  });
   it('on mouseMove', async () => {
     const hook = renderHook(() => useMouse());
     expect(hook.result.current.pageX).toEqual(NaN);
     expect(hook.result.current.pageY).toEqual(NaN);
 
     moveMouse(10, 10);
+    await hook.waitForNextUpdate();
 
     // can't manually set pageX & pageY for mouseEvent, default undefined here.
     expect(hook.result.current.pageX).toEqual(undefined);

@@ -1,16 +1,11 @@
 ---
-title: useThrottleFn
 nav:
-  title: Hooks
   path: /hooks
-group:
-  title: SideEffect
-  path: /side-effect
 ---
 
 # useThrottleFn
 
-A hook that handle the throttle function.
+A hook that deal with the throttled function.
 
 ## Examples
 
@@ -23,7 +18,8 @@ A hook that handle the throttle function.
 ```typescript
 const {
   run,
-  cancel
+  cancel,
+  flush
 } = useThrottleFn(
   fn: (...args: any[]) => any,
   options?: Options
@@ -32,23 +28,23 @@ const {
 
 ### Params
 
-| Property | Description                                                  | Type                      | Default |
-|----------|--------------------------------------------------------------|---------------------------|---------|
-| fn       | The function to throttle.                                    | `(...args: any[]) => any` | `-`     |
-| options  | Config the throttle behavior. See the Options section below. | `Options`                 | `{}`    |
+| Property | Description                       | Type                      | Default |
+| -------- | --------------------------------- | ------------------------- | ------- |
+| fn       | The function to throttle.         | `(...args: any[]) => any` | -       |
+| options  | Config for the throttle behaviors | `Options`                 | -       |
 
 ### Options
 
 | Property | Description                                           | Type      | Default |
-|----------|-------------------------------------------------------|-----------|---------|
+| -------- | ----------------------------------------------------- | --------- | ------- |
 | wait     | The number of milliseconds to delay.                  | `number`  | `1000`  |
 | leading  | Specify invoking on the leading edge of the timeout.  | `boolean` | `true`  |
 | trailing | Specify invoking on the trailing edge of the timeout. | `boolean` | `true`  |
 
 ### Result
 
-| Property | Description                               | Type                      |
-|----------|-------------------------------------------|---------------------------|
-| run      | trigger fn, parameters will be send to fn | `(...args: any[]) => any` |
-| cancel   | cancel current throttle                   | `() => void`              |
-| flush    | immediately invoke current throttle       | `() => void`              |
+| Property | Description                                            | Type                      |
+| -------- | ------------------------------------------------------ | ------------------------- |
+| run      | Invoke and pass parameters to fn.                      | `(...args: any[]) => any` |
+| cancel   | Cancel the invocation of currently throttled function. | `() => void`              |
+| flush    | Immediately invoke currently throttled function        | `() => void`              |

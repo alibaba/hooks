@@ -1,9 +1,9 @@
 /**
  * title: TodoList
- * desc: redo and undo operations
+ * desc: Redo and undo operations
  *
  * title.zh-CN: 可撤销恢复的 Todo List
- * desc.zh: 可以实现撤销恢复等操作。
+ * desc.zh-CN: 可以实现撤销恢复等操作。
  */
 
 import { useHistoryTravel } from 'ahooks';
@@ -11,7 +11,7 @@ import React, { useState } from 'react';
 
 export default () => {
   const {
-    value,
+    value = [],
     setValue,
     backLength,
     forwardLength,
@@ -22,7 +22,7 @@ export default () => {
   } = useHistoryTravel(['do homework']);
 
   const [inputValue, setInputValue] = useState('');
-  const [step, setStep] = useState(0);
+  const [step, setStep] = useState(-1);
 
   const onAdd = () => {
     setValue([...value, inputValue]);

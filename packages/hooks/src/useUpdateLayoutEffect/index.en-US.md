@@ -1,16 +1,11 @@
 ---
-title: useUpdateLayoutEffect
 nav:
-  title: Hooks
   path: /hooks
-group:
-  title: LifeCycle
-  path: /life-cycle
 ---
 
 # useUpdateLayoutEffect
 
-A hook of useLayoutEffect that only runs when dependencies update.
+A hook alike `useLayoutEffect` but skips running the effect for the first time.
 
 ## Examples
 
@@ -20,16 +15,11 @@ A hook of useLayoutEffect that only runs when dependencies update.
 
 ## API
 
+The API is exactly the same as `React.useLayoutEffect`.
+
 ```typescript
-useUpdateLayoutEffect(
-  effect: () => (void | (() => void | undefined)),
-  deps?: deps,
+useUpdateEffect(
+  effect: React.EffectCallback,
+  deps?: React.DependencyList,
 )
 ```
-
-### Params
-
-| Property | Description                                        | Type                                      | Default |
-|----------|----------------------------------------------------|-------------------------------------------|---------|
-| effect   | Executable function                                | `() => (void | (() => void | undefined))` | -       |
-| deps     | Optionally, pass in objects that depend on changes |  `array` \| `undefined`                     | -       |

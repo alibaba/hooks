@@ -2,6 +2,10 @@
   color: transparent !important;
 }
 
+.__dumi-default-layout-hero img {
+  width: 250px;
+}
+
 a[title='站长统计'] {
   display: none;
 }
@@ -13,4 +17,20 @@ button {
 
 input[type='number'] {
   border: 1px solid rgb(118, 118, 118);
+}
+
+[data-prefers-color='dark'] button {
+  color: #141414;
+}
+
+[data-prefers-color='dark'] input {
+  color: #141414;
+}
+
+#logo-version {
+  flex: 1;
+  margin-top: 10px;
+  margin-left: -30px;
+  color: #a8a8ad;
+  font-size: 16px;
 }

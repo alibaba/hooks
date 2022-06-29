@@ -1,11 +1,6 @@
 ---
-title: useTrackedEffect
 nav:
-  title: Hooks
   path: /hooks
-group:
-  title: LifeCycle
-  path: /life-cycle
 ---
 
 # useTrackedEffect
@@ -20,16 +15,15 @@ A hook of useEffect that allow us to track which dependencies caused the effect 
 
 ## API
 
-```javascript
+```typescript
 useTrackedEffect(
-  effect: (changes:[], previousDeps:[], currentDeps:[]) => (void | (() => void | undefined)),
+  effect: (changes: [], previousDeps: [], currentDeps: []) => (void | (() => void | undefined)),
   deps?: deps,
 )
 ```
 
-### Params
+The API is alike `React.useEffect`, but the first function will receive three parameters: `changes`, `previousDeps`, and `currentDeps`.
 
-| Property | Description                                                        | Type                   | Default |
-|---------|----------------------------------------------|------------------------|--------|
-| effect | Executable function  | (changes:array, previousDeps: array, currentDeps: array) => (void | (() => void | undefined)) | -      |
-| deps | Optionally, pass in objects that depend on changes | array \| undefined | -      |
+- changes: Index of changed dependencies
+- previousDeps: Last deps
+- currentDeps: Current deps

@@ -1,9 +1,9 @@
 /**
- * title: Default usage
+ * title: Basic usage
  * desc: Execute once after 3000ms
  *
  * title.zh-CN: 基础用法
- * desc.zh-CN: 3000ms后执行一次
+ * desc.zh-CN: 3000ms 后执行一次
  */
 
 import React, { useState } from 'react';
@@ -15,9 +15,5 @@ export default () => {
     setState(state + 1);
   }, 3000);
 
-  return (
-    <div>
-      <p style={{ marginTop: 16 }}> {state} </p>
-    </div>
-  );
+  return <div>{state}</div>;
 };

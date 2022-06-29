@@ -1,11 +1,6 @@
 ---
-title: useSetState
 nav:
-  title: Hooks
   path: /hooks
-group:
-  title: State
-  path: /state
 ---
 
 # useSetState
@@ -21,7 +16,7 @@ group:
 ## API
 
 ```typescript
-const [state, setState] = useSetState<T extends object>(
+const [state, setState] = useSetState<T extends Record<string, any>>(
   initialState: T = {} as T
 ): [T, (patch: Partial<T> | ((prevState: T) => Partial<T>)) => void]
 ```

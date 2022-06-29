@@ -1,6 +1,6 @@
 {
   "name": "ahooks",
-  "version": "2.10.0",
+  "version": "3.5.1",
   "description": "react hooks library",
   "keywords": [
     "ahooks",
@@ -17,7 +17,7 @@
     "email": "brickspert.fjl@alipay.com"
   },
   "publishConfig": {
-    "registry": "https://registry.npmjs.com/"
+    "registry": "https://registry.npmjs.org/"
   },
   "repository": "https://github.com/alibaba/hooks",
   "homepage": "https://github.com/alibaba/hooks",
@@ -28,37 +28,37 @@
     "dist",
     "lib",
     "es",
+    "metadata.json",
     "package.json",
     "README.md"
   ],
   "dependencies": {
-    "@ahooksjs/use-request": "^2.8.4",
-    "@types/js-cookie": "^2.2.6",
+    "@types/js-cookie": "^2.x.x",
+    "ahooks-v3-count": "^1.0.0",
     "dayjs": "^1.9.1",
-    "intersection-observer": "^0.7.0",
-    "js-cookie": "^2.2.1",
-    "lodash.debounce": "^4.0.8",
-    "lodash.isequal": "^4.5.0",
-    "lodash.throttle": "^4.1.1",
+    "intersection-observer": "^0.12.0",
+    "js-cookie": "^2.x.x",
+    "lodash": "^4.17.21",
     "resize-observer-polyfill": "^1.5.1",
     "screenfull": "^5.0.0"
   },
   "peerDependencies": {
-    "react": "^16.8.6 || ^17.0"
+    "react": "^16.8.0 || ^17.0.0 || ^18.0.0"
   },
   "devDependencies": {
     "@alifd/next": "^1.20.6",
+    "@ant-design/icons": "^4.6.2",
     "@types/enzyme": "^3.10.5",
-    "antd": "^3.26.6",
+    "antd": "^4.16.9",
     "enzyme-adapter-react-16": "^1.15.4",
     "jest-websocket-mock": "^2.1.0",
     "mock-socket": "^9.0.3",
-    "react-drag-listview": "^0.1.6",
-    "umi-request": "^1.0.8"
+    "mockjs": "^1.1.0",
+    "react-drag-listview": "^0.1.6"
   },
   "engines": {
     "node": ">=8.0.0"
   },
   "license": "MIT",
-  "gitHead": "561ebf0c820fa5fd6f1a8e83d6a8de3474254921"
+  "gitHead": "11f6ad571bd365c95ecb9409ca3050cbbfc9b34a"
 }

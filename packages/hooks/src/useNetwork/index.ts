@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { isObject } from '../utils';
 
 export interface NetworkState {
   since?: Date;
@@ -11,9 +12,15 @@ export interface NetworkState {
   effectiveType?: string;
 }
 
+enum NetworkEventType {
+  ONLINE = 'online',
+  OFFLINE = 'offline',
+  CHANGE = 'change',
+}
+
 function getConnection() {
   const nav = navigator as any;
-  if (typeof nav !== 'object') return null;
+  if (!isObject(nav)) return null;
   return nav.connection || nav.mozConnection || nav.webkitConnection;
 }
 
@@ -34,7 +41,7 @@ function useNetwork(): NetworkState {
   const [state, setState] = useState(() => {
     return {
       since: undefined,
-      online: navigator.onLine,
+      online: navigator?.onLine,
       ...getConnectionProperty(),
     };
   });
@@ -63,16 +70,16 @@ function useNetwork(): NetworkState {
       }));
     };
 
-    window.addEventListener('online', onOnline);
-    window.addEventListener('offline', onOffline);
+    window.addEventListener(NetworkEventType.ONLINE, onOnline);
+    window.addEventListener(NetworkEventType.OFFLINE, onOffline);
 
     const connection = getConnection();
-    connection?.addEventListener('change', onConnectionChange);
+    connection?.addEventListener(NetworkEventType.CHANGE, onConnectionChange);
 
     return () => {
-      window.removeEventListener('online', onOnline);
-      window.removeEventListener('offline', onOffline);
-      connection?.removeEventListener('change', onConnectionChange);
+      window.removeEventListener(NetworkEventType.ONLINE, onOnline);
+      window.removeEventListener(NetworkEventType.OFFLINE, onOffline);
+      connection?.removeEventListener(NetworkEventType.CHANGE, onConnectionChange);
     };
   }, []);
 

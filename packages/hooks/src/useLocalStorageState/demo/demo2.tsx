@@ -1,5 +1,5 @@
 /**
- * title: Store complex types such as arrays or objects
+ * title: Store complex types such as array or object
  * desc: useLocalStorageState will do the serialization and deserialization work automatically.
  *
  * title.zh-CN: 存储数组或对象等复杂类型
@@ -12,11 +12,13 @@ import { useLocalStorageState } from 'ahooks';
 const defaultArray = ['a', 'e', 'i', 'o', 'u'];
 
 export default function () {
-  const [value, setValue] = useLocalStorageState('cascader', defaultArray);
+  const [value, setValue] = useLocalStorageState('use-local-storage-state-demo2', {
+    defaultValue: defaultArray,
+  });
 
   return (
     <>
-      <p>{value.join('-')}</p>
+      <p>{value?.join('-')}</p>
       <button
         type="button"
         style={{ marginRight: '16px' }}

@@ -1,16 +1,11 @@
 ---
-title: useUpdate
 nav:
-  title: Hooks
   path: /hooks
-group:
-  title: LifeCycle
-  path: /life-cycle
 ---
 
 # useUpdate
 
-强制组件重新渲染的 hook。
+useUpdate 会返回一个函数，调用该函数会强制组件重新渲染。
 
 ## 代码演示
 

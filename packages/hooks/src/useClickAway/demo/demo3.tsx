@@ -1,6 +1,6 @@
 /**
  * title: Support multiple DOM
- * desc: Support pass multiple DOM elements, or functions which returns the DOM element.
+ * desc: Support pass multiple DOM elements.
  *
  * title.zh-CN: 支持多个 DOM 对象
  * desc.zh-CN: 支持传入多个目标对象。
@@ -11,8 +11,8 @@ import { useClickAway } from 'ahooks';
 
 export default () => {
   const [counter, setCounter] = useState(0);
-  const ref1 = useRef();
-  const ref2 = useRef();
+  const ref1 = useRef(null);
+  const ref2 = useRef(null);
   useClickAway(() => {
     setCounter((s) => s + 1);
   }, [ref1, ref2]);

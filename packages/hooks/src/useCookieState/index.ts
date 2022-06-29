@@ -1,44 +1,43 @@
 import Cookies from 'js-cookie';
-import { useCallback, useState } from 'react';
-import { isFunction } from '../utils';
+import { useState } from 'react';
+import useMemoizedFn from '../useMemoizedFn';
+import { isFunction, isString } from '../utils';
 
-// TODO ts 命名不规范，待下个大版本修复
-export type TCookieState = string | undefined | null;
-export type TCookieOptions = Cookies.CookieAttributes;
+export type State = string | undefined;
 
-export interface IOptions extends TCookieOptions {
-  defaultValue?: TCookieState | (() => TCookieState);
+export interface Options extends Cookies.CookieAttributes {
+  defaultValue?: State | (() => State);
 }
 
-function useCookieState(cookieKey: string, options: IOptions = {}) {
-  const [state, setState] = useState<TCookieState>(() => {
+function useCookieState(cookieKey: string, options: Options = {}) {
+  const [state, setState] = useState<State>(() => {
     const cookieValue = Cookies.get(cookieKey);
-    if (typeof cookieValue === 'string') return cookieValue;
 
-    if (isFunction(options.defaultValue)) return options.defaultValue();
+    if (isString(cookieValue)) return cookieValue;
+
+    if (isFunction(options.defaultValue)) {
+      return options.defaultValue();
+    }
+
     return options.defaultValue;
   });
 
-  // usePersistFn 保证返回的 updateState 不会变化
-  const updateState = useCallback(
+  const updateState = useMemoizedFn(
     (
-      newValue?: TCookieState | ((prevState: TCookieState) => TCookieState),
+      newValue: State | ((prevState: State) => State),
       newOptions: Cookies.CookieAttributes = {},
     ) => {
       const { defaultValue, ...restOptions } = { ...options, ...newOptions };
-      setState(
-        (prevState: TCookieState): TCookieState => {
-          const value = isFunction(newValue) ? newValue(prevState) : newValue;
-          if (value === undefined || value === null) {
-            Cookies.remove(cookieKey);
-          } else {
-            Cookies.set(cookieKey, value, restOptions);
-          }
-          return value;
-        },
-      );
+      setState((prevState) => {
+        const value = isFunction(newValue) ? newValue(prevState) : newValue;
+        if (value === undefined) {
+          Cookies.remove(cookieKey);
+        } else {
+          Cookies.set(cookieKey, value, restOptions);
+        }
+        return value;
+      });
     },
-    [cookieKey, options],
   );
 
   return [state, updateState] as const;

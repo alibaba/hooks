@@ -1,16 +1,11 @@
 ---
-title: useUpdateEffect
 nav:
-  title: Hooks
   path: /hooks
-group:
-  title: LifeCycle
-  path: /life-cycle
 ---
 
 # useUpdateEffect
 
-A hook of useEffect that only runs when dependencies update.
+A hook alike `useEffect` but skips running the effect for the first time.
 
 ## Examples
 
@@ -20,16 +15,11 @@ A hook of useEffect that only runs when dependencies update.
 
 ## API
 
+The API is exactly the same as `React.useEffect`.
+
 ```typescript
 useUpdateEffect(
-  effect: () => (void | (() => void | undefined)),
-  deps?: deps,
+  effect: React.EffectCallback,
+  deps?: React.DependencyList,
 )
 ```
-
-### Params
-
-| Property | Description                                        | Type                                      | Default |
-|----------|----------------------------------------------------|-------------------------------------------|---------|
-| effect   | Executable function                                | `() => (void | (() => void | undefined))` | -       |
-| deps     | Optionally, pass in objects that depend on changes |   `array` \| `undefined`                 | -       |

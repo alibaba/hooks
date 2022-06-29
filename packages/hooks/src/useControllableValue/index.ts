@@ -1,5 +1,8 @@
-import { useCallback, useState } from 'react';
-import useUpdateEffect from '../useUpdateEffect';
+import { useMemo, useRef } from 'react';
+import type { SetStateAction } from 'react';
+import { isFunction } from '../utils';
+import useMemoizedFn from '../useMemoizedFn';
+import useUpdate from '../useUpdate';
 
 export interface Options<T> {
   defaultValue?: T;
@@ -8,11 +11,22 @@ export interface Options<T> {
   trigger?: string;
 }
 
-export interface Props {
-  [key: string]: any;
+export type Props = Record<string, any>;
+
+export interface StandardProps<T> {
+  value: T;
+  defaultValue?: T;
+  onChange: (val: T) => void;
 }
 
-export default function useControllableValue<T>(props: Props = {}, options: Options<T> = {}) {
+function useControllableValue<T = any>(
+  props: StandardProps<T>,
+): [T, (v: SetStateAction<T>) => void];
+function useControllableValue<T = any>(
+  props?: Props,
+  options?: Options<T>,
+): [T, (v: SetStateAction<T>, ...args: any[]) => void];
+function useControllableValue<T = any>(props: Props = {}, options: Options<T> = {}) {
   const {
     defaultValue,
     defaultValuePropName = 'defaultValue',
@@ -21,35 +35,38 @@ export default function useControllableValue<T>(props: Props = {}, options: Opti
   } = options;
 
   const value = props[valuePropName] as T;
+  const isControlled = props.hasOwnProperty(valuePropName);
 
-  const [state, setState] = useState<T | undefined>(() => {
-    if (valuePropName in props) {
+  const initialValue = useMemo(() => {
+    if (isControlled) {
       return value;
     }
-    if (defaultValuePropName in props) {
+    if (props.hasOwnProperty(defaultValuePropName)) {
       return props[defaultValuePropName];
     }
     return defaultValue;
-  });
+  }, []);
 
-  /* init 的时候不用执行了 */
-  useUpdateEffect(() => {
-    if (valuePropName in props) {
-      setState(value);
+  const stateRef = useRef(initialValue);
+  if (isControlled) {
+    stateRef.current = value;
+  }
+
+  const update = useUpdate();
+
+  function setState(v: SetStateAction<T>, ...args: any[]) {
+    const r = isFunction(v) ? v(stateRef.current) : v;
+
+    if (!isControlled) {
+      stateRef.current = r;
+      update();
     }
-  }, [value, valuePropName]);
+    if (props[trigger]) {
+      props[trigger](r, ...args);
+    }
+  }
 
-  const handleSetState = useCallback(
-    (v: T | undefined, ...args: any[]) => {
-      if (!(valuePropName in props)) {
-        setState(v);
-      }
-      if (props[trigger]) {
-        props[trigger](v, ...args);
-      }
-    },
-    [props, valuePropName, trigger],
-  );
-
-  return [valuePropName in props ? value : state, handleSetState] as const;
+  return [stateRef.current, useMemoizedFn(setState)] as const;
 }
+
+export default useControllableValue;

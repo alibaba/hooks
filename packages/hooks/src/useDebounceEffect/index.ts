@@ -1,8 +1,8 @@
-import { useEffect, EffectCallback, DependencyList, useState } from 'react';
-import { DebounceOptions } from '../useDebounce/debounceOptions';
+import { useEffect, useState } from 'react';
+import type { DependencyList, EffectCallback } from 'react';
+import type { DebounceOptions } from '../useDebounce/debounceOptions';
 import useDebounceFn from '../useDebounceFn';
 import useUpdateEffect from '../useUpdateEffect';
-import useUnmount from '../useUnmount';
 
 function useDebounceEffect(
   effect: EffectCallback,
@@ -11,15 +11,13 @@ function useDebounceEffect(
 ) {
   const [flag, setFlag] = useState({});
 
-  const { run, cancel } = useDebounceFn(() => {
+  const { run } = useDebounceFn(() => {
     setFlag({});
   }, options);
 
   useEffect(() => {
     return run();
   }, deps);
-
-  useUnmount(cancel);
 
   useUpdateEffect(effect, [flag]);
 }

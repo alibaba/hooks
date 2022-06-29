@@ -1,11 +1,6 @@
 ---
-title: useTimeout
 nav:
-  title: Hooks
   path: /hooks
-group:
-  title: SideEffect
-  path: /side-effect
 ---
 
 # useTimeout
@@ -17,17 +12,26 @@ group:
 ### 基础用法
 
 <code src="./demo/demo1.tsx" />
-
+<code src="./demo/demo2.tsx" />
 
 ## API
 
 ```typescript
-useTimeout(fn: () => void, delay: number | undefined | null);
+useTimeout(
+  fn: () => void,
+  delay?: number | null
+): fn: () => void;
 ```
 
-### 参数
+### Params
 
-| 参数 | 说明 | 类型 |
-|------|---------------------------|--------|
-| fn   | 是你想要在到期时间(delay毫秒)之后执行的函数 | `() => void` |
-| delay | 到期时间（单位为毫秒），当取值为 `null` 或 `undefined` 时会停止计时器 | `number` \| `undefined` \| `null` |
+| 参数  | 说明                                                                       | 类型                    |
+| ----- | -------------------------------------------------------------------------- | ----------------------- |
+| fn    | 待执行函数                                                                 | `() => void`            |
+| delay | 定时时间（单位为毫秒）,支持动态变化，，当取值为 `undefined` 时会停止计时器 | `number` \| `undefined` |
+
+### Result
+
+| 参数         | 说明       | 类型         |
+| ------------ | ---------- | ------------ |
+| clearTimeout | 清除定时器 | `() => void` |

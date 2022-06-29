@@ -1,14 +1,14 @@
 /**
- * title: Default usage
- * desc: The function is called right after the component mount.
+ * title: Basic usage
+ * desc: The function is called right after the component is mounted.
  *
  * title.zh-CN: 基础用法
  * desc.zh-CN: 在组件首次渲染时，执行方法。
  */
 
-import React from 'react';
+import { useMount, useBoolean } from 'ahooks';
 import { message } from 'antd';
-import { useToggle, useMount } from 'ahooks';
+import React from 'react';
 
 const MyComponent = () => {
   useMount(() => {
@@ -19,11 +19,11 @@ const MyComponent = () => {
 };
 
 export default () => {
-  const [state, { toggle }] = useToggle(false);
+  const [state, { toggle }] = useBoolean(false);
 
   return (
     <>
-      <button type="button" onClick={() => toggle()}>
+      <button type="button" onClick={toggle}>
         {state ? 'unmount' : 'mount'}
       </button>
       {state && <MyComponent />}

@@ -1,12 +1,6 @@
 ---
-title: useThrottle
 nav:
-  title: Hooks
   path: /hooks
-group:
-  title: SideEffect
-  path: /side-effect
-  order: 7
 ---
 
 # useThrottle
@@ -30,16 +24,15 @@ const throttledValue = useThrottle(
 
 ### Params
 
-| 参数    | 说明                               | 类型      | 默认值 |
-|---------|------------------------------------|-----------|--------|
-| value   | 需要节流的值                       | `any`     | -      |
-| options | 配置节流的行为，详见下面的 Options | `Options` | `{}`   |
-
+| 参数    | 说明           | 类型      | 默认值 |
+| ------- | -------------- | --------- | ------ |
+| value   | 需要节流的值   | `any`     | -      |
+| options | 配置节流的行为 | `Options` | -      |
 
 ### Options
 
-| 参数     | 说明                       | 类型      | 默认值 |
-|----------|----------------------------|-----------|--------|
-| wait     | 超时时间，单位为毫秒       | `number`  | `1000` |
-| leading  | 是否在上升沿触发副作用函数 | `boolean` | `true` |
-| trailing | 是否在下降沿触发副作用函数 | `boolean` | `true` |
+| 参数     | 说明                     | 类型      | 默认值 |
+| -------- | ------------------------ | --------- | ------ |
+| wait     | 等待时间，单位为毫秒     | `number`  | `1000` |
+| leading  | 是否在延迟开始前调用函数 | `boolean` | `true` |
+| trailing | 是否在延迟开始后调用函数 | `boolean` | `true` |

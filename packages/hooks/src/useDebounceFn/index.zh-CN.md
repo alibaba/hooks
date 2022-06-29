@@ -1,11 +1,6 @@
 ---
-title: useDebounceFn
 nav:
-  title: Hooks
   path: /hooks
-group:
-  title: SideEffect
-  path: /side-effect
 ---
 
 # useDebounceFn
@@ -20,10 +15,11 @@ group:
 
 ## API
 
-```javascript
+```typescript
 const {
   run,
-  cancel
+  cancel,
+  flush
 } = useDebounceFn(
   fn: (...args: any[]) => any,
   options?: Options
@@ -32,23 +28,24 @@ const {
 
 ### Params
 
-| 参数    | 说明                               | 类型                      | 默认值 |
-|---------|------------------------------------|---------------------------|--------|
-| fn      | 需要防抖执行的函数                 | `(...args: any[]) => any` | -      |
-| options | 配置防抖的行为，详见下面的 Options | `Options`                 | `{}`     |
+| 参数    | 说明               | 类型                      | 默认值 |
+| ------- | ------------------ | ------------------------- | ------ |
+| fn      | 需要防抖执行的函数 | `(...args: any[]) => any` | -      |
+| options | 配置防抖的行为     | `Options`                 | -      |
 
 ### Options
 
-| 参数     | 说明                       | 类型      | 默认值  |
-|----------|----------------------------|-----------|---------|
-| wait     | 超时时间，单位为毫秒       | `number`  | `1000`  |
-| leading  | 是否在上升沿触发副作用函数 | `boolean` | `false` |
-| trailing | 是否在下降沿触发副作用函数 | `boolean` | `true`  |
+| 参数     | 说明                     | 类型      | 默认值  |
+| -------- | ------------------------ | --------- | ------- |
+| wait     | 等待时间，单位为毫秒     | `number`  | `1000`  |
+| leading  | 是否在延迟开始前调用函数 | `boolean` | `false` |
+| trailing | 是否在延迟开始后调用函数 | `boolean` | `true`  |
+| maxWait  | 最大等待时间，单位为毫秒 | `number`  | -       |
 
 ### Result
 
-| 参数   | 说明                               | 类型         |
-|--------|------------------------------------|--------------|
+| 参数   | 说明                               | 类型                      |
+| ------ | ---------------------------------- | ------------------------- |
 | run    | 触发执行 fn，函数参数将会传递给 fn | `(...args: any[]) => any` |
-| cancel | 取消当前防抖                       | `() => void` |
-| flush  | 当前防抖立即调用                   | `() => void` |
+| cancel | 取消当前防抖                       | `() => void`              |
+| flush  | 立即调用当前防抖函数               | `() => void`              |

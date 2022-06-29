@@ -8,10 +8,6 @@ const callToggle = (hook: any) => {
 };
 
 describe('useToggle', () => {
-  it('should be defined', () => {
-    expect(useToggle).toBeDefined();
-  });
-
   it('test on init', async () => {
     const hook = renderHook(() => useToggle());
     expect(hook.result.current[0]).toBeFalsy();
@@ -39,7 +35,7 @@ describe('useToggle', () => {
     callToggle(hook);
     expect(hook.result.current[0]).toEqual('World');
     act(() => {
-      hook.result.current[1].toggle('World');
+      hook.result.current[1].set('World');
     });
     expect(hook.result.current[0]).toEqual('World');
     callToggle(hook);

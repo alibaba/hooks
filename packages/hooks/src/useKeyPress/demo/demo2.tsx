@@ -12,11 +12,11 @@ import { useKeyPress } from 'ahooks';
 export default () => {
   const [counter, setCounter] = useState(0);
 
-  useKeyPress('left', () => {
+  useKeyPress('leftarrow', () => {
     setCounter((s) => s - 1);
   });
 
-  useKeyPress('right', () => {
+  useKeyPress('rightarrow', () => {
     setCounter((s) => s + 1);
   });
 

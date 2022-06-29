@@ -1,9 +1,9 @@
 /**
- * title: Default usage
- * desc: Default as a switch function, or accept a parameter to change state.
+ * title: Basic usage
+ * desc: Toggle boolean, default value can be set optionally.
  *
  * title.zh-CN: 基础用法
- * desc.zh-CN: 默认切换布尔值状态，也可以接收一个参数作为新的值。
+ * desc.zh-CN: 切换 boolean，可以接收默认值。
  */
 
 import React from 'react';
@@ -16,7 +16,7 @@ export default () => {
     <div>
       <p>Effects：{JSON.stringify(state)}</p>
       <p>
-        <button type="button" onClick={() => toggle()}>
+        <button type="button" onClick={toggle}>
           Toggle
         </button>
         <button type="button" onClick={setFalse} style={{ margin: '0 16px' }}>

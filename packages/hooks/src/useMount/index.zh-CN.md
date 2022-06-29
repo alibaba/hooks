@@ -1,16 +1,11 @@
 ---
-title: useMount
 nav:
-  title: Hooks
   path: /hooks
-group:
-  title: LifeCycle
-  path: /life-cycle
 ---
 
 # useMount
 
-只在组件 mount 时执行的 hook。
+只在组件初始化时执行的 Hook。
 
 ## 代码演示
 
@@ -21,11 +16,11 @@ group:
 ## API
 
 ```typescript
-useMount(fn: () => void );
+useMount(fn: () => void);
 ```
 
 ### 参数
 
 | 参数 | 说明               | 类型         | 默认值 |
-|------|--------------------|--------------|--------|
-| fn   | mount 时执行的函数 | `() => void` | -      |
+| ---- | ------------------ | ------------ | ------ |
+| fn   | 初始化时执行的函数 | `() => void` | -      |

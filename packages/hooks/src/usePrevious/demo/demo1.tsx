@@ -1,6 +1,6 @@
 /**
- * title: Default usage
- * desc: Store the previous value.
+ * title: Basic usage
+ * desc: Record the previous value.
  *
  * title.zh-CN: 基础用法
  * desc.zh-CN: 记录上次的 count 值

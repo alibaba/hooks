@@ -3,9 +3,9 @@ import useTrackedEffect from '../index';
 
 describe('useTrackedEffect', () => {
   //We use a array to store which dependency has changed
-  var changedDepIndexes = [];
-  var prevDependencies = [];
-  var currentDependencies = [];
+  let changedDepIndexes = [];
+  let prevDependencies = [];
+  let currentDependencies = [];
   const mockEffectCleanup = jest.fn();
   const mockEffectCallback = jest.fn().mockReturnValue(mockEffectCleanup);
   const mockEffectWithTracked = jest.fn().mockImplementation((changes, prevDeps, curDeps) => {
@@ -14,9 +14,6 @@ describe('useTrackedEffect', () => {
     prevDependencies = prevDeps;
     currentDependencies = curDeps;
     return mockEffectCleanup;
-  });
-  it('should be defined', () => {
-    expect(useTrackedEffect).toBeDefined();
   });
   it("should run provided effect and return single changed dependecy's index ", () => {
     let var1 = 0;

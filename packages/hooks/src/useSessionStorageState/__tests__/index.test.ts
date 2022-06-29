@@ -2,13 +2,9 @@ import { renderHook, act } from '@testing-library/react-hooks';
 import useSessionStorageState from '../index';
 
 describe('useSessionStorageState', () => {
-  it('should be defined', () => {
-    expect(useSessionStorageState).toBeDefined();
-  });
-
   const setUp = <T>(key: string, value: T) =>
     renderHook(() => {
-      const [state, setState] = useSessionStorageState<T>(key, value);
+      const [state, setState] = useSessionStorageState<T>(key, { defaultValue: value });
       return {
         state,
         setState,

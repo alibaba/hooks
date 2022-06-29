@@ -1,8 +1,8 @@
-import { useEffect, EffectCallback, DependencyList, useState } from 'react';
-import { ThrottleOptions } from '../useThrottle/throttleOptions';
+import { useEffect, useState } from 'react';
+import type { DependencyList, EffectCallback } from 'react';
+import type { ThrottleOptions } from '../useThrottle/throttleOptions';
 import useThrottleFn from '../useThrottleFn';
 import useUpdateEffect from '../useUpdateEffect';
-import useUnmount from '../useUnmount';
 
 function useThrottleEffect(
   effect: EffectCallback,
@@ -11,15 +11,13 @@ function useThrottleEffect(
 ) {
   const [flag, setFlag] = useState({});
 
-  const { run, cancel } = useThrottleFn(() => {
+  const { run } = useThrottleFn(() => {
     setFlag({});
   }, options);
 
   useEffect(() => {
     return run();
   }, deps);
-
-  useUnmount(cancel);
 
   useUpdateEffect(effect, [flag]);
 }

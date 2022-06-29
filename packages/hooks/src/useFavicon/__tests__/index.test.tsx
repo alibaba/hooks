@@ -39,11 +39,6 @@ const App: React.FC = () => {
 };
 
 describe.only('useFavicon Hook', () => {
-  it('should be defined as function', () => {
-    expect(useFavicon).toBeDefined();
-    expect(typeof useFavicon).toBe('function');
-  });
-
   it('should toggle favicon when URL changed', () => {
     const wrapper = mount(<App />);
     const currentFaviconURL = wrapper.find('span').at(0);

@@ -1,16 +1,11 @@
 ---
-title: useFavicon
 nav:
-  title: Hooks
   path: /hooks
-group:
-  title: Dom
-  path: /dom
 ---
 
 # useFavicon
 
-Set or configure page favicon URL.
+A hook that set the favicon of the page.
 
 ## Example
 
@@ -21,11 +16,11 @@ Set or configure page favicon URL.
 ## API
 
 ```typescript
-useFavicon(faviconURL: string)
+useFavicon(href: string);
 ```
 
 ### Params
 
-| Params     | Description                                  | Type     | Default |
-|------------|----------------------------------------------|----------|---------|
-| faviconURL | favicon URL, support `svg`/`png`/`ico`/`gif` | `string` | -       |
+| Params | Description                                  | Type     | Default |
+| ------ | -------------------------------------------- | -------- | ------- |
+| href   | favicon URL, support `svg`/`png`/`ico`/`gif` | `string` | -       |

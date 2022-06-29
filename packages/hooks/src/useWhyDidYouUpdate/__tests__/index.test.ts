@@ -3,10 +3,6 @@ import useWhyDidYouUpdate from '../index';
 import { useState } from 'react';
 
 describe('useWhyDidYouUpdate', () => {
-  it('should be defined', () => {
-    expect(useWhyDidYouUpdate).toBeDefined();
-  });
-
   it('should work', () => {
     console.log = jest.fn();
     const setup = () =>
@@ -34,6 +30,4 @@ describe('useWhyDidYouUpdate', () => {
       },
     );
   });
-
-  it('should support component props', () => {});
 });

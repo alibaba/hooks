@@ -1,9 +1,9 @@
 /**
- * title: Using compare function
- * desc: The stored previous value update only when the compare function returns true.
+ * title: Custom shouldUpdate function
+ * desc: Previous value update only when the shouldUpdate function return true.
  *
- * title.zh-CN: 使用 compare function
- * desc.zh-CN: 只有 compare function 返回 true 时，才会记录值的变化
+ * title.zh-CN: 自定义 shouldUpdate 函数
+ * desc.zh-CN: 只有 shouldUpdate function 返回 true 时，才会记录值的变化。
  */
 
 import React, { useState } from 'react';

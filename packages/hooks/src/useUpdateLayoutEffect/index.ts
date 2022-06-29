@@ -1,17 +1,4 @@
-/* eslint consistent-return: 0 */
+import { useLayoutEffect } from 'react';
+import { createUpdateEffect } from '../createUpdateEffect';
 
-import { useLayoutEffect, useRef } from 'react';
-
-const useUpdateLayoutEffect: typeof useLayoutEffect = (effect, deps) => {
-  const isMounted = useRef(false);
-
-  useLayoutEffect(() => {
-    if (!isMounted.current) {
-      isMounted.current = true;
-    } else {
-      return effect();
-    }
-  }, deps);
-};
-
-export default useUpdateLayoutEffect;
+export default createUpdateEffect(useLayoutEffect);

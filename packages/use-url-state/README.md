@@ -16,6 +16,12 @@ Or with npm:
 npm install @ahooksjs/use-url-state -S
 ```
 
+Or with pnpm
+
+```bash
+pnpm add @ahooksjs/use-url-state
+```
+
 ## Example
 
 ```javascript

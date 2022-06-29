@@ -1,17 +1,11 @@
 ---
-title: useDebounce
 nav:
-  title: Hooks
   path: /hooks
-group:
-  title: SideEffect
-  path: /side-effect
-  order: 7
 ---
 
 # useDebounce
 
-A hook that handle the debounce value.
+A hook that deal with the debounced value.
 
 ## Examples
 
@@ -21,7 +15,7 @@ A hook that handle the debounce value.
 
 ## API
 
-```javascript
+```typescript
 const debouncedValue = useDebounce(
   value: any,
   options?: Options
@@ -30,15 +24,16 @@ const debouncedValue = useDebounce(
 
 ### Params
 
-| Property | Description                                                  | Type      | Default |
-|----------|--------------------------------------------------------------|-----------|---------|
-| value    | value that requires debounce                                 | `any`     | -       |
-| options  | Config the debounce behavior. See the Options section below. | `Options` | `{}`    |
+| Property | Description                        | Type      | Default |
+| -------- | ---------------------------------- | --------- | ------- |
+| value    | The value to debounce.             | `any`     | -       |
+| options  | Config for the debounce behaviors. | `Options` | -       |
 
 ### Options
 
-| Property | Description                                           | Type      | Default |
-|----------|-------------------------------------------------------|-----------|---------|
-| wait     | The number of milliseconds to delay.                  | `number`  | `1000`  |
-| leading  | Specify invoking on the leading edge of the timeout.  | `boolean` | `false` |
-| trailing | Specify invoking on the trailing edge of the timeout. | `boolean` | `true`  |
+| Property | Description                                                         | Type      | Default |
+| -------- | ------------------------------------------------------------------- | --------- | ------- |
+| wait     | The number of milliseconds to delay.                                | `number`  | `1000`  |
+| leading  | Specify invoking on the leading edge of the timeout.                | `boolean` | `false` |
+| trailing | Specify invoking on the trailing edge of the timeout.               | `boolean` | `true`  |
+| maxWait  | The maximum time func is allowed to be delayed before it’s invoked. | `number`  | -       |

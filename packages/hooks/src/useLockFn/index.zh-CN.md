@@ -1,11 +1,6 @@
 ---
-title: useLockFn
 nav:
-  title: Hooks
   path: /hooks
-group:
-  title: Advanced
-  path: /advanced
 ---
 
 # useLockFn
@@ -14,7 +9,7 @@ group:
 
 ## 代码演示
 
-### 避免重复提交
+### 基础用法
 
 <code src="./demo/demo1.tsx" />
 
@@ -23,18 +18,17 @@ group:
 ```typescript
 function useLockFn<P extends any[] = any[], V extends any = any>(
   fn: (...args: P) => Promise<V>
-): fn: (...args: P) => Promise<V | undefined>
+): fn: (...args: P) => Promise<V | undefined>;
 ```
 
 ### Result
 
-| 参数 | 说明                      | 类型                      |
-|------|---------------------------|---------------------------|
-| fn   | 增加了竞态锁的函数 | `(...args: any[]) => any` |
+| 参数 | 说明               | 类型                               |
+| ---- | ------------------ | ---------------------------------- |
+| fn   | 增加了竞态锁的函数 | `(...args: any[]) => Promise<any>` |
 
 ### Params
 
-| 参数           | 说明             | 类型                      | 默认值 |
-|----------------|------------------|---------------------------|--------|
-| fn             | 需要增加竞态锁的函数 | `(...args: any[]) => any` | -      |
-
+| 参数 | 说明                 | 类型                               | 默认值 |
+| ---- | -------------------- | ---------------------------------- | ------ |
+| fn   | 需要增加竞态锁的函数 | `(...args: any[]) => Promise<any>` | -      |

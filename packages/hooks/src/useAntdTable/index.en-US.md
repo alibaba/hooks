@@ -1,75 +1,130 @@
 ---
-title: useAntdTable
-order: 1000
 nav:
-  title: Hooks
   path: /hooks
-group:
-  title: Table
-  path: /table
-  order: 3
 ---
 
 # useAntdTable
 
-It encapsulates the common antd [Form](https://ant.design/components/form-cn/) and antd [Table](https://ant.design/components/table-cn/) linkage logic, and supports antd V3 and V4 at the same time.
+`useAntdTable` is implemented based on `useRequest` and encapsulates the commonly used [Ant Design Form](https://ant.design/components/form/) and [Ant Design Table](https://ant.design/components/table/) data binding logic, and supports both antd v3 and v4.
+
+Before using it, you need to understand a few points that are different from `useRequest`:
+
+1. `service` receives two parameters, the first parameter is the paging data `{ current, pageSize, sorter, filters }`, and the second parameter is the form data.
+2. The data structure returned by `service` must be `{ total: number, list: Item[] }`.
+3. Additional `tableProps` and `search` fields will be returned to manage tables and forms.
+4. When `refreshDeps` changes, it will reset `current` to the first page and re-initiate the request.
 
 ## Examples
 
+The following demos are for antd v4. For v3, please refer to: https://ahooks-v2.js.org/hooks/table/use-antd-table
+
+### Table management
+
+`useAntdTable` will automatically manage the pagination data of `Table`, you only need to pass the returned `tableProps` to the `Table` component.
+
+```tsx | pure
+<Table columns={columns} rowKey="email" {...tableProps} />
+```
+
+<br />
+
+<code src="./demo/table.tsx" />
+
 ### Form and Table data binding
 
-<code src="./demo/demo1.tsx" />
+When `useAntdTable` receives the `form` instance, it will return a search object to handle form related events.
 
-### Data caching
+- `search.type` supports switching between `simple` and `advance`
+- `search.changeType`, switch form type
+- `search.submit` submit form
+- `search.reset` reset the current form
 
-<code src="./demo/demo2.tsx" />
+In the following example, you can try out the data binding between form and table.
 
-### Set Default Params
+<code src="./demo/form.tsx" />
 
-<code src="./demo/demo5.tsx" />
+### Default Params
 
-### Form Validate
+`useAntdTable` sets the initial value through `defaultParams`, `defaultParams` is an array, the first item is paging related parameters, and the second item is form related data. If there is a second value, we will initialize the form for you!
 
-<code src="./demo/demo6.tsx" />
+It should be noted that the initial form data can be filled with all the form data of `simple` and `advance`, and we will help you select the form data of the currently activated type.
+
+The following example sets paging data and form data during initialization.
+
+<code src="./demo/init.tsx" />
+
+### Form Validation
+
+Before the form is submitted, we will call `form.validateFields` to validate the form data. If the verification fails, the request will not be initiated.
+
+<code src="./demo/validate.tsx" />
+
+### Data Caching
+
+By setting `cacheKey`, we can apply the data caching for the `Form` and `Table`.
+
+<code src="./demo/cache.tsx" />
 
 ## API
 
-useAntdTable is based on [useRequest](/async). All [useRquest Pagination](/async?anchor=pagination#api-1) APIs can be used directly. For example `cacheKey`,` manual`, etc.
+All parameters and returned results of `useRequest` are applicable to `useAntdTable`, so we won't repeat them here.
 
-As the same as useRequest Pagination mode，The data structure returned by service must be `{list: Item [], total: number}`. If it is not satisfied, it can be converted once by `options.formatResult`.
+```typescript
 
-useAntdTable adds `result.search` and` options.form`.
+type Data = { total: number; list: any[] };
+type Params = [{ current: number; pageSize: number, filter?: any, sorter?: any }, { [key: string]: any }];
 
-```javascript
 const {
   ...,
+  tableProps: {
+    dataSource: any[];
+    loading: boolean;
+    onChange: (
+      pagination: any,
+      filters?: any,
+      sorter?: any,
+    ) => void;
+    pagination: {
+      current: number;
+      pageSize: number;
+      total: number;
+    };
+  };
   search: {
     type: 'simple' | 'advance';
     changeType: () => void;
     submit: () => void;
     reset: () => void;
   };
-} = useAntdTable(
-  service,
+} = useAntdTable<TData extends Data, TParams extends Params>(
+  service: (...args: TParams) => Promise<TData>,
   {
     ...,
-    form,
-    defaultType: 'simple' | 'advance',
-    defaultParams: [pagination, formData],
+    form?: any;
+    defaultType?: 'simple' | 'advance';
+    defaultParams?: TParams,
+    defaultPageSize?: number;
+    refreshDeps?: any[];
   }
 );
 ```
 
-## FAQ
+### Result
 
-### 1. Unable to read or initialize the value of the custom component
+| Property          | Description                                | Type                  |
+| ----------------- | ------------------------------------------ | --------------------- |
+| tableProps        | The data required by the `Table` component | -                     |
+| search.type       | Current form type                          | `simple` \| `advance` |
+| search.changeType | Switch form type                           | `() => void`          |
+| search.submit     | Submit form                                | `() => void`          |
+| search.reset      | Reset the current form                     | `() => void`          |
 
-You can refer to [#496](https://github.com/alibaba/hooks/issues/496).
+### Params
 
-If the antd form item is a custom function component, you need to use the `React.forwardRef`.
-
-```js
-const CustomInput = React.forwardRef((props, ref) => (
-  <Input ref={ref} value={props.value} onChange={props.onChange} />
-));
-```
+| Property        | Description                                                                                | Type                     | Default  |
+| --------------- | ------------------------------------------------------------------------------------------ | ------------------------ | -------- |
+| form            | `Form` instance                                                                            | -                        | -        |
+| defaultType     | Default form type                                                                          | `simple` \| `advance`    | `simple` |
+| defaultParams   | Default parameters, the first item is paging data, the second item is form data            | `[pagination, formData]` | -        |
+| defaultPageSize | Default page size                                                                          | `number`                 | `10`     |
+| refreshDeps     | Changes in `refreshDeps` will reset current to the first page and re-initiate the request. | `React.DependencyList`   | `[]`     |

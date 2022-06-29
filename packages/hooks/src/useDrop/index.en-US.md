@@ -1,12 +1,6 @@
 ---
-title: useDrag & useDrop
 nav:
-  title: Hooks
   path: /hooks
-group:
-  title: UI
-  path: /ui
-  order: 9
 ---
 
 # useDrop & useDrag
@@ -21,50 +15,63 @@ A pair of hooks to help you manage data transfer between drag and drop
 
 ## Examples
 
-### Default Usage
+### Basic Usage
 
 <code src="./demo/demo1.tsx" />
 
 ## API
 
+### useDrag
+
 ```typescript
-const getDragProps = useDrag({ onDragStart, onDragEnd });
-
-<div {...getDragProps(id)}>draggable</div>
-
-const [ props, { isHovering } ] = useDrop({
-  onText: (text: string, e: Event) => void,
-  onFiles: (files: File[], e: Event) => void,
-  onUri: (uri: string, e: Event) => void,
-  onDom: (content: any, e: Event) => void
-});
+useDrag<T>(
+  data: any,
+  target: (() => Element) | Element | MutableRefObject<Element>,
+  options?: DragOptions
+);
 ```
 
-### useDrag Result
+#### Params
 
-| Property     | Description                                                                                  | Type                      |
-|--------------|----------------------------------------------------------------------------------------------|---------------------------|
-| getDragProps | A function that accept a content as dragging values and return props passed to a dom element | `(content: any) => props` |
+| Property | Description        | Type                                                        | Default |
+| -------- | ------------------ | ----------------------------------------------------------- | ------- |
+| data     | Drag data          | `any`                                                       | -       |
+| target   | DOM element or ref | `() => Element` \| `Element` \| `MutableRefObject<Element>` | -       |
+| options  | More config        | `DragOptions`                                               | -       |
 
-### useDrop Result
+#### DragOptions
 
-| Property   | Description                                             | Type      |
-|------------|---------------------------------------------------------|-----------|
-| props      | Props passed to the drop area                           | -         |
-| isHovering | Whether the dragging element is on top of the drop area | `boolean` |
+| Property    | Description            | Type                           | Default |
+| ----------- | ---------------------- | ------------------------------ | ------- |
+| onDragStart | On drag start callback | `(e: React.DragEvent) => void` | -       |
+| onDragEnd   | On drag end callback   | `(e: React.DragEvent) => void` | -       |
 
-### useDrag Params
+### useDrop
 
-| 参数        | 说明                                    | 类型                            | 默认值 |
-|-------------|-----------------------------------------|---------------------------------|--------|
-| onDragStart | The callback when a dragging is started | `(data: any, e: Event) => void` | -      |
-| onDragEnd   | The callback when a dragging is ended   | `(data: any, e: Event) => void` | -      |
+```typescript
+useDrop<T>(
+  target: (() => Element) | Element | MutableRefObject<Element>,
+  options?: DropOptions
+);
+```
 
-### useDrop Params
+#### Params
 
-| Property | Description                         | Type                                | Default |
-|----------|-------------------------------------|-------------------------------------|---------|
-| onText   | The callback when text is dropped   | `(text: string, e: Event) => void`  | -       |
-| onFiles  | The callback when files are dropped | `(files: File[], e: Event) => void` | -       |
-| onUri    | The callback when a uri is dropped  | `(text: string, e: Event) => void`  | -       |
-| onDom    | The callback when a dom is dropped  | `(content: any, e: Event) => void`  | -       |
+| Property | Description        | Type                                                        | Default |
+| -------- | ------------------ | ----------------------------------------------------------- | ------- |
+| target   | DOM element or ref | `() => Element` \| `Element` \| `MutableRefObject<Element>` | -       |
+| options  | More config        | `DropOptions`                                               | -       |
+
+#### DropOptions
+
+| Property    | Description                                 | Type                                          | Default |
+| ----------- | ------------------------------------------- | --------------------------------------------- | ------- |
+| onText      | The callback when text is dropped or pasted | `(text: string, e: React.DragEvent) => void`  | -       |
+| onFiles     | The callback when file is dropped or pasted | `(files: File[], e: React.DragEvent) => void` | -       |
+| onUri       | The callback when uri is dropped or pasted  | `(text: string, e: React.DragEvent) => void`  | -       |
+| onDom       | The callback when DOM is dropped or pasted  | `(content: any, e: React.DragEvent) => void`  | -       |
+| onDrop      | The callback when any is dropped            | `(e: React.DragEvent) => void`                | -       |
+| onPaste     | The callback when any is pasted             | `(e: React.DragEvent) => void`                | -       |
+| onDragEnter | On drag enter callback                      | `(e: React.DragEvent) => void`                | -       |
+| onDragOver  | On drag over callback                       | `(e: React.DragEvent) => void`                | -       |
+| onDragLeave | On drag leave callback                      | `(e: React.DragEvent) => void`                | -       |

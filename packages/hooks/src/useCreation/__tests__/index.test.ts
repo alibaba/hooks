@@ -3,10 +3,6 @@ import { useState } from 'react';
 import useCreation from '../index';
 
 describe('useCreation', () => {
-  it('should be defined', () => {
-    expect(useCreation).toBeDefined();
-  });
-
   class Foo {
     constructor() {
       this.data = Math.random();

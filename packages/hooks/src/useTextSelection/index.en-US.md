@@ -1,11 +1,6 @@
 ---
-title: useTextSelection
 nav:
-  title: Hooks
   path: /hooks
-group:
-  title: Dom
-  path: /dom
 ---
 
 # useTextSelection
@@ -18,7 +13,7 @@ Tracking content, size, position of user text selection.
 
 <code src="./demo/demo1.tsx" />
 
-### Listen specified area
+### Listen for specified area
 
 <code src="./demo/demo3.tsx" />
 
@@ -29,25 +24,25 @@ Tracking content, size, position of user text selection.
 ## API
 
 ```typescript
-const state = useTextSelection(target);
+const state = useTextSelection(target?);
 ```
 
 ### Params
 
-| Property | Description               | Type | Default  |
-|----------|---------------------------|------|----------|
-| target   | DOM element or Ref Object | `HTMLElement` \| `(() => HTMLElement)` \| `React.MutableRefObject` \| `Document` | `document` |
+| Property | Description        | Type                                                                                 | Default    |
+| -------- | ------------------ | ------------------------------------------------------------------------------------ | ---------- |
+| target   | DOM element or ref | `Element` \| `Document` \| `(() => Element\Document)` \| `MutableRefObject<Element>` | `document` |
 
 ### Result
 
-| Property | Description                                    | Type                     |
-|----------|------------------------------------------------|--------------------------|
-| state    | content, size, position of user text selection | detail as follow State |
+| Property | Description                                    | Type    |
+| -------- | ---------------------------------------------- | ------- |
+| state    | Content, size, position of user text selection | `State` |
 
 ### State
 
-| Property | Description                         | Type   |
-|----------|-------------------------------------|--------|
+| Property | Description                         | Type     |
+| -------- | ----------------------------------- | -------- |
 | text     | Selected text                       | `string` |
 | left     | The left coordinate value of text   | `number` |
 | right    | The right coordinate value of text  | `number` |

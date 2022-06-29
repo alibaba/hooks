@@ -1,17 +1,11 @@
 ---
-title: useMount
 nav:
-  title: Hooks
   path: /hooks
-group:
-  title: LifeCycle
-  path: /life-cycle
-  order: 9
 ---
 
 # useMount
 
-A hook that executes a function at mount.
+A hook that executes a function after the component is mounted.
 
 ## Examples
 
@@ -27,6 +21,6 @@ useMount(fn: () => void);
 
 ### Params
 
-| Property | Description                      | Type         | Default |
-|----------|----------------------------------|--------------|---------|
-| fn       | the function need to be executed | `() => void` | -       |
+| Property | Description                 | Type         | Default |
+| -------- | --------------------------- | ------------ | ------- |
+| fn       | The function to be executed | `() => void` | -       |

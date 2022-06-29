@@ -1,71 +1,84 @@
-import { useState, useCallback } from 'react';
+/* eslint-disable no-empty */
+import { useState } from 'react';
+import useMemoizedFn from '../useMemoizedFn';
 import useUpdateEffect from '../useUpdateEffect';
+import { isFunction, isUndef } from '../utils';
 
 export interface IFuncUpdater<T> {
   (previousState?: T): T;
 }
-
 export interface IFuncStorage {
   (): Storage;
 }
 
-export type StorageStateResult<T> = [T | undefined, (value?: T | IFuncUpdater<T>) => void];
-
-function isFunction<T>(obj: any): obj is T {
-  return typeof obj === 'function';
+export interface Options<T> {
+  serializer?: (value: T) => string;
+  deserializer?: (value: string) => T;
+  defaultValue?: T | IFuncUpdater<T>;
 }
 
-export function createUseStorageState(nullishStorage: Storage | null) {
-  function useStorageState<T>(
-    key: string,
-    defaultValue?: T | IFuncUpdater<T>,
-  ): StorageStateResult<T> {
-    const storage = nullishStorage as Storage;
-    const [state, setState] = useState<T | undefined>(() => getStoredValue());
+export function createUseStorageState(getStorage: () => Storage | undefined) {
+  function useStorageState<T>(key: string, options?: Options<T>) {
+    let storage: Storage | undefined;
+
+    // https://github.com/alibaba/hooks/issues/800
+    try {
+      storage = getStorage();
+    } catch (err) {
+      console.error(err);
+    }
+
+    const serializer = (value: T) => {
+      if (options?.serializer) {
+        return options?.serializer(value);
+      }
+      return JSON.stringify(value);
+    };
+
+    const deserializer = (value: string) => {
+      if (options?.deserializer) {
+        return options?.deserializer(value);
+      }
+      return JSON.parse(value);
+    };
+
+    function getStoredValue() {
+      try {
+        const raw = storage?.getItem(key);
+        if (raw) {
+          return deserializer(raw);
+        }
+      } catch (e) {
+        console.error(e);
+      }
+      if (isFunction(options?.defaultValue)) {
+        return options?.defaultValue();
+      }
+      return options?.defaultValue;
+    }
+
+    const [state, setState] = useState<T>(() => getStoredValue());
+
     useUpdateEffect(() => {
       setState(getStoredValue());
     }, [key]);
 
-    function getStoredValue() {
-      const raw = storage.getItem(key);
-      if (raw) {
+    const updateState = (value: T | IFuncUpdater<T>) => {
+      const currentState = isFunction(value) ? value(state) : value;
+      setState(currentState);
+
+      if (isUndef(currentState)) {
+        storage?.removeItem(key);
+      } else {
         try {
-          return JSON.parse(raw);
-        } catch (e) {}
-      }
-      if (isFunction<IFuncUpdater<T>>(defaultValue)) {
-        return defaultValue();
-      }
-      return defaultValue;
-    }
-
-    const updateState = useCallback(
-      (value?: T | IFuncUpdater<T>) => {
-        if (typeof value === 'undefined') {
-          storage.removeItem(key);
-          setState(undefined);
-        } else if (isFunction<IFuncUpdater<T>>(value)) {
-          const previousState = getStoredValue();
-          const currentState = value(previousState);
-          storage.setItem(key, JSON.stringify(currentState));
-          setState(currentState);
-        } else {
-          storage.setItem(key, JSON.stringify(value));
-          setState(value);
+          storage?.setItem(key, serializer(currentState));
+        } catch (e) {
+          console.error(e);
         }
-      },
-      [key],
-    );
+      }
+    };
 
-    return [state, updateState];
-  }
-  if (!nullishStorage) {
-    return function (_: string, defaultValue: any) {
-      return [
-        isFunction<IFuncUpdater<any>>(defaultValue) ? defaultValue() : defaultValue,
-        () => {},
-      ];
-    } as typeof useStorageState;
+    return [state, useMemoizedFn(updateState)] as const;
   }
   return useStorageState;
 }

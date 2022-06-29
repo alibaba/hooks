@@ -1,16 +1,11 @@
 ---
-title: useUpdate
 nav:
-  title: Hooks
   path: /hooks
-group:
-  title: LifeCycle
-  path: /life-cycle
 ---
 
 # useUpdate
 
-A hook that executes a function at update.
+A hook that returns a function which can be used to force the component to re-render.
 
 ## Examples
 

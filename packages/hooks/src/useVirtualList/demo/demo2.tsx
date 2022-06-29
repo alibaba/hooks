@@ -1,23 +1,28 @@
 /**
  * title: Dynamic item height
- * desc: specify item height dynamically.
+ * desc: Specify item height dynamically.
  *
  * title.zh-CN: 动态元素高度
  * desc.zh-CN: 动态指定每个元素的高度
  */
 
-import React from 'react';
+import React, { useMemo, useRef } from 'react';
 import { useVirtualList } from 'ahooks';
 
 export default () => {
+  const containerRef = useRef(null);
+  const wrapperRef = useRef(null);
+
+  const originalList = useMemo(() => Array.from(Array(99999).keys()), []);
+
   const [value, onChange] = React.useState<number>(0);
-  const { list, containerProps, wrapperProps, scrollTo } = useVirtualList(
-    Array.from(Array(99999).keys()),
-    {
-      itemHeight: (i) => (i % 2 === 0 ? 42 + 8 : 84 + 8),
-      overscan: 10,
-    },
-  );
+
+  const [list, scrollTo] = useVirtualList(originalList, {
+    containerTarget: containerRef,
+    wrapperTarget: wrapperRef,
+    itemHeight: (i) => (i % 2 === 0 ? 42 + 8 : 84 + 8),
+    overscan: 10,
+  });
 
   return (
     <div>
@@ -39,8 +44,8 @@ export default () => {
           scroll to
         </button>
       </div>
-      <div {...containerProps} style={{ height: '300px', overflow: 'auto' }}>
-        <div {...wrapperProps}>
+      <div ref={containerRef} style={{ height: '300px', overflow: 'auto' }}>
+        <div ref={wrapperRef}>
           {list.map((ele) => (
             <div
               style={{

@@ -1,37 +1,42 @@
-import { useEffect, useRef } from 'react';
-import { BasicTarget, getTargetElement } from '../utils/dom';
+import useLatest from '../useLatest';
+import type { BasicTarget } from '../utils/domTarget';
+import { getTargetElement } from '../utils/domTarget';
+import getDocumentOrShadow from '../utils/getDocumentOrShadow';
+import useEffectWithTarget from '../utils/useEffectWithTarget';
 
-// 鼠标点击事件，click 不会监听右键
-const defaultEvent = 'click';
-
-type EventType = MouseEvent | TouchEvent;
-
-export default function useClickAway(
-  onClickAway: (event: EventType) => void,
+export default function useClickAway<T extends Event = Event>(
+  onClickAway: (event: T) => void,
   target: BasicTarget | BasicTarget[],
-  eventName: string = defaultEvent,
+  eventName: string | string[] = 'click',
 ) {
-  const onClickAwayRef = useRef(onClickAway);
-  onClickAwayRef.current = onClickAway;
+  const onClickAwayRef = useLatest(onClickAway);
 
-  useEffect(() => {
-    const handler = (event: any) => {
-      const targets = Array.isArray(target) ? target : [target];
-      if (
-        targets.some((targetItem) => {
-          const targetElement = getTargetElement(targetItem) as HTMLElement;
-          return !targetElement || targetElement?.contains(event.target);
-        })
-      ) {
-        return;
-      }
-      onClickAwayRef.current(event);
-    };
+  useEffectWithTarget(
+    () => {
+      const handler = (event: any) => {
+        const targets = Array.isArray(target) ? target : [target];
+        if (
+          targets.some((item) => {
+            const targetElement = getTargetElement(item);
+            return !targetElement || targetElement.contains(event.target);
+          })
+        ) {
+          return;
+        }
+        onClickAwayRef.current(event);
+      };
 
-    document.addEventListener(eventName, handler);
+      const documentOrShadow = getDocumentOrShadow(target);
 
-    return () => {
-      document.removeEventListener(eventName, handler);
-    };
-  }, [target, eventName]);
+      const eventNames = Array.isArray(eventName) ? eventName : [eventName];
+
+      eventNames.forEach((event) => documentOrShadow.addEventListener(event, handler));
+
+      return () => {
+        eventNames.forEach((event) => documentOrShadow.removeEventListener(event, handler));
+      };
+    },
+    Array.isArray(eventName) ? eventName : [eventName],
+    target,
+  );
 }

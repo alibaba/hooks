@@ -1,36 +1,25 @@
-import { Field } from './index';
-
-export interface Store {
-  [name: string]: any;
-}
-interface UseAntdTableFormUtils {
-  getFieldInstance?: (name: string) => {}; // antd 3
-  setFieldsValue: (value: Store) => void;
-  getFieldsValue: (...args: any) => Store;
-  resetFields: (...args: any) => void;
-  validateFields: () => Promise<any>;
-  [key: string]: any;
-}
+import type { AntdFormUtils } from '../useAntdTable/types';
+import type { Field } from './types';
 
 export const fieldAdapter = (field: Field) =>
   ({
     getFieldInstance: (name: string) => field.getNames().includes(name),
     setFieldsValue: field.setValues,
     getFieldsValue: field.getValues,
-    resetFields: field.reset,
+    resetFields: field.resetToDefault,
     validateFields: (fields, callback) => {
-      field.validate(callback);
+      field.validate(fields, callback);
     },
-  } as UseAntdTableFormUtils);
+  } as AntdFormUtils);
 
 export const resultAdapter = (result: any) => {
   const tableProps = {
     dataSource: result.tableProps.dataSource,
     loading: result.tableProps.loading,
-    onSort: (dataIndex: String, order: String) => {
+    onSort: (dataIndex: string, order: string) => {
       result.tableProps.onChange(
         { current: result.pagination.current, pageSize: result.pagination.pageSize },
-        result.filters,
+        result.params[0]?.filters,
         {
           field: dataIndex,
           order,
@@ -41,7 +30,7 @@ export const resultAdapter = (result: any) => {
       result.tableProps.onChange(
         { current: result.pagination.current, pageSize: result.pagination.pageSize },
         filterParams,
-        result.sorter,
+        result.params[0]?.sorter,
       );
     },
   };

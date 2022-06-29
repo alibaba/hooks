@@ -1,38 +1,40 @@
-import { useState, useLayoutEffect } from 'react';
 import ResizeObserver from 'resize-observer-polyfill';
-import { getTargetElement, BasicTarget } from '../utils/dom';
+import useRafState from '../useRafState';
+import type { BasicTarget } from '../utils/domTarget';
+import { getTargetElement } from '../utils/domTarget';
+import useIsomorphicLayoutEffectWithTarget from '../utils/useIsomorphicLayoutEffectWithTarget';
 
-type Size = { width?: number; height?: number };
+type Size = { width: number; height: number };
 
-function useSize(target: BasicTarget): Size {
-  const [state, setState] = useState<Size>(() => {
-    const el = getTargetElement(target);
-    return {
-      width: ((el || {}) as HTMLElement).clientWidth,
-      height: ((el || {}) as HTMLElement).clientHeight,
-    };
-  });
+function useSize(target: BasicTarget): Size | undefined {
+  const [state, setState] = useRafState<Size>();
 
-  useLayoutEffect(() => {
-    const el = getTargetElement(target);
-    if (!el) {
-      return () => {};
-    }
+  useIsomorphicLayoutEffectWithTarget(
+    () => {
+      const el = getTargetElement(target);
 
-    const resizeObserver = new ResizeObserver((entries) => {
-      entries.forEach((entry) => {
-        setState({
-          width: entry.target.clientWidth,
-          height: entry.target.clientHeight,
+      if (!el) {
+        return;
+      }
+
+      const resizeObserver = new ResizeObserver((entries) => {
+        entries.forEach((entry) => {
+          const { clientWidth, clientHeight } = entry.target;
+          setState({
+            width: clientWidth,
+            height: clientHeight,
+          });
         });
       });
-    });
 
-    resizeObserver.observe(el as HTMLElement);
-    return () => {
-      resizeObserver.disconnect();
-    };
-  }, [target]);
+      resizeObserver.observe(el);
+      return () => {
+        resizeObserver.disconnect();
+      };
+    },
+    [],
+    target,
+  );
 
   return state;
 }

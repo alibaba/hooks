@@ -1,16 +1,11 @@
 ---
-title: useDebounceFn
 nav:
-  title: Hooks
   path: /hooks
-group:
-  title: SideEffect
-  path: /side-effect
 ---
 
 # useDebounceFn
 
-A hook that handle the debounce function.
+A hook that deal with the debounced function.
 
 ## Examples
 
@@ -20,10 +15,11 @@ A hook that handle the debounce function.
 
 ## API
 
-```javascript
+```typescript
 const {
   run,
-  cancel
+  cancel,
+  flush
 } = useDebounceFn(
   fn: (...args: any[]) => any,
   options?: Options
@@ -32,23 +28,24 @@ const {
 
 ### Params
 
-| Property | Description                                                  | Type                      | Default |
-|----------|--------------------------------------------------------------|---------------------------|---------|
-| fn       | The function to debounce.                                    | `(...args: any[]) => any` | -       |
-| options  | Config the debounce behavior. See the Options section below. | `Options`                 | `{}`    |
+| Property | Description                        | Type                      | Default |
+| -------- | ---------------------------------- | ------------------------- | ------- |
+| fn       | The function to debounce.          | `(...args: any[]) => any` | -       |
+| options  | Config for the debounce behaviors. | `Options`                 | -       |
 
 ### Options
 
-| Property | Description                                           | Type      | Default |
-|----------|-------------------------------------------------------|-----------|---------|
-| wait     | The number of milliseconds to delay.                  | `number`  | `1000`  |
-| leading  | Specify invoking on the leading edge of the timeout.  | `boolean` | `false` |
-| trailing | Specify invoking on the trailing edge of the timeout. | `boolean` | `true`  |
+| Property | Description                                                         | Type      | Default |
+| -------- | ------------------------------------------------------------------- | --------- | ------- |
+| wait     | The number of milliseconds to delay.                                | `number`  | `1000`  |
+| leading  | Specify invoking on the leading edge of the timeout.                | `boolean` | `false` |
+| trailing | Specify invoking on the trailing edge of the timeout.               | `boolean` | `true`  |
+| maxWait  | The maximum time func is allowed to be delayed before it’s invoked. | `number`  | -       |
 
 ### Result
 
-| Property | Description                               | Type         |
-|----------|-------------------------------------------|--------------|
-| run      | trigger fn, parameters will be send to fn | `(...args: any[]) => any` |
-| cancel   | cancel current debounce                   | `() => void` |
-| flush    | immediately invoke current debounce       | `() => void` |
+| Property | Description                                            | Type                      |
+| -------- | ------------------------------------------------------ | ------------------------- |
+| run      | Invode and pass parameters to fn.                      | `(...args: any[]) => any` |
+| cancel   | Cancel the invocation of currently debounced function. | `() => void`              |
+| flush    | Immediately invoke currently debounced function.       | `() => void`              |
