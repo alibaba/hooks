@@ -1,5 +1,5 @@
 import { act, renderHook } from '@testing-library/react-hooks';
-import { IFuncUpdater, createUseStorageState } from '../index';
+import { createUseStorageState } from '../index';
 
 class TestStorage implements Storage {
   [name: string]: any;
@@ -42,7 +42,7 @@ class TestStorage implements Storage {
 
 interface StorageStateProps<T> {
   key: string;
-  defaultValue?: T | IFuncUpdater<T>;
+  defaultValue?: T | (() => T);
 }
 
 describe('useStorageState', () => {

@@ -4,9 +4,6 @@ import useMemoizedFn from '../useMemoizedFn';
 import useUpdateEffect from '../useUpdateEffect';
 import { isFunction, isUndef } from '../utils';
 
-export interface IFuncUpdater<T> {
-  (previousState?: T): T;
-}
 export interface IFuncStorage {
   (): Storage;
 }
@@ -14,7 +11,7 @@ export interface IFuncStorage {
 export interface Options<T> {
   serializer?: (value: T) => string;
   deserializer?: (value: string) => T;
-  defaultValue?: T | IFuncUpdater<T>;
+  defaultValue?: T | (() => T);
 }
 
 export function createUseStorageState(getStorage: () => Storage | undefined) {
@@ -30,14 +27,14 @@ export function createUseStorageState(getStorage: () => Storage | undefined) {
 
     const serializer = (value: T) => {
       if (options?.serializer) {
-        return options?.serializer(value);
+        return options.serializer(value);
       }
       return JSON.stringify(value);
     };
 
     const deserializer = (value: string) => {
       if (options?.deserializer) {
-        return options?.deserializer(value);
+        return options.deserializer(value);
       }
       return JSON.parse(value);
     };
@@ -52,7 +49,7 @@ export function createUseStorageState(getStorage: () => Storage | undefined) {
         console.error(e);
       }
       if (isFunction(options?.defaultValue)) {
-        return options?.defaultValue();
+        return options!.defaultValue();
       }
       return options?.defaultValue;
     }
@@ -63,7 +60,7 @@ export function createUseStorageState(getStorage: () => Storage | undefined) {
       setState(getStoredValue());
     }, [key]);
 
-    const updateState = (value: T | IFuncUpdater<T>) => {
+    const updateState = (value: T | ((previousState: T) => T)) => {
       const currentState = isFunction(value) ? value(state) : value;
       setState(currentState);
 
