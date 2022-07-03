@@ -23,7 +23,7 @@ A Hook that store state into localStorage.
 
 ## API
 
-If you want to delete this record from localStorage, you can use `setState()` or `setState(undefined)`.
+If you want to delete this record from localStorage, you can use `setState(undefined)`.
 
 ```typescript
 interface Options<T> {
@@ -35,7 +35,7 @@ interface Options<T> {
 const [state, setState] = useLocalStorageState<T>(
   key: string,
   options: Options<T>
-): [T?, (value?: T | ((previousState: T) => T)) => void];
+): [T, (value: T | ((previousState: T) => T)) => void];
 ```
 
 ### Options

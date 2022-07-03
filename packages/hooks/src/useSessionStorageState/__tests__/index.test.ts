@@ -43,4 +43,14 @@ describe('useSessionStorageState', () => {
     });
     expect(hook.result.current.state).toEqual('hello world, zhangsan');
   });
+
+  it('should support clear the state', () => {
+    const LOCAL_STORAGE_KEY = 'test-clear-state';
+    const hook = setUp<string | undefined>(LOCAL_STORAGE_KEY, 'hello world');
+    expect(hook.result.current.state).toEqual('hello world');
+    act(() => {
+      hook.result.current.setState(undefined);
+    });
+    expect(hook.result.current.state).toEqual(undefined);
+  });
 });

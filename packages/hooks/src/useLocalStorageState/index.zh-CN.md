@@ -23,7 +23,7 @@ nav:
 
 ## API
 
-如果想从 localStorage 中删除这条数据，可以使用 `setState()` 或 `setState(undefined)` 。
+如果想从 localStorage 中删除这条数据，可以使用 `setState(undefined)` 。
 
 ```typescript
 interface Options<T> {
@@ -35,7 +35,7 @@ interface Options<T> {
 const [state, setState] = useLocalStorageState<T>(
   key: string,
   options: Options<T>
-): [T?, (value?: T | ((previousState: T) => T)) => void];
+): [T, (value: T | ((previousState: T) => T)) => void];
 ```
 
 ### Options
