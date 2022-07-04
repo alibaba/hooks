@@ -68,8 +68,7 @@ const useVirtualList = <T = any>(list: T[], options: Options<T>) => {
     }
     const height = list
       .slice(0, index)
-      // @ts-ignore
-      .reduce((sum, _, i) => sum + itemHeightRef.current(i, list[i]), 0);
+      .reduce((sum, _, i) => sum + (itemHeightRef.current as Function)(i, list[i]), 0);
     return height;
   };
 
@@ -77,13 +76,15 @@ const useVirtualList = <T = any>(list: T[], options: Options<T>) => {
     if (isNumber(itemHeightRef.current)) {
       return list.length * itemHeightRef.current;
     }
-    // @ts-ignore
-    return list.reduce((sum, _, index) => sum + itemHeightRef.current(index, list[index]), 0);
+    return list.reduce(
+      (sum, _, index) => sum + (itemHeightRef.current as Function)(index, list[index]),
+      0,
+    );
   }, [list]);
 
   const calculateRange = () => {
     const container = getTargetElement(containerTarget);
-    const wrapper = getTargetElement(wrapperTarget);
+    const wrapper = getTargetElement(wrapperTarget) as HTMLElement;
 
     if (container && wrapper) {
       const { scrollTop, clientHeight } = container;
@@ -96,9 +97,7 @@ const useVirtualList = <T = any>(list: T[], options: Options<T>) => {
 
       const offsetTop = getDistanceTop(start);
 
-      // @ts-ignore
       wrapper.style.height = totalHeight - offsetTop + 'px';
-      // @ts-ignore
       wrapper.style.marginTop = offsetTop + 'px';
 
       setTargetList(
