@@ -121,6 +121,7 @@ const {
   loading: boolean,
   data?: TData,
   error?: Error,
+  isPolling: boolean,
   params: TParams || [],
   run: (...params: TParams) => void,
   runAsync: (...params: TParams) => Promise<TData>,
