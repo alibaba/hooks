@@ -8,6 +8,7 @@ export type Subscribe = () => void;
 // for Fetch
 
 export interface FetchState<TData, TParams extends any[]> {
+  isPolling: boolean;
   loading: boolean;
   params?: TParams;
   data?: TData;
@@ -109,6 +110,7 @@ export type Plugin<TData, TParams extends any[]> = {
 // };
 
 export interface Result<TData, TParams extends any[]> {
+  isPolling: boolean;
   loading: boolean;
   data?: TData;
   error?: Error;

@@ -53,6 +53,7 @@ function useRequestImplement<TData, TParams extends any[]>(
 
   return {
     loading: fetchInstance.state.loading,
+    isPolling: fetchInstance.state.isPolling,
     data: fetchInstance.state.data,
     error: fetchInstance.state.error,
     params: fetchInstance.state.params || [],
