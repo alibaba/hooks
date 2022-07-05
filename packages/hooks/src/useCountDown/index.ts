@@ -2,9 +2,10 @@ import dayjs from 'dayjs';
 import { useEffect, useMemo, useState } from 'react';
 import useLatest from '../useLatest';
 
-export type TDate = Date | number | string | undefined;
+export type TDate = dayjs.ConfigType;
 
 export type Options = {
+  leftTime?: number;
   targetDate?: TDate;
   interval?: number;
   onEnd?: () => void;
@@ -23,7 +24,18 @@ const calcLeft = (t?: TDate) => {
     return 0;
   }
   // https://stackoverflow.com/questions/4310953/invalid-date-in-safari
-  const left = dayjs(t).valueOf() - new Date().getTime();
+  const left = dayjs(t).valueOf() - Date.now();
+  if (left < 0) {
+    return 0;
+  }
+  return left;
+};
+
+const calcLeftTime = (t?: number, interval: number = 0): number => {
+  if (!t) {
+    return 0;
+  }
+  const left = t - interval;
   if (left < 0) {
     return 0;
   }
@@ -32,46 +44,60 @@ const calcLeft = (t?: TDate) => {
 
 const parseMs = (milliseconds: number): FormattedRes => {
   return {
-    days: Math.floor(milliseconds / 86400000),
-    hours: Math.floor(milliseconds / 3600000) % 24,
-    minutes: Math.floor(milliseconds / 60000) % 60,
-    seconds: Math.floor(milliseconds / 1000) % 60,
-    milliseconds: Math.floor(milliseconds) % 1000,
+    days: (milliseconds / 86400000) >>> 0,
+    hours: ((milliseconds / 3600000) >>> 0) % 24,
+    minutes: ((milliseconds / 60000) >>> 0) % 60,
+    seconds: ((milliseconds / 1000) >>> 0) % 60,
+    milliseconds: (milliseconds >>> 0) % 1000,
   };
 };
 
 const useCountdown = (options?: Options) => {
-  const { targetDate, interval = 1000, onEnd } = options || {};
+  const { leftTime, targetDate, interval = 1000, onEnd } = options || {};
 
-  const [timeLeft, setTimeLeft] = useState(() => calcLeft(targetDate));
+  const [timeLeft, setTimeLeft] = useState(() => {
+    return leftTime ? calcLeftTime(leftTime) : calcLeft(targetDate);
+  });
 
   const onEndRef = useLatest(onEnd);
 
   useEffect(() => {
-    if (!targetDate) {
+    if (!targetDate && !leftTime) {
       // for stop
       setTimeLeft(0);
       return;
     }
 
-    // 立即执行一次
-    setTimeLeft(calcLeft(targetDate));
+    if (leftTime) {
+      // 有 leftTime，以 leftTime 为主
+      setTimeLeft(calcLeftTime(leftTime)); // 先执行一次
+      const timer = setInterval(() => {
+        setTimeLeft((target) => {
+          const targetLeft = calcLeftTime(target, interval);
+          if (targetLeft === 0) {
+            clearInterval(timer);
+            onEndRef.current?.();
+          }
+          return targetLeft;
+        });
+      }, interval);
+      return () => clearInterval(timer);
+    } else {
+      // 没有 leftTime，以 targetDate 为主
+      setTimeLeft(calcLeft(targetDate)); // 先执行一次
+      const timer = setInterval(() => {
+        const targetLeft = calcLeft(targetDate);
+        setTimeLeft(targetLeft);
+        if (targetLeft === 0) {
+          clearInterval(timer);
+          onEndRef.current?.();
+        }
+      }, interval);
+      return () => clearInterval(timer);
+    }
+  }, [leftTime, targetDate, interval]);
 
-    const timer = setInterval(() => {
-      const targetLeft = calcLeft(targetDate);
-      setTimeLeft(targetLeft);
-      if (targetLeft === 0) {
-        clearInterval(timer);
-        onEndRef.current?.();
-      }
-    }, interval);
-
-    return () => clearInterval(timer);
-  }, [targetDate, interval]);
-
-  const formattedRes = useMemo(() => {
-    return parseMs(timeLeft);
-  }, [timeLeft]);
+  const formattedRes = useMemo(() => parseMs(timeLeft), [timeLeft]);
 
   return [timeLeft, formattedRes] as const;
 };
