@@ -40,12 +40,11 @@ const { data, run, cancel } = useRequest(getUsername, {
 
 ### Return
 
-| 参数      | 说明                 | 类型                                     |
-| --------- | -------------------- | ---------------------------------------- |
-| run       | 启动轮询             | `(...params: TParams) => void`           |
-| runAsync  | 启动轮询             | `(...params: TParams) => Promise<TData>` |
-| cancel    | 停止轮询             | `() => void`                             |
-| isPolling | service 是否正在轮询 | `boolean`                                |
+| 参数     | 说明     | 类型                                     |
+| -------- | -------- | ---------------------------------------- |
+| run      | 启动轮询 | `(...params: TParams) => void`           |
+| runAsync | 启动轮询 | `(...params: TParams) => Promise<TData>` |
+| cancel   | 停止轮询 | `() => void`                             |
 
 ### Options
 

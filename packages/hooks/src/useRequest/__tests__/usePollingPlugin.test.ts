@@ -23,7 +23,6 @@ describe('usePollingPlugin', () => {
       );
     });
     expect(hook.result.current.loading).toEqual(true);
-    expect(hook.result.current.isPolling).toEqual(true);
 
     act(() => {
       jest.runAllTimers();
@@ -48,18 +47,15 @@ describe('usePollingPlugin', () => {
     act(() => {
       hook.result.current.cancel();
     });
-    expect(hook.result.current.isPolling).toEqual(false);
 
     act(() => {
       jest.runAllTimers();
     });
     expect(callback).toHaveBeenCalledTimes(3);
-    expect(hook.result.current.isPolling).toEqual(false);
 
     act(() => {
       hook.result.current.run();
     });
-    expect(hook.result.current.isPolling).toEqual(true);
     act(() => {
       jest.runAllTimers();
     });
@@ -91,7 +87,6 @@ describe('usePollingPlugin', () => {
     });
 
     expect(hook2.result.current.loading).toEqual(true);
-    expect(hook2.result.current.isPolling).toEqual(true);
     expect(errorCallback).toHaveBeenCalledTimes(0);
 
     act(() => {
@@ -118,7 +113,6 @@ describe('usePollingPlugin', () => {
     });
     await hook2.waitForNextUpdate();
     expect(errorCallback).toHaveBeenCalledTimes(4);
-    expect(hook2.result.current.isPolling).toEqual(false);
 
     act(() => {
       jest.runAllTimers();
@@ -128,7 +122,6 @@ describe('usePollingPlugin', () => {
     act(() => {
       hook2.result.current.run();
     });
-    expect(hook2.result.current.isPolling).toEqual(true);
     act(() => {
       jest.runAllTimers();
     });

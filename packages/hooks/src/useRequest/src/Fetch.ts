@@ -8,7 +8,6 @@ export default class Fetch<TData, TParams extends any[]> {
   count: number = 0;
 
   state: FetchState<TData, TParams> = {
-    isPolling: false,
     loading: false,
     params: undefined,
     data: undefined,
@@ -59,7 +58,6 @@ export default class Fetch<TData, TParams extends any[]> {
 
     this.setState({
       loading: true,
-      isPolling: !!this.options.pollingInterval,
       params,
       ...state,
     });
@@ -100,10 +98,7 @@ export default class Fetch<TData, TParams extends any[]> {
       this.options.onFinally?.(params, res, undefined);
 
       if (currentCount === this.count) {
-        const { isStopPolling } = this.runPluginHandler('onFinally', params, res, undefined) || {};
-        this.setState({
-          isPolling: !!this.options.pollingInterval && !isStopPolling,
-        });
+        this.runPluginHandler('onFinally', params, res, undefined);
       }
 
       return res;
@@ -124,11 +119,7 @@ export default class Fetch<TData, TParams extends any[]> {
       this.options.onFinally?.(params, undefined, error);
 
       if (currentCount === this.count) {
-        const { isStopPolling } =
-          this.runPluginHandler('onFinally', params, undefined, error) || {};
-        this.setState({
-          isPolling: !!this.options.pollingInterval && !isStopPolling,
-        });
+        this.runPluginHandler('onFinally', params, undefined, error);
       }
 
       throw error;
@@ -147,7 +138,6 @@ export default class Fetch<TData, TParams extends any[]> {
     this.count += 1;
     this.setState({
       loading: false,
-      isPolling: false,
     });
 
     this.runPluginHandler('onCancel');
