@@ -1,17 +1,32 @@
 import { act, renderHook } from '@testing-library/react-hooks';
-import useCountDown, { TDate, Options } from '../index';
+import useCountDown from '../index';
+import type { Options } from '../index';
 
 // https://github.com/facebook/jest/issues/2234
 jest.spyOn(Date, 'now').mockImplementation(() => 1479427200000);
 
-const setup = (_targetDate?: TDate, _interval?: Options['interval'], onEnd?: Options['onEnd']) =>
-  renderHook(({ targetDate, interval }) => useCountDown({ targetDate, interval, onEnd }), {
-    initialProps: {
-      targetDate: _targetDate,
-      interval: _interval,
-      onEnd,
+const setup = ({
+  _leftTime,
+  _targetDate,
+  _interval,
+  onEnd,
+}: {
+  _leftTime?: Options['leftTime'];
+  _targetDate?: Options['targetDate'];
+  _interval?: Options['interval'];
+  onEnd?: Options['onEnd'];
+} = {}) =>
+  renderHook(
+    ({ leftTime, targetDate, interval }) => useCountDown({ leftTime, targetDate, interval, onEnd }),
+    {
+      initialProps: {
+        leftTime: _leftTime,
+        targetDate: _targetDate,
+        interval: _interval,
+        onEnd,
+      },
     },
-  });
+  );
 
 describe('useCountDown Hooks', () => {
   jest.useFakeTimers();
@@ -31,7 +46,7 @@ describe('useCountDown Hooks', () => {
   });
 
   it('should initialize correctly with correct targetDate', () => {
-    const { result } = setup(Date.now() + 5000, 1000);
+    const { result } = setup({ _targetDate: Date.now() + 5000, _interval: 1000 });
 
     const [count, formattedRes] = result.current;
 
@@ -41,7 +56,9 @@ describe('useCountDown Hooks', () => {
   });
 
   it('should work manually', () => {
-    const { result } = setup(undefined, 1000);
+    const { result } = setup({ _targetDate: undefined, _interval: 1000 });
+
+    const [count, formattedRes] = result.current;
 
     let targetDate: number;
     let hook;
@@ -53,39 +70,43 @@ describe('useCountDown Hooks', () => {
     targetDate = Date.now() + 5000;
     hook.rerender();
 
-    expect(result.current[0]).toBeLessThanOrEqual(5000);
-    expect(result.current[1].seconds).toBeLessThanOrEqual(5);
+    expect(count).toBeLessThanOrEqual(5000);
+    expect(formattedRes.seconds).toBeLessThanOrEqual(5);
 
     jest.advanceTimersByTime(1000);
-    expect(result.current[0]).toBeLessThanOrEqual(4000);
-    expect(result.current[1].seconds).toBeLessThanOrEqual(4);
+    expect(count).toBeLessThanOrEqual(4000);
+    expect(formattedRes.seconds).toBeLessThanOrEqual(4);
 
     jest.advanceTimersByTime(4000);
-    expect(result.current[0]).toEqual(0);
-    expect(result.current[1].seconds).toBe(0);
+    expect(count).toEqual(0);
+    expect(formattedRes.seconds).toBe(0);
 
     jest.advanceTimersByTime(1000);
-    expect(result.current[0]).toEqual(0);
-    expect(result.current[1].seconds).toBe(0);
+    expect(count).toEqual(0);
+    expect(formattedRes.seconds).toBe(0);
   });
 
   it('should work automatically', async () => {
-    const { result } = setup(Date.now() + 5000, 1000);
+    const { result } = setup({ _targetDate: Date.now() + 5000, _interval: 1000 });
 
-    expect(result.current[0]).toBeLessThanOrEqual(5000);
-    expect(result.current[1].seconds).toBeLessThanOrEqual(5);
+    const [count, formattedRes] = result.current;
+
+    expect(count).toBeLessThanOrEqual(5000);
+    expect(formattedRes.seconds).toBeLessThanOrEqual(5);
 
     jest.advanceTimersByTime(1000);
-    expect(result.current[0]).toBeLessThanOrEqual(4000);
-    expect(result.current[1].seconds).toBeLessThanOrEqual(4);
+    expect(count).toBeLessThanOrEqual(4000);
+    expect(formattedRes.seconds).toBeLessThanOrEqual(4);
 
     jest.advanceTimersByTime(4000);
-    expect(result.current[0]).toBeLessThanOrEqual(0);
-    expect(result.current[1].seconds).toEqual(0);
+    expect(count).toBeLessThanOrEqual(0);
+    expect(formattedRes.seconds).toEqual(0);
   });
 
   it('should work stop', async () => {
-    const { result } = setup(Date.now() + 5000, 1000);
+    const { result } = setup({ _targetDate: Date.now() + 5000, _interval: 1000 });
+
+    const [count, formattedRes] = result.current;
 
     let targetDate = undefined;
     let hook;
@@ -94,18 +115,18 @@ describe('useCountDown Hooks', () => {
       hook = renderHook(() => useCountDown({ targetDate: Date.now() + 5000, interval: 1000 }));
     });
 
-    expect(result.current[0]).toBeLessThanOrEqual(5000);
-    expect(result.current[1].seconds).toBeLessThanOrEqual(5);
+    expect(count).toBeLessThanOrEqual(5000);
+    expect(formattedRes.seconds).toBeLessThanOrEqual(5);
 
     jest.advanceTimersByTime(1000);
-    expect(result.current[0]).toBeLessThanOrEqual(4000);
-    expect(result.current[1].seconds).toBeLessThanOrEqual(4);
+    expect(count).toBeLessThanOrEqual(4000);
+    expect(formattedRes.seconds).toBeLessThanOrEqual(4);
 
     targetDate = undefined;
     hook.rerender();
 
-    expect(result.current[0]).toBeLessThanOrEqual(0);
-    expect(result.current[1].seconds).toEqual(0);
+    expect(count).toBeLessThanOrEqual(0);
+    expect(formattedRes.seconds).toEqual(0);
   });
 
   it('it onEnd should work', async () => {
@@ -113,7 +134,7 @@ describe('useCountDown Hooks', () => {
     const onEnd = () => {
       count++;
     };
-    setup(Date.now() + 5000, 1000, onEnd);
+    setup({ _targetDate: Date.now() + 5000, _interval: 1000, onEnd });
     jest.advanceTimersByTime(6000);
     expect(count).toEqual(1);
   });
