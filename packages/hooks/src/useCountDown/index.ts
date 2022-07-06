@@ -19,7 +19,7 @@ export interface FormattedRes {
   milliseconds: number;
 }
 
-const calcLeft = (t?: TDate) => {
+const calcLeftTarget = (t?: TDate) => {
   if (!t) {
     return 0;
   }
@@ -56,7 +56,7 @@ const useCountdown = (options?: Options) => {
   const { leftTime, targetDate, interval = 1000, onEnd } = options || {};
 
   const [timeLeft, setTimeLeft] = useState(() => {
-    return leftTime ? calcLeftTime(leftTime) : calcLeft(targetDate);
+    return leftTime ? calcLeftTime(leftTime) : calcLeftTarget(targetDate);
   });
 
   const onEndRef = useLatest(onEnd);
@@ -67,34 +67,18 @@ const useCountdown = (options?: Options) => {
       setTimeLeft(0);
       return;
     }
-
-    if (leftTime) {
-      // 有 leftTime，以 leftTime 为主
-      setTimeLeft(calcLeftTime(leftTime)); // 先执行一次
-      const timer = setInterval(() => {
-        setTimeLeft((target) => {
-          const targetLeft = calcLeftTime(target, interval);
-          if (targetLeft === 0) {
-            clearInterval(timer);
-            onEndRef.current?.();
-          }
-          return targetLeft;
-        });
-      }, interval);
-      return () => clearInterval(timer);
-    } else {
-      // 没有 leftTime，以 targetDate 为主
-      setTimeLeft(calcLeft(targetDate)); // 先执行一次
-      const timer = setInterval(() => {
-        const targetLeft = calcLeft(targetDate);
-        setTimeLeft(targetLeft);
-        if (targetLeft === 0) {
+    // 有 leftTime 就以 leftTime 为主，没有就以 targetDate 为主
+    setTimeLeft(leftTime ? calcLeftTime(leftTime) : calcLeftTarget(targetDate)); // 先执行一次
+    const timer = setInterval(() => {
+      setTimeLeft((prevState) => {
+        if (prevState === 0) {
           clearInterval(timer);
           onEndRef.current?.();
         }
-      }, interval);
-      return () => clearInterval(timer);
-    }
+        return leftTime ? calcLeftTime(prevState, interval) : calcLeftTarget(targetDate);
+      });
+    }, interval);
+    return () => clearInterval(timer);
   }, [leftTime, targetDate, interval]);
 
   const formattedRes = useMemo(() => parseMs(timeLeft), [timeLeft]);
