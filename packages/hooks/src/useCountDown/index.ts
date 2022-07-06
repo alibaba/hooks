@@ -1,5 +1,5 @@
 import dayjs from 'dayjs';
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useState, useRef } from 'react';
 import useLatest from '../useLatest';
 
 export type TDate = dayjs.ConfigType;
@@ -60,6 +60,7 @@ const useCountdown = (options?: Options) => {
   });
 
   const onEndRef = useLatest(onEnd);
+  const timerRef = useRef<NodeJS.Timer | null>(null);
 
   useEffect(() => {
     if (!targetDate && !leftTime) {
@@ -69,17 +70,24 @@ const useCountdown = (options?: Options) => {
     }
     // 有 leftTime 就以 leftTime 为主，没有就以 targetDate 为主
     setTimeLeft(leftTime ? calcLeftTime(leftTime) : calcLeftTarget(targetDate)); // 先执行一次
-    const timer = setInterval(() => {
-      setTimeLeft((prevState) => {
-        if (prevState === 0) {
-          clearInterval(timer);
-          onEndRef.current?.();
-        }
-        return leftTime ? calcLeftTime(prevState, interval) : calcLeftTarget(targetDate);
-      });
+
+    timerRef.current = setInterval(() => {
+      setTimeLeft((prev) => (leftTime ? calcLeftTime(prev, interval) : calcLeftTarget(targetDate)));
     }, interval);
-    return () => clearInterval(timer);
+
+    return () => {
+      if (timerRef.current) {
+        clearInterval(timerRef.current);
+      }
+    };
   }, [leftTime, targetDate, interval]);
+
+  useEffect(() => {
+    if (timeLeft === 0) {
+      clearInterval(timerRef.current!);
+      onEndRef.current?.();
+    }
+  }, [timeLeft]);
 
   const formattedRes = useMemo(() => parseMs(timeLeft), [timeLeft]);
 
