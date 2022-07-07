@@ -19,12 +19,12 @@ export interface FormattedRes {
   milliseconds: number;
 }
 
-const calcLeftTarget = (t?: TDate) => {
-  if (!t) {
+const calcLeftTarget = (target?: TDate) => {
+  if (!target) {
     return 0;
   }
   // https://stackoverflow.com/questions/4310953/invalid-date-in-safari
-  const left = dayjs(t).valueOf() - Date.now();
+  const left = dayjs(target).valueOf() - Date.now();
   if (left < 0) {
     return 0;
   }
@@ -44,11 +44,11 @@ const calcLeftTime = (t?: number, interval: number = 0): number => {
 
 const parseMs = (milliseconds: number): FormattedRes => {
   return {
-    days: (milliseconds / 86400000) >>> 0,
-    hours: ((milliseconds / 3600000) >>> 0) % 24,
-    minutes: ((milliseconds / 60000) >>> 0) % 60,
-    seconds: ((milliseconds / 1000) >>> 0) % 60,
-    milliseconds: (milliseconds >>> 0) % 1000,
+    days: Math.floor(milliseconds / 86400000),
+    hours: Math.floor(milliseconds / 3600000) % 24,
+    minutes: Math.floor(milliseconds / 60000) % 60,
+    seconds: Math.floor(milliseconds / 1000) % 60,
+    milliseconds: Math.floor(milliseconds) % 1000,
   };
 };
 
@@ -68,7 +68,8 @@ const useCountdown = (options?: Options) => {
       setTimeLeft(0);
       return;
     }
-    // 有 leftTime 就以 leftTime 为主，没有就以 targetDate 为主
+
+    // should work leftTime, and ignored targetDate, If both leftTime and targetDate
     setTimeLeft(leftTime ? calcLeftTime(leftTime) : calcLeftTarget(targetDate)); // 先执行一次
 
     timerRef.current = setInterval(() => {

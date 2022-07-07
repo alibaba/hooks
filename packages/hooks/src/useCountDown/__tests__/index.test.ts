@@ -53,7 +53,7 @@ describe('useCountDown', () => {
     expect(formattedRes.milliseconds).toBe(0);
   });
 
-  it('should work leftTime and ignored targetDate, If both leftTime and targetDate', () => {
+  it('should work leftTime, and ignored targetDate, If both leftTime and targetDate', () => {
     const { result } = setup({
       leftTime: 5 * 1000,
       targetDate: Date.now() + 10000,
