@@ -72,7 +72,13 @@ const useCountdown = (options?: Options) => {
     setTimeLeft(leftTime ? calcLeftTime(leftTime) : calcLeftTarget(targetDate)); // 先执行一次
 
     timerRef.current = setInterval(() => {
-      setTimeLeft((prev) => (leftTime ? calcLeftTime(prev, interval) : calcLeftTarget(targetDate)));
+      setTimeLeft((prevState) => {
+        if (leftTime) {
+          return calcLeftTime(prevState, interval);
+        } else {
+          return calcLeftTarget(targetDate);
+        }
+      });
     }, interval);
 
     return () => {
@@ -84,8 +90,10 @@ const useCountdown = (options?: Options) => {
 
   useEffect(() => {
     if (timeLeft === 0) {
-      clearInterval(timerRef.current!);
       onEndRef.current?.();
+      if (timerRef.current) {
+        clearInterval(timerRef.current);
+      }
     }
   }, [timeLeft]);
 
