@@ -2,9 +2,8 @@ import { act, renderHook } from '@testing-library/react-hooks';
 import type { Options } from '../index';
 import useCountDown from '../index';
 
-const setup = (options: Options = {}) => {
-  return renderHook((props: Options = options) => useCountDown(props));
-};
+const setup = (options: Options = {}) =>
+  renderHook((props: Options = options) => useCountDown(props));
 
 describe('useCountDown', () => {
   beforeAll(() => {
