@@ -73,6 +73,7 @@ import useUpdateLayoutEffect from './useUpdateLayoutEffect';
 import useVirtualList from './useVirtualList';
 import useWebSocket from './useWebSocket';
 import useWhyDidYouUpdate from './useWhyDidYouUpdate';
+import useClipboard from './useClipboard';
 
 export {
   useRequest,
@@ -152,4 +153,5 @@ export {
   createUpdateEffect,
   useRafInterval,
   useRafTimeout,
+  useClipboard,
 };
