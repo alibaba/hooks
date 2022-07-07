@@ -31,11 +31,11 @@ const calcLeftTarget = (target?: TDate) => {
   return left;
 };
 
-const calcLeftTime = (t?: number, interval: number = 0): number => {
-  if (!t) {
+const calcLeftTime = (leftTime?: number, interval: number = 0): number => {
+  if (!leftTime) {
     return 0;
   }
-  const left = t - interval;
+  const left = leftTime - interval;
   if (left < 0) {
     return 0;
   }
