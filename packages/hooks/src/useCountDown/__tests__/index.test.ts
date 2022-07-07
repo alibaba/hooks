@@ -1,20 +1,19 @@
 import { act, renderHook } from '@testing-library/react-hooks';
-import useCountDown, { TDate, Options } from '../index';
+import useCountDown, { Options } from '../index';
 
-// https://github.com/facebook/jest/issues/2234
-jest.spyOn(Date, 'now').mockImplementation(() => 1479427200000);
+const setup = (options: Options = {}) =>
+  renderHook((props: Options = options) => useCountDown(props));
 
-const setup = (_targetDate?: TDate, _interval?: Options['interval'], onEnd?: Options['onEnd']) =>
-  renderHook(({ targetDate, interval }) => useCountDown({ targetDate, interval, onEnd }), {
-    initialProps: {
-      targetDate: _targetDate,
-      interval: _interval,
-      onEnd,
-    },
+describe('useCountDown', () => {
+  beforeAll(() => {
+    jest.useFakeTimers('modern');
+    jest.setSystemTime(1479427200000);
   });
 
-describe('useCountDown Hooks', () => {
-  jest.useFakeTimers();
+  afterAll(() => {
+    jest.useRealTimers();
+  });
+
   it('should initialize correctly with undefined targetDate', () => {
     const { result } = setup();
 
@@ -31,90 +30,108 @@ describe('useCountDown Hooks', () => {
   });
 
   it('should initialize correctly with correct targetDate', () => {
-    const { result } = setup(Date.now() + 5000, 1000);
-
+    const { result } = setup({
+      targetDate: Date.now() + 5000,
+      interval: 1000,
+    });
     const [count, formattedRes] = result.current;
-
-    expect(count).toBeLessThanOrEqual(5000);
-    expect(formattedRes.seconds).toBeLessThanOrEqual(5);
-    expect(formattedRes.milliseconds).toBeLessThanOrEqual(1000);
+    expect(count).toBe(5000);
+    expect(formattedRes.seconds).toBe(5);
+    expect(formattedRes.milliseconds).toBe(0);
   });
 
   it('should work manually', () => {
-    const { result } = setup(undefined, 1000);
+    const { result, rerender } = setup({ interval: 100 });
 
-    let targetDate: number;
-    let hook;
+    rerender({ targetDate: Date.now() + 5000, interval: 1000 });
+    expect(result.current[0]).toBe(5000);
+    expect(result.current[1].seconds).toBe(5);
 
     act(() => {
-      hook = renderHook(() => useCountDown({ targetDate, interval: 1000 }));
+      jest.advanceTimersByTime(1000);
     });
+    expect(result.current[0]).toBe(4000);
+    expect(result.current[1].seconds).toBe(4);
 
-    targetDate = Date.now() + 5000;
-    hook.rerender();
-
-    expect(result.current[0]).toBeLessThanOrEqual(5000);
-    expect(result.current[1].seconds).toBeLessThanOrEqual(5);
-
-    jest.advanceTimersByTime(1000);
-    expect(result.current[0]).toBeLessThanOrEqual(4000);
-    expect(result.current[1].seconds).toBeLessThanOrEqual(4);
-
-    jest.advanceTimersByTime(4000);
+    act(() => {
+      jest.advanceTimersByTime(4000);
+    });
     expect(result.current[0]).toEqual(0);
     expect(result.current[1].seconds).toBe(0);
 
-    jest.advanceTimersByTime(1000);
+    act(() => {
+      jest.advanceTimersByTime(1000);
+    });
+
     expect(result.current[0]).toEqual(0);
     expect(result.current[1].seconds).toBe(0);
   });
 
-  it('should work automatically', async () => {
-    const { result } = setup(Date.now() + 5000, 1000);
-
-    expect(result.current[0]).toBeLessThanOrEqual(5000);
-    expect(result.current[1].seconds).toBeLessThanOrEqual(5);
-
-    jest.advanceTimersByTime(1000);
-    expect(result.current[0]).toBeLessThanOrEqual(4000);
-    expect(result.current[1].seconds).toBeLessThanOrEqual(4);
-
-    jest.advanceTimersByTime(4000);
-    expect(result.current[0]).toBeLessThanOrEqual(0);
-    expect(result.current[1].seconds).toEqual(0);
-  });
-
-  it('should work stop', async () => {
-    const { result } = setup(Date.now() + 5000, 1000);
-
-    let targetDate = undefined;
-    let hook;
-
-    act(() => {
-      hook = renderHook(() => useCountDown({ targetDate: Date.now() + 5000, interval: 1000 }));
+  it('should work automatically', () => {
+    const { result } = setup({
+      targetDate: Date.now() + 5000,
+      interval: 1000,
     });
 
-    expect(result.current[0]).toBeLessThanOrEqual(5000);
-    expect(result.current[1].seconds).toBeLessThanOrEqual(5);
+    expect(result.current[0]).toBe(5000);
+    expect(result.current[1].seconds).toBe(5);
 
-    jest.advanceTimersByTime(1000);
-    expect(result.current[0]).toBeLessThanOrEqual(4000);
-    expect(result.current[1].seconds).toBeLessThanOrEqual(4);
+    act(() => {
+      jest.advanceTimersByTime(1000);
+    });
+    expect(result.current[0]).toBe(4000);
+    expect(result.current[1].seconds).toBe(4);
 
-    targetDate = undefined;
-    hook.rerender();
-
-    expect(result.current[0]).toBeLessThanOrEqual(0);
-    expect(result.current[1].seconds).toEqual(0);
+    act(() => {
+      jest.advanceTimersByTime(4000);
+    });
+    expect(result.current[0]).toBe(0);
+    expect(result.current[1].seconds).toBe(0);
   });
 
-  it('it onEnd should work', async () => {
-    let count = 0;
-    const onEnd = () => {
-      count++;
-    };
-    setup(Date.now() + 5000, 1000, onEnd);
-    jest.advanceTimersByTime(6000);
-    expect(count).toEqual(1);
+  it('should work stop', () => {
+    const { result, rerender } = setup({
+      targetDate: Date.now() + 5000,
+      interval: 1000,
+    });
+
+    rerender({
+      targetDate: Date.now() + 5000,
+      interval: 1000,
+    });
+    expect(result.current[0]).toBe(5000);
+    expect(result.current[1].seconds).toBe(5);
+
+    act(() => {
+      jest.advanceTimersByTime(1000);
+    });
+    expect(result.current[0]).toBe(4000);
+    expect(result.current[1].seconds).toBe(4);
+
+    rerender({
+      targetDate: undefined,
+    });
+    expect(result.current[0]).toBe(0);
+    expect(result.current[1].seconds).toBe(0);
+  });
+
+  it('it onEnd should work', () => {
+    const onEnd = jest.fn();
+    setup({
+      targetDate: Date.now() + 5000,
+      interval: 1000,
+      onEnd,
+    });
+    act(() => {
+      jest.advanceTimersByTime(6000);
+    });
+    expect(onEnd).toBeCalled();
+  });
+
+  it('timeLeft should be 0 when target date less than current time', () => {
+    const { result } = setup({
+      targetDate: Date.now() - 5000,
+    });
+    expect(result.current[0]).toBe(0);
   });
 });
