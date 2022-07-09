@@ -2,7 +2,7 @@ import { act, renderHook } from '@testing-library/react-hooks';
 import useControllableValue, { Options, Props } from '../index';
 
 describe('useControllableValue', () => {
-  const setUp = (props?: Props, options?: Options<any>): any =>
+  const setUp = <T = any, P extends Props = {}>(props?: P, options?: Options<T, P>) =>
     renderHook(() => useControllableValue(props, options));
 
   it('defaultValue should work', () => {
