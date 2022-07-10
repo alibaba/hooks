@@ -57,7 +57,7 @@ If both `leftTime` and `targetDate` are passed, the `targetDate` is ignored, the
 
 | Property   | Description                                  | Type         | Default |
 | ---------- | -------------------------------------------- | ------------ | ------- |
-| leftTime   | Rest time, in milliseconds                   | `number`     | -       |
+| leftTime   | The rest of time, in milliseconds            | `number`     | -       |
 | targetDate | Target time                                  | `TDate`      | -       |
 | interval   | Time interval between ticks, in milliseconds | `number`     | `1000`  |
 | onEnd      | Function to call when countdown completes    | `() => void` | -       |

@@ -25,21 +25,15 @@ const calcLeftTarget = (target?: TDate) => {
   }
   // https://stackoverflow.com/questions/4310953/invalid-date-in-safari
   const left = dayjs(target).valueOf() - Date.now();
-  if (left < 0) {
-    return 0;
-  }
-  return left;
+  return left < 0 ? 0 : left;
 };
 
-const calcLeftTime = (leftTime?: number, interval: number = 0): number => {
+const calcLeftTime = (leftTime: number, interval: number = 0): number => {
   if (!leftTime) {
     return 0;
   }
   const left = leftTime - interval;
-  if (left < 0) {
-    return 0;
-  }
-  return left;
+  return left < 0 ? 0 : left;
 };
 
 const parseMs = (milliseconds: number): FormattedRes => {
@@ -52,11 +46,15 @@ const parseMs = (milliseconds: number): FormattedRes => {
   };
 };
 
+const isValidTime = (value: any): boolean => {
+  return typeof value === 'number' && !Number.isNaN(value);
+};
+
 const useCountdown = (options?: Options) => {
   const { leftTime, targetDate, interval = 1000, onEnd } = options || {};
 
   const [timeLeft, setTimeLeft] = useState(() => {
-    return leftTime ? calcLeftTime(leftTime) : calcLeftTarget(targetDate);
+    return isValidTime(leftTime) ? calcLeftTime(leftTime!) : calcLeftTarget(targetDate);
   });
 
   const onEndRef = useLatest(onEnd);
@@ -69,12 +67,12 @@ const useCountdown = (options?: Options) => {
       return;
     }
 
-    // should work leftTime, and ignored targetDate, If both leftTime and targetDate
-    setTimeLeft(leftTime ? calcLeftTime(leftTime) : calcLeftTarget(targetDate)); // 先执行一次
+    // should work leftTime, and ignored targetDate, if both leftTime and targetDate
+    setTimeLeft(isValidTime(leftTime) ? calcLeftTime(leftTime!) : calcLeftTarget(targetDate)); // 先执行一次
 
     timerRef.current = setInterval(() => {
       setTimeLeft((prevState) => {
-        if (leftTime) {
+        if (isValidTime(leftTime)) {
           return calcLeftTime(prevState, interval);
         } else {
           return calcLeftTarget(targetDate);
