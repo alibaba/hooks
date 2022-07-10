@@ -1,11 +1,10 @@
 import dayjs from 'dayjs';
-import { useEffect, useMemo, useState, useRef } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import useLatest from '../useLatest';
 
-export type TDate = dayjs.ConfigType;
+export type TDate = Date | number | string | undefined;
 
 export type Options = {
-  leftTime?: number;
   targetDate?: TDate;
   interval?: number;
   onEnd?: () => void;
@@ -19,21 +18,16 @@ export interface FormattedRes {
   milliseconds: number;
 }
 
-const calcLeftTarget = (target?: TDate) => {
-  if (!target) {
+const calcLeft = (t?: TDate) => {
+  if (!t) {
     return 0;
   }
   // https://stackoverflow.com/questions/4310953/invalid-date-in-safari
-  const left = dayjs(target).valueOf() - Date.now();
-  return left < 0 ? 0 : left;
-};
-
-const calcLeftTime = (leftTime: number, interval: number = 0): number => {
-  if (!leftTime) {
+  const left = dayjs(t).valueOf() - new Date().getTime();
+  if (left < 0) {
     return 0;
   }
-  const left = leftTime - interval;
-  return left < 0 ? 0 : left;
+  return left;
 };
 
 const parseMs = (milliseconds: number): FormattedRes => {
@@ -46,57 +40,38 @@ const parseMs = (milliseconds: number): FormattedRes => {
   };
 };
 
-const isValidTime = (value: any): boolean => {
-  return typeof value === 'number' && !Number.isNaN(value);
-};
-
 const useCountdown = (options?: Options) => {
-  const { leftTime, targetDate, interval = 1000, onEnd } = options || {};
+  const { targetDate, interval = 1000, onEnd } = options || {};
 
-  const [timeLeft, setTimeLeft] = useState(() => {
-    return isValidTime(leftTime) ? calcLeftTime(leftTime!) : calcLeftTarget(targetDate);
-  });
+  const [timeLeft, setTimeLeft] = useState(() => calcLeft(targetDate));
 
   const onEndRef = useLatest(onEnd);
-  const timerRef = useRef<NodeJS.Timer | null>(null);
 
   useEffect(() => {
-    if (!targetDate && !leftTime) {
+    if (!targetDate) {
       // for stop
       setTimeLeft(0);
       return;
     }
 
-    // should work leftTime, and ignored targetDate, if both leftTime and targetDate
-    setTimeLeft(isValidTime(leftTime) ? calcLeftTime(leftTime!) : calcLeftTarget(targetDate)); // 先执行一次
+    // 立即执行一次
+    setTimeLeft(calcLeft(targetDate));
 
-    timerRef.current = setInterval(() => {
-      setTimeLeft((prevState) => {
-        if (isValidTime(leftTime)) {
-          return calcLeftTime(prevState, interval);
-        } else {
-          return calcLeftTarget(targetDate);
-        }
-      });
+    const timer = setInterval(() => {
+      const targetLeft = calcLeft(targetDate);
+      setTimeLeft(targetLeft);
+      if (targetLeft === 0) {
+        clearInterval(timer);
+        onEndRef.current?.();
+      }
     }, interval);
 
-    return () => {
-      if (timerRef.current) {
-        clearInterval(timerRef.current);
-      }
-    };
-  }, [leftTime, targetDate, interval]);
+    return () => clearInterval(timer);
+  }, [targetDate, interval]);
 
-  useEffect(() => {
-    if (timeLeft === 0) {
-      onEndRef.current?.();
-      if (timerRef.current) {
-        clearInterval(timerRef.current);
-      }
-    }
+  const formattedRes = useMemo(() => {
+    return parseMs(timeLeft);
   }, [timeLeft]);
-
-  const formattedRes = useMemo(() => parseMs(timeLeft), [timeLeft]);
 
   return [timeLeft, formattedRes] as const;
 };
