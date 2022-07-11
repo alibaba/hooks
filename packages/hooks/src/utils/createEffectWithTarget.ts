@@ -22,7 +22,7 @@ const createEffectWithTarget = (useEffectType: typeof useEffect | typeof useLayo
     const lastElementRef = useRef<(Element | null)[]>([]);
     const lastDepsRef = useRef<DependencyList>([]);
 
-    const unLoadRef = useRef<ReturnType<typeof effect>>();
+    const unLoadRef = useRef<any>();
 
     useEffectType(() => {
       const targets = Array.isArray(target) ? target : [target];
