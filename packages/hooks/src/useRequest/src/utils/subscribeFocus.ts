@@ -1,5 +1,5 @@
 // from swr
-import canUseDom from '../../../utils/canUseDom';
+import isBrowser from '../../../utils/isBrowser';
 import isDocumentVisible from './isDocumentVisible';
 import isOnline from './isOnline';
 
@@ -13,7 +13,7 @@ function subscribe(listener: () => void) {
   };
 }
 
-if (canUseDom()) {
+if (isBrowser) {
   const revalidate = () => {
     if (!isDocumentVisible() || !isOnline()) return;
     for (let i = 0; i < listeners.length; i++) {
