@@ -16,15 +16,21 @@ const useMutationObserver = (
       }
       // https://developer.mozilla.org/zh-CN/docs/Web/API/MutationObserver/observe#%E5%BC%82%E5%B8%B8
       if (!options?.attributes && !options?.characterData && !options?.childList) {
-        console.error(errorMessage1);
+        if (process.env.NODE_ENV === 'development') {
+          console.error(errorMessage1);
+        }
         return;
       }
       if (!options?.attributes && options?.attributeOldValue) {
-        console.error(errorMessage2);
+        if (process.env.NODE_ENV === 'development') {
+          console.error(errorMessage2);
+        }
         return;
       }
       if (options?.characterDataOldValue && !options?.characterData) {
-        console.error(errorMessage3);
+        if (process.env.NODE_ENV === 'development') {
+          console.error(errorMessage3);
+        }
         return;
       }
       const observer = new MutationObserver(callback);
