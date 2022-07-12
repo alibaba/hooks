@@ -14,7 +14,7 @@ const useMutationObserver = (
       if (!element) {
         return;
       }
-
+      // https://developer.mozilla.org/zh-CN/docs/Web/API/MutationObserver/observe#%E5%BC%82%E5%B8%B8
       if (!options?.attributes && !options?.characterData && !options?.childList) {
         if (process.env.NODE_ENV === 'development') {
           console.error(errorMessage1);
