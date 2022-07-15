@@ -49,9 +49,6 @@ const useFullscreen = (target: BasicTarget, options?: Options) => {
   };
 
   const exitFullscreen = () => {
-    if (!state) {
-      return;
-    }
     if (screenfull.isEnabled) {
       screenfull.exit();
     }
