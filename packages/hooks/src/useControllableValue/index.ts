@@ -4,7 +4,7 @@ import { isFunction } from '../utils';
 import useMemoizedFn from '../useMemoizedFn';
 import useUpdate from '../useUpdate';
 
-export interface Options<T, P extends Props = {}> {
+export interface Options<T, P extends Props = Props> {
   defaultValue?: T;
   defaultValuePropName?: keyof P;
   valuePropName?: keyof P;
@@ -22,11 +22,11 @@ export interface StandardProps<T> {
 function useControllableValue<T = any>(
   props: StandardProps<T>,
 ): [T, (v: SetStateAction<T>) => void];
-function useControllableValue<T = any, P extends Props = {}>(
+function useControllableValue<T = any, P extends Props = Props>(
   props?: P,
   options?: Options<T, P>,
 ): [T, (v: SetStateAction<T>, ...args: any[]) => void];
-function useControllableValue<T = any, P extends Props = {}>(
+function useControllableValue<T = any, P extends Props = Props>(
   props: P = {} as P,
   options: Options<T, P> = {},
 ) {
