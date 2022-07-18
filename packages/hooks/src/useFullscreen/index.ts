@@ -17,7 +17,7 @@ const useFullscreen = (target: BasicTarget, options?: Options) => {
   const onExitRef = useLatest(onExit);
   const onEnterRef = useLatest(onEnter);
 
-  const [state, setState] = useState(false);
+  const [state, setState] = useState(Boolean(screenfull.isFullscreen));
 
   const onChange = () => {
     if (screenfull.isEnabled) {
@@ -49,9 +49,6 @@ const useFullscreen = (target: BasicTarget, options?: Options) => {
   };
 
   const exitFullscreen = () => {
-    if (!state) {
-      return;
-    }
     if (screenfull.isEnabled) {
       screenfull.exit();
     }
