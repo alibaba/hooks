@@ -1,5 +1,5 @@
 import dayjs from 'dayjs';
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useState, useRef } from 'react';
 import useLatest from '../useLatest';
 
 export type TDate = dayjs.ConfigType;
@@ -53,10 +53,11 @@ const parseMs = (milliseconds: number): FormattedRes => {
 const useCountdown = (options?: Options) => {
   const { leftTime, targetDate, interval = 1000, onEnd } = options || {};
 
-  const startTime = Date.now();
+  const startTime = useRef<number>(Date.now());
+
   const onEndRef = useLatest(onEnd);
 
-  const [timeLeft, setTimeLeft] = useState(() => calcLeft(startTime, leftTime!, targetDate));
+  const [timeLeft, setTimeLeft] = useState(calcLeft(startTime.current, leftTime!, targetDate));
 
   useEffect(() => {
     if (!leftTime && !targetDate) {
@@ -65,7 +66,7 @@ const useCountdown = (options?: Options) => {
       return;
     }
 
-    setTimeLeft(calcLeft(startTime, leftTime!, targetDate)); // 先执行一次
+    setTimeLeft(calcLeft(startTime.current, leftTime!, targetDate)); // 先执行一次
 
     const timer = setInterval(() => {
       setTimeLeft((prev) => {
@@ -73,7 +74,7 @@ const useCountdown = (options?: Options) => {
           onEndRef.current?.();
           clearInterval(timer);
         }
-        return calcLeft(startTime, leftTime!, targetDate);
+        return calcLeft(startTime.current, leftTime!, targetDate);
       });
     }, interval);
 
