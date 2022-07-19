@@ -17,7 +17,7 @@ const useFullscreen = (target: BasicTarget, options?: Options) => {
   const onExitRef = useLatest(onExit);
   const onEnterRef = useLatest(onEnter);
 
-  const [state, setState] = useState(Boolean(screenfull.isFullscreen));
+  const [state, setState] = useState(false);
 
   const onChange = () => {
     if (screenfull.isEnabled) {
