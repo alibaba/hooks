@@ -77,7 +77,7 @@ type Params = [{ current: number; pageSize: number, filter?: any, sorter?: any }
 const {
   ...,
   tableProps: {
-    dataSource: any[];
+    dataSource: TData['list'];
     loading: boolean;
     onChange: (
       pagination: any,
