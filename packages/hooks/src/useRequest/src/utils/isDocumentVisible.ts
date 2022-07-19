@@ -1,7 +1,7 @@
-import canUseDom from '../../../utils/canUseDom';
+import isBrowser from '../../../utils/isBrowser';
 
 export default function isDocumentVisible(): boolean {
-  if (canUseDom()) {
+  if (isBrowser) {
     return document.visibilityState !== 'hidden';
   }
   return true;
