@@ -4,12 +4,12 @@ import useLatest from '../useLatest';
 
 export type TDate = dayjs.ConfigType;
 
-export type Options = {
+export interface Options {
   leftTime?: number;
   targetDate?: TDate;
   interval?: number;
   onEnd?: () => void;
-};
+}
 
 export interface FormattedRes {
   days: number;
@@ -23,20 +23,21 @@ const isValidTime = (value: any): boolean => {
   return typeof value === 'number' && !Number.isNaN(value);
 };
 
-const calcLeft = (leftTime: number, target: TDate): number => {
+const calcLeft = (startTime: number, leftTime: number, target: TDate): number => {
   if (!leftTime && !target) {
     return 0;
   }
+
+  let targetTime = 0;
   // should work leftTime, and ignored targetDate, if both leftTime and targetDate
   if (isValidTime(leftTime)) {
-    return leftTime < 0 ? 0 : leftTime;
-  }
-  if (target) {
+    targetTime = startTime + leftTime;
+  } else if (target) {
     // https://stackoverflow.com/questions/4310953/invalid-date-in-safari
-    const left = dayjs(target).valueOf() - Date.now();
-    return left < 0 ? 0 : left;
+    targetTime = dayjs(target).valueOf();
   }
-  return 0;
+  const left = targetTime - Date.now();
+  return left < 0 ? 0 : left;
 };
 
 const parseMs = (milliseconds: number): FormattedRes => {
@@ -52,29 +53,27 @@ const parseMs = (milliseconds: number): FormattedRes => {
 const useCountdown = (options?: Options) => {
   const { leftTime, targetDate, interval = 1000, onEnd } = options || {};
 
-  const left = useMemo(() => calcLeft(leftTime!, targetDate), [leftTime, targetDate]);
-
-  const [timeLeft, setTimeLeft] = useState(() => left);
-
+  const startTime = Date.now();
   const onEndRef = useLatest(onEnd);
 
+  const [timeLeft, setTimeLeft] = useState(() => calcLeft(startTime, leftTime!, targetDate));
+
   useEffect(() => {
-    if (!left) {
+    if (!leftTime && !targetDate) {
       // for stop
       setTimeLeft(0);
       return;
     }
 
-    setTimeLeft(left); // 先执行一次
+    setTimeLeft(calcLeft(startTime, leftTime!, targetDate)); // 先执行一次
 
     const timer = setInterval(() => {
-      setTimeLeft((prevState) => {
-        const result = prevState - interval;
-        if (prevState === 0) {
+      setTimeLeft((prev) => {
+        if (prev === 0) {
           onEndRef.current?.();
           clearInterval(timer);
         }
-        return result < 0 ? 0 : result;
+        return calcLeft(startTime, leftTime!, targetDate);
       });
     }, interval);
 
