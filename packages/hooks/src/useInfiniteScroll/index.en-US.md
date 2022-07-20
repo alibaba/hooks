@@ -34,7 +34,7 @@ In the data fixation scenario, we sometimes use `page` and `pageSize` to request
 
 In the infinite scrolling scenario, the most common case is to automatically load when scrolling to the bottom. By configuring the following properties, you can achieve scrolling to automatically load.
 
-- `options.target` specifies the parent element
+- `options.target` specifies the parent element, The parent element needs to set a fixed height and support internal scrolling
 - `options.isNoMore` determines if there is no more data
 
 <code src="./demo/scroll.tsx" />
