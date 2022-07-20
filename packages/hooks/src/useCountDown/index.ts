@@ -57,7 +57,9 @@ const useCountdown = (options?: Options) => {
 
   const onEndRef = useLatest(onEnd);
 
-  const [timeLeft, setTimeLeft] = useState(calcLeft(startTime.current, leftTime!, targetDate));
+  const [timeLeft, setTimeLeft] = useState(() =>
+    calcLeft(startTime.current, leftTime!, targetDate),
+  );
 
   useEffect(() => {
     if (!leftTime && !targetDate) {
