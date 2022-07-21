@@ -48,8 +48,7 @@ const useCountdown = (options: Options = {}) => {
 
   const [timeLeft, setTimeLeft] = useState(() => {
     if ('leftTime' in options) {
-      const endDate = isValidTime(leftTime) ? Date.now() + leftTime! : undefined;
-      return calcLeft(endDate);
+      return calcLeft(isValidTime(leftTime) ? Date.now() + leftTime! : undefined);
     } else {
       return calcLeft(targetDate);
     }
