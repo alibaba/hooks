@@ -55,7 +55,7 @@ const useCountdown = (options: Options = {}) => {
 
   useEffect(() => {
     if (!target) {
-      // for stop
+      //  stop
       setTimeLeft(0);
       return;
     }
