@@ -1,5 +1,5 @@
 import dayjs from 'dayjs';
-import { useEffect, useMemo, useState, useRef } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import useLatest from '../useLatest';
 
 export type TDate = dayjs.ConfigType;
@@ -20,23 +20,16 @@ export interface FormattedRes {
 }
 
 const isValidTime = (value: any): boolean => {
-  return typeof value === 'number' && !Number.isNaN(value);
+  // 只有大于 0 的 number 才是有效的剩余时间
+  return typeof value === 'number' && !Number.isNaN(value) && value > 0;
 };
 
-const calcLeft = (startTime: number, leftTime: number, target: TDate): number => {
-  if (!leftTime && !target) {
+const calcLeft = (target?: TDate) => {
+  if (!target) {
     return 0;
   }
-
-  let targetTime = 0;
-  // should work leftTime, and ignored targetDate, if both leftTime and targetDate
-  if (isValidTime(leftTime)) {
-    targetTime = startTime + leftTime;
-  } else if (target) {
-    // https://stackoverflow.com/questions/4310953/invalid-date-in-safari
-    targetTime = dayjs(target).valueOf();
-  }
-  const left = targetTime - Date.now();
+  // https://stackoverflow.com/questions/4310953/invalid-date-in-safari
+  const left = dayjs(target).valueOf() - Date.now();
   return left < 0 ? 0 : left;
 };
 
@@ -50,39 +43,47 @@ const parseMs = (milliseconds: number): FormattedRes => {
   };
 };
 
-const useCountdown = (options?: Options) => {
+const useCountdown = (options: Options = {}) => {
   const { leftTime, targetDate, interval = 1000, onEnd } = options || {};
 
-  const startTime = useRef<number>(Date.now());
+  const [timeLeft, setTimeLeft] = useState(() => {
+    if ('leftTime' in options) {
+      const endDate = isValidTime(leftTime) ? Date.now() + leftTime! : undefined;
+      return calcLeft(endDate);
+    } else {
+      return calcLeft(targetDate);
+    }
+  });
 
   const onEndRef = useLatest(onEnd);
 
-  const [timeLeft, setTimeLeft] = useState(calcLeft(startTime.current, leftTime!, targetDate));
-
   useEffect(() => {
-    if (!leftTime && !targetDate) {
+    let endDate: TDate;
+    if ('leftTime' in options) {
+      endDate = isValidTime(leftTime) ? Date.now() + leftTime! : undefined;
+    } else {
+      endDate = targetDate;
+    }
+
+    if (!endDate) {
       // for stop
       setTimeLeft(0);
       return;
     }
 
-    setTimeLeft(calcLeft(startTime.current, leftTime!, targetDate)); // 先执行一次
+    // 立即执行一次
+    setTimeLeft(calcLeft(endDate));
 
     const timer = setInterval(() => {
-      setTimeLeft((prev) => {
-        if (prev === 0) {
-          onEndRef.current?.();
-          clearInterval(timer);
-        }
-        return calcLeft(startTime.current, leftTime!, targetDate);
-      });
+      const targetLeft = calcLeft(endDate);
+      setTimeLeft(targetLeft);
+      if (targetLeft === 0) {
+        clearInterval(timer);
+        onEndRef.current?.();
+      }
     }, interval);
 
-    return () => {
-      if (timer) {
-        clearInterval(timer);
-      }
-    };
+    return () => clearInterval(timer);
   }, [leftTime, targetDate, interval]);
 
   const formattedRes = useMemo(() => parseMs(timeLeft), [timeLeft]);
