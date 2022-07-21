@@ -73,7 +73,7 @@ const useCountdown = (options: Options = {}) => {
     }, interval);
 
     return () => clearInterval(timer);
-  }, [leftTime, targetDate, interval]);
+  }, [target, interval]);
 
   const formattedRes = useMemo(() => parseMs(timeLeft), [timeLeft]);
 
