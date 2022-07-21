@@ -41,35 +41,30 @@ const parseMs = (milliseconds: number): FormattedRes => {
 const useCountdown = (options: Options = {}) => {
   const { leftTime, targetDate, interval = 1000, onEnd } = options || {};
 
-  const [timeLeft, setTimeLeft] = useState(() => {
+  const target = useMemo<TDate>(() => {
     if ('leftTime' in options) {
-      return calcLeft(leftTime && leftTime > 0 ? Date.now() + leftTime! : undefined);
+      return leftTime && leftTime > 0 ? Date.now() + leftTime : undefined;
     } else {
-      return calcLeft(targetDate);
+      return targetDate;
     }
-  });
+  }, [leftTime, targetDate]);
+
+  const [timeLeft, setTimeLeft] = useState(() => calcLeft(target));
 
   const onEndRef = useLatest(onEnd);
 
   useEffect(() => {
-    let endDate: TDate;
-    if ('leftTime' in options) {
-      endDate = leftTime && leftTime > 0 ? Date.now() + leftTime! : undefined;
-    } else {
-      endDate = targetDate;
-    }
-
-    if (!endDate) {
+    if (!target) {
       // for stop
       setTimeLeft(0);
       return;
     }
 
     // 立即执行一次
-    setTimeLeft(calcLeft(endDate));
+    setTimeLeft(calcLeft(target));
 
     const timer = setInterval(() => {
-      const targetLeft = calcLeft(endDate);
+      const targetLeft = calcLeft(target);
       setTimeLeft(targetLeft);
       if (targetLeft === 0) {
         clearInterval(timer);
