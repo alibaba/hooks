@@ -19,7 +19,7 @@ export interface FormattedRes {
   milliseconds: number;
 }
 
-const isValidTime = (value: any): boolean => {
+const isValidTime = (value: number): boolean => {
   // 只有大于 0 的 number 才是有效的剩余时间
   return typeof value === 'number' && !Number.isNaN(value) && value > 0;
 };
@@ -48,7 +48,7 @@ const useCountdown = (options: Options = {}) => {
 
   const [timeLeft, setTimeLeft] = useState(() => {
     if ('leftTime' in options) {
-      return calcLeft(isValidTime(leftTime) ? Date.now() + leftTime! : undefined);
+      return calcLeft(isValidTime(leftTime!) ? Date.now() + leftTime! : undefined);
     } else {
       return calcLeft(targetDate);
     }
@@ -59,7 +59,7 @@ const useCountdown = (options: Options = {}) => {
   useEffect(() => {
     let endDate: TDate;
     if ('leftTime' in options) {
-      endDate = isValidTime(leftTime) ? Date.now() + leftTime! : undefined;
+      endDate = isValidTime(leftTime!) ? Date.now() + leftTime! : undefined;
     } else {
       endDate = targetDate;
     }
