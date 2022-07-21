@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-parameter-properties */
 import { isFunction } from '../../utils';
 import type { MutableRefObject } from 'react';
 import type { FetchState, Options, PluginReturn, Service, Subscribe } from './types';
