@@ -15,6 +15,10 @@ A hook for manage countdown.
 
 <code src="./demo/demo2.tsx" />
 
+## Config leftTime
+
+<code src="./demo/demo3.tsx" />
+
 ## API
 
 ```typescript
@@ -30,6 +34,7 @@ interface FormattedRes {
 
 const [countdown, formattedRes] = useCountDown(
   {
+    leftTime,
     targetDate,
     interval,
     onEnd
@@ -46,10 +51,13 @@ The precision of useCountDown is milliseconds, which may cause the following pro
 
 If you only need to be accurate to the second, you can use it like this `Math.round(countdown / 1000)`.
 
+If both `leftTime` and `targetDate` are passed, the `targetDate` is ignored, the `leftTime` is dominant.
+
 ### Params
 
 | Property   | Description                                  | Type         | Default |
 | ---------- | -------------------------------------------- | ------------ | ------- |
+| leftTime   | The rest of time, in milliseconds            | `number`     | -       |
 | targetDate | Target time                                  | `TDate`      | -       |
 | interval   | Time interval between ticks, in milliseconds | `number`     | `1000`  |
 | onEnd      | Function to call when countdown completes    | `() => void` | -       |
@@ -63,4 +71,4 @@ If you only need to be accurate to the second, you can use it like this `Math.ro
 
 ## Remark
 
-`targetDate`、`interval`、`onEnd` support dynamic change.
+`leftTime`、`targetDate`、`interval`、`onEnd` support dynamic change.
