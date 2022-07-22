@@ -1,6 +1,7 @@
 import dayjs from 'dayjs';
 import { useEffect, useMemo, useState } from 'react';
 import useLatest from '../useLatest';
+import { isNumber } from '../utils/index';
 
 export type TDate = dayjs.ConfigType;
 
@@ -43,7 +44,7 @@ const useCountdown = (options: Options = {}) => {
 
   const target = useMemo<TDate>(() => {
     if ('leftTime' in options) {
-      return leftTime && leftTime > 0 ? Date.now() + leftTime : undefined;
+      return isNumber(leftTime) && leftTime > 0 ? Date.now() + leftTime : undefined;
     } else {
       return targetDate;
     }

@@ -15,7 +15,7 @@ A hook for manage countdown.
 
 <code src="./demo/demo2.tsx" />
 
-## Countdown to rest time
+## Config leftTime
 
 <code src="./demo/demo3.tsx" />
 

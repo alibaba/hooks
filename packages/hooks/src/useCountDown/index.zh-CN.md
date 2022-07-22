@@ -15,7 +15,7 @@ nav:
 
 <code src="./demo/demo2.tsx" />
 
-## 剩余时间毫秒数的倒计时
+## 通过 leftTime 配置剩余时间
 
 <code src="./demo/demo3.tsx" />
 
