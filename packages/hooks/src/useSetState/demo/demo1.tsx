@@ -8,7 +8,7 @@ interface State {
 }
 
 export default () => {
-  const [state, setState] = useSetState<State>({
+  const [state, setState, resetState] = useSetState<State>({
     hello: '',
     count: 0,
   });
@@ -25,6 +25,9 @@ export default () => {
         </button>
         <button type="button" onClick={() => setState((prev) => ({ count: prev.count + 1 }))}>
           count + 1
+        </button>
+        <button type="button" onClick={resetState} style={{ marginLeft: 8 }}>
+          reset
         </button>
       </p>
     </div>

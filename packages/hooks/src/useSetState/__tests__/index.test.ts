@@ -4,11 +4,8 @@ import useSetState from '../index';
 describe('useSetState', () => {
   const setUp = <T extends object>(initialValue: T) =>
     renderHook(() => {
-      const [state, setState] = useSetState<T>(initialValue);
-      return {
-        state,
-        setState,
-      } as const;
+      const [state, setState, resetState] = useSetState<T>(initialValue);
+      return { state, setState, resetState } as const;
     });
 
   it('should support initialValue', () => {
@@ -36,5 +33,15 @@ describe('useSetState', () => {
       hook.result.current.setState((prev) => ({ count: prev.count + 1 }));
     });
     expect(hook.result.current.state).toEqual({ count: 1 });
+  });
+  it('should support resetState', () => {
+    const hook = setUp<any>({
+      hello: 'world',
+    });
+    act(() => {
+      hook.result.current.setState({ foo: 'bar' });
+      hook.result.current.resetState();
+    });
+    expect(hook.result.current.state).toEqual({ hello: 'world' });
   });
 });

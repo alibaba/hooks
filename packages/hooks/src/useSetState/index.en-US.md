@@ -5,7 +5,7 @@ nav:
 
 # useSetState
 
-useSetState works similar to `this.setState` of class component, used to manage the state of object type.
+useSetState works similar to `this.setState` of class component, used to manage the state of object type. There is a `reset` method to reset the state to initial value.
 
 ## Examples
 
@@ -16,7 +16,7 @@ useSetState works similar to `this.setState` of class component, used to manage 
 ## API
 
 ```typescript
-const [state, setState] = useSetState<T extends Record<string, any>>(
+const [state, setState, resetState] = useSetState<T extends Record<string, any>>(
   initialState: T = {} as T
-): [T, (patch: Partial<T> | ((prevState: T) => Partial<T>)) => void]
+): [T, (patch: Partial<T> | ((prevState: T) => Partial<T>)) => void, () => void]
 ```
