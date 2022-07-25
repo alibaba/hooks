@@ -16,7 +16,11 @@ export default () => {
     <div>
       <pre>{JSON.stringify(state, null, 2)}</pre>
       <p>
-        <button type="button" onClick={() => setState({ hello: 'world', count: 1 })}>
+        <button
+          type="button"
+          style={{ marginRight: '8px' }}
+          onClick={() => setState({ hello: 'world', count: 1 })}
+        >
           set hello and count
         </button>
 
