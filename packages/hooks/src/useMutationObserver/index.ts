@@ -21,7 +21,7 @@ const useMutationObserver = (
         }
       };
     },
-    [callback, options],
+    [],
     target,
   );
 };
