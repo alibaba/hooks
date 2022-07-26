@@ -134,7 +134,7 @@ describe('usePagination', () => {
     act(() => {
       hook = setUp(asyncFn, {
         defaultPageSize: 5,
-        defaultPage: 2,
+        defaultCurrent: 2,
       });
     });
     expect(hook.result.current.loading).toEqual(true);

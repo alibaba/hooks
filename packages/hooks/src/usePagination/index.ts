@@ -8,10 +8,10 @@ const usePagination = <TData extends Data, TParams extends Params>(
   service: Service<TData, TParams>,
   options: PaginationOptions<TData, TParams> = {},
 ) => {
-  const { defaultPageSize = 10, defaultPage = 1, ...rest } = options;
+  const { defaultPageSize = 10, defaultCurrent = 1, ...rest } = options;
 
   const result = useRequest(service, {
-    defaultParams: [{ current: defaultPage, pageSize: defaultPageSize }],
+    defaultParams: [{ current: defaultCurrent, pageSize: defaultPageSize }],
     refreshDepsAction: () => {
       // eslint-disable-next-line @typescript-eslint/no-use-before-define
       changeCurrent(1);

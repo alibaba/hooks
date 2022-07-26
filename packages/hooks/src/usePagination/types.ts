@@ -24,5 +24,5 @@ export interface PaginationResult<TData extends Data, TParams extends Params>
 export interface PaginationOptions<TData extends Data, TParams extends Params>
   extends Options<TData, TParams> {
   defaultPageSize?: number;
-  defaultPage?: number;
+  defaultCurrent?: number;
 }
