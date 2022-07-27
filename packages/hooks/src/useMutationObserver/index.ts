@@ -5,7 +5,7 @@ import type { BasicTarget } from '../utils/domTarget';
 const useMutationObserver = (
   target: BasicTarget,
   callback: MutationCallback,
-  options?: MutationObserverInit,
+  options: MutationObserverInit = {},
 ): void => {
   useEffect(() => {
     const element = getTargetElement(target);
