@@ -1,19 +1,22 @@
 import { getTargetElement } from '../utils/domTarget';
 import type { BasicTarget } from '../utils/domTarget';
 import useDeepCompareEffectWithTarget from '../utils/useDeepCompareWithTarget';
+import useLatest from '../useLatest';
 
 const useMutationObserver = (
-  target: BasicTarget,
   callback: MutationCallback,
+  target: BasicTarget,
   options: MutationObserverInit = {},
 ): void => {
+  const callbackRef = useLatest(callback);
+
   useDeepCompareEffectWithTarget(
     () => {
       const element = getTargetElement(target);
       if (!element) {
         return;
       }
-      const observer = new MutationObserver(callback);
+      const observer = new MutationObserver(callbackRef.current);
       observer.observe(element, options);
       return () => {
         if (observer) {
@@ -21,7 +24,7 @@ const useMutationObserver = (
         }
       };
     },
-    [options, callback],
+    [options],
     target,
   );
 };
