@@ -7,10 +7,12 @@ import { getTargetElement } from '../utils/domTarget';
 import type { BasicTarget } from '../utils/domTarget';
 import { isNumber } from '../utils';
 
+type ItemHeight<T> = (index: number, data: T) => number;
+
 export interface Options<T> {
   containerTarget: BasicTarget;
   wrapperTarget: BasicTarget;
-  itemHeight: number | ((index: number, data: T) => number);
+  itemHeight: number | ItemHeight<T>;
   overscan?: number;
 }
 
@@ -68,7 +70,7 @@ const useVirtualList = <T = any>(list: T[], options: Options<T>) => {
     }
     const height = list
       .slice(0, index)
-      .reduce((sum, _, i) => sum + (itemHeightRef.current as Function)(i, list[i]), 0);
+      .reduce((sum, _, i) => sum + (itemHeightRef.current as ItemHeight<T>)(i, list[i]), 0);
     return height;
   };
 
@@ -77,7 +79,7 @@ const useVirtualList = <T = any>(list: T[], options: Options<T>) => {
       return list.length * itemHeightRef.current;
     }
     return list.reduce(
-      (sum, _, index) => sum + (itemHeightRef.current as Function)(index, list[index]),
+      (sum, _, index) => sum + (itemHeightRef.current as ItemHeight<T>)(index, list[index]),
       0,
     );
   }, [list]);
