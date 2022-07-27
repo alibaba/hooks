@@ -1,32 +1,32 @@
 /**
  * title: Basic usage
- * desc: receive ref as argument
  *
  * title.zh-CN: 基础用法
- * desc.zh-CN: 接收 ref 参数
  */
 
 import { useMutationObserver } from 'ahooks';
-import { message } from 'antd';
 import React, { useRef, useState } from 'react';
 
 const App: React.FC = () => {
-  const [flag, setFlag] = useState<boolean>(false);
+  const [width, setWidth] = useState(200);
+  const [count, setCount] = useState(0);
 
-  const ref = useRef<HTMLButtonElement>(null);
+  const ref = useRef<HTMLDivElement>(null);
 
   const callback: MutationCallback = (mutationsList) => {
-    mutationsList.forEach((mutation) => {
-      message.info(`The ${mutation.attributeName} was be modified.`);
-    });
+    mutationsList.forEach(() => setCount(count + 1));
   };
 
   useMutationObserver(ref, callback, { attributes: true });
 
   return (
-    <button ref={ref} style={{ width: flag ? 200 : 300 }} onClick={() => setFlag(!flag)}>
-      change size
-    </button>
+    <div>
+      <div ref={ref} style={{ width, height: 30, border: '1px solid #000', marginBottom: 8 }}>
+        current width：{width}
+      </div>
+      <button onClick={() => setWidth(width + 10)}>widening</button>
+      <p>Mutation count {count}</p>
+    </div>
   );
 };
 
