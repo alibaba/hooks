@@ -23,12 +23,14 @@ useMutationObserver(
 );
 ```
 
-### Options
+## Params
 
-| Property | Description        | Type                                                                | Default |
-| -------- | ------------------ | ------------------------------------------------------------------- | ------- |
-| callback | Trigger Function   | `(mutations: MutationRecord[], observer: MutationObserver) => void` | -       |
-| target   | DOM element or ref | `Element` \| `() => Element` \| `MutableRefObject<Element>`         | -       |
-| options  | Setting            | `Options`                                                           | -       |
+| Property | Description           | Type                                                                | Default |
+| -------- | --------------------- | ------------------------------------------------------------------- | ------- |
+| target   | DOM element or ref    | `() => Element` \| `Element` \| `MutableRefObject<Element>`         | -       |
+| callback | The callback function | `(mutations: MutationRecord[], observer: MutationObserver) => void` | -       |
+| options  | Setting               | `MutationObserverInit`                                              | -       |
+
+### Options
 
 For options, please refer to [MutationObserver](https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver/observe#parameters)
