@@ -15,7 +15,7 @@ const App: React.FC = () => {
 
   useMutationObserver(
     (mutationsList) => {
-      mutationsList.forEach(() => setCount(count + 1));
+      mutationsList.forEach(() => setCount((c) => c + 1));
     },
     ref,
     { attributes: true },
