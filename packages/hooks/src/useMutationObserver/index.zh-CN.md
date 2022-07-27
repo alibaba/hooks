@@ -13,18 +13,6 @@ nav:
 
 <code src="./demo/demo1.tsx" />
 
-### 传入 DOM 元素
-
-<code src="./demo/demo2.tsx" />
-
-### 监听子节点变化
-
-<code src="./demo/demo3.tsx" />
-
-### 动态回调
-
-<code src="./demo/demo4.tsx" />
-
 ## API
 
 ```typescript
@@ -43,7 +31,7 @@ useMutationObserver(
 | callback | 触发的回调函数   | `(mutations: MutationRecord[], observer: MutationObserver) => void` |        |
 | options  | 设置项           | `MutationObserverInit`                                              |        |
 
-### options
+### Options
 
 | 参数                  | 说明                                                                                     | 类型       | 默认值  |
 | --------------------- | ---------------------------------------------------------------------------------------- | ---------- | ------- |
@@ -66,7 +54,3 @@ useMutationObserver(
 - `attributes` 选项为 `false`（表示不监视属性更改），但是 `attributeOldValue` 选项为 `true` 并且/或者 `attributeFilter` 配置存在
 
 - `characterDataOldValue` 选项为 `true`，但是 `characterData` 选项为 `false`（表示不跟踪字符更改）
-
-## 备注
-
-`options`、`callback` 支持动态变化
