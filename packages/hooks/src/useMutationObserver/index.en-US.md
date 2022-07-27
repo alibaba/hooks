@@ -21,6 +21,10 @@ A hook that provides the ability to watch for changes being made to the DOM tree
 
 <code src="./demo/demo3.tsx" />
 
+### dynamic callback
+
+<code src="./demo/demo4.tsx" />
+
 ## API
 
 ```typescript
@@ -62,3 +66,7 @@ Warning, Thrown in any of the following circumstances:
 - The value of attributes is false (indicating that attribute changes are not to be monitored), but attributeOldValue is true and/or attributeFilter is present.
 
 - The characterDataOldValue option is true but characterData is false (indicating that character changes are not to be monitored).
+
+## Remark
+
+`options`、`callback` support dynamic change.

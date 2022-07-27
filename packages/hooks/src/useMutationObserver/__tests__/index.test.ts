@@ -40,11 +40,11 @@ describe('useMutationObserver', () => {
     expect(callback).not.toBeCalled();
   });
 
-  it('should not work when options is null', async () => {
+  it('should throw a Error when options is null', async () => {
     const callback = jest.fn();
     const { rerender } = renderHook(() => useMutationObserver(container, callback));
     container.style.backgroundColor = '#000';
     await rerender();
-    expect(callback).not.toBeCalled();
+    expect(callback).toThrow();
   });
 });

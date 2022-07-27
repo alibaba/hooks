@@ -21,6 +21,10 @@ nav:
 
 <code src="./demo/demo3.tsx" />
 
+### 动态回调
+
+<code src="./demo/demo4.tsx" />
+
 ## API
 
 ```typescript
@@ -62,3 +66,7 @@ useMutationObserver(
 - `attributes` 选项为 `false`（表示不监视属性更改），但是 `attributeOldValue` 选项为 `true` 并且/或者 `attributeFilter` 配置存在
 
 - `characterDataOldValue` 选项为 `true`，但是 `characterData` 选项为 `false`（表示不跟踪字符更改）
+
+## 备注
+
+`options`、`callback` 支持动态变化
