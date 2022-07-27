@@ -13,18 +13,20 @@ const App: React.FC = () => {
 
   const ref = useRef<HTMLDivElement>(null);
 
-  const callback: MutationCallback = (mutationsList) => {
-    mutationsList.forEach(() => setCount(count + 1));
-  };
-
-  useMutationObserver(ref, callback, { attributes: true });
+  useMutationObserver(
+    (mutationsList) => {
+      mutationsList.forEach(() => setCount(count + 1));
+    },
+    ref,
+    { attributes: true },
+  );
 
   return (
     <div>
-      <div ref={ref} style={{ width, height: 30, border: '1px solid #000', marginBottom: 8 }}>
+      <div ref={ref} style={{ width, padding: 12, border: '1px solid #000', marginBottom: 8 }}>
         current width：{width}
       </div>
-      <button onClick={() => setWidth(width + 10)}>widening</button>
+      <button onClick={() => setWidth((w) => w + 10)}>widening</button>
       <p>Mutation count {count}</p>
     </div>
   );
