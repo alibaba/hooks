@@ -157,6 +157,6 @@ describe('usePagination', () => {
     expect(queryArgs.pageSize).toEqual(5);
     await hook.waitForNextUpdate();
     expect(hook.result.current.pagination.current).toEqual(3);
-    expect(hook.result.current.pagination.current).toEqual(5);
+    expect(hook.result.current.pagination.pageSize).toEqual(5);
   });
 });
