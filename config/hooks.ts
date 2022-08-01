@@ -90,6 +90,7 @@ export const menus = [
       'useFavicon',
       'useFullscreen',
       'useHover',
+      'useMutationObserver',
       'useInViewport',
       'useKeyPress',
       'useLongPress',
