@@ -1,6 +1,6 @@
 import { renderHook } from '@testing-library/react-hooks';
 import { useEffect, useLayoutEffect } from 'react';
-import { createUpdateEffect } from '../index';
+import createUpdateEffect from '../index';
 
 describe('createUpdateEffect', () => {
   it('should work for useEffect', () => {
