@@ -1,4 +1,4 @@
-import createUpdateEffect from './createUpdateEffect';
+import { createUpdateEffect } from './createUpdateEffect';
 import useAntdTable from './useAntdTable';
 import useAsyncEffect from './useAsyncEffect';
 import useBoolean from './useBoolean';
