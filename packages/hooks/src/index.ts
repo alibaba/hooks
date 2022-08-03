@@ -74,6 +74,7 @@ import useVirtualList from './useVirtualList';
 import useWebSocket from './useWebSocket';
 import useWhyDidYouUpdate from './useWhyDidYouUpdate';
 import useMutationObserver from './useMutationObserver';
+import useEnhance from './useEnhance';
 
 export {
   useRequest,
@@ -154,4 +155,5 @@ export {
   useRafInterval,
   useRafTimeout,
   useMutationObserver,
+  useEnhance,
 };
