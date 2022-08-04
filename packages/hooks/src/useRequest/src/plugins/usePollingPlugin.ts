@@ -45,16 +45,15 @@ const usePollingPlugin: Plugin<any, any[]> = (
         // When an error occurs, the request is not repeated after pollingErrorRetryCount retries
         (pollingErrorRetryCount !== -1 && countRef.current <= pollingErrorRetryCount)
       ) {
-        // if pollingWhenHidden = false && document is hidden, then stop polling and subscribe revisible
-        if (!pollingWhenHidden && !isDocumentVisible()) {
-          unsubscribeRef.current = subscribeReVisible(() => {
-            fetchInstance.refresh();
-          });
-          return;
-        }
-
         timerRef.current = setTimeout(() => {
-          fetchInstance.refresh();
+          // if pollingWhenHidden = false && document is hidden, then stop polling and subscribe revisible
+          if (!pollingWhenHidden && !isDocumentVisible()) {
+            unsubscribeRef.current = subscribeReVisible(() => {
+              fetchInstance.refresh();
+            });
+          } else {
+            fetchInstance.refresh();
+          }
         }, pollingInterval);
       } else {
         countRef.current = 0;
