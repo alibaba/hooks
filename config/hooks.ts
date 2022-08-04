@@ -55,6 +55,7 @@ export const menus = [
       'useRafState',
       'useSafeState',
       'useGetState',
+      'useResetState',
     ],
   },
   {

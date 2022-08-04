@@ -179,7 +179,7 @@ packages:
       react-dom: ^16.13.1
     dependencies:
       '@gcanvas/core': 1.0.0
-      classnames: 2.2.6
+      classnames: 2.3.1
       omit.js: 2.0.2
       prop-types: 15.8.1
       react: 16.14.0
@@ -5171,6 +5171,7 @@ packages:
       {
         integrity: sha512-p2q/t/mhvuOj/UeLlV6566GD/guowlr0hHxClI0W9m7MWYkL1F0hLo+0Aexs9HSPCtR1SXQ0TD3MMKrXZajbiQ==,
       }
+    requiresBuild: true
     dependencies:
       file-uri-to-path: 1.0.0
     dev: true
@@ -8720,6 +8721,7 @@ packages:
       {
         integrity: sha512-0Zt+s3L7Vf1biwWZ29aARiVYLx7iMGnEUl9x33fbB/j3jR81u/O2LbqK+Bm1CDSNDKVtJ/YjwY7TUd5SkeLQLw==,
       }
+    requiresBuild: true
     dev: true
     optional: true
 
@@ -9440,7 +9442,7 @@ packages:
       fs.realpath: 1.0.0
       inflight: 1.0.6
       inherits: 2.0.4
-      minimatch: 3.0.4
+      minimatch: 3.1.2
       once: 1.4.0
       path-is-absolute: 1.0.1
     dev: true
@@ -13769,6 +13771,7 @@ packages:
       {
         integrity: sha512-UdAqHyFngu7TfQKsCBgAA6pWDkT8MAO7d0jyOecVhN5354xbLqdn8mV9Tat9gepAupm0bt2DbeaSC8vS52MuFA==,
       }
+    requiresBuild: true
     dev: true
     optional: true
 
@@ -21436,7 +21439,7 @@ packages:
       require-directory: 2.1.1
       string-width: 4.2.3
       y18n: 5.0.8
-      yargs-parser: 20.2.4
+      yargs-parser: 20.2.9
     dev: true
 
   /yargs/7.1.2:
