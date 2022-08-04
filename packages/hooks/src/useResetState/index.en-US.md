@@ -7,9 +7,9 @@ nav:
 
 useResetState works similar to `React.useState`, it provides a `reset` method
 
-## 代码演示
+## Examples
 
-### 基础用法
+### Default Usage
 
 <code src="./demo/demo1.tsx" />
 
