@@ -128,4 +128,35 @@ describe('usePagination', () => {
     expect(hook.result.current.pagination.current).toEqual(1);
     expect(hook.result.current.pagination.pageSize).toEqual(20);
   });
+
+  it('should default params work', async () => {
+    queryArgs = undefined;
+    act(() => {
+      hook = setUp(asyncFn, {
+        defaultPageSize: 5,
+        defaultCurrent: 2,
+      });
+    });
+    expect(hook.result.current.loading).toEqual(true);
+    expect(queryArgs.current).toEqual(2);
+    expect(queryArgs.pageSize).toEqual(5);
+    await hook.waitForNextUpdate();
+
+    expect(hook.result.current.loading).toEqual(false);
+
+    expect(hook.result.current.pagination.current).toEqual(2);
+    expect(hook.result.current.pagination.pageSize).toEqual(5);
+    expect(hook.result.current.pagination.total).toEqual(55);
+    expect(hook.result.current.pagination.totalPage).toEqual(11);
+
+    act(() => {
+      hook.result.current.pagination.changeCurrent(3);
+    });
+    expect(hook.result.current.loading).toEqual(true);
+    expect(queryArgs.current).toEqual(3);
+    expect(queryArgs.pageSize).toEqual(5);
+    await hook.waitForNextUpdate();
+    expect(hook.result.current.pagination.current).toEqual(3);
+    expect(hook.result.current.pagination.pageSize).toEqual(5);
+  });
 });

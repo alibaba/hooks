@@ -7,10 +7,12 @@ import { getTargetElement } from '../utils/domTarget';
 import type { BasicTarget } from '../utils/domTarget';
 import { isNumber } from '../utils';
 
+type ItemHeight<T> = (index: number, data: T) => number;
+
 export interface Options<T> {
   containerTarget: BasicTarget;
   wrapperTarget: BasicTarget;
-  itemHeight: number | ((index: number, data: T) => number);
+  itemHeight: number | ItemHeight<T>;
   overscan?: number;
 }
 
@@ -68,8 +70,7 @@ const useVirtualList = <T = any>(list: T[], options: Options<T>) => {
     }
     const height = list
       .slice(0, index)
-      // @ts-ignore
-      .reduce((sum, _, i) => sum + itemHeightRef.current(i, list[i]), 0);
+      .reduce((sum, _, i) => sum + (itemHeightRef.current as ItemHeight<T>)(i, list[i]), 0);
     return height;
   };
 
@@ -77,13 +78,15 @@ const useVirtualList = <T = any>(list: T[], options: Options<T>) => {
     if (isNumber(itemHeightRef.current)) {
       return list.length * itemHeightRef.current;
     }
-    // @ts-ignore
-    return list.reduce((sum, _, index) => sum + itemHeightRef.current(index, list[index]), 0);
+    return list.reduce(
+      (sum, _, index) => sum + (itemHeightRef.current as ItemHeight<T>)(index, list[index]),
+      0,
+    );
   }, [list]);
 
   const calculateRange = () => {
     const container = getTargetElement(containerTarget);
-    const wrapper = getTargetElement(wrapperTarget);
+    const wrapper = getTargetElement(wrapperTarget) as HTMLElement;
 
     if (container && wrapper) {
       const { scrollTop, clientHeight } = container;
@@ -96,9 +99,7 @@ const useVirtualList = <T = any>(list: T[], options: Options<T>) => {
 
       const offsetTop = getDistanceTop(start);
 
-      // @ts-ignore
       wrapper.style.height = totalHeight - offsetTop + 'px';
-      // @ts-ignore
       wrapper.style.marginTop = offsetTop + 'px';
 
       setTargetList(

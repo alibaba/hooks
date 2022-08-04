@@ -79,4 +79,5 @@ const {
 | Property        | Description                                                                                                                                      | Type                   | Default |
 | --------------- | ------------------------------------------------------------------------------------------------------------------------------------------------ | ---------------------- | ------- |
 | defaultPageSize | Default page size                                                                                                                                | `number`               | -       |
+| defaultCurrent  | Number of pages on initial request                                                                                                               | `number`               | -       |
 | refreshDeps     | Changes in `refreshDeps` will reset current to the first page and re-initiate the request. Generally, you can put the dependent conditions here. | `React.DependencyList` | `[]`    |
