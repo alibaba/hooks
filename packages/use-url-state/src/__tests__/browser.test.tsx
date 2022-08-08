@@ -1,113 +1,108 @@
-import type { RenderHookResult } from '@testing-library/react-hooks';
-import { act, renderHook } from '@testing-library/react-hooks';
-import routeData from 'react-router';
-import useUrlState, { Options } from '../index';
+import React from 'react';
+import { render } from '@testing-library/react';
+import { act } from '@testing-library/react-hooks/dom';
+import type { MemoryRouterProps } from 'react-router';
+import { MemoryRouter } from 'react-router';
+import * as rc from 'react-router';
+import useUrlState from '..';
+import type { Options } from '..';
 
-/* 暂时关闭 act 警告  见：https://github.com/testing-library/react-testing-library/issues/281#issuecomment-480349256 */
-const originalError = console.error;
+const setup = (
+  initialEntries: MemoryRouterProps['initialEntries'],
+  initialState: any = {},
+  options?: Options,
+) => {
+  const res = {} as any;
 
-beforeAll(() => {
-  console.error = (...args: any) => {
-    if (/Warning.*not wrapped in act/.test(args[0])) {
-      return;
-    }
-    originalError.call(console, ...args);
-  };
-});
-
-afterAll(() => {
-  console.error = originalError;
-});
-const replaceFn = jest.fn();
-
-function makeMockLocation(search?: string) {
-  const mockLocation = {
-    pathname: '/',
-    hash: '',
-    search: search ? `${search}` : '',
-    state: '',
+  const Component = () => {
+    const [state, setState] = useUrlState(initialState, options);
+    Object.assign(res, { state, setState });
+    return null;
   };
 
-  const mockHistory: any = {
-    push: ({ search }) => {
-      replaceFn();
-      mockLocation.search = search;
-    },
-  };
+  render(
+    <MemoryRouter initialEntries={initialEntries}>
+      <Component />
+    </MemoryRouter>,
+  );
 
-  jest.spyOn(routeData, 'useLocation').mockReturnValue(mockLocation);
-  jest.spyOn(routeData, 'useHistory').mockReturnValue(mockHistory);
-
-  return mockLocation;
-}
+  return res;
+};
 
 describe('useUrlState', () => {
   it('should be defined', () => {
     expect(useUrlState).toBeDefined();
   });
 
-  describe('test url', () => {
-    let hook: RenderHookResult<
-      [string, number],
-      [number, ((s: any) => void) | (() => (s: any) => any)]
-    >;
+  it('state should be url search params', () => {
+    const res = setup([
+      {
+        pathname: '/index',
+        search: '?count=1',
+      },
+    ]);
+    expect(res.state).toMatchObject({ count: '1' });
+  });
 
-    function setup(key: string, value: string, config?: Options) {
-      hook = renderHook(() => {
-        return useUrlState({ [key]: value }, config);
-      }) as any;
-      hook.rerender();
-    }
+  it('url shoule be changed when use setState', () => {
+    const res = setup(['/index']);
+    expect(res.state).toMatchObject({});
+    act(() => {
+      res.setState({ count: 1 });
+    });
+    expect(res.state).toMatchObject({ count: '1' });
+  });
 
-    afterEach(() => {
-      hook.unmount();
+  it('multiple states should be work', () => {
+    const res = setup(['/index']);
+    act(() => {
+      res.setState({ page: 1 });
+    });
+    act(() => {
+      res.setState({ pageSize: 10 });
+    });
+    expect(res.state).toMatchObject({ page: '1', pageSize: '10' });
+  });
+
+  it('query-string options should work', async () => {
+    const res = setup(
+      [
+        {
+          pathname: '/index',
+          search: '?foo=1,2,3',
+        },
+      ],
+      {},
+      {
+        parseOptions: {
+          arrayFormat: 'comma',
+        },
+        stringifyOptions: {
+          arrayFormat: 'comma',
+        },
+      },
+    );
+    expect(res.state).toMatchObject({ foo: ['1', '2', '3'] });
+
+    act(() => {
+      res.setState({ foo: ['4', '5', '6'] });
+    });
+    expect(res.state).toMatchObject({ foo: ['4', '5', '6'] });
+  });
+
+  it('react router v5 should be work', () => {
+    const push = jest.fn();
+
+    Object.defineProperty(rc, 'useHistory', {
+      value: () => ({ push }),
     });
 
-    it('history replace should work', async () => {
-      const mockLocation = makeMockLocation();
-      act(() => {
-        setup('mock', '0');
-      });
-
-      expect(replaceFn).toBeCalledTimes(0);
-      expect(hook.result.current[0]).toEqual({ mock: '0' });
-      expect(mockLocation.search).toEqual('');
-
-      act(() => {
-        hook.result.current[1]({ mock: 1 });
-      });
-      expect(replaceFn).toBeCalledTimes(1);
-      expect(mockLocation.search).toEqual('mock=1');
-      act(() => {
-        hook.result.current[1]({ mock: 2, test: 3 });
-      });
-
-      expect(mockLocation.search).toEqual('mock=2&test=3');
+    const res = setup(['/index']);
+    act(() => {
+      res.setState({ count: 1 });
     });
 
-    it('query-string options should work', async () => {
-      const mockLocation = makeMockLocation();
-
-      act(() => {
-        setup('mock', '0', {
-          parseOptions: {
-            arrayFormat: 'comma',
-          },
-          stringifyOptions: {
-            arrayFormat: 'comma',
-          },
-        });
-      });
-      expect(replaceFn).toBeCalledTimes(0);
-      expect(hook.result.current[0]).toEqual({ mock: '0' });
-      expect(mockLocation.search).toEqual('');
-
-      act(() => {
-        hook.result.current[1]({ mock: 1, test: [1, 2, 3] });
-      });
-      expect(replaceFn).toBeCalledTimes(1);
-      expect(hook.result.current[0]).toEqual({ mock: '1', test: ['1', '2', '3'] });
-      expect(mockLocation.search).toEqual('mock=1&test=1,2,3');
-    });
+    expect(res.state).toMatchObject({ count: '1' });
+    expect(push).toBeCalledWith({ hash: '', search: 'count=1' });
   });
 });
