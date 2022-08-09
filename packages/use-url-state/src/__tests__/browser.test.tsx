@@ -1,39 +1,7 @@
-import React from 'react';
-import { render } from '@testing-library/react';
 import { act } from '@testing-library/react-hooks/dom';
-import type { MemoryRouterProps } from 'react-router';
-import { MemoryRouter } from 'react-router';
-import * as rc from 'react-router';
-import useUrlState from '..';
-import type { Options } from '..';
-
-const setup = (
-  initialEntries: MemoryRouterProps['initialEntries'],
-  initialState: any = {},
-  options?: Options,
-) => {
-  const res = {} as any;
-
-  const Component = () => {
-    const [state, setState] = useUrlState(initialState, options);
-    Object.assign(res, { state, setState });
-    return null;
-  };
-
-  render(
-    <MemoryRouter initialEntries={initialEntries}>
-      <Component />
-    </MemoryRouter>,
-  );
-
-  return res;
-};
+import { setup } from '.';
 
 describe('useUrlState', () => {
-  it('should be defined', () => {
-    expect(useUrlState).toBeDefined();
-  });
-
   it('state should be url search params', () => {
     const res = setup([
       {
@@ -88,21 +56,5 @@ describe('useUrlState', () => {
       res.setState({ foo: ['4', '5', '6'] });
     });
     expect(res.state).toMatchObject({ foo: ['4', '5', '6'] });
-  });
-
-  it('react router v5 should be work', () => {
-    const push = jest.fn();
-
-    Object.defineProperty(rc, 'useHistory', {
-      value: () => ({ push }),
-    });
-
-    const res = setup(['/index']);
-    act(() => {
-      res.setState({ count: 1 });
-    });
-
-    expect(res.state).toMatchObject({ count: '1' });
-    expect(push).toBeCalledWith({ hash: '', search: 'count=1' });
   });
 });
