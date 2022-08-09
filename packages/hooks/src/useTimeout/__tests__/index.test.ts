@@ -10,6 +10,7 @@ const setUp = ({ fn, delay }: ParamsObj) => renderHook(() => useTimeout(fn, dela
 
 describe('useTimeout', () => {
   jest.useFakeTimers();
+  jest.spyOn(global, 'clearTimeout');
 
   it('timeout should work', () => {
     const callback = jest.fn();

@@ -25,6 +25,8 @@ describe('useCachePlugin', () => {
     expect(hook.result.current.data).toEqual('success');
     hook.unmount();
 
+    jest.advanceTimersByTime(100);
+
     let hook2;
     act(() => {
       hook2 = setUp(request, {
