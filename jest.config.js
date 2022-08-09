@@ -1,5 +1,6 @@
 module.exports = {
   preset: 'ts-jest/presets/js-with-ts',
+  testEnvironment: 'jsdom',
   clearMocks: true,
   testPathIgnorePatterns: ['/.history/'],
   modulePathIgnorePatterns: ['<rootDir>/package.json'],
@@ -16,5 +17,6 @@ module.exports = {
     '!**/example/**',
     '!**/es/**',
     '!**/lib/**',
+    '!**/dist/**',
   ],
 };
