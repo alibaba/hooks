@@ -7,7 +7,7 @@ importers:
       '@babel/cli': ^7.10.1
       '@babel/core': ^7.10.2
       '@testing-library/react': ^10.0.4
-      '@testing-library/react-hooks': ^2.0.1
+      '@testing-library/react-hooks': ^8.0.1
       '@types/jest': ^26.0.1
       '@types/lodash.debounce': ^4.0.6
       '@types/lodash.isequal': ^4.5.5
@@ -56,7 +56,7 @@ importers:
       '@babel/cli': 7.18.9_@babel+core@7.18.9
       '@babel/core': 7.18.9
       '@testing-library/react': 10.4.9_wcqkhtmu7mswc6yz4uyexck3ty
-      '@testing-library/react-hooks': 2.0.3_tdqown5j64uauhc2nsegmgpvwq
+      '@testing-library/react-hooks': 8.0.1_dahwe3hk4b2k22ca2w2l5lt4hq
       '@types/jest': 26.0.24
       '@types/lodash.debounce': 4.0.7
       '@types/lodash.isequal': 4.5.6
@@ -2556,18 +2556,29 @@ packages:
       pretty-format: 26.6.2
     dev: true
 
-  /@testing-library/react-hooks/2.0.3_tdqown5j64uauhc2nsegmgpvwq:
+  /@testing-library/react-hooks/8.0.1_dahwe3hk4b2k22ca2w2l5lt4hq:
     resolution:
       {
-        integrity: sha512-adm+7b1gcysGka8VuYq/ObBrIBJTT9QmCEIqPpuxozWFfVDgxSbzBGc44ia/WYLGVt2dqFIOc6/DmAmu/pa0gQ==,
+        integrity: sha512-Aqhl2IVmLt8IovEVarNDFuJDVWVvhnr9/GCU6UUnrYXwgDFF9h2L2o2P9KBni1AST5sT6riAyoukFLyjQUgD/g==,
       }
+    engines: { node: '>=12' }
     peerDependencies:
-      react: '>=16.9.0'
-      react-test-renderer: '>=16.9.0'
+      '@types/react': ^16.9.0 || ^17.0.0
+      react: ^16.9.0 || ^17.0.0
+      react-dom: ^16.9.0 || ^17.0.0
+      react-test-renderer: ^16.9.0 || ^17.0.0
+    peerDependenciesMeta:
+      '@types/react':
+        optional: true
+      react-dom:
+        optional: true
+      react-test-renderer:
+        optional: true
     dependencies:
       '@babel/runtime': 7.18.9
-      '@types/testing-library__react-hooks': 2.0.0
       react: 16.14.0
+      react-dom: 16.14.0_react@16.14.0
+      react-error-boundary: 3.1.4_react@16.14.0
       react-test-renderer: 16.14.0_react@16.14.0
     dev: true
 
@@ -2953,15 +2964,6 @@ packages:
       '@types/react': 18.0.15
     dev: true
 
-  /@types/react-test-renderer/18.0.0:
-    resolution:
-      {
-        integrity: sha512-C7/5FBJ3g3sqUahguGi03O79b8afNeSD6T8/GU50oQrJCU0bVCCGQHaGKUbg2Ce8VQEEqTw8/HiS6lXHHdgkdQ==,
-      }
-    dependencies:
-      '@types/react': 18.0.15
-    dev: true
-
   /@types/react/16.14.28:
     resolution:
       {
@@ -3014,16 +3016,6 @@ packages:
       {
         integrity: sha512-Hl219/BT5fLAaz6NDkSuhzasy49dwQS/DSdu4MdggFB8zcXv7vflBI3xp7FEmkmdDkBUI2bPUNeMttp2knYdxw==,
       }
-    dev: true
-
-  /@types/testing-library__react-hooks/2.0.0:
-    resolution:
-      {
-        integrity: sha512-YUVqXGCChJKEJ4aAnMXqPCq0NfPAFVsJeGIb2y/iiMjxwyu+45+vR+AHOwjJHHKEHeC0ZhOGrZ5gSEmaJe4tyQ==,
-      }
-    dependencies:
-      '@types/react': 18.0.15
-      '@types/react-test-renderer': 18.0.0
     dev: true
 
   /@types/unist/2.0.6:

@@ -29,7 +29,7 @@
     "@babel/cli": "^7.10.1",
     "@babel/core": "^7.10.2",
     "@testing-library/react": "^10.0.4",
-    "@testing-library/react-hooks": "^2.0.1",
+    "@testing-library/react-hooks": "^8.0.1",
     "@types/jest": "^26.0.1",
     "@types/lodash.debounce": "^4.0.6",
     "@types/lodash.isequal": "^4.5.5",
