@@ -34,6 +34,7 @@
     "@types/lodash.debounce": "^4.0.6",
     "@types/lodash.isequal": "^4.5.5",
     "@types/lodash.throttle": "^4.1.6",
+    "@types/react-router": "^5.1.18",
     "@umijs/fabric": "^2.1.0",
     "@umijs/plugin-sass": "^1.1.1",
     "antd": "^4.3.3",
