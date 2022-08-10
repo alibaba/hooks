@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState, useRef } from 'react';
+import { useEffect, useMemo, useState, useRef, useLayoutEffect } from 'react';
 import useEventListener from '../useEventListener';
 import useLatest from '../useLatest';
 import useMemoizedFn from '../useMemoizedFn';
@@ -26,6 +26,8 @@ const useVirtualList = <T = any>(list: T[], options: Options<T>) => {
   const scrollTriggerByScrollToFunc = useRef(false);
 
   const [targetList, setTargetList] = useState<{ index: number; data: T }[]>([]);
+
+  const [offsetTop, setOffsetTop] = useState<number>(0);
 
   const getVisibleCount = (containerHeight: number, fromIndex: number) => {
     if (isNumber(itemHeightRef.current)) {
@@ -68,9 +70,7 @@ const useVirtualList = <T = any>(list: T[], options: Options<T>) => {
       const height = index * itemHeightRef.current;
       return height;
     }
-    const height = list
-      .slice(0, index)
-      .reduce((sum, _, i) => sum + (itemHeightRef.current as ItemHeight<T>)(i, list[i]), 0);
+    const height = list.slice(0, index).reduce((sum, _, i) => sum + (itemHeightRef.current as ItemHeight<T>)(i, list[i]), 0);
     return height;
   };
 
@@ -78,11 +78,14 @@ const useVirtualList = <T = any>(list: T[], options: Options<T>) => {
     if (isNumber(itemHeightRef.current)) {
       return list.length * itemHeightRef.current;
     }
-    return list.reduce(
-      (sum, _, index) => sum + (itemHeightRef.current as ItemHeight<T>)(index, list[index]),
-      0,
-    );
+    return list.reduce((sum, _, index) => sum + (itemHeightRef.current as ItemHeight<T>)(index, list[index]), 0);
   }, [list]);
+
+  useLayoutEffect(() => {
+    const wrapper = getTargetElement(wrapperTarget) as HTMLElement;
+    wrapper.style.height = totalHeight - offsetTop + 'px';
+    wrapper.style.marginTop = offsetTop + 'px';
+  }, [totalHeight, wrapperTarget, offsetTop]);
 
   const calculateRange = () => {
     const container = getTargetElement(containerTarget);
@@ -98,15 +101,15 @@ const useVirtualList = <T = any>(list: T[], options: Options<T>) => {
       const end = Math.min(list.length, offset + visibleCount + overscan);
 
       const offsetTop = getDistanceTop(start);
-
-      wrapper.style.height = totalHeight - offsetTop + 'px';
-      wrapper.style.marginTop = offsetTop + 'px';
+      setOffsetTop(offsetTop);
+      // wrapper.style.height = totalHeight - offsetTop + 'px';
+      // wrapper.style.marginTop = offsetTop + 'px';
 
       setTargetList(
         list.slice(start, end).map((ele, index) => ({
           data: ele,
           index: index + start,
-        })),
+        }))
       );
     }
   };
@@ -130,7 +133,7 @@ const useVirtualList = <T = any>(list: T[], options: Options<T>) => {
     },
     {
       target: containerTarget,
-    },
+    }
   );
 
   const scrollTo = (index: number) => {
