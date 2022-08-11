@@ -12,6 +12,7 @@ importers:
       '@types/lodash.debounce': ^4.0.6
       '@types/lodash.isequal': ^4.5.5
       '@types/lodash.throttle': ^4.1.6
+      '@types/react-router': ^5.1.18
       '@umijs/fabric': ^2.1.0
       '@umijs/plugin-sass': ^1.1.1
       antd: ^4.3.3
@@ -61,6 +62,7 @@ importers:
       '@types/lodash.debounce': 4.0.7
       '@types/lodash.isequal': 4.5.6
       '@types/lodash.throttle': 4.1.7
+      '@types/react-router': 5.1.18
       '@umijs/fabric': 2.12.2
       '@umijs/plugin-sass': 1.1.1_umi@3.5.30+webpack@4.46.0
       antd: 4.21.7_wcqkhtmu7mswc6yz4uyexck3ty
@@ -2947,7 +2949,7 @@ packages:
     dependencies:
       '@types/history': 5.0.0
       '@types/react': 18.0.15
-      '@types/react-router': 5.1.12
+      '@types/react-router': 5.1.18
     dev: true
 
   /@types/react-router/5.1.12:
