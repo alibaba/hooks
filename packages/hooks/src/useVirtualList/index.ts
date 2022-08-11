@@ -40,15 +40,16 @@ const useVirtualList = <T = any>(list: T[], options: Options<T>) => {
 
     let sum = 0;
     let endIndex = 0;
-    for (let i = fromIndex; i < list.length; i++) {
+    // 需要从 0 开始计算，因为从 fronIndex 计算会有半个在可视区域外面的情况，不严谨
+    for (let i = 0; i < list.length; i++) {
       const height = itemHeightRef.current(i, list[i]);
       sum += height;
       endIndex = i;
-      if (sum >= containerHeight) {
+      if (sum >= containerHeight + scrollTop) {
         break;
       }
     }
-    return sum === containerHeight ? endIndex - fromIndex : endIndex - fromIndex + 1;
+    return endIndex - fromIndex + 1;
   };
 
   // 当前显示第一个元素的下标
