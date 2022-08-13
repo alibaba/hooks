@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useRef, isValidElement } from 'react';
 import useCreation from '../useCreation';
 import useUpdate from '../useUpdate';
 import { isObject } from '../utils';
@@ -19,6 +19,11 @@ function observer<T extends Record<string, any>>(initialVal: T, cb: () => void):
   // 防止代理已经代理过的对象
   // https://github.com/alibaba/hooks/issues/839
   if (rawMap.has(initialVal)) {
+    return initialVal;
+  }
+
+  // virtualDOM 不能被代理
+  if(isValidElement(initialVal)) {
     return initialVal;
   }
 
