@@ -40,6 +40,8 @@ function usePaginated<R, Item, U extends Item = any>(
     ...(restOptions as any),
   });
 
+  const defaultDataSourceRef = useRef([]);
+
   const {
     current = 1,
     pageSize = defaultPageSize,
@@ -134,7 +136,7 @@ function usePaginated<R, Item, U extends Item = any>(
       changePageSize,
     },
     tableProps: {
-      dataSource: data?.list || [],
+      dataSource: data?.list || defaultDataSourceRef.current,
       loading,
       onChange: changeTable,
       pagination: {
