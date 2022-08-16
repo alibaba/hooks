@@ -19,4 +19,5 @@ module.exports = {
     '!**/lib/**',
     '!**/dist/**',
   ],
+  transformIgnorePatterns: ['^.+\\.js$'],
 };
