@@ -46,7 +46,9 @@ export default () => {
       <div style={{ marginTop: 8 }}>
         <p>received message: </p>
         {messageHistory.current.map((message, index) => (
-          <p key={index}>{message?.data}</p>
+          <p key={index} style={{ wordWrap: 'break-word' }}>
+            {message?.data}
+          </p>
         ))}
       </div>
     </div>
