@@ -115,6 +115,11 @@ export default class Fetch<TData, TParams extends any[]> {
       });
 
       this.options.onError?.(error, params);
+
+      if (!this.options.onError) {
+        console.error(error);
+      }
+
       this.runPluginHandler('onError', error, params);
 
       this.options.onFinally?.(params, undefined, error);
@@ -128,11 +133,7 @@ export default class Fetch<TData, TParams extends any[]> {
   }
 
   run(...params: TParams) {
-    this.runAsync(...params).catch((error) => {
-      if (!this.options.onError) {
-        console.error(error);
-      }
-    });
+    this.runAsync(...params);
   }
 
   cancel() {
