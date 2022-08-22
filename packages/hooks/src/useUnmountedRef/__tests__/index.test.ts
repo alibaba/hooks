@@ -1,8 +1,8 @@
 import { renderHook } from '@testing-library/react-hooks';
 import useUnmountedRef from '../index';
 
-describe('useMountStatus', () => {
-  it('should work', async () => {
+describe('useUnmountedRef', () => {
+  it('should work', () => {
     const hook = renderHook(() => useUnmountedRef());
     expect(hook.result.current.current).toBe(false);
     hook.rerender();
