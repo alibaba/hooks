@@ -46,6 +46,13 @@ export default class Fetch<TData, TParams extends any[]> {
     this.count += 1;
     const currentCount = this.count;
 
+    const cancel = this.options.onBefore?.(params);
+
+    // support user cancel in onBefore
+    if (cancel === false) {
+      return new Promise(() => {});
+    }
+
     const {
       stopNow = false,
       returnNow = false,
@@ -67,8 +74,6 @@ export default class Fetch<TData, TParams extends any[]> {
     if (returnNow) {
       return Promise.resolve(state.data);
     }
-
-    this.options.onBefore?.(params);
 
     try {
       // replace service

@@ -213,4 +213,35 @@ describe('useRequest', () => {
     expect(hook.result.current.loading).toEqual(false);
     hook.unmount();
   });
+
+  it('useRequest onBefore return false should work', async () => {
+    const mockRequest = jest.fn(request);
+
+    act(() => {
+      hook = setUp(mockRequest, {
+        manual: true,
+        onBefore: ([cancel]) => {
+          if (cancel) return false;
+        },
+      });
+    });
+
+    act(() => {
+      hook.result.current.run(true);
+    });
+    expect(hook.result.current.loading).toEqual(false);
+    expect(mockRequest).toHaveBeenCalledTimes(0);
+
+    act(() => {
+      hook.result.current.run(false);
+    });
+    expect(hook.result.current.loading).toEqual(true);
+    act(() => {
+      jest.runAllTimers();
+    });
+    await hook.waitForNextUpdate();
+    expect(mockRequest).toHaveBeenCalledTimes(1);
+    expect(hook.result.current.loading).toEqual(false);
+    hook.unmount();
+  });
 });

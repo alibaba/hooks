@@ -1,3 +1,11 @@
+/**
+ * title: Edit username
+ * desc: In this example, we use `run(username)` to edit the username. When username contains spaces, the `editUsername` function will not be called.
+ *
+ * title.zh-CN: 修改用户名
+ * desc.zh-CN: 在这个例子中，我们通过 `run(username)` 来修改用户名。当你提交的名字包含空格时，会弹出错误提示并且不会发送请求。
+ */
+
 import { message } from 'antd';
 import React, { useState } from 'react';
 import { useRequest } from 'ahooks';
@@ -25,6 +33,12 @@ export default () => {
     },
     onError: (error) => {
       message.error(error.message);
+    },
+    onBefore: ([username]) => {
+      if (username.includes(' ')) {
+        message.warn(`Username cannot contain spaces!`);
+        return false;
+      }
     },
   });
 

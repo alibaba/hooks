@@ -41,7 +41,7 @@ export interface PluginReturn<TData, TParams extends any[]> {
 export interface Options<TData, TParams extends any[]> {
   manual?: boolean;
 
-  onBefore?: (params: TParams) => void;
+  onBefore?: (params: TParams) => void | boolean | Promise<boolean>;
   onSuccess?: (data: TData, params: TParams) => void;
   onError?: (e: Error, params: TParams) => void;
   // formatResult?: (res: any) => TData;

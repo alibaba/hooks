@@ -104,6 +104,8 @@ const { loading, run, runAsync } = useRequest(service, {
 - 组件卸载时，取消正在进行的请求
 - 竞态取消，当上一次请求还没返回时，又发起了下一次请求，则会取消上一次请求
 
+你也可以在`options.onBefore`中通过返回`false`阻止触发请求函数，该特性可用于对参数进行校验
+
 <code src="./demo/cancel.tsx" />
 
 ## 参数管理
