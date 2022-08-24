@@ -218,4 +218,109 @@ describe('useCachePlugin', () => {
     expect(hook2.result.current.loading).toEqual(false);
     hook2.unmount();
   });
+
+  it('useRequest dynamic cacheKey should work', async () => {
+    MockDate.reset();
+    act(() => {
+      hook = setUp(request, {
+        cacheKey: (id) => `testCacheKey_${id}`,
+        defaultParams: [1],
+      });
+    });
+
+    act(() => {
+      jest.runAllTimers();
+    });
+    await hook.waitForNextUpdate();
+    expect(hook.result.current.loading).toEqual(false);
+    expect(hook.result.current.data).toEqual('success');
+
+    jest.advanceTimersByTime(100);
+
+    let hook2;
+    act(() => {
+      hook2 = setUp(request, {
+        cacheKey: 'testCacheKey_1',
+      });
+    });
+    expect(hook2.result.current.loading).toEqual(true);
+    expect(hook2.result.current.data).toEqual('success');
+
+    act(() => {
+      jest.runAllTimers();
+    });
+    await hook2.waitForNextUpdate();
+    expect(hook2.result.current.loading).toEqual(false);
+    hook2.unmount();
+
+    let hook3;
+    act(() => {
+      hook3 = setUp(request, {
+        cacheKey: 'testCacheKey_3',
+        manual: true,
+      });
+    });
+    expect(hook3.result.current.data).toEqual(undefined);
+
+    hook.result.current.run(3);
+    act(() => {
+      jest.runAllTimers();
+    });
+    await hook.waitForNextUpdate();
+    expect(hook3.result.current.data).toEqual('success');
+  });
+
+  it('useRequest dynamic cacheKey should work', async () => {
+    MockDate.reset();
+    act(() => {
+      hook = setUp(request, {
+        cacheKey: (id) => `testCacheKey_${id}`,
+        defaultParams: [1],
+      });
+    });
+
+    act(() => {
+      jest.runAllTimers();
+    });
+    await hook.waitForNextUpdate();
+    expect(hook.result.current.loading).toEqual(false);
+    expect(hook.result.current.data).toEqual('success');
+
+    jest.advanceTimersByTime(100);
+
+    let hook2;
+    act(() => {
+      hook2 = setUp(request, {
+        cacheKey: 'testCacheKey_1',
+      });
+    });
+    expect(hook2.result.current.loading).toEqual(true);
+    expect(hook2.result.current.data).toEqual('success');
+
+    act(() => {
+      jest.runAllTimers();
+    });
+    await hook2.waitForNextUpdate();
+    expect(hook2.result.current.loading).toEqual(false);
+
+    let hook3;
+    act(() => {
+      hook3 = setUp(request, {
+        cacheKey: 'testCacheKey_3',
+        manual: true,
+      });
+    });
+    expect(hook3.result.current.data).toEqual(undefined);
+
+    hook.result.current.run(3);
+    act(() => {
+      jest.runAllTimers();
+    });
+    await hook.waitForNextUpdate();
+    expect(hook3.result.current.data).toEqual('success');
+
+    hook2.result.current.mutate(2);
+    expect(hook2.result.current.data).toEqual(2);
+    expect(hook.result.current.data).toEqual('success');
+  });
 });

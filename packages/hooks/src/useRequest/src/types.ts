@@ -77,7 +77,7 @@ export interface Options<TData, TParams extends any[]> {
   throttleTrailing?: boolean;
 
   // cache
-  cacheKey?: string;
+  cacheKey?: string | ((params: TParams) => string);
   cacheTime?: number;
   staleTime?: number;
   setCache?: (data: CachedData<TData, TParams>) => void;

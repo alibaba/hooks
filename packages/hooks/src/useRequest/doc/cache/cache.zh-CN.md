@@ -46,6 +46,12 @@ group:
 
 <code src="./demo/params.tsx" />
 
+### 动态 cacheKey
+
+`cacheKey`支持`string`和`(params) => string`，并且支持动态更新。`cacheKey`的更新不会实时触发数据的变化，只有每次重新请求时才会以新的`cacheKey`获取/保存缓存数据
+
+<code src="./demo/dynamicCacheKey.tsx" />
+
 ### 删除缓存
 
 ahooks 提供了一个 `clearCache` 方法，可以清除指定 `cacheKey` 的缓存数据。
