@@ -37,14 +37,14 @@ function useScroll(
             // https://stackoverflow.com/questions/28633221/document-body-scrolltop-firefox-returns-0-only-js
             newPosition = {
               left: Math.max(
-                window.pageYOffset,
-                document.documentElement.scrollTop,
-                document.body.scrollTop,
-              ),
-              top: Math.max(
                 window.pageXOffset,
                 document.documentElement.scrollLeft,
                 document.body.scrollLeft,
+              ),
+              top: Math.max(
+                window.pageYOffset,
+                document.documentElement.scrollTop,
+                document.body.scrollTop,
               ),
             };
           }
