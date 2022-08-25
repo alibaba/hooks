@@ -155,16 +155,8 @@ export default class Fetch<TData, TParams extends any[]> {
   }
 
   mutate(data?: TData | ((oldData?: TData) => TData | undefined)) {
-    let targetData: TData | undefined;
-    if (isFunction(data)) {
-      // @ts-ignore
-      targetData = data(this.state.data);
-    } else {
-      targetData = data;
-    }
-
+    const targetData = isFunction(data) ? data(this.state.data) : data;
     this.runPluginHandler('onMutate', targetData);
-
     this.setState({
       data: targetData,
     });
