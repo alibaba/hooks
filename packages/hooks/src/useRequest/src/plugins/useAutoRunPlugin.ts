@@ -5,7 +5,7 @@ import type { Plugin } from '../types';
 // support refreshDeps & ready
 const useAutoRunPlugin: Plugin<any, any[]> = (
   fetchInstance,
-  { manual, ready = true, defaultParams = [], refreshDeps = [], refreshDepsAction },
+  { manual, ready = true, defaultParams = [], refreshDeps = [], refreshDepsAction, params },
 ) => {
   const hasAutoRun = useRef(false);
   hasAutoRun.current = false;
@@ -13,7 +13,7 @@ const useAutoRunPlugin: Plugin<any, any[]> = (
   useUpdateEffect(() => {
     if (!manual && ready) {
       hasAutoRun.current = true;
-      fetchInstance.run(...defaultParams);
+      fetchInstance.run(...(params || defaultParams));
     }
   }, [ready]);
 
@@ -26,7 +26,11 @@ const useAutoRunPlugin: Plugin<any, any[]> = (
       if (refreshDepsAction) {
         refreshDepsAction();
       } else {
-        fetchInstance.refresh();
+        if (params) {
+          fetchInstance.run(...params);
+        } else {
+          fetchInstance.refresh();
+        }
       }
     }
   }, [...refreshDeps]);

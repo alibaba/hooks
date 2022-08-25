@@ -48,6 +48,7 @@ export interface Options<TData, TParams extends any[]> {
   onFinally?: (params: TParams, data?: TData, e?: Error) => void;
 
   defaultParams?: TParams;
+  params?: TParams;
 
   // refreshDeps
   refreshDeps?: DependencyList;
