@@ -105,7 +105,7 @@ const {
 | reload        | 加载第一页数据，会自动捕获异常，通过 `options.onError` 处理                | `() => void`             |
 | reloadAsync   | 加载第一页数据，与 `reload` 行为一致，但返回的是 Promise，需要自行处理异常 | `() => Promise<TData>`   |
 | mutate        | 直接修改 `data`                                                            | `(data?: TData) => void` |
-| cancel        | 取消当前正在进行的请求                                                     | `() => void`             |
+| cancel        | 忽略当前 Promise 的响应                                                    | `() => void`             |
 
 ### Options
 
