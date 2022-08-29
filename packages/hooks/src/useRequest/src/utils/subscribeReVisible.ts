@@ -1,7 +1,7 @@
 import isBrowser from '../../../utils/isBrowser';
 import isDocumentVisible from './isDocumentVisible';
 
-type Listener = (data?: any) => void;
+type Listener = () => void;
 
 const listeners: Listener[] = [];
 
