@@ -105,7 +105,7 @@ const {
 | reload        | Load the first page of data, it will automatically catch the exception, and handle it through `options.onError`                                   | `() => void`             |
 | reloadAsync   | Load the first page of data, which is consistent with the behavior of `reload`, but returns Promise, so you need to handle the exception yourself | `() => Promise<TData>`   |
 | mutate        | Modify `data` directly                                                                                                                            | `(data?: TData) => void` |
-| cancel        | Cancel the request currently in progress                                                                                                          | `() => void`             |
+| cancel        | Ignore the current promise response                                                                                                               | `() => void`             |
 
 ### Options
 
