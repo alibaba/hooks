@@ -3,7 +3,7 @@ import isBrowser from '../../../utils/isBrowser';
 import isDocumentVisible from './isDocumentVisible';
 import isOnline from './isOnline';
 
-type Listener = (data?: any) => void;
+type Listener = () => void;
 
 const listeners: Listener[] = [];
 

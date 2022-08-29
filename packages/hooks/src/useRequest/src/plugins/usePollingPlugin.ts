@@ -23,9 +23,6 @@ const usePollingPlugin: Plugin<any, any[]> = (
     if (!pollingInterval) {
       stopPolling();
     }
-    return () => {
-      fetchInstance.refresh();
-    };
   }, [pollingInterval]);
 
   if (!pollingInterval) {
@@ -33,16 +30,16 @@ const usePollingPlugin: Plugin<any, any[]> = (
   }
 
   return {
-    onBefore() {
+    onBefore: () => {
       stopPolling();
     },
-    onError() {
+    onError: () => {
       countRef.current += 1;
     },
-    onSuccess() {
+    onSuccess: () => {
       countRef.current = 0;
     },
-    onFinally() {
+    onFinally: () => {
       if (
         pollingErrorRetryCount === -1 ||
         // When an error occurs, the request is not repeated after pollingErrorRetryCount retries
@@ -62,7 +59,7 @@ const usePollingPlugin: Plugin<any, any[]> = (
         countRef.current = 0;
       }
     },
-    onCancel() {
+    onCancel: () => {
       stopPolling();
     },
   };
