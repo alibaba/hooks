@@ -156,7 +156,6 @@ describe('useMap', () => {
     act(() => {
       reset();
     });
-    console.log(result.current[0]);
     expect([...result.current[0]]).toEqual([['msg', 'hello']]);
   });
 });
