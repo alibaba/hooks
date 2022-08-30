@@ -1,11 +1,11 @@
 import { act, renderHook } from '@testing-library/react-hooks';
 import useMap from '../index';
 
-const setUp = (initialMap?: Iterable<[any, any]>) => renderHook(() => useMap(initialMap));
+const setup = (initialMap?: Iterable<[any, any]>) => renderHook(() => useMap(initialMap));
 
 describe('useMap', () => {
   it('should init map and utils', () => {
-    const { result } = setUp([
+    const { result } = setup([
       ['foo', 'bar'],
       ['a', 1],
     ]);
@@ -25,13 +25,13 @@ describe('useMap', () => {
   });
 
   it('should init empty map if not initial object provided', () => {
-    const { result } = setUp();
+    const { result } = setup();
 
     expect([...result.current[0]]).toEqual([]);
   });
 
   it('should get corresponding value for initial provided key', () => {
-    const { result } = setUp([
+    const { result } = setup([
       ['foo', 'bar'],
       ['a', 1],
     ]);
@@ -46,7 +46,7 @@ describe('useMap', () => {
   });
 
   it('should get corresponding value for existing provided key', () => {
-    const { result } = setUp([
+    const { result } = setup([
       ['foo', 'bar'],
       ['a', 1],
     ]);
@@ -64,7 +64,7 @@ describe('useMap', () => {
   });
 
   it('should get undefined for non-existing provided key', () => {
-    const { result } = setUp([
+    const { result } = setup([
       ['foo', 'bar'],
       ['a', 1],
     ]);
@@ -79,7 +79,7 @@ describe('useMap', () => {
   });
 
   it('should set new key-value pair', () => {
-    const { result } = setUp([
+    const { result } = setup([
       ['foo', 'bar'],
       ['a', 1],
     ]);
@@ -97,7 +97,7 @@ describe('useMap', () => {
   });
 
   it('should override current value if setting existing key', () => {
-    const { result } = setUp([
+    const { result } = setup([
       ['foo', 'bar'],
       ['a', 1],
     ]);
@@ -114,7 +114,7 @@ describe('useMap', () => {
   });
 
   it('should set new map', () => {
-    const { result } = setUp([
+    const { result } = setup([
       ['foo', 'bar'],
       ['a', 1],
     ]);
@@ -131,5 +131,31 @@ describe('useMap', () => {
       ['foo', 'foo'],
       ['a', 2],
     ]);
+  });
+
+  it('remove should be work', () => {
+    const { result } = setup([['msg', 'hello']]);
+    const { remove } = result.current[1];
+    expect(result.current[0].size).toBe(1);
+    act(() => {
+      remove('msg');
+    });
+    expect(result.current[0].size).toBe(0);
+  });
+
+  it('reset should be work', () => {
+    const { result } = setup([['msg', 'hello']]);
+    const { set, reset } = result.current[1];
+    act(() => {
+      set('text', 'new map');
+    });
+    expect([...result.current[0]]).toEqual([
+      ['msg', 'hello'],
+      ['text', 'new map'],
+    ]);
+    act(() => {
+      reset();
+    });
+    expect([...result.current[0]]).toEqual([['msg', 'hello']]);
   });
 });
