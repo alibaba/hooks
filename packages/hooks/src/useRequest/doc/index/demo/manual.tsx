@@ -10,6 +10,7 @@ import { message } from 'antd';
 import React, { useState } from 'react';
 import { useRequest } from 'ahooks';
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 function changeUsername(username: string): Promise<{ success: boolean }> {
   return new Promise((resolve) => {
     setTimeout(() => {
