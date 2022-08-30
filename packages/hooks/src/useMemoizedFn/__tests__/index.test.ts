@@ -31,4 +31,11 @@ describe('useMemoizedFn', () => {
     expect(currentFn).toEqual(hook.result.current.memoizedFn);
     expect(hook.result.current.memoizedFn()).toEqual(1);
   });
+
+  it('should output error when fn is not a function', () => {
+    const errSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
+    renderHook(() => useMemoizedFn(1 as any));
+    expect(errSpy).toBeCalledWith('useMemoizedFn expected parameter is a function, got number');
+    errSpy.mockRestore();
+  });
 });

@@ -17,13 +17,10 @@ describe('useMount', () => {
 
   it('should output error when fn is not a function', () => {
     const errSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
-    const env = process.env.NODE_ENV;
-    process.env.NODE_ENV = 'development';
     renderHook(() => useMount(1 as any));
     expect(errSpy).toBeCalledWith(
       'useMount: parameter `fn` expected to be a function, but got "number".',
     );
-    process.env.NODE_ENV = env;
     errSpy.mockRestore();
   });
 });

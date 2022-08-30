@@ -54,4 +54,11 @@ describe('useDebounceFn', () => {
       expect(count).toBe(7);
     });
   });
+
+  it('should output error when fn is not a function', () => {
+    const errSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
+    renderHook(() => useDebounceFn(1 as any));
+    expect(errSpy).toBeCalledWith('useDebounceFn expected parameter is a function, got number');
+    errSpy.mockRestore();
+  });
 });
