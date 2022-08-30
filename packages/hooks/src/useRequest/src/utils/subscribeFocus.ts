@@ -3,9 +3,11 @@ import isBrowser from '../../../utils/isBrowser';
 import isDocumentVisible from './isDocumentVisible';
 import isOnline from './isOnline';
 
-const listeners: any[] = [];
+type Listener = () => void;
 
-function subscribe(listener: () => void) {
+const listeners: Listener[] = [];
+
+function subscribe(listener: Listener) {
   listeners.push(listener);
   return function unsubscribe() {
     const index = listeners.indexOf(listener);
