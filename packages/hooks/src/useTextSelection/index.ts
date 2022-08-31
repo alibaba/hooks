@@ -39,15 +39,12 @@ function getRectFromSelection(selection: Selection | null): Rect {
   }
   const range = selection.getRangeAt(0);
   const { height, width, top, left, right, bottom } = range.getBoundingClientRect();
-  return {
-    height,
-    width,
-    top,
-    left,
-    right,
-    bottom,
-  };
+  return { height, width, top, left, right, bottom };
 }
+
+const filterText = (value: string, ele: HTMLElement): string => {
+  return [...value].filter((letter) => ele?.innerText?.includes?.(letter))?.join('');
+};
 
 function useTextSelection(target?: BasicTarget<Document | Element>): State {
   const [state, setState] = useState(initState);
@@ -64,26 +61,32 @@ function useTextSelection(target?: BasicTarget<Document | Element>): State {
 
       const mouseupHandler = () => {
         let selObj: Selection | null = null;
-        let text = '';
         let rect = initRect;
-        if (!window.getSelection) return;
+        if (!window.getSelection) {
+          return;
+        }
         selObj = window.getSelection();
-        text = selObj ? selObj.toString() : '';
+        const text = selObj ? selObj.toString() : '';
         if (text) {
           rect = getRectFromSelection(selObj);
-          setState({ ...state, text, ...rect });
+          setState({
+            ...state,
+            ...rect,
+            text: target ? filterText(text, el as HTMLElement) : text,
+          });
         }
       };
 
       // 任意点击都需要清空之前的 range
       const mousedownHandler = () => {
-        if (!window.getSelection) return;
+        if (!window.getSelection) {
+          return;
+        }
         if (stateRef.current.text) {
-          setState({ ...initState });
+          setState(initState);
         }
         const selObj = window.getSelection();
-        if (!selObj) return;
-        selObj.removeAllRanges();
+        selObj?.removeAllRanges?.();
       };
 
       el.addEventListener('mouseup', mouseupHandler);

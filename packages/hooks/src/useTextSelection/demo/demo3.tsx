@@ -14,10 +14,10 @@ export default () => {
   const selection = useTextSelection(ref);
   return (
     <div>
-      <div ref={ref} style={{ border: '1px solid', padding: 20 }}>
+      <div ref={ref} style={{ border: '1px solid', padding: 20, marginBottom: 10 }}>
         <p>Please swipe your mouse to select any text on this paragraph.</p>
       </div>
-      <p>Result：{JSON.stringify(selection)}</p>
+      <pre>Result：{JSON.stringify(selection, null, 2)}</pre>
     </div>
   );
 };
