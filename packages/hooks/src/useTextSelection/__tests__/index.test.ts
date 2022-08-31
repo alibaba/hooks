@@ -75,7 +75,7 @@ describe('useTextSelection', () => {
 
     // TODO
     // @ts-ignore
-    const hook = renderHook(() => useTextSelection(() => document));
+    const hook = renderHook(useTextSelection);
 
     expect(hook.result.current.text).toBe('');
     expect(hook.result.current.left).toBe(NaN);

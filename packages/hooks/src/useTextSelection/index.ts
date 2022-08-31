@@ -72,7 +72,8 @@ function useTextSelection(target?: BasicTarget<Document | Element>): State {
           setState({
             ...state,
             ...rect,
-            text: target ? filterText(text, el as HTMLElement) : text,
+            text:
+              target && !(target instanceof Document) ? filterText(text, el as HTMLElement) : text,
           });
         }
       };
