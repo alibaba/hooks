@@ -42,6 +42,7 @@ function getRectFromSelection(selection: Selection | null): Rect {
   return { height, width, top, left, right, bottom };
 }
 
+// 过滤出只包含在dom元素之内的文字
 const filterText = (value: string, ele: HTMLElement): string => {
   return [...value].filter((letter) => ele?.innerText?.includes?.(letter))?.join('');
 };
