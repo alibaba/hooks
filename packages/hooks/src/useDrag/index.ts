@@ -10,7 +10,7 @@ export interface Options {
 
 const useDrag = <T>(data: T, target: BasicTarget, options: Options = {}) => {
   const optionsRef = useLatest(options);
-
+  const dataRef = useLatest(data);
   useEffectWithTarget(
     () => {
       const targetElement = getTargetElement(target);
@@ -20,7 +20,7 @@ const useDrag = <T>(data: T, target: BasicTarget, options: Options = {}) => {
 
       const onDragStart = (event: React.DragEvent) => {
         optionsRef.current.onDragStart?.(event);
-        event.dataTransfer.setData('custom', JSON.stringify(data));
+        event.dataTransfer.setData('custom', JSON.stringify(dataRef.current));
       };
 
       const onDragEnd = (event: React.DragEvent) => {
