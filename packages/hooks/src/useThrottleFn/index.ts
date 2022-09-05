@@ -4,11 +4,12 @@ import useLatest from '../useLatest';
 import type { ThrottleOptions } from '../useThrottle/throttleOptions';
 import useUnmount from '../useUnmount';
 import { isFunction } from '../utils';
+import isDev from '../utils/isDev';
 
 type noop = (...args: any) => any;
 
 function useThrottleFn<T extends noop>(fn: T, options?: ThrottleOptions) {
-  if (process.env.NODE_ENV === 'development') {
+  if (isDev) {
     if (!isFunction(fn)) {
       console.error(`useThrottleFn expected parameter is a function, got ${typeof fn}`);
     }
