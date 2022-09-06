@@ -30,22 +30,14 @@ const initState: State = {
 };
 
 function getRectFromSelection(selection: Selection | null): Rect {
-  if (!selection) {
+  if (!selection || selection.rangeCount < 1) {
     return initRect;
   }
 
-  if (selection.rangeCount < 1) {
-    return initRect;
-  }
   const range = selection.getRangeAt(0);
   const { height, width, top, left, right, bottom } = range.getBoundingClientRect();
   return { height, width, top, left, right, bottom };
 }
-
-// 过滤出只包含在dom元素之内的文字
-const filterText = (value: string, ele: HTMLElement): string => {
-  return [...value].filter((letter) => ele?.innerText?.includes?.(letter))?.join('');
-};
 
 function useTextSelection(target?: BasicTarget<Document | Element>): State {
   const [state, setState] = useState(initState);
@@ -61,21 +53,32 @@ function useTextSelection(target?: BasicTarget<Document | Element>): State {
       }
 
       const mouseupHandler = () => {
-        let selObj: Selection | null = null;
-        let rect = initRect;
         if (!window.getSelection) {
           return;
         }
-        selObj = window.getSelection();
-        const text = selObj ? selObj.toString() : '';
+        let rect = initRect;
+        const selObj = window.getSelection();
+
+        const range = selObj?.getRangeAt(0);
+
+        const allEle = range?.cloneContents().querySelectorAll('*');
+
+        let result = '';
+
+        // 过滤包含在 el 里面的元素
+        allEle?.forEach((ele) => {
+          if (el.contains(ele)) {
+            console.log('1111');
+          } else {
+            console.log('2222');
+          }
+        });
+
+        const text = range ? range.toString() : '';
+
         if (text) {
           rect = getRectFromSelection(selObj);
-          setState({
-            ...state,
-            ...rect,
-            text:
-              target && !(target instanceof Document) ? filterText(text, el as HTMLElement) : text,
-          });
+          setState({ ...state, ...rect, text });
         }
       };
 
