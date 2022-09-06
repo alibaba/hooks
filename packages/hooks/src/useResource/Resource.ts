@@ -22,7 +22,10 @@ export class Resource<R = any, E = any, P extends any[] = any[]> {
       throw new TypeError('the type of fetcher must be promise or function.');
     }
     if (this._status === 'PENDING') {
-      throw (typeof this._fetcher === 'function' ? this._fetcher(...args) : this._fetcher)
+      if (typeof this._fetcher === 'function') {
+        this._fetcher = this._fetcher(...args);
+      }
+      throw this._fetcher
         .then((res) => ((this._status = 'RESOLVED'), (this._res = res), res))
         .catch((err) => ((this._status = 'REJECTED'), (this._err = err), err));
     }
