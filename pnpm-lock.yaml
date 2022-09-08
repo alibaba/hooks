@@ -35,7 +35,6 @@ importers:
       jest: ^27.5.1
       jest-fetch-mock: ^3.0.3
       jest-localstorage-mock: ^2.4.18
-      mockdate: ^3.0.2
       mockjs: ^1.1.0
       prettier: ^2.0.5
       pretty-quick: ^3.1.3
@@ -85,7 +84,6 @@ importers:
       jest: 27.5.1
       jest-fetch-mock: 3.0.3
       jest-localstorage-mock: 2.4.21
-      mockdate: 3.0.5
       mockjs: 1.1.0
       prettier: 2.7.1
       pretty-quick: 3.1.3_prettier@2.7.1
@@ -13650,13 +13648,6 @@ packages:
         integrity: sha512-3DeNIcsQixWHHKk6NdoBhWI4t1VMj5/HzfnI1rE/pLl5qKx7+gd4DNA07ehTaZ6MoUU053si6Hd+YtiM/tQZfg==,
       }
     engines: { node: '>= 8' }
-    dev: true
-
-  /mockdate/3.0.5:
-    resolution:
-      {
-        integrity: sha512-iniQP4rj1FhBdBYS/+eQv7j1tadJ9lJtdzgOpvsOHng/GbcDh2Fhdeq+ZRldrPYdXvCyfFUmFeEwEGXZB5I/AQ==,
-      }
     dev: true
 
   /mockjs/1.1.0:

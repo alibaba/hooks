@@ -57,7 +57,6 @@
     "jest": "^27.5.1",
     "jest-fetch-mock": "^3.0.3",
     "jest-localstorage-mock": "^2.4.18",
-    "mockdate": "^3.0.2",
     "mockjs": "^1.1.0",
     "prettier": "^2.0.5",
     "pretty-quick": "^3.1.3",
