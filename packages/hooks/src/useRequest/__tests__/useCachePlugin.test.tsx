@@ -1,6 +1,8 @@
 import { act, renderHook } from '@testing-library/react-hooks';
+import { render } from '@testing-library/react';
 import useRequest, { clearCache } from '../index';
 import { request } from '../../utils/testingHelpers';
+import React, { useState } from 'react';
 import 'jest-localstorage-mock';
 
 describe('useCachePlugin', () => {
@@ -12,7 +14,7 @@ describe('useCachePlugin', () => {
     const hook = setup(request, options);
     expect(hook.result.current.loading).toEqual(true);
     await act(async () => {
-      jest.runAllTimers();
+      jest.advanceTimersByTime(1000);
     });
     expect(hook.result.current.loading).toEqual(false);
     expect(hook.result.current.data).toEqual('success');
@@ -32,7 +34,7 @@ describe('useCachePlugin', () => {
     expect(hook2.result.current.loading).toEqual(true);
     expect(hook2.result.current.data).toEqual('success');
     await act(async () => {
-      jest.runAllTimers();
+      jest.advanceTimersByTime(1000);
     });
     expect(hook2.result.current.loading).toEqual(false);
   });
@@ -63,7 +65,7 @@ describe('useCachePlugin', () => {
     expect(hook3.result.current.data).toEqual('success');
 
     await act(async () => {
-      jest.runAllTimers();
+      jest.advanceTimersByTime(1000);
     });
     expect(hook3.result.current.loading).toEqual(false);
   });
@@ -94,7 +96,7 @@ describe('useCachePlugin', () => {
     expect(hook3.result.current.data).toEqual(undefined);
 
     await act(async () => {
-      jest.runAllTimers();
+      jest.advanceTimersByTime(1000);
     });
     expect(hook3.result.current.loading).toEqual(false);
     expect(hook3.result.current.data).toEqual('success');
@@ -129,8 +131,66 @@ describe('useCachePlugin', () => {
     expect(hook2.result.current.data).toEqual('success');
 
     await act(async () => {
-      jest.runAllTimers();
+      jest.advanceTimersByTime(1000);
     });
     expect(hook2.result.current.loading).toEqual(false);
+  });
+
+  it('cache should work when change data immediately', async () => {
+    const { result } = setup(request, {
+      cacheKey: 'mutateCacheKey',
+    });
+    act(() => {
+      result.current.mutate(1);
+    });
+    expect(result.current.data).toEqual(1);
+    await act(async () => {
+      jest.advanceTimersByTime(1000);
+    });
+    expect(result.current.loading).toEqual(false);
+    expect(result.current.data).toEqual('success');
+  });
+
+  //github.com/alibaba/hooks/issues/1859
+  it('error should reset with activeKey', async () => {
+    const errSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
+
+    let res = {} as any;
+    const TestComponent = () => {
+      const [key, setKey] = useState<number>(1);
+      const { data, error } = useRequest(() => request(key), {
+        refreshDeps: [key],
+        cacheKey: String(key),
+        staleTime: 300000,
+      });
+      res = {
+        data,
+        error,
+        setKey,
+      };
+      return null;
+    };
+
+    render(<TestComponent />);
+
+    await act(async () => {
+      jest.advanceTimersByTime(1000);
+    });
+    expect(res.error).toEqual(undefined);
+
+    res.setKey(0);
+    await act(async () => {
+      jest.advanceTimersByTime(1000);
+    });
+    expect(errSpy).toBeCalled();
+    expect(res.error).not.toEqual(undefined);
+
+    res.setKey(1);
+    await act(async () => {
+      jest.advanceTimersByTime(1000);
+    });
+    expect(res.error).toEqual(undefined);
+
+    errSpy.mockRestore();
   });
 });
