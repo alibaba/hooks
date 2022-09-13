@@ -41,6 +41,6 @@ const [
 
 ### Params
 
-| Property     | Description                 | Type                   | Default |
-| ------------ | --------------------------- | ---------------------- | ------- |
-| initialValue | Optional, set default value | `Iterable<[any, any]>` | -       |
+| Property     | Description                 | Type                                          | Default |
+| ------------ | --------------------------- | --------------------------------------------- | ------- |
+| initialValue | Optional, set default value | `Iterable<[any, any]> \| Record<string, any>` | -       |
