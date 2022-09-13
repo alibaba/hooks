@@ -1,5 +1,6 @@
 import { renderHook, act } from '@testing-library/react-hooks';
 import useSize from '../index';
+import { mockRaf } from '../../utils/mocks';
 
 let callback;
 jest.mock('resize-observer-polyfill', () => {
@@ -24,12 +25,7 @@ describe('useSize', () => {
   });
 
   it('should work', () => {
-    const mockRaf = jest
-      .spyOn(window, 'requestAnimationFrame')
-      .mockImplementation((cb: FrameRequestCallback) => {
-        cb(0);
-        return 0;
-      });
+    const mockedRaf = mockRaf();
     const targetEl = document.createElement('div');
     const { result } = renderHook(() => useSize(targetEl));
 
@@ -49,6 +45,6 @@ describe('useSize', () => {
       height: 50,
     });
 
-    mockRaf.mockRestore();
+    mockedRaf.mockRestore();
   });
 });
