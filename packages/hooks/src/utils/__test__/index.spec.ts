@@ -1,4 +1,4 @@
-import { isBoolean, isFunction, isNumber, isObject, isString, isUndef } from '../index';
+import { isBoolean, isFunction, isNumber, isObject, isString, isUndef, isIterable } from '../index';
 
 describe('shared utils methods', () => {
   test('isBoolean', () => {
@@ -35,6 +35,16 @@ describe('shared utils methods', () => {
     expect(isObject(null)).toBe(false);
     expect(isObject(function foo() {})).toBe(false);
     expect(isObject(123)).toBe(false);
+  });
+
+  test('isIterable', () => {
+    expect(isIterable({})).toBe(false);
+    expect(isIterable([])).toBe(true);
+    expect(isIterable('')).toBe(true);
+    expect(isIterable(new Set())).toBe(true);
+    expect(isIterable(new WeakSet())).toBe(false);
+    expect(isIterable(new Map())).toBe(true);
+    expect(isIterable(new WeakMap())).toBe(false);
   });
 
   test('isString', () => {
