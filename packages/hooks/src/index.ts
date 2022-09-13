@@ -38,6 +38,7 @@ import useLocalStorageState from './useLocalStorageState';
 import useLockFn from './useLockFn';
 import useLongPress from './useLongPress';
 import useMap from './useMap';
+import useMeasures from './useMeasures';
 import useMemoizedFn from './useMemoizedFn';
 import useMount from './useMount';
 import useMouse from './useMouse';
@@ -156,4 +157,5 @@ export {
   useRafTimeout,
   useResetState,
   useMutationObserver,
+  useMeasures,
 };
