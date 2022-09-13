@@ -1,9 +1,13 @@
 import { useState } from 'react';
 import useMemoizedFn from '../useMemoizedFn';
+import { isIterable } from '../utils';
 
-function useMap<K, T>(initialValue?: Iterable<readonly [K, T]>) {
+function useMap<K, T>(initialValue?: Iterable<readonly [K, T]> | Record<string, any>) {
   const getInitValue = () => {
-    return initialValue === undefined ? new Map() : new Map(initialValue);
+    if (initialValue === undefined) {
+      return new Map();
+    }
+    return isIterable(initialValue) ? new Map(initialValue) : new Map(Object.entries(initialValue));
   };
 
   const [map, setMap] = useState<Map<K, T>>(() => getInitValue());
