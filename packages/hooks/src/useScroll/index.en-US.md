@@ -32,7 +32,7 @@ const position = useScroll(target, shouldUpdate);
 | Property     | Description               | Type                                                                        | Default    |
 | ------------ | ------------------------- | --------------------------------------------------------------------------- | ---------- |
 | target       | DOM element or ref object | `Element` \| `Document` \| `(() => Element)` \| `MutableRefObject<Element>` | `document` |
-| shouldUpdate | Weather update position   | `({ top: number, left: number }) => boolean`                                | `-`        |
+| shouldUpdate | Whether update position   | `({ top: number, left: number }) => boolean`                                | `-`        |
 
 ### Result
 
