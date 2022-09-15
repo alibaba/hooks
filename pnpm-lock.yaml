@@ -121,7 +121,6 @@ importers:
       lodash: ^4.17.21
       mock-socket: ^9.0.3
       mockjs: ^1.1.0
-      react: ^16.8.0 || ^17.0.0 || ^18.0.0
       react-drag-listview: ^0.1.6
       resize-observer-polyfill: ^1.5.1
       screenfull: ^5.0.0
@@ -143,21 +142,15 @@ importers:
       jest-websocket-mock: 2.3.0
       mock-socket: 9.1.5
       mockjs: 1.1.0
-      react: 16.14.0
       react-drag-listview: 0.1.9
 
   packages/use-url-state:
     specifiers:
       ahooks: ^3.4.1
       query-string: ^6.9.0
-      react: ^16.8.0 || ^17.0.0 || ^18.0.0
-      react-router: ^5.0.0 || ^6.0.0
     dependencies:
       ahooks: link:../hooks
       query-string: 6.14.1
-      react-router: 6.3.0_react@16.14.0
-    devDependencies:
-      react: 16.14.0
 
 packages:
   /@alifd/field/1.5.8:
@@ -1999,6 +1992,7 @@ packages:
     engines: { node: '>=6.9.0' }
     dependencies:
       regenerator-runtime: 0.13.9
+    dev: true
 
   /@babel/template/7.18.6:
     resolution:
@@ -6659,10 +6653,7 @@ packages:
     dev: true
 
   /concat-map/0.0.1:
-    resolution:
-      {
-        integrity: sha512-/Srv4dswyQNBfohGpz9o6Yb3Gz3SrUDqBH5rTuhGR7ahtlbYKnVxw2bCFMRljaA7EXHaXZ8wsHdodFvbkhKmqg==,
-      }
+    resolution: { integrity: sha1-2Klr13/Wjfd5OnMDajug1UBdR3s= }
     dev: true
 
   /concat-stream/1.6.2:
@@ -6738,8 +6729,8 @@ packages:
     engines: { node: '>=10' }
     hasBin: true
     dependencies:
-      JSONStream: 1.3.5
       is-text-path: 1.0.1
+      JSONStream: 1.3.5
       lodash: 4.17.21
       meow: 8.1.2
       split2: 3.2.2
@@ -10558,6 +10549,7 @@ packages:
       }
     dependencies:
       '@babel/runtime': 7.18.9
+    dev: true
 
   /hmac-drbg/1.0.1:
     resolution:
@@ -12555,6 +12547,7 @@ packages:
       {
         integrity: sha512-RdJUflcE3cUzKiMqQgsCu06FPu9UdIJO0beYbPhHN4k6apgJtifcoCtT9bcxOpYBtpD2kCM6Sbzg4CausW/PKQ==,
       }
+    dev: true
 
   /js-yaml/3.14.1:
     resolution:
@@ -13197,6 +13190,7 @@ packages:
     hasBin: true
     dependencies:
       js-tokens: 4.0.0
+    dev: true
 
   /lowercase-keys/1.0.1:
     resolution:
@@ -14626,6 +14620,7 @@ packages:
         integrity: sha512-rJgTQnkUnH1sFw8yT6VSU3zD3sWmu6sZhIseY8VX+GRu3P6F7Fu+JNDoXfklElbLJSnc3FUQHVe4cU5hj+BcUg==,
       }
     engines: { node: '>=0.10.0' }
+    dev: true
 
   /object-copy/0.1.0:
     resolution:
@@ -16341,6 +16336,7 @@ packages:
       loose-envify: 1.4.0
       object-assign: 4.1.1
       react-is: 16.13.1
+    dev: true
 
   /property-information/5.6.0:
     resolution:
@@ -17360,6 +17356,7 @@ packages:
       {
         integrity: sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==,
       }
+    dev: true
 
   /react-is/17.0.2:
     resolution:
@@ -17460,6 +17457,7 @@ packages:
     dependencies:
       history: 5.3.0
       react: 16.14.0
+    dev: true
 
   /react-shadow/19.0.3_ccrd4luiijsxnlhe6bgkvyy2z4:
     resolution:
@@ -17560,6 +17558,7 @@ packages:
       loose-envify: 1.4.0
       object-assign: 4.1.1
       prop-types: 15.8.1
+    dev: true
 
   /read-pkg-up/1.0.1:
     resolution:
@@ -17741,6 +17740,7 @@ packages:
       {
         integrity: sha512-p3VT+cOEgxFsRRA9X4lkI1E+k2/CtnKtU4gcxyaCUreilL/vqI6CdZ3wxVUx3UOUg+gnUOQQcRI7BmSI656MYA==,
       }
+    dev: true
 
   /regenerator-transform/0.15.0:
     resolution:
