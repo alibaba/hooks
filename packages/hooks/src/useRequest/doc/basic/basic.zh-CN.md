@@ -97,12 +97,16 @@ const { loading, run, runAsync } = useRequest(service, {
 
 <!-- <code src="./demo/formatResult.tsx" /> -->
 
-## 取消请求
+## 取消响应
 
-`useRequest` 提供了 `cancel` 函数，可以取消当前正在进行的请求。同时 `useRequest` 会在以下时机自动取消当前请求：
+`useRequest` 提供了 `cancel` 函数，用于**忽略**当前 promise 返回的数据和错误
 
-- 组件卸载时，取消正在进行的请求
-- 竞态取消，当上一次请求还没返回时，又发起了下一次请求，则会取消上一次请求
+**注意：调用 `cancel` 函数并不会取消 promise 的执行**
+
+同时 `useRequest` 会在以下时机自动忽略响应：
+
+- 组件卸载时，正在进行的 promise
+- 竞态取消，当上一次 promise 还没返回时，又发起了下一次 promise，则会忽略上一次 promise 的响应
 
 <code src="./demo/cancel.tsx" />
 
@@ -154,7 +158,7 @@ const {
 | refresh      | 使用上一次的 params，重新调用 `run`                                                                      | `() => void`                                                          |
 | refreshAsync | 使用上一次的 params，重新调用 `runAsync`                                                                 | `() => Promise<TData>`                                                |
 | mutate       | 直接修改 `data`                                                                                          | `(data?: TData / ((oldData?: TData) => (TData / undefined))) => void` |
-| cancel       | 取消当前正在进行的请求                                                                                   | `() => void`                                                          |
+| cancel       | 忽略当前 Promise 的响应                                                                                  | `() => void`                                                          |
 
 ### Options
 

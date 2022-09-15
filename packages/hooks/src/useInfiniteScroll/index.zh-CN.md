@@ -34,7 +34,7 @@ useInfiniteScroll 的第一个参数 `service` 是一个异步函数，对这个
 
 在无限滚动场景中，我们最常见的是滚动到底部时自动加载。通过配置以下几个属性，即可实现滚动自动加载。
 
-- `options.target` 指定父级元素
+- `options.target` 指定父级元素（父级元素需设置固定高度，且支持内部滚动）
 - `options.isNoMore` 判断是不是没有更多数据了
 
 <code src="./demo/scroll.tsx" />
@@ -105,7 +105,7 @@ const {
 | reload        | 加载第一页数据，会自动捕获异常，通过 `options.onError` 处理                | `() => void`             |
 | reloadAsync   | 加载第一页数据，与 `reload` 行为一致，但返回的是 Promise，需要自行处理异常 | `() => Promise<TData>`   |
 | mutate        | 直接修改 `data`                                                            | `(data?: TData) => void` |
-| cancel        | 取消当前正在进行的请求                                                     | `() => void`             |
+| cancel        | 忽略当前 Promise 的响应                                                    | `() => void`             |
 
 ### Options
 

@@ -1,0 +1,23 @@
+name: Comment When Needs More Info Label Added
+
+on:
+  issues:
+    types: [labeled]
+
+jobs:
+  create-comment:
+    runs-on: ubuntu-latest
+    if: github.event.label.name == 'needs more info'
+    steps:
+      - name: Create comment
+        uses: actions-cool/issues-helper@v3
+        with:
+          actions: 'create-comment'
+          token: ${{ secrets.GITHUB_TOKEN }}
+          issue-number: ${{ github.event.issue.number }}
+          body: |
+            Hi, ${{ github.event.issue.user.login }}.
+
+            It seems that this issue is a bit vague and lacks some necessary information. 
+
+            看起来这条 issue 描述得有些模糊，缺少一些必要的信息。

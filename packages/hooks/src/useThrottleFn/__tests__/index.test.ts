@@ -55,4 +55,11 @@ describe('useThrottleFn', () => {
       expect(count).toBe(9);
     });
   });
+
+  it('should output error when fn is not a function', () => {
+    const errSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
+    renderHook(() => useThrottleFn(1 as any));
+    expect(errSpy).toBeCalledWith('useThrottleFn expected parameter is a function, got number');
+    errSpy.mockRestore();
+  });
 });

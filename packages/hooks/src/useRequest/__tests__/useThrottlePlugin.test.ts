@@ -32,15 +32,9 @@ describe('useThrottlePlugin', () => {
       hook.result.current.run(3);
       jest.advanceTimersByTime(50);
       hook.result.current.run(4);
-      jest.advanceTimersByTime(50);
+      jest.advanceTimersByTime(40);
     });
 
-    act(() => {
-      jest.runAllTimers();
-    });
-    await hook.waitForNextUpdate();
     expect(callback).toHaveBeenCalledTimes(2);
-
-    hook.unmount();
   });
 });

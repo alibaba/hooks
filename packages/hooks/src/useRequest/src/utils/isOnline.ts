@@ -1,7 +1,7 @@
-import canUseDom from '../../../utils/canUseDom';
+import isBrowser from '../../../utils/isBrowser';
 
 export default function isOnline(): boolean {
-  if (canUseDom() && typeof navigator.onLine !== 'undefined') {
+  if (isBrowser && typeof navigator.onLine !== 'undefined') {
     return navigator.onLine;
   }
   return true;
