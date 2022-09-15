@@ -29,6 +29,8 @@
     "@ant-design/icons": "^4.6.2",
     "@babel/cli": "^7.10.1",
     "@babel/core": "^7.10.2",
+    "@commitlint/cli": "^17.1.2",
+    "@commitlint/config-conventional": "^17.1.0",
     "@testing-library/react": "^10.0.4",
     "@testing-library/react-hooks": "^8.0.1",
     "@types/jest": "^27.4.1",
@@ -75,5 +77,10 @@
     "webpack-cli": "^3.3.10",
     "webpack-merge": "^4.2.2"
   },
-  "packageManager": "pnpm@7.1.9"
+  "packageManager": "pnpm@7.1.9",
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ]
+  }
 }
