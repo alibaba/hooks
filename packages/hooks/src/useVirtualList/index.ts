@@ -126,7 +126,9 @@ const useVirtualList = <T = any>(list: T[], options: Options<T>) => {
         return;
       }
       e.preventDefault();
-      calculateRange();
+      setTimeout(() => {
+        calculateRange();
+      });
     },
     {
       target: containerTarget,
