@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-parameter-properties */
-import { isFunction } from '../../utils';
 import type { MutableRefObject } from 'react';
+import { isFunction } from '../../utils';
 import type { FetchState, Options, PluginReturn, Service, Subscribe } from './types';
 
 export default class Fetch<TData, TParams extends any[]> {
@@ -96,12 +96,6 @@ export default class Fetch<TData, TParams extends any[]> {
       this.options.onSuccess?.(res, params);
       this.runPluginHandler('onSuccess', res, params);
 
-      this.options.onFinally?.(params, res, undefined);
-
-      if (currentCount === this.count) {
-        this.runPluginHandler('onFinally', params, res, undefined);
-      }
-
       return res;
     } catch (error) {
       if (currentCount !== this.count) {
@@ -117,13 +111,12 @@ export default class Fetch<TData, TParams extends any[]> {
       this.options.onError?.(error, params);
       this.runPluginHandler('onError', error, params);
 
-      this.options.onFinally?.(params, undefined, error);
-
-      if (currentCount === this.count) {
-        this.runPluginHandler('onFinally', params, undefined, error);
-      }
-
       throw error;
+    } finally {
+      this.options.onFinally?.(params, this.state.data, this.state.error);
+      if (currentCount === this.count) {
+        this.runPluginHandler('onFinally', params, this.state.data, this.state.error);
+      }
     }
   }
 
