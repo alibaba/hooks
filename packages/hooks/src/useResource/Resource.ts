@@ -21,17 +21,20 @@ export class Resource<R = any, E = any, P extends any[] = any[]> {
     if (typeof this._fetcher !== 'function' && typeof this._fetcher.then !== 'function') {
       throw new TypeError('the type of fetcher must be promise or function.');
     }
-    if (this._status === 'PENDING') {
-      if (typeof this._fetcher === 'function') {
-        this._fetcher = this._fetcher(...args);
-      }
-      throw this._fetcher
-        .then((res) => ((this._status = 'RESOLVED'), (this._res = res), res))
-        .catch((err) => ((this._status = 'REJECTED'), (this._err = err), err));
-    }
     if (this._status === 'REJECTED') {
       throw this._err;
     }
+    if (this._status === 'PENDING') {
+      throw this._execute(...args);
+    }
     return this._res as R;
+  }
+  private _execute(...args: P) {
+    if (typeof this._fetcher === 'function') {
+      this._fetcher = this._fetcher(...args);
+    }
+    return this._fetcher
+      .then((res) => ((this._status = 'RESOLVED'), (this._res = res), res))
+      .catch((err) => ((this._status = 'REJECTED'), (this._err = err), err));
   }
 }
