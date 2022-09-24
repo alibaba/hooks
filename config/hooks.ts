@@ -56,6 +56,7 @@ export const menus = [
       'useSafeState',
       'useGetState',
       'useResetState',
+      'useDefault',
     ],
   },
   {
@@ -100,6 +101,7 @@ export const menus = [
       'useScroll',
       'useSize',
       'useFocusWithin',
+      'useHash',
     ],
   },
   {
