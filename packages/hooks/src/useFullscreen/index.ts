@@ -21,14 +21,21 @@ const useFullscreen = (target: BasicTarget, options?: Options) => {
 
   const onChange = () => {
     if (screenfull.isEnabled) {
-      const { isFullscreen } = screenfull;
-      if (isFullscreen) {
-        onEnterRef.current?.();
-      } else {
-        screenfull.off('change', onChange);
+      const el = getTargetElement(target);
+
+      if (!screenfull.element) {
         onExitRef.current?.();
+        setState(false);
+        screenfull.off('change', onChange);
+      } else {
+        const isFullscreen = screenfull.element === el;
+        if (isFullscreen) {
+          onEnterRef.current?.();
+        } else {
+          onExitRef.current?.();
+        }
+        setState(isFullscreen);
       }
-      setState(isFullscreen);
     }
   };
 
@@ -49,7 +56,8 @@ const useFullscreen = (target: BasicTarget, options?: Options) => {
   };
 
   const exitFullscreen = () => {
-    if (screenfull.isEnabled) {
+    const el = getTargetElement(target);
+    if (screenfull.isEnabled && screenfull.element === el) {
       screenfull.exit();
     }
   };
