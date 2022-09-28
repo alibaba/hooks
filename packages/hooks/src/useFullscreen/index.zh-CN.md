@@ -17,6 +17,10 @@ nav:
 
 <code src="./demo/demo2.tsx" />
 
+### 浏览器全屏
+
+<code src="./demo/demo3.tsx" />
+
 ## API
 
 ```typescript
@@ -42,10 +46,11 @@ const [
 
 ### Options
 
-| 参数    | 说明         | 类型         | 默认值 |
-| ------- | ------------ | ------------ | ------ |
-| onExit  | 退出全屏触发 | `() => void` | -      |
-| onEnter | 全屏触发     | `() => void` | -      |
+| 参数                | 说明             | 类型         | 默认值 |
+| ------------------- | ---------------- | ------------ | ------ |
+| onExit              | 退出全屏触发     | `() => void` | -      |
+| onEnter             | 全屏触发         | `() => void` | -      |
+| isBrowserFullscreen | 是否是浏览器全屏 | boolean      | -      |
 
 ### Result
 

@@ -17,6 +17,10 @@ manages DOM full screen.
 
 <code src="./demo/demo2.tsx" />
 
+### Browser full screen
+
+<code src="./demo/demo3.tsx" />
+
 ## API
 
 ```typescript
@@ -42,10 +46,11 @@ const [
 
 ### Options
 
-| Property | Description               | Type         | Default |
-| -------- | ------------------------- | ------------ | ------- |
-| onExit   | Exit full screen trigger  | `() => void` | -       |
-| onEnter  | Enter full screen trigger | `() => void` | -       |
+| Property            | Description                     | Type         | Default |
+| ------------------- | ------------------------------- | ------------ | ------- |
+| onExit              | Exit full screen trigger        | `() => void` | -       |
+| onEnter             | Enter full screen trigger       | `() => void` | -       |
+| isBrowserFullscreen | whether the browser full screen | boolean      | -       |
 
 ### Result
 

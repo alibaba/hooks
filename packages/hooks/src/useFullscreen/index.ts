@@ -9,10 +9,11 @@ import { getTargetElement } from '../utils/domTarget';
 export interface Options {
   onExit?: () => void;
   onEnter?: () => void;
+  isBrowserFullscreen?: boolean;
 }
 
 const useFullscreen = (target: BasicTarget, options?: Options) => {
-  const { onExit, onEnter } = options || {};
+  const { onExit, onEnter, isBrowserFullscreen } = options || {};
 
   const onExitRef = useLatest(onExit);
   const onEnterRef = useLatest(onEnter);
@@ -32,12 +33,40 @@ const useFullscreen = (target: BasicTarget, options?: Options) => {
     }
   };
 
+  const setStyleFullscreen = (val: boolean) => {
+    const el = getTargetElement(target);
+    console.log(val);
+
+    if (!el) {
+      return;
+    }
+    const getStyleElem = document.getElementById('hook-fullScreenStyle') as HTMLStyleElement;
+    if (val) {
+      el.classList.add('hook-fullscreen');
+      if (!getStyleElem) {
+        const styleElem = document.createElement('style');
+        styleElem.setAttribute('id', 'hook-fullScreenStyle');
+        styleElem.textContent = `.hook-fullscreen{ position:fixed;left:0;top:0;right:0;bottom:0;z-index:2000;width:100%!important;height:100%!important;}`;
+        el.appendChild(styleElem);
+      }
+    } else {
+      el.classList.remove('hook-fullscreen');
+      if (getStyleElem) {
+        getStyleElem.remove();
+      }
+    }
+    setState(!state);
+  };
   const enterFullscreen = () => {
     const el = getTargetElement(target);
     if (!el) {
       return;
     }
 
+    if (isBrowserFullscreen) {
+      setStyleFullscreen(true);
+      return;
+    }
     if (screenfull.isEnabled) {
       try {
         screenfull.request(el);
@@ -49,12 +78,18 @@ const useFullscreen = (target: BasicTarget, options?: Options) => {
   };
 
   const exitFullscreen = () => {
+    if (isBrowserFullscreen) {
+      setStyleFullscreen(false);
+      return;
+    }
     if (screenfull.isEnabled) {
       screenfull.exit();
     }
   };
 
   const toggleFullscreen = () => {
+    console.log(state);
+
     if (state) {
       exitFullscreen();
     } else {
@@ -63,8 +98,10 @@ const useFullscreen = (target: BasicTarget, options?: Options) => {
   };
 
   useUnmount(() => {
-    if (screenfull.isEnabled) {
-      screenfull.off('change', onChange);
+    if (!isBrowserFullscreen) {
+      if (screenfull.isEnabled) {
+        screenfull.off('change', onChange);
+      }
     }
   });
 
