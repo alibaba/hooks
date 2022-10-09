@@ -42,4 +42,35 @@ describe('useLoadingDelayPlugin', () => {
     expect(hook.result.current.loading).toEqual(false);
     hook.unmount();
   });
+
+  it('useLoadingDelayPlugin should no update loading when ready is false', async () => {
+    act(() => {
+      hook = setUp(request, {
+        loadingDelay: 2000,
+        ready: false,
+      });
+    });
+    expect(hook.result.current.loading).toEqual(false);
+
+    act(() => {
+      jest.advanceTimersByTime(3000);
+    });
+
+    expect(hook.result.current.loading).toEqual(false);
+  });
+
+  it('useLoadingDelayPlugin should update loading when ready is undefined', async () => {
+    act(() => {
+      hook = setUp(request, {
+        loadingDelay: 2000,
+      });
+    });
+    expect(hook.result.current.loading).toEqual(false);
+
+    act(() => {
+      jest.advanceTimersByTime(3000);
+    });
+
+    expect(hook.result.current.loading).toEqual(true);
+  });
 });
