@@ -75,7 +75,7 @@ import useVirtualList from './useVirtualList';
 import useWebSocket from './useWebSocket';
 import useWhyDidYouUpdate from './useWhyDidYouUpdate';
 import useMutationObserver from './useMutationObserver';
-import useHash from './userHash';
+import useHash from './useHash';
 
 export {
   useRequest,

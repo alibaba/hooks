@@ -44,6 +44,7 @@ export const menus = [
       'useBoolean',
       'useToggle',
       'use-url-state',
+      'useHash',
       'useCookieState',
       'useLocalStorageState',
       'useSessionStorageState',
