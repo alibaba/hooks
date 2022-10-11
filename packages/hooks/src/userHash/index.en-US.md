@@ -16,8 +16,20 @@ A hook that tracks the location hash.
 ## API
 
 ```javascript
-const [ hash, setHash ] = useHash();
+const [ hash, setHash ] = useHash({ onChange });
 ```
+
+### Params
+
+| 参数    | 说明        | 类型      | 默认值 |
+| ------- | ----------- | --------- | ------ |
+| options | More config | `Options` | -      |
+
+### Options
+
+| 参数     | 说明                                   | 类型                                       | 默认值 |
+| -------- | -------------------------------------- | ------------------------------------------ | ------ |
+| onChange | Callback to be executed on hash change | `(hahs: string, prevHash: string) => void` | -      |
 
 ### Result
 
