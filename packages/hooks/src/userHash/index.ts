@@ -10,7 +10,12 @@ function _getHash() {
   }
 }
 
-export default (): [string, (newHash: string) => void] => {
+export type Options = {
+  onChange?: (hash: string, prevHash: string) => void;
+};
+
+export default (options?: Options): [string, (newHash: string) => void] => {
+  const { onChange } = options || {};
   const [hash, setHash, getHash] = useGetState<string>(_getHash);
 
   const changeHash = useCallback((newHash: string) => {
@@ -23,7 +28,10 @@ export default (): [string, (newHash: string) => void] => {
   }, []);
 
   useEventListener('hashchange', () => {
-    setHash(_getHash());
+    const currentHash = getHash();
+    const newHash = _getHash();
+    setHash(newHash);
+    onChange?.(newHash, currentHash);
   });
 
   return [hash, changeHash];
