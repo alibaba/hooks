@@ -16,6 +16,7 @@ export type Options = {
   events?: KeyEvent[];
   target?: Target;
   exactMatch?: boolean;
+  useCapture?: boolean;
 };
 
 // 键盘事件 keyCode 别名
@@ -209,7 +210,7 @@ function genKeyFormatter(keyFilter: KeyFilter, exactMatch: boolean): KeyPredicat
 const defaultEvents: KeyEvent[] = ['keydown'];
 
 function useKeyPress(keyFilter: KeyFilter, eventHandler: EventHandler, option?: Options) {
-  const { events = defaultEvents, target, exactMatch = false } = option || {};
+  const { events = defaultEvents, target, exactMatch = false, useCapture = false } = option || {};
   const eventHandlerRef = useLatest(eventHandler);
   const keyFilterRef = useLatest(keyFilter);
 
@@ -228,11 +229,11 @@ function useKeyPress(keyFilter: KeyFilter, eventHandler: EventHandler, option?: 
       };
 
       for (const eventName of events) {
-        el?.addEventListener?.(eventName, callbackHandler);
+        el?.addEventListener?.(eventName, callbackHandler, useCapture);
       }
       return () => {
         for (const eventName of events) {
-          el?.removeEventListener?.(eventName, callbackHandler);
+          el?.removeEventListener?.(eventName, callbackHandler, useCapture);
         }
       };
     },
