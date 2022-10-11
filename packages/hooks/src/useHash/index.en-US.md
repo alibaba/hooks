@@ -21,15 +21,15 @@ const [ hash, setHash ] = useHash({ onChange });
 
 ### Params
 
-| 参数    | 说明        | 类型      | 默认值 |
-| ------- | ----------- | --------- | ------ |
-| options | More config | `Options` | -      |
+| Property | Description | Type      | Default |
+| -------- | ----------- | --------- | ------- |
+| options  | More config | `Options` | -       |
 
 ### Options
 
-| 参数     | 说明                                   | 类型                                       | 默认值 |
-| -------- | -------------------------------------- | ------------------------------------------ | ------ |
-| onChange | Callback to be executed on hash change | `(hahs: string, prevHash: string) => void` | -      |
+| Property | Description                            | Type                                       | Default |
+| -------- | -------------------------------------- | ------------------------------------------ | ------- |
+| onChange | Callback to be executed on hash change | `(hahs: string, prevHash: string) => void` | -       |
 
 ### Result
 
