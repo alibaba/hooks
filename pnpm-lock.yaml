@@ -121,6 +121,7 @@ importers:
       lodash: ^4.17.21
       mock-socket: ^9.0.3
       mockjs: ^1.1.0
+      react: ^16.8.0 || ^17.0.0 || ^18.0.0
       react-drag-listview: ^0.1.6
       resize-observer-polyfill: ^1.5.1
       screenfull: ^5.0.0
@@ -142,15 +143,21 @@ importers:
       jest-websocket-mock: 2.4.0
       mock-socket: 9.1.5
       mockjs: 1.1.0
+      react: 16.14.0
       react-drag-listview: 0.1.9
 
   packages/use-url-state:
     specifiers:
       ahooks: ^3.4.1
       query-string: ^6.9.0
+      react: ^16.8.0 || ^17.0.0 || ^18.0.0
+      react-router: ^5.0.0 || ^6.0.0
     dependencies:
       ahooks: link:../hooks
       query-string: 6.14.1
+      react-router: 6.4.2_react@16.14.0
+    devDependencies:
+      react: 16.14.0
 
 packages:
   /@alifd/field/1.5.8:
@@ -2765,7 +2772,6 @@ packages:
         integrity: sha512-GRSOFhJzjGN+d4sKHTMSvNeUPoZiDHWmRnXfzaxrqe7dE/Nzlc8BiMSJdLDESZlndM7jIUrZ/F4yWqVYlI0rwQ==,
       }
     engines: { node: '>=14' }
-    dev: true
 
   /@sinclair/typebox/0.24.46:
     resolution:
@@ -5530,6 +5536,7 @@ packages:
       {
         integrity: sha512-p2q/t/mhvuOj/UeLlV6566GD/guowlr0hHxClI0W9m7MWYkL1F0hLo+0Aexs9HSPCtR1SXQ0TD3MMKrXZajbiQ==,
       }
+    requiresBuild: true
     dependencies:
       file-uri-to-path: 1.0.0
     dev: true
@@ -9191,6 +9198,7 @@ packages:
       {
         integrity: sha512-0Zt+s3L7Vf1biwWZ29aARiVYLx7iMGnEUl9x33fbB/j3jR81u/O2LbqK+Bm1CDSNDKVtJ/YjwY7TUd5SkeLQLw==,
       }
+    requiresBuild: true
     dev: true
     optional: true
 
@@ -12641,7 +12649,6 @@ packages:
       {
         integrity: sha512-RdJUflcE3cUzKiMqQgsCu06FPu9UdIJO0beYbPhHN4k6apgJtifcoCtT9bcxOpYBtpD2kCM6Sbzg4CausW/PKQ==,
       }
-    dev: true
 
   /js-yaml/3.14.1:
     resolution:
@@ -13284,7 +13291,6 @@ packages:
     hasBin: true
     dependencies:
       js-tokens: 4.0.0
-    dev: true
 
   /lowercase-keys/1.0.1:
     resolution:
@@ -14324,6 +14330,7 @@ packages:
       {
         integrity: sha512-2ZTgtl0nJsO0KQCjEpxcIr5D+Yv90plTitZt9JBfQvVJDS5seMl3FOvsh3+9CoYWXf/1l5OaZzzF6nDm4cagaQ==,
       }
+    requiresBuild: true
     dev: true
     optional: true
 
@@ -14715,7 +14722,6 @@ packages:
         integrity: sha512-rJgTQnkUnH1sFw8yT6VSU3zD3sWmu6sZhIseY8VX+GRu3P6F7Fu+JNDoXfklElbLJSnc3FUQHVe4cU5hj+BcUg==,
       }
     engines: { node: '>=0.10.0' }
-    dev: true
 
   /object-copy/0.1.0:
     resolution:
@@ -16447,7 +16453,6 @@ packages:
       loose-envify: 1.4.0
       object-assign: 4.1.1
       react-is: 16.13.1
-    dev: true
 
   /property-information/5.6.0:
     resolution:
@@ -17496,7 +17501,6 @@ packages:
       {
         integrity: sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==,
       }
-    dev: true
 
   /react-is/17.0.2:
     resolution:
@@ -17605,7 +17609,6 @@ packages:
     dependencies:
       '@remix-run/router': 1.0.2
       react: 16.14.0
-    dev: true
 
   /react-shadow/19.0.3_ccrd4luiijsxnlhe6bgkvyy2z4:
     resolution:
@@ -17706,7 +17709,6 @@ packages:
       loose-envify: 1.4.0
       object-assign: 4.1.1
       prop-types: 15.8.1
-    dev: true
 
   /read-pkg-up/1.0.1:
     resolution:
