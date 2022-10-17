@@ -124,4 +124,55 @@ describe('useFullscreen', () => {
     unmount();
     expect(events.fullscreenchange.size).toBe(size - 1);
   });
+
+  it('`isFullscreen` should be false when use `document.exitFullscreen`', () => {
+    const { result } = setup(targetEl);
+    const { enterFullscreen } = result.current[1];
+    enterFullscreen();
+    act(() => {
+      events['fullscreenchange'].forEach((fn: any) => fn());
+    });
+    expect(result.current[0]).toBeTruthy();
+
+    document.exitFullscreen();
+    act(() => {
+      events['fullscreenchange'].forEach((fn: any) => fn());
+    });
+    expect(result.current[0]).toBeFalsy();
+  });
+
+  it('mutli element full screen should be correct', () => {
+    const targetEl2 = document.createElement('p');
+    const hook = setup(targetEl);
+    const hook2 = setup(targetEl2);
+
+    // target1 full screen
+    hook.result.current[1].enterFullscreen();
+    act(() => {
+      events['fullscreenchange'].forEach((fn: any) => fn());
+    });
+    expect(hook.result.current[0]).toBeTruthy();
+
+    // target2 full screen
+    hook2.result.current[1].enterFullscreen();
+    Object.defineProperty(document, 'fullscreenElement', {
+      value: targetEl2,
+    });
+    act(() => {
+      events['fullscreenchange'].forEach((fn: any) => fn());
+    });
+    expect(hook.result.current[0]).toBeFalsy();
+    expect(hook2.result.current[0]).toBeTruthy();
+
+    // target2 exit full screen
+    hook2.result.current[1].exitFullscreen();
+    Object.defineProperty(document, 'fullscreenElement', {
+      value: targetEl,
+    });
+    act(() => {
+      events['fullscreenchange'].forEach((fn: any) => fn());
+    });
+    expect(hook.result.current[0]).toBeTruthy();
+    expect(hook2.result.current[0]).toBeFalsy();
+  });
 });
