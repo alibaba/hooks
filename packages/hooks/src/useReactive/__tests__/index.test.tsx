@@ -4,7 +4,12 @@ import { act } from 'react-dom/test-utils';
 import useReactive from '../';
 
 const Demo = () => {
-  let state = useReactive({
+  let state: {
+    count: number;
+    val: any;
+    foo?: string;
+    arr: number[];
+  } = useReactive({
     count: 0,
     val: {
       val1: {
