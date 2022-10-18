@@ -5,18 +5,19 @@ import { isNumber } from '../utils';
 function useInterval(
   fn: () => void,
   delay: number | undefined,
-  options?: {
+  options: {
     immediate?: boolean;
-  },
+  } = {},
 ) {
-  const immediate = options?.immediate;
+  const { immediate } = options;
 
   const fnRef = useLatest(fn);
-  const timerRef = useRef<number | NodeJS.Timer>();
+  const timerRef = useRef<NodeJS.Timer | null>(null);
 
   useEffect(() => {
-    if (!isNumber(delay) || delay < 0) return;
-
+    if (!isNumber(delay) || delay < 0) {
+      return;
+    }
     if (immediate) {
       fnRef.current();
     }
@@ -25,14 +26,14 @@ function useInterval(
     }, delay);
     return () => {
       if (timerRef.current) {
-        clearInterval(timerRef.current as NodeJS.Timer);
+        clearInterval(timerRef.current);
       }
     };
   }, [delay]);
 
   const clear = useCallback(() => {
     if (timerRef.current) {
-      clearInterval(timerRef.current as NodeJS.Timer);
+      clearInterval(timerRef.current);
     }
   }, []);
 
