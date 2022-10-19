@@ -39,4 +39,54 @@ describe('useRefreshOnWindowFocusPlugin', () => {
     expect(hook.result.current.loading).toEqual(true);
     hook.unmount();
   });
+
+  it('fix: multiple unsubscriptions should not delete the last subscription listener ', async () => {
+    let hook1;
+    let hook2;
+    act(() => {
+      hook1 = setUp(request, {
+        refreshOnWindowFocus: true,
+      });
+      hook2 = setUp(request, {
+        refreshOnWindowFocus: true,
+      });
+    });
+
+    expect(hook1.result.current.loading).toEqual(true);
+    expect(hook2.result.current.loading).toEqual(true);
+
+    act(() => {
+      jest.advanceTimersByTime(1001);
+    });
+    await hook1.waitForNextUpdate();
+    expect(hook1.result.current.loading).toEqual(false);
+    expect(hook2.result.current.loading).toEqual(false);
+
+    act(() => {
+      fireEvent.focus(window);
+    });
+
+    expect(hook1.result.current.loading).toEqual(true);
+    expect(hook2.result.current.loading).toEqual(true);
+
+    act(() => {
+      jest.advanceTimersByTime(2000);
+    });
+
+    await hook1.waitForNextUpdate();
+
+    expect(hook1.result.current.loading).toEqual(false);
+    expect(hook2.result.current.loading).toEqual(false);
+
+    hook1.unmount();
+
+    act(() => {
+      jest.advanceTimersByTime(3000);
+      fireEvent.focus(window);
+    });
+
+    expect(hook1.result.current.loading).toEqual(false);
+    // hook2 should not unsubscribe
+    expect(hook2.result.current.loading).toEqual(true);
+  });
 });

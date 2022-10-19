@@ -11,7 +11,9 @@ function subscribe(listener: Listener) {
   listeners.push(listener);
   return function unsubscribe() {
     const index = listeners.indexOf(listener);
-    listeners.splice(index, 1);
+    if (index > -1) {
+      listeners.splice(index, 1);
+    }
   };
 }
 
