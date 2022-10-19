@@ -17,6 +17,10 @@ nav:
 
 <code src="./demo/demo2.tsx" />
 
+### 限制历史记录最大长度
+
+<code src="./demo/demo3.tsx" />
+
 ## API
 
 ```typescript
@@ -28,14 +32,15 @@ const {
   go,
   back,
   forward
-} = useHistoryTravel<T>(initialValue?: T);
+} = useHistoryTravel<T>(initialValue?: T, maxLength: number = 0);
 ```
 
 ### Params
 
-| 参数         | 说明         | 类型  | 默认值 |
-| ------------ | ------------ | ----- | ------ |
-| initialValue | 可选，初始值 | `any` | -      |
+| 参数         | 说明                                                      | 类型     | 默认值   |
+| ------------ | --------------------------------------------------------- | -------- | -------- |
+| initialValue | 可选，初始值                                              | `any`    | -        |
+| maxLength    | 可选，限制历史记录最大长度,超过最大长度后将删除第一个记录 | `number` | 0 不限制 |
 
 ### Result
 
