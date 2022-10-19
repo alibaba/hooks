@@ -18,10 +18,6 @@ const setUp = ({ fn, wait }: ParamsObj) => renderHook(() => useDebounceFn(fn, { 
 let hook: RenderHookResult<ParamsObj, ReturnType<typeof useDebounceFn>>;
 
 describe('useDebounceFn', () => {
-  it('should be defined', () => {
-    expect(useDebounceFn).toBeDefined();
-  });
-
   it('run, cancel and flush should work', async () => {
     act(() => {
       hook = setUp({
@@ -57,5 +53,12 @@ describe('useDebounceFn', () => {
       await sleep(300);
       expect(count).toBe(7);
     });
+  });
+
+  it('should output error when fn is not a function', () => {
+    const errSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
+    renderHook(() => useDebounceFn(1 as any));
+    expect(errSpy).toBeCalledWith('useDebounceFn expected parameter is a function, got number');
+    errSpy.mockRestore();
   });
 });

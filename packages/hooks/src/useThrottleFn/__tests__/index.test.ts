@@ -13,10 +13,6 @@ const setUp = ({ fn, wait }: ParamsObj) => renderHook(() => useThrottleFn(fn, { 
 let hook: RenderHookResult<ParamsObj, ReturnType<typeof useThrottleFn>>;
 
 describe('useThrottleFn', () => {
-  it('should be defined', () => {
-    expect(useThrottleFn).toBeDefined();
-  });
-
   it('run, cancel and flush should work', async () => {
     let count = 0;
     const throttleFn = (gap: number) => {
@@ -58,5 +54,12 @@ describe('useThrottleFn', () => {
       await sleep(550); // t: 2100
       expect(count).toBe(9);
     });
+  });
+
+  it('should output error when fn is not a function', () => {
+    const errSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
+    renderHook(() => useThrottleFn(1 as any));
+    expect(errSpy).toBeCalledWith('useThrottleFn expected parameter is a function, got number');
+    errSpy.mockRestore();
   });
 });

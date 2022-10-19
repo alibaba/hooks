@@ -25,10 +25,6 @@ const setup = (options?: Options) => {
 };
 
 describe('useFocusWithin', () => {
-  it('should be defined', () => {
-    expect(useFocusWithin).toBeDefined();
-  });
-
   it('should call onFocus/onBlur', () => {
     const onFocus = jest.fn();
     const onBlur = jest.fn();

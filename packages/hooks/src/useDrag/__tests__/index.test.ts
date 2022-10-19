@@ -1,11 +1,12 @@
 import { renderHook } from '@testing-library/react-hooks';
-import useDrag, { Options } from '../index';
+import type { Options } from '../index';
+import useDrag from '../index';
 import type { BasicTarget } from '../../utils/domTarget';
 
 const setup = <T>(data: T, target: BasicTarget, options?: Options) =>
-  renderHook(() => useDrag(data, target, options));
+  renderHook((newData: T) => useDrag(newData ? newData : data, target, options));
 
-const events = {};
+const events: Record<string, (event: any) => void> = {};
 const mockTarget = {
   addEventListener: jest.fn((event, callback) => {
     events[event] = callback;
@@ -17,10 +18,6 @@ const mockTarget = {
 };
 
 describe('useDrag', () => {
-  it('should be defined', () => {
-    expect(useDrag).toBeDefined();
-  });
-
   it('should add/remove listener on mount/unmount', () => {
     const { unmount } = setup(1, mockTarget as any);
     expect(mockTarget.addEventListener).toBeCalled();
@@ -39,14 +36,22 @@ describe('useDrag', () => {
         setData: jest.fn(),
       },
     };
-    setup(1, mockTarget as any, {
+    const hook = setup(1, mockTarget as any, {
       onDragStart,
       onDragEnd,
     });
-    events['dragstart'](mockEvent);
+    events.dragstart(mockEvent);
     expect(onDragStart).toBeCalled();
     expect(mockEvent.dataTransfer.setData).toBeCalledWith('custom', '1');
-    events['dragend'](mockEvent);
+    events.dragend(mockEvent);
+    expect(onDragEnd).toBeCalled();
+
+    hook.rerender(2);
+
+    events.dragstart(mockEvent);
+    expect(onDragStart).toBeCalled();
+    expect(mockEvent.dataTransfer.setData).toHaveBeenLastCalledWith('custom', '2');
+    events.dragend(mockEvent);
     expect(onDragEnd).toBeCalled();
   });
 

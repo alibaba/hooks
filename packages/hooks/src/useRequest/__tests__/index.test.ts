@@ -2,12 +2,17 @@ import { act, renderHook } from '@testing-library/react-hooks';
 import useRequest from '../index';
 import { request } from '../../utils/testingHelpers';
 
+const errorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
+
 describe('useRequest', () => {
-  it('should be defined', () => {
-    expect(useRequest).toBeDefined();
+  beforeAll(() => {
+    jest.useFakeTimers();
   });
 
-  jest.useFakeTimers();
+  afterAll(() => {
+    errorSpy.mockRestore();
+  });
+
   const setUp = (service, options) => renderHook((o) => useRequest(service, o || options));
   let hook;
   it('useRequest should auto run', async () => {

@@ -39,10 +39,6 @@ const mockEvent = {
 };
 
 describe('useDrop', () => {
-  it('should be defined', () => {
-    expect(useDrop).toBeDefined();
-  });
-
   it(`should not work when target don't support addEventListener method`, () => {
     const originAddEventListener = mockTarget.addEventListener;
     Object.defineProperty(mockTarget, 'addEventListener', {

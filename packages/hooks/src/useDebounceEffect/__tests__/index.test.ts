@@ -10,10 +10,6 @@ interface ParamsObj {
 let hook: RenderHookResult<ParamsObj, any>;
 
 describe('useDebounceEffect', () => {
-  it('should be defined', () => {
-    expect(useDebounceEffect).toBeDefined();
-  });
-
   it('useDebounceEffect should work', async () => {
     let mountedState = 1;
     const mockEffect = jest.fn(() => {});

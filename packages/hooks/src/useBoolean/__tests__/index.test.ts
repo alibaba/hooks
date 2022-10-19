@@ -4,10 +4,6 @@ import useBoolean from '../index';
 const setUp = (defaultValue?: boolean) => renderHook(() => useBoolean(defaultValue));
 
 describe('useBoolean', () => {
-  it('should be defined', () => {
-    expect(useBoolean).toBeDefined();
-  });
-
   it('test on methods', async () => {
     const { result } = setUp();
     expect(result.current[0]).toBe(false);

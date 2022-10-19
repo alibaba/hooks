@@ -6,10 +6,11 @@
     "url": "git+https://github.com/alibaba/hooks.git"
   },
   "scripts": {
-    "init": "pnpm clean && pnpm install && pnpm run build",
+    "init": "pnpm install && pnpm run build",
     "start": "pnpm run dev",
     "dev": "dumi dev",
-    "clean": "rm -rf node_modules **/*/node_modules",
+    "clean-dist": "rimraf 'packages/*/{lib,es,node_modules,dist}'",
+    "clean": "pnpm run clean-dist && rimraf node_modules",
     "build": "pnpm -r --filter=./packages/* run build",
     "test": "jest",
     "coveralls": "jest --coverage --coverageReporters=text-lcov | coveralls",
@@ -28,12 +29,15 @@
     "@ant-design/icons": "^4.6.2",
     "@babel/cli": "^7.10.1",
     "@babel/core": "^7.10.2",
+    "@commitlint/cli": "^17.1.2",
+    "@commitlint/config-conventional": "^17.1.0",
     "@testing-library/react": "^10.0.4",
-    "@testing-library/react-hooks": "^2.0.1",
-    "@types/jest": "^26.0.1",
+    "@testing-library/react-hooks": "^8.0.1",
+    "@types/jest": "^27.4.1",
     "@types/lodash.debounce": "^4.0.6",
     "@types/lodash.isequal": "^4.5.5",
     "@types/lodash.throttle": "^4.1.6",
+    "@types/react-router": "^5.1.18",
     "@umijs/fabric": "^2.1.0",
     "@umijs/plugin-sass": "^1.1.1",
     "antd": "^4.3.3",
@@ -42,7 +46,7 @@
     "babel-plugin-transform-async-to-promises": "^0.8.15",
     "coveralls": "^3.1.1",
     "del": "^5.1.0",
-    "dumi": "^1.1.7",
+    "dumi": "^1.1.48",
     "enzyme": "^3.10.0",
     "eslint": "^7.2.0",
     "eslint-plugin-react-hooks": "^4.0.8",
@@ -53,25 +57,30 @@
     "gulp-babel": "^8.0.0",
     "gulp-typescript": "^6.0.0-alpha.1",
     "husky": "^8.0.0",
-    "jest": "^26.0.1",
+    "jest": "^27.5.1",
     "jest-fetch-mock": "^3.0.3",
     "jest-localstorage-mock": "^2.4.18",
-    "mockdate": "^3.0.2",
     "mockjs": "^1.1.0",
     "prettier": "^2.0.5",
     "pretty-quick": "^3.1.3",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-drag-listview": "^0.1.6",
+    "react-shadow": "^19.0.3",
     "react-test-renderer": "^16.13.1",
+    "rimraf": "^3.0.2",
     "surge": "^0.21.3",
-    "ts-jest": "^26.1.0",
-    "typescript": "^3.3.3",
+    "ts-jest": "^27.1.5",
+    "typescript": "^4.8.4",
     "umi-request": "^1.2.18",
     "webpack": "^4.43.0",
     "webpack-cli": "^3.3.10",
-    "webpack-merge": "^4.2.2",
-    "react-shadow": "^19.0.3"
+    "webpack-merge": "^4.2.2"
   },
-  "packageManager": "pnpm@7.1.9"
+  "packageManager": "pnpm@7.1.9",
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ]
+  }
 }

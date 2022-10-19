@@ -55,6 +55,7 @@ export const menus = [
       'useRafState',
       'useSafeState',
       'useGetState',
+      'useResetState',
     ],
   },
   {
@@ -90,6 +91,7 @@ export const menus = [
       'useFavicon',
       'useFullscreen',
       'useHover',
+      'useMutationObserver',
       'useInViewport',
       'useKeyPress',
       'useLongPress',
