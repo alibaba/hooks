@@ -82,6 +82,7 @@ function useTextSelection(target?: BasicTarget<Document | Element>): State {
         if (stateRef.current.text) {
           setState({ ...initState });
         }
+        isInRangeRef.current = false;
         const selObj = window.getSelection();
         if (!selObj) return;
         selObj.removeAllRanges();
