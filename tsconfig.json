@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "target": "ES5",
+    "target": "ES6",
     "moduleResolution": "node",
     "jsx": "react",
     "esModuleInterop": true,
@@ -16,7 +16,8 @@
     "allowSyntheticDefaultImports": true,
     "skipLibCheck": true,
     "declaration": false,
-    "strictNullChecks": true
+    "strictNullChecks": true,
+    "importHelpers": true
   },
   "exclude": ["node_modules", "lib", "es", "dist", "example"]
 }
