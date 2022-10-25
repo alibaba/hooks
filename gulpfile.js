@@ -10,12 +10,8 @@ gulp.task('clean', async function () {
 });
 
 gulp.task('cjs', function () {
-  const tsProject = ts.createProject('tsconfig.pro.json', {
-    module: 'CommonJS',
-  });
-  return tsProject
-    .src()
-    .pipe(tsProject())
+  return gulp
+    .src(['./es/**/*.js'])
     .pipe(
       babel({
         configFile: '../../.babelrc',
@@ -28,15 +24,7 @@ gulp.task('es', function () {
   const tsProject = ts.createProject('tsconfig.pro.json', {
     module: 'ESNext',
   });
-  return tsProject
-    .src()
-    .pipe(tsProject())
-    .pipe(
-      babel({
-        configFile: '../../.babelrc',
-      }),
-    )
-    .pipe(gulp.dest('es/'));
+  return tsProject.src().pipe(tsProject()).pipe(babel()).pipe(gulp.dest('es/'));
 });
 
 gulp.task('declaration', function () {
@@ -51,4 +39,4 @@ gulp.task('copyReadme', async function () {
   await gulp.src('../../README.md').pipe(gulp.dest('../../packages/hooks'));
 });
 
-exports.default = gulp.series('clean', 'cjs', 'es', 'declaration', 'copyReadme');
+exports.default = gulp.series('clean', 'es', 'cjs', 'declaration', 'copyReadme');

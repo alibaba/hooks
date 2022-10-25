@@ -195,4 +195,51 @@ describe('useHistoryTravel', () => {
     expect(hook.result.current.backLength).toEqual(0);
     expect(hook.result.current.forwardLength).toEqual(0);
   });
+
+  it('should work without max length', async () => {
+    const hook = renderHook(() => useHistoryTravel());
+    expect(hook.result.current.backLength).toEqual(0);
+    for (let i = 1; i <= 100; i++) {
+      act(() => {
+        hook.result.current.setValue(i);
+      });
+    }
+    expect(hook.result.current.forwardLength).toEqual(0);
+    expect(hook.result.current.backLength).toEqual(100);
+    expect(hook.result.current.value).toEqual(100);
+  });
+
+  it('should work with max length', async () => {
+    const hook = renderHook(() => useHistoryTravel(0, 10));
+    expect(hook.result.current.backLength).toEqual(0);
+    for (let i = 1; i <= 100; i++) {
+      act(() => {
+        hook.result.current.setValue(i);
+      });
+    }
+    expect(hook.result.current.forwardLength).toEqual(0);
+    expect(hook.result.current.backLength).toEqual(10);
+    expect(hook.result.current.value).toEqual(100);
+
+    act(() => {
+      hook.result.current.go(-5);
+    });
+    expect(hook.result.current.forwardLength).toEqual(5);
+    expect(hook.result.current.backLength).toEqual(5);
+    expect(hook.result.current.value).toEqual(95);
+
+    act(() => {
+      hook.result.current.go(5);
+    });
+    expect(hook.result.current.forwardLength).toEqual(0);
+    expect(hook.result.current.backLength).toEqual(10);
+    expect(hook.result.current.value).toEqual(100);
+
+    act(() => {
+      hook.result.current.go(-50);
+    });
+    expect(hook.result.current.forwardLength).toEqual(10);
+    expect(hook.result.current.backLength).toEqual(0);
+    expect(hook.result.current.value).toEqual(90);
+  });
 });
