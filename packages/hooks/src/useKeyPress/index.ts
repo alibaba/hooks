@@ -204,7 +204,7 @@ function genKeyFormatter(keyFilter: KeyFilter, exactMatch: boolean): KeyPredicat
     return (event: KeyboardEvent) =>
       keyFilter.some((item) => genFilterKey(event, item, exactMatch));
   }
-  return keyFilter ? () => true : () => false;
+  return () => Boolean(keyFilter);
 }
 
 const defaultEvents: KeyEvent[] = ['keydown'];
