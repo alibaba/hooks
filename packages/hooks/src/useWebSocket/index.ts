@@ -14,6 +14,7 @@ export interface Options {
   reconnectLimit?: number;
   reconnectInterval?: number;
   manual?: boolean;
+  binaryType?: 'blob' | 'arraybuffer';
   onOpen?: (event: WebSocketEventMap['open'], instance: WebSocket) => void;
   onClose?: (event: WebSocketEventMap['close'], instance: WebSocket) => void;
   onMessage?: (message: WebSocketEventMap['message'], instance: WebSocket) => void;
@@ -36,6 +37,8 @@ export default function useWebSocket(socketUrl: string, options: Options = {}): 
     reconnectLimit = 3,
     reconnectInterval = 3 * 1000,
     manual = false,
+    binaryType = 'blob',
+  
     onOpen,
     onClose,
     onMessage,
@@ -84,6 +87,7 @@ export default function useWebSocket(socketUrl: string, options: Options = {}): 
     }
 
     const ws = new WebSocket(socketUrl, protocols);
+    ws.binaryType = binaryType;
     setReadyState(ReadyState.Connecting);
 
     ws.onerror = (event) => {
