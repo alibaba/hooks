@@ -1,5 +1,5 @@
 import useDocumentVisibility from '../index';
-import { renderHook, act } from '@testing-library/react-hooks';
+import { renderHook, act } from '@testing-library/react';
 
 const mockIsBrowser = jest.fn();
 const mockDocumentVisibilityState = jest.spyOn(document, 'visibilityState', 'get');
