@@ -1,4 +1,4 @@
-import { act, renderHook } from '@testing-library/react-hooks';
+import { act, renderHook, waitFor } from '@testing-library/react';
 import { fireEvent } from '@testing-library/react';
 import useRequest from '../index';
 import { request } from '../../utils/testingHelpers';
@@ -20,8 +20,7 @@ describe('useRefreshOnWindowFocusPlugin', () => {
     act(() => {
       jest.advanceTimersByTime(1001);
     });
-    await hook.waitForNextUpdate();
-    expect(hook.result.current.loading).toEqual(false);
+    await waitFor(() => expect(hook.result.current.loading).toEqual(false));
     act(() => {
       fireEvent.focus(window);
     });
@@ -30,14 +29,12 @@ describe('useRefreshOnWindowFocusPlugin', () => {
     act(() => {
       jest.advanceTimersByTime(2000);
     });
-    await hook.waitForNextUpdate();
-    expect(hook.result.current.loading).toEqual(false);
+    await waitFor(() => expect(hook.result.current.loading).toEqual(false));
     act(() => {
       jest.advanceTimersByTime(3000);
       fireEvent.focus(window);
     });
     expect(hook.result.current.loading).toEqual(true);
-    hook.unmount();
   });
 
   it('fix: multiple unsubscriptions should not delete the last subscription listener ', async () => {
@@ -58,8 +55,7 @@ describe('useRefreshOnWindowFocusPlugin', () => {
     act(() => {
       jest.advanceTimersByTime(1001);
     });
-    await hook1.waitForNextUpdate();
-    expect(hook1.result.current.loading).toEqual(false);
+    await waitFor(() => expect(hook1.result.current.loading).toEqual(false));
     expect(hook2.result.current.loading).toEqual(false);
 
     act(() => {
@@ -73,9 +69,7 @@ describe('useRefreshOnWindowFocusPlugin', () => {
       jest.advanceTimersByTime(2000);
     });
 
-    await hook1.waitForNextUpdate();
-
-    expect(hook1.result.current.loading).toEqual(false);
+    await waitFor(() => expect(hook1.result.current.loading).toEqual(false));
     expect(hook2.result.current.loading).toEqual(false);
 
     hook1.unmount();
