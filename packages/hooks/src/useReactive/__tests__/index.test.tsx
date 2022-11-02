@@ -5,7 +5,7 @@ import useReactive from '../';
 import { renderHook } from '@testing-library/react-hooks';
 
 const Demo = () => {
-  let state = useReactive({
+  const state = useReactive({
     count: 0,
     val: {
       val1: {
@@ -79,11 +79,11 @@ const Demo = () => {
 
 describe('test useReactive feature', () => {
   it('test count ', () => {
-    let wrap = render(<Demo />);
+    const wrap = render(<Demo />);
 
-    let count = wrap.getByRole('addCount');
-    let addCountBtn = wrap.getByRole('addCountBtn');
-    let subCountBtn = wrap.getByRole('subCountBtn');
+    const count = wrap.getByRole('addCount');
+    const addCountBtn = wrap.getByRole('addCountBtn');
+    const subCountBtn = wrap.getByRole('subCountBtn');
 
     act(() => {
       fireEvent.click(addCountBtn);
@@ -112,12 +112,12 @@ describe('test useReactive feature', () => {
   });
 
   it('test array', () => {
-    let wrap = render(<Demo />);
-    let testArray = wrap.getByRole('test-array');
-    let pushbtn = wrap.getByRole('pushbtn');
-    let popbtn = wrap.getByRole('popbtn');
-    let shiftbtn = wrap.getByRole('shiftbtn');
-    let unshiftbtn = wrap.getByRole('unshiftbtn');
+    const wrap = render(<Demo />);
+    const testArray = wrap.getByRole('test-array');
+    const pushbtn = wrap.getByRole('pushbtn');
+    const popbtn = wrap.getByRole('popbtn');
+    const shiftbtn = wrap.getByRole('shiftbtn');
+    const unshiftbtn = wrap.getByRole('unshiftbtn');
     act(() => {
       fireEvent.click(pushbtn);
     });
@@ -137,10 +137,10 @@ describe('test useReactive feature', () => {
   });
 
   it('test input1', () => {
-    let wrap = render(<Demo />);
+    const wrap = render(<Demo />);
 
-    let input = wrap.getByRole('input1');
-    let inputVal = wrap.getByRole('inputVal1');
+    const input = wrap.getByRole('input1');
+    const inputVal = wrap.getByRole('inputVal1');
     act(() => {
       fireEvent.change(input, { target: { value: 'a' } });
     });
@@ -153,10 +153,10 @@ describe('test useReactive feature', () => {
   });
 
   it('delete object property', () => {
-    let wrap = render(<Demo />);
+    const wrap = render(<Demo />);
 
-    let deleteProperty = wrap.getByRole('deleteProperty');
-    let deletePropertyBtn = wrap.getByRole('deletePropertyBtn');
+    const deleteProperty = wrap.getByRole('deleteProperty');
+    const deletePropertyBtn = wrap.getByRole('deletePropertyBtn');
     expect(deleteProperty.textContent).toBe('foo');
 
     act(() => {
