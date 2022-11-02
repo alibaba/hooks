@@ -2,6 +2,7 @@ import { fireEvent, render } from '@testing-library/react';
 import React from 'react';
 import { act } from 'react-dom/test-utils';
 import useReactive from '../';
+import { renderHook } from '@testing-library/react-hooks';
 
 const Demo = () => {
   let state = useReactive({
@@ -162,5 +163,29 @@ describe('test useReactive feature', () => {
       fireEvent.click(deletePropertyBtn);
     });
     expect(deleteProperty.textContent).toBe('');
+  });
+
+  it('access from self to prototype chain', () => {
+    const parent = {
+      name: 'parent',
+      get value() {
+        return this.name;
+      },
+    };
+
+    const child: Record<string, string> = {
+      name: 'child',
+    };
+
+    const { result } = renderHook(() => useReactive(parent));
+    const proxy = result.current;
+
+    Object.setPrototypeOf(child, proxy);
+
+    expect(child.value).toBe('child');
+
+    delete child.name;
+
+    expect(child.value).toBe('parent');
   });
 });
