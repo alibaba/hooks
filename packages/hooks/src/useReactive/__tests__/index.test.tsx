@@ -5,7 +5,12 @@ import useReactive from '../';
 import { renderHook } from '@testing-library/react-hooks';
 
 const Demo = () => {
-  const state = useReactive({
+  const state: {
+    count: number;
+    val: any;
+    foo?: string;
+    arr: number[];
+  } = useReactive({
     count: 0,
     val: {
       val1: {

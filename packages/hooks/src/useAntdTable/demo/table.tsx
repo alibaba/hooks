@@ -17,7 +17,7 @@ interface Result {
 }
 
 const getTableData = ({ current, pageSize }): Promise<Result> => {
-  let query = `page=${current}&size=${pageSize}`;
+  const query = `page=${current}&size=${pageSize}`;
 
   return fetch(`https://randomuser.me/api?results=55&${query}`)
     .then((res) => res.json())

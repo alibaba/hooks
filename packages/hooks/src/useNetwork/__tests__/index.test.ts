@@ -1,5 +1,5 @@
 import useNetwork from '../index';
-import { renderHook, act } from '@testing-library/react-hooks';
+import { renderHook, act } from '@testing-library/react';
 
 describe('useNetwork', () => {
   it('toggle network state', () => {

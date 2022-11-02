@@ -6,7 +6,7 @@ import useUnmount from '../useUnmount';
 import { isFunction } from '../utils';
 import isDev from '../utils/isDev';
 
-type noop = (...args: any) => any;
+type noop = (...args: any[]) => any;
 
 function useThrottleFn<T extends noop>(fn: T, options?: ThrottleOptions) {
   if (isDev) {
