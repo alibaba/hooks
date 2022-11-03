@@ -1,8 +1,6 @@
-import { fireEvent, render } from '@testing-library/react';
+import { fireEvent, render, renderHook, act } from '@testing-library/react';
 import React from 'react';
-import { act } from 'react-dom/test-utils';
 import useReactive from '../';
-import { renderHook } from '@testing-library/react-hooks';
 
 const Demo = () => {
   const state: {
