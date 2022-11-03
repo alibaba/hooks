@@ -15,15 +15,20 @@ export default function useClickAway<T extends Event = Event>(
     () => {
       const handler = (event: any) => {
         const targets = Array.isArray(target) ? target : [target];
-        if (
-          targets.some((item) => {
-            const targetElement = getTargetElement(item);
-            return !targetElement || targetElement.contains(event.target);
-          })
-        ) {
-          return;
+        let hasTruthyValue = false;
+
+        for (const item of targets) {
+          const targetElement = getTargetElement(item);
+
+          if (targetElement) {
+            if (targetElement.contains(event.target)) {
+              return;
+            }
+            hasTruthyValue = true;
+          }
         }
-        onClickAwayRef.current(event);
+
+        if (hasTruthyValue) onClickAwayRef.current(event);
       };
 
       const documentOrShadow = getDocumentOrShadow(target);

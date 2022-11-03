@@ -63,4 +63,62 @@ describe('useClickAway', () => {
     document.body.click();
     expect(state).toEqual(1);
   });
+
+  it('should ignore falsy value in targets array', async () => {
+    let state: number = 0;
+    const { rerender, unmount } = renderHook((dom: any) =>
+      useClickAway(() => {
+        state++;
+      }, dom),
+    );
+
+    rerender([null, container, null, container1]);
+    container.click();
+    expect(state).toEqual(0);
+    container1.click();
+    expect(state).toEqual(0);
+    document.body.click();
+    expect(state).toEqual(1);
+
+    unmount();
+    document.body.click();
+    expect(state).toEqual(1);
+  });
+
+  it('should be disabled while all targets are falsy value', async () => {
+    let state: number = 0;
+    const { rerender, unmount } = renderHook((dom: any) =>
+      useClickAway(() => {
+        state++;
+      }, dom),
+    );
+
+    rerender(null);
+    container.click();
+    expect(state).toEqual(0);
+    container1.click();
+    expect(state).toEqual(0);
+    document.body.click();
+    expect(state).toEqual(0);
+
+    rerender([null, null]);
+    container.click();
+    expect(state).toEqual(0);
+    container1.click();
+    expect(state).toEqual(0);
+    document.body.click();
+    expect(state).toEqual(0);
+
+    rerender(undefined);
+    container.click();
+    expect(state).toEqual(0);
+    container1.click();
+    expect(state).toEqual(0);
+    document.body.click();
+    expect(state).toEqual(0);
+
+    unmount();
+    document.body.click();
+    expect(state).toEqual(0);
+  });
 });
