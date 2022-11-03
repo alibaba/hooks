@@ -32,7 +32,7 @@
     "@babel/plugin-transform-runtime": "^7.19.6",
     "@commitlint/cli": "^17.1.2",
     "@commitlint/config-conventional": "^17.1.0",
-    "@testing-library/dom": "^8.19.0",
+    "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@testing-library/react-hooks": "^8.0.1",
     "@types/jest": "^27.4.1",
