@@ -83,6 +83,7 @@ export const menus = [
     children: [
       'useEventListener',
       'useClickAway',
+      'useContains',
       'useDocumentVisibility',
       'useDrop',
       'useEventTarget',
