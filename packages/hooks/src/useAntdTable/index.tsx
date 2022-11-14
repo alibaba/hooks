@@ -163,7 +163,7 @@ const useAntdTable = <TData extends Data, TParams extends Params>(
     _submit();
   };
 
-  const onTableChange = (pagination: any, filters: any, sorter: any) => {
+  const onTableChange = (pagination: any, filters: any, sorter: any, extra: any) => {
     const [oldPaginationParams, ...restParams] = params || [];
     run(
       // @ts-ignore
@@ -173,6 +173,7 @@ const useAntdTable = <TData extends Data, TParams extends Params>(
         pageSize: pagination.pageSize,
         filters,
         sorter,
+        extra,
       },
       ...restParams,
     );
