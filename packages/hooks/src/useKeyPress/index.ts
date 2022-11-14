@@ -127,7 +127,13 @@ const modifierKey = {
   ctrl: (event: KeyboardEvent) => event.ctrlKey,
   shift: (event: KeyboardEvent) => event.shiftKey,
   alt: (event: KeyboardEvent) => event.altKey,
-  meta: (event: KeyboardEvent) => event.metaKey,
+  meta: (event: KeyboardEvent) => {
+    if (event.type === 'keyup') {
+      // https://github.com/alibaba/hooks/issues/1962
+      return event.keyCode === 91 || event.keyCode === 93;
+    }
+    return event.metaKey;
+  },
 };
 
 // 根据 event 计算激活键数量
