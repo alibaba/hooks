@@ -11,6 +11,7 @@ import useCreation from './useCreation';
 import useDebounce from './useDebounce';
 import useDebounceEffect from './useDebounceEffect';
 import useDebounceFn from './useDebounceFn';
+import useDeepCompareMemo from './useDeepCompareMemo';
 import useDeepCompareEffect from './useDeepCompareEffect';
 import useDeepCompareLayoutEffect from './useDeepCompareLayoutEffect';
 import useDocumentVisibility from './useDocumentVisibility';
@@ -138,6 +139,7 @@ export {
   useSafeState,
   useLatest,
   useIsomorphicLayoutEffect,
+  useDeepCompareMemo,
   useDeepCompareEffect,
   useDeepCompareLayoutEffect,
   useAsyncEffect,
