@@ -6,6 +6,7 @@ import * as cache from '../utils/cache';
 import type { CachedData } from '../utils/cache';
 import * as cachePromise from '../utils/cachePromise';
 import * as cacheSubscribe from '../utils/cacheSubscribe';
+import isBrowser from '../../../utils/isBrowser';
 
 const useCachePlugin: Plugin<any, any[]> = (
   fetchInstance,
@@ -38,7 +39,7 @@ const useCachePlugin: Plugin<any, any[]> = (
   };
 
   useCreation(() => {
-    if (!cacheKey) {
+    if (!cacheKey || !isBrowser) {
       return;
     }
 
@@ -62,7 +63,7 @@ const useCachePlugin: Plugin<any, any[]> = (
     unSubscribeRef.current?.();
   });
 
-  if (!cacheKey) {
+  if (!cacheKey || !isBrowser) {
     return {};
   }
 
