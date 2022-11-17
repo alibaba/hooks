@@ -1,4 +1,6 @@
-import { isBoolean, isFunction, isNumber, isObject, isString, isUndef } from '../index';
+import { renderHook } from '@testing-library/react';
+import { useRef } from 'react';
+import { isBoolean, isFunction, isNumber, isObject, isString, isUndef, isReactRef } from '../index';
 
 describe('shared utils methods', () => {
   test('isBoolean', () => {
@@ -52,5 +54,14 @@ describe('shared utils methods', () => {
     expect(isUndef(null)).toBe(false);
     expect(isUndef(NaN)).toBe(false);
     expect(isUndef('')).toBe(false);
+  });
+
+  test('isReactRef', () => {
+    const refHook = renderHook(() => useRef(null));
+    expect(isReactRef(refHook.result.current)).toBeTruthy();
+    const error_data1 = { base: { current: null } };
+    expect(isReactRef(error_data1)).toBeFalsy();
+    const error_data2 = { current: 'hello', current2: 'world' };
+    expect(isReactRef(error_data2)).toBeFalsy();
   });
 });

@@ -1,5 +1,5 @@
 import type { MutableRefObject } from 'react';
-import { isFunction } from './index';
+import { isFunction, isReactRef } from './index';
 import isBrowser from './isBrowser';
 
 type TargetValue<T> = T | undefined | null;
@@ -24,9 +24,11 @@ export function getTargetElement<T extends TargetType>(target: BasicTarget<T>, d
 
   if (isFunction(target)) {
     targetElement = target();
-  } else if ('current' in target) {
+  } else if (isReactRef(target)) {
+    // @ts-ignore
     targetElement = target.current;
   } else {
+    // @ts-ignore
     targetElement = target;
   }
 
