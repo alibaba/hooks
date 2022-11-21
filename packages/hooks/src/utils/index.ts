@@ -1,3 +1,6 @@
+import type { MutableRefObject } from 'react';
+import { TargetType, TargetValue } from './domTarget';
+
 export const isObject = (value: unknown): value is Record<any, any> =>
   value !== null && typeof value === 'object';
 export const isFunction = (value: unknown): value is Function => typeof value === 'function';
@@ -7,5 +10,8 @@ export const isBoolean = (value: unknown): value is boolean => typeof value === 
 export const isNumber = (value: unknown): value is number => typeof value === 'number';
 export const isUndef = (value: unknown): value is undefined => typeof value === 'undefined';
 
-export const isReactRef = (target: unknown): boolean =>
-  !!(target?.hasOwnProperty('current') && Object.keys(target).length === 1);
+export const isReactRef = <T extends TargetType>(
+  target: any,
+): target is MutableRefObject<TargetValue<T>> => {
+  return target && target?.hasOwnProperty('current') && Object.keys(target).length === 1;
+};
