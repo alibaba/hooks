@@ -63,22 +63,22 @@ const useInfiniteScroll = <TData extends Data>(
     },
   );
 
-  const loadMore = () => {
+  const loadMore = useMemoizedFn(() => {
     if (noMore) return;
     setLoadingMore(true);
     run(finalData);
-  };
+  });
 
-  const loadMoreAsync = () => {
+  const loadMoreAsync = useMemoizedFn(() => {
     if (noMore) return Promise.reject();
     setLoadingMore(true);
     return runAsync(finalData);
-  };
+  });
 
   const reload = () => run();
   const reloadAsync = () => runAsync();
 
-  const scrollMethod = () => {
+  const scrollMethod = useMemoizedFn(() => {
     const el = getTargetElement(target);
     if (!el) {
       return;
@@ -91,7 +91,7 @@ const useInfiniteScroll = <TData extends Data>(
     if (scrollHeight - scrollTop <= clientHeight + threshold) {
       loadMore();
     }
-  };
+  });
 
   useEventListener(
     'scroll',
@@ -114,8 +114,8 @@ const useInfiniteScroll = <TData extends Data>(
     loadingMore,
     noMore,
 
-    loadMore: useMemoizedFn(loadMore),
-    loadMoreAsync: useMemoizedFn(loadMoreAsync),
+    loadMore,
+    loadMoreAsync,
     reload: useMemoizedFn(reload),
     reloadAsync: useMemoizedFn(reloadAsync),
     mutate: setFinalData,
