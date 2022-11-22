@@ -63,11 +63,11 @@ const useInfiniteScroll = <TData extends Data>(
     },
   );
 
-  const loadMore = () => {
+  const loadMore = useMemoizedFn(() => {
     if (noMore) return;
     setLoadingMore(true);
     run(finalData);
-  };
+  });
 
   const loadMoreAsync = () => {
     if (noMore) return Promise.reject();
@@ -114,7 +114,7 @@ const useInfiniteScroll = <TData extends Data>(
     loadingMore,
     noMore,
 
-    loadMore: useMemoizedFn(loadMore),
+    loadMore,
     loadMoreAsync: useMemoizedFn(loadMoreAsync),
     reload: useMemoizedFn(reload),
     reloadAsync: useMemoizedFn(reloadAsync),
