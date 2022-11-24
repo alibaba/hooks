@@ -72,4 +72,15 @@ describe('useKeyPress ', () => {
     expect(callback.mock.calls.length).toBe(2);
     unmount();
   });
+
+  it('meta key should be work in keyup event', async () => {
+    renderHook(() =>
+      useKeyPress(['meta'], callback, {
+        events: ['keyup'],
+      }),
+    );
+
+    fireEvent.keyUp(document, { key: 'meta', keyCode: 91, metaKey: false });
+    expect(callback).toBeCalled();
+  });
 });
