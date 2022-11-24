@@ -11,7 +11,6 @@ importers:
       '@commitlint/config-conventional': ^17.1.0
       '@testing-library/jest-dom': ^5.16.5
       '@testing-library/react': ^13.4.0
-      '@testing-library/react-hooks': ^8.0.1
       '@types/jest': ^27.4.1
       '@types/lodash.debounce': ^4.0.6
       '@types/lodash.isequal': ^4.5.5
@@ -47,7 +46,6 @@ importers:
       react-drag-listview: ^0.1.6
       react-router: ^6.4.2
       react-shadow: ^19.0.3
-      react-test-renderer: ^16.13.1
       rimraf: ^3.0.2
       surge: ^0.21.3
       ts-jest: ^27.1.5
@@ -65,7 +63,6 @@ importers:
       '@commitlint/config-conventional': 17.1.0
       '@testing-library/jest-dom': 5.16.5
       '@testing-library/react': 13.4.0_biqbaboplfbrettd7655fr4n2y
-      '@testing-library/react-hooks': 8.0.1_rpif3dwxubyc6z5xzppyjamszu
       '@types/jest': 27.5.2
       '@types/lodash.debounce': 4.0.7
       '@types/lodash.isequal': 4.5.6
@@ -101,7 +98,6 @@ importers:
       react-drag-listview: 0.1.9
       react-router: 6.4.2_react@18.2.0
       react-shadow: 19.0.3_v2m5e27vhdewzwhryxwfaorcca
-      react-test-renderer: 16.14.0_react@18.2.0
       rimraf: 3.0.2
       surge: 0.21.7
       ts-jest: 27.1.5_zgo3ukr7wfsrfu7w73hol4lxpy
@@ -2874,32 +2870,6 @@ packages:
       dom-accessibility-api: 0.5.14
       lodash: 4.17.21
       redent: 3.0.0
-    dev: true
-
-  /@testing-library/react-hooks/8.0.1_rpif3dwxubyc6z5xzppyjamszu:
-    resolution:
-      {
-        integrity: sha512-Aqhl2IVmLt8IovEVarNDFuJDVWVvhnr9/GCU6UUnrYXwgDFF9h2L2o2P9KBni1AST5sT6riAyoukFLyjQUgD/g==,
-      }
-    engines: { node: '>=12' }
-    peerDependencies:
-      '@types/react': ^16.9.0 || ^17.0.0
-      react: ^16.9.0 || ^17.0.0
-      react-dom: ^16.9.0 || ^17.0.0
-      react-test-renderer: ^16.9.0 || ^17.0.0
-    peerDependenciesMeta:
-      '@types/react':
-        optional: true
-      react-dom:
-        optional: true
-      react-test-renderer:
-        optional: true
-    dependencies:
-      '@babel/runtime': 7.19.4
-      react: 18.2.0
-      react-dom: 18.2.0_react@18.2.0
-      react-error-boundary: 3.1.4_react@18.2.0
-      react-test-renderer: 16.14.0_react@18.2.0
     dev: true
 
   /@testing-library/react/13.4.0_biqbaboplfbrettd7655fr4n2y:
