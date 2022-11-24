@@ -23,6 +23,7 @@ importers:
       babel-plugin-import: ^1.12.0
       babel-plugin-transform-async-to-promises: ^0.8.15
       coveralls: ^3.1.1
+      cross-env: ^7.0.3
       del: ^5.1.0
       dumi: ^1.1.48
       enzyme: ^3.10.0
@@ -75,6 +76,7 @@ importers:
       babel-plugin-import: 1.13.5
       babel-plugin-transform-async-to-promises: 0.8.18
       coveralls: 3.1.1
+      cross-env: 7.0.3
       del: 5.1.0
       dumi: 1.1.48_7bjniougckmbgefyr6rd4qfxhy
       enzyme: 3.11.0
@@ -7154,6 +7156,17 @@ packages:
       {
         integrity: sha512-dcKFX3jn0MpIaXjisoRvexIJVEKzaq7z2rZKxf+MSr9TkdmHmsU4m2lcLojrj/FHl8mk5VxMmYA+ftRkP/3oKQ==,
       }
+    dev: true
+
+  /cross-env/7.0.3:
+    resolution:
+      {
+        integrity: sha512-+/HKd6EgcQCJGh2PSjZuUitQBQynKor4wrFbRg4DtAgS1aWO+gU52xpH7M9ScGgXSYmAVS9bIJ8EzuaGw0oNAw==,
+      }
+    engines: { node: '>=10.14', npm: '>=6', yarn: '>=1' }
+    hasBin: true
+    dependencies:
+      cross-spawn: 7.0.3
     dev: true
 
   /cross-fetch/3.1.5:
