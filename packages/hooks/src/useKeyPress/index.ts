@@ -3,6 +3,7 @@ import { isFunction, isNumber, isString } from '../utils';
 import type { BasicTarget } from '../utils/domTarget';
 import { getTargetElement } from '../utils/domTarget';
 import useDeepCompareEffectWithTarget from '../utils/useDeepCompareWithTarget';
+import isAppleDevice from '../utils/isAppleDevice';
 
 export type KeyPredicate = (event: KeyboardEvent) => boolean;
 export type keyType = number | string;
@@ -122,9 +123,6 @@ const aliasKeyCodeMap = {
   singlequote: 222,
 };
 
-const isAppleDevice = /(mac|iphone|ipod|ipad)/i.test(
-  typeof navigator !== 'undefined' ? navigator?.platform : '',
-);
 if (isAppleDevice) {
   aliasKeyCodeMap['meta'] = [91, 93];
 } else {
@@ -136,7 +134,12 @@ const modifierKey = {
   ctrl: (event: KeyboardEvent) => event.ctrlKey,
   shift: (event: KeyboardEvent) => event.shiftKey,
   alt: (event: KeyboardEvent) => event.altKey,
-  meta: (event: KeyboardEvent) => event.metaKey,
+  meta: (event: KeyboardEvent) => {
+    if (event.type === 'keyup') {
+      return aliasKeyCodeMap['meta'].includes(event.keyCode);
+    }
+    return event.metaKey;
+  },
 };
 
 // 根据 event 计算激活键数量
@@ -180,14 +183,8 @@ function genFilterKey(event: KeyboardEvent, keyFilter: keyType, exactMatch: bool
     // keyCode 别名
     const aliasKeyCode: number | number[] = aliasKeyCodeMap[key.toLowerCase()];
 
-    if (genModifier && genModifier(event)) {
+    if ((genModifier && genModifier(event)) || (aliasKeyCode && aliasKeyCode === event.keyCode)) {
       genLen++;
-    } else if (aliasKeyCode) {
-      if (aliasKeyCode === event.keyCode) {
-        genLen++;
-      } else if (Array.isArray(aliasKeyCode) && aliasKeyCode.includes(event.keyCode)) {
-        genLen++;
-      }
     }
   }
 
