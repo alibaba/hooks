@@ -53,6 +53,7 @@ function useTextSelection(target?: BasicTarget<Document | Element>): State {
   const [state, setState] = useState(initState);
 
   const stateRef = useRef(state);
+  const isInRangeRef = useRef(false);
   stateRef.current = state;
 
   useEffectWithTarget(
@@ -69,21 +70,23 @@ function useTextSelection(target?: BasicTarget<Document | Element>): State {
         if (!window.getSelection) return;
         selObj = window.getSelection();
         text = selObj ? selObj.toString() : '';
-        if (text) {
+        if (text && isInRangeRef.current) {
           rect = getRectFromSelection(selObj);
           setState({ ...state, text, ...rect });
         }
       };
 
       // 任意点击都需要清空之前的 range
-      const mousedownHandler = () => {
+      const mousedownHandler = (e) => {
         if (!window.getSelection) return;
         if (stateRef.current.text) {
           setState({ ...initState });
         }
+        isInRangeRef.current = false;
         const selObj = window.getSelection();
         if (!selObj) return;
         selObj.removeAllRanges();
+        isInRangeRef.current = el.contains(e.target);
       };
 
       el.addEventListener('mouseup', mouseupHandler);

@@ -1,4 +1,4 @@
-import { act, renderHook } from '@testing-library/react-hooks';
+import { act, renderHook, waitFor } from '@testing-library/react';
 import useRequest from '../index';
 import { request } from '../../utils/testingHelpers';
 
@@ -19,9 +19,7 @@ describe('useLoadingDelayPlugin', () => {
     act(() => {
       jest.runAllTimers();
     });
-    await hook.waitForNextUpdate();
-    expect(hook.result.current.loading).toEqual(false);
-    hook.unmount();
+    await waitFor(() => expect(hook.result.current.loading).toEqual(false));
 
     act(() => {
       hook = setUp(request, {
@@ -38,8 +36,7 @@ describe('useLoadingDelayPlugin', () => {
     act(() => {
       jest.runAllTimers();
     });
-    await hook.waitForNextUpdate();
+    await waitFor(() => expect(hook.result.current.loading).toEqual(false));
     expect(hook.result.current.loading).toEqual(false);
-    hook.unmount();
   });
 });

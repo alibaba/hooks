@@ -1,4 +1,4 @@
-import { renderHook } from '@testing-library/react-hooks';
+import { renderHook } from '@testing-library/react';
 import { useEffect, useLayoutEffect } from 'react';
 import { createUpdateEffect } from '../index';
 
