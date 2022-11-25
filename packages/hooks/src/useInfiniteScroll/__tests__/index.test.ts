@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { renderHook, act } from '@testing-library/react';
+import { renderHook, act } from '../../utils/tests';
 import useInfiniteScroll from '..';
 import type { Data, Service, InfiniteScrollOptions } from '../types';
 import { sleep } from '../../utils/testingHelpers';
@@ -190,7 +190,7 @@ describe('useInfiniteScroll', () => {
     const onBefore = jest.fn();
     const onSuccess = jest.fn();
     const onFinally = jest.fn();
-    const { result } = setup(mockRequest, {
+    setup(mockRequest, {
       onBefore,
       onSuccess,
       onFinally,
