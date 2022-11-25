@@ -1,4 +1,4 @@
-import { act, renderHook } from '@testing-library/react-hooks';
+import { act, renderHook } from '@testing-library/react';
 import useFusionTable from '../index';
 import { sleep } from '../../utils/testingHelpers';
 

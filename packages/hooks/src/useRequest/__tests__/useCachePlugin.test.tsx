@@ -1,4 +1,4 @@
-import { act, renderHook } from '@testing-library/react-hooks';
+import { act, renderHook, waitFor } from '@testing-library/react';
 import { render } from '@testing-library/react';
 import useRequest, { clearCache } from '../index';
 import { request } from '../../utils/testingHelpers';
@@ -178,14 +178,18 @@ describe('useCachePlugin', () => {
     });
     expect(res.error).toEqual(undefined);
 
-    res.setKey(0);
+    act(() => res.setKey(0));
+    await act(async () => {
+      jest.advanceTimersByTime(1000);
+    });
+
     await act(async () => {
       jest.advanceTimersByTime(1000);
     });
     expect(errSpy).toBeCalled();
-    expect(res.error).not.toEqual(undefined);
+    await waitFor(() => expect(res.error).not.toEqual(undefined));
 
-    res.setKey(1);
+    act(() => res.setKey(1));
     await act(async () => {
       jest.advanceTimersByTime(1000);
     });

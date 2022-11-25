@@ -1,53 +1,29 @@
-import React, { useState } from 'react';
-import Enzyme, { mount } from 'enzyme';
-import Adapter from 'enzyme-adapter-react-16';
+import { renderHook } from '@testing-library/react';
 import useFavicon from '../index';
 
-Enzyme.configure({ adapter: new Adapter() });
+describe('useFavicon', () => {
+  it('should set the favicon', () => {
+    expect(document.querySelector("link[rel*='icon']")).toBeNull();
+    renderHook(() => useFavicon('favicon.ico'));
+    expect(document.querySelector("link[rel*='icon']")).not.toBeNull();
+  });
 
-// 直接导入demo1.tsx作为测试会报错(import { useFavicon } from 'ahooks')
-const DEFAULT_FAVICON_URL = 'https://ahooks.js.org/simple-logo.svg';
-const GOOGLE_FAVICON_URL = 'https://www.google.com/favicon.ico';
-
-const App: React.FC = () => {
-  const [url, setUrl] = useState<string>(DEFAULT_FAVICON_URL);
-  useFavicon(url);
-  return (
-    <>
-      <p>
-        当前Favicon: <span>{url}</span>
-      </p>
-      <button
-        id="google"
-        style={{ marginRight: 16 }}
-        onClick={() => {
-          setUrl(GOOGLE_FAVICON_URL);
-        }}
-      >
-        Change To Google Favicon
-      </button>
-      <button
-        id="ahooks"
-        onClick={() => {
-          setUrl(DEFAULT_FAVICON_URL);
-        }}
-      >
-        Back To AHooks Favicon
-      </button>
-    </>
-  );
-};
-
-describe.only('useFavicon Hook', () => {
-  it('should toggle favicon when URL changed', () => {
-    const wrapper = mount(<App />);
-    const currentFaviconURL = wrapper.find('span').at(0);
-    const toggleToGoogleBtn = wrapper.find('button').at(0);
-    const toggleToAHooksBtn = wrapper.find('button').at(1);
-    expect(currentFaviconURL.text()).toBe(DEFAULT_FAVICON_URL);
-    toggleToGoogleBtn.simulate('click');
-    expect(currentFaviconURL.text()).toBe(GOOGLE_FAVICON_URL);
-    toggleToAHooksBtn.simulate('click');
-    expect(currentFaviconURL.text()).toBe(DEFAULT_FAVICON_URL);
+  it('should support svg/png/ico/gif', () => {
+    const { rerender } = renderHook((url: string) => useFavicon(url));
+    const suffixs = ['svg', 'png', 'ico', 'gif'];
+    const imgTypeMap = {
+      svg: 'image/svg+xml',
+      ico: 'image/x-icon',
+      gif: 'image/gif',
+      png: 'image/png',
+    };
+    suffixs.forEach((suffix) => {
+      const url = `favicon.${suffix}`;
+      rerender(url);
+      const link = document.querySelector("link[rel*='icon']") as HTMLLinkElement;
+      expect(link).toHaveAttribute('type', imgTypeMap[suffix]);
+      expect(link).toHaveAttribute('href', url);
+      expect(link).toHaveAttribute('rel', 'shortcut icon');
+    });
   });
 });

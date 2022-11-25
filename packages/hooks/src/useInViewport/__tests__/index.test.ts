@@ -1,5 +1,5 @@
 import useInViewport from '../index';
-import { renderHook, act } from '@testing-library/react-hooks';
+import { renderHook, act } from '@testing-library/react';
 
 const targetEl = document.createElement('div');
 document.body.appendChild(targetEl);

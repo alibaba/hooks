@@ -25,7 +25,7 @@ function observer<T extends Record<string, any>>(initialVal: T, cb: () => void):
   const proxy = new Proxy<T>(initialVal, {
     get(target, key, receiver) {
       const res = Reflect.get(target, key, receiver);
-      return isObject(res) ? observer(res, cb) : Reflect.get(target, key);
+      return isObject(res) ? observer(res, cb) : res;
     },
     set(target, key, val) {
       const ret = Reflect.set(target, key, val);

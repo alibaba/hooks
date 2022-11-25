@@ -1,4 +1,4 @@
-import { renderHook, act } from '@testing-library/react-hooks';
+import { renderHook, act, waitFor } from '@testing-library/react';
 import usePagination from '../';
 
 // 初始化
@@ -30,9 +30,7 @@ describe('usePagination', () => {
     expect(hook.result.current.loading).toEqual(true);
     expect(queryArgs.current).toEqual(1);
     expect(queryArgs.pageSize).toEqual(10);
-    await hook.waitForNextUpdate();
-
-    expect(hook.result.current.loading).toEqual(false);
+    await waitFor(() => expect(hook.result.current.loading).toEqual(false));
 
     expect(hook.result.current.pagination.current).toEqual(1);
     expect(hook.result.current.pagination.pageSize).toEqual(10);
@@ -48,9 +46,7 @@ describe('usePagination', () => {
     expect(hook.result.current.loading).toEqual(true);
     expect(queryArgs.current).toEqual(1);
     expect(queryArgs.pageSize).toEqual(10);
-    await hook.waitForNextUpdate();
-
-    expect(hook.result.current.loading).toEqual(false);
+    await waitFor(() => expect(hook.result.current.loading).toEqual(false));
 
     act(() => {
       hook.result.current.pagination.changeCurrent(2);
@@ -58,8 +54,7 @@ describe('usePagination', () => {
     expect(hook.result.current.loading).toEqual(true);
     expect(queryArgs.current).toEqual(2);
     expect(queryArgs.pageSize).toEqual(10);
-    await hook.waitForNextUpdate();
-    expect(hook.result.current.pagination.current).toEqual(2);
+    await waitFor(() => expect(hook.result.current.pagination.current).toEqual(2));
 
     act(() => {
       hook.result.current.pagination.changeCurrent(10);
@@ -67,8 +62,7 @@ describe('usePagination', () => {
     expect(hook.result.current.loading).toEqual(true);
     expect(queryArgs.current).toEqual(6);
     expect(queryArgs.pageSize).toEqual(10);
-    await hook.waitForNextUpdate();
-    expect(hook.result.current.pagination.current).toEqual(6);
+    await waitFor(() => expect(hook.result.current.pagination.current).toEqual(6));
 
     act(() => {
       hook.result.current.pagination.changePageSize(20);
@@ -76,8 +70,7 @@ describe('usePagination', () => {
     expect(hook.result.current.loading).toEqual(true);
     expect(queryArgs.current).toEqual(3);
     expect(queryArgs.pageSize).toEqual(20);
-    await hook.waitForNextUpdate();
-    expect(hook.result.current.pagination.current).toEqual(3);
+    await waitFor(() => expect(hook.result.current.pagination.current).toEqual(3));
     expect(hook.result.current.pagination.pageSize).toEqual(20);
     expect(hook.result.current.pagination.totalPage).toEqual(3);
 
@@ -87,8 +80,7 @@ describe('usePagination', () => {
     expect(hook.result.current.loading).toEqual(true);
     expect(queryArgs.current).toEqual(2);
     expect(queryArgs.pageSize).toEqual(10);
-    await hook.waitForNextUpdate();
-    expect(hook.result.current.pagination.current).toEqual(2);
+    await waitFor(() => expect(hook.result.current.pagination.current).toEqual(2));
     expect(hook.result.current.pagination.pageSize).toEqual(10);
     expect(hook.result.current.pagination.totalPage).toEqual(6);
   });
@@ -104,16 +96,13 @@ describe('usePagination', () => {
     expect(hook.result.current.loading).toEqual(true);
     expect(queryArgs.current).toEqual(1);
     expect(queryArgs.pageSize).toEqual(10);
-    await hook.waitForNextUpdate();
-
-    expect(hook.result.current.loading).toEqual(false);
+    await waitFor(() => expect(hook.result.current.loading).toEqual(false));
 
     act(() => {
       hook.result.current.pagination.onChange(3, 20);
     });
     expect(hook.result.current.loading).toEqual(true);
-    await hook.waitForNextUpdate();
-    expect(hook.result.current.pagination.current).toEqual(3);
+    await waitFor(() => expect(hook.result.current.pagination.current).toEqual(3));
     expect(hook.result.current.pagination.pageSize).toEqual(20);
 
     dep = 2;
@@ -124,8 +113,7 @@ describe('usePagination', () => {
     expect(hook.result.current.loading).toEqual(true);
     expect(queryArgs.current).toEqual(1);
     expect(queryArgs.pageSize).toEqual(20);
-    await hook.waitForNextUpdate();
-    expect(hook.result.current.pagination.current).toEqual(1);
+    await waitFor(() => expect(hook.result.current.pagination.current).toEqual(1));
     expect(hook.result.current.pagination.pageSize).toEqual(20);
   });
 
@@ -140,9 +128,7 @@ describe('usePagination', () => {
     expect(hook.result.current.loading).toEqual(true);
     expect(queryArgs.current).toEqual(2);
     expect(queryArgs.pageSize).toEqual(5);
-    await hook.waitForNextUpdate();
-
-    expect(hook.result.current.loading).toEqual(false);
+    await waitFor(() => expect(hook.result.current.loading).toEqual(false));
 
     expect(hook.result.current.pagination.current).toEqual(2);
     expect(hook.result.current.pagination.pageSize).toEqual(5);
@@ -155,8 +141,7 @@ describe('usePagination', () => {
     expect(hook.result.current.loading).toEqual(true);
     expect(queryArgs.current).toEqual(3);
     expect(queryArgs.pageSize).toEqual(5);
-    await hook.waitForNextUpdate();
-    expect(hook.result.current.pagination.current).toEqual(3);
+    await waitFor(() => expect(hook.result.current.pagination.current).toEqual(3));
     expect(hook.result.current.pagination.pageSize).toEqual(5);
   });
 });
