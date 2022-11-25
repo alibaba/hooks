@@ -23,7 +23,8 @@
     "pub": "pnpm run build && pnpm -r --filter=./packages/* publish",
     "pub:beta": "pnpm run build && pnpm -r --filter=./packages/* publish --tag beta",
     "preinstall": "npx only-allow pnpm",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "test:strict": "cross-env REACT_MODE=strict jest"
   },
   "devDependencies": {
     "@ant-design/icons": "^4.6.2",
@@ -34,7 +35,6 @@
     "@commitlint/config-conventional": "^17.1.0",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
-    "@testing-library/react-hooks": "^8.0.1",
     "@types/jest": "^27.4.1",
     "@types/lodash.debounce": "^4.0.6",
     "@types/lodash.isequal": "^4.5.5",
@@ -47,6 +47,7 @@
     "babel-plugin-import": "^1.12.0",
     "babel-plugin-transform-async-to-promises": "^0.8.15",
     "coveralls": "^3.1.1",
+    "cross-env": "^7.0.3",
     "del": "^5.1.0",
     "dumi": "^1.1.48",
     "enzyme": "^3.10.0",
@@ -70,7 +71,6 @@
     "react-drag-listview": "^0.1.6",
     "react-router": "^6.4.2",
     "react-shadow": "^19.0.3",
-    "react-test-renderer": "^16.13.1",
     "rimraf": "^3.0.2",
     "surge": "^0.21.3",
     "ts-jest": "^27.1.5",
