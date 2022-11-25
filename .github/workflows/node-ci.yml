@@ -23,9 +23,8 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
 
-      - name: pnpm run intall, build, and test
+      - name: pnpm run intall, build
         run: |
           pnpm run init
-          pnpm run test
         env:
           CI: true
