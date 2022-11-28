@@ -3,6 +3,7 @@ import type { BasicTarget } from '../utils/domTarget';
 import { getTargetElement } from '../utils/domTarget';
 import getDocumentOrShadow from '../utils/getDocumentOrShadow';
 import useEffectWithTarget from '../utils/useEffectWithTarget';
+import { isFunction } from '../utils/index';
 
 export default function useClickAway<T extends Event = Event>(
   onClickAway: (event: T) => void,
@@ -10,14 +11,16 @@ export default function useClickAway<T extends Event = Event>(
   eventName: string | string[] = 'click',
 ) {
   const onClickAwayRef = useLatest(onClickAway);
+  const realTarget = isFunction(target) && Array.isArray(target()) ? target() : target;
 
   useEffectWithTarget(
     () => {
       const handler = (event: any) => {
-        const targets = Array.isArray(target) ? target : [target];
+        const targets = Array.isArray(realTarget) ? realTarget : [realTarget];
         if (
           targets.some((item) => {
             const targetElement = getTargetElement(item);
+            console.log('targetElement = ', targetElement);
             return !targetElement || targetElement.contains(event.target);
           })
         ) {
@@ -26,7 +29,7 @@ export default function useClickAway<T extends Event = Event>(
         onClickAwayRef.current(event);
       };
 
-      const documentOrShadow = getDocumentOrShadow(target);
+      const documentOrShadow = getDocumentOrShadow(realTarget);
 
       const eventNames = Array.isArray(eventName) ? eventName : [eventName];
 
@@ -37,6 +40,6 @@ export default function useClickAway<T extends Event = Event>(
       };
     },
     Array.isArray(eventName) ? eventName : [eventName],
-    target,
+    realTarget,
   );
 }
