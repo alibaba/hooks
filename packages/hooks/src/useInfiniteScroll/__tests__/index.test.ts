@@ -248,4 +248,54 @@ describe('useInfiniteScroll', () => {
       Promise.resolve();
     });
   });
+
+  it('reload should list number can right', async () => {
+    let n = 15;
+    const fn = async () => {
+      await sleep(1000);
+      return {
+        list: Array.from({
+          length: n,
+        }).map((_, index) => index + 1),
+        hasMore: n > 10
+      };
+    };
+    Object.defineProperties(targetEl, {
+      clientHeight: {
+        value: 150,
+      },
+      scrollHeight: {
+        get() {
+          return n < 10 ? 150 : 20 * n;
+        },
+      },
+      scrollTop: {
+        value: 0,
+      },
+    });
+    const { result } = setup(fn, {
+      isNoMore: (d) => !d?.hasMore,
+      target: targetEl,
+    });
+    await act(async () => {
+      jest.advanceTimersByTime(1000);
+    });
+    await act(async () => {
+      jest.advanceTimersByTime(1000);
+    });
+
+    expect(result.current.data?.list.length).toBe(n);
+
+    await act(async () => {
+      n = 2;
+      result.current.reload();
+    });
+    await act(async () => {
+      jest.advanceTimersByTime(1000);
+    });
+    await act(async () => {
+      jest.advanceTimersByTime(1000);
+    });
+    expect(result.current.data?.list.length).toBe(n);
+  });
 });
