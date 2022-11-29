@@ -18,7 +18,7 @@ interface Result {
 
 const getTableData = (
   { current, pageSize, filters, sorter },
-  formData: Object,
+  formData: object,
 ): Promise<Result> => {
   console.log(sorter, filters);
 

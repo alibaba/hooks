@@ -13,7 +13,7 @@ import React, { useState, useRef } from 'react';
 import { useKeyPress } from 'ahooks';
 
 export default () => {
-  const inputRef = useRef(null);
+  const inputRef = useRef<HTMLInputElement>(null);
 
   const [text, setText] = useState('');
   const [textRef, setTextRef] = useState('');

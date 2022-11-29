@@ -1,5 +1,6 @@
 import { act, renderHook } from '@testing-library/react';
-import useVirtualList, { Options } from '../index';
+import type { Options } from '../index';
+import useVirtualList from '../index';
 
 describe('useVirtualList', () => {
   describe('virtual list render', () => {
@@ -27,7 +28,7 @@ describe('useVirtualList', () => {
       hook.unmount();
     });
 
-    const setup = (list: any[] = [], options: {}) => {
+    const setup = (list: any[] = [], options: object) => {
       hook = renderHook(() => useVirtualList(list as unknown[], options as Options<any>));
     };
 

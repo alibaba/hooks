@@ -4,7 +4,7 @@ import useMemoizedFn from '../useMemoizedFn';
 export default function useSelections<T>(items: T[], defaultSelected: T[] = []) {
   const [selected, setSelected] = useState<T[]>(defaultSelected);
 
-  const selectedSet = useMemo(() => new Set(selected), [selected]);
+  const selectedSet = useMemo<Set<T>>(() => new Set(selected), [selected]);
 
   const isSelected = (item: T) => selectedSet.has(item);
 

@@ -1,5 +1,6 @@
 import { renderHook, act } from '@testing-library/react';
-import useCookieState, { Options } from '../index';
+import type { Options } from '../index';
+import useCookieState from '../index';
 import Cookies from 'js-cookie';
 
 describe('useCookieState', () => {

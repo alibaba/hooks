@@ -1,5 +1,6 @@
 import { renderHook, act } from '@testing-library/react';
-import useFullscreen, { Options } from '../index';
+import type { Options } from '../index';
+import useFullscreen from '../index';
 import type { BasicTarget } from '../../utils/domTarget';
 
 const targetEl = document.createElement('div');
@@ -50,13 +51,13 @@ describe('useFullscreen', () => {
     const { enterFullscreen, exitFullscreen } = result.current[1];
     enterFullscreen();
     act(() => {
-      events['fullscreenchange'].forEach((fn: any) => fn());
+      events.fullscreenchange.forEach((fn: any) => fn());
     });
     expect(result.current[0]).toBeTruthy();
 
     exitFullscreen();
     act(() => {
-      events['fullscreenchange'].forEach((fn: any) => fn());
+      events.fullscreenchange.forEach((fn: any) => fn());
     });
     expect(result.current[0]).toBeFalsy();
   });
@@ -66,13 +67,13 @@ describe('useFullscreen', () => {
     const { toggleFullscreen } = result.current[1];
     toggleFullscreen();
     act(() => {
-      events['fullscreenchange'].forEach((fn: any) => fn());
+      events.fullscreenchange.forEach((fn: any) => fn());
     });
     expect(result.current[0]).toBeTruthy();
 
     toggleFullscreen();
     act(() => {
-      events['fullscreenchange'].forEach((fn: any) => fn());
+      events.fullscreenchange.forEach((fn: any) => fn());
     });
     expect(result.current[0]).toBeFalsy();
   });
@@ -87,13 +88,13 @@ describe('useFullscreen', () => {
     const { toggleFullscreen } = result.current[1];
     toggleFullscreen();
     act(() => {
-      events['fullscreenchange'].forEach((fn: any) => fn());
+      events.fullscreenchange.forEach((fn: any) => fn());
     });
     expect(onEnter).toBeCalled();
 
     toggleFullscreen();
     act(() => {
-      events['fullscreenchange'].forEach((fn: any) => fn());
+      events.fullscreenchange.forEach((fn: any) => fn());
     });
     expect(onExit).toBeCalled();
   });
@@ -111,7 +112,7 @@ describe('useFullscreen', () => {
     const { exitFullscreen } = result.current[1];
     exitFullscreen();
     act(() => {
-      events['fullscreenchange'].forEach((fn: any) => fn());
+      events.fullscreenchange.forEach((fn: any) => fn());
     });
     expect(onExit).not.toBeCalled();
   });
@@ -130,13 +131,13 @@ describe('useFullscreen', () => {
     const { enterFullscreen } = result.current[1];
     enterFullscreen();
     act(() => {
-      events['fullscreenchange'].forEach((fn: any) => fn());
+      events.fullscreenchange.forEach((fn: any) => fn());
     });
     expect(result.current[0]).toBeTruthy();
 
     document.exitFullscreen();
     act(() => {
-      events['fullscreenchange'].forEach((fn: any) => fn());
+      events.fullscreenchange.forEach((fn: any) => fn());
     });
     expect(result.current[0]).toBeFalsy();
   });
@@ -149,7 +150,7 @@ describe('useFullscreen', () => {
     // target1 full screen
     hook.result.current[1].enterFullscreen();
     act(() => {
-      events['fullscreenchange'].forEach((fn: any) => fn());
+      events.fullscreenchange.forEach((fn: any) => fn());
     });
     expect(hook.result.current[0]).toBeTruthy();
 
@@ -159,7 +160,7 @@ describe('useFullscreen', () => {
       value: targetEl2,
     });
     act(() => {
-      events['fullscreenchange'].forEach((fn: any) => fn());
+      events.fullscreenchange.forEach((fn: any) => fn());
     });
     expect(hook.result.current[0]).toBeFalsy();
     expect(hook2.result.current[0]).toBeTruthy();
@@ -170,7 +171,7 @@ describe('useFullscreen', () => {
       value: targetEl,
     });
     act(() => {
-      events['fullscreenchange'].forEach((fn: any) => fn());
+      events.fullscreenchange.forEach((fn: any) => fn());
     });
     expect(hook.result.current[0]).toBeTruthy();
     expect(hook2.result.current[0]).toBeFalsy();

@@ -1,5 +1,6 @@
 import { act, renderHook } from '@testing-library/react';
-import useCountDown, { Options } from '../index';
+import type { Options } from '../index';
+import useCountDown from '../index';
 
 const setup = (options: Options = {}) =>
   renderHook((props: Options = options) => useCountDown(props));

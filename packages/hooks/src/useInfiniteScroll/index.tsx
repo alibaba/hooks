@@ -27,7 +27,9 @@ const useInfiniteScroll = <TData extends Data>(
   const [loadingMore, setLoadingMore] = useState(false);
 
   const noMore = useMemo(() => {
-    if (!isNoMore) return false;
+    if (!isNoMore) {
+      return false;
+    }
     return isNoMore(finalData);
   }, [finalData]);
 
@@ -64,13 +66,17 @@ const useInfiniteScroll = <TData extends Data>(
   );
 
   const loadMore = () => {
-    if (noMore) return;
+    if (noMore) {
+      return;
+    }
     setLoadingMore(true);
     run(finalData);
   };
 
   const loadMoreAsync = () => {
-    if (noMore) return Promise.reject();
+    if (noMore) {
+      return Promise.reject();
+    }
     setLoadingMore(true);
     return runAsync(finalData);
   };

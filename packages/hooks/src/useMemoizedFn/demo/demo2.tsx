@@ -10,6 +10,21 @@ import { useMemoizedFn } from 'ahooks';
 import { message } from 'antd';
 import React, { useCallback, useRef, useState } from 'react';
 
+// some expensive component with React.memo
+const ExpensiveTree = React.memo<Record<PropertyKey, any>>(({ showCount }) => {
+  const renderCountRef = useRef(0);
+  renderCountRef.current += 1;
+
+  return (
+    <div>
+      <p>Render Count: {renderCountRef.current}</p>
+      <button type="button" onClick={showCount}>
+        showParentCount
+      </button>
+    </div>
+  );
+});
+
 export default () => {
   const [count, setCount] = useState(0);
 
@@ -49,18 +64,3 @@ export default () => {
     </>
   );
 };
-
-// some expensive component with React.memo
-const ExpensiveTree = React.memo<{ [key: string]: any }>(({ showCount }) => {
-  const renderCountRef = useRef(0);
-  renderCountRef.current += 1;
-
-  return (
-    <div>
-      <p>Render Count: {renderCountRef.current}</p>
-      <button type="button" onClick={showCount}>
-        showParentCount
-      </button>
-    </div>
-  );
-});

@@ -1,3 +1,4 @@
+import type { RenderHookResult } from '@testing-library/react';
 import { act, renderHook } from '@testing-library/react';
 import useThrottleFn from '../index';
 import { sleep } from '../../utils/testingHelpers';
@@ -10,7 +11,7 @@ interface ParamsObj {
 
 const setUp = ({ fn, wait }: ParamsObj) => renderHook(() => useThrottleFn(fn, { wait }));
 
-let hook;
+let hook: RenderHookResult<any, ReturnType<typeof useThrottleFn>>;
 
 describe('useThrottleFn', () => {
   it('run, cancel and flush should work', async () => {

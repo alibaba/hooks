@@ -1,7 +1,8 @@
 import { renderHook, act } from '@testing-library/react';
 import useSize from '../index';
 
-let callback;
+let callback: (p?: any) => void;
+
 jest.mock('resize-observer-polyfill', () => {
   return jest.fn().mockImplementation((cb) => {
     callback = cb;

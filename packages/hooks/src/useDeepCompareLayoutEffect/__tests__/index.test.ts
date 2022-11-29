@@ -8,7 +8,7 @@ describe('useDeepCompareLayoutEffect', () => {
       const [x, setX] = useState(0);
       const [y, setY] = useState({});
       useDeepCompareLayoutEffect(() => {
-        setX((x) => x + 1);
+        setX((count) => count + 1);
       }, [y]);
       return { x, setY };
     });

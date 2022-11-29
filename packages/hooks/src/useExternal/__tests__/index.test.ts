@@ -1,5 +1,6 @@
 import { renderHook, act } from '@testing-library/react';
-import useExternal, { Options } from '../index';
+import type { Options } from '../index';
+import useExternal from '../index';
 import { fireEvent } from '@testing-library/react';
 
 const setup = (path: string, options?: Options) => renderHook(() => useExternal(path, options));

@@ -76,7 +76,7 @@ describe('useInfiniteScroll', () => {
   });
 
   it('should auto load when scroll to bottom', async () => {
-    const events = {};
+    const events: Record<PropertyKey, any> = {};
     const mockAddEventListener = jest
       .spyOn(targetEl, 'addEventListener')
       .mockImplementation((eventName, callback) => {
@@ -88,7 +88,7 @@ describe('useInfiniteScroll', () => {
     });
     // not work when loading
     expect(result.current.loading).toBeTruthy();
-    events['scroll']();
+    events.scroll();
     await act(async () => {
       jest.advanceTimersByTime(1000);
     });
@@ -107,7 +107,7 @@ describe('useInfiniteScroll', () => {
       },
     });
     act(() => {
-      events['scroll']();
+      events.scroll();
     });
     expect(result.current.loadingMore).toBeTruthy();
     await act(async () => {
@@ -118,7 +118,7 @@ describe('useInfiniteScroll', () => {
     // not work when no more
     expect(result.current.noMore).toBeTruthy();
     act(() => {
-      events['scroll']();
+      events.scroll();
     });
     expect(result.current.loadingMore).toBeFalsy();
 
@@ -190,11 +190,7 @@ describe('useInfiniteScroll', () => {
     const onBefore = jest.fn();
     const onSuccess = jest.fn();
     const onFinally = jest.fn();
-    const { result } = setup(mockRequest, {
-      onBefore,
-      onSuccess,
-      onFinally,
-    });
+    setup(mockRequest, { onBefore, onSuccess, onFinally });
     await act(async () => {
       jest.advanceTimersByTime(1000);
     });

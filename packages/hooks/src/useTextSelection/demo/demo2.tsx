@@ -21,9 +21,13 @@ const getResult = (keyword: string): Promise<string> => {
 };
 
 export default () => {
-  const { text = '', left = 0, top = 0, height = 0, width = 0 } = useTextSelection(() =>
-    document.querySelector('#translate-dom'),
-  );
+  const {
+    text = '',
+    left = 0,
+    top = 0,
+    height = 0,
+    width = 0,
+  } = useTextSelection(() => document.querySelector('#translate-dom'));
 
   const [visible, setVisible] = useState(false);
 

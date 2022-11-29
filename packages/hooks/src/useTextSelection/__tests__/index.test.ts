@@ -3,19 +3,6 @@ import useTextSelection from '../index';
 
 // test about Resize Observer see https://github.com/que-etc/resize-observer-polyfill/tree/master/tests
 describe('useTextSelection', () => {
-  function moveMouse(x: number, y: number) {
-    act(() => {
-      document.dispatchEvent(
-        new MouseEvent('mousemove', {
-          clientX: x,
-          clientY: y,
-          screenX: x,
-          screenY: y,
-        }),
-      );
-    });
-  }
-
   function downMouse(x: number, y: number) {
     act(() => {
       document.dispatchEvent(
@@ -52,7 +39,7 @@ describe('useTextSelection', () => {
         },
         rangeCount: text.length,
         removeAllRanges: () => {},
-        getRangeAt: (index: number) => {
+        getRangeAt() {
           return {
             getBoundingClientRect: () => {
               return {
