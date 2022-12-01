@@ -1,4 +1,4 @@
 import { useLayoutEffect } from 'react';
-import { createDeepCompareEffect } from '../createDeepCompareEffect';
+import { createDeepCompareHook } from '../createDeepCompareHook';
 
-export default createDeepCompareEffect(useLayoutEffect);
+export default createDeepCompareHook(useLayoutEffect);

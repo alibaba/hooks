@@ -1,4 +1,4 @@
 import { useEffect } from 'react';
-import { createDeepCompareEffect } from '../createDeepCompareEffect';
+import { createDeepCompareHook } from '../createDeepCompareHook';
 
-export default createDeepCompareEffect(useEffect);
+export default createDeepCompareHook(useEffect);
