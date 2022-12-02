@@ -118,4 +118,8 @@ export const menus = [
     title: 'Dev',
     children: ['useTrackedEffect', 'useWhyDidYouUpdate'],
   },
+  {
+    title: 'Export',
+    children: ['useExport'],
+  },
 ];
