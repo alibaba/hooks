@@ -1,8 +1,7 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import screenfull from 'screenfull';
 import useLatest from '../useLatest';
 import useMemoizedFn from '../useMemoizedFn';
-import useUnmount from '../useUnmount';
 import type { BasicTarget } from '../utils/domTarget';
 import { getTargetElement } from '../utils/domTarget';
 
@@ -16,42 +15,25 @@ const useFullscreen = (target: BasicTarget, options?: Options) => {
 
   const onExitRef = useLatest(onExit);
   const onEnterRef = useLatest(onEnter);
+  const isSelfInFullscreen = useRef(false);
 
-  const [state, setState] = useState(false);
-
-  const onChange = () => {
-    if (screenfull.isEnabled) {
-      const el = getTargetElement(target);
-
-      if (!screenfull.element) {
-        onExitRef.current?.();
-        setState(false);
-        screenfull.off('change', onChange);
-      } else {
-        const isFullscreen = screenfull.element === el;
-        if (isFullscreen) {
-          onEnterRef.current?.();
-        } else {
-          onExitRef.current?.();
-        }
-        setState(isFullscreen);
-      }
-    }
-  };
+  const [state, setState] = useState(
+    () =>
+      screenfull.isEnabled &&
+      Boolean(screenfull.element) &&
+      screenfull.element === getTargetElement(target),
+  );
 
   const enterFullscreen = () => {
     const el = getTargetElement(target);
-    if (!el) {
+    if (!screenfull.isEnabled || !el) {
       return;
     }
 
-    if (screenfull.isEnabled) {
-      try {
-        screenfull.request(el);
-        screenfull.on('change', onChange);
-      } catch (error) {
-        console.error(error);
-      }
+    try {
+      screenfull.request(el);
+    } catch (error) {
+      console.error(error);
     }
   };
 
@@ -70,11 +52,30 @@ const useFullscreen = (target: BasicTarget, options?: Options) => {
     }
   };
 
-  useUnmount(() => {
-    if (screenfull.isEnabled) {
-      screenfull.off('change', onChange);
+  useEffect(() => {
+    if (!screenfull.isEnabled) {
+      return;
     }
-  });
+
+    const onChange = () => {
+      const el = getTargetElement(target);
+      const isFullscreen = Boolean(screenfull.element) && screenfull.element === el;
+
+      // Previous was fullscreen, but now is not
+      if (isSelfInFullscreen.current && !isFullscreen) {
+        onExitRef.current?.();
+      } else if (isFullscreen) {
+        onEnterRef.current?.();
+      }
+      setState(isFullscreen);
+      isSelfInFullscreen.current = isFullscreen;
+    };
+
+    screenfull.on('change', onChange);
+    return () => {
+      screenfull.off('change', onChange);
+    };
+  }, []);
 
   return [
     state,

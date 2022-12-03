@@ -98,13 +98,6 @@ describe('useFullscreen', () => {
     expect(onExit).toBeCalled();
   });
 
-  it('enterFullscreen should not work when target is not element', () => {
-    const { result } = setup(null);
-    const { enterFullscreen } = result.current[1];
-    enterFullscreen();
-    expect(events.fullscreenchange.size).toBe(0);
-  });
-
   it('exitFullscreen should not work when not in full screen', () => {
     const onExit = jest.fn();
     const { result } = setup(targetEl, { onExit });
