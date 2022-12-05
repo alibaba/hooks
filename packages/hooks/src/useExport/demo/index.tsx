@@ -8,14 +8,12 @@
 
 import { useExport } from 'ahooks';
 import { Button } from 'antd';
-import React from 'react';
 
 export default () => {
-  const { loading, exportFile } = useExport();
+  const { exportFile } = useExport();
 
   return (
     <Button
-      loading={loading}
       onClick={() => {
         exportFile('https://codeload.github.com/alibaba/hooks/zip/refs/tags/v3.7.2', {});
       }}
