@@ -26,7 +26,7 @@ export const resultAdapter = (result: any) => {
         },
       );
     },
-    onFilter: (filterParams: object) => {
+    onFilter: (filterParams: Object) => {
       result.tableProps.onChange(
         { current: result.pagination.current, pageSize: result.pagination.pageSize },
         filterParams,

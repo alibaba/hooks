@@ -6,7 +6,7 @@ const mockCallback = jest.fn();
 const mockClickCallback = jest.fn();
 const mockLongPressEndCallback = jest.fn();
 
-let events: Record<PropertyKey, (e?: MouseEvent) => void> = {};
+let events = {};
 const mockTarget = {
   addEventListener: jest.fn((event, callback) => {
     events[event] = callback;
@@ -35,9 +35,9 @@ describe('useLongPress', () => {
       onLongPressEnd: mockLongPressEndCallback,
     });
     expect(mockTarget.addEventListener).toBeCalled();
-    events.mousedown();
+    events['mousedown']();
     jest.advanceTimersByTime(350);
-    events.mouseleave();
+    events['mouseleave']();
     expect(mockCallback).toBeCalledTimes(1);
     expect(mockLongPressEndCallback).toBeCalledTimes(1);
     expect(mockClickCallback).toBeCalledTimes(0);
@@ -49,10 +49,10 @@ describe('useLongPress', () => {
       onLongPressEnd: mockLongPressEndCallback,
     });
     expect(mockTarget.addEventListener).toBeCalled();
-    events.mousedown();
-    events.mouseup();
-    events.mousedown();
-    events.mouseup();
+    events['mousedown']();
+    events['mouseup']();
+    events['mousedown']();
+    events['mouseup']();
     expect(mockCallback).toBeCalledTimes(0);
     expect(mockLongPressEndCallback).toBeCalledTimes(0);
     expect(mockClickCallback).toBeCalledTimes(2);
@@ -64,11 +64,11 @@ describe('useLongPress', () => {
       onLongPressEnd: mockLongPressEndCallback,
     });
     expect(mockTarget.addEventListener).toBeCalled();
-    events.mousedown();
+    events['mousedown']();
     jest.advanceTimersByTime(350);
-    events.mouseup();
-    events.mousedown();
-    events.mouseup();
+    events['mouseup']();
+    events['mousedown']();
+    events['mouseup']();
     expect(mockCallback).toBeCalledTimes(1);
     expect(mockLongPressEndCallback).toBeCalledTimes(1);
     expect(mockClickCallback).toBeCalledTimes(1);
@@ -81,14 +81,19 @@ describe('useLongPress', () => {
         y: 20,
       },
     });
-    expect(events.mousemove).toBeDefined();
-    events.mousedown(new MouseEvent('mousedown'));
-    events.mousemove(new MouseEvent('mousemove', { clientX: 40, clientY: 10 }));
+    expect(events['mousemove']).toBeDefined();
+    events['mousedown'](new MouseEvent('mousedown'));
+    events['mousemove'](
+      new MouseEvent('mousemove', {
+        clientX: 40,
+        clientY: 10,
+      }),
+    );
     jest.advanceTimersByTime(320);
     expect(mockCallback).not.toBeCalled();
 
     unmount();
-    expect(events.mousemove).toBeUndefined();
+    expect(events['mousemove']).toBeUndefined();
   });
 
   it(`should not work when target don't support addEventListener method`, () => {

@@ -8,7 +8,7 @@ describe('useDeepCompareEffect', () => {
       const [x, setX] = useState(0);
       const [y, setY] = useState({});
       useDeepCompareEffect(() => {
-        setX((count) => count + 1);
+        setX((x) => x + 1);
       }, [y]);
       return { x, setY };
     });

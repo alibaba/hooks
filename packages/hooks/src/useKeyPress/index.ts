@@ -21,7 +21,7 @@ export type Options = {
 };
 
 // 键盘事件 keyCode 别名
-const aliasKeyCodeMap: Record<PropertyKey, number | [number, number]> = {
+const aliasKeyCodeMap = {
   '0': 48,
   '1': 49,
   '2': 50,
@@ -124,9 +124,9 @@ const aliasKeyCodeMap: Record<PropertyKey, number | [number, number]> = {
 };
 
 if (isAppleDevice) {
-  aliasKeyCodeMap.meta = [91, 93];
+  aliasKeyCodeMap['meta'] = [91, 93];
 } else {
-  aliasKeyCodeMap.meta = [91, 92];
+  aliasKeyCodeMap['meta'] = [91, 92];
 }
 
 // 修饰键
@@ -135,8 +135,8 @@ const modifierKey = {
   shift: (event: KeyboardEvent) => event.shiftKey,
   alt: (event: KeyboardEvent) => event.altKey,
   meta: (event: KeyboardEvent) => {
-    if (event.type === 'keyup' && Array.isArray(aliasKeyCodeMap.meta)) {
-      return aliasKeyCodeMap.meta.includes(event.keyCode);
+    if (event.type === 'keyup') {
+      return aliasKeyCodeMap['meta'].includes(event.keyCode);
     }
     return event.metaKey;
   },

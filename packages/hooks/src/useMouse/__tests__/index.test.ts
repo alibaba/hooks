@@ -30,7 +30,7 @@ describe('useMouse', () => {
   });
 
   it('should be work with target', async () => {
-    const events: Record<PropertyKey, (e?: Partial<MouseEvent>) => void> = {};
+    const events = {};
     const getBoundingClientRectMock = jest.spyOn(HTMLElement.prototype, 'getBoundingClientRect');
     jest.spyOn(document, 'addEventListener').mockImplementation(
       jest.fn((event: any, callback: any) => {
@@ -46,7 +46,7 @@ describe('useMouse', () => {
       height: 200,
     } as DOMRect);
     const { result } = renderHook(() => useMouse(targetEl));
-    events.mousemove({ pageX: 100, pageY: 100 });
+    events['mousemove']({ pageX: 100, pageY: 100 });
 
     await waitFor(() => expect(result.current.elementX).toBe(0));
     expect(result.current.elementX).toBe(0);

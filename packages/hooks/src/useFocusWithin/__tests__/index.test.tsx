@@ -1,11 +1,10 @@
 import React, { useRef } from 'react';
-import type { Options } from '../index';
-import useFocusWithin from '../index';
+import useFocusWithin, { Options } from '../index';
 import { render, fireEvent } from '@testing-library/react';
 
 const setup = (options?: Options) => {
   const TestComponent = () => {
-    const ref = useRef<HTMLDivElement>(null);
+    const ref = useRef(null);
     const isFocusWithin = useFocusWithin(ref, options);
     return (
       <div ref={ref}>

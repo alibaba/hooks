@@ -42,7 +42,7 @@ const DragItem = ({ data }) => {
 export default () => {
   const [isHovering, setIsHovering] = useState(false);
 
-  const dropRef = useRef<HTMLDivElement>(null);
+  const dropRef = useRef(null);
 
   useDrop(dropRef, {
     onText: (text, e) => {
@@ -57,7 +57,7 @@ export default () => {
       console.log(e);
       alert(`uri: ${uri} dropped`);
     },
-    onDom: (content: string) => {
+    onDom: (content: string, e) => {
       alert(`custom: ${content} dropped`);
     },
     onDragEnter: () => setIsHovering(true),
@@ -71,7 +71,7 @@ export default () => {
       </div>
 
       <div style={{ display: 'flex', marginTop: 8 }}>
-        {['1', '2', '3', '4', '5'].map((e) => (
+        {['1', '2', '3', '4', '5'].map((e, i) => (
           <DragItem key={e} data={e} />
         ))}
       </div>

@@ -16,7 +16,7 @@ interface Result {
   list: Item[];
 }
 
-const getTableData = ({ current, pageSize }, formData: object): Promise<Result> => {
+const getTableData = ({ current, pageSize }, formData: Object): Promise<Result> => {
   let query = `page=${current}&size=${pageSize}`;
   Object.entries(formData).forEach(([key, value]) => {
     if (value) {

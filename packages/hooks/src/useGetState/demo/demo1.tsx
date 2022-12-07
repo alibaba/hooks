@@ -22,5 +22,5 @@ export default () => {
     };
   }, []);
 
-  return <button onClick={() => setCount((prevCount) => prevCount + 1)}>count: {count}</button>;
+  return <button onClick={() => setCount((count) => count + 1)}>count: {count}</button>;
 };

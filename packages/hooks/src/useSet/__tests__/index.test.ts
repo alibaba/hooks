@@ -24,14 +24,14 @@ describe('useSet', () => {
 
   it('should have an initially provided key', () => {
     const { result } = setUp(['a']);
-    const [set] = result.current;
+    const [set, utils] = result.current;
 
-    let value: boolean;
+    let value;
     act(() => {
       value = set.has('a');
     });
 
-    expect(value!).toBe(true);
+    expect(value).toBe(true);
   });
 
   it('should have an added key', () => {

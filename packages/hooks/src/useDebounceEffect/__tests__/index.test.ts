@@ -1,9 +1,8 @@
-import type { RenderHookResult } from '@testing-library/react';
 import { act, renderHook } from '@testing-library/react';
 import useDebounceEffect from '../index';
 import { sleep } from '../../utils/testingHelpers';
 
-let hook: RenderHookResult<any, any>;
+let hook;
 
 describe('useDebounceEffect', () => {
   it('useDebounceEffect should work', async () => {
@@ -54,7 +53,7 @@ describe('useDebounceEffect', () => {
     const mockEffect = jest.fn(() => {});
     const mockCleanUp = jest.fn(() => {});
 
-    const renderHooks = renderHook(
+    const hook = renderHook(
       (props) =>
         useDebounceEffect(
           () => {
@@ -72,7 +71,7 @@ describe('useDebounceEffect', () => {
     expect(mockEffect.mock.calls.length).toEqual(0);
     expect(mockCleanUp.mock.calls.length).toEqual(0);
 
-    renderHooks.rerender(1);
+    hook.rerender(1);
     await sleep(50);
     expect(mockEffect.mock.calls.length).toEqual(0);
     expect(mockCleanUp.mock.calls.length).toEqual(0);
@@ -83,14 +82,14 @@ describe('useDebounceEffect', () => {
     expect(mockEffect.mock.calls.length).toEqual(1);
     expect(mockCleanUp.mock.calls.length).toEqual(0);
 
-    renderHooks.rerender(2);
+    hook.rerender(2);
     await act(async () => {
       await sleep(300);
     });
     expect(mockEffect.mock.calls.length).toEqual(2);
     expect(mockCleanUp.mock.calls.length).toEqual(1);
 
-    renderHooks.unmount();
+    hook.unmount();
     expect(mockEffect.mock.calls.length).toEqual(2);
     expect(mockCleanUp.mock.calls.length).toEqual(2);
   });

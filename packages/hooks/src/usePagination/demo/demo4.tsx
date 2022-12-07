@@ -12,7 +12,49 @@ interface UserListItem {
   disabled: boolean;
 }
 
-const PaginationComponent: React.FC = () => {
+const userList = (current: number, pageSize: number) =>
+  Mock.mock({
+    total: 55,
+    [`list|${pageSize}`]: [
+      {
+        id: '@guid',
+        name: '@name',
+        'gender|1': ['male', 'female'],
+        email: '@email',
+        disabled: false,
+      },
+    ],
+  });
+
+async function getUserList(params: {
+  current: number;
+  pageSize: number;
+  gender: string;
+}): Promise<{ total: number; list: UserListItem[] }> {
+  console.log('cache demo', params.current, params.pageSize, params.gender);
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve(userList(params.current, params.pageSize));
+    }, 1000);
+  });
+}
+
+export default () => {
+  const [state, { toggle }] = useBoolean();
+  return (
+    <div>
+      <p>You can click the button multiple times, the conditions of pagination will be cached.</p>
+      <p>
+        <button type="button" onClick={() => toggle()}>
+          show/hide
+        </button>
+      </p>
+      {state && <PaginationComponent />}
+    </div>
+  );
+};
+
+const PaginationComponent = () => {
   const { data, loading, pagination, run, params } = usePagination(
     ({ current, pageSize }, g: string) => {
       return getUserList({
@@ -70,48 +112,6 @@ const PaginationComponent: React.FC = () => {
         showSizeChanger
         style={{ marginTop: 16, textAlign: 'right' }}
       />
-    </div>
-  );
-};
-
-const userList = (current: number, pageSize: number) =>
-  Mock.mock({
-    total: 55,
-    [`list|${pageSize}`]: [
-      {
-        id: '@guid',
-        name: '@name',
-        'gender|1': ['male', 'female'],
-        email: '@email',
-        disabled: false,
-      },
-    ],
-  });
-
-async function getUserList(params: {
-  current: number;
-  pageSize: number;
-  gender: string;
-}): Promise<{ total: number; list: UserListItem[] }> {
-  console.log('cache demo', params.current, params.pageSize, params.gender);
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      resolve(userList(params.current, params.pageSize));
-    }, 1000);
-  });
-}
-
-export default () => {
-  const [state, { toggle }] = useBoolean();
-  return (
-    <div>
-      <p>You can click the button multiple times, the conditions of pagination will be cached.</p>
-      <p>
-        <button type="button" onClick={() => toggle()}>
-          show/hide
-        </button>
-      </p>
-      {state && <PaginationComponent />}
     </div>
   );
 };

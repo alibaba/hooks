@@ -1,13 +1,11 @@
 import { renderHook } from '@testing-library/react';
-import type { Options } from '../index';
-import useDrop from '../index';
+import useDrop, { Options } from '../index';
 import type { BasicTarget } from '../../utils/domTarget';
 
 const setup = (target: unknown, options?: Options) =>
   renderHook(() => useDrop(target as BasicTarget, options));
 
-const events: Record<PropertyKey, (e?: Partial<MouseEvent>) => void> = {};
-
+const events = {};
 const mockTarget = {
   addEventListener: jest.fn((event, callback) => {
     events[event] = callback;
@@ -19,7 +17,7 @@ const mockTarget = {
 
 const mockEvent = {
   dataTransfer: {
-    getData: () => 'mock',
+    getData: (format?: string) => 'mock' as unknown,
     get items() {
       return [] as unknown[];
     },
@@ -28,7 +26,7 @@ const mockEvent = {
     },
   },
   clipboardData: {
-    getData: () => 'mock',
+    getData: (format?: string) => 'mock' as unknown,
     get items() {
       return [] as unknown[];
     },
@@ -92,7 +90,7 @@ describe('useDrop', () => {
   it('should call onText on drop', async () => {
     jest.spyOn(mockEvent.dataTransfer, 'items', 'get').mockReturnValue([
       {
-        getAsString: (callback: (str?: string) => void) => {
+        getAsString: (callback) => {
           callback('drop text');
         },
       },
@@ -102,8 +100,8 @@ describe('useDrop', () => {
     setup(mockTarget, {
       onText,
     });
-    events.dragenter(mockEvent);
-    events.drop(mockEvent);
+    events['dragenter'](mockEvent);
+    events['drop'](mockEvent);
     expect(onText.mock.calls[0][0]).toBe('drop text');
   });
 
@@ -114,25 +112,23 @@ describe('useDrop', () => {
     setup(mockTarget, {
       onFiles,
     });
-    events.dragenter(mockEvent);
-    events.drop(mockEvent);
+    events['dragenter'](mockEvent);
+    events['drop'](mockEvent);
     expect(onFiles.mock.calls[0][0]).toHaveLength(1);
   });
 
   it('should call onUri on drop', async () => {
     const url = 'https://alipay.com';
-    jest.spyOn(mockEvent.dataTransfer, 'getData').mockImplementation(((format: string) => {
-      if (format === 'text/uri-list') {
-        return url;
-      }
-    }) as unknown as () => string);
+    jest.spyOn(mockEvent.dataTransfer, 'getData').mockImplementation((format: string) => {
+      if (format === 'text/uri-list') return url;
+    });
 
     const onUri = jest.fn();
     setup(mockTarget, {
       onUri,
     });
-    events.dragenter(mockEvent);
-    events.drop(mockEvent);
+    events['dragenter'](mockEvent);
+    events['drop'](mockEvent);
     expect(onUri.mock.calls[0][0]).toBe(url);
   });
 
@@ -140,35 +136,31 @@ describe('useDrop', () => {
     const data = {
       value: 'mock',
     };
-    jest.spyOn(mockEvent.dataTransfer, 'getData').mockImplementation(((format: string) => {
-      if (format === 'custom') {
-        return data;
-      }
-    }) as unknown as () => string);
+    jest.spyOn(mockEvent.dataTransfer, 'getData').mockImplementation((format: string) => {
+      if (format === 'custom') return data;
+    });
 
     const onDom = jest.fn();
     setup(mockTarget, {
       onDom,
     });
-    events.dragenter(mockEvent);
-    events.drop(mockEvent);
+    events['dragenter'](mockEvent);
+    events['drop'](mockEvent);
     expect(onDom.mock.calls[0][0]).toMatchObject(data);
 
     // catch JSON.parse error
-    jest.spyOn(mockEvent.dataTransfer, 'getData').mockImplementation(((format: string) => {
-      if (format === 'custom') {
-        return {};
-      }
-    }) as unknown as () => string);
-    events.dragenter(mockEvent);
-    events.drop(mockEvent);
+    jest.spyOn(mockEvent.dataTransfer, 'getData').mockImplementation((format: string) => {
+      if (format === 'custom') return {};
+    });
+    events['dragenter'](mockEvent);
+    events['drop'](mockEvent);
     expect(onDom.mock.calls[0][0]).toMatchObject({});
   });
 
   it('should call onText on paste', async () => {
     jest.spyOn(mockEvent.clipboardData, 'items', 'get').mockReturnValue([
       {
-        getAsString: (callback: (str?: string) => void) => {
+        getAsString: (callback) => {
           callback('paste text');
         },
       },
@@ -178,8 +170,8 @@ describe('useDrop', () => {
     setup(mockTarget, {
       onText,
     });
-    events.dragenter(mockEvent);
-    events.paste(mockEvent);
+    events['dragenter'](mockEvent);
+    events['paste'](mockEvent);
     expect(onText.mock.calls[0][0]).toBe('paste text');
   });
 });
