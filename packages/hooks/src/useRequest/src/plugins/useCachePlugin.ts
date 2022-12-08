@@ -1,5 +1,6 @@
 import { useRef } from 'react';
 import useCreation from '../../../useCreation';
+import useMount from '../../../useMount';
 import useUnmount from '../../../useUnmount';
 import type { Plugin } from '../types';
 import * as cache from '../utils/cache';
@@ -51,12 +52,16 @@ const useCachePlugin: Plugin<any, any[]> = (
         fetchInstance.state.loading = false;
       }
     }
-
-    // subscribe same cachekey update, trigger update
-    unSubscribeRef.current = cacheSubscribe.subscribe(cacheKey, (data) => {
-      fetchInstance.setState({ data });
-    });
   }, []);
+
+  useMount(() => {
+    if (cacheKey) {
+      // subscribe same cachekey update, trigger update
+      unSubscribeRef.current = cacheSubscribe.subscribe(cacheKey, (data) => {
+        fetchInstance.setState({ data });
+      });
+    }
+  });
 
   useUnmount(() => {
     unSubscribeRef.current?.();
