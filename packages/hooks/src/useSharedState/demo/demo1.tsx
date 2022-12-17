@@ -31,7 +31,7 @@ const Counter1 = () => {
 
 const Counter2 = () => {
   const [count2, setCount] = useCount((state) => state.count2);
-  console.log('Counter1 rendered');
+  console.log('Counter2 rendered');
   return (
     <button
       onClick={() =>
@@ -41,7 +41,7 @@ const Counter2 = () => {
         }))
       }
     >
-      count1 is {count2}
+      count2 is {count2}
     </button>
   );
 };

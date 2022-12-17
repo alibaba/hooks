@@ -1,4 +1,4 @@
-import { useCallback } from 'react';
+import { useCallback, useDebugValue } from 'react';
 import { useSyncExternalStore } from 'use-sync-external-store/shim';
 import { SharedState } from './sharedState';
 import type { Dispatch, SetStateAction } from 'react';
@@ -15,16 +15,18 @@ export function createSharedState<Snapshot>(
   selector?: (state: Snapshot) => Selection,
 ) => [Selection extends undefined ? Snapshot : Selection, Dispatch<SetStateAction<Snapshot>>];
 export function createSharedState(initialState?: any) {
-  const sharedState = new SharedState(initialState);
+  let sharedState: SharedState<any>;
   const useSharedState = (selector?: (state: any) => any) => {
+    if (!sharedState) {
+      sharedState = new SharedState(initialState);
+    }
     const getSnapshot = useCallback(
       () => sharedState.getState(selector ? selector : (state) => state),
       [],
     );
-    return [
-      useSyncExternalStore(sharedState.subscribe, getSnapshot, getSnapshot),
-      sharedState.setState,
-    ];
+    const state = useSyncExternalStore(sharedState.subscribe, getSnapshot, getSnapshot);
+    useDebugValue(state);
+    return [state, sharedState.setState];
   };
   return useSharedState;
 }
