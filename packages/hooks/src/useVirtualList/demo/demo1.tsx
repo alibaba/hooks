@@ -20,6 +20,9 @@ export default () => {
     wrapperTarget: wrapperRef,
     itemHeight: 60,
     overscan: 10,
+    onScroll: (e) => {
+      console.log('scroll', e);
+    },
   });
   return (
     <>
