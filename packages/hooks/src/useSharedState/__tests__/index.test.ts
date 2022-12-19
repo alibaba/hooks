@@ -1,11 +1,10 @@
 import { act, renderHook } from '@testing-library/react';
 import { createSharedState } from '../index';
 
-const useCount = createSharedState(0);
-
 describe('createSharedState', () => {
   const setUp = () =>
     renderHook(() => {
+      const useCount = createSharedState(0);
       return useCount();
     });
 
