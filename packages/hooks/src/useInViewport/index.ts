@@ -40,7 +40,7 @@ function useInViewport(target: BasicTarget, options?: Options) {
         observer.disconnect();
       };
     },
-    [],
+    [options?.rootMargin, options?.threshold],
     target,
   );
 
