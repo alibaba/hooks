@@ -1,10 +1,23 @@
 import { useEffect, useRef, useState } from 'react';
 
-export interface Options {
-  type?: 'js' | 'css';
+export type JsOptions = {
+  type?: 'js';
   js?: Partial<HTMLScriptElement>;
+};
+
+export type CssOptions = {
+  type?: 'css';
   css?: Partial<HTMLStyleElement>;
-}
+};
+
+export type Options =
+  | CssOptions
+  | JsOptions
+  | {
+      type: never;
+      js?: Partial<HTMLScriptElement>;
+      css?: Partial<HTMLStyleElement>;
+    };
 
 // {[path]: count}
 // remove external when no used
@@ -87,11 +100,11 @@ const useExternal = (path?: string, options?: Options) => {
     }
     const pathname = path.replace(/[|#].*$/, '');
     if (options?.type === 'css' || (!options?.type && /(^css!|\.css$)/.test(pathname))) {
-      const result = loadCss(path, options?.css);
+      const result = loadCss(path, (options as CssOptions)?.css);
       ref.current = result.ref;
       setStatus(result.status);
     } else if (options?.type === 'js' || (!options?.type && /(^js!|\.js$)/.test(pathname))) {
-      const result = loadScript(path, options?.js);
+      const result = loadScript(path, (options as JsOptions)?.js);
       ref.current = result.ref;
       setStatus(result.status);
     } else {
