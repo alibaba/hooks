@@ -130,4 +130,55 @@ describe('usePollingPlugin', () => {
 
     hook2.unmount();
   });
+
+  let hook3;
+  it('usePollingPlugin  pollingInterval=100 polling.isPolling polling.pollingCounter should work', async () => {
+    const callback = jest.fn();
+    act(() => {
+      hook3 = setUp(
+        () => {
+          callback();
+          return request(1);
+        },
+        {
+          pollingInterval: 100,
+        },
+      );
+    });
+
+    expect(hook3.result.current.polling.isPolling).toEqual(true);
+
+    act(() => {
+      jest.runAllTimers();
+    });
+    await hook3.waitForNextUpdate();
+    expect(hook3.result.current.polling.pollingCounter).toEqual(1);
+    expect(hook3.result.current.polling.isPolling).toEqual(true);
+    expect(callback).toHaveBeenCalledTimes(1);
+
+    act(() => {
+      jest.runAllTimers();
+    });
+    await hook3.waitForNextUpdate();
+    expect(hook3.result.current.polling.pollingCounter).toEqual(2);
+    expect(hook3.result.current.polling.isPolling).toEqual(true);
+    expect(callback).toHaveBeenCalledTimes(2);
+
+    act(() => {
+      jest.runAllTimers();
+    });
+    await hook3.waitForNextUpdate();
+    expect(hook3.result.current.polling.pollingCounter).toEqual(3);
+    expect(hook3.result.current.polling.isPolling).toEqual(true);
+    expect(callback).toHaveBeenCalledTimes(3);
+
+    act(() => {
+      hook3.result.current.cancel();
+    });
+    expect(hook3.result.current.polling.pollingCounter).toEqual(0);
+    expect(hook3.result.current.polling.isPolling).toEqual(false);
+    expect(callback).toHaveBeenCalledTimes(3);
+
+    hook3.unmount();
+  });
 });
