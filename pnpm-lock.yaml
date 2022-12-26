@@ -158,11 +158,13 @@ importers:
       query-string: ^6.9.0
       react: ^16.8.0 || ^17.0.0 || ^18.0.0
       react-router: ^5.0.0 || ^6.0.0
+      tslib: ^2.4.1
     dependencies:
       ahooks: link:../hooks
       query-string: 6.14.1
       react: 18.2.0
       react-router: 6.4.2_react@18.2.0
+      tslib: 2.4.1
 
 packages:
   /@adobe/css-tools/4.0.1:
