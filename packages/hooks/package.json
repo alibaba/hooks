@@ -40,7 +40,8 @@
     "js-cookie": "^2.x.x",
     "lodash": "^4.17.21",
     "resize-observer-polyfill": "^1.5.1",
-    "screenfull": "^5.0.0"
+    "screenfull": "^5.0.0",
+    "tslib": "^2.4.1"
   },
   "peerDependencies": {
     "react": "^16.8.0 || ^17.0.0 || ^18.0.0"
