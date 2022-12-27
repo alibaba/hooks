@@ -1,3 +1,4 @@
+import { isArray } from './index';
 import type { BasicTarget } from '../utils/domTarget';
 import { getTargetElement } from '../utils/domTarget';
 
@@ -23,7 +24,7 @@ const getDocumentOrShadow = (target: BasicTarget | BasicTarget[]): Document | No
     return document;
   }
 
-  const targets = Array.isArray(target) ? target : [target];
+  const targets = isArray(target) ? target : [target];
 
   if (checkIfAllInShadow(targets)) {
     return getShadow(getTargetElement(targets[0]));
