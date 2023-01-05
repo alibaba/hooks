@@ -1,23 +1,24 @@
 import { useEffect, useRef, useState } from 'react';
 
-export type JsOptions = {
-  type?: 'js';
+type JsOptions = {
+  type: 'js';
   js?: Partial<HTMLScriptElement>;
 };
 
-export type CssOptions = {
-  type?: 'css';
+type CssOptions = {
+  type: 'css';
   css?: Partial<HTMLStyleElement>;
 };
 
-export type Options =
-  | CssOptions
-  | JsOptions
-  | {
-      type: never;
-      js?: Partial<HTMLScriptElement>;
-      css?: Partial<HTMLStyleElement>;
-    };
+type DefaultOptions = {
+  type?: 'js' | 'css';
+  js?: Partial<HTMLScriptElement>;
+  css?: Partial<HTMLStyleElement>;
+};
+
+type OptionsType = 'js' | 'css' | undefined;
+type Opt<T> = T extends 'js' ? JsOptions : T extends 'css' ? CssOptions : DefaultOptions;
+export type Options = Opt<OptionsType>;
 
 // {[path]: count}
 // remove external when no used
@@ -100,11 +101,11 @@ const useExternal = (path?: string, options?: Options) => {
     }
     const pathname = path.replace(/[|#].*$/, '');
     if (options?.type === 'css' || (!options?.type && /(^css!|\.css$)/.test(pathname))) {
-      const result = loadCss(path, (options as CssOptions)?.css);
+      const result = loadCss(path, options?.css);
       ref.current = result.ref;
       setStatus(result.status);
     } else if (options?.type === 'js' || (!options?.type && /(^js!|\.js$)/.test(pathname))) {
-      const result = loadScript(path, (options as JsOptions)?.js);
+      const result = loadScript(path, options?.js);
       ref.current = result.ref;
       setStatus(result.status);
     } else {
