@@ -11,7 +11,7 @@ type CssOptions = {
 };
 
 type DefaultOptions = {
-  type?: 'js' | 'css';
+  type?: never;
   js?: Partial<HTMLScriptElement>;
   css?: Partial<HTMLStyleElement>;
 };
