@@ -16,9 +16,7 @@ type DefaultOptions = {
   css?: Partial<HTMLStyleElement>;
 };
 
-type OptionsType = 'js' | 'css' | undefined;
-type Opt<T> = T extends 'js' ? JsOptions : T extends 'css' ? CssOptions : DefaultOptions;
-export type Options = Opt<OptionsType>;
+export type Options = JsOptions | CssOptions | DefaultOptions;
 
 // {[path]: count}
 // remove external when no used
