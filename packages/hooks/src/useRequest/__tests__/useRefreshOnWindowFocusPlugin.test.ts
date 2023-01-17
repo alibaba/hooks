@@ -1,5 +1,4 @@
-import { act, renderHook } from '@testing-library/react-hooks';
-import { fireEvent, waitFor } from '@testing-library/react';
+import { act, renderHook, fireEvent, waitFor } from '@testing-library/react';
 import useRequest from '../index';
 import { request } from '../../utils/testingHelpers';
 
