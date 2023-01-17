@@ -12,14 +12,14 @@ type Listener = {
 export const defaultFocusEvents: FocusEvent[] = ['visibilitychange', 'focus'];
 const listeners: Listener[] = [];
 
-function subscribe(listener: Listener['fn'], focusEvent: FocusEvent[] = defaultFocusEvents) {
-  focusEvent.forEach((type) => {
+function subscribe(listener: Listener['fn'], focusEvents: FocusEvent[] = defaultFocusEvents) {
+  focusEvents.forEach((type) => {
     listeners.push({ type, fn: listener });
   });
 
   return function unsubscribe() {
     const index = listeners.findIndex(
-      (ele) => ele.fn === listener && focusEvent.includes(ele.type),
+      (ele) => ele.fn === listener && focusEvents.includes(ele.type),
     );
     if (index > -1) {
       listeners.splice(index, 1);
@@ -29,7 +29,6 @@ function subscribe(listener: Listener['fn'], focusEvent: FocusEvent[] = defaultF
 
 if (isBrowser) {
   const revalidate = (type: FocusEvent) => {
-    console.info('??????', type);
     if (!isDocumentVisible() || !isOnline()) return;
     for (let i = 0; i < listeners.length; i++) {
       const listener = listeners[i];
