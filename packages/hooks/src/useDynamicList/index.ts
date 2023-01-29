@@ -18,6 +18,7 @@ const useDynamicList = <T>(initialList: T[] = []) => {
   });
 
   const resetList = useCallback((newList: T[]) => {
+    counterRef.current = -1;
     keyList.current = [];
     setList(() => {
       newList.forEach((_, index) => {
