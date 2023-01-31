@@ -90,7 +90,7 @@ export interface Options<TData, TParams extends any[]> {
   // ready
   ready?: boolean;
 
-  // [key: string]: any;
+  [key: string]: any;
 }
 
 export type Plugin<TData, TParams extends any[]> = {
