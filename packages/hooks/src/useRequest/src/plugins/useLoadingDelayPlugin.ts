@@ -19,7 +19,10 @@ const useLoadingDelayPlugin: Plugin<any, any[]> = (fetchInstance, { loadingDelay
     onBefore: () => {
       cancelTimeout();
 
-      if (ready === undefined || (isBoolean(ready) && ready)) {
+      // Two cases:
+      // 1. ready === undefined
+      // 2. ready ==== true
+      if (ready !== false) {
         timerRef.current = setTimeout(() => {
           fetchInstance.setState({
             loading: true,
