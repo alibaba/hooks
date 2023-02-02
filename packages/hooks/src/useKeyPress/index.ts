@@ -3,6 +3,7 @@ import { isFunction, isNumber, isString } from '../utils';
 import type { BasicTarget } from '../utils/domTarget';
 import { getTargetElement } from '../utils/domTarget';
 import useDeepCompareEffectWithTarget from '../utils/useDeepCompareWithTarget';
+import isAppleDevice from '../utils/isAppleDevice';
 
 export type KeyPredicate = (event: KeyboardEvent) => boolean;
 export type keyType = number | string;
@@ -16,6 +17,7 @@ export type Options = {
   events?: KeyEvent[];
   target?: Target;
   exactMatch?: boolean;
+  useCapture?: boolean;
 };
 
 // 键盘事件 keyCode 别名
@@ -121,12 +123,23 @@ const aliasKeyCodeMap = {
   singlequote: 222,
 };
 
+if (isAppleDevice) {
+  aliasKeyCodeMap['meta'] = [91, 93];
+} else {
+  aliasKeyCodeMap['meta'] = [91, 92];
+}
+
 // 修饰键
 const modifierKey = {
   ctrl: (event: KeyboardEvent) => event.ctrlKey,
   shift: (event: KeyboardEvent) => event.shiftKey,
   alt: (event: KeyboardEvent) => event.altKey,
-  meta: (event: KeyboardEvent) => event.metaKey,
+  meta: (event: KeyboardEvent) => {
+    if (event.type === 'keyup') {
+      return aliasKeyCodeMap['meta'].includes(event.keyCode);
+    }
+    return event.metaKey;
+  },
 };
 
 // 根据 event 计算激活键数量
@@ -168,7 +181,7 @@ function genFilterKey(event: KeyboardEvent, keyFilter: keyType, exactMatch: bool
     // 组合键
     const genModifier = modifierKey[key];
     // keyCode 别名
-    const aliasKeyCode = aliasKeyCodeMap[key.toLowerCase()];
+    const aliasKeyCode: number | number[] = aliasKeyCodeMap[key.toLowerCase()];
 
     if ((genModifier && genModifier(event)) || (aliasKeyCode && aliasKeyCode === event.keyCode)) {
       genLen++;
@@ -203,13 +216,13 @@ function genKeyFormatter(keyFilter: KeyFilter, exactMatch: boolean): KeyPredicat
     return (event: KeyboardEvent) =>
       keyFilter.some((item) => genFilterKey(event, item, exactMatch));
   }
-  return keyFilter ? () => true : () => false;
+  return () => Boolean(keyFilter);
 }
 
 const defaultEvents: KeyEvent[] = ['keydown'];
 
 function useKeyPress(keyFilter: KeyFilter, eventHandler: EventHandler, option?: Options) {
-  const { events = defaultEvents, target, exactMatch = false } = option || {};
+  const { events = defaultEvents, target, exactMatch = false, useCapture = false } = option || {};
   const eventHandlerRef = useLatest(eventHandler);
   const keyFilterRef = useLatest(keyFilter);
 
@@ -228,11 +241,11 @@ function useKeyPress(keyFilter: KeyFilter, eventHandler: EventHandler, option?: 
       };
 
       for (const eventName of events) {
-        el?.addEventListener?.(eventName, callbackHandler);
+        el?.addEventListener?.(eventName, callbackHandler, useCapture);
       }
       return () => {
         for (const eventName of events) {
-          el?.removeEventListener?.(eventName, callbackHandler);
+          el?.removeEventListener?.(eventName, callbackHandler, useCapture);
         }
       };
     },

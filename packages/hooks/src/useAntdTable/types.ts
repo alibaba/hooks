@@ -8,6 +8,7 @@ export type Params = [
     pageSize: number;
     sorter?: any;
     filter?: any;
+    extra?: any;
     [key: string]: any;
   },
   ...any[],

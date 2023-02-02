@@ -1,4 +1,4 @@
-import { renderHook } from '@testing-library/react-hooks';
+import { renderHook } from '@testing-library/react';
 import useMutationObserver from '../index';
 
 const options: MutationObserverInit = { attributes: true, childList: true };
