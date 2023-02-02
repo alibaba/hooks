@@ -1,4 +1,4 @@
-import { act, renderHook } from '@testing-library/react-hooks';
+import { act, renderHook } from '@testing-library/react';
 import useCounter, { Options } from '../index';
 
 const setUp = (init?: number, options?: Options) => renderHook(() => useCounter(init, options));

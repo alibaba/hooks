@@ -120,7 +120,7 @@ const useCachePlugin: Plugin<any, any[]> = (
     },
     onMutate: (data) => {
       if (cacheKey) {
-        // cancel subscribe, avoid trgger self
+        // cancel subscribe, avoid trigger self
         unSubscribeRef.current?.();
         _setCache(cacheKey, {
           data,
