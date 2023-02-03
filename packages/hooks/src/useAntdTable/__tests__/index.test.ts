@@ -79,7 +79,7 @@ describe('useAntdTable', () => {
       hook = setUp(asyncFn, {});
     });
 
-    expect(hook.result.current.tableProps.loading).toEqual(false);
+    expect(hook.result.current.tableProps.loading).toBe(false);
     expect(hook.result.current.tableProps.pagination.current).toEqual(1);
     expect(hook.result.current.tableProps.pagination.pageSize).toEqual(10);
     await waitFor(() => expect(hook.result.current.tableProps.pagination.total).toEqual(20));
@@ -103,7 +103,7 @@ describe('useAntdTable', () => {
       });
     });
     const { search } = hook.result.current;
-    expect(hook.result.current.tableProps.loading).toEqual(false);
+    expect(hook.result.current.tableProps.loading).toBe(false);
     await waitFor(() => expect(queryArgs.current).toEqual(2));
     expect(queryArgs.pageSize).toEqual(10);
     expect(queryArgs.name).toEqual('hello');
@@ -169,7 +169,7 @@ describe('useAntdTable', () => {
     });
 
     const { search } = hook.result.current;
-    expect(hook.result.current.tableProps.loading).toEqual(false);
+    expect(hook.result.current.tableProps.loading).toBe(false);
     await waitFor(() => expect(queryArgs.current).toEqual(2));
     expect(queryArgs.pageSize).toEqual(10);
     expect(queryArgs.name).toEqual('hello');
@@ -205,7 +205,7 @@ describe('useAntdTable', () => {
       hook = setUp(asyncFn, { form: v3Form });
     });
     const { search } = hook.result.current;
-    expect(hook.result.current.tableProps.loading).toEqual(false);
+    expect(hook.result.current.tableProps.loading).toBe(false);
     await waitFor(() => expect(queryArgs.current).toEqual(1));
     expect(queryArgs.pageSize).toEqual(10);
     expect(queryArgs.name).toEqual('default name');
