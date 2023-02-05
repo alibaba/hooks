@@ -13,7 +13,7 @@ const setUp = ({ fn, delay, options }: ParamsObj) =>
 const FRAME_TIME = 16;
 describe('useRafInterval', () => {
   beforeAll(() => {
-    jest.useFakeTimers('modern');
+    jest.useFakeTimers({ legacyFakeTimers: false });
   });
   afterAll(() => {
     jest.restoreAllMocks();

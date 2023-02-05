@@ -6,7 +6,7 @@ const setup = (options: Options = {}) =>
 
 describe('useCountDown', () => {
   beforeAll(() => {
-    jest.useFakeTimers('modern');
+    jest.useFakeTimers({ legacyFakeTimers: false });
     jest.setSystemTime(1479427200000);
   });
 
