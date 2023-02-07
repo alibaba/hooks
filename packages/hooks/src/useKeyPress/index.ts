@@ -21,7 +21,7 @@ export type Options = {
 };
 
 // 键盘事件 keyCode 别名
-const aliasKeyCodeMap: any = {
+const aliasKeyCodeMap = {
   '0': 48,
   '1': 49,
   '2': 50,
@@ -123,10 +123,11 @@ const aliasKeyCodeMap: any = {
   singlequote: 222,
 };
 
+/* eslint-disable */
 if (isAppleDevice) {
-  aliasKeyCodeMap.meta = [91, 93];
+  aliasKeyCodeMap['meta'] = [91, 93];
 } else {
-  aliasKeyCodeMap.meta = [91, 92];
+  aliasKeyCodeMap['meta'] = [91, 92];
 }
 
 // 修饰键
