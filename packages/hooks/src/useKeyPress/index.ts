@@ -137,7 +137,8 @@ const modifierKey = {
   alt: (event: KeyboardEvent) => event.altKey,
   meta: (event: KeyboardEvent) => {
     if (event.type === 'keyup') {
-      return aliasKeyCodeMap.meta.includes(event.keyCode);
+      /* eslint-disable */
+      return aliasKeyCodeMap['meta'].includes(event.keyCode);
     }
     return event.metaKey;
   },
