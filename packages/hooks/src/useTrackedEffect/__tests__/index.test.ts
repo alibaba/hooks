@@ -17,8 +17,8 @@ describe('useTrackedEffect', () => {
   });
   it("should run provided effect and return single changed dependecy's index ", () => {
     let var1 = 0;
-    let var2 = '0';
-    let var3 = { value: 0 };
+    const var2 = '0';
+    const var3 = { value: 0 };
     const { rerender } = renderHook(() =>
       useTrackedEffect(mockEffectWithTracked, [var1, var2, var3]),
     );
@@ -34,7 +34,7 @@ describe('useTrackedEffect', () => {
   it('should run provided effect and return correct dependencies (previous and current)', () => {
     let var1 = 0;
     let var2 = '0';
-    let var3 = { value: 0 };
+    const var3 = { value: 0 };
     const { rerender } = renderHook(() =>
       useTrackedEffect(mockEffectWithTracked, [var1, var2, var3]),
     );
@@ -47,8 +47,8 @@ describe('useTrackedEffect', () => {
     rerender();
     expect(prevDependencies[0]).toEqual(0);
     expect(currentDependencies[0]).toEqual(1);
-    expect(prevDependencies[1] === '0').toEqual(true);
-    expect(currentDependencies[1] === '1').toEqual(true);
+    expect(prevDependencies[1] === '0').toBe(true);
+    expect(currentDependencies[1] === '1').toBe(true);
     changedDepIndexes = [];
     var2 = '2';
     rerender();
@@ -58,7 +58,7 @@ describe('useTrackedEffect', () => {
   it(" should run provided effect and return multiple changed dependecy's indexes", () => {
     let var1 = 0;
     let var2 = '0';
-    let var3 = { value: 0 };
+    const var3 = { value: 0 };
     const { rerender } = renderHook(() =>
       useTrackedEffect(mockEffectWithTracked, [var1, var2, var3]),
     );
@@ -80,8 +80,8 @@ describe('useTrackedEffect', () => {
   });
   it('should run provided effect and return empty if no dependency changed', () => {
     let var1 = 0;
-    let var2 = '0';
-    let var3 = { value: 0 };
+    const var2 = '0';
+    const var3 = { value: 0 };
     const { rerender } = renderHook(() =>
       useTrackedEffect(mockEffectWithTracked, [var1, var2, var3]),
     );
@@ -94,9 +94,9 @@ describe('useTrackedEffect', () => {
     expect(changedDepIndexes).toHaveLength(0);
   });
   it('should run provided effect and make sure reference equality is correct', () => {
-    let var1 = 0;
-    let var2 = '0';
-    let var3 = { value: 0 };
+    const var1 = 0;
+    const var2 = '0';
+    const var3 = { value: 0 };
     const { rerender } = renderHook(() =>
       useTrackedEffect(mockEffectWithTracked, [var1, var2, var3]),
     );
