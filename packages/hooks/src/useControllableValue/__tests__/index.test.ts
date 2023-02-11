@@ -35,7 +35,7 @@ describe('useControllableValue', () => {
       hook.result.current[1](3, 'extraParam');
     });
     expect(props.value).toEqual(3);
-    expect(extraParam).toEqual('extraParam');
+    expect(extraParam).toBe('extraParam');
   });
 
   it('test on state update', () => {

@@ -106,9 +106,9 @@ describe('useAntdTable', () => {
     expect(hook.result.current.tableProps.loading).toBe(false);
     await waitFor(() => expect(queryArgs.current).toEqual(2));
     expect(queryArgs.pageSize).toEqual(10);
-    expect(queryArgs.name).toEqual('hello');
-    expect(queryArgs.phone).toEqual('123');
-    expect(search.type).toEqual('advance');
+    expect(queryArgs.name).toBe('hello');
+    expect(queryArgs.phone).toBe('123');
+    expect(search.type).toBe('advance');
   });
 
   it('should stop the query when validate fields failed', async () => {
@@ -172,9 +172,9 @@ describe('useAntdTable', () => {
     expect(hook.result.current.tableProps.loading).toBe(false);
     await waitFor(() => expect(queryArgs.current).toEqual(2));
     expect(queryArgs.pageSize).toEqual(10);
-    expect(queryArgs.name).toEqual('hello');
-    expect(queryArgs.phone).toEqual('456');
-    expect(search.type).toEqual('advance');
+    expect(queryArgs.name).toBe('hello');
+    expect(queryArgs.phone).toBe('456');
+    expect(search.type).toBe('advance');
   });
 
   it('should antd v3 work', async () => {
@@ -208,8 +208,8 @@ describe('useAntdTable', () => {
     expect(hook.result.current.tableProps.loading).toBe(false);
     await waitFor(() => expect(queryArgs.current).toEqual(1));
     expect(queryArgs.pageSize).toEqual(10);
-    expect(queryArgs.name).toEqual('default name');
-    expect(search.type).toEqual('simple');
+    expect(queryArgs.name).toBe('default name');
+    expect(search.type).toBe('simple');
 
     // /* 切换 分页 */
     act(() => {
@@ -220,7 +220,7 @@ describe('useAntdTable', () => {
     });
     await waitFor(() => expect(queryArgs.current).toEqual(2));
     expect(queryArgs.pageSize).toEqual(5);
-    expect(queryArgs.name).toEqual('default name');
+    expect(queryArgs.name).toBe('default name');
 
     /* 改变 name， 提交表单 */
     v3Form.fieldsValue.name = 'change name';
@@ -230,6 +230,6 @@ describe('useAntdTable', () => {
     await waitFor(() => expect(queryArgs.current).toEqual(1));
     expect(queryArgs.current).toEqual(1);
     expect(queryArgs.pageSize).toEqual(5);
-    expect(queryArgs.name).toEqual('change name');
+    expect(queryArgs.name).toBe('change name');
   });
 });

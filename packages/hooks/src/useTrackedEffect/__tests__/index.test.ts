@@ -52,8 +52,8 @@ describe('useTrackedEffect', () => {
     changedDepIndexes = [];
     var2 = '2';
     rerender();
-    expect(prevDependencies[1]).toEqual('1');
-    expect(currentDependencies[1]).toEqual('2');
+    expect(prevDependencies[1]).toBe('1');
+    expect(currentDependencies[1]).toBe('2');
   });
   it(" should run provided effect and return multiple changed dependecy's indexes", () => {
     let var1 = 0;

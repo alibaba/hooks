@@ -17,7 +17,7 @@ describe('useCachePlugin', () => {
       jest.advanceTimersByTime(1000);
     });
     expect(hook.result.current.loading).toBe(false);
-    expect(hook.result.current.data).toEqual('success');
+    expect(hook.result.current.data).toBe('success');
     hook.unmount();
   };
 
@@ -32,7 +32,7 @@ describe('useCachePlugin', () => {
       cacheKey: 'testCacheKey',
     });
     expect(hook2.result.current.loading).toBe(true);
-    expect(hook2.result.current.data).toEqual('success');
+    expect(hook2.result.current.data).toBe('success');
     await act(async () => {
       jest.advanceTimersByTime(1000);
     });
@@ -52,7 +52,7 @@ describe('useCachePlugin', () => {
       staleTime: 3000,
     });
     expect(hook2.result.current.loading).toBe(false);
-    expect(hook2.result.current.data).toEqual('success');
+    expect(hook2.result.current.data).toBe('success');
     hook2.unmount();
 
     jest.advanceTimersByTime(3001);
@@ -62,7 +62,7 @@ describe('useCachePlugin', () => {
       staleTime: 3000,
     });
     expect(hook3.result.current.loading).toBe(true);
-    expect(hook3.result.current.data).toEqual('success');
+    expect(hook3.result.current.data).toBe('success');
 
     await act(async () => {
       jest.advanceTimersByTime(1000);
@@ -83,7 +83,7 @@ describe('useCachePlugin', () => {
       cacheTime: 5000,
     });
     expect(hook2.result.current.loading).toBe(true);
-    expect(hook2.result.current.data).toEqual('success');
+    expect(hook2.result.current.data).toBe('success');
     hook2.unmount();
 
     jest.advanceTimersByTime(5001);
@@ -99,7 +99,7 @@ describe('useCachePlugin', () => {
       jest.advanceTimersByTime(1000);
     });
     expect(hook3.result.current.loading).toBe(false);
-    expect(hook3.result.current.data).toEqual('success');
+    expect(hook3.result.current.data).toBe('success');
   });
 
   it('clearCache should work', async () => {
@@ -128,7 +128,7 @@ describe('useCachePlugin', () => {
       getCache: () => JSON.parse(localStorage.getItem(cacheKey) || '{}'),
     });
     expect(hook2.result.current.loading).toBe(true);
-    expect(hook2.result.current.data).toEqual('success');
+    expect(hook2.result.current.data).toBe('success');
 
     await act(async () => {
       jest.advanceTimersByTime(1000);
@@ -148,7 +148,7 @@ describe('useCachePlugin', () => {
       jest.advanceTimersByTime(1000);
     });
     expect(result.current.loading).toBe(false);
-    expect(result.current.data).toEqual('success');
+    expect(result.current.data).toBe('success');
   });
 
   //github.com/alibaba/hooks/issues/1859

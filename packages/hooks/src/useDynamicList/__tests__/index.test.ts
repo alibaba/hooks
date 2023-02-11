@@ -32,7 +32,7 @@ describe('useDynamicList', () => {
       hook.result.current.unshift({ name: 'ddd', age: 21 });
     });
 
-    expect(hook.result.current.list[0].name).toEqual('ddd');
+    expect(hook.result.current.list[0].name).toBe('ddd');
     expect(hook.result.current.getKey(0)).toEqual(3);
 
     // push
@@ -40,7 +40,7 @@ describe('useDynamicList', () => {
       hook.result.current.push({ name: 'ddd', age: 21 });
     });
 
-    expect(hook.result.current.list[4].name).toEqual('ddd');
+    expect(hook.result.current.list[4].name).toBe('ddd');
     expect(hook.result.current.getKey(0)).toEqual(3);
     expect(hook.result.current.getKey(4)).toEqual(4);
 
@@ -48,7 +48,7 @@ describe('useDynamicList', () => {
     act(() => {
       hook.result.current.insert(1, { name: 'eee', age: 22 });
     });
-    expect(hook.result.current.list[1].name).toEqual('eee');
+    expect(hook.result.current.list[1].name).toBe('eee');
     expect(hook.result.current.getKey(1)).toEqual(5);
 
     // merge
@@ -170,12 +170,12 @@ describe('useDynamicList', () => {
 
     let sorted = hook.result.current.sortList(formData);
     expect(sorted.length).toEqual(3);
-    expect(sorted[0].name).toEqual('my bro');
+    expect(sorted[0].name).toBe('my bro');
 
     act(() => {
       hook.result.current.move(3, 0);
     });
     sorted = hook.result.current.sortList(formData);
-    expect(sorted[0].name).toEqual('新增行');
+    expect(sorted[0].name).toBe('新增行');
   });
 });

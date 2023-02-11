@@ -14,18 +14,18 @@ describe('useLocalStorageState', () => {
   it('getKey should work', () => {
     const LOCAL_STORAGE_KEY = 'test-key';
     const hook = setUp(LOCAL_STORAGE_KEY, 'A');
-    expect(hook.result.current.state).toEqual('A');
+    expect(hook.result.current.state).toBe('A');
     act(() => {
       hook.result.current.setState('B');
     });
-    expect(hook.result.current.state).toEqual('B');
+    expect(hook.result.current.state).toBe('B');
     const anotherHook = setUp(LOCAL_STORAGE_KEY, 'A');
-    expect(anotherHook.result.current.state).toEqual('B');
+    expect(anotherHook.result.current.state).toBe('B');
     act(() => {
       anotherHook.result.current.setState('C');
     });
-    expect(anotherHook.result.current.state).toEqual('C');
-    expect(hook.result.current.state).toEqual('B');
+    expect(anotherHook.result.current.state).toBe('C');
+    expect(hook.result.current.state).toBe('B');
   });
 
   it('should support object', () => {
@@ -100,10 +100,10 @@ describe('useLocalStorageState', () => {
   it('should support function updater', () => {
     const LOCAL_STORAGE_KEY = 'test-func-updater';
     const hook = setUp<string | null>(LOCAL_STORAGE_KEY, 'hello world');
-    expect(hook.result.current.state).toEqual('hello world');
+    expect(hook.result.current.state).toBe('hello world');
     act(() => {
       hook.result.current.setState((state) => `${state}, zhangsan`);
     });
-    expect(hook.result.current.state).toEqual('hello world, zhangsan');
+    expect(hook.result.current.state).toBe('hello world, zhangsan');
   });
 });

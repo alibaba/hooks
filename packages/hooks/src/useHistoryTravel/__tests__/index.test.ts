@@ -8,7 +8,7 @@ describe('useHistoryTravel', () => {
     act(() => {
       hook.result.current.setValue('test');
     });
-    expect(hook.result.current.value).toEqual('test');
+    expect(hook.result.current.value).toBe('test');
   });
 
   it('should work with null and undefined without initial value', async () => {
@@ -33,11 +33,11 @@ describe('useHistoryTravel', () => {
 
   it('should work with initial value', async () => {
     const hook = renderHook(() => useHistoryTravel('abc'));
-    expect(hook.result.current.value).toEqual('abc');
+    expect(hook.result.current.value).toBe('abc');
     act(() => {
       hook.result.current.setValue('def');
     });
-    expect(hook.result.current.value).toEqual('def');
+    expect(hook.result.current.value).toBe('def');
   });
 
   it('should work with null and undefined with initial value', async () => {
@@ -63,19 +63,19 @@ describe('useHistoryTravel', () => {
     act(() => {
       hook.result.current.setValue('abc');
     });
-    expect(hook.result.current.value).toEqual('abc');
+    expect(hook.result.current.value).toBe('abc');
     act(() => {
       hook.result.current.setValue('def');
     });
-    expect(hook.result.current.value).toEqual('def');
+    expect(hook.result.current.value).toBe('def');
     act(() => {
       hook.result.current.back();
     });
-    expect(hook.result.current.value).toEqual('abc');
+    expect(hook.result.current.value).toBe('abc');
     act(() => {
       hook.result.current.forward();
     });
-    expect(hook.result.current.value).toEqual('def');
+    expect(hook.result.current.value).toBe('def');
   });
 
   it('go should work for negative step', () => {
@@ -92,11 +92,11 @@ describe('useHistoryTravel', () => {
     act(() => {
       hook.result.current.go(-2);
     });
-    expect(hook.result.current.value).toEqual('abc');
+    expect(hook.result.current.value).toBe('abc');
     act(() => {
       hook.result.current.go(-100);
     });
-    expect(hook.result.current.value).toEqual('init');
+    expect(hook.result.current.value).toBe('init');
   });
 
   it('go should work for positive step', () => {
@@ -113,15 +113,15 @@ describe('useHistoryTravel', () => {
     act(() => {
       hook.result.current.go(-3);
     });
-    expect(hook.result.current.value).toEqual('init');
+    expect(hook.result.current.value).toBe('init');
     act(() => {
       hook.result.current.go(2);
     });
-    expect(hook.result.current.value).toEqual('def');
+    expect(hook.result.current.value).toBe('def');
     act(() => {
       hook.result.current.go(100);
     });
-    expect(hook.result.current.value).toEqual('hij');
+    expect(hook.result.current.value).toBe('hij');
   });
 
   it('reset should reset state to initial by default', () => {
@@ -143,7 +143,7 @@ describe('useHistoryTravel', () => {
     act(() => {
       hook.result.current.reset();
     });
-    expect(hook.result.current.value).toEqual('init');
+    expect(hook.result.current.value).toBe('init');
     expect(hook.result.current.backLength).toEqual(0);
     expect(hook.result.current.forwardLength).toEqual(0);
   });
@@ -167,7 +167,7 @@ describe('useHistoryTravel', () => {
     act(() => {
       hook.result.current.reset('new init');
     });
-    expect(hook.result.current.value).toEqual('new init');
+    expect(hook.result.current.value).toBe('new init');
     expect(hook.result.current.backLength).toEqual(0);
     expect(hook.result.current.forwardLength).toEqual(0);
   });

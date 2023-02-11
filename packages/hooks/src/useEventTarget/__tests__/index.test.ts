@@ -8,20 +8,20 @@ describe('useEventTarget', () => {
     act(() => {
       hook.result.current[1].onChange({ target: { value: 'abc' } });
     });
-    expect(hook.result.current[0]).toEqual('abc');
+    expect(hook.result.current[0]).toBe('abc');
   });
 
   it('should work with initial value', async () => {
     const hook = renderHook(() => useEventTarget({ initialValue: 'abc' }));
-    expect(hook.result.current[0]).toEqual('abc');
+    expect(hook.result.current[0]).toBe('abc');
     act(() => {
       hook.result.current[1].onChange({ target: { value: 'def' } });
     });
-    expect(hook.result.current[0]).toEqual('def');
+    expect(hook.result.current[0]).toBe('def');
     act(() => {
       hook.result.current[1].reset();
     });
-    expect(hook.result.current[0]).toEqual('abc');
+    expect(hook.result.current[0]).toBe('abc');
   });
 
   it('should work with transformer', () => {
@@ -35,7 +35,7 @@ describe('useEventTarget', () => {
     act(() => {
       hook.result.current[1].onChange({ target: { value: 'def' } });
     });
-    expect(hook.result.current[0]).toEqual('DEF');
+    expect(hook.result.current[0]).toBe('DEF');
   });
 
   it('should be able to transform to any type', () => {
@@ -48,6 +48,6 @@ describe('useEventTarget', () => {
     act(() => {
       hook.result.current[1].onChange({ target: { value: 123 } });
     });
-    expect(hook.result.current[0]).toEqual('123');
+    expect(hook.result.current[0]).toBe('123');
   });
 });
