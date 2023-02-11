@@ -92,9 +92,9 @@ describe('useLocalStorageState', () => {
     act(() => {
       hook.result.current.setState(null);
     });
-    expect(hook.result.current.state).toEqual(null);
+    expect(hook.result.current.state).toBeNull();
     const anotherHook = setUp(LOCAL_STORAGE_KEY, false);
-    expect(anotherHook.result.current.state).toEqual(null);
+    expect(anotherHook.result.current.state).toBeNull();
   });
 
   it('should support function updater', () => {

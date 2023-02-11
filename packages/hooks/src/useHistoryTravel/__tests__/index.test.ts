@@ -17,7 +17,7 @@ describe('useHistoryTravel', () => {
     act(() => {
       nullHook.result.current.setValue(null);
     });
-    expect(nullHook.result.current.value).toEqual(null);
+    expect(nullHook.result.current.value).toBeNull();
 
     const undefHook = renderHook(() => useHistoryTravel());
     expect(undefHook.result.current.value).toBeUndefined();
@@ -45,7 +45,7 @@ describe('useHistoryTravel', () => {
     act(() => {
       nullHook.result.current.setValue(null);
     });
-    expect(nullHook.result.current.value).toEqual(null);
+    expect(nullHook.result.current.value).toBeNull();
 
     const undefHook = renderHook(() => useHistoryTravel<undefined | string>('abc'));
     act(() => {
