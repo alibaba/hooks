@@ -42,7 +42,7 @@ describe('useCookieState', () => {
     act(() => {
       hook.result.current.setState(undefined);
     });
-    expect(hook.result.current.state).toEqual(undefined);
+    expect(hook.result.current.state).toBeUndefined();
     const anotherHook = setUp(COOKIE_KEY, {
       defaultValue: 'false',
     });

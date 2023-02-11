@@ -130,7 +130,7 @@ describe('useAntdTable', () => {
     });
 
     await sleep(1);
-    expect(queryArgs).toEqual(undefined);
+    expect(queryArgs).toBeUndefined();
   });
 
   it('should ready work', async () => {
@@ -153,7 +153,7 @@ describe('useAntdTable', () => {
       });
     });
     await sleep(1);
-    expect(queryArgs).toEqual(undefined);
+    expect(queryArgs).toBeUndefined();
 
     hook.rerender({
       ready: true,

@@ -4,7 +4,7 @@ import useHistoryTravel from '../index';
 describe('useHistoryTravel', () => {
   it('should work without initial value', async () => {
     const hook = renderHook(() => useHistoryTravel());
-    expect(hook.result.current.value).toEqual(undefined);
+    expect(hook.result.current.value).toBeUndefined();
     act(() => {
       hook.result.current.setValue('test');
     });
@@ -13,21 +13,21 @@ describe('useHistoryTravel', () => {
 
   it('should work with null and undefined without initial value', async () => {
     const nullHook = renderHook(() => useHistoryTravel());
-    expect(nullHook.result.current.value).toEqual(undefined);
+    expect(nullHook.result.current.value).toBeUndefined();
     act(() => {
       nullHook.result.current.setValue(null);
     });
     expect(nullHook.result.current.value).toEqual(null);
 
     const undefHook = renderHook(() => useHistoryTravel());
-    expect(undefHook.result.current.value).toEqual(undefined);
+    expect(undefHook.result.current.value).toBeUndefined();
     act(() => {
       undefHook.result.current.setValue('def');
     });
     act(() => {
       undefHook.result.current.setValue(undefined);
     });
-    expect(undefHook.result.current.value).toEqual(undefined);
+    expect(undefHook.result.current.value).toBeUndefined();
     expect(undefHook.result.current.backLength).toBe(2);
   });
 
@@ -51,7 +51,7 @@ describe('useHistoryTravel', () => {
     act(() => {
       undefHook.result.current.setValue(undefined);
     });
-    expect(undefHook.result.current.value).toEqual(undefined);
+    expect(undefHook.result.current.value).toBeUndefined();
     expect(undefHook.result.current.backLength).toBe(1);
   });
 
@@ -191,7 +191,7 @@ describe('useHistoryTravel', () => {
     act(() => {
       hook.result.current.reset(undefined);
     });
-    expect(hook.result.current.value).toEqual(undefined);
+    expect(hook.result.current.value).toBeUndefined();
     expect(hook.result.current.backLength).toBe(0);
     expect(hook.result.current.forwardLength).toBe(0);
   });

@@ -93,7 +93,7 @@ describe('useCachePlugin', () => {
       cacheTime: 5000,
     });
     expect(hook3.result.current.loading).toBe(true);
-    expect(hook3.result.current.data).toEqual(undefined);
+    expect(hook3.result.current.data).toBeUndefined();
 
     await act(async () => {
       jest.advanceTimersByTime(1000);
@@ -110,7 +110,7 @@ describe('useCachePlugin', () => {
       cacheKey: 'testClearCache',
     });
     expect(hook2.result.current.loading).toBe(true);
-    expect(hook2.result.current.data).toEqual(undefined);
+    expect(hook2.result.current.data).toBeUndefined();
   });
 
   it('setCache/getCache should work', async () => {
@@ -176,7 +176,7 @@ describe('useCachePlugin', () => {
     await act(async () => {
       jest.advanceTimersByTime(1000);
     });
-    expect(res.error).toEqual(undefined);
+    expect(res.error).toBeUndefined();
 
     act(() => res.setKey(0));
     await act(async () => {
@@ -187,13 +187,13 @@ describe('useCachePlugin', () => {
       jest.advanceTimersByTime(1000);
     });
     expect(errSpy).toBeCalled();
-    await waitFor(() => expect(res.error).not.toEqual(undefined));
+    await waitFor(() => expect(res.error).not.toBeUndefined());
 
     act(() => res.setKey(1));
     await act(async () => {
       jest.advanceTimersByTime(1000);
     });
-    expect(res.error).toEqual(undefined);
+    expect(res.error).toBeUndefined();
 
     errSpy.mockRestore();
   });

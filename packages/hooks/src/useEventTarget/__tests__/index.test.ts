@@ -4,7 +4,7 @@ import useEventTarget from '../index';
 describe('useEventTarget', () => {
   it('should work without initial value', async () => {
     const hook = renderHook(() => useEventTarget());
-    expect(hook.result.current[0]).toEqual(undefined);
+    expect(hook.result.current[0]).toBeUndefined();
     act(() => {
       hook.result.current[1].onChange({ target: { value: 'abc' } });
     });
@@ -31,7 +31,7 @@ describe('useEventTarget', () => {
       }),
     );
 
-    expect(hook.result.current[0]).toEqual(undefined);
+    expect(hook.result.current[0]).toBeUndefined();
     act(() => {
       hook.result.current[1].onChange({ target: { value: 'def' } });
     });
@@ -44,7 +44,7 @@ describe('useEventTarget', () => {
         transformer: (num: number) => String(num),
       }),
     );
-    expect(hook.result.current[0]).toEqual(undefined);
+    expect(hook.result.current[0]).toBeUndefined();
     act(() => {
       hook.result.current[1].onChange({ target: { value: 123 } });
     });

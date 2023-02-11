@@ -38,7 +38,7 @@ describe('useRequest', () => {
     });
     expect(hook.result.current.loading).toBe(true);
     expect(value).toBe('before');
-    expect(success).toEqual(undefined);
+    expect(success).toBeUndefined();
 
     act(() => {
       jest.runAllTimers();
