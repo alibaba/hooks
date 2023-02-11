@@ -15,8 +15,8 @@ describe('useMouse', () => {
 
   it('on mouseMove', async () => {
     const hook = renderHook(() => useMouse());
-    expect(hook.result.current.pageX).toEqual(NaN);
-    expect(hook.result.current.pageY).toEqual(NaN);
+    expect(hook.result.current.pageX).toBeNaN();
+    expect(hook.result.current.pageY).toBeNaN();
 
     moveMouse(10, 10);
 
