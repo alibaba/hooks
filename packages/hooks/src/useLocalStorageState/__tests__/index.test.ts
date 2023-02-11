@@ -54,18 +54,18 @@ describe('useLocalStorageState', () => {
   it('should support number', () => {
     const LOCAL_STORAGE_KEY = 'test-number-key';
     const hook = setUp(LOCAL_STORAGE_KEY, 1);
-    expect(hook.result.current.state).toEqual(1);
+    expect(hook.result.current.state).toBe(1);
     act(() => {
       hook.result.current.setState(2);
     });
-    expect(hook.result.current.state).toEqual(2);
+    expect(hook.result.current.state).toBe(2);
     const anotherHook = setUp(LOCAL_STORAGE_KEY, 3);
-    expect(anotherHook.result.current.state).toEqual(2);
+    expect(anotherHook.result.current.state).toBe(2);
     act(() => {
       anotherHook.result.current.setState(3);
     });
-    expect(anotherHook.result.current.state).toEqual(3);
-    expect(hook.result.current.state).toEqual(2);
+    expect(anotherHook.result.current.state).toBe(3);
+    expect(hook.result.current.state).toBe(2);
   });
 
   it('should support boolean', () => {

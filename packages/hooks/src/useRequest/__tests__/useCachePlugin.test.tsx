@@ -143,7 +143,7 @@ describe('useCachePlugin', () => {
     act(() => {
       result.current.mutate(1);
     });
-    expect(result.current.data).toEqual(1);
+    expect(result.current.data).toBe(1);
     await act(async () => {
       jest.advanceTimersByTime(1000);
     });
