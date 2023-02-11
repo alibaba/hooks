@@ -47,13 +47,13 @@ describe('useLoadingDelayPlugin', () => {
         ready: false,
       });
     });
-    expect(hook.result.current.loading).toEqual(false);
+    expect(hook.result.current.loading).toBe(false);
 
     act(() => {
       jest.advanceTimersByTime(3000);
     });
 
-    expect(hook.result.current.loading).toEqual(false);
+    expect(hook.result.current.loading).toBe(false);
   });
 
   it('useLoadingDelayPlugin should update loading when ready is undefined', async () => {
@@ -62,12 +62,12 @@ describe('useLoadingDelayPlugin', () => {
         loadingDelay: 2000,
       });
     });
-    expect(hook.result.current.loading).toEqual(false);
+    expect(hook.result.current.loading).toBe(false);
 
     act(() => {
       jest.advanceTimersByTime(3000);
     });
 
-    expect(hook.result.current.loading).toEqual(true);
+    expect(hook.result.current.loading).toBe(true);
   });
 });
