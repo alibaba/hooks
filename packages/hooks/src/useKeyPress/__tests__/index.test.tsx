@@ -73,14 +73,21 @@ describe('useKeyPress ', () => {
     unmount();
   });
 
-  it('meta key should be work in keyup event', async () => {
-    renderHook(() =>
-      useKeyPress(['meta'], callback, {
-        events: ['keyup'],
-      }),
-    );
+  it('modifier keys (shift, ctrl, alt, meta) should be work in keyup event', async () => {
+    const hooks1 = renderHook(() => useKeyPress(['shift'], callback, { events: ['keyup'] }));
+    const hooks2 = renderHook(() => useKeyPress(['ctrl'], callback, { events: ['keyup'] }));
+    const hooks3 = renderHook(() => useKeyPress(['alt'], callback, { events: ['keyup'] }));
+    const hooks4 = renderHook(() => useKeyPress(['meta'], callback, { events: ['keyup'] }));
 
-    fireEvent.keyUp(document, { key: 'meta', keyCode: 91, metaKey: false });
-    expect(callback).toBeCalled();
+    fireEvent.keyUp(document, { key: 'shift', shiftKey: false, keyCode: 16 });
+    fireEvent.keyUp(document, { key: 'ctrl', ctrlKey: false, keyCode: 17 });
+    fireEvent.keyUp(document, { key: 'alt', altKey: false, keyCode: 18 });
+    fireEvent.keyUp(document, { key: 'meta', metaKey: false, keyCode: 91 });
+    fireEvent.keyUp(document, { key: 'meta', metaKey: false, keyCode: 92 });
+    expect(callback.mock.calls.length).toBe(5);
+    hooks1.unmount();
+    hooks2.unmount();
+    hooks3.unmount();
+    hooks4.unmount();
   });
 });
