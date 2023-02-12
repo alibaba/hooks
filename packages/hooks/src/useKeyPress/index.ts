@@ -22,16 +22,6 @@ export type Options = {
 
 // 键盘事件 keyCode 别名
 const aliasKeyCodeMap = {
-  '0': 48,
-  '1': 49,
-  '2': 50,
-  '3': 51,
-  '4': 52,
-  '5': 53,
-  '6': 54,
-  '7': 55,
-  '8': 56,
-  '9': 57,
   backspace: 8,
   tab: 9,
   enter: 13,
@@ -52,6 +42,16 @@ const aliasKeyCodeMap = {
   downarrow: 40,
   insert: 45,
   delete: 46,
+  '0': 48,
+  '1': 49,
+  '2': 50,
+  '3': 51,
+  '4': 52,
+  '5': 53,
+  '6': 54,
+  '7': 55,
+  '8': 56,
+  '9': 57,
   a: 65,
   b: 66,
   c: 67,
@@ -80,6 +80,7 @@ const aliasKeyCodeMap = {
   z: 90,
   leftwindowkey: 91,
   rightwindowkey: 92,
+  meta: isAppleDevice ? [91, 93] : [91, 92], // ⌘ cmd or ⊞ win
   leftmetakey: 91, // ⌘ left
   rightmetakey: 93, // ⌘ right
   selectkey: 93, // ≣ menu
@@ -125,12 +126,6 @@ const aliasKeyCodeMap = {
   singlequote: 222, // '
 };
 
-if (isAppleDevice) {
-  aliasKeyCodeMap['meta'] = [91, 93];
-} else {
-  aliasKeyCodeMap['meta'] = [91, 92];
-}
-
 // 修饰键
 const modifierKey = {
   ctrl: (event: KeyboardEvent) => event.ctrlKey,
@@ -138,7 +133,7 @@ const modifierKey = {
   alt: (event: KeyboardEvent) => event.altKey,
   meta: (event: KeyboardEvent) => {
     if (event.type === 'keyup') {
-      return aliasKeyCodeMap['meta'].includes(event.keyCode);
+      return aliasKeyCodeMap.meta.includes(event.keyCode);
     }
     return event.metaKey;
   },
