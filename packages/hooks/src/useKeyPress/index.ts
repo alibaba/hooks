@@ -95,11 +95,11 @@ const aliasKeyCodeMap: Record<string, number | number[]> = {
   numpad7: 103,
   numpad8: 104,
   numpad9: 105,
-  multiply: 106, // *
-  add: 107, // +
-  subtract: 109, // -
-  decimalpoint: 110, // .
-  divide: 111, // /
+  multiply: 106, // numpad *
+  add: 107, // numpad +
+  subtract: 109, // numpad -
+  decimalpoint: 110, // numpad .
+  divide: 111, // numpad /
   f1: 112,
   f2: 113,
   f3: 114,
