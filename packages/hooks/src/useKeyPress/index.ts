@@ -80,7 +80,9 @@ const aliasKeyCodeMap = {
   z: 90,
   leftwindowkey: 91,
   rightwindowkey: 92,
-  selectkey: 93,
+  leftmetakey: 91, // ⌘ left
+  rightmetakey: 93, // ⌘ right
+  selectkey: 93, // ≣ menu
   numpad0: 96,
   numpad1: 97,
   numpad2: 98,
@@ -91,11 +93,11 @@ const aliasKeyCodeMap = {
   numpad7: 103,
   numpad8: 104,
   numpad9: 105,
-  multiply: 106,
-  add: 107,
-  subtract: 109,
-  decimalpoint: 110,
-  divide: 111,
+  multiply: 106, // *
+  add: 107, // +
+  subtract: 109, // -
+  decimalpoint: 110, // .
+  divide: 111, // /
   f1: 112,
   f2: 113,
   f3: 114,
@@ -110,17 +112,17 @@ const aliasKeyCodeMap = {
   f12: 123,
   numlock: 144,
   scrolllock: 145,
-  semicolon: 186,
-  equalsign: 187,
-  comma: 188,
-  dash: 189,
-  period: 190,
-  forwardslash: 191,
-  graveaccent: 192,
-  openbracket: 219,
-  backslash: 220,
-  closebracket: 221,
-  singlequote: 222,
+  semicolon: 186, // ;
+  equalsign: 187, // =
+  comma: 188, // ,
+  dash: 189, // -
+  period: 190, // .
+  forwardslash: 191, // /
+  graveaccent: 192, // `
+  openbracket: 219, // [
+  backslash: 220, // \
+  closebracket: 221, // ]
+  singlequote: 222, // '
 };
 
 if (isAppleDevice) {
