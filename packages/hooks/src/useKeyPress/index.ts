@@ -21,7 +21,7 @@ export type Options = {
 };
 
 // 键盘事件 keyCode 别名
-const aliasKeyCodeMap = {
+const aliasKeyCodeMap: Record<string, number | number[]> = {
   backspace: 8,
   tab: 9,
   enter: 13,
@@ -80,7 +80,8 @@ const aliasKeyCodeMap = {
   z: 90,
   leftwindowkey: 91,
   rightwindowkey: 92,
-  meta: isAppleDevice ? [91, 93] : [91, 92], // ⌘ cmd or ⊞ win
+  // 224: firefox
+  meta: isAppleDevice ? [91, 93, 224] : [91, 92], // ⌘ cmd or ⊞ win
   leftmetakey: 91, // ⌘ left
   rightmetakey: 93, // ⌘ right
   selectkey: 93, // ≣ menu
@@ -113,10 +114,13 @@ const aliasKeyCodeMap = {
   f12: 123,
   numlock: 144,
   scrolllock: 145,
-  semicolon: 186, // ;
-  equalsign: 187, // =
+  // 59: firefox
+  semicolon: [186, 59], // ;
+  // 61: firefox
+  equalsign: [187, 61], // =
   comma: 188, // ,
-  dash: 189, // -
+  // 173: firefox
+  dash: [189, 173], // -
   period: 190, // .
   forwardslash: 191, // /
   graveaccent: 192, // `
@@ -133,11 +137,28 @@ const modifierKey = {
   alt: (event: KeyboardEvent) => event.altKey,
   meta: (event: KeyboardEvent) => {
     if (event.type === 'keyup') {
-      return aliasKeyCodeMap.meta.includes(event.keyCode);
+      return genAliasKeyCodeHit(event, 'meta');
     }
     return event.metaKey;
   },
 };
+
+// 修饰键的 keyCode
+const modifierKeyCode = [16, 17, 18, 91, 92, 93, 224];
+
+/**
+ * 判断“键盘事件 keyCode 别名”是否命中
+ * @param event 键盘事件
+ * @param aliasKey 键盘事件 keyCode 别名
+ * @returns Boolean
+ */
+function genAliasKeyCodeHit(event: KeyboardEvent, aliasKey: string) {
+  const aliasKeyCode = aliasKeyCodeMap[aliasKey];
+
+  return Array.isArray(aliasKeyCode)
+    ? aliasKeyCode.some((item) => item === event.keyCode)
+    : !!aliasKeyCode && aliasKeyCode === event.keyCode;
+}
 
 // 根据 event 计算激活键数量
 function countKeyByEvent(event: KeyboardEvent) {
@@ -149,8 +170,8 @@ function countKeyByEvent(event: KeyboardEvent) {
     return total;
   }, 0);
 
-  // 16 17 18 91 92 是修饰键的 keyCode，如果 keyCode 是修饰键，那么激活数量就是修饰键的数量，如果不是，那么就需要 +1
-  return [16, 17, 18, 91, 92].includes(event.keyCode) ? countOfModifier : countOfModifier + 1;
+  // 如果 keyCode 是修饰键，那么激活数量就是修饰键的数量，如果不是，那么就需要 +1
+  return modifierKeyCode.includes(event.keyCode) ? countOfModifier : countOfModifier + 1;
 }
 
 /**
@@ -177,10 +198,8 @@ function genFilterKey(event: KeyboardEvent, keyFilter: keyType, exactMatch: bool
   for (const key of genArr) {
     // 组合键
     const genModifier = modifierKey[key];
-    // keyCode 别名
-    const aliasKeyCode: number | number[] = aliasKeyCodeMap[key.toLowerCase()];
 
-    if ((genModifier && genModifier(event)) || (aliasKeyCode && aliasKeyCode === event.keyCode)) {
+    if ((genModifier && genModifier(event)) || genAliasKeyCodeHit(event, key.toLowerCase())) {
       genLen++;
     }
   }
