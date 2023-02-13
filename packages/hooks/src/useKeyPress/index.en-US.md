@@ -75,3 +75,7 @@ alt
 shift
 meta
 ```
+
+## FAQ:
+
+Due to browser limitations, when listening to key combinations, other keys do not trigger callbacks when the `command/alt` key is held down.

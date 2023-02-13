@@ -75,3 +75,7 @@ alt
 shift
 meta
 ```
+
+## FAQ:
+
+由于浏览器限制，监听组合键时，当按住 `command/alt` 键时 其他按键不触发回调。
