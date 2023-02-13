@@ -39,6 +39,6 @@ const status = useExternal(path: string, options?: Options);
 
 | Params | Description                                                                                                          | Type                | Default |
 | ------ | -------------------------------------------------------------------------------------------------------------------- | ------------------- | ------- |
-| type   | The type of extarnal resources which need to load, support `js`/`css`, if no type, it will deduced according to path | `string`            | -       |
+| type   | The type of external resources which need to load, support `js`/`css`, if no type, it will deduced according to path | `string`            | -       |
 | js     | Attributes supported by `script`                                                                                     | `HTMLScriptElement` | -       |
 | css    | Attributes supported by `link`                                                                                       | `HTMLStyleElement`  | -       |

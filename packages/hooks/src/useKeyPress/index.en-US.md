@@ -56,12 +56,12 @@ useKeyPress(
 
 ### Options
 
-| Property   | Description                                                                                                                                   | Type                                                        | Default       |
-| ---------- | --------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------- | ------------- |
-| events     | Trigger Events                                                                                                                                | `('keydown' \| 'keyup')[]`                                  | `['keydown']` |
-| target     | DOM element or ref                                                                                                                            | `() => Element` \| `Element` \| `MutableRefObject<Element>` | -             |
-| exactMatch | Exact match. If set `true`, the event will only be trigger when the keys match exactly. For example, pressing [shif + c] will not trigger [c] | `boolean`                                                   | `false`       |
-| useCapture | to block events bubbling                                                                                                                      | `boolean`                                                   | `false`       |
+| Property   | Description                                                                                                                                    | Type                                                        | Default       |
+| ---------- | ---------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------- | ------------- |
+| events     | Trigger Events                                                                                                                                 | `('keydown' \| 'keyup')[]`                                  | `['keydown']` |
+| target     | DOM element or ref                                                                                                                             | `() => Element` \| `Element` \| `MutableRefObject<Element>` | -             |
+| exactMatch | Exact match. If set `true`, the event will only be trigger when the keys match exactly. For example, pressing [shift + c] will not trigger [c] | `boolean`                                                   | `false`       |
+| useCapture | to block events bubbling                                                                                                                       | `boolean`                                                   | `false`       |
 
 ## Remarks
 
