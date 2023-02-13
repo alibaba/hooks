@@ -99,7 +99,7 @@ We have modified the user name, but we do not want to wait for the request to be
 
 ## Cancel response
 
-`useRequest` provides a `cancel` function, which will **ignore** the data and erros returned by the current promise
+`useRequest` provides a `cancel` function, which will **ignore** the data and error returned by the current promise
 
 **Note: Calling `cancel` doesn't cancel the execution of promise**
 
