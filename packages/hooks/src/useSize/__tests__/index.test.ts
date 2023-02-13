@@ -20,7 +20,9 @@ describe('useSize', () => {
   });
 
   it('should not work when target is null', () => {
-    renderHook(() => useSize(null));
+    expect(() => {
+      renderHook(() => useSize(null));
+    }).not.toThrowError();
   });
 
   it('should work', () => {
