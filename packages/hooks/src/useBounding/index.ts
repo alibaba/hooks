@@ -53,11 +53,15 @@ function useBounding(target: Target, options: UseBoundingOptions = {}): UseBound
 
   function update() {
     const el = getTargetElement(target);
-    const rect = el?.getBoundingClientRect();
 
-    if (rect) {
-      setState(rect);
+    if (!el) {
+      if (reset) {
+        setState(INIT_BOUNDING_RECT);
+      }
+      return;
     }
+
+    setState(el.getBoundingClientRect());
   }
 
   useEffectWithTarget(
@@ -65,14 +69,10 @@ function useBounding(target: Target, options: UseBoundingOptions = {}): UseBound
       const el = getTargetElement(target);
 
       if (!el) {
-        if (reset) {
-          setState(INIT_BOUNDING_RECT);
-        }
-
+        update();
         return;
       }
 
-      update();
       observer = new ResizeObserver(update);
       observer.observe(el);
 
