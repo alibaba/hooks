@@ -8,8 +8,8 @@ type Size = { width: number; height: number };
 
 function useSize(target: BasicTarget): Size | undefined {
   const el = getTargetElement(target);
-  const [state, setState] = useRafState<Size>(
-    el ? { width: el.clientWidth, height: el.clientHeight } : (undefined as unknown as Size),
+  const [state, setState] = useRafState<Size | undefined>(
+    el ? { width: el.clientWidth, height: el.clientHeight } : undefined,
   );
 
   useIsomorphicLayoutEffectWithTarget(
