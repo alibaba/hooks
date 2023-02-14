@@ -42,6 +42,16 @@ export function createUseStorageState(getStorage: () => Storage | undefined) {
       return JSON.parse(value);
     };
 
+    function getDefaultValue() {
+      return isFunction(options?.defaultValue) ? options?.defaultValue() : options?.defaultValue;
+    }
+
+    function setDefaultStoredValue() {
+      const defaultValue = getDefaultValue();
+      if (isUndef(defaultValue)) return;
+      storage?.setItem(key, serializer(defaultValue));
+    }
+
     function getStoredValue() {
       try {
         const raw = storage?.getItem(key);
@@ -51,10 +61,8 @@ export function createUseStorageState(getStorage: () => Storage | undefined) {
       } catch (e) {
         console.error(e);
       }
-      if (isFunction(options?.defaultValue)) {
-        return options?.defaultValue();
-      }
-      return options?.defaultValue;
+      setDefaultStoredValue();
+      return getDefaultValue();
     }
 
     const [state, setState] = useState<T>(() => getStoredValue());
