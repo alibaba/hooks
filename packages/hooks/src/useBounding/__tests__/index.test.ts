@@ -45,10 +45,10 @@ describe('useBounding', () => {
   });
 
   function triggerResize() {
-    // `ResizeObserver` API will call once on component mounted
     const calls = resizeObserverMock.mock.calls;
     const [resizeObserverCallback] = calls[calls.length - 1];
 
+    // `ResizeObserver` API will call once on component mounted
     act(() => resizeObserverCallback());
   }
 
