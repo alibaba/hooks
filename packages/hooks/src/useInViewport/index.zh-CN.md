@@ -17,21 +17,27 @@ nav:
 
 <code src="./demo/demo2.tsx" />
 
+### 监听内容滚动选中菜单
+
+<code src="./demo/demo3.tsx" />
+
 ## API
 
 ```typescript
 const [inViewport, ratio] = useInViewport(
   target,
   options?: Options
+  callback?: (entry: IntersectionObserverEntry) => void
 );
 ```
 
 ### Params
 
-| 参数    | 说明             | 类型                                                        | 默认值 |
-| ------- | ---------------- | ----------------------------------------------------------- | ------ |
-| target  | DOM 节点或者 ref | `Element` \| `() => Element` \| `MutableRefObject<Element>` | -      |
-| options | 设置             | `Options`                                                   | -      |
+| 参数     | 说明             | 类型                                                        | 默认值 |
+| -------- | ---------------- | ----------------------------------------------------------- | ------ |
+| target   | DOM 节点或者 ref | `Element` \| `() => Element` \| `MutableRefObject<Element>` | -      |
+| options  | 设置             | `Options`                                                   | -      |
+| callback | 回调             | `(entry: IntersectionObserverEntry) => void`                | -      |
 
 ### Options
 

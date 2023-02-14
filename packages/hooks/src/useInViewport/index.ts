@@ -10,14 +10,23 @@ export interface Options {
   root?: BasicTarget<Element>;
 }
 
-function useInViewport(target: BasicTarget, options?: Options) {
+type CallbackType = (entry: IntersectionObserverEntry) => void;
+
+function useInViewport(
+  target: BasicTarget | BasicTarget[],
+  options?: Options,
+  callback?: CallbackType,
+) {
   const [state, setState] = useState<boolean>();
   const [ratio, setRatio] = useState<number>();
 
   useEffectWithTarget(
     () => {
-      const el = getTargetElement(target);
-      if (!el) {
+      const targets = Array.isArray(target) ? target : [target];
+
+      const els = targets.map((element) => getTargetElement(element)).filter(Boolean);
+
+      if (!els.length) {
         return;
       }
 
@@ -26,6 +35,9 @@ function useInViewport(target: BasicTarget, options?: Options) {
           for (const entry of entries) {
             setRatio(entry.intersectionRatio);
             setState(entry.isIntersecting);
+            if (callback) {
+              callback(entry);
+            }
           }
         },
         {
@@ -34,7 +46,9 @@ function useInViewport(target: BasicTarget, options?: Options) {
         },
       );
 
-      observer.observe(el);
+      els.forEach((el) => {
+        observer.observe(el as Element);
+      });
 
       return () => {
         observer.disconnect();

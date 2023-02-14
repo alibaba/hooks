@@ -17,12 +17,17 @@ Observe whether the element is in the visible area, and the visible area ratio o
 
 <code src="./demo/demo2.tsx" />
 
+### Listening content scrolling selection menu
+
+<code src="./demo/demo3.tsx" />
+
 ## API
 
 ```typescript
 const [inViewport, ratio] = useInViewport(
   target,
   options?: Options
+  callback?: (entry: IntersectionObserverEntry) => void
 );
 ```
 
@@ -32,6 +37,7 @@ const [inViewport, ratio] = useInViewport(
 | -------- | ------------------ | ----------------------------------------------------------- | ------- |
 | target   | DOM element or ref | `Element` \| `() => Element` \| `MutableRefObject<Element>` | -       |
 | options  | Setting            | `Options`                                                   | -       |
+| callback | Callback           | `(entry: IntersectionObserverEntry) => void`                | -       |
 
 ### Options
 
