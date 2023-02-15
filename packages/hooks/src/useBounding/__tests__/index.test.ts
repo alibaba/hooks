@@ -93,11 +93,11 @@ describe('useBounding', () => {
     });
 
     hook = setup(target, { reset });
-    // initial state
+    // Initial state
     expect(hook.result.current).toEqual(INIT_VALUE);
 
     hook.unmount();
-    // it should be a new state when `reset: true`, otherwise old state
+    // It should be a new state when `reset: true`, otherwise old state
     expect(hook.result.current).toEqual(reset ? INIT_BOUNDING_RECT : INIT_VALUE);
   }
 
@@ -113,14 +113,14 @@ describe('useBounding', () => {
     const newRect = { ...INIT_VALUE, width: 10, height: 10 };
     hook = setup(target, { windowResize });
 
-    // initial state
+    // Initial state
     expect(hook.result.current).toEqual(INIT_VALUE);
 
-    // mock "resize"
+    // Mock "resize"
     targetRectMock.mockReturnValue(newRect);
     act(() => windowAddEventListenerMock?.resize?.());
 
-    // it should be a new state when `windowResize: true`, otherwise old state
+    // It should be a new state when `windowResize: true`, otherwise old state
     expect(hook.result.current).toEqual(windowResize ? newRect : INIT_VALUE);
   }
 
@@ -136,14 +136,14 @@ describe('useBounding', () => {
     const newRect = { ...INIT_VALUE, width: 10, height: 10 };
     hook = setup(target, { windowScroll });
 
-    // initial state
+    // Initial state
     expect(hook.result.current).toEqual(INIT_VALUE);
 
-    // mock "scroll"
+    // Mock "scroll"
     targetRectMock.mockReturnValue(newRect);
     act(() => windowAddEventListenerMock?.scroll?.());
 
-    // it should be a new state when `windowScroll: true`, otherwise old state
+    // It should be a new state when `windowScroll: true`, otherwise old state
     expect(hook.result.current).toEqual(windowScroll ? newRect : INIT_VALUE);
   }
 
