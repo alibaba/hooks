@@ -76,11 +76,11 @@ function useBounding(target: Target, options: UseBoundingOptions = {}): UseBound
       observer = new ResizeObserver(update);
       observer.observe(el);
 
-      if (windowScroll) {
-        window.addEventListener('scroll', update);
-      }
       if (windowResize) {
         window.addEventListener('resize', update);
+      }
+      if (windowScroll) {
+        window.addEventListener('scroll', update);
       }
 
       return () => {
@@ -88,11 +88,11 @@ function useBounding(target: Target, options: UseBoundingOptions = {}): UseBound
           observer.disconnect();
           observer = null;
         }
-        if (windowScroll) {
-          window.removeEventListener('scroll', update);
-        }
         if (windowResize) {
           window.removeEventListener('resize', update);
+        }
+        if (windowScroll) {
+          window.removeEventListener('scroll', update);
         }
       };
     },
