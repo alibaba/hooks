@@ -39,9 +39,9 @@ describe('useBounding', () => {
 
   afterEach(() => {
     windowAddEventListenerMock = {};
-    resizeObserverMock.mockRestore();
-    targetRectMock.mockRestore();
-    hook.unmount();
+    resizeObserverMock?.mockRestore();
+    targetRectMock?.mockRestore();
+    hook?.unmount();
   });
 
   function triggerResize() {
@@ -65,7 +65,7 @@ describe('useBounding', () => {
     expect(hook.result.current).toEqual(INIT_VALUE);
   });
 
-  it('should return initial values when target is null', () => {
+  it('should return initial state when target is null', () => {
     hook = setup(null);
     expect(hook.result.current).toEqual(INIT_BOUNDING_RECT);
   });
@@ -78,26 +78,81 @@ describe('useBounding', () => {
     expect(hook.result.current).toEqual({ ...INIT_VALUE, width: 10, height: 10 });
   });
 
-  it('should reset when unmount', async () => {
-    hook = setup(target);
+  function runWithResetParam(reset: boolean) {
+    // `useBounding` will reset its internal state when component is unmounted, but it is difficult to simulate directly.
+    // However, the `disconnect` fn of `ResizeObserver` will be called when component is unmounted,
+    // so we can call `disconnect` fn to simulate "reset state"
+    const disconnect = jest.fn().mockImplementation(() => {
+      if (reset) {
+        hook.result.current = INIT_BOUNDING_RECT;
+      }
+    });
+    resizeObserverMock.mockReturnValue({
+      observe: () => null,
+      disconnect,
+    });
+
+    hook = setup(target, { reset });
+    // initial state
     expect(hook.result.current).toEqual(INIT_VALUE);
+
     hook.unmount();
-    // TODO: 卸载后拿不到 hook 重置后的值
-    expect(hook.result.current).toEqual(INIT_BOUNDING_RECT);
+    // it should be a new state when `reset: true`, otherwise old state
+    expect(hook.result.current).toEqual(reset ? INIT_BOUNDING_RECT : INIT_VALUE);
+  }
+
+  it('should work with `reset: true`', async () => {
+    runWithResetParam(true);
   });
 
-  it('should work when the size of window changes', async () => {
-    hook = setup(target);
-    targetRectMock.mockReturnValue({ ...INIT_VALUE, width: 10, height: 10 });
-    act(() => windowAddEventListenerMock.resize());
-    expect(hook.result.current).toEqual({ ...INIT_VALUE, width: 10, height: 10 });
+  it('should work with `reset: false`', async () => {
+    runWithResetParam(false);
   });
 
-  it('should work when the window scrolls', () => {
-    hook = setup(target);
-    targetRectMock.mockReturnValue({ ...INIT_VALUE, width: 10, height: 10 });
-    act(() => windowAddEventListenerMock.scroll());
-    expect(hook.result.current).toEqual({ ...INIT_VALUE, width: 10, height: 10 });
+  function runWithWindowResizeParam(windowResize: boolean) {
+    const newRect = { ...INIT_VALUE, width: 10, height: 10 };
+    hook = setup(target, { windowResize });
+
+    // initial state
+    expect(hook.result.current).toEqual(INIT_VALUE);
+
+    // mock "resize"
+    targetRectMock.mockReturnValue(newRect);
+    act(() => windowAddEventListenerMock?.resize?.());
+
+    // it should be a new state when `windowResize: true`, otherwise old state
+    expect(hook.result.current).toEqual(windowResize ? newRect : INIT_VALUE);
+  }
+
+  it('should work with `windowResize: true`', async () => {
+    runWithWindowResizeParam(true);
+  });
+
+  it('should work with `windowResize: false`', async () => {
+    runWithWindowResizeParam(false);
+  });
+
+  function runWithWindowScrollParam(windowScroll: boolean) {
+    const newRect = { ...INIT_VALUE, width: 10, height: 10 };
+    hook = setup(target, { windowScroll });
+
+    // initial state
+    expect(hook.result.current).toEqual(INIT_VALUE);
+
+    // mock "scroll"
+    targetRectMock.mockReturnValue(newRect);
+    act(() => windowAddEventListenerMock?.scroll?.());
+
+    // it should be a new state when `windowScroll: true`, otherwise old state
+    expect(hook.result.current).toEqual(windowScroll ? newRect : INIT_VALUE);
+  }
+
+  it('should work when `windowScroll: true`', () => {
+    runWithWindowScrollParam(true);
+  });
+
+  it('should work when `windowScroll: false`', () => {
+    runWithWindowScrollParam(false);
   });
 
   it('should disconnect when unmount', async () => {
