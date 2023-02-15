@@ -44,18 +44,18 @@ describe('useBounding', () => {
     hook?.unmount();
   });
 
-  function triggerResize() {
+  function triggerResizeObserver() {
     const calls = resizeObserverMock.mock.calls;
     const [resizeObserverCallback] = calls[calls.length - 1];
 
-    // `ResizeObserver` API will call once on component mounted
     act(() => resizeObserverCallback());
   }
 
   function setup(el: Target, options?: UseBoundingOptions) {
     const res = renderHook(() => useBounding(el, options));
 
-    if (el) triggerResize();
+    // `ResizeObserver` API will call when component is mounted, so here simulate this behavior
+    if (el) triggerResizeObserver();
 
     return res;
   }
@@ -74,7 +74,7 @@ describe('useBounding', () => {
     hook = setup(target);
     // Simulate the size change of the target
     targetRectMock.mockReturnValue({ ...INIT_VALUE, width: 10, height: 10 });
-    triggerResize();
+    triggerResizeObserver();
     expect(hook.result.current).toEqual({ ...INIT_VALUE, width: 10, height: 10 });
   });
 
