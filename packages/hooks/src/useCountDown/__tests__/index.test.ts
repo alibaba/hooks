@@ -56,14 +56,14 @@ describe('useCountDown', () => {
     act(() => {
       jest.advanceTimersByTime(4000);
     });
-    expect(result.current[0]).toEqual(0);
+    expect(result.current[0]).toBe(0);
     expect(result.current[1].seconds).toBe(0);
 
     act(() => {
       jest.advanceTimersByTime(1000);
     });
 
-    expect(result.current[0]).toEqual(0);
+    expect(result.current[0]).toBe(0);
     expect(result.current[1].seconds).toBe(0);
   });
 
@@ -174,14 +174,14 @@ describe('useCountDown', () => {
     act(() => {
       jest.advanceTimersByTime(4000);
     });
-    expect(result.current[0]).toEqual(0);
+    expect(result.current[0]).toBe(0);
     expect(result.current[1].seconds).toBe(0);
 
     act(() => {
       jest.advanceTimersByTime(1000);
     });
 
-    expect(result.current[0]).toEqual(0);
+    expect(result.current[0]).toBe(0);
     expect(result.current[1].seconds).toBe(0);
   });
 

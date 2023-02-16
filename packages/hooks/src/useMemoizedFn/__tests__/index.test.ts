@@ -22,14 +22,14 @@ describe('useMemoizedFn', () => {
       hook = renderHook(() => useCount());
     });
     const currentFn = hook.result.current.memoizedFn;
-    expect(hook.result.current.memoizedFn()).toEqual(0);
+    expect(hook.result.current.memoizedFn()).toBe(0);
 
     act(() => {
       hook.result.current.addCount();
     });
 
     expect(currentFn).toEqual(hook.result.current.memoizedFn);
-    expect(hook.result.current.memoizedFn()).toEqual(1);
+    expect(hook.result.current.memoizedFn()).toBe(1);
   });
 
   // it('should output error when fn is not a function', () => {
