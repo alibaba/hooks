@@ -3,7 +3,7 @@
  * desc: Try to scroll the page or resize window or resize element.
  *
  * title.zh-CN: 基础用法
- * desc.zh-CN: 尝试一下滚动页面、改变窗口大小 或 手动调整元素大小。
+ * desc.zh-CN: 尝试一下滚动页面、改变窗口大小 或 改变元素大小。
  */
 
 import React, { useEffect, useRef, useState } from 'react';
