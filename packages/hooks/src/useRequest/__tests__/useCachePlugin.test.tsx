@@ -17,7 +17,7 @@ describe('useCachePlugin', () => {
       jest.advanceTimersByTime(1000);
     });
     expect(hook.result.current.loading).toBe(false);
-    expect(hook.result.current.data).toEqual('success');
+    expect(hook.result.current.data).toBe('success');
     hook.unmount();
   };
 
@@ -32,7 +32,7 @@ describe('useCachePlugin', () => {
       cacheKey: 'testCacheKey',
     });
     expect(hook2.result.current.loading).toBe(true);
-    expect(hook2.result.current.data).toEqual('success');
+    expect(hook2.result.current.data).toBe('success');
     await act(async () => {
       jest.advanceTimersByTime(1000);
     });
@@ -52,7 +52,7 @@ describe('useCachePlugin', () => {
       staleTime: 3000,
     });
     expect(hook2.result.current.loading).toBe(false);
-    expect(hook2.result.current.data).toEqual('success');
+    expect(hook2.result.current.data).toBe('success');
     hook2.unmount();
 
     jest.advanceTimersByTime(3001);
@@ -62,7 +62,7 @@ describe('useCachePlugin', () => {
       staleTime: 3000,
     });
     expect(hook3.result.current.loading).toBe(true);
-    expect(hook3.result.current.data).toEqual('success');
+    expect(hook3.result.current.data).toBe('success');
 
     await act(async () => {
       jest.advanceTimersByTime(1000);
@@ -83,7 +83,7 @@ describe('useCachePlugin', () => {
       cacheTime: 5000,
     });
     expect(hook2.result.current.loading).toBe(true);
-    expect(hook2.result.current.data).toEqual('success');
+    expect(hook2.result.current.data).toBe('success');
     hook2.unmount();
 
     jest.advanceTimersByTime(5001);
@@ -93,13 +93,13 @@ describe('useCachePlugin', () => {
       cacheTime: 5000,
     });
     expect(hook3.result.current.loading).toBe(true);
-    expect(hook3.result.current.data).toEqual(undefined);
+    expect(hook3.result.current.data).toBeUndefined();
 
     await act(async () => {
       jest.advanceTimersByTime(1000);
     });
     expect(hook3.result.current.loading).toBe(false);
-    expect(hook3.result.current.data).toEqual('success');
+    expect(hook3.result.current.data).toBe('success');
   });
 
   it('clearCache should work', async () => {
@@ -110,7 +110,7 @@ describe('useCachePlugin', () => {
       cacheKey: 'testClearCache',
     });
     expect(hook2.result.current.loading).toBe(true);
-    expect(hook2.result.current.data).toEqual(undefined);
+    expect(hook2.result.current.data).toBeUndefined();
   });
 
   it('setCache/getCache should work', async () => {
@@ -128,7 +128,7 @@ describe('useCachePlugin', () => {
       getCache: () => JSON.parse(localStorage.getItem(cacheKey) || '{}'),
     });
     expect(hook2.result.current.loading).toBe(true);
-    expect(hook2.result.current.data).toEqual('success');
+    expect(hook2.result.current.data).toBe('success');
 
     await act(async () => {
       jest.advanceTimersByTime(1000);
@@ -143,12 +143,12 @@ describe('useCachePlugin', () => {
     act(() => {
       result.current.mutate(1);
     });
-    expect(result.current.data).toEqual(1);
+    expect(result.current.data).toBe(1);
     await act(async () => {
       jest.advanceTimersByTime(1000);
     });
     expect(result.current.loading).toBe(false);
-    expect(result.current.data).toEqual('success');
+    expect(result.current.data).toBe('success');
   });
 
   //github.com/alibaba/hooks/issues/1859
@@ -176,7 +176,7 @@ describe('useCachePlugin', () => {
     await act(async () => {
       jest.advanceTimersByTime(1000);
     });
-    expect(res.error).toEqual(undefined);
+    expect(res.error).toBeUndefined();
 
     act(() => res.setKey(0));
     await act(async () => {
@@ -187,13 +187,13 @@ describe('useCachePlugin', () => {
       jest.advanceTimersByTime(1000);
     });
     expect(errSpy).toBeCalled();
-    await waitFor(() => expect(res.error).not.toEqual(undefined));
+    await waitFor(() => expect(res.error).not.toBeUndefined());
 
     act(() => res.setKey(1));
     await act(async () => {
       jest.advanceTimersByTime(1000);
     });
-    expect(res.error).toEqual(undefined);
+    expect(res.error).toBeUndefined();
 
     errSpy.mockRestore();
   });

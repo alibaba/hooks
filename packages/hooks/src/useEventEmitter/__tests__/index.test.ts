@@ -24,10 +24,10 @@ describe('useEventEmitter', () => {
     act(() => {
       hook.result.current.event$.emit(1);
     });
-    expect(hook.result.current.count).toEqual(12);
+    expect(hook.result.current.count).toBe(12);
     act(() => {
       hook.result.current.event$.emit(2);
     });
-    expect(hook.result.current.count).toEqual(26);
+    expect(hook.result.current.count).toBe(26);
   });
 });
