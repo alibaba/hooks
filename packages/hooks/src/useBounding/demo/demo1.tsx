@@ -6,17 +6,12 @@
  * desc.zh-CN: 尝试一下滚动页面、改变窗口大小 或 改变元素大小。
  */
 
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef } from 'react';
 import { useBounding } from 'ahooks';
 
 export default () => {
   const ref = useRef(null);
   const rect = useBounding(ref);
-  const [value, setValue] = useState<string>('');
-
-  useEffect(() => {
-    setValue(JSON.stringify(rect));
-  }, [rect]);
 
   return (
     <div>
@@ -30,7 +25,7 @@ export default () => {
           border: '1px solid #666',
         }}
       >
-        {value}
+        {JSON.stringify(rect)}
       </div>
     </div>
   );
