@@ -16,7 +16,7 @@ jest.mock('resize-observer-polyfill', () => {
 describe('useSize', () => {
   it('with argument', () => {
     const hook = renderHook(() => useSize(document.body));
-    expect(hook.result.current).toEqual(undefined);
+    expect(hook.result.current).toBeUndefined();
   });
 
   it('should not work when target is null', () => {

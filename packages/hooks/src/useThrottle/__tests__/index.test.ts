@@ -11,7 +11,7 @@ describe('useThrottle', () => {
       hook = renderHook(() => useThrottle(mountedState, { wait: 500 }));
     });
 
-    expect(hook.result.current).toEqual(1);
+    expect(hook.result.current).toBe(1);
     mountedState = 2;
     hook.rerender();
     mountedState = 3;
@@ -19,13 +19,13 @@ describe('useThrottle', () => {
     await act(async () => {
       await sleep(250);
     });
-    expect(hook.result.current).toEqual(1);
+    expect(hook.result.current).toBe(1);
     mountedState = 4;
     hook.rerender();
     await act(async () => {
       await sleep(260);
     });
-    expect(hook.result.current).toEqual(4);
+    expect(hook.result.current).toBe(4);
   });
 
   it('leading:false & trailing:false of options useThrottle should work', async () => {
@@ -38,17 +38,17 @@ describe('useThrottle', () => {
 
     //Never get the latest value
     mountedState = 1;
-    expect(hook.result.current).toEqual(0);
+    expect(hook.result.current).toBe(0);
     mountedState = 2;
     hook.rerender();
     mountedState = 3;
     hook.rerender();
     await sleep(250);
-    expect(hook.result.current).toEqual(0);
+    expect(hook.result.current).toBe(0);
     mountedState = 4;
     hook.rerender();
     await sleep(260);
-    expect(hook.result.current).toEqual(0);
+    expect(hook.result.current).toBe(0);
   });
 
   it('leading:true & trailing:false of options useThrottle should work', async () => {
@@ -59,17 +59,17 @@ describe('useThrottle', () => {
       );
     });
 
-    expect(hook.result.current).toEqual(0);
+    expect(hook.result.current).toBe(0);
     mountedState = 1;
     hook.rerender();
     await sleep(0);
-    expect(hook.result.current).toEqual(0);
+    expect(hook.result.current).toBe(0);
 
     mountedState = 2;
     await sleep(200);
     hook.rerender();
     await sleep(0);
-    expect(hook.result.current).toEqual(0);
+    expect(hook.result.current).toBe(0);
 
     mountedState = 3;
     //Need to wait more than 500ms to get the latest value
@@ -78,7 +78,7 @@ describe('useThrottle', () => {
     });
     hook.rerender();
     await sleep(0);
-    expect(hook.result.current).toEqual(3);
+    expect(hook.result.current).toBe(3);
   });
 
   it('leading:false & trailing:true of options useThrottle should work', async () => {
@@ -89,16 +89,16 @@ describe('useThrottle', () => {
       );
     });
 
-    expect(hook.result.current).toEqual(0);
+    expect(hook.result.current).toBe(0);
     mountedState = 1;
     hook.rerender();
     await sleep(0);
-    expect(hook.result.current).toEqual(0);
+    expect(hook.result.current).toBe(0);
 
     mountedState = 2;
     hook.rerender();
     await sleep(250);
-    expect(hook.result.current).toEqual(0);
+    expect(hook.result.current).toBe(0);
 
     mountedState = 3;
     hook.rerender();
@@ -106,6 +106,6 @@ describe('useThrottle', () => {
       await sleep(260);
     });
     await sleep(260);
-    expect(hook.result.current).toEqual(3);
+    expect(hook.result.current).toBe(3);
   });
 });
