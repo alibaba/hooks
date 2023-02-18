@@ -37,16 +37,16 @@ describe('useRequest', () => {
       });
     });
     expect(hook.result.current.loading).toBe(true);
-    expect(value).toEqual('before');
-    expect(success).toEqual(undefined);
+    expect(value).toBe('before');
+    expect(success).toBeUndefined();
 
     act(() => {
       jest.runAllTimers();
     });
     await waitFor(() => expect(hook.result.current.loading).toBe(false));
-    expect(success).toEqual('success');
-    expect(hook.result.current.data).toEqual('success');
-    expect(value).toEqual('finally');
+    expect(success).toBe('success');
+    expect(hook.result.current.data).toBe('success');
+    expect(value).toBe('finally');
     expect(errorCallback).toHaveBeenCalledTimes(0);
 
     //manual run fail
@@ -71,7 +71,7 @@ describe('useRequest', () => {
     act(() => {
       jest.runAllTimers();
     });
-    expect(hook.result.current.data).toEqual('success');
+    expect(hook.result.current.data).toBe('success');
     await waitFor(() => expect(hook.result.current.loading).toBe(false));
     expect(errorCallback).toHaveBeenCalledTimes(1);
     hook.unmount();
@@ -110,7 +110,7 @@ describe('useRequest', () => {
       jest.runAllTimers();
     });
     await waitFor(() => expect(hook.result.current.loading).toBe(false));
-    expect(hook.result.current.data).toEqual('success');
+    expect(hook.result.current.data).toBe('success');
     act(() => {
       hook.result.current.run(0);
     });
@@ -147,7 +147,7 @@ describe('useRequest', () => {
     act(() => {
       jest.runAllTimers();
     });
-    expect(success).toEqual('');
+    expect(success).toBe('');
     await waitFor(() => expect(error).toEqual(new Error('fail')));
     success = '';
     error = '';
@@ -165,8 +165,8 @@ describe('useRequest', () => {
     act(() => {
       jest.runAllTimers();
     });
-    await waitFor(() => expect(success).toEqual('success'));
-    expect(error).toEqual('');
+    await waitFor(() => expect(success).toBe('success'));
+    expect(error).toBe('');
     hook.unmount();
   });
 
@@ -178,11 +178,11 @@ describe('useRequest', () => {
     act(() => {
       jest.runAllTimers();
     });
-    await waitFor(() => expect(hook.result.current.data).toEqual('success'));
+    await waitFor(() => expect(hook.result.current.data).toBe('success'));
     act(() => {
       hook.result.current.mutate('hello');
     });
-    expect(hook.result.current.data).toEqual('hello');
+    expect(hook.result.current.data).toBe('hello');
     hook.unmount();
   });
 
@@ -198,7 +198,7 @@ describe('useRequest', () => {
       jest.runAllTimers();
     });
     expect(hook.result.current.params).toEqual([1, 2, 3]);
-    await waitFor(() => expect(hook.result.current.data).toEqual('success'));
+    await waitFor(() => expect(hook.result.current.data).toBe('success'));
     expect(hook.result.current.loading).toBe(false);
     hook.unmount();
   });
