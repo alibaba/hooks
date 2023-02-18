@@ -28,7 +28,7 @@ const aliasKeyCodeMap: Record<string, number | number[]> = {
   shift: 16,
   ctrl: 17,
   alt: 18,
-  pausebreak: 19,
+  pausebreak: [19, 126],
   capslock: 20,
   esc: 27,
   space: 32,
@@ -79,10 +79,10 @@ const aliasKeyCodeMap: Record<string, number | number[]> = {
   y: 89,
   z: 90,
   leftwindowkey: 91,
-  rightwindowkey: 92,
+  rightwindowkey: [91, 92],
   meta: isAppleDevice ? [91, 93, 224] : [91, 92], // Command ⌘ or Window ⊞
-  leftmetakey: 91, // Left ⌘ or Left ⊞
-  rightmetakey: 93, // Right ⌘ or Right ⊞
+  leftmetakey: isAppleDevice ? [91, 224] : 91, // Left ⌘ or Left ⊞
+  rightmetakey: isAppleDevice ? [93, 224] : [91, 92], // Right ⌘ or Right ⊞
   selectkey: 93, // ContextMenu ≣
   numpad0: 96,
   numpad1: 97,
@@ -111,8 +111,8 @@ const aliasKeyCodeMap: Record<string, number | number[]> = {
   f10: 121,
   f11: 122,
   f12: 123,
-  numlock: 144,
-  scrolllock: 145,
+  numlock: [12, 144],
+  scrolllock: [125, 145],
   semicolon: [186, 59], // ;
   equalsign: [187, 61], // =
   comma: 188, // ,
