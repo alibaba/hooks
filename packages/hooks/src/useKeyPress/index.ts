@@ -80,7 +80,6 @@ const aliasKeyCodeMap: Record<string, number | number[]> = {
   z: 90,
   leftwindowkey: 91,
   rightwindowkey: 92,
-  // 224: firefox
   meta: isAppleDevice ? [91, 93, 224] : [91, 92], // ⌘ cmd or ⊞ win
   leftmetakey: 91, // ⌘ left
   rightmetakey: 93, // ⌘ right
@@ -114,12 +113,9 @@ const aliasKeyCodeMap: Record<string, number | number[]> = {
   f12: 123,
   numlock: 144,
   scrolllock: 145,
-  // 59: firefox
   semicolon: [186, 59], // ;
-  // 61: firefox
   equalsign: [187, 61], // =
   comma: 188, // ,
-  // 173: firefox
   dash: [189, 173], // -
   period: 190, // .
   forwardslash: 191, // /
