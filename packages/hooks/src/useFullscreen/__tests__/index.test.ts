@@ -52,13 +52,13 @@ describe('useFullscreen', () => {
     act(() => {
       events['fullscreenchange'].forEach((fn: any) => fn());
     });
-    expect(result.current[0]).toBeTruthy();
+    expect(result.current[0]).toBe(true);
 
     exitFullscreen();
     act(() => {
       events['fullscreenchange'].forEach((fn: any) => fn());
     });
-    expect(result.current[0]).toBeFalsy();
+    expect(result.current[0]).toBe(false);
   });
 
   it('toggleFullscreen should be work', () => {
@@ -68,13 +68,13 @@ describe('useFullscreen', () => {
     act(() => {
       events['fullscreenchange'].forEach((fn: any) => fn());
     });
-    expect(result.current[0]).toBeTruthy();
+    expect(result.current[0]).toBe(true);
 
     toggleFullscreen();
     act(() => {
       events['fullscreenchange'].forEach((fn: any) => fn());
     });
-    expect(result.current[0]).toBeFalsy();
+    expect(result.current[0]).toBe(false);
   });
 
   it('onExit/onEnter should be called', () => {
@@ -132,13 +132,13 @@ describe('useFullscreen', () => {
     act(() => {
       events['fullscreenchange'].forEach((fn: any) => fn());
     });
-    expect(result.current[0]).toBeTruthy();
+    expect(result.current[0]).toBe(true);
 
     document.exitFullscreen();
     act(() => {
       events['fullscreenchange'].forEach((fn: any) => fn());
     });
-    expect(result.current[0]).toBeFalsy();
+    expect(result.current[0]).toBe(false);
   });
 
   it('mutli element full screen should be correct', () => {
@@ -151,7 +151,7 @@ describe('useFullscreen', () => {
     act(() => {
       events['fullscreenchange'].forEach((fn: any) => fn());
     });
-    expect(hook.result.current[0]).toBeTruthy();
+    expect(hook.result.current[0]).toBe(true);
 
     // target2 full screen
     hook2.result.current[1].enterFullscreen();
@@ -161,8 +161,8 @@ describe('useFullscreen', () => {
     act(() => {
       events['fullscreenchange'].forEach((fn: any) => fn());
     });
-    expect(hook.result.current[0]).toBeFalsy();
-    expect(hook2.result.current[0]).toBeTruthy();
+    expect(hook.result.current[0]).toBe(false);
+    expect(hook2.result.current[0]).toBe(true);
 
     // target2 exit full screen
     hook2.result.current[1].exitFullscreen();
@@ -172,7 +172,7 @@ describe('useFullscreen', () => {
     act(() => {
       events['fullscreenchange'].forEach((fn: any) => fn());
     });
-    expect(hook.result.current[0]).toBeTruthy();
-    expect(hook2.result.current[0]).toBeFalsy();
+    expect(hook.result.current[0]).toBe(true);
+    expect(hook2.result.current[0]).toBe(false);
   });
 });

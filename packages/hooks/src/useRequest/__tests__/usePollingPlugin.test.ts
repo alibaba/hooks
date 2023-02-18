@@ -28,7 +28,7 @@ describe('usePollingPlugin', () => {
       jest.runAllTimers();
     });
     await waitFor(() => expect(hook.result.current.loading).toBe(false));
-    expect(hook.result.current.data).toEqual('success');
+    expect(hook.result.current.data).toBe('success');
     expect(callback).toHaveBeenCalledTimes(1);
 
     act(() => {
