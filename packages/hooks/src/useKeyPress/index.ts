@@ -80,10 +80,10 @@ const aliasKeyCodeMap: Record<string, number | number[]> = {
   z: 90,
   leftwindowkey: 91,
   rightwindowkey: 92,
-  meta: isAppleDevice ? [91, 93, 224] : [91, 92], // ⌘ cmd or ⊞ win
-  leftmetakey: 91, // ⌘ left
-  rightmetakey: 93, // ⌘ right
-  selectkey: 93, // ≣ menu
+  meta: isAppleDevice ? [91, 93, 224] : [91, 92], // Command ⌘ or Window ⊞
+  leftmetakey: 91, // Left ⌘ or Left ⊞
+  rightmetakey: 93, // Right ⌘ or Right ⊞
+  selectkey: 93, // ContextMenu ≣
   numpad0: 96,
   numpad1: 97,
   numpad2: 98,
@@ -94,11 +94,11 @@ const aliasKeyCodeMap: Record<string, number | number[]> = {
   numpad7: 103,
   numpad8: 104,
   numpad9: 105,
-  multiply: 106, // numpad *
-  add: 107, // numpad +
-  subtract: 109, // numpad -
-  decimalpoint: 110, // numpad .
-  divide: 111, // numpad /
+  multiply: 106, // Numpad *
+  add: 107, // Numpad +
+  subtract: 109, // Numpad -
+  decimalpoint: 110, // Numpad .
+  divide: 111, // Numpad /
   f1: 112,
   f2: 113,
   f3: 114,
