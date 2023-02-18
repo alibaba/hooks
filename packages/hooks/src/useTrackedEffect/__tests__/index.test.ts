@@ -29,7 +29,7 @@ describe('useTrackedEffect', () => {
     var1++;
     rerender();
     expect(changedDepIndexes).toHaveLength(1);
-    expect(changedDepIndexes[0]).toEqual(0);
+    expect(changedDepIndexes[0]).toBe(0);
   });
   it('should run provided effect and return correct dependencies (previous and current)', () => {
     let var1 = 0;
@@ -45,15 +45,15 @@ describe('useTrackedEffect', () => {
     var1++;
     var2 = '1';
     rerender();
-    expect(prevDependencies[0]).toEqual(0);
-    expect(currentDependencies[0]).toEqual(1);
+    expect(prevDependencies[0]).toBe(0);
+    expect(currentDependencies[0]).toBe(1);
     expect(prevDependencies[1] === '0').toBe(true);
     expect(currentDependencies[1] === '1').toBe(true);
     changedDepIndexes = [];
     var2 = '2';
     rerender();
-    expect(prevDependencies[1]).toEqual('1');
-    expect(currentDependencies[1]).toEqual('2');
+    expect(prevDependencies[1]).toBe('1');
+    expect(currentDependencies[1]).toBe('2');
   });
   it(" should run provided effect and return multiple changed dependecy's indexes", () => {
     let var1 = 0;
@@ -70,13 +70,13 @@ describe('useTrackedEffect', () => {
     var2 = '1';
     rerender();
     expect(changedDepIndexes).toHaveLength(2);
-    expect(changedDepIndexes[0]).toEqual(0);
-    expect(changedDepIndexes[1]).toEqual(1);
+    expect(changedDepIndexes[0]).toBe(0);
+    expect(changedDepIndexes[1]).toBe(1);
     changedDepIndexes = [];
     var2 = '2';
     rerender();
     expect(changedDepIndexes).toHaveLength(1);
-    expect(changedDepIndexes[0]).toEqual(1);
+    expect(changedDepIndexes[0]).toBe(1);
   });
   it('should run provided effect and return empty if no dependency changed', () => {
     let var1 = 0;

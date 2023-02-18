@@ -23,12 +23,12 @@ describe('useEventListener', () => {
     );
 
     document.body.click();
-    expect(state).toEqual(0);
+    expect(state).toBe(0);
     rerender();
     container.click();
-    expect(state).toEqual(1);
+    expect(state).toBe(1);
     unmount();
     document.body.click();
-    expect(state).toEqual(1);
+    expect(state).toBe(1);
   });
 });

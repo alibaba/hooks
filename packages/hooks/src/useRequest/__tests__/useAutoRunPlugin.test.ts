@@ -236,14 +236,14 @@ describe('useAutoRunPlugin', () => {
       refreshDepsAction,
     });
     expect(hook.result.current.loading).toBe(false);
-    expect(count).toEqual(1);
+    expect(count).toBe(1);
 
     hook.rerender({
       refreshDeps: [dep],
       refreshDepsAction,
     });
     expect(hook.result.current.loading).toBe(false);
-    expect(count).toEqual(1);
+    expect(count).toBe(1);
 
     dep = 3;
     hook.rerender({
@@ -251,7 +251,7 @@ describe('useAutoRunPlugin', () => {
       refreshDepsAction,
     });
     expect(hook.result.current.loading).toBe(false);
-    expect(count).toEqual(2);
+    expect(count).toBe(2);
   });
 
   it('useAutoRunPlugin ready & refreshDeps change same time work fine', async () => {
