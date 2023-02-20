@@ -6,12 +6,12 @@
     "url": "git+https://github.com/alibaba/hooks.git"
   },
   "scripts": {
-    "init": "set NODE_OPTIONS=--openssl-legacy-provider && pnpm install && pnpm run build",
+    "init": "pnpm install && pnpm run build",
     "start": "pnpm run dev",
     "dev": "dumi dev",
     "clean-dist": "rimraf 'packages/*/{lib,es,node_modules,dist}'",
     "clean": "pnpm run clean-dist && rimraf node_modules",
-    "build": "pnpm -r --filter=./packages/* run build",
+    "build": "set NODE_OPTIONS=--openssl-legacy-provider &&  pnpm -r --filter=./packages/* run build",
     "test": "jest",
     "coveralls": "jest --coverage --coverageReporters=text-lcov | coveralls",
     "lint": "eslint --ignore-pattern **/__tests__/* --ignore-pattern **/demo/* \"packages/*/src/**/*.{ts,tsx}\"",
