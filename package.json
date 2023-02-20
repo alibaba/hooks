@@ -6,7 +6,7 @@
     "url": "git+https://github.com/alibaba/hooks.git"
   },
   "scripts": {
-    "init": "pnpm install && pnpm run build",
+    "init": "NODE_OPTIONS=--openssl-legacy-provider pnpm install && pnpm run build",
     "start": "pnpm run dev",
     "dev": "dumi dev",
     "clean-dist": "rimraf 'packages/*/{lib,es,node_modules,dist}'",
