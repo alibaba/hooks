@@ -17,20 +17,20 @@ describe('useCookieState', () => {
     const hook = setUp(COOKIE_KEY, {
       defaultValue: 'A',
     });
-    expect(hook.result.current.state).toEqual('A');
+    expect(hook.result.current.state).toBe('A');
     act(() => {
       hook.result.current.setState('B');
     });
-    expect(hook.result.current.state).toEqual('B');
+    expect(hook.result.current.state).toBe('B');
     const anotherHook = setUp(COOKIE_KEY, {
       defaultValue: 'A',
     });
-    expect(anotherHook.result.current.state).toEqual('B');
+    expect(anotherHook.result.current.state).toBe('B');
     act(() => {
       anotherHook.result.current.setState('C');
     });
-    expect(anotherHook.result.current.state).toEqual('C');
-    expect(hook.result.current.state).toEqual('B');
+    expect(anotherHook.result.current.state).toBe('C');
+    expect(hook.result.current.state).toBe('B');
   });
 
   it('should support undefined', () => {
@@ -38,15 +38,15 @@ describe('useCookieState', () => {
     const hook = setUp(COOKIE_KEY, {
       defaultValue: 'undefined',
     });
-    expect(hook.result.current.state).toEqual('undefined');
+    expect(hook.result.current.state).toBe('undefined');
     act(() => {
       hook.result.current.setState(undefined);
     });
-    expect(hook.result.current.state).toEqual(undefined);
+    expect(hook.result.current.state).toBeUndefined();
     const anotherHook = setUp(COOKIE_KEY, {
       defaultValue: 'false',
     });
-    expect(anotherHook.result.current.state).toEqual('false');
+    expect(anotherHook.result.current.state).toBe('false');
   });
 
   it('should support empty string', () => {
@@ -56,7 +56,7 @@ describe('useCookieState', () => {
     const hook = setUp(COOKIE_KEY, {
       defaultValue: 'hello',
     });
-    expect(hook.result.current.state).toEqual('');
+    expect(hook.result.current.state).toBe('');
   });
 
   it('should support function updater', () => {
@@ -64,10 +64,10 @@ describe('useCookieState', () => {
     const hook = setUp(COOKIE_KEY, {
       defaultValue: () => 'hello world',
     });
-    expect(hook.result.current.state).toEqual('hello world');
+    expect(hook.result.current.state).toBe('hello world');
     act(() => {
       hook.result.current.setState((state) => `${state}, zhangsan`);
     });
-    expect(hook.result.current.state).toEqual('hello world, zhangsan');
+    expect(hook.result.current.state).toBe('hello world, zhangsan');
   });
 });
