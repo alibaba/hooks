@@ -1,5 +1,6 @@
 import { act, renderHook } from '@testing-library/react';
-import { IFuncUpdater, createUseStorageState } from '../index';
+import type { IFuncUpdater } from '../index';
+import { createUseStorageState } from '../index';
 
 class TestStorage implements Storage {
   [name: string]: any;
@@ -64,21 +65,21 @@ describe('useStorageState', () => {
 
   it('should get defaultValue for a given key', () => {
     const hook = setUp({ key: 'key1', defaultValue: 'value1' });
-    expect(hook.result.current.state).toEqual('value1');
+    expect(hook.result.current.state).toBe('value1');
 
     hook.rerender({ key: 'key2', defaultValue: 'value2' });
-    expect(hook.result.current.state).toEqual('value2');
+    expect(hook.result.current.state).toBe('value2');
   });
 
   it('should get default and set value for a given key', () => {
     const hook = setUp({ key: 'key', defaultValue: 'defaultValue' });
-    expect(hook.result.current.state).toEqual('defaultValue');
+    expect(hook.result.current.state).toBe('defaultValue');
     act(() => {
       hook.result.current.setState('setValue');
     });
-    expect(hook.result.current.state).toEqual('setValue');
+    expect(hook.result.current.state).toBe('setValue');
     hook.rerender({ key: 'key' });
-    expect(hook.result.current.state).toEqual('setValue');
+    expect(hook.result.current.state).toBe('setValue');
   });
 
   it('should remove value for a given key', () => {
@@ -86,7 +87,7 @@ describe('useStorageState', () => {
     act(() => {
       hook.result.current.setState('value');
     });
-    expect(hook.result.current.state).toEqual('value');
+    expect(hook.result.current.state).toBe('value');
     act(() => {
       hook.result.current.setState(undefined);
     });
