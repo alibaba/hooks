@@ -1,3 +1,12 @@
+---
+title: useUpdateLayoutEffect
+nav: Hooks
+group:
+  title: Effect
+  order: 5
+order: 2
+---
+
 # useUpdateLayoutEffect
 
 A hook alike `useLayoutEffect` but skips running the effect for the first time.

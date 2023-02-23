@@ -1,3 +1,12 @@
+---
+title: useTimeout
+nav: Hooks
+group:
+  title: Effect
+  order: 5
+order: 12
+---
+
 # useTimeout
 
 A hook that handles the `setTimeout` timer function.

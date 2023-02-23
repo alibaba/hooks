@@ -1,3 +1,10 @@
+---
+title: 依赖刷新
+nav: Hooks
+group: useRequest
+order: 6
+---
+
 # RefreshDeps
 
 useRequest provides an `options.refreshDeps`, which will trigger the request refresh when its value changes.

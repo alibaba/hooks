@@ -1,3 +1,12 @@
+---
+title: usePrevious
+nav: Hooks
+group:
+  title: State
+  order: 4
+order: 12
+---
+
 # usePrevious
 
 A Hook to return the previous state.

@@ -1,3 +1,12 @@
+---
+title: useUpdateEffect
+nav: Hooks
+group:
+  title: Effect
+  order: 5
+order: 1
+---
+
 # useUpdateEffect
 
 A hook alike `useEffect` but skips running the effect for the first time.

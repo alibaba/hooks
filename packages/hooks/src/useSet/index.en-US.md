@@ -1,3 +1,12 @@
+---
+title: useSet
+nav: Hooks
+group:
+  title: State
+  order: 4
+order: 11
+---
+
 # useSet
 
 A hook that can manage the state of Set.

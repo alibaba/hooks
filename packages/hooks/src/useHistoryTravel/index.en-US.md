@@ -1,3 +1,12 @@
+---
+title: useHistoryTravel
+nav: Hooks
+group:
+  title: Scene
+  order: 2
+order: 7
+---
+
 # useHistoryTravel
 
 A hook to manage state change history. It provides encapsulation methods to travel through the history.

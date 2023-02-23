@@ -1,3 +1,12 @@
+---
+title: useCreation
+nav: Hooks
+group:
+  title: Advanced
+  order: 7
+order: 2
+---
+
 # useCreation
 
 `useCreation` is the replacement for `useMemo` or `useRef`.

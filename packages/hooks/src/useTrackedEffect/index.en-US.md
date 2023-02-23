@@ -1,3 +1,12 @@
+---
+title: useTrackedEffect
+nav: Hooks
+group:
+  title: Dev
+  order: 8
+order: 1
+---
+
 # useTrackedEffect
 
 A hook of useEffect that allow us to track which dependencies caused the effect to trigger.

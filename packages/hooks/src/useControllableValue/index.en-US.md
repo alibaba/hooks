@@ -1,3 +1,12 @@
+---
+title: useControllableValue
+nav: Hooks
+group:
+  title: Advanced
+  order: 7
+order: 1
+---
+
 # useControllableValue
 
 In some components, we need the state to be managed by itself or controlled by it's parent. `useControllableValue` is a Hook that helps you manage this kind of state.

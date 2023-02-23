@@ -1,3 +1,12 @@
+---
+title: useUnmount
+nav: Hooks
+group:
+  title: LifeCycle
+  order: 3
+order: 2
+---
+
 # useUnmount
 
 A hook that executes the function right before the component is unmounted.

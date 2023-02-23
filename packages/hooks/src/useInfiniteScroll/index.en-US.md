@@ -1,3 +1,12 @@
+---
+title: useInfiniteScroll
+nav: Hooks
+group:
+  title: Scene
+  order: 2
+order: 3
+---
+
 # useInfiniteScroll
 
 useInfiniteScroll encapsulates the common infinite scroll logic.

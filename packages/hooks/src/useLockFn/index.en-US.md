@@ -1,3 +1,12 @@
+---
+title: useLockFn
+nav: Hooks
+group:
+  title: Effect
+  order: 5
+order: 14
+---
+
 # useLockFn
 
 Add lock to an async function to prevent parallel executions.

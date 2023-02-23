@@ -1,3 +1,12 @@
+---
+title: useCookieState
+nav: Hooks
+group:
+  title: State
+  order: 4
+order: 5
+---
+
 # useCookieState
 
 A Hook that store state into Cookie.

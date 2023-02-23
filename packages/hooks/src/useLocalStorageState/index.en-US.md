@@ -1,3 +1,12 @@
+---
+title: useLocalStorageState
+nav: Hooks
+group:
+  title: State
+  order: 4
+order: 6
+---
+
 # useLocalStorageState
 
 A Hook that store state into localStorage.

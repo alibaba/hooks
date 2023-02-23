@@ -1,3 +1,12 @@
+---
+title: useRafInterval
+nav: Hooks
+group:
+  title: Effect
+  order: 5
+order: 11
+---
+
 # useRafInterval
 
 A hook implements with `requestAnimationFrame` for better performance. The API is consistent with `useInterval`, the advantage is that the execution of the timer can be stopped when the page is not rendering, such as page hiding or minimization.

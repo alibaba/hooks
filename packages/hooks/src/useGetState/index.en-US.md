@@ -1,3 +1,12 @@
+---
+title: useGetState
+nav: Hooks
+group:
+  title: State
+  order: 4
+order: 15
+---
+
 # useGetState
 
 Add a getter method to the return value of `React.useState` to get the latest value

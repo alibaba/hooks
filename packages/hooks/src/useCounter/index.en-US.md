@@ -1,3 +1,12 @@
+---
+title: useCounter
+nav: Hooks
+group:
+  title: Scene
+  order: 2
+order: 11
+---
+
 # useCounter
 
 A hook that manage counter.

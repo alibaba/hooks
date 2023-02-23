@@ -1,3 +1,12 @@
+---
+title: usePagination
+nav: Hooks
+group:
+  title: Scene
+  order: 2
+order: 4
+---
+
 # usePagination
 
 `usePagination` is implemented based on `useRequest` and encapsulates common paging logic. The differences from `useRequest` are as follows:

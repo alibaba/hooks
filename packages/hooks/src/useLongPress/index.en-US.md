@@ -1,3 +1,12 @@
+---
+title: useLongPress
+nav: Hooks
+group:
+  title: Dom
+  order: 6
+order: 14
+---
+
 # useLongPress
 
 Listen for the long press event of the target element.

@@ -1,3 +1,12 @@
+---
+title: useInterval
+nav: Hooks
+group:
+  title: Effect
+  order: 5
+order: 10
+---
+
 # useInterval
 
 A hook that handles the `setInterval` timer function.

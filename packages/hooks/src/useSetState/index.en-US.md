@@ -1,3 +1,12 @@
+---
+title: useSetState
+nav: Hooks
+group:
+  title: State
+  order: 4
+order: 1
+---
+
 # useSetState
 
 useSetState works similar to `this.setState` of class component, used to manage the state of object type.

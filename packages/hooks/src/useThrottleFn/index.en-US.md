@@ -1,3 +1,12 @@
+---
+title: useThrottleFn
+nav: Hooks
+group:
+  title: Effect
+  order: 5
+order: 6
+---
+
 # useThrottleFn
 
 A hook that deal with the throttled function.

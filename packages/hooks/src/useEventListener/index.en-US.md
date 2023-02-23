@@ -1,3 +1,12 @@
+---
+title: useEventListener
+nav: Hooks
+group:
+  title: Dom
+  order: 6
+order: 1
+---
+
 # useEventListener
 
 Use addEventListener elegant by Hook.

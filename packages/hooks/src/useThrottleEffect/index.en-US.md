@@ -1,3 +1,12 @@
+---
+title: useThrottleEffect
+nav: Hooks
+group:
+  title: Effect
+  order: 5
+order: 7
+---
+
 # useThrottleEffect
 
 Throttle your `useEffect`.

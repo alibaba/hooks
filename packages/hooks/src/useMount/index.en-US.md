@@ -1,3 +1,12 @@
+---
+title: useMount
+nav: Hooks
+group:
+  title: LifeCycle
+  order: 3
+order: 1
+---
+
 # useMount
 
 A hook that executes a function after the component is mounted.

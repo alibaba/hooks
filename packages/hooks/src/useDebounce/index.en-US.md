@@ -1,3 +1,12 @@
+---
+title: useDebounce
+nav: Hooks
+group:
+  title: State
+  order: 4
+order: 8
+---
+
 # useDebounce
 
 A hook that deal with the debounced value.

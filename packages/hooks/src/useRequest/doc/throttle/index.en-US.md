@@ -1,3 +1,10 @@
+---
+title: 节流
+nav: Hooks
+group: useRequest
+order: 9
+---
+
 # Throttle
 
 Enter the throttle mode by setting `options.throttleWait`. At this time, if `run` or `runAsync` is triggered frequently, the request will be executed with the throttle strategy.

@@ -1,3 +1,10 @@
+---
+title: 错误重试
+nav: Hooks
+group: useRequest
+order: 11
+---
+
 # Error Retry
 
 By setting `options.retryCount`, set the number of error retries, useRequest will retry after it fails.

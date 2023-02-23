@@ -1,3 +1,12 @@
+---
+title: useRafTimeout
+nav: Hooks
+group:
+  title: Effect
+  order: 5
+order: 13
+---
+
 # useRafTimeout
 
 A hook implements with `requestAnimationFrame` for better performance. The API is consistent with `useTimeout`. the advantage is that will not trigger function when the page is not rendering, such as page hiding or minimization.

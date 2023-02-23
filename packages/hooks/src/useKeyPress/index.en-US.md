@@ -1,3 +1,12 @@
+---
+title: useKeyPress
+nav: Hooks
+group:
+  title: Dom
+  order: 6
+order: 13
+---
+
 # useKeyPress
 
 Listen for the keyboard press, support key combinations, and support alias.

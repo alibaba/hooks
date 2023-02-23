@@ -1,3 +1,12 @@
+---
+title: useThrottle
+nav: Hooks
+group:
+  title: State
+  order: 4
+order: 9
+---
+
 # useThrottle
 
 A hook that deal with the throttled value.

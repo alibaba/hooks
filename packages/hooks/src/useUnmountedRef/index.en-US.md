@@ -1,3 +1,12 @@
+---
+title: useUnmountedRef
+nav: Hooks
+group:
+  title: LifeCycle
+  order: 3
+order: 3
+---
+
 # useUnmountedRef
 
 A Hook can be used to get whether the component is unmounted.

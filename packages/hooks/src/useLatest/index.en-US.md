@@ -1,3 +1,12 @@
+---
+title: useLatest
+nav: Hooks
+group:
+  title: Advanced
+  order: 7
+order: 5
+---
+
 # useLatest
 
 A Hook that returns the latest value, effectively avoiding the closure problem.

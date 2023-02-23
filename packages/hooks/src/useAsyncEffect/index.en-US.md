@@ -1,3 +1,12 @@
+---
+title: useAsyncEffect
+nav: Hooks
+group:
+  title: Effect
+  order: 5
+order: 3
+---
+
 # useAsyncEffect
 
 useEffect support async function.

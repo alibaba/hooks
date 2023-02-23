@@ -1,3 +1,12 @@
+---
+title: useSize
+nav: Hooks
+group:
+  title: Dom
+  order: 6
+order: 18
+---
+
 # useSize
 
 A hook that observes size change of an element.

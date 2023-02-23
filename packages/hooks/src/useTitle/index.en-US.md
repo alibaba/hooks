@@ -1,3 +1,12 @@
+---
+title: useTitle
+nav: Hooks
+group:
+  title: Dom
+  order: 6
+order: 7
+---
+
 # useTitle
 
 A hook that set title of the page.

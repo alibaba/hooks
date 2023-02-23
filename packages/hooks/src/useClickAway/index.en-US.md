@@ -1,3 +1,12 @@
+---
+title: useClickAway
+nav: Hooks
+group:
+  title: Dom
+  order: 6
+order: 2
+---
+
 # useClickAway
 
 Listen for click events outside the target element.

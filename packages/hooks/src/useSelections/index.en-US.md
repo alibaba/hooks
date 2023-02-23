@@ -1,3 +1,12 @@
+---
+title: useSelections
+nav: Hooks
+group:
+  title: Scene
+  order: 2
+order: 9
+---
+
 # useSelections
 
 This hook is used for Checkbox group, supports multiple selection, single selection, select-all, select-none and semi-selected etc.

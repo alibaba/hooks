@@ -1,3 +1,12 @@
+---
+title: useBoolean
+nav: Hooks
+group:
+  title: State
+  order: 4
+order: 2
+---
+
 # useBoolean
 
 A hook that elegantly manages boolean state.

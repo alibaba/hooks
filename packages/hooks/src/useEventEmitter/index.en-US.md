@@ -1,3 +1,12 @@
+---
+title: useEventEmitter
+nav: Hooks
+group:
+  title: Advanced
+  order: 7
+order: 3
+---
+
 # useEventEmitter
 
 Sometimes it is difficult to pass events between multiple components. By using EventEmitter, this can be simplified.

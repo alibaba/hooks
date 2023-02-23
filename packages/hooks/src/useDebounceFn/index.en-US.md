@@ -1,3 +1,12 @@
+---
+title: useDebounceFn
+nav: Hooks
+group:
+  title: Effect
+  order: 5
+order: 5
+---
+
 # useDebounceFn
 
 A hook that deal with the debounced function.

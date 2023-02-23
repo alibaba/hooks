@@ -1,3 +1,12 @@
+---
+title: useWhyDidYouUpdate
+nav: Hooks
+group:
+  title: Dev
+  order: 8
+order: 2
+---
+
 # useWhyDidYouUpdate
 
 Help developers troubleshoot what changes have caused component rerender.

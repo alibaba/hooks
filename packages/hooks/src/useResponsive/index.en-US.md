@@ -1,3 +1,12 @@
+---
+title: useResponsive
+nav: Hooks
+group:
+  title: Dom
+  order: 6
+order: 16
+---
+
 # useResponsive
 
 React Hook for getting responsive info.

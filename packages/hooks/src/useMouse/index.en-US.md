@@ -1,3 +1,12 @@
+---
+title: useMouse
+nav: Hooks
+group:
+  title: Dom
+  order: 6
+order: 15
+---
+
 # useMouse
 
 Track cursor position

@@ -1,3 +1,12 @@
+---
+title: useResetState
+nav: Hooks
+group:
+  title: State
+  order: 4
+order: 16
+---
+
 # useResetState
 
 useResetState works similar to `React.useState`, it provides a `reset` method

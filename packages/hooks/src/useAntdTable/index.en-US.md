@@ -1,3 +1,12 @@
+---
+title: useAntdTable
+nav: Hooks
+group:
+  title: Scene
+  order: 2
+order: 1
+---
+
 # useAntdTable
 
 `useAntdTable` is implemented based on `useRequest` and encapsulates the commonly used [Ant Design Form](https://ant.design/components/form/) and [Ant Design Table](https://ant.design/components/table/) data binding logic, and supports both antd v3 and v4.

@@ -1,3 +1,12 @@
+---
+title: useFusionTable
+nav: Hooks
+group:
+  title: Scene
+  order: 2
+order: 2
+---
+
 # useFusionTable
 
 useFusionTable encapsulates the commonly used [Fusion Form](https://fusion.design/pc/component/basic/form) and [Fusion Table](https://fusion.design/pc/component/basic/table) data binding logic.

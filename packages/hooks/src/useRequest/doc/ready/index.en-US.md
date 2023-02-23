@@ -1,3 +1,10 @@
+---
+title: Ready
+nav: Hooks
+group: useRequest
+order: 5
+---
+
 # Ready
 
 useRequest provides an `options.ready`, when its value is `false`, the request will never be sent.

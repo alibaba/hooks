@@ -1,3 +1,12 @@
+---
+title: useReactive
+nav: Hooks
+group:
+  title: Advanced
+  order: 7
+order: 7
+---
+
 ## useReactive
 
 It offers data reactivity when manipulating states and views, in which case `useState` is unnecessary for state definition. Modifying properties will automatically lead to view rerendering.

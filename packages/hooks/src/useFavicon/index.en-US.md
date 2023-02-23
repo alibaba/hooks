@@ -1,3 +1,12 @@
+---
+title: useFavicon
+nav: Hooks
+group:
+  title: Dom
+  order: 6
+order: 8
+---
+
 # useFavicon
 
 A hook that set the favicon of the page.

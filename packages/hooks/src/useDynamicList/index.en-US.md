@@ -1,3 +1,12 @@
+---
+title: useDynamicList
+nav: Hooks
+group:
+  title: Scene
+  order: 2
+order: 5
+---
+
 # useDynamicList
 
 A hook that helps you manage dynamic list and generate unique key for each item.
