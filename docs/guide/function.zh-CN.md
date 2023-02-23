@@ -1,4 +1,10 @@
-# ahooks 函数处理规范
+---
+title: ahooks 输入输出函数处理规范
+group: Blog
+order: 1
+---
+
+# ahooks 输入输出函数处理规范
 
 ahooks 通过对输入输出函数做特殊处理，尽力帮助大家避免闭包问题。
 

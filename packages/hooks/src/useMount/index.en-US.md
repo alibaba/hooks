@@ -1,8 +1,3 @@
----
-nav:
-  path: /hooks
----
-
 # useMount
 
 A hook that executes a function after the component is mounted.

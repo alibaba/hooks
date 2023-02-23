@@ -1,8 +1,3 @@
----
-nav:
-  path: /hooks
----
-
 # useBoolean
 
 A hook that elegantly manages boolean state.

@@ -1,8 +1,10 @@
 ---
-nav:
-  path: /hooks
+title: 快速上手
+nav: Hooks
 group:
-  path: /use-request
+  title: useRequest
+  order: 1
+order: 1
 ---
 
 # 快速上手

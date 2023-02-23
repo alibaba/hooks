@@ -1,6 +1,10 @@
 ---
-nav:
-  path: /hooks
+title: useSafeState
+nav: Hooks
+group:
+  title: State
+  order: 4
+order: 14
 ---
 
 # useSafeState

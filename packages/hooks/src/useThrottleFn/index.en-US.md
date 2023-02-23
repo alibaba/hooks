@@ -1,8 +1,3 @@
----
-nav:
-  path: /hooks
----
-
 # useThrottleFn
 
 A hook that deal with the throttled function.

@@ -1,8 +1,3 @@
----
-nav:
-  path: /hooks
----
-
 # useControllableValue
 
 In some components, we need the state to be managed by itself or controlled by it's parent. `useControllableValue` is a Hook that helps you manage this kind of state.

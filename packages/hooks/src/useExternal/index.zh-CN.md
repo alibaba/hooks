@@ -1,6 +1,10 @@
 ---
-nav:
-  path: /hooks
+title: useExternal
+nav: Hooks
+group:
+  title: Dom
+  order: 6
+order: 6
 ---
 
 # useExternal

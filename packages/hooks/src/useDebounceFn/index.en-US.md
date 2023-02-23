@@ -1,8 +1,3 @@
----
-nav:
-  path: /hooks
----
-
 # useDebounceFn
 
 A hook that deal with the debounced function.

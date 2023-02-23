@@ -1,8 +1,8 @@
 ---
-nav:
-  path: /hooks
-group:
-  path: /use-request
+title: Loading Delay
+nav: Hooks
+group: useRequest
+order: 3
 ---
 
 # Loading Delay

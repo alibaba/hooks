@@ -1,6 +1,10 @@
 ---
-nav:
-  path: /hooks
+title: useCookieState
+nav: Hooks
+group:
+  title: State
+  order: 4
+order: 5
 ---
 
 # useCookieState

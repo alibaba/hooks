@@ -1,8 +1,3 @@
----
-nav:
-  path: /hooks
----
-
 # useCreation
 
 `useCreation` is the replacement for `useMemo` or `useRef`.

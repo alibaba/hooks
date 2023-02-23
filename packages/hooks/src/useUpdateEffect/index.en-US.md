@@ -1,8 +1,3 @@
----
-nav:
-  path: /hooks
----
-
 # useUpdateEffect
 
 A hook alike `useEffect` but skips running the effect for the first time.

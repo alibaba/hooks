@@ -1,6 +1,10 @@
 ---
-nav:
-  path: /hooks
+title: useDebounce
+nav: Hooks
+group:
+  title: State
+  order: 4
+order: 8
 ---
 
 # useDebounce

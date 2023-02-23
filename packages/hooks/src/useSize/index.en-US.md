@@ -1,8 +1,3 @@
----
-nav:
-  path: /hooks
----
-
 # useSize
 
 A hook that observes size change of an element.

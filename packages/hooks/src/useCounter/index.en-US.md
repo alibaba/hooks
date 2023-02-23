@@ -1,8 +1,3 @@
----
-nav:
-  path: /hooks
----
-
 # useCounter
 
 A hook that manage counter.

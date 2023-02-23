@@ -1,6 +1,10 @@
 ---
-nav:
-  path: /hooks
+title: useFusionTable
+nav: Hooks
+group:
+  title: Scene
+  order: 2
+order: 2
 ---
 
 # useFusionTable

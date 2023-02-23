@@ -1,7 +1,10 @@
 ---
-nav:
-  title: Hooks
-  path: /hooks
+title: useAntdTable
+nav: Hooks
+group:
+  title: Scene
+  order: 2
+order: 1
 ---
 
 # useAntdTable

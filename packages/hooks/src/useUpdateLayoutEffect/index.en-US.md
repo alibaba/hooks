@@ -1,8 +1,3 @@
----
-nav:
-  path: /hooks
----
-
 # useUpdateLayoutEffect
 
 A hook alike `useLayoutEffect` but skips running the effect for the first time.

@@ -1,8 +1,3 @@
----
-nav:
-  path: /hooks
----
-
 # useVirtualList
 
 A hook that allows you to use virtual list to render huge chunks of list data.

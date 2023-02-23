@@ -1,6 +1,10 @@
 ---
-nav:
-  path: /hooks
+title: useSet
+nav: Hooks
+group:
+  title: State
+  order: 4
+order: 11
 ---
 
 # useSet

@@ -1,3 +1,9 @@
+---
+title: React Hooks & strict mode
+group: Blog
+order: 4
+---
+
 # React Hooks & strict mode
 
 ## 什么是严格模式

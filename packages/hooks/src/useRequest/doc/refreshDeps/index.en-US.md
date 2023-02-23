@@ -1,10 +1,3 @@
----
-nav:
-  path: /hooks
-group:
-  path: /use-request
----
-
 # RefreshDeps
 
 useRequest provides an `options.refreshDeps`, which will trigger the request refresh when its value changes.

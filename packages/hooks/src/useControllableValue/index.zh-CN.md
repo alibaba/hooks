@@ -1,6 +1,10 @@
 ---
-nav:
-  path: /hooks
+title: useControllableValue
+nav: Hooks
+group:
+  title: Advanced
+  order: 7
+order: 1
 ---
 
 # useControllableValue

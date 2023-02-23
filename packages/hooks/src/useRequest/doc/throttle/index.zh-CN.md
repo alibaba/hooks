@@ -1,8 +1,8 @@
 ---
-nav:
-  path: /hooks
-group:
-  path: /use-request
+title: 节流
+nav: Hooks
+group: useRequest
+order: 9
 ---
 
 # 节流

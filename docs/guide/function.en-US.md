@@ -1,3 +1,9 @@
+---
+title: ahooks function specification
+group: Blog
+order: 1
+---
+
 # ahooks function specification
 
 ahooks tries its best to help everyone avoid the closure problem by specially processing the input and output functions.

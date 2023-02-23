@@ -1,6 +1,10 @@
 ---
-nav:
-  path: /hooks
+title: usePrevious
+nav: Hooks
+group:
+  title: State
+  order: 4
+order: 12
 ---
 
 # usePrevious

@@ -1,6 +1,10 @@
 ---
-nav:
-  path: /hooks
+title: useIsomorphicLayoutEffect
+nav: Hooks
+group:
+  title: Advanced
+  order: 7
+order: 4
 ---
 
 # useIsomorphicLayoutEffect

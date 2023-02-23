@@ -1,8 +1,3 @@
----
-nav:
-  path: /hooks
----
-
 # useUnmount
 
 A hook that executes the function right before the component is unmounted.

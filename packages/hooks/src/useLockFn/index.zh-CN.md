@@ -1,6 +1,10 @@
 ---
-nav:
-  path: /hooks
+title: useLockFn
+nav: Hooks
+group:
+  title: Effect
+  order: 5
+order: 14
 ---
 
 # useLockFn

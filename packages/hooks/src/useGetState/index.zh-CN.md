@@ -1,6 +1,10 @@
 ---
-nav:
-  path: /hooks
+title: useGetState
+nav: Hooks
+group:
+  title: State
+  order: 4
+order: 15
 ---
 
 # useGetState

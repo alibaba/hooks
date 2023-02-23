@@ -1,8 +1,3 @@
----
-nav:
-  path: /hooks
----
-
 # useIsomorphicLayoutEffect
 
 In SSR mode, the following warning will appear when useLayoutEffect is used

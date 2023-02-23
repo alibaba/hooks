@@ -1,8 +1,3 @@
----
-nav:
-  path: /hooks
----
-
 # useNetwork
 
 A hook that tracks the state of network connection.

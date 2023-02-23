@@ -1,6 +1,10 @@
 ---
-nav:
-  path: /hooks
+title: useHistoryTravel
+nav: Hooks
+group:
+  title: Scene
+  order: 2
+order: 7
 ---
 
 # useHistoryTravel

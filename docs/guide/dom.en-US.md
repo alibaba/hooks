@@ -1,3 +1,8 @@
+---
+title: Hooks of DOM specification
+order: 3
+---
+
 ## Hooks of DOM specification
 
 Most of the DOM Hooks will receive the `target` parameter, which indicates the element to be processed.

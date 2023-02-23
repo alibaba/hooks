@@ -1,6 +1,10 @@
 ---
-nav:
-  path: /hooks
+title: useHover
+nav: Hooks
+group:
+  title: Dom
+  order: 6
+order: 10
 ---
 
 # useHover

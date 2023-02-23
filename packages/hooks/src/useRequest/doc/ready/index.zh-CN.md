@@ -1,8 +1,8 @@
 ---
-nav:
-  path: /hooks
-group:
-  path: /use-request
+title: Ready
+nav: Hooks
+group: useRequest
+order: 5
 ---
 
 # Ready

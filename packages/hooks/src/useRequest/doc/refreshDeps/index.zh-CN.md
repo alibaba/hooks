@@ -1,8 +1,8 @@
 ---
-nav:
-  path: /hooks
-group:
-  path: /use-request
+title: 依赖刷新
+nav: Hooks
+group: useRequest
+order: 6
 ---
 
 # 依赖刷新

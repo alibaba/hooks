@@ -1,8 +1,3 @@
----
-nav:
-  path: /hooks
----
-
 # useKeyPress
 
 Listen for the keyboard press, support key combinations, and support alias.

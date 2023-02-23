@@ -1,6 +1,10 @@
 ---
-nav:
-  path: /hooks
+title: useReactive
+nav: Hooks
+group:
+  title: Advanced
+  order: 7
+order: 7
 ---
 
 ## useReactive

@@ -1,6 +1,10 @@
 ---
-nav:
-  path: /hooks
+title: useThrottle
+nav: Hooks
+group:
+  title: State
+  order: 4
+order: 9
 ---
 
 # useThrottle

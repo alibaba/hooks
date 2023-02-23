@@ -1,8 +1,3 @@
----
-nav:
-  path: /hooks
----
-
 # useScroll
 
 Get the scroll position of an element.

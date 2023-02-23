@@ -1,8 +1,3 @@
----
-nav:
-  path: /hooks
----
-
 # useResponsive
 
 React Hook for getting responsive info.

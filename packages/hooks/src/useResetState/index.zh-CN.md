@@ -1,6 +1,10 @@
 ---
-nav:
-  path: /hooks
+title: useResetState
+nav: Hooks
+group:
+  title: State
+  order: 4
+order: 16
 ---
 
 # useResetState

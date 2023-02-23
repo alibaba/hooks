@@ -1,8 +1,3 @@
----
-nav:
-  path: /hooks
----
-
 # useSet
 
 A hook that can manage the state of Set.

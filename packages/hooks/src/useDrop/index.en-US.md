@@ -1,8 +1,3 @@
----
-nav:
-  path: /hooks
----
-
 # useDrop & useDrag
 
 A pair of hooks to help you manage data transfer between drag and drop

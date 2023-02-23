@@ -1,6 +1,10 @@
 ---
-nav:
-  path: /hooks
+title: useDeepCompareEffect
+nav: Hooks
+group:
+  title: Effect
+  order: 5
+order: 8
 ---
 
 # useDeepCompareEffect

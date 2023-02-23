@@ -1,6 +1,10 @@
 ---
-nav:
-  path: /hooks
+title: useMutationObserver
+nav: Hooks
+group:
+  title: Dom
+  order: 6
+order: 11
 ---
 
 # useMutationObserver

@@ -1,6 +1,10 @@
 ---
-nav:
-  path: /hooks
+title: useRafInterval
+nav: Hooks
+group:
+  title: Effect
+  order: 5
+order: 11
 ---
 
 # useRafInterval

@@ -1,6 +1,10 @@
 ---
-nav:
-  path: /hooks
+title: useDynamicList
+nav: Hooks
+group:
+  title: Scene
+  order: 2
+order: 5
 ---
 
 # useDynamicList

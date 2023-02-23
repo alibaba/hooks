@@ -1,6 +1,10 @@
 ---
-nav:
-  path: /hooks
+title: useCreation
+nav: Hooks
+group:
+  title: Advanced
+  order: 7
+order: 2
 ---
 
 # useCreation

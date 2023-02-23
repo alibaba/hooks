@@ -1,6 +1,10 @@
 ---
-nav:
-  path: /hooks
+title: useMemoizedFn
+nav: Hooks
+group:
+  title: Advanced
+  order: 7
+order: 6
 ---
 
 # useMemoizedFn

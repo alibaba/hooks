@@ -1,8 +1,3 @@
----
-nav:
-  path: /hooks
----
-
 # useMemoizedFn
 
 Hooks for persistent functions. In theory, useMemoizedFn can be used instead of useCallback.

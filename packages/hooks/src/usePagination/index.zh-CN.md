@@ -1,6 +1,10 @@
 ---
-nav:
-  path: /hooks
+title: usePagination
+nav: Hooks
+group:
+  title: Scene
+  order: 2
+order: 4
 ---
 
 # usePagination

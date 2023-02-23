@@ -1,8 +1,3 @@
----
-nav:
-  path: /hooks
----
-
 # useResetState
 
 useResetState works similar to `React.useState`, it provides a `reset` method

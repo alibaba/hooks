@@ -1,8 +1,3 @@
----
-nav:
-  path: /hooks
----
-
 # useExternal
 
 Dynamically load JS or CSS, useExternal can ensure that the resource are globally unique.

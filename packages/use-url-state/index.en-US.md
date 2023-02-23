@@ -1,8 +1,10 @@
 ---
-nav:
-  path: /hooks
+title: useUrlState
+nav: Hooks
 group:
-  path: /
+  title: State
+  order: 4
+order: 4
 ---
 
 # useUrlState

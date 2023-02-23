@@ -1,8 +1,8 @@
 ---
-nav:
-  path: /hooks
-group:
-  path: /use-request
+title: 错误重试
+nav: Hooks
+group: useRequest
+order: 11
 ---
 
 # 错误重试

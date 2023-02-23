@@ -1,10 +1,3 @@
----
-nav:
-  path: /hooks
-group:
-  path: /use-request
----
-
 # Error Retry
 
 By setting `options.retryCount`, set the number of error retries, useRequest will retry after it fails.

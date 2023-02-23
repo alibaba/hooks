@@ -1,14 +1,12 @@
 ---
 title: ahooks - React Hooks Library
 hero:
-  image: /logo.svg
-  desc: 一套高质量可靠的 React Hooks 库
+  description: 一套高质量可靠的 React Hooks 库
   actions:
     - text: 指南
       link: /zh-CN/guide
     - text: Hooks 列表
       link: /zh-CN/hooks
-footer: Open-source MIT Licensed | Copyright © 2019-present<br />Powered by [dumi](https://d.umijs.org)
 ---
 
 [![NPM version][image-1]][1]

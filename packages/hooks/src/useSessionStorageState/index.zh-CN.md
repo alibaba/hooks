@@ -1,6 +1,10 @@
 ---
-nav:
-  path: /hooks
+title: useSessionStorageState
+nav: Hooks
+group:
+  title: State
+  order: 4
+order: 7
 ---
 
 # useSessionStorageState

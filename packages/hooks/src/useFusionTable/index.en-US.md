@@ -1,8 +1,3 @@
----
-nav:
-  path: /hooks
----
-
 # useFusionTable
 
 useFusionTable encapsulates the commonly used [Fusion Form](https://fusion.design/pc/component/basic/form) and [Fusion Table](https://fusion.design/pc/component/basic/table) data binding logic.

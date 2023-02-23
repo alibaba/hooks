@@ -1,6 +1,10 @@
 ---
-nav:
-  path: /hooks
+title: useDocumentVisibility
+nav: Hooks
+group:
+  title: Dom
+  order: 6
+order: 3
 ---
 
 # useDocumentVisibility

@@ -1,8 +1,3 @@
----
-nav:
-  path: /hooks
----
-
 # useAntdTable
 
 `useAntdTable` is implemented based on `useRequest` and encapsulates the commonly used [Ant Design Form](https://ant.design/components/form/) and [Ant Design Table](https://ant.design/components/table/) data binding logic, and supports both antd v3 and v4.

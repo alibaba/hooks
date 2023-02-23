@@ -1,8 +1,3 @@
----
-nav:
-  path: /hooks
----
-
 # useDebounceEffect
 
 Debounce your `useEffect`.

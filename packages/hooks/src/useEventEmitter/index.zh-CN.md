@@ -1,6 +1,10 @@
 ---
-nav:
-  path: /hooks
+title: useEventEmitter
+nav: Hooks
+group:
+  title: Advanced
+  order: 7
+order: 3
 ---
 
 # useEventEmitter

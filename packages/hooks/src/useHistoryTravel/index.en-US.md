@@ -1,8 +1,3 @@
----
-nav:
-  path: /hooks
----
-
 # useHistoryTravel
 
 A hook to manage state change history. It provides encapsulation methods to travel through the history.

@@ -1,8 +1,3 @@
----
-nav:
-  path: /hooks
----
-
 # useWhyDidYouUpdate
 
 Help developers troubleshoot what changes have caused component rerender.

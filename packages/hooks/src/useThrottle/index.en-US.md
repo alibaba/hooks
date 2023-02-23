@@ -1,8 +1,3 @@
----
-nav:
-  path: /hooks
----
-
 # useThrottle
 
 A hook that deal with the throttled value.

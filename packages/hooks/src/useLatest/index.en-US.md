@@ -1,8 +1,3 @@
----
-nav:
-  path: /hooks
----
-
 # useLatest
 
 A Hook that returns the latest value, effectively avoiding the closure problem.

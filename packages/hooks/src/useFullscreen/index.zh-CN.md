@@ -1,6 +1,10 @@
 ---
-nav:
-  path: /hooks
+title: useFullscreen
+nav: Hooks
+group:
+  title: Dom
+  order: 6
+order: 9
 ---
 
 # useFullscreen

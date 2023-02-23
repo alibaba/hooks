@@ -1,8 +1,3 @@
----
-nav:
-  path: /hooks
----
-
 # useCountDown
 
 A hook for manage countdown.

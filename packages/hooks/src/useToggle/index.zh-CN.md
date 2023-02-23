@@ -1,6 +1,10 @@
 ---
-nav:
-  path: /hooks
+title: useToggle
+nav: Hooks
+group:
+  title: State
+  order: 4
+order: 3
 ---
 
 # useToggle

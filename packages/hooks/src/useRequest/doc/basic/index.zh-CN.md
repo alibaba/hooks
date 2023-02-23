@@ -1,8 +1,8 @@
 ---
-nav:
-  path: /hooks
-group:
-  path: /use-request
+title: 基础用法
+nav: Hooks
+group: useRequest
+order: 2
 ---
 
 # 基础用法

@@ -1,6 +1,10 @@
 ---
-nav:
-  path: /hooks
+title: useTextSelection
+nav: Hooks
+group:
+  title: Scene
+  order: 2
+order: 12
 ---
 
 # useTextSelection

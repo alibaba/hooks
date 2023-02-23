@@ -1,8 +1,3 @@
----
-nav:
-  path: /hooks
----
-
 # useEventEmitter
 
 Sometimes it is difficult to pass events between multiple components. By using EventEmitter, this can be simplified.

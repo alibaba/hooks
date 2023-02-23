@@ -1,8 +1,3 @@
----
-nav:
-  path: /hooks
----
-
 # useTitle
 
 A hook that set title of the page.

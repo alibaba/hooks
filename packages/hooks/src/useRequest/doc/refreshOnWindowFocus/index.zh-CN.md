@@ -1,8 +1,8 @@
 ---
-nav:
-  path: /hooks
-group:
-  path: /use-request
+title: 屏幕聚焦重新请求
+nav: Hooks
+group: useRequest
+order: 7
 ---
 
 # 屏幕聚焦重新请求

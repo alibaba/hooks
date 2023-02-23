@@ -1,6 +1,10 @@
 ---
-nav:
-  path: /hooks
+title: useNetwork
+nav: Hooks
+group:
+  title: Scene
+  order: 2
+order: 8
 ---
 
 # useNetwork

@@ -1,8 +1,3 @@
----
-nav:
-  path: /hooks
----
-
 # usePrevious
 
 A Hook to return the previous state.

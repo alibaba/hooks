@@ -1,6 +1,10 @@
 ---
-nav:
-  path: /hooks
+title: useLongPress
+nav: Hooks
+group:
+  title: Dom
+  order: 6
+order: 14
 ---
 
 # useLongPress

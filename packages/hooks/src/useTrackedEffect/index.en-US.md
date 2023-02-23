@@ -1,8 +1,3 @@
----
-nav:
-  path: /hooks
----
-
 # useTrackedEffect
 
 A hook of useEffect that allow us to track which dependencies caused the effect to trigger.

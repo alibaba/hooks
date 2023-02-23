@@ -1,6 +1,10 @@
 ---
-nav:
-  path: /hooks
+title: useFocusWithin
+nav: Hooks
+group:
+  title: Dom
+  order: 6
+order: 19
 ---
 
 # useFocusWithin

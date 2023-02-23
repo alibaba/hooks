@@ -1,10 +1,3 @@
----
-nav:
-  path: /hooks
-group:
-  path: /use-request
----
-
 # RefreshOnWindowFocus
 
 By setting `options.refreshOnWindowFocus`, the request will be refreshed when the browser is `refocus` and `revisible`.

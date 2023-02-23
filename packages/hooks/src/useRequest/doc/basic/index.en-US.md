@@ -1,10 +1,3 @@
----
-nav:
-  path: /hooks
-group:
-  path: /use-request
----
-
 # Basic usage
 
 In this section, we will introduce the core and basic functionalities of `useRequest`, that is, the functionalities of the `useRequest` kernel.

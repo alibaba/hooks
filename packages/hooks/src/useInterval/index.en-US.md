@@ -1,8 +1,3 @@
----
-nav:
-  path: /hooks
----
-
 # useInterval
 
 A hook that handles the `setInterval` timer function.

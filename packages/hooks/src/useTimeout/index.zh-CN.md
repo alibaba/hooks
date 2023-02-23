@@ -1,6 +1,10 @@
 ---
-nav:
-  path: /hooks
+title: useTimeout
+nav: Hooks
+group:
+  title: Effect
+  order: 5
+order: 12
 ---
 
 # useTimeout

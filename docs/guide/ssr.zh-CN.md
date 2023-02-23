@@ -1,3 +1,9 @@
+---
+title: React Hooks & SSR
+group: Blog
+order: 2
+---
+
 # React Hooks & SSR
 
 服务端渲染（Server-Side Rendering），是指由服务侧完成页面的 HTML 结构拼接的页面处理技术。一般用于解决 SEO 问题和首屏加载速度问题。

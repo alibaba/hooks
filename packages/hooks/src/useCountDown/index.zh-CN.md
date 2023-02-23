@@ -1,6 +1,10 @@
 ---
-nav:
-  path: /hooks
+title: useCountDown
+nav: Hooks
+group:
+  title: Scene
+  order: 2
+order: 10
 ---
 
 # useCountDown

@@ -1,8 +1,3 @@
----
-nav:
-  path: /hooks
----
-
 # useThrottleEffect
 
 Throttle your `useEffect`.

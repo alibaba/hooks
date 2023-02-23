@@ -1,6 +1,10 @@
 ---
-nav:
-  path: /hooks
+title: useThrottleFn
+nav: Hooks
+group:
+  title: Effect
+  order: 5
+order: 6
 ---
 
 # useThrottleFn

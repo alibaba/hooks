@@ -1,8 +1,3 @@
----
-nav:
-  path: /hooks
----
-
 # useAsyncEffect
 
 useEffect support async function.

@@ -1,10 +1,3 @@
----
-nav:
-  path: /hooks
-group:
-  path: /use-request
----
-
 # Quick Start
 
 `useRequest` is a powerful Hooks for asynchronous data management. `useRequest` is sufficient enough for network request scenarios in React projects.

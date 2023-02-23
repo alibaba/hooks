@@ -1,6 +1,10 @@
 ---
-nav:
-  path: /hooks
+title: useWebSocket
+nav: Hooks
+group:
+  title: Scene
+  order: 2
+order: 13
 ---
 
 # useWebSocket

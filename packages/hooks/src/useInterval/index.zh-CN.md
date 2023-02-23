@@ -1,6 +1,10 @@
 ---
-nav:
-  path: /hooks
+title: useInterval
+nav: Hooks
+group:
+  title: Effect
+  order: 5
+order: 10
 ---
 
 # useInterval

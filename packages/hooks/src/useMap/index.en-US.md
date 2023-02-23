@@ -1,8 +1,3 @@
----
-nav:
-  path: /hooks
----
-
 # useMap
 
 A hook that can manage the state of Map.

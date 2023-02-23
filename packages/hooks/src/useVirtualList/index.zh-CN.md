@@ -1,6 +1,10 @@
 ---
-nav:
-  path: /hooks
+title: useVirtualList
+nav: Hooks
+group:
+  title: Scene
+  order: 2
+order: 6
 ---
 
 # useVirtualList

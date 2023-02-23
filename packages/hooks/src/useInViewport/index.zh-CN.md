@@ -1,6 +1,10 @@
 ---
-nav:
-  path: /hooks
+title: useInViewport
+nav: Hooks
+group:
+  title: Dom
+  order: 6
+order: 12
 ---
 
 # useInViewport

@@ -1,6 +1,10 @@
 ---
-nav:
-  path: /hooks
+title: useBoolean
+nav: Hooks
+group:
+  title: State
+  order: 4
+order: 2
 ---
 
 # useBoolean

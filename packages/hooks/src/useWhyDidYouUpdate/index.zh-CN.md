@@ -1,6 +1,10 @@
 ---
-nav:
-  path: /hooks
+title: useWhyDidYouUpdate
+nav: Hooks
+group:
+  title: Dev
+  order: 8
+order: 2
 ---
 
 # useWhyDidYouUpdate

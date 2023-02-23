@@ -1,8 +1,3 @@
----
-nav:
-  path: /hooks
----
-
 # useLocalStorageState
 
 A Hook that store state into localStorage.

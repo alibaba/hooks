@@ -1,8 +1,3 @@
----
-nav:
-  path: /hooks
----
-
 # useMouse
 
 Track cursor position

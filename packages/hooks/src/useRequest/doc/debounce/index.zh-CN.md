@@ -1,8 +1,8 @@
 ---
-nav:
-  path: /hooks
-group:
-  path: /use-request
+title: 防抖
+nav: Hooks
+group: useRequest
+order: 8
 ---
 
 # 防抖

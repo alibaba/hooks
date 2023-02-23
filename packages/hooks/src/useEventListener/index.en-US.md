@@ -1,8 +1,3 @@
----
-nav:
-  path: /hooks
----
-
 # useEventListener
 
 Use addEventListener elegant by Hook.

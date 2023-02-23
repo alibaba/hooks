@@ -1,8 +1,3 @@
----
-nav:
-  path: /hooks
----
-
 # useWebSocket
 
 A hook for WebSocket.

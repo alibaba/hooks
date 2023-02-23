@@ -1,6 +1,10 @@
 ---
-nav:
-  path: /hooks
+title: useRafState
+nav: Hooks
+group:
+  title: State
+  order: 4
+order: 13
 ---
 
 # useRafState

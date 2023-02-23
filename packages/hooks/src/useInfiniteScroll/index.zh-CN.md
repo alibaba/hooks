@@ -1,6 +1,10 @@
 ---
-nav:
-  path: /hooks
+title: useInfiniteScroll
+nav: Hooks
+group:
+  title: Scene
+  order: 2
+order: 3
 ---
 
 # useInfiniteScroll

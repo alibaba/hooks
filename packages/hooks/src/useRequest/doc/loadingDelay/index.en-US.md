@@ -1,10 +1,3 @@
----
-nav:
-   path: /hooks
-group:
-   path: /use-request
----
-
 # Loading Delay
 
 By setting `options.loadingDelay`, you can delay the time when `loading` turns to `true`, effectively prevent UI flashing.

@@ -1,8 +1,3 @@
----
-nav:
-  path: /hooks
----
-
 # useGetState
 
 Add a getter method to the return value of `React.useState` to get the latest value

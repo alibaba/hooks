@@ -1,6 +1,10 @@
 ---
-nav:
-  path: /hooks
+title: useTitle
+nav: Hooks
+group:
+  title: Dom
+  order: 6
+order: 7
 ---
 
 # useTitle

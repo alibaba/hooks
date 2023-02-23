@@ -1,8 +1,3 @@
----
-nav:
-  path: /hooks
----
-
 # useDynamicList
 
 A hook that helps you manage dynamic list and generate unique key for each item.

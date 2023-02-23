@@ -1,6 +1,10 @@
 ---
-nav:
-  path: /hooks
+title: useSelections
+nav: Hooks
+group:
+  title: Scene
+  order: 2
+order: 9
 ---
 
 # useSelections

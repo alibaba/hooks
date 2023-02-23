@@ -1,6 +1,10 @@
 ---
-nav:
-  path: /hooks
+title: useFavicon
+nav: Hooks
+group:
+  title: Dom
+  order: 6
+order: 8
 ---
 
 # useFavicon

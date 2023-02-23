@@ -1,6 +1,10 @@
 ---
-nav:
-  path: /hooks
+title: useRafTimeout
+nav: Hooks
+group:
+  title: Effect
+  order: 5
+order: 13
 ---
 
 # useRafTimeout

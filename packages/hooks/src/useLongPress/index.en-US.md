@@ -1,8 +1,3 @@
----
-nav:
-  path: /hooks
----
-
 # useLongPress
 
 Listen for the long press event of the target element.

@@ -1,8 +1,3 @@
----
-nav:
-  path: /hooks
----
-
 # useTextSelection
 
 Tracking content, size, position of user text selection.

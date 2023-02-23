@@ -1,8 +1,3 @@
----
-nav:
-  path: /hooks
----
-
 # useFullscreen
 
 manages DOM full screen.

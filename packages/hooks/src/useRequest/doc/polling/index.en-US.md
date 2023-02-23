@@ -1,10 +1,3 @@
----
-nav:
-  path: /hooks
-group:
-  path: /use-request
----
-
 # Polling
 
 By setting `options.pollingInterval`, enter the polling mode, `useRequest` will periodically trigger service execution.

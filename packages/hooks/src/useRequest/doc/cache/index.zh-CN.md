@@ -1,8 +1,8 @@
 ---
-nav:
-  path: /hooks
-group:
-  path: /use-request
+title: 缓存 & SWR
+nav: Hooks
+group: useRequest
+order: 10
 ---
 
 # 缓存 & SWR

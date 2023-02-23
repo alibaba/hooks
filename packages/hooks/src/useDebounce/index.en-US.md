@@ -1,8 +1,3 @@
----
-nav:
-  path: /hooks
----
-
 # useDebounce
 
 A hook that deal with the debounced value.

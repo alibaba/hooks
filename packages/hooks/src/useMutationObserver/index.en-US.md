@@ -1,8 +1,3 @@
----
-nav:
-  path: /hooks
----
-
 # useMutationObserver
 
 A hook that provides the ability to watch for changes being made to the DOM tree, refer to [MutationObserver](https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver)

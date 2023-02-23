@@ -1,6 +1,10 @@
 ---
-nav:
-  path: /hooks
+title: useClickAway
+nav: Hooks
+group:
+  title: Dom
+  order: 6
+order: 2
 ---
 
 # useClickAway

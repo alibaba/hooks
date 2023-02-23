@@ -1,6 +1,10 @@
 ---
-nav:
-  path: /hooks
+title: useLatest
+nav: Hooks
+group:
+  title: Advanced
+  order: 7
+order: 5
 ---
 
 # useLatest

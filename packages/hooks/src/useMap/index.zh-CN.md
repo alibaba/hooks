@@ -1,6 +1,10 @@
 ---
-nav:
-  path: /hooks
+title: useMap
+nav: Hooks
+group:
+  title: State
+  order: 4
+order: 10
 ---
 
 # useMap

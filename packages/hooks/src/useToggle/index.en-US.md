@@ -1,8 +1,3 @@
----
-nav:
-  path: /hooks
----
-
 # useToggle
 
 A hook that toggle states.

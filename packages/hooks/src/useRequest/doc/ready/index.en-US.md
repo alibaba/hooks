@@ -1,10 +1,3 @@
----
-nav:
-  path: /hooks
-group:
-  path: /use-request
----
-
 # Ready
 
 useRequest provides an `options.ready`, when its value is `false`, the request will never be sent.

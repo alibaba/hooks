@@ -1,8 +1,3 @@
----
-nav:
-  path: /hooks
----
-
 # useTimeout
 
 A hook that handles the `setTimeout` timer function.

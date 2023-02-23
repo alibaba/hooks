@@ -1,8 +1,3 @@
----
-nav:
-  path: /hooks
----
-
 # usePagination
 
 `usePagination` is implemented based on `useRequest` and encapsulates common paging logic. The differences from `useRequest` are as follows:

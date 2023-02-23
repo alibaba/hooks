@@ -1,8 +1,3 @@
----
-nav:
-  path: /hooks
----
-
 # useHover
 
 A hook that tracks whether the element is being hovered.

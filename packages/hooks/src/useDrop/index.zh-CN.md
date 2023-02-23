@@ -1,6 +1,10 @@
 ---
-nav:
-  path: /hooks
+title: useDrop & useDrag
+nav: Hooks
+group:
+  title: Dom
+  order: 6
+order: 4
 ---
 
 # useDrop & useDrag

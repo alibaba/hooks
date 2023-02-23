@@ -1,6 +1,10 @@
 ---
-nav:
-  path: /hooks
+title: useMount
+nav: Hooks
+group:
+  title: LifeCycle
+  order: 3
+order: 1
 ---
 
 # useMount

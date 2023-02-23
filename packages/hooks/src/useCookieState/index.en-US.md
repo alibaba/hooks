@@ -1,8 +1,3 @@
----
-nav:
-  path: /hooks
----
-
 # useCookieState
 
 A Hook that store state into Cookie.

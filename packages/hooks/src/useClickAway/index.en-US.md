@@ -1,8 +1,3 @@
----
-nav:
-  path: /hooks
----
-
 # useClickAway
 
 Listen for click events outside the target element.

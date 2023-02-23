@@ -1,6 +1,10 @@
 ---
-nav:
-  path: /hooks
+title: useDebounceEffect
+nav: Hooks
+group:
+  title: Effect
+  order: 5
+order: 4
 ---
 
 # useDebounceEffect

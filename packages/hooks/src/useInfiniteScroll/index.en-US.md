@@ -1,8 +1,3 @@
----
-nav:
-  path: /hooks
----
-
 # useInfiniteScroll
 
 useInfiniteScroll encapsulates the common infinite scroll logic.

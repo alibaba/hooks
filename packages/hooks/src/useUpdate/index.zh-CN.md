@@ -1,6 +1,10 @@
 ---
-nav:
-  path: /hooks
+title: useUpdate
+nav: Hooks
+group:
+  title: Effect
+  order: 5
+order: 15
 ---
 
 # useUpdate

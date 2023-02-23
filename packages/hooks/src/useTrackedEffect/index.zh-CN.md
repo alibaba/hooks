@@ -1,6 +1,10 @@
 ---
-nav:
-  path: /hooks
+title: useTrackedEffect
+nav: Hooks
+group:
+  title: Dev
+  order: 8
+order: 1
 ---
 
 # useTrackedEffect
