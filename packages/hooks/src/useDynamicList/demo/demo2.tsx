@@ -1,9 +1,9 @@
 /**
  * title: Used in antd Form
- * desc: Used in antd Form, a component can be packaged independently, like DynamicInputs in the example.
+ * description: Used in antd Form, a component can be packaged independently, like DynamicInputs in the example.
  *
  * title.zh-CN: 在 antd Form 中使用
- * desc.zh-CN: 在 antd Form 中使用，可以独立封装一个组件，比如例子中的 DynamicInputs。
+ * description.zh-CN: 在 antd Form 中使用，可以独立封装一个组件，比如例子中的 DynamicInputs。
  */
 
 import { MinusCircleOutlined, PlusCircleOutlined } from '@ant-design/icons';

@@ -1,9 +1,9 @@
 /**
  * title: Basic usage
- * desc: useLatest always returns the latest value
+ * description: useLatest always returns the latest value
  *
  * title.zh-CN: 基础用法
- * desc.zh-CN: useLatest 返回的永远是最新值
+ * description.zh-CN: useLatest 返回的永远是最新值
  */
 
 import React, { useState, useEffect } from 'react';

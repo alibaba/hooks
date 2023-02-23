@@ -1,9 +1,9 @@
 /**
  * title: Edit username
- * desc: In this example, we modify the username.
+ * description: In this example, we modify the username.
  *
  * title.zh-CN: 修改用户名
- * desc.zh-CN: 在这个例子中，我们尝试修改用户名。
+ * description.zh-CN: 在这个例子中，我们尝试修改用户名。
  */
 
 import { message } from 'antd';

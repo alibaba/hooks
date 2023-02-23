@@ -1,9 +1,9 @@
 /**
  * title: Basic usage
- * desc: Simple example of counter management.
+ * description: Simple example of counter management.
  *
  * title.zh-CN: 基础用法
- * desc.zh-CN: 简单的 counter 管理示例。
+ * description.zh-CN: 简单的 counter 管理示例。
  */
 
 import React from 'react';

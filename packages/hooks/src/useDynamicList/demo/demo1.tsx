@@ -1,9 +1,9 @@
 /**
  * title: Basic usage
- * desc: Dynamic list management
+ * description: Dynamic list management
  *
  * title.zh-CN: 基础用法
- * desc.zh-CN: 管理动态列表
+ * description.zh-CN: 管理动态列表
  */
 
 import { MinusCircleOutlined, PlusCircleOutlined } from '@ant-design/icons';

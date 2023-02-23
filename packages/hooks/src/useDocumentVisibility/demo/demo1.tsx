@@ -1,9 +1,9 @@
 /**
  * title: Default usage
- * desc: Listen to document visibility change.
+ * description: Listen to document visibility change.
  *
  * title.zh-CN: 基础用法
- * desc.zh-CN: 监听 document 的可见状态
+ * description.zh-CN: 监听 document 的可见状态
  */
 
 import React, { useEffect } from 'react';

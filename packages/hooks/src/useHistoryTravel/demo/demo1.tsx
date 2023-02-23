@@ -1,9 +1,9 @@
 /**
  * title: Basic usage
- * desc: Redo and undo operations，click back and forward after input something.
+ * description: Redo and undo operations，click back and forward after input something.
  *
  * title.zh-CN: 基础用法
- * desc.zh-CN: 撤销跟重做操作，输入内容后，点击 back 和 forward。
+ * description.zh-CN: 撤销跟重做操作，输入内容后，点击 back 和 forward。
  */
 
 import { useHistoryTravel } from 'ahooks';

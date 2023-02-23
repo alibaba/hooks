@@ -1,9 +1,9 @@
 /**
  * title: SetState can receive function
- * desc: Function updater is also acceptable with useCookieState's setState，similar to how useState is used.
+ * description: Function updater is also acceptable with useCookieState's setState，similar to how useState is used.
  *
  * title.zh-CN: setState 可以接收函数
- * desc.zh-CN: useCookieState 的 setState 可以接收 function updater，就像 useState 那样。
+ * description.zh-CN: useCookieState 的 setState 可以接收 function updater，就像 useState 那样。
  */
 
 import React from 'react';

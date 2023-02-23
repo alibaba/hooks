@@ -1,9 +1,9 @@
 /**
  * title: Default usage
- * desc: Checkbox group.
+ * description: Checkbox group.
  *
  * title.zh-CN: 基础用法
- * desc.zh-CN: 常见的 Checkbox 联动
+ * description.zh-CN: 常见的 Checkbox 联动
  */
 
 import { Checkbox, Col, Row } from 'antd';

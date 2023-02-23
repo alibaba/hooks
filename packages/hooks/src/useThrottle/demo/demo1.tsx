@@ -1,9 +1,9 @@
 /**
  * title: Default usage
- * desc: ThrottledValue will change every 500ms.
+ * description: ThrottledValue will change every 500ms.
  *
  * title.zh-CN: 基础用法
- * desc.zh-CN: ThrottledValue 每隔 500ms 变化一次。
+ * description.zh-CN: ThrottledValue 每隔 500ms 变化一次。
  */
 
 import React, { useState } from 'react';

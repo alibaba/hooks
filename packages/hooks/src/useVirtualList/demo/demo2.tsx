@@ -1,9 +1,9 @@
 /**
  * title: Dynamic item height
- * desc: Specify item height dynamically.
+ * description: Specify item height dynamically.
  *
  * title.zh-CN: 动态元素高度
- * desc.zh-CN: 动态指定每个元素的高度
+ * description.zh-CN: 动态指定每个元素的高度
  */
 
 import React, { useMemo, useRef } from 'react';

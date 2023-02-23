@@ -1,9 +1,9 @@
 /**
  * title: Custom update
- * desc: listen on scroll event between 100px ~ 200px in vertical direction
+ * description: listen on scroll event between 100px ~ 200px in vertical direction
  *
  * title.zh-CN: 自定义更新
- * desc.zh-CN: 在垂直方向 100px 到 200px 的滚动范围内监听
+ * description.zh-CN: 在垂直方向 100px 到 200px 的滚动范围内监听
  */
 
 import React, { useRef } from 'react';

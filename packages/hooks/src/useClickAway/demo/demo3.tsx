@@ -1,9 +1,9 @@
 /**
  * title: Support multiple DOM
- * desc: Support pass multiple DOM elements.
+ * description: Support pass multiple DOM elements.
  *
  * title.zh-CN: 支持多个 DOM 对象
- * desc.zh-CN: 支持传入多个目标对象。
+ * description.zh-CN: 支持传入多个目标对象。
  */
 
 import React, { useState, useRef } from 'react';

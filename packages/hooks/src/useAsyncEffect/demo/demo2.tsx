@@ -1,9 +1,9 @@
 /**
  * title: Break off
- * desc: Use `yield` to stop the execution when effect has been cleaned up.
+ * description: Use `yield` to stop the execution when effect has been cleaned up.
  *
  * title.zh-CN: 中断执行
- * desc.zh-CN: 通过 `yield` 语句可以增加一些检查点，如果发现当前 effect 已经被清理，会停止继续往下执行。
+ * description.zh-CN: 通过 `yield` 语句可以增加一些检查点，如果发现当前 effect 已经被清理，会停止继续往下执行。
  */
 
 import React, { useState } from 'react';

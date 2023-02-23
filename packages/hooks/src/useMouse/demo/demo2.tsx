@@ -1,9 +1,9 @@
 /**
  * title: Mouse position relative to the element
- * desc: By passing in the target element, you can get the position of the mouse relative to the element.
+ * description: By passing in the target element, you can get the position of the mouse relative to the element.
  *
  * title.zh-CN: 获取鼠标相对于元素的位置
- * desc.zh-CN: 通过传入目标元素，可以获取鼠标相对于元素的位置。
+ * description.zh-CN: 通过传入目标元素，可以获取鼠标相对于元素的位置。
  */
 
 import React, { useRef } from 'react';

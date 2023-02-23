@@ -1,9 +1,9 @@
 /**
  * title: Translate user text selection
- * desc: Use Antd.Popover to translate user text selection
+ * description: Use Antd.Popover to translate user text selection
  *
  * title.zh-CN: 划词翻译
- * desc.zh-CN: 配合 Popover 做划词翻译
+ * description.zh-CN: 配合 Popover 做划词翻译
  */
 
 import { useRequest, useTextSelection } from 'ahooks';

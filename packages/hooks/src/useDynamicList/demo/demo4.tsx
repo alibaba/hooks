@@ -1,9 +1,9 @@
 /**
  * title: Draggable dynamic table
- * desc: Using antd Table to build dynamic table form.
+ * description: Using antd Table to build dynamic table form.
  *
  * title.zh-CN: 可拖拽的动态表格
- * desc.zh-CN: 使用 antd table 构建动态表格
+ * description.zh-CN: 使用 antd table 构建动态表格
  */
 
 import { DragOutlined } from '@ant-design/icons';

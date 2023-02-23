@@ -1,9 +1,9 @@
 /**
  * title: Default usage
- * desc: Update state or props, you can see the output in the console
+ * description: Update state or props, you can see the output in the console
  *
  * title.zh-CN: 基础用法
- * desc.zh-CN: 更新 state 或 props，可以在控制台看到输出
+ * description.zh-CN: 更新 state 或 props，可以在控制台看到输出
  */
 
 import { useWhyDidYouUpdate } from 'ahooks';

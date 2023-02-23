@@ -1,9 +1,9 @@
 /**
  * title: Advanced
- * desc: Supports receiving a Boolean callback function to handle preprocessing operations.
+ * description: Supports receiving a Boolean callback function to handle preprocessing operations.
  *
  * title.zh-CN: 进阶使用
- * desc.zh-CN: 支持接收一个返回 boolean 的回调函数，自己处理逻辑。
+ * description.zh-CN: 支持接收一个返回 boolean 的回调函数，自己处理逻辑。
  */
 
 import React, { useState } from 'react';

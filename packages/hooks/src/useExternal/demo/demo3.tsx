@@ -1,9 +1,9 @@
 /**
  * title: Load style dynamically
- * desc: Load css file, such as [bootstrap-badge.css](/useExternal/bootstrap-badge.css)
+ * description: Load css file, such as [bootstrap-badge.css](/useExternal/bootstrap-badge.css)
  *
  * title.zh-CN: 动态加载样式
- * desc.zh-CN: 加载 css 文件，例如引入 [bootstrap-badge.css](/useExternal/bootstrap-badge.css)
+ * description.zh-CN: 加载 css 文件，例如引入 [bootstrap-badge.css](/useExternal/bootstrap-badge.css)
  */
 
 import { useExternal } from 'ahooks';

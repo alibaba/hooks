@@ -1,9 +1,9 @@
 /**
  * title: Default usage
- * desc: render 100,000 items in a list.
+ * description: render 100,000 items in a list.
  *
  * title.zh-CN: 基础用法
- * desc.zh-CN: 渲染大量数据
+ * description.zh-CN: 渲染大量数据
  */
 
 import React, { useMemo, useRef } from 'react';

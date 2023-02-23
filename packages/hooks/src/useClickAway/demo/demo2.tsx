@@ -1,9 +1,9 @@
 /**
  * title: Support DOM
- * desc: Support pass in a DOM element or function.
+ * description: Support pass in a DOM element or function.
  *
  * title.zh-CN: 支持传入 DOM
- * desc.zh-CN: 支持直接传入 DOM 对象或 function。
+ * description.zh-CN: 支持直接传入 DOM 对象或 function。
  */
 
 import React, { useState } from 'react';

@@ -1,9 +1,9 @@
 /**
  * title: Exact match
- * desc: Enable exact matching by setting `exactMatch`. For example, press [shift + c], will not trigger [c].
+ * description: Enable exact matching by setting `exactMatch`. For example, press [shift + c], will not trigger [c].
  *
  * title.zh-CN: 精确匹配
- * desc.zh-CN: 通过配置 `exactMatch`, 开启精确匹配。比如按 [shift + c] ，不会触发 [c]。
+ * description.zh-CN: 通过配置 `exactMatch`, 开启精确匹配。比如按 [shift + c] ，不会触发 [c]。
  */
 
 import { CheckOutlined } from '@ant-design/icons';

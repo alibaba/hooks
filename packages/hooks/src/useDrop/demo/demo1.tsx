@@ -1,9 +1,9 @@
 /**
  * title: Basic usage
- * desc: The drop area can accept files, uri, text or one of the boxes below.
+ * description: The drop area can accept files, uri, text or one of the boxes below.
  *
  * title.zh-CN: 基础用法
- * desc.zh-CN: 拖拽区域可以接受文件，链接，文字，和下方的 box 节点。
+ * description.zh-CN: 拖拽区域可以接受文件，链接，文字，和下方的 box 节点。
  */
 
 import React, { useRef, useState } from 'react';

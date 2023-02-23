@@ -1,9 +1,9 @@
 /**
  * title: Basic usage
- * desc: Record the previous value.
+ * description: Record the previous value.
  *
  * title.zh-CN: 基础用法
- * desc.zh-CN: 记录上次的 count 值
+ * description.zh-CN: 记录上次的 count 值
  */
 
 import { usePrevious } from 'ahooks';

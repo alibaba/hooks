@@ -1,9 +1,9 @@
 /**
  * title: Used in antd Form
- * desc: Pay attention to the use of sortList. The data of antd Form is not sorted correctly. sortList can be used to calibrate the sorting.
+ * description: Pay attention to the use of sortList. The data of antd Form is not sorted correctly. sortList can be used to calibrate the sorting.
  *
  * title.zh-CN: 在 antd Form 中使用的另一种写法
- * desc.zh-CN: 注意 sortList 的使用，antd Form 获取的数据排序不对，通过 sortList 可以校准排序。
+ * description.zh-CN: 注意 sortList 的使用，antd Form 获取的数据排序不对，通过 sortList 可以校准排序。
  */
 
 import React, { useState } from 'react';
