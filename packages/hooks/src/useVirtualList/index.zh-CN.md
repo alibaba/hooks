@@ -46,6 +46,7 @@ const [list, scrollTo] = useVirtualList<T>(
 | wrapperTarget   | 内部容器，支持 DOM 节点或者 Ref 对象                   | `() => Element` \| `Element` \| `MutableRefObject<Element>` | -      |
 | itemHeight      | 行高度，静态高度可以直接写入像素值，动态高度可传入函数 | `number` \| `((index: number, data: T) => number)`          | -      |
 | overscan        | 视区上、下额外展示的 DOM 节点数量                      | `number`                                                    | `5`    |
+| onScroll        | 滚动事件回调                                           | `(ev: Event) => void`                                       | -      |
 
 ### Result
 

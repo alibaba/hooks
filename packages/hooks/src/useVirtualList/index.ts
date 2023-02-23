@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState, useRef } from 'react';
+import { useEffect, useMemo, useState, useRef, UIEventHandler } from 'react';
 import useEventListener from '../useEventListener';
 import useLatest from '../useLatest';
 import useMemoizedFn from '../useMemoizedFn';
@@ -14,10 +14,11 @@ export interface Options<T> {
   wrapperTarget: BasicTarget;
   itemHeight: number | ItemHeight<T>;
   overscan?: number;
+  onScroll?: UIEventHandler<HTMLElement>;
 }
 
 const useVirtualList = <T = any>(list: T[], options: Options<T>) => {
-  const { containerTarget, wrapperTarget, itemHeight, overscan = 5 } = options;
+  const { containerTarget, wrapperTarget, itemHeight, overscan = 5, onScroll } = options;
 
   const itemHeightRef = useLatest(itemHeight);
 
@@ -127,6 +128,7 @@ const useVirtualList = <T = any>(list: T[], options: Options<T>) => {
       }
       e.preventDefault();
       calculateRange();
+      onScroll?.(e);
     },
     {
       target: containerTarget,

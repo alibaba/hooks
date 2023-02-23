@@ -46,6 +46,7 @@ const [list, scrollTo] = useVirtualList<T>(
 | wrapperTarget   | Inner Container，DOM element or ref                                     | `() => Element` \| `Element` \| `MutableRefObject<Element>` | -       |
 | itemHeight      | Item height, accept a pixel value or a function that returns the height | `number` \| `((index: number, data: T) => number)`          | -       |
 | overscan        | The extra buffer items outside of the view area                         | `number`                                                    | `5`     |
+| onScroll        | Triggered when container scroll                                         | `(ev: Event) => void`                                       | -       |
 
 ### Result
 
