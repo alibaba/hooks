@@ -50,7 +50,7 @@
     "coveralls": "^3.1.1",
     "cross-env": "^7.0.3",
     "del": "^5.1.0",
-    "dumi": "^1.1.48",
+    "dumi": "^2.1.13",
     "enzyme": "^3.10.0",
     "eslint": "^7.2.0",
     "eslint-plugin-react-hooks": "^4.0.8",
