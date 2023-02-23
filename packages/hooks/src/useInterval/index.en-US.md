@@ -11,11 +11,11 @@ A hook that handles the `setInterval` timer function.
 
 ### Default usage
 
-<code src="./demo/demo1.tsx" />
+<code src="./demo/demo1.tsx"></code>
 
 ### Advanced usage
 
-<code src="./demo/demo2.tsx" />
+<code src="./demo/demo2.tsx"></code>
 
 ## API
 

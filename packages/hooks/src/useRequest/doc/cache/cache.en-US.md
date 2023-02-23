@@ -19,13 +19,13 @@ Next, through a few examples to experience these features.
 
 In the following example, we set the `cacheKey`. When the component is loaded for the second time, the cached content will be returned first, and then the request will be re-run in background. You can experience the effect by clicking the button.
 
-<code src="./demo/cacheKey.tsx" />
+<code src="./demo/cacheKey.tsx"></code>
 
 ### Keep your data fresh
 
 By setting `staleTime`, we can specify the data retention time, during which time the request will not be re-run. The following example sets a fresh time of 5s, you can experience the effect by clicking the button
 
-<code src="./demo/staleTime.tsx" />
+<code src="./demo/staleTime.tsx"></code>
 
 ### Data sharing
 
@@ -36,7 +36,7 @@ The content of the same `cacheKey` is shared globally, which will bring the foll
 
 In the following example, the two components will only initiate one request during initialization. And the content of the two articles is always synchronized.
 
-<code src="./demo/share.tsx" />
+<code src="./demo/share.tsx"></code>
 
 ### Parameters cache
 
@@ -44,13 +44,13 @@ The cached data includes `data` and `params`. Through the `params` caching mecha
 
 In the following example, we can initialize the `keyword` from the cached `params`
 
-<code src="./demo/params.tsx" />
+<code src="./demo/params.tsx"></code>
 
 ### Clear cache
 
 ahooks provides a `clearCache` method, which can clear the cache data of the specified `cacheKey`.
 
-<code src="./demo/clearCache.tsx" />
+<code src="./demo/clearCache.tsx"></code>
 
 ### Custom cache
 
@@ -61,7 +61,7 @@ Please note:
 1. `setCache` and `getCache` need to be used together.
 2. In the custom cache mode, `cacheTime` and `clearCache` will be unused, please implement it yourself according to the actual situation.
 
-<code src="./demo/setCache.tsx" />
+<code src="./demo/setCache.tsx"></code>
 
 ## API
 

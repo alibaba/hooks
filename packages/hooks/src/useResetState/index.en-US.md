@@ -11,7 +11,7 @@ useResetState works similar to `React.useState`, it provides a `reset` method
 
 ### Default Usage
 
-<code src="./demo/demo1.tsx" />
+<code src="./demo/demo1.tsx"></code>
 
 ## API
 

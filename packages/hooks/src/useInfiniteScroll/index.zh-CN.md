@@ -22,13 +22,13 @@ useInfiniteScroll 的第一个参数 `service` 是一个异步函数，对这个
 
 第一个例子我们演示最基本的无限滚动写法。
 
-<code src="./demo/default.tsx" />
+<code src="./demo/default.tsx"></code>
 
 ## 分页
 
 在数据固定场景下，我们有时候会用 `page` 和 `pageSize` 来请求新的分页数据。
 
-<code src="./demo/pagination.tsx" />
+<code src="./demo/pagination.tsx"></code>
 
 ## 滚动自动加载
 
@@ -37,13 +37,13 @@ useInfiniteScroll 的第一个参数 `service` 是一个异步函数，对这个
 - `options.target` 指定父级元素（父级元素需设置固定高度，且支持内部滚动）
 - `options.isNoMore` 判断是不是没有更多数据了
 
-<code src="./demo/scroll.tsx" />
+<code src="./demo/scroll.tsx"></code>
 
 ## 数据重置
 
 通过 `reload` 即可实现数据重置，下面示例我们演示在 `filter` 变化后，重置数据到第一页。
 
-<code src="./demo/reload.tsx" />
+<code src="./demo/reload.tsx"></code>
 
 以上代码可以通过 `reloadDeps` 语法糖实现，当 `reloadDeps` 变化时，会自动触发 `reload`。
 
@@ -57,7 +57,7 @@ const result = useInfiniteScroll(service, {
 
 通过 `mutate`，我们可以直接修改当前 `data`。下面示例演示了删除某条数据。
 
-<code src="./demo/mutate.tsx" />
+<code src="./demo/mutate.tsx"></code>
 
 ## API
 

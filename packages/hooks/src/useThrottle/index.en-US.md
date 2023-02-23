@@ -11,7 +11,7 @@ A hook that deal with the throttled value.
 
 ### Default usage
 
-<code src="./demo/demo1.tsx" />
+<code src="./demo/demo1.tsx"></code>
 
 ## API
 

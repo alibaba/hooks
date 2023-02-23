@@ -22,7 +22,7 @@ const b = useCreation(() => new Subject(), []); // By using factory function, Su
 
 ### Default usage
 
-<code src="./demo/demo1.tsx" />
+<code src="./demo/demo1.tsx"></code>
 
 ## API
 

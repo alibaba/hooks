@@ -9,15 +9,15 @@ nav:
 
 ## 到未来某一时间点的倒计时
 
-<code src="./demo/demo1.tsx" />
+<code src="./demo/demo1.tsx"></code>
 
 ## 配置项动态变化
 
-<code src="./demo/demo2.tsx" />
+<code src="./demo/demo2.tsx"></code>
 
 ## 通过 leftTime 配置剩余时间
 
-<code src="./demo/demo3.tsx" />
+<code src="./demo/demo3.tsx"></code>
 
 **说明**
 

@@ -33,7 +33,7 @@ useEffect(() => {
 
 你可以通过下面示例来体验效果
 
-<code src="./demo/refreshDeps.tsx" />
+<code src="./demo/refreshDeps.tsx"></code>
 
 ## API
 

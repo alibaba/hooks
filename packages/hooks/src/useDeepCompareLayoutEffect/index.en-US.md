@@ -11,7 +11,7 @@ Usage is the same as `useLayoutEffect`, but deps are compared with [lodash.isEqu
 
 ### Default usage
 
-<code src="./demo/demo1.tsx" />
+<code src="./demo/demo1.tsx"></code>
 
 ## API
 

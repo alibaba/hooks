@@ -35,7 +35,7 @@ If you want to let the child component notify the parent component, you can just
 
 ### Parent component shares a event
 
-<code src="./demo/demo1.tsx" />
+<code src="./demo/demo1.tsx"></code>
 
 ## API
 

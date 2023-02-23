@@ -18,13 +18,13 @@ useRequest 提供了一个 `options.ready` 参数，当其值为 `false` 时，�
 
 以下示例演示了自动模式下 `ready` 的行为。每次 `ready` 从 `false` 变为 `true` 时，都会重新发起请求。
 
-<code src="./demo/ready.tsx" />
+<code src="./demo/ready.tsx"></code>
 
 ## 手动模式
 
 以下示例演示了手动模式下 `ready` 的行为。只有当 `ready` 等于 `true` 时，`run` 才会执行。
 
-<code src="./demo/manualReady.tsx" />
+<code src="./demo/manualReady.tsx"></code>
 
 ## API
 

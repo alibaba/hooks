@@ -11,19 +11,19 @@ It offers data reactivity when manipulating states and views, in which case `use
 
 ### Default Usage
 
-<code src="./demo/demo1.tsx" />
+<code src="./demo/demo1.tsx"></code>
 
 ### Array
 
-<code src="./demo/demo2.tsx" />
+<code src="./demo/demo2.tsx"></code>
 
 ### Computed Properties
 
-<code src="./demo/demo3.tsx" />
+<code src="./demo/demo3.tsx"></code>
 
 ### notice
 
-<code  src="./demo/demo4.tsx" />
+<code src="./demo/demo4.tsx"></code>
 
 ## API
 

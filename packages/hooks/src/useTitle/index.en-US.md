@@ -11,7 +11,7 @@ A hook that set title of the page.
 
 ### Default usage
 
-<code src="./demo/demo1.tsx" />
+<code src="./demo/demo1.tsx"></code>
 
 ## API
 

@@ -19,7 +19,7 @@ const { data, error, loading } = useRequest(service);
 
 <br />
 
-<code src="./demo/default.tsx" />
+<code src="./demo/default.tsx"></code>
 
 ## Manually trigger
 
@@ -50,9 +50,9 @@ The difference between `run` and `runAsync` is:
 
 Next, we will demonstrate the difference between `run` and `runAsync` through the simple scenario of editing the username.
 
-<code src="./demo/manual-run.tsx" />
+<code src="./demo/manual-run.tsx"></code>
 
-<code src="./demo/manual-runAsync.tsx" />
+<code src="./demo/manual-runAsync.tsx"></code>
 
 ## The life cycle
 
@@ -63,7 +63,7 @@ Next, we will demonstrate the difference between `run` and `runAsync` through th
 - `onError`: Triggered when the request is rejected
 - `onFinally`: Triggered when the request is completed
 
-<code src="./demo/lifeCycle.tsx" />
+<code src="./demo/lifeCycle.tsx"></code>
 
 ## Refresh (repeat the last request)
 
@@ -75,7 +75,7 @@ If in the scenario of reading user information
 2. We updated user information by some ways
 3. We want to re-initiate the last request, then we can use `refresh` instead of `run(1)`, which is very useful in scenarios with complex parameters
 
-<code src="./demo/refresh.tsx" />
+<code src="./demo/refresh.tsx"></code>
 
 Of course, the difference between `refresh` and `refreshAsync` is the same as `run` and `runAsync`.
 
@@ -89,13 +89,13 @@ In the following example, we demonstrate a scenario of `mutate`.
 
 We have modified the user name, but we do not want to wait for the request to be successful before giving feedback to the user. Instead, modify the data directly, then call the modify request in background, and provide additional feedback after the request returns.
 
-<code src="./demo/mutate.tsx" />
+<code src="./demo/mutate.tsx"></code>
 
 <!-- ## Format data
 
 `useRequest` provides the `formatResult` configuration item, which can format the data returned by the service once. If `formatResult` is configured, the return value of other places where `data` is used shall prevail, such as the parameters of `result.data`, `options.onSuccess` and so on. -->
 
-<!-- <code src="./demo/formatResult.tsx" /> -->
+<!-- <code src="./demo/formatResult.tsx"></code> -->
 
 ## Cancel response
 
@@ -108,7 +108,7 @@ At the same time, `useRequest` will automatically ignore the response at the fol
 - When the component is unmounting, the ongoing promise
 - Race cancellation, when the previous promise has not returned, if the next promise is initiated, the previous promise will be ignored
 
-<code src="./demo/cancel.tsx" />
+<code src="./demo/cancel.tsx"></code>
 
 ## Parameter management
 
@@ -116,7 +116,7 @@ The `params` returned by `useRequest` will record the parameters of `service`. F
 
 If we set `options.manual = false`, the parameters of calling `service` for the first time can be set by `options.defaultParams`.
 
-<code src="./demo/params.tsx" />
+<code src="./demo/params.tsx"></code>
 
 ## API
 

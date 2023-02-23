@@ -11,7 +11,7 @@ A hook of useEffect that allow us to track which dependencies caused the effect 
 
 ### Basic usage
 
-<code src="./demo/demo1.tsx" />
+<code src="./demo/demo1.tsx"></code>
 
 ## API
 

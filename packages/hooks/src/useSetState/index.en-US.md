@@ -11,7 +11,7 @@ useSetState works similar to `this.setState` of class component, used to manage 
 
 ### Default usage
 
-<code src="./demo/demo1.tsx" />
+<code src="./demo/demo1.tsx"></code>
 
 ## API
 

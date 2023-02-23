@@ -11,7 +11,7 @@ A hook that provides the ability to watch for changes being made to the DOM tree
 
 ### Default Usage
 
-<code src="./demo/demo1.tsx" />
+<code src="./demo/demo1.tsx"></code>
 
 ## API
 

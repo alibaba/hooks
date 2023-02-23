@@ -11,11 +11,11 @@ nav:
 
 ### 基础用法
 
-<code src="./demo/demo1.tsx" />
+<code src="./demo/demo1.tsx"></code>
 
 ### 传入 DOM 节点
 
-<code src="./demo/demo2.tsx" />
+<code src="./demo/demo2.tsx"></code>
 
 ## API
 

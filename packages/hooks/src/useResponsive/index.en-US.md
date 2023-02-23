@@ -11,7 +11,7 @@ React Hook for getting responsive info.
 
 ### Get responsive info in components
 
-<code src="./demo/demo1.tsx" />
+<code src="./demo/demo1.tsx"></code>
 
 ## API
 

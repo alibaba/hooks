@@ -19,13 +19,13 @@ group:
 
 下面的示例，我们设置了 `cacheKey`，在组件第二次加载时，会优先返回缓存的内容，然后在背后重新发起请求。你可以通过点击按钮来体验效果。
 
-<code src="./demo/cacheKey.tsx" />
+<code src="./demo/cacheKey.tsx"></code>
 
 ### 数据保持新鲜
 
 通过设置 `staleTime`，我们可以指定数据新鲜时间，在这个时间内，不会重新发起请求。下面的示例设置了 5s 的新鲜时间，你可以通过点击按钮来体验效果
 
-<code src="./demo/staleTime.tsx" />
+<code src="./demo/staleTime.tsx"></code>
 
 ### 数据共享
 
@@ -36,7 +36,7 @@ group:
 
 下面的示例中，初始化时，两个组件只会发起一个请求。并且两篇文章的内容永远是同步的。
 
-<code src="./demo/share.tsx" />
+<code src="./demo/share.tsx"></code>
 
 ### 参数缓存
 
@@ -44,13 +44,13 @@ group:
 
 下面的示例中，我们可以从缓存的 `params` 中初始化 `keyword`
 
-<code src="./demo/params.tsx" />
+<code src="./demo/params.tsx"></code>
 
 ### 删除缓存
 
 ahooks 提供了一个 `clearCache` 方法，可以清除指定 `cacheKey` 的缓存数据。
 
-<code src="./demo/clearCache.tsx" />
+<code src="./demo/clearCache.tsx"></code>
 
 ### 自定义缓存
 
@@ -61,7 +61,7 @@ ahooks 提供了一个 `clearCache` 方法，可以清除指定 `cacheKey` 的�
 1. `setCache` 和 `getCache` 需要配套使用。
 2. 在自定义缓存模式下，`cacheTime` 和 `clearCache` 不会生效，请根据实际情况自行实现。
 
-<code src="./demo/setCache.tsx" />
+<code src="./demo/setCache.tsx"></code>
 
 ## API
 

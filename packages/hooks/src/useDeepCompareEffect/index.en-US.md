@@ -11,7 +11,7 @@ Usage is the same as `useEffect`, but deps are compared with [lodash.isEqual](ht
 
 ### Default usage
 
-<code src="./demo/demo1.tsx" />
+<code src="./demo/demo1.tsx"></code>
 
 ## API
 

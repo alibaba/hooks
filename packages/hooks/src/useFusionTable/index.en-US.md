@@ -27,7 +27,7 @@ useFusionTable encapsulates the commonly used [Fusion Form](https://fusion.desig
 
 <br />
 
-<code src="./demo/table.tsx" />
+<code src="./demo/table.tsx"></code>
 
 ### Form and Table data binding
 
@@ -40,7 +40,7 @@ When `useFusionTable` receives the `field` instance, it will return a search obj
 
 In the following example, you can experience the data binding between form and table.
 
-<code src="./demo/form.tsx" />
+<code src="./demo/form.tsx"></code>
 
 ### Default Params
 
@@ -50,19 +50,19 @@ It should be noted that the initial form data can be filled with all the form da
 
 The following example sets paging data and form data during initialization.
 
-<code src="./demo/init.tsx" />
+<code src="./demo/init.tsx"></code>
 
 ### Form Validation
 
 Before the form is submitted, we will automatically validate the form data. If the verification fails, the request will not be initiated.
 
-<code src="./demo/validate.tsx" />
+<code src="./demo/validate.tsx"></code>
 
 ### Data Caching
 
 By setting `cacheKey`, we can apply the data caching for the `Form` and `Table` .
 
-<code src="./demo/cache.tsx" />
+<code src="./demo/cache.tsx"></code>
 
 ## API
 

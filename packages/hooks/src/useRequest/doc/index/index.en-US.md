@@ -33,7 +33,7 @@ const { data, error, loading } = useRequest(getUsername);
 
 <br />
 
-<code src="./demo/default.tsx" />
+<code src="./demo/default.tsx"></code>
 
 ## Manual trigger
 
@@ -47,6 +47,6 @@ const { loading, run } = useRequest(changeUsername, {
 
 <br />
 
-<code src="./demo/manual.tsx" />
+<code src="./demo/manual.tsx"></code>
 
 In the above two examples, we demonstrated the most basic usages of `useRequest`. Next, we will introduce the features of `useRequest` one by one.

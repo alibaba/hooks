@@ -35,7 +35,7 @@ event$.useSubscription(val => {
 
 ### 父组件向子组件共享事件
 
-<code src="./demo/demo1.tsx" />
+<code src="./demo/demo1.tsx"></code>
 
 ## API
 

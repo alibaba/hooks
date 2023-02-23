@@ -20,7 +20,7 @@ const { data, run } = useRequest(getUsername, {
 
 你可以在下面 input 框中快速输入文本，体验效果
 
-<code src="./demo/throttle.tsx" />
+<code src="./demo/throttle.tsx"></code>
 
 ## API
 

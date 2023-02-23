@@ -19,7 +19,7 @@ As in the example code above, after the request is failed, it will retry 3 times
 
 You can type text in the input box below and click the Edit button to experience the effect
 
-<code src="./demo/retry.tsx" />
+<code src="./demo/retry.tsx"></code>
 
 ## API
 

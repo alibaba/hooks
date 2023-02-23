@@ -19,7 +19,7 @@ const { data, error, loading } = useRequest(service);
 
 <br />
 
-<code src="./demo/default.tsx" />
+<code src="./demo/default.tsx"></code>
 
 ## 手动触发
 
@@ -50,9 +50,9 @@ const { loading, run, runAsync } = useRequest(service, {
 
 接下来我们通过修改用户名这个简单的场景，来演示 useRequest 手动触发模式，以及 `run` 与 `runAsync` 的区别。
 
-<code src="./demo/manual-run.tsx" />
+<code src="./demo/manual-run.tsx"></code>
 
-<code src="./demo/manual-runAsync.tsx" />
+<code src="./demo/manual-runAsync.tsx"></code>
 
 ## 生命周期
 
@@ -63,7 +63,7 @@ const { loading, run, runAsync } = useRequest(service, {
 - `onError`：请求失败触发
 - `onFinally`：请求完成触发
 
-<code src="./demo/lifeCycle.tsx" />
+<code src="./demo/lifeCycle.tsx"></code>
 
 ## 刷新（重复上一次请求）
 
@@ -75,7 +75,7 @@ const { loading, run, runAsync } = useRequest(service, {
 2. 我们通过某种手段更新了用户信息
 3. 我们想重新发起上一次的请求，那我们就可以使用 `refresh` 来代替 `run(1)`，这在复杂参数的场景中是非常有用的
 
-<code src="./demo/refresh.tsx" />
+<code src="./demo/refresh.tsx"></code>
 
 当然 `refresh` 和 `refreshAsync` 的区别和 `run` 和 `runAsync` 是一致的。
 
@@ -89,13 +89,13 @@ const { loading, run, runAsync } = useRequest(service, {
 
 我们修改了用户名，但是我们不希望等编辑接口调用成功之后，才给用户反馈。而是直接修改页面数据，同时在背后去调用修改接口，等修改接口返回之后，另外提供反馈。
 
-<code src="./demo/mutate.tsx" />
+<code src="./demo/mutate.tsx"></code>
 
 <!-- ## 格式化数据
 
 `useRequest` 提供了 `formatResult` 配置项，可以对 service 返回的数据做一次格式化。如果配置了 `formatResult`，则其它用到 `data` 的地方均以该返回值为准，比如 `result.data`，`options.onSuccess` 的参数等等。 -->
 
-<!-- <code src="./demo/formatResult.tsx" /> -->
+<!-- <code src="./demo/formatResult.tsx"></code> -->
 
 ## 取消响应
 
@@ -108,7 +108,7 @@ const { loading, run, runAsync } = useRequest(service, {
 - 组件卸载时，正在进行的 promise
 - 竞态取消，当上一次 promise 还没返回时，又发起了下一次 promise，则会忽略上一次 promise 的响应
 
-<code src="./demo/cancel.tsx" />
+<code src="./demo/cancel.tsx"></code>
 
 ## 参数管理
 
@@ -116,7 +116,7 @@ const { loading, run, runAsync } = useRequest(service, {
 
 如果我们设置了 `options.manual = false`，则首次调用 `service` 的参数可以通过 `options.defaultParams` 来设置。
 
-<code src="./demo/params.tsx" />
+<code src="./demo/params.tsx"></code>
 
 ## API
 

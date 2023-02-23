@@ -19,7 +19,7 @@ const { data, run, cancel } = useRequest(getUsername, {
 
 你可以通过下面的示例来体验效果
 
-<code src="./demo/polling.tsx" />
+<code src="./demo/polling.tsx"></code>
 
 ## 轮询错误重试
 
@@ -34,7 +34,7 @@ const { data, run, cancel } = useRequest(getUsername, {
 
 你可以通过下面的示例来体验效果。
 
-<code src="./demo/pollingError.tsx" />
+<code src="./demo/pollingError.tsx"></code>
 
 ## API
 

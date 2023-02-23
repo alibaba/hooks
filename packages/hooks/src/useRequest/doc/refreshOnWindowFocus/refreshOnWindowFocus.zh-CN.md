@@ -17,7 +17,7 @@ const { data } = useRequest(getUsername, {
 
 你可以点击浏览器外部，再点击当前页面来体验效果（或者隐藏当前页面，重新展示），如果和上一次请求间隔大于 5000ms，则会重新请求一次。
 
-<code src="./demo/refreshOnWindowFocus.tsx" />
+<code src="./demo/refreshOnWindowFocus.tsx"></code>
 
 ## API
 

@@ -33,7 +33,7 @@ const { data, error, loading } = useRequest(getUsername);
 
 <br />
 
-<code src="./demo/default.tsx" />
+<code src="./demo/default.tsx"></code>
 
 ## 手动触发
 
@@ -47,6 +47,6 @@ const { loading, run } = useRequest(changeUsername, {
 
 <br />
 
-<code src="./demo/manual.tsx" />
+<code src="./demo/manual.tsx"></code>
 
 上面两个例子，我们演示了 `useRequest` 最基础的用法，接下来的我们开始逐个详细介绍 `useRequest` 的特性。

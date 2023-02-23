@@ -21,7 +21,7 @@ return <div>{ loading ? 'Loading...' : data }</div>
 
 你可以快速点击下面示例中的按钮以体验效果
 
-<code src="./demo/loadingDelay.tsx" />
+<code src="./demo/loadingDelay.tsx"></code>
 
 ## API
 

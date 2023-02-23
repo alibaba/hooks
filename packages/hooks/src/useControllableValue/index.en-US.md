@@ -11,15 +11,15 @@ In some components, we need the state to be managed by itself or controlled by i
 
 ### Uncontrolled component
 
-<code src="./demo/demo1.tsx" />
+<code src="./demo/demo1.tsx"></code>
 
 ### Controlled component
 
-<code src="./demo/demo2.tsx" />
+<code src="./demo/demo2.tsx"></code>
 
 ### No value, have onChange component
 
-<code src="./demo/demo3.tsx" />
+<code src="./demo/demo3.tsx"></code>
 
 ## API
 
@@ -46,6 +46,6 @@ const [state, setState] = useControllableValue(props: Record<string, any>, optio
 | Property             | Description                                                                     | Type     | Default        |
 | -------------------- | ------------------------------------------------------------------------------- | -------- | -------------- |
 | defaultValue         | The default value, will be overridden by `props.defaultValue` and `props.value` | -        | -              |
-| defaultValuePropName | Custom defaultValue attribute name                                               | `string` | `defaultValue` |
+| defaultValuePropName | Custom defaultValue attribute name                                              | `string` | `defaultValue` |
 | valuePropName        | Custom value attribute name                                                     | `string` | `value`        |
 | trigger              | Custom trigger attribute name                                                   | `string` | `onChange`     |

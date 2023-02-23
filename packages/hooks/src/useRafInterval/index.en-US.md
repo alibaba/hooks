@@ -18,11 +18,11 @@ Please note that the following two cases are likely to be inapplicable, and `use
 
 ### Default usage
 
-<code src="./demo/demo1.tsx" />
+<code src="./demo/demo1.tsx"></code>
 
 ### Advanced usage
 
-<code src="./demo/demo2.tsx" />
+<code src="./demo/demo2.tsx"></code>
 
 ## API
 

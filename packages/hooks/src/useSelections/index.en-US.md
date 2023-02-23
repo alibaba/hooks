@@ -11,7 +11,7 @@ This hook is used for Checkbox group, supports multiple selection, single select
 
 ### Default usage
 
-<code src="./demo/demo1.tsx" />
+<code src="./demo/demo1.tsx"></code>
 
 ## API
 

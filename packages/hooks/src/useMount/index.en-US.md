@@ -11,7 +11,7 @@ A hook that executes a function after the component is mounted.
 
 ### Default Usage
 
-<code src="./demo/demo1.tsx" />
+<code src="./demo/demo1.tsx"></code>
 
 ## API
 

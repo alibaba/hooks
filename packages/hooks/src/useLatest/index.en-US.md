@@ -11,7 +11,7 @@ A Hook that returns the latest value, effectively avoiding the closure problem.
 
 ### Basic usage
 
-<code src="./demo/demo1.tsx" />
+<code src="./demo/demo1.tsx"></code>
 
 ## API
 

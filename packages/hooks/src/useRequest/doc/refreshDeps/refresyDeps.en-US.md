@@ -33,7 +33,7 @@ useEffect(() => {
 
 You can experience the effect through the following example
 
-<code src="./demo/refreshDeps.tsx" />
+<code src="./demo/refreshDeps.tsx"></code>
 
 ## API
 

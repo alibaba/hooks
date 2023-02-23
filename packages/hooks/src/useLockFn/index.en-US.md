@@ -11,7 +11,7 @@ Add lock to an async function to prevent parallel executions.
 
 ### Basic usage
 
-<code src="./demo/demo1.tsx" />
+<code src="./demo/demo1.tsx"></code>
 
 ## API
 

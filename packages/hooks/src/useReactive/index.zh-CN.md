@@ -11,19 +11,19 @@ nav:
 
 ### 基本用法
 
-<code src="./demo/demo1.tsx" />
+<code src="./demo/demo1.tsx"></code>
 
 ### 数组操作
 
-<code src="./demo/demo2.tsx"  />
+<code src="./demo/demo2.tsx" ></code>
 
 ### 计算属性
 
-<code src="./demo/demo3.tsx"  />
+<code src="./demo/demo3.tsx" ></code>
 
 ### 注意
 
-<code src="./demo/demo4.tsx" />
+<code src="./demo/demo4.tsx"></code>
 
 ## API
 
