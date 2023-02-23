@@ -23,7 +23,7 @@
     "pub": "pnpm run build && pnpm -r --filter=./packages/* publish",
     "pub:beta": "pnpm run build && pnpm -r --filter=./packages/* publish --tag beta",
     "preinstall": "npx only-allow pnpm",
-    "prepare": "husky install",
+    "prepare": "husky install && dumi setup",
     "test:strict": "cross-env REACT_MODE=strict jest"
   },
   "devDependencies": {
