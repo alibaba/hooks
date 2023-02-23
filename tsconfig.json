@@ -9,6 +9,7 @@
     "baseUrl": ".",
     "paths": {
       "@/*": ["src/*"],
+      "@@/*": [".dumi/tmp/*"],
       "ahooks": ["./packages/hooks/src/index.ts"],
       "ahooks/lib/*": ["./packages/hooks/src/*"],
       "@ahooksjs/use-url-state": ["./packages/use-url-state/src/index.ts"]
