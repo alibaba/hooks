@@ -20,5 +20,6 @@
     "strictNullChecks": true,
     "importHelpers": true
   },
+  "include": [".dumi/**/*", ".dumirc.ts"],
   "exclude": ["node_modules", "lib", "es", "dist", "example"]
 }
