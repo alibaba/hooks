@@ -1,7 +1,7 @@
 import { useRef } from 'react';
+import { cloneDeepWith, isPlainObject } from 'lodash';
 import useCreation from '../useCreation';
 import useUpdate from '../useUpdate';
-import { isObject } from '../utils';
 
 // k:v 原对象:代理过的对象
 const proxyMap = new WeakMap();
@@ -26,7 +26,10 @@ function observer<T extends Record<string, any>>(initialVal: T, cb: () => void):
     get(target, key, receiver) {
       const res = Reflect.get(target, key, receiver);
 
-      return isObject(res) ? observer(res, cb) : res;
+      // Only proxy plain object (e.g. `{}`, `Object.create(null)`, ...),
+      // don't proxy any "special object" or "primitive value".
+      // https://github.com/alibaba/hooks/issues/2080
+      return isPlainObject(res) ? observer(res, cb) : res;
     },
     set(target, key, val) {
       const ret = Reflect.set(target, key, val);
@@ -46,9 +49,24 @@ function observer<T extends Record<string, any>>(initialVal: T, cb: () => void):
   return proxy;
 }
 
+function deepClone<S>(initialState: S): S {
+  // resolve: https://github.com/alibaba/hooks/issues/1317
+  const copy = cloneDeepWith(initialState, (value) => {
+    const ret = {};
+
+    for (const key of Reflect.ownKeys(value)) {
+      ret[key] = Reflect.get(value, key);
+    }
+
+    return ret;
+  });
+
+  return copy;
+}
+
 function useReactive<S extends Record<string, any>>(initialState: S): S {
   const update = useUpdate();
-  const stateRef = useRef<S>(initialState);
+  const stateRef = useRef<S>(deepClone<S>(initialState));
 
   const state = useCreation(() => {
     return observer(stateRef.current, () => {
