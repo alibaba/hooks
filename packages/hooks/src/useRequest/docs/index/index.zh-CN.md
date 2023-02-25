@@ -1,6 +1,8 @@
 ---
 title: 快速上手
-nav: Hooks
+nav:
+  title: Hooks
+  order: 2
 group:
   title: useRequest
   order: 1
