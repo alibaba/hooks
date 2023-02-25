@@ -25,6 +25,10 @@ nav:
 
 <code src="./demo/demo4.tsx" />
 
+### 元素属性
+
+<code src="./demo/demo5.tsx"  />
+
 ## API
 
 ```js

@@ -25,6 +25,10 @@ It offers data reactivity when manipulating states and views, in which case `use
 
 <code  src="./demo/demo4.tsx" />
 
+### Element Properties
+
+<code  src="./demo/demo5.tsx" />
+
 ## API
 
 ```js
