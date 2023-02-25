@@ -81,7 +81,7 @@ const Demo = () => {
 };
 
 describe('test useReactive feature', () => {
-  it('test count ', () => {
+  it('test count', () => {
     const wrap = render(<Demo />);
 
     const count = wrap.getByRole('addCount');
@@ -153,6 +153,11 @@ describe('test useReactive feature', () => {
       fireEvent.change(input, { target: { value: 'bbb' } });
     });
     expect(inputVal.textContent).toBe('bbb');
+  });
+
+  it('test `Element`', () => {
+    const hook = renderHook(() => useReactive({ dom: <div>aaa</div> }));
+    expect(hook.result.current.dom).toBe('<div>aaa</div>');
   });
 
   it('delete object property', () => {
