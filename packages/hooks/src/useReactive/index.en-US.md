@@ -21,11 +21,11 @@ It offers data reactivity when manipulating states and views, in which case `use
 
 <code src="./demo/demo3.tsx" />
 
-### notice
+### Element Properties
 
 <code  src="./demo/demo4.tsx" />
 
-### Element Properties
+### notice
 
 <code  src="./demo/demo5.tsx" />
 
