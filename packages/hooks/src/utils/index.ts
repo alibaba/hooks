@@ -1,5 +1,5 @@
 /**
- * https://github.com/facebook/react/blob/main/packages/shared/ReactSymbols.js#L15
+ * @see https://github.com/facebook/react/blob/main/packages/shared/ReactSymbols.js#L15
  */
 const REACT_ELEMENT_TYPE = Symbol.for('react.element');
 
@@ -14,8 +14,8 @@ export const isUndef = (value: unknown): value is undefined => typeof value === 
 
 /**
  * Verifies the object is a ReactElement.
- * - See https://reactjs.org/docs/react-api.html#isvalidelement
- * - See https://github.com/facebook/react/blob/main/packages/react/src/jsx/ReactJSXElementValidator.js#L66
+ * @see https://reactjs.org/docs/react-api.html#isvalidelement
+ * @see https://github.com/facebook/react/blob/main/packages/react/src/jsx/ReactJSXElementValidator.js#L66
  * @param {?object} object
  * @return {boolean} True if `object` is a ReactElement.
  */
