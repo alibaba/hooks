@@ -1,7 +1,7 @@
 import { useRef } from 'react';
 import useCreation from '../useCreation';
 import useUpdate from '../useUpdate';
-import { isObject } from '../utils';
+import { isObject, isValidElement } from '../utils';
 
 // k:v 原对象:代理过的对象
 const proxyMap = new WeakMap();
@@ -25,7 +25,9 @@ function observer<T extends Record<string, any>>(initialVal: T, cb: () => void):
   const proxy = new Proxy<T>(initialVal, {
     get(target, key, receiver) {
       const res = Reflect.get(target, key, receiver);
-      return isObject(res) ? observer(res, cb) : res;
+      const isReactElement = isValidElement(res);
+
+      return isObject(res) && !isReactElement ? observer(res, cb) : res;
     },
     set(target, key, val) {
       const ret = Reflect.set(target, key, val);
