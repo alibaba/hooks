@@ -21,13 +21,9 @@ nav:
 
 <code src="./demo/demo3.tsx" />
 
-### 元素属性
-
-<code src="./demo/demo4.tsx" />
-
 ### 注意
 
-<code src="./demo/demo5.tsx" />
+<code src="./demo/demo4.tsx" />
 
 ## API
 

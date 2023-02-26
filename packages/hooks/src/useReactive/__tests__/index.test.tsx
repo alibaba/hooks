@@ -155,19 +155,6 @@ describe('test useReactive feature', () => {
     expect(inputVal.textContent).toBe('bbb');
   });
 
-  it('test React element', () => {
-    const dom1 = <div>aaa</div>;
-    const dom2 = <div>bbb</div>;
-    const hook = renderHook(() => useReactive({ dom: dom1 }));
-
-    expect(hook.result.current.dom).toBe(dom1);
-    expect(hook.result.current.dom).not.toBe(dom2);
-
-    act(() => (hook.result.current.dom = dom2));
-    expect(hook.result.current.dom).toBe(dom2);
-    expect(hook.result.current.dom).not.toBe(dom1);
-  });
-
   it('delete object property', () => {
     const wrap = render(<Demo />);
 
