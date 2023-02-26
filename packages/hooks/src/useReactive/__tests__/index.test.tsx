@@ -169,7 +169,7 @@ describe('test useReactive feature', () => {
   });
 
   it('access from self to prototype chain', () => {
-    const parent = {
+    const parent: Record<string, string> = {
       name: 'parent',
       get value() {
         return this.name;
@@ -186,9 +186,17 @@ describe('test useReactive feature', () => {
     Object.setPrototypeOf(child, proxy);
 
     expect(child.value).toBe('child');
+    expect(proxy.value).toBe('parent');
+    expect(parent.value).toBe('parent');
 
-    delete child.name;
-
+    act(() => delete child.name);
     expect(child.value).toBe('parent');
+    expect(proxy.value).toBe('parent');
+    expect(parent.value).toBe('parent');
+
+    act(() => delete proxy.name);
+    expect(child.value).toBeUndefined();
+    expect(proxy.value).toBeUndefined();
+    expect(parent.value).toBeUndefined();
   });
 });
