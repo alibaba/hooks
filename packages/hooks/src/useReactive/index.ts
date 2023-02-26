@@ -27,8 +27,7 @@ function observer<T extends Record<string, any>>(initialVal: T, cb: () => void):
       const res = Reflect.get(target, key, receiver);
 
       // Only proxy plain object (e.g. `{}`, `Object.create(null)`, ...),
-      // don't proxy any "special object" or "primitive value".
-      // https://github.com/alibaba/hooks/issues/2080
+      // otherwise it will cause: https://github.com/alibaba/hooks/issues/2080
       return isPlainObject(res) ? observer(res, cb) : res;
     },
     set(target, key, val) {
@@ -66,9 +65,11 @@ function deepClone<S>(initialState: S): S {
 
 function useReactive<S extends Record<string, any>>(initialState: S): S {
   const update = useUpdate();
-  const stateRef = useRef<S>(deepClone<S>(initialState));
+  const stateRef = useRef<S>();
 
   const state = useCreation(() => {
+    stateRef.current = deepClone<S>(initialState);
+
     return observer(stateRef.current, () => {
       update();
     });
