@@ -1,5 +1,5 @@
 import { useRef } from 'react';
-import { cloneDeepWith, isPlainObject } from 'lodash';
+import { isPlainObject } from 'lodash';
 import useCreation from '../useCreation';
 import useUpdate from '../useUpdate';
 
@@ -48,28 +48,11 @@ function observer<T extends Record<string, any>>(initialVal: T, cb: () => void):
   return proxy;
 }
 
-function deepClone<S>(initialState: S): S {
-  // resolve: https://github.com/alibaba/hooks/issues/1317
-  const copy = cloneDeepWith(initialState, (value) => {
-    const ret = {};
-
-    for (const key of Reflect.ownKeys(value)) {
-      ret[key] = Reflect.get(value, key);
-    }
-
-    return ret;
-  });
-
-  return copy;
-}
-
 function useReactive<S extends Record<string, any>>(initialState: S): S {
   const update = useUpdate();
-  const stateRef = useRef<S>();
+  const stateRef = useRef<S>(initialState);
 
   const state = useCreation(() => {
-    stateRef.current = deepClone<S>(initialState);
-
     return observer(stateRef.current, () => {
       update();
     });
