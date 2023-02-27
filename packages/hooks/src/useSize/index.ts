@@ -9,7 +9,6 @@ type Size = { width: number; height: number };
 function useSize(target: BasicTarget): Size | undefined {
   const [state, setState] = useRafState<Size | undefined>(
     () => {
-      // init size when target already exist
       const el = getTargetElement(target);
       return el ? { width: el.clientWidth, height: el.clientHeight } : undefined
     },
