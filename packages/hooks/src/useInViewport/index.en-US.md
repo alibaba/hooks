@@ -27,7 +27,6 @@ Observe whether the element is in the visible area, and the visible area ratio o
 const [inViewport, ratio] = useInViewport(
   target,
   options?: Options
-  callback?: (entry: IntersectionObserverEntry) => void
 );
 ```
 
@@ -37,7 +36,6 @@ const [inViewport, ratio] = useInViewport(
 | -------- | ------------------ | ----------------------------------------------------------- | ------- |
 | target   | DOM element or ref | `Element` \| `() => Element` \| `MutableRefObject<Element>` | -       |
 | options  | Setting            | `Options`                                                   | -       |
-| callback | Callback           | `(entry: IntersectionObserverEntry) => void`                | -       |
 
 ### Options
 
@@ -48,6 +46,7 @@ More information refer to [Intersection Observer API](https://developer.mozilla.
 | threshold  | Either a single number or an array of numbers which indicate at what percentage of the target's visibility the ratio should be executed                                           | `number` \| `number[]`                                                               | -       |
 | rootMargin | Margin around the root                                                                                                                                                            | `string`                                                                             | -       |
 | root       | The element that is used as the viewport for checking visibility of the target. Must be the ancestor of the target. Defaults to the browser viewport if not specified or if null. | `Element` \| `Document` \| `() => (Element/Document)` \| `MutableRefObject<Element>` | -       |
+| callback   | You can customize the control to trigger the event when the visual area reaches this ratio                                                                                        | `(entry: IntersectionObserverEntry) => void`                                         | -       |
 
 ### Result
 

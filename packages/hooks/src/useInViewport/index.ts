@@ -4,19 +4,16 @@ import type { BasicTarget } from '../utils/domTarget';
 import { getTargetElement } from '../utils/domTarget';
 import useEffectWithTarget from '../utils/useEffectWithTarget';
 
+type CallbackType = (entry: IntersectionObserverEntry) => void;
+
 export interface Options {
   rootMargin?: string;
   threshold?: number | number[];
   root?: BasicTarget<Element>;
+  callback?: CallbackType;
 }
 
-type CallbackType = (entry: IntersectionObserverEntry) => void;
-
-function useInViewport(
-  target: BasicTarget | BasicTarget[],
-  options?: Options,
-  callback?: CallbackType,
-) {
+function useInViewport(target: BasicTarget | BasicTarget[], options?: Options) {
   const [state, setState] = useState<boolean>();
   const [ratio, setRatio] = useState<number>();
 
@@ -30,6 +27,8 @@ function useInViewport(
         return;
       }
 
+      const { callback, ...option } = options || {};
+
       const observer = new IntersectionObserver(
         (entries) => {
           for (const entry of entries) {
@@ -41,8 +40,8 @@ function useInViewport(
           }
         },
         {
-          ...options,
-          root: getTargetElement(options?.root),
+          ...option,
+          root: getTargetElement(option?.root),
         },
       );
 

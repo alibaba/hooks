@@ -3,10 +3,10 @@
  * desc: Pass in 'callback', you can customize the control to trigger the event when the visible area reaches this proportion. In this example, scroll to the element area and select the corresponding menu.
  *
  * title.zh-CN: 监听内容滚动选中菜单
- * desc.zh-CN: 传入 `callback`, 可以自定义控制在可见区域达到该比例时触发事件，在这个例子中，滚动到元素区域中选中对应菜单。
+ * desc.zh-CN: 传入 `callback`, 可以自定义控制在可视区域达到该比例时触发事件，在这个例子中，滚动到元素区域中选中对应菜单。
  */
-import React, { useRef, useState } from 'react';
 import { useInViewport } from 'ahooks';
+import React, { useRef, useState } from 'react';
 
 const menus = ['menu-1', 'menu-2', 'menu-3'];
 const content = {
@@ -20,11 +20,13 @@ export default () => {
 
   const [activeMenu, setActiveMenu] = useState(menus[0]);
 
-  useInViewport(menuRef.current, { threshold: 0.1 }, (entry) => {
-    if (entry.isIntersecting) {
-      const active = entry.target.getAttribute('id') || '';
-      setActiveMenu(active);
-    }
+  useInViewport(menuRef.current, {
+    callback: (entry) => {
+      if (entry.isIntersecting) {
+        const active = entry.target.getAttribute('id') || '';
+        setActiveMenu(active);
+      }
+    },
   });
 
   const handleMenuClick = (menu) => {
