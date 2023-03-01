@@ -20,7 +20,7 @@ nav:
 ## API
 
 ```typescript
-const [state, setState] = useSetState(initialState);
+const [state, setState] = useSetState<T>(initialState);
 ```
 
 ### Result
