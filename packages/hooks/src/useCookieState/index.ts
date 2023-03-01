@@ -1,8 +1,7 @@
 import Cookies from 'js-cookie';
 import { useState } from 'react';
 import useMemoizedFn from '../useMemoizedFn';
-import useUpdateEffect from '../useUpdateEffect';
-import { isFunction, isString, isUndef } from '../utils';
+import { isFunction, isString } from '../utils';
 
 export type State = string | undefined;
 
@@ -22,27 +21,24 @@ function useCookieState(cookieKey: string, options: Options = {}) {
 
     return options.defaultValue;
   });
-  const [mergedOptions, setMergedOptions] = useState<Options>(options);
 
   const updateState = useMemoizedFn(
     (
       newValue: State | ((prevState: State) => State),
       newOptions: Cookies.CookieAttributes = {},
     ) => {
-      setState(newValue);
-      setMergedOptions({ ...options, ...newOptions });
+      const { defaultValue, ...restOptions } = { ...options, ...newOptions };
+      const value = isFunction(newValue) ? newValue(state) : newValue;
+
+      setState(value);
+
+      if (value === undefined) {
+        Cookies.remove(cookieKey);
+      } else {
+        Cookies.set(cookieKey, value, restOptions);
+      }
     },
   );
-
-  useUpdateEffect(() => {
-    const { defaultValue, ...restOptions } = mergedOptions;
-
-    if (isUndef(state)) {
-      Cookies.remove(cookieKey);
-    } else {
-      Cookies.set(cookieKey, state, restOptions);
-    }
-  }, [state]);
 
   return [state, updateState] as const;
 }

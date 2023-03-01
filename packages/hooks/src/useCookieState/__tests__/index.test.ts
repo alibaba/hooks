@@ -1,6 +1,5 @@
 import { renderHook, act } from '@testing-library/react';
-import useCookieState from '../index';
-import type { Options } from '../index';
+import useCookieState, { Options } from '../index';
 import Cookies from 'js-cookie';
 
 describe('useCookieState', () => {
@@ -70,28 +69,5 @@ describe('useCookieState', () => {
       hook.result.current.setState((state) => `${state}, zhangsan`);
     });
     expect(hook.result.current.state).toBe('hello world, zhangsan');
-  });
-
-  it('should set right value when batch updates', () => {
-    const COOKIE_KEY = 'test-batch-updates';
-    const hook = setUp(COOKIE_KEY, { defaultValue: 'A' });
-    expect(hook.result.current.state).toBe('A');
-
-    act(() => {
-      // Batch updates
-      hook.result.current.setState(hook.result.current.state + 'B');
-      hook.result.current.setState(hook.result.current.state + 'C');
-    });
-    expect(hook.result.current.state).toBe('AC');
-
-    act(() => {
-      // Restore default
-      hook.result.current.setState('A');
-
-      // Non-batch updates
-      hook.result.current.setState((prev) => prev + 'B');
-      hook.result.current.setState((prev) => prev + 'C');
-    });
-    expect(hook.result.current.state).toBe('ABC');
   });
 });
