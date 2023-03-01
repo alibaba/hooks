@@ -7,14 +7,16 @@ import useIsomorphicLayoutEffectWithTarget from '../utils/useIsomorphicLayoutEff
 type Size = { width: number; height: number };
 
 function useSize(target: BasicTarget): Size | undefined {
-  let el = getTargetElement(target);
   const [state, setState] = useRafState<Size | undefined>(
-    el ? { width: el.clientWidth, height: el.clientHeight } : undefined,
+    () => {
+      const el = getTargetElement(target);
+      return el ? { width: el.clientWidth, height: el.clientHeight } : undefined
+    },
   );
 
   useIsomorphicLayoutEffectWithTarget(
     () => {
-      el = getTargetElement(target);
+      const el = getTargetElement(target);
 
       if (!el) {
         return;
