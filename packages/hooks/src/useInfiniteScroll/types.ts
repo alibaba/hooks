@@ -31,4 +31,5 @@ export interface InfiniteScrollOptions<TData extends Data> {
   onSuccess?: (data: TData) => void;
   onError?: (e: Error) => void;
   onFinally?: (data?: TData, e?: Error) => void;
+  isReverse?: boolean;
 }

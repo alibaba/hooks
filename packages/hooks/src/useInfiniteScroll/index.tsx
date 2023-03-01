@@ -21,6 +21,7 @@ const useInfiniteScroll = <TData extends Data>(
     onSuccess,
     onError,
     onFinally,
+    isReverse = false,
   } = options;
 
   const [finalData, setFinalData] = useState<TData>();
@@ -88,7 +89,9 @@ const useInfiniteScroll = <TData extends Data>(
     const scrollHeight = getScrollHeight(el);
     const clientHeight = getClientHeight(el);
 
-    if (scrollHeight - scrollTop <= clientHeight + threshold) {
+    const scrollRemaining = isReverse ? scrollHeight + scrollTop : scrollHeight - scrollTop;
+
+    if (scrollRemaining <= clientHeight + threshold) {
       loadMore();
     }
   };

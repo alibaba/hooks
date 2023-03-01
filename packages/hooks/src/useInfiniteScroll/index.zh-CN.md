@@ -119,4 +119,5 @@ const {
 | onBefore   | service 执行前触发                                                                                                                               | `() => void`                                                | -       |
 | onSuccess  | service resolve 时触发                                                                                                                           | `(data: TData) => void`                                     | -       |
 | onError    | service reject 时触发                                                                                                                            | `(e: Error) => void`                                        | -       |
-| onFinally  | service 执行完成时触发                                                                                                                           | `(data?: TData, e?: Error) => void`                         | -       |
+| onFinally  | service 执行完成时触发                                                                                                                           | `(e: Error) => void`                                        | -       |
+| isReverse  | 是否颠倒滚动方向，需要配合 `flex-direction: column-reverse;` 使用                                                                                | `boolean`                                                   | `false` |
