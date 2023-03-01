@@ -13,6 +13,10 @@ nav:
 
 <code src="./demo/demo1.tsx" />
 
+### 使用回调更新
+
+<code src="./demo/demo2.tsx" />
+
 ## API
 
 ```typescript

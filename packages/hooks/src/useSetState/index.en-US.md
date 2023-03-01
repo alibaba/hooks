@@ -13,6 +13,10 @@ useSetState works similar to `this.setState` of class component, used to manage 
 
 <code src="./demo/demo1.tsx" />
 
+### Updating with callback
+
+<code src="./demo/demo2.tsx" />
+
 ## API
 
 ```typescript
