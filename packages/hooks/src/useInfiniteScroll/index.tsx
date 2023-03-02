@@ -89,6 +89,11 @@ const useInfiniteScroll = <TData extends Data>(
     const scrollHeight = getScrollHeight(el);
     const clientHeight = getClientHeight(el);
 
+    // @ts-ignore
+    if (isReverse && el?.style?.flexDirection !== 'column-reverse') {
+      return;
+    }
+
     const scrollRemaining = isReverse ? scrollHeight + scrollTop : scrollHeight - scrollTop;
 
     if (scrollRemaining <= clientHeight + threshold) {
