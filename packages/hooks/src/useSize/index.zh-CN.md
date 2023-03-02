@@ -31,6 +31,6 @@ const size = useSize(target);
 
 ### Result
 
-| 参数 | 说明           | 类型                                             |
-| ---- | -------------- | ------------------------------------------------ |
-| size | DOM 节点的尺寸 | `{ width: number, height: number } \| undefined` |
+| 参数 | 说明           | 类型                                             | 默认值                                                                    |
+| ---- | -------------- | ------------------------------------------------ | ------------------------------------------------------------------------- |
+| size | DOM 节点的尺寸 | `{ width: number, height: number } \| undefined` | `{ width: target.clientWidth, height: target.clientHeight } \| undefined` |
