@@ -11,7 +11,7 @@ function useInterval(
 ) {
   const { immediate } = options;
 
-  const cb = useMemoizedFn(fn);
+  const timerCallback = useMemoizedFn(fn);
   const timerRef = useRef<NodeJS.Timer | null>(null);
 
   useEffect(() => {
@@ -19,15 +19,15 @@ function useInterval(
       return;
     }
     if (immediate) {
-      cb();
+      timerCallback();
     }
-    timerRef.current = setInterval(cb, delay);
+    timerRef.current = setInterval(timerCallback, delay);
     return () => {
       if (timerRef.current) {
         clearInterval(timerRef.current);
       }
     };
-  }, [delay, cb]);
+  }, [delay, timerCallback]);
 
   const clear = useCallback(() => {
     if (timerRef.current) {
