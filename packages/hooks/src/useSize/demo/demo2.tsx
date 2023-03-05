@@ -1,9 +1,9 @@
 /**
  * title: pass in the DOM element
- * desc: useSize can receive a dom element as parameter. In SSR scenarios, you can pass in function `()=>dom`
+ * desc: useSize can receive a dom element as parameter. In SSR scenarios, you can pass in function `() => dom`
  *
  * title.zh-CN: 传入 DOM 元素
- * desc.zh-CN: useSize 可以接收 dom，在 SSR 场景可以传入函数 `()=> dom`
+ * desc.zh-CN: useSize 可以接收 dom，在 SSR 场景可以传入函数 `() => dom`
  */
 
 import React from 'react';
