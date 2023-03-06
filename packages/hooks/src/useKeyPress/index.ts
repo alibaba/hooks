@@ -123,7 +123,6 @@ const aliasKeyCodeMap = {
   singlequote: 222,
 };
 
-/* eslint-disable */
 if (isAppleDevice) {
   aliasKeyCodeMap['meta'] = [91, 93];
 } else {
@@ -137,7 +136,6 @@ const modifierKey = {
   alt: (event: KeyboardEvent) => event.altKey,
   meta: (event: KeyboardEvent) => {
     if (event.type === 'keyup') {
-      /* eslint-disable */
       return aliasKeyCodeMap['meta'].includes(event.keyCode);
     }
     return event.metaKey;
