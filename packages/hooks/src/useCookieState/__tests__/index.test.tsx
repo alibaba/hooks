@@ -15,15 +15,15 @@ describe('useCookieState', () => {
     });
 
   it('defaultValue should work', () => {
-    const COOKIE_KEY = {
+    const COOKIE = {
       KEY: 'test-key-with-default-value',
       KEY2: 'test-key-with-default-value2',
       DEFAULT_VALUE: 'A',
       DEFAULT_VALUE2: 'A2',
     };
     const Setup = () => {
-      const [key, setKey] = useState<string>(COOKIE_KEY.KEY);
-      const [defaultValue, setDefaultValue] = useState<string>(COOKIE_KEY.DEFAULT_VALUE);
+      const [key, setKey] = useState<string>(COOKIE.KEY);
+      const [defaultValue, setDefaultValue] = useState<string>(COOKIE.DEFAULT_VALUE);
       const [state] = useCookieState(key, { defaultValue });
 
       return (
@@ -32,8 +32,8 @@ describe('useCookieState', () => {
           <button
             role="button"
             onClick={() => {
-              setKey(COOKIE_KEY.KEY2);
-              setDefaultValue(COOKIE_KEY.DEFAULT_VALUE2);
+              setKey(COOKIE.KEY2);
+              setDefaultValue(COOKIE.DEFAULT_VALUE2);
             }}
           />
         </>
@@ -42,18 +42,18 @@ describe('useCookieState', () => {
     const wrap = render(<Setup />);
 
     // Initial value
-    expect(wrap.getByRole('state').textContent).toBe(COOKIE_KEY.DEFAULT_VALUE);
-    expect(Cookies.get(COOKIE_KEY.KEY)).toBe(COOKIE_KEY.DEFAULT_VALUE);
+    expect(wrap.getByRole('state').textContent).toBe(COOKIE.DEFAULT_VALUE);
+    expect(Cookies.get(COOKIE.KEY)).toBe(COOKIE.DEFAULT_VALUE);
 
     // Change `key` and `defaultValue`
     act(() => fireEvent.click(wrap.getByRole('button')));
-    expect(Cookies.get(COOKIE_KEY.KEY)).toBe(COOKIE_KEY.DEFAULT_VALUE);
-    expect(Cookies.get(COOKIE_KEY.KEY2)).toBe(COOKIE_KEY.DEFAULT_VALUE2);
+    expect(Cookies.get(COOKIE.KEY)).toBe(COOKIE.DEFAULT_VALUE);
+    expect(Cookies.get(COOKIE.KEY2)).toBe(COOKIE.DEFAULT_VALUE2);
   });
 
   it('getKey should work', () => {
-    const COOKIE_KEY = 'test-key';
-    const hook = setUp(COOKIE_KEY, {
+    const COOKIE = 'test-key';
+    const hook = setUp(COOKIE, {
       defaultValue: 'A',
     });
     expect(hook.result.current.state).toBe('A');
@@ -61,7 +61,7 @@ describe('useCookieState', () => {
       hook.result.current.setState('B');
     });
     expect(hook.result.current.state).toBe('B');
-    const anotherHook = setUp(COOKIE_KEY, {
+    const anotherHook = setUp(COOKIE, {
       defaultValue: 'A',
     });
     expect(anotherHook.result.current.state).toBe('B');
@@ -73,8 +73,8 @@ describe('useCookieState', () => {
   });
 
   it('should support undefined', () => {
-    const COOKIE_KEY = 'test-boolean-key-with-undefined';
-    const hook = setUp(COOKIE_KEY, {
+    const COOKIE = 'test-boolean-key-with-undefined';
+    const hook = setUp(COOKIE, {
       defaultValue: 'undefined',
     });
     expect(hook.result.current.state).toBe('undefined');
@@ -82,7 +82,7 @@ describe('useCookieState', () => {
       hook.result.current.setState(undefined);
     });
     expect(hook.result.current.state).toBeUndefined();
-    const anotherHook = setUp(COOKIE_KEY, {
+    const anotherHook = setUp(COOKIE, {
       defaultValue: 'false',
     });
     expect(anotherHook.result.current.state).toBe('false');
@@ -91,16 +91,16 @@ describe('useCookieState', () => {
   it('should support empty string', () => {
     Cookies.set('test-key-empty-string', '');
     expect(Cookies.get('test-key-empty-string')).toBe('');
-    const COOKIE_KEY = 'test-key-empty-string';
-    const hook = setUp(COOKIE_KEY, {
+    const COOKIE = 'test-key-empty-string';
+    const hook = setUp(COOKIE, {
       defaultValue: 'hello',
     });
     expect(hook.result.current.state).toBe('');
   });
 
   it('should support function updater', () => {
-    const COOKIE_KEY = 'test-func-updater';
-    const hook = setUp(COOKIE_KEY, {
+    const COOKIE = 'test-func-updater';
+    const hook = setUp(COOKIE, {
       defaultValue: () => 'hello world',
     });
     expect(hook.result.current.state).toBe('hello world');
