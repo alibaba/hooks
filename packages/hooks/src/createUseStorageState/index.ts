@@ -46,12 +46,12 @@ export function createUseStorageState(getStorage: () => Storage | undefined) {
       return isFunction(options?.defaultValue) ? options?.defaultValue() : options?.defaultValue;
     }
 
-    function setDefaultStoredValue() {
-      const defaultValue = getDefaultValue();
-
-      if (!isUndef(defaultValue)) {
+    function setStoredValue(value?: T) {
+      if (isUndef(value)) {
+        storage?.removeItem(key);
+      } else {
         try {
-          storage?.setItem(key, serializer(defaultValue));
+          storage?.setItem(key, serializer(value));
         } catch (e) {
           console.error(e);
         }
@@ -68,9 +68,11 @@ export function createUseStorageState(getStorage: () => Storage | undefined) {
         console.error(e);
       }
 
-      setDefaultStoredValue();
+      const defaultValue = getDefaultValue();
 
-      return getDefaultValue();
+      setStoredValue(defaultValue);
+
+      return defaultValue;
     }
 
     const [state, setState] = useState<T>(() => getStoredValue());
@@ -81,17 +83,9 @@ export function createUseStorageState(getStorage: () => Storage | undefined) {
 
     const updateState = (value: T | IFuncUpdater<T>) => {
       const currentState = isFunction(value) ? value(state) : value;
-      setState(currentState);
 
-      if (isUndef(currentState)) {
-        storage?.removeItem(key);
-      } else {
-        try {
-          storage?.setItem(key, serializer(currentState));
-        } catch (e) {
-          console.error(e);
-        }
-      }
+      setState(currentState);
+      setStoredValue(currentState);
     };
 
     return [state, useMemoizedFn(updateState)] as const;
