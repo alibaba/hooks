@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef } from 'react';
-import useLatest from '../useLatest';
+import useMemoizedFn from '../useMemoizedFn';
 import { isNumber } from '../utils';
 
 function useInterval(
@@ -11,7 +11,7 @@ function useInterval(
 ) {
   const { immediate } = options;
 
-  const fnRef = useLatest(fn);
+  const timerCallback = useMemoizedFn(fn);
   const timerRef = useRef<NodeJS.Timer | null>(null);
 
   useEffect(() => {
@@ -19,17 +19,15 @@ function useInterval(
       return;
     }
     if (immediate) {
-      fnRef.current();
+      timerCallback();
     }
-    timerRef.current = setInterval(() => {
-      fnRef.current();
-    }, delay);
+    timerRef.current = setInterval(timerCallback, delay);
     return () => {
       if (timerRef.current) {
         clearInterval(timerRef.current);
       }
     };
-  }, [delay]);
+  }, [delay, timerCallback]);
 
   const clear = useCallback(() => {
     if (timerRef.current) {

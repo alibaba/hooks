@@ -1,6 +1,6 @@
 {
   "name": "ahooks",
-  "version": "3.7.4",
+  "version": "3.7.5",
   "description": "react hooks library",
   "keywords": [
     "ahooks",
@@ -48,14 +48,15 @@
   },
   "devDependencies": {
     "@alifd/next": "^1.20.6",
-    "@ant-design/icons": "^4.6.2",
+    "@ant-design/icons": "^5.0.1",
     "@types/enzyme": "^3.10.5",
-    "antd": "^4.16.9",
+    "antd": "^5.2.1",
     "enzyme-adapter-react-16": "^1.15.4",
     "jest-websocket-mock": "^2.1.0",
     "mock-socket": "^9.0.3",
     "mockjs": "^1.1.0",
-    "react-drag-listview": "^0.1.6"
+    "react-drag-listview": "^0.1.6",
+    "react-json-view": "^1.21.3"
   },
   "engines": {
     "node": ">=8.0.0"

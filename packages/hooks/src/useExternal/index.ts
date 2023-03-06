@@ -1,10 +1,22 @@
 import { useEffect, useRef, useState } from 'react';
 
-export interface Options {
-  type?: 'js' | 'css';
+type JsOptions = {
+  type: 'js';
+  js?: Partial<HTMLScriptElement>;
+};
+
+type CssOptions = {
+  type: 'css';
+  css?: Partial<HTMLStyleElement>;
+};
+
+type DefaultOptions = {
+  type?: never;
   js?: Partial<HTMLScriptElement>;
   css?: Partial<HTMLStyleElement>;
-}
+};
+
+export type Options = JsOptions | CssOptions | DefaultOptions;
 
 // {[path]: count}
 // remove external when no used
