@@ -48,6 +48,7 @@ export function createUseStorageState(getStorage: () => Storage | undefined) {
 
     function setDefaultStoredValue() {
       const defaultValue = getDefaultValue();
+
       if (!isUndef(defaultValue)) {
         try {
           storage?.setItem(key, serializer(defaultValue));
@@ -66,7 +67,9 @@ export function createUseStorageState(getStorage: () => Storage | undefined) {
       } catch (e) {
         console.error(e);
       }
+
       setDefaultStoredValue();
+
       return getDefaultValue();
     }
 
