@@ -13,10 +13,25 @@ nav:
 
 <code src="./demo/demo1.tsx" />
 
+### 使用回调更新
+
+<code src="./demo/demo2.tsx" />
+
 ## API
 
 ```typescript
-const [state, setState] = useSetState<T extends Record<string, any>>(
-  initialState: T = {} as T
-): [T, (patch: Partial<T> | ((prevState: T) => Partial<T>)) => void]
+const [state, setState] = useSetState<T>(initialState);
 ```
+
+### Result
+
+| 参数     | 说明         | 类型                                                                                      | 默认值 |
+| -------- | ------------ | ----------------------------------------------------------------------------------------- | ------ |
+| state    | 当前状态     | `T`                                                                                       | -      |
+| setState | 设置当前状态 | `(state: Partial<T> \| null) => void` \| `((prevState: T) => Partial<T> \| null) => void` | -      |
+
+### Params
+
+| 参数         | 说明     | 类型           | 默认值 |
+| ------------ | -------- | -------------- | ------ |
+| initialState | 初始状态 | `T \| () => T` | -      |

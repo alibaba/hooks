@@ -28,15 +28,15 @@ function useCookieState(cookieKey: string, options: Options = {}) {
       newOptions: Cookies.CookieAttributes = {},
     ) => {
       const { defaultValue, ...restOptions } = { ...options, ...newOptions };
-      setState((prevState) => {
-        const value = isFunction(newValue) ? newValue(prevState) : newValue;
-        if (value === undefined) {
-          Cookies.remove(cookieKey);
-        } else {
-          Cookies.set(cookieKey, value, restOptions);
-        }
-        return value;
-      });
+      const value = isFunction(newValue) ? newValue(state) : newValue;
+
+      setState(value);
+
+      if (value === undefined) {
+        Cookies.remove(cookieKey);
+      } else {
+        Cookies.set(cookieKey, value, restOptions);
+      }
     },
   );
 
