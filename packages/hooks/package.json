@@ -55,7 +55,8 @@
     "jest-websocket-mock": "^2.1.0",
     "mock-socket": "^9.0.3",
     "mockjs": "^1.1.0",
-    "react-drag-listview": "^0.1.6"
+    "react-drag-listview": "^0.1.6",
+    "react-json-view": "^1.21.3"
   },
   "engines": {
     "node": ">=8.0.0"
