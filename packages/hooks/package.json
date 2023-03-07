@@ -33,6 +33,7 @@
     "README.md"
   ],
   "dependencies": {
+    "@babel/runtime": "^7.21.0",
     "@types/js-cookie": "^2.x.x",
     "ahooks-v3-count": "^1.0.0",
     "dayjs": "^1.9.1",
