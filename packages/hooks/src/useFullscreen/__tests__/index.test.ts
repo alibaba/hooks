@@ -1,5 +1,6 @@
 import { renderHook, act } from '@testing-library/react';
-import useFullscreen, { Options } from '../index';
+import useFullscreen from '../index';
+import type { Options } from '../index';
 import type { BasicTarget } from '../../utils/domTarget';
 
 const targetEl = document.createElement('div');
@@ -50,13 +51,13 @@ describe('useFullscreen', () => {
     const { enterFullscreen, exitFullscreen } = result.current[1];
     enterFullscreen();
     act(() => {
-      events['fullscreenchange'].forEach((fn: any) => fn());
+      events.fullscreenchange.forEach((fn: any) => fn());
     });
     expect(result.current[0]).toBe(true);
 
     exitFullscreen();
     act(() => {
-      events['fullscreenchange'].forEach((fn: any) => fn());
+      events.fullscreenchange.forEach((fn: any) => fn());
     });
     expect(result.current[0]).toBe(false);
   });
@@ -66,13 +67,13 @@ describe('useFullscreen', () => {
     const { toggleFullscreen } = result.current[1];
     toggleFullscreen();
     act(() => {
-      events['fullscreenchange'].forEach((fn: any) => fn());
+      events.fullscreenchange.forEach((fn: any) => fn());
     });
     expect(result.current[0]).toBe(true);
 
     toggleFullscreen();
     act(() => {
-      events['fullscreenchange'].forEach((fn: any) => fn());
+      events.fullscreenchange.forEach((fn: any) => fn());
     });
     expect(result.current[0]).toBe(false);
   });
@@ -87,13 +88,13 @@ describe('useFullscreen', () => {
     const { toggleFullscreen } = result.current[1];
     toggleFullscreen();
     act(() => {
-      events['fullscreenchange'].forEach((fn: any) => fn());
+      events.fullscreenchange.forEach((fn: any) => fn());
     });
     expect(onEnter).toBeCalled();
 
     toggleFullscreen();
     act(() => {
-      events['fullscreenchange'].forEach((fn: any) => fn());
+      events.fullscreenchange.forEach((fn: any) => fn());
     });
     expect(onExit).toBeCalled();
   });
@@ -111,7 +112,7 @@ describe('useFullscreen', () => {
     const { exitFullscreen } = result.current[1];
     exitFullscreen();
     act(() => {
-      events['fullscreenchange'].forEach((fn: any) => fn());
+      events.fullscreenchange.forEach((fn: any) => fn());
     });
     expect(onExit).not.toBeCalled();
   });
