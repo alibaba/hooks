@@ -1,5 +1,6 @@
 import { renderHook, act } from '@testing-library/react';
 import useLocalStorageState from '../index';
+import 'jest-localstorage-mock';
 
 describe('useLocalStorageState', () => {
   const setUp = <T>(key: string, value: T) =>
@@ -105,5 +106,14 @@ describe('useLocalStorageState', () => {
       hook.result.current.setState((state) => `${state}, zhangsan`);
     });
     expect(hook.result.current.state).toBe('hello world, zhangsan');
+  });
+
+  it('should save the default value in localStorage', () => {
+    const LOCAL_STORAGE_KEY = 'test-default-value-key';
+    const defaultValue = 'Hello';
+    const hook = setUp(LOCAL_STORAGE_KEY, defaultValue);
+    expect(hook.result.current.state).toBe(defaultValue);
+    const localStorageValue = localStorage.getItem(LOCAL_STORAGE_KEY);
+    expect(localStorageValue).toBe(JSON.stringify(defaultValue));
   });
 });
