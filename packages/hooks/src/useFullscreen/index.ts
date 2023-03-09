@@ -48,7 +48,7 @@ const useFullscreen = (target: BasicTarget, options?: Options) => {
     }
   };
 
-  const toggleBrowserFullscreen = (fullscreen: boolean) => {
+  const togglePageFullscreen = (fullscreen: boolean) => {
     const el = getTargetElement(target);
 
     if (!el) {
@@ -90,7 +90,7 @@ const useFullscreen = (target: BasicTarget, options?: Options) => {
     }
 
     if (pageFullscreen) {
-      toggleBrowserFullscreen(true);
+      togglePageFullscreen(true);
       return;
     }
     if (screenfull.isEnabled) {
@@ -105,7 +105,7 @@ const useFullscreen = (target: BasicTarget, options?: Options) => {
 
   const exitFullscreen = () => {
     if (pageFullscreen) {
-      toggleBrowserFullscreen(false);
+      togglePageFullscreen(false);
       return;
     }
 
