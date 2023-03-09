@@ -5,15 +5,23 @@ import useMemoizedFn from '../useMemoizedFn';
 import useUnmount from '../useUnmount';
 import type { BasicTarget } from '../utils/domTarget';
 import { getTargetElement } from '../utils/domTarget';
+import { isBoolean } from '../utils';
+
+export interface PageFullscreenOptions {
+  className?: string;
+  zIndex: number;
+}
 
 export interface Options {
   onExit?: () => void;
   onEnter?: () => void;
-  isBrowserFullscreen?: boolean;
+  pageFullscreen?: boolean | PageFullscreenOptions;
 }
 
 const useFullscreen = (target: BasicTarget, options?: Options) => {
-  const { onExit, onEnter, isBrowserFullscreen } = options || {};
+  const { onExit, onEnter, pageFullscreen = false } = options || {};
+  const { className = 'ahooks-page-fullscreen', zIndex = 999999 } =
+    isBoolean(pageFullscreen) || !pageFullscreen ? {} : pageFullscreen;
 
   const onExitRef = useLatest(onExit);
   const onEnterRef = useLatest(onEnter);
@@ -33,38 +41,49 @@ const useFullscreen = (target: BasicTarget, options?: Options) => {
     }
   };
 
-  const setStyleFullscreen = (val: boolean) => {
+  const toggleBrowserFullscreen = (fullscreen: boolean) => {
     const el = getTargetElement(target);
-    console.log(val);
 
     if (!el) {
       return;
     }
-    const getStyleElem = document.getElementById('hook-fullScreenStyle') as HTMLStyleElement;
-    if (val) {
-      el.classList.add('hook-fullscreen');
-      if (!getStyleElem) {
-        const styleElem = document.createElement('style');
-        styleElem.setAttribute('id', 'hook-fullScreenStyle');
-        styleElem.textContent = `.hook-fullscreen{ position:fixed;left:0;top:0;right:0;bottom:0;z-index:2000;width:100%!important;height:100%!important;}`;
+
+    let styleElem = document.getElementById(className);
+
+    if (fullscreen) {
+      el.classList.add(className);
+
+      if (!styleElem) {
+        styleElem = document.createElement('style');
+        styleElem.setAttribute('id', className);
+        styleElem.textContent = `
+          .${className} {
+            position: fixed; left: 0; top: 0; right: 0; bottom: 0;
+            width: 100% !important; height: 100% !important;
+            z-index: ${zIndex};
+          }
+          html { position: fixed; }`;
         el.appendChild(styleElem);
       }
     } else {
-      el.classList.remove('hook-fullscreen');
-      if (getStyleElem) {
-        getStyleElem.remove();
+      el.classList.remove(className);
+
+      if (styleElem) {
+        styleElem.remove();
       }
     }
+
     setState(!state);
   };
+
   const enterFullscreen = () => {
     const el = getTargetElement(target);
     if (!el) {
       return;
     }
 
-    if (isBrowserFullscreen) {
-      setStyleFullscreen(true);
+    if (pageFullscreen) {
+      toggleBrowserFullscreen(true);
       return;
     }
     if (screenfull.isEnabled) {
@@ -78,8 +97,8 @@ const useFullscreen = (target: BasicTarget, options?: Options) => {
   };
 
   const exitFullscreen = () => {
-    if (isBrowserFullscreen) {
-      setStyleFullscreen(false);
+    if (pageFullscreen) {
+      toggleBrowserFullscreen(false);
       return;
     }
     if (screenfull.isEnabled) {
@@ -88,8 +107,6 @@ const useFullscreen = (target: BasicTarget, options?: Options) => {
   };
 
   const toggleFullscreen = () => {
-    console.log(state);
-
     if (state) {
       exitFullscreen();
     } else {
@@ -98,10 +115,8 @@ const useFullscreen = (target: BasicTarget, options?: Options) => {
   };
 
   useUnmount(() => {
-    if (!isBrowserFullscreen) {
-      if (screenfull.isEnabled) {
-        screenfull.off('change', onChange);
-      }
+    if (!pageFullscreen && screenfull.isEnabled) {
+      screenfull.off('change', onChange);
     }
   });
 
