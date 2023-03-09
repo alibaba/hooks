@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Button, Col, Form, Input, Row, Table, Select } from 'antd';
 import { useAntdTable, clearCache } from 'ahooks';
+import ReactJson from 'react-json-view';
 
 const { Option } = Select;
 
@@ -138,8 +139,10 @@ const UserList = () => {
       <Table columns={columns} rowKey="email" {...tableProps} />
 
       <div style={{ background: '#f5f5f5', padding: 8 }}>
-        <p>Current Table: {JSON.stringify(params[0])}</p>
-        <p>Current Form: {JSON.stringify(params[1])}</p>
+        <p>Current Table:</p>
+        <ReactJson src={params[0]!} collapsed={2} />
+        <p>Current Form:</p>
+        <ReactJson src={params[0]!} collapsed={2} />
       </div>
     </div>
   );
