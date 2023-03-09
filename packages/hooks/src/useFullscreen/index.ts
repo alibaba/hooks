@@ -101,7 +101,10 @@ const useFullscreen = (target: BasicTarget, options?: Options) => {
       toggleBrowserFullscreen(false);
       return;
     }
-    if (screenfull.isEnabled) {
+
+    const el = getTargetElement(target);
+
+    if (screenfull.isEnabled && screenfull.element === el) {
       screenfull.exit();
     }
   };
