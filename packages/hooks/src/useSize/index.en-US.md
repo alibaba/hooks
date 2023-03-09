@@ -31,6 +31,6 @@ const size = useSize(target);
 
 ### Result
 
-| Property | Description         | Type                                             |
-| -------- | ------------------- | ------------------------------------------------ |
-| size     | Size of the element | `{ width: number, height: number } \| undefined` |
+| Property | Description         | Type                                             | Default                                                                   |
+| -------- | ------------------- | ------------------------------------------------ | ------------------------------------------------------------------------- |
+| size     | Size of the element | `{ width: number, height: number } \| undefined` | `{ width: target.clientWidth, height: target.clientHeight } \| undefined` |

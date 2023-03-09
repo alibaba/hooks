@@ -17,6 +17,10 @@ A hook to manage state change history. It provides encapsulation methods to trav
 
 <code src="./demo/demo2.tsx" />
 
+### Limit maximum history length
+
+<code src="./demo/demo3.tsx" />
+
 ## API
 
 ```typescript
@@ -28,14 +32,15 @@ const {
   go,
   back,
   forward
-} = useHistoryTravel<T>(initialValue?: T);
+} = useHistoryTravel<T>(initialValue?: T, maxLength: number = 0 );
 ```
 
 ### Params
 
-| Property     | Description            | Type | Default |
-| ------------ | ---------------------- | ---- | ------- |
-| initialValue | Optional initial value | `T`  | -       |
+| Property     | Description                                                                                                               | Type     | Default     |
+| ------------ | ------------------------------------------------------------------------------------------------------------------------- | -------- | ----------- |
+| initialValue | Optional initial value                                                                                                    | `T`      | -           |
+| maxLength    | Optional limit the maximum length of history records. If the maximum length is exceeded, the first record will be deleted | `number` | 0 unlimited |
 
 ### Result
 

@@ -1,4 +1,4 @@
-import { act } from '@testing-library/react-hooks/dom';
+import { act } from '@testing-library/react';
 import { setup } from '.';
 
 describe('useUrlState', () => {
@@ -56,5 +56,20 @@ describe('useUrlState', () => {
       res.setState({ foo: ['4', '5', '6'] });
     });
     expect(res.state).toMatchObject({ foo: ['4', '5', '6'] });
+  });
+
+  it('location.state should be remain', () => {
+    const res = setup([
+      {
+        pathname: '/index',
+        state: 'state',
+      },
+    ]);
+    expect(res.location.state).toBe('state');
+    act(() => {
+      res.setState({ count: 1 });
+    });
+    expect(res.state).toMatchObject({ count: '1' });
+    expect(res.location.state).toBe('state');
   });
 });

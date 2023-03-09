@@ -1,4 +1,4 @@
-import { act, renderHook } from '@testing-library/react-hooks';
+import { act, renderHook, waitFor } from '@testing-library/react';
 import useRequest from '../index';
 import { request } from '../../utils/testingHelpers';
 
@@ -36,8 +36,7 @@ describe('useDebouncePlugin', () => {
     act(() => {
       jest.runAllTimers();
     });
-    await hook.waitForNextUpdate();
-    expect(callback).toHaveBeenCalledTimes(1);
+    await waitFor(() => expect(callback).toHaveBeenCalledTimes(1));
 
     act(() => {
       hook.result.current.run(1);
@@ -52,8 +51,7 @@ describe('useDebouncePlugin', () => {
     act(() => {
       jest.runAllTimers();
     });
-    await hook.waitForNextUpdate();
-    expect(callback).toHaveBeenCalledTimes(2);
+    await waitFor(() => expect(callback).toHaveBeenCalledTimes(2));
 
     act(() => {
       hook.result.current.run(1);

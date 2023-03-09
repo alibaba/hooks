@@ -5,11 +5,10 @@ module.exports = {
   testPathIgnorePatterns: ['/.history/'],
   modulePathIgnorePatterns: ['<rootDir>/package.json'],
   resetMocks: false,
-  setupFiles: ['./jest.setup.ts', 'jest-localstorage-mock'],
-  globals: {
-    'ts-jest': {
-      tsconfig: 'tsconfig.json',
-    },
+  setupFiles: ['./jest.setup.js', 'jest-localstorage-mock'],
+  setupFilesAfterEnv: ['@testing-library/jest-dom/extend-expect'],
+  transform: {
+    '^.+\\.tsx?$': ['ts-jest', { tsconfig: 'tsconfig.json' }],
   },
   collectCoverageFrom: [
     '<rootDir>/**/src/**/*.{js,jsx,ts,tsx}',

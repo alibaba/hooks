@@ -1,4 +1,4 @@
-import { act, renderHook } from '@testing-library/react-hooks';
+import { act, renderHook, waitFor } from '@testing-library/react';
 import { render } from '@testing-library/react';
 import useRequest, { clearCache } from '../index';
 import { request } from '../../utils/testingHelpers';
@@ -12,12 +12,12 @@ describe('useCachePlugin', () => {
 
   const testCacheKey = async (options: any) => {
     const hook = setup(request, options);
-    expect(hook.result.current.loading).toEqual(true);
+    expect(hook.result.current.loading).toBe(true);
     await act(async () => {
       jest.advanceTimersByTime(1000);
     });
-    expect(hook.result.current.loading).toEqual(false);
-    expect(hook.result.current.data).toEqual('success');
+    expect(hook.result.current.loading).toBe(false);
+    expect(hook.result.current.data).toBe('success');
     hook.unmount();
   };
 
@@ -31,12 +31,12 @@ describe('useCachePlugin', () => {
     const hook2 = setup(request, {
       cacheKey: 'testCacheKey',
     });
-    expect(hook2.result.current.loading).toEqual(true);
-    expect(hook2.result.current.data).toEqual('success');
+    expect(hook2.result.current.loading).toBe(true);
+    expect(hook2.result.current.data).toBe('success');
     await act(async () => {
       jest.advanceTimersByTime(1000);
     });
-    expect(hook2.result.current.loading).toEqual(false);
+    expect(hook2.result.current.loading).toBe(false);
   });
 
   it('useRequest staleTime should work', async () => {
@@ -51,8 +51,8 @@ describe('useCachePlugin', () => {
       cacheKey: 'testStaleTime',
       staleTime: 3000,
     });
-    expect(hook2.result.current.loading).toEqual(false);
-    expect(hook2.result.current.data).toEqual('success');
+    expect(hook2.result.current.loading).toBe(false);
+    expect(hook2.result.current.data).toBe('success');
     hook2.unmount();
 
     jest.advanceTimersByTime(3001);
@@ -61,13 +61,13 @@ describe('useCachePlugin', () => {
       cacheKey: 'testStaleTime',
       staleTime: 3000,
     });
-    expect(hook3.result.current.loading).toEqual(true);
-    expect(hook3.result.current.data).toEqual('success');
+    expect(hook3.result.current.loading).toBe(true);
+    expect(hook3.result.current.data).toBe('success');
 
     await act(async () => {
       jest.advanceTimersByTime(1000);
     });
-    expect(hook3.result.current.loading).toEqual(false);
+    expect(hook3.result.current.loading).toBe(false);
   });
 
   it('useRequest cacheTime should work', async () => {
@@ -82,8 +82,8 @@ describe('useCachePlugin', () => {
       cacheKey: 'testCacheTime',
       cacheTime: 5000,
     });
-    expect(hook2.result.current.loading).toEqual(true);
-    expect(hook2.result.current.data).toEqual('success');
+    expect(hook2.result.current.loading).toBe(true);
+    expect(hook2.result.current.data).toBe('success');
     hook2.unmount();
 
     jest.advanceTimersByTime(5001);
@@ -92,14 +92,14 @@ describe('useCachePlugin', () => {
       cacheKey: 'testCacheTime',
       cacheTime: 5000,
     });
-    expect(hook3.result.current.loading).toEqual(true);
-    expect(hook3.result.current.data).toEqual(undefined);
+    expect(hook3.result.current.loading).toBe(true);
+    expect(hook3.result.current.data).toBeUndefined();
 
     await act(async () => {
       jest.advanceTimersByTime(1000);
     });
-    expect(hook3.result.current.loading).toEqual(false);
-    expect(hook3.result.current.data).toEqual('success');
+    expect(hook3.result.current.loading).toBe(false);
+    expect(hook3.result.current.data).toBe('success');
   });
 
   it('clearCache should work', async () => {
@@ -109,8 +109,8 @@ describe('useCachePlugin', () => {
     const hook2 = setup(request, {
       cacheKey: 'testClearCache',
     });
-    expect(hook2.result.current.loading).toEqual(true);
-    expect(hook2.result.current.data).toEqual(undefined);
+    expect(hook2.result.current.loading).toBe(true);
+    expect(hook2.result.current.data).toBeUndefined();
   });
 
   it('setCache/getCache should work', async () => {
@@ -127,13 +127,13 @@ describe('useCachePlugin', () => {
       setCache: (data) => localStorage.setItem(cacheKey, JSON.stringify(data)),
       getCache: () => JSON.parse(localStorage.getItem(cacheKey) || '{}'),
     });
-    expect(hook2.result.current.loading).toEqual(true);
-    expect(hook2.result.current.data).toEqual('success');
+    expect(hook2.result.current.loading).toBe(true);
+    expect(hook2.result.current.data).toBe('success');
 
     await act(async () => {
       jest.advanceTimersByTime(1000);
     });
-    expect(hook2.result.current.loading).toEqual(false);
+    expect(hook2.result.current.loading).toBe(false);
   });
 
   it('cache should work when change data immediately', async () => {
@@ -143,12 +143,12 @@ describe('useCachePlugin', () => {
     act(() => {
       result.current.mutate(1);
     });
-    expect(result.current.data).toEqual(1);
+    expect(result.current.data).toBe(1);
     await act(async () => {
       jest.advanceTimersByTime(1000);
     });
-    expect(result.current.loading).toEqual(false);
-    expect(result.current.data).toEqual('success');
+    expect(result.current.loading).toBe(false);
+    expect(result.current.data).toBe('success');
   });
 
   //github.com/alibaba/hooks/issues/1859
@@ -176,20 +176,24 @@ describe('useCachePlugin', () => {
     await act(async () => {
       jest.advanceTimersByTime(1000);
     });
-    expect(res.error).toEqual(undefined);
+    expect(res.error).toBeUndefined();
 
-    res.setKey(0);
+    act(() => res.setKey(0));
+    await act(async () => {
+      jest.advanceTimersByTime(1000);
+    });
+
     await act(async () => {
       jest.advanceTimersByTime(1000);
     });
     expect(errSpy).toBeCalled();
-    expect(res.error).not.toEqual(undefined);
+    await waitFor(() => expect(res.error).not.toBeUndefined());
 
-    res.setKey(1);
+    act(() => res.setKey(1));
     await act(async () => {
       jest.advanceTimersByTime(1000);
     });
-    expect(res.error).toEqual(undefined);
+    expect(res.error).toBeUndefined();
 
     errSpy.mockRestore();
   });

@@ -1,4 +1,4 @@
-import { act, renderHook } from '@testing-library/react-hooks';
+import { act, renderHook } from '@testing-library/react';
 import useFusionTable from '../index';
 import { sleep } from '../../utils/testingHelpers';
 
@@ -72,11 +72,11 @@ describe('useFusionTable', () => {
     await act(async () => {
       jest.runAllTimers();
     });
-    expect(result.current.tableProps.loading).toBeTruthy();
+    expect(result.current.tableProps.loading).toBe(true);
     await act(async () => {
       jest.advanceTimersByTime(1000);
     });
-    expect(result.current.tableProps.loading).toBeFalsy();
+    expect(result.current.tableProps.loading).toBe(false);
     expect(result.current.tableProps.dataSource).toHaveLength(10);
     expect(result.current.paginationProps.current).toBe(1);
     expect(result.current.paginationProps.total).toBe(total);
@@ -111,23 +111,23 @@ describe('useFusionTable', () => {
     await act(async () => {
       jest.runAllTimers();
     });
-    expect(result.current.loading).toBeTruthy();
+    expect(result.current.loading).toBe(true);
     expect(result.current.params[1]).toMatchObject({ name: 'ahooks' });
     await act(async () => {
       jest.advanceTimersByTime(1000);
     });
-    expect(result.current.loading).toBeFalsy();
+    expect(result.current.loading).toBe(false);
 
     result.current.search.reset();
     expect(result.current.params[1]).toMatchObject({});
     await act(async () => {
       jest.runAllTimers();
     });
-    expect(result.current.loading).toBeTruthy();
+    expect(result.current.loading).toBe(true);
     await act(async () => {
       jest.advanceTimersByTime(1000);
     });
-    expect(result.current.loading).toBeFalsy();
+    expect(result.current.loading).toBe(false);
   });
 
   it('defaultParams should be work', async () => {
@@ -165,14 +165,14 @@ describe('useFusionTable', () => {
     });
 
     expect(hook.result.current.tableProps.dataSource).toHaveLength(5);
-    expect(hook.result.current.loading).toBeFalsy();
+    expect(hook.result.current.loading).toBe(false);
 
     hook.unmount();
     const hook2 = setup(getTableData, options);
     await act(async () => {
       jest.runAllTimers();
     });
-    expect(hook2.result.current.loading).toBeFalsy();
+    expect(hook2.result.current.loading).toBe(false);
     expect(hook2.result.current.tableProps.dataSource).toHaveLength(5);
   });
 
@@ -181,7 +181,7 @@ describe('useFusionTable', () => {
     act(() => {
       result.current.tableProps.onSort('dataIndex', 'asc');
     });
-    expect(result.current.loading).toBeTruthy();
+    expect(result.current.loading).toBe(true);
     expect(result.current.params[0]?.sorter).toMatchObject({ field: 'dataIndex', order: 'asc' });
   });
 
@@ -193,7 +193,7 @@ describe('useFusionTable', () => {
     act(() => {
       result.current.tableProps.onFilter(filterParams);
     });
-    expect(result.current.loading).toBeTruthy();
+    expect(result.current.loading).toBe(true);
     expect(result.current.params[0]?.filters).toMatchObject(filterParams);
   });
 });

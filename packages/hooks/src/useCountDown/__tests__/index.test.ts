@@ -1,4 +1,4 @@
-import { act, renderHook } from '@testing-library/react-hooks';
+import { act, renderHook } from '@testing-library/react';
 import useCountDown, { Options } from '../index';
 
 const setup = (options: Options = {}) =>
@@ -6,7 +6,7 @@ const setup = (options: Options = {}) =>
 
 describe('useCountDown', () => {
   beforeAll(() => {
-    jest.useFakeTimers('modern');
+    jest.useFakeTimers({ legacyFakeTimers: false });
     jest.setSystemTime(1479427200000);
   });
 
@@ -56,14 +56,14 @@ describe('useCountDown', () => {
     act(() => {
       jest.advanceTimersByTime(4000);
     });
-    expect(result.current[0]).toEqual(0);
+    expect(result.current[0]).toBe(0);
     expect(result.current[1].seconds).toBe(0);
 
     act(() => {
       jest.advanceTimersByTime(1000);
     });
 
-    expect(result.current[0]).toEqual(0);
+    expect(result.current[0]).toBe(0);
     expect(result.current[1].seconds).toBe(0);
   });
 
@@ -174,14 +174,14 @@ describe('useCountDown', () => {
     act(() => {
       jest.advanceTimersByTime(4000);
     });
-    expect(result.current[0]).toEqual(0);
+    expect(result.current[0]).toBe(0);
     expect(result.current[1].seconds).toBe(0);
 
     act(() => {
       jest.advanceTimersByTime(1000);
     });
 
-    expect(result.current[0]).toEqual(0);
+    expect(result.current[0]).toBe(0);
     expect(result.current[1].seconds).toBe(0);
   });
 

@@ -1,4 +1,4 @@
-import { renderHook } from '@testing-library/react-hooks';
+import { renderHook } from '@testing-library/react';
 import useIsomorphicLayoutEffect from '../index';
 
 describe('useIsomorphicLayoutEffect', () => {
@@ -6,6 +6,6 @@ describe('useIsomorphicLayoutEffect', () => {
   const { result } = renderHook(() => useIsomorphicLayoutEffect(callback));
 
   it('cheak return value', () => {
-    expect(result.current).toBe(undefined);
+    expect(result.current).toBeUndefined();
   });
 });
