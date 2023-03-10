@@ -28,22 +28,27 @@ const useFullscreen = (target: BasicTarget, options?: Options) => {
 
   const [state, setState] = useState(false);
 
+  const invokeCallback = (fullscreen: boolean) => {
+    if (fullscreen) {
+      onEnterRef.current?.();
+    } else {
+      onExitRef.current?.();
+    }
+  };
+
   // Memoized, otherwise it will be listened multiply times.
-  const onChange = useMemoizedFn(() => {
+  const onScreenfullChange = useMemoizedFn(() => {
     if (screenfull.isEnabled) {
       const el = getTargetElement(target);
 
       if (!screenfull.element) {
-        onExitRef.current?.();
+        invokeCallback(false);
         setState(false);
-        screenfull.off('change', onChange);
+        screenfull.off('change', onScreenfullChange);
       } else {
         const isFullscreen = screenfull.element === el;
-        if (isFullscreen) {
-          onEnterRef.current?.();
-        } else {
-          onExitRef.current?.();
-        }
+
+        invokeCallback(isFullscreen);
         setState(isFullscreen);
       }
     }
@@ -81,6 +86,7 @@ const useFullscreen = (target: BasicTarget, options?: Options) => {
       }
     }
 
+    invokeCallback(fullscreen);
     setState(!state);
   };
 
@@ -97,7 +103,7 @@ const useFullscreen = (target: BasicTarget, options?: Options) => {
     if (screenfull.isEnabled) {
       try {
         screenfull.request(el);
-        screenfull.on('change', onChange);
+        screenfull.on('change', onScreenfullChange);
       } catch (error) {
         console.error(error);
       }
@@ -105,13 +111,15 @@ const useFullscreen = (target: BasicTarget, options?: Options) => {
   };
 
   const exitFullscreen = () => {
+    const el = getTargetElement(target);
+    if (!el) {
+      return;
+    }
+
     if (pageFullscreen) {
       togglePageFullscreen(false);
       return;
     }
-
-    const el = getTargetElement(target);
-
     if (screenfull.isEnabled && screenfull.element === el) {
       screenfull.exit();
     }
@@ -126,8 +134,8 @@ const useFullscreen = (target: BasicTarget, options?: Options) => {
   };
 
   useUnmount(() => {
-    if (!pageFullscreen && screenfull.isEnabled) {
-      screenfull.off('change', onChange);
+    if (screenfull.isEnabled && !pageFullscreen) {
+      screenfull.off('change', onScreenfullChange);
     }
   });
 
