@@ -9,7 +9,7 @@ import { isBoolean } from '../utils';
 
 export interface PageFullscreenOptions {
   className?: string;
-  zIndex: number;
+  zIndex?: number;
 }
 
 export interface Options {
