@@ -99,22 +99,36 @@ describe('useFullscreen', () => {
     expect(onExit).toBeCalled();
   });
 
+  it('onExit/onEnter should not be called', () => {
+    const onExit = jest.fn();
+    const onEnter = jest.fn();
+    const { result } = setup(targetEl, { onExit, onEnter });
+    const { exitFullscreen, enterFullscreen } = result.current[1];
+
+    // `onExit` should not be called when not full screen
+    exitFullscreen();
+    act(() => events.fullscreenchange.forEach((fn: any) => fn()));
+    expect(onExit).not.toBeCalled();
+
+    // Enter full screen
+    enterFullscreen();
+    act(() => events.fullscreenchange.forEach((fn: any) => fn()));
+    expect(onEnter).toBeCalled();
+    onEnter.mockReset();
+
+    // `onEnter` should not be called when full screen
+    enterFullscreen();
+    // There is no need to write: `act(() => events.fullscreenchange.forEach((fn: any) => fn()));`,
+    // because in a real browser, if it is already in full screen, calling `enterFullscreen` again
+    // will not trigger the `change` event.
+    expect(onEnter).not.toBeCalled();
+  });
+
   it('enterFullscreen should not work when target is not element', () => {
     const { result } = setup(null);
     const { enterFullscreen } = result.current[1];
     enterFullscreen();
     expect(events.fullscreenchange.size).toBe(0);
-  });
-
-  it('exitFullscreen should not work when not in full screen', () => {
-    const onExit = jest.fn();
-    const { result } = setup(targetEl, { onExit });
-    const { exitFullscreen } = result.current[1];
-    exitFullscreen();
-    act(() => {
-      events.fullscreenchange.forEach((fn: any) => fn());
-    });
-    expect(onExit).not.toBeCalled();
   });
 
   it('should remove event listener when unmount', () => {

@@ -28,7 +28,8 @@ const useFullscreen = (target: BasicTarget, options?: Options) => {
 
   const [state, setState] = useState(false);
 
-  const onChange = () => {
+  // Memoized, otherwise it will be listened multiply times.
+  const onChange = useMemoizedFn(() => {
     if (screenfull.isEnabled) {
       const el = getTargetElement(target);
 
@@ -46,7 +47,7 @@ const useFullscreen = (target: BasicTarget, options?: Options) => {
         setState(isFullscreen);
       }
     }
-  };
+  });
 
   const togglePageFullscreen = (fullscreen: boolean) => {
     const el = getTargetElement(target);
