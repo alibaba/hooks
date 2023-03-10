@@ -56,7 +56,6 @@ const useFullscreen = (target: BasicTarget, options?: Options) => {
 
   const togglePageFullscreen = (fullscreen: boolean) => {
     const el = getTargetElement(target);
-
     if (!el) {
       return;
     }
@@ -74,8 +73,7 @@ const useFullscreen = (target: BasicTarget, options?: Options) => {
             position: fixed; left: 0; top: 0; right: 0; bottom: 0;
             width: 100% !important; height: 100% !important;
             z-index: ${zIndex};
-          }
-          html { position: fixed; }`;
+          }`;
         el.appendChild(styleElem);
       }
     } else {
@@ -86,8 +84,11 @@ const useFullscreen = (target: BasicTarget, options?: Options) => {
       }
     }
 
-    invokeCallback(fullscreen);
-    setState(!state);
+    // Prevent repeated calls when the state is not changed.
+    if (state !== fullscreen) {
+      invokeCallback(fullscreen);
+      setState(fullscreen);
+    }
   };
 
   const enterFullscreen = () => {
