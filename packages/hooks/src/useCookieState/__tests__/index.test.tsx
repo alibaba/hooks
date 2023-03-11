@@ -83,10 +83,18 @@ describe('useCookieState', () => {
       hook.result.current.setState(undefined);
     });
     expect(hook.result.current.state).toBeUndefined();
+    expect(Cookies.get(COOKIE)).toBeUndefined();
     const anotherHook = setUp(COOKIE, {
       defaultValue: 'false',
     });
     expect(anotherHook.result.current.state).toBe('false');
+    expect(Cookies.get(COOKIE)).toBe('false');
+    act(() => {
+      // @ts-ignore
+      hook.result.current.setState();
+    });
+    expect(hook.result.current.state).toBeUndefined();
+    expect(Cookies.get(COOKIE)).toBeUndefined();
   });
 
   it('should support empty string', () => {
@@ -129,30 +137,5 @@ describe('useCookieState', () => {
     expect(result1.current.state).toBe('B');
     expect(result2.current.state).toBe('C');
     expect(Cookies.get(COOKIE_NAME)).toBe('C');
-  });
-
-  it('delete cookie when cookie value equal undefined', () => {
-    const COOKIE = 'test-delete-undefined-cookie';
-    const hook = setUp(COOKIE, {
-      defaultValue: 'hello',
-    });
-    expect(hook.result.current.state).toBe('hello');
-    expect(Cookies.get(COOKIE)).toBe('hello');
-    act(() => {
-      hook.result.current.setState(undefined);
-    });
-    expect(hook.result.current.state).toBeUndefined();
-    expect(Cookies.get(COOKIE)).toBeUndefined();
-    act(() => {
-      hook.result.current.setState('');
-    });
-    expect(hook.result.current.state).toBe('');
-    expect(Cookies.get(COOKIE)).toBe('');
-    act(() => {
-      // @ts-ignore
-      hook.result.current.setState();
-    });
-    expect(hook.result.current.state).toBeUndefined();
-    expect(Cookies.get(COOKIE)).toBeUndefined();
   });
 });
