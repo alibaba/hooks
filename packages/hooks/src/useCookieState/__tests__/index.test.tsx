@@ -70,6 +70,7 @@ describe('useCookieState', () => {
     });
     expect(anotherHook.result.current.state).toBe('C');
     expect(hook.result.current.state).toBe('B');
+    expect(Cookies.get(COOKIE)).toBe('C');
   });
 
   it('should support undefined', () => {
@@ -108,5 +109,50 @@ describe('useCookieState', () => {
       hook.result.current.setState((state) => `${state}, zhangsan`);
     });
     expect(hook.result.current.state).toBe('hello world, zhangsan');
+  });
+
+  it('using the same cookie name', () => {
+    const COOKIE_NAME = 'test-cookie';
+    const { result: result1 } = setUp(COOKIE_NAME, { defaultValue: 'A' });
+    const { result: result2 } = setUp(COOKIE_NAME, { defaultValue: 'B' });
+    expect(result1.current.state).toBe('A');
+    expect(result2.current.state).toBe('A');
+    act(() => {
+      result1.current.setState('B');
+    });
+    expect(result1.current.state).toBe('B');
+    expect(result2.current.state).toBe('A');
+    expect(Cookies.get(COOKIE_NAME)).toBe('B');
+    act(() => {
+      result2.current.setState('C');
+    });
+    expect(result1.current.state).toBe('B');
+    expect(result2.current.state).toBe('C');
+    expect(Cookies.get(COOKIE_NAME)).toBe('C');
+  });
+
+  it('delete cookie when cookie value equal undefined', () => {
+    const COOKIE = 'test-delete-undefined-cookie';
+    const hook = setUp(COOKIE, {
+      defaultValue: 'hello',
+    });
+    expect(hook.result.current.state).toBe('hello');
+    expect(Cookies.get(COOKIE)).toBe('hello');
+    act(() => {
+      hook.result.current.setState(undefined);
+    });
+    expect(hook.result.current.state).toBeUndefined();
+    expect(Cookies.get(COOKIE)).toBeUndefined();
+    act(() => {
+      hook.result.current.setState('');
+    });
+    expect(hook.result.current.state).toBe('');
+    expect(Cookies.get(COOKIE)).toBe('');
+    act(() => {
+      // @ts-ignore
+      hook.result.current.setState();
+    });
+    expect(hook.result.current.state).toBeUndefined();
+    expect(Cookies.get(COOKIE)).toBeUndefined();
   });
 });
