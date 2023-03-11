@@ -61,7 +61,7 @@ setState can update cookie options, which will be merged with the options set by
 
 | Property     | Description                                                                                | Type                                                       | Default     |
 | ------------ | ------------------------------------------------------------------------------------------ | ---------------------------------------------------------- | ----------- |
-| defaultValue | Optional. Default value, but not store to Cookie                                           | `string` \| `undefined` \| `(() => (string \| undefined))` | `undefined` |
+| defaultValue | Optional. Default value, store to Cookie                                                   | `string` \| `undefined` \| `(() => (string \| undefined))` | `undefined` |
 | expires      | Optional. Set Cookie expiration time                                                       | `number` \| `Date`                                         | -           |
 | path         | Optional. Specify available paths                                                          | `string`                                                   | `/`         |
 | domain       | Optional. Specify available domain. Default creation domain                                | `string`                                                   | -           |
