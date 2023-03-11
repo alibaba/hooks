@@ -1,5 +1,5 @@
 import useDocumentVisibility from '../index';
-import { renderHook, act } from '@testing-library/react-hooks';
+import { renderHook, act } from '@testing-library/react';
 
 const mockIsBrowser = jest.fn();
 const mockDocumentVisibilityState = jest.spyOn(document, 'visibilityState', 'get');
@@ -23,7 +23,7 @@ describe('useDocumentVisibility', () => {
     // Object.defineProperty(document, 'visibilityState', { value: 'hidden', writable: true });
     mockIsBrowser.mockReturnValue(false);
     const { result } = renderHook(() => useDocumentVisibility());
-    expect(result.current).toEqual('visible');
+    expect(result.current).toBe('visible');
   });
 
   it('visibilitychange update correct ', async () => {
@@ -31,12 +31,12 @@ describe('useDocumentVisibility', () => {
     // Object.defineProperty(document, 'visibilityState', { value: 'hidden', writable: true });
     mockIsBrowser.mockReturnValue(true);
     const { result } = renderHook(() => useDocumentVisibility());
-    expect(result.current).toEqual('hidden');
+    expect(result.current).toBe('hidden');
     mockDocumentVisibilityState.mockReturnValue('visible');
     // Object.defineProperty(document, 'visibilityState', { value: 'visible', writable: true });
     act(() => {
       document.dispatchEvent(new Event('visibilitychange'));
     });
-    expect(result.current).toEqual('visible');
+    expect(result.current).toBe('visible');
   });
 });

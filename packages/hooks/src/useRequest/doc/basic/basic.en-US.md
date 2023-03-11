@@ -97,12 +97,16 @@ We have modified the user name, but we do not want to wait for the request to be
 
 <!-- <code src="./demo/formatResult.tsx" /> -->
 
-## Cancel request
+## Cancel response
 
-`useRequest` provides a `cancel` function, which can cancel the request. At the same time, `useRequest` will automatically cancel the current request at the following timing:
+`useRequest` provides a `cancel` function, which will **ignore** the data and error returned by the current promise
 
-- When the component is unmounting, the ongoing request will be cancelled
-- Race cancellation, when the previous request has not returned, if the next request is initiated, the previous request will be cancelled
+**Note: Calling `cancel` doesn't cancel the execution of promise**
+
+At the same time, `useRequest` will automatically ignore the response at the following timing:
+
+- When the component is unmounting, the ongoing promise
+- Race cancellation, when the previous promise has not returned, if the next promise is initiated, the previous promise will be ignored
 
 <code src="./demo/cancel.tsx" />
 
@@ -154,7 +158,7 @@ const {
 | refresh      | Use the last params, call `run` again                                                                                                                                                   | `() => void`                                                          |
 | refreshAsync | Use the last params, call `runAsync` again                                                                                                                                              | `() => Promise<TData>`                                                |
 | mutate       | Mutate `data` directly                                                                                                                                                                  | `(data?: TData / ((oldData?: TData) => (TData / undefined))) => void` |
-| cancel       | Cancel the current running request                                                                                                                                                      | `() => void`                                                          |
+| cancel       | Ignore the current promise response                                                                                                                                                     | `() => void`                                                          |
 
 ### Options
 

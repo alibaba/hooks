@@ -19,7 +19,7 @@ const getShadow = (node: TargetValue<Element>) => {
 };
 
 const getDocumentOrShadow = (target: BasicTarget | BasicTarget[]): Document | Node => {
-  if (!target) {
+  if (!target || !document.getRootNode) {
     return document;
   }
 

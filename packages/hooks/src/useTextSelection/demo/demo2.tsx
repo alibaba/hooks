@@ -21,11 +21,15 @@ const getResult = (keyword: string): Promise<string> => {
 };
 
 export default () => {
-  const { text = '', left = 0, top = 0, height = 0, width = 0 } = useTextSelection(() =>
-    document.querySelector('#translate-dom'),
-  );
+  const {
+    text = '',
+    left = 0,
+    top = 0,
+    height = 0,
+    width = 0,
+  } = useTextSelection(() => document.querySelector('#translate-dom'));
 
-  const [visible, setVisible] = useState(false);
+  const [open, setOpen] = useState<boolean>(false);
 
   const { data, run, loading } = useRequest(getResult, {
     manual: true,
@@ -33,10 +37,10 @@ export default () => {
 
   useEffect(() => {
     if (text.trim() === '') {
-      setVisible(false);
+      setOpen(false);
       return;
     }
-    setVisible(true);
+    setOpen(true);
     run(text);
   }, [text]);
 
@@ -47,7 +51,7 @@ export default () => {
       </p>
       <Popover
         content={<Spin spinning={loading}>{loading ? 'Translating……' : data}</Spin>}
-        visible={visible}
+        open={open}
       >
         <span
           style={{

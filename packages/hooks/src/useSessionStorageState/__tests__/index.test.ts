@@ -1,4 +1,4 @@
-import { renderHook, act } from '@testing-library/react-hooks';
+import { renderHook, act } from '@testing-library/react';
 import useSessionStorageState from '../index';
 
 describe('useSessionStorageState', () => {
@@ -37,10 +37,10 @@ describe('useSessionStorageState', () => {
   it('should support function updater', () => {
     const LOCAL_STORAGE_KEY = 'test-func-updater';
     const hook = setUp<string | null>(LOCAL_STORAGE_KEY, 'hello world');
-    expect(hook.result.current.state).toEqual('hello world');
+    expect(hook.result.current.state).toBe('hello world');
     act(() => {
       hook.result.current.setState((state) => `${state}, zhangsan`);
     });
-    expect(hook.result.current.state).toEqual('hello world, zhangsan');
+    expect(hook.result.current.state).toBe('hello world, zhangsan');
   });
 });

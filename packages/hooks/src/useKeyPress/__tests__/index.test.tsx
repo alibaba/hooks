@@ -1,4 +1,4 @@
-import { renderHook } from '@testing-library/react-hooks';
+import { renderHook } from '@testing-library/react';
 import { fireEvent } from '@testing-library/react';
 import useKeyPress from '../index';
 
@@ -71,5 +71,16 @@ describe('useKeyPress ', () => {
     fireEvent.keyDown(document, { key: 'a', keyCode: 65 });
     expect(callback.mock.calls.length).toBe(2);
     unmount();
+  });
+
+  it('meta key should be work in keyup event', async () => {
+    renderHook(() =>
+      useKeyPress(['meta'], callback, {
+        events: ['keyup'],
+      }),
+    );
+
+    fireEvent.keyUp(document, { key: 'meta', keyCode: 91, metaKey: false });
+    expect(callback).toBeCalled();
   });
 });

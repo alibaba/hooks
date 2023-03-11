@@ -1,9 +1,11 @@
-import canUseDom from '../../../utils/canUseDom';
+import isBrowser from '../../../utils/isBrowser';
 import isDocumentVisible from './isDocumentVisible';
 
-const listeners: any[] = [];
+type Listener = () => void;
 
-function subscribe(listener: () => void) {
+const listeners: Listener[] = [];
+
+function subscribe(listener: Listener) {
   listeners.push(listener);
   return function unsubscribe() {
     const index = listeners.indexOf(listener);
@@ -11,7 +13,7 @@ function subscribe(listener: () => void) {
   };
 }
 
-if (canUseDom() && typeof window.addEventListener !== 'undefined') {
+if (isBrowser && typeof window.addEventListener !== 'undefined') {
   const revalidate = () => {
     if (!isDocumentVisible()) return;
     for (let i = 0; i < listeners.length; i++) {

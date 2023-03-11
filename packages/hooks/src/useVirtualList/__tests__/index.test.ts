@@ -1,20 +1,5 @@
-import { act, renderHook } from '@testing-library/react-hooks';
+import { act, renderHook } from '@testing-library/react';
 import useVirtualList, { Options } from '../index';
-
-/* 暂时关闭 act 警告  见：https://github.com/testing-library/react-testing-library/issues/281#issuecomment-480349256 */
-const originalError = console.error;
-beforeAll(() => {
-  console.error = (...args: any) => {
-    if (/Warning.*not wrapped in act/.test(args[0])) {
-      return;
-    }
-    originalError.call(console, ...args);
-  };
-});
-
-afterAll(() => {
-  console.error = originalError;
-});
 
 describe('useVirtualList', () => {
   describe('virtual list render', () => {
@@ -78,12 +63,16 @@ describe('useVirtualList', () => {
       expect(container.scrollTop).toBe(20 * 30);
     });
 
-    it('test with dynamic height', () => {
-      setup(Array.from(Array(99999).keys()), {
+    it('test with dynamic height', async () => {
+      const list = Array.from(Array(99999).keys());
+      setup(list, {
         overscan: 0,
         containerTarget: () => container,
         wrapperTarget: () => wrapper,
-        itemHeight: (i: number) => (i % 2 === 0 ? 30 : 60),
+        itemHeight: (i: number, data) => {
+          expect(list[i] === data).toBe(true);
+          return i % 2 === 0 ? 30 : 60;
+        },
       });
 
       act(() => {

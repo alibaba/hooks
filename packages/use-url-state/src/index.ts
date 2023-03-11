@@ -68,10 +68,13 @@ const useUrlState = <S extends UrlState = UrlState>(
     // 2. update 和 history 的更新会合并，不会造成多次更新
     update();
     if (history) {
-      history[navigateMode]({
-        hash: location.hash,
-        search: stringify({ ...queryFromUrl, ...newQuery }, mergedStringifyOptions) || '?',
-      });
+      history[navigateMode](
+        {
+          hash: location.hash,
+          search: stringify({ ...queryFromUrl, ...newQuery }, mergedStringifyOptions) || '?',
+        },
+        location.state,
+      );
     }
     if (navigate) {
       navigate(
@@ -81,6 +84,7 @@ const useUrlState = <S extends UrlState = UrlState>(
         },
         {
           replace: navigateMode === 'replace',
+          state: location.state,
         },
       );
     }

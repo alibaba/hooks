@@ -1,13 +1,8 @@
-import { act, renderHook, RenderHookResult } from '@testing-library/react-hooks';
+import { act, renderHook } from '@testing-library/react';
 import useDebounceEffect from '../index';
 import { sleep } from '../../utils/testingHelpers';
 
-interface ParamsObj {
-  value: any;
-  wait: number;
-}
-
-let hook: RenderHookResult<ParamsObj, any>;
+let hook;
 
 describe('useDebounceEffect', () => {
   it('useDebounceEffect should work', async () => {
@@ -28,27 +23,30 @@ describe('useDebounceEffect', () => {
         ),
       );
     });
+
+    expect(mockEffect.mock.calls.length).toBe(0);
+    expect(mockCleanUp.mock.calls.length).toBe(0);
+    mountedState = 2;
+    hook.rerender();
+    await sleep(50);
+    mountedState = 3;
+    hook.rerender();
+    expect(mockEffect.mock.calls.length).toBe(0);
+    expect(mockCleanUp.mock.calls.length).toBe(0);
     await act(async () => {
-      expect(mockEffect.mock.calls.length).toEqual(0);
-      expect(mockCleanUp.mock.calls.length).toEqual(0);
-      mountedState = 2;
-      hook.rerender();
-      await sleep(50);
-      mountedState = 3;
-      hook.rerender();
-      expect(mockEffect.mock.calls.length).toEqual(0);
-      expect(mockCleanUp.mock.calls.length).toEqual(0);
       await sleep(300);
-      expect(mockEffect.mock.calls.length).toEqual(1);
-      expect(mockCleanUp.mock.calls.length).toEqual(0);
-      mountedState = 4;
-      hook.rerender();
-      expect(mockEffect.mock.calls.length).toEqual(1);
-      expect(mockCleanUp.mock.calls.length).toEqual(0);
-      await sleep(300);
-      expect(mockEffect.mock.calls.length).toEqual(2);
-      expect(mockCleanUp.mock.calls.length).toEqual(1);
     });
+    expect(mockEffect.mock.calls.length).toBe(1);
+    expect(mockCleanUp.mock.calls.length).toBe(0);
+    mountedState = 4;
+    hook.rerender();
+    expect(mockEffect.mock.calls.length).toBe(1);
+    expect(mockCleanUp.mock.calls.length).toBe(0);
+    await act(async () => {
+      await sleep(300);
+    });
+    expect(mockEffect.mock.calls.length).toBe(2);
+    expect(mockCleanUp.mock.calls.length).toBe(1);
   });
 
   it('should cancel timeout on unmount', async () => {
@@ -70,27 +68,29 @@ describe('useDebounceEffect', () => {
       { initialProps: 0 },
     );
 
+    expect(mockEffect.mock.calls.length).toBe(0);
+    expect(mockCleanUp.mock.calls.length).toBe(0);
+
+    hook.rerender(1);
+    await sleep(50);
+    expect(mockEffect.mock.calls.length).toBe(0);
+    expect(mockCleanUp.mock.calls.length).toBe(0);
+
     await act(async () => {
-      expect(mockEffect.mock.calls.length).toEqual(0);
-      expect(mockCleanUp.mock.calls.length).toEqual(0);
-
-      hook.rerender(1);
-      await sleep(50);
-      expect(mockEffect.mock.calls.length).toEqual(0);
-      expect(mockCleanUp.mock.calls.length).toEqual(0);
-
       await sleep(300);
-      expect(mockEffect.mock.calls.length).toEqual(1);
-      expect(mockCleanUp.mock.calls.length).toEqual(0);
-
-      hook.rerender(2);
-      await sleep(300);
-      expect(mockEffect.mock.calls.length).toEqual(2);
-      expect(mockCleanUp.mock.calls.length).toEqual(1);
-
-      hook.unmount();
-      expect(mockEffect.mock.calls.length).toEqual(2);
-      expect(mockCleanUp.mock.calls.length).toEqual(2);
     });
+    expect(mockEffect.mock.calls.length).toBe(1);
+    expect(mockCleanUp.mock.calls.length).toBe(0);
+
+    hook.rerender(2);
+    await act(async () => {
+      await sleep(300);
+    });
+    expect(mockEffect.mock.calls.length).toBe(2);
+    expect(mockCleanUp.mock.calls.length).toBe(1);
+
+    hook.unmount();
+    expect(mockEffect.mock.calls.length).toBe(2);
+    expect(mockCleanUp.mock.calls.length).toBe(2);
   });
 });

@@ -43,7 +43,7 @@ const useAntdTable = <TData extends Data, TParams extends Params>(
   const isAntdV4 = !!form?.getInternalHooks;
 
   // get current active field values
-  const getActivetFieldValues = () => {
+  const getActiveFieldValues = () => {
     if (!form) {
       return {};
     }
@@ -69,7 +69,7 @@ const useAntdTable = <TData extends Data, TParams extends Params>(
     if (!form) {
       return Promise.resolve({});
     }
-    const activeFieldsValue = getActivetFieldValues();
+    const activeFieldsValue = getActiveFieldValues();
     const fields = Object.keys(activeFieldsValue);
 
     // antd 4
@@ -109,7 +109,7 @@ const useAntdTable = <TData extends Data, TParams extends Params>(
   };
 
   const changeType = () => {
-    const activeFieldsValue = getActivetFieldValues();
+    const activeFieldsValue = getActiveFieldValues();
     allFormDataRef.current = {
       ...allFormDataRef.current,
       ...activeFieldsValue,
@@ -155,7 +155,12 @@ const useAntdTable = <TData extends Data, TParams extends Params>(
     if (form) {
       form.resetFields();
     }
-    _submit();
+    _submit(
+      defaultParams?.[0] || {
+        pageSize: options.defaultPageSize || 10,
+        current: 1,
+      },
+    );
   };
 
   const submit = (e?: any) => {
@@ -163,7 +168,7 @@ const useAntdTable = <TData extends Data, TParams extends Params>(
     _submit();
   };
 
-  const onTableChange = (pagination: any, filters: any, sorter: any) => {
+  const onTableChange = (pagination: any, filters: any, sorter: any, extra: any) => {
     const [oldPaginationParams, ...restParams] = params || [];
     run(
       // @ts-ignore
@@ -173,6 +178,7 @@ const useAntdTable = <TData extends Data, TParams extends Params>(
         pageSize: pagination.pageSize,
         filters,
         sorter,
+        extra,
       },
       ...restParams,
     );

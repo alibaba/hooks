@@ -9,7 +9,7 @@ nav:
 
 Before using it, you need to understand a few points that are different from `useRequest`:
 
-1. `service` receives two parameters, the first parameter is the paging data `{ current, pageSize, sorter, filters }`, and the second parameter is the form data.
+1. `service` receives two parameters, the first parameter is the paging data `{ current, pageSize, sorter, filters, extra }`, and the second parameter is the form data.
 2. The data structure returned by `service` must be `{ total: number, list: Item[] }`.
 3. Additional `tableProps` and `search` fields will be returned to manage tables and forms.
 4. When `refreshDeps` changes, it will reset `current` to the first page and re-initiate the request.
@@ -72,17 +72,18 @@ All parameters and returned results of `useRequest` are applicable to `useAntdTa
 ```typescript
 
 type Data = { total: number; list: any[] };
-type Params = [{ current: number; pageSize: number, filter?: any, sorter?: any }, { [key: string]: any }];
+type Params = [{ current: number; pageSize: number, filter?: any, sorter?: any, extra?: any }, { [key: string]: any }];
 
 const {
   ...,
   tableProps: {
-    dataSource: any[];
+    dataSource: TData['list'];
     loading: boolean;
     onChange: (
       pagination: any,
       filters?: any,
       sorter?: any,
+      extra?: any,
     ) => void;
     pagination: {
       current: number;
