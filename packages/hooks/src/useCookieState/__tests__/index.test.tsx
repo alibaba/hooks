@@ -120,7 +120,7 @@ describe('useCookieState', () => {
   });
 
   it('using the same cookie name', () => {
-    const COOKIE_NAME = 'test-cookie';
+    const COOKIE_NAME = 'test-same-cookie-name';
     const { result: result1 } = setUp(COOKIE_NAME, { defaultValue: 'A' });
     const { result: result2 } = setUp(COOKIE_NAME, { defaultValue: 'B' });
     expect(result1.current.state).toBe('A');
