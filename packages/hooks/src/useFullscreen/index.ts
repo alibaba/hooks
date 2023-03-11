@@ -36,7 +36,7 @@ const useFullscreen = (target: BasicTarget, options?: Options) => {
     }
   };
 
-  // Memoized, otherwise it will be listened multiply times.
+  // Memoized, otherwise it will be listened multiple times.
   const onScreenfullChange = useMemoizedFn(() => {
     if (screenfull.isEnabled) {
       const el = getTargetElement(target);
