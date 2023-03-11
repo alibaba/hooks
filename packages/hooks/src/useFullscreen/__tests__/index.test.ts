@@ -13,7 +13,8 @@ const setup = (target: BasicTarget, options?: Options) =>
   renderHook(() => useFullscreen(target, options));
 
 describe('useFullscreen', () => {
-  beforeAll(() => {
+  beforeEach(() => {
+    document.body.appendChild(targetEl);
     jest.spyOn(HTMLElement.prototype, 'requestFullscreen').mockImplementation(() => {
       Object.defineProperty(document, 'fullscreenElement', {
         value: targetEl,
@@ -39,6 +40,7 @@ describe('useFullscreen', () => {
   });
 
   afterEach(() => {
+    document.body.removeChild(targetEl);
     events.fullscreenchange.clear();
   });
 
@@ -102,7 +104,10 @@ describe('useFullscreen', () => {
   it('onExit/onEnter should not be called', () => {
     const onExit = jest.fn();
     const onEnter = jest.fn();
-    const { result } = setup(targetEl, { onExit, onEnter });
+    const { result } = setup(targetEl, {
+      onExit,
+      onEnter,
+    });
     const { exitFullscreen, enterFullscreen } = result.current[1];
 
     // `onExit` should not be called when not full screen
@@ -122,6 +127,39 @@ describe('useFullscreen', () => {
     // because in a real browser, if it is already in full screen, calling `enterFullscreen` again
     // will not trigger the `change` event.
     expect(onEnter).not.toBeCalled();
+  });
+
+  it('pageFullscreen should be work', () => {
+    const PAGE_FULLSCREEN_CLASS_NAME = 'test-page-fullscreen';
+    const PAGE_FULLSCREEN_Z_INDEX = 101;
+    const onExit = jest.fn();
+    const onEnter = jest.fn();
+    const { result } = setup(targetEl, {
+      onExit,
+      onEnter,
+      pageFullscreen: {
+        className: PAGE_FULLSCREEN_CLASS_NAME,
+        zIndex: PAGE_FULLSCREEN_Z_INDEX,
+      },
+    });
+    const { toggleFullscreen } = result.current[1];
+    const getStyleEl = () => targetEl.querySelector('style');
+
+    act(() => toggleFullscreen());
+    expect(result.current[0]).toBe(true);
+    expect(onEnter).toBeCalled();
+    expect(targetEl.classList.contains(PAGE_FULLSCREEN_CLASS_NAME)).toBeTruthy();
+    expect(getStyleEl()).not.toBeNull();
+    expect(getStyleEl()?.textContent).toContain(`z-index: ${PAGE_FULLSCREEN_Z_INDEX}`);
+    expect(getStyleEl()?.getAttribute('id')).toBe(PAGE_FULLSCREEN_CLASS_NAME);
+
+    act(() => toggleFullscreen());
+    expect(result.current[0]).toBe(false);
+    expect(onExit).toBeCalled();
+    expect(targetEl.classList.contains(PAGE_FULLSCREEN_CLASS_NAME)).toBeFalsy();
+    expect(getStyleEl()).toBeNull();
+    expect(getStyleEl()?.textContent).toBeUndefined();
+    expect(getStyleEl()?.getAttribute('id')).toBeUndefined();
   });
 
   it('enterFullscreen should not work when target is not element', () => {
