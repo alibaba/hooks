@@ -7,10 +7,8 @@ module.exports = {
   resetMocks: false,
   setupFiles: ['./jest.setup.js', 'jest-localstorage-mock'],
   setupFilesAfterEnv: ['@testing-library/jest-dom/extend-expect'],
-  globals: {
-    'ts-jest': {
-      tsconfig: 'tsconfig.json',
-    },
+  transform: {
+    '^.+\\.tsx?$': ['ts-jest', { tsconfig: 'tsconfig.json' }],
   },
   collectCoverageFrom: [
     '<rootDir>/**/src/**/*.{js,jsx,ts,tsx}',

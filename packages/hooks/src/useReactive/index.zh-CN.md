@@ -15,11 +15,11 @@ nav:
 
 ### 数组操作
 
-<code src="./demo/demo2.tsx"  />
+<code src="./demo/demo2.tsx" />
 
 ### 计算属性
 
-<code src="./demo/demo3.tsx"  />
+<code src="./demo/demo3.tsx" />
 
 ### 注意
 

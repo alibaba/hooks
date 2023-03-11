@@ -25,22 +25,22 @@ const [
     reset,
     get
   }
-] = useMap(initialValue?: Iterable<[any, any]>);
+] = useMap<K, V>(initialValue);
 ```
 
 ### Result
 
-| Property | Description      | Type                                     |
-| -------- | ---------------- | ---------------------------------------- |
-| map      | Map object       | `Map`                                    |
-| set      | Add item         | `(key: any, value: any) => void`         |
-| get      | Get item         | `(key: any) => MapItem`                  |
-| setAll   | Set a new Map    | `(newMap: Iterable<[any, any]>) => void` |
-| remove   | Remove key       | `(key: any) => void`                     |
-| reset    | Reset to default | `() => void`                             |
+| Property | Description      | Type                                 |
+| -------- | ---------------- | ------------------------------------ |
+| map      | Map object       | `Map<K, V>`                          |
+| set      | Add item         | `(key: K, value: V) => void`         |
+| get      | Get item         | `(key: K) => V \| undefined`         |
+| setAll   | Set a new Map    | `(newMap: Iterable<[K, V]>) => void` |
+| remove   | Remove key       | `(key: K) => void`                   |
+| reset    | Reset to default | `() => void`                         |
 
 ### Params
 
-| Property     | Description                 | Type                   | Default |
-| ------------ | --------------------------- | ---------------------- | ------- |
-| initialValue | Optional, set default value | `Iterable<[any, any]>` | -       |
+| Property     | Description                 | Type               | Default |
+| ------------ | --------------------------- | ------------------ | ------- |
+| initialValue | Optional, set default value | `Iterable<[K, V]>` | -       |
