@@ -1,4 +1,4 @@
-import { renderHook } from '@testing-library/react-hooks';
+import { renderHook } from '@testing-library/react';
 import useInterval from '../index';
 
 interface ParamsObj {
@@ -12,6 +12,7 @@ const setUp = ({ fn, delay, options }: ParamsObj) =>
 
 describe('useInterval', () => {
   jest.useFakeTimers();
+  jest.spyOn(global, 'clearInterval');
 
   it('interval should work', () => {
     const callback = jest.fn();

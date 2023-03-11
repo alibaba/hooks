@@ -21,7 +21,7 @@ It offers data reactivity when manipulating states and views, in which case `use
 
 <code src="./demo/demo3.tsx" />
 
-### notice
+### Notice
 
 <code  src="./demo/demo4.tsx" />
 

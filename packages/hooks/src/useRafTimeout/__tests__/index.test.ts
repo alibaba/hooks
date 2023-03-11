@@ -1,4 +1,4 @@
-import { renderHook } from '@testing-library/react-hooks';
+import { renderHook } from '@testing-library/react';
 import useRafTimeout from '../index';
 
 interface ParamsObj {
@@ -11,7 +11,7 @@ const setUp = ({ fn, delay }: ParamsObj) => renderHook(() => useRafTimeout(fn, d
 const FRAME_TIME = 16.7;
 describe('useRafTimeout', () => {
   beforeAll(() => {
-    jest.useFakeTimers('modern');
+    jest.useFakeTimers({ legacyFakeTimers: false });
   });
   afterAll(() => {
     jest.restoreAllMocks();

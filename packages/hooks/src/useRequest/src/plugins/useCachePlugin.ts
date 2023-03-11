@@ -79,12 +79,14 @@ const useCachePlugin: Plugin<any, any[]> = (
         return {
           loading: false,
           data: cacheData?.data,
+          error: undefined,
           returnNow: true,
         };
       } else {
         // If the data is stale, return data, and request continue
         return {
           data: cacheData?.data,
+          error: undefined,
         };
       }
     },
@@ -118,7 +120,7 @@ const useCachePlugin: Plugin<any, any[]> = (
     },
     onMutate: (data) => {
       if (cacheKey) {
-        // cancel subscribe, avoid trgger self
+        // cancel subscribe, avoid trigger self
         unSubscribeRef.current?.();
         _setCache(cacheKey, {
           data,

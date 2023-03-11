@@ -1,4 +1,4 @@
-import { renderHook, act } from '@testing-library/react-hooks';
+import { renderHook, act } from '@testing-library/react';
 import useUpdate from '..';
 import useMemoizedFn from '../../useMemoizedFn';
 
@@ -16,9 +16,9 @@ describe('useUpdate', () => {
         }),
       };
     });
-    expect(hooks.result.current.count).toEqual(0);
+    expect(hooks.result.current.count).toBe(0);
     act(hooks.result.current.onChange);
-    expect(hooks.result.current.count).toEqual(1);
+    expect(hooks.result.current.count).toBe(1);
   });
   it('should return same update function', () => {
     const hooks = renderHook(() => useUpdate());

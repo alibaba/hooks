@@ -1,6 +1,6 @@
 // write your test cases here
 import React from 'react';
-import { renderHook, act } from '@testing-library/react-hooks';
+import { renderHook, act } from '@testing-library/react';
 import { render, fireEvent } from '@testing-library/react';
 import useHover from '../index';
 
@@ -21,18 +21,12 @@ describe('useHover', () => {
 
     expect(result.current).toBe(false);
 
-    act(() => {
-      fireEvent.mouseOver(getByText('Hover'), () => {
-        expect(result.current).toBe(true);
-        expect(trigger).toBe(1);
-      });
-    });
+    act(() => void fireEvent.mouseEnter(getByText('Hover')));
+    expect(result.current).toBe(true);
+    expect(trigger).toBe(1);
 
-    act(() => {
-      fireEvent.mouseLeave(getByText('Hover'), () => {
-        expect(result.current).toBe(false);
-        expect(trigger).toBe(2);
-      });
-    });
+    act(() => void fireEvent.mouseLeave(getByText('Hover')));
+    expect(result.current).toBe(false);
+    expect(trigger).toBe(2);
   });
 });

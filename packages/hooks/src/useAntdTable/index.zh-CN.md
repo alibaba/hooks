@@ -10,7 +10,7 @@ nav:
 
 在使用之前，你需要了解它与 `useRequest` 不同的几个点：
 
-1. `service` 接收两个参数，第一个参数为分页数据 `{ current, pageSize, sorter, filters }`，第二个参数为表单数据。
+1. `service` 接收两个参数，第一个参数为分页数据 `{ current, pageSize, sorter, filters, extra }`，第二个参数为表单数据。
 2. `service` 返回的数据结构为 `{ total: number, list: Item[] }`。
 3. 会额外返回 `tableProps` 和 `search` 字段，管理表格和表单。
 4. `refreshDeps` 变化，会重置 `current` 到第一页，并重新发起请求。
@@ -73,17 +73,18 @@ nav:
 ```typescript
 
 type Data = { total: number; list: any[] };
-type Params = [{ current: number; pageSize: number, filter?: any, sorter?: any }, { [key: string]: any }];
+type Params = [{ current: number; pageSize: number, filter?: any, sorter?: any, extra?: any }, { [key: string]: any }];
 
 const {
   ...,
   tableProps: {
-    dataSource: any[];
+    dataSource: TData['list'];
     loading: boolean;
     onChange: (
       pagination: any,
       filters?: any,
       sorter?: any,
+      extra?: any,
     ) => void;
     pagination: {
       current: number;

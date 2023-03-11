@@ -49,6 +49,7 @@ import useRafState from './useRafState';
 import useRafTimeout from './useRafTimeout';
 import useReactive from './useReactive';
 import useRequest, { clearCache } from './useRequest';
+import useResetState from './useResetState';
 import { configResponsive, useResponsive } from './useResponsive';
 import useSafeState from './useSafeState';
 import useScroll from './useScroll';
@@ -73,6 +74,7 @@ import useUpdateLayoutEffect from './useUpdateLayoutEffect';
 import useVirtualList from './useVirtualList';
 import useWebSocket from './useWebSocket';
 import useWhyDidYouUpdate from './useWhyDidYouUpdate';
+import useMutationObserver from './useMutationObserver';
 
 export {
   useRequest,
@@ -152,4 +154,6 @@ export {
   createUpdateEffect,
   useRafInterval,
   useRafTimeout,
+  useResetState,
+  useMutationObserver,
 };

@@ -1,4 +1,4 @@
-import { renderHook } from '@testing-library/react-hooks';
+import { renderHook } from '@testing-library/react';
 import useClickAway from '../index';
 
 describe('useClickAway', () => {
@@ -28,19 +28,19 @@ describe('useClickAway', () => {
 
     rerender(container);
     container.click();
-    expect(state).toEqual(0);
+    expect(state).toBe(0);
     document.body.click();
-    expect(state).toEqual(1);
+    expect(state).toBe(1);
 
     rerender(container1);
     container1.click();
-    expect(state).toEqual(1);
+    expect(state).toBe(1);
     document.body.click();
-    expect(state).toEqual(2);
+    expect(state).toBe(2);
 
     unmount();
     document.body.click();
-    expect(state).toEqual(2);
+    expect(state).toBe(2);
   });
 
   it('should works on multiple target', async () => {
@@ -53,14 +53,14 @@ describe('useClickAway', () => {
 
     rerender([container, container1]);
     container.click();
-    expect(state).toEqual(0);
+    expect(state).toBe(0);
     container1.click();
-    expect(state).toEqual(0);
+    expect(state).toBe(0);
     document.body.click();
-    expect(state).toEqual(1);
+    expect(state).toBe(1);
 
     unmount();
     document.body.click();
-    expect(state).toEqual(1);
+    expect(state).toBe(1);
   });
 });

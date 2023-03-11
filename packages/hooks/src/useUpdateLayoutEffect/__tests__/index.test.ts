@@ -1,4 +1,4 @@
-import { renderHook } from '@testing-library/react-hooks';
+import { renderHook } from '@testing-library/react';
 import useUpdateLayoutEffect from '../index';
 
 describe('useUpdateLayoutEffect', () => {
@@ -9,9 +9,9 @@ describe('useUpdateLayoutEffect', () => {
         mountedState = 2;
       }),
     );
-    expect(mountedState).toEqual(1);
+    expect(mountedState).toBe(1);
     hook.rerender();
-    expect(mountedState).toEqual(2);
+    expect(mountedState).toBe(2);
   });
   it('test on optional', () => {
     let mountedState = 1;
@@ -20,11 +20,11 @@ describe('useUpdateLayoutEffect', () => {
         mountedState = 3;
       }, [mountedState]),
     );
-    expect(mountedState).toEqual(1);
+    expect(mountedState).toBe(1);
     hook.rerender();
-    expect(mountedState).toEqual(1);
+    expect(mountedState).toBe(1);
     mountedState = 2;
     hook.rerender();
-    expect(mountedState).toEqual(3);
+    expect(mountedState).toBe(3);
   });
 });

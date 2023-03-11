@@ -78,5 +78,6 @@ const {
 
 | 参数            | 说明                                                                                        | 类型                   | 默认值 |
 | --------------- | ------------------------------------------------------------------------------------------- | ---------------------- | ------ |
-| defaultPageSize | 默认分页数量                                                                                | `number`               | -      |
+| defaultPageSize | 默认分页数量                                                                                | `number`               | 10      |
+| defaultCurrent  | 初次请求时的页数                                                                            | `number`               | 1      |
 | refreshDeps     | `refreshDeps` 变化，会重置 current 到第一页，并重新发起请求，一般你可以把依赖的条件放这里。 | `React.DependencyList` | `[]`   |

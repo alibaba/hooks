@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Table, Pagination, Field, Form, Input, Button } from '@alifd/next';
 import { useFusionTable } from 'ahooks';
+import ReactJson from 'react-json-view';
 
 interface Item {
   name: {
@@ -108,8 +109,10 @@ const AppList = () => {
       </Table>
       <Pagination style={{ marginTop: 16 }} {...paginationProps} />
       <div style={{ background: '#f5f5f5', padding: 8, marginTop: 16 }}>
-        <p>Current Table: {JSON.stringify(params[0])}</p>
-        <p>Current Form: {JSON.stringify(params[1])}</p>
+        <p>Current Table:</p>
+        <ReactJson src={params[0]!} collapsed={2} />
+        <p>Current Form:</p>
+        <ReactJson src={params[1]!} collapsed={2} />
       </div>
     </div>
   );

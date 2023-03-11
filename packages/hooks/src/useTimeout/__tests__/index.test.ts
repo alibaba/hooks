@@ -1,4 +1,4 @@
-import { renderHook } from '@testing-library/react-hooks';
+import { renderHook } from '@testing-library/react';
 import useTimeout from '../index';
 
 interface ParamsObj {
@@ -10,6 +10,7 @@ const setUp = ({ fn, delay }: ParamsObj) => renderHook(() => useTimeout(fn, dela
 
 describe('useTimeout', () => {
   jest.useFakeTimers();
+  jest.spyOn(global, 'clearTimeout');
 
   it('timeout should work', () => {
     const callback = jest.fn();

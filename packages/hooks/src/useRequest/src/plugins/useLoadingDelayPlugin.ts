@@ -1,7 +1,7 @@
 import { useRef } from 'react';
 import type { Plugin, Timeout } from '../types';
 
-const useLoadingDelayPlugin: Plugin<any, any[]> = (fetchInstance, { loadingDelay }) => {
+const useLoadingDelayPlugin: Plugin<any, any[]> = (fetchInstance, { loadingDelay, ready }) => {
   const timerRef = useRef<Timeout>();
 
   if (!loadingDelay) {
@@ -18,11 +18,16 @@ const useLoadingDelayPlugin: Plugin<any, any[]> = (fetchInstance, { loadingDelay
     onBefore: () => {
       cancelTimeout();
 
-      timerRef.current = setTimeout(() => {
-        fetchInstance.setState({
-          loading: true,
-        });
-      }, loadingDelay);
+      // Two cases:
+      // 1. ready === undefined
+      // 2. ready === true
+      if (ready !== false) {
+        timerRef.current = setTimeout(() => {
+          fetchInstance.setState({
+            loading: true,
+          });
+        }, loadingDelay);
+      }
 
       return {
         loading: false,

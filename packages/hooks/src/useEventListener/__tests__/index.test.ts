@@ -1,4 +1,4 @@
-import { renderHook } from '@testing-library/react-hooks';
+import { renderHook } from '@testing-library/react';
 import useEventListener from '../index';
 
 describe('useEventListener', () => {
@@ -23,12 +23,12 @@ describe('useEventListener', () => {
     );
 
     document.body.click();
-    expect(state).toEqual(0);
+    expect(state).toBe(0);
     rerender();
     container.click();
-    expect(state).toEqual(1);
+    expect(state).toBe(1);
     unmount();
     document.body.click();
-    expect(state).toEqual(1);
+    expect(state).toBe(1);
   });
 });
