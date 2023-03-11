@@ -80,6 +80,7 @@ const aliasKeyCodeMap = {
   z: 90,
   leftwindowkey: 91,
   rightwindowkey: 92,
+  meta: isAppleDevice ? [91, 93] : [91, 92],
   selectkey: 93,
   numpad0: 96,
   numpad1: 97,
@@ -123,12 +124,6 @@ const aliasKeyCodeMap = {
   singlequote: 222,
 };
 
-if (isAppleDevice) {
-  aliasKeyCodeMap['meta'] = [91, 93];
-} else {
-  aliasKeyCodeMap['meta'] = [91, 92];
-}
-
 // 修饰键
 const modifierKey = {
   ctrl: (event: KeyboardEvent) => event.ctrlKey,
@@ -136,7 +131,7 @@ const modifierKey = {
   alt: (event: KeyboardEvent) => event.altKey,
   meta: (event: KeyboardEvent) => {
     if (event.type === 'keyup') {
-      return aliasKeyCodeMap['meta'].includes(event.keyCode);
+      return aliasKeyCodeMap.meta.includes(event.keyCode);
     }
     return event.metaKey;
   },
