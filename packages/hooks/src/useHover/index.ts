@@ -5,10 +5,11 @@ import type { BasicTarget } from '../utils/domTarget';
 export interface Options {
   onEnter?: () => void;
   onLeave?: () => void;
+  onChange?: (isHovering: boolean) => void;
 }
 
 export default (target: BasicTarget, options?: Options): boolean => {
-  const { onEnter, onLeave } = options || {};
+  const { onEnter, onLeave, onChange } = options || {};
 
   const [state, { setTrue, setFalse }] = useBoolean(false);
 
@@ -17,6 +18,7 @@ export default (target: BasicTarget, options?: Options): boolean => {
     () => {
       onEnter?.();
       setTrue();
+      onChange?.(true);
     },
     {
       target,
@@ -28,6 +30,7 @@ export default (target: BasicTarget, options?: Options): boolean => {
     () => {
       onLeave?.();
       setFalse();
+      onChange?.(false);
     },
     {
       target,

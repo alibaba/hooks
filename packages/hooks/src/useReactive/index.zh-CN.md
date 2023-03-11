@@ -15,11 +15,11 @@ nav:
 
 ### 数组操作
 
-<code src="./demo/demo2.tsx"  />
+<code src="./demo/demo2.tsx" />
 
 ### 计算属性
 
-<code src="./demo/demo3.tsx"  />
+<code src="./demo/demo3.tsx" />
 
 ### 注意
 
@@ -34,5 +34,5 @@ const state = useReactive(initialState: Record<string, any>);
 ## 参数
 
 | 参数         | 说明           | 类型                  | 默认值 |
-|--------------|----------------|-----------------------|--------|
+| ------------ | -------------- | --------------------- | ------ |
 | initialState | 当前的数据对象 | `Record<string, any>` | -      |

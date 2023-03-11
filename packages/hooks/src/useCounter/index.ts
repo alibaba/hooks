@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import useMemoizedFn from '../useMemoizedFn';
+import { isNumber } from '../utils';
 
 export interface Options {
   min?: number;
@@ -18,10 +19,10 @@ export type ValueParam = number | ((c: number) => number);
 function getTargetValue(val: number, options: Options = {}) {
   const { min, max } = options;
   let target = val;
-  if (typeof max === 'number') {
+  if (isNumber(max)) {
     target = Math.min(max, target);
   }
-  if (typeof min === 'number') {
+  if (isNumber(min)) {
     target = Math.max(min, target);
   }
   return target;
@@ -39,7 +40,7 @@ function useCounter(initialValue: number = 0, options: Options = {}) {
 
   const setValue = (value: ValueParam) => {
     setCurrent((c) => {
-      const target = typeof value === 'number' ? value : value(c);
+      const target = isNumber(value) ? value : value(c);
       return getTargetValue(target, {
         max,
         min,

@@ -1,18 +1,26 @@
-import { useEffect } from 'react';
-import useLatest from '../useLatest';
+import { useCallback, useEffect, useRef } from 'react';
+import useMemoizedFn from '../useMemoizedFn';
+import { isNumber } from '../utils';
 
-function useTimeout(fn: () => void, delay: number | undefined): void {
-  const fnRef = useLatest(fn);
+const useTimeout = (fn: () => void, delay?: number) => {
+  const timerCallback = useMemoizedFn(fn);
+  const timerRef = useRef<NodeJS.Timer | null>(null);
+
+  const clear = useCallback(() => {
+    if (timerRef.current) {
+      clearTimeout(timerRef.current);
+    }
+  }, []);
 
   useEffect(() => {
-    if (typeof delay !== 'number' || delay < 0) return;
-    const timer = setTimeout(() => {
-      fnRef.current();
-    }, delay);
-    return () => {
-      clearTimeout(timer);
-    };
+    if (!isNumber(delay) || delay < 0) {
+      return;
+    }
+    timerRef.current = setTimeout(timerCallback, delay);
+    return clear;
   }, [delay]);
-}
+
+  return clear;
+};
 
 export default useTimeout;

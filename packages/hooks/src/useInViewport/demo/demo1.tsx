@@ -10,7 +10,7 @@ import React, { useRef } from 'react';
 import { useInViewport } from 'ahooks';
 
 export default () => {
-  const ref = useRef();
+  const ref = useRef(null);
   const [inViewport] = useInViewport(ref);
   return (
     <div>

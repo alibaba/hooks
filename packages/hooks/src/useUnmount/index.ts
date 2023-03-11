@@ -1,9 +1,11 @@
 import { useEffect } from 'react';
 import useLatest from '../useLatest';
+import { isFunction } from '../utils';
+import isDev from '../utils/isDev';
 
 const useUnmount = (fn: () => void) => {
-  if (process.env.NODE_ENV === 'development') {
-    if (typeof fn !== 'function') {
+  if (isDev) {
+    if (!isFunction(fn)) {
       console.error(`useUnmount expected parameter is a function, got ${typeof fn}`);
     }
   }

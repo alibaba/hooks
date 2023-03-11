@@ -1,4 +1,4 @@
-import { renderHook, act } from '@testing-library/react-hooks';
+import { renderHook, act } from '@testing-library/react';
 import useToggle from '../index';
 
 const callToggle = (hook: any) => {
@@ -8,10 +8,6 @@ const callToggle = (hook: any) => {
 };
 
 describe('useToggle', () => {
-  it('should be defined', () => {
-    expect(useToggle).toBeDefined();
-  });
-
   it('test on init', async () => {
     const hook = renderHook(() => useToggle());
     expect(hook.result.current[0]).toBeFalsy();
@@ -19,7 +15,7 @@ describe('useToggle', () => {
 
   it('test on methods', async () => {
     const hook = renderHook(() => useToggle('Hello'));
-    expect(hook.result.current[0]).toEqual('Hello');
+    expect(hook.result.current[0]).toBe('Hello');
     act(() => {
       hook.result.current[1].toggle();
     });
@@ -27,7 +23,7 @@ describe('useToggle', () => {
     act(() => {
       hook.result.current[1].setLeft();
     });
-    expect(hook.result.current[0]).toEqual('Hello');
+    expect(hook.result.current[0]).toBe('Hello');
     act(() => {
       hook.result.current[1].setRight();
     });
@@ -37,12 +33,12 @@ describe('useToggle', () => {
   it('test on optional', () => {
     const hook = renderHook(() => useToggle('Hello', 'World'));
     callToggle(hook);
-    expect(hook.result.current[0]).toEqual('World');
+    expect(hook.result.current[0]).toBe('World');
     act(() => {
       hook.result.current[1].set('World');
     });
-    expect(hook.result.current[0]).toEqual('World');
+    expect(hook.result.current[0]).toBe('World');
     callToggle(hook);
-    expect(hook.result.current[0]).toEqual('Hello');
+    expect(hook.result.current[0]).toBe('Hello');
   });
 });

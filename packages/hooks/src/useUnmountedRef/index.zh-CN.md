@@ -22,5 +22,5 @@ const unmountRef: { current: boolean } = useUnmountedRef();
 ### Result
 
 | 参数       | 说明             | 类型                   |
-|------------|------------------|------------------------|
+| ---------- | ---------------- | ---------------------- |
 | unmountRef | 组件是否已经卸载 | `{ current: boolean }` |

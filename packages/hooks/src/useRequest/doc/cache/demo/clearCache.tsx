@@ -15,7 +15,7 @@ async function getArticle(): Promise<{ data: string; time: number }> {
 }
 
 const Article = ({ cacheKey }) => {
-  const { data, loading, refresh } = useRequest(getArticle, {
+  const { data, loading } = useRequest(getArticle, {
     cacheKey,
   });
   if (!data && loading) {

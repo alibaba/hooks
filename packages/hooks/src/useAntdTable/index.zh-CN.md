@@ -3,21 +3,21 @@ nav:
   title: Hooks
   path: /hooks
 ---
+
 # useAntdTable
 
 `useAntdTable` 基于 `useRequest` 实现，封装了常用的 [Ant Design Form](https://ant.design/components/form-cn/) 与 [Ant Design Table](https://ant.design/components/table-cn/) 联动逻辑，并且同时支持 antd v3 和 v4。
 
 在使用之前，你需要了解它与 `useRequest` 不同的几个点：
 
-1. `service` 接收两个参数，第一个参数为分页数据 `{ current, pageSize, sorter, filters }`，第二个参数为表单数据。
+1. `service` 接收两个参数，第一个参数为分页数据 `{ current, pageSize, sorter, filters, extra }`，第二个参数为表单数据。
 2. `service` 返回的数据结构为 `{ total: number, list: Item[] }`。
 3. 会额外返回 `tableProps` 和 `search` 字段，管理表格和表单。
 4. `refreshDeps` 变化，会重置 `current` 到第一页，并重新发起请求。
 
-
 ## 代码演示
 
-以下展示的是 antd v4 的 demo，v3 请参考：https://ahooks-v2.surge.sh/hooks/table/use-antd-table
+以下展示的是 antd v4 的 demo，v3 请参考：https://ahooks-v2.js.org/hooks/table/use-antd-table
 
 ### Table 管理
 
@@ -26,6 +26,7 @@ nav:
 ```tsx | pure
 <Table columns={columns} rowKey="email" {...tableProps} />
 ```
+
 <br />
 
 <code src="./demo/table.tsx" />
@@ -34,10 +35,10 @@ nav:
 
 `useAntdTable` 接收 `form` 实例后，会返回 search 对象，用来处理表单相关事件。
 
-* `search.type` 支持 `simple` 和 `advance` 两个表单切换
-* `search.changeType`，切换表单类型
-* `search.submit` 提交表单行为
-* `search.reset` 重置当前表单
+- `search.type` 支持 `simple` 和 `advance` 两个表单切换
+- `search.changeType`，切换表单类型
+- `search.submit` 提交表单行为
+- `search.reset` 重置当前表单
 
 以下示例你可以体验表单与表格联动。
 
@@ -65,7 +66,6 @@ nav:
 
 <code src="./demo/cache.tsx" />
 
-
 ## API
 
 `useRequest` 所有参数和返回结果均适用于 `useAntdTable`，此处不再赘述。
@@ -73,17 +73,18 @@ nav:
 ```typescript
 
 type Data = { total: number; list: any[] };
-type Params = [{ current: number; pageSize: number, filter?: any, sorter?: any }, { [key: string]: any }];
+type Params = [{ current: number; pageSize: number, filter?: any, sorter?: any, extra?: any }, { [key: string]: any }];
 
 const {
   ...,
   tableProps: {
-    dataSource: any[];
+    dataSource: TData['list'];
     loading: boolean;
     onChange: (
       pagination: any,
       filters?: any,
       sorter?: any,
+      extra?: any,
     ) => void;
     pagination: {
       current: number;
@@ -113,7 +114,7 @@ const {
 ### Result
 
 | 参数              | 说明                                                | 类型                  |
-|-------------------|-----------------------------------------------------|-----------------------|
+| ----------------- | --------------------------------------------------- | --------------------- |
 | tableProps        | `Table` 组件需要的数据，直接透传给 `Table` 组件即可 | -                     |
 | search.type       | 当前表单类型                                        | `simple` \| `advance` |
 | search.changeType | 切换表单类型                                        | `() => void`          |
@@ -123,9 +124,9 @@ const {
 ### Params
 
 | 参数            | 说明                                                          | 类型                     | 默认值   |
-|-----------------|---------------------------------------------------------------|--------------------------|----------|
+| --------------- | ------------------------------------------------------------- | ------------------------ | -------- |
 | form            | `Form` 实例                                                   | -                        | -        |
 | defaultType     | 默认表单类型                                                  | `simple` \| `advance`    | `simple` |
-| defaultParams   | 默认参数，第一项为分页数据，第二项为表单数据                  | `[pagiantion, formData]` | -        |
+| defaultParams   | 默认参数，第一项为分页数据，第二项为表单数据                  | `[pagination, formData]` | -        |
 | defaultPageSize | 默认分页数量                                                  | `number`                 | `10`     |
-| refreshDeps     | `refreshDeps` 变化，会重置 current 到第一页，并重新发起请求。 | `React.DependencyList`                | `[]`  |
+| refreshDeps     | `refreshDeps` 变化，会重置 current 到第一页，并重新发起请求。 | `React.DependencyList`   | `[]`     |

@@ -14,8 +14,8 @@ nav:
 And similar to `useRef`, you can use `useCreation` to create some constants. But `useCreation` can avoid performance hazards.
 
 ```javascript
-const a = useRef(new Subject()) // A new Subject instance is created in every render.
-const b = useCreation(() => new Subject(), []) // By using factory function, Subject is only instantiated once.
+const a = useRef(new Subject()); // A new Subject instance is created in every render.
+const b = useCreation(() => new Subject(), []); // By using factory function, Subject is only instantiated once.
 ```
 
 ## Examples
@@ -33,6 +33,6 @@ function useCreation<T>(factory: () => T, deps: any[]): T;
 ### Params
 
 | Property | Description                              | Type        | Default |
-|----------|------------------------------------------|-------------|---------|
+| -------- | ---------------------------------------- | ----------- | ------- |
 | factory  | A function used for creating the object. | `() => any` | -       |
 | deps     | The dependencies list.                   | `any[]`     | -       |

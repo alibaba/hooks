@@ -10,7 +10,7 @@ import React, { useRef, useState } from 'react';
 import { useDrop, useDrag } from 'ahooks';
 
 const DragItem = ({ data }) => {
-  const dragRef = useRef();
+  const dragRef = useRef(null);
 
   const [dragging, setDragging] = useState(false);
 
@@ -42,7 +42,7 @@ const DragItem = ({ data }) => {
 export default () => {
   const [isHovering, setIsHovering] = useState(false);
 
-  const dropRef = useRef();
+  const dropRef = useRef(null);
 
   useDrop(dropRef, {
     onText: (text, e) => {

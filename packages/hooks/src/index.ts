@@ -1,3 +1,4 @@
+import { createUpdateEffect } from './createUpdateEffect';
 import useAntdTable from './useAntdTable';
 import useAsyncEffect from './useAsyncEffect';
 import useBoolean from './useBoolean';
@@ -11,6 +12,7 @@ import useDebounce from './useDebounce';
 import useDebounceEffect from './useDebounceEffect';
 import useDebounceFn from './useDebounceFn';
 import useDeepCompareEffect from './useDeepCompareEffect';
+import useDeepCompareLayoutEffect from './useDeepCompareLayoutEffect';
 import useDocumentVisibility from './useDocumentVisibility';
 import useDrag from './useDrag';
 import useDrop from './useDrop';
@@ -42,9 +44,12 @@ import useMouse from './useMouse';
 import useNetwork from './useNetwork';
 import usePagination from './usePagination';
 import usePrevious from './usePrevious';
+import useRafInterval from './useRafInterval';
 import useRafState from './useRafState';
+import useRafTimeout from './useRafTimeout';
 import useReactive from './useReactive';
 import useRequest, { clearCache } from './useRequest';
+import useResetState from './useResetState';
 import { configResponsive, useResponsive } from './useResponsive';
 import useSafeState from './useSafeState';
 import useScroll from './useScroll';
@@ -69,6 +74,7 @@ import useUpdateLayoutEffect from './useUpdateLayoutEffect';
 import useVirtualList from './useVirtualList';
 import useWebSocket from './useWebSocket';
 import useWhyDidYouUpdate from './useWhyDidYouUpdate';
+import useMutationObserver from './useMutationObserver';
 
 export {
   useRequest,
@@ -133,6 +139,7 @@ export {
   useLatest,
   useIsomorphicLayoutEffect,
   useDeepCompareEffect,
+  useDeepCompareLayoutEffect,
   useAsyncEffect,
   useLongPress,
   useRafState,
@@ -144,4 +151,9 @@ export {
   useGetState,
   clearCache,
   useFocusWithin,
+  createUpdateEffect,
+  useRafInterval,
+  useRafTimeout,
+  useResetState,
+  useMutationObserver,
 };

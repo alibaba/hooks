@@ -2,20 +2,21 @@
 nav:
   path: /hooks
 ---
+
 # useAntdTable
 
 `useAntdTable` is implemented based on `useRequest` and encapsulates the commonly used [Ant Design Form](https://ant.design/components/form/) and [Ant Design Table](https://ant.design/components/table/) data binding logic, and supports both antd v3 and v4.
 
 Before using it, you need to understand a few points that are different from `useRequest`:
 
-1. `service` receives two parameters, the first parameter is the paging data `{ current, pageSize, sorter, filters }`, and the second parameter is the form data.
+1. `service` receives two parameters, the first parameter is the paging data `{ current, pageSize, sorter, filters, extra }`, and the second parameter is the form data.
 2. The data structure returned by `service` must be `{ total: number, list: Item[] }`.
 3. Additional `tableProps` and `search` fields will be returned to manage tables and forms.
 4. When `refreshDeps` changes, it will reset `current` to the first page and re-initiate the request.
 
 ## Examples
 
-The following demos are for antd v4. For v3, please refer to: https://ahooks-v2.surge.sh/hooks/table/use-antd-table
+The following demos are for antd v4. For v3, please refer to: https://ahooks-v2.js.org/hooks/table/use-antd-table
 
 ### Table management
 
@@ -24,6 +25,7 @@ The following demos are for antd v4. For v3, please refer to: https://ahooks-v2.
 ```tsx | pure
 <Table columns={columns} rowKey="email" {...tableProps} />
 ```
+
 <br />
 
 <code src="./demo/table.tsx" />
@@ -32,10 +34,10 @@ The following demos are for antd v4. For v3, please refer to: https://ahooks-v2.
 
 When `useAntdTable` receives the `form` instance, it will return a search object to handle form related events.
 
-* `search.type` supports switching between `simple` and `advance`
-* `search.changeType`, switch form type
-* `search.submit` submit form
-* `search.reset` reset the current form
+- `search.type` supports switching between `simple` and `advance`
+- `search.changeType`, switch form type
+- `search.submit` submit form
+- `search.reset` reset the current form
 
 In the following example, you can try out the data binding between form and table.
 
@@ -70,17 +72,18 @@ All parameters and returned results of `useRequest` are applicable to `useAntdTa
 ```typescript
 
 type Data = { total: number; list: any[] };
-type Params = [{ current: number; pageSize: number, filter?: any, sorter?: any }, { [key: string]: any }];
+type Params = [{ current: number; pageSize: number, filter?: any, sorter?: any, extra?: any }, { [key: string]: any }];
 
 const {
   ...,
   tableProps: {
-    dataSource: any[];
+    dataSource: TData['list'];
     loading: boolean;
     onChange: (
       pagination: any,
       filters?: any,
       sorter?: any,
+      extra?: any,
     ) => void;
     pagination: {
       current: number;
@@ -110,7 +113,7 @@ const {
 ### Result
 
 | Property          | Description                                | Type                  |
-|-------------------|--------------------------------------------|-----------------------|
+| ----------------- | ------------------------------------------ | --------------------- |
 | tableProps        | The data required by the `Table` component | -                     |
 | search.type       | Current form type                          | `simple` \| `advance` |
 | search.changeType | Switch form type                           | `() => void`          |
@@ -120,9 +123,9 @@ const {
 ### Params
 
 | Property        | Description                                                                                | Type                     | Default  |
-|-----------------|--------------------------------------------------------------------------------------------|--------------------------|----------|
+| --------------- | ------------------------------------------------------------------------------------------ | ------------------------ | -------- |
 | form            | `Form` instance                                                                            | -                        | -        |
 | defaultType     | Default form type                                                                          | `simple` \| `advance`    | `simple` |
-| defaultParams   | Default parameters, the first item is paging data, the second item is form data            | `[pagiantion, formData]` | -        |
+| defaultParams   | Default parameters, the first item is paging data, the second item is form data            | `[pagination, formData]` | -        |
 | defaultPageSize | Default page size                                                                          | `number`                 | `10`     |
 | refreshDeps     | Changes in `refreshDeps` will reset current to the first page and re-initiate the request. | `React.DependencyList`   | `[]`     |

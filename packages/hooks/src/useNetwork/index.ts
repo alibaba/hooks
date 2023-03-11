@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { isObject } from '../utils';
 
 export interface NetworkState {
   since?: Date;
@@ -19,7 +20,7 @@ enum NetworkEventType {
 
 function getConnection() {
   const nav = navigator as any;
-  if (typeof nav !== 'object') return null;
+  if (!isObject(nav)) return null;
   return nav.connection || nav.mozConnection || nav.webkitConnection;
 }
 

@@ -1,4 +1,4 @@
-import { act, renderHook } from '@testing-library/react-hooks';
+import { act, renderHook, waitFor } from '@testing-library/react';
 import useRequest from '../index';
 import { request } from '../../utils/testingHelpers';
 
@@ -26,26 +26,22 @@ describe('useRetryPlugin', () => {
     act(() => {
       jest.runAllTimers();
     });
-    await hook.waitForNextUpdate();
-    expect(errorCallback).toHaveBeenCalledTimes(1);
+    await waitFor(() => expect(errorCallback).toHaveBeenCalledTimes(1));
 
     act(() => {
       jest.runAllTimers();
     });
-    await hook.waitForNextUpdate();
-    expect(errorCallback).toHaveBeenCalledTimes(2);
+    await waitFor(() => expect(errorCallback).toHaveBeenCalledTimes(2));
 
     act(() => {
       jest.runAllTimers();
     });
-    await hook.waitForNextUpdate();
-    expect(errorCallback).toHaveBeenCalledTimes(3);
+    await waitFor(() => expect(errorCallback).toHaveBeenCalledTimes(3));
 
     act(() => {
       jest.runAllTimers();
     });
-    await hook.waitForNextUpdate();
-    expect(errorCallback).toHaveBeenCalledTimes(4);
+    await waitFor(() => expect(errorCallback).toHaveBeenCalledTimes(4));
 
     act(() => {
       jest.runAllTimers();
@@ -67,14 +63,12 @@ describe('useRetryPlugin', () => {
     act(() => {
       jest.runAllTimers();
     });
-    await hook2.waitForNextUpdate();
-    expect(errorCallback).toHaveBeenCalledTimes(1);
+    await waitFor(() => expect(errorCallback).toHaveBeenCalledTimes(1));
 
     act(() => {
       jest.runAllTimers();
     });
-    await hook2.waitForNextUpdate();
-    expect(errorCallback).toHaveBeenCalledTimes(2);
+    await waitFor(() => expect(errorCallback).toHaveBeenCalledTimes(2));
     act(() => {
       hook2.result.current.cancel();
     });
