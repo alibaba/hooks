@@ -24,6 +24,6 @@ useTrackedEffect(
 
 The API is alike `React.useEffect`, but the first function will receive three parameters: `changes`, `previousDeps`, and `currentDeps`.
 
-* changes: Index of changed dependencies
-* previousDeps: Last deps
-* currentDeps: Current deps
+- changes: Index of changed dependencies
+- previousDeps: Last deps
+- currentDeps: Current deps

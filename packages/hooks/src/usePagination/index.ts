@@ -1,15 +1,17 @@
 import { useMemo } from 'react';
-import { useMemoizedFn, useRequest } from '..';
+import useMemoizedFn from '../useMemoizedFn';
+import useRequest from '../useRequest';
+
 import type { Data, PaginationOptions, Params, Service, PaginationResult } from './types';
 
 const usePagination = <TData extends Data, TParams extends Params>(
   service: Service<TData, TParams>,
   options: PaginationOptions<TData, TParams> = {},
 ) => {
-  const { defaultPageSize = 10, ...rest } = options;
+  const { defaultPageSize = 10, defaultCurrent = 1, ...rest } = options;
 
   const result = useRequest(service, {
-    defaultParams: [{ current: 1, pageSize: defaultPageSize }],
+    defaultParams: [{ current: defaultCurrent, pageSize: defaultPageSize }],
     refreshDepsAction: () => {
       // eslint-disable-next-line @typescript-eslint/no-use-before-define
       changeCurrent(1);

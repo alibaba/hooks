@@ -1,11 +1,10 @@
-import {
-  useCreation,
-  useLatest,
-  useMemoizedFn,
-  useMount,
-  useUnmount,
-  useUpdate,
-} from '../../index';
+import useCreation from '../../useCreation';
+import useLatest from '../../useLatest';
+import useMemoizedFn from '../../useMemoizedFn';
+import useMount from '../../useMount';
+import useUnmount from '../../useUnmount';
+import useUpdate from '../../useUpdate';
+
 import Fetch from './Fetch';
 import type { Options, Plugin, Result, Service } from './types';
 

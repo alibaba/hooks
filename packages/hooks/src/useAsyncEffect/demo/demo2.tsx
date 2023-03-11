@@ -19,11 +19,11 @@ function mockCheck(val: string): Promise<boolean> {
 
 export default () => {
   const [value, setValue] = useState('');
-  const [pass, setPass] = useState<boolean>(null);
+  const [pass, setPass] = useState<boolean>();
 
   useAsyncEffect(
     async function* () {
-      setPass(null);
+      setPass(undefined);
       const result = await mockCheck(value);
       yield; // Check whether the effect is still valid, if it is has been cleaned up, stop at here.
       setPass(result);

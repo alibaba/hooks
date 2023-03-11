@@ -1,29 +1,29 @@
-import { useEffect } from 'react';
-import useLatest from '../useLatest';
+import { useCallback, useEffect, useRef } from 'react';
+import useMemoizedFn from '../useMemoizedFn';
+import { isNumber } from '../utils';
 
-function useInterval(
-  fn: () => void,
-  delay: number | undefined,
-  options?: {
-    immediate?: boolean;
-  },
-) {
-  const immediate = options?.immediate;
+const useInterval = (fn: () => void, delay?: number, options: { immediate?: boolean } = {}) => {
+  const timerCallback = useMemoizedFn(fn);
+  const timerRef = useRef<NodeJS.Timer | null>(null);
 
-  const fnRef = useLatest(fn);
+  const clear = useCallback(() => {
+    if (timerRef.current) {
+      clearInterval(timerRef.current);
+    }
+  }, []);
 
   useEffect(() => {
-    if (typeof delay !== 'number' || delay < 0) return;
-    if (immediate) {
-      fnRef.current();
+    if (!isNumber(delay) || delay < 0) {
+      return;
     }
-    const timer = setInterval(() => {
-      fnRef.current();
-    }, delay);
-    return () => {
-      clearInterval(timer);
-    };
+    if (options.immediate) {
+      timerCallback();
+    }
+    timerRef.current = setInterval(timerCallback, delay);
+    return clear;
   }, [delay]);
-}
+
+  return clear;
+};
 
 export default useInterval;

@@ -11,15 +11,15 @@ group:
 
 `useRequest` organizes code through a plug-in pattern, the core code is extremely simple, and can be easily extended for more advanced features. Current features include:
 
-* Automatic/manual request
-* Polling
-* Debounce
-* Throttle
-* Refresh on window focus
-* Error retry
-* Loading delay
-* SWR(stale-while-revalidate)
-* Caching
+- Automatic/manual request
+- Polling
+- Debounce
+- Throttle
+- Refresh on window focus
+- Error retry
+- Loading delay
+- SWR(stale-while-revalidate)
+- Caching
 
 Next, let's get to know `useRequest` from the two simplest examples.
 

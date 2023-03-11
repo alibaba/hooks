@@ -1,11 +1,7 @@
-import { act, renderHook } from '@testing-library/react-hooks';
+import { act, renderHook } from '@testing-library/react';
 import useTitle from '../index';
 
 describe('useTitle', () => {
-  it('should be defined', () => {
-    expect(useTitle).toBeDefined();
-  });
-
   it('should update document title', () => {
     const hook = renderHook((props) => useTitle(props), { initialProps: 'Current Page Title' });
 

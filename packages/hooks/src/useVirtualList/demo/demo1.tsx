@@ -10,8 +10,8 @@ import React, { useMemo, useRef } from 'react';
 import { useVirtualList } from 'ahooks';
 
 export default () => {
-  const containerRef = useRef();
-  const wrapperRef = useRef();
+  const containerRef = useRef(null);
+  const wrapperRef = useRef(null);
 
   const originalList = useMemo(() => Array.from(Array(99999).keys()), []);
 

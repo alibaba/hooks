@@ -1,13 +1,9 @@
-import { renderHook, act } from '@testing-library/react-hooks';
+import { renderHook, act } from '@testing-library/react';
 import useSet from '../index';
 
 const setUp = <K>(initialSet?: Iterable<K>) => renderHook(() => useSet(initialSet));
 
 describe('useSet', () => {
-  it('should be defined', () => {
-    expect(useSet).toBeDefined();
-  });
-
   it('should init set and utils', () => {
     const { result } = setUp([1, 2]);
     const [set, utils] = result.current;

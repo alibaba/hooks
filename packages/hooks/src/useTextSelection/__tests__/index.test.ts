@@ -1,4 +1,4 @@
-import { renderHook, act } from '@testing-library/react-hooks';
+import { renderHook, act } from '@testing-library/react';
 import useTextSelection from '../index';
 
 // test about Resize Observer see https://github.com/que-etc/resize-observer-polyfill/tree/master/tests
@@ -70,10 +70,6 @@ describe('useTextSelection', () => {
     };
   }
 
-  it('should be defined', () => {
-    expect(useTextSelection).toBeDefined();
-  });
-
   it('on textSelection', async () => {
     initGetSelection({ left: 10, top: 10, height: 100, width: 100, text: 'on textSelection' });
 
@@ -82,12 +78,12 @@ describe('useTextSelection', () => {
     const hook = renderHook(() => useTextSelection(() => document));
 
     expect(hook.result.current.text).toBe('');
-    expect(hook.result.current.left).toBe(NaN);
-    expect(hook.result.current.right).toBe(NaN);
-    expect(hook.result.current.top).toBe(NaN);
-    expect(hook.result.current.bottom).toBe(NaN);
-    expect(hook.result.current.height).toBe(NaN);
-    expect(hook.result.current.width).toBe(NaN);
+    expect(hook.result.current.left).toBeNaN();
+    expect(hook.result.current.right).toBeNaN();
+    expect(hook.result.current.top).toBeNaN();
+    expect(hook.result.current.bottom).toBeNaN();
+    expect(hook.result.current.height).toBeNaN();
+    expect(hook.result.current.width).toBeNaN();
 
     downMouse(0, 0);
     upMouse(100, 100);

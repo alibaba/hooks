@@ -1,22 +1,18 @@
-import { act, renderHook } from '@testing-library/react-hooks';
+import { act, renderHook } from '@testing-library/react';
 import useControllableValue, { Options, Props } from '../index';
 
 describe('useControllableValue', () => {
-  it('should be defined', () => {
-    expect(useControllableValue).toBeDefined();
-  });
-
   const setUp = (props?: Props, options?: Options<any>): any =>
     renderHook(() => useControllableValue(props, options));
 
   it('defaultValue should work', () => {
     const hook = setUp({ defaultValue: 1 });
-    expect(hook.result.current[0]).toEqual(1);
+    expect(hook.result.current[0]).toBe(1);
   });
 
   it('value should work', () => {
     const hook = setUp({ defaultValue: 1, value: 2 });
-    expect(hook.result.current[0]).toEqual(2);
+    expect(hook.result.current[0]).toBe(2);
   });
 
   it('state should be undefined', () => {
@@ -34,12 +30,12 @@ describe('useControllableValue', () => {
       },
     };
     const hook = setUp(props);
-    expect(hook.result.current[0]).toEqual(2);
+    expect(hook.result.current[0]).toBe(2);
     act(() => {
       hook.result.current[1](3, 'extraParam');
     });
-    expect(props.value).toEqual(3);
-    expect(extraParam).toEqual('extraParam');
+    expect(props.value).toBe(3);
+    expect(extraParam).toBe('extraParam');
   });
 
   it('test on state update', () => {
@@ -49,10 +45,10 @@ describe('useControllableValue', () => {
     const { result, rerender } = setUp(props);
     props.value = 2;
     rerender(props);
-    expect(result.current[0]).toEqual(2);
+    expect(result.current[0]).toBe(2);
     props.value = 3;
     rerender(props);
-    expect(result.current[0]).toEqual(3);
+    expect(result.current[0]).toBe(3);
   });
 
   it('test set state', async () => {
@@ -67,7 +63,10 @@ describe('useControllableValue', () => {
     expect(result.current[0]).toBeNull();
 
     act(() => setValue(55));
-    expect(result.current[0]).toEqual(55);
+    expect(result.current[0]).toBe(55);
+
+    act(() => setValue((prevState) => prevState + 1));
+    expect(result.current[0]).toBe(56);
   });
 
   it('type inference should work', async () => {
@@ -88,7 +87,7 @@ describe('useControllableValue', () => {
       onChange: () => {},
     };
     const hook = renderHook(() => useControllableValue(props));
-    const [v, setV] = hook.result.current;
+    const [v] = hook.result.current;
     expect(v.foo).toBe(123);
   });
 });

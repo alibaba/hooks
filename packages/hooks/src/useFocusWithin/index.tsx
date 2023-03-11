@@ -29,8 +29,7 @@ export default function useFocusWithin(target: BasicTarget, options?: Options) {
   useEventListener(
     'focusout',
     (e: FocusEvent) => {
-      // @ts-ignore
-      if (isFocusWithin && !e.currentTarget?.contains?.(e.relatedTarget)) {
+      if (isFocusWithin && !(e.currentTarget as Element)?.contains?.(e.relatedTarget as Element)) {
         onBlur?.(e);
         onChange?.(false);
         setIsFocusWithin(false);

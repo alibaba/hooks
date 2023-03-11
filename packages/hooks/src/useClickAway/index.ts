@@ -1,6 +1,7 @@
 import useLatest from '../useLatest';
 import type { BasicTarget } from '../utils/domTarget';
 import { getTargetElement } from '../utils/domTarget';
+import getDocumentOrShadow from '../utils/getDocumentOrShadow';
 import useEffectWithTarget from '../utils/useEffectWithTarget';
 
 export default function useClickAway<T extends Event = Event>(
@@ -17,7 +18,7 @@ export default function useClickAway<T extends Event = Event>(
         if (
           targets.some((item) => {
             const targetElement = getTargetElement(item);
-            return !targetElement || targetElement?.contains(event.target);
+            return !targetElement || targetElement.contains(event.target);
           })
         ) {
           return;
@@ -25,12 +26,14 @@ export default function useClickAway<T extends Event = Event>(
         onClickAwayRef.current(event);
       };
 
+      const documentOrShadow = getDocumentOrShadow(target);
+
       const eventNames = Array.isArray(eventName) ? eventName : [eventName];
 
-      eventNames.forEach((event) => document.addEventListener(event, handler));
+      eventNames.forEach((event) => documentOrShadow.addEventListener(event, handler));
 
       return () => {
-        eventNames.forEach((event) => document.removeEventListener(event, handler));
+        eventNames.forEach((event) => documentOrShadow.removeEventListener(event, handler));
       };
     },
     Array.isArray(eventName) ? eventName : [eventName],

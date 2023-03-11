@@ -5,7 +5,7 @@ export default () => {
   const [pressCounter, setPressCounter] = useState(0);
   const [clickCounter, setClickCounter] = useState(0);
 
-  const ref = useRef<HTMLButtonElement>();
+  const ref = useRef<HTMLButtonElement>(null);
 
   useLongPress(() => setPressCounter((s) => s + 1), ref, {
     onClick: () => setClickCounter((s) => s + 1),

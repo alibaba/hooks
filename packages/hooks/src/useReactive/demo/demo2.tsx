@@ -2,7 +2,7 @@ import React from 'react';
 import { useReactive } from 'ahooks';
 
 export default () => {
-  const state = useReactive({
+  const state = useReactive<{ arr: number[] }>({
     arr: [],
   });
 

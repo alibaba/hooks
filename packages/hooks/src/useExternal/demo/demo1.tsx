@@ -22,7 +22,7 @@ export default () => {
         Status: <b>{status}</b>
       </p>
       <p>
-        Response: <i>{status === 'ready' ? TEST_SCRIPT?.start() : '-'}</i>
+        Response: <i>{status === 'ready' ? window.TEST_SCRIPT?.start() : '-'}</i>
       </p>
     </>
   );

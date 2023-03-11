@@ -16,11 +16,11 @@ A hook that set the favicon of the page.
 ## API
 
 ```typescript
-useFavicon(href: string)
+useFavicon(href: string);
 ```
 
 ### Params
 
 | Params | Description                                  | Type     | Default |
-|--------|----------------------------------------------|----------|---------|
+| ------ | -------------------------------------------- | -------- | ------- |
 | href   | favicon URL, support `svg`/`png`/`ico`/`gif` | `string` | -       |

@@ -6,7 +6,7 @@
  * desc.zh-CN: useMemoizedFn 与 useCallback 可以实现同样的效果。
  */
 
-import React, { useState, useCallback, useRef } from 'react';
+import React, { useState, useCallback } from 'react';
 import { message } from 'antd';
 import { useMemoizedFn } from 'ahooks';
 

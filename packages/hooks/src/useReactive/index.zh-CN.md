@@ -15,11 +15,11 @@ nav:
 
 ### 数组操作
 
-<code src="./demo/demo2.tsx"  />
+<code src="./demo/demo2.tsx" />
 
 ### 计算属性
 
-<code src="./demo/demo3.tsx"  />
+<code src="./demo/demo3.tsx" />
 
 ### 提供与useSafeState相同的功能，组件卸载后异步回调内的 状态改变 不再执行，避免因组件卸载后更新状态而导致的内存泄漏
 <code src="./demo/demo5.tsx"/>
@@ -42,7 +42,7 @@ const state = useReactive(
 ## 参数
 
 | 参数         | 说明           | 类型                  | 默认值 |
-|--------------|----------------|-----------------------|--------|
+| ------------ | -------------- | --------------------- | ------ |
 | initialState | 当前的数据对象 | `Record<string, any>` | -      |
 | options | 配置组件卸载后异步回调内的状态行为    | `Record<string, boolean>`  | -            |
 
