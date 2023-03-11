@@ -45,7 +45,7 @@ More information refer to [Intersection Observer API](https://developer.mozilla.
 
 ### Result
 
-| Property   | Description                                                                              | Type                     |
-| ---------- | ---------------------------------------------------------------------------------------- | ------------------------ |
-| inViewport | Is visible                                                                               | `boolean` \| `undefined` |
-| ratio      | Current visible ratio, updated every time the node set by `options.threshold` is reached | `number` \| `undefined`  |
+| Property   | Description                                                                              | Type      | Default |
+| ---------- | ---------------------------------------------------------------------------------------- | --------- | ------- |
+| inViewport | Is visible                                                                               | `boolean` | `false` |
+| ratio      | Current visible ratio, updated every time the node set by `options.threshold` is reached | `number`  | `0`     |

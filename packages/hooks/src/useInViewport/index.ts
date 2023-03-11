@@ -11,8 +11,8 @@ export interface Options {
 }
 
 function useInViewport(target: BasicTarget, options?: Options) {
-  const [state, setState] = useState<boolean>();
-  const [ratio, setRatio] = useState<number>();
+  const [state, setState] = useState<boolean>(false);
+  const [ratio, setRatio] = useState<number>(0);
 
   useEffectWithTarget(
     () => {

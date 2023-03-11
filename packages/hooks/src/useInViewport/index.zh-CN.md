@@ -45,7 +45,7 @@ const [inViewport, ratio] = useInViewport(
 
 ### Result
 
-| 参数       | 说明                                                        | 类型                     |
-| ---------- | ----------------------------------------------------------- | ------------------------ |
-| inViewport | 是否可见                                                    | `boolean` \| `undefined` |
-| ratio      | 当前可见比例，在每次到达 `options.threshold` 设置节点时更新 | `number` \| `undefined`  |
+| 参数       | 说明                                                        | 类型      | 默认值  |
+| ---------- | ----------------------------------------------------------- | --------- | ------- |
+| inViewport | 是否可见                                                    | `boolean` | `false` |
+| ratio      | 当前可见比例，在每次到达 `options.threshold` 设置节点时更新 | `number`  | `0`     |
