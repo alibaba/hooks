@@ -1,8 +1,8 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import useMemoizedFn from '../useMemoizedFn';
 
 function useMap<K, T>(initialValue?: Iterable<readonly [K, T]>) {
-  const getInitValue = new Map(initialValue);
+  const getInitValue = useMemo(() => new Map(initialValue), [initialValue]);
   const [map, setMap] = useState<Map<K, T>>(getInitValue);
 
   const set = (key: K, entry: T) => {
