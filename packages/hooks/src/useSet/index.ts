@@ -2,11 +2,8 @@ import { useState } from 'react';
 import useMemoizedFn from '../useMemoizedFn';
 
 function useSet<K>(initialValue?: Iterable<K>) {
-  const getInitValue = () => {
-    return initialValue === undefined ? new Set<K>() : new Set(initialValue);
-  };
-
-  const [set, setSet] = useState<Set<K>>(() => getInitValue());
+  const getInitValue = new Set(initialValue);
+  const [set, setSet] = useState<Set<K>>(getInitValue);
 
   const add = (key: K) => {
     if (set.has(key)) {
@@ -30,7 +27,7 @@ function useSet<K>(initialValue?: Iterable<K>) {
     });
   };
 
-  const reset = () => setSet(getInitValue());
+  const reset = () => setSet(getInitValue);
 
   return [
     set,
