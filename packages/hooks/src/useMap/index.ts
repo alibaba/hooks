@@ -2,11 +2,8 @@ import { useState } from 'react';
 import useMemoizedFn from '../useMemoizedFn';
 
 function useMap<K, T>(initialValue?: Iterable<readonly [K, T]>) {
-  const getInitValue = () => {
-    return initialValue === undefined ? new Map() : new Map(initialValue);
-  };
-
-  const [map, setMap] = useState<Map<K, T>>(() => getInitValue());
+  const getInitValue = new Map(initialValue);
+  const [map, setMap] = useState<Map<K, T>>(getInitValue);
 
   const set = (key: K, entry: T) => {
     setMap((prev) => {
@@ -28,7 +25,7 @@ function useMap<K, T>(initialValue?: Iterable<readonly [K, T]>) {
     });
   };
 
-  const reset = () => setMap(getInitValue());
+  const reset = () => setMap(getInitValue);
 
   const get = (key: K) => map.get(key);
 
