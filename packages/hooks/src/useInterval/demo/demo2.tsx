@@ -13,7 +13,7 @@ export default () => {
   const [count, setCount] = useState(0);
   const [interval, setInterval] = useState<number | undefined>(1000);
 
-  useInterval(() => {
+  const clear = useInterval(() => {
     setCount(count + 1);
   }, interval);
 
@@ -35,13 +35,7 @@ export default () => {
       >
         reset interval
       </button>
-      <button
-        onClick={() => {
-          setInterval(undefined);
-        }}
-      >
-        clear
-      </button>
+      <button onClick={clear}>clear</button>
     </div>
   );
 };

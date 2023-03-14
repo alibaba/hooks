@@ -1,5 +1,8 @@
 import { useMemo, useState } from 'react';
-import { useEventListener, useMemoizedFn, useRequest, useUpdateEffect } from '../';
+import useEventListener from '../useEventListener';
+import useMemoizedFn from '../useMemoizedFn';
+import useRequest from '../useRequest';
+import useUpdateEffect from '../useUpdateEffect';
 import { getTargetElement } from '../utils/domTarget';
 import { getClientHeight, getScrollHeight, getScrollTop } from '../utils/rect';
 import type { Data, InfiniteScrollOptions, Service } from './types';
@@ -67,7 +70,7 @@ const useInfiniteScroll = <TData extends Data>(
   };
 
   const loadMoreAsync = () => {
-    if (noMore) return;
+    if (noMore) return Promise.reject();
     setLoadingMore(true);
     return runAsync(finalData);
   };

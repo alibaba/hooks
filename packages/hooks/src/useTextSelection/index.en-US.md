@@ -30,19 +30,19 @@ const state = useTextSelection(target?);
 ### Params
 
 | Property | Description        | Type                                                                                 | Default    |
-|----------|--------------------|--------------------------------------------------------------------------------------|------------|
+| -------- | ------------------ | ------------------------------------------------------------------------------------ | ---------- |
 | target   | DOM element or ref | `Element` \| `Document` \| `(() => Element\Document)` \| `MutableRefObject<Element>` | `document` |
 
 ### Result
 
 | Property | Description                                    | Type    |
-|----------|------------------------------------------------|---------|
+| -------- | ---------------------------------------------- | ------- |
 | state    | Content, size, position of user text selection | `State` |
 
 ### State
 
 | Property | Description                         | Type     |
-|----------|-------------------------------------|----------|
+| -------- | ----------------------------------- | -------- |
 | text     | Selected text                       | `string` |
 | left     | The left coordinate value of text   | `number` |
 | right    | The right coordinate value of text  | `number` |

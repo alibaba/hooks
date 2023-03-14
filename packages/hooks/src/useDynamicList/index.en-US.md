@@ -34,7 +34,7 @@ const result: Result = useDynamicList(initialValue: T[]);
 ### Result
 
 | Property  | Description                              | Type                                           | Remarks                                                                                    |
-|-----------|------------------------------------------|------------------------------------------------|--------------------------------------------------------------------------------------------|
+| --------- | ---------------------------------------- | ---------------------------------------------- | ------------------------------------------------------------------------------------------ |
 | list      | Current list                             | `T[]`                                          | -                                                                                          |
 | resetList | Reset list current data                  | `(list: T[]) => void`                          | -                                                                                          |
 | insert    | Add item at specific position            | `(index: number, item: T) => void`             | -                                                                                          |
@@ -53,5 +53,5 @@ const result: Result = useDynamicList(initialValue: T[]);
 ### Params
 
 | Property     | Description               | Type  | Default |
-|--------------|---------------------------|-------|---------|
+| ------------ | ------------------------- | ----- | ------- |
 | initialValue | Initial value of the list | `T[]` | `[]`    |

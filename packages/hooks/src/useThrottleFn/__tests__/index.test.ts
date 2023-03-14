@@ -1,4 +1,4 @@
-import { act, renderHook, RenderHookResult } from '@testing-library/react-hooks';
+import { act, renderHook } from '@testing-library/react';
 import useThrottleFn from '../index';
 import { sleep } from '../../utils/testingHelpers';
 
@@ -10,13 +10,9 @@ interface ParamsObj {
 
 const setUp = ({ fn, wait }: ParamsObj) => renderHook(() => useThrottleFn(fn, { wait }));
 
-let hook: RenderHookResult<ParamsObj, ReturnType<typeof useThrottleFn>>;
+let hook;
 
 describe('useThrottleFn', () => {
-  it('should be defined', () => {
-    expect(useThrottleFn).toBeDefined();
-  });
-
   it('run, cancel and flush should work', async () => {
     let count = 0;
     const throttleFn = (gap: number) => {
@@ -59,4 +55,11 @@ describe('useThrottleFn', () => {
       expect(count).toBe(9);
     });
   });
+
+  // it('should output error when fn is not a function', () => {
+  //   const errSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
+  //   renderHook(() => useThrottleFn(1 as any));
+  //   expect(errSpy).toBeCalledWith('useThrottleFn expected parameter is a function, got number');
+  //   errSpy.mockRestore();
+  // });
 });

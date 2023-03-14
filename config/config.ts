@@ -35,6 +35,10 @@ export default {
   dynamicImport: {},
   manifest: {},
   hash: true,
+  alias: {
+    ahooks: process.cwd() + '/packages/hooks/src/index.ts',
+    '@ahooksjs/use-url-state': process.cwd() + '/packages/use-url-state/src/index.ts',
+  },
   resolve: {
     includes: ['docs', 'packages/hooks/src', 'packages/use-url-state'],
   },
@@ -54,7 +58,7 @@ export default {
         children: [
           {
             title: 'v2.x',
-            path: 'https://ahooks-v2.surge.sh/',
+            path: 'https://ahooks-v2.js.org/',
           },
           {
             title: 'v1.x',
@@ -74,7 +78,7 @@ export default {
         children: [
           {
             title: 'v2.x',
-            path: 'https://ahooks-v2.surge.sh/',
+            path: 'https://ahooks-v2.js.org/',
           },
           {
             title: 'v1.x',

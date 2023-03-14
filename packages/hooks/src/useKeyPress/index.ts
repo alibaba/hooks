@@ -1,7 +1,9 @@
 import useLatest from '../useLatest';
+import { isFunction, isNumber, isString } from '../utils';
 import type { BasicTarget } from '../utils/domTarget';
 import { getTargetElement } from '../utils/domTarget';
 import useDeepCompareEffectWithTarget from '../utils/useDeepCompareWithTarget';
+import isAppleDevice from '../utils/isAppleDevice';
 
 export type KeyPredicate = (event: KeyboardEvent) => boolean;
 export type keyType = number | string;
@@ -15,6 +17,7 @@ export type Options = {
   events?: KeyEvent[];
   target?: Target;
   exactMatch?: boolean;
+  useCapture?: boolean;
 };
 
 // 键盘事件 keyCode 别名
@@ -77,6 +80,7 @@ const aliasKeyCodeMap = {
   z: 90,
   leftwindowkey: 91,
   rightwindowkey: 92,
+  meta: isAppleDevice ? [91, 93] : [91, 92],
   selectkey: 93,
   numpad0: 96,
   numpad1: 97,
@@ -125,7 +129,12 @@ const modifierKey = {
   ctrl: (event: KeyboardEvent) => event.ctrlKey,
   shift: (event: KeyboardEvent) => event.shiftKey,
   alt: (event: KeyboardEvent) => event.altKey,
-  meta: (event: KeyboardEvent) => event.metaKey,
+  meta: (event: KeyboardEvent) => {
+    if (event.type === 'keyup') {
+      return aliasKeyCodeMap.meta.includes(event.keyCode);
+    }
+    return event.metaKey;
+  },
 };
 
 // 根据 event 计算激活键数量
@@ -155,7 +164,7 @@ function genFilterKey(event: KeyboardEvent, keyFilter: keyType, exactMatch: bool
   }
 
   // 数字类型直接匹配事件的 keyCode
-  if (typeof keyFilter === 'number') {
+  if (isNumber(keyFilter)) {
     return event.keyCode === keyFilter;
   }
 
@@ -167,7 +176,7 @@ function genFilterKey(event: KeyboardEvent, keyFilter: keyType, exactMatch: bool
     // 组合键
     const genModifier = modifierKey[key];
     // keyCode 别名
-    const aliasKeyCode = aliasKeyCodeMap[key.toLowerCase()];
+    const aliasKeyCode: number | number[] = aliasKeyCodeMap[key.toLowerCase()];
 
     if ((genModifier && genModifier(event)) || (aliasKeyCode && aliasKeyCode === event.keyCode)) {
       genLen++;
@@ -191,24 +200,24 @@ function genFilterKey(event: KeyboardEvent, keyFilter: keyType, exactMatch: bool
  * @param [keyFilter: any] 当前键
  * @returns () => Boolean
  */
-function genKeyFormater(keyFilter: KeyFilter, exactMatch: boolean): KeyPredicate {
-  if (typeof keyFilter === 'function') {
+function genKeyFormatter(keyFilter: KeyFilter, exactMatch: boolean): KeyPredicate {
+  if (isFunction(keyFilter)) {
     return keyFilter;
   }
-  if (typeof keyFilter === 'string' || typeof keyFilter === 'number') {
+  if (isString(keyFilter) || isNumber(keyFilter)) {
     return (event: KeyboardEvent) => genFilterKey(event, keyFilter, exactMatch);
   }
   if (Array.isArray(keyFilter)) {
     return (event: KeyboardEvent) =>
       keyFilter.some((item) => genFilterKey(event, item, exactMatch));
   }
-  return keyFilter ? () => true : () => false;
+  return () => Boolean(keyFilter);
 }
 
 const defaultEvents: KeyEvent[] = ['keydown'];
 
 function useKeyPress(keyFilter: KeyFilter, eventHandler: EventHandler, option?: Options) {
-  const { events = defaultEvents, target, exactMatch = false } = option || {};
+  const { events = defaultEvents, target, exactMatch = false, useCapture = false } = option || {};
   const eventHandlerRef = useLatest(eventHandler);
   const keyFilterRef = useLatest(keyFilter);
 
@@ -220,18 +229,18 @@ function useKeyPress(keyFilter: KeyFilter, eventHandler: EventHandler, option?: 
       }
 
       const callbackHandler = (event: KeyboardEvent) => {
-        const genGuard: KeyPredicate = genKeyFormater(keyFilterRef.current, exactMatch);
+        const genGuard: KeyPredicate = genKeyFormatter(keyFilterRef.current, exactMatch);
         if (genGuard(event)) {
           return eventHandlerRef.current?.(event);
         }
       };
 
       for (const eventName of events) {
-        el?.addEventListener?.(eventName, callbackHandler);
+        el?.addEventListener?.(eventName, callbackHandler, useCapture);
       }
       return () => {
         for (const eventName of events) {
-          el?.removeEventListener?.(eventName, callbackHandler);
+          el?.removeEventListener?.(eventName, callbackHandler, useCapture);
         }
       };
     },

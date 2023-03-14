@@ -1,13 +1,9 @@
-import { renderHook, act } from '@testing-library/react-hooks';
+import { renderHook, act } from '@testing-library/react';
 import useAsyncEffect from '../index';
 import { useState } from 'react';
 import { sleep } from '../../utils/testingHelpers';
 
 describe('useAsyncEffect', () => {
-  it('should be defined', () => {
-    expect(useAsyncEffect).toBeDefined();
-  });
-
   it('should work without clean up', async () => {
     const hook = renderHook(() => {
       const [x, setX] = useState(0);

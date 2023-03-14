@@ -1,4 +1,5 @@
 import { useRef } from 'react';
+import { isPlainObject } from 'lodash';
 import useCreation from '../useCreation';
 import useUpdate from '../useUpdate';
 
@@ -6,10 +7,6 @@ import useUpdate from '../useUpdate';
 const proxyMap = new WeakMap();
 // k:v 代理过的对象:原对象
 const rawMap = new WeakMap();
-
-function isObject(val: Record<string, any>): boolean {
-  return typeof val === 'object' && val !== null;
-}
 
 function observer<T extends Record<string, any>>(initialVal: T, cb: () => void): T {
   const existingProxy = proxyMap.get(initialVal);
@@ -28,7 +25,10 @@ function observer<T extends Record<string, any>>(initialVal: T, cb: () => void):
   const proxy = new Proxy<T>(initialVal, {
     get(target, key, receiver) {
       const res = Reflect.get(target, key, receiver);
-      return isObject(res) ? observer(res, cb) : Reflect.get(target, key);
+
+      // Only proxy plain object or array,
+      // otherwise it will cause: https://github.com/alibaba/hooks/issues/2080
+      return isPlainObject(res) || Array.isArray(res) ? observer(res, cb) : res;
     },
     set(target, key, val) {
       const ret = Reflect.set(target, key, val);

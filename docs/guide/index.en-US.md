@@ -17,6 +17,8 @@ ahooks, pronounced [eɪ hʊks], is a high-quality and reliable React Hooks libra
 $ npm install --save ahooks
 # or
 $ yarn add ahooks
+# or
+$ pnpm add ahooks
 ```
 
 ## Usage

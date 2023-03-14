@@ -1,16 +1,22 @@
+/**
+ * title: Default usage
+ * desc: Automatically merge object.
+ *
+ * title.zh-CN: 基础用法
+ * desc.zh-CN: 自动合并对象。
+ */
+
 import React from 'react';
 import { useSetState } from 'ahooks';
 
 interface State {
   hello: string;
-  count: number;
   [key: string]: any;
 }
 
 export default () => {
   const [state, setState] = useSetState<State>({
     hello: '',
-    count: 0,
   });
 
   return (
@@ -22,9 +28,6 @@ export default () => {
         </button>
         <button type="button" onClick={() => setState({ foo: 'bar' })} style={{ margin: '0 8px' }}>
           set foo
-        </button>
-        <button type="button" onClick={() => setState((prev) => ({ count: prev.count + 1 }))}>
-          count + 1
         </button>
       </p>
     </div>

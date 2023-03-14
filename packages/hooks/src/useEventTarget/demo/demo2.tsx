@@ -11,6 +11,7 @@ import { useEventTarget } from 'ahooks';
 
 export default () => {
   const [value, { onChange, reset }] = useEventTarget({
+    initialValue: '',
     transformer: (val: string) => val.replace(/[^\d]/g, ''),
   });
 

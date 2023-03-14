@@ -39,6 +39,6 @@ You can experience the effect through the following example
 
 ### Options
 
-| Property    | Description                                             | Type    | Default |
-|-------------|---------------------------------------------------------|---------|---------|
+| Property    | Description                                             | Type                   | Default |
+| ----------- | ------------------------------------------------------- | ---------------------- | ------- |
 | refreshDeps | When the content of the array changes, trigger refresh. | `React.DependencyList` | `[]`    |

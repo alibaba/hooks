@@ -1,12 +1,8 @@
-import { renderHook, act } from '@testing-library/react-hooks';
+import { renderHook, act } from '@testing-library/react';
 import useWhyDidYouUpdate from '../index';
 import { useState } from 'react';
 
 describe('useWhyDidYouUpdate', () => {
-  it('should be defined', () => {
-    expect(useWhyDidYouUpdate).toBeDefined();
-  });
-
   it('should work', () => {
     console.log = jest.fn();
     const setup = () =>

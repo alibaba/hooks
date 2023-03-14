@@ -1,12 +1,8 @@
-import { renderHook, act } from '@testing-library/react-hooks';
+import { renderHook, act } from '@testing-library/react';
 import { useState } from 'react';
 import useCreation from '../index';
 
 describe('useCreation', () => {
-  it('should be defined', () => {
-    expect(useCreation).toBeDefined();
-  });
-
   class Foo {
     constructor() {
       this.data = Math.random();

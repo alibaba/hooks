@@ -22,8 +22,8 @@ interface ResponsiveConfig {
 interface ResponsiveInfo {
   [key: string]: boolean;
 }
-function configResponsive(config: ResponsiveConfig): void
-function useResponsive(): ResponsiveInfo
+function configResponsive(config: ResponsiveConfig): void;
+function useResponsive(): ResponsiveInfo;
 ```
 
 ### Config

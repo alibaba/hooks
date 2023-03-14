@@ -1,11 +1,7 @@
-import { act, renderHook, RenderHookResult } from '@testing-library/react-hooks';
+import { act, renderHook, RenderHookResult } from '@testing-library/react';
 import useSafeState from '../index';
 
 describe('useSetState', () => {
-  it('should be defined', () => {
-    expect(useSafeState).toBeDefined();
-  });
-
   const setUp = (initialValue: any) =>
     renderHook(() => {
       const [state, setState] = useSafeState(initialValue);
@@ -27,7 +23,7 @@ describe('useSetState', () => {
     act(() => {
       hook.result.current.setState(5);
     });
-    expect(hook.result.current.state).toEqual(5);
+    expect(hook.result.current.state).toBe(5);
   });
 
   it('should not support update when unmount', () => {
@@ -36,6 +32,6 @@ describe('useSetState', () => {
     act(() => {
       hook.result.current.setState(5);
     });
-    expect(hook.result.current.state).toEqual(0);
+    expect(hook.result.current.state).toBe(0);
   });
 });

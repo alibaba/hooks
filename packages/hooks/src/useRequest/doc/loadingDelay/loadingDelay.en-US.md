@@ -7,7 +7,7 @@ group:
 
 # Loading Delay
 
-By setting `options.loadingDelay`, you can delay the time when `loading` turns to  `true`, effectively prevent UI flashing.
+By setting `options.loadingDelay`, you can delay the time when `loading` turns to `true`, effectively prevent UI flashing.
 
 ```tsx | pure
 const { loading, data } = useRequest(getUsername, {
@@ -26,7 +26,7 @@ You can quickly click the button in the example below to experience the effect
 ## API
 
 | Property     | Description                                       | Type     | Default |
-|--------------|---------------------------------------------------|----------|---------|
+| ------------ | ------------------------------------------------- | -------- | ------- |
 | loadingDelay | Set the delay time for `loading` to become `true` | `number` | `0`     |
 
 ## Remark
