@@ -248,4 +248,50 @@ describe('useInfiniteScroll', () => {
       Promise.resolve();
     });
   });
+
+  it('loading should be true when reload after loadMore', async () => {
+    const { result } = setup(mockRequest);
+    expect(result.current.loading).toBeTruthy();
+    const { reload, loadMore } = result.current;
+    await act(async () => {
+      jest.advanceTimersByTime(1000);
+    });
+
+    expect(result.current.loading).toBeFalsy();
+
+    act(() => {
+      loadMore();
+      reload();
+    });
+    expect(result.current.loading).toBeTruthy();
+
+    await act(async () => {
+      jest.advanceTimersByTime(1000);
+    });
+
+    expect(result.current.loading).toBeFalsy();
+  });
+
+  it('loading should be true when reloadAsync after loadMore', async () => {
+    const { result } = setup(mockRequest);
+    expect(result.current.loading).toBeTruthy();
+    const { reloadAsync, loadMore } = result.current;
+    await act(async () => {
+      jest.advanceTimersByTime(1000);
+    });
+
+    expect(result.current.loading).toBeFalsy();
+
+    act(() => {
+      loadMore();
+      reloadAsync();
+    });
+    expect(result.current.loading).toBeTruthy();
+
+    await act(async () => {
+      jest.advanceTimersByTime(1000);
+    });
+
+    expect(result.current.loading).toBeFalsy();
+  });
 });
