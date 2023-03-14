@@ -27,23 +27,23 @@ describe('useThrottleEffect', () => {
 
     hook.rerender({ value: 2, wait: 200 });
     await sleep(100);
-    expect(mockEffect.mock.calls.length).toEqual(1);
-    expect(mockCleanUp.mock.calls.length).toEqual(0);
+    expect(mockEffect.mock.calls.length).toBe(1);
+    expect(mockCleanUp.mock.calls.length).toBe(0);
     await act(async () => {
       await sleep(150);
     });
-    expect(mockEffect.mock.calls.length).toEqual(2);
-    expect(mockCleanUp.mock.calls.length).toEqual(1);
+    expect(mockEffect.mock.calls.length).toBe(2);
+    expect(mockCleanUp.mock.calls.length).toBe(1);
 
     hook.rerender({ value: 3, wait: 100 });
     await sleep(50);
-    expect(mockEffect.mock.calls.length).toEqual(3);
-    expect(mockCleanUp.mock.calls.length).toEqual(2);
+    expect(mockEffect.mock.calls.length).toBe(3);
+    expect(mockCleanUp.mock.calls.length).toBe(2);
     await act(async () => {
       await sleep(100);
     });
-    expect(mockEffect.mock.calls.length).toEqual(3);
-    expect(mockCleanUp.mock.calls.length).toEqual(2);
+    expect(mockEffect.mock.calls.length).toBe(3);
+    expect(mockCleanUp.mock.calls.length).toBe(2);
   });
 
   it('should cancel timeout on unmount', async () => {
@@ -66,15 +66,15 @@ describe('useThrottleEffect', () => {
     );
 
     await act(async () => {
-      expect(mockEffect.mock.calls.length).toEqual(1);
-      expect(mockCleanUp.mock.calls.length).toEqual(0);
+      expect(mockEffect.mock.calls.length).toBe(1);
+      expect(mockCleanUp.mock.calls.length).toBe(0);
 
       hook.rerender(1);
       await sleep(50);
       hook.unmount();
 
-      expect(mockEffect.mock.calls.length).toEqual(1);
-      expect(mockCleanUp.mock.calls.length).toEqual(1);
+      expect(mockEffect.mock.calls.length).toBe(1);
+      expect(mockCleanUp.mock.calls.length).toBe(1);
     });
   });
 });

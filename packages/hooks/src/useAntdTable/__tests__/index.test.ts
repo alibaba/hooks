@@ -79,10 +79,10 @@ describe('useAntdTable', () => {
       hook = setUp(asyncFn, {});
     });
 
-    expect(hook.result.current.tableProps.loading).toEqual(false);
-    expect(hook.result.current.tableProps.pagination.current).toEqual(1);
-    expect(hook.result.current.tableProps.pagination.pageSize).toEqual(10);
-    await waitFor(() => expect(hook.result.current.tableProps.pagination.total).toEqual(20));
+    expect(hook.result.current.tableProps.loading).toBe(false);
+    expect(hook.result.current.tableProps.pagination.current).toBe(1);
+    expect(hook.result.current.tableProps.pagination.pageSize).toBe(10);
+    await waitFor(() => expect(hook.result.current.tableProps.pagination.total).toBe(20));
   });
 
   it('should defaultParams work', async () => {
@@ -103,12 +103,12 @@ describe('useAntdTable', () => {
       });
     });
     const { search } = hook.result.current;
-    expect(hook.result.current.tableProps.loading).toEqual(false);
-    await waitFor(() => expect(queryArgs.current).toEqual(2));
-    expect(queryArgs.pageSize).toEqual(10);
-    expect(queryArgs.name).toEqual('hello');
-    expect(queryArgs.phone).toEqual('123');
-    expect(search.type).toEqual('advance');
+    expect(hook.result.current.tableProps.loading).toBe(false);
+    await waitFor(() => expect(queryArgs.current).toBe(2));
+    expect(queryArgs.pageSize).toBe(10);
+    expect(queryArgs.name).toBe('hello');
+    expect(queryArgs.phone).toBe('123');
+    expect(search.type).toBe('advance');
   });
 
   it('should stop the query when validate fields failed', async () => {
@@ -130,7 +130,7 @@ describe('useAntdTable', () => {
     });
 
     await sleep(1);
-    expect(queryArgs).toEqual(undefined);
+    expect(queryArgs).toBeUndefined();
   });
 
   it('should ready work', async () => {
@@ -153,7 +153,7 @@ describe('useAntdTable', () => {
       });
     });
     await sleep(1);
-    expect(queryArgs).toEqual(undefined);
+    expect(queryArgs).toBeUndefined();
 
     hook.rerender({
       ready: true,
@@ -169,12 +169,12 @@ describe('useAntdTable', () => {
     });
 
     const { search } = hook.result.current;
-    expect(hook.result.current.tableProps.loading).toEqual(false);
-    await waitFor(() => expect(queryArgs.current).toEqual(2));
-    expect(queryArgs.pageSize).toEqual(10);
-    expect(queryArgs.name).toEqual('hello');
-    expect(queryArgs.phone).toEqual('456');
-    expect(search.type).toEqual('advance');
+    expect(hook.result.current.tableProps.loading).toBe(false);
+    await waitFor(() => expect(queryArgs.current).toBe(2));
+    expect(queryArgs.pageSize).toBe(10);
+    expect(queryArgs.name).toBe('hello');
+    expect(queryArgs.phone).toBe('456');
+    expect(search.type).toBe('advance');
   });
 
   it('should antd v3 work', async () => {
@@ -205,11 +205,11 @@ describe('useAntdTable', () => {
       hook = setUp(asyncFn, { form: v3Form });
     });
     const { search } = hook.result.current;
-    expect(hook.result.current.tableProps.loading).toEqual(false);
-    await waitFor(() => expect(queryArgs.current).toEqual(1));
-    expect(queryArgs.pageSize).toEqual(10);
-    expect(queryArgs.name).toEqual('default name');
-    expect(search.type).toEqual('simple');
+    expect(hook.result.current.tableProps.loading).toBe(false);
+    await waitFor(() => expect(queryArgs.current).toBe(1));
+    expect(queryArgs.pageSize).toBe(10);
+    expect(queryArgs.name).toBe('default name');
+    expect(search.type).toBe('simple');
 
     // /* 切换 分页 */
     act(() => {
@@ -218,18 +218,62 @@ describe('useAntdTable', () => {
         pageSize: 5,
       });
     });
-    await waitFor(() => expect(queryArgs.current).toEqual(2));
-    expect(queryArgs.pageSize).toEqual(5);
-    expect(queryArgs.name).toEqual('default name');
+    await waitFor(() => expect(queryArgs.current).toBe(2));
+    expect(queryArgs.pageSize).toBe(5);
+    expect(queryArgs.name).toBe('default name');
 
     /* 改变 name， 提交表单 */
     v3Form.fieldsValue.name = 'change name';
     act(() => {
       search.submit();
     });
-    await waitFor(() => expect(queryArgs.current).toEqual(1));
-    expect(queryArgs.current).toEqual(1);
-    expect(queryArgs.pageSize).toEqual(5);
-    expect(queryArgs.name).toEqual('change name');
+    await waitFor(() => expect(queryArgs.current).toBe(1));
+    expect(queryArgs.current).toBe(1);
+    expect(queryArgs.pageSize).toBe(5);
+    expect(queryArgs.name).toBe('change name');
+  });
+
+  it('should reset params work', async () => {
+    queryArgs = undefined;
+    form.resetFields();
+    act(() => {
+      hook = setUp(asyncFn, {
+        form,
+        defaultParams: [
+          {
+            current: 1,
+            pageSize: 10,
+          },
+        ],
+      });
+    });
+
+    const { search, tableProps } = hook.result.current;
+    expect(tableProps.loading).toBe(false);
+    await waitFor(() => expect(queryArgs.current).toBe(1));
+    expect(queryArgs.pageSize).toBe(10);
+
+    // change params
+    act(() => {
+      tableProps.onChange({
+        current: 2,
+        pageSize: 5,
+      });
+    });
+
+    await waitFor(() => {
+      expect(queryArgs.current).toBe(2);
+      expect(queryArgs.pageSize).toBe(5);
+    });
+
+    // reset params
+    act(() => {
+      search.reset();
+    });
+
+    await waitFor(() => {
+      expect(queryArgs.current).toBe(1);
+      expect(queryArgs.pageSize).toBe(10);
+    });
   });
 });
