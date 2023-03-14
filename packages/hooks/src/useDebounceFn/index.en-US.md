@@ -46,6 +46,6 @@ const {
 
 | Property | Description                                            | Type                      |
 | -------- | ------------------------------------------------------ | ------------------------- |
-| run      | Invode and pass parameters to fn.                      | `(...args: any[]) => any` |
+| run      | invoke and pass parameters to fn.                      | `(...args: any[]) => any` |
 | cancel   | Cancel the invocation of currently debounced function. | `() => void`              |
 | flush    | Immediately invoke currently debounced function.       | `() => void`              |

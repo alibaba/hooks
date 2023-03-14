@@ -1,7 +1,7 @@
 import type { AntdTableOptions, AntdTableResult, Data, Params } from '../useAntdTable/types';
 
 export interface Field {
-  getFieldInstance?: (name: string) => {};
+  getFieldInstance?: (name: string) => Record<string, any>;
   setValues: (value: Record<string, any>) => void;
   getValues: (...args: any) => Record<string, any>;
   reset: (...args: any) => void;

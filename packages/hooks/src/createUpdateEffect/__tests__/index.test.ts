@@ -12,9 +12,9 @@ describe('createUpdateEffect', () => {
         mountedState = 2;
       }),
     );
-    expect(mountedState).toEqual(1);
+    expect(mountedState).toBe(1);
     hook.rerender();
-    expect(mountedState).toEqual(2);
+    expect(mountedState).toBe(2);
   });
 
   it('should work for useLayoutEffect', () => {
@@ -26,8 +26,8 @@ describe('createUpdateEffect', () => {
         mountedState = 2;
       }),
     );
-    expect(mountedState).toEqual(1);
+    expect(mountedState).toBe(1);
     hook.rerender();
-    expect(mountedState).toEqual(2);
+    expect(mountedState).toBe(2);
   });
 });

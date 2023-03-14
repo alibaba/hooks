@@ -1,4 +1,4 @@
-import { renderHook, act } from '@testing-library/react';
+import { renderHook, act } from '../../utils/tests';
 import { useResponsive } from '../';
 
 describe('useResponsive', () => {

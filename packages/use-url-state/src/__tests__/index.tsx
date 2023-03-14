@@ -1,7 +1,7 @@
 import React from 'react';
 import { render } from '@testing-library/react';
 import type { MemoryRouterProps } from 'react-router';
-import { MemoryRouter } from 'react-router';
+import { MemoryRouter, useLocation } from 'react-router';
 import useUrlState from '..';
 import type { Options } from '..';
 
@@ -14,7 +14,8 @@ export const setup = (
 
   const Component = () => {
     const [state, setState] = useUrlState(initialState, options);
-    Object.assign(res, { state, setState });
+    const location = useLocation();
+    Object.assign(res, { state, setState, location });
     return null;
   };
 

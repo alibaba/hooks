@@ -4,6 +4,6 @@ import useScroll from '../index';
 describe('useScroll', () => {
   it('document body', () => {
     const hook = renderHook(() => useScroll(document));
-    expect(hook.result.current).toEqual(undefined);
+    expect(hook.result.current).toBeUndefined();
   });
 });

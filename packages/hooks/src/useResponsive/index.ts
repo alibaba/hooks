@@ -61,9 +61,16 @@ export function useResponsive() {
   useEffect(() => {
     if (!isBrowser) return;
 
+    // In React 18's StrictMode, useEffect perform twice, resize listener is remove, so handleResize is never perform.
+    // https://github.com/alibaba/hooks/issues/1910
+    if (!listening) {
+      window.addEventListener('resize', handleResize);
+    }
+
     const subscriber = () => {
       setState(info);
     };
+
     subscribers.add(subscriber);
     return () => {
       subscribers.delete(subscriber);
