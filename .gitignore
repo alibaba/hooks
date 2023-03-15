@@ -18,3 +18,4 @@ packages/hooks/README.md
 yarn-error.log
 package-lock.json
 metadata.json
+.eslintcache

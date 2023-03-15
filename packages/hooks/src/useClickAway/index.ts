@@ -4,10 +4,12 @@ import { getTargetElement } from '../utils/domTarget';
 import getDocumentOrShadow from '../utils/getDocumentOrShadow';
 import useEffectWithTarget from '../utils/useEffectWithTarget';
 
+type DocumentEventKey = keyof DocumentEventMap;
+
 export default function useClickAway<T extends Event = Event>(
   onClickAway: (event: T) => void,
   target: BasicTarget | BasicTarget[],
-  eventName: string | string[] = 'click',
+  eventName: DocumentEventKey | DocumentEventKey[] = 'click',
 ) {
   const onClickAwayRef = useLatest(onClickAway);
 
