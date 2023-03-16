@@ -14,11 +14,11 @@ function useRequestImplement<TData, TParams extends any[]>(
   options: Options<TData, TParams> = {},
   plugins: Plugin<TData, TParams>[] = [],
 ) {
-  const { manual = false, defaultParams, ...rest } = options;
+  const { manual = false, ...rest } = options;
 
   if (isDev) {
-    if (defaultParams && !Array.isArray(defaultParams)) {
-      console.warn(`expected defaultParams is array, got ${typeof defaultParams}`);
+    if (options.defaultParams && !Array.isArray(options.defaultParams)) {
+      console.warn(`expected defaultParams is array, got ${typeof options.defaultParams}`);
     }
   }
 
