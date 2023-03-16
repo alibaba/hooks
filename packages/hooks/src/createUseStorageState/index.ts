@@ -54,6 +54,7 @@ export function createUseStorageState(getStorage: () => Storage | undefined) {
           storage?.setItem(key, serializer(value));
         } catch (e) {
           console.error(e);
+          throw e;
         }
       }
     }
