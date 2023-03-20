@@ -61,7 +61,7 @@ setState 可以更新 cookie options，会与 `useCookieState` 设置的 options
 
 | 参数         | 说明                                                 | 类型                                                       | 默认值      |
 | ------------ | ---------------------------------------------------- | ---------------------------------------------------------- | ----------- |
-| defaultValue | 可选，定义 Cookie 默认值，会同步到本地 Cookie        | `string` \| `undefined` \| `(() => (string \| undefined))` | `undefined` |
+| defaultValue | 可选，定义 Cookie 默认值，但不同步到本地 Cookie      | `string` \| `undefined` \| `(() => (string \| undefined))` | `undefined` |
 | expires      | 可选，定义 Cookie 存储有效时间                       | `number` \| `Date`                                         | -           |
 | path         | 可选，定义 Cookie 可用的路径                         | `string`                                                   | `/`         |
 | domain       | 可选，定义 Cookie 可用的域，默认为 Cookie 创建的域名 | `string`                                                   | -           |
