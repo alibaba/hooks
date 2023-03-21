@@ -49,7 +49,7 @@ describe('useCookieState', () => {
       defaultValue: 'false',
     });
     expect(anotherHook.result.current.state).toBe('false');
-    expect(Cookies.get(COOKIE)).toBe('false');
+    expect(Cookies.get(COOKIE)).toBeUndefined();
     act(() => {
       // @ts-ignore
       hook.result.current.setState();
@@ -85,18 +85,18 @@ describe('useCookieState', () => {
     const { result: result1 } = setUp(COOKIE_NAME, { defaultValue: 'A' });
     const { result: result2 } = setUp(COOKIE_NAME, { defaultValue: 'B' });
     expect(result1.current.state).toBe('A');
-    expect(result2.current.state).toBe('A');
+    expect(result2.current.state).toBe('B');
     act(() => {
-      result1.current.setState('B');
+      result1.current.setState('C');
     });
-    expect(result1.current.state).toBe('B');
-    expect(result2.current.state).toBe('A');
-    expect(Cookies.get(COOKIE_NAME)).toBe('B');
-    act(() => {
-      result2.current.setState('C');
-    });
-    expect(result1.current.state).toBe('B');
-    expect(result2.current.state).toBe('C');
+    expect(result1.current.state).toBe('C');
+    expect(result2.current.state).toBe('B');
     expect(Cookies.get(COOKIE_NAME)).toBe('C');
+    act(() => {
+      result2.current.setState('D');
+    });
+    expect(result1.current.state).toBe('C');
+    expect(result2.current.state).toBe('D');
+    expect(Cookies.get(COOKIE_NAME)).toBe('D');
   });
 });
