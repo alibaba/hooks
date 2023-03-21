@@ -14,7 +14,7 @@
     "build": "pnpm -r --filter=./packages/* run build",
     "test": "jest",
     "coveralls": "jest --coverage --coverageReporters=text-lcov | coveralls",
-    "lint": "eslint --ignore-pattern **/__tests__/* --ignore-pattern **/demo/* \"packages/*/src/**/*.{ts,tsx}\"",
+    "lint": "eslint --ignore-pattern **/__tests__/* --ignore-pattern **/demo/* \"packages/*/src/**/*.{ts,tsx}\" --cache",
     "pretty": "pretty-quick --staged",
     "build:doc": "dumi build",
     "pub:doc-surge": "surge ./dist --domain ahooks.js.org",
