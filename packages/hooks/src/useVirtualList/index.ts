@@ -34,13 +34,13 @@ const useVirtualList = <T = any>(list: T[], options: Options<T>) => {
   const getVisibleCount = (containerHeight: number, fromIndex: number, scrollTop: number) => {
     if (isNumber(itemHeightRef.current)) {
       const count = Math.ceil(containerHeight / itemHeightRef.current);
-      // 如果滚动的距离是 itemHeight 的整数倍，直接取 count,否则需要 +1
+      // If the scrolled distance is an integer multiple of itemHeight, just take count, otherwise +1
       return scrollTop % itemHeightRef.current ? count + 1 : count;
     }
 
     let sum = 0;
     let endIndex = 0;
-    // 需要从 0 开始计算，因为从 fronIndex 计算会有半个在可视区域外面的情况，不严谨
+    // get the index of the last element
     for (let i = 0; i < list.length; i++) {
       const height = itemHeightRef.current(i, list[i]);
       sum += height;
