@@ -48,22 +48,6 @@ export function createUseStorageState(getStorage: () => Storage | undefined) {
       return JSON.parse(value);
     };
 
-    function getDefaultValue() {
-      return isFunction(options?.defaultValue) ? options?.defaultValue() : options?.defaultValue;
-    }
-
-    function setStoredValue(value?: T) {
-      if (isUndef(value)) {
-        storage?.removeItem(key);
-      } else {
-        try {
-          storage?.setItem(key, serializer(value));
-        } catch (e) {
-          onError(e);
-        }
-      }
-    }
-
     function getStoredValue() {
       try {
         const raw = storage?.getItem(key);
@@ -73,12 +57,10 @@ export function createUseStorageState(getStorage: () => Storage | undefined) {
       } catch (e) {
         onError(e);
       }
-
-      const defaultValue = getDefaultValue();
-
-      setStoredValue(defaultValue);
-
-      return defaultValue;
+      if (isFunction(options?.defaultValue)) {
+        return options?.defaultValue();
+      }
+      return options?.defaultValue;
     }
 
     const [state, setState] = useState<T>(() => getStoredValue());
@@ -89,9 +71,17 @@ export function createUseStorageState(getStorage: () => Storage | undefined) {
 
     const updateState = (value: T | IFuncUpdater<T>) => {
       const currentState = isFunction(value) ? value(state) : value;
-
       setState(currentState);
-      setStoredValue(currentState);
+
+      if (isUndef(currentState)) {
+        storage?.removeItem(key);
+      } else {
+        try {
+          storage?.setItem(key, serializer(currentState));
+        } catch (e) {
+          console.error(e);
+        }
+      }
     };
 
     return [state, useMemoizedFn(updateState)] as const;

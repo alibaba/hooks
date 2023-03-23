@@ -34,7 +34,7 @@ const previousState: T = usePrevious<T>(
 
 ### Params
 
-| Property     | Description                                                   | Type                                         | Default             |
-| ------------ | ------------------------------------------------------------- | -------------------------------------------- | ------------------- |
-| state        | The state that needs to be tracked                            | `T`                                          | -                   |
-| shouldUpdate | Optional. Customize whether the state value should be updated | `(prev: T \| undefined, next: T) => boolean` | `(a, b) => a !== b` |
+| Property     | Description                                                   | Type                                         | Default                      |
+| ------------ | ------------------------------------------------------------- | -------------------------------------------- | ---------------------------- |
+| state        | The state that needs to be tracked                            | `T`                                          | -                            |
+| shouldUpdate | Optional. Customize whether the state value should be updated | `(prev: T \| undefined, next: T) => boolean` | `(a, b) => !Object.is(a, b)` |
