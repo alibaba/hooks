@@ -6,7 +6,7 @@ import type * as React from 'react';
 import * as tmp from 'react-router';
 
 // ignore waring `"export 'useNavigate' (imported as 'rc') was not found in 'react-router'`
-const reactRouter = tmp as any;
+const rc = tmp as any;
 
 export interface Options {
   navigateMode?: 'push' | 'replace';
@@ -36,12 +36,12 @@ const useUrlState = <S extends UrlState = UrlState>(
   const mergedParseOptions = { ...baseParseConfig, ...parseOptions };
   const mergedStringifyOptions = { ...baseStringifyConfig, ...stringifyOptions };
 
-  const location = reactRouter.useLocation();
+  const location = rc.useLocation();
 
   // react-router v5
-  const history = reactRouter.useHistory?.();
+  const history = rc.useHistory?.();
   // react-router v6
-  const navigate = reactRouter.useNavigate?.();
+  const navigate = rc.useNavigate?.();
 
   const update = useUpdate();
 
@@ -61,36 +61,33 @@ const useUrlState = <S extends UrlState = UrlState>(
     [queryFromUrl],
   );
 
-  const setState = (s: React.SetStateAction<State>): Promise<void> => {
-    return new Promise((resolve) => {
-      const newQuery = typeof s === 'function' ? s(targetQuery) : s;
+  const setState = (s: React.SetStateAction<State>) => {
+    const newQuery = typeof s === 'function' ? s(targetQuery) : s;
 
-      // 1. 如果 setState 后，search 没变化，就需要 update 来触发一次更新。比如 demo1 直接点击 clear，就需要 update 来触发更新。
-      // 2. update 和 history 的更新会合并，不会造成多次更新
-      update();
-      if (history) {
-        history[navigateMode](
-          {
-            hash: location.hash,
-            search: stringify({ ...queryFromUrl, ...newQuery }, mergedStringifyOptions) || '?',
-          },
-          location.state,
-        );
-      }
-      if (navigate) {
-        navigate(
-          {
-            hash: location.hash,
-            search: stringify({ ...queryFromUrl, ...newQuery }, mergedStringifyOptions) || '?',
-          },
-          {
-            replace: navigateMode === 'replace',
-            state: location.state,
-          },
-        );
-      }
-      resolve();
-    });
+    // 1. 如果 setState 后，search 没变化，就需要 update 来触发一次更新。比如 demo1 直接点击 clear，就需要 update 来触发更新。
+    // 2. update 和 history 的更新会合并，不会造成多次更新
+    update();
+    if (history) {
+      history[navigateMode](
+        {
+          hash: location.hash,
+          search: stringify({ ...queryFromUrl, ...newQuery }, mergedStringifyOptions) || '?',
+        },
+        location.state,
+      );
+    }
+    if (navigate) {
+      navigate(
+        {
+          hash: location.hash,
+          search: stringify({ ...queryFromUrl, ...newQuery }, mergedStringifyOptions) || '?',
+        },
+        {
+          replace: navigateMode === 'replace',
+          state: location.state,
+        },
+      );
+    }
   };
 
   return [targetQuery, useMemoizedFn(setState)] as const;
