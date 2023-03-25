@@ -29,6 +29,6 @@ const greeting = useGreeting();
 
 ### Result
 
-| Property | Description | Type                              |
-| -------- | ----------- | --------------------------------- |
-| greeting | 白天状态    | `morning/afternoon/evening/night` |
+| Property | Description | Type     |
+| -------- | ----------- | -------- |
+| greeting | 白天状态    | `string` |
