@@ -75,7 +75,7 @@ import useVirtualList from './useVirtualList';
 import useWebSocket from './useWebSocket';
 import useWhyDidYouUpdate from './useWhyDidYouUpdate';
 import useMutationObserver from './useMutationObserver';
-import useGreetings from './useGreetings';
+import useGreeting from './useGreeting';
 
 export {
   useRequest,
@@ -157,5 +157,5 @@ export {
   useRafTimeout,
   useResetState,
   useMutationObserver,
-  useGreetings,
+  useGreeting,
 };
