@@ -23,7 +23,7 @@ describe('useGreeting', () => {
     );
 
     await act(async () => {
-      hook.result.current.setState({ suffix: '!' });
+      hook.result.current.setState({ prefix: '', suffix: '!' });
     });
     expect(hook.result.current.greeting).toMatch(/^morning!|afternoon!|evening!|night!$/);
 
