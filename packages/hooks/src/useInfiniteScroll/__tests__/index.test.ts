@@ -159,6 +159,35 @@ describe('useInfiniteScroll', () => {
     });
   });
 
+  it('reload data should be latest', async () => {
+    let listCount = 5;
+    const mockRequestFn = async () => {
+      await sleep(1000);
+      return {
+        list: Array.from({
+          length: listCount,
+        }).map((_, index) => index + 1),
+        nextId: listCount,
+        hasMore: listCount > 2,
+      };
+    };
+
+    const { result } = setup(mockRequestFn);
+
+    await act(async () => {
+      jest.advanceTimersByTime(1000);
+    });
+    expect(result.current.data).toMatchObject({ list: [1, 2, 3, 4, 5], nextId: 5 });
+
+    listCount = 3;
+    await act(async () => {
+      result.current.reload();
+      jest.advanceTimersByTime(1000);
+    });
+
+    expect(result.current.data).toMatchObject({ list: [1, 2, 3], nextId: 3 });
+  });
+
   it('mutate should be work', async () => {
     const { result } = setup(mockRequest);
     const { mutate } = result.current;
