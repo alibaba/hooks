@@ -15,17 +15,23 @@ export interface Options<T> {
   serializer?: (value: T) => string;
   deserializer?: (value: string) => T;
   defaultValue?: T | IFuncUpdater<T>;
+  onError?: (error: unknown) => void;
 }
 
 export function createUseStorageState(getStorage: () => Storage | undefined) {
-  function useStorageState<T>(key: string, options?: Options<T>) {
+  function useStorageState<T>(key: string, options: Options<T> = {}) {
     let storage: Storage | undefined;
+    const {
+      onError = (e) => {
+        console.error(e);
+      },
+    } = options;
 
     // https://github.com/alibaba/hooks/issues/800
     try {
       storage = getStorage();
     } catch (err) {
-      console.error(err);
+      onError(err);
     }
 
     const serializer = (value: T) => {
@@ -49,7 +55,7 @@ export function createUseStorageState(getStorage: () => Storage | undefined) {
           return deserializer(raw);
         }
       } catch (e) {
-        console.error(e);
+        onError(e);
       }
       if (isFunction(options?.defaultValue)) {
         return options?.defaultValue();
