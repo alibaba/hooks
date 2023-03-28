@@ -8,10 +8,10 @@
 
 import React from 'react';
 import { useGreeting, useSetState } from 'ahooks';
-import type { GreetingsOptions } from 'ahooks/lib/useGreeting';
+import type { GreetingOptions } from 'ahooks/lib/useGreeting';
 
 export default () => {
-  const [state, setState] = useSetState<GreetingsOptions>({
+  const [state, setState] = useSetState<GreetingOptions>({
     prefix: '',
     suffix: '',
     transform: undefined,
@@ -47,7 +47,7 @@ export default () => {
           >
             <option value={undefined}>No Transform</option>
             <option value="uppercase">Uppercase</option>
-            <option value="capitalizeFirstLetter">Capitalize First Letter</option>
+            <option value="capitalize">Capitalize</option>
           </select>
         </div>
       </div>

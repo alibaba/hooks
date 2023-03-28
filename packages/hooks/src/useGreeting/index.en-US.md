@@ -21,11 +21,11 @@ const greeting = useGreeting();
 
 ### Params
 
-| Property  | Description                                                                                          | Type      | Default   |
-| --------- | ---------------------------------------------------------------------------------------------------- | --------- | --------- |
-| prefix    | add optionally a string before the state of the day                                                  | `string`  |           |
-| suffix    | add optionally a string after the state of the day                                                   | `string`  |           |
-| transform | Optionally transform (morning/afternoon/evening/night) into uppercase/capitalize first letter letter | `boolean` | undefined |
+| Property  | Description                                                                                          | Type                        | Default |
+| --------- | ---------------------------------------------------------------------------------------------------- | --------------------------- | ------- |
+| prefix    | add optionally a string before the state of the day                                                  | `string`                    |         |
+| suffix    | add optionally a string after the state of the day                                                   | `string`                    |         |
+| transform | Optionally transform (morning/afternoon/evening/night) into uppercase/capitalize first letter letter | `uppercase` \| `capitalize` | -       |
 
 ### Result
 

@@ -1,12 +1,12 @@
 import { act, renderHook } from '@testing-library/react';
 import { useSetState } from 'ahooks';
-import type { GreetingsOptions } from '../index';
+import type { GreetingOptions } from '../index';
 import useGreeting from '../index';
 
 describe('useGreeting', () => {
   it('should work for different props', async () => {
     const hook = renderHook(() => {
-      const [state, setState] = useSetState<GreetingsOptions>({
+      const [state, setState] = useSetState<GreetingOptions>({
         prefix: '',
         suffix: '',
         transform: undefined,
@@ -33,7 +33,7 @@ describe('useGreeting', () => {
     expect(hook.result.current.greeting).toMatch(/^MORNING!|AFTERNOON!|EVENING!|NIGHT!$/);
 
     await act(async () => {
-      hook.result.current.setState({ transform: 'capitalizeFirstLetter' });
+      hook.result.current.setState({ transform: 'capitalize' });
     });
     expect(hook.result.current.greeting).toMatch(/^Morning!|Afternoon!|Evening!|Night!$/);
   });

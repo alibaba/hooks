@@ -1,13 +1,13 @@
-import { useMemo } from 'react';
+import React from 'react';
 
-export interface GreetingsOptions {
+export interface GreetingOptions {
   prefix?: string;
   suffix?: string;
-  transform?: 'uppercase' | 'capitalizeFirstLetter';
+  transform?: 'uppercase' | 'capitalize';
 }
 
-export default function useGreeting(options?: GreetingsOptions): string {
-  return useMemo(() => {
+export default function useGreeting(options?: GreetingOptions): string {
+  return React.useMemo(() => {
     const hour = new Date().getHours();
     let greeting;
     if (hour >= 4 && hour <= 11) greeting = 'morning';
@@ -16,7 +16,7 @@ export default function useGreeting(options?: GreetingsOptions): string {
     else greeting = 'night';
 
     switch (options?.transform) {
-      case 'capitalizeFirstLetter':
+      case 'capitalize':
         greeting = greeting.charAt(0).toUpperCase() + greeting.slice(1);
         break;
       case 'uppercase':
