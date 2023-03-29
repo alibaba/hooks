@@ -1,5 +1,6 @@
 import { renderHook } from '@testing-library/react';
-import usePrevious, { ShouldUpdateFunc } from '../';
+import type { ShouldUpdateFunc } from '../';
+import usePrevious from '../';
 
 describe('usePrevious', () => {
   function getHook<T>(initialValue?: T, compareFunction?: ShouldUpdateFunc<T>) {
@@ -33,6 +34,15 @@ describe('usePrevious', () => {
 
     hook.rerender({ val: 5 });
     expect(hook.result.current).toBe(4);
+  });
+
+  it('should not update previous value if current value is the same', () => {
+    const hook = getHook(0);
+    expect(hook.result.current).toBeUndefined();
+    hook.rerender({ val: 1 });
+    expect(hook.result.current).toBe(0);
+    hook.rerender({ val: 1 });
+    expect(hook.result.current).toBe(0);
   });
 
   it('should work fine with `undefined` values', () => {

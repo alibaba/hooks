@@ -4,6 +4,7 @@ import useMemoizedFn from '../../useMemoizedFn';
 import useMount from '../../useMount';
 import useUnmount from '../../useUnmount';
 import useUpdate from '../../useUpdate';
+import isDev from '../../utils/isDev';
 
 import Fetch from './Fetch';
 import type { Options, Plugin, Result, Service } from './types';
@@ -14,6 +15,12 @@ function useRequestImplement<TData, TParams extends any[]>(
   plugins: Plugin<TData, TParams>[] = [],
 ) {
   const { manual = false, ...rest } = options;
+
+  if (isDev) {
+    if (options.defaultParams && !Array.isArray(options.defaultParams)) {
+      console.warn(`expected defaultParams is array, got ${typeof options.defaultParams}`);
+    }
+  }
 
   const fetchOptions = {
     manual,
