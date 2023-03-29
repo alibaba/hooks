@@ -16,7 +16,7 @@ const content = {
 };
 
 export default () => {
-  const menuRef = useRef<Element[]>([]);
+  const menuRef = useRef<HTMLDivElement[]>([]);
 
   const [activeMenu, setActiveMenu] = useState(menus[0]);
 
@@ -27,40 +27,57 @@ export default () => {
         setActiveMenu(active);
       }
     },
+    root: () => document.getElementById('parent-scroll'),
+    rootMargin: '-50% 0px -50% 0px',
   });
 
-  const handleMenuClick = (menu) => {
-    setActiveMenu(menu);
+  const handleMenuClick = (index) => {
+    const contentEl = document.getElementById('content-scroll');
+    const top = menuRef.current[index]?.offsetTop;
+    contentEl?.scrollTo({
+      top,
+      behavior: 'smooth',
+    });
   };
   return (
-    <div style={{ width: 300, height: 300, border: '1px solid', display: 'flex' }}>
-      <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
-        {menus.map((menu, index) => (
-          <li
-            key={menu}
-            style={{
-              padding: '10px',
-              backgroundColor: activeMenu === menu ? 'lightgray' : 'white',
-            }}
-          >
-            <span style={{ cursor: 'pointer' }} onClick={() => handleMenuClick(menu)}>
+    <div
+      id="parent-scroll"
+      style={{ width: 300, height: 300, border: '1px solid', display: 'flex', overflow: 'hidden' }}
+    >
+      <div style={{ width: '30%', backgroundColor: '#f0f0f0' }}>
+        <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
+          {menus.map((menu, index) => (
+            <li
+              key={menu}
+              onClick={() => handleMenuClick(index)}
+              style={{
+                padding: '10px',
+                cursor: 'pointer',
+                textAlign: 'center',
+                transition: 'background-color 0.2s ease-in-out',
+                backgroundColor: activeMenu === menu ? '#e0e0e0' : '',
+              }}
+            >
               {menu}
-            </span>
-          </li>
-        ))}
-      </ul>
-      <div style={{ flex: 1, overflow: 'scroll' }}>
+            </li>
+          ))}
+        </ul>
+      </div>
+      <div id="content-scroll" style={{ flex: 1, overflowY: 'scroll', position: 'relative' }}>
         {menus.map((menu, index) => (
           <div
-            ref={(el: any) => {
+            ref={(el: HTMLDivElement) => {
               menuRef.current[index] = el;
             }}
             key={menu}
             id={menu}
             style={{
-              height: 500,
-              backgroundColor: 'lightgray',
-              padding: 20,
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              padding: '0 20px',
+              height: '100%',
+              fontSize: 16,
             }}
           >
             {content[menu]}
