@@ -3,7 +3,7 @@ import type { BasicTarget } from '../utils/domTarget';
 
 export type Data = { list: any[]; [key: string]: any };
 
-export type Service<TData extends Data> = (currentData?: Data) => Promise<TData>;
+export type Service<TData extends Data> = (currentData?: TData) => Promise<TData>;
 
 export interface InfiniteScrollResult<TData extends Data> {
   data: TData;
