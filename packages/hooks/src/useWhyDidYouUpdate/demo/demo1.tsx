@@ -21,7 +21,7 @@ const Demo: React.FC<{ count: number }> = (props) => {
       </div>
       <div>
         randomNum: {randomNum}
-        <button onClick={() => setRandomNum(Math.random)} style={{ marginLeft: 8 }}>
+        <button onClick={() => setRandomNum(Math.random())} style={{ marginLeft: 8 }}>
           🎲
         </button>
       </div>
