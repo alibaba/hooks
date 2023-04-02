@@ -1,9 +1,9 @@
 /**
  * title: Listening content scrolling selection menu
- * desc: Pass in 'callback', you can customize the control to trigger the event when the visible area reaches this proportion. In this example, scroll to the element area and select the corresponding menu.
+ * desc: Pass the `callback` that is triggered when the callback of `IntersectionObserver` is called, so you can do some customization.
  *
  * title.zh-CN: 监听内容滚动选中菜单
- * desc.zh-CN: 传入 `callback`, 可以自定义控制在可视区域达到该比例时触发事件，在这个例子中，滚动到元素区域中选中对应菜单。
+ * desc.zh-CN: 传入 `callback`, 使得 `IntersectionObserver` 的回调被调用时，用户可以做一些自定义操作。
  */
 import { useInViewport } from 'ahooks';
 import React, { useRef, useState } from 'react';

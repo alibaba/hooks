@@ -46,7 +46,7 @@ const [inViewport, ratio] = useInViewport(
 | threshold  | 可以是单一的 number 也可以是 number 数组，target 元素和 root 元素相交程度达到该值的时候 ratio 会被更新        | `number` \| `number[]`                                                               | -      |
 | rootMargin | 根(root)元素的外边距                                                                                          | `string`                                                                             | -      |
 | root       | 指定根(root)元素，用于检查目标的可见性。必须是目标元素的父级元素，如果未指定或者为 null，则默认为浏览器视窗。 | `Element` \| `Document` \| `() => (Element/Document)` \| `MutableRefObject<Element>` | -      |
-| callback   | 可以自定义控制在可见区域达到该比例时触发事件                                                                  | `(entry: IntersectionObserverEntry) => void`                                         | -      |
+| callback   | `IntersectionObserver` 的回调被调用时触发                                                                     | `(entry: IntersectionObserverEntry) => void`                                         | -      |
 
 ### Result
 
