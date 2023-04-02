@@ -14,29 +14,26 @@ export interface Options {
 }
 
 function useInViewport(target: BasicTarget | BasicTarget[], options?: Options) {
+  const { callback, ...option } = options || {};
+
   const [state, setState] = useState<boolean>();
   const [ratio, setRatio] = useState<number>();
 
   useEffectWithTarget(
     () => {
       const targets = Array.isArray(target) ? target : [target];
-
       const els = targets.map((element) => getTargetElement(element)).filter(Boolean);
 
       if (!els.length) {
         return;
       }
 
-      const { callback, ...option } = options || {};
-
       const observer = new IntersectionObserver(
         (entries) => {
           for (const entry of entries) {
             setRatio(entry.intersectionRatio);
             setState(entry.isIntersecting);
-            if (callback) {
-              callback(entry);
-            }
+            callback?.(entry);
           }
         },
         {
