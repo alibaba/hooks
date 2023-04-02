@@ -44,11 +44,11 @@ const [isFullscreen, {
 
 ### Options
 
-| Property       | Description                                                                                                                   | Type                                                  | Default |
-| -------------- | ----------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------- | ------- |
-| onExit         | Exit full screen trigger                                                                                                      | `() => void`                                          | -       |
-| onEnter        | Enter full screen trigger                                                                                                     | `() => void`                                          | -       |
-| pageFullscreen | Whether to enable full screen of page. If its type is object, it can set `className` and `z-index` of the full screen element | `boolean` \| `{ className?: string, zIndex: number }` | `false` |
+| Property       | Description                                                                                                                   | Type                                                   | Default |
+| -------------- | ----------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------ | ------- |
+| onExit         | Exit full screen trigger                                                                                                      | `() => void`                                           | -       |
+| onEnter        | Enter full screen trigger                                                                                                     | `() => void`                                           | -       |
+| pageFullscreen | Whether to enable full screen of page. If its type is object, it can set `className` and `z-index` of the full screen element | `boolean` \| `{ className?: string, zIndex?: number }` | `false` |
 
 ### Result
 
