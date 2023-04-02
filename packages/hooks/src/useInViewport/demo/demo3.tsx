@@ -34,11 +34,13 @@ export default () => {
   const handleMenuClick = (index) => {
     const contentEl = document.getElementById('content-scroll');
     const top = menuRef.current[index]?.offsetTop;
+
     contentEl?.scrollTo({
       top,
       behavior: 'smooth',
     });
   };
+
   return (
     <div
       id="parent-scroll"
@@ -75,7 +77,6 @@ export default () => {
               display: 'flex',
               justifyContent: 'center',
               alignItems: 'center',
-              padding: '0 20px',
               height: '100%',
               fontSize: 16,
             }}
