@@ -1,5 +1,5 @@
 import { useRef } from 'react';
-import { isPlainObject } from 'lodash';
+import isPlainObject from 'lodash/isPlainObject';
 import useCreation from '../useCreation';
 import useUpdate from '../useUpdate';
 
