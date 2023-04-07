@@ -70,4 +70,38 @@ describe('useLoadingDelayPlugin', () => {
 
     expect(hook.result.current.loading).toBe(true);
   });
+
+  it('useLoadingDelayPlugin should no update loading when the value of StaleTime is -1', async () => {
+    act(() => {
+      hook = setUp(request, {
+        staleTime: -1,
+        loadingDelay: 2000,
+      });
+    });
+
+    expect(hook.result.current.loading).toBe(false);
+
+    act(() => {
+      jest.advanceTimersByTime(3000);
+    });
+
+    expect(hook.result.current.loading).toBe(false);
+  });
+
+  it('useLoadingDelayPlugin should no update loading when the value of StaleTime is greater than loadingDelay', async () => {
+    act(() => {
+      hook = setUp(request, {
+        staleTime: 3000,
+        loadingDelay: 2000,
+      });
+    });
+
+    expect(hook.result.current.loading).toBe(false);
+
+    act(() => {
+      jest.advanceTimersByTime(3001);
+    });
+
+    expect(hook.result.current.loading).toBe(false);
+  });
 });
