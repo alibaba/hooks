@@ -24,18 +24,20 @@ Observe whether the element is in the visible area, and the visible area ratio o
 ## API
 
 ```typescript
+type Target = Element | (() => Element) | React.MutableRefObject<Element>;
+
 const [inViewport, ratio] = useInViewport(
-  target,
+  target: Target | Target[],
   options?: Options
 );
 ```
 
 ### Params
 
-| Property | Description        | Type                                                        | Default |
-| -------- | ------------------ | ----------------------------------------------------------- | ------- |
-| target   | DOM element or ref | `Element` \| `() => Element` \| `MutableRefObject<Element>` | -       |
-| options  | Setting            | `Options`                                                   | -       |
+| Property | Description                        | Type                   | Default |
+| -------- | ---------------------------------- | ---------------------- | ------- |
+| target   | DOM elements or Ref, support array | `Target` \| `Target[]` | -       |
+| options  | Setting                            | `Options`              | -       |
 
 ### Options
 

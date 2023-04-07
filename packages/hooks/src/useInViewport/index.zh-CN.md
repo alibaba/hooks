@@ -24,18 +24,20 @@ nav:
 ## API
 
 ```typescript
+type Target = Element | (() => Element) | React.MutableRefObject<Element>;
+
 const [inViewport, ratio] = useInViewport(
-  target,
+  target: Target | Target[],
   options?: Options
 );
 ```
 
 ### Params
 
-| 参数    | 说明             | 类型                                                        | 默认值 |
-| ------- | ---------------- | ----------------------------------------------------------- | ------ |
-| target  | DOM 节点或者 ref | `Element` \| `() => Element` \| `MutableRefObject<Element>` | -      |
-| options | 设置             | `Options`                                                   | -      |
+| 参数    | 说明                       | 类型                   | 默认值 |
+| ------- | -------------------------- | ---------------------- | ------ |
+| target  | DOM 节点或者 Ref，支持数组 | `Target` \| `Target[]` | -      |
+| options | 设置                       | `Options`              | -      |
 
 ### Options
 
