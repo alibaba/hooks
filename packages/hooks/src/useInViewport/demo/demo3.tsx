@@ -5,7 +5,7 @@
  * title.zh-CN: 监听内容滚动选中菜单
  * desc.zh-CN: 传入 `callback`, 使得 `IntersectionObserver` 的回调被调用时，用户可以做一些自定义操作。
  */
-import { useInViewport } from 'ahooks';
+import { useInViewport, useMemoizedFn } from 'ahooks';
 import React, { useRef, useState } from 'react';
 
 const menus = ['menu-1', 'menu-2', 'menu-3'];
@@ -20,15 +20,11 @@ export default () => {
 
   const [activeMenu, setActiveMenu] = useState(menus[0]);
 
-  useInViewport(menuRef.current, {
-    callback: (entry) => {
-      if (entry.isIntersecting) {
-        const active = entry.target.getAttribute('id') || '';
-        setActiveMenu(active);
-      }
-    },
-    root: () => document.getElementById('parent-scroll'),
-    rootMargin: '-50% 0px -50% 0px',
+  const callback = useMemoizedFn((entry) => {
+    if (entry.isIntersecting) {
+      const active = entry.target.getAttribute('id') || '';
+      setActiveMenu(active);
+    }
   });
 
   const handleMenuClick = (index) => {
@@ -40,6 +36,12 @@ export default () => {
       behavior: 'smooth',
     });
   };
+
+  useInViewport(menuRef.current, {
+    callback,
+    root: () => document.getElementById('parent-scroll'),
+    rootMargin: '-50% 0px -50% 0px',
+  });
 
   return (
     <div

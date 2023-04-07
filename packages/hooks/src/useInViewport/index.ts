@@ -43,7 +43,9 @@ function useInViewport(target: BasicTarget | BasicTarget[], options?: Options) {
       );
 
       els.forEach((el) => {
-        observer.observe(el as Element);
+        if (el) {
+          observer.observe(el);
+        }
       });
 
       return () => {
