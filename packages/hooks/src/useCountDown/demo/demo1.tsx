@@ -19,7 +19,7 @@ export default () => {
     <>
       <p>
         There are {days} days {hours} hours {minutes} minutes {seconds} seconds {milliseconds}{' '}
-        milliseconds until 2022-12-31 24:00:00
+        milliseconds until 2023-12-31 24:00:00
       </p>
     </>
   );
