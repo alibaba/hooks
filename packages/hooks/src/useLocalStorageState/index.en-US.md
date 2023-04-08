@@ -26,26 +26,17 @@ A Hook that store state into localStorage.
 If you want to delete this record from localStorage, you can use `setState()` or `setState(undefined)`.
 
 ```typescript
-type SetState<S> = S | ((prevState?: S) => S);
 interface Options<T> {
   defaultValue?: T | (() => T);
   serializer?: (value: T) => string;
   deserializer?: (value: string) => T;
-  onError?: (error: unknown) => void;
 }
 
 const [state, setState] = useLocalStorageState<T>(
   key: string,
   options: Options<T>
-): [T?, (value?: SetState<T>) => void];
+): [T?, (value?: T | ((previousState: T) => T)) => void];
 ```
-
-### Result
-
-| Property | Description                 | Type                            |
-| -------- | --------------------------- | ------------------------------- |
-| state    | Local `localStorage` value  | `T`                             |
-| setState | Update `localStorage` value | `(value?: SetState<T>) => void` |
 
 ### Options
 
