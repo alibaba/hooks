@@ -26,6 +26,7 @@ nav:
 如果想从 localStorage 中删除这条数据，可以使用 `setState()` 或 `setState(undefined)` 。
 
 ```typescript
+type SetState<S> = S | ((prevState?: S) => S);
 interface Options<T> {
   defaultValue?: T | (() => T);
   serializer?: (value: T) => string;
@@ -35,8 +36,15 @@ interface Options<T> {
 const [state, setState] = useLocalStorageState<T>(
   key: string,
   options: Options<T>
-): [T?, (value?: T | ((previousState: T) => T)) => void];
+): [T?, (value?: SetState<T>) => void];
 ```
+
+### Result
+
+| 参数     | 说明                   | 类型                            |
+| -------- | ---------------------- | ------------------------------- |
+| state    | 本地 `localStorage` 值 | `T`                             |
+| setState | 设置 `localStorage` 值 | `(value?: SetState<T>) => void` |
 
 ### Options
 
