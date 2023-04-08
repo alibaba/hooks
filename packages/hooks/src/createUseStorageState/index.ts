@@ -41,7 +41,7 @@ export function createUseStorageState(getStorage: () => Storage | undefined) {
       return JSON.stringify(value);
     };
 
-    const deserializer = (value: string) => {
+    const deserializer = (value: string): T => {
       if (options?.deserializer) {
         return options?.deserializer(value);
       }
@@ -63,13 +63,13 @@ export function createUseStorageState(getStorage: () => Storage | undefined) {
       return options?.defaultValue;
     }
 
-    const [state, setState] = useState<T>(() => getStoredValue());
+    const [state, setState] = useState(() => getStoredValue());
 
     useUpdateEffect(() => {
       setState(getStoredValue());
     }, [key]);
 
-    const updateState = (value: T | IFuncUpdater<T>) => {
+    const updateState = (value?: T | IFuncUpdater<T>) => {
       const currentState = isFunction(value) ? value(state) : value;
       setState(currentState);
 
