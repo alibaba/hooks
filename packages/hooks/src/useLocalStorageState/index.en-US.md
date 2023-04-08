@@ -31,6 +31,7 @@ interface Options<T> {
   defaultValue?: T | (() => T);
   serializer?: (value: T) => string;
   deserializer?: (value: string) => T;
+  onError?: (error: unknown) => void;
 }
 
 const [state, setState] = useLocalStorageState<T>(
