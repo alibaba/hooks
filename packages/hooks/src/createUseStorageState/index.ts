@@ -57,7 +57,7 @@ export function createUseStorageState(getStorage: () => Storage | undefined) {
       return options?.defaultValue;
     }
 
-    const [state, setState] = useState<T | undefined>(() => getStoredValue());
+    const [state, setState] = useState(getStoredValue);
 
     useUpdateEffect(() => {
       setState(getStoredValue());
