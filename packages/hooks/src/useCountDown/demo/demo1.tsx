@@ -11,7 +11,7 @@ import { useCountDown } from 'ahooks';
 
 export default () => {
   const [countdown, formattedRes] = useCountDown({
-    targetDate: '2022-12-31 24:00:00',
+    targetDate: '2023-12-31 24:00:00',
   });
   const { days, hours, minutes, seconds, milliseconds } = formattedRes;
 
