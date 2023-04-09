@@ -25,7 +25,7 @@ const useFullscreen = (target: BasicTarget, options?: Options) => {
   const onExitRef = useLatest(onExit);
   const onEnterRef = useLatest(onEnter);
 
-  // fullscreen state may be changed by other scripts/components,
+  // The state of full screen may be changed by other scripts/components,
   // so the initial value needs to be computed dynamically.
   const [state, setState] = useState(getIsFullscreen);
   // This is used to though closure.
@@ -34,7 +34,8 @@ const useFullscreen = (target: BasicTarget, options?: Options) => {
   function getIsFullscreen() {
     return (
       screenfull.isEnabled &&
-      (!screenfull.element ? false : screenfull.element === getTargetElement(target))
+      !!screenfull.element &&
+      screenfull.element === getTargetElement(target)
     );
   }
 
