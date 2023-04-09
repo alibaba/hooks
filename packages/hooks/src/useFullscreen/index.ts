@@ -56,6 +56,12 @@ const useFullscreen = (target: BasicTarget, options?: Options) => {
     }
   };
 
+  const onScreenfullChange = () => {
+    const fullscreen = getIsFullscreen();
+
+    updateFullscreenState(fullscreen);
+  };
+
   const togglePageFullscreen = (fullscreen: boolean) => {
     const el = getTargetElement(target);
     if (!el) {
@@ -129,12 +135,6 @@ const useFullscreen = (target: BasicTarget, options?: Options) => {
     } else {
       enterFullscreen();
     }
-  };
-
-  const onScreenfullChange = () => {
-    const fullscreen = getIsFullscreen();
-
-    updateFullscreenState(fullscreen);
   };
 
   useEffect(() => {
