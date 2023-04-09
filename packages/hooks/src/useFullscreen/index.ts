@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import screenfull from 'screenfull';
 import useLatest from '../useLatest';
 import useMemoizedFn from '../useMemoizedFn';
@@ -28,6 +28,8 @@ const useFullscreen = (target: BasicTarget, options?: Options) => {
   // fullscreen state may be changed by other scripts/components,
   // so the initial value needs to be computed dynamically.
   const [state, setState] = useState(getIsFullscreen);
+  // This is used to though closure.
+  const stateRef = useRef(getIsFullscreen());
 
   function getIsFullscreen() {
     return (
@@ -46,9 +48,10 @@ const useFullscreen = (target: BasicTarget, options?: Options) => {
 
   const updateFullscreenState = (fullscreen: boolean) => {
     // Prevent repeated calls when the state is not changed.
-    if (state !== fullscreen) {
+    if (stateRef.current !== fullscreen) {
       invokeCallback(fullscreen);
       setState(fullscreen);
+      stateRef.current = fullscreen;
     }
   };
 
