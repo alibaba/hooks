@@ -127,12 +127,11 @@ const useFullscreen = (target: BasicTarget, options?: Options) => {
     }
   };
 
-  // Memoized, otherwise it will be listened multiple times.
-  const onScreenfullChange = useMemoizedFn(() => {
+  const onScreenfullChange = () => {
     const fullscreen = getIsFullscreen();
 
     updateFullscreenState(fullscreen);
-  });
+  };
 
   useEffect(() => {
     if (!screenfull.isEnabled || pageFullscreen) {
