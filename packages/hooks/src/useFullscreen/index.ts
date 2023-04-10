@@ -28,7 +28,6 @@ const useFullscreen = (target: BasicTarget, options?: Options) => {
   // The state of full screen may be changed by other scripts/components,
   // so the initial value needs to be computed dynamically.
   const [state, setState] = useState(getIsFullscreen);
-  // This is used to though closure.
   const stateRef = useRef(getIsFullscreen());
 
   function getIsFullscreen() {
