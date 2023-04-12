@@ -1,6 +1,5 @@
 /* eslint-disable no-empty */
 import { useState } from 'react';
-import useMemoizedFn from '../useMemoizedFn';
 import useUpdateEffect from '../useUpdateEffect';
 import { isFunction, isUndef } from '../utils';
 
@@ -69,22 +68,19 @@ export function createUseStorageState(getStorage: () => Storage | undefined) {
       setState(getStoredValue());
     }, [key]);
 
-    const updateState = (value: T | IFuncUpdater<T>) => {
-      const currentState = isFunction(value) ? value(state) : value;
-      setState(currentState);
-
-      if (isUndef(currentState)) {
+    useUpdateEffect(() => {
+      if (isUndef(state)) {
         storage?.removeItem(key);
       } else {
         try {
-          storage?.setItem(key, serializer(currentState));
+          storage?.setItem(key, serializer(state));
         } catch (e) {
           console.error(e);
         }
       }
-    };
+    }, [state]);
 
-    return [state, useMemoizedFn(updateState)] as const;
+    return [state, setState] as const;
   }
   return useStorageState;
 }

@@ -93,4 +93,15 @@ describe('useStorageState', () => {
     });
     expect(hook.result.current.state).toBeUndefined();
   });
+
+  it('should set right value when batching updates', () => {
+    const hook = setUp({ key: 'key', defaultValue: 1 });
+    act(() => {
+      hook.result.current.setState((prev) => prev + 1);
+      hook.result.current.setState((prev) => prev + 1);
+    });
+    expect(hook.result.current.state).toBe(3);
+    hook.rerender({ key: 'key' });
+    expect(hook.result.current.state).toBe(3);
+  });
 });
