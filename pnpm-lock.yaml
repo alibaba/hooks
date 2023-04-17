@@ -164,14 +164,14 @@ importers:
     specifiers:
       '@babel/runtime': ^7.21.0
       ahooks: ^3.4.1
-      query-string: ^6.9.0
+      query-string: ^8.1.0
       react: ^16.8.0 || ^17.0.0 || ^18.0.0
       react-router: ^5.0.0 || ^6.0.0
       tslib: ^2.4.1
     dependencies:
       '@babel/runtime': 7.21.0
       ahooks: link:../hooks
-      query-string: 6.14.1
+      query-string: 8.1.0
       react: 18.2.0
       react-router: 6.8.2_react@18.2.0
       tslib: 2.5.0
@@ -214,7 +214,7 @@ packages:
       react-dom: ^16.13.1
     dependencies:
       '@gcanvas/core': 1.0.0
-      classnames: 2.2.6
+      classnames: 2.3.2
       omit.js: 2.0.2
       prop-types: 15.8.1
       react: 18.2.0
@@ -8395,6 +8395,15 @@ packages:
         integrity: sha512-FqUYQ+8o158GyGTrMFJms9qh3CqTKvAqgqsTnkLI8sKu0028orqBhxNMFkFen0zGyg6epACD32pjVk58ngIErQ==,
       }
     engines: { node: '>=0.10' }
+    dev: true
+
+  /decode-uri-component/0.4.1:
+    resolution:
+      {
+        integrity: sha512-+8VxcR21HhTy8nOt6jf20w0c9CADrw1O8d+VZ/YzzCt4bJ3uBjw+D1q2osAB8RnpwwaeYBxy0HyKQxD5JBMuuQ==,
+      }
+    engines: { node: '>=14.16' }
+    dev: false
 
   /dedent/0.7.0:
     resolution:
@@ -10302,6 +10311,15 @@ packages:
         integrity: sha512-8rXg1ZnX7xzy2NGDVkBVaAy+lSlPNwad13BtgSlLuxfIslyt5Vg64U7tFcCt4WS1R0hvtnQybT/IyCkGZ3DpXQ==,
       }
     engines: { node: '>=0.10.0' }
+    dev: true
+
+  /filter-obj/5.1.0:
+    resolution:
+      {
+        integrity: sha512-qWeTREPoT7I0bifpPUXtxkZJ1XJzxWtfoWWkdVGqa+eCr3SHW/Ocp89o8vLvbUuQnadybJpjOKu4V+RwO6sGng==,
+      }
+    engines: { node: '>=14.16' }
+    dev: false
 
   /find-cache-dir/2.1.0:
     resolution:
@@ -11053,7 +11071,7 @@ packages:
       fs.realpath: 1.0.0
       inflight: 1.0.6
       inherits: 2.0.4
-      minimatch: 3.0.4
+      minimatch: 3.1.2
       once: 1.4.0
       path-is-absolute: 1.0.1
     dev: true
@@ -17993,6 +18011,19 @@ packages:
       filter-obj: 1.1.0
       split-on-first: 1.1.0
       strict-uri-encode: 2.0.0
+    dev: true
+
+  /query-string/8.1.0:
+    resolution:
+      {
+        integrity: sha512-BFQeWxJOZxZGix7y+SByG3F36dA0AbTy9o6pSmKFcFz7DAj0re9Frkty3saBn3nHo3D0oZJ/+rx3r8H8r8Jbpw==,
+      }
+    engines: { node: '>=14.16' }
+    dependencies:
+      decode-uri-component: 0.4.1
+      filter-obj: 5.1.0
+      split-on-first: 3.0.0
+    dev: false
 
   /querystring-es3/0.2.1:
     resolution:
@@ -21476,6 +21507,15 @@ packages:
         integrity: sha512-43ZssAJaMusuKWL8sKUBQXHWOpq8d6CfN/u1p4gUzfJkM05C8rxTmYrkIPTXapZpORA6LkkzcUulJ8FqA7Uudw==,
       }
     engines: { node: '>=6' }
+    dev: true
+
+  /split-on-first/3.0.0:
+    resolution:
+      {
+        integrity: sha512-qxQJTx2ryR0Dw0ITYyekNQWpz6f8dGd7vffGNflQQ3Iqj9NJ6qiZ7ELpZsJ/QBhIVAiDfXdag3+Gp8RvWa62AA==,
+      }
+    engines: { node: '>=12' }
+    dev: false
 
   /split-string/3.1.0:
     resolution:
@@ -21695,6 +21735,7 @@ packages:
         integrity: sha512-QwiXZgpRcKkhTj2Scnn++4PKtWsH0kpzZ62L2R6c/LUVYv7hVnZqcg2+sMuT6R7Jusu1vviK/MFsu6kNJfWlEQ==,
       }
     engines: { node: '>=4' }
+    dev: true
 
   /string-convert/0.2.1:
     resolution:
@@ -24499,7 +24540,7 @@ packages:
       require-directory: 2.1.1
       string-width: 4.2.3
       y18n: 5.0.8
-      yargs-parser: 20.2.4
+      yargs-parser: 20.2.9
     dev: true
 
   /yargs/17.7.1:
