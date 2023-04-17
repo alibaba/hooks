@@ -1,11 +1,11 @@
 ---
 nav:
-path: /hooks
+  path: /hooks
 ---
 
 # useGreeting
 
-一个根据当前时间返回问候消息的挂钩。
+一个根据当前时间返回问候消息的 hook。
 
 ## 代码演示
 

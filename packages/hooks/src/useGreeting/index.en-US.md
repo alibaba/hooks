@@ -1,6 +1,6 @@
 ---
 nav:
-path: /hooks
+  path: /hooks
 ---
 
 # useGreeting
