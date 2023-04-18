@@ -70,7 +70,6 @@ describe('useInViewport', () => {
   });
 
   it('should disconnect when unmount', async () => {
-    const disconnect = jest.fn();
     mockIntersectionObserver.mockReturnValue({
       observe: () => null,
       disconnect,
