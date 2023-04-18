@@ -28,7 +28,7 @@ export function createUseStorageState(getStorage: () => Storage | undefined) {
       onError(err);
     }
 
-    const serializer = (value: T): string => {
+    const serializer = (value: T) => {
       if (options?.serializer) {
         return options?.serializer(value);
       }
