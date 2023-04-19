@@ -14,7 +14,7 @@ gulp.task('cjs', function () {
     .src(['./es/**/*.js'])
     .pipe(
       babel({
-        configFile: '../../.babelrc',
+        configFile: '../../.babel.config.json',
       }),
     )
     .pipe(gulp.dest('lib/'));
