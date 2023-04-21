@@ -20,8 +20,7 @@ describe('shared utils methods', () => {
   test('isNumber', () => {
     expect(isNumber(1)).toBe(true);
     expect(isNumber(Infinity)).toBe(true);
-    expect(isNumber(NaN)).toBe(true);
-
+    expect(isNumber(NaN)).toBe(false);
     expect(isNumber('str')).toBe(false);
     expect(isNumber({})).toBe(false);
   });
