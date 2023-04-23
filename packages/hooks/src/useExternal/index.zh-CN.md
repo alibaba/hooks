@@ -37,8 +37,9 @@ const status = useExternal(path: string, options?: Options);
 
 ### Options
 
-| 参数 | 说明                                                              | 类型                | 默认值 |
-| ---- | ----------------------------------------------------------------- | ------------------- | ------ |
-| type | 需引入外部资源的类型，支持 `js`/`css`，如果不传，则根据 path 推导 | `string`            | -      |
-| js   | `script` 标签支持的属性                                           | `HTMLScriptElement` | -      |
-| css  | `link` 标签支持的属性                                             | `HTMLStyleElement`  | -      |
+| 参数           | 说明                                                              | 类型                | 默认值  |
+| -------------- | ----------------------------------------------------------------- | ------------------- | ------- |
+| type           | 需引入外部资源的类型，支持 `js`/`css`，如果不传，则根据 path 推导 | `string`            | -       |
+| js             | `script` 标签支持的属性                                           | `HTMLScriptElement` | -       |
+| css            | `link` 标签支持的属性                                             | `HTMLStyleElement`  | -       |
+| keepWhenUnused | 在不持有资源的引用后，仍然保留资源                                | `boolean`           | `false` |
