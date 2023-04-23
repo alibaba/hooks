@@ -15,17 +15,23 @@ export interface Options<T> {
   serializer?: (value: T) => string;
   deserializer?: (value: string) => T;
   defaultValue?: T | IFuncUpdater<T>;
+  onError?: (error: unknown) => void;
 }
 
 export function createUseStorageState(getStorage: () => Storage | undefined) {
-  function useStorageState<T>(key: string, options?: Options<T>) {
+  function useStorageState<T>(key: string, options: Options<T> = {}) {
     let storage: Storage | undefined;
+    const {
+      onError = (e) => {
+        console.error(e);
+      },
+    } = options;
 
     // https://github.com/alibaba/hooks/issues/800
     try {
       storage = getStorage();
     } catch (err) {
-      console.error(err);
+      onError(err);
     }
 
     const serializer = (value: T) => {
@@ -35,28 +41,12 @@ export function createUseStorageState(getStorage: () => Storage | undefined) {
       return JSON.stringify(value);
     };
 
-    const deserializer = (value: string) => {
+    const deserializer = (value: string): T => {
       if (options?.deserializer) {
         return options?.deserializer(value);
       }
       return JSON.parse(value);
     };
-
-    function getDefaultValue() {
-      return isFunction(options?.defaultValue) ? options?.defaultValue() : options?.defaultValue;
-    }
-
-    function setStoredValue(value?: T) {
-      if (isUndef(value)) {
-        storage?.removeItem(key);
-      } else {
-        try {
-          storage?.setItem(key, serializer(value));
-        } catch (e) {
-          console.error(e);
-        }
-      }
-    }
 
     function getStoredValue() {
       try {
@@ -65,27 +55,33 @@ export function createUseStorageState(getStorage: () => Storage | undefined) {
           return deserializer(raw);
         }
       } catch (e) {
-        console.error(e);
+        onError(e);
       }
-
-      const defaultValue = getDefaultValue();
-
-      setStoredValue(defaultValue);
-
-      return defaultValue;
+      if (isFunction(options?.defaultValue)) {
+        return options?.defaultValue();
+      }
+      return options?.defaultValue;
     }
 
-    const [state, setState] = useState<T>(() => getStoredValue());
+    const [state, setState] = useState(() => getStoredValue());
 
     useUpdateEffect(() => {
       setState(getStoredValue());
     }, [key]);
 
-    const updateState = (value: T | IFuncUpdater<T>) => {
+    const updateState = (value?: T | IFuncUpdater<T>) => {
       const currentState = isFunction(value) ? value(state) : value;
-
       setState(currentState);
-      setStoredValue(currentState);
+
+      if (isUndef(currentState)) {
+        storage?.removeItem(key);
+      } else {
+        try {
+          storage?.setItem(key, serializer(currentState));
+        } catch (e) {
+          console.error(e);
+        }
+      }
     };
 
     return [state, useMemoizedFn(updateState)] as const;
