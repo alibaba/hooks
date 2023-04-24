@@ -216,7 +216,11 @@ function genKeyFormatter(keyFilter: KeyFilter, exactMatch: boolean): KeyPredicat
 
 const defaultEvents: KeyEvent[] = ['keydown'];
 
-function useKeyPress(keyFilter: KeyFilter, eventHandler: EventHandler, option?: Options) {
+function useKeyPress(
+  keyFilter: KeyFilter,
+  eventHandler: (event: KeyboardEvent, code: string[]) => void,
+  option?: Options,
+) {
   const { events = defaultEvents, target, exactMatch = false, useCapture = false } = option || {};
   const eventHandlerRef = useLatest(eventHandler);
   const keyFilterRef = useLatest(keyFilter);
@@ -231,7 +235,7 @@ function useKeyPress(keyFilter: KeyFilter, eventHandler: EventHandler, option?: 
       const callbackHandler = (event: KeyboardEvent) => {
         const genGuard: KeyPredicate = genKeyFormatter(keyFilterRef.current, exactMatch);
         if (genGuard(event)) {
-          return eventHandlerRef.current?.(event);
+          return eventHandlerRef.current?.(event, getKeyCode(event));
         }
       };
 
@@ -249,4 +253,15 @@ function useKeyPress(keyFilter: KeyFilter, eventHandler: EventHandler, option?: 
   );
 }
 
+function getKeyCode(eventHandler: KeyboardEvent) {
+  const result: string[] = [];
+  const { metaKey, shiftKey, ctrlKey, altKey, key } = eventHandler;
+  if (metaKey) result.push('meta');
+  if (shiftKey) result.push('shift');
+  if (ctrlKey) result.push('ctrl');
+  if (altKey) result.push('alt');
+  const _key = key.toLowerCase();
+  if (!result.includes(_key)) result.push(_key);
+  return result;
+}
 export default useKeyPress;

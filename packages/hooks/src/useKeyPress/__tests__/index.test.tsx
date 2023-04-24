@@ -83,4 +83,21 @@ describe('useKeyPress ', () => {
     fireEvent.keyUp(document, { key: 'meta', keyCode: 91, metaKey: false });
     expect(callback).toBeCalled();
   });
+
+  it.only('test callback code', async () => {
+    let keyCode;
+    renderHook(() =>
+      useKeyPress(
+        ['uparrow'],
+        (e, code) => {
+          keyCode = code;
+        },
+        {
+          events: ['keydown'],
+        },
+      ),
+    );
+    fireEvent.keyDown(document, { key: 'ArrowUp', keyCode: 38, metaKey: true, shiftKey: true });
+    expect(keyCode).toStrictEqual(['meta', 'shift', 'arrowup']);
+  });
 });
