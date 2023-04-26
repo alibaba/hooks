@@ -88,7 +88,7 @@ describe('useKeyPress ', () => {
     let keyCode;
     renderHook(() =>
       useKeyPress(
-        ['uparrow'],
+        ['ctrl.uparrow', 'ctrl.meta.c'],
         (e, code) => {
           keyCode = code;
         },
@@ -97,7 +97,9 @@ describe('useKeyPress ', () => {
         },
       ),
     );
-    fireEvent.keyDown(document, { key: 'ArrowUp', keyCode: 38, metaKey: true, shiftKey: true });
-    expect(keyCode).toStrictEqual(['meta', 'shift', 'arrowup']);
+    fireEvent.keyDown(document, { key: 'ArrowUp', keyCode: 38, ctrlKey: true });
+    expect(keyCode).toBe('ctrl.uparrow');
+    fireEvent.keyDown(document, { key: 'c', keyCode: 67, ctrlKey: true, metaKey: true });
+    expect(keyCode).toBe('ctrl.meta.c');
   });
 });
