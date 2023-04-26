@@ -95,4 +95,38 @@ describe('useWebSocket', () => {
 
     act(() => wsServer.close());
   });
+
+  it('change socketUrl should connect correctly', async () => {
+    const wsUrl1 = 'ws://localhost:8888';
+    const wsServer1 = new WS(wsUrl);
+    const wsServer2 = new WS(wsUrl1);
+
+    const onOpen = jest.fn();
+    const onClose = jest.fn();
+
+    let url = wsUrl;
+    const hooks = renderHook(() => useWebSocket(url, { onOpen, onClose, reconnectInterval: 300 }));
+
+    expect(hooks.result.current.readyState).toBe(ReadyState.Connecting);
+    await act(async () => {
+      await wsServer1.connected;
+    });
+    expect(hooks.result.current.readyState).toBe(ReadyState.Open);
+
+    url = wsUrl1;
+    hooks.rerender();
+    await act(async () => {
+      await wsServer2.connected;
+    });
+    expect(hooks.result.current.readyState).toBe(ReadyState.Open);
+
+    await act(async () => {
+      await sleep(3000);
+    });
+    expect(onOpen).toBeCalledTimes(2);
+    expect(onClose).toBeCalledTimes(1);
+
+    act(() => wsServer1.close());
+    act(() => wsServer2.close());
+  });
 });
