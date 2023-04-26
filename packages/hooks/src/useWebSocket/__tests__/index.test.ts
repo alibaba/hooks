@@ -68,4 +68,31 @@ describe('useWebSocket', () => {
 
     act(() => wsServer.close());
   });
+
+  it('should not call connect when initial socketUrl is empty', async () => {
+    const wsServer = new WS(wsUrl);
+    const onOpen = jest.fn();
+    const onClose = jest.fn();
+
+    let url = '';
+    const hooks = renderHook(() => useWebSocket(url, { onOpen, onClose }));
+
+    await act(async () => {
+      await sleep(1000);
+    });
+
+    expect(hooks.result.current.readyState).toBe(ReadyState.Closed);
+
+    url = wsUrl;
+    hooks.rerender();
+
+    await act(async () => {
+      await wsServer.connected;
+    });
+
+    expect(hooks.result.current.readyState).toBe(ReadyState.Open);
+    expect(onOpen).toBeCalledTimes(1);
+
+    act(() => wsServer.close());
+  });
 });

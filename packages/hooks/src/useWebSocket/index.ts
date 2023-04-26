@@ -144,7 +144,7 @@ export default function useWebSocket(socketUrl: string, options: Options = {}): 
   };
 
   useEffect(() => {
-    if (!manual) {
+    if (!manual && socketUrl) {
       connect();
     }
   }, [socketUrl, manual]);
