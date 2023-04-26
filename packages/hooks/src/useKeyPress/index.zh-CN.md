@@ -41,7 +41,7 @@ type KeyFilter = keyType | keyType[] | ((event: KeyboardEvent) => boolean);
 
 useKeyPress(
   keyFilter: KeyFilter,
-  eventHandler: (event: KeyboardEvent, code: string[]) => void,
+  eventHandler: (event: KeyboardEvent, code: string) => void,
   options?: Options
 );
 ```
@@ -51,7 +51,7 @@ useKeyPress(
 | 参数         | 说明                                         | 类型                                                            | 默认值 |
 | ------------ | -------------------------------------------- | --------------------------------------------------------------- | ------ |
 | keyFilter    | 支持 keyCode、别名、组合键、数组，自定义函数 | `keyType` \| `keyType[]` \| `(event: KeyboardEvent) => boolean` | -      |
-| eventHandler | 回调函数                                     | `(event: KeyboardEvent, code: string[]) => void`                | -      |
+| eventHandler | 回调函数                                     | `(event: KeyboardEvent, code: string) => void`                  | -      |
 | options      | 可选配置项                                   | `Options`                                                       | -      |
 
 ### Options
