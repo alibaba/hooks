@@ -84,7 +84,7 @@ describe('useKeyPress ', () => {
     expect(callback).toBeCalled();
   });
 
-  it.only('test callback code', async () => {
+  it('test callback code', async () => {
     let keyCode;
     renderHook(() =>
       useKeyPress(
