@@ -5,9 +5,9 @@ import { getTargetElement } from '../utils/domTarget';
 import useDeepCompareEffectWithTarget from '../utils/useDeepCompareWithTarget';
 import isAppleDevice from '../utils/isAppleDevice';
 
-export type KeyPredicate = (event: KeyboardEvent) => boolean;
+export type KeyPredicate = (event: KeyboardEvent) => string | number | false;
 export type keyType = number | string;
-export type KeyFilter = keyType | keyType[] | ((event: KeyboardEvent) => boolean);
+export type KeyFilter = keyType | keyType[] | ((event: KeyboardEvent) => string | number);
 export type EventHandler = (event: KeyboardEvent) => void;
 export type KeyEvent = 'keydown' | 'keyup';
 
@@ -155,17 +155,16 @@ function countKeyByEvent(event: KeyboardEvent) {
  * 判断按键是否激活
  * @param [event: KeyboardEvent]键盘事件
  * @param [keyFilter: any] 当前键
- * @returns Boolean
+ * @returns string | number | false
  */
 function genFilterKey(event: KeyboardEvent, keyFilter: keyType, exactMatch: boolean) {
   // 浏览器自动补全 input 的时候，会触发 keyDown、keyUp 事件，但此时 event.key 等为空
   if (!event.key) {
     return false;
   }
-
   // 数字类型直接匹配事件的 keyCode
   if (isNumber(keyFilter)) {
-    return event.keyCode === keyFilter;
+    return event.keyCode === keyFilter ? keyFilter : false;
   }
 
   // 字符串依次判断是否有组合键
@@ -190,9 +189,9 @@ function genFilterKey(event: KeyboardEvent, keyFilter: keyType, exactMatch: bool
    * 主要用来防止按组合键其子集也会触发的情况，例如监听 ctrl+a 会触发监听 ctrl 和 a 两个键的事件。
    */
   if (exactMatch) {
-    return genLen === genArr.length && countKeyByEvent(event) === genArr.length;
+    return genLen === genArr.length && countKeyByEvent(event) === genArr.length ? keyFilter : false;
   }
-  return genLen === genArr.length;
+  return genLen === genArr.length ? keyFilter : false;
 }
 
 /**
@@ -209,16 +208,16 @@ function genKeyFormatter(keyFilter: KeyFilter, exactMatch: boolean): KeyPredicat
   }
   if (Array.isArray(keyFilter)) {
     return (event: KeyboardEvent) =>
-      keyFilter.some((item) => genFilterKey(event, item, exactMatch));
+      keyFilter.find((item) => genFilterKey(event, item, exactMatch))!;
   }
-  return () => Boolean(keyFilter);
+  return () => (Boolean(keyFilter) ? keyFilter : false);
 }
 
 const defaultEvents: KeyEvent[] = ['keydown'];
 
 function useKeyPress(
   keyFilter: KeyFilter,
-  eventHandler: (event: KeyboardEvent, code: string[]) => void,
+  eventHandler: (event: KeyboardEvent, code: keyType) => void,
   option?: Options,
 ) {
   const { events = defaultEvents, target, exactMatch = false, useCapture = false } = option || {};
@@ -234,8 +233,9 @@ function useKeyPress(
 
       const callbackHandler = (event: KeyboardEvent) => {
         const genGuard: KeyPredicate = genKeyFormatter(keyFilterRef.current, exactMatch);
-        if (genGuard(event)) {
-          return eventHandlerRef.current?.(event, getKeyCode(event));
+        const code = genGuard(event);
+        if (code) {
+          return eventHandlerRef.current?.(event, code);
         }
       };
 
@@ -253,15 +253,4 @@ function useKeyPress(
   );
 }
 
-function getKeyCode(eventHandler: KeyboardEvent) {
-  const result: string[] = [];
-  const { metaKey, shiftKey, ctrlKey, altKey, key } = eventHandler;
-  if (metaKey) result.push('meta');
-  if (shiftKey) result.push('shift');
-  if (ctrlKey) result.push('ctrl');
-  if (altKey) result.push('alt');
-  const _key = key.toLowerCase();
-  if (!result.includes(_key)) result.push(_key);
-  return result;
-}
 export default useKeyPress;
