@@ -21,7 +21,7 @@ const useInterval = (fn: () => void, delay?: number, options: { immediate?: bool
     }
     timerRef.current = setInterval(timerCallback, delay);
     return clear;
-  }, [delay]);
+  }, [delay, options.immediate]);
 
   return clear;
 };
