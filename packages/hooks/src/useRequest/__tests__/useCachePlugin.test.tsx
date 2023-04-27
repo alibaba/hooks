@@ -4,6 +4,7 @@ import useRequest, { clearCache } from '../index';
 import { request } from '../../utils/testingHelpers';
 import React, { useState } from 'react';
 import 'jest-localstorage-mock';
+import Fetch from '../src/Fetch';
 
 describe('useCachePlugin', () => {
   jest.useFakeTimers();
@@ -196,5 +197,43 @@ describe('useCachePlugin', () => {
     expect(res.error).toBeUndefined();
 
     errSpy.mockRestore();
+  });
+
+  it('multiple useRequest with same cacheKey should call setState only twice', async () => {
+    const setStateSpy = jest.spyOn(Fetch.prototype, 'setState');
+    let hook1, hook2, hook3;
+    act(() => {
+      hook1 = setup(request, {
+        cacheKey: "test-key",
+        key: 1,
+      });
+      hook2 = setup(request, {
+        cacheKey: "test-key",
+        key: 2,
+      });
+      hook3 = setup(request, {
+        cacheKey: "test-key",
+        key: 2,
+      });
+    });
+
+    act(() => {
+      jest.runAllTimers();
+    });
+
+    await waitFor(() => expect(hook1.result.current.data).toBe('success'));
+
+    act(() => {
+      jest.runAllTimers();
+    });
+
+    // every useRequest only need call setState twice:
+    // 1. before request: set loading to true
+    // 2. after request: set loading to false and set data
+    expect(setStateSpy).toHaveBeenCalledTimes(6);
+
+    hook1.unmount();
+    hook2.unmount();
+    hook3.unmount();
   });
 });
