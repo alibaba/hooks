@@ -7,7 +7,7 @@ const promise: Promise<void> = new Promise((resolve) => resolve());
 const wsUrl = 'ws://localhost:9999';
 
 describe('useWebSocket', () => {
-  afterAll(() => {
+  afterEach(() => {
     WS.clean();
   });
 
@@ -41,6 +41,21 @@ describe('useWebSocket', () => {
       await wsServer.closed;
       return promise;
     });
+    expect(hooks.result.current.readyState).toBe(ReadyState.Closed);
+  });
+
+  it('disconnect should work', async () => {
+    const wsServer = new WS(wsUrl);
+    const hooks = renderHook(() => useWebSocket(wsUrl));
+
+    // connect
+    expect(hooks.result.current.readyState).toBe(ReadyState.Connecting);
+    await act(() => wsServer.connected);
+    expect(hooks.result.current.readyState).toBe(ReadyState.Open);
+
+    // disconnect
+    act(() => hooks.result.current.disconnect());
+    await act(() => wsServer.closed);
     expect(hooks.result.current.readyState).toBe(ReadyState.Closed);
   });
 

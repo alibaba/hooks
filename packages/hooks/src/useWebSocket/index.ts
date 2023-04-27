@@ -58,7 +58,6 @@ export default function useWebSocket(socketUrl: string, options: Options = {}): 
   const reconnect = () => {
     if (
       reconnectTimesRef.current < reconnectLimit &&
-      websocketRef.current &&
       websocketRef.current?.readyState !== ReadyState.Open
     ) {
       if (reconnectTimerRef.current) {
@@ -110,11 +109,14 @@ export default function useWebSocket(socketUrl: string, options: Options = {}): 
     };
     ws.onclose = (event) => {
       onCloseRef.current?.(event, ws);
-      if (websocketRef.current !== ws) {
-        return;
+      // closed by server
+      if (websocketRef.current === ws) {
+        reconnect();
       }
-      reconnect();
-      setReadyState(ws.readyState || ReadyState.Closed);
+      // closed by disconnect or closed by server
+      if (!websocketRef.current || websocketRef.current === ws) {
+        setReadyState(ws.readyState || ReadyState.Closed);
+      }
     };
 
     websocketRef.current = ws;
@@ -138,6 +140,7 @@ export default function useWebSocket(socketUrl: string, options: Options = {}): 
       clearTimeout(reconnectTimerRef.current);
     }
 
+    reconnectTimesRef.current = reconnectLimit;
     websocketRef.current?.close();
     websocketRef.current = undefined;
   };
