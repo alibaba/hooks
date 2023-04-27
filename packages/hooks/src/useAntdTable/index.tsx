@@ -125,8 +125,8 @@ const useAntdTable = <TData extends Data, TParams extends Params>(
       validateFields()
         .then((values = {}) => {
           const pagination = initPagination || {
-            pageSize: options.defaultPageSize || 10,
             ...(params?.[0] || {}),
+            pageSize: options.defaultPageSize || options.defaultParams?.[0]?.pageSize || 10,
             current: 1,
           };
           if (!form) {

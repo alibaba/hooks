@@ -5,6 +5,7 @@ import useAntdTable from '../index';
 interface Query {
   current: number;
   pageSize: number;
+
   [key: string]: any;
 }
 
@@ -231,5 +232,92 @@ describe('useAntdTable', () => {
     expect(queryArgs.current).toBe(1);
     expect(queryArgs.pageSize).toBe(5);
     expect(queryArgs.name).toBe('change name');
+  });
+
+  it('should reset pageSize in defaultParams', async () => {
+    queryArgs = undefined;
+    form.resetFields();
+    act(() => {
+      hook = setUp(asyncFn, {
+        form,
+        defaultParams: [
+          {
+            current: 1,
+            pageSize: 10,
+          },
+        ],
+      });
+    });
+
+    const { search, tableProps } = hook.result.current;
+    expect(tableProps.loading).toBe(false);
+    await waitFor(() => expect(queryArgs.current).toBe(1));
+    expect(queryArgs.pageSize).toBe(10);
+
+    // change params
+    act(() => {
+      tableProps.onChange({
+        current: 2,
+        pageSize: 5,
+      });
+    });
+
+    await waitFor(() => {
+      expect(queryArgs.current).toBe(2);
+      expect(queryArgs.pageSize).toBe(5);
+    });
+
+    // reset params
+    act(() => {
+      search.reset();
+    });
+
+    await waitFor(() => {
+      expect(queryArgs.current).toBe(1);
+      expect(queryArgs.pageSize).toBe(10);
+    });
+  });
+
+  it('should reset pageSize in defaultPageSize', async () => {
+    queryArgs = undefined;
+    form.resetFields();
+    act(() => {
+      hook = setUp(asyncFn, {
+        form,
+        defaultParams: {
+          current: 1,
+          pageSize: 10,
+        },
+        defaultPageSize: 20,
+      });
+    });
+
+    const { search, tableProps } = hook.result.current;
+    expect(tableProps.loading).toBe(false);
+    await waitFor(() => expect(queryArgs.current).toBe(1));
+    expect(queryArgs.pageSize).toBe(20);
+
+    // change params
+    act(() => {
+      tableProps.onChange({
+        current: 2,
+        pageSize: 5,
+      });
+    });
+
+    await waitFor(() => {
+      expect(queryArgs.current).toBe(2);
+      expect(queryArgs.pageSize).toBe(5);
+    });
+
+    // reset params
+    act(() => {
+      search.reset();
+    });
+
+    await waitFor(() => {
+      expect(queryArgs.current).toBe(1);
+      expect(queryArgs.pageSize).toBe(20);
+    });
   });
 });
