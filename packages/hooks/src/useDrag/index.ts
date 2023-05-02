@@ -6,6 +6,11 @@ import useEffectWithTarget from '../utils/useEffectWithTarget';
 export interface Options {
   onDragStart?: (event: React.DragEvent) => void;
   onDragEnd?: (event: React.DragEvent) => void;
+  dragImg?: {
+    img: string | HTMLImageElement;
+    offsetX?: number;
+    offsetY?: number;
+  };
 }
 
 const useDrag = <T>(data: T, target: BasicTarget, options: Options = {}) => {
@@ -21,6 +26,17 @@ const useDrag = <T>(data: T, target: BasicTarget, options: Options = {}) => {
       const onDragStart = (event: React.DragEvent) => {
         optionsRef.current.onDragStart?.(event);
         event.dataTransfer.setData('custom', JSON.stringify(dataRef.current));
+
+        if (optionsRef.current.dragImg) {
+          const { img, offsetX, offsetY } = optionsRef.current.dragImg;
+          if (typeof img === 'string') {
+            const imgElement = new Image();
+            imgElement.src = img;
+            event.dataTransfer.setDragImage(imgElement, offsetX || 0, offsetY || 0);
+          } else {
+            event.dataTransfer.setDragImage(img, offsetX || 0, offsetY || 0);
+          }
+        }
       };
 
       const onDragEnd = (event: React.DragEvent) => {
