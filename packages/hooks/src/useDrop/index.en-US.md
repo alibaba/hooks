@@ -45,6 +45,15 @@ useDrag<T>(
 | ----------- | ---------------------- | ------------------------------ | ------- |
 | onDragStart | On drag start callback | `(e: React.DragEvent) => void` | -       |
 | onDragEnd   | On drag end callback   | `(e: React.DragEvent) => void` | -       |
+| dragImg     | custom image           | `DragImgOptions`               | -       |
+
+#### DragImgOptions
+
+| 参数    | 说明                                   | 类型                         | 默认值 |
+| ------- | -------------------------------------- | ---------------------------- | ------ |
+| img     | img                                    | `string \| HTMLImageElement` | -      |
+| offsetX | the horizontal offset within the image | `number`                     | 0      |
+| offsetY | the vertical offset within the image   | `number`                     | 0      |
 
 ### useDrop
 

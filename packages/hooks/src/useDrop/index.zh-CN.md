@@ -45,6 +45,15 @@ useDrag<T>(
 | ----------- | -------------- | ------------------------------ | ------ |
 | onDragStart | 开始拖拽的回调 | `(e: React.DragEvent) => void` | -      |
 | onDragEnd   | 结束拖拽的回调 | `(e: React.DragEvent) => void` | -      |
+| dragImg     | 自定义图像     | `DragImgOptions`               | -      |
+
+#### DragImgOptions
+
+| 参数    | 说明     | 类型                         | 默认值 |
+| ------- | -------- | ---------------------------- | ------ |
+| img     | 图片     | `string \| HTMLImageElement` | -      |
+| offsetX | 水平偏移 | `number`                     | 0      |
+| offsetY | 垂直偏移 | `number`                     | 0      |
 
 ### useDrop
 
