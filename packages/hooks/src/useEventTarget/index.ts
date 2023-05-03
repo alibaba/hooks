@@ -19,7 +19,11 @@ function useEventTarget<T, U = T>(options?: Options<T, U>) {
 
   const transformerRef = useLatest(transformer);
 
-  const reset = useCallback(() => setValue(initialValue), []);
+  const resetFun = () => setValue(initialValue);
+
+  const resetRef = useLatest(resetFun);
+
+  const reset = useCallback(() => resetRef.current(), []);
 
   const onChange = useCallback((e: EventTarget<U>) => {
     const _value = e.target.value;
