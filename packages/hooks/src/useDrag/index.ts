@@ -27,14 +27,14 @@ const useDrag = <T>(data: T, target: BasicTarget, options: Options = {}) => {
         optionsRef.current.onDragStart?.(event);
         event.dataTransfer.setData('custom', JSON.stringify(dataRef.current));
 
-        if (optionsRef.current.dragImg) {
-          const { img, offsetX, offsetY } = optionsRef.current.dragImg;
+        if (optionsRef.current.dragImg?.img) {
+          const { img, offsetX = 0, offsetY = 0 } = optionsRef.current.dragImg;
           if (typeof img === 'string') {
             const imgElement = new Image();
             imgElement.src = img;
-            event.dataTransfer.setDragImage(imgElement, offsetX || 0, offsetY || 0);
+            event.dataTransfer.setDragImage(imgElement, offsetX, offsetY);
           } else {
-            event.dataTransfer.setDragImage(img, offsetX || 0, offsetY || 0);
+            event.dataTransfer.setDragImage(img, offsetX, offsetY);
           }
         }
       };
