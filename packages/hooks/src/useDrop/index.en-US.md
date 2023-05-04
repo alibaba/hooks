@@ -41,19 +41,19 @@ useDrag<T>(
 
 #### DragOptions
 
-| Property    | Description            | Type                           | Default |
-| ----------- | ---------------------- | ------------------------------ | ------- |
-| onDragStart | On drag start callback | `(e: React.DragEvent) => void` | -       |
-| onDragEnd   | On drag end callback   | `(e: React.DragEvent) => void` | -       |
-| dragImg     | custom image           | `DragImgOptions`               | -       |
+| Property    | Description                                                   | Type                           | Default |
+| ----------- | ------------------------------------------------------------- | ------------------------------ | ------- |
+| onDragStart | On drag start callback                                        | `(e: React.DragEvent) => void` | -       |
+| onDragEnd   | On drag end callback                                          | `(e: React.DragEvent) => void` | -       |
+| dragImage   | Customize image that follow the mouse pointer during dragging | `DragImageOptions`             | -       |
 
-#### DragImgOptions
+#### DragImageOptions
 
-| 参数    | 说明                                   | 类型                         | 默认值 |
-| ------- | -------------------------------------- | ---------------------------- | ------ |
-| img     | img                                    | `string \| HTMLImageElement` | -      |
-| offsetX | the horizontal offset within the image | `number`                     | 0      |
-| offsetY | the vertical offset within the image   | `number`                     | 0      |
+| 参数    | 说明                                                         | 类型                | 默认值 |
+| ------- | ------------------------------------------------------------ | ------------------- | ------ |
+| image   | An image Element element to use for the drag feedback image. | `string \| Element` | -      |
+| offsetX | the horizontal offset within the image                       | `number`            | 0      |
+| offsetY | the vertical offset within the image                         | `number`            | 0      |
 
 ### useDrop
 

@@ -1,4 +1,6 @@
+import { useRef } from 'react';
 import useLatest from '../useLatest';
+import useMount from '../useMount';
 import type { BasicTarget } from '../utils/domTarget';
 import { getTargetElement } from '../utils/domTarget';
 import useEffectWithTarget from '../utils/useEffectWithTarget';
@@ -6,8 +8,8 @@ import useEffectWithTarget from '../utils/useEffectWithTarget';
 export interface Options {
   onDragStart?: (event: React.DragEvent) => void;
   onDragEnd?: (event: React.DragEvent) => void;
-  dragImg?: {
-    img: string | HTMLImageElement;
+  dragImage?: {
+    image: string | Element;
     offsetX?: number;
     offsetY?: number;
   };
@@ -16,6 +18,22 @@ export interface Options {
 const useDrag = <T>(data: T, target: BasicTarget, options: Options = {}) => {
   const optionsRef = useLatest(options);
   const dataRef = useLatest(data);
+  const imageElementRef = useRef<Element>();
+
+  useMount(() => {
+    if (optionsRef.current.dragImage?.image) {
+      const { image } = optionsRef.current.dragImage;
+      if (typeof image === 'string') {
+        const imgElement = new Image();
+        imgElement.src = image;
+        console.log(imgElement);
+        imageElementRef.current = imgElement;
+      } else {
+        imageElementRef.current = image;
+      }
+    }
+  });
+
   useEffectWithTarget(
     () => {
       const targetElement = getTargetElement(target);
@@ -27,15 +45,10 @@ const useDrag = <T>(data: T, target: BasicTarget, options: Options = {}) => {
         optionsRef.current.onDragStart?.(event);
         event.dataTransfer.setData('custom', JSON.stringify(dataRef.current));
 
-        if (optionsRef.current.dragImg?.img) {
-          const { img, offsetX = 0, offsetY = 0 } = optionsRef.current.dragImg;
-          if (typeof img === 'string') {
-            const imgElement = new Image();
-            imgElement.src = img;
-            event.dataTransfer.setDragImage(imgElement, offsetX, offsetY);
-          } else {
-            event.dataTransfer.setDragImage(img, offsetX, offsetY);
-          }
+        if (optionsRef.current.dragImage?.image && imageElementRef.current) {
+          const { offsetX = 0, offsetY = 0 } = optionsRef.current.dragImage;
+
+          event.dataTransfer.setDragImage(imageElementRef.current, offsetX, offsetY);
         }
       };
 

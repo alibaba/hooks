@@ -8,7 +8,6 @@
 
 import React, { useRef, useState } from 'react';
 import { useDrop, useDrag } from 'ahooks';
-import dropImg from './drop.png';
 
 const DragItem = ({ data }) => {
   const dragRef = useRef(null);
@@ -22,8 +21,8 @@ const DragItem = ({ data }) => {
     onDragEnd: () => {
       setDragging(false);
     },
-    dragImg: {
-      img: dropImg,
+    dragImage: {
+      image: '/logo.svg',
     },
   });
 
