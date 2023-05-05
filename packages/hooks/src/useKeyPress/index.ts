@@ -6,8 +6,8 @@ import useDeepCompareEffectWithTarget from '../utils/useDeepCompareWithTarget';
 import isAppleDevice from '../utils/isAppleDevice';
 
 export type KeyPredicate = (event: KeyboardEvent) => string | number | false;
-export type keyType = number | string;
-export type KeyFilter = keyType | keyType[] | ((event: KeyboardEvent) => string | number);
+export type KeyType = number | string;
+export type KeyFilter = KeyType | KeyType[] | ((event: KeyboardEvent) => string | number);
 export type EventHandler = (event: KeyboardEvent) => void;
 export type KeyEvent = 'keydown' | 'keyup';
 
@@ -157,7 +157,7 @@ function countKeyByEvent(event: KeyboardEvent) {
  * @param [keyFilter: any] 当前键
  * @returns string | number | false
  */
-function genFilterKey(event: KeyboardEvent, keyFilter: keyType, exactMatch: boolean) {
+function genFilterKey(event: KeyboardEvent, keyFilter: KeyType, exactMatch: boolean) {
   // 浏览器自动补全 input 的时候，会触发 keyDown、keyUp 事件，但此时 event.key 等为空
   if (!event.key) {
     return false;
@@ -217,7 +217,7 @@ const defaultEvents: KeyEvent[] = ['keydown'];
 
 function useKeyPress(
   keyFilter: KeyFilter,
-  eventHandler: (event: KeyboardEvent, code: keyType) => void,
+  eventHandler: (event: KeyboardEvent, code: KeyType) => void,
   option?: Options,
 ) {
   const { events = defaultEvents, target, exactMatch = false, useCapture = false } = option || {};

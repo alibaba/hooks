@@ -36,8 +36,8 @@ nav:
 ## API
 
 ```typescript
-type keyType = number | string;
-type KeyFilter = keyType | keyType[] | ((event: KeyboardEvent) => string | number);
+type KeyType = number | string;
+type KeyFilter = KeyType | KeyType[] | ((event: KeyboardEvent) => string | number);
 
 useKeyPress(
   keyFilter: KeyFilter,
@@ -50,7 +50,7 @@ useKeyPress(
 
 | 参数         | 说明                                         | 类型                                                                     | 默认值 |
 | ------------ | -------------------------------------------- | ------------------------------------------------------------------------ | ------ |
-| keyFilter    | 支持 keyCode、别名、组合键、数组，自定义函数 | `keyType` \| `keyType[]` \| `(event: KeyboardEvent) => string \| number` | -      |
+| keyFilter    | 支持 keyCode、别名、组合键、数组，自定义函数 | `KeyType` \| `KeyType[]` \| `(event: KeyboardEvent) => string \| number` | -      |
 | eventHandler | 回调函数                                     | `(event: KeyboardEvent, code: string) => void`                           | -      |
 | options      | 可选配置项                                   | `Options`                                                                | -      |
 

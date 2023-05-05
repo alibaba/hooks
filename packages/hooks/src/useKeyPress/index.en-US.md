@@ -36,8 +36,8 @@ Listen for the keyboard press, support key combinations, and support alias.
 ## API
 
 ```typescript
-type keyType = number | string;
-type KeyFilter = keyType | keyType[] | ((event: KeyboardEvent) => string | number);
+type KeyType = number | string;
+type KeyFilter = KeyType | KeyType[] | ((event: KeyboardEvent) => string | number);
 
 useKeyPress(
   keyFilter: KeyFilter,
@@ -50,7 +50,7 @@ useKeyPress(
 
 | Property     | Description                                                      | Type                                                                     | Default |
 | ------------ | ---------------------------------------------------------------- | ------------------------------------------------------------------------ | ------- |
-| keyFilter    | Support keyCode、alias、combination keys、array、custom function | `keyType` \| `keyType[]` \| `(event: KeyboardEvent) => string \| number` | -       |
+| keyFilter    | Support keyCode、alias、combination keys、array、custom function | `KeyType` \| `KeyType[]` \| `(event: KeyboardEvent) => string \| number` | -       |
 | eventHandler | Callback function                                                | `(event: KeyboardEvent, code: string) => void`                           | -       |
 | options      | advanced options                                                 | `Options`                                                                | -       |
 
