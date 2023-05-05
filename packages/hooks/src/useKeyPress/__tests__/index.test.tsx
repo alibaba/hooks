@@ -84,22 +84,16 @@ describe('useKeyPress ', () => {
     expect(callback).toBeCalled();
   });
 
-  it('test callback code', async () => {
-    let keyCode;
+  it('test callback key', async () => {
+    let triggerKey;
     renderHook(() =>
-      useKeyPress(
-        ['ctrl.uparrow', 'ctrl.meta.c'],
-        (e, code) => {
-          keyCode = code;
-        },
-        {
-          events: ['keydown'],
-        },
-      ),
+      useKeyPress(['ctrl.uparrow', 'ctrl.meta.c'], (e, key) => {
+        triggerKey = key;
+      }),
     );
     fireEvent.keyDown(document, { key: 'ArrowUp', keyCode: 38, ctrlKey: true });
-    expect(keyCode).toBe('ctrl.uparrow');
+    expect(triggerKey).toBe('ctrl.uparrow');
     fireEvent.keyDown(document, { key: 'c', keyCode: 67, ctrlKey: true, metaKey: true });
-    expect(keyCode).toBe('ctrl.meta.c');
+    expect(triggerKey).toBe('ctrl.meta.c');
   });
 });
