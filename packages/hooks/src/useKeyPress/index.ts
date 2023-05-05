@@ -217,7 +217,7 @@ const defaultEvents: KeyEvent[] = ['keydown'];
 
 function useKeyPress(
   keyFilter: KeyFilter,
-  eventHandler: (event: KeyboardEvent, code: KeyType) => void,
+  eventHandler: (event: KeyboardEvent, key: KeyType) => void,
   option?: Options,
 ) {
   const { events = defaultEvents, target, exactMatch = false, useCapture = false } = option || {};
@@ -233,9 +233,9 @@ function useKeyPress(
 
       const callbackHandler = (event: KeyboardEvent) => {
         const genGuard: KeyPredicate = genKeyFormatter(keyFilterRef.current, exactMatch);
-        const code = genGuard(event);
-        if (code) {
-          return eventHandlerRef.current?.(event, code);
+        const key = genGuard(event);
+        if (key) {
+          return eventHandlerRef.current?.(event, key);
         }
       };
 

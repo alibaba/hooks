@@ -41,7 +41,7 @@ type KeyFilter = KeyType | KeyType[] | ((event: KeyboardEvent) => string | numbe
 
 useKeyPress(
   keyFilter: KeyFilter,
-  eventHandler: (event: KeyboardEvent, code: KeyType) => void,
+  eventHandler: (event: KeyboardEvent, key: KeyType) => void,
   options?: Options
 );
 ```
@@ -51,7 +51,7 @@ useKeyPress(
 | Property     | Description                                                      | Type                                                                     | Default |
 | ------------ | ---------------------------------------------------------------- | ------------------------------------------------------------------------ | ------- |
 | keyFilter    | Support keyCode、alias、combination keys、array、custom function | `KeyType` \| `KeyType[]` \| `(event: KeyboardEvent) => string \| number` | -       |
-| eventHandler | Callback function                                                | `(event: KeyboardEvent, code: KeyType) => void`                          | -       |
+| eventHandler | Callback function                                                | `(event: KeyboardEvent, key: KeyType) => void`                           | -       |
 | options      | advanced options                                                 | `Options`                                                                | -       |
 
 ### Options
