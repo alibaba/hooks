@@ -25,6 +25,10 @@ Listen for the keyboard press, support key combinations, and support alias.
 
 <code src="./demo/demo3.tsx" />
 
+### Get the trigger key
+
+<code src="./demo/demo8.tsx" />
+
 ### Custom method
 
 <code src="./demo/demo4.tsx" />

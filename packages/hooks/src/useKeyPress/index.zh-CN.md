@@ -25,6 +25,10 @@ nav:
 
 <code src="./demo/demo3.tsx" />
 
+### 获取触发的按键
+
+<code src="./demo/demo8.tsx" />
+
 ### 自定义监听方式
 
 <code src="./demo/demo4.tsx" />
