@@ -19,6 +19,10 @@ nav:
 
 <code src="./demo/demo1.tsx" />
 
+### 自定义拖拽图像
+
+<code src="./demo/demo2.tsx" />
+
 ## API
 
 ### useDrag
