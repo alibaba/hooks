@@ -45,13 +45,13 @@ useDrag<T>(
 | ----------- | ---------------------------------- | ------------------------------ | ------ |
 | onDragStart | 开始拖拽的回调                     | `(e: React.DragEvent) => void` | -      |
 | onDragEnd   | 结束拖拽的回调                     | `(e: React.DragEvent) => void` | -      |
-| dragImage   | 自定义拖曳过程中跟随鼠标指针的图像 | `DragImageOptions`             | -      |
+| dragImage   | 自定义拖拽过程中跟随鼠标指针的图像 | `DragImageOptions`             | -      |
 
 #### DragImageOptions
 
 | 参数    | 说明                         | 类型                | 默认值 |
 | ------- | ---------------------------- | ------------------- | ------ |
-| image   | 拖曳过程中跟随鼠标指针的图像 | `string \| Element` | -      |
+| image   | 拖拽过程中跟随鼠标指针的图像 | `string \| Element` | -      |
 | offsetX | 水平偏移                     | `number`            | 0      |
 | offsetY | 垂直偏移                     | `number`            | 0      |
 
