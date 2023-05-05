@@ -1,6 +1,7 @@
 import { useRef } from 'react';
 import useLatest from '../useLatest';
 import useMount from '../useMount';
+import { isString } from '../utils';
 import type { BasicTarget } from '../utils/domTarget';
 import { getTargetElement } from '../utils/domTarget';
 import useEffectWithTarget from '../utils/useEffectWithTarget';
@@ -20,14 +21,17 @@ const useDrag = <T>(data: T, target: BasicTarget, options: Options = {}) => {
   const dataRef = useLatest(data);
   const imageElementRef = useRef<Element>();
 
+  const { dragImage } = optionsRef.current;
+
   useMount(() => {
-    if (optionsRef.current.dragImage?.image) {
-      const { image } = optionsRef.current.dragImage;
-      if (typeof image === 'string') {
-        const imgElement = new Image();
-        imgElement.src = image;
-        console.log(imgElement);
-        imageElementRef.current = imgElement;
+    if (dragImage?.image) {
+      const { image } = dragImage;
+
+      if (isString(image)) {
+        const imageElement = new Image();
+
+        imageElement.src = image;
+        imageElementRef.current = imageElement;
       } else {
         imageElementRef.current = image;
       }
@@ -45,8 +49,8 @@ const useDrag = <T>(data: T, target: BasicTarget, options: Options = {}) => {
         optionsRef.current.onDragStart?.(event);
         event.dataTransfer.setData('custom', JSON.stringify(dataRef.current));
 
-        if (optionsRef.current.dragImage?.image && imageElementRef.current) {
-          const { offsetX = 0, offsetY = 0 } = optionsRef.current.dragImage;
+        if (dragImage?.image && imageElementRef.current) {
+          const { offsetX = 0, offsetY = 0 } = dragImage;
 
           event.dataTransfer.setDragImage(imageElementRef.current, offsetX, offsetY);
         }
