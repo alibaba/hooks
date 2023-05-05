@@ -21,9 +21,6 @@ const DragItem = ({ data }) => {
     onDragEnd: () => {
       setDragging(false);
     },
-    dragImage: {
-      image: '/logo.svg',
-    },
   });
 
   return (
