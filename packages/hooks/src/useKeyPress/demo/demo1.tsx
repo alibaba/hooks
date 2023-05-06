@@ -12,9 +12,14 @@ import { useKeyPress } from 'ahooks';
 export default () => {
   const [counter, setCounter] = useState(0);
 
-  useKeyPress('uparrow', () => {
-    setCounter((s) => s + 1);
-  });
+  useKeyPress(
+    () => true,
+    (e, code) => {
+      console.log(e, code);
+      setCounter((s) => s + 1);
+    },
+    { exactMatch: true },
+  );
 
   // keyCode value for ArrowDown
   useKeyPress(40, () => {
