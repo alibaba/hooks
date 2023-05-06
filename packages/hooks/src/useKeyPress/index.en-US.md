@@ -41,7 +41,7 @@ Listen for the keyboard press, support key combinations, and support alias.
 
 ```typescript
 type KeyType = number | string;
-type KeyFilter = KeyType | KeyType[] | ((event: KeyboardEvent) => string | number);
+type KeyFilter = KeyType | KeyType[] | ((event: KeyboardEvent) => boolean);
 
 useKeyPress(
   keyFilter: KeyFilter,
@@ -52,11 +52,11 @@ useKeyPress(
 
 ### Params
 
-| Property     | Description                                                      | Type                                                                     | Default |
-| ------------ | ---------------------------------------------------------------- | ------------------------------------------------------------------------ | ------- |
-| keyFilter    | Support keyCode、alias、combination keys、array、custom function | `KeyType` \| `KeyType[]` \| `(event: KeyboardEvent) => string \| number` | -       |
-| eventHandler | Callback function                                                | `(event: KeyboardEvent, key: KeyType) => void`                           | -       |
-| options      | advanced options                                                 | `Options`                                                                | -       |
+| Property     | Description                                                      | Type                                                            | Default |
+| ------------ | ---------------------------------------------------------------- | --------------------------------------------------------------- | ------- |
+| keyFilter    | Support keyCode、alias、combination keys、array、custom function | `KeyType` \| `KeyType[]` \| `(event: KeyboardEvent) => boolean` | -       |
+| eventHandler | Callback function                                                | `(event: KeyboardEvent, key: KeyType) => void`                  | -       |
+| options      | Advanced options                                                 | `Options`                                                       | -       |
 
 ### Options
 

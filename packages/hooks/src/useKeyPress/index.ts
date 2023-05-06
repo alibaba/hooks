@@ -5,10 +5,9 @@ import { getTargetElement } from '../utils/domTarget';
 import useDeepCompareEffectWithTarget from '../utils/useDeepCompareWithTarget';
 import isAppleDevice from '../utils/isAppleDevice';
 
-export type KeyPredicate = (event: KeyboardEvent) => string | number | false;
 export type KeyType = number | string;
-export type KeyFilter = KeyType | KeyType[] | ((event: KeyboardEvent) => string | number);
-export type EventHandler = (event: KeyboardEvent) => void;
+export type KeyPredicate = (event: KeyboardEvent) => KeyType | boolean;
+export type KeyFilter = KeyType | KeyType[] | ((event: KeyboardEvent) => boolean);
 export type KeyEvent = 'keydown' | 'keyup';
 
 export type Target = BasicTarget<HTMLElement | Document | Window>;
@@ -137,6 +136,11 @@ const modifierKey = {
   },
 };
 
+// 判断合法的按键类型
+function isValidKeyType(value: unknown): value is string | number {
+  return isString(value) || isNumber(value);
+}
+
 // 根据 event 计算激活键数量
 function countKeyByEvent(event: KeyboardEvent) {
   const countOfModifier = Object.keys(modifierKey).reduce((total, key) => {
@@ -155,13 +159,14 @@ function countKeyByEvent(event: KeyboardEvent) {
  * 判断按键是否激活
  * @param [event: KeyboardEvent]键盘事件
  * @param [keyFilter: any] 当前键
- * @returns string | number | false
+ * @returns string | number | boolean
  */
 function genFilterKey(event: KeyboardEvent, keyFilter: KeyType, exactMatch: boolean) {
   // 浏览器自动补全 input 的时候，会触发 keyDown、keyUp 事件，但此时 event.key 等为空
   if (!event.key) {
     return false;
   }
+
   // 数字类型直接匹配事件的 keyCode
   if (isNumber(keyFilter)) {
     return event.keyCode === keyFilter ? keyFilter : false;
@@ -203,14 +208,14 @@ function genKeyFormatter(keyFilter: KeyFilter, exactMatch: boolean): KeyPredicat
   if (isFunction(keyFilter)) {
     return keyFilter;
   }
-  if (isString(keyFilter) || isNumber(keyFilter)) {
+  if (isValidKeyType(keyFilter)) {
     return (event: KeyboardEvent) => genFilterKey(event, keyFilter, exactMatch);
   }
   if (Array.isArray(keyFilter)) {
     return (event: KeyboardEvent) =>
-      keyFilter.find((item) => genFilterKey(event, item, exactMatch))!;
+      keyFilter.some((item) => genFilterKey(event, item, exactMatch));
   }
-  return () => (Boolean(keyFilter) ? keyFilter : false);
+  return () => Boolean(keyFilter);
 }
 
 const defaultEvents: KeyEvent[] = ['keydown'];
@@ -232,9 +237,10 @@ function useKeyPress(
       }
 
       const callbackHandler = (event: KeyboardEvent) => {
-        const genGuard: KeyPredicate = genKeyFormatter(keyFilterRef.current, exactMatch);
+        const genGuard = genKeyFormatter(keyFilterRef.current, exactMatch);
         const key = genGuard(event);
-        if (key) {
+
+        if (isValidKeyType(key)) {
           return eventHandlerRef.current?.(event, key);
         }
       };
