@@ -6,7 +6,7 @@ import useDeepCompareEffectWithTarget from '../utils/useDeepCompareWithTarget';
 import isAppleDevice from '../utils/isAppleDevice';
 
 export type KeyType = number | string;
-export type KeyPredicate = (event: KeyboardEvent) => KeyType | boolean;
+export type KeyPredicate = (event: KeyboardEvent) => KeyType | boolean | undefined;
 export type KeyFilter = KeyType | KeyType[] | ((event: KeyboardEvent) => boolean);
 export type KeyEvent = 'keydown' | 'keyup';
 
@@ -213,7 +213,7 @@ function genKeyFormatter(keyFilter: KeyFilter, exactMatch: boolean): KeyPredicat
   }
   if (Array.isArray(keyFilter)) {
     return (event: KeyboardEvent) =>
-      keyFilter.some((item) => genFilterKey(event, item, exactMatch));
+      keyFilter.find((item) => genFilterKey(event, item, exactMatch));
   }
   return () => Boolean(keyFilter);
 }
