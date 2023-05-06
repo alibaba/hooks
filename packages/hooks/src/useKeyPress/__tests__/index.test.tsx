@@ -114,17 +114,8 @@ describe('useKeyPress ', () => {
       pressedKey = key;
     };
 
-    // test `exactMatch: false`(default) props
-    const hook1 = renderHook(() => useKeyPress(KEYS, callbackKey));
-    fireEvent.keyDown(document, { key: 'c', keyCode: 67 });
-    expect(pressedKey).toBe('c');
-    fireEvent.keyDown(document, { key: 'c', keyCode: 67, shiftKey: true });
-    expect(pressedKey).toBe('c');
-    fireEvent.keyDown(document, { key: 'c', keyCode: 67, shiftKey: true, ctrlKey: true });
-    expect(pressedKey).toBe('c');
-
     // test `exactMatch: true` props
-    const hook2 = renderHook(() => useKeyPress(KEYS, callbackKey, { exactMatch: true }));
+    const hook1 = renderHook(() => useKeyPress(KEYS, callbackKey, { exactMatch: true }));
     fireEvent.keyDown(document, { key: 'c', keyCode: 67 });
     expect(pressedKey).toBe('c');
     fireEvent.keyDown(document, { key: 'c', keyCode: 67, shiftKey: true });
@@ -132,7 +123,16 @@ describe('useKeyPress ', () => {
     fireEvent.keyDown(document, { key: 'c', keyCode: 67, shiftKey: true, ctrlKey: true });
     expect(pressedKey).toBe('shift.ctrl.c');
 
-    hook1.unmount();
+    // test `exactMatch: false`(default) props
+    const hook2 = renderHook(() => useKeyPress(KEYS, callbackKey));
+    fireEvent.keyDown(document, { key: 'c', keyCode: 67 });
+    expect(pressedKey).toBe('c');
+    fireEvent.keyDown(document, { key: 'c', keyCode: 67, shiftKey: true });
+    expect(pressedKey).toBe('c');
+    fireEvent.keyDown(document, { key: 'c', keyCode: 67, shiftKey: true, ctrlKey: true });
+    expect(pressedKey).toBe('c');
+
     hook2.unmount();
+    hook1.unmount();
   });
 });
