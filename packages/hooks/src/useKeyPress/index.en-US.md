@@ -45,7 +45,7 @@ type KeyFilter = KeyType | KeyType[] | ((event: KeyboardEvent) => boolean);
 
 useKeyPress(
   keyFilter: KeyFilter,
-  eventHandler: (event: KeyboardEvent, key: KeyType) => void,
+  eventHandler: (event: KeyboardEvent, key?: KeyType) => void,
   options?: Options
 );
 ```
@@ -55,7 +55,7 @@ useKeyPress(
 | Property     | Description                                                      | Type                                                            | Default |
 | ------------ | ---------------------------------------------------------------- | --------------------------------------------------------------- | ------- |
 | keyFilter    | Support keyCode、alias、combination keys、array、custom function | `KeyType` \| `KeyType[]` \| `(event: KeyboardEvent) => boolean` | -       |
-| eventHandler | Callback function                                                | `(event: KeyboardEvent, key: KeyType) => void`                  | -       |
+| eventHandler | Callback function                                                | `(event: KeyboardEvent, key?: KeyType) => void`                 | -       |
 | options      | Advanced options                                                 | `Options`                                                       | -       |
 
 ### Options

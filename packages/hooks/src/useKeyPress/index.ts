@@ -222,7 +222,7 @@ const defaultEvents: KeyEvent[] = ['keydown'];
 
 function useKeyPress(
   keyFilter: KeyFilter,
-  eventHandler: (event: KeyboardEvent, key: KeyType) => void,
+  eventHandler: (event: KeyboardEvent, key?: KeyType) => void,
   option?: Options,
 ) {
   const { events = defaultEvents, target, exactMatch = false, useCapture = false } = option || {};
@@ -238,10 +238,12 @@ function useKeyPress(
 
       const callbackHandler = (event: KeyboardEvent) => {
         const genGuard = genKeyFormatter(keyFilterRef.current, exactMatch);
-        const key = genGuard(event);
+        const keyGuard = genGuard(event);
+        // When `keyGuard` is not a string or number, this means that we cannot know which key was pressed.
+        const firedKey = isValidKeyType(keyGuard) ? keyGuard : undefined;
 
-        if (isValidKeyType(key)) {
-          return eventHandlerRef.current?.(event, key);
+        if (keyGuard) {
+          return eventHandlerRef.current?.(event, firedKey);
         }
       };
 
