@@ -239,12 +239,7 @@ function useKeyPress(
       const callbackHandler = (event: KeyboardEvent) => {
         const genGuard = genKeyFormatter(keyFilterRef.current, exactMatch);
         const keyGuard = genGuard(event);
-        // When `keyGuard` is not a string or number, this means that we cannot know which key was pressed.
-        const firedKey = isValidKeyType(keyGuard)
-          ? keyGuard
-          : exactMatch
-          ? getExactKey(event)
-          : event.key;
+        const firedKey = isValidKeyType(keyGuard) ? keyGuard : event.key;
 
         if (keyGuard) {
           return eventHandlerRef.current?.(event, firedKey);
@@ -263,25 +258,6 @@ function useKeyPress(
     [events],
     target,
   );
-}
-
-function getExactKey(event: KeyboardEvent) {
-  const result: string[] = [];
-  if (event.altKey) {
-    result.push('alt');
-  }
-  if (event.ctrlKey) {
-    result.push('ctrl');
-  }
-  if (event.metaKey) {
-    result.push('meta');
-  }
-  if (event.shiftKey) {
-    result.push('shift');
-  }
-  const key = event.key.toLowerCase();
-  if (!result.includes(key)) result.push(key);
-  return result.join('.');
 }
 
 export default useKeyPress;
