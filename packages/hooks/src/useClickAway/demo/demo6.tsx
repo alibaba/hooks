@@ -1,9 +1,9 @@
 /**
  * title: Support shadow DOM
- * desc: Add the addEventListener to shadow DOM root (mode: closed) instead of the document
+ * desc: If mode with closed, add the addEventListener to shadow DOM root instead of the document
  *
  * title.zh-CN: 支持 shadow DOM
- * desc.zh-CN: 将 addEventListener 添加到 shadow DOM root (mode: closed)
+ * desc.zh-CN: 如果 mode 为 closed，将 addEventListener 添加到 shadow DOM root
  */
 
 import React, { useState, useRef } from 'react';
