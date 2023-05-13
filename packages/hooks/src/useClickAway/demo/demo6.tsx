@@ -14,7 +14,7 @@ export default () => {
   const [counterOpen, setCounterOpen] = useState(0);
   const [counterClosed, setCounterClosed] = useState(0);
   const refOpen = useRef(null);
-  const refCLosed = useRef(null);
+  const refClosed = useRef(null);
   useClickAway(
     () => {
       setCounterOpen((s) => s + 1);
@@ -26,7 +26,7 @@ export default () => {
     () => {
       setCounterClosed((s) => s + 1);
     },
-    refCLosed,
+    refClosed,
     ['click', 'contextmenu'],
   );
 
@@ -46,7 +46,7 @@ export default () => {
         <div>
           <button
             type="button"
-            ref={refCLosed}
+            ref={refClosed}
             onLoad={() => {
               console.log('hello');
             }}
