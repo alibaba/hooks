@@ -1,35 +1,28 @@
 import type { BasicTarget } from '../utils/domTarget';
 import { getTargetElement } from '../utils/domTarget';
 
-declare type TargetValue<T> = T | undefined | null;
-
-const checkIfAllInShadow = (targets: BasicTarget[]): boolean => {
-  return targets.every((item) => {
-    const targetElement = getTargetElement(item);
-    if (!targetElement) return false;
-    if (targetElement.getRootNode() instanceof ShadowRoot) return true;
-  });
+const getRootNode = (node: Element) => {
+  return node.getRootNode ? node.getRootNode() : document;
 };
 
-const getShadow = (node: TargetValue<Element>) => {
-  if (!node) {
-    return document;
-  }
-  return node.getRootNode();
-};
-
-const getDocumentOrShadow = (target: BasicTarget | BasicTarget[]): Document | Node => {
-  if (!target || !document.getRootNode) {
+const getDocumentOrShadow = (target: BasicTarget): Document | Node => {
+  if (!target) {
     return document;
   }
 
-  const targets = Array.isArray(target) ? target : [target];
+  const targetElement = getTargetElement(target);
 
-  if (checkIfAllInShadow(targets)) {
-    return getShadow(getTargetElement(targets[0]));
+  if (!targetElement) {
+    return document;
   }
 
-  return document;
+  const rootNode = getRootNode(targetElement);
+
+  if (rootNode instanceof ShadowRoot) {
+    return rootNode.mode === 'open' ? document : rootNode;
+  }
+
+  return rootNode;
 };
 
 export default getDocumentOrShadow;

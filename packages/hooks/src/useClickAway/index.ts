@@ -6,7 +6,7 @@ import useEffectWithTarget from '../utils/useEffectWithTarget';
 
 type DocumentEventKey = keyof DocumentEventMap;
 
-export default function useClickAway<T extends Event = Event>(
+export default function useClickAway<T extends Event = MouseEvent>(
   onClickAway: (event: T) => void,
   target: BasicTarget | BasicTarget[],
   eventName: DocumentEventKey | DocumentEventKey[] = 'click',
@@ -15,12 +15,12 @@ export default function useClickAway<T extends Event = Event>(
 
   useEffectWithTarget(
     () => {
-      const handler = (event: any) => {
+      const handler = (event: T) => {
         const targets = Array.isArray(target) ? target : [target];
         if (
           targets.some((item) => {
             const targetElement = getTargetElement(item);
-            return !targetElement || targetElement.contains(event.target);
+            return !targetElement || event.composedPath().includes(targetElement);
           })
         ) {
           return;
@@ -28,14 +28,24 @@ export default function useClickAway<T extends Event = Event>(
         onClickAwayRef.current(event);
       };
 
-      const documentOrShadow = getDocumentOrShadow(target);
-
+      const targets = Array.isArray(target) ? target : [target];
       const eventNames = Array.isArray(eventName) ? eventName : [eventName];
 
-      eventNames.forEach((event) => documentOrShadow.addEventListener(event, handler));
+      const removeEventListeners = targets.map((item) => {
+        const targetElement = getTargetElement(item);
+        const documentOrShadow = getDocumentOrShadow(targetElement);
+
+        if (documentOrShadow) {
+          eventNames.forEach((event) => documentOrShadow.addEventListener(event, handler));
+          return () =>
+            eventNames.forEach((event) => documentOrShadow.removeEventListener(event, handler));
+        }
+
+        return () => {};
+      });
 
       return () => {
-        eventNames.forEach((event) => documentOrShadow.removeEventListener(event, handler));
+        removeEventListeners.forEach((item) => item());
       };
     },
     Array.isArray(eventName) ? eventName : [eventName],
