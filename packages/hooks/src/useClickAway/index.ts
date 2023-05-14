@@ -6,16 +6,22 @@ import useEffectWithTarget from '../utils/useEffectWithTarget';
 
 type DocumentEventKey = keyof DocumentEventMap;
 
-export default function useClickAway<T extends Event = MouseEvent>(
-  onClickAway: (event: T) => void,
+type EventUnion<EventArrayType> = EventArrayType extends readonly DocumentEventKey[]
+  ? DocumentEventMap[EventArrayType[number]]
+  : never;
+type GetDerivedEvent<T extends DocumentEventKey | DocumentEventKey[] = 'click'> =
+  T extends DocumentEventKey ? DocumentEventMap[T] : EventUnion<T>;
+
+export default function useClickAway<T extends DocumentEventKey | DocumentEventKey[] = 'click'>(
+  onClickAway: (event: GetDerivedEvent<T>) => void,
   target: BasicTarget | BasicTarget[],
-  eventName: DocumentEventKey | DocumentEventKey[] = 'click',
+  eventName: T,
 ) {
   const onClickAwayRef = useLatest(onClickAway);
 
   useEffectWithTarget(
     () => {
-      const handler = (event: T) => {
+      const handler = (event: GetDerivedEvent<T>) => {
         const targets = Array.isArray(target) ? target : [target];
         if (
           targets.some((item) => {
