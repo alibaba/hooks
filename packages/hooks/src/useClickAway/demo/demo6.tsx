@@ -44,13 +44,7 @@ export default () => {
       <p>Shadow root mode: closed</p>
       <root.div mode="closed">
         <div>
-          <button
-            type="button"
-            ref={refClosed}
-            onLoad={() => {
-              console.log('hello');
-            }}
-          >
+          <button type="button" ref={refClosed}>
             box
           </button>
           <p>counter: {counterClosed}</p>
