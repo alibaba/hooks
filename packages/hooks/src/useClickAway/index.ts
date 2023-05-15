@@ -6,7 +6,7 @@ import useEffectWithTarget from '../utils/useEffectWithTarget';
 
 type DocumentEventKey = keyof DocumentEventMap;
 
-export default function useClickAway<T extends Event = MouseEvent>(
+export default function useClickAway<T extends Event = Event>(
   onClickAway: (event: T) => void,
   target: BasicTarget | BasicTarget[],
   eventName: DocumentEventKey | DocumentEventKey[] = 'click',
