@@ -27,7 +27,11 @@ const useCachePlugin: Plugin<any, any[]> = (
     } else {
       cache.setCache(key, cacheTime, cachedData);
     }
-    cacheSubscribe.trigger(key, cachedData.data);
+    cacheSubscribe.trigger(key, {
+      data: cachedData.data,
+      loading: false,
+      error: undefined,
+    });
   };
 
   const _getCache = (key: string, params: any[] = []) => {
@@ -54,7 +58,7 @@ const useCachePlugin: Plugin<any, any[]> = (
 
     // subscribe same cachekey update, trigger update
     unSubscribeRef.current = cacheSubscribe.subscribe(cacheKey, (data) => {
-      fetchInstance.setState({ data });
+      fetchInstance.setState(data);
     });
   }, []);
 
@@ -93,6 +97,9 @@ const useCachePlugin: Plugin<any, any[]> = (
     onRequest: (service, args) => {
       let servicePromise = cachePromise.getCachePromise(cacheKey);
 
+      // Sync loading status to the fetchInstances related with `cacheKey`
+      cacheSubscribe.trigger(cacheKey, { loading: true });
+
       // If has servicePromise, and is not trigger by self, then use it
       if (servicePromise && servicePromise !== currentPromiseRef.current) {
         return { servicePromise };
@@ -114,7 +121,22 @@ const useCachePlugin: Plugin<any, any[]> = (
         });
         // resubscribe
         unSubscribeRef.current = cacheSubscribe.subscribe(cacheKey, (d) => {
-          fetchInstance.setState({ data: d });
+          fetchInstance.setState(d);
+        });
+      }
+    },
+    onError: (error) => {
+      if (cacheKey) {
+        // cancel subscribe, avoid trgger self
+        unSubscribeRef.current?.();
+        // Sync error and loading status to the fetchInstances related with `cacheKey`
+        cacheSubscribe.trigger(cacheKey, {
+          error,
+          loading: false,
+        });
+        // resubscribe
+        unSubscribeRef.current = cacheSubscribe.subscribe(cacheKey, (d) => {
+          fetchInstance.setState(d);
         });
       }
     },
@@ -129,7 +151,7 @@ const useCachePlugin: Plugin<any, any[]> = (
         });
         // resubscribe
         unSubscribeRef.current = cacheSubscribe.subscribe(cacheKey, (d) => {
-          fetchInstance.setState({ data: d });
+          fetchInstance.setState(d);
         });
       }
     },

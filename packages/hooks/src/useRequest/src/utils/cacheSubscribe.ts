@@ -1,7 +1,12 @@
-type Listener = (data: any) => void;
+interface Data {
+  loading?: boolean;
+  error?: Error;
+  data?: any;
+}
+type Listener = (data: Data) => void;
 const listeners: Record<string, Listener[]> = {};
 
-const trigger = (key: string, data: any) => {
+const trigger = (key: string, data: Data) => {
   if (listeners[key]) {
     listeners[key].forEach((item) => item(data));
   }
