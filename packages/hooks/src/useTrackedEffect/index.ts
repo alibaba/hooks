@@ -1,7 +1,7 @@
 import type { DependencyList } from 'react';
 import { useEffect, useRef } from 'react';
 
-type Effect<T extends any[]> = (
+type Effect<T extends unknown[]> = (
   changes?: number[],
   previousDeps?: [...T],
   currentDeps?: [...T],
@@ -20,7 +20,7 @@ const diffTwoDeps = (deps1?: DependencyList, deps2?: DependencyList) => {
     : [];
 };
 
-const useTrackedEffect = <T extends any[]>(effect: Effect<T>, deps?: [...T]) => {
+const useTrackedEffect = <T extends unknown[]>(effect: Effect<T>, deps?: [...T]) => {
   const previousDepsRef = useRef<T>();
 
   useEffect(() => {
