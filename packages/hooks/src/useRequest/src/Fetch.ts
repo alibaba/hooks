@@ -58,7 +58,6 @@ export default class Fetch<TData, TParams extends any[]> {
     }
 
     this.setState({
-      loading: true,
       params,
       ...state,
     });
