@@ -1,4 +1,5 @@
 import { useRef, useEffect } from 'react';
+import useCreation from '../useCreation';
 
 type Subscription<T> = (val: T) => void;
 
@@ -31,9 +32,5 @@ export class EventEmitter<T> {
 }
 
 export default function useEventEmitter<T = void>() {
-  const ref = useRef<EventEmitter<T>>();
-  if (!ref.current) {
-    ref.current = new EventEmitter();
-  }
-  return ref.current;
+  return useCreation<EventEmitter<T>>(() => new EventEmitter(), []);
 }
