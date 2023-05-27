@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import type { BasicTarget } from '../utils/domTarget';
 import { getTargetElement } from '../utils/domTarget';
 import useEffectWithTarget from '../utils/useEffectWithTarget';
@@ -49,7 +49,7 @@ export const INIT_BOUNDING_RECT = {
 function useBounding(target: Target, options: UseBoundingOptions = {}): UseBoundingRect {
   const { reset = true, windowResize = true, windowScroll = true } = options;
   const [state, setState] = useState<UseBoundingRect>(INIT_BOUNDING_RECT);
-  let observer: ResizeObserver | null;
+  let observer = useRef<ResizeObserver>();
 
   function update() {
     const el = getTargetElement(target);
@@ -73,8 +73,8 @@ function useBounding(target: Target, options: UseBoundingOptions = {}): UseBound
         return;
       }
 
-      observer = new ResizeObserver(update);
-      observer.observe(el);
+      observer.current = new ResizeObserver(update);
+      observer.current?.observe(el);
 
       if (windowResize) {
         window.addEventListener('resize', update);
@@ -84,10 +84,8 @@ function useBounding(target: Target, options: UseBoundingOptions = {}): UseBound
       }
 
       return () => {
-        if (observer) {
-          observer.disconnect();
-          observer = null;
-        }
+        observer.current?.disconnect();
+
         if (windowResize) {
           window.removeEventListener('resize', update);
         }
