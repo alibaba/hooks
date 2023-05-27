@@ -15,17 +15,23 @@ export interface Options<T> {
   serializer?: (value: T) => string;
   deserializer?: (value: string) => T;
   defaultValue?: T | IFuncUpdater<T>;
+  onError?: (error: unknown) => void;
 }
 
 export function createUseStorageState(getStorage: () => Storage | undefined) {
-  function useStorageState<T>(key: string, options?: Options<T>) {
+  function useStorageState<T>(key: string, options: Options<T> = {}) {
     let storage: Storage | undefined;
+    const {
+      onError = (e) => {
+        console.error(e);
+      },
+    } = options;
 
     // https://github.com/alibaba/hooks/issues/800
     try {
       storage = getStorage();
     } catch (err) {
-      console.error(err);
+      onError(err);
     }
 
     const serializer = (value: T) => {
@@ -35,7 +41,7 @@ export function createUseStorageState(getStorage: () => Storage | undefined) {
       return JSON.stringify(value);
     };
 
-    const deserializer = (value: string) => {
+    const deserializer = (value: string): T => {
       if (options?.deserializer) {
         return options?.deserializer(value);
       }
@@ -49,7 +55,7 @@ export function createUseStorageState(getStorage: () => Storage | undefined) {
           return deserializer(raw);
         }
       } catch (e) {
-        console.error(e);
+        onError(e);
       }
       if (isFunction(options?.defaultValue)) {
         return options?.defaultValue();
@@ -57,13 +63,13 @@ export function createUseStorageState(getStorage: () => Storage | undefined) {
       return options?.defaultValue;
     }
 
-    const [state, setState] = useState<T>(() => getStoredValue());
+    const [state, setState] = useState(() => getStoredValue());
 
     useUpdateEffect(() => {
       setState(getStoredValue());
     }, [key]);
 
-    const updateState = (value: T | IFuncUpdater<T>) => {
+    const updateState = (value?: T | IFuncUpdater<T>) => {
       const currentState = isFunction(value) ? value(state) : value;
       setState(currentState);
 

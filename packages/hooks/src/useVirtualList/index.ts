@@ -1,4 +1,5 @@
-import { useEffect, useMemo, useState, useRef, CSSProperties } from 'react';
+import { useEffect, useMemo, useState, useRef } from 'react';
+import type { CSSProperties } from 'react';
 import useEventListener from '../useEventListener';
 import useLatest from '../useLatest';
 import useMemoizedFn from '../useMemoizedFn';

@@ -26,8 +26,10 @@ describe('useMap', () => {
 
   it('should init empty map if not initial object provided', () => {
     const { result } = setup();
-
     expect([...result.current[0]]).toEqual([]);
+
+    const { result: result2 } = setup(undefined);
+    expect([...result2.current[0]]).toEqual([]);
   });
 
   it('should get corresponding value for initial provided key', () => {
@@ -131,6 +133,12 @@ describe('useMap', () => {
       ['foo', 'foo'],
       ['a', 2],
     ]);
+
+    act(() => {
+      // @ts-ignore
+      utils.setAll();
+    });
+    expect([...result.current[0]]).toEqual([]);
   });
 
   it('remove should be work', () => {
@@ -141,6 +149,24 @@ describe('useMap', () => {
       remove('msg');
     });
     expect(result.current[0].size).toBe(0);
+
+    const { result: result2 } = setup([
+      ['foo', 'bar'],
+      ['a', 1],
+      ['b', 2],
+      ['c', 3],
+    ]);
+    const [, utils] = result2.current;
+
+    act(() => {
+      utils.remove('a');
+    });
+
+    expect([...result2.current[0]]).toEqual([
+      ['foo', 'bar'],
+      ['b', 2],
+      ['c', 3],
+    ]);
   });
 
   it('reset should be work', () => {
