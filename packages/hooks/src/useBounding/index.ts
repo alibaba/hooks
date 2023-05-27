@@ -1,7 +1,7 @@
 import { useRef, useState } from 'react';
 import type { BasicTarget } from '../utils/domTarget';
 import { getTargetElement } from '../utils/domTarget';
-import useEffectWithTarget from '../utils/useEffectWithTarget';
+import useIsomorphicLayoutEffectWithTarget from '../utils/useIsomorphicLayoutEffectWithTarget';
 
 type TargetType = HTMLElement | Element;
 export type Target = BasicTarget<TargetType>;
@@ -64,7 +64,7 @@ function useBounding(target: Target, options: UseBoundingOptions = {}): UseBound
     setState(el.getBoundingClientRect());
   }
 
-  useEffectWithTarget(
+  useIsomorphicLayoutEffectWithTarget(
     () => {
       const el = getTargetElement(target);
 
