@@ -19,9 +19,7 @@ const useMutationObserver = (
       const observer = new MutationObserver(callbackRef.current);
       observer.observe(element, options);
       return () => {
-        if (observer) {
-          observer.disconnect();
-        }
+        observer?.disconnect();
       };
     },
     [options],
