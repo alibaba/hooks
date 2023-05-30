@@ -35,12 +35,14 @@ const useInfiniteScroll = <TData extends Data>(
     async (lastData?: TData) => {
       const currentData = await service(lastData);
       if (!lastData) {
-        setFinalData(currentData);
+        setFinalData({
+          ...currentData,
+          list: [...(currentData.list ?? [])],
+        });
       } else {
         setFinalData({
           ...currentData,
-          // @ts-ignore
-          list: [...lastData.list, ...currentData.list],
+          list: [...(lastData.list ?? []), ...currentData.list],
         });
       }
       return currentData;
