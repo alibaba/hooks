@@ -1,12 +1,8 @@
-import isEqual from 'lodash/isEqual';
 import type { DependencyList, EffectCallback } from 'react';
 import { useRef } from 'react';
 import type { BasicTarget } from './domTarget';
 import useEffectWithTarget from './useEffectWithTarget';
-
-const depsEqual = (aDeps: DependencyList, bDeps: DependencyList = []) => {
-  return isEqual(aDeps, bDeps);
-};
+import { depsEqual } from './depsEqual';
 
 const useDeepCompareEffectWithTarget = (
   effect: EffectCallback,
