@@ -35,9 +35,9 @@ interface Options {
 
 interface Result {
   latestMessage?: WebSocketEventMap['message'];
-  sendMessage?: WebSocket['send'];
-  disconnect?: () => void;
-  connect?: () => void;
+  sendMessage: WebSocket['send'];
+  disconnect: () => void;
+  connect: () => void;
   readyState: ReadyState;
   webSocketIns?: WebSocket;
 }
