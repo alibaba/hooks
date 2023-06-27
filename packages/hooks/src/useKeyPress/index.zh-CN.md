@@ -25,6 +25,10 @@ nav:
 
 <code src="./demo/demo3.tsx" />
 
+### 获取触发的按键
+
+<code src="./demo/demo8.tsx" />
+
 ### 自定义监听方式
 
 <code src="./demo/demo4.tsx" />
@@ -36,12 +40,12 @@ nav:
 ## API
 
 ```typescript
-type keyType = number | string;
-type KeyFilter = keyType | keyType[] | ((event: KeyboardEvent) => boolean);
+type KeyType = number | string;
+type KeyFilter = KeyType | KeyType[] | ((event: KeyboardEvent) => boolean);
 
 useKeyPress(
   keyFilter: KeyFilter,
-  eventHandler: EventHandler,
+  eventHandler: (event: KeyboardEvent, key: KeyType) => void,
   options?: Options
 );
 ```
@@ -50,8 +54,8 @@ useKeyPress(
 
 | 参数         | 说明                                         | 类型                                                            | 默认值 |
 | ------------ | -------------------------------------------- | --------------------------------------------------------------- | ------ |
-| keyFilter    | 支持 keyCode、别名、组合键、数组，自定义函数 | `keyType` \| `keyType[]` \| `(event: KeyboardEvent) => boolean` | -      |
-| eventHandler | 回调函数                                     | `(event: KeyboardEvent) => void`                                | -      |
+| keyFilter    | 支持 keyCode、别名、组合键、数组、自定义函数 | `KeyType` \| `KeyType[]` \| `(event: KeyboardEvent) => boolean` | -      |
+| eventHandler | 回调函数                                     | `(event: KeyboardEvent, key: KeyType) => void`                  | -      |
 | options      | 可选配置项                                   | `Options`                                                       | -      |
 
 ### Options
