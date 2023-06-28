@@ -25,6 +25,10 @@ Listen for the keyboard press, support key combinations, and support alias.
 
 <code src="./demo/demo3.tsx" />
 
+### Get the trigger key
+
+<code src="./demo/demo8.tsx" />
+
 ### Custom method
 
 <code src="./demo/demo4.tsx" />
@@ -36,12 +40,12 @@ Listen for the keyboard press, support key combinations, and support alias.
 ## API
 
 ```typescript
-type keyType = number | string;
-type KeyFilter = keyType | keyType[] | ((event: KeyboardEvent) => boolean);
+type KeyType = number | string;
+type KeyFilter = KeyType | KeyType[] | ((event: KeyboardEvent) => boolean);
 
 useKeyPress(
   keyFilter: KeyFilter,
-  eventHandler: EventHandler,
+  eventHandler: (event: KeyboardEvent, key: KeyType) => void,
   options?: Options
 );
 ```
@@ -50,9 +54,9 @@ useKeyPress(
 
 | Property     | Description                                                      | Type                                                            | Default |
 | ------------ | ---------------------------------------------------------------- | --------------------------------------------------------------- | ------- |
-| keyFilter    | Support keyCode、alias、combination keys、array、custom function | `keyType` \| `keyType[]` \| `(event: KeyboardEvent) => boolean` | -       |
-| eventHandler | Callback function                                                | `(event: KeyboardEvent) => void`                                | -       |
-| options      | advanced options                                                 | `Options`                                                       | -       |
+| keyFilter    | Support keyCode、alias、combination keys、array、custom function | `KeyType` \| `KeyType[]` \| `(event: KeyboardEvent) => boolean` | -       |
+| eventHandler | Callback function                                                | `(event: KeyboardEvent, key: KeyType) => void`                  | -       |
+| options      | Advanced options                                                 | `Options`                                                       | -       |
 
 ### Options
 
