@@ -197,4 +197,63 @@ describe('useCachePlugin', () => {
 
     errSpy.mockRestore();
   });
+
+  describe('refresh should sync status to all instances when cache data is valid', () => {
+    it('should sync loading status', async () => {
+      const cacheKey = 'testRefreshLoading';
+
+      const hook1 = setup(request, {
+        cacheKey,
+        cacheTime: -1,
+        staleTime: -1,
+      });
+      const hook2 = setup(request, {
+        cacheKey,
+        cacheTime: -1,
+        staleTime: -1,
+      });
+
+      await act(async () => {
+        jest.advanceTimersByTime(1000);
+      });
+
+      expect(hook1.result.current.loading).toBe(false);
+      expect(hook2.result.current.loading).toBe(false);
+
+      await act(async () => {
+        clearCache(cacheKey);
+        hook1.result.current.refresh();
+      });
+
+      expect(hook1.result.current.loading).toBe(true);
+      expect(hook2.result.current.loading).toBe(true);
+    });
+
+    it('should sync error status', async () => {
+      const cacheKey = 'testRefreshError';
+
+      const hook1 = setup(request, {
+        cacheKey,
+        cacheTime: -1,
+        staleTime: -1,
+      });
+      await act(async () => {
+        jest.advanceTimersByTime(1000);
+      });
+      expect(hook1.result.current.error).toBeUndefined();
+
+      const hook2 = setup(() => request(0), {
+        cacheKey,
+        cacheTime: -1,
+        staleTime: -1,
+      });
+      await act(async () => {
+        clearCache(cacheKey);
+        hook2.result.current.refresh();
+        jest.advanceTimersByTime(1000);
+      });
+      expect(hook1.result.current.error).toBeInstanceOf(Error);
+      expect(hook2.result.current.error).toBeInstanceOf(Error);
+    });
+  });
 });
