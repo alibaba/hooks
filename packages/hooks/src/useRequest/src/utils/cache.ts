@@ -3,6 +3,7 @@ type CachedKey = string | number;
 
 export interface CachedData<TData = any, TParams = any> {
   data: TData;
+  error?: Error;
   params: TParams;
   time: number;
 }

@@ -27,7 +27,7 @@ const useCachePlugin: Plugin<any, any[]> = (
     } else {
       cache.setCache(key, cacheTime, cachedData);
     }
-    cacheSubscribe.trigger(key, cachedData.data);
+    cacheSubscribe.trigger(key, cachedData);
   };
 
   const _getCache = (key: string, params: any[] = []) => {
@@ -54,7 +54,7 @@ const useCachePlugin: Plugin<any, any[]> = (
 
     // subscribe same cachekey update, trigger update
     unSubscribeRef.current = cacheSubscribe.subscribe(cacheKey, (data) => {
-      fetchInstance.setState({ data });
+      fetchInstance.setState(data);
     });
   }, []);
 
@@ -71,15 +71,19 @@ const useCachePlugin: Plugin<any, any[]> = (
       const cacheData = _getCache(cacheKey, params);
 
       if (!cacheData || !Object.hasOwnProperty.call(cacheData, 'data')) {
+        _setCache(cacheKey, {
+          data: undefined,
+          params: undefined,
+          ...fetchInstance.state,
+          time: new Date().getTime(),
+        });
         return {};
       }
 
       // If the data is fresh, stop request
       if (staleTime === -1 || new Date().getTime() - cacheData.time <= staleTime) {
         return {
-          loading: false,
-          data: cacheData?.data,
-          error: undefined,
+          ...cacheData,
           returnNow: true,
         };
       } else {
@@ -114,7 +118,23 @@ const useCachePlugin: Plugin<any, any[]> = (
         });
         // resubscribe
         unSubscribeRef.current = cacheSubscribe.subscribe(cacheKey, (d) => {
-          fetchInstance.setState({ data: d });
+          fetchInstance.setState(d);
+        });
+      }
+    },
+    onError: (error, params) => {
+      if (cacheKey) {
+        // cancel subscribe, avoid trgger self
+        unSubscribeRef.current?.();
+        _setCache(cacheKey, {
+          data: undefined,
+          params: undefined,
+          ...fetchInstance.state,
+          time: new Date().getTime(),
+        });
+        // resubscribe
+        unSubscribeRef.current = cacheSubscribe.subscribe(cacheKey, (d) => {
+          fetchInstance.setState(d);
         });
       }
     },
@@ -129,7 +149,7 @@ const useCachePlugin: Plugin<any, any[]> = (
         });
         // resubscribe
         unSubscribeRef.current = cacheSubscribe.subscribe(cacheKey, (d) => {
-          fetchInstance.setState({ data: d });
+          fetchInstance.setState(d);
         });
       }
     },
