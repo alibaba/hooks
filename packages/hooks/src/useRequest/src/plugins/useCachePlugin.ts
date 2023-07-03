@@ -7,6 +7,25 @@ import type { CachedData } from '../utils/cache';
 import * as cachePromise from '../utils/cachePromise';
 import * as cacheSubscribe from '../utils/cacheSubscribe';
 
+// batch processing triggers subscription to avoid generating too many tasks.
+let queue: { key: string; data: any }[] = [];
+let flushTimer;
+function flush() {
+  if (flushTimer !== undefined) {
+    clearTimeout(flushTimer);
+  }
+  const queueCopy = queue.slice();
+  queue = [];
+  queueCopy.forEach(({ key, data }) => cacheSubscribe.trigger(key, data));
+}
+function push(key: string, data: any) {
+  queue.push({ key, data });
+  if (flushTimer !== undefined) {
+    clearTimeout(flushTimer);
+  }
+  flushTimer = setTimeout(flush, 0);
+}
+
 const useCachePlugin: Plugin<any, any[]> = (
   fetchInstance,
   {
@@ -27,7 +46,8 @@ const useCachePlugin: Plugin<any, any[]> = (
     } else {
       cache.setCache(key, cacheTime, cachedData);
     }
-    cacheSubscribe.trigger(key, cachedData.data);
+    // add to batch queue, will trigger after all pending request be resolve
+    push(key, cachedData.data);
   };
 
   const _getCache = (key: string, params: any[] = []) => {
@@ -35,6 +55,16 @@ const useCachePlugin: Plugin<any, any[]> = (
       return customGetCache(params);
     }
     return cache.getCache(key);
+  };
+
+  const subscribe = (key: string) => {
+    // subscribe same cachekey update, trigger update
+    unSubscribeRef.current = cacheSubscribe.subscribe(key, (data) => {
+      // avoid duplicate update
+      if (data !== fetchInstance.state.data) {
+        fetchInstance.setState({ data });
+      }
+    });
   };
 
   useCreation(() => {
@@ -52,10 +82,7 @@ const useCachePlugin: Plugin<any, any[]> = (
       }
     }
 
-    // subscribe same cachekey update, trigger update
-    unSubscribeRef.current = cacheSubscribe.subscribe(cacheKey, (data) => {
-      fetchInstance.setState({ data });
-    });
+    subscribe(cacheKey);
   }, []);
 
   useUnmount(() => {
@@ -113,9 +140,7 @@ const useCachePlugin: Plugin<any, any[]> = (
           time: new Date().getTime(),
         });
         // resubscribe
-        unSubscribeRef.current = cacheSubscribe.subscribe(cacheKey, (d) => {
-          fetchInstance.setState({ data: d });
-        });
+        subscribe(cacheKey);
       }
     },
     onMutate: (data) => {
@@ -128,9 +153,7 @@ const useCachePlugin: Plugin<any, any[]> = (
           time: new Date().getTime(),
         });
         // resubscribe
-        unSubscribeRef.current = cacheSubscribe.subscribe(cacheKey, (d) => {
-          fetchInstance.setState({ data: d });
-        });
+        subscribe(cacheKey);
       }
     },
   };
