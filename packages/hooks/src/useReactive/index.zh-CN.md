@@ -36,3 +36,11 @@ const state = useReactive(initialState: Record<string, any>);
 | 参数         | 说明           | 类型                  | 默认值 |
 | ------------ | -------------- | --------------------- | ------ |
 | initialState | 当前的数据对象 | `Record<string, any>` | -      |
+
+## FAQ
+
+### `useReactive` 和 `Map`、`Set` 一起使用时报错或无效？
+
+`useReactive` 目前不兼容 `Map`、`Set`。
+
+相关 issues：[#2239](https://github.com/alibaba/hooks/discussions/2239)
