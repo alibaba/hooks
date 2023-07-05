@@ -78,6 +78,9 @@ function useTextSelection(target?: BasicTarget<Document | Element>): State {
 
       // 任意点击都需要清空之前的 range
       const mousedownHandler = (e) => {
+        // 如果是鼠标右键需要跳过 这样选中的数据就不会被清空
+        if (e.button === 2) return;
+
         if (!window.getSelection) return;
         if (stateRef.current.text) {
           setState({ ...initState });
