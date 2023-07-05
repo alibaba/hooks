@@ -35,15 +35,15 @@ export function createUseStorageState(getStorage: () => Storage | undefined) {
     }
 
     const serializer = (value: T) => {
-      if (options?.serializer) {
-        return options?.serializer(value);
+      if (options.serializer) {
+        return options.serializer(value);
       }
       return JSON.stringify(value);
     };
 
     const deserializer = (value: string): T => {
-      if (options?.deserializer) {
-        return options?.deserializer(value);
+      if (options.deserializer) {
+        return options.deserializer(value);
       }
       return JSON.parse(value);
     };
@@ -57,10 +57,10 @@ export function createUseStorageState(getStorage: () => Storage | undefined) {
       } catch (e) {
         onError(e);
       }
-      if (isFunction(options?.defaultValue)) {
-        return options?.defaultValue();
+      if (isFunction(options.defaultValue)) {
+        return options.defaultValue();
       }
-      return options?.defaultValue;
+      return options.defaultValue;
     }
 
     const [state, setState] = useState(() => getStoredValue());

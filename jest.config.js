@@ -19,4 +19,7 @@ module.exports = {
     '!**/dist/**',
   ],
   transformIgnorePatterns: ['^.+\\.js$'],
+  moduleNameMapper: {
+    'lodash-es': 'lodash',
+  },
 };

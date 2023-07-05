@@ -2,10 +2,10 @@ import { useRef } from 'react';
 import useCreation from '../../../useCreation';
 import useUnmount from '../../../useUnmount';
 import type { Plugin } from '../types';
-import * as cache from '../utils/cache';
+import { setCache, getCache } from '../utils/cache';
 import type { CachedData } from '../utils/cache';
-import * as cachePromise from '../utils/cachePromise';
-import * as cacheSubscribe from '../utils/cacheSubscribe';
+import { setCachePromise, getCachePromise } from '../utils/cachePromise';
+import { trigger, subscribe } from '../utils/cacheSubscribe';
 
 const useCachePlugin: Plugin<any, any[]> = (
   fetchInstance,
@@ -25,16 +25,16 @@ const useCachePlugin: Plugin<any, any[]> = (
     if (customSetCache) {
       customSetCache(cachedData);
     } else {
-      cache.setCache(key, cacheTime, cachedData);
+      setCache(key, cacheTime, cachedData);
     }
-    cacheSubscribe.trigger(key, cachedData.data);
+    trigger(key, cachedData.data);
   };
 
   const _getCache = (key: string, params: any[] = []) => {
     if (customGetCache) {
       return customGetCache(params);
     }
-    return cache.getCache(key);
+    return getCache(key);
   };
 
   useCreation(() => {
@@ -53,7 +53,7 @@ const useCachePlugin: Plugin<any, any[]> = (
     }
 
     // subscribe same cachekey update, trigger update
-    unSubscribeRef.current = cacheSubscribe.subscribe(cacheKey, (data) => {
+    unSubscribeRef.current = subscribe(cacheKey, (data) => {
       fetchInstance.setState({ data });
     });
   }, []);
@@ -91,7 +91,7 @@ const useCachePlugin: Plugin<any, any[]> = (
       }
     },
     onRequest: (service, args) => {
-      let servicePromise = cachePromise.getCachePromise(cacheKey);
+      let servicePromise = getCachePromise(cacheKey);
 
       // If has servicePromise, and is not trigger by self, then use it
       if (servicePromise && servicePromise !== currentPromiseRef.current) {
@@ -100,7 +100,7 @@ const useCachePlugin: Plugin<any, any[]> = (
 
       servicePromise = service(...args);
       currentPromiseRef.current = servicePromise;
-      cachePromise.setCachePromise(cacheKey, servicePromise);
+      setCachePromise(cacheKey, servicePromise);
       return { servicePromise };
     },
     onSuccess: (data, params) => {
@@ -113,7 +113,7 @@ const useCachePlugin: Plugin<any, any[]> = (
           time: new Date().getTime(),
         });
         // resubscribe
-        unSubscribeRef.current = cacheSubscribe.subscribe(cacheKey, (d) => {
+        unSubscribeRef.current = subscribe(cacheKey, (d) => {
           fetchInstance.setState({ data: d });
         });
       }
@@ -128,7 +128,7 @@ const useCachePlugin: Plugin<any, any[]> = (
           time: new Date().getTime(),
         });
         // resubscribe
-        unSubscribeRef.current = cacheSubscribe.subscribe(cacheKey, (d) => {
+        unSubscribeRef.current = subscribe(cacheKey, (d) => {
           fetchInstance.setState({ data: d });
         });
       }
