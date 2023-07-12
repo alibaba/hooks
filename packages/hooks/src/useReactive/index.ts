@@ -28,7 +28,7 @@ function observer<T extends Record<string, any>>(initialVal: T, cb: () => void):
 
       // https://github.com/alibaba/hooks/issues/1317
       const descriptor = Reflect.getOwnPropertyDescriptor(target, key);
-      if (descriptor && descriptor.configurable === false && descriptor.writable === false) {
+      if (!descriptor?.configurable && !descriptor?.writable) {
         return res;
       }
 
