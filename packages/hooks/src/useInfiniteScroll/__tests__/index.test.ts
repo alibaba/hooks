@@ -323,4 +323,15 @@ describe('useInfiniteScroll', () => {
 
     expect(result.current.loading).toBeFalsy();
   });
+
+  it('error state', async () => {
+    const { result } = setup(async () => {
+      throw new Error('error message');
+    });
+    await act(async () => {
+      jest.advanceTimersByTime(1000);
+    });
+
+    expect(result.current.error?.message).toBe('error message');
+  });
 });
