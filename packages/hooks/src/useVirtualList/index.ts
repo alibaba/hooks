@@ -8,6 +8,7 @@ import { getTargetElement } from '../utils/domTarget';
 import type { BasicTarget } from '../utils/domTarget';
 import { isNumber } from '../utils';
 import useUpdateEffect from '../useUpdateEffect';
+import { isEqual } from 'lodash-es';
 
 type ItemHeight<T> = (index: number, data: T) => number;
 
@@ -102,17 +103,34 @@ const useVirtualList = <T = any>(list: T[], options: Options<T>) => {
 
       const offsetTop = getDistanceTop(start);
 
-      setWrapperStyle({
-        height: totalHeight - offsetTop + 'px',
-        marginTop: offsetTop + 'px',
-      });
+      if (
+        !isEqual(wrapperStyle, {
+          height: totalHeight - offsetTop + 'px',
+          marginTop: offsetTop + 'px',
+        })
+      ) {
+        setWrapperStyle({
+          height: totalHeight - offsetTop + 'px',
+          marginTop: offsetTop + 'px',
+        });
+      }
 
-      setTargetList(
-        list.slice(start, end).map((ele, index) => ({
-          data: ele,
-          index: index + start,
-        })),
-      );
+      if (
+        !isEqual(
+          targetList,
+          list.slice(start, end).map((ele, index) => ({
+            data: ele,
+            index: index + start,
+          })),
+        )
+      ) {
+        setTargetList(
+          list.slice(start, end).map((ele, index) => ({
+            data: ele,
+            index: index + start,
+          })),
+        );
+      }
     }
   };
 
