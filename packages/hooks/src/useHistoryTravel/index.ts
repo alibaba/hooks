@@ -35,8 +35,8 @@ export default function useHistoryTravel<T>(
   initialValue?: T,
   options?:
     | {
-        maxLength: number;
-        manual: boolean;
+        maxLength?: number;
+        manual?: boolean;
       }
     | number,
 ) {
@@ -46,8 +46,8 @@ export default function useHistoryTravel<T>(
   if (typeof options === 'number') {
     maxLength = options;
   } else if (typeof options === 'object') {
-    maxLength = options.maxLength;
-    manual = options.manual;
+    maxLength = options?.maxLength || maxLength;
+    manual = options?.manual || manual;
   }
 
   const [history, setHistory] = useState<IData<T | undefined>>({
@@ -71,7 +71,7 @@ export default function useHistoryTravel<T>(
     });
   };
 
-  const updateValue = (val: T) => {
+  const updateValue = useMemoizedFn((val: T) => {
     const _past = [...past, present];
     const maxLengthNum = isNumber(maxLength) ? maxLength : Number(maxLength);
     // maximum number of records exceeded
@@ -85,15 +85,23 @@ export default function useHistoryTravel<T>(
       future: [],
       past: _past,
     });
-  };
+  });
 
-  const updateValueWithoutRecord = (val: T) => {
+  const updateValueWithoutRecord = useMemoizedFn((val?: T) => {
     setHistory({
       present: val,
       future: future,
       past: past,
     });
-  };
+  });
+
+  const commit = useMemoizedFn((val?: T) => {
+    if (val) {
+      updateValue(val);
+      return;
+    }
+    return present && updateValue(present);
+  });
 
   const _forward = (step: number = 1) => {
     if (future.length === 0) {
@@ -135,8 +143,8 @@ export default function useHistoryTravel<T>(
     value: present,
     backLength: past.length,
     forwardLength: future.length,
-    setValue: manual ? useMemoizedFn(updateValueWithoutRecord) : useMemoizedFn(updateValue),
-    commit: useMemoizedFn(updateValue),
+    setValue: manual ? updateValueWithoutRecord : updateValue,
+    commit,
     go: useMemoizedFn(go),
     back: useMemoizedFn(() => {
       go(-1);
