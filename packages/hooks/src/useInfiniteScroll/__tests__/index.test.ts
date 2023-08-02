@@ -349,7 +349,7 @@ describe('useInfiniteScroll', () => {
     });
   });
 
-  it('error state', async () => {
+  it('error result', async () => {
     const { result } = setup(async () => {
       throw new Error('error message');
     });
