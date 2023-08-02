@@ -31,7 +31,25 @@ const split = <T>(step: number, targetArr: T[]) => {
   };
 };
 
-export default function useHistoryTravel<T>(initialValue?: T, maxLength: number = 0) {
+export default function useHistoryTravel<T>(
+  initialValue?: T,
+  options?:
+    | {
+        maxLength: number;
+        manual: boolean;
+      }
+    | number,
+) {
+  let maxLength = 0;
+  let manual = false;
+
+  if (typeof options === 'number') {
+    maxLength = options;
+  } else if (typeof options === 'object') {
+    maxLength = options.maxLength;
+    manual = options.manual;
+  }
+
   const [history, setHistory] = useState<IData<T | undefined>>({
     present: initialValue,
     past: [],
@@ -66,6 +84,14 @@ export default function useHistoryTravel<T>(initialValue?: T, maxLength: number 
       present: val,
       future: [],
       past: _past,
+    });
+  };
+
+  const updateValueWithoutRecord = (val: T) => {
+    setHistory({
+      present: val,
+      future: future,
+      past: past,
     });
   };
 
@@ -109,7 +135,8 @@ export default function useHistoryTravel<T>(initialValue?: T, maxLength: number 
     value: present,
     backLength: past.length,
     forwardLength: future.length,
-    setValue: useMemoizedFn(updateValue),
+    setValue: manual ? useMemoizedFn(updateValueWithoutRecord) : useMemoizedFn(updateValue),
+    commit: useMemoizedFn(updateValue),
     go: useMemoizedFn(go),
     back: useMemoizedFn(() => {
       go(-1);
