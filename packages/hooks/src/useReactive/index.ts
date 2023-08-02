@@ -1,5 +1,5 @@
 import { useRef } from 'react';
-import isPlainObject from 'lodash/isPlainObject';
+import { isPlainObject } from 'lodash-es';
 import useCreation from '../useCreation';
 import useUpdate from '../useUpdate';
 
@@ -25,6 +25,12 @@ function observer<T extends Record<string, any>>(initialVal: T, cb: () => void):
   const proxy = new Proxy<T>(initialVal, {
     get(target, key, receiver) {
       const res = Reflect.get(target, key, receiver);
+
+      // https://github.com/alibaba/hooks/issues/1317
+      const descriptor = Reflect.getOwnPropertyDescriptor(target, key);
+      if (!descriptor?.configurable && !descriptor?.writable) {
+        return res;
+      }
 
       // Only proxy plain object or array,
       // otherwise it will cause: https://github.com/alibaba/hooks/issues/2080

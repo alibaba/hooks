@@ -24,9 +24,9 @@ export interface Options {
 
 export interface Result {
   latestMessage?: WebSocketEventMap['message'];
-  sendMessage?: WebSocket['send'];
-  disconnect?: () => void;
-  connect?: () => void;
+  sendMessage: WebSocket['send'];
+  disconnect: () => void;
+  connect: () => void;
   readyState: ReadyState;
   webSocketIns?: WebSocket;
 }
@@ -51,8 +51,6 @@ export default function useWebSocket(socketUrl: string, options: Options = {}): 
   const reconnectTimesRef = useRef(0);
   const reconnectTimerRef = useRef<ReturnType<typeof setTimeout>>();
   const websocketRef = useRef<WebSocket>();
-
-  const unmountedRef = useRef(false);
 
   const [latestMessage, setLatestMessage] = useState<WebSocketEventMap['message']>();
   const [readyState, setReadyState] = useState<ReadyState>(ReadyState.Closed);
@@ -87,7 +85,7 @@ export default function useWebSocket(socketUrl: string, options: Options = {}): 
     setReadyState(ReadyState.Connecting);
 
     ws.onerror = (event) => {
-      if (unmountedRef.current) {
+      if (websocketRef.current !== ws) {
         return;
       }
       reconnect();
@@ -95,7 +93,7 @@ export default function useWebSocket(socketUrl: string, options: Options = {}): 
       setReadyState(ws.readyState || ReadyState.Closed);
     };
     ws.onopen = (event) => {
-      if (unmountedRef.current) {
+      if (websocketRef.current !== ws) {
         return;
       }
       onOpenRef.current?.(event, ws);
@@ -103,19 +101,22 @@ export default function useWebSocket(socketUrl: string, options: Options = {}): 
       setReadyState(ws.readyState || ReadyState.Open);
     };
     ws.onmessage = (message: WebSocketEventMap['message']) => {
-      if (unmountedRef.current) {
+      if (websocketRef.current !== ws) {
         return;
       }
       onMessageRef.current?.(message, ws);
       setLatestMessage(message);
     };
     ws.onclose = (event) => {
-      if (unmountedRef.current) {
-        return;
-      }
-      reconnect();
       onCloseRef.current?.(event, ws);
-      setReadyState(ws.readyState || ReadyState.Closed);
+      // closed by server
+      if (websocketRef.current === ws) {
+        reconnect();
+      }
+      // closed by disconnect or closed by server
+      if (!websocketRef.current || websocketRef.current === ws) {
+        setReadyState(ws.readyState || ReadyState.Closed);
+      }
     };
 
     websocketRef.current = ws;
@@ -141,16 +142,16 @@ export default function useWebSocket(socketUrl: string, options: Options = {}): 
 
     reconnectTimesRef.current = reconnectLimit;
     websocketRef.current?.close();
+    websocketRef.current = undefined;
   };
 
   useEffect(() => {
-    if (!manual) {
+    if (!manual && socketUrl) {
       connect();
     }
   }, [socketUrl, manual]);
 
   useUnmount(() => {
-    unmountedRef.current = true;
     disconnect();
   });
 

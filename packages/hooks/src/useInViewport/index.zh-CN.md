@@ -17,21 +17,27 @@ nav:
 
 <code src="./demo/demo2.tsx" />
 
+### 监听内容滚动选中菜单
+
+<code src="./demo/demo3.tsx" />
+
 ## API
 
 ```typescript
+type Target = Element | (() => Element) | React.MutableRefObject<Element>;
+
 const [inViewport, ratio] = useInViewport(
-  target,
+  target: Target | Target[],
   options?: Options
 );
 ```
 
 ### Params
 
-| 参数    | 说明             | 类型                                                        | 默认值 |
-| ------- | ---------------- | ----------------------------------------------------------- | ------ |
-| target  | DOM 节点或者 ref | `Element` \| `() => Element` \| `MutableRefObject<Element>` | -      |
-| options | 设置             | `Options`                                                   | -      |
+| 参数    | 说明                       | 类型                   | 默认值 |
+| ------- | -------------------------- | ---------------------- | ------ |
+| target  | DOM 节点或者 Ref，支持数组 | `Target` \| `Target[]` | -      |
+| options | 设置                       | `Options`              | -      |
 
 ### Options
 
@@ -42,6 +48,7 @@ const [inViewport, ratio] = useInViewport(
 | threshold  | 可以是单一的 number 也可以是 number 数组，target 元素和 root 元素相交程度达到该值的时候 ratio 会被更新        | `number` \| `number[]`                                                               | -      |
 | rootMargin | 根(root)元素的外边距                                                                                          | `string`                                                                             | -      |
 | root       | 指定根(root)元素，用于检查目标的可见性。必须是目标元素的父级元素，如果未指定或者为 null，则默认为浏览器视窗。 | `Element` \| `Document` \| `() => (Element/Document)` \| `MutableRefObject<Element>` | -      |
+| callback   | `IntersectionObserver` 的回调被调用时触发                                                                     | `(entry: IntersectionObserverEntry) => void`                                         | -      |
 
 ### Result
 

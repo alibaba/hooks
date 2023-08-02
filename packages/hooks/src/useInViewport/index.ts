@@ -4,20 +4,27 @@ import type { BasicTarget } from '../utils/domTarget';
 import { getTargetElement } from '../utils/domTarget';
 import useEffectWithTarget from '../utils/useEffectWithTarget';
 
+type CallbackType = (entry: IntersectionObserverEntry) => void;
+
 export interface Options {
   rootMargin?: string;
   threshold?: number | number[];
   root?: BasicTarget<Element>;
+  callback?: CallbackType;
 }
 
-function useInViewport(target: BasicTarget, options?: Options) {
+function useInViewport(target: BasicTarget | BasicTarget[], options?: Options) {
+  const { callback, ...option } = options || {};
+
   const [state, setState] = useState<boolean>();
   const [ratio, setRatio] = useState<number>();
 
   useEffectWithTarget(
     () => {
-      const el = getTargetElement(target);
-      if (!el) {
+      const targets = Array.isArray(target) ? target : [target];
+      const els = targets.map((element) => getTargetElement(element)).filter(Boolean);
+
+      if (!els.length) {
         return;
       }
 
@@ -26,21 +33,26 @@ function useInViewport(target: BasicTarget, options?: Options) {
           for (const entry of entries) {
             setRatio(entry.intersectionRatio);
             setState(entry.isIntersecting);
+            callback?.(entry);
           }
         },
         {
-          ...options,
+          ...option,
           root: getTargetElement(options?.root),
         },
       );
 
-      observer.observe(el);
+      els.forEach((el) => {
+        if (el) {
+          observer.observe(el);
+        }
+      });
 
       return () => {
         observer.disconnect();
       };
     },
-    [options?.rootMargin, options?.threshold],
+    [options?.rootMargin, options?.threshold, callback],
     target,
   );
 

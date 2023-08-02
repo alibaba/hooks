@@ -324,6 +324,31 @@ describe('useInfiniteScroll', () => {
     expect(result.current.loading).toBeFalsy();
   });
 
+  it('list can be null or undefined', async () => {
+    // @ts-ignore
+    const { result } = setup(async function () {
+      await sleep(1000);
+      count++;
+      return {
+        list: Math.random() < 0.5 ? null : undefined,
+        nextId: count,
+      };
+    });
+
+    expect(result.current.loading).toBeTruthy();
+
+    const { loadMore } = result.current;
+    await act(async () => {
+      jest.advanceTimersByTime(1000);
+    });
+
+    expect(result.current.loading).toBeFalsy();
+
+    act(() => {
+      loadMore();
+    });
+  });
+
   it('error state', async () => {
     const { result } = setup(async () => {
       throw new Error('error message');

@@ -195,6 +195,36 @@ describe('test useReactive feature', () => {
     expect(() => result.current.v.Module).not.toThrowError();
   });
 
+  it('test JSX element', () => {
+    const hook = renderHook(() => useReactive({ html: <div role="id">foo</div> }));
+    const proxy = hook.result.current;
+    const wrap = render(proxy.html);
+    const html = wrap.getByRole('id');
+
+    expect(html.textContent).toBe('foo');
+    act(() => {
+      proxy.html = <div role="id">bar</div>;
+      wrap.rerender(proxy.html);
+    });
+    expect(html.textContent).toBe('bar');
+    hook.unmount();
+  });
+
+  it('test read-only and non-configurable data property', () => {
+    const obj = {} as { user: { name: string } };
+    Reflect.defineProperty(obj, 'user', {
+      value: { name: 'foo' },
+      writable: false,
+      configurable: false,
+    });
+
+    const hook = renderHook(() => useReactive(obj));
+    const proxy = hook.result.current;
+
+    expect(() => proxy.user.name).not.toThrowError();
+    hook.unmount();
+  });
+
   it('test input1', () => {
     const wrap = render(<Demo />);
 
