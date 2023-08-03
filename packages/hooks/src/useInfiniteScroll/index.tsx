@@ -31,7 +31,7 @@ const useInfiniteScroll = <TData extends Data>(
     return isNoMore(finalData);
   }, [finalData]);
 
-  const { loading, run, runAsync, cancel } = useRequest(
+  const { loading, error, run, runAsync, cancel } = useRequest(
     async (lastData?: TData) => {
       const currentData = await service(lastData);
       if (!lastData) {
@@ -122,6 +122,7 @@ const useInfiniteScroll = <TData extends Data>(
   return {
     data: finalData,
     loading: !loadingMore && loading,
+    error,
     loadingMore,
     noMore,
 
