@@ -45,6 +45,9 @@ export default function useHistoryTravel<T>(
 
   if (typeof options === 'number') {
     maxLength = options;
+    if (isDev) {
+      console.warn('[ahooks: useHistoryTravel] `maxLength` is deprecated which will be removed in next major version, please use `options.maxLength` instead.');
+    }
   } else if (typeof options === 'object') {
     maxLength = options?.maxLength ?? maxLength;
     manual = options?.manual ?? manual;
