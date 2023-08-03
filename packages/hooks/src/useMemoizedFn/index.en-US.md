@@ -61,6 +61,6 @@ const memoizedFn = useMemoizedFn<T>(fn: T): T;
 
 ### The function returned by `useMemoizedFn` will not inherit properties from fn itself?
 
-The function returned by `useMemoizedFn` is entirely different to the reference of the passed `fn`, and it does not inherit any properties from `fn` itself. If you want to preserve the properties of the function itself after memoization, `useMemoizedFn` currently does not fulfill that requirement. In this case, consider downgrading to using `useCallback` or `useMemo` instead.
+The function returned by `useMemoizedFn` is entirely different from the reference of the passed `fn`, and it does not inherit any properties from `fn` itself. If you want to preserve the properties of the function itself after memoization, `useMemoizedFn` currently does not fulfill that requirement. In this case, consider downgrading to using `useCallback` or `useMemo` instead.
 
 Related issues: [2273](https://github.com/alibaba/hooks/issues/2273)
