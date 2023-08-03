@@ -1,6 +1,7 @@
 import { useRef, useState } from 'react';
 import useMemoizedFn from '../useMemoizedFn';
 import { isNumber } from '../utils';
+import isDev from '../utils/isDev';
 
 interface IData<T> {
   present?: T;
@@ -45,8 +46,11 @@ export default function useHistoryTravel<T>(
 
   if (typeof options === 'number') {
     maxLength = options;
+
     if (isDev) {
-      console.warn('[ahooks: useHistoryTravel] `maxLength` is deprecated which will be removed in next major version, please use `options.maxLength` instead.');
+      console.warn(
+        '[ahooks: useHistoryTravel] `maxLength` is deprecated which will be removed in next major version, please use `options.maxLength` instead.',
+      );
     }
   } else if (typeof options === 'object') {
     maxLength = options?.maxLength ?? maxLength;
