@@ -46,8 +46,8 @@ export default function useHistoryTravel<T>(
   if (typeof options === 'number') {
     maxLength = options;
   } else if (typeof options === 'object') {
-    maxLength = options?.maxLength || maxLength;
-    manual = options?.manual || manual;
+    maxLength = options?.maxLength ?? maxLength;
+    manual = options?.manual ?? manual;
   }
 
   const [history, setHistory] = useState<IData<T | undefined>>({
