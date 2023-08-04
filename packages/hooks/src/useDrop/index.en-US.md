@@ -53,11 +53,11 @@ useDrag<T>(
 
 #### DragImageOptions
 
-| 参数    | 说明                                                        | 类型                | 默认值 |
-| ------- | ----------------------------------------------------------- | ------------------- | ------ |
+| 参数    | 说明                                                                                                                                                                                                                                                                                                          | 类型                | 默认值 |
+| ------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------- | ------ |
 | image   | An image Element element to use for the drag feedback image. The image will typically be an [`<img>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/img) element but it can also be a [`<canvas>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/canvas) or any other visible element | `string \| Element` | -      |
-| offsetX | the horizontal offset within the image                      | `number`            | 0      |
-| offsetY | the vertical offset within the image                        | `number`            | 0      |
+| offsetX | the horizontal offset within the image                                                                                                                                                                                                                                                                        | `number`            | 0      |
+| offsetY | the vertical offset within the image                                                                                                                                                                                                                                                                          | `number`            | 0      |
 
 ### useDrop
 
