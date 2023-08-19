@@ -1,7 +1,10 @@
 import { useState } from 'react';
+import useEventListener from '../useEventListener';
 import useMemoizedFn from '../useMemoizedFn';
 import useUpdateEffect from '../useUpdateEffect';
 import { isFunction, isUndef } from '../utils';
+
+const SYNC_STORAGE_EVENT = 'AHOOKS_SYNC_STORAGE_EVENT';
 
 export type SetState<S> = S | ((prevState?: S) => S);
 
@@ -76,7 +79,20 @@ export function createUseStorageState(getStorage: () => Storage | undefined) {
           console.error(e);
         }
       }
+      dispatchEvent(new StorageEvent(SYNC_STORAGE_EVENT, { key }));
     };
+
+    const syncStorageState = (event: StorageEvent) => {
+      if (event.key === key) {
+        setState(getStoredValue());
+      }
+    };
+
+    // from different tabs
+    useEventListener('storage', syncStorageState);
+
+    // from the same tab but different hooks
+    useEventListener(SYNC_STORAGE_EVENT, syncStorageState);
 
     return [state, useMemoizedFn(updateState)] as const;
   }

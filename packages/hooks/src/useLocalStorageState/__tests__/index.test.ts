@@ -25,7 +25,7 @@ describe('useLocalStorageState', () => {
       anotherHook.result.current.setState('C');
     });
     expect(anotherHook.result.current.state).toBe('C');
-    expect(hook.result.current.state).toBe('B');
+    expect(hook.result.current.state).toBe('C');
   });
 
   it('should support object', () => {
@@ -48,7 +48,7 @@ describe('useLocalStorageState', () => {
       });
     });
     expect(anotherHook.result.current.state).toEqual({ name: 'C' });
-    expect(hook.result.current.state).toEqual({ name: 'B' });
+    expect(hook.result.current.state).toEqual({ name: 'C' });
   });
 
   it('should support number', () => {
@@ -65,7 +65,7 @@ describe('useLocalStorageState', () => {
       anotherHook.result.current.setState(3);
     });
     expect(anotherHook.result.current.state).toBe(3);
-    expect(hook.result.current.state).toBe(2);
+    expect(hook.result.current.state).toBe(3);
   });
 
   it('should support boolean', () => {
@@ -82,7 +82,7 @@ describe('useLocalStorageState', () => {
       anotherHook.result.current.setState(true);
     });
     expect(anotherHook.result.current.state).toBe(true);
-    expect(hook.result.current.state).toBe(false);
+    expect(hook.result.current.state).toBe(true);
   });
 
   it('should support null', () => {
@@ -105,5 +105,17 @@ describe('useLocalStorageState', () => {
       hook.result.current.setState((state) => `${state}, zhangsan`);
     });
     expect(hook.result.current.state).toBe('hello world, zhangsan');
+  });
+
+  it('should sync state when changes', async () => {
+    const LOCAL_STORAGE_KEY = 'test-sync-state';
+    const hook = setUp(LOCAL_STORAGE_KEY, 'foo');
+    const anotherHook = setUp(LOCAL_STORAGE_KEY, 'foo');
+    expect(hook.result.current.state).toBe('foo');
+    act(() => {
+      hook.result.current.setState('bar');
+    });
+    expect(hook.result.current.state).toBe('bar');
+    expect(anotherHook.result.current.state).toBe('bar');
   });
 });

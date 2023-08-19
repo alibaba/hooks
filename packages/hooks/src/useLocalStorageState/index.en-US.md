@@ -21,6 +21,10 @@ A Hook that store state into localStorage.
 
 <code src="./demo/demo3.tsx" />
 
+### Sync state with localStorage
+
+<code src="./demo/demo4.tsx" />
+
 ## API
 
 If you want to delete this record from localStorage, you can use `setState()` or `setState(undefined)`.

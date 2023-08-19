@@ -21,6 +21,10 @@ nav:
 
 <code src="./demo/demo3.tsx" />
 
+### 将 state 与 localStorage 保持同步
+
+<code src="./demo/demo4.tsx" />
+
 ## API
 
 如果想从 localStorage 中删除这条数据，可以使用 `setState()` 或 `setState(undefined)` 。
