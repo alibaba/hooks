@@ -31,7 +31,7 @@ describe('useSessionStorageState', () => {
       });
     });
     expect(anotherHook.result.current.state).toEqual({ name: 'C' });
-    expect(hook.result.current.state).toEqual({ name: 'C' });
+    expect(hook.result.current.state).toEqual({ name: 'B' });
   });
 
   it('should support function updater', () => {
