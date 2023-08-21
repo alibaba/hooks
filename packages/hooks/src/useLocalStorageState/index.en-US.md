@@ -54,12 +54,13 @@ const [state, setState] = useLocalStorageState<T>(
 
 ### Options
 
-| Property     | Description                   | Type                       | Default                       |
-| ------------ | ----------------------------- | -------------------------- | ----------------------------- |
-| defaultValue | Default value                 | `any \| (() => any)`       | -                             |
-| serializer   | Custom serialization method   | `(value: any) => string`   | `JSON.stringify`              |
-| deserializer | Custom deserialization method | `(value: string) => any`   | `JSON.parse`                  |
-| onError      | On error callback             | `(error: unknown) => void` | `(e) => { console.error(e) }` |
+| Property            | Description                                                                                                                                                                                             | Type                       | Default                       |
+| ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------- | ----------------------------- |
+| defaultValue        | Default value                                                                                                                                                                                           | `any \| (() => any)`       | -                             |
+| listenStorageChange | Whether to listen storage changes. If `true`, when the stored value changes, all `useLocalStorageState` with the same `key` will synchronize their states, including different tabs of the same browser | `boolean`                  | `false`                       |
+| serializer          | Custom serialization method                                                                                                                                                                             | `(value: any) => string`   | `JSON.stringify`              |
+| deserializer        | Custom deserialization method                                                                                                                                                                           | `(value: string) => any`   | `JSON.parse`                  |
+| onError             | On error callback                                                                                                                                                                                       | `(error: unknown) => void` | `(e) => { console.error(e) }` |
 
 ## Remark
 

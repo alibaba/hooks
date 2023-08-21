@@ -1,9 +1,9 @@
 /**
  * title: Sync state with localStorage
- * desc: The state can be synchronized with `localStorage`, ensuring that it remains consistent across different tabs or when modified elsewhere (try to open this demo in two tabs, and then click the button in one of the tabs)
+ * desc: When the stored value changes, all `useLocalStorageState` with the same `key` will synchronize their states, including different tabs of the same browser (try to open two tabs of this page, clicking a button on one page will automatically update the "count" on the other page).
  *
  * title.zh-CN: 将 state 与 localStorage 保持同步
- * desc.zh-CN: 当 state 在其他地方被修改时，会自动同步到 `localStorage` 中，包括同一浏览器不同 tab 之间（尝试打开两个此页面，点击其中一个页面的按钮，另一个页面的 count 会自动更新）
+ * desc.zh-CN: 存储值变化时，所有 `key` 相同的 `useLocalStorageState` 会同步状态，包括同一浏览器不同 tab 之间（尝试打开两个此页面，点击其中一个页面的按钮，另一个页面的 count 会自动更新）
  */
 
 import React from 'react';
@@ -21,6 +21,7 @@ export default function () {
 function Counter() {
   const [count, setCount] = useLocalStorageState('use-local-storage-state-demo4', {
     defaultValue: 0,
+    listenStorageChange: true,
   });
 
   const add = () => setCount(count! + 1);
