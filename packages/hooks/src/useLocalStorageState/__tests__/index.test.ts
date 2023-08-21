@@ -1,10 +1,14 @@
 import { renderHook, act } from '@testing-library/react';
+import type { Options } from '../../createUseStorageState';
 import useLocalStorageState from '../index';
 
 describe('useLocalStorageState', () => {
-  const setUp = <T>(key: string, value: T) =>
+  const setUp = <T>(key: string, value: T, options?: Options<T>) =>
     renderHook(() => {
-      const [state, setState] = useLocalStorageState<T>(key, { defaultValue: value });
+      const [state, setState] = useLocalStorageState<T>(key, {
+        defaultValue: value,
+        ...options,
+      });
       return {
         state,
         setState,
@@ -25,7 +29,7 @@ describe('useLocalStorageState', () => {
       anotherHook.result.current.setState('C');
     });
     expect(anotherHook.result.current.state).toBe('C');
-    expect(hook.result.current.state).toBe('C');
+    expect(hook.result.current.state).toBe('B');
   });
 
   it('should support object', () => {
@@ -48,7 +52,7 @@ describe('useLocalStorageState', () => {
       });
     });
     expect(anotherHook.result.current.state).toEqual({ name: 'C' });
-    expect(hook.result.current.state).toEqual({ name: 'C' });
+    expect(hook.result.current.state).toEqual({ name: 'B' });
   });
 
   it('should support number', () => {
@@ -65,7 +69,7 @@ describe('useLocalStorageState', () => {
       anotherHook.result.current.setState(3);
     });
     expect(anotherHook.result.current.state).toBe(3);
-    expect(hook.result.current.state).toBe(3);
+    expect(hook.result.current.state).toBe(2);
   });
 
   it('should support boolean', () => {
@@ -82,7 +86,7 @@ describe('useLocalStorageState', () => {
       anotherHook.result.current.setState(true);
     });
     expect(anotherHook.result.current.state).toBe(true);
-    expect(hook.result.current.state).toBe(true);
+    expect(hook.result.current.state).toBe(false);
   });
 
   it('should support null', () => {
@@ -109,13 +113,18 @@ describe('useLocalStorageState', () => {
 
   it('should sync state when changes', async () => {
     const LOCAL_STORAGE_KEY = 'test-sync-state';
-    const hook = setUp(LOCAL_STORAGE_KEY, 'foo');
-    const anotherHook = setUp(LOCAL_STORAGE_KEY, 'foo');
+    const hook = setUp(LOCAL_STORAGE_KEY, 'foo', { listenStorageChange: true });
+    const anotherHook = setUp(LOCAL_STORAGE_KEY, 'bar', { listenStorageChange: true });
+
     expect(hook.result.current.state).toBe('foo');
-    act(() => {
-      hook.result.current.setState('bar');
-    });
-    expect(hook.result.current.state).toBe('bar');
     expect(anotherHook.result.current.state).toBe('bar');
+
+    act(() => hook.result.current.setState('baz'));
+    expect(hook.result.current.state).toBe('baz');
+    expect(anotherHook.result.current.state).toBe('baz');
+
+    act(() => anotherHook.result.current.setState('qux'));
+    expect(hook.result.current.state).toBe('qux');
+    expect(anotherHook.result.current.state).toBe('qux');
   });
 });

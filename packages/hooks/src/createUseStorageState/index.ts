@@ -4,12 +4,13 @@ import useMemoizedFn from '../useMemoizedFn';
 import useUpdateEffect from '../useUpdateEffect';
 import { isFunction, isUndef } from '../utils';
 
-const SYNC_STORAGE_EVENT = 'AHOOKS_SYNC_STORAGE_EVENT';
+export const SYNC_STORAGE_EVENT_NAME = 'AHOOKS_SYNC_STORAGE_EVENT_NAME';
 
 export type SetState<S> = S | ((prevState?: S) => S);
 
 export interface Options<T> {
   defaultValue?: T | (() => T);
+  listenStorageChange?: boolean;
   serializer?: (value: T) => string;
   deserializer?: (value: string) => T;
   onError?: (error: unknown) => void;
@@ -19,6 +20,7 @@ export function createUseStorageState(getStorage: () => Storage | undefined) {
   function useStorageState<T>(key: string, options: Options<T> = {}) {
     let storage: Storage | undefined;
     const {
+      listenStorageChange = false,
       onError = (e) => {
         console.error(e);
       },
@@ -70,29 +72,57 @@ export function createUseStorageState(getStorage: () => Storage | undefined) {
       const currentState = isFunction(value) ? value(state) : value;
       setState(currentState);
 
-      if (isUndef(currentState)) {
-        storage?.removeItem(key);
-      } else {
-        try {
-          storage?.setItem(key, serializer(currentState));
-        } catch (e) {
-          console.error(e);
+      try {
+        let newValue: string | null;
+        const oldValue = storage?.getItem(key);
+
+        if (isUndef(currentState)) {
+          newValue = null;
+          storage?.removeItem(key);
+        } else {
+          newValue = serializer(currentState);
+          storage?.setItem(key, newValue);
         }
+
+        dispatchEvent(
+          // send custom event to communicate within same page
+          // importantly this should not be a StorageEvent since those cannot
+          // be constructed with a non-built-in storage area
+          new CustomEvent(SYNC_STORAGE_EVENT_NAME, {
+            detail: {
+              key,
+              newValue,
+              oldValue,
+              storageArea: storage,
+            },
+          }),
+        );
+      } catch (e) {
+        onError(e);
       }
-      dispatchEvent(new StorageEvent(SYNC_STORAGE_EVENT, { key }));
     };
 
-    const syncStorageState = (event: StorageEvent) => {
-      if (event.key === key) {
-        setState(getStoredValue());
+    const syncState = (event: StorageEvent) => {
+      if (event.key !== key || event.storageArea !== storage) {
+        return;
       }
+
+      setState(getStoredValue());
     };
 
-    // from different tabs
-    useEventListener('storage', syncStorageState);
+    const syncStateFromCustomEvent = (event: CustomEvent<StorageEvent>) => {
+      syncState(event.detail);
+    };
 
-    // from the same tab but different hooks
-    useEventListener(SYNC_STORAGE_EVENT, syncStorageState);
+    // from another document
+    useEventListener('storage', syncState, {
+      enable: listenStorageChange,
+    });
+
+    // from the same document but different hooks
+    useEventListener(SYNC_STORAGE_EVENT_NAME, syncStateFromCustomEvent, {
+      enable: listenStorageChange,
+    });
 
     return [state, useMemoizedFn(updateState)] as const;
   }
