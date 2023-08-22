@@ -29,6 +29,11 @@ const useAntdTable = <TData extends Data, TParams extends Params>(
   const result = usePagination<TData, TParams>(service, {
     manual: true,
     ...rest,
+    onSuccess(...args) {
+      // eslint-disable-next-line @typescript-eslint/no-use-before-define
+      runSuccessRef.current = true;
+      rest.onSuccess?.(...args);
+    },
   });
 
   const { params = [], run } = result;
@@ -39,6 +44,7 @@ const useAntdTable = <TData extends Data, TParams extends Params>(
 
   const allFormDataRef = useRef<Record<string, any>>({});
   const defaultDataSourceRef = useRef([]);
+  const runSuccessRef = useRef(false);
 
   const isAntdV4 = !!form?.getInternalHooks;
 
@@ -164,7 +170,15 @@ const useAntdTable = <TData extends Data, TParams extends Params>(
 
   const submit = (e?: any) => {
     e?.preventDefault?.();
-    _submit();
+    _submit(
+      runSuccessRef.current
+        ? undefined
+        : {
+            pageSize: options.defaultPageSize || options.defaultParams?.[0]?.pageSize || 10,
+            current: 1,
+            ...(defaultParams?.[0] || {}),
+          },
+    );
   };
 
   const onTableChange = (pagination: any, filters: any, sorter: any, extra: any) => {
