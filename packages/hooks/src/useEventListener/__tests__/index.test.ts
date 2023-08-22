@@ -31,4 +31,24 @@ describe('useEventListener', () => {
     document.body.click();
     expect(state).toBe(1);
   });
+
+  it('test "enable" parameter', async () => {
+    let state: number = 0;
+    let enable = true;
+    const onClick = () => state++;
+    const { rerender, unmount } = renderHook(() =>
+      useEventListener('click', onClick, { target: () => container, enable }),
+    );
+
+    document.body.click();
+    expect(state).toBe(0);
+    container.click();
+    expect(state).toBe(1);
+
+    enable = false;
+    rerender();
+    container.click();
+    expect(state).toBe(1);
+    unmount();
+  });
 });
