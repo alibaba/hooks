@@ -32,8 +32,8 @@ describe('useEventListener', () => {
     expect(state).toBe(1);
   });
 
-  it('test "enable" parameter', async () => {
-    let state: number = 0;
+  it('test "enable" parameter', () => {
+    let state = 0;
     let enable = true;
     const onClick = () => state++;
     const { rerender, unmount } = renderHook(() =>
