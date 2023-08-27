@@ -36,6 +36,10 @@ footer: Open-source MIT Licensed | Copyright © 2019-present<br />Powered by [du
 $ npm install --save ahooks
 # or
 $ yarn add ahooks
+# or
+$ pnpm add ahooks
+# or
+$ bun add ahooks
 ```
 
 ## 🔨 使用

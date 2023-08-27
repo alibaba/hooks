@@ -19,6 +19,8 @@ $ npm install --save ahooks
 $ yarn add ahooks
 # or
 $ pnpm add ahooks
+# or
+$ bun add ahooks
 ```
 
 ## Usage
