@@ -52,6 +52,9 @@ const Result:ModalResult = useModal<T,K>((Props:ModalProps<T,K>)=>{},props)
 | data     | Data passed in when Modal is opened    | `T \| Record<string,any> \| undefined` | -           |
 | props    | Props passed in when registering Modal | `K`                                    | `undefined` |
 
+> Note: The difference between 'hide' and 'destroy' is that 'hide' will preserve the state of the Modal, while 'destroy' will terminate the Modal's state.
+> For Modals with closing animations, it's advisable to use 'hide' first and then 'destroy' once the animation has completed. **Using 'destroy' directly can result in the animation not completing properly.**
+
 > The difference between data and props is that data is passed in each time Modal is opened, and props is passed in when Modal is registered, and props will not change.
 
 ### Result

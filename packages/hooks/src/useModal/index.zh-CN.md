@@ -52,7 +52,10 @@ const Result:ModalResult = useModal<T,K>((Props:ModalProps<T,K>)=>{},props)
 | data    | Modal 打开时传入的 data   | `T \| Record<string,any> \| undefined` | -           |
 | props   | 注册 Modal 时传入的 props | `K`                                    | `undefined` |
 
-> data 与 props 的区别在于，data 是每次打开 Modal 时传入的，props 是注册 Modal 时传入的，props 不会变化。
+> 注：hide 和 destroy 的区别在于，hide 会保留 Modal 的状态，destroy 会销毁 Modal 的状态。
+> 对于有关闭动画的 Modal，可以先使用 hide，等动画结束后再 destroy，**直接使用 destroy 会导致动画无法正常结束。**
+
+> 注: data 与 props 的区别在于，data 是每次打开 Modal 时传入的，props 是注册 Modal 时传入的，props 不会变化。
 
 ### Result
 
