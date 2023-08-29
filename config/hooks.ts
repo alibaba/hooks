@@ -100,6 +100,7 @@ export const menus = [
       'useScroll',
       'useSize',
       'useFocusWithin',
+      'useModal',
     ],
   },
   {
