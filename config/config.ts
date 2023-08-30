@@ -187,13 +187,20 @@ export default {
     const logo = document.querySelector('.__dumi-default-navbar-logo');
     if(logo){
       logo.parentNode.insertBefore(dom, logo.nextSibling);
-    }else{
-      setTimeout(()=>{
-        insertVersion();
-      }, 1000)
     }
   }
-  insertVersion();
+  const observer = new MutationObserver((mutationsList, observer) => {
+    for(let mutation of mutationsList) {
+      if (mutation.type === 'childList') {
+        const logo = document.querySelector('.__dumi-default-navbar-logo');
+        if (logo) {
+          insertVersion();
+          observer.disconnect();
+        }
+      }
+    }
+  });
+  observer.observe(document.body, { childList: true, subtree: true });
   `,
   ],
 };
