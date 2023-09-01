@@ -1,27 +1,30 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { useResetState } from 'ahooks';
 
 interface State {
   hello: string;
-  count: number;
+  value: number;
 }
 
 export default () => {
-  const [state, setState, resetState] = useResetState<State>({
+  const initialValue = useRef({
     hello: '',
-    count: 0,
-  });
+    value: Math.random(),
+  }).current;
+
+  const [state, setState, resetState] = useResetState<State>(() => initialValue);
 
   return (
     <div>
       <pre>{JSON.stringify(state, null, 2)}</pre>
+      <div>initialValue: {JSON.stringify(initialValue, null, 2)}</div>
       <p>
         <button
           type="button"
           style={{ marginRight: '8px' }}
-          onClick={() => setState((prev) => ({ hello: 'world', count: prev.count + 1 }))}
+          onClick={() => setState(() => ({ hello: 'world', value: Math.random() }))}
         >
-          set hello and count
+          set hello and value
         </button>
 
         <button type="button" onClick={resetState}>

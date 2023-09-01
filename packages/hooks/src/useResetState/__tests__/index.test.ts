@@ -2,9 +2,9 @@ import { act, renderHook } from '@testing-library/react';
 import useResetState from '../index';
 
 describe('useResetState', () => {
-  const setUp = <S>(initialState: S) =>
+  const setUp = (initialState) =>
     renderHook(() => {
-      const [state, setState, resetState] = useResetState<S>(initialState);
+      const [state, setState, resetState] = useResetState(initialState);
 
       return {
         state,
@@ -17,6 +17,13 @@ describe('useResetState', () => {
     const hook = setUp({
       hello: 'world',
     });
+    expect(hook.result.current.state).toEqual({ hello: 'world' });
+  });
+
+  it('should support functional initialValue', () => {
+    const hook = setUp(() => ({
+      hello: 'world',
+    }));
     expect(hook.result.current.state).toEqual({ hello: 'world' });
   });
 
@@ -55,6 +62,23 @@ describe('useResetState', () => {
     const hook = setUp({
       count: random,
     });
+    act(() => {
+      hook.result.current.setState({ count: Math.random() });
+    });
+
+    act(() => {
+      hook.result.current.resetState();
+    });
+
+    expect(hook.result.current.state).toEqual({ count: random });
+  });
+
+  it('should support random functional initialValue', () => {
+    const random = Math.random();
+    const hook = setUp(() => ({
+      count: random,
+    }));
+
     act(() => {
       hook.result.current.setState({ count: Math.random() });
     });
