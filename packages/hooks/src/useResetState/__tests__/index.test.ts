@@ -49,4 +49,20 @@ describe('useResetState', () => {
     });
     expect(hook.result.current.state).toEqual({ count: 1 });
   });
+
+  it('should keep random initial state', () => {
+    const random = Math.random();
+    const hook = setUp({
+      count: random,
+    });
+    act(() => {
+      hook.result.current.setState({ count: Math.random() });
+    });
+
+    act(() => {
+      hook.result.current.resetState();
+    });
+
+    expect(hook.result.current.state).toEqual({ count: random });
+  });
 });
