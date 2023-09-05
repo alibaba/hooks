@@ -189,7 +189,7 @@ export default {
     logo.parentNode.insertBefore(dom, logo.nextSibling);
   }
   const observer = new MutationObserver((mutationsList, observer) => {
-    for(let mutation of mutationsList) {
+    for (let mutation of mutationsList) {
       if (mutation.type === 'childList') {
         const logoVersion = document.querySelector('#logo-version');
         if (logoVersion) {
