@@ -181,21 +181,21 @@ export default {
     'https://s4.cnzz.com/z_stat.php?id=1278992092&web_id=1278992092',
     `
   const insertVersion = function(){
+    const logo = document.querySelector('.__dumi-default-navbar-logo');
+    if (!logo) return;
     const dom = document.createElement('span');
     dom.id = 'logo-version';
     dom.innerHTML = '${packages.version}';
-    const logo = document.querySelector('.__dumi-default-navbar-logo');
-    if(logo){
-      logo.parentNode.insertBefore(dom, logo.nextSibling);
-    }
+    logo.parentNode.insertBefore(dom, logo.nextSibling);
   }
   const observer = new MutationObserver((mutationsList, observer) => {
     for(let mutation of mutationsList) {
       if (mutation.type === 'childList') {
-        const logo = document.querySelector('.__dumi-default-navbar-logo');
-        if (logo) {
-          insertVersion();
+        const logoVersion = document.querySelector('#logo-version');
+        if (logoVersion) {
           observer.disconnect();
+        } else {
+          insertVersion();
         }
       }
     }
