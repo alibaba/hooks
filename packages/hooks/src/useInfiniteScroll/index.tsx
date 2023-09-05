@@ -99,10 +99,10 @@ const useInfiniteScroll = <TData extends Data>(
     const scrollTop = getScrollTop(el);
     const scrollHeight = getScrollHeight(el);
     const clientHeight = getClientHeight(el);
-    const isScrollDown = scrollHeight - scrollTop <= clientHeight + threshold;
-    const isScrollUp = scrollTop + scrollHeight <= clientHeight + threshold;
-    const condition = isInverse ? isScrollUp : isScrollDown;
-    if (condition) {
+    const isReachToBottom = scrollHeight - scrollTop <= clientHeight + threshold;
+    const isReachToTop = scrollTop + scrollHeight <= clientHeight + threshold;
+    const isReachBoundary = isInverse ? isReachToTop : isReachToBottom;
+    if (isReachBoundary) {
       loadMore();
     }
   };
