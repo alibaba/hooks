@@ -16,9 +16,9 @@ export default () => {
 
   return (
     <div>
-      <div>initial state: </div>
+      <div>initial state:</div>
       <pre>{JSON.stringify(initialValue, null, 2)}</pre>
-      <div>current state: </div>
+      <div>current state:</div>
       <pre>{JSON.stringify(state, null, 2)}</pre>
       <p>
         <button

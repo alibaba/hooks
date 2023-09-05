@@ -34,16 +34,9 @@ describe('useResetState', () => {
     });
 
     act(() => {
-      hook.result.current.setState({
-        hello: 'world',
-        count: 1,
-      });
-    });
-
-    act(() => {
+      hook.result.current.setState({ hello: 'world', count: 1 });
       hook.result.current.resetState();
     });
-
     expect(hook.result.current.state).toEqual({ hello: '', count: 0 });
   });
 
@@ -51,6 +44,7 @@ describe('useResetState', () => {
     const hook = setUp({
       count: 0,
     });
+
     act(() => {
       hook.result.current.setState((prev) => ({ count: prev.count + 1 }));
     });
@@ -62,14 +56,11 @@ describe('useResetState', () => {
     const hook = setUp({
       count: random,
     });
+
     act(() => {
       hook.result.current.setState({ count: Math.random() });
-    });
-
-    act(() => {
       hook.result.current.resetState();
     });
-
     expect(hook.result.current.state).toEqual({ count: random });
   });
 
@@ -81,12 +72,8 @@ describe('useResetState', () => {
 
     act(() => {
       hook.result.current.setState({ count: Math.random() });
-    });
-
-    act(() => {
       hook.result.current.resetState();
     });
-
     expect(hook.result.current.state).toEqual({ count: random });
   });
 });
