@@ -180,16 +180,16 @@ export default {
   scripts: [
     'https://s4.cnzz.com/z_stat.php?id=1278992092&web_id=1278992092',
     `
-  const insertVersion = function(){
+  const insertVersion = function() {
     const logo = document.querySelector('.__dumi-default-navbar-logo');
     if (!logo) return;
     const dom = document.createElement('span');
     dom.id = 'logo-version';
     dom.innerHTML = '${packages.version}';
     logo.parentNode.insertBefore(dom, logo.nextSibling);
-  }
+  };
   const observer = new MutationObserver((mutationsList, observer) => {
-    for (let mutation of mutationsList) {
+    for (const mutation of mutationsList) {
       if (mutation.type === 'childList') {
         const logoVersion = document.querySelector('#logo-version');
         if (logoVersion) {
