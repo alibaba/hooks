@@ -23,7 +23,7 @@ export interface InfiniteScrollOptions<TData extends Data> {
   target?: BasicTarget<Element | Document>;
   isNoMore?: (data?: TData) => boolean;
   threshold?: number;
-
+  isInverse?: boolean;
   manual?: boolean;
   reloadDeps?: DependencyList;
 
