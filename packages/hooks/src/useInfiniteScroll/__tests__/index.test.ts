@@ -125,6 +125,60 @@ describe('useInfiniteScroll', () => {
     mockAddEventListener.mockRestore();
   });
 
+  it('should auto load when scroll to top', async () => {
+    const events = {};
+    const mockAddEventListener = jest
+      .spyOn(targetEl, 'addEventListener')
+      .mockImplementation((eventName, callback) => {
+        events[eventName] = callback;
+      });
+    const { result } = setup(mockRequest, {
+      target: targetEl,
+      isNoMore: (d) => d?.nextId === undefined,
+      isInverse: true,
+    });
+    expect(result.current.loading).toBe(true);
+
+    events['scroll']();
+
+    await act(async () => {
+      jest.advanceTimersByTime(1000);
+    });
+    expect(result.current.loading).toBe(false);
+    // mock scroll
+    const currentTargetPosition = {
+      clientHeight: {
+        value: 400,
+      },
+      scrollHeight: {
+        value: 300,
+      },
+      scrollTop: {
+        value: 100,
+      },
+    };
+    Object.defineProperties(targetEl, currentTargetPosition);
+
+    act(() => {
+      events['scroll']();
+    });
+
+    expect(result.current.loadingMore).toBe(true);
+    await act(async () => {
+      jest.advanceTimersByTime(1000);
+    });
+    expect(result.current.loadingMore).toBe(false);
+
+    // not work when no more
+    expect(result.current.noMore).toBe(true);
+    act(() => {
+      events['scroll']();
+    });
+    expect(result.current.loadingMore).toBe(false);
+
+    mockAddEventListener.mockRestore();
+  });
+
   it('reload should be work', async () => {
     const fn = jest.fn(() => Promise.resolve({ list: [] }));
     const { result } = setup(fn);
