@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React from 'react';
 import { useResetState } from 'ahooks';
 
 interface State {
@@ -6,18 +6,20 @@ interface State {
   value: number;
 }
 
-export default () => {
-  const initialValue = useRef({
-    hello: '',
-    value: Math.random(),
-  }).current;
+const initialValue = {
+  hello: '',
+  value: Math.random(),
+};
 
-  const [state, setState, resetState] = useResetState<State>(() => initialValue);
+export default () => {
+  const [state, setState, resetState] = useResetState<State>(initialValue);
 
   return (
     <div>
+      <div>initial state: </div>
+      <pre>{JSON.stringify(initialValue, null, 2)}</pre>
+      <div>current state: </div>
       <pre>{JSON.stringify(state, null, 2)}</pre>
-      <div>initialValue: {JSON.stringify(initialValue, null, 2)}</div>
       <p>
         <button
           type="button"
