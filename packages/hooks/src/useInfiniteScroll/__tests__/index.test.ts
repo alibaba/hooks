@@ -17,8 +17,6 @@ export async function mockRequest() {
   };
 }
 
-const targetEl = document.createElement('div');
-
 const setup = <T extends Data>(service: Service<T>, options?: InfiniteScrollOptions<T>) =>
   renderHook(() => useInfiniteScroll(service, options));
 
@@ -76,6 +74,7 @@ describe('useInfiniteScroll', () => {
   });
 
   it('should auto load when scroll to bottom', async () => {
+    const targetEl = document.createElement('div');
     const events = {};
     const mockAddEventListener = jest
       .spyOn(targetEl, 'addEventListener')
@@ -126,6 +125,7 @@ describe('useInfiniteScroll', () => {
   });
 
   it('should auto load when scroll to top', async () => {
+    const targetEl = document.createElement('div');
     const events = {};
     const mockAddEventListener = jest
       .spyOn(targetEl, 'addEventListener')
