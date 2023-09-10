@@ -13,6 +13,7 @@
       "ahooks/lib/*": ["./packages/hooks/src/*"],
       "@ahooksjs/use-url-state": ["./packages/use-url-state/src/index.ts"]
     },
+    "allowJs": true,
     "allowSyntheticDefaultImports": true,
     "skipLibCheck": true,
     "declaration": false,
