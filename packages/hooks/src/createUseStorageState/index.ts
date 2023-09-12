@@ -13,6 +13,14 @@ export interface Options<T> {
 }
 
 export function createUseStorageState(getStorage: () => Storage | undefined) {
+  function useStorageState<T>(
+    key: string,
+    options: Options<T> & { defaultValue: T | (() => T) },
+  ): [T, (value?: SetState<T>) => void];
+  function useStorageState<T>(
+    key: string,
+    options?: Options<T>,
+  ): [T | undefined, (value?: SetState<T>) => void];
   function useStorageState<T>(key: string, options: Options<T> = {}) {
     let storage: Storage | undefined;
     const {
