@@ -20,7 +20,7 @@ nav:
 ## API
 
 ```typescript
-const [state, setState] = useSetState<T>(initialState);
+const [state, setMergeState, setState] = useSetState<T>(initialState);
 ```
 
 ### Result
@@ -28,7 +28,8 @@ const [state, setState] = useSetState<T>(initialState);
 | 参数     | 说明         | 类型                                                                                      | 默认值 |
 | -------- | ------------ | ----------------------------------------------------------------------------------------- | ------ |
 | state    | 当前状态     | `T`                                                                                       | -      |
-| setState | 设置当前状态 | `(state: Partial<T> \| null) => void` \| `((prevState: T) => Partial<T> \| null) => void` | -      |
+| setMergeState | 设置当前状态(合并) | `(state: Partial<T> \| null) => void` \| `((prevState: T) => Partial<T> \| null) => void` | -      |
+| setState | 设置状态 | `(state: T \| null) => void` \| `((prevState: T) => T \| null) => void` | -      |
 
 ### Params
 

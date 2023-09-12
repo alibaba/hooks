@@ -20,7 +20,7 @@ useSetState works similar to `this.setState` of class component, used to manage 
 ## API
 
 ```typescript
-const [state, setState] = useSetState<T>(initialState);
+const [state, setMergeState, setState] = useSetState<T>(initialState);
 ```
 
 ### Result
@@ -28,7 +28,9 @@ const [state, setState] = useSetState<T>(initialState);
 | Property | Description          | Type                                                                                      | Default |
 | -------- | -------------------- | ----------------------------------------------------------------------------------------- | ------- |
 | state    | Current state        | `T`                                                                                       | -       |
-| setState | Update current state | `(state: Partial<T> \| null) => void` \| `((prevState: T) => Partial<T> \| null) => void` | -       |
+| setMergeState | Update current state (merge) | `(state: Partial<T> \| null) => void` \| `((prevState: T) => Partial<T> \| null) => void` | -       |
+
+| setState | Update current state | `(state: T \| null) => void` \| `((prevState: T) => T \| null) => void` | -       |
 
 ### Params
 

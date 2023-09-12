@@ -1,3 +1,4 @@
+import type { Dispatch, SetStateAction } from 'react';
 import { useCallback, useState } from 'react';
 import { isFunction } from '../utils';
 
@@ -7,7 +8,7 @@ export type SetState<S extends Record<string, any>> = <K extends keyof S>(
 
 const useSetState = <S extends Record<string, any>>(
   initialState: S | (() => S),
-): [S, SetState<S>] => {
+): [S, SetState<S>, Dispatch<SetStateAction<S>>] => {
   const [state, setState] = useState<S>(initialState);
 
   const setMergeState = useCallback((patch) => {
@@ -17,7 +18,7 @@ const useSetState = <S extends Record<string, any>>(
     });
   }, []);
 
-  return [state, setMergeState];
+  return [state, setMergeState, setState];
 };
 
 export default useSetState;
