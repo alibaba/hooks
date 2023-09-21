@@ -1,5 +1,6 @@
 import { useRef } from 'react';
 import type { DependencyList, useEffect, useLayoutEffect } from 'react';
+import { cloneDeep } from 'lodash-es';
 import { depsEqual } from '../utils/depsEqual';
 
 type EffectHookType = typeof useEffect | typeof useLayoutEffect;
@@ -10,7 +11,7 @@ export const createDeepCompareEffect: CreateUpdateEffect = (hook) => (effect, de
   const signalRef = useRef<number>(0);
 
   if (deps === undefined || !depsEqual(deps, ref.current)) {
-    ref.current = deps;
+    ref.current = cloneDeep(deps);
     signalRef.current += 1;
   }
 
