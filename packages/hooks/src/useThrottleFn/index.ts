@@ -8,7 +8,7 @@ import isDev from '../utils/isDev';
 
 type noop = (...args: any[]) => any;
 
-function useThrottleFn<T extends noop>(fn: T, options?: ThrottleOptions) {
+function useThrottleFn<T extends noop>(fn: T, options: ThrottleOptions = {}) {
   if (isDev) {
     if (!isFunction(fn)) {
       console.error(`useThrottleFn expected parameter is a function, got ${typeof fn}`);
@@ -17,9 +17,8 @@ function useThrottleFn<T extends noop>(fn: T, options?: ThrottleOptions) {
 
   const fnRef = useLatest(fn);
 
-  // To make it compatible with older versions, you can omit the default setting of 1000 milliseconds.
-  // Additionally, you can support explicitly setting it to null to enable the use of requestAnimationFrame
-  const wait = options?.wait === undefined ? 1000 : options?.wait;
+  // https://github.com/alibaba/hooks/issues/2331
+  const wait = 'wait' in options ? options.wait : 1000;
 
   const throttled = useMemo(
     () =>
