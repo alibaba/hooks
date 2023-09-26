@@ -17,7 +17,9 @@ function useThrottleFn<T extends noop>(fn: T, options?: ThrottleOptions) {
 
   const fnRef = useLatest(fn);
 
-  const wait = options?.wait ?? 1000;
+  // To make it compatible with older versions, you can omit the default setting of 1000 milliseconds.
+  // Additionally, you can support explicitly setting it to null to enable the use of requestAnimationFrame
+  const wait = options?.wait === undefined ? 1000 : options?.wait;
 
   const throttled = useMemo(
     () =>
