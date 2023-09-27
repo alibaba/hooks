@@ -16,6 +16,7 @@ export default () => {
   const [userId, setUserId] = useState<number>();
   const { data, loading, run } = useRequest((id: number) => getUsername(id), {
     refreshDeps: [userId],
+    refreshDepsAction: () => run(userId),
   });
 
   if (loading) {
@@ -26,7 +27,7 @@ export default () => {
     <div>
       <p>Username: {data}</p>
       <button style={{ marginRight: '8px' }} onClick={() => setUserId(Math.random())}>
-        Use previous id to refresh
+        Use latest id to refresh
       </button>
       <button onClick={() => run(Math.random())}>Use latest id to refresh</button>
     </div>
