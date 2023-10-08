@@ -144,6 +144,23 @@ const useDynamicList = <T>(initialList: T[] = []) => {
     [],
   );
 
+  const batchRemove = useCallback((removeList: number[]) => {
+    if (removeList.length === 0 || !(removeList instanceof Array)) {
+      return list;
+    }
+    setList((list) => {
+      const newKeyList: number[] = [];
+      const temp = list.filter((l, index) => {
+        if (!removeList.includes(index)) {
+          newKeyList.push(index);
+          return l;
+        }
+      });
+      keyList.current = newKeyList;
+      return temp;
+    });
+  }, []);
+
   return {
     list,
     insert,
@@ -159,6 +176,7 @@ const useDynamicList = <T>(initialList: T[] = []) => {
     shift,
     sortList,
     resetList,
+    batchRemove,
   };
 };
 
