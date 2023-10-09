@@ -81,8 +81,8 @@ const useDynamicList = <T>(initialList: T[] = []) => {
   const batchRemove = useCallback((indexes: number[]) => {
     if (!Array.isArray(indexes)) {
       if (isDev) {
-        console.warn(
-          `expected an array for \`indexes\` parameter of \`batchRemove\` function, got ${typeof indexes}.`,
+        console.error(
+          `\`indexes\` parameter of \`batchRemove\` function expected to be an array, but got "${typeof indexes}".`,
         );
       }
       return;

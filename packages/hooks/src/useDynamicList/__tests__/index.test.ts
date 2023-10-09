@@ -3,6 +3,15 @@ import useDynamicList from '../index';
 
 describe('useDynamicList', () => {
   const setUp = (props: any): any => renderHook(() => useDynamicList(props));
+  const warnSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
+
+  afterEach(() => {
+    warnSpy.mockReset();
+  });
+
+  afterAll(() => {
+    warnSpy.mockRestore();
+  });
 
   it('getKey should work', () => {
     const hook = setUp([1, 2, 3]);
@@ -100,9 +109,12 @@ describe('useDynamicList', () => {
 
     // batch remove
     act(() => {
-      // should not throw error when passing non-array data
       hook.result.current.batchRemove(1);
-      // should work when passing array data
+    });
+    expect(warnSpy).toHaveBeenCalledWith(
+      '`indexes` parameter of `batchRemove` function expected to be an array, but got "number".',
+    );
+    act(() => {
       hook.result.current.batchRemove([0, 1, 2]);
     });
     expect(hook.result.current.list.length).toBe(4);
