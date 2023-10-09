@@ -97,6 +97,15 @@ describe('useDynamicList', () => {
       hook.result.current.remove(7);
     });
     expect(hook.result.current.list.length).toBe(7);
+
+    // batch remove
+    act(() => {
+      // should not throw error when passing non-array data
+      hook.result.current.batchRemove(1);
+      // should work when passing array data
+      hook.result.current.batchRemove([0, 1, 2]);
+    });
+    expect(hook.result.current.list.length).toBe(4);
   });
 
   it('same items should have different keys', () => {
