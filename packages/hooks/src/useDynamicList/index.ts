@@ -79,12 +79,15 @@ const useDynamicList = <T>(initialList: T[] = []) => {
   }, []);
 
   const batchRemove = useCallback((indexes: number[]) => {
-    if (!Array.isArray(indexes) || !indexes.length) {
+    if (!Array.isArray(indexes)) {
       if (isDev) {
         console.warn(
           `expected an array for \`indexes\` parameter of \`batchRemove\` function, got ${typeof indexes}.`,
         );
       }
+      return;
+    }
+    if (!indexes.length) {
       return;
     }
 
