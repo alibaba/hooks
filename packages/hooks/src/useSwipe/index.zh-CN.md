@@ -3,88 +3,113 @@ nav:
   path: /hooks
 ---
 
-# useDrop & useDrag
+# useSwipe
 
-处理元素拖拽的 Hook。
-
-> useDrop 可以单独使用来接收文件、文字和网址的拖拽。
->
-> useDrag 允许一个 DOM 节点被拖拽，需要配合 useDrop 使用。
->
-> 向节点内触发粘贴动作也会被视为拖拽。
+基于 [TouchEvents](https://developer.mozilla.org/en-US/docs/Web/API/TouchEvent) 的滑动检测，为开发者提供了一些处理滑动手势的基本功能。
 
 ## 代码演示
 
-### 基础用法
+### 基本使用
 
 <code src="./demo/demo1.tsx" />
 
-### 自定义拖拽图像
+### API
 
-<code src="./demo/demo2.tsx" />
+```typescript jsx
+function App() {
+  const el = useRef<HTMLDivElement>(null)
+  const { isSwiping, direction, lengthX, lengthY } = useSwipe(el, {
+    passive: false,
+    threshold: 100,
+    onSwipeStart(e) {},
+    onSwipeMove(e, direction) {},
+    onSwipeEnd(e, diretion) {},
+  })
 
-## API
-
-### useDrag
-
-```typescript
-useDrag<T>(
-  data: any,
-  target: (() => Element) | Element | MutableRefObject<Element>,
-  options?: DragOptions
-);
+  return <>
+    <div ref={el}>
+      Swiping here
+    </div>
+    <div>
+      <p>isSwiping: {String(isSwiping)}</p>
+      <p>direction: {direction}</p>
+      <p>
+        lengthX: {lengthX} | lengthY: {lengthY}
+      </p>
+    </div>
+  </>
+}
 ```
 
-#### Params
+### Params
 
-| 参数    | 说明                  | 类型                                                        | 默认值 |
-| ------- | --------------------- | ----------------------------------------------------------- | ------ |
-| data    | 拖拽的内容            | `any`                                                       | -      |
-| target  | DOM 节点或者 Ref 对象 | `() => Element` \| `Element` \| `MutableRefObject<Element>` | -      |
-| options | 额外的配置项          | `DragOptions`                                               | -      |
+| Property | Description                                    | Type              | Default |
+| -------- | ---------------------------------------------- | ----------------- | ------- |
+| el       | Ref 包裹住的 dom 节点                          | `HTMLElement`     | -       |
+| options  | 可选配置项，参考更多可以查看下方的 `Interface` | `UseSwipeOptions` | -       |
 
-#### DragOptions
+### Result
 
-| 参数        | 说明                               | 类型                           | 默认值 |
-| ----------- | ---------------------------------- | ------------------------------ | ------ |
-| onDragStart | 开始拖拽的回调                     | `(e: React.DragEvent) => void` | -      |
-| onDragEnd   | 结束拖拽的回调                     | `(e: React.DragEvent) => void` | -      |
-| dragImage   | 自定义拖拽过程中跟随鼠标指针的图像 | `DragImageOptions`             | -      |
+| Property  | Description    | Type                                          | Default |
+| --------- | -------------- | --------------------------------------------- | ------- |
+| isSwiping | 是否正在滑动   | `boolean`                                     | -       |
+| direction | 滑动方向       | `'up' \| 'down' \| 'left' \| 'right' \| null` | -       |
+| lengthX   | 滑动的 clientX | `number`                                      | -       |
+| lengthY   | 滑动的 clientY | `number`                                      | -       |
 
-#### DragImageOptions
-
-| 参数    | 说明                                                                                                                                                                                                                                       | 类型                | 默认值 |
-| ------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------- | ------ |
-| image   | 拖拽过程中跟随鼠标指针的图像。图像通常是一个 [`<img>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/img) 元素，但也可以是 [`<canvas>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/canvas) 或任何其他图像元素。 | `string \| Element` | -      |
-| offsetX | 水平偏移                                                                                                                                                                                                                                   | `number`            | 0      |
-| offsetY | 垂直偏移                                                                                                                                                                                                                                   | `number`            | 0      |
-
-### useDrop
+### Interface
 
 ```typescript
-useDrop<T>(
-  target: (() => Element) | Element | MutableRefObject<Element>,
-  options?: DropOptions
-);
+export type UseSwipeDirection = 'up' | 'down' | 'left' | 'right' | null;
+
+export interface UseSwipeOptions {
+  /**
+   * Register events as passive
+   *
+   * @default true
+   */
+  passive?: boolean;
+
+  /**
+   * @default 50
+   */
+  threshold?: number;
+
+  /**
+   * Callback when start swipe
+   */
+  onSwipeStart?: (e: TouchEvent) => void;
+
+  /**
+   * Callback on swiping
+   */
+  onSwipe?: (e: TouchEvent, direction: UseSwipeDirection) => void;
+
+  /**
+   * Callback on swiping end
+   */
+  onSwipeEnd?: (e: TouchEvent, direction: UseSwipeDirection) => void;
+}
+
+export interface UseSwipeReturn {
+  /**
+   * Is swiping
+   */
+  isSwiping: boolean;
+
+  /**
+   * Touches clientX
+   */
+  lengthX: number;
+
+  /**
+   * Touches clientY
+   */
+  lengthY: number;
+
+  /**
+   * Swiping direction
+   */
+  direction: UseSwipeDirection;
+}
 ```
-
-#### Params
-
-| 参数    | 说明                  | 类型                                                        | 默认值 |
-| ------- | --------------------- | ----------------------------------------------------------- | ------ |
-| target  | DOM 节点或者 Ref 对象 | `() => Element` \| `Element` \| `MutableRefObject<Element>` | -      |
-| options | 额外的配置项          | `DragOptions`                                               | -      |
-
-#### DropOptions
-
-| 参数        | 说明                           | 类型                                          | 默认值 |
-| ----------- | ------------------------------ | --------------------------------------------- | ------ |
-| onText      | 拖拽/粘贴文字的回调            | `(text: string, e: React.DragEvent) => void`  | -      |
-| onFiles     | 拖拽/粘贴文件的回调            | `(files: File[], e: React.DragEvent) => void` | -      |
-| onUri       | 拖拽/粘贴链接的回调            | `(text: string, e: React.DragEvent) => void`  | -      |
-| onDom       | 拖拽/粘贴自定义 DOM 节点的回调 | `(content: any, e: React.DragEvent) => void`  | -      |
-| onDrop      | 拖拽任意内容的回调             | `(e: React.DragEvent) => void`                | -      |
-| onPaste     | 粘贴内容的回调                 | `(e: React.DragEvent) => void`                | -      |
-| onDragEnter | 拖拽进入                       | `(e: React.DragEvent) => void`                | -      |
-| onDragOver  | 拖拽中                         | `(e: React.DragEvent) => void`                | -      |
-| onDragLeave | 拖拽出去                       | `(e: React.DragEvent) => void`                | -      |

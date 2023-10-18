@@ -2,13 +2,6 @@ export type UseSwipeDirection = 'up' | 'down' | 'left' | 'right' | null;
 
 export interface UseSwipeOptions {
   /**
-   * 检测滑动的方向
-   * 如果不传direction的话就是默认用户自己实现swipe的direction
-   * 如果传了direction我们hook内部就自动帮用户检测
-   */
-  direction?: UseSwipeDirection;
-
-  /**
    * Register events as passive
    *
    * @default true
@@ -29,7 +22,7 @@ export interface UseSwipeOptions {
   /**
    * 滑动时调用
    */
-  onSwipe?: (e: TouchEvent) => void;
+  onSwipe?: (e: TouchEvent, direction: UseSwipeDirection) => void;
 
   /**
    * 滑动结束后调用

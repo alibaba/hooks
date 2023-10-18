@@ -1,79 +1,93 @@
 /**
  * title: Basic usage
- * desc: The drop area can accept files, uri, text or one of the boxes below.
+ * desc: useSwipe
  *
  * title.zh-CN: 基础用法
- * desc.zh-CN: 拖拽区域可以接受文件，链接，文字，和下方的 box 节点。
+ * desc.zh-CN: useSwipe
  */
 
-import React, { useRef, useState } from 'react';
-import { useDrop, useDrag } from 'ahooks';
-
-const DragItem = ({ data }) => {
-  const dragRef = useRef(null);
-
-  const [dragging, setDragging] = useState(false);
-
-  useDrag(data, dragRef, {
-    onDragStart: () => {
-      setDragging(true);
-    },
-    onDragEnd: () => {
-      setDragging(false);
-    },
-  });
-
-  return (
-    <div
-      ref={dragRef}
-      style={{
-        border: '1px solid #e8e8e8',
-        padding: 16,
-        width: 80,
-        textAlign: 'center',
-        marginRight: 16,
-      }}
-    >
-      {dragging ? 'dragging' : `box-${data}`}
-    </div>
-  );
-};
+import React, { useEffect, useMemo, useRef, useState } from 'react';
+import { useSwipe } from 'ahooks';
 
 export default () => {
-  const [isHovering, setIsHovering] = useState(false);
-
-  const dropRef = useRef(null);
-
-  useDrop(dropRef, {
-    onText: (text, e) => {
-      console.log(e);
-      alert(`'text: ${text}' dropped`);
-    },
-    onFiles: (files, e) => {
-      console.log(e, files);
-      alert(`${files.length} file dropped`);
-    },
-    onUri: (uri, e) => {
-      console.log(e);
-      alert(`uri: ${uri} dropped`);
-    },
-    onDom: (content: string, e) => {
-      alert(`custom: ${content} dropped`);
-    },
-    onDragEnter: () => setIsHovering(true),
-    onDragLeave: () => setIsHovering(false),
+  const el = useRef<HTMLDivElement>(null);
+  const containerWidth = useMemo(() => el.current?.offsetWidth || 1, [el.current]);
+  const [elStyle, setElStyle] = useState<React.CSSProperties>({
+    opacity: 1,
+    left: 0,
   });
+
+  const { isSwiping, direction, lengthX, lengthY } = useSwipe(el, {
+    onSwipeEnd() {
+      if (lengthX < 0 && containerWidth && Math.abs(lengthX) / containerWidth >= 0.5) {
+        setElStyle({
+          transition: 'all',
+          transitionDuration: '250ms',
+          left: '100%',
+          opacity: 0,
+        });
+      } else {
+        setElStyle({
+          left: '0',
+          opacity: 1,
+        });
+      }
+    },
+  });
+
+  useEffect(() => {
+    let opacity = 1;
+    let left = '0';
+
+    if (lengthX < 0) {
+      left = `${-lengthX}px`;
+      opacity = 1.1 - Math.abs(lengthX) / (el.current?.offsetWidth || 1);
+    }
+
+    setElStyle({
+      left,
+      opacity,
+    });
+  }, [lengthX]);
 
   return (
     <div>
-      <div ref={dropRef} style={{ border: '1px dashed #e8e8e8', padding: 16, textAlign: 'center' }}>
-        {isHovering ? 'release here' : 'drop here'}
+      <div
+        ref={el}
+        style={{
+          position: 'relative',
+          border: '1px solid #e8e8e8',
+          padding: 8,
+          width: '90%',
+          textAlign: 'center',
+          background: '#4e66d1',
+          color: 'white',
+          ...elStyle,
+        }}
+      >
+        <p>Swipe right</p>
       </div>
-
-      <div style={{ display: 'flex', marginTop: 8 }}>
-        {['1', '2', '3', '4', '5'].map((e, i) => (
-          <DragItem key={e} data={e} />
-        ))}
+      <div
+        style={{
+          display: 'flex',
+          justifyContent: 'center',
+          marginTop: 20,
+        }}
+        onClick={() =>
+          setElStyle({
+            opacity: 1,
+            left: 0,
+          })
+        }
+      >
+        <button>reset</button>
+      </div>
+      <div style={{ marginTop: 20, textAlign: 'center' }}>
+        <p>isSwiping: {String(isSwiping)}</p>
+        <p>direction: {direction}</p>
+        <p>
+          lengthX: {lengthX} | lengthY: {lengthY}
+        </p>
       </div>
     </div>
   );

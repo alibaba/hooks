@@ -3,15 +3,9 @@ nav:
   path: /hooks
 ---
 
-# useDrop & useDrag
+# useSwipe
 
-A pair of hooks to help you manage data transfer between drag and drop
-
-> useDrop can be used alone to accept file, text or uri dropping.
->
-> useDrag should be used along with useDrop.
->
-> Paste into the drop area will also be treated as content drop.
+A swipe detection based on [TouchEvents](https://developer.mozilla.org/en-US/docs/Web/API/TouchEvent), provide some basic abilities for developer to handle swipe gesture.
 
 ## Examples
 
@@ -19,72 +13,103 @@ A pair of hooks to help you manage data transfer between drag and drop
 
 <code src="./demo/demo1.tsx" />
 
-### Customize Image
+### API
 
-<code src="./demo/demo2.tsx" />
+```typescript jsx
+function App() {
+  const el = useRef<HTMLDivElement>(null)
+  const { isSwiping, direction, lengthX, lengthY } = useSwipe(el, {
+    passive: false,
+    threshold: 100,
+    onSwipeStart(e) {},
+    onSwipeMove(e, direction) {},
+    onSwipeEnd(e, diretion) {},
+  })
 
-## API
-
-### useDrag
-
-```typescript
-useDrag<T>(
-  data: any,
-  target: (() => Element) | Element | MutableRefObject<Element>,
-  options?: DragOptions
-);
+  return <>
+    <div ref={el}>
+      Swiping here
+    </div>
+    <div>
+      <p>isSwiping: {String(isSwiping)}</p>
+      <p>direction: {direction}</p>
+      <p>
+        lengthX: {lengthX} | lengthY: {lengthY}
+      </p>
+    </div>
+  </>
+}
 ```
 
-#### Params
+### Params
 
-| Property | Description        | Type                                                        | Default |
-| -------- | ------------------ | ----------------------------------------------------------- | ------- |
-| data     | Drag data          | `any`                                                       | -       |
-| target   | DOM element or ref | `() => Element` \| `Element` \| `MutableRefObject<Element>` | -       |
-| options  | More config        | `DragOptions`                                               | -       |
+| Property | Description                                       | Type          | Default |
+| -------- | ------------------------------------------------- | ------------- | ------- |
+| el       | DOM elements or Ref                               | `HTMLElement` | -       |
+| options  | Options, for more detail please refer `Interface` | `Options`     | -       |
 
-#### DragOptions
+### Result
 
-| Property    | Description                                                   | Type                           | Default |
-| ----------- | ------------------------------------------------------------- | ------------------------------ | ------- |
-| onDragStart | On drag start callback                                        | `(e: React.DragEvent) => void` | -       |
-| onDragEnd   | On drag end callback                                          | `(e: React.DragEvent) => void` | -       |
-| dragImage   | Customize image that follow the mouse pointer during dragging | `DragImageOptions`             | -       |
+| Property  | Description       | Type      | Default |
+| --------- | ----------------- | --------- | ------- |
+| isSwiping | Is swiping        | `boolean` | -       |
+| direction | Swiping direction | `string`  | -       |
+| lengthX   | Swiping clientX   | `number`  | -       |
+| lengthY   | Swiping clientY   | `number`  | -       |
 
-#### DragImageOptions
-
-| 参数    | 说明                                                                                                                                                                                                                                                                                                          | 类型                | 默认值 |
-| ------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------- | ------ |
-| image   | An image Element element to use for the drag feedback image. The image will typically be an [`<img>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/img) element but it can also be a [`<canvas>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/canvas) or any other visible element | `string \| Element` | -      |
-| offsetX | the horizontal offset within the image                                                                                                                                                                                                                                                                        | `number`            | 0      |
-| offsetY | the vertical offset within the image                                                                                                                                                                                                                                                                          | `number`            | 0      |
-
-### useDrop
+### Interface
 
 ```typescript
-useDrop<T>(
-  target: (() => Element) | Element | MutableRefObject<Element>,
-  options?: DropOptions
-);
+export type UseSwipeDirection = 'up' | 'down' | 'left' | 'right' | null;
+
+export interface UseSwipeOptions {
+  /**
+   * Register events as passive
+   *
+   * @default true
+   */
+  passive?: boolean;
+
+  /**
+   * @default 50
+   */
+  threshold?: number;
+
+  /**
+   * Callback when start swipe
+   */
+  onSwipeStart?: (e: TouchEvent) => void;
+
+  /**
+   * Callback on swiping
+   */
+  onSwipe?: (e: TouchEvent, direction: UseSwipeDirection) => void;
+
+  /**
+   * Callback on swiping end
+   */
+  onSwipeEnd?: (e: TouchEvent, direction: UseSwipeDirection) => void;
+}
+
+export interface UseSwipeReturn {
+  /**
+   * Is swiping
+   */
+  isSwiping: boolean;
+
+  /**
+   * Touches clientX
+   */
+  lengthX: number;
+
+  /**
+   * Touches clientY
+   */
+  lengthY: number;
+
+  /**
+   * Swiping direction
+   */
+  direction: UseSwipeDirection;
+}
 ```
-
-#### Params
-
-| Property | Description        | Type                                                        | Default |
-| -------- | ------------------ | ----------------------------------------------------------- | ------- |
-| target   | DOM element or ref | `() => Element` \| `Element` \| `MutableRefObject<Element>` | -       |
-| options  | More config        | `DropOptions`                                               | -       |
-
-#### DropOptions
-
-| Property    | Description                                 | Type                                          | Default |
-| ----------- | ------------------------------------------- | --------------------------------------------- | ------- |
-| onText      | The callback when text is dropped or pasted | `(text: string, e: React.DragEvent) => void`  | -       |
-| onFiles     | The callback when file is dropped or pasted | `(files: File[], e: React.DragEvent) => void` | -       |
-| onUri       | The callback when uri is dropped or pasted  | `(text: string, e: React.DragEvent) => void`  | -       |
-| onDom       | The callback when DOM is dropped or pasted  | `(content: any, e: React.DragEvent) => void`  | -       |
-| onDrop      | The callback when any is dropped            | `(e: React.DragEvent) => void`                | -       |
-| onPaste     | The callback when any is pasted             | `(e: React.DragEvent) => void`                | -       |
-| onDragEnter | On drag enter callback                      | `(e: React.DragEvent) => void`                | -       |
-| onDragOver  | On drag over callback                       | `(e: React.DragEvent) => void`                | -       |
-| onDragLeave | On drag leave callback                      | `(e: React.DragEvent) => void`                | -       |
