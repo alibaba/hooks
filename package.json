@@ -77,5 +77,6 @@
     "extends": [
       "@commitlint/config-conventional"
     ]
-  }
+  },
+  "packageManager": "pnpm@7.33.6"
 }
