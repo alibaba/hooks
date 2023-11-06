@@ -4,7 +4,8 @@ nav:
 ---
 
 # useStateRef
-处理闭包问题，在useState的基础上多了一个获取最新state的函数
+
+处理闭包问题，在 useState 的基础上多了一个获取最新 state 的函数
 
 ## 代码演示
 
