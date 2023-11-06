@@ -16,11 +16,11 @@ export default () => {
   useEffect(() => {
     setTimeout(() => {
       setValue('data loaded from server');
-    }, 5000);
+    }, 2000);
 
     setTimeout(() => {
       console.log(getValue());
-    }, 6000);
+    }, 3000);
   }, []);
 
   const text = value || 'Loading...';
