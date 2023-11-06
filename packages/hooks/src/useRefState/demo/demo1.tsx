@@ -1,17 +1,17 @@
 /**
  * title: Basic usage
- * desc: useSize can receive ref as argument
+ * desc: useRefState The closure trap is solved by adding a function that gets the current state
  *
  * title.zh-CN: 基础用法
- * desc.zh-CN: useSize 可以接收 ref 参数
+ * desc.zh-CN: useRefState 多了一个获取当前最新state的函数，解决了闭包陷阱
  */
 
 import React, { useEffect } from 'react';
-import { useStateRef } from 'ahooks';
+import { useRefState } from 'ahooks';
 
 
 export default () => {
-  const [value, setValue, getValue] = useStateRef(false);
+  const [value, setValue, getValue] = useRefState(false);
 
   useEffect(() => {
     setTimeout(() => {
