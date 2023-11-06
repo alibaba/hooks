@@ -40,11 +40,6 @@ export default function useSelections<T>(items: T[], defaultSelected: T[] = []) 
     setSelected(Array.from(selectedSet));
   };
 
-  const clearAll = () => {
-    selectedSet.clear();
-    setSelected([]);
-  };
-
   const noneSelected = useMemo(() => items.every((o) => !selectedSet.has(o)), [items, selectedSet]);
 
   const allSelected = useMemo(
@@ -58,6 +53,11 @@ export default function useSelections<T>(items: T[], defaultSelected: T[] = []) 
   );
 
   const toggleAll = () => (allSelected ? unSelectAll() : selectAll());
+
+  const clearAll = () => {
+    selectedSet.clear();
+    setSelected([]);
+  };
 
   return {
     selected,
