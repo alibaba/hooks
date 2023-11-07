@@ -12,11 +12,11 @@ function useRefState<S = undefined>(): [
   Dispatch<SetStateAction<S | undefined>>,
   GetStateAction<S | undefined>,
 ];
-function useRefState<T>(value?: T) {
+function useRefState<S>(value?: S) {
   const [state, setState] = useState(value);
   const stateRef = useRef(state);
 
-  const setRefState = useCallback((patch: T | ((state?: T) => T)) => {
+  const setRefState = useCallback((patch: S | ((state?: S) => S)) => {
     const newState = isFunction(patch) ? patch(stateRef.current) : patch;
     stateRef.current = newState;
     setState(newState);
