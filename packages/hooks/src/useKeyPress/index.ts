@@ -17,6 +17,7 @@ export type Options = {
   target?: Target;
   exactMatch?: boolean;
   useCapture?: boolean;
+  observe?: boolean;
 };
 
 // 键盘事件 keyCode 别名
@@ -225,12 +226,21 @@ function useKeyPress(
   eventHandler: (event: KeyboardEvent, key: KeyType) => void,
   option?: Options,
 ) {
-  const { events = defaultEvents, target, exactMatch = false, useCapture = false } = option || {};
+  const {
+    events = defaultEvents,
+    target,
+    exactMatch = false,
+    useCapture = false,
+    observe = true,
+  } = option || {};
   const eventHandlerRef = useLatest(eventHandler);
   const keyFilterRef = useLatest(keyFilter);
 
   useDeepCompareEffectWithTarget(
     () => {
+      if (!observe) {
+        return;
+      }
       const el = getTargetElement(target, window);
       if (!el) {
         return;
@@ -255,7 +265,7 @@ function useKeyPress(
         }
       };
     },
-    [events],
+    [events, observe],
     target,
   );
 }
