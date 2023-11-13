@@ -16,6 +16,30 @@ describe('useKeyPress ', () => {
     unmount();
   });
 
+  it('test single key by observe', async () => {
+    const callbackDefault = jest.fn();
+    const callbackFalse = jest.fn();
+    const callbackTrue = jest.fn();
+    const hook1 = renderHook(() => useKeyPress(['c'], callbackDefault));
+    const hook2 = renderHook(() =>
+      useKeyPress(['c'], callbackFalse, {
+        observe: false,
+      }),
+    );
+    const hook3 = renderHook(() =>
+      useKeyPress(['c'], callbackTrue, {
+        observe: true,
+      }),
+    );
+    fireEvent.keyDown(document, { key: 'c', keyCode: 67 });
+    expect(callbackDefault.mock.calls.length).toBe(1);
+    expect(callbackFalse.mock.calls.length).toBe(0);
+    expect(callbackTrue.mock.calls.length).toBe(1);
+    hook1.unmount();
+    hook2.unmount();
+    hook3.unmount();
+  });
+
   it('test modifier key', async () => {
     const { unmount } = renderHook(() => useKeyPress(['ctrl'], callback));
     fireEvent.keyDown(document, { key: 'ctrl', keyCode: 17, ctrlKey: true });
