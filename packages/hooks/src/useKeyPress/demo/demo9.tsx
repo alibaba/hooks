@@ -4,11 +4,12 @@ import { Switch } from 'antd';
 
 export default () => {
   const [counter, setCounter] = useState(0);
-  const [observe, { toggle }] = useBoolean();
+  const [observe, { toggle }] = useBoolean(true);
+
   useKeyPress(
-    'uparrow',
+    'w',
     () => {
-      setCounter((s) => s + 1);
+      setCounter((prev) => prev + 1);
     },
     {
       observe,
@@ -21,7 +22,7 @@ export default () => {
         Switch observe state &nbsp;
         <Switch checked={observe} onChange={toggle} />
       </div>
-      <div>Press ArrowUp by key to increase when observe state is checked</div>
+      <div>Press [w] to increase when observe state is checked</div>
       <div>
         counter: <span style={{ color: '#f00' }}>{counter}</span>
       </div>

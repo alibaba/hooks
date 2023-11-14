@@ -70,7 +70,7 @@ useKeyPress(
 | target     | DOM 节点或者 ref                                                                            | `() => Element` \| `Element` \| `MutableRefObject<Element>` | -             |
 | exactMatch | 精确匹配。如果开启，则只有在按键完全匹配的情况下触发事件。比如按键 [shift + c] 不会触发 [c] | `boolean`                                                   | `false`       |
 | useCapture | 是否阻止事件冒泡                                                                            | `boolean`                                                   | `false`       |
-| observe    | 控制监听状态 为 false 时不会触发任何事件                                                    | `boolean`                                                   | `true`        |
+| observe    | 是否开启监听状态，为 false 时不会触发回调函数                                               | `boolean`                                                   | `true`        |
 
 ## Remarks
 

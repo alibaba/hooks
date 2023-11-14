@@ -70,7 +70,7 @@ useKeyPress(
 | target     | DOM element or ref                                                                                                                             | `() => Element` \| `Element` \| `MutableRefObject<Element>` | -             |
 | exactMatch | Exact match. If set `true`, the event will only be trigger when the keys match exactly. For example, pressing [shift + c] will not trigger [c] | `boolean`                                                   | `false`       |
 | useCapture | to block events bubbling                                                                                                                       | `boolean`                                                   | `false`       |
-| observe    | to control the observe state. If set `true`, the event will be trigger when the element is in focus.                                           | `boolean`                                                   | `true`        |
+| observe    | to control the observe state. If set `false`, the callback will not be triggered.                                                              | `boolean`                                                   | `true`        |
 
 ## Remarks
 
