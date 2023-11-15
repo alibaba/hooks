@@ -14,6 +14,27 @@ export interface FetchState<TData, TParams extends any[]> {
   error?: Error;
 }
 
+export enum Trigger {
+  // 自动触发
+  AUTO = 'AUTO',
+  // 调用run
+  RUN = 'RUN',
+  // 调用runAsync
+  RUN_ASYNC = 'RUN_ASYNC',
+  // 调用refresh
+  REFRESH = 'REFRESH',
+  // 调用refreshAsync
+  REFRESH_ASYNC = 'REFRESH_ASYNC',
+  // 来自轮询
+  POLLING = 'POLLING',
+  // 来自依赖变更
+  REFRESH_DEPS = 'REFRESH_DEPS',
+  // 来自重新聚焦
+  REFRESH_ON_WINDOW_FOCUS = 'REFRESH_ON_WINDOW_FOCUS',
+  // 来自重试
+  RETRY = 'RETRY',
+}
+
 export interface PluginReturn<TData, TParams extends any[]> {
   onBefore?: (params: TParams) =>
     | ({
@@ -41,7 +62,7 @@ export interface PluginReturn<TData, TParams extends any[]> {
 export interface Options<TData, TParams extends any[]> {
   manual?: boolean;
 
-  onBefore?: (params: TParams) => void;
+  onBefore?: (params: TParams, trigger: Trigger | undefined) => void;
   onSuccess?: (data: TData, params: TParams) => void;
   onError?: (e: Error, params: TParams) => void;
   // formatResult?: (res: any) => TData;

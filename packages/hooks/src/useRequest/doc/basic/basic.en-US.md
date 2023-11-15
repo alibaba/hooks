@@ -137,7 +137,7 @@ const {
   {
     manual?: boolean,
     defaultParams?: TParams,
-    onBefore?: (params: TParams) => void,
+    onBefore?: (params: TParams, trigget: Trigger) => void,
     onSuccess?: (data: TData, params: TParams) => void,
     onError?: (e: Error, params: TParams) => void,
     onFinally?: (params: TParams, data?: TData, e?: Error) => void,
@@ -166,9 +166,23 @@ const {
 | ------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------- | ------- |
 | manual        | <ul><li> The default is `false`. That is, the service is automatically executed during initialization. </li><li>If set to `true`, you need to manually call `run` or `runAsync` to trigger execution. </li></ul> | `boolean`                                            | `false` |
 | defaultParams | The parameters passed to the service at the first default execution                                                                                                                                              | `TParams`                                            | -       |
-| onBefore      | Triggered before service execution                                                                                                                                                                               | `(params: TParams) => void`                          | -       |
+| onBefore      | Triggered before service execution                                                                                                                                                                               | `(params: TParams, trigget: Trigger) => void`        | -       |
 | onSuccess     | Triggered when service resolve                                                                                                                                                                                   | `(data: TData, params: TParams) => void`             | -       |
 | onError       | Triggered when service reject                                                                                                                                                                                    | `(e: Error, params: TParams) => void`                | -       |
 | onFinally     | Triggered when service execution is complete                                                                                                                                                                     | `(params: TParams, data?: TData, e?: Error) => void` | -       |
+
+### Trigger
+
+| EnumValue               | Description               |
+| ----------------------- | ------------------------- |
+| AUTO                    | From first time auto run  |
+| RUN                     | Call `run`                |
+| RUN_ASYNC               | Call `runAsync`           |
+| REFRESH                 | Call `refresh`            |
+| REFRESH_ASYNC           | Call `refreshAsync`       |
+| POLLING                 | From polling              |
+| REFRESH_DEPS            | From refreshDeps          |
+| REFRESH_ON_WINDOW_FOCUS | From refreshOnWindowFocus |
+| RETRY                   | From retry                |
 
 Above we have introduced the most basic functionalities of useRequest, and then we will introduce some more advanced functionalities.

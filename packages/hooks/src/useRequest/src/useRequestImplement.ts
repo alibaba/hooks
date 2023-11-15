@@ -8,6 +8,7 @@ import isDev from '../../utils/isDev';
 
 import Fetch from './Fetch';
 import type { Options, Plugin, Result, Service } from './types';
+import { Trigger } from './types';
 
 function useRequestImplement<TData, TParams extends any[]>(
   service: Service<TData, TParams>,
@@ -49,6 +50,7 @@ function useRequestImplement<TData, TParams extends any[]>(
     if (!manual) {
       // useCachePlugin can set fetchInstance.state.params from cache when init
       const params = fetchInstance.state.params || options.defaultParams || [];
+      fetchInstance.setTrigger(Trigger.AUTO);
       // @ts-ignore
       fetchInstance.run(...params);
     }

@@ -137,7 +137,7 @@ const {
   {
     manual?: boolean,
     defaultParams?: TParams,
-    onBefore?: (params: TParams) => void,
+    onBefore?: (params: TParams, trigget: Trigger) => void,
     onSuccess?: (data: TData, params: TParams) => void,
     onError?: (e: Error, params: TParams) => void,
     onFinally?: (params: TParams, data?: TData, e?: Error) => void,
@@ -166,9 +166,23 @@ const {
 | ------------- | ------------------------------------------------------------------------------------------------------------------------------------------ | ---------------------------------------------------- | ------- |
 | manual        | <ul><li> 默认 `false`。 即在初始化时自动执行 service。</li><li>如果设置为 `true`，则需要手动调用 `run` 或 `runAsync` 触发执行。 </li></ul> | `boolean`                                            | `false` |
 | defaultParams | 首次默认执行时，传递给 service 的参数                                                                                                      | `TParams`                                            | -       |
-| onBefore      | service 执行前触发                                                                                                                         | `(params: TParams) => void`                          | -       |
+| onBefore      | service 执行前触发                                                                                                                         | `(params: TParams, trigget: Trigger) => void`        | -       |
 | onSuccess     | service resolve 时触发                                                                                                                     | `(data: TData, params: TParams) => void`             | -       |
 | onError       | service reject 时触发                                                                                                                      | `(e: Error, params: TParams) => void`                | -       |
 | onFinally     | service 执行完成时触发                                                                                                                     | `(params: TParams, data?: TData, e?: Error) => void` | -       |
+
+### Trigger
+
+| 枚举值                  | 说明                 |
+| ----------------------- | -------------------- |
+| AUTO                    | 首次自动触发         |
+| RUN                     | 调用`run`            |
+| RUN_ASYNC               | 调用`runAsync`       |
+| REFRESH                 | 调用`refresh`        |
+| REFRESH_ASYNC           | 调用`refreshAsync`   |
+| POLLING                 | 来自轮询             |
+| REFRESH_DEPS            | 来自依赖变更         |
+| REFRESH_ON_WINDOW_FOCUS | 来自屏幕聚焦重新请求 |
+| RETRY                   | 来自错误重试         |
 
 以上我们介绍了 useRequest 最基础的功能，接下来我们介绍一些更高级的能力。

@@ -2,11 +2,12 @@
 import { isFunction } from '../../utils';
 import type { MutableRefObject } from 'react';
 import type { FetchState, Options, PluginReturn, Service, Subscribe } from './types';
-
+import { Trigger } from './types';
 export default class Fetch<TData, TParams extends any[]> {
   pluginImpls: PluginReturn<TData, TParams>[];
 
   count: number = 0;
+  trigger: Trigger | undefined;
 
   state: FetchState<TData, TParams> = {
     loading: false,
@@ -36,6 +37,17 @@ export default class Fetch<TData, TParams extends any[]> {
     this.subscribe();
   }
 
+  setTrigger(triggerValue: Trigger) {
+    if (this.trigger) {
+      return;
+    }
+    this.trigger = triggerValue;
+  }
+
+  clearTrigger() {
+    this.trigger = undefined;
+  }
+
   runPluginHandler(event: keyof PluginReturn<TData, TParams>, ...rest: any[]) {
     // @ts-ignore
     const r = this.pluginImpls.map((i) => i[event]?.(...rest)).filter(Boolean);
@@ -44,6 +56,7 @@ export default class Fetch<TData, TParams extends any[]> {
 
   async runAsync(...params: TParams): Promise<TData> {
     this.count += 1;
+    this.setTrigger(Trigger.RUN_ASYNC);
     const currentCount = this.count;
 
     const {
@@ -54,6 +67,7 @@ export default class Fetch<TData, TParams extends any[]> {
 
     // stop request
     if (stopNow) {
+      this.clearTrigger();
       return new Promise(() => {});
     }
 
@@ -65,11 +79,12 @@ export default class Fetch<TData, TParams extends any[]> {
 
     // return now
     if (returnNow) {
+      this.clearTrigger();
       return Promise.resolve(state.data);
     }
 
-    this.options.onBefore?.(params);
-
+    this.options.onBefore?.(params, this.trigger);
+    this.clearTrigger();
     try {
       // replace service
       let { servicePromise } = this.runPluginHandler('onRequest', this.serviceRef.current, params);
@@ -128,6 +143,7 @@ export default class Fetch<TData, TParams extends any[]> {
   }
 
   run(...params: TParams) {
+    this.setTrigger(Trigger.RUN);
     this.runAsync(...params).catch((error) => {
       if (!this.options.onError) {
         console.error(error);
@@ -145,11 +161,13 @@ export default class Fetch<TData, TParams extends any[]> {
   }
 
   refresh() {
+    this.setTrigger(Trigger.REFRESH);
     // @ts-ignore
     this.run(...(this.state.params || []));
   }
 
   refreshAsync() {
+    this.setTrigger(Trigger.REFRESH_ASYNC);
     // @ts-ignore
     return this.runAsync(...(this.state.params || []));
   }
