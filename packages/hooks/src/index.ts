@@ -73,6 +73,7 @@ import useUpdateEffect from './useUpdateEffect';
 import useUpdateLayoutEffect from './useUpdateLayoutEffect';
 import useVirtualList from './useVirtualList';
 import useWebSocket from './useWebSocket';
+import useTransfer from './useTransfer';
 import useWhyDidYouUpdate from './useWhyDidYouUpdate';
 import useMutationObserver from './useMutationObserver';
 
@@ -156,4 +157,5 @@ export {
   useRafTimeout,
   useResetState,
   useMutationObserver,
+  useTransfer,
 };
