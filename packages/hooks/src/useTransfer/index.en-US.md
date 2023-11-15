@@ -5,7 +5,7 @@ nav:
 
 # useTransfer
 
-Encapsulates the common logic of Antd Transfer, making it easier for you to manage.
+Encapsulates the common logic of Antd Transfer.
 
 ## Examples
 

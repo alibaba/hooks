@@ -5,7 +5,7 @@ nav:
 
 # useTransfer
 
-封装了 Antd Transfer 常用的逻辑，让你更轻松的管理。
+封装了 Antd Transfer 常用的逻辑。
 
 ## 代码演示
 
