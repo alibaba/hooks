@@ -37,6 +37,9 @@ const useCachePlugin: Plugin<any, any[]> = (
     return getCache(key);
   };
 
+  const _isFresh = (cacheData: CachedData) =>
+    staleTime === -1 || new Date().getTime() - cacheData.time <= staleTime;
+
   useCreation(() => {
     if (!cacheKey) {
       return;
@@ -47,12 +50,12 @@ const useCachePlugin: Plugin<any, any[]> = (
     if (cacheData && Object.hasOwnProperty.call(cacheData, 'data')) {
       fetchInstance.state.data = cacheData.data;
       fetchInstance.state.params = cacheData.params;
-      if (staleTime === -1 || new Date().getTime() - cacheData.time <= staleTime) {
+      if (_isFresh(cacheData)) {
         fetchInstance.state.loading = false;
       }
     }
 
-    // subscribe same cachekey update, trigger update
+    // subscribe same cacheKey update, trigger update
     unSubscribeRef.current = subscribe(cacheKey, (data) => {
       fetchInstance.setState({ data });
     });
@@ -73,9 +76,8 @@ const useCachePlugin: Plugin<any, any[]> = (
       if (!cacheData || !Object.hasOwnProperty.call(cacheData, 'data')) {
         return {};
       }
-
-      // If the data is fresh, stop request
-      if (staleTime === -1 || new Date().getTime() - cacheData.time <= staleTime) {
+      // If the data is fresh && don't need to skip stale time, stop request
+      if (_isFresh(cacheData) && !fetchInstance.getTempConfig('skipStaleTime')) {
         return {
           loading: false,
           data: cacheData?.data,
@@ -105,7 +107,7 @@ const useCachePlugin: Plugin<any, any[]> = (
     },
     onSuccess: (data, params) => {
       if (cacheKey) {
-        // cancel subscribe, avoid trgger self
+        // cancel subscribe, avoid trigger self
         unSubscribeRef.current?.();
         _setCache(cacheKey, {
           data,

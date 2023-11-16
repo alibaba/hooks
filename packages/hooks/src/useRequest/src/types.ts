@@ -34,7 +34,12 @@ export enum Trigger {
   // 来自重试
   RETRY = 'RETRY',
 }
-
+export interface RefreshOptions {
+  skipStaleTime?: boolean;
+}
+export interface TempConfig extends RefreshOptions {
+  trigger: Trigger | undefined;
+}
 export interface PluginReturn<TData, TParams extends any[]> {
   onBefore?: (params: TParams) =>
     | ({

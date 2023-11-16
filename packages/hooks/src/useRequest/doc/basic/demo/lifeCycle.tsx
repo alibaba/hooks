@@ -17,7 +17,7 @@ function editUsername(username: string): Promise<void> {
 export default () => {
   const [state, setState] = useState('');
 
-  const { loading, run, refresh, refreshAsync } = useRequest(editUsername, {
+  const { loading, run, refresh } = useRequest(editUsername, {
     manual: true,
     onBefore: (params, trigger) => {
       message.info(`${trigger} :Start Request: ${params[0]}`);
@@ -45,7 +45,7 @@ export default () => {
       <button disabled={loading} type="button" onClick={() => run(state)}>
         {loading ? 'Loading' : 'Edit'}
       </button>
-      <button disabled={loading} type="button" onClick={refresh}>
+      <button disabled={loading} type="button" onClick={() => refresh()} style={{ marginLeft: 16 }}>
         refresh
       </button>
     </div>

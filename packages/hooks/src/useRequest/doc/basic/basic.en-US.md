@@ -128,7 +128,7 @@ const {
   params: TParams || [],
   run: (...params: TParams) => void,
   runAsync: (...params: TParams) => Promise<TData>,
-  refresh: () => void,
+  refresh: (options?: RefreshOptions) => void,
   refreshAsync: () => Promise<TData>,
   mutate: (data?: TData | ((oldData?: TData) => (TData | undefined))) => void,
   cancel: () => void,
@@ -155,7 +155,7 @@ const {
 | params       | An array of parameters for the service being executed. For example, you triggered `run(1, 2, 3)`, then params is equal to `[1, 2, 3]`                                                   | `TParams` \| `[]`                                                     |
 | run          | <ul><li> Manually trigger the execution of the service, and the parameters will be passed to the service</li><li>Automatic handling of exceptions, feedback through `onError`</li></ul> | `(...params : TParams) => void`                                       |
 | runAsync     | The usage is the same as `run`, but it returns a Promise, so you need to handle the exception yourself.                                                                                 | `(...params: TParams) => Promise<TData>`                              |
-| refresh      | Use the last params, call `run` again                                                                                                                                                   | `() => void`                                                          |
+| refresh      | Use the last params, call `run` again                                                                                                                                                   | `(options?:RefreshOptions) => void`                                   |
 | refreshAsync | Use the last params, call `runAsync` again                                                                                                                                              | `() => Promise<TData>`                                                |
 | mutate       | Mutate `data` directly                                                                                                                                                                  | `(data?: TData / ((oldData?: TData) => (TData / undefined))) => void` |
 | cancel       | Ignore the current promise response                                                                                                                                                     | `() => void`                                                          |
@@ -170,6 +170,12 @@ const {
 | onSuccess     | Triggered when service resolve                                                                                                                                                                                   | `(data: TData, params: TParams) => void`             | -       |
 | onError       | Triggered when service reject                                                                                                                                                                                    | `(e: Error, params: TParams) => void`                | -       |
 | onFinally     | Triggered when service execution is complete                                                                                                                                                                     | `(params: TParams, data?: TData, e?: Error) => void` | -       |
+
+### RefreshOptions
+
+| 参数          | 说明             | 类型      | 默认值  |
+| ------------- | ---------------- | --------- | ------- |
+| skipStaleTime | skip `staleTime` | `boolean` | `false` |
 
 ### Trigger
 

@@ -70,6 +70,41 @@ describe('useCachePlugin', () => {
     expect(hook3.result.current.loading).toBe(false);
   });
 
+  it('useRequest skipStaleTime should work', async () => {
+    await testCacheKey({
+      cacheKey: 'testSkipStaleTime',
+      staleTime: 3000,
+    });
+    jest.advanceTimersByTime(1000);
+    const hook2 = setup(request, {
+      cacheKey: 'testSkipStaleTime',
+      staleTime: 3000,
+    });
+    act(() => {
+      hook2.result.current.refresh();
+    });
+    expect(hook2.result.current.loading).toBe(false);
+    expect(hook2.result.current.data).toBe('success');
+    act(() => {
+      hook2.result.current.refresh({
+        skipStaleTime: true,
+      });
+    });
+    expect(hook2.result.current.loading).toBe(true);
+    await waitFor(() => expect(hook2.result.current.data).toBe('success'));
+    act(() => {
+      hook2.result.current.refresh();
+    });
+    expect(hook2.result.current.loading).toBe(false);
+    act(() => {
+      hook2.result.current.refresh({
+        skipStaleTime: true,
+      });
+    });
+    expect(hook2.result.current.loading).toBe(true);
+    hook2.unmount();
+  });
+
   it('useRequest cacheTime should work', async () => {
     await testCacheKey({
       cacheKey: 'testCacheTime',
