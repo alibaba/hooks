@@ -11,7 +11,7 @@ import type {
   TempConfig,
 } from './types';
 import { Trigger } from './types';
-import { omit } from 'lodash-es';
+import { pick, keys } from 'lodash-es';
 
 const getDefaultTempConfig: () => TempConfig = () => ({
   trigger: undefined,
@@ -56,7 +56,10 @@ export default class Fetch<TData, TParams extends any[]> {
     this.tempConfig = {
       ...this.tempConfig,
       // 不允许修改触发器类型
-      ...omit(config, 'trigger'),
+      ...pick(
+        config,
+        keys(getDefaultTempConfig()).filter((key) => key !== 'trigger'),
+      ),
     };
   }
   getTempConfig(key: keyof TempConfig | undefined) {
