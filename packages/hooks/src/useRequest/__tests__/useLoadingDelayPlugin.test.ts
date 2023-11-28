@@ -1,4 +1,5 @@
 import { act, renderHook, waitFor } from '@testing-library/react';
+import type { RenderHookResult } from '@testing-library/react';
 import useRequest from '../index';
 import { request } from '../../utils/testingHelpers';
 
@@ -6,8 +7,12 @@ describe('useLoadingDelayPlugin', () => {
   jest.useFakeTimers();
 
   const setUp = (service, options) => renderHook((o) => useRequest(service, o || options));
+  let hook: RenderHookResult<ReturnType<typeof useRequest>, any>;
 
-  let hook;
+  afterEach(() => {
+    hook.unmount();
+  });
+
   it('useLoadingDelayPlugin should work', async () => {
     act(() => {
       hook = setUp(request, {
@@ -53,7 +58,7 @@ describe('useLoadingDelayPlugin', () => {
       jest.advanceTimersByTime(3000);
     });
 
-    expect(hook.result.current.loading).toBe(false);
+    await waitFor(() => expect(hook.result.current.loading).toBe(false));
   });
 
   it('useLoadingDelayPlugin should update loading when ready is undefined', async () => {
@@ -68,6 +73,6 @@ describe('useLoadingDelayPlugin', () => {
       jest.advanceTimersByTime(3000);
     });
 
-    expect(hook.result.current.loading).toBe(true);
+    await waitFor(() => expect(hook.result.current.loading).toBe(true));
   });
 });
