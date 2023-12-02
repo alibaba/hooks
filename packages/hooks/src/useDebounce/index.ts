@@ -1,6 +1,7 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import useDebounceFn from '../useDebounceFn';
 import type { DebounceOptions } from './debounceOptions';
+import useUpdateEffect from '../useUpdateEffect';
 
 function useDebounce<T>(value: T, options?: DebounceOptions) {
   const [debounced, setDebounced] = useState(value);
@@ -9,7 +10,7 @@ function useDebounce<T>(value: T, options?: DebounceOptions) {
     setDebounced(value);
   }, options);
 
-  useEffect(() => {
+  useUpdateEffect(() => {
     run();
   }, [value]);
 
