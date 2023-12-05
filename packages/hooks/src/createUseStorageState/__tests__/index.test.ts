@@ -97,4 +97,23 @@ describe('useStorageState', () => {
     act(() => hook.result.current.setState());
     expect(hook.result.current.state).toBeUndefined();
   });
+
+  it('should continuous calls to setState take effect', () => {
+    const hook = setUp({ key: 'key', defaultValue: 'defaultValue' });
+    expect(hook.result.current.state).toBe('defaultValue');
+    act(() => {
+      hook.result.current.setState('A');
+      hook.result.current.setState((pre) => {
+        expect(pre).toBe('A');
+        return 'B';
+      });
+      hook.result.current.setState((pre) => {
+        expect(pre).toBe('B');
+        return 'C';
+      });
+    });
+    expect(hook.result.current.state).toBe('C');
+    hook.rerender({ key: 'key' });
+    expect(hook.result.current.state).toBe('C');
+  });
 });
