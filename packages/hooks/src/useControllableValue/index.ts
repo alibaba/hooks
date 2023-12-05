@@ -21,11 +21,11 @@ export interface StandardProps<T> {
 
 function useControllableValue<T = any>(
   props: StandardProps<T>,
-): [T, (v: SetStateAction<T>) => void];
+): [T, (v: SetStateAction<T>) => void | Promise<unknown>];
 function useControllableValue<T = any>(
   props?: Props,
   options?: Options<T>,
-): [T, (v: SetStateAction<T>, ...args: any[]) => void];
+): [T, (v: SetStateAction<T>, ...args: any[]) => void | Promise<unknown>];
 function useControllableValue<T = any>(props: Props = {}, options: Options<T> = {}) {
   const {
     defaultValue,
@@ -62,7 +62,7 @@ function useControllableValue<T = any>(props: Props = {}, options: Options<T> = 
       update();
     }
     if (props[trigger]) {
-      props[trigger](r, ...args);
+      return props[trigger](r, ...args);
     }
   }
 

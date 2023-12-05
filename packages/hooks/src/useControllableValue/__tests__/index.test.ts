@@ -1,5 +1,6 @@
 import { act, renderHook } from '@testing-library/react';
 import useControllableValue, { Options, Props } from '../index';
+import { sleep } from '../../utils/testingHelpers';
 
 describe('useControllableValue', () => {
   const setUp = (props?: Props, options?: Options<any>): any =>
@@ -36,6 +37,23 @@ describe('useControllableValue', () => {
     });
     expect(props.value).toBe(3);
     expect(extraParam).toBe('extraParam');
+  });
+
+  it('onChange return promise should work', async () => {
+    const props = {
+      value: 2,
+      loading: true,
+      async onChange(val: number) {
+        await sleep(10);
+        this.value = val + 10;
+      },
+    };
+    const hook = setUp(props);
+    expect(hook.result.current[0]).toBe(2);
+    const result = hook.result.current[1](3);
+    expect(result).toBeInstanceOf(Promise);
+    await result;
+    expect(props.value).toBe(13);
   });
 
   it('test on state update', () => {
