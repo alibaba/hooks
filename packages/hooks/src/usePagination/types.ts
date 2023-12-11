@@ -11,6 +11,7 @@ export type Service<TData extends Data, TParams extends Params> = (
 export interface PaginationResult<TData extends Data, TParams extends Params>
   extends Result<TData, TParams> {
   pagination: {
+    pageSizeOptions: number[];
     current: number;
     pageSize: number;
     total: number;

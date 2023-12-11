@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useMemo, useEffect } from 'react';
 import useMemoizedFn from '../useMemoizedFn';
 import useRequest from '../useRequest';
 
@@ -8,10 +8,29 @@ const usePagination = <TData extends Data, TParams extends Params>(
   service: Service<TData, TParams>,
   options: PaginationOptions<TData, TParams> = {},
 ) => {
+  const defaultPageSizeOptions = [10, 20, 50, 100];
   const { defaultPageSize = 10, defaultCurrent = 1, ...rest } = options;
 
+  const pageSizeOptions = useMemo(() => {
+    if (defaultPageSizeOptions.includes(defaultPageSize)) {
+      return defaultPageSizeOptions;
+    } else {
+      return [...defaultPageSizeOptions, defaultPageSize].sort((a, b) => a - b);
+    }
+  }, [defaultPageSize]);
+
+  useEffect(() => {
+    console.log(pageSizeOptions, 'pageSizeOptions');
+  }, [pageSizeOptions]);
+
   const result = useRequest(service, {
-    defaultParams: [{ current: defaultCurrent, pageSize: defaultPageSize }],
+    defaultParams: [
+      {
+        current: defaultCurrent,
+        pageSize: defaultPageSize,
+        pageSizeOptions,
+      },
+    ],
     refreshDepsAction: () => {
       // eslint-disable-next-line @typescript-eslint/no-use-before-define
       changeCurrent(1);
@@ -59,6 +78,7 @@ const usePagination = <TData extends Data, TParams extends Params>(
       pageSize,
       total,
       totalPage,
+      pageSizeOptions,
       onChange: useMemoizedFn(onChange),
       changeCurrent: useMemoizedFn(changeCurrent),
       changePageSize: useMemoizedFn(changePageSize),
