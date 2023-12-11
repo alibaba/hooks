@@ -28,6 +28,7 @@ const useAntdTable = <TData extends Data, TParams extends Params>(
 
   const result = usePagination<TData, TParams>(service, {
     manual: true,
+    defaultPageSize: defaultParams?.[0]?.pageSize || 10,
     ...rest,
     onSuccess(...args) {
       // eslint-disable-next-line @typescript-eslint/no-use-before-define
@@ -261,6 +262,7 @@ const useAntdTable = <TData extends Data, TParams extends Params>(
         current: result.pagination.current,
         pageSize: result.pagination.pageSize,
         total: result.pagination.total,
+        pageSizeOptions: result.pagination.pageSizeOptions,
       },
     },
     search: {

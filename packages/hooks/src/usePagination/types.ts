@@ -15,6 +15,7 @@ export interface PaginationResult<TData extends Data, TParams extends Params>
     pageSize: number;
     total: number;
     totalPage: number;
+    pageSizeOptions: number[];
     onChange: (current: number, pageSize: number) => void;
     changeCurrent: (current: number) => void;
     changePageSize: (pageSize: number) => void;
