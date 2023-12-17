@@ -8,6 +8,10 @@ export interface Options {
   onChange?: (isHovering: boolean) => void;
 }
 
+/**
+ * A hook that tracks whether the element is being hovered.
+ * @see https://ahooks.js.org/hooks/use-hover
+ */
 export default (target: BasicTarget, options?: Options): boolean => {
   const { onEnter, onLeave, onChange } = options || {};
 
