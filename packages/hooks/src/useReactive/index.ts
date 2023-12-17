@@ -54,6 +54,10 @@ function observer<T extends Record<string, any>>(initialVal: T, cb: () => void):
   return proxy;
 }
 
+/**
+ * It offers data reactivity when manipulating states and views, in which case `useState` is unnecessary for state definition. Modifying properties will automatically lead to view rerendering.
+ * @see https://ahooks.js.org/hooks/use-reactive
+ */
 function useReactive<S extends Record<string, any>>(initialState: S): S {
   const update = useUpdate();
   const stateRef = useRef<S>(initialState);
