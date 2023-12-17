@@ -19,6 +19,10 @@ export interface StandardProps<T> {
   onChange: (val: T) => void;
 }
 
+/**
+ * Controlled and uncontrolled
+ * @see https://ahooks.js.org/hooks/use-controllable-value)
+ */
 function useControllableValue<T = any>(
   props: StandardProps<T>,
 ): [T, (v: SetStateAction<T>) => void];
