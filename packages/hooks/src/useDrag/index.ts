@@ -16,6 +16,10 @@ export interface Options {
   };
 }
 
+/**
+ * help you manage data transfer between drag and drop
+ * @see https://ahooks.js.org/hooks/use-drop
+ */
 const useDrag = <T>(data: T, target: BasicTarget, options: Options = {}) => {
   const optionsRef = useLatest(options);
   const dataRef = useLatest(data);

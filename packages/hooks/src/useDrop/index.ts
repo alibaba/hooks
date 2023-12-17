@@ -16,6 +16,10 @@ export interface Options {
   onPaste?: (event?: React.ClipboardEvent) => void;
 }
 
+/**
+ * help you manage data transfer between drag and drop
+ * @see https://ahooks.js.org/hooks/use-drop
+ */
 const useDrop = (target: BasicTarget, options: Options = {}) => {
   const optionsRef = useLatest(options);
 
