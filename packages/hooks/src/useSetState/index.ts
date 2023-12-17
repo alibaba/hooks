@@ -5,6 +5,10 @@ export type SetState<S extends Record<string, any>> = <K extends keyof S>(
   state: Pick<S, K> | null | ((prevState: Readonly<S>) => Pick<S, K> | S | null),
 ) => void;
 
+/**
+ * useSetState works similar to `this.setState` of class component, used to manage the state of object type.
+ * @see https://ahooks.js.org/hooks/use-set-state
+ */
 const useSetState = <S extends Record<string, any>>(
   initialState: S | (() => S),
 ): [S, SetState<S>] => {
