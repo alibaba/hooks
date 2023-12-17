@@ -39,6 +39,10 @@ const clearRafInterval = function (handle: Handle) {
   cancelAnimationFrame(handle.id);
 };
 
+/**
+ * A hook implements with `requestAnimationFrame` for better performance.
+ * @see https://ahooks.js.org/hooks/use-raf-interval
+ */
 function useRafInterval(
   fn: () => void,
   delay: number | undefined,
