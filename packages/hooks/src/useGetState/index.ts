@@ -3,6 +3,10 @@ import { useState, useRef, useCallback } from 'react';
 
 type GetStateAction<S> = () => S;
 
+/**
+ * Add a getter method to the return value of `React.useState` to get the latest value
+ * @see https://ahooks.js.org/hooks/use-get-state
+ */
 function useGetState<S>(
   initialState: S | (() => S),
 ): [S, Dispatch<SetStateAction<S>>, GetStateAction<S>];
