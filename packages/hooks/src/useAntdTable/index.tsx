@@ -12,6 +12,10 @@ import type {
   AntdTableResult,
 } from './types';
 
+/**
+ * `useAntdTable` is implemented based on [useRequest](https://ahooks.js.org/hooks/use-request/index) and encapsulates the commonly used [Ant Design Form](https://ant.design/components/form/) and [Ant Design Table](https://ant.design/components/table/) data binding logic, and supports both antd v3 and v4.
+ * @see https://ahooks.js.org/hooks/use-antd-table
+ */
 const useAntdTable = <TData extends Data, TParams extends Params>(
   service: Service<TData, TParams>,
   options: AntdTableOptions<TData, TParams> = {},
