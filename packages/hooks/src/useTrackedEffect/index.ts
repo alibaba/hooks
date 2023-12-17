@@ -20,6 +20,10 @@ const diffTwoDeps = (deps1?: DependencyList, deps2?: DependencyList) => {
     : [];
 };
 
+/**
+ * A hook of useEffect that allow us to track which dependencies caused the effect to trigger.
+ * @see https://ahooks.js.org/hooks/use-tracked-effect
+ */
 const useTrackedEffect = <T extends DependencyList>(effect: Effect<T>, deps?: [...T]) => {
   const previousDepsRef = useRef<T>();
 
