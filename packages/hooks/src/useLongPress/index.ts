@@ -18,6 +18,10 @@ const touchSupported =
   // @ts-ignore
   ('ontouchstart' in window || (window.DocumentTouch && document instanceof DocumentTouch));
 
+/**
+ * Listen for the long press event of the target element.
+ * @see https://ahooks.js.org/hooks/use-long-press
+ */
 function useLongPress(
   onLongPress: (event: EventType) => void,
   target: BasicTarget,
