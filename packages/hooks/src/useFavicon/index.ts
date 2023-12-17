@@ -9,6 +9,10 @@ const ImgTypeMap = {
 
 type ImgTypes = keyof typeof ImgTypeMap;
 
+/**
+ * A hook that set the favicon of the page.
+ * @see https://ahooks.js.org/hooks/use-favicon
+ */
 const useFavicon = (href: string) => {
   useEffect(() => {
     if (!href) return;
