@@ -37,6 +37,10 @@ function getConnectionProperty(): NetworkState {
   };
 }
 
+/**
+ * A hook that tracks the state of network connection.
+ * @see https://ahooks.js.org/hooks/use-network
+ */
 function useNetwork(): NetworkState {
   const [state, setState] = useState(() => {
     return {
