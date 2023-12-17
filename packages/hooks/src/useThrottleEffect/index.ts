@@ -4,6 +4,10 @@ import type { ThrottleOptions } from '../useThrottle/throttleOptions';
 import useThrottleFn from '../useThrottleFn';
 import useUpdateEffect from '../useUpdateEffect';
 
+/**
+ * Throttle your `useEffect`.
+ * @see https://ahooks.js.org/hooks/use-throttle-effect
+ */
 function useThrottleEffect(
   effect: EffectCallback,
   deps?: DependencyList,
