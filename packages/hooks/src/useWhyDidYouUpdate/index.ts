@@ -2,6 +2,10 @@ import { useEffect, useRef } from 'react';
 
 export type IProps = Record<string, any>;
 
+/**
+ * Help developers troubleshoot what changes have caused component rerender.
+ * @see https://ahooks.js.org/hooks/use-why-did-you-update
+ */
 export default function useWhyDidYouUpdate(componentName: string, props: IProps) {
   const prevProps = useRef<IProps>({});
 
