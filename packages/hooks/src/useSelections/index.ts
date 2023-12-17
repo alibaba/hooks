@@ -1,6 +1,10 @@
 import { useMemo, useState } from 'react';
 import useMemoizedFn from '../useMemoizedFn';
 
+/**
+ * This hook is used for Checkbox group, supports multiple selection, single selection, select-all, select-none and semi-selected etc.
+ * @see https://ahooks.js.org/hooks/use-selections
+ */
 export default function useSelections<T>(items: T[], defaultSelected: T[] = []) {
   const [selected, setSelected] = useState<T[]>(defaultSelected);
 
