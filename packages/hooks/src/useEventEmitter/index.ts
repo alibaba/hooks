@@ -30,6 +30,10 @@ export class EventEmitter<T> {
   };
 }
 
+/**
+ * Simplifying multiple component passing of parameters
+ * @see https://ahooks.js.org/hooks/use-event-emitter
+ */
 export default function useEventEmitter<T = void>() {
   const ref = useRef<EventEmitter<T>>();
   if (!ref.current) {
