@@ -40,7 +40,7 @@ const clearRafInterval = function (handle: Handle) {
 };
 
 /**
- * A hook implements with `requestAnimationFrame` for better performance.
+ * A hook implements with `requestAnimationFrame` for better performance. The API is consistent with `useInterval`
  * @see https://ahooks.js.org/hooks/use-raf-interval
  */
 function useRafInterval(

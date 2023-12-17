@@ -42,6 +42,10 @@ const clearRafTimeout = function (handle: Handle) {
   cancelAnimationFrame(handle.id);
 };
 
+/**
+ * A hook implements with `requestAnimationFrame` for better performance. The API is consistent with `useTimeout`.
+ * @see https://ahooks.js.org/hooks/use-raf-timeout
+ */
 function useRafTimeout(fn: () => void, delay: number | undefined) {
   const fnRef = useLatest(fn);
   const timerRef = useRef<Handle>();
