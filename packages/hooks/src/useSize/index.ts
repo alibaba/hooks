@@ -11,10 +11,12 @@ type Size = { width: number; height: number };
  * @see https://ahooks.js.org/hooks/use-size
  */
 function useSize(target: BasicTarget): Size | undefined {
-  const [state, setState] = useRafState<Size | undefined>(() => {
-    const el = getTargetElement(target);
-    return el ? { width: el.clientWidth, height: el.clientHeight } : undefined;
-  });
+  const [state, setState] = useRafState<Size | undefined>(
+    () => {
+      const el = getTargetElement(target);
+      return el ? { width: el.clientWidth, height: el.clientHeight } : undefined
+    },
+  );
 
   useIsomorphicLayoutEffectWithTarget(
     () => {
