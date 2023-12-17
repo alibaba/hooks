@@ -28,6 +28,10 @@ function getTargetValue(val: number, options: Options = {}) {
   return target;
 }
 
+/**
+ * A hook that manage counter.
+ * @see https://ahooks.js.org/hooks/use-counter
+ */
 function useCounter(initialValue: number = 0, options: Options = {}) {
   const { min, max } = options;
 
