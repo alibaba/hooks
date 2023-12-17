@@ -18,6 +18,10 @@ export interface Options<T> {
   overscan?: number;
 }
 
+/**
+ * A hook that allows you to use virtual list to render huge chunks of list data.
+ * @see https://ahooks.js.org/hooks/use-virtual-list
+ */
 const useVirtualList = <T = any>(list: T[], options: Options<T>) => {
   const { containerTarget, wrapperTarget, itemHeight, overscan = 5 } = options;
 
