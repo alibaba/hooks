@@ -39,6 +39,10 @@ const parseMs = (milliseconds: number): FormattedRes => {
   };
 };
 
+/**
+ * A hook for manage countdown.
+ * @see https://ahooks.js.org/hooks/use-count-down
+ */
 const useCountdown = (options: Options = {}) => {
   const { leftTime, targetDate, interval = 1000, onEnd } = options || {};
 
