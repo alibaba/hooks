@@ -9,6 +9,10 @@ import useThrottlePlugin from './plugins/useThrottlePlugin';
 import type { Options, Plugin, Service } from './types';
 import useRequestImplement from './useRequestImplement';
 
+/**
+ * `useRequest` is a powerful Hooks for asynchronous data management. `useRequest` is sufficient enough for network request scenarios in React projects.
+ * @see https://ahooks.js.org/hooks/use-request
+ */
 // function useRequest<TData, TParams extends any[], TFormated, TTFormated extends TFormated = any>(
 //   service: Service<TData, TParams>,
 //   options: OptionsWithFormat<TData, TParams, TFormated, TTFormated>,
