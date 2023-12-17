@@ -49,6 +49,10 @@ export function configResponsive(config: ResponsiveConfig) {
   if (info) calculate();
 }
 
+/**
+ * React Hook for getting responsive info.
+ * @see https://ahooks.js.org/hooks/use-responsive
+ */
 export function useResponsive() {
   if (isBrowser && !listening) {
     info = {};
