@@ -7,6 +7,17 @@ export interface Actions<T> {
   toggle: () => void;
 }
 
+/**
+ * A hook that toggle states.
+ * @see https://ahooks.js.org/hooks/use-toggle
+ * @example
+ * ```js
+ * // Default value is boolean，alike useBoolean.
+ * const [state, { toggle, setLeft, setRight }] = useToggle();
+ * // Toggle between any two values
+ * const [state, { toggle, setLeft, setRight }] = useToggle('Hello', 'World');
+ * ```
+ */
 function useToggle<T = boolean>(): [boolean, Actions<T>];
 
 function useToggle<T>(defaultValue: T): [T, Actions<T>];
