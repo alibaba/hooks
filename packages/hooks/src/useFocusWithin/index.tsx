@@ -8,6 +8,10 @@ export interface Options {
   onChange?: (isFocusWithin: boolean) => void;
 }
 
+/**
+ * Monitor whether the current focus is within a certain area, Same as css attribute [:focus-within](https://developer.mozilla.org/en-US/docs/Web/CSS/:focus-within).
+ * @see https://ahooks.js.org/hooks/use-focus-within
+ */
 export default function useFocusWithin(target: BasicTarget, options?: Options) {
   const [isFocusWithin, setIsFocusWithin] = useState(false);
   const { onFocus, onBlur, onChange } = options || {};
