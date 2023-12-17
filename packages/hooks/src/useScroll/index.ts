@@ -9,6 +9,10 @@ type Position = { left: number; top: number };
 export type Target = BasicTarget<Element | Document>;
 export type ScrollListenController = (val: Position) => boolean;
 
+/**
+ * Get the scroll position of an element.
+ * @see https://ahooks.js.org/hooks/use-scroll
+ */
 function useScroll(
   target?: Target,
   shouldUpdate: ScrollListenController = () => true,
