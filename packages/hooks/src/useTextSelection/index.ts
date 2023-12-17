@@ -49,6 +49,10 @@ function getRectFromSelection(selection: Selection | null): Rect {
   };
 }
 
+/**
+ * Tracking content, size, position of user text selection.
+ * @see https://ahooks.js.org/hooks/use-text-selection
+ */
 function useTextSelection(target?: BasicTarget<Document | Element>): State {
   const [state, setState] = useState(initState);
 
