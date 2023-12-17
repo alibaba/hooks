@@ -220,6 +220,10 @@ function genKeyFormatter(keyFilter: KeyFilter, exactMatch: boolean): KeyPredicat
 
 const defaultEvents: KeyEvent[] = ['keydown'];
 
+/**
+ * Listen for the keyboard press, support key combinations, and support alias.
+ * @see https://ahooks.js.org/hooks/use-key-press
+ */
 function useKeyPress(
   keyFilter: KeyFilter,
   eventHandler: (event: KeyboardEvent, key: KeyType) => void,
