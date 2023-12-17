@@ -9,6 +9,10 @@ type PickFunction<T extends noop> = (
   ...args: Parameters<T>
 ) => ReturnType<T>;
 
+/**
+ * Hooks for persistent functions.
+ * @see https://ahooks.js.org/hooks/use-memoized-fn
+ */
 function useMemoizedFn<T extends noop>(fn: T) {
   if (isDev) {
     if (!isFunction(fn)) {
