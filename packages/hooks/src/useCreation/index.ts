@@ -2,6 +2,10 @@ import type { DependencyList } from 'react';
 import { useRef } from 'react';
 import depsAreSame from '../utils/depsAreSame';
 
+/**
+ * `useCreation` is the replacement for `useMemo` or `useRef`.
+ * @see https://ahooks.js.org/hooks/use-creation
+ */
 export default function useCreation<T>(factory: () => T, deps: DependencyList) {
   const { current } = useRef({
     deps,
