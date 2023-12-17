@@ -8,6 +8,10 @@ import isDev from '../utils/isDev';
 
 type noop = (...args: any[]) => any;
 
+/**
+ * A hook that deal with the throttled function.
+ * @see https://ahooks.js.org/hooks/use-throttle-fn
+ */
 function useThrottleFn<T extends noop>(fn: T, options?: ThrottleOptions) {
   if (isDev) {
     if (!isFunction(fn)) {
