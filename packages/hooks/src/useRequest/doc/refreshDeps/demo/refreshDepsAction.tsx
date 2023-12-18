@@ -1,9 +1,9 @@
 /**
  * title: Custom refresh
- * desc: This example shows checking parameter validity when the dependency array changes, and then making a new request.
+ * desc: This example shows that when the dependency array changes, it checks the parameters' validity first and then makes a new request.
  *
  * title.zh-CN: 自定义刷新行为
- * desc.zh-CN: 该示例展示了当依赖数组变化时，校验参数合法性，然后发起新的请求。
+ * desc.zh-CN: 该示例展示了当依赖数组变化时，首先校验参数合法性，然后发起新的请求。
  */
 
 import React, { useState } from 'react';
