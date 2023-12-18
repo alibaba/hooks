@@ -1,6 +1,7 @@
 {
   "name": "ahooks",
   "private": true,
+  "packageManager": "pnpm@7.33.6",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/alibaba/hooks.git"
@@ -77,6 +78,5 @@
     "extends": [
       "@commitlint/config-conventional"
     ]
-  },
-  "packageManager": "pnpm@7.33.6"
+  }
 }
