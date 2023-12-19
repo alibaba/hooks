@@ -81,7 +81,7 @@ $ pnpm start
 
 <img src="https://github.com/alibaba/hooks/assets/49217418/ba636378-1dff-4754-bfe6-46923417cd3b" width="200" style='display:inline' />
 <img src="https://user-images.githubusercontent.com/12526493/163084577-bab53c55-610e-4efe-96c7-eb0dd076c100.JPG" width="200" style='display:inline' />
-<img src="https://user-images.githubusercontent.com/12526493/163084584-bfb789fe-b5f4-4cd6-b4a5-2444bd67c1a5.JPG" width="200" style='display:inline' />
+<img src="https://github.com/alibaba/hooks/assets/49217418/d30d80c7-eb16-4522-acab-f2d48513464a" width="200" style='display:inline' />
 
 [1]: https://www.npmjs.com/package/ahooks
 [2]: https://npmjs.org/package/ahooks
