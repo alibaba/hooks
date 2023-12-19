@@ -73,7 +73,9 @@ Thanks to all the contributors:
 
 ## 👥 Discuss
 
-<img src="https://user-images.githubusercontent.com/60802048/201606568-9ce53e3f-2e1c-4dc3-869f-fb3cf6196904.JPG" width="200" style='display:inline'/><img src="https://user-images.githubusercontent.com/60802048/201606896-31abd486-cc3e-4cc4-beea-1b244a4c5595.JPG" width="200" style='display:inline'/><img src="https://user-images.githubusercontent.com/60802048/201606953-c33f3f52-eb91-42bc-8da7-1e941e823144.JPG" width="200" style='display:inline'/>
+<img src="https://github.com/alibaba/hooks/assets/49217418/ba636378-1dff-4754-bfe6-46923417cd3b" width="200" style='display:inline' />
+<img src="https://user-images.githubusercontent.com/60802048/201606896-31abd486-cc3e-4cc4-beea-1b244a4c5595.JPG" width="200" style='display:inline' />
+<img src="https://user-images.githubusercontent.com/60802048/201606953-c33f3f52-eb91-42bc-8da7-1e941e823144.JPG" width="200" style='display:inline' />
 
 [1]: https://www.npmjs.com/package/ahooks
 [2]: https://npmjs.org/package/ahooks
