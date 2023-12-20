@@ -2,6 +2,10 @@ import { useCallback, useRef, useState } from 'react';
 import type { Dispatch, SetStateAction } from 'react';
 import useUnmount from '../useUnmount';
 
+/**
+ * Update the state in [requestAnimationFrame](https://developer.mozilla.org/en-US/docs/Web/API/window/requestAnimationFrame) callback, generally used for performance optimization.
+ * @see https://ahooks.js.org/hooks/use-raf-state
+ */
 function useRafState<S>(initialState: S | (() => S)): [S, Dispatch<SetStateAction<S>>];
 function useRafState<S = undefined>(): [S | undefined, Dispatch<SetStateAction<S | undefined>>];
 

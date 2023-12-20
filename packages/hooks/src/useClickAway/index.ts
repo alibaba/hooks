@@ -6,6 +6,10 @@ import useEffectWithTarget from '../utils/useEffectWithTarget';
 
 type DocumentEventKey = keyof DocumentEventMap;
 
+/**
+ * Listen for click events outside the target element.
+ * @see https://ahooks.js.org/hooks/use-click-away
+ */
 export default function useClickAway<T extends Event = Event>(
   onClickAway: (event: T) => void,
   target: BasicTarget | BasicTarget[],

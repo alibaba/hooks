@@ -13,6 +13,10 @@ export interface Options<T, U> {
   transformer?: (value: U) => T;
 }
 
+/**
+ * A hook that encapsulates `onChange` and `value` logic for form controls that obtains value through `event.target.value`.
+ * @see https://ahooks.js.org/hooks/use-event-target
+ */
 function useEventTarget<T, U = T>(options?: Options<T, U>) {
   const { initialValue, transformer } = options || {};
   const [value, setValue] = useState(initialValue);

@@ -8,6 +8,14 @@ export interface Actions {
   toggle: () => void;
 }
 
+/**
+ * Elegantly manages boolean state.
+ * @see https://ahooks.js.org/hooks/use-boolean
+ * @example
+ * ```jsx
+ * const [state, { toggle, setTrue, setFalse }] = useBoolean(true);
+ * ```
+ */
 export default function useBoolean(defaultValue = false): [boolean, Actions] {
   const [state, { toggle, set }] = useToggle(!!defaultValue);
 

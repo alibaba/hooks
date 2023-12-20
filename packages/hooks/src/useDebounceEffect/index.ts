@@ -4,6 +4,10 @@ import type { DebounceOptions } from '../useDebounce/debounceOptions';
 import useDebounceFn from '../useDebounceFn';
 import useUpdateEffect from '../useUpdateEffect';
 
+/**
+ * Debounce your `useEffect`.
+ * @see https://ahooks.js.org/hooks/use-debounce-effect
+ */
 function useDebounceEffect(
   effect: EffectCallback,
   deps?: DependencyList,

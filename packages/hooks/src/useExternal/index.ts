@@ -90,6 +90,10 @@ const loadCss = (path: string, props = {}): loadResult => {
   };
 };
 
+/**
+ * Dynamically load JS or CSS, useExternal can ensure that the resource are globally unique.
+ * @see https://ahooks.js.org/hooks/use-external
+ */
 const useExternal = (path?: string, options?: Options) => {
   const [status, setStatus] = useState<Status>(path ? 'loading' : 'unset');
 

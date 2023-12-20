@@ -14,6 +14,10 @@ type Options<T extends Target = Target> = {
   passive?: boolean;
 };
 
+/**
+ * Use addEventListener elegant by Hook.
+ * @see https://ahooks.js.org/hooks/use-event-listener
+ */
 function useEventListener<K extends keyof HTMLElementEventMap>(
   eventName: K,
   handler: (ev: HTMLElementEventMap[K]) => void,

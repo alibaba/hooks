@@ -4,6 +4,10 @@ export type ShouldUpdateFunc<T> = (prev: T | undefined, next: T) => boolean;
 
 const defaultShouldUpdate = <T>(a?: T, b?: T) => !Object.is(a, b);
 
+/**
+ * A Hook to return the previous state.
+ * @see https://ahooks.js.org/hooks/use-previous
+ */
 function usePrevious<T>(
   state: T,
   shouldUpdate: ShouldUpdateFunc<T> = defaultShouldUpdate,

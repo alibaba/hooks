@@ -4,6 +4,10 @@ import useRequest from '../useRequest';
 
 import type { Data, PaginationOptions, Params, Service, PaginationResult } from './types';
 
+/**
+ * `usePagination` is implemented based on `useRequest` and encapsulates common paging logic.
+ * @see https://ahooks.js.org/hooks/use-pagination
+ */
 const usePagination = <TData extends Data, TParams extends Params>(
   service: Service<TData, TParams>,
   options: PaginationOptions<TData, TParams> = {},

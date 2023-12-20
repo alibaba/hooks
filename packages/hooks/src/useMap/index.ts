@@ -1,6 +1,10 @@
 import { useState } from 'react';
 import useMemoizedFn from '../useMemoizedFn';
 
+/**
+ * A hook that can manage the state of Map.
+ * @see https://ahooks.js.org/hooks/use-map
+ */
 function useMap<K, T>(initialValue?: Iterable<readonly [K, T]>) {
   const getInitValue = () => new Map(initialValue);
   const [map, setMap] = useState<Map<K, T>>(getInitValue);

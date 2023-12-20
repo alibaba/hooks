@@ -4,6 +4,10 @@ import useMemoizedFn from '../useMemoizedFn';
 
 type ResetState = () => void;
 
+/**
+ * `useResetState` works similar to `React.useState`, it provides a `reset` method
+ * @see https://ahooks.js.org/hooks/use-reset-state
+ */
 const useResetState = <S>(
   initialState: S | (() => S),
 ): [S, Dispatch<SetStateAction<S>>, ResetState] => {

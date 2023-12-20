@@ -1,6 +1,10 @@
 import { useState } from 'react';
 import useMemoizedFn from '../useMemoizedFn';
 
+/**
+ * A hook that can manage the state of Set.
+ * @see https://ahooks.js.org/hooks/use-set
+ */
 function useSet<K>(initialValue?: Iterable<K>) {
   const getInitValue = () => new Set(initialValue);
   const [set, setSet] = useState<Set<K>>(getInitValue);

@@ -9,6 +9,10 @@ export interface Options extends Cookies.CookieAttributes {
   defaultValue?: State | (() => State);
 }
 
+/**
+ * A Hook that store state into Cookie.
+ * @see https://ahooks.js.org/hooks/use-cookie-state
+ */
 function useCookieState(cookieKey: string, options: Options = {}) {
   const [state, setState] = useState<State>(() => {
     const cookieValue = Cookies.get(cookieKey);

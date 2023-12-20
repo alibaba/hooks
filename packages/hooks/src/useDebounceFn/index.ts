@@ -8,6 +8,10 @@ import isDev from '../utils/isDev';
 
 type noop = (...args: any[]) => any;
 
+/**
+ * A hook that deal with the debounced function.
+ * @see https://ahooks.js.org/hooks/use-debounce-fn
+ */
 function useDebounceFn<T extends noop>(fn: T, options?: DebounceOptions) {
   if (isDev) {
     if (!isFunction(fn)) {

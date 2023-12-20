@@ -31,6 +31,10 @@ const split = <T>(step: number, targetArr: T[]) => {
   };
 };
 
+/**
+ * A hook to manage state change history. It provides encapsulation methods to travel through the history.
+ * @see https://ahooks.js.org/hooks/use-history-travel
+ */
 export default function useHistoryTravel<T>(initialValue?: T, maxLength: number = 0) {
   const [history, setHistory] = useState<IData<T | undefined>>({
     present: initialValue,

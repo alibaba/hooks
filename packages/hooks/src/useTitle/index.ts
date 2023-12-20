@@ -10,6 +10,10 @@ const DEFAULT_OPTIONS: Options = {
   restoreOnUnmount: false,
 };
 
+/**
+ * A hook that set title of the page.
+ * @see https://ahooks.js.org/hooks/use-title
+ */
 function useTitle(title: string, options: Options = DEFAULT_OPTIONS) {
   const titleRef = useRef(isBrowser ? document.title : '');
   useEffect(() => {

@@ -7,6 +7,10 @@ import { getTargetElement } from '../utils/domTarget';
 import { getClientHeight, getScrollHeight, getScrollTop } from '../utils/rect';
 import type { Data, InfiniteScrollOptions, Service } from './types';
 
+/**
+ * `useInfiniteScroll` encapsulates the common infinite scroll logic.
+ * @see https://ahooks.js.org/hooks/use-infinite-scroll
+ */
 const useInfiniteScroll = <TData extends Data>(
   service: Service<TData>,
   options: InfiniteScrollOptions<TData> = {},

@@ -31,6 +31,10 @@ export interface Result {
   webSocketIns?: WebSocket;
 }
 
+/**
+ * A hook for WebSocket.
+ * @see https://ahooks.js.org/hooks/web-socket
+ */
 export default function useWebSocket(socketUrl: string, options: Options = {}): Result {
   const {
     reconnectLimit = 3,

@@ -3,6 +3,10 @@ import type { BasicTarget } from '../utils/domTarget';
 import useDeepCompareEffectWithTarget from '../utils/useDeepCompareWithTarget';
 import useLatest from '../useLatest';
 
+/**
+ * A hook that provides the ability to watch for changes being made to the DOM tree, refer to [MutationObserver](https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver)
+ * @see https://ahooks.js.org/hooks/use-mutation-observer
+ */
 const useMutationObserver = (
   callback: MutationCallback,
   target: BasicTarget,

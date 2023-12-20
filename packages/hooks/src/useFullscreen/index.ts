@@ -17,6 +17,10 @@ export interface Options {
   pageFullscreen?: boolean | PageFullscreenOptions;
 }
 
+/**
+ * manages DOM full screen.
+ * @see https://ahooks.js.org/hooks/use-fullscreen
+ */
 const useFullscreen = (target: BasicTarget, options?: Options) => {
   const { onExit, onEnter, pageFullscreen = false } = options || {};
   const { className = 'ahooks-page-fullscreen', zIndex = 999999 } =

@@ -8,6 +8,10 @@ function isAsyncGenerator(
   return isFunction(val[Symbol.asyncIterator]);
 }
 
+/**
+ * useEffect support async function.
+ * @see https://ahooks.js.org/hooks/use-async-effect
+ */
 function useAsyncEffect(
   effect: () => AsyncGenerator<void, void, void> | Promise<void>,
   deps?: DependencyList,

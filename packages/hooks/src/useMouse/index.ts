@@ -33,6 +33,10 @@ const initState: CursorState = {
   elementPosY: NaN,
 };
 
+/**
+ * Track cursor position.
+ * @see https://ahooks.js.org/hooks/use-mouse
+ */
 export default (target?: BasicTarget) => {
   const [state, setState] = useRafState(initState);
 

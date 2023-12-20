@@ -13,6 +13,10 @@ export interface Options {
   callback?: CallbackType;
 }
 
+/**
+ * Observe whether the element is in the visible area, and the visible area ratio of the element. refer to [Intersection Observer API](https://developer.mozilla.org/en-US/docs/Web/API/Intersection_Observer_API).
+ * @see https://ahooks.js.org/hooks/use-in-viewport
+ */
 function useInViewport(target: BasicTarget | BasicTarget[], options?: Options) {
   const { callback, ...option } = options || {};
 
