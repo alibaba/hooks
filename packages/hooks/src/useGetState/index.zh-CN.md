@@ -9,9 +9,14 @@ nav:
 
 ## 代码演示
 
-### 基础用法
+### 基础用法 1
 
 <code src="./demo/demo1.tsx" />
+
+### 基础用法 2
+
+setState 之后可以立即获取最新的 state 值
+<code src="./demo/demo2.tsx" />
 
 ## 类型定义
 

@@ -13,12 +13,20 @@ function useGetState<S = undefined>(): [
 ];
 function useGetState<S>(initialState?: S) {
   const [state, setState] = useState(initialState);
+
   const stateRef = useRef(state);
-  stateRef.current = state;
+
+  const setStateWithRef: Dispatch<SetStateAction<S>> = (newValue) => {
+    setState((cur) => {
+      const _newValue = typeof newValue === 'function' ? (newValue as any)(cur) : newValue;
+      stateRef.current = _newValue as S;
+      return _newValue as S;
+    });
+  };
 
   const getState = useCallback(() => stateRef.current, []);
 
-  return [state, setState, getState];
+  return [state, setStateWithRef, getState];
 }
 
 export default useGetState;

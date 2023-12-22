@@ -9,9 +9,14 @@ Add a getter method to the return value of `React.useState` to get the latest va
 
 ## Examples
 
-### Default usage
+### Default usage 1
 
 <code src="./demo/demo1.tsx" />
+
+### Default usage 2
+
+After setState, you can immediately obtain the latest state value
+<code src="./demo/demo2.tsx" />
 
 ## TypeScript definition
 
