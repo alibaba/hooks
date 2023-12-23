@@ -9,11 +9,9 @@ function useLockFn<P extends any[] = any[], V extends any = any>(fn: (...args: P
       lockRef.current = true;
       try {
         const ret = await fn(...args);
-        lockRef.current = false;
         return ret;
-      } catch (e) {
+      } finally {
         lockRef.current = false;
-        throw e;
       }
     },
     [fn],
