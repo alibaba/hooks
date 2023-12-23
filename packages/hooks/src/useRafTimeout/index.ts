@@ -46,23 +46,19 @@ function useRafTimeout(fn: () => void, delay: number | undefined) {
   const fnRef = useLatest(fn);
   const timerRef = useRef<Handle>();
 
-  useEffect(() => {
-    if (!isNumber(delay) || delay < 0) return;
-    timerRef.current = setRafTimeout(() => {
-      fnRef.current();
-    }, delay);
-    return () => {
-      if (timerRef.current) {
-        clearRafTimeout(timerRef.current);
-      }
-    };
-  }, [delay]);
-
   const clear = useCallback(() => {
     if (timerRef.current) {
       clearRafTimeout(timerRef.current);
     }
   }, []);
+
+  useEffect(() => {
+    if (!isNumber(delay) || delay < 0) return;
+    timerRef.current = setRafTimeout(() => {
+      fnRef.current();
+    }, delay);
+    return clear;
+  }, [delay]);
 
   return clear;
 }
