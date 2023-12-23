@@ -51,6 +51,12 @@ function useRafInterval(
   const fnRef = useLatest(fn);
   const timerRef = useRef<Handle>();
 
+  const clear = useCallback(() => {
+    if (timerRef.current) {
+      clearRafInterval(timerRef.current);
+    }
+  }, []);
+
   useEffect(() => {
     if (!isNumber(delay) || delay < 0) return;
     if (immediate) {
@@ -59,18 +65,8 @@ function useRafInterval(
     timerRef.current = setRafInterval(() => {
       fnRef.current();
     }, delay);
-    return () => {
-      if (timerRef.current) {
-        clearRafInterval(timerRef.current);
-      }
-    };
+    return clear;
   }, [delay]);
-
-  const clear = useCallback(() => {
-    if (timerRef.current) {
-      clearRafInterval(timerRef.current);
-    }
-  }, []);
 
   return clear;
 }
