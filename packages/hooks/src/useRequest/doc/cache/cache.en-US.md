@@ -29,10 +29,12 @@ By setting `staleTime`, we can specify the data retention time, during which tim
 
 ### Data sharing
 
-The content of the same `cacheKey` is shared globally, which will bring the following features
+> Note: If no new request is issued, the "Data sharing" will not be triggered. `cacheTime` and `staleTime` parameters will invalidate "Data sharing". [#2313](https://github.com/alibaba/hooks/issues/2313)
 
-- Sharing request `Promise`, only one of the same `cacheKey` will initiate a request at the same time, and the subsequent ones will share the same request `Promise`.
-- Data synchronization. At any time, when we change the content of one of the `cacheKey`, the content of the other `cacheKey` will be synchronized.
+The content of the same `cacheKey` is shared globally, which will bring the following features:
+
+- Sharing request `Promise`: Only one of the same `cacheKey` will initiate a request at the same time, and the subsequent ones will share the same request `Promise`.
+- Data synchronization: When a request is made by one `cacheKey`, the contents of other identical `cacheKey` will be synchronized accordingly.
 
 In the following example, the two components will only initiate one request during initialization. And the content of the two articles is always synchronized.
 
@@ -77,7 +79,7 @@ interface CachedData<TData, TParams> {
 
 | Property  | Description                                                                                                                                                                                                                                   | Type                              | Default  |
 | --------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------- | -------- |
-| cacheKey  | A unique ID of the request. If `cacheKey` is set, we will enable the caching mechanism. The data of the same `cacheKey` is globally synchronized.                                                                                             | `string`                          | -        |
+| cacheKey  | A unique ID of the request. Data of the same `cacheKey` will synchronized globally (`cacheTime` and `staleTime` parameters will invalidate this mechanism, see demo: [Data sharing](#data-sharing))                                           | `string`                          | -        |
 | cacheTime | <ul><li> Set the cache time. By default, the cached data will be cleared after 5 minutes.</li><li> If set to `-1`, the cached data will never expire</li></ul>                                                                                | `number`                          | `300000` |
 | staleTime | <ul><li> Time to consider the cached data is fresh. Within this time interval, the request will not be re-initiated</li><li> If set to `-1`, it means that the data is always fresh</li></ul>                                                 | `number`                          | `0`      |
 | setCache  | <ul><li> Custom set cache </li><li> `setCache` and `getCache` need to be used together</li><li> In the custom cache mode, `cacheTime` and `clearCache` are useless, please implement it yourself according to the actual situation.</li></ul> | `(data: CachedData) => void;`     | -        |
