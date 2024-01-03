@@ -94,19 +94,19 @@ const {
 
 ### Result
 
-| 参数          | 说明                                                                       | 类型                     |
-| ------------- | -------------------------------------------------------------------------- | ------------------------ | ----------- |
-| data          | service 返回的数据，其中的 `list` 属性为聚合后数据                         | `TData` \                | `undefined` |
-| loading       | 是否正在进行首次请求                                                       | `boolean`                |
-| loadingMore   | 是否正在进行更多数据请求                                                   | `boolean`                |
-| noMore        | 是否没有更多数据了，配置 `options.isNoMore` 后生效                         | `boolean`                |
-| error         | 请求错误消息                                                               | `Error`                  |
-| loadMore      | 加载更多数据，会自动捕获异常，通过 `options.onError` 处理                  | `() => void`             |
-| loadMoreAsync | 加载更多数据，与 `loadMore` 行为一致，但返回的是 Promise，需要自行处理异常 | `() => Promise<TData>`   |
-| reload        | 加载第一页数据，会自动捕获异常，通过 `options.onError` 处理                | `() => void`             |
-| reloadAsync   | 加载第一页数据，与 `reload` 行为一致，但返回的是 Promise，需要自行处理异常 | `() => Promise<TData>`   |
-| mutate        | 直接修改 `data`                                                            | `(data?: TData) => void` |
-| cancel        | 忽略当前 Promise 的响应                                                    | `() => void`             |
+| 参数 | 说明 | 类型 |
+| ---- | ---- | ---- |
+| data | service 返回的数据，其中的 `list` 属性为聚合后数据 | `TData` \| `undefined` |
+| loading | 是否正在进行首次请求 | `boolean` |
+| loadingMore | 是否正在进行更多数据请求 | `boolean` |
+| noMore | 是否没有更多数据了，配置 `options.isNoMore` 后生效 | `boolean` |
+| error | 请求错误消息 | `Error` |
+| loadMore | 加载更多数据，会自动捕获异常，通过 `options.onError` 处理 | `() => void` |
+| loadMoreAsync | 加载更多数据，与 `loadMore` 行为一致，但返回的是 Promise，需要自行处理异常 | `() => Promise<TData>` |
+| reload | 加载第一页数据，会自动捕获异常，通过 `options.onError` 处理 | `() => void` |
+| reloadAsync | 加载第一页数据，与 `reload` 行为一致，但返回的是 Promise，需要自行处理异常 | `() => Promise<TData>` |
+| mutate | 直接修改 `data` | `(data?: TData) => void` |
+| cancel | 忽略当前 Promise 的响应 | `() => void` |
 
 ### Options
 
