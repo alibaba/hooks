@@ -94,30 +94,32 @@ const {
 
 ### Result
 
-| Property      | Description                                                                                                                                       | Type                     |
-| ------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------ | ----------- |
-| data          | The data returned by the service, where the `list` attribute is the aggregated data                                                               | `TData` \                | `undefined` |
-| loading       | Is the first request in progress                                                                                                                  | `boolean`                |
-| loadingMore   | Is more data request in progress                                                                                                                  | `boolean`                |
-| noMore        | Whether there is no more data, it will take effect after configuring `options.isNoMore`                                                           | `boolean`                |
-| error         | Request error message                                                                                                                             | `Error`                  |
-| loadMore      | Load more data, it will automatically catch the exception, and handle it through `options.onError`                                                | `() => void`             |
-| loadMoreAsync | Load more data, which is consistent with the behavior of `loadMore`, but returns Promise, so you need to handle the exception yourself            | `() => Promise<TData>`   |
-| reload        | Load the first page of data, it will automatically catch the exception, and handle it through `options.onError`                                   | `() => void`             |
-| reloadAsync   | Load the first page of data, which is consistent with the behavior of `reload`, but returns Promise, so you need to handle the exception yourself | `() => Promise<TData>`   |
-| mutate        | Modify `data` directly                                                                                                                            | `(data?: TData) => void` |
-| cancel        | Ignore the current promise response                                                                                                               | `() => void`             |
+<!-- prettier-ignore -->
+| Property | Description | Type |
+| --- | --- | --- |
+| data | The data returned by the service, where the `list` attribute is the aggregated data | `TData` | `undefined` |
+| loading | Is the first request in progress | `boolean` |
+| loadingMore | Is more data request in progress | `boolean` |
+| noMore | Whether there is no more data, it will take effect after configuring `options.isNoMore` | `boolean` |
+| error | Request error message | `Error` |
+| loadMore | Load more data, it will automatically catch the exception, and handle it through `options.onError` | `() => void` |
+| loadMoreAsync | Load more data, which is consistent with the behavior of `loadMore`, but returns Promise, so you need to handle the exception yourself | `() => Promise<TData>` |
+| reload | Load the first page of data, it will automatically catch the exception, and handle it through `options.onError` | `() => void` |
+| reloadAsync | Load the first page of data, which is consistent with the behavior of `reload`, but returns Promise, so you need to handle the exception yourself | `() => Promise<TData>` |
+| mutate | Modify `data` directly | `(data?: TData) => void` |
+| cancel | Ignore the current promise response | `() => void` |
 
 ### Options
 
-| Property   | Description                                                                                                                                                                                                                                          | Type                                                        | Default |
-| ---------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------- | ------- |
-| target     | specifies the parent element. If it exists, it will trigger the `loadMore` when scrolling to the bottom. Needs to work with `isNoMore` to know when there is no more data to load. **when target is document, it is defined as the entire viewport** | `() => Element` \| `Element` \| `MutableRefObject<Element>` | -       |
-| isNoMore   | determines if there is no more data, the input parameter is the latest merged `data`                                                                                                                                                                 | `(data?: TData) => boolean`                                 | -       |
-| threshold  | The pixel threshold to the bottom for the scrolling to load                                                                                                                                                                                          | `number`                                                    | `100`   |
-| reloadDeps | When the content of the array changes, `reload` will be triggered                                                                                                                                                                                    | `any[]`                                                     | -       |
-| manual     | <ul><li> The default is `false`. That is, the service is automatically executed during initialization. </li><li>If set to `true`, you need to manually call `run` or `runAsync` to trigger execution </li></ul>                                      | `boolean`                                                   | `false` |
-| onBefore   | Triggered before service execution                                                                                                                                                                                                                   | `() => void`                                                | -       |
-| onSuccess  | Triggered when service resolve                                                                                                                                                                                                                       | `(data: TData) => void`                                     | -       |
-| onError    | Triggered when service reject                                                                                                                                                                                                                        | `(e: Error) => void`                                        | -       |
-| onFinally  | Triggered when service execution is complete                                                                                                                                                                                                         | `(data?: TData, e?: Error) => void`                         | -       |
+<!-- prettier-ignore -->
+| Property | Description | Type | Default |
+| --- | --- | --- | --- |
+| target | specifies the parent element. If it exists, it will trigger the `loadMore` when scrolling to the bottom. Needs to work with `isNoMore` to know when there is no more data to load. **when target is document, it is defined as the entire viewport** | `() => Element` \| `Element` \| `MutableRefObject<Element>` | - |
+| isNoMore | determines if there is no more data, the input parameter is the latest merged `data` | `(data?: TData) => boolean` | - |
+| threshold | The pixel threshold to the bottom for the scrolling to load | `number` | `100` |
+| reloadDeps | When the content of the array changes, `reload` will be triggered | `any[]` | - |
+| manual | <ul><li> The default is `false`. That is, the service is automatically executed during initialization. </li><li>If set to `true`, you need to manually call `run` or `runAsync` to trigger execution </li></ul> | `boolean` | `false` |
+| onBefore | Triggered before service execution | `() => void` | - |
+| onSuccess | Triggered when service resolve | `(data: TData) => void` | - |
+| onError | Triggered when service reject | `(e: Error) => void` | - |
+| onFinally | Triggered when service execution is complete | `(data?: TData, e?: Error) => void` | - |
