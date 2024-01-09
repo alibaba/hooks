@@ -1,13 +1,15 @@
 import { useCallback, useState } from 'react';
 import { isFunction } from '../utils';
 
-export type SetState<S extends Record<string, any>> = <K extends keyof S>(
+type SetState<S extends Record<string, any>> = <K extends keyof S>(
   state: Pick<S, K> | null | ((prevState: Readonly<S>) => Pick<S, K> | S | null),
 ) => void;
 
+type ResetState = () => void;
+
 const useSetState = <S extends Record<string, any>>(
   initialState: S | (() => S),
-): [S, SetState<S>] => {
+): [S, SetState<S>, ResetState] => {
   const [state, setState] = useState<S>(initialState);
 
   const setMergeState = useCallback((patch) => {
@@ -17,7 +19,11 @@ const useSetState = <S extends Record<string, any>>(
     });
   }, []);
 
-  return [state, setMergeState];
+  const resetState = useCallback(() => {
+    setMergeState(() => initialState);
+  }, []);
+
+  return [state, setMergeState, resetState];
 };
 
 export default useSetState;
