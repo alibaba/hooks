@@ -20,7 +20,7 @@ const useSetState = <S extends Record<string, any>>(
   }, []);
 
   const resetState = useCallback(() => {
-    setMergeState(() => initialState);
+    setState(initialState);
   }, []);
 
   return [state, setMergeState, resetState];
