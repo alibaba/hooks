@@ -19,7 +19,7 @@ nav:
 ```typescript
 useTimeout(
   fn: () => void,
-  delay?: number | null
+  delay?: number | undefined
 ): fn: () => void;
 ```
 
