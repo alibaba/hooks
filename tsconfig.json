@@ -9,8 +9,6 @@
     "baseUrl": ".",
     "paths": {
       "@/*": ["src/*"],
-      "ahooks": ["./packages/hooks/src/index.ts"],
-      "ahooks/lib/*": ["./packages/hooks/src/*"],
       "@ahooksjs/use-url-state": ["./packages/use-url-state/src/index.ts"]
     },
     "allowSyntheticDefaultImports": true,
