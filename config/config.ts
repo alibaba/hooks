@@ -9,6 +9,8 @@ export default {
     type: 'none',
     exclude: [],
   },
+  // https://github.com/alibaba/hooks/issues/2155
+  extraBabelIncludes: ['filter-obj'],
   extraBabelPlugins: [
     [
       'babel-plugin-import',
