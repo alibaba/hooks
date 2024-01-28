@@ -84,6 +84,7 @@ export default () => {
             dataSource={list}
             rowKey={(r: Item, index: number) => getKey(index).toString()}
             pagination={false}
+            style={{ overflow: 'auto' }}
           />
         </ReactDragListView>
       </Form>
