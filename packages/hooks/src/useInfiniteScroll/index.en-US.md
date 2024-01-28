@@ -69,6 +69,7 @@ const {
   data: TData;
   loading: boolean;
   loadingMore: boolean;
+  error?: Error;
   noMore: boolean;
   loadMore: () => void;
   loadMoreAsync: () => Promise<TData>;
