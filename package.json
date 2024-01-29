@@ -19,7 +19,7 @@
     "pretty": "pretty-quick --staged",
     "build:doc": "dumi build",
     "pub:doc-surge": "surge ./dist --domain ahooks.js.org",
-    "pub:doc-gitee": "cd ./dist && rm -rf .git && touch .spa && touch .nojekyll && git init && git remote add origin git@gitee.com:ahooks/ahooks.git && git add -A && git commit -m \"publish docs\" && git push origin master -f && echo https://gitee.com/ahooks/ahooks/pages",
+    "pub:doc-gitee": "cd ./dist && rm -rf .git && touch .spa && touch .nojekyll && git init && git remote add origin git@gitee.com:ahooks/ahooks.git && git add -A && git commit -m \"publish docs\" && git push origin main -f && echo https://gitee.com/ahooks/ahooks/pages",
     "pub:doc": "pnpm run build:doc && pnpm run pub:doc-surge && pnpm run pub:doc-gitee",
     "pub": "pnpm run build && pnpm -r --filter=./packages/* publish",
     "pub:beta": "pnpm run build && pnpm -r --filter=./packages/* publish --tag beta",
