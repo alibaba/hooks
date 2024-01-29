@@ -7,7 +7,7 @@ function useMediaQuery<K, T>(queries: K[], values: T[], defaultValue: T) {
 
   const getValue = () => {
     const index = mediaQueryLists.current.findIndex((mql) => mql.matches);
-    setCurrentQuery(mediaQueryLists.current?.[index]?.media);
+    setCurrentQuery(mediaQueryLists.current?.[index]?.media || '');
     return values?.[index] || defaultValue;
   };
 
@@ -17,7 +17,7 @@ function useMediaQuery<K, T>(queries: K[], values: T[], defaultValue: T) {
     mediaQueryLists.current.forEach((mql) =>
       mql.removeEventListener('change', handleQueryListener),
     );
-    mediaQueryLists.current = queries.map((query) => window.matchMedia(query as string));
+    mediaQueryLists.current = queries.map((query) => query && window.matchMedia(query as string));
     mediaQueryLists.current.forEach((mql) => mql.addEventListener('change', handleQueryListener));
     setValue(getValue());
   };
