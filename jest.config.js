@@ -28,7 +28,4 @@ module.exports = {
     '!**/dist/**',
   ],
   transformIgnorePatterns: [`node_modules/(?!(?:.pnpm/)?(${esmModules.join('|')}))`],
-  moduleNameMapper: {
-    'lodash-es': 'lodash',
-  },
 };

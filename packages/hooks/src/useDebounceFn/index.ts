@@ -1,4 +1,4 @@
-import { debounce } from '../utils/lodash-polyfill';
+import debounce from 'lodash/debounce';
 import { useMemo } from 'react';
 import type { DebounceOptions } from '../useDebounce/debounceOptions';
 import useLatest from '../useLatest';
