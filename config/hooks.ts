@@ -56,6 +56,7 @@ export const menus = [
       'useSafeState',
       'useGetState',
       'useResetState',
+      'useMediaQuery',
     ],
   },
   {
