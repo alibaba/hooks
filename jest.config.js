@@ -1,3 +1,12 @@
+/** esm modules to transform */
+const esmModules = [
+  // `query-string` and its related dependencies
+  'query-string',
+  'decode-uri-component',
+  'split-on-first',
+  'filter-obj',
+];
+
 module.exports = {
   preset: 'ts-jest/presets/js-with-ts',
   testEnvironment: 'jsdom',
@@ -18,7 +27,7 @@ module.exports = {
     '!**/lib/**',
     '!**/dist/**',
   ],
-  transformIgnorePatterns: ['^.+\\.js$'],
+  transformIgnorePatterns: [`node_modules/(?!(?:.pnpm/)?(${esmModules.join('|')}))`],
   moduleNameMapper: {
     'lodash-es': 'lodash',
   },
