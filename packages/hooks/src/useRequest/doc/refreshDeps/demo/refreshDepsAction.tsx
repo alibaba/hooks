@@ -8,7 +8,6 @@
 
 import React, { useState } from 'react';
 import Mock from 'mockjs';
-import { isNumber } from 'lodash-es';
 import { Button, Space } from 'antd';
 import { useRequest } from 'ahooks';
 
@@ -27,7 +26,7 @@ export default () => {
   const { data, loading, run } = useRequest((id: number) => getUsername(id), {
     refreshDeps: [userId],
     refreshDepsAction: () => {
-      if (!isNumber(userId)) {
+      if (typeof userId !== 'number') {
         console.log(
           `parameter "userId" expected to be a number, but got ${typeof userId}.`,
           userId,
