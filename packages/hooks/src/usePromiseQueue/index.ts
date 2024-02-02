@@ -15,12 +15,6 @@ type ResultItem<T> = {
   index: number;
 };
 
-/**
- * 一个用于处理 Promise 队列的 Hooks
- * @param initQueue 初始队列，默认为空数组
- * @param maxConcurrent 最大并发数，默认为 1
- * @returns 返回一个对象，包含 addToQueue、results、isProcessing 三个属性
- */
 const usePromiseQueue = <T = any>({
   initQueue = [],
   maxConcurrent = 1,
