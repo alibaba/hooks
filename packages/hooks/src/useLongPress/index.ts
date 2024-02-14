@@ -30,10 +30,7 @@ function useLongPress(
   const timerRef = useRef<ReturnType<typeof setTimeout>>();
   const isTriggeredRef = useRef(false);
   const pervPositionRef = useRef({ x: 0, y: 0 });
-  const hasMoveThreshold = !!(
-    (moveThreshold?.x && moveThreshold.x > 0) ||
-    (moveThreshold?.y && moveThreshold.y > 0)
-  );
+  const hasMoveThreshold = !!(Number(moveThreshold?.x) > 0 || Number(moveThreshold?.y) > 0);
 
   useEffectWithTarget(
     () => {
