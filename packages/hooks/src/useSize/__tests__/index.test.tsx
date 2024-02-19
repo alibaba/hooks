@@ -44,7 +44,7 @@ describe('useSize', () => {
     expect(await screen.findByText(/^width/)).toHaveTextContent('width: undefined');
     expect(await screen.findByText(/^height/)).toHaveTextContent('height: undefined');
 
-    act(() => callback([{ target: { clientWidth: 10, clientHeight: 10 } }]));
+    act(() => callback([{ target: { getBoundingClientRect: () => ({ width: 10, height: 10 }) } }]));
     expect(await screen.findByText(/^width/)).toHaveTextContent('width: 10');
     expect(await screen.findByText(/^height/)).toHaveTextContent('height: 10');
     mockRaf.mockRestore();
@@ -70,8 +70,10 @@ describe('useSize', () => {
       callback([
         {
           target: {
-            clientWidth: 100,
-            clientHeight: 50,
+            getBoundingClientRect: () => ({
+              clientWidth: 100,
+              clientHeight: 50,
+            }),
           },
         },
       ]);
