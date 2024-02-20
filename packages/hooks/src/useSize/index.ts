@@ -9,7 +9,8 @@ type Size = { width: number; height: number };
 function useSize(target: BasicTarget): Size | undefined {
   const [state, setState] = useRafState<Size | undefined>(() => {
     const el = getTargetElement(target);
-    return el ? { width: el.clientWidth, height: el.clientHeight } : undefined;
+    const rect = el?.getBoundingClientRect();
+    return rect ? { width: rect.width, height: rect.height } : undefined;
   });
 
   useIsomorphicLayoutEffectWithTarget(
