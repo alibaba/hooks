@@ -1,8 +1,8 @@
 import { useMemo, useState } from 'react';
 import type { Key } from 'react';
-import { isPlainObject } from 'lodash-es';
+import isPlainObject from 'lodash/isPlainObject';
 import useMemoizedFn from '../useMemoizedFn';
-import { isFunction, isObject, isString } from '../utils';
+import { isFunction, isString } from '../utils';
 
 export interface Options<T> {
   defaultSelected?: T[];
@@ -15,7 +15,7 @@ export default function useSelections<T>(items: T[], options?: T[] | Options<T>)
 
   if (Array.isArray(options)) {
     defaultSelected = options;
-  } else if (isObject(options)) {
+  } else if (isPlainObject(options)) {
     defaultSelected = options?.defaultSelected ?? defaultSelected;
     itemKey = options?.itemKey ?? itemKey;
   }
