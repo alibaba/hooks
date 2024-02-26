@@ -111,6 +111,7 @@ importers:
       mockjs: ^1.1.0
       react: ^16.8.0 || ^17.0.0 || ^18.0.0
       react-drag-listview: ^0.1.6
+      react-fast-compare: ^3.2.2
       react-json-view: ^1.21.3
       resize-observer-polyfill: ^1.5.1
       screenfull: ^5.0.0
@@ -122,6 +123,7 @@ importers:
       js-cookie: 2.2.1
       lodash: 4.17.21
       react: 18.2.0
+      react-fast-compare: 3.2.2
       resize-observer-polyfill: 1.5.1
       screenfull: 5.2.0
       tslib: 2.5.0
@@ -18697,6 +18699,13 @@ packages:
       '@babel/runtime': 7.21.0
       react: 18.2.0
     dev: true
+
+  /react-fast-compare/3.2.2:
+    resolution:
+      {
+        integrity: sha512-nsO+KSNgo1SbJqJEYRE9ERzo7YtYbou/OqjSQKxV7jcKox7+usiUVZOAC+XnDOABXggQTno0Y1CpVnuWEc1boQ==,
+      }
+    dev: false
 
   /react-is/16.13.1:
     resolution:
