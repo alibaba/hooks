@@ -19,7 +19,7 @@ A hook that handles the `setTimeout` timer function.
 ```typescript
 useTimeout(
   fn: () => void,
-  delay?: number | null
+  delay?: number | undefined
 ): fn: () => void;
 ```
 

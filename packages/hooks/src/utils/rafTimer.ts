@@ -1,5 +1,5 @@
 export type Handle = {
-  id: number | NodeJS.Timer | NodeJS.Timeout;
+  id: number | ReturnType<typeof setInterval> | ReturnType<typeof setTimeout>;
 };
 
 export function cancelAnimationFrameIsNotDefined(t: any): t is NodeJS.Timer {
@@ -31,10 +31,10 @@ export function setRafTimeout(callback: () => void, delay: number = 0): Handle {
     id: 0,
   };
 
-  const startTime = new Date().getTime();
+  const startTime = Date.now();
 
   const loop = () => {
-    const current = new Date().getTime();
+    const current = Date.now();
     if (current - startTime >= delay) {
       callback();
     } else {
@@ -51,15 +51,15 @@ export function setRafInterval(callback: () => void, delay: number = 0): Handle 
       id: setInterval(callback, delay),
     };
   }
-  let start = new Date().getTime();
+  let start = Date.now();
   const handle: Handle = {
     id: 0,
   };
   const loop = () => {
-    const current = new Date().getTime();
+    const current = Date.now();
     if (current - start >= delay) {
       callback();
-      start = new Date().getTime();
+      start = Date.now();
     }
     handle.id = requestAnimationFrame(loop);
   };

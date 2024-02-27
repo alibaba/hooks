@@ -34,10 +34,10 @@ const [inViewport, ratio] = useInViewport(
 
 ### Params
 
-| Property | Description                        | Type                   | Default |
-| -------- | ---------------------------------- | ---------------------- | ------- |
-| target   | DOM elements or Ref, support array | `Target` \| `Target[]` | -       |
-| options  | Setting                            | `Options`              | -       |
+| Property | Description                        | Type                     | Default |
+| -------- | ---------------------------------- | ------------------------ | ------- |
+| target   | DOM elements or Ref, support array | `Target` \| `Target[]`   | -       |
+| options  | Setting                            | `Options` \| `undefined` | -       |
 
 ### Options
 
