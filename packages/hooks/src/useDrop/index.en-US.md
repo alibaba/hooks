@@ -25,7 +25,7 @@ A pair of hooks to help you manage data transfer between drag and drop
 
 ### Customize Image
 
-<code src="./demo/demo2.tsx" />
+<code src="./demo/demo2.tsx"></code>
 
 ## API
 

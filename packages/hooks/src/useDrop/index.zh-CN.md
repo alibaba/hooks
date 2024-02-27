@@ -25,7 +25,7 @@ order: 4
 
 ### 自定义拖拽图像
 
-<code src="./demo/demo2.tsx" />
+<code src="./demo/demo2.tsx"></code>
 
 ## API
 

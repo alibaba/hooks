@@ -31,7 +31,7 @@ order: 13
 
 ### 获取触发的按键
 
-<code src="./demo/demo8.tsx" />
+<code src="./demo/demo8.tsx"></code>
 
 ### 自定义监听方式
 

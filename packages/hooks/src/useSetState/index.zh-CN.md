@@ -19,7 +19,7 @@ order: 1
 
 ### 使用回调更新
 
-<code src="./demo/demo2.tsx" />
+<code src="./demo/demo2.tsx"></code>
 
 ## API
 

@@ -23,11 +23,11 @@ manages DOM full screen.
 
 ### Page full screen
 
-<code src="./demo/demo3.tsx" />
+<code src="./demo/demo3.tsx"></code>
 
 ### Coexist with other full screen operations
 
-<code src="./demo/demo4.tsx" />
+<code src="./demo/demo4.tsx"></code>
 
 ## API
 

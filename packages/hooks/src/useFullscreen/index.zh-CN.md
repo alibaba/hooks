@@ -23,11 +23,11 @@ order: 9
 
 ### 页面全屏
 
-<code src="./demo/demo3.tsx" />
+<code src="./demo/demo3.tsx"></code>
 
 ### 与其它全屏操作共存
 
-<code src="./demo/demo4.tsx" />
+<code src="./demo/demo4.tsx"></code>
 
 ## API
 

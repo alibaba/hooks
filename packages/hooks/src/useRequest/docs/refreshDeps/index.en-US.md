@@ -35,7 +35,7 @@ useEffect(() => {
 
 ### Custom refresh
 
-<code src="./demo/refreshDepsAction.tsx" />
+<code src="./demo/refreshDepsAction.tsx"></code>
 
 ## API
 

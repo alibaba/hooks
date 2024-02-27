@@ -23,7 +23,7 @@ order: 12
 
 ### 监听内容滚动选中菜单
 
-<code src="./demo/demo3.tsx" />
+<code src="./demo/demo3.tsx"></code>
 
 ## API
 

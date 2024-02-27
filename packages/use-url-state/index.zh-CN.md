@@ -47,7 +47,7 @@ React Router V6：https://codesandbox.io/s/autumn-shape-odrt9?file=/App.tsx
 
 ### 多状态管理（拆分）
 
-<code src="./demo/demo4.tsx" hideActions='["CSB"]' />
+<code src="./demo/demo4.tsx" hideActions='["CSB"]'></code>
 
 ### 自定义 query-string 配置
 

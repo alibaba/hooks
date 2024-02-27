@@ -31,7 +31,7 @@ Listen for the keyboard press, support key combinations, and support alias.
 
 ### Get the trigger key
 
-<code src="./demo/demo8.tsx" />
+<code src="./demo/demo8.tsx"></code>
 
 ### Custom method
 
