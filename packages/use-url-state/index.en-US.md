@@ -45,6 +45,10 @@ React Router V6：https://codesandbox.io/s/autumn-shape-odrt9?file=/App.tsx
 
 <code src="./demo/demo2.tsx" hideActions='["CSB"]'></code>
 
+### Multi-state management (split)
+
+<code src="./demo/demo4.tsx" hideActions='["CSB"]' />
+
 ### Custom query-string options
 
 <code src="./demo/demo3.tsx" hideActions='["CSB"]'></code>

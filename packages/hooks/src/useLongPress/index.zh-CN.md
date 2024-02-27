@@ -31,7 +31,7 @@ order: 14
 useLongPress(
   onLongPress: (event: MouseEvent | TouchEvent) => void,
   target: Target,
-  options?: {
+  options: {
     delay?: number;
     moveThreshold?: { x?: number; y?: number };
     onClick?: (event: MouseEvent | TouchEvent) => void;
@@ -46,7 +46,7 @@ useLongPress(
 | ----------- | ---------------- | ----------------------------------------------------------- | ------ |
 | onLongPress | 触发函数         | `(event: MouseEvent \| TouchEvent) => void`                 | -      |
 | target      | DOM 节点或者 Ref | `Element` \| `() => Element` \| `MutableRefObject<Element>` | -      |
-| options     | 可选配置项       | `Options`                                                   | -      |
+| options     | 可选配置项       | `Options`                                                   | `{}`   |
 
 ### Options
 

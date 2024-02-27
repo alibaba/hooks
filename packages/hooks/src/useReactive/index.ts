@@ -1,7 +1,7 @@
 import { useRef } from 'react';
+import isPlainObject from 'lodash/isPlainObject';
 import useCreation from '../useCreation';
 import useUpdate from '../useUpdate';
-import { isObject } from '../utils';
 
 // k:v 原对象:代理过的对象
 const proxyMap = new WeakMap();
@@ -25,7 +25,16 @@ function observer<T extends Record<string, any>>(initialVal: T, cb: () => void):
   const proxy = new Proxy<T>(initialVal, {
     get(target, key, receiver) {
       const res = Reflect.get(target, key, receiver);
-      return isObject(res) ? observer(res, cb) : res;
+
+      // https://github.com/alibaba/hooks/issues/1317
+      const descriptor = Reflect.getOwnPropertyDescriptor(target, key);
+      if (!descriptor?.configurable && !descriptor?.writable) {
+        return res;
+      }
+
+      // Only proxy plain object or array,
+      // otherwise it will cause: https://github.com/alibaba/hooks/issues/2080
+      return isPlainObject(res) || Array.isArray(res) ? observer(res, cb) : res;
     },
     set(target, key, val) {
       const ret = Reflect.set(target, key, val);

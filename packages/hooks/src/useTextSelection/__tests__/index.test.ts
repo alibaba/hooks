@@ -16,7 +16,7 @@ describe('useTextSelection', () => {
     });
   }
 
-  function downMouse(x: number, y: number) {
+  function downMouse(x: number, y: number, options?: MouseEventInit) {
     act(() => {
       document.dispatchEvent(
         new MouseEvent('mousedown', {
@@ -24,6 +24,7 @@ describe('useTextSelection', () => {
           clientY: y,
           screenX: x,
           screenY: y,
+          ...options,
         }),
       );
     });
@@ -90,6 +91,27 @@ describe('useTextSelection', () => {
 
     expect(hook.result.current.left).toBe(10);
     expect(hook.result.current.text).toBe('on textSelection');
+    hook.unmount();
+  });
+
+  it('keep/cancel the selected text range', async () => {
+    initGetSelection({ text: 'aaa' });
+
+    const hook = renderHook(() => useTextSelection(() => document));
+
+    expect(hook.result.current.text).toBe('');
+    downMouse(0, 0);
+    upMouse(100, 100);
+    expect(hook.result.current.text).toBe('aaa');
+
+    // trigger the secondary button of mouse (usually the right button)
+    downMouse(0, 0, { button: 2 });
+    expect(hook.result.current.text).toBe('aaa');
+
+    // // trigger the main button of mouse (usually the left button)
+    downMouse(0, 0, { button: 0 });
+    expect(hook.result.current.text).toBe('');
+
     hook.unmount();
   });
 });

@@ -1,6 +1,5 @@
 import { useRef } from 'react';
 import type { Plugin, Timeout } from '../types';
-import { isBoolean } from '../../../utils';
 
 const useLoadingDelayPlugin: Plugin<any, any[]> = (fetchInstance, { loadingDelay, ready }) => {
   const timerRef = useRef<Timeout>();

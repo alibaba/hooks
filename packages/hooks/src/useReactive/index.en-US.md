@@ -25,7 +25,7 @@ It offers data reactivity when manipulating states and views, in which case `use
 
 <code src="./demo/demo3.tsx"></code>
 
-### notice
+### Notice
 
 <code src="./demo/demo4.tsx"></code>
 
@@ -40,3 +40,11 @@ const state = useReactive(initialValue: Record<string, any>);
 | Params       | Description   | Type                  | Default |
 | ------------ | ------------- | --------------------- | ------- |
 | initialState | Current state | `Record<string, any>` | -       |
+
+## FAQ
+
+### When `useReactive` is used with `Map`, `Set`, it will throw an error or not work?
+
+`useReactive` is not compatible with `Map`, `Set`。
+
+Related issues: [#2239](https://github.com/alibaba/hooks/discussions/2239)

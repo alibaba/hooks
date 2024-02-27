@@ -12,7 +12,7 @@ const getVisibility = () => {
 };
 
 function useDocumentVisibility(): VisibilityState {
-  const [documentVisibility, setDocumentVisibility] = useState(() => getVisibility());
+  const [documentVisibility, setDocumentVisibility] = useState(getVisibility);
 
   useEventListener(
     'visibilitychange',

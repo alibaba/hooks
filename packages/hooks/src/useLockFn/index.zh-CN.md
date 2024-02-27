@@ -20,7 +20,7 @@ order: 14
 ## API
 
 ```typescript
-function useLockFn<P extends any[] = any[], V extends any = any>(
+function useLockFn<P extends any[] = any[], V = any>(
   fn: (...args: P) => Promise<V>
 ): fn: (...args: P) => Promise<V | undefined>;
 ```

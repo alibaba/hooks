@@ -7,7 +7,7 @@ const promise: Promise<void> = new Promise((resolve) => resolve());
 const wsUrl = 'ws://localhost:9999';
 
 describe('useWebSocket', () => {
-  afterAll(() => {
+  afterEach(() => {
     WS.clean();
   });
 
@@ -44,6 +44,21 @@ describe('useWebSocket', () => {
     expect(hooks.result.current.readyState).toBe(ReadyState.Closed);
   });
 
+  it('disconnect should work', async () => {
+    const wsServer = new WS(wsUrl);
+    const hooks = renderHook(() => useWebSocket(wsUrl));
+
+    // connect
+    expect(hooks.result.current.readyState).toBe(ReadyState.Connecting);
+    await act(() => wsServer.connected);
+    expect(hooks.result.current.readyState).toBe(ReadyState.Open);
+
+    // disconnect
+    act(() => hooks.result.current.disconnect());
+    await act(() => wsServer.closed);
+    expect(hooks.result.current.readyState).toBe(ReadyState.Closed);
+  });
+
   it('useWebSocket should be manually triggered', async () => {
     const wsServer = new WS(wsUrl);
 
@@ -67,5 +82,66 @@ describe('useWebSocket', () => {
     expect(hooks.result.current.readyState).toBe(ReadyState.Open);
 
     act(() => wsServer.close());
+  });
+
+  it('should not call connect when initial socketUrl is empty', async () => {
+    const wsServer = new WS(wsUrl);
+    const onOpen = jest.fn();
+    const onClose = jest.fn();
+
+    let url = '';
+    const hooks = renderHook(() => useWebSocket(url, { onOpen, onClose }));
+
+    await act(async () => {
+      await sleep(1000);
+    });
+
+    expect(hooks.result.current.readyState).toBe(ReadyState.Closed);
+
+    url = wsUrl;
+    hooks.rerender();
+
+    await act(async () => {
+      await wsServer.connected;
+    });
+
+    expect(hooks.result.current.readyState).toBe(ReadyState.Open);
+    expect(onOpen).toBeCalledTimes(1);
+
+    act(() => wsServer.close());
+  });
+
+  it('change socketUrl should connect correctly', async () => {
+    const wsUrl1 = 'ws://localhost:8888';
+    const wsServer1 = new WS(wsUrl);
+    const wsServer2 = new WS(wsUrl1);
+
+    const onOpen = jest.fn();
+    const onClose = jest.fn();
+
+    let url = wsUrl;
+    const hooks = renderHook(() => useWebSocket(url, { onOpen, onClose, reconnectInterval: 300 }));
+
+    expect(hooks.result.current.readyState).toBe(ReadyState.Connecting);
+    await act(async () => {
+      await wsServer1.connected;
+    });
+    expect(hooks.result.current.readyState).toBe(ReadyState.Open);
+
+    url = wsUrl1;
+    hooks.rerender();
+    await act(async () => {
+      await wsServer2.connected;
+    });
+    expect(hooks.result.current.readyState).toBe(ReadyState.Open);
+
+    await act(async () => {
+      await sleep(3000);
+    });
+    expect(onOpen).toBeCalledTimes(2);
+    expect(onClose).toBeCalledTimes(1);
+
+    act(() => wsServer1.close());
+    act(() => wsServer2.close());
   });
 });

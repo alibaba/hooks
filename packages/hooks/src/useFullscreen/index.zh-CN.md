@@ -21,20 +21,26 @@ order: 9
 
 <code src="./demo/demo2.tsx"></code>
 
+### 页面全屏
+
+<code src="./demo/demo3.tsx" />
+
+### 与其它全屏操作共存
+
+<code src="./demo/demo4.tsx" />
+
 ## API
 
 ```typescript
-const [
-  isFullscreen,
-  {
-    enterFullscreen,
-    exitFullscreen,
-    toggleFullscreen,
-    isEnabled,
-  }] = useFullScreen(
-    target,
-    options?: Options
-  );
+const [isFullscreen, {
+  enterFullscreen,
+  exitFullscreen,
+  toggleFullscreen,
+  isEnabled,
+}] = useFullScreen(
+  target,
+  options?: Options
+);
 ```
 
 ### Params
@@ -46,10 +52,11 @@ const [
 
 ### Options
 
-| 参数    | 说明         | 类型         | 默认值 |
-| ------- | ------------ | ------------ | ------ |
-| onExit  | 退出全屏触发 | `() => void` | -      |
-| onEnter | 全屏触发     | `() => void` | -      |
+| 参数           | 说明                                                                   | 类型                                                   | 默认值  |
+| -------------- | ---------------------------------------------------------------------- | ------------------------------------------------------ | ------- |
+| onExit         | 退出全屏触发                                                           | `() => void`                                           | -       |
+| onEnter        | 全屏触发                                                               | `() => void`                                           | -       |
+| pageFullscreen | 是否是页面全屏。当参数类型为对象时，可以设置全屏元素的类名和 `z-index` | `boolean` \| `{ className?: string, zIndex?: number }` | `false` |
 
 ### Result
 

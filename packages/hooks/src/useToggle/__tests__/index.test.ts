@@ -16,9 +16,7 @@ describe('useToggle', () => {
   it('test on methods', async () => {
     const hook = renderHook(() => useToggle('Hello'));
     expect(hook.result.current[0]).toBe('Hello');
-    act(() => {
-      hook.result.current[1].toggle();
-    });
+    callToggle(hook);
     expect(hook.result.current[0]).toBeFalsy();
     act(() => {
       hook.result.current[1].setLeft();

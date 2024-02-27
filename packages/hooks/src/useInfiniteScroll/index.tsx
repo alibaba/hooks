@@ -31,16 +31,18 @@ const useInfiniteScroll = <TData extends Data>(
     return isNoMore(finalData);
   }, [finalData]);
 
-  const { loading, run, runAsync, cancel } = useRequest(
+  const { loading, error, run, runAsync, cancel } = useRequest(
     async (lastData?: TData) => {
       const currentData = await service(lastData);
       if (!lastData) {
-        setFinalData(currentData);
+        setFinalData({
+          ...currentData,
+          list: [...(currentData.list ?? [])],
+        });
       } else {
         setFinalData({
           ...currentData,
-          // @ts-ignore
-          list: [...lastData.list, ...currentData.list],
+          list: [...(lastData.list ?? []), ...currentData.list],
         });
       }
       return currentData;
@@ -63,26 +65,35 @@ const useInfiniteScroll = <TData extends Data>(
     },
   );
 
-  const loadMore = () => {
+  const loadMore = useMemoizedFn(() => {
     if (noMore) return;
     setLoadingMore(true);
     run(finalData);
-  };
+  });
 
-  const loadMoreAsync = () => {
+  const loadMoreAsync = useMemoizedFn(() => {
     if (noMore) return Promise.reject();
     setLoadingMore(true);
     return runAsync(finalData);
+  });
+
+  const reload = () => {
+    setLoadingMore(false);
+    return run();
   };
 
-  const reload = () => run();
-  const reloadAsync = () => runAsync();
+  const reloadAsync = () => {
+    setLoadingMore(false);
+    return runAsync();
+  };
 
   const scrollMethod = () => {
-    const el = getTargetElement(target);
+    let el = getTargetElement(target);
     if (!el) {
       return;
     }
+
+    el = el === document ? document.documentElement : el;
 
     const scrollTop = getScrollTop(el);
     const scrollHeight = getScrollHeight(el);
@@ -111,11 +122,12 @@ const useInfiniteScroll = <TData extends Data>(
   return {
     data: finalData,
     loading: !loadingMore && loading,
+    error,
     loadingMore,
     noMore,
 
-    loadMore: useMemoizedFn(loadMore),
-    loadMoreAsync: useMemoizedFn(loadMoreAsync),
+    loadMore,
+    loadMoreAsync,
     reload: useMemoizedFn(reload),
     reloadAsync: useMemoizedFn(reloadAsync),
     mutate: setFinalData,

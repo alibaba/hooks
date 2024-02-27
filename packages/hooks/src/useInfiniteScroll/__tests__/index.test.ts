@@ -159,6 +159,35 @@ describe('useInfiniteScroll', () => {
     });
   });
 
+  it('reload data should be latest', async () => {
+    let listCount = 5;
+    const mockRequestFn = async () => {
+      await sleep(1000);
+      return {
+        list: Array.from({
+          length: listCount,
+        }).map((_, index) => index + 1),
+        nextId: listCount,
+        hasMore: listCount > 2,
+      };
+    };
+
+    const { result } = setup(mockRequestFn);
+
+    await act(async () => {
+      jest.advanceTimersByTime(1000);
+    });
+    expect(result.current.data).toMatchObject({ list: [1, 2, 3, 4, 5], nextId: 5 });
+
+    listCount = 3;
+    await act(async () => {
+      result.current.reload();
+      jest.advanceTimersByTime(1000);
+    });
+
+    expect(result.current.data).toMatchObject({ list: [1, 2, 3], nextId: 3 });
+  });
+
   it('mutate should be work', async () => {
     const { result } = setup(mockRequest);
     const { mutate } = result.current;
@@ -247,5 +276,87 @@ describe('useInfiniteScroll', () => {
     await act(async () => {
       Promise.resolve();
     });
+  });
+
+  it('loading should be true when reload after loadMore', async () => {
+    const { result } = setup(mockRequest);
+    expect(result.current.loading).toBeTruthy();
+    const { reload, loadMore } = result.current;
+    await act(async () => {
+      jest.advanceTimersByTime(1000);
+    });
+
+    expect(result.current.loading).toBeFalsy();
+
+    act(() => {
+      loadMore();
+      reload();
+    });
+    expect(result.current.loading).toBeTruthy();
+
+    await act(async () => {
+      jest.advanceTimersByTime(1000);
+    });
+
+    expect(result.current.loading).toBeFalsy();
+  });
+
+  it('loading should be true when reloadAsync after loadMore', async () => {
+    const { result } = setup(mockRequest);
+    expect(result.current.loading).toBeTruthy();
+    const { reloadAsync, loadMore } = result.current;
+    await act(async () => {
+      jest.advanceTimersByTime(1000);
+    });
+
+    expect(result.current.loading).toBeFalsy();
+
+    act(() => {
+      loadMore();
+      reloadAsync();
+    });
+    expect(result.current.loading).toBeTruthy();
+
+    await act(async () => {
+      jest.advanceTimersByTime(1000);
+    });
+
+    expect(result.current.loading).toBeFalsy();
+  });
+
+  it('list can be null or undefined', async () => {
+    // @ts-ignore
+    const { result } = setup(async function () {
+      await sleep(1000);
+      count++;
+      return {
+        list: Math.random() < 0.5 ? null : undefined,
+        nextId: count,
+      };
+    });
+
+    expect(result.current.loading).toBeTruthy();
+
+    const { loadMore } = result.current;
+    await act(async () => {
+      jest.advanceTimersByTime(1000);
+    });
+
+    expect(result.current.loading).toBeFalsy();
+
+    act(() => {
+      loadMore();
+    });
+  });
+
+  it('error result', async () => {
+    const { result } = setup(async () => {
+      throw new Error('error message');
+    });
+    await act(async () => {
+      jest.advanceTimersByTime(1000);
+    });
+
+    expect(result.current.error?.message).toBe('error message');
   });
 });

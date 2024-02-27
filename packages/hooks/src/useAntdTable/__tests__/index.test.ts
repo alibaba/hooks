@@ -5,6 +5,7 @@ import useAntdTable from '../index';
 interface Query {
   current: number;
   pageSize: number;
+
   [key: string]: any;
 }
 
@@ -229,7 +230,121 @@ describe('useAntdTable', () => {
     });
     await waitFor(() => expect(queryArgs.current).toBe(1));
     expect(queryArgs.current).toBe(1);
-    expect(queryArgs.pageSize).toBe(5);
+    // expect(queryArgs.pageSize).toBe(5);
     expect(queryArgs.name).toBe('change name');
+  });
+
+  it('should reset pageSize in defaultParams', async () => {
+    queryArgs = undefined;
+    form.resetFields();
+    act(() => {
+      hook = setUp(asyncFn, {
+        form,
+        defaultParams: [
+          {
+            current: 1,
+            pageSize: 10,
+          },
+        ],
+      });
+    });
+
+    const { search, tableProps } = hook.result.current;
+    expect(tableProps.loading).toBe(false);
+    await waitFor(() => expect(queryArgs.current).toBe(1));
+    expect(queryArgs.pageSize).toBe(10);
+
+    // change params
+    act(() => {
+      tableProps.onChange({
+        current: 2,
+        pageSize: 5,
+      });
+    });
+
+    await waitFor(() => {
+      expect(queryArgs.current).toBe(2);
+      expect(queryArgs.pageSize).toBe(5);
+    });
+
+    // reset params
+    act(() => {
+      search.reset();
+    });
+
+    await waitFor(() => {
+      expect(queryArgs.current).toBe(1);
+      expect(queryArgs.pageSize).toBe(10);
+    });
+  });
+
+  it('should reset pageSize in defaultPageSize', async () => {
+    queryArgs = undefined;
+    form.resetFields();
+    act(() => {
+      hook = setUp(asyncFn, {
+        form,
+        defaultParams: {
+          current: 1,
+          pageSize: 10,
+        },
+        defaultPageSize: 20,
+      });
+    });
+
+    const { search, tableProps } = hook.result.current;
+    expect(tableProps.loading).toBe(false);
+    await waitFor(() => expect(queryArgs.current).toBe(1));
+    expect(queryArgs.pageSize).toBe(20);
+
+    // change params
+    act(() => {
+      tableProps.onChange({
+        current: 2,
+        pageSize: 5,
+      });
+    });
+
+    await waitFor(() => {
+      expect(queryArgs.current).toBe(2);
+      expect(queryArgs.pageSize).toBe(5);
+    });
+
+    // reset params
+    act(() => {
+      search.reset();
+    });
+
+    await waitFor(() => {
+      expect(queryArgs.current).toBe(1);
+      expect(queryArgs.pageSize).toBe(20);
+    });
+  });
+
+  it('search submit use default params', async () => {
+    queryArgs = undefined;
+    form.resetFields();
+    act(() => {
+      hook = setUp(asyncFn, {
+        form,
+        defaultParams: [
+          {
+            current: 2,
+            pageSize: 100,
+          },
+        ],
+      });
+    });
+
+    const { search } = hook.result.current;
+
+    act(() => {
+      search.submit();
+    });
+
+    await waitFor(() => {
+      expect(queryArgs.current).toBe(2);
+      expect(queryArgs.pageSize).toBe(100);
+    });
   });
 });

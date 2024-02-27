@@ -19,7 +19,7 @@ export default () => {
       <p>
         Status: <b>{status}</b>
       </p>
-      <div className="bd-example">
+      <div className="bd-example" style={{ wordBreak: 'break-word' }}>
         <span className="badge badge-pill badge-primary">Primary</span>
         <span className="badge badge-pill badge-secondary">Secondary</span>
         <span className="badge badge-pill badge-success">Success</span>

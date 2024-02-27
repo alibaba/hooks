@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "target": "ES6",
+    "target": "ES5",
     "moduleResolution": "node",
     "jsx": "react",
     "esModuleInterop": true,
@@ -10,16 +10,15 @@
     "paths": {
       "@/*": ["src/*"],
       "@@/*": [".dumi/tmp/*"],
-      "ahooks": ["./packages/hooks/src/index.ts"],
-      "ahooks/lib/*": ["./packages/hooks/src/*"],
       "@ahooksjs/use-url-state": ["./packages/use-url-state/src/index.ts"]
     },
+    "allowJs": true,
     "allowSyntheticDefaultImports": true,
     "skipLibCheck": true,
     "declaration": false,
     "strictNullChecks": true,
     "importHelpers": true
   },
-  "include": [".dumi/**/*", ".dumirc.ts"],
+  "include": [".dumirc.ts"],
   "exclude": ["node_modules", "lib", "es", "dist", "example"]
 }

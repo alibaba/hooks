@@ -1,5 +1,5 @@
 import { act, renderHook } from '@testing-library/react';
-import type { IFuncUpdater } from '../index';
+import type { Options } from '../index';
 import { createUseStorageState } from '../index';
 
 class TestStorage implements Storage {
@@ -41,9 +41,8 @@ class TestStorage implements Storage {
   }
 }
 
-interface StorageStateProps<T> {
+interface StorageStateProps<T> extends Pick<Options<T>, 'defaultValue'> {
   key: string;
-  defaultValue?: T | IFuncUpdater<T>;
 }
 
 describe('useStorageState', () => {
@@ -91,6 +90,11 @@ describe('useStorageState', () => {
     act(() => {
       hook.result.current.setState(undefined);
     });
+    expect(hook.result.current.state).toBeUndefined();
+
+    act(() => hook.result.current.setState('value'));
+    expect(hook.result.current.state).toBe('value');
+    act(() => hook.result.current.setState());
     expect(hook.result.current.state).toBeUndefined();
   });
 });
