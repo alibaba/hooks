@@ -23,11 +23,7 @@ export default () => {
       {loading ? (
         <p>loading</p>
       ) : (
-        <ul style={{ marginTop: 8 }}>
-          {data?.map((i) => (
-            <li key={i}>{i}</li>
-          ))}
-        </ul>
+        <ul style={{ marginTop: 8 }}>{data?.map((i) => <li key={i}>{i}</li>)}</ul>
       )}
     </div>
   );
