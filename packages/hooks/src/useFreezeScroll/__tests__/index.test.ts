@@ -1,5 +1,5 @@
 import { renderHook } from '@testing-library/react';
-import { useFreezeScroll } from '../index';
+import useFreezeScroll from '../index';
 
 // Mock window.innerWidth and document.documentElement properties
 const originalWindowInnerWidth = window.innerWidth;
