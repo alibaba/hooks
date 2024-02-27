@@ -1,6 +1,6 @@
-export interface Handle {
-  id: number | NodeJS.Timeout;
-}
+export type Handle = {
+  id: number | NodeJS.Timer | NodeJS.Timeout;
+};
 
 export function cancelAnimationFrameIsNotDefined(t: any): t is NodeJS.Timer {
   return typeof cancelAnimationFrame === typeof undefined;
