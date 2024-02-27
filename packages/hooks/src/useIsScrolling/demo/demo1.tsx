@@ -1,11 +1,3 @@
-/**
- * title: Basic Usage
- * desc: Try to scroll the box below.
- *
- * title.zh-CN: 基础用法
- * desc.zh-CN: 尝试滚动一下文字内容。
- */
-
 import React, { useRef } from 'react';
 import { useIsScrolling } from 'ahooks';
 
@@ -51,22 +43,6 @@ export default () => {
           Culpa cumque eveniet natus totam! Adipisci, animi at commodi delectus distinctio dolore
           earum, eum expedita facilis
         </div>
-        <div>
-          Quod sit, temporibus! Amet animi fugit officiis perspiciatis, quis unde. Cumque
-          dignissimos distinctio, dolor eaque est fugit nisi non pariatur porro possimus, quas quasi
-        </div>
-        <div>
-          Quod sit, temporibus! Amet animi fugit officiis perspiciatis, quis unde. Cumque
-          dignissimos distinctio, dolor eaque est fugit nisi non pariatur porro possimus, quas quasi
-        </div>{' '}
-        <div>
-          Quod sit, temporibus! Amet animi fugit officiis perspiciatis, quis unde. Cumque
-          dignissimos distinctio, dolor eaque est fugit nisi non pariatur porro possimus, quas quasi
-        </div>{' '}
-        <div>
-          Quod sit, temporibus! Amet animi fugit officiis perspiciatis, quis unde. Cumque
-          dignissimos distinctio, dolor eaque est fugit nisi non pariatur porro possimus, quas quasi
-        </div>{' '}
         <div>
           Quod sit, temporibus! Amet animi fugit officiis perspiciatis, quis unde. Cumque
           dignissimos distinctio, dolor eaque est fugit nisi non pariatur porro possimus, quas quasi

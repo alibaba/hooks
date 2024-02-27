@@ -1,18 +1,18 @@
 /**
- * title: Custom update
- * desc: listen on scroll event between 100px ~ 200px in vertical direction
+ * title: Control the direction of listening scrolling
+ * desc: listen on the horizontal scrolling status
  *
- * title.zh-CN: 自定义更新
- * desc.zh-CN: 在垂直方向 100px 到 200px 的滚动范围内监听
+ * title.zh-CN: 控制监听滚动的方向
+ * desc.zh-CN: 监听水平方向的滚动中状态
  */
 
 import React, { useRef } from 'react';
-import { useScroll } from 'ahooks';
+import { useIsScrolling } from 'ahooks';
 
 export default () => {
   const ref = useRef(null);
 
-  const scroll = useScroll(ref, (val) => val.top > 100 && val.top < 200);
+  const scroll = useIsScrolling({ target: ref, scrollDirection: 'horizontal' });
 
   return (
     <>

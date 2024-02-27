@@ -2,13 +2,17 @@ import { useRef, useState } from 'react';
 import { getTargetElement, type BasicTarget } from '../utils/domTarget';
 import useEffectWithTarget from '../utils/useEffectWithTarget';
 import useLatest from '../useLatest';
-import { setRafTimeout } from '../utils/rafTimer';
+import type { Handle } from '../utils/rafTimer';
+import { clearRafTimeout, setRafTimeout } from '../utils/rafTimer';
 
 export type Target = BasicTarget<Element | Document>;
 
 export type Options = {
   target?: Target;
   scrollDirection?: 'vertical' | 'horizontal';
+};
+export type Result = {
+  scrolling: boolean;
 };
 
 type Position = { left: number; top: number };
@@ -46,8 +50,8 @@ const getCurrentScrollPosition = (scrollEl: Target): Position => {
   return newPosition;
 };
 
-const useIsScrolling = (option?: Options) => {
-  const { scrollDirection = 'vertical', target } = option ?? {};
+const useIsScrolling = (option?: Options): Result => {
+  const { scrollDirection, target } = option ?? {};
   const [isScrolling, setIsScrolling] = useState<boolean>(false);
   const prevPosition = useRef<Position | undefined>();
   const latestScrolling = useLatest(isScrolling);
@@ -56,7 +60,11 @@ const useIsScrolling = (option?: Options) => {
     () => {
       const scrollEl = getTargetElement(target, document);
       if (!scrollEl) return;
+
+      const timeoutTimer: Handle = { id: 0 };
+
       const getIsScrolling = () => {
+        clearRafTimeout(timeoutTimer);
         const newPosition = getCurrentScrollPosition(scrollEl);
         if (!prevPosition.current) {
           prevPosition.current = newPosition;
@@ -64,10 +72,16 @@ const useIsScrolling = (option?: Options) => {
         }
         const delay = latestScrolling.current ? 500 : 100;
         setRafTimeout(() => {
+          const isVerticalScroll = prevPosition.current?.top !== newPosition.top;
+          const isHorizontalScroll = prevPosition.current?.left !== newPosition.left;
+          if (!scrollDirection) {
+            setIsScrolling(isVerticalScroll || isHorizontalScroll);
+          }
           if (scrollDirection === 'vertical') {
-            setIsScrolling(prevPosition.current?.top !== newPosition.top);
-          } else if (scrollDirection === 'horizontal') {
-            setIsScrolling(prevPosition.current?.left !== newPosition.left);
+            setIsScrolling(isVerticalScroll);
+          }
+          if (scrollDirection === 'horizontal') {
+            setIsScrolling(isHorizontalScroll);
           }
         }, delay);
         prevPosition.current.top = newPosition.top;
@@ -83,7 +97,7 @@ const useIsScrolling = (option?: Options) => {
     target,
   );
 
-  return isScrolling;
+  return { scrolling: isScrolling };
 };
 
 export default useIsScrolling;
