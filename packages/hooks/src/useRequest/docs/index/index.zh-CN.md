@@ -1,12 +1,9 @@
 ---
 title: 快速上手
-nav:
-  title: Hooks
-  order: 2
-group:
-  title: useRequest
-  order: 1
+nav: Hooks
+group: useRequest
 order: 1
+toc: content
 ---
 
 # 快速上手

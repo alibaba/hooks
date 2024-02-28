@@ -1,6 +1,7 @@
 ---
 title: Hooks of DOM specification
-order: 3
+order: 2
+toc: content
 ---
 
 ## Hooks of DOM specification

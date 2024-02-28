@@ -5,6 +5,7 @@ group:
   title: Effect
   order: 5
 order: 6
+toc: content
 ---
 
 # useThrottleFn

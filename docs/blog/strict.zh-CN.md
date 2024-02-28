@@ -1,7 +1,7 @@
 ---
 title: React Hooks & strict mode
-group: Blog
-order: 4
+order: 5
+toc: content
 ---
 
 # React Hooks & strict mode

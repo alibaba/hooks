@@ -5,6 +5,7 @@ group:
   title: Effect
   order: 5
 order: 3
+toc: content
 ---
 
 # useAsyncEffect

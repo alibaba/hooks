@@ -5,6 +5,7 @@ group:
   title: Advanced
   order: 7
 order: 3
+toc: content
 ---
 
 # useEventEmitter

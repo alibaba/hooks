@@ -3,6 +3,7 @@ title: 依赖刷新
 nav: Hooks
 group: useRequest
 order: 6
+toc: content
 ---
 
 # 依赖刷新

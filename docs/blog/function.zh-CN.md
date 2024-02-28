@@ -1,7 +1,7 @@
 ---
 title: ahooks 输入输出函数处理规范
-group: Blog
 order: 1
+toc: content
 ---
 
 # ahooks 输入输出函数处理规范

@@ -3,6 +3,7 @@ title: Loading Delay
 nav: Hooks
 group: useRequest
 order: 3
+toc: content
 ---
 
 # Loading Delay

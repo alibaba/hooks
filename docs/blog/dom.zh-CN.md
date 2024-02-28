@@ -1,6 +1,7 @@
 ---
 title: DOM 类 Hooks 使用规范
-order: 3
+order: 2
+toc: content
 ---
 
 ## DOM 类 Hooks 使用规范

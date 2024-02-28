@@ -1,6 +1,7 @@
 ---
 title: v2 to v3
-order: 2
+order: 1
+toc: content
 ---
 
 ## v2 to v3

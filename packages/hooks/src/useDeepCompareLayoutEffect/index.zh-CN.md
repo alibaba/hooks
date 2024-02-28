@@ -5,6 +5,7 @@ group:
   title: Effect
   order: 5
 order: 9
+toc: content
 ---
 
 # useDeepCompareLayoutEffect

@@ -5,6 +5,7 @@ group:
   title: Advanced
   order: 7
 order: 7
+toc: content
 ---
 
 ## useReactive

@@ -5,6 +5,7 @@ group:
   title: Effect
   order: 5
 order: 11
+toc: content
 ---
 
 # useRafInterval

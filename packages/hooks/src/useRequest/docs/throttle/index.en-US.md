@@ -3,6 +3,7 @@ title: 节流
 nav: Hooks
 group: useRequest
 order: 9
+toc: content
 ---
 
 # Throttle

@@ -5,6 +5,7 @@ group:
   title: Effect
   order: 5
 order: 13
+toc: content
 ---
 
 # useRafTimeout

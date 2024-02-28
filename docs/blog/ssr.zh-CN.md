@@ -1,7 +1,7 @@
 ---
 title: React Hooks & SSR
-group: Blog
-order: 2
+order: 4
+toc: content
 ---
 
 # React Hooks & SSR

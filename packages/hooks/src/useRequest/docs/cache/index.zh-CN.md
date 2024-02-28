@@ -3,6 +3,7 @@ title: 缓存 & SWR
 nav: Hooks
 group: useRequest
 order: 10
+toc: content
 ---
 
 # 缓存 & SWR

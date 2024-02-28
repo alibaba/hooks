@@ -1,10 +1,9 @@
 ---
 title: 快速上手
 nav: Hooks
-group:
-  title: useRequest
-  order: 1
+group: useRequest
 order: 1
+toc: content
 ---
 
 # Quick Start

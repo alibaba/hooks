@@ -1,7 +1,7 @@
 ---
 title: ahooks function specification
-group: Blog
 order: 1
+toc: content
 ---
 
 # ahooks function specification

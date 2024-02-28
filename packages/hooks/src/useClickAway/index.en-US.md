@@ -5,6 +5,7 @@ group:
   title: Dom
   order: 6
 order: 2
+toc: content
 ---
 
 # useClickAway

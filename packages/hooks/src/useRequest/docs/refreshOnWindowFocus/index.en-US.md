@@ -3,6 +3,7 @@ title: 屏幕聚焦重新请求
 nav: Hooks
 group: useRequest
 order: 7
+toc: content
 ---
 
 # RefreshOnWindowFocus

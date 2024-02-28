@@ -1,3 +1,7 @@
+---
+sidebar: false
+---
+
 # useUrlState
 
 A hook that stores the state into url query parameters.

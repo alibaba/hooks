@@ -3,10 +3,13 @@ import { defineConfig } from 'dumi';
 const packages = require('./packages/hooks/package.json');
 
 export default defineConfig({
-  // ssr: {},
-  hash: true,
   mfsu: false,
-  favicons: ['/simple-logo.svg'],
+  hash: true,
+  manifest: {},
+  alias: {
+    ahooks: process.cwd() + '/packages/hooks/src/index.ts',
+    '@ahooksjs/use-url-state': process.cwd() + '/packages/use-url-state/src/index.ts',
+  },
   resolve: {
     docDirs: ['docs'],
     atomDirs: [
@@ -14,66 +17,58 @@ export default defineConfig({
       { type: 'hook', dir: 'packages/hooks/src/useRequest/docs' },
       { type: 'hook', dir: 'packages/use-url-state' },
     ],
-    codeBlockMode: 'passive',
   },
-  locales: [
-    { id: 'zh-CN', name: '中文' },
-    { id: 'en-US', name: 'English' },
-  ],
-  alias: {
-    ahooks: process.cwd() + '/packages/hooks/src/index.ts',
-    '@ahooksjs/use-url-state': process.cwd() + '/packages/use-url-state/src/index.ts',
-  },
-  // TODO: 原来的统计使用的是：https://s4.cnzz.com/z_stat.php?id=1278992092&web_id=1278992092，但这个链接无法访问，
-  //       是否需要切换到 dumi 内置的统计功能中
-  analytics: {},
-  manifest: {},
   sitemap: {
     hostname: 'https://ahooks.js.org/',
   },
+  locales: [
+    { id: 'en-US', name: 'English' },
+    { id: 'zh-CN', name: '中文' },
+  ],
+  favicons: ['/simple-logo.svg'],
   themeConfig: {
-    // name: `ahooks ${packages.version}`,
     logo: '/logo.svg',
-    prefersColor: { default: 'auto', switch: true },
+    // name: packages.version, // TODO: 溢出了
+    prefersColor: {
+      default: 'light',
+      switch: true,
+    },
     footer:
       'Open-source MIT Licensed | Copyright © 2019-present<br />Powered by <a href="https://d.umijs.org" target="_blank">dumi</a>',
     socialLinks: {
       github: 'https://github.com/alibaba/hooks',
     },
+    nav: {
+      'en-US': [
+        { title: 'Guide', link: '/guide' },
+        { title: 'Hooks', link: '/hooks/index' },
+        { title: 'Blog', link: '/blog/function' },
+        { title: 'Releases', link: 'https://github.com/alibaba/hooks/releases' },
+        { title: '国内镜像', link: 'https://ahooks.gitee.io/zh-CN' },
+        {
+          title: 'Legacy Versions',
+          children: [
+            { title: 'v2.x', link: 'https://ahooks-v2.js.org/' },
+            { title: 'v1.x', link: 'http://hooks.umijs.org/' },
+          ],
+        },
+      ],
+      'zh-CN': [
+        { title: '指南', link: '/zh-CN/guide' },
+        { title: 'Hooks', link: '/zh-CN/hooks/index' },
+        { title: '博客', link: '/zh-CN/blog/function' },
+        { title: '更新日志', link: 'https://github.com/alibaba/hooks/releases' },
+        { title: '国内镜像', link: 'https://ahooks.gitee.io/zh-CN' },
+        {
+          title: '历史版本',
+          children: [
+            { title: 'v2.x', link: 'https://ahooks-v2.js.org/' },
+            { title: 'v1.x', link: 'http://hooks.umijs.org/' },
+          ],
+        },
+      ],
+    },
   },
-  // https://github.com/alibaba/hooks/issues/2155
-  extraBabelIncludes: ['filter-obj'],
-  extraBabelPlugins: [
-    [
-      'babel-plugin-import',
-      {
-        libraryName: 'antd',
-        libraryDirectory: 'es',
-        style: true,
-      },
-      'antd',
-    ],
-    [
-      'babel-plugin-import',
-      {
-        libraryName: '@alifd/next',
-        style: false,
-      },
-      'fusion',
-    ],
-  ],
-  exportStatic: {},
-  /**
-   * TODO: dumi v1 中，该选项配置如下：
-   *
-   * nodeModulesTransform: {
-   *   type: 'none',
-   *   exclude: [],
-   * },
-   *
-   * 在 v2 中暂时不确定怎样是等价的配置
-   */
-  // legacy: {},
   links: [
     // Used by the `useFusionTable` demo
     {
@@ -104,5 +99,36 @@ export default defineConfig({
       }
     });
     observer.observe(document.body, { childList: true, subtree: true });`,
+  ],
+  /**
+   * TODO: dumi v1 中，该选项配置如下：
+   *
+   * nodeModulesTransform: {
+   *   type: 'none',
+   *   exclude: [],
+   * },
+   *
+   * 在 v2 中暂时不确定怎样是等价的配置
+   */
+  // https://github.com/alibaba/hooks/issues/2155
+  extraBabelIncludes: ['filter-obj'],
+  extraBabelPlugins: [
+    [
+      'babel-plugin-import',
+      {
+        libraryName: 'antd',
+        libraryDirectory: 'es',
+        style: true,
+      },
+      'antd',
+    ],
+    [
+      'babel-plugin-import',
+      {
+        libraryName: '@alifd/next',
+        style: false,
+      },
+      'fusion',
+    ],
   ],
 });

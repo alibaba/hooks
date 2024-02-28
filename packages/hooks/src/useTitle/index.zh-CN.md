@@ -5,6 +5,7 @@ group:
   title: Dom
   order: 6
 order: 7
+toc: content
 ---
 
 # useTitle

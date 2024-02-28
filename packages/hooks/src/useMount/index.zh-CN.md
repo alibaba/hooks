@@ -5,6 +5,7 @@ group:
   title: LifeCycle
   order: 3
 order: 1
+toc: content
 ---
 
 # useMount
