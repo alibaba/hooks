@@ -6,10 +6,10 @@
  * description.zh-CN: 管理动态列表
  */
 
+import React from 'react';
+import { Input } from 'antd';
 import { MinusCircleOutlined, PlusCircleOutlined } from '@ant-design/icons';
 import { useDynamicList } from 'ahooks';
-import { Input } from 'antd';
-import React from 'react';
 
 export default () => {
   const { list, remove, getKey, insert, replace } = useDynamicList(['David', 'Jack']);

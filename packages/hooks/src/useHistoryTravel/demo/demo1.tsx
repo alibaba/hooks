@@ -6,8 +6,8 @@
  * description.zh-CN: 撤销跟重做操作，输入内容后，点击 back 和 forward。
  */
 
-import { useHistoryTravel } from 'ahooks';
 import React from 'react';
+import { useHistoryTravel } from 'ahooks';
 
 export default () => {
   const { value, setValue, backLength, forwardLength, back, forward } = useHistoryTravel<string>();

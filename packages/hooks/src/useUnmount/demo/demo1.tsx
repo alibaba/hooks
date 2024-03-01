@@ -6,9 +6,9 @@
  * description.zh-CN: 在组件卸载时，执行函数。
  */
 
-import { useBoolean, useUnmount } from 'ahooks';
-import { message } from 'antd';
 import React from 'react';
+import { message } from 'antd';
+import { useBoolean, useUnmount } from 'ahooks';
 
 const MyComponent = () => {
   useUnmount(() => {

@@ -6,9 +6,24 @@
  * description.zh-CN: 示例中 `memoizedFn` 是不会变化的，`callbackFn` 在 count 变化时变化。
  */
 
-import { useMemoizedFn } from 'ahooks';
-import { message } from 'antd';
 import React, { useCallback, useRef, useState } from 'react';
+import { message } from 'antd';
+import { useMemoizedFn } from 'ahooks';
+
+// some expensive component with React.memo
+const ExpensiveTree = React.memo<Record<string, any>>(({ showCount }) => {
+  const renderCountRef = useRef(0);
+  renderCountRef.current += 1;
+
+  return (
+    <div>
+      <p>Render Count: {renderCountRef.current}</p>
+      <button type="button" onClick={showCount}>
+        showParentCount
+      </button>
+    </div>
+  );
+});
 
 export default () => {
   const [count, setCount] = useState(0);
@@ -49,18 +64,3 @@ export default () => {
     </>
   );
 };
-
-// some expensive component with React.memo
-const ExpensiveTree = React.memo<{ [key: string]: any }>(({ showCount }) => {
-  const renderCountRef = useRef(0);
-  renderCountRef.current += 1;
-
-  return (
-    <div>
-      <p>Render Count: {renderCountRef.current}</p>
-      <button type="button" onClick={showCount}>
-        showParentCount
-      </button>
-    </div>
-  );
-});

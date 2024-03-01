@@ -6,9 +6,9 @@
  * description.zh-CN: 在组件首次渲染时，执行方法。
  */
 
-import { useMount, useBoolean } from 'ahooks';
-import { message } from 'antd';
 import React from 'react';
+import { message } from 'antd';
+import { useMount, useBoolean } from 'ahooks';
 
 const MyComponent = () => {
   useMount(() => {

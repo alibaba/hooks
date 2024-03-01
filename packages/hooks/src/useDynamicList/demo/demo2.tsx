@@ -6,10 +6,10 @@
  * description.zh-CN: 在 antd Form 中使用，可以独立封装一个组件，比如例子中的 DynamicInputs。
  */
 
+import React, { useEffect, useState } from 'react';
+import { Button, Form, Input } from 'antd';
 import { MinusCircleOutlined, PlusCircleOutlined } from '@ant-design/icons';
 import { useDynamicList } from 'ahooks';
-import { Button, Form, Input } from 'antd';
-import React, { useEffect, useState } from 'react';
 
 const DynamicInputs = ({
   value = [],

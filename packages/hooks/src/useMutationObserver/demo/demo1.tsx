@@ -4,8 +4,8 @@
  * title.zh-CN: 基础用法
  */
 
-import { useMutationObserver } from 'ahooks';
 import React, { useRef, useState } from 'react';
+import { useMutationObserver } from 'ahooks';
 
 const App: React.FC = () => {
   const [width, setWidth] = useState(200);

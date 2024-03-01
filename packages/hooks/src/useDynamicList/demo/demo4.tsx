@@ -6,10 +6,10 @@
  * description.zh-CN: 使用 antd table 构建动态表格
  */
 
-import { DragOutlined } from '@ant-design/icons';
-import { Button, Form, Input, Table } from 'antd';
 import React, { useState } from 'react';
 import ReactDragListView from 'react-drag-listview';
+import { Button, Form, Input, Table } from 'antd';
+import { DragOutlined } from '@ant-design/icons';
 import { useDynamicList } from 'ahooks';
 
 interface Item {

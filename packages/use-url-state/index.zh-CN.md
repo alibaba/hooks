@@ -40,19 +40,19 @@ React Router V6：https://codesandbox.io/s/autumn-shape-odrt9?file=/App.tsx
 
 ### 基础用法
 
-<code src="./demo/demo1.tsx" hideActions='["CSB"]'></code>
+<code src="./src/demo/demo1.tsx" hideActions='["CSB"]'></code>
 
 ### 多状态管理
 
-<code src="./demo/demo2.tsx" hideActions='["CSB"]'></code>
+<code src="./src/demo/demo2.tsx" hideActions='["CSB"]'></code>
 
 ### 多状态管理（拆分）
 
-<code src="./demo/demo4.tsx" hideActions='["CSB"]'></code>
+<code src="./src/demo/demo4.tsx" hideActions='["CSB"]'></code>
 
 ### 自定义 query-string 配置
 
-<code src="./demo/demo3.tsx" hideActions='["CSB"]'></code>
+<code src="./src/demo/demo3.tsx" hideActions='["CSB"]'></code>
 
 ## API
 

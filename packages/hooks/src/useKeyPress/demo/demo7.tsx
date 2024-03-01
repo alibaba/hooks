@@ -6,9 +6,9 @@
  * description.zh-CN: 通过配置 `exactMatch`, 开启精确匹配。比如按 [shift + c] ，不会触发 [c]。
  */
 
+import React, { useState } from 'react';
 import { CheckOutlined } from '@ant-design/icons';
 import { useKeyPress } from 'ahooks';
-import React, { useState } from 'react';
 
 export default () => {
   const [state, setState] = useState<number>();

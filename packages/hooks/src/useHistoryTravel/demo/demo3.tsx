@@ -6,8 +6,8 @@
  * description.zh-CN: 限制最大历史记录数量,避免过度占用内存。
  */
 
-import { useHistoryTravel } from 'ahooks';
 import React from 'react';
+import { useHistoryTravel } from 'ahooks';
 
 export default () => {
   const maxLength = 3;

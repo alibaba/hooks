@@ -6,9 +6,9 @@
  * description.zh-CN: 在 `submit` 函数执行完成前，其余的点击动作都会被忽略。
  */
 
-import { useLockFn } from 'ahooks';
-import { message } from 'antd';
 import React, { useState } from 'react';
+import { message } from 'antd';
+import { useLockFn } from 'ahooks';
 
 function mockApiRequest() {
   return new Promise<void>((resolve) => {

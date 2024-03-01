@@ -6,8 +6,8 @@
  * description.zh-CN: 更新 state 或 props，可以在控制台看到输出
  */
 
-import { useWhyDidYouUpdate } from 'ahooks';
 import React, { useState } from 'react';
+import { useWhyDidYouUpdate } from 'ahooks';
 
 const Demo: React.FC<{ count: number }> = (props) => {
   const [randomNum, setRandomNum] = useState(Math.random());

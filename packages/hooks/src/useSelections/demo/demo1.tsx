@@ -6,8 +6,8 @@
  * description.zh-CN: 常见的 Checkbox 联动
  */
 
-import { Checkbox, Col, Row } from 'antd';
 import React, { useMemo, useState } from 'react';
+import { Checkbox, Col, Row } from 'antd';
 import { useSelections } from 'ahooks';
 
 export default () => {
