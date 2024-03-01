@@ -1,5 +1,5 @@
 ---
-title: Intro
+title: Getting Started
 order: 1
 toc: content
 ---

@@ -30,18 +30,21 @@ export default defineConfig({
   themeConfig: {
     logo: '/logo.svg',
     title: 'ahooks',
+    bannerConfig: {
+      showBanner: false,
+    },
     description: {
       'en-US': 'A high-quality & reliable React Hooks library',
       'zh-CN': '一套高质量可靠的 React Hooks 库',
     },
     actions: {
       'en-US': [
-        { text: 'Guide', link: '/guide', type: 'primary' },
+        { text: 'Getting Started', link: '/guide', type: 'primary' },
         { text: 'Hooks List', link: '/hooks/index' },
       ],
       'zh-CN': [
-        { text: '指南', link: '/guide', type: 'primary' },
-        { text: 'Hooks 列表', link: '/hooks/index' },
+        { text: '开始使用', link: '/zh-CN/guide', type: 'primary' },
+        { text: 'Hooks 列表', link: '/zh-CN/hooks/index' },
       ],
     },
     features: {
@@ -79,9 +82,10 @@ export default defineConfig({
       'v1.x': 'http://hooks.umijs.org/',
     },
     localesEnhance: [
+      { id: 'en-US', switchPrefix: 'En' },
       { id: 'zh-CN', switchPrefix: '中' },
-      { id: 'en-US', switchPrefix: 'EN' },
     ],
+    sidebarGroupModePath: ['/guide', '/hooks', '/blog', '/zh-CN'],
     nav: {
       'en-US': [
         { title: 'Guide', link: '/guide' },

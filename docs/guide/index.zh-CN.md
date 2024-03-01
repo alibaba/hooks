@@ -1,5 +1,5 @@
 ---
-title: 介绍
+title: 快速上手
 order: 1
 toc: content
 ---
