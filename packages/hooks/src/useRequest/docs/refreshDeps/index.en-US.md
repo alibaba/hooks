@@ -1,5 +1,5 @@
 ---
-title: RefreshDeps
+title: Refresh Deps
 nav: Hooks
 group: useRequest
 order: 6

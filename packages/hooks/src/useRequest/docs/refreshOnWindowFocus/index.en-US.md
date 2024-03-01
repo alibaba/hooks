@@ -1,5 +1,5 @@
 ---
-title: RefreshOnWindowFocus
+title: Refresh on Window Focus
 nav: Hooks
 group: useRequest
 order: 7

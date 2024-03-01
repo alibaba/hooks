@@ -1,5 +1,5 @@
 ---
-title: Basic usage
+title: Basic Usage
 nav: Hooks
 group: useRequest
 order: 2
