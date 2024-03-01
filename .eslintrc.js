@@ -14,6 +14,8 @@ module.exports = {
     '@typescript-eslint/no-parameter-properties': 'off',
     'import/no-useless-path-segments': 'off',
     'no-unused-expressions': 'off',
+    'react/no-array-index-key': 'off',
+    'react/no-unescaped-entities': 'off',
     'react-hooks/rules-of-hooks': 'error',
     'react-hooks/exhaustive-deps': 'off',
     'no-await-in-loop': 'off',

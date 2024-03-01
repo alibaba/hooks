@@ -7,11 +7,6 @@
     "downlevelIteration": true,
     "sourceMap": true,
     "baseUrl": ".",
-    "paths": {
-      "@/*": ["src/*"],
-      "@@/*": [".dumi/tmp/*"],
-      "@ahooksjs/use-url-state": ["./packages/use-url-state/src/index.ts"]
-    },
     "allowJs": true,
     "allowSyntheticDefaultImports": true,
     "skipLibCheck": true,
@@ -19,6 +14,5 @@
     "strictNullChecks": true,
     "importHelpers": true
   },
-  "include": [".dumirc.ts"],
   "exclude": ["node_modules", "lib", "es", "dist", "example"]
 }
