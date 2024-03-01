@@ -1,12 +1,10 @@
 ---
-title: 轮询
+title: Polling
 nav: Hooks
 group: useRequest
 order: 4
 toc: content
 ---
-
-# Polling
 
 By setting `options.pollingInterval`, enter the polling mode, `useRequest` will periodically trigger service execution.
 

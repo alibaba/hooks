@@ -1,12 +1,10 @@
 ---
-title: 缓存 & SWR
+title: Cache & SWR
 nav: Hooks
 group: useRequest
 order: 10
 toc: content
 ---
-
-# Cache & SWR
 
 If `options.cacheKey` is set, `useRequest` will cache the successful data . The next time the component is initialized, if there is cached data, we will return the cached data first, and then send a new request in background, which is the ability of SWR.
 

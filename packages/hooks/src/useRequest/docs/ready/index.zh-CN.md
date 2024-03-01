@@ -6,8 +6,6 @@ order: 5
 toc: content
 ---
 
-# Ready
-
 通过设置 `options.ready`，可以控制请求是否发出。当其值为 `false` 时，请求永远都不会发出。
 
 其具体行为如下：

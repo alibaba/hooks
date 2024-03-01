@@ -6,8 +6,6 @@ order: 5
 toc: content
 ---
 
-# Ready
-
 By setting `options.ready`, you can control whether a request is sent. When its value is `false`, the request will never be sent.
 
 The specific behavior is as follows:

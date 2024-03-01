@@ -6,8 +6,6 @@ order: 1
 toc: content
 ---
 
-# 快速上手
-
 `useRequest` 是一个强大的异步数据管理的 Hooks，React 项目中的网络请求场景使用 `useRequest` 就够了。
 
 `useRequest` 通过插件式组织代码，核心代码极其简单，并且可以很方便的扩展出更高级的功能。目前已有能力包括：

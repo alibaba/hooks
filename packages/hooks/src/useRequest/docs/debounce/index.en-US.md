@@ -1,12 +1,10 @@
 ---
-title: 防抖
+title: Debounce
 nav: Hooks
 group: useRequest
 order: 8
 toc: content
 ---
-
-# Debounce
 
 Enter the debounce mode by setting `options.debounceWait`. At this time, if `run` or `runAsync` is triggered frequently, the request will be executed with the debounce strategy.
 

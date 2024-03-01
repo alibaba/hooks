@@ -6,8 +6,6 @@ order: 11
 toc: content
 ---
 
-# 错误重试
-
 通过设置 `options.retryCount`，指定错误重试次数，则 useRequest 在失败后会进行重试。
 
 ```tsx | pure

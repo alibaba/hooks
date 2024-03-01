@@ -6,8 +6,6 @@ order: 4
 toc: content
 ---
 
-# 轮询
-
 通过设置 `options.pollingInterval`，进入轮询模式，`useRequest` 会定时触发 service 执行。
 
 ```tsx | pure

@@ -6,8 +6,6 @@ order: 3
 toc: content
 ---
 
-# Loading Delay
-
 By setting `options.loadingDelay`, you can delay the time when `loading` turns to `true`, effectively prevent UI flashing.
 
 ```tsx | pure

@@ -1,12 +1,10 @@
 ---
-title: 基础用法
+title: Basic usage
 nav: Hooks
 group: useRequest
 order: 2
 toc: content
 ---
-
-# Basic usage
 
 In this section, we will introduce the core and basic functionalities of `useRequest`, that is, the functionalities of the `useRequest` kernel.
 

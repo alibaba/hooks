@@ -1,12 +1,10 @@
 ---
-title: 屏幕聚焦重新请求
+title: RefreshOnWindowFocus
 nav: Hooks
 group: useRequest
 order: 7
 toc: content
 ---
-
-# RefreshOnWindowFocus
 
 By setting `options.refreshOnWindowFocus`, the request will be refreshed when the browser is `refocus` and `revisible`.
 

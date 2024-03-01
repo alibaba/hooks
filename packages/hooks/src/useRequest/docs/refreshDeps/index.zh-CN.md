@@ -6,8 +6,6 @@ order: 6
 toc: content
 ---
 
-# 依赖刷新
-
 通过设置 `options.refreshDeps`，在依赖变化时， `useRequest` 会自动调用 [refresh](https://ahooks.js.org/zh-CN/hooks/use-request/basic/#result) 方法，实现[刷新（重复上一次请求）](https://ahooks.js.org/zh-CN/hooks/use-request/basic/#刷新重复上一次请求)的效果。
 
 ```tsx | pure

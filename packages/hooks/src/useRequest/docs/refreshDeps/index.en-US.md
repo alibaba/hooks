@@ -1,12 +1,10 @@
 ---
-title: 依赖刷新
+title: RefreshDeps
 nav: Hooks
 group: useRequest
 order: 6
 toc: content
 ---
-
-# RefreshDeps
 
 By setting `options.refreshDeps`, `useRequest` will run [refresh](https://ahooks.js.org/hooks/use-request/basic/#result) automatically when dependencies change, achieving the effect of [Refresh (repeat the last request)](https://ahooks.js.org/hooks/use-request/basic/#refresh-repeat-the-last-request).
 

@@ -6,8 +6,6 @@ order: 7
 toc: content
 ---
 
-# 屏幕聚焦重新请求
-
 通过设置 `options.refreshOnWindowFocus`，在浏览器窗口 `refocus` 和 `revisible` 时，会重新发起请求。
 
 ```tsx | pure

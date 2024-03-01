@@ -1,12 +1,10 @@
 ---
-title: 快速上手
+title: Quick Start
 nav: Hooks
 group: useRequest
 order: 1
 toc: content
 ---
-
-# Quick Start
 
 `useRequest` is a powerful Hooks for asynchronous data management. `useRequest` is sufficient enough for network request scenarios in React projects.
 

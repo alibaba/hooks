@@ -6,8 +6,6 @@ order: 9
 toc: content
 ---
 
-# 节流
-
 通过设置 `options.throttleWait`，进入节流模式，此时如果频繁触发 `run` 或者 `runAsync`，则会以节流策略进行请求。
 
 ```tsx | pure

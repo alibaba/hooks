@@ -6,8 +6,6 @@ order: 2
 toc: content
 ---
 
-# 基础用法
-
 这一小节我们会介绍 `useRequest` 最核心，最基础的能力，也就是 `useRequest` 内核的能力。
 
 ## 默认请求
