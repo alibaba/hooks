@@ -44,7 +44,7 @@ export default defineConfig({
         { title: 'Hooks', link: '/hooks/index' },
         { title: 'Blog', link: '/blog/function' },
         { title: 'Releases', link: 'https://github.com/alibaba/hooks/releases' },
-        { title: '国内镜像', link: 'https://ahooks.gitee.io/zh-CN' },
+        { title: 'Mirror', link: 'https://ahooks.gitee.io/zh-CN' },
         {
           title: 'Legacy Versions',
           children: [
@@ -100,18 +100,6 @@ export default defineConfig({
     });
     observer.observe(document.body, { childList: true, subtree: true });`,
   ],
-  /**
-   * TODO: dumi v1 中，该选项配置如下：
-   *
-   * nodeModulesTransform: {
-   *   type: 'none',
-   *   exclude: [],
-   * },
-   *
-   * 在 v2 中暂时不确定怎样是等价的配置
-   */
-  // https://github.com/alibaba/hooks/issues/2155
-  extraBabelIncludes: ['filter-obj'],
   extraBabelPlugins: [
     [
       'babel-plugin-import',
@@ -131,4 +119,6 @@ export default defineConfig({
       'fusion',
     ],
   ],
+  // https://github.com/alibaba/hooks/issues/2155
+  extraBabelIncludes: ['filter-obj'],
 });
