@@ -28,16 +28,17 @@ export default defineConfig({
   favicons: ['/simple-logo.svg'],
   themeConfig: {
     logo: '/logo.svg',
-    // name: packages.version, // TODO: 溢出了
+    name: packages.version,
+    rtl: true,
+    socialLinks: {
+      github: 'https://github.com/alibaba/hooks',
+    },
     prefersColor: {
       default: 'light',
       switch: true,
     },
     footer:
       'Open-source MIT Licensed | Copyright © 2019-present<br />Powered by <a href="https://d.umijs.org" target="_blank">dumi</a>',
-    socialLinks: {
-      github: 'https://github.com/alibaba/hooks',
-    },
     nav: {
       'en-US': [
         { title: 'Guide', link: '/guide' },
