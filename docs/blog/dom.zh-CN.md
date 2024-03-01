@@ -4,8 +4,6 @@ order: 2
 toc: content
 ---
 
-## DOM 类 Hooks 使用规范
-
 ahooks 大部分 DOM 类 Hooks 都会接收 `target` 参数，表示要处理的元素。
 
 `target` 支持三种类型 `React.MutableRefObject`、`HTMLElement`、`() => HTMLElement`。

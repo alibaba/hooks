@@ -4,8 +4,6 @@ order: 3
 toc: content
 ---
 
-# React Hooks & react-refresh（HMR）
-
 ## 什么是 react-refresh
 
 [react-refresh-webpack-plugin](https://github.com/pmmmwh/react-refresh-webpack-plugin) 是 React 官方提供的一个 模块热替换（HMR）插件。

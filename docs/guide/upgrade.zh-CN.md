@@ -4,8 +4,6 @@ order: 1
 toc: content
 ---
 
-## v2 to v3
-
 相较于 ahooks v2 版本，ahooks v3 版本的变更主要包括：
 
 - 全新的 `useRequest`

@@ -5,6 +5,7 @@ const packages = require('./packages/hooks/package.json');
 export default defineConfig({
   mfsu: false,
   hash: true,
+  ssr: process.env.NODE_ENV === 'development' ? false : {},
   manifest: {},
   alias: {
     ahooks: process.cwd() + '/packages/hooks/src/index.ts',
@@ -28,7 +29,42 @@ export default defineConfig({
   favicons: ['/simple-logo.svg'],
   themeConfig: {
     logo: '/logo.svg',
-    name: packages.version,
+    title: 'ahooks',
+    description: {
+      'en-US': 'A high-quality & reliable React Hooks library',
+      'zh-CN': '一套高质量可靠的 React Hooks 库',
+    },
+    actions: {
+      'en-US': [
+        { text: 'Guide', link: '/guide', type: 'primary' },
+        { text: 'Hooks List', link: '/hooks/index' },
+      ],
+      'zh-CN': [
+        { text: '指南', link: '/guide', type: 'primary' },
+        { text: 'Hooks 列表', link: '/hooks/index' },
+      ],
+    },
+    features: {
+      'en-US': [
+        { title: 'Easy to learn and use' },
+        { title: 'Supports SSR' },
+        { title: 'Special treatment for functions, avoid closure problems' },
+        {
+          title:
+            'Contains a large number of advanced Hooks that are refined from business scenarios',
+        },
+        { title: 'Contains a comprehensive collection of basic Hooks' },
+        { title: 'Written in TypeScript with predictable static types' },
+      ],
+      'zh-CN': [
+        { title: '易学易用' },
+        { title: '支持 SSR' },
+        { title: '对输入输出函数做了特殊处理，避免闭包问题' },
+        { title: '包含大量提炼自业务的高级 Hooks' },
+        { title: '包含丰富的基础 Hooks' },
+        { title: '使用 TypeScript 构建，提供完整的类型定义文件' },
+      ],
+    },
     rtl: true,
     socialLinks: {
       github: 'https://github.com/alibaba/hooks',
@@ -37,8 +73,15 @@ export default defineConfig({
       default: 'light',
       switch: true,
     },
-    footer:
-      'Open-source MIT Licensed | Copyright © 2019-present<br />Powered by <a href="https://d.umijs.org" target="_blank">dumi</a>',
+    docVersions: {
+      [packages.version]: '',
+      'v2.x': 'https://ahooks-v2.js.org/',
+      'v1.x': 'http://hooks.umijs.org/',
+    },
+    localesEnhance: [
+      { id: 'zh-CN', switchPrefix: '中' },
+      { id: 'en-US', switchPrefix: 'EN' },
+    ],
     nav: {
       'en-US': [
         { title: 'Guide', link: '/guide' },
@@ -46,13 +89,6 @@ export default defineConfig({
         { title: 'Blog', link: '/blog/function' },
         { title: 'Releases', link: 'https://github.com/alibaba/hooks/releases' },
         { title: 'Mirror', link: 'https://ahooks.gitee.io/zh-CN' },
-        {
-          title: 'Legacy Versions',
-          children: [
-            { title: 'v2.x', link: 'https://ahooks-v2.js.org/' },
-            { title: 'v1.x', link: 'http://hooks.umijs.org/' },
-          ],
-        },
       ],
       'zh-CN': [
         { title: '指南', link: '/zh-CN/guide' },
@@ -60,15 +96,10 @@ export default defineConfig({
         { title: '博客', link: '/zh-CN/blog/function' },
         { title: '更新日志', link: 'https://github.com/alibaba/hooks/releases' },
         { title: '国内镜像', link: 'https://ahooks.gitee.io/zh-CN' },
-        {
-          title: '历史版本',
-          children: [
-            { title: 'v2.x', link: 'https://ahooks-v2.js.org/' },
-            { title: 'v1.x', link: 'http://hooks.umijs.org/' },
-          ],
-        },
       ],
     },
+    footer:
+      'Open-source MIT Licensed | Copyright © 2019-present<br />Powered by <a href="https://d.umijs.org" target="_blank">dumi</a>',
   },
   links: [
     // Used by the `useFusionTable` demo

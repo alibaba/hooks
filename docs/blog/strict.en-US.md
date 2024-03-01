@@ -4,8 +4,6 @@ order: 5
 toc: content
 ---
 
-# React Hooks & strict mode
-
 ## What is strict mode
 
 In React, there are many historical APIs or writing methods that will be obsolete in future versions and are now marked as deprecated. such as `componentWillMount`, in normal mode, you can use it normally. But in strict mode, a warning will be thrown:

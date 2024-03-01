@@ -4,8 +4,6 @@ order: 1
 toc: content
 ---
 
-# ahooks function specification
-
 ahooks tries its best to help everyone avoid the closure problem by specially processing the input and output functions.
 
 **1. All the output functions of ahooks, the references are stable**

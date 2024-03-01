@@ -4,8 +4,6 @@ order: 4
 toc: content
 ---
 
-# React Hooks & SSR
-
 Server-Side Rendering refers to the page processing technology where the HTML structure of the page is spliced on the server side. Generally used to solve SEO problems and speed up the first screen.
 
 Since SSR executes JS code in a non-browser environment, there will be many problems. This article mainly introduces the common problems and solutions of React Hooks in SSR mode.

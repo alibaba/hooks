@@ -4,8 +4,6 @@ order: 2
 toc: content
 ---
 
-## Hooks of DOM specification
-
 Most of the DOM Hooks will receive the `target` parameter, which indicates the element to be processed.
 
 `target` supports three types `React.MutableRefObject`, `HTMLElement`, `() => HTMLElement`.

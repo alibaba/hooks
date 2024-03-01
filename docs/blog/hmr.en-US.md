@@ -4,8 +4,6 @@ order: 3
 toc: content
 ---
 
-# React Hooks & react-refresh（HMR）
-
 ## What is react-refresh?
 
 [react-refresh-webpack-plugin](https://github.com/pmmmwh/react-refresh-webpack-plugin) is a hot module replacement (HMR) plugin provided by React.

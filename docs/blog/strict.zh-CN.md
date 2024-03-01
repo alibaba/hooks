@@ -4,8 +4,6 @@ order: 5
 toc: content
 ---
 
-# React Hooks & strict mode
-
 ## 什么是严格模式
 
 在 React 中，有很多历史的 API 或写法，在未来版本中会被废弃，现在被标记为不建议使用。既然是不建议使用，那还是可以用的，比如 `componentWillMount`，在普通模式下，你可以正常使用。但在严格模式下，就会抛出警告：

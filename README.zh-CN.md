@@ -8,15 +8,7 @@
 
 一套高质量可靠的 React Hooks 库
 
-[![NPM version][image-1]][1]
-[![NPM downloads][image-2]][2]
-[![npm](https://img.shields.io/npm/dw/ahooks-v2?label=downloads%28v2%29)](https://www.npmjs.com/package/ahooks-v2)
-[![Coverage Status](https://coveralls.io/repos/github/alibaba/hooks/badge.svg?branch=master)](https://coveralls.io/github/alibaba/hooks?branch=master)
-[![npm](https://img.shields.io/github/issues/alibaba/hooks)](https://github.com/alibaba/hooks/issues)
-![gzip size](https://img.badgesize.io/https:/unpkg.com/ahooks/dist/ahooks.js?label=gzip%20size&compression=gzip)
-[![Percentage of issues still open](http://isitmaintained.com/badge/open/alibaba/hooks.svg)](http://isitmaintained.com/project/alibaba/hooks 'Percentage of issues still open')
-[![Average time to resolve an issue](http://isitmaintained.com/badge/resolution/alibaba/hooks.svg)](http://isitmaintained.com/project/alibaba/hooks 'Average time to resolve an issue')
-![GitHub](https://img.shields.io/github/license/alibaba/hooks)
+[![NPM version](https://img.shields.io/npm/v/ahooks.svg)](https://www.npmjs.com/package/ahooks) [![NPM downloads](https://img.shields.io/npm/dw/ahooks.svg)](https://npmjs.org/package/ahooks) [![npm](https://img.shields.io/npm/dw/ahooks-v2?label=downloads%28v2%29)](https://www.npmjs.com/package/ahooks-v2) [![npm](https://img.shields.io/github/issues/alibaba/hooks)](https://github.com/alibaba/hooks/issues) [![Coverage Status](https://coveralls.io/repos/github/alibaba/hooks/badge.svg)](https://coveralls.io/github/alibaba/hooks?branch=master) [![npm](https://img.shields.io/github/issues/alibaba/hooks)](https://github.com/alibaba/hooks/issues) ![gzip size](https://img.badgesize.io/https:/unpkg.com/ahooks/dist/ahooks.js?label=gzip%20size&compression=gzip) [![Percentage of issues still open](http://isitmaintained.com/badge/open/alibaba/hooks.svg)](http://isitmaintained.com/project/alibaba/hooks 'Percentage of issues still open') [![Average time to resolve an issue](http://isitmaintained.com/badge/resolution/alibaba/hooks.svg)](http://isitmaintained.com/project/alibaba/hooks 'Average time to resolve an issue') [![GitHub](https://img.shields.io/github/license/alibaba/hooks)](https://github.com/alibaba/hooks/blob/master/LICENSE)
 
 [English](https://github.com/alibaba/hooks/blob/master/README.md) | 简体中文
 
@@ -38,19 +30,11 @@
 
 ## 📦 安装
 
-```bash
-$ npm install --save ahooks
-# or
-$ yarn add ahooks
-# or
-$ pnpm add ahooks
-# or
-$ bun add ahooks
-```
+<InstallDependencies npm='$ npm install --save ahooks' yarn='$ yarn add ahooks' pnpm='$ pnpm add ahooks' bun='$ bun add ahooks'></InstallDependencies>
 
 ## 🔨 使用
 
-```js
+```ts
 import { useRequest } from 'ahooks';
 ```
 
@@ -80,8 +64,3 @@ $ pnpm start
 ## 👥 交流讨论
 
 <img src="https://github.com/alibaba/hooks/assets/49217418/ba636378-1dff-4754-bfe6-46923417cd3b" width="200" style='display:inline' /><img src="https://github.com/alibaba/hooks/assets/49217418/93a169ce-f9d1-4a66-a829-9f16e790ee28" width="200" style='display:inline' /><img src="https://github.com/alibaba/hooks/assets/49217418/d30d80c7-eb16-4522-acab-f2d48513464a" width="200" style='display:inline' />
-
-[1]: https://www.npmjs.com/package/ahooks
-[2]: https://npmjs.org/package/ahooks
-[image-1]: https://img.shields.io/npm/v/ahooks.svg?style=flat
-[image-2]: https://img.shields.io/npm/dw/ahooks.svg?style=flat
