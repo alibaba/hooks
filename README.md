@@ -6,7 +6,7 @@
 
 <div align="center">
 
-A high-quality & reliable React Hooks library.
+A high-quality & reliable React Hooks library
 
 [![NPM version](https://img.shields.io/npm/v/ahooks.svg)](https://www.npmjs.com/package/ahooks) [![NPM downloads](https://img.shields.io/npm/dw/ahooks.svg)](https://npmjs.org/package/ahooks) [![npm](https://img.shields.io/npm/dw/ahooks-v2?label=downloads%28v2%29)](https://www.npmjs.com/package/ahooks-v2) [![npm](https://img.shields.io/github/issues/alibaba/hooks)](https://github.com/alibaba/hooks/issues) [![Coverage Status](https://coveralls.io/repos/github/alibaba/hooks/badge.svg)](https://coveralls.io/github/alibaba/hooks?branch=master) [![npm](https://img.shields.io/github/issues/alibaba/hooks)](https://github.com/alibaba/hooks/issues) ![gzip size](https://img.badgesize.io/https:/unpkg.com/ahooks/dist/ahooks.js?label=gzip%20size&compression=gzip) [![Percentage of issues still open](http://isitmaintained.com/badge/open/alibaba/hooks.svg)](http://isitmaintained.com/project/alibaba/hooks 'Percentage of issues still open') [![Average time to resolve an issue](http://isitmaintained.com/badge/resolution/alibaba/hooks.svg)](http://isitmaintained.com/project/alibaba/hooks 'Average time to resolve an issue') [![GitHub](https://img.shields.io/github/license/alibaba/hooks)](https://github.com/alibaba/hooks/blob/master/LICENSE)
 
@@ -30,7 +30,15 @@ English | [简体中文](https://github.com/alibaba/hooks/blob/master/README.zh-
 
 ## 📦 Install
 
-<InstallDependencies npm='$ npm install --save ahooks' yarn='$ yarn add ahooks' pnpm='$ pnpm add ahooks' bun='$ bun add ahooks'></InstallDependencies>
+```bash
+$ npm install --save ahooks
+# or
+$ yarn add ahooks
+# or
+$ pnpm add ahooks
+# or
+$ bun add ahooks
+```
 
 ## 🔨 Usage
 

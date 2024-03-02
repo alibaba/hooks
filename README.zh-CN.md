@@ -30,7 +30,15 @@
 
 ## 📦 安装
 
-<InstallDependencies npm='$ npm install --save ahooks' yarn='$ yarn add ahooks' pnpm='$ pnpm add ahooks' bun='$ bun add ahooks'></InstallDependencies>
+```bash
+$ npm install --save ahooks
+# or
+$ yarn add ahooks
+# or
+$ pnpm add ahooks
+# or
+$ bun add ahooks
+```
 
 ## 🔨 使用
 
