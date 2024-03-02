@@ -10,4 +10,4 @@ ahooks，发音 [eɪ hʊks]，是一套高质量可靠的 React Hooks 库。在�
 
 <InstallDependencies npm="$ npm install --save ahooks" yarn="$ yarn add ahooks" pnpm="$ pnpm add ahooks" bun="$ bun add ahooks"></InstallDependencies>
 
-<embed src="../../README.zh-CN.md#L43-L999"></embed>
+<embed src="../../README.zh-CN.md#L43-L51"></embed>
