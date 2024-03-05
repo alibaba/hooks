@@ -4,6 +4,8 @@ nav: Hooks
 group: useRequest
 order: 9
 toc: content
+demo:
+  cols: 2
 ---
 
 通过设置 `options.throttleWait`，进入节流模式，此时如果频繁触发 `run` 或者 `runAsync`，则会以节流策略进行请求。

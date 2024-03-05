@@ -1,9 +1,9 @@
 /**
  * title: Basic usage
- * description: Return network status
+ * description: Return network status.
  *
  * title.zh-CN: 基础用法
- * description.zh-CN: 返回网络状态信息
+ * description.zh-CN: 返回网络状态信息。
  */
 
 import React from 'react';

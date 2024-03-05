@@ -4,6 +4,8 @@ nav: Hooks
 group: useRequest
 order: 1
 toc: content
+demo:
+  cols: 2
 ---
 
 `useRequest` 是一个强大的异步数据管理的 Hooks，React 项目中的网络请求场景使用 `useRequest` 就够了。

@@ -6,6 +6,8 @@ group:
   order: 4
 order: 1
 toc: content
+demo:
+  cols: 2
 ---
 
 # useSetState
@@ -14,12 +16,7 @@ toc: content
 
 ## 代码演示
 
-### 基础用法
-
 <code src="./demo/demo1.tsx"></code>
-
-### 使用回调更新
-
 <code src="./demo/demo2.tsx"></code>
 
 ## API

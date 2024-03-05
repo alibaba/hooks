@@ -11,7 +11,6 @@ import { useDrop, useDrag } from 'ahooks';
 
 const DragItem = ({ data }) => {
   const dragRef = useRef(null);
-
   const [dragging, setDragging] = useState(false);
 
   useDrag(data, dragRef, {
@@ -31,7 +30,6 @@ const DragItem = ({ data }) => {
         padding: 16,
         width: 80,
         textAlign: 'center',
-        marginRight: 16,
       }}
     >
       {dragging ? 'dragging' : `box-${data}`}
@@ -58,6 +56,7 @@ export default () => {
       alert(`uri: ${uri} dropped`);
     },
     onDom: (content: string, e) => {
+      console.log(e);
       alert(`custom: ${content} dropped`);
     },
     onDragEnter: () => setIsHovering(true),
@@ -66,11 +65,14 @@ export default () => {
 
   return (
     <div>
-      <div ref={dropRef} style={{ border: '1px dashed #e8e8e8', padding: 16, textAlign: 'center' }}>
+      <div
+        ref={dropRef}
+        style={{ border: '1px dashed #e8e8e8', marginBottom: 16, padding: 16, textAlign: 'center' }}
+      >
         {isHovering ? 'release here' : 'drop here'}
       </div>
 
-      <div style={{ display: 'flex', marginTop: 8, overflow: 'auto' }}>
+      <div style={{ display: 'flex', gap: 16, overflow: 'auto' }}>
         {['1', '2', '3', '4', '5'].map((e) => (
           <DragItem key={e} data={e} />
         ))}

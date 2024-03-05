@@ -4,6 +4,8 @@ nav: Hooks
 group: useRequest
 order: 4
 toc: content
+demo:
+  cols: 2
 ---
 
 通过设置 `options.pollingInterval`，进入轮询模式，`useRequest` 会定时触发 service 执行。

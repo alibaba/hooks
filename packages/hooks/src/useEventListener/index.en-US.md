@@ -6,6 +6,8 @@ group:
   order: 6
 order: 1
 toc: content
+demo:
+  cols: 2
 ---
 
 # useEventListener
@@ -14,12 +16,7 @@ Use addEventListener elegant by Hook.
 
 ## Examples
 
-### Default usage
-
 <code src="./demo/demo1.tsx"></code>
-
-### Listen for keydown
-
 <code src="./demo/demo2.tsx"></code>
 
 ## API

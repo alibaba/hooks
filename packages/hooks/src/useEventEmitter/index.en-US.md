@@ -6,6 +6,8 @@ group:
   order: 7
 order: 3
 toc: content
+demo:
+  cols: 2
 ---
 
 # useEventEmitter
@@ -37,8 +39,6 @@ event$.useSubscription(val => {
 If you want to let the child component notify the parent component, you can just use `props` to pass a `onEvent` function. And if you want to let the parent component notify the child component, you can use `forwardRef` to retrieve the ref of child component. `useEventEmitter` is most suitable for event management among multiple components or between two components which are far away.
 
 ## Examples
-
-### Parent component shares a event
 
 <code src="./demo/demo1.tsx"></code>
 

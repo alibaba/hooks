@@ -1,9 +1,9 @@
 /**
  * title: Listening content scrolling selection menu
- * desc: Pass the `callback` that is triggered when the callback of `IntersectionObserver` is called, so you can do some customization.
+ * description: Pass the `callback` that is triggered when the callback of `IntersectionObserver` is called, so you can do some customization.
  *
  * title.zh-CN: 监听内容滚动选中菜单
- * desc.zh-CN: 传入 `callback`, 使得 `IntersectionObserver` 的回调被调用时，用户可以做一些自定义操作。
+ * description.zh-CN: 传入 `callback`, 使得 `IntersectionObserver` 的回调被调用时，用户可以做一些自定义操作。
  */
 import React, { useRef, useState } from 'react';
 import { useInViewport, useMemoizedFn } from 'ahooks';
@@ -17,7 +17,6 @@ const content = {
 
 export default () => {
   const menuRef = useRef<HTMLDivElement[]>([]);
-
   const [activeMenu, setActiveMenu] = useState(menus[0]);
 
   const callback = useMemoizedFn((entry) => {
@@ -46,7 +45,14 @@ export default () => {
   return (
     <div
       id="parent-scroll"
-      style={{ width: 300, height: 300, border: '1px solid', display: 'flex', overflow: 'hidden' }}
+      style={{
+        width: 300,
+        height: 300,
+        border: '1px dashed #ccc',
+        borderRadius: 4,
+        display: 'flex',
+        overflow: 'hidden',
+      }}
     >
       <div style={{ width: '30%', backgroundColor: '#f0f0f0' }}>
         <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>

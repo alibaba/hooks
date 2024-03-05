@@ -7,16 +7,17 @@
  */
 
 import React from 'react';
+import { Input } from 'antd';
 import { useCookieState } from 'ahooks';
 
 export default () => {
   const [message, setMessage] = useCookieState('useCookieStateString');
+
   return (
-    <input
+    <Input
       value={message}
       placeholder="Please enter some words..."
       onChange={(e) => setMessage(e.target.value)}
-      style={{ width: 300 }}
     />
   );
 };

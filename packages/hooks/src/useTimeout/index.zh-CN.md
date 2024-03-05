@@ -6,6 +6,8 @@ group:
   order: 5
 order: 12
 toc: content
+demo:
+  cols: 2
 ---
 
 # useTimeout
@@ -13,8 +15,6 @@ toc: content
 一个可以处理 setTimeout 计时器函数的 Hook。
 
 ## 代码演示
-
-### 基础用法
 
 <code src="./demo/demo1.tsx"></code>
 <code src="./demo/demo2.tsx"></code>

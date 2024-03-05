@@ -5,6 +5,7 @@
  */
 
 import React, { useRef, useState } from 'react';
+import { Button } from 'antd';
 import { useMutationObserver } from 'ahooks';
 
 const App: React.FC = () => {
@@ -23,10 +24,21 @@ const App: React.FC = () => {
 
   return (
     <div>
-      <div ref={ref} style={{ width, padding: 12, border: '1px solid #000', marginBottom: 8 }}>
+      <div
+        ref={ref}
+        style={{
+          width,
+          padding: 12,
+          border: '1px dashed #ccc',
+          borderRadius: 4,
+          marginBottom: 8,
+        }}
+      >
         current width：{width}
       </div>
-      <button onClick={() => setWidth((w) => w + 10)}>widening</button>
+      <Button style={{ marginBottom: 8 }} onClick={() => setWidth((w) => w + 10)}>
+        widening
+      </Button>
       <p>Mutation count {count}</p>
     </div>
   );

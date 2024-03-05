@@ -1,9 +1,9 @@
 /**
  * title: Basic usage
- * description: useSize can receive ref as argument
+ * description: useSize can receive ref as argument.
  *
  * title.zh-CN: 基础用法
- * description.zh-CN: useSize 可以接收 ref 参数
+ * description.zh-CN: useSize 可以接收 ref 参数。
  */
 
 import React, { useRef } from 'react';
@@ -12,6 +12,7 @@ import { useSize } from 'ahooks';
 export default () => {
   const ref = useRef(null);
   const size = useSize(ref);
+
   return (
     <div ref={ref}>
       <p>Try to resize the preview window </p>

@@ -6,20 +6,20 @@
  * description.zh-CN: 加载 css 文件，例如引入 [bootstrap-badge.css](/useExternal/bootstrap-badge.css)
  */
 
-import { useExternal } from 'ahooks';
 import React, { useState } from 'react';
+import { Button, Space } from 'antd';
+import { useExternal } from 'ahooks';
 
 export default () => {
   const [path, setPath] = useState('/useExternal/bootstrap-badge.css');
-
   const status = useExternal(path);
 
   return (
-    <>
+    <Space direction="vertical">
       <p>
         Status: <b>{status}</b>
       </p>
-      <div className="bd-example" style={{ wordBreak: 'break-word' }}>
+      <Space>
         <span className="badge badge-pill badge-primary">Primary</span>
         <span className="badge badge-pill badge-secondary">Secondary</span>
         <span className="badge badge-pill badge-success">Success</span>
@@ -28,18 +28,11 @@ export default () => {
         <span className="badge badge-pill badge-info">Info</span>
         <span className="badge badge-pill badge-light">Light</span>
         <span className="badge badge-pill badge-dark">Dark</span>
-      </div>
-      <br />
-      <button type="button" style={{ marginRight: 8 }} onClick={() => setPath('')}>
-        unload
-      </button>
-      <button
-        type="button"
-        style={{ marginRight: 8 }}
-        onClick={() => setPath('/useExternal/bootstrap-badge.css')}
-      >
-        load
-      </button>
-    </>
+      </Space>
+      <Space>
+        <Button onClick={() => setPath('')}>unload</Button>
+        <Button onClick={() => setPath('/useExternal/bootstrap-badge.css')}>load</Button>
+      </Space>
+    </Space>
   );
 };

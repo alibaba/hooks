@@ -7,6 +7,7 @@
  */
 
 import React, { useState } from 'react';
+import { Button } from 'antd';
 import { useCreation } from 'ahooks';
 
 class Foo {
@@ -20,17 +21,11 @@ class Foo {
 export default function () {
   const foo = useCreation(() => new Foo(), []);
   const [, setFlag] = useState({});
+
   return (
     <>
       <p>{foo.data}</p>
-      <button
-        type="button"
-        onClick={() => {
-          setFlag({});
-        }}
-      >
-        Rerender
-      </button>
+      <Button onClick={() => setFlag({})}>Rerender</Button>
     </>
   );
 }

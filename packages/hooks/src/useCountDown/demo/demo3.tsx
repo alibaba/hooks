@@ -9,9 +9,10 @@
 import React from 'react';
 import { useCountDown } from 'ahooks';
 
-const App: React.FC = () => {
-  const [countdown] = useCountDown({ leftTime: 60 * 1000 });
+export default () => {
+  const [countdown] = useCountDown({
+    leftTime: 60 * 1000,
+  });
+
   return <p>{countdown}</p>;
 };
-
-export default App;

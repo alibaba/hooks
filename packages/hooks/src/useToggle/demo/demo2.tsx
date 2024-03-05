@@ -7,6 +7,7 @@
  */
 
 import React from 'react';
+import { Button, Space } from 'antd';
 import { useToggle } from 'ahooks';
 
 export default () => {
@@ -14,24 +15,14 @@ export default () => {
 
   return (
     <div>
+      <Space style={{ marginBottom: 8 }}>
+        <Button onClick={toggle}>Toggle</Button>
+        <Button onClick={() => set('Hello')}>Set Hello</Button>
+        <Button onClick={() => set('World')}>Set World</Button>
+        <Button onClick={setLeft}>Set Left</Button>
+        <Button onClick={setRight}>Set Right</Button>
+      </Space>
       <p>Effects：{state}</p>
-      <p>
-        <button type="button" onClick={toggle}>
-          Toggle
-        </button>
-        <button type="button" onClick={() => set('Hello')} style={{ margin: '0 8px' }}>
-          Set Hello
-        </button>
-        <button type="button" onClick={() => set('World')}>
-          Set World
-        </button>
-        <button type="button" onClick={setLeft} style={{ margin: '0 8px' }}>
-          Set Left
-        </button>
-        <button type="button" onClick={setRight}>
-          Set Right
-        </button>
-      </p>
     </div>
   );
 };

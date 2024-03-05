@@ -4,6 +4,8 @@ nav: Hooks
 group: useRequest
 order: 4
 toc: content
+demo:
+  cols: 2
 ---
 
 By setting `options.pollingInterval`, enter the polling mode, `useRequest` will periodically trigger service execution.

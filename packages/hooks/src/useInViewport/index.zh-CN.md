@@ -6,6 +6,8 @@ group:
   order: 6
 order: 12
 toc: content
+demo:
+  cols: 2
 ---
 
 # useInViewport
@@ -14,16 +16,8 @@ toc: content
 
 ## 代码演示
 
-### 基础用法
-
 <code src="./demo/demo1.tsx"></code>
-
-### 监听元素可见区域比例
-
 <code src="./demo/demo2.tsx"></code>
-
-### 监听内容滚动选中菜单
-
 <code src="./demo/demo3.tsx"></code>
 
 ## API

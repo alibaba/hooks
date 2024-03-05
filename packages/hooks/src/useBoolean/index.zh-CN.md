@@ -6,6 +6,8 @@ group:
   order: 4
 order: 2
 toc: content
+demo:
+  cols: 2
 ---
 
 # useBoolean
@@ -13,8 +15,6 @@ toc: content
 优雅的管理 boolean 状态的 Hook。
 
 ## 代码演示
-
-### 基础用法
 
 <code src="./demo/demo1.tsx"></code>
 

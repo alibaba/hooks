@@ -11,9 +11,6 @@ import { useScroll } from 'ahooks';
 
 export default () => {
   const scroll = useScroll(document);
-  return (
-    <div>
-      <div>{JSON.stringify(scroll)}</div>
-    </div>
-  );
+
+  return <>{JSON.stringify(scroll)}</>;
 };

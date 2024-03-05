@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Mock from 'mockjs';
-import { Pagination } from 'antd';
+import { Button, Pagination } from 'antd';
 import { usePagination, useBoolean, useUpdateEffect } from 'ahooks';
 
 interface UserListItem {
@@ -106,9 +106,7 @@ export default () => {
     <div>
       <p>You can click the button multiple times, the conditions of pagination will be cached.</p>
       <p>
-        <button type="button" onClick={() => toggle()}>
-          show/hide
-        </button>
+        <Button onClick={() => toggle()}>show/hide</Button>
       </p>
       {state && <PaginationComponent />}
     </div>

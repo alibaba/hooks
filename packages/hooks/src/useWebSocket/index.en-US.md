@@ -6,6 +6,8 @@ group:
   order: 2
 order: 13
 toc: content
+demo:
+  cols: 2
 ---
 
 # useWebSocket
@@ -13,8 +15,6 @@ toc: content
 A hook for WebSocket.
 
 ## Examples
-
-### Default usage
 
 <code src="./demo/demo1.tsx"></code>
 

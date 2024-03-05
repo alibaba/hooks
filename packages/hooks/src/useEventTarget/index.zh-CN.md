@@ -6,6 +6,8 @@ group:
   order: 6
 order: 5
 toc: content
+demo:
+  cols: 2
 ---
 
 # useEventTarget
@@ -14,12 +16,7 @@ toc: content
 
 ## 代码演示
 
-### 基础用法
-
 <code src="./demo/demo1.tsx"></code>
-
-### 自定义转换函数
-
 <code src="./demo/demo2.tsx"></code>
 
 ## API

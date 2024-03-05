@@ -6,6 +6,8 @@ group:
   order: 5
 order: 11
 toc: content
+demo:
+  cols: 2
 ---
 
 # useRafInterval
@@ -21,12 +23,7 @@ Please note that the following two cases are likely to be inapplicable, and `use
 
 ## Examples
 
-### Default usage
-
 <code src="./demo/demo1.tsx"></code>
-
-### Advanced usage
-
 <code src="./demo/demo2.tsx"></code>
 
 ## API

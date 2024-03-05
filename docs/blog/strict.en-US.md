@@ -2,6 +2,8 @@
 title: React Hooks & strict mode
 order: 5
 toc: content
+demo:
+  cols: 2
 ---
 
 ## What is strict mode

@@ -14,10 +14,10 @@ import { useKeyPress } from 'ahooks';
 
 export default () => {
   const inputRef = useRef(null);
-
   const [text, setText] = useState('');
   const [textRef, setTextRef] = useState('');
   const [textSync, setTextSync] = useState('');
+
   useKeyPress(
     'enter',
     (event: any) => {
@@ -58,15 +58,15 @@ export default () => {
     <div>
       <div>
         <p>Input and pressing enter: {text}</p>
-        <input id="input" style={{ width: 300, marginRight: 24 }} />
+        <input id="input" style={{ width: '100%' }} />
       </div>
       <div style={{ marginTop: 24 }}>
         <p>Input and pressing enter: {textRef}</p>
-        <input ref={inputRef} style={{ width: 300, marginRight: 24 }} />
+        <input className="ant-input" ref={inputRef} style={{ width: '100%' }} />
       </div>
       <div style={{ marginTop: 24 }}>
         <p>Input after enter change: {textSync}</p>
-        <input id="input2" style={{ width: 300, marginRight: 24 }} />
+        <input id="input2" style={{ width: '100%' }} />
       </div>
     </div>
   );

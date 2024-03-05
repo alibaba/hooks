@@ -6,6 +6,8 @@ group:
   order: 4
 order: 15
 toc: content
+demo:
+  cols: 2
 ---
 
 # useGetState
@@ -13,8 +15,6 @@ toc: content
 Add a getter method to the return value of `React.useState` to get the latest value
 
 ## Examples
-
-### Default usage
 
 <code src="./demo/demo1.tsx"></code>
 

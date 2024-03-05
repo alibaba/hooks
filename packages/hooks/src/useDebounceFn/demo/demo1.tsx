@@ -6,8 +6,9 @@
  * description.zh-CN: 频繁调用 run，但只会在所有点击完成 500ms 后执行一次相关函数
  */
 
-import { useDebounceFn } from 'ahooks';
 import React, { useState } from 'react';
+import { Button } from 'antd';
+import { useDebounceFn } from 'ahooks';
 
 export default () => {
   const [value, setValue] = useState(0);
@@ -21,11 +22,9 @@ export default () => {
   );
 
   return (
-    <div>
-      <p style={{ marginTop: 16 }}> Clicked count: {value} </p>
-      <button type="button" onClick={run}>
-        Click fast!
-      </button>
-    </div>
+    <>
+      <Button onClick={run}>Click fast!</Button>
+      <p style={{ marginTop: 16 }}>Clicked count: {value}</p>
+    </>
   );
 };

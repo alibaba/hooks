@@ -6,6 +6,8 @@ group:
   order: 4
 order: 1
 toc: content
+demo:
+  cols: 2
 ---
 
 # useSetState
@@ -14,12 +16,7 @@ useSetState works similar to `this.setState` of class component, used to manage 
 
 ## Examples
 
-### Default usage
-
 <code src="./demo/demo1.tsx"></code>
-
-### Updating with callback
-
 <code src="./demo/demo2.tsx"></code>
 
 ## API

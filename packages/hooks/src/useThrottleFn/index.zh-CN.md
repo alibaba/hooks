@@ -6,6 +6,8 @@ group:
   order: 5
 order: 6
 toc: content
+demo:
+  cols: 2
 ---
 
 # useThrottleFn
@@ -13,8 +15,6 @@ toc: content
 用来处理函数节流的 Hook。
 
 ## 代码演示
-
-### 基础用法
 
 <code src="./demo/demo1.tsx"></code>
 

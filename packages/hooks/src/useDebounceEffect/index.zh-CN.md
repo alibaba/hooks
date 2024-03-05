@@ -6,6 +6,8 @@ group:
   order: 5
 order: 4
 toc: content
+demo:
+  cols: 2
 ---
 
 # useDebounceEffect
@@ -13,8 +15,6 @@ toc: content
 为 `useEffect` 增加防抖的能力。
 
 ## 代码演示
-
-### 基础用法
 
 <code src="./demo/demo1.tsx"></code>
 

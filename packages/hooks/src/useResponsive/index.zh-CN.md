@@ -6,6 +6,8 @@ group:
   order: 6
 order: 16
 toc: content
+demo:
+  cols: 2
 ---
 
 # useResponsive
@@ -13,8 +15,6 @@ toc: content
 获取响应式信息。
 
 ## 代码演示
-
-### 在组件中获取响应式信息
 
 <code src="./demo/demo1.tsx"></code>
 

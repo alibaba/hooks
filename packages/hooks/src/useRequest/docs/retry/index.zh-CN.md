@@ -4,6 +4,8 @@ nav: Hooks
 group: useRequest
 order: 11
 toc: content
+demo:
+  cols: 2
 ---
 
 通过设置 `options.retryCount`，指定错误重试次数，则 useRequest 在失败后会进行重试。

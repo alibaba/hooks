@@ -6,6 +6,8 @@ group:
   order: 4
 order: 9
 toc: content
+demo:
+  cols: 2
 ---
 
 # useThrottle
@@ -13,8 +15,6 @@ toc: content
 A hook that deal with the throttled value.
 
 ## Examples
-
-### Default usage
 
 <code src="./demo/demo1.tsx"></code>
 

@@ -12,9 +12,13 @@ import { useTextSelection } from 'ahooks';
 export default () => {
   const ref = useRef(null);
   const selection = useTextSelection(ref);
+
   return (
     <div>
-      <div ref={ref} style={{ border: '1px solid', padding: 20 }}>
+      <div
+        ref={ref}
+        style={{ border: '1px dashed #ccc', borderRadius: 4, padding: 20, marginBottom: 8 }}
+      >
         <p>Please swipe your mouse to select any text on this paragraph.</p>
       </div>
       <p style={{ wordWrap: 'break-word' }}>Result：{JSON.stringify(selection)}</p>

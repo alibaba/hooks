@@ -1,9 +1,9 @@
 /**
- * title: Custom update
- * description: listen on scroll event between 100px ~ 200px in vertical direction
+ * title: Custom Update
+ * description: listen on scroll event between 100px ~ 200px in vertical direction.
  *
  * title.zh-CN: 自定义更新
- * description.zh-CN: 在垂直方向 100px 到 200px 的滚动范围内监听
+ * description.zh-CN: 在垂直方向 100px 到 200px 的滚动范围内监听。
  */
 
 import React, { useRef } from 'react';
@@ -11,17 +11,17 @@ import { useScroll } from 'ahooks';
 
 export default () => {
   const ref = useRef(null);
-
   const scroll = useScroll(ref, (val) => val.top > 100 && val.top < 200);
 
   return (
     <>
-      <p>{JSON.stringify(scroll)}</p>
       <div
         style={{
           height: '160px',
           width: '160px',
-          border: 'solid 1px #000',
+          border: '1px dashed #ccc',
+          borderRadius: 4,
+          marginBottom: 8,
           overflow: 'scroll',
           whiteSpace: 'nowrap',
           fontSize: '36px',
@@ -58,6 +58,7 @@ export default () => {
           dignissimos distinctio, dolor eaque est fugit nisi non pariatur porro possimus, quas quasi
         </div>
       </div>
+      <p>{JSON.stringify(scroll)}</p>
     </>
   );
 };

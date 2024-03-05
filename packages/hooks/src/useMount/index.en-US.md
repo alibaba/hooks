@@ -6,6 +6,8 @@ group:
   order: 3
 order: 1
 toc: content
+demo:
+  cols: 2
 ---
 
 # useMount
@@ -13,8 +15,6 @@ toc: content
 A hook that executes a function after the component is mounted.
 
 ## Examples
-
-### Default Usage
 
 <code src="./demo/demo1.tsx"></code>
 

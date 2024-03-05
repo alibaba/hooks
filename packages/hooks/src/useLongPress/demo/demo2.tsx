@@ -1,4 +1,13 @@
+/**
+ * title: Listen for click and long press events at the same time
+ * description:
+ *
+ * title.zh-CN: 同时监听点击和长按事件
+ * description.zh-CN:
+ */
+
 import React, { useRef, useState } from 'react';
+import { Button } from 'antd';
 import { useLongPress } from 'ahooks';
 
 export default () => {
@@ -12,12 +21,12 @@ export default () => {
   });
 
   return (
-    <div>
-      <button ref={ref} type="button">
+    <>
+      <Button style={{ marginBottom: 8 }} ref={ref}>
         Press me
-      </button>
+      </Button>
       <p>pressCounter: {pressCounter}</p>
       <p>clickCounter: {clickCounter}</p>
-    </div>
+    </>
   );
 };

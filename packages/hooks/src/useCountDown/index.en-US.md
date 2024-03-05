@@ -6,22 +6,16 @@ group:
   order: 2
 order: 10
 toc: content
+demo:
+  cols: 2
 ---
 
 # useCountDown
 
 A hook for manage countdown.
 
-## Countdown to target time
-
 <code src="./demo/demo1.tsx"></code>
-
-## Dynamic config
-
 <code src="./demo/demo2.tsx"></code>
-
-## Config leftTime
-
 <code src="./demo/demo3.tsx"></code>
 
 ## API

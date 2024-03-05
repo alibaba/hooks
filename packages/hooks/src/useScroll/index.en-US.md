@@ -6,6 +6,8 @@ group:
   order: 6
 order: 17
 toc: content
+demo:
+  cols: 2
 ---
 
 # useScroll
@@ -14,16 +16,8 @@ Get the scroll position of an element.
 
 ## Examples
 
-### Basic Usage
-
 <code src="./demo/demo1.tsx"></code>
-
-### Detect Whole Page Scroll
-
 <code src="./demo/demo2.tsx"></code>
-
-### Control listen on scroll status
-
 <code src="./demo/demo3.tsx"></code>
 
 ## API

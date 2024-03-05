@@ -6,6 +6,8 @@ group:
   order: 8
 order: 1
 toc: content
+demo:
+  cols: 2
 ---
 
 # useTrackedEffect
@@ -13,8 +15,6 @@ toc: content
 追踪是哪个依赖变化触发了 `useEffect` 的执行。
 
 ## 代码演示
-
-### 基础用法
 
 <code src="./demo/demo1.tsx"></code>
 

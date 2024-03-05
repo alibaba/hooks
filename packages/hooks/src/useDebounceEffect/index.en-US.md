@@ -6,6 +6,8 @@ group:
   order: 5
 order: 4
 toc: content
+demo:
+  cols: 2
 ---
 
 # useDebounceEffect
@@ -13,8 +15,6 @@ toc: content
 Debounce your `useEffect`.
 
 ## Examples
-
-### Default usage
 
 <code src="./demo/demo1.tsx"></code>
 

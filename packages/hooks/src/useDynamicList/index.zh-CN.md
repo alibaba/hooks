@@ -6,6 +6,8 @@ group:
   order: 2
 order: 5
 toc: content
+demo:
+  cols: 2
 ---
 
 # useDynamicList
@@ -14,20 +16,9 @@ toc: content
 
 ## 代码演示
 
-### 基础用法
-
 <code src="./demo/demo1.tsx"></code>
-
-### 在 antd Form 中使用
-
 <code src="./demo/demo2.tsx"></code>
-
-### 在 antd Form 中使用的另一种写法
-
 <code src="./demo/demo3.tsx"></code>
-
-### 可拖拽的动态表格
-
 <code src="./demo/demo4.tsx"></code>
 
 ## API

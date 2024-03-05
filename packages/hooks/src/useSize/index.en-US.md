@@ -6,6 +6,8 @@ group:
   order: 6
 order: 18
 toc: content
+demo:
+  cols: 2
 ---
 
 # useSize
@@ -14,12 +16,7 @@ A hook that observes size change of an element.
 
 ## Examples
 
-### Default usage
-
 <code src="./demo/demo1.tsx"></code>
-
-### Pass in the DOM element
-
 <code src="./demo/demo2.tsx"></code>
 
 ## API

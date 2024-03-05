@@ -4,6 +4,8 @@ nav: Hooks
 group: useRequest
 order: 7
 toc: content
+demo:
+  cols: 2
 ---
 
 通过设置 `options.refreshOnWindowFocus`，在浏览器窗口 `refocus` 和 `revisible` 时，会重新发起请求。

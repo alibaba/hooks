@@ -1,28 +1,28 @@
+/**
+ * title: Basic usage
+ * description:
+ *
+ * title.zh-CN: 基础用法
+ * description.zh-CN:
+ */
+
 import React from 'react';
+import { Button, Space } from 'antd';
 import { useSet } from 'ahooks';
 
 export default () => {
   const [set, { add, remove, reset }] = useSet(['Hello']);
 
   return (
-    <div>
-      <button type="button" onClick={() => add(String(Date.now()))}>
-        Add Timestamp
-      </button>
-      <button
-        type="button"
-        onClick={() => remove('Hello')}
-        disabled={!set.has('Hello')}
-        style={{ margin: '0 8px' }}
-      >
-        Remove Hello
-      </button>
-      <button type="button" onClick={() => reset()}>
-        Reset
-      </button>
-      <div style={{ marginTop: 16 }}>
-        <pre>{JSON.stringify(Array.from(set), null, 2)}</pre>
-      </div>
-    </div>
+    <>
+      <Space style={{ marginBottom: 8 }}>
+        <Button onClick={() => add(String(Date.now()))}>Add Timestamp</Button>
+        <Button onClick={() => remove('Hello')} disabled={!set.has('Hello')}>
+          Remove Hello
+        </Button>
+        <Button onClick={() => reset()}>Reset</Button>
+      </Space>
+      <pre>{JSON.stringify(Array.from(set), null, 2)}</pre>
+    </>
   );
 };

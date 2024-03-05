@@ -6,6 +6,8 @@ group:
   order: 7
 order: 2
 toc: content
+demo:
+  cols: 2
 ---
 
 # useCreation
@@ -24,8 +26,6 @@ const b = useCreation(() => new Subject(), []); // 通过 factory 函数，可�
 ```
 
 ## 代码演示
-
-### 基础用法
 
 <code src="./demo/demo1.tsx"></code>
 

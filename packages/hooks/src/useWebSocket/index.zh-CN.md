@@ -6,6 +6,8 @@ group:
   order: 2
 order: 13
 toc: content
+demo:
+  cols: 2
 ---
 
 # useWebSocket
@@ -13,8 +15,6 @@ toc: content
 用于处理 WebSocket 的 Hook。
 
 ## 代码演示
-
-### 基础用法
 
 <code src="./demo/demo1.tsx"></code>
 

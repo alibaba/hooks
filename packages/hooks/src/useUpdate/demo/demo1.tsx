@@ -7,6 +7,7 @@
  */
 
 import React from 'react';
+import { Button } from 'antd';
 import { useUpdate } from 'ahooks';
 
 export default () => {
@@ -14,10 +15,10 @@ export default () => {
 
   return (
     <>
+      <Button style={{ marginBottom: 8 }} onClick={update}>
+        Update
+      </Button>
       <div>Time: {Date.now()}</div>
-      <button type="button" onClick={update} style={{ marginTop: 8 }}>
-        update
-      </button>
     </>
   );
 };

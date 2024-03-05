@@ -6,6 +6,8 @@ group:
   order: 5
 order: 13
 toc: content
+demo:
+  cols: 2
 ---
 
 # useRafTimeout
@@ -16,12 +18,7 @@ toc: content
 
 ## 代码演示
 
-### 基础用法
-
 <code src="./demo/demo1.tsx"></code>
-
-### 进阶使用
-
 <code src="./demo/demo2.tsx"></code>
 
 ## API

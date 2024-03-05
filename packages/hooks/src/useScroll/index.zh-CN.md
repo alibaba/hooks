@@ -6,6 +6,8 @@ group:
   order: 6
 order: 17
 toc: content
+demo:
+  cols: 2
 ---
 
 # useScroll
@@ -14,16 +16,8 @@ toc: content
 
 ## 代码演示
 
-### 基础用法
-
 <code src="./demo/demo1.tsx"></code>
-
-### 监测整页的滚动
-
 <code src="./demo/demo2.tsx"></code>
-
-### 控制滚动状态的监听
-
 <code src="./demo/demo3.tsx"></code>
 
 ## API

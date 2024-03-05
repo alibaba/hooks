@@ -7,6 +7,7 @@
  */
 
 import React from 'react';
+import { Button, Space } from 'antd';
 import { useSetState } from 'ahooks';
 
 interface State {
@@ -20,16 +21,12 @@ export default () => {
   });
 
   return (
-    <div>
+    <>
+      <Space style={{ marginBottom: 8 }}>
+        <Button onClick={() => setState({ hello: 'world' })}>Set hello</Button>
+        <Button onClick={() => setState({ foo: 'bar' })}>Set foo</Button>
+      </Space>
       <pre>{JSON.stringify(state, null, 2)}</pre>
-      <p>
-        <button type="button" onClick={() => setState({ hello: 'world' })}>
-          set hello
-        </button>
-        <button type="button" onClick={() => setState({ foo: 'bar' })} style={{ margin: '0 8px' }}>
-          set foo
-        </button>
-      </p>
-    </div>
+    </>
   );
 };

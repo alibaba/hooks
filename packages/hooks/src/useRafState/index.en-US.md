@@ -6,6 +6,8 @@ group:
   order: 4
 order: 13
 toc: content
+demo:
+  cols: 2
 ---
 
 # useRafState
@@ -13,8 +15,6 @@ toc: content
 Update the state in [requestAnimationFrame](https://developer.mozilla.org/en-US/docs/Web/API/window/requestAnimationFrame) callback, generally used for performance optimization.
 
 ## Examples
-
-### Default usage
 
 <code src="./demo/demo1.tsx"></code>
 

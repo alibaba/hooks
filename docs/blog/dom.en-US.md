@@ -2,6 +2,8 @@
 title: Hooks of DOM specification
 order: 2
 toc: content
+demo:
+  cols: 2
 ---
 
 Most of the DOM Hooks will receive the `target` parameter, which indicates the element to be processed.

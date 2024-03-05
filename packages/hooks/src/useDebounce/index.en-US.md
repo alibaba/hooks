@@ -6,6 +6,8 @@ group:
   order: 4
 order: 8
 toc: content
+demo:
+  cols: 2
 ---
 
 # useDebounce
@@ -13,8 +15,6 @@ toc: content
 A hook that deal with the debounced value.
 
 ## Examples
-
-### Default usage
 
 <code src="./demo/demo1.tsx"></code>
 

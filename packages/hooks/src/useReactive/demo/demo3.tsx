@@ -1,4 +1,13 @@
+/**
+ * title: Computed Properties
+ * description:
+ *
+ * title.zh-CN: 计算属性
+ * description.zh-CN:
+ */
+
 import React from 'react';
+import { Button, Input, Space } from 'antd';
 import { useReactive } from 'ahooks';
 
 export default () => {
@@ -16,7 +25,6 @@ export default () => {
   return (
     <div>
       <p>state.bugsCount: {state.bugsCount}</p>
-
       <form
         onSubmit={(e) => {
           state.addBug(state.bug);
@@ -24,18 +32,20 @@ export default () => {
           e.preventDefault();
         }}
       >
-        <input type="text" value={state.bug} onChange={(e) => (state.bug = e.target.value)} />
-        <button type="submit" style={{ marginLeft: '10px' }}>
-          Add
-        </button>
-        <button type="button" style={{ marginLeft: '10px' }} onClick={() => state.bugs.pop()}>
-          Delete
-        </button>
+        <Space style={{ margin: '8px 0' }}>
+          <Input type="text" value={state.bug} onChange={(e) => (state.bug = e.target.value)} />
+          <Button
+            onClick={() => {
+              state.addBug(state.bug);
+              state.bug = '';
+            }}
+          >
+            Add
+          </Button>
+          <Button onClick={() => state.bugs.pop()}>Delete</Button>
+        </Space>
       </form>
-
-      <br />
-
-      <ul>
+      <ul style={{ marginLeft: 16 }}>
         {state.bugs.map((bug) => (
           <li key={bug}>{bug}</li>
         ))}

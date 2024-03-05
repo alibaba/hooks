@@ -6,6 +6,8 @@ group:
   order: 6
 order: 19
 toc: content
+demo:
+  cols: 2
 ---
 
 # useFocusWithin
@@ -14,12 +16,7 @@ toc: content
 
 ## 代码演示
 
-### 基础用法
-
 <code src="./demo/demo1.tsx"></code>
-
-### 传入 DOM 元素
-
 <code src="./demo/demo2.tsx"></code>
 
 ## API

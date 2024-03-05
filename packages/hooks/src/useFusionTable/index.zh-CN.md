@@ -6,6 +6,8 @@ group:
   order: 2
 order: 2
 toc: content
+demo:
+  cols: 2
 ---
 
 # useFusionTable

@@ -6,6 +6,8 @@ group:
   order: 2
 order: 9
 toc: content
+demo:
+  cols: 2
 ---
 
 # useSelections

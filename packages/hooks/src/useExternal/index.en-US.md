@@ -6,6 +6,8 @@ group:
   order: 6
 order: 6
 toc: content
+demo:
+  cols: 2
 ---
 
 # useExternal
@@ -14,12 +16,7 @@ Dynamically load JS or CSS, useExternal can ensure that the resource are globall
 
 ## Example
 
-### Basic Usage
-
 <code src="./demo/demo1.tsx"></code>
-
-### Load CSS
-
 <code src="./demo/demo2.tsx"></code>
 
 ## API

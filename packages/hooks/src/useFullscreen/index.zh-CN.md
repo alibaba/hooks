@@ -6,6 +6,8 @@ group:
   order: 6
 order: 9
 toc: content
+demo:
+  cols: 2
 ---
 
 # useFullscreen
@@ -14,20 +16,9 @@ toc: content
 
 ## 代码演示
 
-### 基础用法
-
 <code src="./demo/demo1.tsx"></code>
-
-### 图片全屏
-
 <code src="./demo/demo2.tsx"></code>
-
-### 页面全屏
-
 <code src="./demo/demo3.tsx"></code>
-
-### 与其它全屏操作共存
-
 <code src="./demo/demo4.tsx"></code>
 
 ## API

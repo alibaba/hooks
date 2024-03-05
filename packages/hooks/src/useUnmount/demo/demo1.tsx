@@ -7,7 +7,7 @@
  */
 
 import React from 'react';
-import { message } from 'antd';
+import { Button, message } from 'antd';
 import { useBoolean, useUnmount } from 'ahooks';
 
 const MyComponent = () => {
@@ -23,9 +23,9 @@ export default () => {
 
   return (
     <>
-      <button type="button" onClick={toggle}>
+      <Button style={{ marginBottom: 8 }} onClick={toggle}>
         {state ? 'unmount' : 'mount'}
-      </button>
+      </Button>
       {state && <MyComponent />}
     </>
   );

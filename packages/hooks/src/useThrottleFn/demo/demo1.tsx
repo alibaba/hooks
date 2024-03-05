@@ -7,6 +7,7 @@
  */
 
 import React, { useState } from 'react';
+import { Button } from 'antd';
 import { useThrottleFn } from 'ahooks';
 
 export default () => {
@@ -20,10 +21,10 @@ export default () => {
 
   return (
     <div>
-      <p style={{ marginTop: 16 }}> Clicked count: {value} </p>
-      <button type="button" onClick={run}>
+      <Button style={{ marginBottom: 8 }} onClick={run}>
         Click fast!
-      </button>
+      </Button>
+      <p>Clicked count: {value}</p>
     </div>
   );
 };

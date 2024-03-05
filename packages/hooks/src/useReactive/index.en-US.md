@@ -6,6 +6,8 @@ group:
   order: 7
 order: 7
 toc: content
+demo:
+  cols: 2
 ---
 
 ## useReactive
@@ -14,20 +16,9 @@ It offers data reactivity when manipulating states and views, in which case `use
 
 ## Examples
 
-### Default Usage
-
 <code src="./demo/demo1.tsx"></code>
-
-### Array
-
 <code src="./demo/demo2.tsx"></code>
-
-### Computed Properties
-
 <code src="./demo/demo3.tsx"></code>
-
-### Notice
-
 <code src="./demo/demo4.tsx"></code>
 
 ## API

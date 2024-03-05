@@ -6,6 +6,8 @@ group:
   order: 4
 order: 2
 toc: content
+demo:
+  cols: 2
 ---
 
 # useBoolean
@@ -13,8 +15,6 @@ toc: content
 A hook that elegantly manages boolean state.
 
 ## Examples
-
-### Default usage
 
 <code src="./demo/demo1.tsx"></code>
 

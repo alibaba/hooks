@@ -17,6 +17,7 @@ configResponsive({
 
 export default function () {
   const responsive = useResponsive();
+
   return (
     <>
       <p>Please change the width of the browser window to see the effect: </p>

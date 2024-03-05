@@ -6,6 +6,8 @@ group:
   order: 7
 order: 4
 toc: content
+demo:
+  cols: 2
 ---
 
 # useIsomorphicLayoutEffect

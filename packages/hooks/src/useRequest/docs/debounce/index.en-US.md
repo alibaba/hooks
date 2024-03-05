@@ -4,6 +4,8 @@ nav: Hooks
 group: useRequest
 order: 8
 toc: content
+demo:
+  cols: 2
 ---
 
 Enter the debounce mode by setting `options.debounceWait`. At this time, if `run` or `runAsync` is triggered frequently, the request will be executed with the debounce strategy.

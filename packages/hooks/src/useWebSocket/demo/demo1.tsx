@@ -1,5 +1,14 @@
+/**
+ * title: Basic usage
+ * description:
+ *
+ * title.zh-CN: 基础用法
+ * description.zh-CN:
+ */
+
 import React, { useRef, useMemo } from 'react';
 import { useWebSocket } from 'ahooks';
+import { Button, Space } from 'antd';
 
 enum ReadyState {
   Connecting = 0,
@@ -21,29 +30,29 @@ export default () => {
   );
 
   return (
-    <div>
-      {/* send message */}
-      <button
-        onClick={() => sendMessage && sendMessage(`${Date.now()}`)}
-        disabled={readyState !== ReadyState.Open}
-        style={{ marginRight: 8 }}
-      >
-        ✉️ send
-      </button>
-      {/* disconnect */}
-      <button
-        onClick={() => disconnect && disconnect()}
-        disabled={readyState !== ReadyState.Open}
-        style={{ marginRight: 8 }}
-      >
-        ❌ disconnect
-      </button>
-      {/* connect */}
-      <button onClick={() => connect && connect()} disabled={readyState === ReadyState.Open}>
-        {readyState === ReadyState.Connecting ? 'connecting' : '📞 connect'}
-      </button>
-      <div style={{ marginTop: 8 }}>readyState: {readyState}</div>
-      <div style={{ marginTop: 8 }}>
+    <>
+      <Space style={{ marginBottom: 8 }}>
+        {/* send message */}
+        <Button
+          onClick={() => sendMessage && sendMessage(`${Date.now()}`)}
+          disabled={readyState !== ReadyState.Open}
+        >
+          ✉️ send
+        </Button>
+        {/* disconnect */}
+        <Button
+          onClick={() => disconnect && disconnect()}
+          disabled={readyState !== ReadyState.Open}
+        >
+          ❌ disconnect
+        </Button>
+        {/* connect */}
+        <Button onClick={() => connect && connect()} disabled={readyState === ReadyState.Open}>
+          {readyState === ReadyState.Connecting ? 'connecting' : '📞 connect'}
+        </Button>
+      </Space>
+      <div>readyState: {readyState}</div>
+      <div>
         <p>received message: </p>
         {messageHistory.current.map((message, index) => (
           <p key={index} style={{ wordWrap: 'break-word' }}>
@@ -51,6 +60,6 @@ export default () => {
           </p>
         ))}
       </div>
-    </div>
+    </>
   );
 };

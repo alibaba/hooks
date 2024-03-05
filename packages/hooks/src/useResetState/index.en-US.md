@@ -6,6 +6,8 @@ group:
   order: 4
 order: 16
 toc: content
+demo:
+  cols: 2
 ---
 
 # useResetState
@@ -13,8 +15,6 @@ toc: content
 useResetState works similar to `React.useState`, it provides a `reset` method
 
 ## Examples
-
-### Default Usage
 
 <code src="./demo/demo1.tsx"></code>
 

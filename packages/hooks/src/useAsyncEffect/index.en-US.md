@@ -6,6 +6,8 @@ group:
   order: 5
 order: 3
 toc: content
+demo:
+  cols: 2
 ---
 
 # useAsyncEffect
@@ -14,12 +16,7 @@ useEffect support async function.
 
 ## 代码演示
 
-### Default usage
-
 <code src="./demo/demo1.tsx"></code>
-
-### Break off
-
 <code src="./demo/demo2.tsx"></code>
 
 ## API

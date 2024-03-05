@@ -7,6 +7,7 @@
  */
 
 import React, { useState } from 'react';
+import { Button, Space } from 'antd';
 import { useTimeout } from 'ahooks';
 
 export default () => {
@@ -19,20 +20,13 @@ export default () => {
 
   return (
     <div>
-      <p> count: {count} </p>
-      <p style={{ marginTop: 16 }}> Delay: {delay} </p>
-      <button onClick={() => setDelay((t) => (!!t ? t + 1000 : 1000))} style={{ marginRight: 8 }}>
-        Delay + 1000
-      </button>
-      <button
-        style={{ marginRight: 8 }}
-        onClick={() => {
-          setDelay(1000);
-        }}
-      >
-        reset Delay
-      </button>
-      <button onClick={clear}>clear</button>
+      <Space style={{ marginBottom: 8 }}>
+        <Button onClick={() => setDelay((t) => (!!t ? t + 1000 : 1000))}>Delay + 1000</Button>
+        <Button onClick={() => setDelay(1000)}>Reset Delay</Button>
+        <Button onClick={clear}>Clear</Button>
+      </Space>
+      <p>count: {count} </p>
+      <p>Delay: {delay} </p>
     </div>
   );
 };

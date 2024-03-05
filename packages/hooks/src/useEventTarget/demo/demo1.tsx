@@ -7,17 +7,18 @@
  */
 
 import React from 'react';
+import { Button, Input, Space } from 'antd';
 import { useEventTarget } from 'ahooks';
 
 export default () => {
-  const [value, { reset, onChange }] = useEventTarget({ initialValue: 'this is initial value' });
+  const [value, { reset, onChange }] = useEventTarget({
+    initialValue: 'this is initial value',
+  });
 
   return (
-    <div>
-      <input value={value} onChange={onChange} style={{ width: 200, marginRight: 20 }} />
-      <button type="button" onClick={reset}>
-        reset
-      </button>
-    </div>
+    <Space>
+      <Input value={value} onChange={onChange} />
+      <Button onClick={reset}>Reset</Button>
+    </Space>
   );
 };

@@ -6,6 +6,8 @@ group:
   order: 2
 order: 7
 toc: content
+demo:
+  cols: 2
 ---
 
 # useHistoryTravel
@@ -14,16 +16,8 @@ toc: content
 
 ## 代码演示
 
-### 基础用法
-
 <code src="./demo/demo1.tsx"></code>
-
-### 可撤销恢复的 Todo List
-
 <code src="./demo/demo2.tsx"></code>
-
-### 限制历史记录最大长度
-
 <code src="./demo/demo3.tsx"></code>
 
 ## API

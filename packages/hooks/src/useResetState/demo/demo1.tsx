@@ -1,4 +1,13 @@
+/**
+ * title: Basic usage
+ * description:
+ *
+ * title.zh-CN: 基础用法
+ * description.zh-CN:
+ */
+
 import React from 'react';
+import { Button, Space } from 'antd';
 import { useResetState } from 'ahooks';
 
 interface State {
@@ -13,21 +22,13 @@ export default () => {
   });
 
   return (
-    <div>
-      <pre>{JSON.stringify(state, null, 2)}</pre>
-      <p>
-        <button
-          type="button"
-          style={{ marginRight: '8px' }}
-          onClick={() => setState({ hello: 'world', count: 1 })}
-        >
-          set hello and count
-        </button>
+    <>
+      <Space style={{ marginBottom: 8 }}>
+        <Button onClick={() => setState({ hello: 'world', count: 1 })}>set hello and count</Button>
 
-        <button type="button" onClick={resetState}>
-          resetState
-        </button>
-      </p>
-    </div>
+        <Button onClick={resetState}>resetState</Button>
+      </Space>
+      <pre>{JSON.stringify(state, null, 2)}</pre>
+    </>
   );
 };

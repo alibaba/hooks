@@ -2,6 +2,8 @@
 title: ahooks function specification
 order: 1
 toc: content
+demo:
+  cols: 2
 ---
 
 ahooks tries its best to help everyone avoid the closure problem by specially processing the input and output functions.

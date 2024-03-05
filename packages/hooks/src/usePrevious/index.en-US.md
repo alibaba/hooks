@@ -6,6 +6,8 @@ group:
   order: 4
 order: 12
 toc: content
+demo:
+  cols: 2
 ---
 
 # usePrevious
@@ -14,12 +16,7 @@ A Hook to return the previous state.
 
 ## Examples
 
-### Default usage
-
 <code src="./demo/demo1.tsx"></code>
-
-### Custom shouldUpdate function
-
 <code src="./demo/demo2.tsx"></code>
 
 ## API

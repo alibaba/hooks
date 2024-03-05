@@ -7,6 +7,7 @@
  */
 
 import React, { useEffect } from 'react';
+import { Button } from 'antd';
 import { useGetState } from 'ahooks';
 
 export default () => {
@@ -22,5 +23,5 @@ export default () => {
     };
   }, []);
 
-  return <button onClick={() => setCount((item) => item + 1)}>count: {count}</button>;
+  return <Button onClick={() => setCount((item) => item + 1)}>count: {count}</Button>;
 };

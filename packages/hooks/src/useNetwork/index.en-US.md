@@ -6,6 +6,8 @@ group:
   order: 2
 order: 8
 toc: content
+demo:
+  cols: 2
 ---
 
 # useNetwork
@@ -13,8 +15,6 @@ toc: content
 A hook that tracks the state of network connection.
 
 ## Examples
-
-### Default usage
 
 <code src="./demo/demo1.tsx"></code>
 

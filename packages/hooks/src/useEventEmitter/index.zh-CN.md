@@ -6,6 +6,8 @@ group:
   order: 7
 order: 3
 toc: content
+demo:
+  cols: 2
 ---
 
 # useEventEmitter
@@ -37,8 +39,6 @@ event$.useSubscription(val => {
 对于**子组件**通知**父组件**的情况，我们仍然推荐直接使用 `props` 传递一个 `onEvent` 函数。而对于**父组件**通知**子组件**的情况，可以使用 `forwardRef` 获取子组件的 ref ，再进行子组件的方法调用。 `useEventEmitter` 适合的是在**距离较远**的组件之间进行事件通知，或是在**多个**组件之间共享事件通知。
 
 ## 代码演示
-
-### 父组件向子组件共享事件
 
 <code src="./demo/demo1.tsx"></code>
 

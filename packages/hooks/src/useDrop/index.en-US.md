@@ -6,6 +6,8 @@ group:
   order: 6
 order: 4
 toc: content
+demo:
+  cols: 2
 ---
 
 # useDrop & useDrag
@@ -20,12 +22,7 @@ A pair of hooks to help you manage data transfer between drag and drop
 
 ## Examples
 
-### Basic Usage
-
 <code src="./demo/demo1.tsx"></code>
-
-### Customize Image
-
 <code src="./demo/demo2.tsx"></code>
 
 ## API

@@ -7,6 +7,7 @@
  */
 
 import React from 'react';
+import { Button, Space } from 'antd';
 import { useCookieState } from 'ahooks';
 
 export default function App() {
@@ -16,24 +17,12 @@ export default function App() {
 
   return (
     <>
+      <Space>
+        <Button onClick={() => setValue((v) => String(Number(v) + 1))}>inc +</Button>
+        <Button onClick={() => setValue((v) => String(Number(v) - 1))}>dec -</Button>
+        <Button onClick={() => setValue('0')}>reset</Button>
+      </Space>
       <p>{value}</p>
-      <button
-        type="button"
-        style={{ marginRight: '16px' }}
-        onClick={() => setValue((v) => String(Number(v) + 1))}
-      >
-        inc +
-      </button>
-      <button
-        type="button"
-        style={{ marginRight: '16px' }}
-        onClick={() => setValue((v) => String(Number(v) - 1))}
-      >
-        dec -
-      </button>
-      <button type="button" onClick={() => setValue('0')}>
-        reset
-      </button>
     </>
   );
 }

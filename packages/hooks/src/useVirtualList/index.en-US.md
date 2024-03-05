@@ -6,6 +6,8 @@ group:
   order: 2
 order: 6
 toc: content
+demo:
+  cols: 2
 ---
 
 # useVirtualList
@@ -14,12 +16,7 @@ A hook that allows you to use virtual list to render huge chunks of list data.
 
 ## Examples
 
-### Default usage
-
 <code src="./demo/demo1.tsx"></code>
-
-### Dynamic item height
-
 <code src="./demo/demo2.tsx"></code>
 
 ## API

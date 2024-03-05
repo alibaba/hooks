@@ -6,6 +6,8 @@ group:
   order: 6
 order: 2
 toc: content
+demo:
+  cols: 2
 ---
 
 # useClickAway
@@ -14,28 +16,11 @@ Listen for click events outside the target element.
 
 ## Examples
 
-### Default usage
-
 <code src="./demo/demo1.tsx"></code>
-
-### Custom DOM
-
 <code src="./demo/demo2.tsx"></code>
-
-### Support multiple DOM
-
 <code src="./demo/demo3.tsx"></code>
-
-### Listen for other events
-
 <code src="./demo/demo4.tsx"></code>
-
-### Support multiple events
-
 <code src="./demo/demo5.tsx"></code>
-
-### Support shadow DOM
-
 <code src="./demo/demo6.tsx"></code>
 
 ## API

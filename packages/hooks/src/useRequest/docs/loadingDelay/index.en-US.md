@@ -4,6 +4,8 @@ nav: Hooks
 group: useRequest
 order: 3
 toc: content
+demo:
+  cols: 2
 ---
 
 By setting `options.loadingDelay`, you can delay the time when `loading` turns to `true`, effectively prevent UI flashing.

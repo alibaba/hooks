@@ -6,6 +6,8 @@ group:
   order: 4
 order: 4
 toc: content
+demo:
+  cols: 2
 ---
 
 # useUrlState

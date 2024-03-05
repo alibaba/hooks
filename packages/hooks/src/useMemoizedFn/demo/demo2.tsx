@@ -1,13 +1,13 @@
 /**
- * title: useMemoizedFn function reference will not change, which can be used for performance optimization.
- * description: In the example, `memoizedFn` reference will not change, `callbackFn` will change when count changes.
+ * title: Performance Improvement
+ * description: useMemoizedFn function reference will not change, which can be used for performance optimization.
  *
- * title.zh-CN: useMemoizedFn 函数地址不会变化，可以用于性能优化
- * description.zh-CN: 示例中 `memoizedFn` 是不会变化的，`callbackFn` 在 count 变化时变化。
+ * title.zh-CN: 性能提升
+ * description.zh-CN: useMemoizedFn 函数地址不会变化，可以用于性能优化。
  */
 
 import React, { useCallback, useRef, useState } from 'react';
-import { message } from 'antd';
+import { Button, message } from 'antd';
 import { useMemoizedFn } from 'ahooks';
 
 // some expensive component with React.memo
@@ -18,9 +18,7 @@ const ExpensiveTree = React.memo<Record<string, any>>(({ showCount }) => {
   return (
     <div>
       <p>Render Count: {renderCountRef.current}</p>
-      <button type="button" onClick={showCount}>
-        showParentCount
-      </button>
+      <Button onClick={showCount}>showParentCount</Button>
     </div>
   );
 });
@@ -39,16 +37,9 @@ export default () => {
   return (
     <>
       <p>count: {count}</p>
-      <button
-        type="button"
-        onClick={() => {
-          setCount((c) => c + 1);
-        }}
-      >
-        Add Count
-      </button>
+      <Button onClick={() => setCount((c) => c + 1)}>Add Count</Button>
 
-      <p>You can click the button to see the number of sub-component renderings</p>
+      <p>You can click the Button to see the number of sub-component renderings</p>
 
       <div style={{ marginTop: 32 }}>
         <h3>Component with useCallback function:</h3>

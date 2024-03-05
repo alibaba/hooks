@@ -1,8 +1,8 @@
 /**
- * title: Basic Usage
+ * title: Countdown to target time
  * description: Basic countdown management.
  *
- * title.zh-CN: 基础用法
+ * title.zh-CN: 到未来某一时间点的倒计时
  * description.zh-CN: 基础的倒计时管理。
  */
 
@@ -10,7 +10,7 @@ import React from 'react';
 import { useCountDown } from 'ahooks';
 
 export default () => {
-  const [countdown, formattedRes] = useCountDown({
+  const [, formattedRes] = useCountDown({
     targetDate: `${new Date().getFullYear()}-12-31 23:59:59`,
   });
   const { days, hours, minutes, seconds, milliseconds } = formattedRes;

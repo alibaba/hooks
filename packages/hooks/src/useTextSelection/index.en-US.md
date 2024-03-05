@@ -6,6 +6,8 @@ group:
   order: 2
 order: 12
 toc: content
+demo:
+  cols: 2
 ---
 
 # useTextSelection
@@ -14,17 +16,9 @@ Tracking content, size, position of user text selection.
 
 ## Examples
 
-### Default usage
-
 <code src="./demo/demo1.tsx"></code>
-
-### Listen for specified area
-
-<code src="./demo/demo3.tsx"></code>
-
-### Translate user text selection
-
 <code src="./demo/demo2.tsx"></code>
+<code src="./demo/demo3.tsx"></code>
 
 ## API
 

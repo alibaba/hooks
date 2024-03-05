@@ -6,6 +6,8 @@ group:
   order: 6
 order: 13
 toc: content
+demo:
+  cols: 2
 ---
 
 # useKeyPress
@@ -17,29 +19,11 @@ toc: content
 ### 基础用法
 
 <code src="./demo/demo1.tsx"></code>
-
-### 监听组合按键
-
 <code src="./demo/demo6.tsx"></code>
-
-### 精确匹配
-
 <code src="./demo/demo7.tsx"></code>
-
-### 监听多个按键
-
 <code src="./demo/demo3.tsx"></code>
-
-### 获取触发的按键
-
 <code src="./demo/demo8.tsx"></code>
-
-### 自定义监听方式
-
 <code src="./demo/demo4.tsx"></code>
-
-### 自定义 DOM
-
 <code src="./demo/demo5.tsx"></code>
 
 ## API

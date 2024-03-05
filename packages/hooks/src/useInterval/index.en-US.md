@@ -6,6 +6,8 @@ group:
   order: 5
 order: 10
 toc: content
+demo:
+  cols: 2
 ---
 
 # useInterval
@@ -14,12 +16,7 @@ A hook that handles the `setInterval` timer function.
 
 ## Examples
 
-### Default usage
-
 <code src="./demo/demo1.tsx"></code>
-
-### Advanced usage
-
 <code src="./demo/demo2.tsx"></code>
 
 ## API

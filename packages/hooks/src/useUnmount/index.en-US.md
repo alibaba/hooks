@@ -6,6 +6,8 @@ group:
   order: 3
 order: 2
 toc: content
+demo:
+  cols: 2
 ---
 
 # useUnmount
@@ -13,8 +15,6 @@ toc: content
 A hook that executes the function right before the component is unmounted.
 
 ## Examples
-
-### Default Usage
 
 <code src="./demo/demo1.tsx"></code>
 

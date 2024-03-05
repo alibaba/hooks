@@ -6,6 +6,8 @@ group:
   order: 6
 order: 6
 toc: content
+demo:
+  cols: 2
 ---
 
 # useExternal
@@ -14,12 +16,7 @@ toc: content
 
 ## 代码演示
 
-### 基础用法
-
 <code src="./demo/demo1.tsx"></code>
-
-### 加载 CSS
-
 <code src="./demo/demo2.tsx"></code>
 
 ## API

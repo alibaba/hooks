@@ -12,14 +12,16 @@ import { useScroll } from 'ahooks';
 export default () => {
   const ref = useRef(null);
   const scroll = useScroll(ref);
+
   return (
     <>
-      <p>{JSON.stringify(scroll)}</p>
       <div
         style={{
           height: '160px',
           width: '160px',
-          border: 'solid 1px #000',
+          border: '1px dashed #ccc',
+          borderRadius: 4,
+          marginBottom: 8,
           overflow: 'scroll',
           whiteSpace: 'nowrap',
           fontSize: '32px',
@@ -56,6 +58,7 @@ export default () => {
           dignissimos distinctio, dolor eaque est fugit nisi non pariatur porro possimus, quas quasi
         </div>
       </div>
+      <p>{JSON.stringify(scroll)}</p>
     </>
   );
 };

@@ -7,6 +7,7 @@
  */
 
 import React, { useState } from 'react';
+import { Input } from 'antd';
 import { useAsyncEffect } from 'ahooks';
 
 function mockCheck(val: string): Promise<boolean> {
@@ -33,7 +34,7 @@ export default () => {
 
   return (
     <div>
-      <input
+      <Input
         value={value}
         onChange={(e) => {
           setValue(e.target.value);

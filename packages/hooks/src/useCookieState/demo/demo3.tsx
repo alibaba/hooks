@@ -7,6 +7,7 @@
  */
 
 import React from 'react';
+import { Button, Space } from 'antd';
 import { useCookieState } from 'ahooks';
 
 export default function App() {
@@ -18,32 +19,28 @@ export default function App() {
 
   return (
     <>
+      <Space>
+        <Button
+          onClick={() =>
+            setValue((v) => String(Number(v) + 1), {
+              expires: (() => new Date(+new Date() + 10000))(),
+            })
+          }
+        >
+          inc + (10s expires)
+        </Button>
+        <Button
+          onClick={() =>
+            setValue((v) => String(Number(v) - 1), {
+              expires: (() => new Date(+new Date() + 10000))(),
+            })
+          }
+        >
+          dec - (10s expires)
+        </Button>
+        <Button onClick={() => setValue('0')}>reset</Button>
+      </Space>
       <p>{value}</p>
-      <button
-        type="button"
-        style={{ marginRight: 16 }}
-        onClick={() =>
-          setValue((v) => String(Number(v) + 1), {
-            expires: (() => new Date(+new Date() + 10000))(),
-          })
-        }
-      >
-        inc + (10s expires)
-      </button>
-      <button
-        type="button"
-        style={{ marginRight: 16 }}
-        onClick={() =>
-          setValue((v) => String(Number(v) - 1), {
-            expires: (() => new Date(+new Date() + 10000))(),
-          })
-        }
-      >
-        dec - (10s expires)
-      </button>
-      <button type="button" onClick={() => setValue('0')}>
-        reset
-      </button>
     </>
   );
 }

@@ -4,6 +4,8 @@ nav: Hooks
 group: useRequest
 order: 10
 toc: content
+demo:
+  cols: 2
 ---
 
 如果设置了 `options.cacheKey`，`useRequest` 会将当前请求成功的数据缓存起来。下次组件初始化时，如果有缓存数据，我们会优先返回缓存数据，然后在背后发送新请求，也就是 SWR 的能力。

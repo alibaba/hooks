@@ -6,6 +6,8 @@ group:
   order: 7
 order: 1
 toc: content
+demo:
+  cols: 2
 ---
 
 # useControllableValue
@@ -14,16 +16,8 @@ In some components, we need the state to be managed by itself or controlled by i
 
 ## Examples
 
-### Uncontrolled component
-
 <code src="./demo/demo1.tsx"></code>
-
-### Controlled component
-
 <code src="./demo/demo2.tsx"></code>
-
-### No value, have onChange component
-
 <code src="./demo/demo3.tsx"></code>
 
 ## API

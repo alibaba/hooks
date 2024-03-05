@@ -6,6 +6,8 @@ group:
   order: 6
 order: 14
 toc: content
+demo:
+  cols: 2
 ---
 
 # useLongPress
@@ -14,16 +16,8 @@ Listen for the long press event of the target element.
 
 ## Examples
 
-### Basic usage
-
 <code src="./demo/demo1.tsx"></code>
-
-### Listen for click and long press events at the same time
-
 <code src="./demo/demo2.tsx"></code>
-
-### Move threshold
-
 <code src="./demo/demo3.tsx"></code>
 
 ## API

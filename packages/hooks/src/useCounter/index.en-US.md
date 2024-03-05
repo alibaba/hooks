@@ -6,6 +6,8 @@ group:
   order: 2
 order: 11
 toc: content
+demo:
+  cols: 2
 ---
 
 # useCounter
@@ -13,8 +15,6 @@ toc: content
 A hook that manage counter.
 
 ## Examples
-
-### Default usage
 
 <code src="./demo/demo1.tsx"></code>
 

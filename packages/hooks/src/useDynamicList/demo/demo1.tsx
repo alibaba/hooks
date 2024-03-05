@@ -7,7 +7,7 @@
  */
 
 import React from 'react';
-import { Input } from 'antd';
+import { Input, Space } from 'antd';
 import { MinusCircleOutlined, PlusCircleOutlined } from '@ant-design/icons';
 import { useDynamicList } from 'ahooks';
 
@@ -15,36 +15,23 @@ export default () => {
   const { list, remove, getKey, insert, replace } = useDynamicList(['David', 'Jack']);
 
   const Row = (index: number, item: any) => (
-    <div key={getKey(index)} style={{ marginBottom: 16 }}>
+    <Space key={getKey(index)}>
       <Input
-        style={{ width: 300 }}
         placeholder="Please enter name"
-        onChange={(e) => replace(index, e.target.value)}
         value={item}
+        onChange={(e) => replace(index, e.target.value)}
       />
-
-      {list.length > 1 && (
-        <MinusCircleOutlined
-          style={{ marginLeft: 8 }}
-          onClick={() => {
-            remove(index);
-          }}
-        />
-      )}
-      <PlusCircleOutlined
-        style={{ marginLeft: 8 }}
-        onClick={() => {
-          insert(index + 1, '');
-        }}
-      />
-    </div>
+      {list.length > 1 && <MinusCircleOutlined onClick={() => remove(index)} />}
+      <PlusCircleOutlined onClick={() => insert(index + 1, '')} />
+    </Space>
   );
 
   return (
     <>
-      {list.map((ele, index) => Row(index, ele))}
-
-      <div>{JSON.stringify([list])}</div>
+      <Space style={{ marginBottom: 16 }} direction="vertical">
+        {list.map((ele, index) => Row(index, ele))}
+      </Space>
+      <p>{JSON.stringify(list)}</p>
     </>
   );
 };

@@ -6,6 +6,8 @@ group:
   order: 2
 order: 4
 toc: content
+demo:
+  cols: 2
 ---
 
 # usePagination

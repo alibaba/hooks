@@ -7,6 +7,7 @@
  */
 
 import React, { useState, useRef } from 'react';
+import { Button } from 'antd';
 import { useEventListener } from 'ahooks';
 
 export default () => {
@@ -21,9 +22,5 @@ export default () => {
     { target: ref },
   );
 
-  return (
-    <button ref={ref} type="button">
-      You click {value} times
-    </button>
-  );
+  return <Button ref={ref}>You click {value} times</Button>;
 };

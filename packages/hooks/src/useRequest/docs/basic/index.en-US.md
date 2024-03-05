@@ -4,6 +4,8 @@ nav: Hooks
 group: useRequest
 order: 2
 toc: content
+demo:
+  cols: 2
 ---
 
 In this section, we will introduce the core and basic functionalities of `useRequest`, that is, the functionalities of the `useRequest` kernel.

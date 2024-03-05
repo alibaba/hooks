@@ -7,6 +7,7 @@
  */
 
 import React, { useLayoutEffect, useState } from 'react';
+import { Button } from 'antd';
 import { useUpdateLayoutEffect } from 'ahooks';
 
 export default () => {
@@ -20,6 +21,7 @@ export default () => {
 
   useUpdateLayoutEffect(() => {
     setUpdateLayoutEffectCount((c) => c + 1);
+
     return () => {
       // do something
     };
@@ -27,13 +29,11 @@ export default () => {
 
   return (
     <div>
+      <Button style={{ marginBottom: 8 }} onClick={() => setCount((c) => c + 1)}>
+        reRender
+      </Button>
       <p>layoutEffectCount: {layoutEffectCount}</p>
       <p>updateLayoutEffectCount: {updateLayoutEffectCount}</p>
-      <p>
-        <button type="button" onClick={() => setCount((c) => c + 1)}>
-          reRender
-        </button>
-      </p>
     </div>
   );
 };

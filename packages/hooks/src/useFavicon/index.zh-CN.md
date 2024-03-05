@@ -6,6 +6,8 @@ group:
   order: 6
 order: 8
 toc: content
+demo:
+  cols: 2
 ---
 
 # useFavicon
@@ -13,8 +15,6 @@ toc: content
 设置页面的 favicon。
 
 ## 代码演示
-
-### 基础用法
 
 <code src="./demo/demo1.tsx"></code>
 

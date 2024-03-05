@@ -6,6 +6,8 @@ group:
   order: 4
 order: 7
 toc: content
+demo:
+  cols: 2
 ---
 
 # useSessionStorageState

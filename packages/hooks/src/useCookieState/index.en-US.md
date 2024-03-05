@@ -6,6 +6,8 @@ group:
   order: 4
 order: 5
 toc: content
+demo:
+  cols: 2
 ---
 
 # useCookieState
@@ -14,16 +16,8 @@ A Hook that store state into Cookie.
 
 ## Examples
 
-### Store state into Cookie
-
 <code src="./demo/demo1.tsx"></code>
-
-### SetState can receive function
-
 <code src="./demo/demo2.tsx"></code>
-
-### Use the option property to configure Cookie
-
 <code src="./demo/demo3.tsx"></code>
 
 ## API

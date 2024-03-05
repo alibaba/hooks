@@ -6,22 +6,16 @@ group:
   order: 2
 order: 10
 toc: content
+demo:
+  cols: 2
 ---
 
 # useCountDown
 
 一个用于管理倒计时的 Hook。
 
-## 到未来某一时间点的倒计时
-
 <code src="./demo/demo1.tsx"></code>
-
-## 配置项动态变化
-
 <code src="./demo/demo2.tsx"></code>
-
-## 通过 leftTime 配置剩余时间
-
 <code src="./demo/demo3.tsx"></code>
 
 **说明**

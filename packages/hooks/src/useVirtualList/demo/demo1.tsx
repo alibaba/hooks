@@ -3,7 +3,7 @@
  * description: render 100,000 items in a list.
  *
  * title.zh-CN: 基础用法
- * description.zh-CN: 渲染大量数据
+ * description.zh-CN: 渲染大量数据。
  */
 
 import React, { useMemo, useRef } from 'react';
@@ -21,9 +21,13 @@ export default () => {
     itemHeight: 60,
     overscan: 10,
   });
+
   return (
     <>
-      <div ref={containerRef} style={{ height: '300px', overflow: 'auto', border: '1px solid' }}>
+      <div
+        ref={containerRef}
+        style={{ height: '300px', overflow: 'auto', border: '1px dashed #ccc', borderRadius: 4 }}
+      >
         <div ref={wrapperRef}>
           {list.map((ele) => (
             <div

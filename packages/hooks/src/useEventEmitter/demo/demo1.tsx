@@ -8,6 +8,7 @@
 
 import React, { useRef } from 'react';
 import type { FC } from 'react';
+import { Button, Input, Space } from 'antd';
 import { useEventEmitter } from 'ahooks';
 import type { EventEmitter } from 'ahooks/es/useEventEmitter';
 
@@ -15,17 +16,10 @@ const MessageBox: FC<{
   focus$: EventEmitter<void>;
 }> = function (props) {
   return (
-    <div style={{ paddingBottom: 24 }}>
+    <Space style={{ marginBottom: 16 }}>
       <p>You received a message</p>
-      <button
-        type="button"
-        onClick={() => {
-          props.focus$.emit();
-        }}
-      >
-        Reply
-      </button>
-    </div>
+      <Button onClick={() => props.focus$.emit()}>Reply</Button>
+    </Space>
   );
 };
 
@@ -33,16 +27,17 @@ const InputBox: FC<{
   focus$: EventEmitter<void>;
 }> = function (props) {
   const inputRef = useRef<any>();
+
   props.focus$.useSubscription(() => {
     inputRef.current.focus();
   });
-  return (
-    <input ref={inputRef} placeholder="Enter reply" style={{ width: '100%', padding: '4px' }} />
-  );
+
+  return <Input ref={inputRef} placeholder="Enter reply" />;
 };
 
 export default function () {
   const focus$ = useEventEmitter();
+
   return (
     <>
       <MessageBox focus$={focus$} />

@@ -6,6 +6,8 @@ group:
   order: 4
 order: 3
 toc: content
+demo:
+  cols: 2
 ---
 
 # useToggle
@@ -14,12 +16,7 @@ A hook that toggle states.
 
 ## Examples
 
-### Default usage
-
 <code src="./demo/demo1.tsx"></code>
-
-### Advanced usage
-
 <code src="./demo/demo2.tsx"></code>
 
 ## API

@@ -2,6 +2,8 @@
 title: React Hooks & react-refresh（HMR）
 order: 3
 toc: content
+demo:
+  cols: 2
 ---
 
 ## 什么是 react-refresh

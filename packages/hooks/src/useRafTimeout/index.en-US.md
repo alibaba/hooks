@@ -6,6 +6,8 @@ group:
   order: 5
 order: 13
 toc: content
+demo:
+  cols: 2
 ---
 
 # useRafTimeout
@@ -16,12 +18,7 @@ A hook implements with `requestAnimationFrame` for better performance. The API i
 
 ## Examples
 
-### Default usage
-
 <code src="./demo/demo1.tsx"></code>
-
-### Advanced usage
-
 <code src="./demo/demo2.tsx"></code>
 
 ## API

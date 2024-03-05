@@ -7,7 +7,7 @@
  */
 
 import React, { useRef } from 'react';
-import { message } from 'antd';
+import { Form, Input, message } from 'antd';
 import { useFocusWithin } from 'ahooks';
 
 export default () => {
@@ -20,24 +20,26 @@ export default () => {
       message.info('blur');
     },
   });
+
   return (
-    <div>
+    <>
       <div
         ref={ref}
         style={{
           padding: 16,
-          backgroundColor: isFocusWithin ? 'red' : '',
-          border: '1px solid gray',
+          backgroundColor: isFocusWithin ? '#4b6bcd' : '',
         }}
       >
-        <label style={{ display: 'block' }}>
-          First Name: <input />
-        </label>
-        <label style={{ display: 'block', marginTop: 16 }}>
-          Last Name: <input />
-        </label>
+        <Form>
+          <Form.Item label="First Name">
+            <Input />
+          </Form.Item>
+          <Form.Item label="Last Name">
+            <Input />
+          </Form.Item>
+        </Form>
       </div>
       <p>isFocusWithin: {JSON.stringify(isFocusWithin)}</p>
-    </div>
+    </>
   );
 };

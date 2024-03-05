@@ -6,6 +6,8 @@ group:
   order: 7
 order: 1
 toc: content
+demo:
+  cols: 2
 ---
 
 # useControllableValue
@@ -14,16 +16,8 @@ toc: content
 
 ## 代码演示
 
-### 非受控组件
-
 <code src="./demo/demo1.tsx"></code>
-
-### 受控组件
-
 <code src="./demo/demo2.tsx"></code>
-
-### 无 value，有 onChange 的组件
-
 <code src="./demo/demo3.tsx"></code>
 
 ## API

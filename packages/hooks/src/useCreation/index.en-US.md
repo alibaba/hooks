@@ -6,6 +6,8 @@ group:
   order: 7
 order: 2
 toc: content
+demo:
+  cols: 2
 ---
 
 # useCreation
@@ -24,8 +26,6 @@ const b = useCreation(() => new Subject(), []); // By using factory function, Su
 ```
 
 ## Examples
-
-### Default usage
 
 <code src="./demo/demo1.tsx"></code>
 

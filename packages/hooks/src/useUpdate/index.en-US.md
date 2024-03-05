@@ -6,6 +6,8 @@ group:
   order: 5
 order: 15
 toc: content
+demo:
+  cols: 2
 ---
 
 # useUpdate
@@ -13,8 +15,6 @@ toc: content
 A hook that returns a function which can be used to force the component to re-render.
 
 ## Examples
-
-### Default Usage
 
 <code src="./demo/demo1.tsx"></code>
 

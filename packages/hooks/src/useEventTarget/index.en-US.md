@@ -6,6 +6,8 @@ group:
   order: 6
 order: 5
 toc: content
+demo:
+  cols: 2
 ---
 
 # useEventTarget
@@ -14,12 +16,7 @@ A hook that encapsulates `onChange` and `value` logic for form controls that obt
 
 ## Example
 
-### Basic Usage
-
 <code src="./demo/demo1.tsx"></code>
-
-### Custom transformer
-
 <code src="./demo/demo2.tsx"></code>
 
 ## API

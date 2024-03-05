@@ -7,20 +7,21 @@
  */
 
 import React from 'react';
+import { Button, Input, Space } from 'antd';
 import { useHistoryTravel } from 'ahooks';
 
 export default () => {
   const { value, setValue, backLength, forwardLength, back, forward } = useHistoryTravel<string>();
 
   return (
-    <div>
-      <input value={value || ''} onChange={(e) => setValue(e.target.value)} />
-      <button disabled={backLength <= 0} onClick={back} style={{ margin: '0 8px' }}>
+    <Space>
+      <Input value={value || ''} onChange={(e) => setValue(e.target.value)} />
+      <Button disabled={backLength <= 0} onClick={back}>
         back
-      </button>
-      <button disabled={forwardLength <= 0} onClick={forward}>
+      </Button>
+      <Button disabled={forwardLength <= 0} onClick={forward}>
         forward
-      </button>
-    </div>
+      </Button>
+    </Space>
   );
 };

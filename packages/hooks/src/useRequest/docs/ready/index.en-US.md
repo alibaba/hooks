@@ -4,6 +4,8 @@ nav: Hooks
 group: useRequest
 order: 5
 toc: content
+demo:
+  cols: 2
 ---
 
 By setting `options.ready`, you can control whether a request is sent. When its value is `false`, the request will never be sent.

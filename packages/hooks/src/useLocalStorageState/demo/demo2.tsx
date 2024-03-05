@@ -7,6 +7,7 @@
  */
 
 import React from 'react';
+import { Button, Space } from 'antd';
 import { useLocalStorageState } from 'ahooks';
 
 const defaultArray = ['a', 'e', 'i', 'o', 'u'];
@@ -18,17 +19,13 @@ export default function () {
 
   return (
     <>
+      <Space style={{ marginBottom: 8 }}>
+        <Button onClick={() => setValue([...(value || []), Math.random().toString(36).slice(-1)])}>
+          push random
+        </Button>
+        <Button onClick={() => setValue(defaultArray)}>reset</Button>
+      </Space>
       <p>{value?.join('-')}</p>
-      <button
-        type="button"
-        style={{ marginRight: '16px' }}
-        onClick={() => setValue([...(value || []), Math.random().toString(36).slice(-1)])}
-      >
-        push random
-      </button>
-      <button type="button" onClick={() => setValue(defaultArray)}>
-        reset
-      </button>
     </>
   );
 }

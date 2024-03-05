@@ -7,6 +7,7 @@
  */
 
 import React, { useState } from 'react';
+import { Input } from 'antd';
 import { useThrottle } from 'ahooks';
 
 export default () => {
@@ -15,13 +16,13 @@ export default () => {
 
   return (
     <div>
-      <input
+      <Input
+        style={{ marginBottom: 8 }}
         value={value}
         onChange={(e) => setValue(e.target.value)}
         placeholder="Typed value"
-        style={{ width: 280 }}
       />
-      <p style={{ marginTop: 16 }}>throttledValue: {throttledValue}</p>
+      <p>throttledValue: {throttledValue}</p>
     </div>
   );
 };

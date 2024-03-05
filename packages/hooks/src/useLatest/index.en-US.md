@@ -6,6 +6,8 @@ group:
   order: 7
 order: 5
 toc: content
+demo:
+  cols: 2
 ---
 
 # useLatest
@@ -13,8 +15,6 @@ toc: content
 A Hook that returns the latest value, effectively avoiding the closure problem.
 
 ## Examples
-
-### Basic usage
 
 <code src="./demo/demo1.tsx"></code>
 

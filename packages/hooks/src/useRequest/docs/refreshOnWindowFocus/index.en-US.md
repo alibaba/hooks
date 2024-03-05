@@ -4,6 +4,8 @@ nav: Hooks
 group: useRequest
 order: 7
 toc: content
+demo:
+  cols: 2
 ---
 
 By setting `options.refreshOnWindowFocus`, the request will be refreshed when the browser is `refocus` and `revisible`.

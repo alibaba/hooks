@@ -7,6 +7,7 @@
  */
 
 import React, { useState } from 'react';
+import { Button } from 'antd';
 import { useClickAway } from 'ahooks';
 
 export default () => {
@@ -21,9 +22,7 @@ export default () => {
 
   return (
     <div>
-      <button type="button" id="use-click-away-button">
-        box
-      </button>
+      <Button id="use-click-away-button">box</Button>
       <p>counter: {counter}</p>
     </div>
   );

@@ -6,6 +6,8 @@ group:
   order: 7
 order: 6
 toc: content
+demo:
+  cols: 2
 ---
 
 # useMemoizedFn
@@ -36,12 +38,7 @@ const func = useMemoizedFn(() => {
 
 ## Examples
 
-### Default usage
-
 <code src="./demo/demo1.tsx"></code>
-
-### Performance Improvement
-
 <code src="./demo/demo2.tsx"></code>
 
 ## API

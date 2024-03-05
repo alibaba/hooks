@@ -6,6 +6,8 @@ group:
   order: 4
 order: 9
 toc: content
+demo:
+  cols: 2
 ---
 
 # useThrottle
@@ -13,8 +15,6 @@ toc: content
 用来处理节流值的 Hook。
 
 ## 代码演示
-
-### 基础用法
 
 <code src="./demo/demo1.tsx"></code>
 

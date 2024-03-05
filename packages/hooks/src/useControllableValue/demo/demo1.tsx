@@ -6,6 +6,7 @@
  * description.zh-CN: 如果 props 中没有 value，则组件内部自己管理 state
  */
 import React from 'react';
+import { Button, Input, Space } from 'antd';
 import { useControllableValue } from 'ahooks';
 
 export default (props: any) => {
@@ -14,11 +15,9 @@ export default (props: any) => {
   });
 
   return (
-    <>
-      <input value={state} onChange={(e) => setState(e.target.value)} style={{ width: 300 }} />
-      <button type="button" onClick={() => setState('')} style={{ marginLeft: 8 }}>
-        Clear
-      </button>
-    </>
+    <Space>
+      <Input value={state} onChange={(e) => setState(e.target.value)} />
+      <Button onClick={() => setState('')}>Clear</Button>
+    </Space>
   );
 };

@@ -7,6 +7,7 @@
  */
 
 import React, { useState, useRef } from 'react';
+import { Button } from 'antd';
 import { useLongPress } from 'ahooks';
 
 export default () => {
@@ -16,11 +17,11 @@ export default () => {
   useLongPress(() => setCounter((s) => s + 1), ref);
 
   return (
-    <div>
-      <button ref={ref} type="button">
+    <>
+      <Button style={{ marginBottom: 8 }} ref={ref}>
         Press me
-      </button>
+      </Button>
       <p>counter: {counter}</p>
-    </div>
+    </>
   );
 };

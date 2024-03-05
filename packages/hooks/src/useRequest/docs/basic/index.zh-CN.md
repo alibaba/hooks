@@ -4,6 +4,8 @@ nav: Hooks
 group: useRequest
 order: 2
 toc: content
+demo:
+  cols: 2
 ---
 
 这一小节我们会介绍 `useRequest` 最核心，最基础的能力，也就是 `useRequest` 内核的能力。

@@ -7,7 +7,7 @@
  */
 
 import React, { useEffect, useState } from 'react';
-import { Button, Form, Input } from 'antd';
+import { Button, Form, Input, Space } from 'antd';
 import { MinusCircleOutlined, PlusCircleOutlined } from '@ant-design/icons';
 import { useDynamicList } from 'ahooks';
 
@@ -32,37 +32,22 @@ const DynamicInputs = ({
   }, [list]);
 
   const Row = (index: number, item: any) => (
-    <div key={getKey(index)} style={{ marginBottom: 16 }}>
+    <Space key={getKey(index)}>
       <Input
-        style={{ width: 300 }}
         placeholder="Please enter name"
-        onChange={(e) => replace(index, e.target.value)}
         value={item}
+        onChange={(e) => replace(index, e.target.value)}
       />
-
-      {list.length > 1 && (
-        <MinusCircleOutlined
-          style={{ marginLeft: 8 }}
-          onClick={() => {
-            remove(index);
-          }}
-        />
-      )}
-      <PlusCircleOutlined
-        style={{ marginLeft: 8 }}
-        onClick={() => {
-          insert(index + 1, '');
-        }}
-      />
-    </div>
+      {list.length > 1 && <MinusCircleOutlined onClick={() => remove(index)} />}
+      <PlusCircleOutlined onClick={() => insert(index + 1, '')} />
+    </Space>
   );
 
-  return <>{list.map((ele, index) => Row(index, ele))}</>;
+  return <Space direction="vertical">{list.map((ele, index) => Row(index, ele))}</Space>;
 };
 
 export default () => {
   const [form] = Form.useForm();
-
   const [result, setResult] = useState('');
 
   return (
@@ -72,23 +57,22 @@ export default () => {
           <DynamicInputs />
         </Form.Item>
       </Form>
-      <Button
-        type="primary"
-        onClick={() =>
-          form
-            .validateFields()
-            .then((val) => {
-              setResult(JSON.stringify(val.names));
-            })
-            .catch(() => {})
-        }
-      >
-        Submit
-      </Button>
-      <Button style={{ marginLeft: 16 }} onClick={() => form.resetFields()}>
-        Reset
-      </Button>
-
+      <Space style={{ marginBottom: 16 }}>
+        <Button
+          type="primary"
+          onClick={() =>
+            form
+              .validateFields()
+              .then((val) => {
+                setResult(JSON.stringify(val.names));
+              })
+              .catch(() => {})
+          }
+        >
+          Submit
+        </Button>
+        <Button onClick={() => form.resetFields()}>Reset</Button>
+      </Space>
       <p>{result}</p>
     </>
   );

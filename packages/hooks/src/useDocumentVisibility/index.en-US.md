@@ -6,6 +6,8 @@ group:
   order: 6
 order: 3
 toc: content
+demo:
+  cols: 2
 ---
 
 # useDocumentVisibility

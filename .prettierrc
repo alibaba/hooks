@@ -12,7 +12,8 @@
     {
       "files": ["*.md"],
       "options": {
-        "embeddedLanguageFormatting": "off"
+        "embeddedLanguageFormatting": "off",
+        "proseWrap": "preserve"
       }
     }
   ]

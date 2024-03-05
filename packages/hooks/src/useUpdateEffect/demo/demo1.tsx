@@ -7,6 +7,7 @@
  */
 
 import React, { useEffect, useState } from 'react';
+import { Button } from 'antd';
 import { useUpdateEffect } from 'ahooks';
 
 export default () => {
@@ -20,6 +21,7 @@ export default () => {
 
   useUpdateEffect(() => {
     setUpdateEffectCount((c) => c + 1);
+
     return () => {
       // do something
     };
@@ -27,13 +29,11 @@ export default () => {
 
   return (
     <div>
+      <Button style={{ marginBottom: 8 }} onClick={() => setCount((c) => c + 1)}>
+        reRender
+      </Button>
       <p>effectCount: {effectCount}</p>
       <p>updateEffectCount: {updateEffectCount}</p>
-      <p>
-        <button type="button" onClick={() => setCount((c) => c + 1)}>
-          reRender
-        </button>
-      </p>
     </div>
   );
 };

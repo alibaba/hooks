@@ -7,29 +7,22 @@
  */
 
 import React, { useState } from 'react';
+import { Input, Space } from 'antd';
 import { useControllableValue } from 'ahooks';
 
 const ControllableComponent = (props: any) => {
   const [state, setState] = useControllableValue<string>(props);
 
-  return (
-    <input
-      value={state}
-      onChange={(e) => {
-        setState(e.target.value);
-      }}
-      style={{ width: 300 }}
-    />
-  );
+  return <Input value={state} onChange={(e) => setState(e.target.value)} />;
 };
 const Parent = () => {
   const [state, setState] = useState<number>(0);
 
   return (
-    <>
-      <div style={{ marginBottom: 8 }}>state:{state}</div>
+    <Space>
       <ControllableComponent onChange={setState} />
-    </>
+      <div>state:{state}</div>
+    </Space>
   );
 };
 export default Parent;

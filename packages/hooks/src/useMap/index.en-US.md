@@ -6,6 +6,8 @@ group:
   order: 4
 order: 10
 toc: content
+demo:
+  cols: 2
 ---
 
 # useMap
@@ -13,8 +15,6 @@ toc: content
 A hook that can manage the state of Map.
 
 ## Examples
-
-### Default usage
 
 <code src="./demo/demo1.tsx"></code>
 

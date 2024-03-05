@@ -7,6 +7,7 @@
  */
 
 import React from 'react';
+import { Button, Input, Space } from 'antd';
 import { useLocalStorageState } from 'ahooks';
 
 export default function () {
@@ -18,18 +19,14 @@ export default function () {
   );
 
   return (
-    <>
-      <input
+    <Space>
+      <Input
         value={message || ''}
         placeholder="Please enter some words..."
         onChange={(e) => setMessage(e.target.value)}
       />
-      <button style={{ margin: '0 8px' }} type="button" onClick={() => setMessage('Hello~')}>
-        Reset
-      </button>
-      <button type="button" onClick={() => setMessage(undefined)}>
-        Clear
-      </button>
-    </>
+      <Button onClick={() => setMessage('Hello~')}>Reset</Button>
+      <Button onClick={() => setMessage(undefined)}>Clear</Button>
+    </Space>
   );
 }

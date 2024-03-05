@@ -14,19 +14,30 @@ export default () => {
     threshold: [0, 0.25, 0.5, 0.75, 1],
     root: () => document.getElementById('parent'),
   });
+
   return (
     <div>
-      <div style={{ width: 300, height: 300, overflow: 'scroll', border: '1px solid' }} id="parent">
+      <div
+        style={{
+          width: 300,
+          height: 300,
+          overflow: 'scroll',
+          border: '1px dashed #ccc',
+          borderRadius: 4,
+        }}
+        id="parent"
+      >
         scroll here
         <div style={{ height: 800 }}>
           <div
             id="children"
             style={{
-              border: '1px solid',
               height: 100,
               width: 100,
-              textAlign: 'center',
+              border: '1px dashed #ccc',
+              borderRadius: 4,
               marginTop: 80,
+              textAlign: 'center',
             }}
           >
             observer dom

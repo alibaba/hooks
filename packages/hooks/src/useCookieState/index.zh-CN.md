@@ -6,6 +6,8 @@ group:
   order: 4
 order: 5
 toc: content
+demo:
+  cols: 2
 ---
 
 # useCookieState
@@ -14,16 +16,8 @@ toc: content
 
 ## 代码演示
 
-### 将 state 存储在 Cookie 中
-
 <code src="./demo/demo1.tsx"></code>
-
-### setState 可以接收函数
-
 <code src="./demo/demo2.tsx"></code>
-
-### 使用 option 配置 Cookie
-
 <code src="./demo/demo3.tsx"></code>
 
 ## API

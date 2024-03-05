@@ -6,6 +6,8 @@ group:
   order: 6
 order: 11
 toc: content
+demo:
+  cols: 2
 ---
 
 # useMutationObserver
@@ -13,8 +15,6 @@ toc: content
 一个监听指定的 DOM 树发生变化的 Hook，参考 [MutationObserver](https://developer.mozilla.org/zh-CN/docs/Web/API/MutationObserver)
 
 ## 代码演示
-
-### 基础用法
 
 <code src="./demo/demo1.tsx"></code>
 

@@ -7,11 +7,13 @@
  */
 
 import React, { useState, useRef } from 'react';
+import { Button } from 'antd';
 import { useClickAway } from 'ahooks';
 
 export default () => {
   const [counter, setCounter] = useState(0);
   const ref = useRef(null);
+
   useClickAway(
     () => {
       setCounter((s) => s + 1);
@@ -22,9 +24,7 @@ export default () => {
 
   return (
     <div>
-      <button type="button" ref={ref}>
-        box
-      </button>
+      <Button ref={ref}>box</Button>
       <p>counter: {counter}</p>
     </div>
   );

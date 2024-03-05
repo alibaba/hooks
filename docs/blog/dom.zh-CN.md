@@ -2,6 +2,8 @@
 title: DOM 类 Hooks 使用规范
 order: 2
 toc: content
+demo:
+  cols: 2
 ---
 
 ahooks 大部分 DOM 类 Hooks 都会接收 `target` 参数，表示要处理的元素。

@@ -6,6 +6,8 @@ group:
   order: 5
 order: 2
 toc: content
+demo:
+  cols: 2
 ---
 
 # useUpdateLayoutEffect
@@ -13,8 +15,6 @@ toc: content
 A hook alike `useLayoutEffect` but skips running the effect for the first time.
 
 ## Examples
-
-### Basic usage
 
 <code src="./demo/demo1.tsx"></code>
 

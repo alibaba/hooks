@@ -7,7 +7,7 @@
  */
 
 import React, { useState } from 'react';
-import { message } from 'antd';
+import { Button, message } from 'antd';
 import { useLockFn } from 'ahooks';
 
 function mockApiRequest() {
@@ -30,8 +30,10 @@ export default () => {
 
   return (
     <>
+      <Button style={{ marginBottom: 8 }} onClick={submit}>
+        Submit
+      </Button>
       <p>Submit count: {count}</p>
-      <button onClick={submit}>Submit</button>
     </>
   );
 };

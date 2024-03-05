@@ -6,6 +6,8 @@ group:
   order: 6
 order: 14
 toc: content
+demo:
+  cols: 2
 ---
 
 # useLongPress
@@ -17,13 +19,7 @@ toc: content
 ### 基本使用
 
 <code src="./demo/demo1.tsx"></code>
-
-### 同时监听点击和长按事件
-
 <code src="./demo/demo2.tsx"></code>
-
-### 移动阈值
-
 <code src="./demo/demo3.tsx"></code>
 
 ## API

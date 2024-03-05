@@ -4,6 +4,8 @@ nav: Hooks
 group: useRequest
 order: 1
 toc: content
+demo:
+  cols: 2
 ---
 
 `useRequest` is a powerful Hooks for asynchronous data management. `useRequest` is sufficient enough for network request scenarios in React projects.

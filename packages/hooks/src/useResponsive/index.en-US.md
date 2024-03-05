@@ -6,6 +6,8 @@ group:
   order: 6
 order: 16
 toc: content
+demo:
+  cols: 2
 ---
 
 # useResponsive
@@ -13,8 +15,6 @@ toc: content
 React Hook for getting responsive info.
 
 ## Examples
-
-### Get responsive info in components
 
 <code src="./demo/demo1.tsx"></code>
 
