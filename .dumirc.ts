@@ -22,11 +22,11 @@ export default defineConfig({
   sitemap: {
     hostname: 'https://ahooks.js.org/',
   },
+  favicons: ['/simple-logo.svg'],
   locales: [
     { id: 'en-US', name: 'English' },
     { id: 'zh-CN', name: '中文' },
   ],
-  favicons: ['/simple-logo.svg'],
   themeConfig: {
     logo: '/logo.svg',
     title: 'ahooks',
@@ -85,14 +85,14 @@ export default defineConfig({
       { id: 'en-US', switchPrefix: 'En' },
       { id: 'zh-CN', switchPrefix: '中' },
     ],
-    sidebarGroupModePath: ['/guide', '/hooks', '/blog', '/zh-CN'],
+    sidebarGroupModePath: ['/guide', '/hooks', '/blog'],
     nav: {
       'en-US': [
         { title: 'Guide', link: '/guide' },
         { title: 'Hooks', link: '/hooks/index' },
         { title: 'Blog', link: '/blog/function' },
         { title: 'Releases', link: 'https://github.com/alibaba/hooks/releases' },
-        { title: 'Mirror', link: 'https://ahooks.gitee.io/zh-CN' },
+        { title: 'Mirror', link: 'https://ahooks.gitee.io' },
       ],
       'zh-CN': [
         { title: '指南', link: '/zh-CN/guide' },

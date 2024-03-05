@@ -49,7 +49,7 @@
     "cross-env": "^7.0.3",
     "del": "^5.1.0",
     "dumi": "^2.2.17",
-    "@liuyib/dumi-theme-antd": "^0.1.0",
+    "@liuyib/dumi-theme-antd": "^0.1.2",
     "eslint": "^8.56.0",
     "eslint-plugin-react-hooks": "^4.6.0",
     "fast-glob": "^3.2.11",
