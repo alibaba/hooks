@@ -10,13 +10,9 @@ demo:
   cols: 2
 ---
 
-# useUnmountedRef
-
 A Hook can be used to get whether the component is unmounted.
 
 ## Examples
-
-### Default Usage
 
 <code src="./demo/demo1.tsx"></code>
 

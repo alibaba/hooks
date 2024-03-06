@@ -10,13 +10,24 @@ demo:
   cols: 2
 ---
 
-# useCountDown
-
 A hook for manage countdown.
+
+## Examples
 
 <code src="./demo/demo1.tsx"></code>
 <code src="./demo/demo2.tsx"></code>
 <code src="./demo/demo3.tsx"></code>
+
+### Note
+
+The precision of useCountDown is milliseconds, which may cause the following problems
+
+- Even if the interval time is set to 1000ms, the update interval of useCountDown may not be exactly 1000ms, but around it.
+- In the second demo, countdown is generally 499x milliseconds at the beginning due to the execution delay of the program.
+
+If you only need to be accurate to the second, you can use it like this `Math.round(countdown / 1000)`.
+
+If both `leftTime` and `targetDate` are passed, the `targetDate` is ignored, the `leftTime` is dominant.
 
 ## API
 
@@ -40,17 +51,6 @@ const [countdown, formattedRes] = useCountDown(
   }
 );
 ```
-
-**Remark**
-
-The precision of useCountDown is milliseconds, which may cause the following problems
-
-- Even if the interval time is set to 1000ms, the update interval of useCountDown may not be exactly 1000ms, but around it.
-- In the second demo, countdown is generally 499x milliseconds at the beginning due to the execution delay of the program.
-
-If you only need to be accurate to the second, you can use it like this `Math.round(countdown / 1000)`.
-
-If both `leftTime` and `targetDate` are passed, the `targetDate` is ignored, the `leftTime` is dominant.
 
 ### Params
 

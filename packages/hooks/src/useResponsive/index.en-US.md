@@ -10,8 +10,6 @@ demo:
   cols: 2
 ---
 
-# useResponsive
-
 React Hook for getting responsive info.
 
 ## Examples
@@ -31,7 +29,7 @@ function configResponsive(config: ResponsiveConfig): void;
 function useResponsive(): ResponsiveInfo;
 ```
 
-### Config
+## Config
 
 The default config is the same as bootstrap:
 

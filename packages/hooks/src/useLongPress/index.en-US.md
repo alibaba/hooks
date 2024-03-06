@@ -10,8 +10,6 @@ demo:
   cols: 2
 ---
 
-# useLongPress
-
 Listen for the long press event of the target element.
 
 ## Examples
@@ -52,6 +50,6 @@ useLongPress(
 | onClick        | Click event                                                                         | `(event: MouseEvent \| TouchEvent) => void` | -       |
 | onLongPressEnd | Long press end event                                                                | `(event: MouseEvent \| TouchEvent) => void` | -       |
 
-### Remark
+## Remark
 
 Please refer to: https://stackoverflow.com/a/11237968 to disable the ability to long press to select text on the phone

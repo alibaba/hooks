@@ -10,8 +10,6 @@ demo:
   cols: 2
 ---
 
-# useSet
-
 A hook that can manage the state of Set.
 
 ## Examples

@@ -10,8 +10,6 @@ demo:
   cols: 2
 ---
 
-# useLongPress
-
 监听目标元素的长按事件。
 
 ## 代码演示
@@ -54,6 +52,6 @@ useLongPress(
 | onClick        | 点击事件                             | `(event: MouseEvent \| TouchEvent) => void` | -      |
 | onLongPressEnd | 长按结束事件                         | `(event: MouseEvent \| TouchEvent) => void` | -      |
 
-### 备注
+## 备注
 
 禁用在手机上长按选择文本的能力请参考：https://stackoverflow.com/a/11237968

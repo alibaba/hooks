@@ -10,8 +10,6 @@ demo:
   cols: 2
 ---
 
-# useTextSelection
-
 Tracking content, size, position of user text selection.
 
 ## Examples

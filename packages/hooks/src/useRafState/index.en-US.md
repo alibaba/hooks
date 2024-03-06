@@ -10,14 +10,12 @@ demo:
   cols: 2
 ---
 
-# useRafState
-
 Update the state in [requestAnimationFrame](https://developer.mozilla.org/en-US/docs/Web/API/window/requestAnimationFrame) callback, generally used for performance optimization.
 
 ## Examples
 
 <code src="./demo/demo1.tsx"></code>
 
-### API
+## API
 
 Same as `React.useState`.

@@ -10,8 +10,6 @@ demo:
   cols: 2
 ---
 
-## useReactive
-
 It offers data reactivity when manipulating states and views, in which case `useState` is unnecessary for state definition. Modifying properties will automatically lead to view rerendering.
 
 ## Examples
@@ -27,7 +25,7 @@ It offers data reactivity when manipulating states and views, in which case `use
 const state = useReactive(initialValue: Record<string, any>);
 ```
 
-## Params
+### Params
 
 | Params       | Description   | Type                  | Default |
 | ------------ | ------------- | --------------------- | ------- |

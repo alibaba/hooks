@@ -30,11 +30,11 @@ useEffect(() => {
 }, [userId]);
 ```
 
-### Repeat last request
+## Repeat last request
 
 <code src="./demo/refreshDeps.tsx"></code>
 
-### Custom refresh
+## Custom refresh
 
 <code src="./demo/refreshDepsAction.tsx"></code>
 

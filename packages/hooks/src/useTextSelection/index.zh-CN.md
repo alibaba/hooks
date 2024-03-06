@@ -10,13 +10,9 @@ demo:
   cols: 2
 ---
 
-# useTextSelection
-
 实时获取用户当前选取的文本内容及位置。
 
 ## 代码演示
-
-### 基础用法
 
 <code src="./demo/demo1.tsx"></code>
 <code src="./demo/demo2.tsx"></code>

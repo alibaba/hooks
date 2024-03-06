@@ -76,7 +76,7 @@ interface CachedData<TData, TParams> {
 }
 ```
 
-## Options
+### Options
 
 | Property  | Description                                                                                                                                                                                                                                   | Type                              | Default  |
 | --------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------- | -------- |
@@ -86,7 +86,7 @@ interface CachedData<TData, TParams> {
 | setCache  | <ul><li> Custom set cache </li><li> `setCache` and `getCache` need to be used together</li><li> In the custom cache mode, `cacheTime` and `clearCache` are useless, please implement it yourself according to the actual situation.</li></ul> | `(data: CachedData) => void;`     | -        |
 | getCache  | Custom get cache                                                                                                                                                                                                                              | `(params: TParams) => CachedData` | -        |
 
-## clearCache
+### clearCache
 
 ```tsx | pure
 import { clearCache } from 'ahooks';

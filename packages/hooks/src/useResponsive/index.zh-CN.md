@@ -10,8 +10,6 @@ demo:
   cols: 2
 ---
 
-# useResponsive
-
 获取响应式信息。
 
 ## 代码演示
@@ -31,7 +29,7 @@ function configResponsive(config: ResponsiveConfig): void;
 function useResponsive(): ResponsiveInfo;
 ```
 
-### 配置
+## 配置
 
 默认的响应式配置和 bootstrap 是一致的：
 

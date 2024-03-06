@@ -76,7 +76,7 @@ interface CachedData<TData, TParams> {
 }
 ```
 
-## Options
+### Options
 
 | 参数      | 说明                                                                                                                                                                          | 类型                              | 默认值   |
 | --------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------- | -------- |
@@ -86,7 +86,7 @@ interface CachedData<TData, TParams> {
 | setCache  | <ul><li> 自定义设置缓存 </li><li> `setCache` 和 `getCache` 需要配套使用</li><li> 在自定义缓存模式下，`cacheTime` 和 `clearCache` 不会生效，请根据实际情况自行实现。</li></ul> | `(data: CachedData) => void;`     | -        |
 | getCache  | 自定义读取缓存                                                                                                                                                                | `(params: TParams) => CachedData` | -        |
 
-## clearCache
+### clearCache
 
 ```tsx | pure
 import { clearCache } from 'ahooks';

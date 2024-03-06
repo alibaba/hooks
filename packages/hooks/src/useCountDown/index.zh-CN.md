@@ -10,15 +10,15 @@ demo:
   cols: 2
 ---
 
-# useCountDown
-
 一个用于管理倒计时的 Hook。
+
+## 代码演示
 
 <code src="./demo/demo1.tsx"></code>
 <code src="./demo/demo2.tsx"></code>
 <code src="./demo/demo3.tsx"></code>
 
-**说明**
+### 说明
 
 useCountDown 的精度为毫秒，可能会造成以下几个问题
 
