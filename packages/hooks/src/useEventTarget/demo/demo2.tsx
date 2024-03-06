@@ -17,7 +17,7 @@ export default () => {
   });
 
   return (
-    <Space>
+    <Space wrap>
       <Input placeholder="Please type here" value={value} onChange={onChange} />
       <Button onClick={reset}>Reset</Button>
     </Space>

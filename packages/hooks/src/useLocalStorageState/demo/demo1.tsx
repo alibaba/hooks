@@ -19,7 +19,7 @@ export default function () {
   );
 
   return (
-    <Space>
+    <Space wrap>
       <Input
         value={message || ''}
         placeholder="Please enter some words..."

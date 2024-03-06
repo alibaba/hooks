@@ -17,7 +17,7 @@ export default function App() {
 
   return (
     <>
-      <Space>
+      <Space wrap>
         <Button onClick={() => setValue((v) => String(Number(v) + 1))}>inc +</Button>
         <Button onClick={() => setValue((v) => String(Number(v) - 1))}>dec -</Button>
         <Button onClick={() => setValue('0')}>reset</Button>

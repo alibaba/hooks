@@ -22,7 +22,7 @@ export default () => {
 
   return (
     <>
-      <Space style={{ marginBottom: 8 }}>
+      <Space style={{ marginBottom: 8 }} wrap>
         <Button onClick={() => setState({ hello: 'world' })}>Set hello</Button>
         <Button onClick={() => setState({ foo: 'bar' })}>Set foo</Button>
       </Space>

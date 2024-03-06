@@ -16,7 +16,7 @@ export default () => {
 
   return (
     <>
-      <Space style={{ marginBottom: 8 }}>
+      <Space style={{ marginBottom: 8 }} wrap>
         <Button onClick={() => setCount((c) => c + 1)}>Increase</Button>
         <Button onClick={() => setCount((c) => c - 1)}>Decrease</Button>
       </Space>

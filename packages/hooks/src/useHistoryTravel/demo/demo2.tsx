@@ -75,7 +75,7 @@ export default () => {
           Reset
         </Button>
       </Space>
-      <Space>
+      <Space wrap>
         <InputNumber
           value={step}
           onChange={(val) => setStep(val as number)}

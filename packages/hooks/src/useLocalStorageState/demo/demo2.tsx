@@ -19,7 +19,7 @@ export default function () {
 
   return (
     <>
-      <Space style={{ marginBottom: 8 }}>
+      <Space style={{ marginBottom: 8 }} wrap>
         <Button onClick={() => setValue([...(value || []), Math.random().toString(36).slice(-1)])}>
           push random
         </Button>

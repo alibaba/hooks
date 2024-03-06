@@ -57,7 +57,7 @@ export default () => {
           <DynamicInputs />
         </Form.Item>
       </Form>
-      <Space style={{ marginBottom: 16 }}>
+      <Space style={{ marginBottom: 16 }} wrap>
         <Button
           type="primary"
           onClick={() =>

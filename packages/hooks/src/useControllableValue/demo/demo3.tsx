@@ -19,7 +19,7 @@ const Parent = () => {
   const [state, setState] = useState<number>(0);
 
   return (
-    <Space>
+    <Space wrap>
       <ControllableComponent onChange={setState} />
       <div>state:{state}</div>
     </Space>

@@ -19,7 +19,7 @@ export default function App() {
 
   return (
     <>
-      <Space>
+      <Space wrap>
         <Button
           onClick={() =>
             setValue((v) => String(Number(v) + 1), {

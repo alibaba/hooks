@@ -39,7 +39,7 @@ export default () => {
       <Form form={form}>
         <Space direction="vertical">{list.map((ele, index) => Row(index, ele))}</Space>
       </Form>
-      <Space style={{ marginBottom: 16 }}>
+      <Space style={{ marginBottom: 16 }} wrap>
         <Button
           type="primary"
           onClick={() =>

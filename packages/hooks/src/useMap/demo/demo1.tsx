@@ -18,7 +18,7 @@ export default () => {
 
   return (
     <div>
-      <Space>
+      <Space wrap>
         <Button onClick={() => set(String(Date.now()), new Date().toJSON())}>Add</Button>
         <Button onClick={() => setAll([['text', 'this is a new Map']])}>Set new Map</Button>
         <Button onClick={() => remove('msg')} disabled={!get('msg')}>

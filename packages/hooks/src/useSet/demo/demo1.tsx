@@ -15,7 +15,7 @@ export default () => {
 
   return (
     <>
-      <Space style={{ marginBottom: 8 }}>
+      <Space style={{ marginBottom: 8 }} wrap>
         <Button onClick={() => add(String(Date.now()))}>Add Timestamp</Button>
         <Button onClick={() => remove('Hello')} disabled={!set.has('Hello')}>
           Remove Hello

@@ -15,7 +15,7 @@ export default (props: any) => {
   });
 
   return (
-    <Space>
+    <Space wrap>
       <Input value={state} onChange={(e) => setState(e.target.value)} />
       <Button onClick={() => setState('')}>Clear</Button>
     </Space>

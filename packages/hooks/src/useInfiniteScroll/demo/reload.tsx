@@ -40,7 +40,7 @@ export default () => {
 
   return (
     <div>
-      <Space style={{ marginBottom: 16 }}>
+      <Space style={{ marginBottom: 16 }} wrap>
         <Input value={keyword} onChange={(e) => setKeyword(e.target.value)} />
         <Button onClick={reload}>Filter</Button>
       </Space>

@@ -44,7 +44,7 @@ export default () => {
 
   return (
     <>
-      <Space style={{ display: 'flex', marginBottom: 8 }}>
+      <Space style={{ display: 'flex', marginBottom: 8 }} wrap>
         <Input
           value={nameInput}
           onChange={(e) => setNameInput(e.target.value)}
@@ -58,7 +58,7 @@ export default () => {
           Update
         </Button>
       </Space>
-      <Space>
+      <Space wrap>
         <Input
           value={jobInput}
           onChange={(e) => setJobInput(e.target.value)}

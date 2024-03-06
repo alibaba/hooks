@@ -23,7 +23,7 @@ export default () => {
       <p>
         Current Favicon: <span>{url}</span>
       </p>
-      <Space>
+      <Space wrap>
         <Button onClick={() => setUrl(GOOGLE_FAVICON_URL)}>Change To Google Favicon</Button>
         <Button onClick={() => setUrl(DEFAULT_FAVICON_URL)}>Back To ahooks Favicon</Button>
       </Space>

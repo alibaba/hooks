@@ -26,13 +26,13 @@ export default () => {
 
   return (
     <div ref={ref} style={{ background: 'white' }}>
-      <Space style={{ marginBottom: 16 }}>
-        <Button onClick={toggleFullscreen}>ahooks toggleFullscreen</Button>
+      <Space style={{ marginBottom: 16 }} wrap>
+        <Button onClick={toggleFullscreen}>ahooks - Toggle Fullscreen</Button>
         <Button onClick={() => vanillaToggleFullscreen(ref.current)}>
-          vanilla toggleFullscreen
+          vanilla - Toggle Fullscreen
         </Button>
       </Space>
-      <div>{isFullscreen ? 'Fullscreen' : 'Not fullscreen'}</div>
+      <div>{isFullscreen ? 'Fullscreen' : 'Not Fullscreen'}</div>
     </div>
   );
 };

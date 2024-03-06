@@ -21,7 +21,7 @@ export default () => {
 
   return (
     <div>
-      <Space>
+      <Space wrap>
         <Button ref={ref1}>box1</Button>
         <Button ref={ref2}>box2</Button>
       </Space>

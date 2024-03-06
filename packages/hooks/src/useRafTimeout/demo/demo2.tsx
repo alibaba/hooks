@@ -20,15 +20,15 @@ export default () => {
 
   return (
     <div>
-      <Space style={{ marginBottom: 16 }}>
+      <Space style={{ marginBottom: 16 }} wrap>
         <Button onClick={() => setDelay((t) => (!!t ? t + 1000 : 1000))} style={{ marginRight: 8 }}>
           Delay + 1000
         </Button>
         <Button onClick={() => setDelay(1000)}>Reset Delay</Button>
         <Button onClick={() => clear()}>Clear</Button>
       </Space>
-      <p> count: {count} </p>
-      <p> Delay: {delay} </p>
+      <p>Count: {count} </p>
+      <p>Delay: {delay} </p>
     </div>
   );
 };

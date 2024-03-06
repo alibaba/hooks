@@ -32,7 +32,7 @@ export default () => {
           e.preventDefault();
         }}
       >
-        <Space style={{ margin: '8px 0' }}>
+        <Space style={{ margin: '8px 0' }} wrap>
           <Input type="text" value={state.bug} onChange={(e) => (state.bug = e.target.value)} />
           <Button
             onClick={() => {

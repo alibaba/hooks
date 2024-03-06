@@ -14,7 +14,7 @@ export default () => {
   const { value, setValue, backLength, forwardLength, back, forward } = useHistoryTravel<string>();
 
   return (
-    <Space>
+    <Space wrap>
       <Input value={value || ''} onChange={(e) => setValue(e.target.value)} />
       <Button disabled={backLength <= 0} onClick={back}>
         back

@@ -16,7 +16,7 @@ const MessageBox: FC<{
   focus$: EventEmitter<void>;
 }> = function (props) {
   return (
-    <Space style={{ marginBottom: 16 }}>
+    <Space style={{ marginBottom: 16 }} wrap>
       <p>You received a message</p>
       <Button onClick={() => props.focus$.emit()}>Reply</Button>
     </Space>

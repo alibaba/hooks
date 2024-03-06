@@ -20,7 +20,7 @@ const Demo: React.FC<{ count: number }> = (props) => {
       <div>
         <span>number: {props.count}</span>
       </div>
-      <Space>
+      <Space wrap>
         randomNum: {randomNum}
         <Button onClick={() => setRandomNum(Math.random)}>🎲</Button>
       </Space>
@@ -34,7 +34,7 @@ export default () => {
   return (
     <div>
       <Demo count={count} />
-      <Space style={{ margin: '8px 0 16px 0' }}>
+      <Space style={{ margin: '8px 0 16px 0' }} wrap>
         <Button onClick={() => setCount((prevCount) => prevCount - 1)}>count -</Button>
         <Button onClick={() => setCount((prevCount) => prevCount + 1)} style={{ marginLeft: 8 }}>
           count +

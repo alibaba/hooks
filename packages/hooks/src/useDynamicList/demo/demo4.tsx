@@ -36,7 +36,7 @@ export default () => {
       dataIndex: 'name',
       key: 'name',
       render: (text: string, row: Item, index: number) => (
-        <Space>
+        <Space wrap>
           <DragOutlined style={{ cursor: 'move' }} />
           <Form.Item name={['params', getKey(index), 'name']} initialValue={text} noStyle>
             <Input placeholder="name" />
@@ -59,7 +59,7 @@ export default () => {
       title: 'Memo',
       dataIndex: 'memo',
       render: (text: string, row: Item, index: number) => (
-        <Space>
+        <Space wrap>
           <Form.Item name={['params', getKey(index), 'memo']} initialValue={text} noStyle>
             <Input placeholder="please input the memo" />
           </Form.Item>
@@ -96,7 +96,7 @@ export default () => {
       >
         + Add row
       </Button>
-      <Space style={{ width: '100%', marginBottom: 16 }}>
+      <Space style={{ width: '100%', marginBottom: 16 }} wrap>
         <Button
           type="primary"
           onClick={() => {

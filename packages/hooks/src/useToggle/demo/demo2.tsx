@@ -15,7 +15,7 @@ export default () => {
 
   return (
     <div>
-      <Space style={{ marginBottom: 8 }}>
+      <Space style={{ marginBottom: 8 }} wrap>
         <Button onClick={toggle}>Toggle</Button>
         <Button onClick={() => set('Hello')}>Set Hello</Button>
         <Button onClick={() => set('World')}>Set World</Button>

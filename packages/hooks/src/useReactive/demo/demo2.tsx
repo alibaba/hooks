@@ -17,7 +17,7 @@ export default () => {
 
   return (
     <>
-      <Space style={{ marginBottom: 8 }}>
+      <Space style={{ marginBottom: 8 }} wrap>
         <Button role="pushbtn" onClick={() => state.arr.push(Math.floor(Math.random() * 100))}>
           push
         </Button>

@@ -20,7 +20,7 @@ export default () => {
   });
 
   return (
-    <Space>
+    <Space wrap>
       <Button onClick={() => setTargetDate(Date.now() + 5000)} disabled={countdown !== 0}>
         {countdown === 0 ? 'Start Interval' : `Reset After ${Math.round(countdown / 1000)}s`}
       </Button>

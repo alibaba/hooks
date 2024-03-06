@@ -31,24 +31,24 @@ export default () => {
 
   return (
     <>
-      <Space style={{ marginBottom: 8 }}>
+      <Space style={{ marginBottom: 8 }} wrap>
         {/* send message */}
         <Button
           onClick={() => sendMessage && sendMessage(`${Date.now()}`)}
           disabled={readyState !== ReadyState.Open}
         >
-          ✉️ send
+          ✉️ Send
         </Button>
         {/* disconnect */}
         <Button
           onClick={() => disconnect && disconnect()}
           disabled={readyState !== ReadyState.Open}
         >
-          ❌ disconnect
+          ❌ Disconnect
         </Button>
         {/* connect */}
         <Button onClick={() => connect && connect()} disabled={readyState === ReadyState.Open}>
-          {readyState === ReadyState.Connecting ? 'connecting' : '📞 connect'}
+          {readyState === ReadyState.Connecting ? 'Connecting' : '📞 Connect'}
         </Button>
       </Space>
       <div>readyState: {readyState}</div>

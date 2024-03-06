@@ -16,12 +16,12 @@ export default () => {
 
   return (
     <div ref={ref} style={{ background: 'white' }}>
-      <Space style={{ marginBottom: 16 }}>
-        <Button onClick={enterFullscreen}>enterFullscreen</Button>
-        <Button onClick={exitFullscreen}>exitFullscreen</Button>
-        <Button onClick={toggleFullscreen}>toggleFullscreen</Button>
+      <Space style={{ marginBottom: 16 }} wrap>
+        <Button onClick={enterFullscreen}>Enter Fullscreen</Button>
+        <Button onClick={exitFullscreen}>Exit Fullscreen</Button>
+        <Button onClick={toggleFullscreen}>Toggle Fullscreen</Button>
       </Space>
-      <div>{isFullscreen ? 'Fullscreen' : 'Not fullscreen'}</div>
+      <div>{isFullscreen ? 'Fullscreen' : 'Not Fullscreen'}</div>
     </div>
   );
 };

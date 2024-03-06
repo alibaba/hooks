@@ -20,7 +20,7 @@ const Parent = () => {
   const [state, setState] = useState<string>('');
 
   return (
-    <Space>
+    <Space wrap>
       <ControllableComponent value={state} onChange={setState} />
       <Button onClick={() => setState('')}>Clear</Button>
     </Space>

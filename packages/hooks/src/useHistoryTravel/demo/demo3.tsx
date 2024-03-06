@@ -20,7 +20,7 @@ export default () => {
 
   return (
     <>
-      <Space style={{ marginBottom: 8 }}>
+      <Space style={{ marginBottom: 8 }} wrap>
         <Input value={value || ''} onChange={(e) => setValue(e.target.value)} />
         <Button disabled={backLength <= 0} onClick={back}>
           back
