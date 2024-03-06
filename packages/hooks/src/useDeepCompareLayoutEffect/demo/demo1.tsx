@@ -21,9 +21,9 @@ export default () => {
 
   return (
     <Space direction="vertical">
-      <Button onClick={update}>reRender</Button>
       <p>effectCount: {effectCountRef.current}</p>
       <p>deepCompareCount: {deepCompareCountRef.current}</p>
+      <Button onClick={update}>reRender</Button>
     </Space>
   );
 };

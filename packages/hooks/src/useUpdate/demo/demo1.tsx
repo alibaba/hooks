@@ -15,10 +15,10 @@ export default () => {
 
   return (
     <>
-      <Button style={{ marginBottom: 8 }} onClick={update}>
+      <div>Time: {Date.now()}</div>
+      <Button style={{ marginTop: 8 }} onClick={update}>
         Update
       </Button>
-      <div>Time: {Date.now()}</div>
     </>
   );
 };

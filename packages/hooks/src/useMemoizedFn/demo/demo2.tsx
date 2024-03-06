@@ -18,7 +18,7 @@ const ExpensiveTree = React.memo<Record<string, any>>(({ showCount }) => {
   return (
     <div>
       <p>Render Count: {renderCountRef.current}</p>
-      <Button onClick={showCount}>showParentCount</Button>
+      <Button onClick={showCount}>Show Parent Count</Button>
     </div>
   );
 });
@@ -38,7 +38,6 @@ export default () => {
     <>
       <p>count: {count}</p>
       <Button onClick={() => setCount((c) => c + 1)}>Add Count</Button>
-
       <p>You can click the Button to see the number of sub-component renderings</p>
 
       <div style={{ marginTop: 32 }}>

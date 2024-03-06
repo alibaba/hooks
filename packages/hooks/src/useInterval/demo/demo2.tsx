@@ -20,13 +20,13 @@ export default () => {
 
   return (
     <div>
-      <Space style={{ marginBottom: 8 }} wrap>
+      <p>count: {count} </p>
+      <p>interval: {interval} </p>
+      <Space style={{ marginTop: 8 }} wrap>
         <Button onClick={() => setInterval((t) => (!!t ? t + 1000 : 1000))}>interval + 1000</Button>
         <Button onClick={() => setInterval(1000)}>reset interval</Button>
         <Button onClick={clear}>clear</Button>
       </Space>
-      <p>count: {count} </p>
-      <p>interval: {interval} </p>
     </div>
   );
 };

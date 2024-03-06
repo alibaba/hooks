@@ -12,7 +12,6 @@ import { useLongPress } from 'ahooks';
 
 export default () => {
   const [pressCounter, setPressCounter] = useState(0);
-
   const ref = useRef<HTMLButtonElement>(null);
 
   useLongPress(() => setPressCounter((s) => s + 1), ref, {
@@ -21,10 +20,10 @@ export default () => {
 
   return (
     <>
-      <Button style={{ marginBottom: 8 }} ref={ref}>
+      <p>counter: {pressCounter}</p>
+      <Button style={{ marginTop: 8 }} ref={ref}>
         Press me
       </Button>
-      <p>counter: {pressCounter}</p>
     </>
   );
 };

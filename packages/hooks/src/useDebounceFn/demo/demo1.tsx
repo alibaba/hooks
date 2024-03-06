@@ -23,8 +23,10 @@ export default () => {
 
   return (
     <>
-      <Button onClick={run}>Click fast!</Button>
-      <p style={{ marginTop: 16 }}>Clicked count: {value}</p>
+      <p>clicked count: {value}</p>
+      <Button style={{ marginTop: 8 }} onClick={run}>
+        Click fast!
+      </Button>
     </>
   );
 };

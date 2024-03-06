@@ -11,7 +11,6 @@ import { useMutationObserver } from 'ahooks';
 const App: React.FC = () => {
   const [width, setWidth] = useState(200);
   const [count, setCount] = useState(0);
-
   const ref = useRef<HTMLDivElement>(null);
 
   useMutationObserver(
@@ -24,6 +23,7 @@ const App: React.FC = () => {
 
   return (
     <div>
+      <p>mutation count: {count}</p>
       <div
         ref={ref}
         style={{
@@ -31,15 +31,14 @@ const App: React.FC = () => {
           padding: 12,
           border: '1px dashed #ccc',
           borderRadius: 4,
-          marginBottom: 8,
+          marginTop: 8,
         }}
       >
-        current width：{width}
+        current width: {width}
       </div>
-      <Button style={{ marginBottom: 8 }} onClick={() => setWidth((w) => w + 10)}>
-        widening
+      <Button style={{ marginTop: 8 }} onClick={() => setWidth((w) => w + 10)}>
+        Widening
       </Button>
-      <p>Mutation count {count}</p>
     </div>
   );
 };

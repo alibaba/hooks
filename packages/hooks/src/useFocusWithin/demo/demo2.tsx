@@ -22,6 +22,7 @@ export default () => {
 
   return (
     <>
+      <p style={{ paddingLeft: 16 }}>isFocusWithin: {JSON.stringify(isFocusWithin)}</p>
       <div
         id="focus-area"
         style={{
@@ -38,7 +39,6 @@ export default () => {
           </Form.Item>
         </Form>
       </div>
-      <p>isFocusWithin: {JSON.stringify(isFocusWithin)}</p>
     </>
   );
 };

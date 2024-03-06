@@ -35,6 +35,7 @@ export default () => {
   return (
     <div>
       <Input
+        style={{ marginBottom: 8 }}
         value={value}
         onChange={(e) => {
           setValue(e.target.value);

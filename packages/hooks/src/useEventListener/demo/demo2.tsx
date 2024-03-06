@@ -18,7 +18,7 @@ export default () => {
 
   return (
     <p>
-      Your press key is <kbd>{value}</kbd>
+      Your press key is: <kbd>{value}</kbd>
     </p>
   );
 };

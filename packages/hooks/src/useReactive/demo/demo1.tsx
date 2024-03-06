@@ -7,7 +7,7 @@
  */
 
 import React from 'react';
-import { Button, Input } from 'antd';
+import { Button, Input, Space } from 'antd';
 import { useReactive } from 'ahooks';
 
 export default () => {
@@ -21,17 +21,17 @@ export default () => {
 
   return (
     <>
-      <Button style={{ marginRight: 8 }} onClick={() => state.count++}>
-        state.count++
-      </Button>
-      <Button onClick={() => state.count--}>state.count--</Button>
-      <p>state.count：{state.count}</p>
+      <p>state.count: {state.count}</p>
+      <Space>
+        <Button onClick={() => state.count++}>state.count++</Button>
+        <Button onClick={() => state.count--}>state.count--</Button>
+      </Space>
 
-      <Input style={{ marginTop: 20 }} onChange={(e) => (state.inputVal = e.target.value)} />
-      <p>state.inputVal: {state.inputVal}</p>
+      <p style={{ marginTop: 20 }}>state.inputVal: {state.inputVal}</p>
+      <Input onChange={(e) => (state.inputVal = e.target.value)} />
 
-      <Input style={{ marginTop: 20 }} onChange={(e) => (state.obj.value = e.target.value)} />
-      <p>state.obj.value: {state.obj.value}</p>
+      <p style={{ marginTop: 20 }}>state.obj.value: {state.obj.value}</p>
+      <Input onChange={(e) => (state.obj.value = e.target.value)} />
     </>
   );
 };

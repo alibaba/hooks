@@ -15,19 +15,6 @@ export default () => {
 
   return (
     <>
-      <div
-        ref={ref}
-        style={{
-          width: '200px',
-          height: '200px',
-          backgroundColor: 'gray',
-          color: 'white',
-          lineHeight: '200px',
-          textAlign: 'center',
-        }}
-      >
-        element
-      </div>
       <div>
         <p>
           Mouse In Element - x: {mouse.elementX}, y: {mouse.elementY}
@@ -38,6 +25,20 @@ export default () => {
         <p>
           Element Dimensions - width: {mouse.elementW}, height: {mouse.elementH}
         </p>
+      </div>
+      <div
+        ref={ref}
+        style={{
+          width: '200px',
+          height: '200px',
+          marginTop: 8,
+          backgroundColor: 'gray',
+          color: 'white',
+          lineHeight: '200px',
+          textAlign: 'center',
+        }}
+      >
+        element
       </div>
     </>
   );

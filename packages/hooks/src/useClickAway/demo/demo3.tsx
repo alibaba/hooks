@@ -21,11 +21,11 @@ export default () => {
 
   return (
     <div>
-      <Space wrap>
+      <p>counter: {counter}</p>
+      <Space style={{ marginTop: 8 }} wrap>
         <Button ref={ref1}>box1</Button>
         <Button ref={ref2}>box2</Button>
       </Space>
-      <p>counter: {counter}</p>
     </div>
   );
 };

@@ -21,10 +21,10 @@ export default () => {
 
   return (
     <div>
-      <Button style={{ marginBottom: 8 }} onClick={run}>
+      <p>Clicked count: {value}</p>
+      <Button style={{ marginTop: 8 }} onClick={run}>
         Click fast!
       </Button>
-      <p>Clicked count: {value}</p>
     </div>
   );
 };

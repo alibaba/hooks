@@ -30,10 +30,10 @@ export default () => {
 
   return (
     <>
-      <Button style={{ marginBottom: 8 }} onClick={submit}>
+      <p>submit count: {count}</p>
+      <Button style={{ marginTop: 8 }} onClick={submit}>
         Submit
       </Button>
-      <p>Submit count: {count}</p>
     </>
   );
 };

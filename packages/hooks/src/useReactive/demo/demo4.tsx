@@ -29,15 +29,11 @@ export default () => {
 
   return (
     <div>
-      <Button style={{ marginTop: 20 }} onClick={() => (state.count += 1)}>
-        stateCount + 1
-      </Button>
-      <p>stateCount:{stateCount}</p>
+      <p>stateCount: {stateCount}</p>
+      <Button onClick={() => (state.count += 1)}>stateCount + 1</Button>
 
-      <Button style={{ marginTop: 20 }} onClick={() => (state2.count += 1)}>
-        stateCount2 + 1
-      </Button>
-      <p>stateCount2:{stateCount2}</p>
+      <p style={{ marginTop: 16 }}>stateCount2: {stateCount2}</p>
+      <Button onClick={() => (state2.count += 1)}>stateCount2 + 1</Button>
     </div>
   );
 };

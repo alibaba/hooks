@@ -18,10 +18,10 @@ export default () => {
 
   return (
     <>
-      <Button style={{ marginBottom: 8 }} ref={ref}>
+      <p>counter: {counter}</p>
+      <Button style={{ marginTop: 8 }} ref={ref}>
         Press me
       </Button>
-      <p>counter: {counter}</p>
     </>
   );
 };

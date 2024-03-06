@@ -26,8 +26,10 @@ export default () => {
   return (
     <root.div>
       <div>
-        <Button ref={ref}>box</Button>
         <p>counter: {counter}</p>
+        <Button ref={ref} style={{ marginTop: 8 }}>
+          box
+        </Button>
       </div>
     </root.div>
   );

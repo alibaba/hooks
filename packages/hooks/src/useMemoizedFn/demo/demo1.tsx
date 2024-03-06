@@ -7,7 +7,7 @@
  */
 
 import React, { useState, useCallback } from 'react';
-import { Button, message } from 'antd';
+import { Button, Space, message } from 'antd';
 import { useMemoizedFn } from 'ahooks';
 
 export default () => {
@@ -24,13 +24,13 @@ export default () => {
   return (
     <>
       <p>count: {count}</p>
-      <Button onClick={() => setCount((c) => c + 1)}>Add Count</Button>
-      <div style={{ marginTop: 16 }}>
-        <Button onClick={callbackFn}>call callbackFn</Button>
-        <Button onClick={memoizedFn} style={{ marginLeft: 8 }}>
-          call memoizedFn
-        </Button>
+      <div style={{ marginTop: 8 }}>
+        <Button onClick={() => setCount((c) => c + 1)}>Add Count</Button>
       </div>
+      <Space style={{ marginTop: 8 }}>
+        <Button onClick={callbackFn}>Call callbackFn</Button>
+        <Button onClick={memoizedFn}>Call memoizedFn</Button>
+      </Space>
     </>
   );
 };

@@ -22,8 +22,10 @@ export default () => {
 
   return (
     <div>
-      <Button id="use-click-away-button">box</Button>
       <p>counter: {counter}</p>
+      <Button id="use-click-away-button" style={{ marginTop: 8 }}>
+        box
+      </Button>
     </div>
   );
 };

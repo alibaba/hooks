@@ -17,7 +17,10 @@ export default () => {
 
   return (
     <>
-      <Space style={{ marginBottom: 8 }} wrap>
+      <p>
+        state.arr: <span role="test-array">{JSON.stringify(state.arr)}</span>
+      </p>
+      <Space style={{ marginTop: 8 }} wrap>
         <Button role="pushbtn" onClick={() => state.arr.push(Math.floor(Math.random() * 100))}>
           push
         </Button>
@@ -40,9 +43,6 @@ export default () => {
           sort
         </Button>
       </Space>
-      <p>
-        state.arr: <span role="test-array">{JSON.stringify(state.arr)}</span>
-      </p>
     </>
   );
 };
