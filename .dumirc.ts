@@ -4,7 +4,6 @@ const packages = require('./packages/hooks/package.json');
 
 export default defineConfig({
   mfsu: false,
-  hash: true,
   ssr: process.env.NODE_ENV === 'development' ? false : {},
   manifest: {},
   alias: {
@@ -71,10 +70,6 @@ export default defineConfig({
     rtl: true,
     socialLinks: {
       github: 'https://github.com/alibaba/hooks',
-    },
-    prefersColor: {
-      default: 'light',
-      switch: true,
     },
     docVersions: {
       [packages.version]: '',
