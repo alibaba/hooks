@@ -29,5 +29,6 @@ export default () => {
   if (loading) {
     return <div>loading...</div>;
   }
+
   return <div>Username: {data}</div>;
 };

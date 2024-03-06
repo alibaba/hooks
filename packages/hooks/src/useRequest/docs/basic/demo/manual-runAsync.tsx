@@ -6,8 +6,8 @@
  * description.zh-CN: 在这个例子中，我们通过 `runAsync(username)` 来修改用户名，此时必须通过 catch 来自行处理异常。
  */
 
-import { message } from 'antd';
 import React, { useState } from 'react';
+import { Button, Input, Space, message } from 'antd';
 import { useRequest } from 'ahooks';
 
 function editUsername(username: string): Promise<void> {
@@ -24,7 +24,6 @@ function editUsername(username: string): Promise<void> {
 
 export default () => {
   const [state, setState] = useState('');
-
   const { loading, runAsync } = useRequest(editUsername, {
     manual: true,
   });
@@ -40,16 +39,16 @@ export default () => {
   };
 
   return (
-    <div>
-      <input
+    <Space wrap>
+      <Input
         onChange={(e) => setState(e.target.value)}
         value={state}
         placeholder="Please enter username"
-        style={{ width: 240, marginRight: 16 }}
+        style={{ width: 240 }}
       />
-      <button disabled={loading} type="button" onClick={onClick}>
+      <Button disabled={loading} onClick={onClick}>
         {loading ? 'Loading' : 'Edit'}
-      </button>
-    </div>
+      </Button>
+    </Space>
   );
 };

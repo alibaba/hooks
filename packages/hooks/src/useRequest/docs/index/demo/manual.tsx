@@ -6,8 +6,8 @@
  * description.zh-CN: 在这个例子中，我们尝试修改用户名。
  */
 
-import { message } from 'antd';
 import React, { useState } from 'react';
+import { Button, Input, Space, message } from 'antd';
 import { useRequest } from 'ahooks';
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -33,16 +33,16 @@ export default () => {
   });
 
   return (
-    <div>
-      <input
+    <Space>
+      <Input
         onChange={(e) => setState(e.target.value)}
         value={state}
         placeholder="Please enter username"
-        style={{ width: 240, marginRight: 16 }}
+        style={{ width: 240 }}
       />
-      <button disabled={loading} type="button" onClick={() => run(state)}>
+      <Button disabled={loading} onClick={() => run(state)}>
         {loading ? 'Loading' : 'Edit'}
-      </button>
-    </div>
+      </Button>
+    </Space>
   );
 };

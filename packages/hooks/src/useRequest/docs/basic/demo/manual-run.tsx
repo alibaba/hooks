@@ -6,8 +6,8 @@
  * description.zh-CN: 在这个例子中，我们通过 `run(username)` 来修改用户名，通过 `onSuccess` 和 `onError` 来处理成功和失败。
  */
 
-import { message } from 'antd';
 import React, { useState } from 'react';
+import { Button, Input, Space, message } from 'antd';
 import { useRequest } from 'ahooks';
 
 function editUsername(username: string): Promise<void> {
@@ -24,7 +24,6 @@ function editUsername(username: string): Promise<void> {
 
 export default () => {
   const [state, setState] = useState('');
-
   const { loading, run } = useRequest(editUsername, {
     manual: true,
     onSuccess: (result, params) => {
@@ -37,16 +36,16 @@ export default () => {
   });
 
   return (
-    <div>
-      <input
+    <Space wrap>
+      <Input
         onChange={(e) => setState(e.target.value)}
         value={state}
         placeholder="Please enter username"
-        style={{ width: 240, marginRight: 16 }}
+        style={{ width: 240 }}
       />
-      <button disabled={loading} type="button" onClick={() => run(state)}>
+      <Button disabled={loading} onClick={() => run(state)}>
         {loading ? 'Loading' : 'Edit'}
-      </button>
-    </div>
+      </Button>
+    </Space>
   );
 };

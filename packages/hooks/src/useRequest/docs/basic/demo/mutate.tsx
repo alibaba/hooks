@@ -4,10 +4,10 @@
  * title.zh-CN: 修改用户名
  */
 
-import { message } from 'antd';
 import React, { useState, useRef } from 'react';
-import { useRequest } from 'ahooks';
 import Mock from 'mockjs';
+import { Button, Input, Space, message } from 'antd';
+import { useRequest } from 'ahooks';
 
 function getUsername(): Promise<string> {
   return new Promise((resolve) => {
@@ -32,7 +32,6 @@ function editUsername(username: string): Promise<void> {
 export default () => {
   // store last username
   const lastRef = useRef<string>();
-
   const [state, setState] = useState('');
 
   // get username
@@ -60,15 +59,15 @@ export default () => {
   return (
     <div>
       <p>Username: {username}</p>
-      <input
-        onChange={(e) => setState(e.target.value)}
-        value={state}
-        placeholder="Please enter username"
-        style={{ width: 240, marginRight: 16 }}
-      />
-      <button type="button" onClick={onChange}>
-        Edit
-      </button>
+      <Space style={{ marginTop: 8 }} wrap>
+        <Input
+          onChange={(e) => setState(e.target.value)}
+          value={state}
+          placeholder="Please enter username"
+          style={{ width: 240 }}
+        />
+        <Button onClick={onChange}>Edit</Button>
+      </Space>
     </div>
   );
 };

@@ -4,9 +4,10 @@
  * title.zh-CN: 刷新用户名称
  */
 
-import { useRequest } from 'ahooks';
-import Mock from 'mockjs';
 import React, { useEffect } from 'react';
+import Mock from 'mockjs';
+import { Button } from 'antd';
+import { useRequest } from 'ahooks';
 
 function getUsername(id: number): Promise<string> {
   console.log('use-request-refresh-id', id);
@@ -29,12 +30,11 @@ export default () => {
   if (loading) {
     return <div>loading...</div>;
   }
+
   return (
     <div>
-      <p>Username: {data}</p>
-      <button onClick={refresh} type="button">
-        Refresh
-      </button>
+      <p style={{ marginBottom: 8 }}>Username: {data}</p>
+      <Button onClick={refresh}>Refresh</Button>
     </div>
   );
 };
