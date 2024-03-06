@@ -1,6 +1,7 @@
-import { useRequest } from 'ahooks';
 import React from 'react';
 import Mock from 'mockjs';
+import { Button } from 'antd';
+import { useRequest } from 'ahooks';
 
 function getUsername(): Promise<string> {
   return new Promise((resolve) => {
@@ -12,7 +13,6 @@ function getUsername(): Promise<string> {
 
 export default () => {
   const action = useRequest(getUsername);
-
   const withLoadingDelayAction = useRequest(getUsername, {
     loadingDelay: 300,
   });
@@ -24,16 +24,13 @@ export default () => {
 
   return (
     <div>
-      <button type="button" onClick={trigger}>
-        run
-      </button>
-
-      <div style={{ margin: '24px 0', width: 300 }}>
-        Username: {action.loading ? 'Loading...' : action.data}
-      </div>
+      <div>Username: {action.loading ? 'Loading...' : action.data}</div>
       <div>
         Username: {withLoadingDelayAction.loading ? 'Loading...' : withLoadingDelayAction.data}
       </div>
+      <Button style={{ marginTop: 8 }} onClick={trigger}>
+        run
+      </Button>
     </div>
   );
 };

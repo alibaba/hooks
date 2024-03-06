@@ -33,8 +33,6 @@ demo:
 <Table columns={columns} rowKey="email" {...tableProps} />
 ```
 
-<br />
-
 <code src="./demo/table.tsx"></code>
 
 ### Form 与 Table 联动

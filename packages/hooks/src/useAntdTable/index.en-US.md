@@ -33,8 +33,6 @@ The following demos are for antd v4. For v3, please refer to: https://ahooks-v2.
 <Table columns={columns} rowKey="email" {...tableProps} />
 ```
 
-<br />
-
 <code src="./demo/table.tsx"></code>
 
 ### Form and Table data binding

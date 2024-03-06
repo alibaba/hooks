@@ -16,19 +16,19 @@ You can also set the data cache time through `options.cacheTime`, after this tim
 
 Next, through a few examples to experience these features.
 
-### SWR
+## SWR
 
 In the following example, we set the `cacheKey`. When the component is loaded for the second time, the cached content will be returned first, and then the request will be re-run in background. You can experience the effect by clicking the button.
 
 <code src="./demo/cacheKey.tsx"></code>
 
-### Keep your data fresh
+## Keep your data fresh
 
 By setting `staleTime`, we can specify the data retention time, during which time the request will not be re-run. The following example sets a fresh time of 5s, you can experience the effect by clicking the button
 
 <code src="./demo/staleTime.tsx"></code>
 
-### Data sharing
+## Data sharing
 
 > Note: If no new request is issued, the "Data sharing" will not be triggered. `cacheTime` and `staleTime` parameters will invalidate "Data sharing". [#2313](https://github.com/alibaba/hooks/issues/2313)
 
@@ -41,7 +41,7 @@ In the following example, the two components will only initiate one request duri
 
 <code src="./demo/share.tsx"></code>
 
-### Parameters cache
+## Parameters cache
 
 The cached data includes `data` and `params`. Through the `params` caching mechanism, we can remember the conditions of the last request and initialize it next time.
 
@@ -49,13 +49,13 @@ In the following example, we can initialize the `keyword` from the cached `param
 
 <code src="./demo/params.tsx"></code>
 
-### Clear cache
+## Clear cache
 
 ahooks provides a `clearCache` method, which can clear the cache data of the specified `cacheKey`.
 
 <code src="./demo/clearCache.tsx"></code>
 
-### Custom cache
+## Custom cache
 
 By setting `setCache` and `getCache`, you can customize the cache, for example, you can store data in `localStorage`, `IndexDB`, etc.
 
@@ -76,7 +76,7 @@ interface CachedData<TData, TParams> {
 }
 ```
 
-### Options
+## Options
 
 | Property  | Description                                                                                                                                                                                                                                   | Type                              | Default  |
 | --------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------- | -------- |
@@ -86,7 +86,7 @@ interface CachedData<TData, TParams> {
 | setCache  | <ul><li> Custom set cache </li><li> `setCache` and `getCache` need to be used together</li><li> In the custom cache mode, `cacheTime` and `clearCache` are useless, please implement it yourself according to the actual situation.</li></ul> | `(data: CachedData) => void;`     | -        |
 | getCache  | Custom get cache                                                                                                                                                                                                                              | `(params: TParams) => CachedData` | -        |
 
-### clearCache
+## clearCache
 
 ```tsx | pure
 import { clearCache } from 'ahooks';

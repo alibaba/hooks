@@ -16,19 +16,19 @@ demo:
 
 接下来通过几个例子来体验缓存这些功能。
 
-### SWR
+## SWR
 
 下面的示例，我们设置了 `cacheKey`，在组件第二次加载时，会优先返回缓存的内容，然后在背后重新发起请求。你可以通过点击按钮来体验效果。
 
 <code src="./demo/cacheKey.tsx"></code>
 
-### 数据保持新鲜
+## 数据保持新鲜
 
 通过设置 `staleTime`，我们可以指定数据新鲜时间，在这个时间内，不会重新发起请求。下面的示例设置了 5s 的新鲜时间，你可以通过点击按钮来体验效果
 
 <code src="./demo/staleTime.tsx"></code>
 
-### 数据共享
+## 数据共享
 
 > 注意：如果没有发起新请求，不会触发数据共享。`cacheTime`、`staleTime` 参数会使数据共享失效。[#2313](https://github.com/alibaba/hooks/issues/2313)
 
@@ -41,7 +41,7 @@ demo:
 
 <code src="./demo/share.tsx"></code>
 
-### 参数缓存
+## 参数缓存
 
 缓存的数据包括 `data` 和 `params`，通过 `params` 缓存机制，我们可以记忆上一次请求的条件，并在下次初始化。
 
@@ -49,13 +49,13 @@ demo:
 
 <code src="./demo/params.tsx"></code>
 
-### 删除缓存
+## 删除缓存
 
 ahooks 提供了一个 `clearCache` 方法，可以清除指定 `cacheKey` 的缓存数据。
 
 <code src="./demo/clearCache.tsx"></code>
 
-### 自定义缓存
+## 自定义缓存
 
 通过配置 `setCache` 和 `getCache`，可以自定义数据缓存，比如可以将数据存储到 `localStorage`、`IndexDB` 等。
 
@@ -76,7 +76,7 @@ interface CachedData<TData, TParams> {
 }
 ```
 
-### Options
+## Options
 
 | 参数      | 说明                                                                                                                                                                          | 类型                              | 默认值   |
 | --------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------- | -------- |
@@ -86,7 +86,7 @@ interface CachedData<TData, TParams> {
 | setCache  | <ul><li> 自定义设置缓存 </li><li> `setCache` 和 `getCache` 需要配套使用</li><li> 在自定义缓存模式下，`cacheTime` 和 `clearCache` 不会生效，请根据实际情况自行实现。</li></ul> | `(data: CachedData) => void;`     | -        |
 | getCache  | 自定义读取缓存                                                                                                                                                                | `(params: TParams) => CachedData` | -        |
 
-### clearCache
+## clearCache
 
 ```tsx | pure
 import { clearCache } from 'ahooks';

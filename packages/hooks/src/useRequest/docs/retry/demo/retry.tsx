@@ -1,6 +1,6 @@
-import { useRequest } from 'ahooks';
 import React, { useState } from 'react';
-import { message } from 'antd';
+import { Button, Input, Space, message } from 'antd';
+import { useRequest } from 'ahooks';
 
 function editUsername(username: string) {
   return new Promise((resolve, reject) => {
@@ -21,16 +21,16 @@ export default () => {
   });
 
   return (
-    <div>
-      <input
+    <Space wrap>
+      <Input
         onChange={(e) => setState(e.target.value)}
         value={state}
         placeholder="Please enter username"
-        style={{ width: 240, marginRight: 16 }}
+        style={{ width: 240 }}
       />
-      <button disabled={loading} type="button" onClick={() => run(state)}>
+      <Button disabled={loading} onClick={() => run(state)}>
         {loading ? 'Loading' : 'Edit'}
-      </button>
-    </div>
+      </Button>
+    </Space>
   );
 };

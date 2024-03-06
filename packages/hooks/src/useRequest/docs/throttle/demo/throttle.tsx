@@ -1,6 +1,7 @@
-import { useRequest } from 'ahooks';
-import Mock from 'mockjs';
 import React from 'react';
+import Mock from 'mockjs';
+import { Input } from 'antd';
+import { useRequest } from 'ahooks';
 
 async function getEmail(search?: string): Promise<string[]> {
   console.log('throttle getEmail', search);
@@ -19,11 +20,11 @@ export default () => {
 
   return (
     <div>
-      <input placeholder="Search Emails" onChange={(e) => run(e.target.value)} />
+      <Input placeholder="Search Emails" onChange={(e) => run(e.target.value)} />
       {loading ? (
-        <p>loading</p>
+        <p style={{ marginTop: 8 }}>loading</p>
       ) : (
-        <ul style={{ marginTop: 8 }}>{data?.map((i) => <li key={i}>{i}</li>)}</ul>
+        <ul style={{ margin: '8px 0 0 16px' }}>{data?.map((i) => <li key={i}>{i}</li>)}</ul>
       )}
     </div>
   );

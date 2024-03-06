@@ -1,7 +1,7 @@
-import { useBoolean } from 'ahooks';
-import Mock from 'mockjs';
 import React from 'react';
-import { useRequest } from 'ahooks';
+import Mock from 'mockjs';
+import { Button } from 'antd';
+import { useRequest, useBoolean } from 'ahooks';
 
 async function getArticle(): Promise<{ data: string; time: number }> {
   return new Promise((resolve) => {
@@ -19,12 +19,14 @@ const cacheKey = 'setCache-demo';
 const Article = () => {
   const { data, loading } = useRequest(getArticle, {
     cacheKey,
-    setCache: (data) => localStorage.setItem(cacheKey, JSON.stringify(data)),
+    setCache: (value) => localStorage.setItem(cacheKey, JSON.stringify(value)),
     getCache: () => JSON.parse(localStorage.getItem(cacheKey) || '{}'),
   });
+
   if (!data && loading) {
     return <p>Loading</p>;
   }
+
   return (
     <>
       <p>Background loading: {loading ? 'true' : 'false'}</p>
@@ -36,11 +38,12 @@ const Article = () => {
 
 export default () => {
   const [state, { toggle }] = useBoolean();
+
   return (
     <div>
-      <button type="button" onClick={() => toggle()}>
-        show/hidden
-      </button>
+      <Button style={{ marginBottom: 8 }} onClick={() => toggle()}>
+        Show/Hidden
+      </Button>
       {state && <Article />}
     </div>
   );

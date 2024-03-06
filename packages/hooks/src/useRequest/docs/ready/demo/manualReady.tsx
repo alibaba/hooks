@@ -1,9 +1,10 @@
-import { useRequest, useToggle } from 'ahooks';
-import Mock from 'mockjs';
 import React from 'react';
+import Mock from 'mockjs';
+import { Button, Space } from 'antd';
+import { useRequest, useToggle } from 'ahooks';
 
 function getUsername() {
-  return new Promise((resolve) => {
+  return new Promise<string>((resolve) => {
     setTimeout(() => {
       resolve(Mock.mock('@name'));
     }, 1000);
@@ -12,26 +13,21 @@ function getUsername() {
 
 export default () => {
   const [ready, { toggle }] = useToggle(false);
-
   const { data, loading, run } = useRequest(getUsername, {
     ready,
     manual: true,
   });
 
   return (
-    <>
-      <p>
-        Ready: {JSON.stringify(ready)}
-        <button onClick={toggle} style={{ marginLeft: 16 }}>
-          Toggle Ready
-        </button>
-      </p>
-      <p>
+    <div>
+      <Space style={{ display: 'flex', marginBottom: 8 }}>
         Username: {loading ? 'Loading' : data}
-        <button type="button" onClick={run} style={{ marginLeft: 16 }}>
-          run
-        </button>
-      </p>
-    </>
+        <Button onClick={run}>run</Button>
+      </Space>
+      <Space>
+        Ready: {JSON.stringify(ready)}
+        <Button onClick={toggle}>Toggle Ready</Button>
+      </Space>
+    </div>
   );
 };

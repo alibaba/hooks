@@ -1,11 +1,11 @@
-import { useRequest } from 'ahooks';
 import React from 'react';
 import Mock from 'mockjs';
-import { message } from 'antd';
+import { Button, Space, message } from 'antd';
+import { useRequest } from 'ahooks';
 
 function getUsername() {
   console.log('polling getUsername Error');
-  return new Promise((resolve, reject) => {
+  return new Promise<string>((resolve, reject) => {
     setTimeout(() => {
       reject(new Error(Mock.mock('@name')));
     }, 1000);
@@ -26,12 +26,10 @@ export default () => {
   return (
     <>
       <p>Username: {loading ? 'Loading' : data}</p>
-      <button type="button" onClick={run}>
-        start
-      </button>
-      <button type="button" onClick={cancel} style={{ marginLeft: 16 }}>
-        stop
-      </button>
+      <Space style={{ marginTop: 8 }}>
+        <Button onClick={run}>start</Button>
+        <Button onClick={cancel}>stop</Button>
+      </Space>
     </>
   );
 };

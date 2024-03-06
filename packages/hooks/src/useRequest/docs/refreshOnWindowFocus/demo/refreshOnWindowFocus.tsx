@@ -1,9 +1,9 @@
-import Mock from 'mockjs';
 import React from 'react';
+import Mock from 'mockjs';
 import { useRequest } from 'ahooks';
 
 function getUsername() {
-  return new Promise((resolve) => {
+  return new Promise<string>((resolve) => {
     setTimeout(() => {
       resolve(Mock.mock('@name'));
     }, 1000);
