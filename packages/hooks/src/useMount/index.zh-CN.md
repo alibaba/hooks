@@ -10,8 +10,6 @@ demo:
   cols: 2
 ---
 
-# useMount
-
 只在组件初始化时执行的 Hook。
 
 ## 代码演示

@@ -10,8 +10,6 @@ demo:
   cols: 2
 ---
 
-# useVirtualList
-
 A hook that allows you to use virtual list to render huge chunks of list data.
 
 ## Examples

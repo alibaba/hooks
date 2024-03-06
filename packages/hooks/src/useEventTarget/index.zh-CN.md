@@ -10,8 +10,6 @@ demo:
   cols: 2
 ---
 
-# useEventTarget
-
 常见表单控件(通过 e.target.value 获取表单值) 的 onChange 跟 value 逻辑封装，支持自定义值转换和重置功能。
 
 ## 代码演示

@@ -10,8 +10,6 @@ demo:
   cols: 2
 ---
 
-# useSize
-
 A hook that observes size change of an element.
 
 ## Examples

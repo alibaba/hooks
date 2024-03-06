@@ -10,8 +10,6 @@ demo:
   cols: 2
 ---
 
-# useThrottleFn
-
 用来处理函数节流的 Hook。
 
 ## 代码演示

@@ -10,8 +10,6 @@ demo:
   cols: 2
 ---
 
-# useCounter
-
 A hook that manage counter.
 
 ## Examples

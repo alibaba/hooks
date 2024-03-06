@@ -10,8 +10,6 @@ demo:
   cols: 2
 ---
 
-# useFavicon
-
 A hook that set the favicon of the page.
 
 ## Example

@@ -10,8 +10,6 @@ demo:
   cols: 2
 ---
 
-# useSize
-
 监听 DOM 节点尺寸变化的 Hook。
 
 ## 代码演示

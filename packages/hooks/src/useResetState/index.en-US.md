@@ -10,8 +10,6 @@ demo:
   cols: 2
 ---
 
-# useResetState
-
 useResetState works similar to `React.useState`, it provides a `reset` method
 
 ## Examples

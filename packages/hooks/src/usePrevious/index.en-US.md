@@ -10,8 +10,6 @@ demo:
   cols: 2
 ---
 
-# usePrevious
-
 A Hook to return the previous state.
 
 ## Examples

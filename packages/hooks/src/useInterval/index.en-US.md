@@ -10,8 +10,6 @@ demo:
   cols: 2
 ---
 
-# useInterval
-
 A hook that handles the `setInterval` timer function.
 
 ## Examples

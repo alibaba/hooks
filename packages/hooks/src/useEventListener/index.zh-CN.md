@@ -10,8 +10,6 @@ demo:
   cols: 2
 ---
 
-# useEventListener
-
 优雅的使用 addEventListener。
 
 ## 代码演示

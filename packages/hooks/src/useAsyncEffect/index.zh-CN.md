@@ -10,8 +10,6 @@ demo:
   cols: 2
 ---
 
-# useAsyncEffect
-
 useEffect 支持异步函数。
 
 ## 代码演示

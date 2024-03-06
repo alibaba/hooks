@@ -10,8 +10,6 @@ demo:
   cols: 2
 ---
 
-# useDrop & useDrag
-
 A pair of hooks to help you manage data transfer between drag and drop
 
 > useDrop can be used alone to accept file, text or uri dropping.

@@ -10,8 +10,6 @@ demo:
   cols: 2
 ---
 
-# useDebounceFn
-
 用来处理防抖函数的 Hook。
 
 ## 代码演示

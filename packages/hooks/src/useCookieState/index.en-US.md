@@ -10,8 +10,6 @@ demo:
   cols: 2
 ---
 
-# useCookieState
-
 A Hook that store state into Cookie.
 
 ## Examples

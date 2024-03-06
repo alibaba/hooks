@@ -10,8 +10,6 @@ demo:
   cols: 2
 ---
 
-# useTimeout
-
 A hook that handles the `setTimeout` timer function.
 
 ## Examples

@@ -10,8 +10,6 @@ demo:
   cols: 2
 ---
 
-# useHover
-
 A hook that tracks whether the element is being hovered.
 
 ## Examples

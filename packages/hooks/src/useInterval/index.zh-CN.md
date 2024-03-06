@@ -10,8 +10,6 @@ demo:
   cols: 2
 ---
 
-# useInterval
-
 一个可以处理 setInterval 的 Hook。
 
 ## 代码演示

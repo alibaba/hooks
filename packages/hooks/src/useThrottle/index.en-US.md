@@ -10,8 +10,6 @@ demo:
   cols: 2
 ---
 
-# useThrottle
-
 A hook that deal with the throttled value.
 
 ## Examples

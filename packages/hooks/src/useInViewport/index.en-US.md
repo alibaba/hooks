@@ -10,8 +10,6 @@ demo:
   cols: 2
 ---
 
-# useInViewport
-
 Observe whether the element is in the visible area, and the visible area ratio of the element. More information refer to [Intersection Observer API](https://developer.mozilla.org/en-US/docs/Web/API/Intersection_Observer_API).
 
 ## Examples

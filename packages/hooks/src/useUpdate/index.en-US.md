@@ -10,8 +10,6 @@ demo:
   cols: 2
 ---
 
-# useUpdate
-
 A hook that returns a function which can be used to force the component to re-render.
 
 ## Examples

@@ -10,8 +10,6 @@ demo:
   cols: 2
 ---
 
-# useNetwork
-
 管理网络连接状态的 Hook。
 
 ## 代码演示

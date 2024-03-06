@@ -10,8 +10,6 @@ demo:
   cols: 2
 ---
 
-# useCreation
-
 `useCreation` is the replacement for `useMemo` or `useRef`.
 
 `useMemo` can't guarantee the memoized value will not be recalculated, while `useCreation` can guarantee that. As the the official document of React.js says:

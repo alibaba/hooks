@@ -10,8 +10,6 @@ demo:
   cols: 2
 ---
 
-# useMutationObserver
-
 一个监听指定的 DOM 树发生变化的 Hook，参考 [MutationObserver](https://developer.mozilla.org/zh-CN/docs/Web/API/MutationObserver)
 
 ## 代码演示

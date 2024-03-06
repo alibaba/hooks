@@ -10,8 +10,6 @@ demo:
   cols: 2
 ---
 
-# useDrop & useDrag
-
 处理元素拖拽的 Hook。
 
 > useDrop 可以单独使用来接收文件、文字和网址的拖拽。

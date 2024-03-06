@@ -10,8 +10,6 @@ demo:
   cols: 2
 ---
 
-# useMouse
-
 监听鼠标位置
 
 ## 代码演示

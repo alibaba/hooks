@@ -10,8 +10,6 @@ demo:
   cols: 2
 ---
 
-# useUrlState
-
 通过 url query 来管理 state 的 Hook。
 
 ## 安装

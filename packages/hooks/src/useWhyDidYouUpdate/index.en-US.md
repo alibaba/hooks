@@ -10,8 +10,6 @@ demo:
   cols: 2
 ---
 
-# useWhyDidYouUpdate
-
 Help developers troubleshoot what changes have caused component rerender.
 
 ## Examples

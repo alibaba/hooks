@@ -10,8 +10,6 @@ demo:
   cols: 2
 ---
 
-# useUnmount
-
 在组件卸载（unmount）时执行的 Hook。
 
 ## 代码演示

@@ -10,8 +10,6 @@ demo:
   cols: 2
 ---
 
-# usePrevious
-
 保存上一次状态的 Hook。
 
 ## 代码演示

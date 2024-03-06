@@ -10,8 +10,6 @@ demo:
   cols: 2
 ---
 
-# useFocusWithin
-
 监听当前焦点是否在某个区域之内，同 css 属性 [:focus-within](https://developer.mozilla.org/en-US/docs/Web/CSS/:focus-within)。
 
 ## 代码演示

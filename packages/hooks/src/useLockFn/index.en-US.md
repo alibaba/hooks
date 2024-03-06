@@ -10,8 +10,6 @@ demo:
   cols: 2
 ---
 
-# useLockFn
-
 Add lock to an async function to prevent parallel executions.
 
 ## Examples

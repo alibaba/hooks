@@ -10,8 +10,6 @@ demo:
   cols: 2
 ---
 
-# useDebounceEffect
-
 Debounce your `useEffect`.
 
 ## Examples

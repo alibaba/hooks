@@ -10,8 +10,6 @@ demo:
   cols: 2
 ---
 
-# usePagination
-
 `usePagination` 基于 `useRequest` 实现，封装了常见的分页逻辑。与 `useRequest` 不同的点有以下几点：
 
 1. `service` 的第一个参数为 `{ current: number, pageSize: number }`

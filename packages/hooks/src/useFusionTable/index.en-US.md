@@ -10,8 +10,6 @@ demo:
   cols: 2
 ---
 
-# useFusionTable
-
 useFusionTable encapsulates the commonly used [Fusion Form](https://fusion.design/pc/component/basic/form) and [Fusion Table](https://fusion.design/pc/component/basic/table) data binding logic.
 
 `useFusionTable` is implemented based on `useRequest`. Before using it, you need to understand a few points that are different from `useRequest`:

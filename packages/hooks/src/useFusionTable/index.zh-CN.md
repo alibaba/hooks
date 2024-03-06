@@ -10,8 +10,6 @@ demo:
   cols: 2
 ---
 
-# useFusionTable
-
 封装了常用的 [Fusion Form](https://fusion.design/pc/component/basic/form) 与 [Fusion Table](https://fusion.design/pc/component/basic/table) 联动逻辑。
 
 > 🌈「Table 场景解决方案」上线啦！点击图片查看常用的表格场景，区块代码一键下载到本地，快速复用! [使用文档](https://fusion.design/help.html#/dnzud5)

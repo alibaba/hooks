@@ -10,8 +10,6 @@ demo:
   cols: 2
 ---
 
-# useUnmount
-
 A hook that executes the function right before the component is unmounted.
 
 ## Examples

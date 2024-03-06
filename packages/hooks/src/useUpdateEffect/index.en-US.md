@@ -10,8 +10,6 @@ demo:
   cols: 2
 ---
 
-# useUpdateEffect
-
 A hook alike `useEffect` but skips running the effect for the first time.
 
 ## Examples

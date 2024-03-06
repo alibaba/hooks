@@ -10,8 +10,6 @@ demo:
   cols: 2
 ---
 
-# useEventListener
-
 Use addEventListener elegant by Hook.
 
 ## Examples

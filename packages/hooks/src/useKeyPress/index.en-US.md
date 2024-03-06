@@ -10,8 +10,6 @@ demo:
   cols: 2
 ---
 
-# useKeyPress
-
 Listen for the keyboard press, support key combinations, and support alias.
 
 ## Examples

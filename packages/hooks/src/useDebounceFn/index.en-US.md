@@ -10,8 +10,6 @@ demo:
   cols: 2
 ---
 
-# useDebounceFn
-
 A hook that deal with the debounced function.
 
 ## Examples

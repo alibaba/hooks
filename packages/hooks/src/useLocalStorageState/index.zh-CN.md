@@ -10,8 +10,6 @@ demo:
   cols: 2
 ---
 
-# useLocalStorageState
-
 将状态存储在 localStorage 中的 Hook 。
 
 ## 代码演示

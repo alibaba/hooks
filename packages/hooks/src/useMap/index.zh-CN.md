@@ -10,8 +10,6 @@ demo:
   cols: 2
 ---
 
-# useMap
-
 管理 Map 类型状态的 Hook。
 
 ## 代码演示

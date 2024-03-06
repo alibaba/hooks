@@ -10,8 +10,6 @@ demo:
   cols: 2
 ---
 
-# useInViewport
-
 观察元素是否在可见区域，以及元素可见比例。更多信息参考 [Intersection Observer API](https://developer.mozilla.org/zh-CN/docs/Web/API/Intersection_Observer_API)。
 
 ## 代码演示

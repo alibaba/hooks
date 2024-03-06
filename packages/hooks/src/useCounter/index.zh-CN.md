@@ -10,8 +10,6 @@ demo:
   cols: 2
 ---
 
-# useCounter
-
 管理计数器的 Hook。
 
 ## 代码演示

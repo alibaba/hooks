@@ -10,8 +10,6 @@ demo:
   cols: 2
 ---
 
-# useHover
-
 监听 DOM 元素是否有鼠标悬停。
 
 ## 代码演示

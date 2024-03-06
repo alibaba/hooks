@@ -10,8 +10,6 @@ demo:
   cols: 2
 ---
 
-# useDebounceEffect
-
 为 `useEffect` 增加防抖的能力。
 
 ## 代码演示

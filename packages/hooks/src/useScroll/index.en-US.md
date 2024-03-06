@@ -10,8 +10,6 @@ demo:
   cols: 2
 ---
 
-# useScroll
-
 Get the scroll position of an element.
 
 ## Examples

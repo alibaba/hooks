@@ -10,8 +10,6 @@ demo:
   cols: 2
 ---
 
-# useTrackedEffect
-
 A hook of useEffect that allow us to track which dependencies caused the effect to trigger.
 
 ## Examples

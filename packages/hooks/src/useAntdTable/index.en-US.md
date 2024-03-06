@@ -10,8 +10,6 @@ demo:
   cols: 2
 ---
 
-# useAntdTable
-
 `useAntdTable` is implemented based on `useRequest` and encapsulates the commonly used [Ant Design Form](https://ant.design/components/form/) and [Ant Design Table](https://ant.design/components/table/) data binding logic, and supports both antd v3 and v4.
 
 Before using it, you need to understand a few points that are different from `useRequest`:

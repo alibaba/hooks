@@ -10,8 +10,6 @@ demo:
   cols: 2
 ---
 
-# useResetState
-
 提供重置 state 方法的 Hooks，用法与 `React.useState` 基本一致。
 
 ## 代码演示

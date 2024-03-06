@@ -10,8 +10,6 @@ demo:
   cols: 2
 ---
 
-# useTitle
-
 A hook that set title of the page.
 
 ## Examples

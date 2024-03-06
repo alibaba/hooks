@@ -10,8 +10,6 @@ demo:
   cols: 2
 ---
 
-# useMouse
-
 Track cursor position
 
 ## Examples

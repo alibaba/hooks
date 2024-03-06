@@ -10,8 +10,6 @@ demo:
   cols: 2
 ---
 
-# useInfiniteScroll
-
 useInfiniteScroll 封装了常见的无限滚动逻辑。
 
 ```js

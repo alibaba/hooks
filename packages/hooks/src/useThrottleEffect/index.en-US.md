@@ -10,8 +10,6 @@ demo:
   cols: 2
 ---
 
-# useThrottleEffect
-
 Throttle your `useEffect`.
 
 ## Examples

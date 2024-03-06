@@ -10,8 +10,6 @@ demo:
   cols: 2
 ---
 
-# useGetState
-
 Add a getter method to the return value of `React.useState` to get the latest value
 
 ## Examples

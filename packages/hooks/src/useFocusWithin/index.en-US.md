@@ -10,8 +10,6 @@ demo:
   cols: 2
 ---
 
-# useFocusWithin
-
 Monitor whether the current focus is within a certain area, Same as css attribute [:focus-within](https://developer.mozilla.org/en-US/docs/Web/CSS/:focus-within).
 
 ## Examples

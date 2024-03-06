@@ -10,8 +10,6 @@ demo:
   cols: 2
 ---
 
-# usePagination
-
 `usePagination` is implemented based on `useRequest` and encapsulates common paging logic. The differences from `useRequest` are as follows:
 
 1. The first parameter of `service` is `{ current: number, pageSize: number }`

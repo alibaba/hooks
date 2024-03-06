@@ -10,8 +10,6 @@ demo:
   cols: 2
 ---
 
-# useMount
-
 A hook that executes a function after the component is mounted.
 
 ## Examples

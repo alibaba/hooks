@@ -10,8 +10,6 @@ demo:
   cols: 2
 ---
 
-# useDynamicList
-
 A hook that helps you manage dynamic list and generate unique key for each item.
 
 ## Examples

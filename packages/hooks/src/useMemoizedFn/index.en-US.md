@@ -10,8 +10,6 @@ demo:
   cols: 2
 ---
 
-# useMemoizedFn
-
 Hooks for persistent functions. In general, useMemoizedFn can be used instead of useCallback. See [FAQ](#faq) for special cases.
 
 In some scenarios, we need to use useCallback to cache a function, but when the second parameter deps changes, the function will be regenerated, causing the function reference to change.

@@ -10,8 +10,6 @@ demo:
   cols: 2
 ---
 
-# useUrlState
-
 A hook that store the state into url query.
 
 ## Install

@@ -10,8 +10,6 @@ demo:
   cols: 2
 ---
 
-# useAsyncEffect
-
 useEffect support async function.
 
 ## 代码演示

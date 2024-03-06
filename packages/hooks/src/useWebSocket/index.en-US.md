@@ -10,8 +10,6 @@ demo:
   cols: 2
 ---
 
-# useWebSocket
-
 A hook for WebSocket.
 
 ## Examples

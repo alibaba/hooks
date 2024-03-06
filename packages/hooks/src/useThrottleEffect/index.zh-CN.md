@@ -10,8 +10,6 @@ demo:
   cols: 2
 ---
 
-# useThrottleEffect
-
 为 `useEffect` 增加节流的能力。
 
 ## 代码演示

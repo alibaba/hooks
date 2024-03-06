@@ -10,8 +10,6 @@ demo:
   cols: 2
 ---
 
-# useMap
-
 A hook that can manage the state of Map.
 
 ## Examples

@@ -10,8 +10,6 @@ demo:
   cols: 2
 ---
 
-# useFullscreen
-
 管理 DOM 全屏的 Hook。
 
 ## 代码演示

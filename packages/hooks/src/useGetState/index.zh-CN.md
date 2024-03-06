@@ -10,8 +10,6 @@ demo:
   cols: 2
 ---
 
-# useGetState
-
 给 `React.useState` 增加了一个 getter 方法，以获取当前最新值。
 
 ## 代码演示

@@ -10,8 +10,6 @@ demo:
   cols: 2
 ---
 
-# useLocalStorageState
-
 A Hook that store state into localStorage.
 
 ## Examples

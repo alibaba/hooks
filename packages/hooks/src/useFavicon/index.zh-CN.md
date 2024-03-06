@@ -10,8 +10,6 @@ demo:
   cols: 2
 ---
 
-# useFavicon
-
 设置页面的 favicon。
 
 ## 代码演示

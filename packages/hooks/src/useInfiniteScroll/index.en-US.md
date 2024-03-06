@@ -10,8 +10,6 @@ demo:
   cols: 2
 ---
 
-# useInfiniteScroll
-
 useInfiniteScroll encapsulates the common infinite scroll logic.
 
 ```js

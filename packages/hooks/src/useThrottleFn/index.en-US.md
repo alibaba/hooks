@@ -10,8 +10,6 @@ demo:
   cols: 2
 ---
 
-# useThrottleFn
-
 A hook that deal with the throttled function.
 
 ## Examples

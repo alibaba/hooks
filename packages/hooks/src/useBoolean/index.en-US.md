@@ -10,8 +10,6 @@ demo:
   cols: 2
 ---
 
-# useBoolean
-
 A hook that elegantly manages boolean state.
 
 ## Examples

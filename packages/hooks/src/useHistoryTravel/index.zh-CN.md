@@ -10,8 +10,6 @@ demo:
   cols: 2
 ---
 
-# useHistoryTravel
-
 管理状态历史变化记录，方便在历史记录中前进与后退。
 
 ## 代码演示

@@ -10,8 +10,6 @@ demo:
   cols: 2
 ---
 
-# useToggle
-
 A hook that toggle states.
 
 ## Examples

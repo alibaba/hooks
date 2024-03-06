@@ -10,8 +10,6 @@ demo:
   cols: 2
 ---
 
-# useControllableValue
-
 在某些组件开发时，我们需要组件的状态既可以自己管理，也可以被外部控制，`useControllableValue` 就是帮你管理这种状态的 Hook。
 
 ## 代码演示

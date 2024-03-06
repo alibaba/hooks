@@ -10,8 +10,6 @@ demo:
   cols: 2
 ---
 
-# useNetwork
-
 A hook that tracks the state of network connection.
 
 ## Examples

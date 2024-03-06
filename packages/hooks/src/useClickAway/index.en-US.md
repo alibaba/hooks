@@ -10,8 +10,6 @@ demo:
   cols: 2
 ---
 
-# useClickAway
-
 Listen for click events outside the target element.
 
 ## Examples

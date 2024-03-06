@@ -10,8 +10,6 @@ demo:
   cols: 2
 ---
 
-# useTrackedEffect
-
 追踪是哪个依赖变化触发了 `useEffect` 的执行。
 
 ## 代码演示

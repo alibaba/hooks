@@ -10,8 +10,6 @@ demo:
   cols: 2
 ---
 
-# useTimeout
-
 一个可以处理 setTimeout 计时器函数的 Hook。
 
 ## 代码演示

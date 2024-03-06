@@ -10,8 +10,6 @@ demo:
   cols: 2
 ---
 
-# useFullscreen
-
 manages DOM full screen.
 
 ## Examples

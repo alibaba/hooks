@@ -10,8 +10,6 @@ demo:
   cols: 2
 ---
 
-# useClickAway
-
 监听目标元素外的点击事件。
 
 ## 代码演示

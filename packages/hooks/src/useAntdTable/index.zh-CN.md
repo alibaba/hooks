@@ -10,8 +10,6 @@ demo:
   cols: 2
 ---
 
-# useAntdTable
-
 `useAntdTable` 基于 `useRequest` 实现，封装了常用的 [Ant Design Form](https://ant.design/components/form-cn/) 与 [Ant Design Table](https://ant.design/components/table-cn/) 联动逻辑，并且同时支持 antd v3 和 v4。
 
 在使用之前，你需要了解它与 `useRequest` 不同的几个点：

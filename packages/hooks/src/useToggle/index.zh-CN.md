@@ -10,8 +10,6 @@ demo:
   cols: 2
 ---
 
-# useToggle
-
 用于在两个状态值间切换的 Hook。
 
 ## 代码演示

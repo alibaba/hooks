@@ -10,8 +10,6 @@ demo:
   cols: 2
 ---
 
-# useWhyDidYouUpdate
-
 帮助开发者排查是哪个属性改变导致了组件的 rerender。
 
 ## 代码演示

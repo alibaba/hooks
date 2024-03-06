@@ -10,8 +10,6 @@ demo:
   cols: 2
 ---
 
-# useLatest
-
 A Hook that returns the latest value, effectively avoiding the closure problem.
 
 ## Examples

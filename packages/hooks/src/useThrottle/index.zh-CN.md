@@ -10,8 +10,6 @@ demo:
   cols: 2
 ---
 
-# useThrottle
-
 用来处理节流值的 Hook。
 
 ## 代码演示

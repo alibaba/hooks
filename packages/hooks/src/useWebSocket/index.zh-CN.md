@@ -10,8 +10,6 @@ demo:
   cols: 2
 ---
 
-# useWebSocket
-
 用于处理 WebSocket 的 Hook。
 
 ## 代码演示

@@ -10,8 +10,6 @@ demo:
   cols: 2
 ---
 
-# useRafTimeout
-
 A hook implements with `requestAnimationFrame` for better performance. The API is consistent with `useTimeout`. the advantage is that will not trigger function when the page is not rendering, such as page hiding or minimization.
 
 > `requestAnimationFrame` will automatically downgrade to `setTimeout` in node environment
