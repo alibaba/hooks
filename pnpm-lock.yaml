@@ -3,13 +3,13 @@ lockfileVersion: 5.4
 importers:
   .:
     specifiers:
+      '@ahooks.js/dumi-theme-antd': ^0.1.0
       '@ant-design/icons': ^5.3.0
       '@babel/cli': ^7.10.1
       '@babel/core': ^7.10.2
       '@babel/plugin-transform-runtime': ^7.19.6
       '@commitlint/cli': ^17.1.2
       '@commitlint/config-conventional': ^17.1.0
-      '@liuyib/dumi-theme-antd': ^0.1.3
       '@testing-library/jest-dom': ^5.16.5
       '@testing-library/react': ^13.4.0
       '@types/jest': ^29.4.0
@@ -50,13 +50,13 @@ importers:
       webpack-cli: ^5.1.4
       webpack-merge: ^4.2.2
     devDependencies:
+      '@ahooks.js/dumi-theme-antd': 0.1.0_6ubdw2b75ikxon3szrukgnwuei
       '@ant-design/icons': 5.3.0_biqbaboplfbrettd7655fr4n2y
       '@babel/cli': 7.21.0_@babel+core@7.21.0
       '@babel/core': 7.21.0
       '@babel/plugin-transform-runtime': 7.21.0_@babel+core@7.21.0
       '@commitlint/cli': 17.4.4
       '@commitlint/config-conventional': 17.4.4
-      '@liuyib/dumi-theme-antd': 0.1.3_6ubdw2b75ikxon3szrukgnwuei
       '@testing-library/jest-dom': 5.16.5
       '@testing-library/react': 13.4.0_biqbaboplfbrettd7655fr4n2y
       '@types/jest': 29.4.0
@@ -168,6 +168,46 @@ packages:
       {
         integrity: sha512-E09FiIft46CmH5Qnjb0wsW54/YQd69LsxeKUOWawmws1XWvyFGURnAChH0mlr7YPFR1ofwvUQfcL0J3lMxXqPA==,
       }
+    dev: true
+
+  /@ahooks.js/dumi-theme-antd/0.1.0_6ubdw2b75ikxon3szrukgnwuei:
+    resolution:
+      {
+        integrity: sha512-223L4/W2wLDdOrsogj/1iH9GnAcmjZrR++5yOKvHM13mvCTQLZW50W9f9rcLzitt+lAIe9jFmm3L1pS1YMwWeg==,
+      }
+    peerDependencies:
+      antd: ^5.7.0
+      dumi: ^2.2.1
+      react: ^18.0.0
+      react-dom: ^18.0.0
+    dependencies:
+      '@ant-design/cssinjs': 1.16.2_biqbaboplfbrettd7655fr4n2y
+      '@ant-design/icons': 5.1.4_biqbaboplfbrettd7655fr4n2y
+      '@babel/runtime': 7.22.3
+      '@ctrl/tinycolor': 3.6.0
+      '@emotion/css': 11.11.2
+      '@emotion/react': 11.11.0_react@18.2.0
+      '@emotion/server': 11.11.0_@emotion+css@11.11.2
+      antd: 5.14.2_biqbaboplfbrettd7655fr4n2y
+      antd-token-previewer: 2.0.0-alpha.6_e6zmfrfzgmrafsxr5g4tr4x66i
+      classnames: 2.3.2
+      crypto: 1.0.1
+      dayjs: 1.11.7
+      dumi: 2.2.17_jee3wun45dmguwauug36rvsrn4
+      lodash.clonedeep: 4.5.0
+      rc-drawer: 6.2.0_biqbaboplfbrettd7655fr4n2y
+      rc-footer: 0.6.8_biqbaboplfbrettd7655fr4n2y
+      rc-util: 5.33.0_biqbaboplfbrettd7655fr4n2y
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
+    transitivePeerDependencies:
+      - '@babel/core'
+      - '@types/react'
+      - date-fns
+      - immer
+      - luxon
+      - moment
+      - react-is
     dev: true
 
   /@alifd/field/1.5.8:
@@ -4738,46 +4778,6 @@ packages:
       '@jridgewell/sourcemap-codec': 1.4.15
     dev: true
 
-  /@liuyib/dumi-theme-antd/0.1.3_6ubdw2b75ikxon3szrukgnwuei:
-    resolution:
-      {
-        integrity: sha512-h1TpiDe4WvD7vbEokh+DP83fxYu37nHZdhNihVJCLLg8h0xdw/cfIEq27oz+FMiLoCQO3PH6WcRIKyxoI66r6Q==,
-      }
-    peerDependencies:
-      antd: ^5.7.0
-      dumi: ^2.2.1
-      react: ^18.0.0
-      react-dom: ^18.0.0
-    dependencies:
-      '@ant-design/cssinjs': 1.16.2_biqbaboplfbrettd7655fr4n2y
-      '@ant-design/icons': 5.1.4_biqbaboplfbrettd7655fr4n2y
-      '@babel/runtime': 7.22.3
-      '@ctrl/tinycolor': 3.6.0
-      '@emotion/css': 11.11.2
-      '@emotion/react': 11.11.0_react@18.2.0
-      '@emotion/server': 11.11.0_@emotion+css@11.11.2
-      antd: 5.14.2_biqbaboplfbrettd7655fr4n2y
-      antd-token-previewer: 2.0.0-alpha.6_e6zmfrfzgmrafsxr5g4tr4x66i
-      classnames: 2.3.2
-      crypto: 1.0.1
-      dayjs: 1.11.7
-      dumi: 2.2.17_jee3wun45dmguwauug36rvsrn4
-      lodash.clonedeep: 4.5.0
-      rc-drawer: 6.2.0_biqbaboplfbrettd7655fr4n2y
-      rc-footer: 0.6.8_biqbaboplfbrettd7655fr4n2y
-      rc-util: 5.33.0_biqbaboplfbrettd7655fr4n2y
-      react: 18.2.0
-      react-dom: 18.2.0_react@18.2.0
-    transitivePeerDependencies:
-      - '@babel/core'
-      - '@types/react'
-      - date-fns
-      - immer
-      - luxon
-      - moment
-      - react-is
-    dev: true
-
   /@loadable/component/5.15.2_react@18.1.0:
     resolution:
       {
@@ -5110,7 +5110,7 @@ packages:
       classcat: 5.0.4
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
-      zustand: 4.5.1_react@18.2.0
+      zustand: 4.5.2_react@18.2.0
     transitivePeerDependencies:
       - '@types/react'
       - immer
@@ -5129,7 +5129,7 @@ packages:
       classcat: 5.0.4
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
-      zustand: 4.5.1_react@18.2.0
+      zustand: 4.5.2_react@18.2.0
     transitivePeerDependencies:
       - '@types/react'
       - immer
@@ -5154,7 +5154,7 @@ packages:
       d3-zoom: 3.0.0
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
-      zustand: 4.5.1_react@18.2.0
+      zustand: 4.5.2_react@18.2.0
     transitivePeerDependencies:
       - '@types/react'
       - immer
@@ -5177,7 +5177,7 @@ packages:
       d3-zoom: 3.0.0
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
-      zustand: 4.5.1_react@18.2.0
+      zustand: 4.5.2_react@18.2.0
     transitivePeerDependencies:
       - '@types/react'
       - immer
@@ -5198,7 +5198,7 @@ packages:
       d3-selection: 3.0.0
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
-      zustand: 4.5.1_react@18.2.0
+      zustand: 4.5.2_react@18.2.0
     transitivePeerDependencies:
       - '@types/react'
       - immer
@@ -5217,7 +5217,7 @@ packages:
       classcat: 5.0.4
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
-      zustand: 4.5.1_react@18.2.0
+      zustand: 4.5.2_react@18.2.0
     transitivePeerDependencies:
       - '@types/react'
       - immer
@@ -29894,10 +29894,10 @@ packages:
     engines: { node: '>=10' }
     dev: true
 
-  /zustand/4.5.1_react@18.2.0:
+  /zustand/4.5.2_react@18.2.0:
     resolution:
       {
-        integrity: sha512-XlauQmH64xXSC1qGYNv00ODaQ3B+tNPoy22jv2diYiP4eoDKr9LA+Bh5Bc3gplTrFdb6JVI+N4kc1DZ/tbtfPg==,
+        integrity: sha512-2cN1tPkDVkwCy5ickKrI7vijSjPksFRfqS6237NzT0vqSsztTNnQdHw9mmN7uBdk3gceVXU0a+21jFzFzAc9+g==,
       }
     engines: { node: '>=12.7.0' }
     peerDependencies:
