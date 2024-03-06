@@ -44,7 +44,15 @@ export default () => {
 
   return (
     <>
-      <Space style={{ display: 'flex', marginBottom: 8 }} wrap>
+      <div style={{ border: '1px dashed #ccc', borderRadius: 4, margin: '8px 0', padding: 8 }}>
+        <div>current name: {state.name}</div>
+        <div>current job: {state.job}</div>
+      </div>
+      <div style={{ border: '1px dashed #ccc', borderRadius: 4, margin: '8px 0', padding: 8 }}>
+        <div>previous name: {(previousName || {}).name}</div>
+        <div>previous job: {(previousJob || {}).job}</div>
+      </div>
+      <Space style={{ display: 'flex', marginTop: 8 }} wrap>
         <Input
           value={nameInput}
           onChange={(e) => setNameInput(e.target.value)}
@@ -58,7 +66,7 @@ export default () => {
           Update
         </Button>
       </Space>
-      <Space wrap>
+      <Space style={{ display: 'flex', marginTop: 8 }} wrap>
         <Input
           value={jobInput}
           onChange={(e) => setJobInput(e.target.value)}
@@ -72,14 +80,6 @@ export default () => {
           Update
         </Button>
       </Space>
-      <div style={{ border: '1px dashed #ccc', borderRadius: 4, margin: '8px 0', padding: 8 }}>
-        <div>current name: {state.name}</div>
-        <div>current job: {state.job}</div>
-      </div>
-      <div style={{ border: '1px dashed #ccc', borderRadius: 4, margin: '8px 0', padding: 8 }}>
-        <div>previous name: {(previousName || {}).name}</div>
-        <div>previous job: {(previousJob || {}).job}</div>
-      </div>
     </>
   );
 };

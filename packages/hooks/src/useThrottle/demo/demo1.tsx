@@ -7,7 +7,7 @@
  */
 
 import React, { useState } from 'react';
-import { Input } from 'antd';
+import { Input, Space } from 'antd';
 import { useThrottle } from 'ahooks';
 
 export default () => {
@@ -15,14 +15,9 @@ export default () => {
   const throttledValue = useThrottle(value, { wait: 500 });
 
   return (
-    <div>
-      <Input
-        style={{ marginBottom: 8 }}
-        value={value}
-        onChange={(e) => setValue(e.target.value)}
-        placeholder="Typed value"
-      />
-      <p>throttledValue: {throttledValue}</p>
-    </div>
+    <Space direction="vertical">
+      <p>throttled value: {throttledValue}</p>
+      <Input value={value} onChange={(e) => setValue(e.target.value)} placeholder="Typed value" />
+    </Space>
   );
 };

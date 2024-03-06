@@ -15,7 +15,7 @@ export default () => {
 
   return (
     <div>
-      <p>Effects：{JSON.stringify(state)}</p>
+      <p>effects: {JSON.stringify(state)}</p>
       <Space style={{ marginTop: 8 }} wrap>
         <Button onClick={toggle}>Toggle</Button>
         <Button onClick={setFalse}>Set false</Button>

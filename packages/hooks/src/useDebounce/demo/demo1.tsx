@@ -18,8 +18,8 @@ export default () => {
 
   return (
     <Space direction="vertical">
+      <p>debounced value: {debouncedValue}</p>
       <Input value={value} onChange={(e) => setValue(e.target.value)} placeholder="Typed value" />
-      <p>DebouncedValue: {debouncedValue}</p>
     </Space>
   );
 };

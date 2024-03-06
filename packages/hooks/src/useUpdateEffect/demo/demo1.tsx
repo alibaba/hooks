@@ -29,11 +29,11 @@ export default () => {
 
   return (
     <div>
-      <Button style={{ marginBottom: 8 }} onClick={() => setCount((c) => c + 1)}>
-        reRender
-      </Button>
       <p>effectCount: {effectCount}</p>
       <p>updateEffectCount: {updateEffectCount}</p>
+      <Button style={{ marginTop: 8 }} onClick={() => setCount((c) => c + 1)}>
+        reRender
+      </Button>
     </div>
   );
 };

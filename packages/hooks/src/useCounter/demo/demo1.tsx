@@ -19,7 +19,7 @@ export default () => {
   return (
     <div>
       <p>{current} [max: 10; min: 1;]</p>
-      <Space wrap>
+      <Space style={{ marginTop: 8 }} wrap>
         <Button onClick={() => inc()}>inc()</Button>
         <Button onClick={() => dec()}>dec()</Button>
         <Button onClick={() => set(3)}>set(3)</Button>

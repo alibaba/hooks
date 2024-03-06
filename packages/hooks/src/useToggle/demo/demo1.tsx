@@ -15,12 +15,12 @@ export default () => {
 
   return (
     <div>
-      <Space style={{ marginBottom: 8 }} wrap>
+      <p>effects: {`${state}`}</p>
+      <Space style={{ marginTop: 8 }} wrap>
         <Button onClick={toggle}>Toggle</Button>
         <Button onClick={setLeft}>Toggle False</Button>
         <Button onClick={setRight}>Toggle True</Button>
       </Space>
-      <p>Effects：{`${state}`}</p>
     </div>
   );
 };

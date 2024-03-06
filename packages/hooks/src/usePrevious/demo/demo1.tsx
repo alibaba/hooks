@@ -16,12 +16,12 @@ export default () => {
 
   return (
     <>
-      <Space style={{ marginBottom: 8 }} wrap>
+      <div>counter current value: {count}</div>
+      <div>counter previous value: {previous}</div>
+      <Space style={{ marginTop: 8 }} wrap>
         <Button onClick={() => setCount((c) => c + 1)}>Increase</Button>
         <Button onClick={() => setCount((c) => c - 1)}>Decrease</Button>
       </Space>
-      <div>counter current value: {count}</div>
-      <div>counter previous value: {previous}</div>
     </>
   );
 };

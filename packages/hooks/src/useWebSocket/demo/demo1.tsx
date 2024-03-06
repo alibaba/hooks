@@ -31,7 +31,16 @@ export default () => {
 
   return (
     <>
-      <Space style={{ marginBottom: 8 }} wrap>
+      <div>readyState: {readyState}</div>
+      <div>
+        <p>received message: </p>
+        {messageHistory.current.map((message, index) => (
+          <p key={index} style={{ wordWrap: 'break-word' }}>
+            {message?.data}
+          </p>
+        ))}
+      </div>
+      <Space style={{ marginTop: 8 }} wrap>
         {/* send message */}
         <Button
           onClick={() => sendMessage && sendMessage(`${Date.now()}`)}
@@ -51,15 +60,6 @@ export default () => {
           {readyState === ReadyState.Connecting ? 'Connecting' : '📞 Connect'}
         </Button>
       </Space>
-      <div>readyState: {readyState}</div>
-      <div>
-        <p>received message: </p>
-        {messageHistory.current.map((message, index) => (
-          <p key={index} style={{ wordWrap: 'break-word' }}>
-            {message?.data}
-          </p>
-        ))}
-      </div>
     </>
   );
 };

@@ -17,12 +17,12 @@ export default function App() {
 
   return (
     <>
-      <Space wrap>
+      <p>{value}</p>
+      <Space style={{ marginTop: 8 }} wrap>
         <Button onClick={() => setValue((v) => String(Number(v) + 1))}>inc +</Button>
         <Button onClick={() => setValue((v) => String(Number(v) - 1))}>dec -</Button>
         <Button onClick={() => setValue('0')}>reset</Button>
       </Space>
-      <p>{value}</p>
     </>
   );
 }

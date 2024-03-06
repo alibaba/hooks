@@ -15,14 +15,14 @@ export default () => {
 
   return (
     <div>
-      <Space style={{ marginBottom: 8 }} wrap>
+      <p>effects: {state}</p>
+      <Space style={{ marginTop: 8 }} wrap>
         <Button onClick={toggle}>Toggle</Button>
         <Button onClick={() => set('Hello')}>Set Hello</Button>
         <Button onClick={() => set('World')}>Set World</Button>
         <Button onClick={setLeft}>Set Left</Button>
         <Button onClick={setRight}>Set Right</Button>
       </Space>
-      <p>Effects：{state}</p>
     </div>
   );
 };

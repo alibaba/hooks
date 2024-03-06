@@ -14,7 +14,7 @@ export default () => {
 
   return (
     <div>
-      <div>Network information: </div>
+      <div>Network information:</div>
       <pre>{JSON.stringify(networkState, null, 2)}</pre>
     </div>
   );

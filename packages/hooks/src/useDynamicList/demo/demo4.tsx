@@ -36,7 +36,7 @@ export default () => {
       dataIndex: 'name',
       key: 'name',
       render: (text: string, row: Item, index: number) => (
-        <Space wrap>
+        <Space>
           <DragOutlined style={{ cursor: 'move' }} />
           <Form.Item name={['params', getKey(index), 'name']} initialValue={text} noStyle>
             <Input placeholder="name" />
