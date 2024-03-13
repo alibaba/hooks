@@ -54,6 +54,11 @@ export default function useSelections<T>(items: T[], defaultSelected: T[] = []) 
 
   const toggleAll = () => (allSelected ? unSelectAll() : selectAll());
 
+  const clearAll = () => {
+    selectedSet.clear();
+    setSelected([]);
+  };
+
   return {
     selected,
     noneSelected,
@@ -66,6 +71,7 @@ export default function useSelections<T>(items: T[], defaultSelected: T[] = []) 
     toggle: useMemoizedFn(toggle),
     selectAll: useMemoizedFn(selectAll),
     unSelectAll: useMemoizedFn(unSelectAll),
+    clearAll: useMemoizedFn(clearAll),
     toggleAll: useMemoizedFn(toggleAll),
   } as const;
 }
