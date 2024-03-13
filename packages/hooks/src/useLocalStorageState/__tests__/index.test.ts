@@ -1,10 +1,14 @@
 import { renderHook, act } from '@testing-library/react';
+import type { Options } from '../../createUseStorageState';
 import useLocalStorageState from '../index';
 
 describe('useLocalStorageState', () => {
-  const setUp = <T>(key: string, value: T) =>
+  const setUp = <T>(key: string, value: T, options?: Options<T>) =>
     renderHook(() => {
-      const [state, setState] = useLocalStorageState<T>(key, { defaultValue: value });
+      const [state, setState] = useLocalStorageState<T>(key, {
+        defaultValue: value,
+        ...options,
+      });
       return {
         state,
         setState,
@@ -105,5 +109,22 @@ describe('useLocalStorageState', () => {
       hook.result.current.setState((state) => `${state}, zhangsan`);
     });
     expect(hook.result.current.state).toBe('hello world, zhangsan');
+  });
+
+  it('should sync state when changes', async () => {
+    const LOCAL_STORAGE_KEY = 'test-sync-state';
+    const hook = setUp(LOCAL_STORAGE_KEY, 'foo', { listenStorageChange: true });
+    const anotherHook = setUp(LOCAL_STORAGE_KEY, 'bar', { listenStorageChange: true });
+
+    expect(hook.result.current.state).toBe('foo');
+    expect(anotherHook.result.current.state).toBe('bar');
+
+    act(() => hook.result.current.setState('baz'));
+    expect(hook.result.current.state).toBe('baz');
+    expect(anotherHook.result.current.state).toBe('baz');
+
+    act(() => anotherHook.result.current.setState('qux'));
+    expect(hook.result.current.state).toBe('qux');
+    expect(anotherHook.result.current.state).toBe('qux');
   });
 });
