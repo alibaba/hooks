@@ -1,29 +1,23 @@
 ---
-nav:
-  path: /hooks
+title: useFullscreen
+nav: Hooks
+group:
+  title: Dom
+  order: 6
+order: 9
+toc: content
+demo:
+  cols: 2
 ---
-
-# useFullscreen
 
 管理 DOM 全屏的 Hook。
 
 ## 代码演示
 
-### 基础用法
-
-<code src="./demo/demo1.tsx" />
-
-### 图片全屏
-
-<code src="./demo/demo2.tsx" />
-
-### 页面全屏
-
-<code src="./demo/demo3.tsx" />
-
-### 与其它全屏操作共存
-
-<code src="./demo/demo4.tsx" />
+<code src="./demo/demo1.tsx"></code>
+<code src="./demo/demo2.tsx"></code>
+<code src="./demo/demo3.tsx"></code>
+<code src="./demo/demo4.tsx"></code>
 
 ## API
 

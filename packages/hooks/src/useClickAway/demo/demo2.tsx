@@ -1,12 +1,13 @@
 /**
  * title: Support DOM
- * desc: Support pass in a DOM element or function.
+ * description: Support pass in a DOM element or function.
  *
  * title.zh-CN: 支持传入 DOM
- * desc.zh-CN: 支持直接传入 DOM 对象或 function。
+ * description.zh-CN: 支持直接传入 DOM 对象或 function。
  */
 
 import React, { useState } from 'react';
+import { Button } from 'antd';
 import { useClickAway } from 'ahooks';
 
 export default () => {
@@ -21,10 +22,10 @@ export default () => {
 
   return (
     <div>
-      <button type="button" id="use-click-away-button">
-        box
-      </button>
       <p>counter: {counter}</p>
+      <Button id="use-click-away-button" style={{ marginTop: 8 }}>
+        box
+      </Button>
     </div>
   );
 };

@@ -1,17 +1,20 @@
 ---
-nav:
-  path: /hooks
+title: useLockFn
+nav: Hooks
+group:
+  title: Effect
+  order: 5
+order: 14
+toc: content
+demo:
+  cols: 2
 ---
-
-# useLockFn
 
 用于给一个异步函数增加竞态锁，防止并发执行。
 
 ## 代码演示
 
-### 基础用法
-
-<code src="./demo/demo1.tsx" />
+<code src="./demo/demo1.tsx"></code>
 
 ## API
 

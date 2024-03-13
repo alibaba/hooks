@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Button, Input, Space } from 'antd';
 import { useInfiniteScroll } from 'ahooks';
 
 interface Result {
@@ -39,12 +40,10 @@ export default () => {
 
   return (
     <div>
-      <div style={{ marginBottom: 16 }}>
-        <input value={keyword} onChange={(e) => setKeyword(e.target.value)} />
-        <button style={{ marginLeft: 8 }} onClick={reload}>
-          Filter
-        </button>
-      </div>
+      <Space style={{ marginBottom: 16 }} wrap>
+        <Input value={keyword} onChange={(e) => setKeyword(e.target.value)} />
+        <Button onClick={reload}>Filter</Button>
+      </Space>
       {loading ? (
         <p>loading</p>
       ) : (
@@ -56,14 +55,12 @@ export default () => {
           ))}
         </div>
       )}
-
       <div style={{ marginTop: 8 }}>
         {data?.nextId && (
-          <button type="button" onClick={loadMore} disabled={loadingMore}>
+          <Button onClick={loadMore} disabled={loadingMore}>
             {loadingMore ? 'Loading more...' : 'Click to load more'}
-          </button>
+          </Button>
         )}
-
         {!data?.nextId && <span>No more data</span>}
       </div>
     </div>

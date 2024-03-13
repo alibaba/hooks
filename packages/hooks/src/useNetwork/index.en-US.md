@@ -1,17 +1,20 @@
 ---
-nav:
-  path: /hooks
+title: useNetwork
+nav: Hooks
+group:
+  title: Scene
+  order: 2
+order: 8
+toc: content
+demo:
+  cols: 2
 ---
-
-# useNetwork
 
 A hook that tracks the state of network connection.
 
 ## Examples
 
-### Default usage
-
-<code src="./demo/demo1.tsx" />
+<code src="./demo/demo1.tsx"></code>
 
 ## API
 

@@ -1,4 +1,10 @@
-## v2 to v3
+---
+title: v2 to v3
+order: 1
+toc: content
+demo:
+  cols: 2
+---
 
 相较于 ahooks v2 版本，ahooks v3 版本的变更主要包括：
 

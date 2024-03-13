@@ -1,17 +1,20 @@
 ---
-nav:
-  path: /hooks
+title: useWebSocket
+nav: Hooks
+group:
+  title: Scene
+  order: 2
+order: 13
+toc: content
+demo:
+  cols: 2
 ---
-
-# useWebSocket
 
 A hook for WebSocket.
 
 ## Examples
 
-### Default usage
-
-<code src="./demo/demo1.tsx" />
+<code src="./demo/demo1.tsx"></code>
 
 ## API
 
@@ -52,7 +55,7 @@ useWebSocket(socketUrl: string, options?: Options): Result;
 | socketUrl | Required, webSocket url        | `string`  | -       |
 | options   | connect the configuration item | `Options` | -       |
 
-#### Options
+### Options
 
 | Options Property  | Description                        | Type                                                                   | Default |
 | ----------------- | ---------------------------------- | ---------------------------------------------------------------------- | ------- |

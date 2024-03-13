@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
+import ReactJson from 'react-json-view';
 import { Table, Pagination, Field, Form, Input, Button } from '@alifd/next';
 import { useFusionTable } from 'ahooks';
-import ReactJson from 'react-json-view';
 
 interface Item {
   name: {
@@ -19,7 +19,7 @@ interface Result {
 
 const getTableData = (
   { current, pageSize, filters, sorter },
-  formData: Object,
+  formData: object,
 ): Promise<Result> => {
   console.log(sorter, filters);
 

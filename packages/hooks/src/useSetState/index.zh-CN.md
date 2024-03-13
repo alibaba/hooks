@@ -1,21 +1,21 @@
 ---
-nav:
-  path: /hooks
+title: useSetState
+nav: Hooks
+group:
+  title: State
+  order: 4
+order: 1
+toc: content
+demo:
+  cols: 2
 ---
-
-# useSetState
 
 管理 object 类型 state 的 Hooks，用法与 class 组件的 `this.setState` 基本一致。
 
 ## 代码演示
 
-### 基础用法
-
-<code src="./demo/demo1.tsx" />
-
-### 使用回调更新
-
-<code src="./demo/demo2.tsx" />
+<code src="./demo/demo1.tsx"></code>
+<code src="./demo/demo2.tsx"></code>
 
 ## API
 

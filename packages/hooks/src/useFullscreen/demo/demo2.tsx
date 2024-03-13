@@ -5,19 +5,17 @@
  */
 
 import React from 'react';
+import { Button, Space } from 'antd';
 import { useFullscreen } from 'ahooks';
 import img from './react-hooks.jpg';
 
 export default () => {
   const [, { enterFullscreen }] = useFullscreen(() => document.getElementById('fullscreen-img'));
+
   return (
-    <div style={{ background: 'white' }}>
-      <div style={{ marginBottom: 16 }}>
-        <img id="fullscreen-img" src={img} style={{ width: 320 }} alt="" />
-      </div>
-      <button type="button" onClick={enterFullscreen}>
-        enterFullscreen
-      </button>
-    </div>
+    <Space style={{ background: 'white' }} direction="vertical" wrap>
+      <img id="fullscreen-img" src={img} style={{ width: 320 }} />
+      <Button onClick={enterFullscreen}>Enter Fullscreen</Button>
+    </Space>
   );
 };

@@ -4,13 +4,13 @@
  * title.zh-CN: 基础用法
  */
 
-import { useMutationObserver } from 'ahooks';
 import React, { useRef, useState } from 'react';
+import { Button } from 'antd';
+import { useMutationObserver } from 'ahooks';
 
 const App: React.FC = () => {
   const [width, setWidth] = useState(200);
   const [count, setCount] = useState(0);
-
   const ref = useRef<HTMLDivElement>(null);
 
   useMutationObserver(
@@ -23,11 +23,22 @@ const App: React.FC = () => {
 
   return (
     <div>
-      <div ref={ref} style={{ width, padding: 12, border: '1px solid #000', marginBottom: 8 }}>
-        current width：{width}
+      <p>mutation count: {count}</p>
+      <div
+        ref={ref}
+        style={{
+          width,
+          padding: 12,
+          border: '1px dashed #ccc',
+          borderRadius: 4,
+          marginTop: 8,
+        }}
+      >
+        current width: {width}
       </div>
-      <button onClick={() => setWidth((w) => w + 10)}>widening</button>
-      <p>Mutation count {count}</p>
+      <Button style={{ marginTop: 8 }} onClick={() => setWidth((w) => w + 10)}>
+        Widening
+      </Button>
     </div>
   );
 };

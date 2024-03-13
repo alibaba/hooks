@@ -1,17 +1,20 @@
 ---
-nav:
-  path: /hooks
+title: useFavicon
+nav: Hooks
+group:
+  title: Dom
+  order: 6
+order: 8
+toc: content
+demo:
+  cols: 2
 ---
-
-# useFavicon
 
 设置页面的 favicon。
 
 ## 代码演示
 
-### 基础用法
-
-<code src="./demo/demo1.tsx" />
+<code src="./demo/demo1.tsx"></code>
 
 ## API
 

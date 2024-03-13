@@ -1,17 +1,20 @@
 ---
-nav:
-  path: /hooks
+title: useResponsive
+nav: Hooks
+group:
+  title: Dom
+  order: 6
+order: 16
+toc: content
+demo:
+  cols: 2
 ---
-
-# useResponsive
 
 React Hook for getting responsive info.
 
 ## Examples
 
-### Get responsive info in components
-
-<code src="./demo/demo1.tsx" />
+<code src="./demo/demo1.tsx"></code>
 
 ## API
 
@@ -26,7 +29,7 @@ function configResponsive(config: ResponsiveConfig): void;
 function useResponsive(): ResponsiveInfo;
 ```
 
-### Config
+## Config
 
 The default config is the same as bootstrap:
 

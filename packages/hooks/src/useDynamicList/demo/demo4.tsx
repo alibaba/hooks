@@ -1,15 +1,15 @@
 /**
  * title: Draggable dynamic table
- * desc: Using antd Table to build dynamic table form.
+ * description: Using antd Table to build dynamic table form.
  *
  * title.zh-CN: 可拖拽的动态表格
- * desc.zh-CN: 使用 antd table 构建动态表格
+ * description.zh-CN: 使用 antd table 构建动态表格
  */
 
-import { DragOutlined } from '@ant-design/icons';
-import { Button, Form, Input, Table } from 'antd';
 import React, { useState } from 'react';
 import ReactDragListView from 'react-drag-listview';
+import { Button, Form, Input, Space, Table } from 'antd';
+import { DragOutlined } from '@ant-design/icons';
 import { useDynamicList } from 'ahooks';
 
 interface Item {
@@ -18,16 +18,17 @@ interface Item {
   memo?: string;
 }
 
+const DEFAULT_LIST = [
+  { name: 'my bro', age: '23', memo: "he's my bro" },
+  { name: 'my sis', age: '21', memo: "she's my sis" },
+  {},
+];
+
 export default () => {
-  const { list, remove, getKey, move, push, sortList } = useDynamicList<Item>([
-    { name: 'my bro', age: '23', memo: "he's my bro" },
-    { name: 'my sis', age: '21', memo: "she's my sis" },
-    {},
-  ]);
-
   const [form] = Form.useForm();
-
   const [result, setResult] = useState('');
+  const { list, remove, getKey, move, push, sortList, resetList } =
+    useDynamicList<Item>(DEFAULT_LIST);
 
   const columns = [
     {
@@ -35,12 +36,12 @@ export default () => {
       dataIndex: 'name',
       key: 'name',
       render: (text: string, row: Item, index: number) => (
-        <>
-          <DragOutlined style={{ cursor: 'move', marginRight: 8 }} />
+        <Space>
+          <DragOutlined style={{ cursor: 'move' }} />
           <Form.Item name={['params', getKey(index), 'name']} initialValue={text} noStyle>
-            <Input style={{ width: 120, marginRight: 16 }} placeholder="name" />
+            <Input placeholder="name" />
           </Form.Item>
-        </>
+        </Space>
       ),
     },
     {
@@ -49,7 +50,7 @@ export default () => {
       key: 'age',
       render: (text: string, row: Item, index: number) => (
         <Form.Item name={['params', getKey(index), 'age']} initialValue={text} noStyle>
-          <Input style={{ width: 120, marginRight: 16 }} placeholder="age" />
+          <Input placeholder="age" />
         </Form.Item>
       ),
     },
@@ -58,23 +59,22 @@ export default () => {
       title: 'Memo',
       dataIndex: 'memo',
       render: (text: string, row: Item, index: number) => (
-        <>
+        <Space wrap>
           <Form.Item name={['params', getKey(index), 'memo']} initialValue={text} noStyle>
-            <Input style={{ width: 300, marginRight: 16 }} placeholder="please input the memo" />
+            <Input placeholder="please input the memo" />
           </Form.Item>
-          <Button.Group>
-            <Button danger onClick={() => remove(index)}>
-              Delete
-            </Button>
-          </Button.Group>
-        </>
+          <Button danger onClick={() => remove(index)}>
+            Delete
+          </Button>
+        </Space>
       ),
     },
   ];
 
   return (
-    <div>
+    <>
       <Form form={form}>
+        {/* @ts-ignore */}
         <ReactDragListView
           onDragEnd={(oldIndex: number, newIndex: number) => move(oldIndex, newIndex)}
           handleSelector={'span[aria-label="drag"]'}
@@ -89,30 +89,39 @@ export default () => {
         </ReactDragListView>
       </Form>
       <Button
-        style={{ marginTop: 8 }}
+        style={{ margin: '16px 0' }}
         block
         type="dashed"
         onClick={() => push({ name: 'new row', age: '25' })}
       >
         + Add row
       </Button>
-      <Button
-        type="primary"
-        style={{ marginTop: 16 }}
-        onClick={() => {
-          form
-            .validateFields()
-            .then((val) => {
-              console.log(val, val.params);
-              const sortedResult = sortList(val.params);
-              setResult(JSON.stringify(sortedResult, null, 2));
-            })
-            .catch(() => {});
-        }}
-      >
-        Submit
-      </Button>
-      <div style={{ whiteSpace: 'pre' }}>{result && `content: ${result}`}</div>
-    </div>
+      <Space style={{ width: '100%', marginBottom: 16 }} wrap>
+        <Button
+          type="primary"
+          onClick={() => {
+            form
+              .validateFields()
+              .then((val) => {
+                console.log(val, val.params);
+                const sortedResult = sortList(val.params);
+                setResult(JSON.stringify(sortedResult));
+              })
+              .catch(() => {});
+          }}
+        >
+          Submit
+        </Button>
+        <Button
+          onClick={() => {
+            resetList(DEFAULT_LIST);
+            setResult('');
+          }}
+        >
+          Reset
+        </Button>
+      </Space>
+      <p>{result}</p>
+    </>
   );
 };

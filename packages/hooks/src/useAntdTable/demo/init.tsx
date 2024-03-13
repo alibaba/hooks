@@ -19,7 +19,7 @@ interface Result {
   list: Item[];
 }
 
-const getTableData = ({ current, pageSize }, formData: Object): Promise<Result> => {
+const getTableData = ({ current, pageSize }, formData: object): Promise<Result> => {
   let query = `page=${current}&size=${pageSize}`;
   Object.entries(formData).forEach(([key, value]) => {
     if (value) {
@@ -38,7 +38,7 @@ const getTableData = ({ current, pageSize }, formData: Object): Promise<Result> 
 export default () => {
   const [form] = Form.useForm();
 
-  const { loading, tableProps, search, params } = useAntdTable(getTableData, {
+  const { tableProps, search, params } = useAntdTable(getTableData, {
     form,
     defaultParams: [
       { current: 2, pageSize: 5 },

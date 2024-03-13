@@ -1,25 +1,22 @@
 ---
-nav:
-  path: /hooks
+title: useLocalStorageState
+nav: Hooks
+group:
+  title: State
+  order: 4
+order: 6
+toc: content
+demo:
+  cols: 2
 ---
-
-# useLocalStorageState
 
 将状态存储在 localStorage 中的 Hook 。
 
 ## 代码演示
 
-### 将 state 存储在 localStorage 中
-
-<code src="./demo/demo1.tsx" />
-
-### 存储复杂类型数据
-
-<code src="./demo/demo2.tsx" />
-
-### 自定义序列化和反序列化函数
-
-<code src="./demo/demo3.tsx" />
+<code src="./demo/demo1.tsx"></code>
+<code src="./demo/demo2.tsx"></code>
+<code src="./demo/demo3.tsx"></code>
 
 ## API
 

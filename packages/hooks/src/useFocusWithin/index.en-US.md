@@ -1,21 +1,21 @@
 ---
-nav:
-  path: /hooks
+title: useFocusWithin
+nav: Hooks
+group:
+  title: Dom
+  order: 6
+order: 19
+toc: content
+demo:
+  cols: 2
 ---
-
-# useFocusWithin
 
 Monitor whether the current focus is within a certain area, Same as css attribute [:focus-within](https://developer.mozilla.org/en-US/docs/Web/CSS/:focus-within).
 
 ## Examples
 
-### Default usage
-
-<code src="./demo/demo1.tsx" />
-
-### Pass in DOM element
-
-<code src="./demo/demo2.tsx" />
+<code src="./demo/demo1.tsx"></code>
+<code src="./demo/demo2.tsx"></code>
 
 ## API
 

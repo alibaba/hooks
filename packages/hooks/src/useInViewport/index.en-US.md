@@ -1,25 +1,22 @@
 ---
-nav:
-  path: /hooks
+title: useInViewport
+nav: Hooks
+group:
+  title: Dom
+  order: 6
+order: 12
+toc: content
+demo:
+  cols: 2
 ---
-
-# useInViewport
 
 Observe whether the element is in the visible area, and the visible area ratio of the element. More information refer to [Intersection Observer API](https://developer.mozilla.org/en-US/docs/Web/API/Intersection_Observer_API).
 
 ## Examples
 
-### Default usage
-
-<code src="./demo/demo1.tsx" />
-
-### Observe the visible area ratio of element
-
-<code src="./demo/demo2.tsx" />
-
-### Listening content scrolling selection menu
-
-<code src="./demo/demo3.tsx" />
+<code src="./demo/demo1.tsx"></code>
+<code src="./demo/demo2.tsx"></code>
+<code src="./demo/demo3.tsx"></code>
 
 ## API
 

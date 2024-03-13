@@ -1,5 +1,5 @@
-import { Pagination, Table } from '@alifd/next';
 import React from 'react';
+import { Pagination, Table } from '@alifd/next';
 import { useFusionTable } from 'ahooks';
 
 interface Item {

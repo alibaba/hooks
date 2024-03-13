@@ -1,9 +1,9 @@
 /**
  * title: Basic usage
- * desc: Supported keyCode and alias in keyboard events, pressing ArrowUp or ArrowDown to show effect.
+ * description: Supported keyCode and alias in keyboard events, pressing ArrowUp or ArrowDown to show effect.
  *
  * title.zh-CN: 基础用法
- * desc.zh-CN: 支持键盘事件中的 keyCode 和别名，请按 ArrowUp 或 ArrowDown 键进行演示。
+ * description.zh-CN: 支持键盘事件中的 keyCode 和别名，请按 ArrowUp 或 ArrowDown 键进行演示。
  */
 
 import React, { useState } from 'react';

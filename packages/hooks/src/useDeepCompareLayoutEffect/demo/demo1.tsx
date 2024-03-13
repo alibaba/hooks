@@ -1,8 +1,9 @@
-import { useDeepCompareLayoutEffect } from 'ahooks';
-import React, { useLayoutEffect, useState, useRef } from 'react';
+import React, { useLayoutEffect, useRef } from 'react';
+import { Button, Space } from 'antd';
+import { useDeepCompareLayoutEffect, useUpdate } from 'ahooks';
 
 export default () => {
-  const [, setCount] = useState(0);
+  const update = useUpdate();
   const effectCountRef = useRef(0);
   const deepCompareCountRef = useRef(0);
 
@@ -12,20 +13,17 @@ export default () => {
 
   useDeepCompareLayoutEffect(() => {
     deepCompareCountRef.current += 1;
+
     return () => {
       // do something
     };
   }, [{}]);
 
   return (
-    <div>
+    <Space direction="vertical">
       <p>effectCount: {effectCountRef.current}</p>
       <p>deepCompareCount: {deepCompareCountRef.current}</p>
-      <p>
-        <button type="button" onClick={() => setCount((c) => c + 1)}>
-          reRender
-        </button>
-      </p>
-    </div>
+      <Button onClick={update}>reRender</Button>
+    </Space>
   );
 };

@@ -1,9 +1,14 @@
 ---
-nav:
-  path: /hooks
+title: useEventEmitter
+nav: Hooks
+group:
+  title: Advanced
+  order: 7
+order: 3
+toc: content
+demo:
+  cols: 2
 ---
-
-# useEventEmitter
 
 在多个组件之间进行事件通知有时会让人非常头疼，借助 EventEmitter ，可以让这一过程变得更加简单。
 
@@ -33,9 +38,7 @@ event$.useSubscription(val => {
 
 ## 代码演示
 
-### 父组件向子组件共享事件
-
-<code src="./demo/demo1.tsx" />
+<code src="./demo/demo1.tsx"></code>
 
 ## API
 

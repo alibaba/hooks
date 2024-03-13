@@ -1,6 +1,14 @@
+/**
+ * title: Combination keys
+ * description:
+ *
+ * title.zh-CN: 监听组合按键
+ * description.zh-CN:
+ */
+
+import React, { useState } from 'react';
 import { CheckOutlined } from '@ant-design/icons';
 import { useKeyPress } from 'ahooks';
-import React, { useState } from 'react';
 
 export default () => {
   const [state, setState] = useState<number>();

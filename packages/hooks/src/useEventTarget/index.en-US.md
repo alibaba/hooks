@@ -1,21 +1,21 @@
 ---
-nav:
-  path: /hooks
+title: useEventTarget
+nav: Hooks
+group:
+  title: Dom
+  order: 6
+order: 5
+toc: content
+demo:
+  cols: 2
 ---
-
-# useEventTarget
 
 A hook that encapsulates `onChange` and `value` logic for form controls that obtains value through `event.target.value`. It also supports custom transformer and reset functionalities.
 
 ## Example
 
-### Basic Usage
-
-<code src="./demo/demo1.tsx" />
-
-### Custom transformer
-
-<code src="./demo/demo2.tsx" />
+<code src="./demo/demo1.tsx"></code>
+<code src="./demo/demo2.tsx"></code>
 
 ## API
 

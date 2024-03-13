@@ -1,9 +1,14 @@
 ---
-nav:
-  path: /hooks
+title: useMemoizedFn
+nav: Hooks
+group:
+  title: Advanced
+  order: 7
+order: 6
+toc: content
+demo:
+  cols: 2
 ---
-
-# useMemoizedFn
 
 持久化 function 的 Hook，一般情况下，可以使用 useMemoizedFn 完全代替 useCallback，特殊情况见 [FAQ](#faq)。
 
@@ -31,13 +36,8 @@ const func = useMemoizedFn(() => {
 
 ## 代码演示
 
-### 基础用法
-
-<code src="./demo/demo1.tsx" />
-
-### 性能提升
-
-<code src="./demo/demo2.tsx" />
+<code src="./demo/demo1.tsx"></code>
+<code src="./demo/demo2.tsx"></code>
 
 ## API
 

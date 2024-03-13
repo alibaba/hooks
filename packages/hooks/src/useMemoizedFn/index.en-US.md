@@ -1,9 +1,14 @@
 ---
-nav:
-  path: /hooks
+title: useMemoizedFn
+nav: Hooks
+group:
+  title: Advanced
+  order: 7
+order: 6
+toc: content
+demo:
+  cols: 2
 ---
-
-# useMemoizedFn
 
 Hooks for persistent functions. In general, useMemoizedFn can be used instead of useCallback. See [FAQ](#faq) for special cases.
 
@@ -31,13 +36,8 @@ const func = useMemoizedFn(() => {
 
 ## Examples
 
-### Default usage
-
-<code src="./demo/demo1.tsx" />
-
-### Performance Improvement
-
-<code src="./demo/demo2.tsx" />
+<code src="./demo/demo1.tsx"></code>
+<code src="./demo/demo2.tsx"></code>
 
 ## API
 

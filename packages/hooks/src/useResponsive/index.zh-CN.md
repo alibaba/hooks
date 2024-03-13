@@ -1,17 +1,20 @@
 ---
-nav:
-  path: /hooks
+title: useResponsive
+nav: Hooks
+group:
+  title: Dom
+  order: 6
+order: 16
+toc: content
+demo:
+  cols: 2
 ---
-
-# useResponsive
 
 获取响应式信息。
 
 ## 代码演示
 
-### 在组件中获取响应式信息
-
-<code src="./demo/demo1.tsx" />
+<code src="./demo/demo1.tsx"></code>
 
 ## API
 
@@ -26,7 +29,7 @@ function configResponsive(config: ResponsiveConfig): void;
 function useResponsive(): ResponsiveInfo;
 ```
 
-### 配置
+## 配置
 
 默认的响应式配置和 bootstrap 是一致的：
 

@@ -1,25 +1,22 @@
 ---
-nav:
-  path: /hooks
+title: useCookieState
+nav: Hooks
+group:
+  title: State
+  order: 4
+order: 5
+toc: content
+demo:
+  cols: 2
 ---
-
-# useCookieState
 
 一个可以将状态存储在 Cookie 中的 Hook 。
 
 ## 代码演示
 
-### 将 state 存储在 Cookie 中
-
-<code src="./demo/demo1.tsx" />
-
-### setState 可以接收函数
-
-<code src="./demo/demo2.tsx" />
-
-### 使用 option 配置 Cookie
-
-<code src="./demo/demo3.tsx" />
+<code src="./demo/demo1.tsx"></code>
+<code src="./demo/demo2.tsx"></code>
+<code src="./demo/demo3.tsx"></code>
 
 ## API
 

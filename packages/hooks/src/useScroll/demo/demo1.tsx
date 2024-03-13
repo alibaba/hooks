@@ -1,9 +1,9 @@
 /**
  * title: Basic Usage
- * desc: Try to scroll the box below.
+ * description: Try to scroll the box below.
  *
  * title.zh-CN: 基础用法
- * desc.zh-CN: 尝试滚动一下文字内容。
+ * description.zh-CN: 尝试滚动一下文字内容。
  */
 
 import React, { useRef } from 'react';
@@ -12,6 +12,7 @@ import { useScroll } from 'ahooks';
 export default () => {
   const ref = useRef(null);
   const scroll = useScroll(ref);
+
   return (
     <>
       <p>{JSON.stringify(scroll)}</p>
@@ -19,7 +20,9 @@ export default () => {
         style={{
           height: '160px',
           width: '160px',
-          border: 'solid 1px #000',
+          border: '1px dashed #ccc',
+          borderRadius: 4,
+          marginTop: 8,
           overflow: 'scroll',
           whiteSpace: 'nowrap',
           fontSize: '32px',

@@ -21,7 +21,7 @@ interface Result {
 
 const getTableData = (
   { current, pageSize, sorter, filters, extra },
-  formData: Object,
+  formData: object,
 ): Promise<Result> => {
   console.log(sorter, filters, extra);
   let query = `page=${current}&size=${pageSize}`;

@@ -1,4 +1,5 @@
 import React from 'react';
+import { Button } from 'antd';
 import { useInfiniteScroll, useRequest } from 'ahooks';
 
 interface Result {
@@ -63,25 +64,23 @@ export default () => {
           {data?.list?.map((item) => (
             <div key={item} style={{ padding: 12, border: '1px solid #f5f5f5' }}>
               item-{item}
-              <button
+              <Button
                 style={{ marginLeft: 8 }}
                 onClick={() => remove(item)}
                 disabled={deleteLading && deleteParams[0] === item}
               >
                 Delete
-              </button>
+              </Button>
             </div>
           ))}
         </div>
       )}
-
       <div style={{ marginTop: 8 }}>
         {data?.nextId && (
-          <button type="button" onClick={loadMore} disabled={loadingMore}>
+          <Button onClick={loadMore} disabled={loadingMore}>
             {loadingMore ? 'Loading more...' : 'Click to load more'}
-          </button>
+          </Button>
         )}
-
         {!data?.nextId && <span>No more data</span>}
       </div>
     </div>

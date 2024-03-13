@@ -1,14 +1,14 @@
 /**
  * title: Basic usage
- * desc: The function is called right before the component is unmounted.
+ * description: The function is called right before the component is unmounted.
  *
  * title.zh-CN: 基础用法
- * desc.zh-CN: 在组件卸载时，执行函数。
+ * description.zh-CN: 在组件卸载时，执行函数。
  */
 
-import { useBoolean, useUnmount } from 'ahooks';
-import { message } from 'antd';
 import React from 'react';
+import { Button, message } from 'antd';
+import { useBoolean, useUnmount } from 'ahooks';
 
 const MyComponent = () => {
   useUnmount(() => {
@@ -23,9 +23,9 @@ export default () => {
 
   return (
     <>
-      <button type="button" onClick={toggle}>
+      <Button style={{ marginBottom: 8 }} onClick={toggle}>
         {state ? 'unmount' : 'mount'}
-      </button>
+      </Button>
       {state && <MyComponent />}
     </>
   );

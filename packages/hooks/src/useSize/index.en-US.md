@@ -1,21 +1,21 @@
 ---
-nav:
-  path: /hooks
+title: useSize
+nav: Hooks
+group:
+  title: Dom
+  order: 6
+order: 18
+toc: content
+demo:
+  cols: 2
 ---
-
-# useSize
 
 A hook that observes size change of an element.
 
 ## Examples
 
-### Default usage
-
-<code src="./demo/demo1.tsx" />
-
-### Pass in the DOM element
-
-<code src="./demo/demo2.tsx" />
+<code src="./demo/demo1.tsx"></code>
+<code src="./demo/demo2.tsx"></code>
 
 ## API
 

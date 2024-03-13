@@ -1,21 +1,21 @@
 ---
-nav:
-  path: /hooks
+title: useEventTarget
+nav: Hooks
+group:
+  title: Dom
+  order: 6
+order: 5
+toc: content
+demo:
+  cols: 2
 ---
-
-# useEventTarget
 
 常见表单控件(通过 e.target.value 获取表单值) 的 onChange 跟 value 逻辑封装，支持自定义值转换和重置功能。
 
 ## 代码演示
 
-### 基础用法
-
-<code src="./demo/demo1.tsx" />
-
-### 自定义转换函数
-
-<code src="./demo/demo2.tsx" />
+<code src="./demo/demo1.tsx"></code>
+<code src="./demo/demo2.tsx"></code>
 
 ## API
 

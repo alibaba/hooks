@@ -1,13 +1,13 @@
 /**
  * title: Default usage
- * desc: Tracking cursor position.
+ * description: Tracking cursor position.
  *
  * title.zh-CN: 基础用法
- * desc.zh-CN: 获取鼠标位置。
+ * description.zh-CN: 获取鼠标位置。
  */
 
-import { useMouse } from 'ahooks';
 import React from 'react';
+import { useMouse } from 'ahooks';
 
 export default () => {
   const mouse = useMouse();

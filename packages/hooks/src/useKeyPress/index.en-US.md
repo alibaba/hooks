@@ -1,41 +1,26 @@
 ---
-nav:
-  path: /hooks
+title: useKeyPress
+nav: Hooks
+group:
+  title: Dom
+  order: 6
+order: 13
+toc: content
+demo:
+  cols: 2
 ---
-
-# useKeyPress
 
 Listen for the keyboard press, support key combinations, and support alias.
 
 ## Examples
 
-### Basic usage
-
-<code src="./demo/demo1.tsx" />
-
-### Combination keys
-
-<code src="./demo/demo6.tsx" />
-
-### Exact match
-
-<code src="./demo/demo7.tsx"/>
-
-### Multiple keys
-
-<code src="./demo/demo3.tsx" />
-
-### Get the trigger key
-
-<code src="./demo/demo8.tsx" />
-
-### Custom method
-
-<code src="./demo/demo4.tsx" />
-
-### Custom DOM
-
-<code src="./demo/demo5.tsx" />
+<code src="./demo/demo1.tsx"></code>
+<code src="./demo/demo6.tsx"></code>
+<code src="./demo/demo7.tsx"></code>
+<code src="./demo/demo3.tsx"></code>
+<code src="./demo/demo8.tsx"></code>
+<code src="./demo/demo4.tsx"></code>
+<code src="./demo/demo5.tsx"></code>
 
 ## API
 

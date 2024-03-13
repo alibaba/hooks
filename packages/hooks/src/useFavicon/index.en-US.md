@@ -1,17 +1,20 @@
 ---
-nav:
-  path: /hooks
+title: useFavicon
+nav: Hooks
+group:
+  title: Dom
+  order: 6
+order: 8
+toc: content
+demo:
+  cols: 2
 ---
-
-# useFavicon
 
 A hook that set the favicon of the page.
 
 ## Example
 
-### Basic Usage
-
-<code src="./demo/demo1.tsx" />
+<code src="./demo/demo1.tsx"></code>
 
 ## API
 
