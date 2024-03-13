@@ -27,6 +27,7 @@ const useAntdTable = <TData extends Data, TParams extends Params>(
   } = options;
 
   const result = usePagination<TData, TParams>(service, {
+    ready,
     manual: true,
     ...rest,
     onSuccess(...args) {
