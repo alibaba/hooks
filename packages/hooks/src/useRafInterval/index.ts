@@ -1,43 +1,7 @@
 import { useCallback, useEffect, useRef } from 'react';
 import useLatest from '../useLatest';
 import { isNumber } from '../utils';
-
-interface Handle {
-  id: number | ReturnType<typeof setInterval>;
-}
-
-const setRafInterval = function (callback: () => void, delay: number = 0): Handle {
-  if (typeof requestAnimationFrame === typeof undefined) {
-    return {
-      id: setInterval(callback, delay),
-    };
-  }
-  let start = Date.now();
-  const handle: Handle = {
-    id: 0,
-  };
-  const loop = () => {
-    const current = Date.now();
-    if (current - start >= delay) {
-      callback();
-      start = Date.now();
-    }
-    handle.id = requestAnimationFrame(loop);
-  };
-  handle.id = requestAnimationFrame(loop);
-  return handle;
-};
-
-function cancelAnimationFrameIsNotDefined(t: any): t is ReturnType<typeof setInterval> {
-  return typeof cancelAnimationFrame === typeof undefined;
-}
-
-const clearRafInterval = function (handle: Handle) {
-  if (cancelAnimationFrameIsNotDefined(handle.id)) {
-    return clearInterval(handle.id);
-  }
-  cancelAnimationFrame(handle.id);
-};
+import { clearRafInterval, setRafInterval, type Handle } from '../utils/rafTimer';
 
 function useRafInterval(
   fn: () => void,

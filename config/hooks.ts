@@ -87,6 +87,7 @@ export const menus = [
       'useDrop',
       'useEventTarget',
       'useExternal',
+      'useIsScrolling',
       'useTitle',
       'useFavicon',
       'useFullscreen',
