@@ -64,18 +64,19 @@ export function createUseStorageState(getStorage: () => Storage | undefined) {
     }, [key]);
 
     const updateState = (value?: SetState<T>) => {
-      const currentState = isFunction(value) ? value(state) : value;
-      setState(currentState);
-
-      if (isUndef(currentState)) {
-        storage?.removeItem(key);
-      } else {
-        try {
-          storage?.setItem(key, serializer(currentState));
-        } catch (e) {
-          console.error(e);
+      setState((preState) => {
+        const newState = isFunction(value) ? value(preState) : value;
+        if (isUndef(newState)) {
+          storage?.removeItem(key);
+        } else {
+          try {
+            storage?.setItem(key, serializer(newState));
+          } catch (e) {
+            console.error(e);
+          }
         }
-      }
+        return newState;
+      });
     };
 
     return [state, useMemoizedFn(updateState)] as const;
