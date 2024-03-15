@@ -20,15 +20,16 @@ nav:
 ## API
 
 ```typescript
-const [state, setState] = useSetState<T>(initialState);
+const [state, setState, resetState] = useSetState<T>(initialState);
 ```
 
 ### Result
 
-| 参数     | 说明         | 类型                                                                                      | 默认值 |
-| -------- | ------------ | ----------------------------------------------------------------------------------------- | ------ |
-| state    | 当前状态     | `T`                                                                                       | -      |
-| setState | 设置当前状态 | `(state: Partial<T> \| null) => void` \| `((prevState: T) => Partial<T> \| null) => void` | -      |
+| 参数       | 说明         | 类型                                                                                      | 默认值 |
+| ---------- | ------------ | ----------------------------------------------------------------------------------------- | ------ |
+| state      | 当前状态     | `T`                                                                                       | -      |
+| setState   | 设置当前状态 | `(state: Partial<T> \| null) => void` \| `((prevState: T) => Partial<T> \| null) => void` | -      |
+| resetState | 重置当前状态 | `() => void`                                                                              | -      |
 
 ### Params
 
