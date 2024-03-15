@@ -163,7 +163,7 @@ const useAntdTable = <TData extends Data, TParams extends Params>(
       form.resetFields();
     }
     _submit({
-      ...(defaultParams?.[0] || {}),
+      ...{ ...params[0], ...defaultParams?.[0] },
       pageSize: options.defaultPageSize || options.defaultParams?.[0]?.pageSize || 10,
       current: 1,
     });
