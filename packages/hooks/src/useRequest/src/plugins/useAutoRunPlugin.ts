@@ -1,6 +1,7 @@
 import { useRef } from 'react';
 import useUpdateEffect from '../../../useUpdateEffect';
 import type { Plugin } from '../types';
+import { Trigger } from '../types';
 
 // support refreshDeps & ready
 const useAutoRunPlugin: Plugin<any, any[]> = (
@@ -13,6 +14,7 @@ const useAutoRunPlugin: Plugin<any, any[]> = (
   useUpdateEffect(() => {
     if (!manual && ready) {
       hasAutoRun.current = true;
+      fetchInstance.setTrigger(Trigger.AUTO);
       fetchInstance.run(...defaultParams);
     }
   }, [ready]);
@@ -26,6 +28,7 @@ const useAutoRunPlugin: Plugin<any, any[]> = (
       if (refreshDepsAction) {
         refreshDepsAction();
       } else {
+        fetchInstance.setTrigger(Trigger.REFRESH_DEPS);
         fetchInstance.refresh();
       }
     }
