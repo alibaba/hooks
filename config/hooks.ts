@@ -98,6 +98,7 @@ export const menus = [
       'useMouse',
       'useResponsive',
       'useScroll',
+      'useBounding',
       'useSize',
       'useFocusWithin',
     ],
