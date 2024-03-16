@@ -7,12 +7,12 @@ import useIsomorphicLayoutEffectWithTarget from '../utils/useIsomorphicLayoutEff
 type Size = { width: number; height: number };
 
 function useSize(target: BasicTarget): Size | undefined {
-  const [state, setState] = useRafState<Size | undefined>(
-    () => {
-      const el = getTargetElement(target);
-      return el ? { width: el.clientWidth, height: el.clientHeight } : undefined
-    },
-  );
+  const [state, setState] = useRafState<Size | undefined>(() => {
+    const el = getTargetElement(target);
+    return el
+      ? { width: el.getBoundingClientRect().width, height: el.getBoundingClientRect().height }
+      : undefined;
+  });
 
   useIsomorphicLayoutEffectWithTarget(
     () => {
@@ -24,8 +24,13 @@ function useSize(target: BasicTarget): Size | undefined {
 
       const resizeObserver = new ResizeObserver((entries) => {
         entries.forEach((entry) => {
-          const { clientWidth, clientHeight } = entry.target;
-          setState({ width: clientWidth, height: clientHeight });
+          // clientWidth: 返回表示元素可见宽度的整数值。
+          // getBoundingClientRect -> width: 元素的真实宽度
+          const { width, height } = (entry.target as HTMLElement)?.getBoundingClientRect() ?? {
+            width: 0,
+            height: 0,
+          };
+          setState({ width, height });
         });
       });
       resizeObserver.observe(el);
