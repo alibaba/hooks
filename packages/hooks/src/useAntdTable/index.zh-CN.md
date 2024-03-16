@@ -73,7 +73,7 @@ nav:
 ```typescript
 
 type Data = { total: number; list: any[] };
-type Params = [{ current: number; pageSize: number, filter?: any, sorter?: any, extra?: any }, { [key: string]: any }];
+type Params = [{ current: number; pageSize: number, filters?: any, sorter?: any, extra?: any }, { [key: string]: any }];
 
 const {
   ...,
