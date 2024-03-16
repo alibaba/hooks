@@ -1,5 +1,4 @@
-import { act, renderHook, waitFor } from '@testing-library/react';
-import { fireEvent } from '@testing-library/react';
+import { act, renderHook, fireEvent, waitFor } from '@testing-library/react';
 import useRequest from '../index';
 import { request } from '../../utils/testingHelpers';
 
@@ -22,7 +21,7 @@ describe('useRefreshOnWindowFocusPlugin', () => {
     });
     await waitFor(() => expect(hook.result.current.loading).toBe(false));
     act(() => {
-      fireEvent.focus(window);
+      fireEvent.focus(document);
     });
     expect(hook.result.current.loading).toBe(true);
 
@@ -32,7 +31,7 @@ describe('useRefreshOnWindowFocusPlugin', () => {
     await waitFor(() => expect(hook.result.current.loading).toBe(false));
     act(() => {
       jest.advanceTimersByTime(3000);
-      fireEvent.focus(window);
+      fireEvent.focus(document);
     });
     expect(hook.result.current.loading).toBe(true);
   });
@@ -59,7 +58,7 @@ describe('useRefreshOnWindowFocusPlugin', () => {
     expect(hook2.result.current.loading).toBe(false);
 
     act(() => {
-      fireEvent.focus(window);
+      fireEvent.focus(document);
     });
 
     expect(hook1.result.current.loading).toBe(true);
@@ -76,11 +75,59 @@ describe('useRefreshOnWindowFocusPlugin', () => {
 
     act(() => {
       jest.advanceTimersByTime(3000);
-      fireEvent.focus(window);
+      fireEvent.focus(document);
     });
 
     expect(hook1.result.current.loading).toBe(false);
     // hook2 should not unsubscribe
     expect(hook2.result.current.loading).toBe(true);
+  });
+
+  it('feat: support subscribe to certain kind of event - visibilitychange', async () => {
+    const service = jest.fn();
+    service.mockImplementation(request);
+    act(() => {
+      hook = setUp(service, {
+        refreshOnWindowFocus: true,
+        focusTimespan: 5000,
+        focusEvents: ['visibilitychange'],
+      });
+    });
+    expect(hook.result.current.loading).toEqual(true);
+    await waitFor(() => !hook.result.current.loading);
+    expect(service).toBeCalledTimes(1);
+    document.dispatchEvent(new Event('visibilitychange'));
+    await waitFor(() => hook.result.current.loading);
+    expect(service).toBeCalledTimes(2);
+    act(() => {
+      jest.advanceTimersByTime(6000);
+      fireEvent.focus(document);
+    });
+    // focus should not trigger service
+    expect(service).toBeCalledTimes(2);
+  });
+
+  it('feat: support subscribe to certain kind of event - focus', async () => {
+    const service = jest.fn();
+    service.mockImplementation(request);
+    act(() => {
+      hook = setUp(service, {
+        refreshOnWindowFocus: true,
+        focusTimespan: 5000,
+        focusEvents: ['focus'],
+      });
+    });
+    expect(hook.result.current.loading).toEqual(true);
+    await waitFor(() => !hook.result.current.loading);
+    expect(service).toBeCalledTimes(1);
+    fireEvent.focus(document);
+    await waitFor(() => hook.result.current.loading);
+    expect(service).toBeCalledTimes(2);
+    act(() => {
+      jest.advanceTimersByTime(6000);
+      document.dispatchEvent(new Event('visibilitychange'));
+    });
+    // visibilitychange should not trigger service
+    expect(service).toBeCalledTimes(2);
   });
 });
