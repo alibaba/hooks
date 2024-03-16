@@ -242,4 +242,53 @@ describe('useHistoryTravel', () => {
     expect(hook.result.current.backLength).toBe(0);
     expect(hook.result.current.value).toBe(90);
   });
+
+  it('should work with manual', async () => {
+    const hook = renderHook(() => useHistoryTravel(0, { manual: true }));
+
+    act(() => {
+      hook.result.current.setValue(1);
+    });
+    // <0>
+    // 1
+    expect(hook.result.current.forwardLength).toBe(0);
+    expect(hook.result.current.backLength).toBe(0);
+    expect(hook.result.current.value).toBe(1);
+
+    act(() => {
+      hook.result.current.commit();
+    });
+    // 0 <1>
+    // 1
+    expect(hook.result.current.forwardLength).toBe(0);
+    expect(hook.result.current.backLength).toBe(1);
+    expect(hook.result.current.value).toBe(1);
+
+    act(() => {
+      hook.result.current.commit(2);
+    });
+    // 0 1 <2>
+    // 2
+    expect(hook.result.current.forwardLength).toBe(0);
+    expect(hook.result.current.backLength).toBe(2);
+    expect(hook.result.current.value).toBe(2);
+
+    act(() => {
+      hook.result.current.back();
+    });
+    // 0 <1> 2
+    // 1
+    expect(hook.result.current.forwardLength).toBe(1);
+    expect(hook.result.current.backLength).toBe(1);
+    expect(hook.result.current.value).toBe(1);
+
+    act(() => {
+      hook.result.current.forward();
+    });
+    // 0 1 <2>
+    // 2
+    expect(hook.result.current.forwardLength).toBe(0);
+    expect(hook.result.current.backLength).toBe(2);
+    expect(hook.result.current.value).toBe(2);
+  });
 });
