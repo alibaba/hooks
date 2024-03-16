@@ -61,6 +61,8 @@ describe('useVirtualList', () => {
 
       expect(hook.result.current[0].length).toBe(10);
       expect(container.scrollTop).toBe(20 * 30);
+      expect(hook.result.current[0][0].data).toBe(20);
+      expect(hook.result.current[0][0].index).toBe(20);
     });
 
     it('test with dynamic height', async () => {
