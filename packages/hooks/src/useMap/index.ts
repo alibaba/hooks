@@ -18,6 +18,9 @@ function useMap<K, T>(initialValue?: Iterable<readonly [K, T]>) {
   };
 
   const remove = (key: K) => {
+    if (!map.get(key)) {
+      return;
+    }
     setMap((prev) => {
       const temp = new Map(prev);
       temp.delete(key);
