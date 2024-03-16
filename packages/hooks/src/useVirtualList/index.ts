@@ -51,7 +51,9 @@ const useVirtualList = <T = any>(list: T[], options: Options<T>) => {
 
   const getOffset = (scrollTop: number) => {
     if (isNumber(itemHeightRef.current)) {
-      return Math.floor(scrollTop / itemHeightRef.current) + 1;
+      const maxOffset = list.length;
+      const calcOffset = Math.floor(scrollTop / itemHeightRef.current);
+      return Math.min(maxOffset, calcOffset) + 1;
     }
     let sum = 0;
     let offset = 0;
