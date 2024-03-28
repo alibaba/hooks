@@ -19,6 +19,7 @@ export const menus = [
     title: 'Scene',
     children: [
       'useAntdTable',
+      'useAntdTableSelection',
       'useFusionTable',
       'useInfiniteScroll',
       'usePagination',
