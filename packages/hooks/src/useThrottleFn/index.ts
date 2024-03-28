@@ -8,7 +8,7 @@ import isDev from '../utils/isDev';
 
 type noop = (...args: any[]) => any;
 
-function useThrottleFn<T extends noop>(fn: T, options?: ThrottleOptions) {
+function useThrottleFn<T extends noop>(fn: T, options: ThrottleOptions = {}) {
   if (isDev) {
     if (!isFunction(fn)) {
       console.error(`useThrottleFn expected parameter is a function, got ${typeof fn}`);
@@ -17,7 +17,8 @@ function useThrottleFn<T extends noop>(fn: T, options?: ThrottleOptions) {
 
   const fnRef = useLatest(fn);
 
-  const wait = options?.wait ?? 1000;
+  // https://github.com/alibaba/hooks/issues/2331
+  const wait = 'wait' in options ? options.wait : 1000;
 
   const throttled = useMemo(
     () =>

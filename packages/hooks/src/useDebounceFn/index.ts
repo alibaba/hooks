@@ -8,7 +8,7 @@ import isDev from '../utils/isDev';
 
 type noop = (...args: any[]) => any;
 
-function useDebounceFn<T extends noop>(fn: T, options?: DebounceOptions) {
+function useDebounceFn<T extends noop>(fn: T, options: DebounceOptions = {}) {
   if (isDev) {
     if (!isFunction(fn)) {
       console.error(`useDebounceFn expected parameter is a function, got ${typeof fn}`);
@@ -17,7 +17,8 @@ function useDebounceFn<T extends noop>(fn: T, options?: DebounceOptions) {
 
   const fnRef = useLatest(fn);
 
-  const wait = options?.wait ?? 1000;
+  // https://github.com/alibaba/hooks/issues/2331
+  const wait = 'wait' in options ? options.wait : 1000;
 
   const debounced = useMemo(
     () =>
