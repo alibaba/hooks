@@ -108,29 +108,6 @@ export default defineConfig({
     },
     { rel: 'stylesheet', href: '/style.css' },
   ],
-  scripts: [
-    `const insertVersion = function() {
-      const logo = document.querySelector('.__dumi-default-navbar-logo');
-      if (!logo) return;
-      const dom = document.createElement('span');
-      dom.id = 'logo-version';
-      dom.innerHTML = '${packages.version}';
-      logo.parentNode.insertBefore(dom, logo.nextSibling);
-    };
-    const observer = new MutationObserver((mutationsList, observer) => {
-      for (const mutation of mutationsList) {
-        if (mutation.type === 'childList') {
-          const logoVersion = document.querySelector('#logo-version');
-          if (logoVersion) {
-            observer.disconnect();
-          } else {
-            insertVersion();
-          }
-        }
-      }
-    });
-    observer.observe(document.body, { childList: true, subtree: true });`,
-  ],
   extraBabelPlugins: [
     [
       'babel-plugin-import',
