@@ -27,12 +27,12 @@ const EXTERNAL_USED_COUNT: Record<string, number> = {};
 
 export type Status = 'unset' | 'loading' | 'ready' | 'error';
 
-interface loadResult {
+interface LoadResult {
   ref: Element;
   status: Status;
 }
-
-const loadScript = (path: string, props = {}): loadResult => {
+type LoadExternal = <T>(path: string, props: Partial<T> | undefined) => LoadResult;
+const loadScript: LoadExternal = (path, props = {}) => {
   const script = document.querySelector(`script[src="${path}"]`);
 
   if (!script) {
@@ -58,7 +58,7 @@ const loadScript = (path: string, props = {}): loadResult => {
   };
 };
 
-const loadCss = (path: string, props = {}): loadResult => {
+const loadCss: LoadExternal = (path, props = {}) => {
   const css = document.querySelector(`link[href="${path}"]`);
   if (!css) {
     const newCss = document.createElement('link');
