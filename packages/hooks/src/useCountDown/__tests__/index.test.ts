@@ -1,5 +1,6 @@
 import { act, renderHook } from '@testing-library/react';
-import useCountDown, { Options } from '../index';
+import type { Options } from '../index';
+import useCountDown from '../index';
 
 const setup = (options: Options = {}) =>
   renderHook((props: Options = options) => useCountDown(props));
@@ -234,5 +235,31 @@ describe('useCountDown', () => {
   it('timeLeft should be 0 when leftTime less than current time', () => {
     const { result } = setup({ leftTime: -5 * 1000 });
     expect(result.current[0]).toBe(0);
+  });
+
+  it('run with timeLeft should not be reset after targetDate changed', async () => {
+    let targetDate = Date.now() + 8000;
+
+    const { result, rerender } = setup({
+      leftTime: 6000,
+      targetDate,
+    });
+    expect(result.current[0]).toBe(6000);
+
+    act(() => {
+      jest.advanceTimersByTime(2000);
+    });
+    rerender({
+      leftTime: 6000,
+      targetDate: targetDate,
+    });
+    expect(result.current[0]).toBe(4000);
+
+    targetDate = Date.now() + 9000;
+    rerender({
+      leftTime: 6000,
+      targetDate: targetDate,
+    });
+    expect(result.current[0]).toBe(4000);
   });
 });
