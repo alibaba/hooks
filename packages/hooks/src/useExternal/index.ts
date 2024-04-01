@@ -31,7 +31,9 @@ interface LoadResult {
   ref: Element;
   status: Status;
 }
+
 type LoadExternal = <T>(path: string, props: Partial<T> | undefined) => LoadResult;
+
 const loadScript: LoadExternal = (path, props = {}) => {
   const script = document.querySelector(`script[src="${path}"]`);
 
