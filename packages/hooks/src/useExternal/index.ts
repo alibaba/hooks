@@ -32,7 +32,7 @@ interface LoadResult {
   status: Status;
 }
 
-type LoadExternal = <T>(path: string, props: Partial<T> | undefined) => LoadResult;
+type LoadExternal = <T>(path: string, props?: Partial<T>) => LoadResult;
 
 const loadScript: LoadExternal = (path, props = {}) => {
   const script = document.querySelector(`script[src="${path}"]`);
