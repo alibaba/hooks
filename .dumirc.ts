@@ -4,7 +4,7 @@ const packages = require('./packages/hooks/package.json');
 
 export default defineConfig({
   mfsu: false,
-  ssr: process.env.NODE_ENV === 'development' ? false : {},
+  ssr: false,
   manifest: {},
   alias: {
     ahooks: process.cwd() + '/packages/hooks/src/index.ts',
