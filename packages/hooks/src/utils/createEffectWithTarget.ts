@@ -40,8 +40,8 @@ const createEffectWithTarget = (useEffectType: typeof useEffect | typeof useLayo
 
       if (
         els.length !== lastElementRef.current.length ||
-        !depsAreSame(els, lastElementRef.current) ||
-        !depsAreSame(deps, lastDepsRef.current)
+        !depsAreSame(lastElementRef.current, els) ||
+        !depsAreSame(lastDepsRef.current, deps)
       ) {
         unLoadRef.current?.();
 

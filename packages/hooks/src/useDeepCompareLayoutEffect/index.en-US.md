@@ -10,7 +10,7 @@ demo:
   cols: 2
 ---
 
-Usage is the same as `useLayoutEffect`, but deps are compared with [lodash.isEqual](https://lodash.com/docs/4.17.15#isEqual).
+Usage is the same as `useLayoutEffect`, but deps are compared with [react-fast-compare](https://www.npmjs.com/package/react-fast-compare).
 
 ## Examples
 

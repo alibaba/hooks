@@ -10,7 +10,7 @@ demo:
   cols: 2
 ---
 
-用法与 useEffect 一致，但 deps 通过 [lodash isEqual](https://lodash.com/docs/4.17.15#isEqual) 进行深比较。
+用法与 useEffect 一致，但 deps 通过 [react-fast-compare](https://www.npmjs.com/package/react-fast-compare) 进行深比较。
 
 ## 代码演示
 
