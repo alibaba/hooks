@@ -40,6 +40,7 @@ export const menus = [
   {
     title: 'State',
     children: [
+      'useProState',
       'useSetState',
       'useBoolean',
       'useToggle',
