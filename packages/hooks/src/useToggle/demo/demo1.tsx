@@ -1,12 +1,13 @@
 /**
  * title: Basic usage
- * desc: Default value is boolean，alike useBoolean.
+ * description: Default value is boolean，alike useBoolean.
  *
  * title.zh-CN: 基础用法
- * desc.zh-CN: 默认为 boolean 切换，基础用法与 useBoolean 一致。
+ * description.zh-CN: 默认为 boolean 切换，基础用法与 useBoolean 一致。
  */
 
 import React from 'react';
+import { Button, Space } from 'antd';
 import { useToggle } from 'ahooks';
 
 export default () => {
@@ -14,18 +15,12 @@ export default () => {
 
   return (
     <div>
-      <p>Effects：{`${state}`}</p>
-      <p>
-        <button type="button" onClick={toggle}>
-          Toggle
-        </button>
-        <button type="button" onClick={setLeft} style={{ margin: '0 8px' }}>
-          Toggle False
-        </button>
-        <button type="button" onClick={setRight}>
-          Toggle True
-        </button>
-      </p>
+      <p>effects: {`${state}`}</p>
+      <Space style={{ marginTop: 8 }} wrap>
+        <Button onClick={toggle}>Toggle</Button>
+        <Button onClick={setLeft}>Toggle False</Button>
+        <Button onClick={setRight}>Toggle True</Button>
+      </Space>
     </div>
   );
 };

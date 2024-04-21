@@ -1,21 +1,21 @@
 ---
-nav:
-  path: /hooks
+title: useEventListener
+nav: Hooks
+group:
+  title: Dom
+  order: 6
+order: 1
+toc: content
+demo:
+  cols: 2
 ---
-
-# useEventListener
 
 Use addEventListener elegant by Hook.
 
 ## Examples
 
-### Default usage
-
-<code src="./demo/demo1.tsx" />
-
-### Listen for keydown
-
-<code src="./demo/demo2.tsx" />
+<code src="./demo/demo1.tsx"></code>
+<code src="./demo/demo2.tsx"></code>
 
 ## API
 

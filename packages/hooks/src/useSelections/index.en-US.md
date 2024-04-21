@@ -1,9 +1,14 @@
 ---
-nav:
-  path: /hooks
+title: useSelections
+nav: Hooks
+group:
+  title: Scene
+  order: 2
+order: 9
+toc: content
+demo:
+  cols: 2
 ---
-
-# useSelections
 
 This hook is used for Checkbox group, supports multiple selection, single selection, select-all, select-none and semi-selected etc.
 
@@ -11,7 +16,7 @@ This hook is used for Checkbox group, supports multiple selection, single select
 
 ### Default usage
 
-<code src="./demo/demo1.tsx" />
+<code src="./demo/demo1.tsx"></code>
 
 ## API
 

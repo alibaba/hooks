@@ -1,9 +1,14 @@
 ---
-nav:
-  path: /hooks
+title: useCreation
+nav: Hooks
+group:
+  title: Advanced
+  order: 7
+order: 2
+toc: content
+demo:
+  cols: 2
 ---
-
-# useCreation
 
 `useCreation` is the replacement for `useMemo` or `useRef`.
 
@@ -20,9 +25,7 @@ const b = useCreation(() => new Subject(), []); // By using factory function, Su
 
 ## Examples
 
-### Default usage
-
-<code src="./demo/demo1.tsx" />
+<code src="./demo/demo1.tsx"></code>
 
 ## API
 

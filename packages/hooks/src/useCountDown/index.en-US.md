@@ -1,23 +1,33 @@
 ---
-nav:
-  path: /hooks
+title: useCountDown
+nav: Hooks
+group:
+  title: Scene
+  order: 2
+order: 10
+toc: content
+demo:
+  cols: 2
 ---
-
-# useCountDown
 
 A hook for manage countdown.
 
-## Countdown to target time
+## Examples
 
-<code src="./demo/demo1.tsx" />
+<code src="./demo/demo1.tsx"></code>
+<code src="./demo/demo2.tsx"></code>
+<code src="./demo/demo3.tsx"></code>
 
-## Dynamic config
+### Note
 
-<code src="./demo/demo2.tsx" />
+The precision of useCountDown is milliseconds, which may cause the following problems
 
-## Config leftTime
+- Even if the interval time is set to 1000ms, the update interval of useCountDown may not be exactly 1000ms, but around it.
+- In the second demo, countdown is generally 499x milliseconds at the beginning due to the execution delay of the program.
 
-<code src="./demo/demo3.tsx" />
+If you only need to be accurate to the second, you can use it like this `Math.round(countdown / 1000)`.
+
+If both `leftTime` and `targetDate` are passed, the `targetDate` is ignored, the `leftTime` is dominant.
 
 ## API
 
@@ -41,17 +51,6 @@ const [countdown, formattedRes] = useCountDown(
   }
 );
 ```
-
-**Remark**
-
-The precision of useCountDown is milliseconds, which may cause the following problems
-
-- Even if the interval time is set to 1000ms, the update interval of useCountDown may not be exactly 1000ms, but around it.
-- In the second demo, countdown is generally 499x milliseconds at the beginning due to the execution delay of the program.
-
-If you only need to be accurate to the second, you can use it like this `Math.round(countdown / 1000)`.
-
-If both `leftTime` and `targetDate` are passed, the `targetDate` is ignored, the `leftTime` is dominant.
 
 ### Params
 

@@ -1,21 +1,21 @@
 ---
-nav:
-  path: /hooks
+title: usePrevious
+nav: Hooks
+group:
+  title: State
+  order: 4
+order: 12
+toc: content
+demo:
+  cols: 2
 ---
-
-# usePrevious
 
 A Hook to return the previous state.
 
 ## Examples
 
-### Default usage
-
-<code src="./demo/demo1.tsx" />
-
-### Custom shouldUpdate function
-
-<code src="./demo/demo2.tsx" />
+<code src="./demo/demo1.tsx"></code>
+<code src="./demo/demo2.tsx"></code>
 
 ## API
 

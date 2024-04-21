@@ -1,17 +1,20 @@
 ---
-nav:
-  path: /hooks
+title: useUpdateEffect
+nav: Hooks
+group:
+  title: Effect
+  order: 5
+order: 1
+toc: content
+demo:
+  cols: 2
 ---
-
-# useUpdateEffect
 
 A hook alike `useEffect` but skips running the effect for the first time.
 
 ## Examples
 
-### Basic usage
-
-<code src="./demo/demo1.tsx" />
+<code src="./demo/demo1.tsx"></code>
 
 ## API
 

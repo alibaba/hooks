@@ -1,21 +1,21 @@
 ---
-nav:
-  path: /hooks
+title: useExternal
+nav: Hooks
+group:
+  title: Dom
+  order: 6
+order: 6
+toc: content
+demo:
+  cols: 2
 ---
-
-# useExternal
 
 动态注入 JS 或 CSS 资源，useExternal 可以保证资源全局唯一。
 
 ## 代码演示
 
-### 基础用法
-
-<code src="./demo/demo1.tsx" />
-
-### 加载 CSS
-
-<code src="./demo/demo2.tsx" />
+<code src="./demo/demo1.tsx"></code>
+<code src="./demo/demo2.tsx"></code>
 
 ## API
 

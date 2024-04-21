@@ -1,7 +1,11 @@
 {
   "extends": "../../tsconfig.json",
   "compilerOptions": {
-    "rootDir": "src"
+    "rootDir": "src",
+    "paths": {
+      "@@/*": [".dumi/tmp/*"],
+      "@ahooksjs/use-url-state": ["packages/use-url-state/src/index.ts"]
+    }
   },
   "include": ["src"]
 }

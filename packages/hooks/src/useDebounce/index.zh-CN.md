@@ -1,17 +1,20 @@
 ---
-nav:
-  path: /hooks
+title: useDebounce
+nav: Hooks
+group:
+  title: State
+  order: 4
+order: 8
+toc: content
+demo:
+  cols: 2
 ---
-
-# useDebounce
 
 用来处理防抖值的 Hook。
 
 ## 代码演示
 
-### 基础用法
-
-<code src="./demo/demo1.tsx" />
+<code src="./demo/demo1.tsx"></code>
 
 ## API
 

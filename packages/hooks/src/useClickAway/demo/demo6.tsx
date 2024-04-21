@@ -1,18 +1,20 @@
 /**
  * title: Support shadow DOM
- * desc: Add the addEventListener to shadow DOM root instead of the document
+ * description: Add the addEventListener to shadow DOM root instead of the document
  *
  * title.zh-CN: 支持 shadow DOM
- * desc.zh-CN: 将 addEventListener 添加到 shadow DOM root 
+ * description.zh-CN: 将 addEventListener 添加到 shadow DOM root
  */
 
 import React, { useState, useRef } from 'react';
-import { useClickAway } from 'ahooks';
 import root from 'react-shadow';
+import { Button } from 'antd';
+import { useClickAway } from 'ahooks';
 
 export default () => {
   const [counter, setCounter] = useState(0);
   const ref = useRef(null);
+
   useClickAway(
     () => {
       setCounter((s) => s + 1);
@@ -24,10 +26,10 @@ export default () => {
   return (
     <root.div>
       <div>
-        <button type="button" ref={ref}>
-          box
-        </button>
         <p>counter: {counter}</p>
+        <Button ref={ref} style={{ marginTop: 8 }}>
+          box
+        </Button>
       </div>
     </root.div>
   );

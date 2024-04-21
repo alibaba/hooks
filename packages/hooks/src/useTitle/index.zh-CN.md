@@ -1,17 +1,20 @@
 ---
-nav:
-  path: /hooks
+title: useTitle
+nav: Hooks
+group:
+  title: Dom
+  order: 6
+order: 7
+toc: content
+demo:
+  cols: 2
 ---
-
-# useTitle
 
 用于设置页面标题。
 
 ## 代码演示
 
-### 基础用法
-
-<code src="./demo/demo1.tsx" />
+<code src="./demo/demo1.tsx"></code>
 
 ## API
 

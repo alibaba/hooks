@@ -1,9 +1,9 @@
 /**
  * title: Pass in DOM element
- * desc: Pass in a function that returns the DOM element.
+ * description: Pass in a function that returns the DOM element.
  *
  * title.zh-CN: 传入 DOM 元素
- * desc.zh-CN: 传入 function 并返回一个 dom 元素。
+ * description.zh-CN: 传入 function 并返回一个 dom 元素。
  */
 
 import React from 'react';
@@ -17,7 +17,7 @@ export default () => {
     onLeave: () => {
       console.log('onLeave');
     },
-    onChange: isHover => {
+    onChange: (isHover) => {
       console.log('onChange', isHover);
     },
   });

@@ -1,17 +1,20 @@
 ---
-nav:
-  path: /hooks
+title: useMutationObserver
+nav: Hooks
+group:
+  title: Dom
+  order: 6
+order: 11
+toc: content
+demo:
+  cols: 2
 ---
-
-# useMutationObserver
 
 A hook that provides the ability to watch for changes being made to the DOM tree, refer to [MutationObserver](https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver)
 
 ## Examples
 
-### Default Usage
-
-<code src="./demo/demo1.tsx" />
+<code src="./demo/demo1.tsx"></code>
 
 ## API
 

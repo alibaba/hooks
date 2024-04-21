@@ -1,16 +1,16 @@
 /**
  * title: Basic usage
- * desc: Set favicon
+ * description: Set favicon
  *
  * title.zh-CN: 基础用法
- * desc.zh-CN: 设置 favicon
+ * description.zh-CN: 设置 favicon
  */
 
 import React, { useState } from 'react';
+import { Button, Space } from 'antd';
 import { useFavicon } from 'ahooks';
 
 export const DEFAULT_FAVICON_URL = 'https://ahooks.js.org/simple-logo.svg';
-
 export const GOOGLE_FAVICON_URL = 'https://www.google.com/favicon.ico';
 
 export default () => {
@@ -19,25 +19,14 @@ export default () => {
   useFavicon(url);
 
   return (
-    <>
+    <Space direction="vertical">
       <p>
         Current Favicon: <span>{url}</span>
       </p>
-      <button
-        style={{ marginRight: 16 }}
-        onClick={() => {
-          setUrl(GOOGLE_FAVICON_URL);
-        }}
-      >
-        Change To Google Favicon
-      </button>
-      <button
-        onClick={() => {
-          setUrl(DEFAULT_FAVICON_URL);
-        }}
-      >
-        Back To AHooks Favicon
-      </button>
-    </>
+      <Space wrap>
+        <Button onClick={() => setUrl(GOOGLE_FAVICON_URL)}>Change To Google Favicon</Button>
+        <Button onClick={() => setUrl(DEFAULT_FAVICON_URL)}>Back To ahooks Favicon</Button>
+      </Space>
+    </Space>
   );
 };

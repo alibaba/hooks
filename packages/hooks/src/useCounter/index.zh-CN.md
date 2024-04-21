@@ -1,17 +1,20 @@
 ---
-nav:
-  path: /hooks
+title: useCounter
+nav: Hooks
+group:
+  title: Scene
+  order: 2
+order: 11
+toc: content
+demo:
+  cols: 2
 ---
-
-# useCounter
 
 管理计数器的 Hook。
 
 ## 代码演示
 
-### 基础用法
-
-<code src="./demo/demo1.tsx" />
+<code src="./demo/demo1.tsx"></code>
 
 ## API
 

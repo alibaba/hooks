@@ -1,9 +1,14 @@
 ---
-nav:
-  path: /hooks
+title: useDrop & useDrag
+nav: Hooks
+group:
+  title: Dom
+  order: 6
+order: 4
+toc: content
+demo:
+  cols: 2
 ---
-
-# useDrop & useDrag
 
 A pair of hooks to help you manage data transfer between drag and drop
 
@@ -15,17 +20,10 @@ A pair of hooks to help you manage data transfer between drag and drop
 
 ## Examples
 
-### Basic Usage
+<code src="./demo/demo1.tsx"></code>
+<code src="./demo/demo2.tsx"></code>
 
-<code src="./demo/demo1.tsx" />
-
-### Customize Image
-
-<code src="./demo/demo2.tsx" />
-
-## API
-
-### useDrag
+## API - useDrag
 
 ```typescript
 useDrag<T>(
@@ -35,7 +33,7 @@ useDrag<T>(
 );
 ```
 
-#### Params
+### Params
 
 | Property | Description        | Type                                                        | Default |
 | -------- | ------------------ | ----------------------------------------------------------- | ------- |
@@ -43,7 +41,7 @@ useDrag<T>(
 | target   | DOM element or ref | `() => Element` \| `Element` \| `MutableRefObject<Element>` | -       |
 | options  | More config        | `DragOptions`                                               | -       |
 
-#### DragOptions
+### DragOptions
 
 | Property    | Description                                                   | Type                           | Default |
 | ----------- | ------------------------------------------------------------- | ------------------------------ | ------- |
@@ -51,7 +49,7 @@ useDrag<T>(
 | onDragEnd   | On drag end callback                                          | `(e: React.DragEvent) => void` | -       |
 | dragImage   | Customize image that follow the mouse pointer during dragging | `DragImageOptions`             | -       |
 
-#### DragImageOptions
+### DragImageOptions
 
 | 参数    | 说明                                                                                                                                                                                                                                                                                                          | 类型                | 默认值 |
 | ------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------- | ------ |
@@ -59,7 +57,7 @@ useDrag<T>(
 | offsetX | the horizontal offset within the image                                                                                                                                                                                                                                                                        | `number`            | 0      |
 | offsetY | the vertical offset within the image                                                                                                                                                                                                                                                                          | `number`            | 0      |
 
-### useDrop
+## API - useDrop
 
 ```typescript
 useDrop<T>(
@@ -68,14 +66,14 @@ useDrop<T>(
 );
 ```
 
-#### Params
+### Params
 
 | Property | Description        | Type                                                        | Default |
 | -------- | ------------------ | ----------------------------------------------------------- | ------- |
 | target   | DOM element or ref | `() => Element` \| `Element` \| `MutableRefObject<Element>` | -       |
 | options  | More config        | `DropOptions`                                               | -       |
 
-#### DropOptions
+### DropOptions
 
 | Property    | Description                                 | Type                                          | Default |
 | ----------- | ------------------------------------------- | --------------------------------------------- | ------- |

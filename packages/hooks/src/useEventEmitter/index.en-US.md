@@ -1,9 +1,14 @@
 ---
-nav:
-  path: /hooks
+title: useEventEmitter
+nav: Hooks
+group:
+  title: Advanced
+  order: 7
+order: 3
+toc: content
+demo:
+  cols: 2
 ---
-
-# useEventEmitter
 
 Sometimes it is difficult to pass events between multiple components. By using EventEmitter, this can be simplified.
 
@@ -33,9 +38,7 @@ If you want to let the child component notify the parent component, you can just
 
 ## Examples
 
-### Parent component shares a event
-
-<code src="./demo/demo1.tsx" />
+<code src="./demo/demo1.tsx"></code>
 
 ## API
 

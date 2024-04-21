@@ -1,25 +1,22 @@
 ---
-nav:
-  path: /hooks
+title: useHistoryTravel
+nav: Hooks
+group:
+  title: Scene
+  order: 2
+order: 7
+toc: content
+demo:
+  cols: 2
 ---
-
-# useHistoryTravel
 
 管理状态历史变化记录，方便在历史记录中前进与后退。
 
 ## 代码演示
 
-### 基础用法
-
-<code src="./demo/demo1.tsx" />
-
-### 可撤销恢复的 Todo List
-
-<code src="./demo/demo2.tsx" />
-
-### 限制历史记录最大长度
-
-<code src="./demo/demo3.tsx" />
+<code src="./demo/demo1.tsx"></code>
+<code src="./demo/demo2.tsx"></code>
+<code src="./demo/demo3.tsx"></code>
 
 ## API
 

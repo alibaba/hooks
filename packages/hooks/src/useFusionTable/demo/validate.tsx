@@ -1,7 +1,7 @@
 import React from 'react';
-import { Table, Pagination, Field, Form, Input, Select, Icon } from '@alifd/next';
-import { useFusionTable } from 'ahooks';
 import ReactJson from 'react-json-view';
+import { Table, Pagination, Field, Form, Input, Icon } from '@alifd/next';
+import { useFusionTable } from 'ahooks';
 
 interface Item {
   name: {
@@ -17,7 +17,7 @@ interface Result {
   list: Item[];
 }
 
-const getTableData = ({ current, pageSize }, formData: Object): Promise<Result> => {
+const getTableData = ({ current, pageSize }, formData: object): Promise<Result> => {
   let query = `page=${current}&size=${pageSize}`;
   Object.entries(formData).forEach(([key, value]) => {
     if (value) {

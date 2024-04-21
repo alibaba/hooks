@@ -1,9 +1,14 @@
 ---
-nav:
-  path: /hooks
+title: useKeyPress
+nav: Hooks
+group:
+  title: Dom
+  order: 6
+order: 13
+toc: content
+demo:
+  cols: 2
 ---
-
-# useKeyPress
 
 监听键盘按键，支持组合键，支持按键别名。
 
@@ -11,31 +16,13 @@ nav:
 
 ### 基础用法
 
-<code src="./demo/demo1.tsx" />
-
-### 监听组合按键
-
-<code src="./demo/demo6.tsx" />
-
-### 精确匹配
-
-<code src="./demo/demo7.tsx">
-
-### 监听多个按键
-
-<code src="./demo/demo3.tsx" />
-
-### 获取触发的按键
-
-<code src="./demo/demo8.tsx" />
-
-### 自定义监听方式
-
-<code src="./demo/demo4.tsx" />
-
-### 自定义 DOM
-
-<code src="./demo/demo5.tsx" />
+<code src="./demo/demo1.tsx"></code>
+<code src="./demo/demo6.tsx"></code>
+<code src="./demo/demo7.tsx"></code>
+<code src="./demo/demo3.tsx"></code>
+<code src="./demo/demo8.tsx"></code>
+<code src="./demo/demo4.tsx"></code>
+<code src="./demo/demo5.tsx"></code>
 
 ## API
 

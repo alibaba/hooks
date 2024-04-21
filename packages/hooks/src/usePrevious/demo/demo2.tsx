@@ -1,12 +1,13 @@
 /**
  * title: Custom shouldUpdate function
- * desc: Previous value update only when the shouldUpdate function return true.
+ * description: Previous value update only when the shouldUpdate function return true.
  *
  * title.zh-CN: 自定义 shouldUpdate 函数
- * desc.zh-CN: 只有 shouldUpdate function 返回 true 时，才会记录值的变化。
+ * description.zh-CN: 只有 shouldUpdate function 返回 true 时，才会记录值的变化。
  */
 
 import React, { useState } from 'react';
+import { Button, Input, Space } from 'antd';
 import { usePrevious } from 'ahooks';
 
 interface Person {
@@ -43,46 +44,42 @@ export default () => {
 
   return (
     <>
-      <div style={{ margin: '8px 0', border: '1px solid #e8e8e8', padding: 8 }}>
+      <div style={{ border: '1px dashed #ccc', borderRadius: 4, margin: '8px 0', padding: 8 }}>
         <div>current name: {state.name}</div>
         <div>current job: {state.job}</div>
       </div>
-      <div>previous name: {(previousName || {}).name}</div>
-      <div style={{ marginBottom: 8 }}>previous job: {(previousJob || {}).job}</div>
-      <div style={{ marginTop: 8 }}>
-        <input
-          style={{ width: 220 }}
+      <div style={{ border: '1px dashed #ccc', borderRadius: 4, margin: '8px 0', padding: 8 }}>
+        <div>previous name: {(previousName || {}).name}</div>
+        <div>previous job: {(previousJob || {}).job}</div>
+      </div>
+      <Space style={{ display: 'flex', marginTop: 8 }} wrap>
+        <Input
           value={nameInput}
           onChange={(e) => setNameInput(e.target.value)}
           placeholder="new name"
         />
-        <button
-          type="button"
+        <Button
           onClick={() => {
             setState((s) => ({ ...s, name: nameInput }));
           }}
-          style={{ marginLeft: 8 }}
         >
-          update
-        </button>
-      </div>
-      <div style={{ marginTop: 8 }}>
-        <input
-          style={{ width: 220 }}
+          Update
+        </Button>
+      </Space>
+      <Space style={{ display: 'flex', marginTop: 8 }} wrap>
+        <Input
           value={jobInput}
           onChange={(e) => setJobInput(e.target.value)}
           placeholder="new job"
         />
-        <button
-          type="button"
+        <Button
           onClick={() => {
             setState((s) => ({ ...s, job: jobInput }));
           }}
-          style={{ marginLeft: 8 }}
         >
-          update
-        </button>
-      </div>
+          Update
+        </Button>
+      </Space>
     </>
   );
 };

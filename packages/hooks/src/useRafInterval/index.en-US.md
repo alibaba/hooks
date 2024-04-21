@@ -1,9 +1,14 @@
 ---
-nav:
-  path: /hooks
+title: useRafInterval
+nav: Hooks
+group:
+  title: Effect
+  order: 5
+order: 11
+toc: content
+demo:
+  cols: 2
 ---
-
-# useRafInterval
 
 A hook implements with `requestAnimationFrame` for better performance. The API is consistent with `useInterval`, the advantage is that the execution of the timer can be stopped when the page is not rendering, such as page hiding or minimization.
 
@@ -16,13 +21,8 @@ Please note that the following two cases are likely to be inapplicable, and `use
 
 ## Examples
 
-### Default usage
-
-<code src="./demo/demo1.tsx" />
-
-### Advanced usage
-
-<code src="./demo/demo2.tsx" />
+<code src="./demo/demo1.tsx"></code>
+<code src="./demo/demo2.tsx"></code>
 
 ## API
 

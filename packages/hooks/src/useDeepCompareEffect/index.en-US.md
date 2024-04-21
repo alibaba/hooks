@@ -1,17 +1,20 @@
 ---
-nav:
-  path: /hooks
+title: useDeepCompareEffect
+nav: Hooks
+group:
+  title: Effect
+  order: 5
+order: 8
+toc: content
+demo:
+  cols: 2
 ---
-
-# useDeepCompareEffect
 
 Usage is the same as `useEffect`, but deps are compared with [react-fast-compare](https://www.npmjs.com/package/react-fast-compare).
 
 ## Examples
 
-### Default usage
-
-<code src="./demo/demo1.tsx" />
+<code src="./demo/demo1.tsx"></code>
 
 ## API
 

@@ -1,13 +1,14 @@
 /**
  * title: Default usage
- * desc: Update state or props, you can see the output in the console
+ * description: Update state or props, you can see the output in the console.
  *
  * title.zh-CN: 基础用法
- * desc.zh-CN: 更新 state 或 props，可以在控制台看到输出
+ * description.zh-CN: 更新 state 或 props，可以在控制台看到输出。
  */
 
-import { useWhyDidYouUpdate } from 'ahooks';
 import React, { useState } from 'react';
+import { Button, Space } from 'antd';
+import { useWhyDidYouUpdate } from 'ahooks';
 
 const Demo: React.FC<{ count: number }> = (props) => {
   const [randomNum, setRandomNum] = useState(Math.random());
@@ -19,12 +20,10 @@ const Demo: React.FC<{ count: number }> = (props) => {
       <div>
         <span>number: {props.count}</span>
       </div>
-      <div>
+      <Space wrap>
         randomNum: {randomNum}
-        <button onClick={() => setRandomNum(Math.random)} style={{ marginLeft: 8 }}>
-          🎲
-        </button>
-      </div>
+        <Button onClick={() => setRandomNum(Math.random)}>🎲</Button>
+      </Space>
     </div>
   );
 };
@@ -35,13 +34,13 @@ export default () => {
   return (
     <div>
       <Demo count={count} />
-      <div>
-        <button onClick={() => setCount((prevCount) => prevCount - 1)}>count -</button>
-        <button onClick={() => setCount((prevCount) => prevCount + 1)} style={{ marginLeft: 8 }}>
+      <Space style={{ margin: '8px 0 16px 0' }} wrap>
+        <Button onClick={() => setCount((prevCount) => prevCount - 1)}>count -</Button>
+        <Button onClick={() => setCount((prevCount) => prevCount + 1)} style={{ marginLeft: 8 }}>
           count +
-        </button>
-      </div>
-      <p style={{ marginTop: 8 }}>Please open the browser console to view the output!</p>
+        </Button>
+      </Space>
+      <p>Please open the browser console to view the output!</p>
     </div>
   );
 };

@@ -1,25 +1,22 @@
 ---
-nav:
-  path: /hooks
+title: useControllableValue
+nav: Hooks
+group:
+  title: Advanced
+  order: 7
+order: 1
+toc: content
+demo:
+  cols: 2
 ---
-
-# useControllableValue
 
 在某些组件开发时，我们需要组件的状态既可以自己管理，也可以被外部控制，`useControllableValue` 就是帮你管理这种状态的 Hook。
 
 ## 代码演示
 
-### 非受控组件
-
-<code src="./demo/demo1.tsx" />
-
-### 受控组件
-
-<code src="./demo/demo2.tsx" />
-
-### 无 value，有 onChange 的组件
-
-<code src="./demo/demo3.tsx" />
+<code src="./demo/demo1.tsx"></code>
+<code src="./demo/demo2.tsx"></code>
+<code src="./demo/demo3.tsx"></code>
 
 ## API
 

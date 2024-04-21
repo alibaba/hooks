@@ -1,25 +1,22 @@
 ---
-nav:
-  path: /hooks
+title: useLocalStorageState
+nav: Hooks
+group:
+  title: State
+  order: 4
+order: 6
+toc: content
+demo:
+  cols: 2
 ---
-
-# useLocalStorageState
 
 A Hook that store state into localStorage.
 
 ## Examples
 
-### Store state into localStorage
-
-<code src="./demo/demo1.tsx" />
-
-### Store complex types of data
-
-<code src="./demo/demo2.tsx" />
-
-### Custom serialization and deserialization functions
-
-<code src="./demo/demo3.tsx" />
+<code src="./demo/demo1.tsx"></code>
+<code src="./demo/demo2.tsx"></code>
+<code src="./demo/demo3.tsx"></code>
 
 ## API
 

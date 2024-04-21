@@ -1,9 +1,9 @@
 /**
  * title: Basic usage
- * desc: Execute after 2000ms.
+ * description: Execute after 2000ms.
  *
  * title.zh-CN: 基础用法
- * desc.zh-CN: 在 2000ms 后执行。
+ * description.zh-CN: 在 2000ms 后执行。
  */
 
 import React, { useState } from 'react';

@@ -1,25 +1,22 @@
 ---
-nav:
-  path: /hooks
+title: useScroll
+nav: Hooks
+group:
+  title: Dom
+  order: 6
+order: 17
+toc: content
+demo:
+  cols: 2
 ---
-
-# useScroll
 
 Get the scroll position of an element.
 
 ## Examples
 
-### Basic Usage
-
-<code src="./demo/demo1.tsx" />
-
-### Detect Whole Page Scroll
-
-<code src="./demo/demo2.tsx" />
-
-### Control listen on scroll status
-
-<code src="./demo/demo3.tsx" />
+<code src="./demo/demo1.tsx"></code>
+<code src="./demo/demo2.tsx"></code>
+<code src="./demo/demo3.tsx"></code>
 
 ## API
 

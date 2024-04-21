@@ -16,8 +16,8 @@ const diffTwoDeps = (deps1?: DependencyList, deps2?: DependencyList) => {
         .map((_ele, idx) => (!Object.is(deps1[idx], deps2?.[idx]) ? idx : -1))
         .filter((ele) => ele >= 0)
     : deps2
-    ? deps2.map((_ele, idx) => idx)
-    : [];
+      ? deps2.map((_ele, idx) => idx)
+      : [];
 };
 
 const useTrackedEffect = <T extends DependencyList>(effect: Effect<T>, deps?: [...T]) => {

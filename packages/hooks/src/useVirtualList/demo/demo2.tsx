@@ -1,13 +1,14 @@
 /**
  * title: Dynamic item height
- * desc: Specify item height dynamically.
+ * description: Specify item height dynamically.
  *
  * title.zh-CN: 动态元素高度
- * desc.zh-CN: 动态指定每个元素的高度
+ * description.zh-CN: 动态指定每个元素的高度。
  */
 
 import React, { useMemo, useRef } from 'react';
 import { useVirtualList } from 'ahooks';
+import { Button, InputNumber, Space } from 'antd';
 
 export default () => {
   const containerRef = useRef(null);
@@ -26,24 +27,15 @@ export default () => {
 
   return (
     <div>
-      <div style={{ textAlign: 'right', marginBottom: 16 }}>
-        <input
-          style={{ width: 120 }}
+      <Space style={{ marginBottom: 16, width: '100%', justifyContent: 'flex-end' }} wrap>
+        <InputNumber
+          style={{ width: 200 }}
           placeholder="line number"
-          type="number"
           value={value}
-          onChange={(e) => onChange(Number(e.target.value))}
+          onChange={(val) => onChange(Number(val))}
         />
-        <button
-          style={{ marginLeft: 8 }}
-          type="button"
-          onClick={() => {
-            scrollTo(Number(value));
-          }}
-        >
-          scroll to
-        </button>
-      </div>
+        <Button onClick={() => scrollTo(Number(value))}>Scroll to</Button>
+      </Space>
       <div ref={containerRef} style={{ height: '300px', overflow: 'auto' }}>
         <div ref={wrapperRef}>
           {list.map((ele) => (
@@ -53,7 +45,8 @@ export default () => {
                 display: 'flex',
                 justifyContent: 'center',
                 alignItems: 'center',
-                border: '1px solid #e8e8e8',
+                border: '1px dashed #ccc',
+                borderRadius: 4,
                 marginBottom: 8,
               }}
               key={ele.index}

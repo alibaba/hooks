@@ -1,12 +1,13 @@
 /**
  * title: Custom transformer function
- * desc: Controlled input component with number input only
+ * description: Controlled input component with number input only.
  *
  * title.zh-CN: 自定义转换函数
- * desc.zh-CN: 只能输入数字的 input 组件
+ * description.zh-CN: 只能输入数字的 input 组件。
  */
 
 import React from 'react';
+import { Button, Input, Space } from 'antd';
 import { useEventTarget } from 'ahooks';
 
 export default () => {
@@ -16,16 +17,9 @@ export default () => {
   });
 
   return (
-    <div>
-      <input
-        value={value}
-        onChange={onChange}
-        style={{ width: 200, marginRight: 20 }}
-        placeholder="Please type here"
-      />
-      <button type="button" onClick={reset}>
-        reset
-      </button>
-    </div>
+    <Space wrap>
+      <Input placeholder="Please type here" value={value} onChange={onChange} />
+      <Button onClick={reset}>Reset</Button>
+    </Space>
   );
 };

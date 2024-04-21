@@ -8,6 +8,7 @@
 
 import React, { useRef } from 'react';
 import { useFullscreen } from 'ahooks';
+import { Button, Space } from 'antd';
 
 function vanillaToggleFullscreen(element) {
   const isFullscreen = !!document.fullscreenElement;
@@ -25,15 +26,13 @@ export default () => {
 
   return (
     <div ref={ref} style={{ background: 'white' }}>
-      <div style={{ marginBottom: 16 }}>{isFullscreen ? 'Fullscreen' : 'Not fullscreen'}</div>
-      <div>
-        <button style={{ marginRight: '8px' }} onClick={toggleFullscreen}>
-          ahooks toggleFullscreen
-        </button>
-        <button onClick={() => vanillaToggleFullscreen(ref.current)}>
-          vanilla toggleFullscreen
-        </button>
-      </div>
+      <Space style={{ marginBottom: 16 }} wrap>
+        <Button onClick={toggleFullscreen}>ahooks - Toggle Fullscreen</Button>
+        <Button onClick={() => vanillaToggleFullscreen(ref.current)}>
+          vanilla - Toggle Fullscreen
+        </Button>
+      </Space>
+      <div>{isFullscreen ? 'Fullscreen' : 'Not Fullscreen'}</div>
     </div>
   );
 };
