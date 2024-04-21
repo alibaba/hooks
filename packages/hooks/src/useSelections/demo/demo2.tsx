@@ -1,9 +1,9 @@
 /**
- * title: Default usage
- * desc: Checkbox group.
+ * title: Object array
+ * desc: When array items are object, you need to specify the field name for the unique key.
  *
- * title.zh-CN: 基础用法
- * desc.zh-CN: 常见的 Checkbox 联动
+ * title.zh-CN: 对象数组
+ * desc.zh-CN: 数组项是对象时，需要指定唯一 key 的字段名称。
  */
 
 import { Checkbox, Col, Row } from 'antd';
@@ -14,21 +14,22 @@ export default () => {
   const [hideOdd, setHideOdd] = useState(false);
   const list = useMemo(() => {
     if (hideOdd) {
-      return [2, 4, 6, 8];
+      return [2, 4, 6, 8].map((id) => ({ id }));
     }
-    return [1, 2, 3, 4, 5, 6, 7, 8];
+    return [1, 2, 3, 4, 5, 6, 7, 8].map((id) => ({ id }));
   }, [hideOdd]);
 
   const { selected, allSelected, isSelected, toggle, toggleAll, partiallySelected } = useSelections(
     list,
     {
-      defaultSelected: [1],
+      defaultSelected: [{ id: 1 }],
+      itemKey: 'id',
     },
   );
 
   return (
     <div>
-      <div>Selected: {selected.join(',')}</div>
+      <div>Selected: {JSON.stringify(selected)}</div>
       <div style={{ borderBottom: '1px solid #E9E9E9', padding: '10px 0' }}>
         <Checkbox checked={allSelected} onClick={toggleAll} indeterminate={partiallySelected}>
           Check all
@@ -38,10 +39,10 @@ export default () => {
         </Checkbox>
       </div>
       <Row style={{ padding: '10px 0' }}>
-        {list.map((o) => (
-          <Col span={12} key={o}>
-            <Checkbox checked={isSelected(o)} onClick={() => toggle(o)}>
-              {o}
+        {list.map((item) => (
+          <Col span={12} key={item.id}>
+            <Checkbox checked={isSelected(item)} onClick={() => toggle(item)}>
+              {item.id}
             </Checkbox>
           </Col>
         ))}
