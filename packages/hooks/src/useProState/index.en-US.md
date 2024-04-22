@@ -11,11 +11,11 @@ The hook that manage state, providing the ability to set, get the latest value, 
 
 ### Get the latest value
 
-<code src="./demo/demo1.tsx" />
+<code src="./demo/demo1.tsx"></code>
 
 ### Merge and reset
 
-<code src="./demo/demo2.tsx" />
+<code src="./demo/demo2.tsx"></code>
 
 ## API
 
