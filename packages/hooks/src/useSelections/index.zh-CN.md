@@ -38,9 +38,11 @@ const result: Result = useSelections<T>(items: T[], defaultSelected?: T[]);
 
 ### Params
 
-| 参数            | 说明           | 类型  | 默认值 |
-| --------------- | -------------- | ----- | ------ |
-| items           | 元素列表       | `T[]` | -      |
+<!-- prettier-ignore -->
+| 参数 | 说明 | 类型 | 默认值 |
+| --- | --- | --- | --- |
+| items | 元素列表 | `T[]` | - |
+| options | 可选配置项 | `Options` | - |
 
 ### Options
 

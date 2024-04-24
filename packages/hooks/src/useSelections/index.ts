@@ -95,7 +95,7 @@ export default function useSelections<T>(items: T[], options?: T[] | Options<T>)
   const toggleAll = () => (allSelected ? unSelectAll() : selectAll());
 
   const clearAll = () => {
-    selectedSet.clear();
+    selectedMap.clear();
     setSelected([]);
   };
 
