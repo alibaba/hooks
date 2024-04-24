@@ -13,20 +13,42 @@ This hook is used for Checkbox group, supports multiple selection, single select
 
 <code src="./demo/demo1.tsx" />
 
+### Object array
+
+<code src="./demo/demo2.tsx" />
+
+### Pagination
+
+<code src="./demo/demo3.tsx" />
+
 ## API
 
 ```typescript
+interface Options<T> {
+  defaultSelected?: T[];
+  itemKey?: string | ((item: T) => Key);
+}
+
+// works when >=3.8.0, recommended ✅
+const result: Result = useSelections<T>(items: T[], options?: Options<T>);
+
+// works when <4.0.0, will be removed in ahooks 4.0 🙅🏻‍♀️
 const result: Result = useSelections<T>(items: T[], defaultSelected?: T[]);
 ```
-
-Note: Generic type `T` currently only supports [JavaScript primitive data types](https://developer.mozilla.org/en-US/docs/Glossary/Primitive) and does not support object.
 
 ### Params
 
 | Property        | Description            | Type  | Default |
 | --------------- | ---------------------- | ----- | ------- |
 | items           | Data items             | `T[]` | -       |
-| defaultSelected | Default selected items | `T[]` | -       |
+
+### Options
+
+<!-- prettier-ignore -->
+| Property | Description | Type | Default |
+| --- | --- | --- | --- |
+| defaultSelected | Default selected data | `T[]` | `[]` |
+| itemKey | The unique key of data item. Typically, this parameter needs to be specified when the data source is an array of object | `string` \| `(item: T) => React.Key` | - |
 
 ### Result
 

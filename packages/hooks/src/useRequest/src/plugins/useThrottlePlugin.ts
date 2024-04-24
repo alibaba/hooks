@@ -1,5 +1,5 @@
-import type { DebouncedFunc, ThrottleSettings } from 'lodash-es';
-import { throttle } from 'lodash-es';
+import type { DebouncedFunc, ThrottleSettings } from 'lodash';
+import throttle from 'lodash/throttle';
 import { useEffect, useRef } from 'react';
 import type { Plugin } from '../types';
 

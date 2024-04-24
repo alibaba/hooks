@@ -13,20 +13,42 @@ nav:
 
 <code src="./demo/demo1.tsx" />
 
+### 对象数组
+
+<code src="./demo/demo2.tsx" />
+
+### 分页多选
+
+<code src="./demo/demo3.tsx" />
+
 ## API
 
 ```typescript
+interface Options<T> {
+  defaultSelected?: T[];
+  itemKey?: string | ((item: T) => Key);
+}
+
+// >=3.8.0 可用，推荐的写法 ✅
+const result: Result = useSelections<T>(items: T[], options?: Options<T>);
+
+// <4.0.0 可用，将会在 ahooks 4.0 中移除 🙅🏻‍♀️
 const result: Result = useSelections<T>(items: T[], defaultSelected?: T[]);
 ```
-
-注：泛型 `T` 目前只支持 [JavaScript 原始数据类型](https://developer.mozilla.org/en-US/docs/Glossary/Primitive)，不支持对象。
 
 ### Params
 
 | 参数            | 说明           | 类型  | 默认值 |
 | --------------- | -------------- | ----- | ------ |
 | items           | 元素列表       | `T[]` | -      |
-| defaultSelected | 默认选择的元素 | `T[]` | -      |
+
+### Options
+
+<!-- prettier-ignore -->
+| 参数 | 说明 | 类型 | 默认值 |
+| --- | --- | --- | --- |
+| defaultSelected | 默认选择的数据 | `T[]` | `[]` |
+| itemKey | 数据项的唯一 key。一般来说，数据源是对象数组时，才需要指定该参数 | `string` \| `(item: T) => React.Key` | - |
 
 ### Result
 
