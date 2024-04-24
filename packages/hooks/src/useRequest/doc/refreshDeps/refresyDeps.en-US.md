@@ -7,7 +7,7 @@ group:
 
 # RefreshDeps
 
-By setting `options.refreshDeps`, `useRequest` will run [refresh](https://ahooks.js.org/hooks/use-request/basic/#result) automatically when initialization and dependencies changes, achieving the effect of [Refresh (repeat the last request)](https://ahooks.js.org/hooks/use-request/basic/#refresh-repeat-the-last-request).
+By setting `options.refreshDeps`, `useRequest` will run [refresh](https://ahooks.js.org/hooks/use-request/basic/#result) automatically when dependencies change, achieving the effect of [Refresh (repeat the last request)](https://ahooks.js.org/hooks/use-request/basic/#refresh-repeat-the-last-request).
 
 ```tsx | pure
 const [userId, setUserId] = useState('1');
@@ -29,7 +29,7 @@ useEffect(() => {
 }, [userId]);
 ```
 
-### Refresh last request
+### Repeat last request
 
 <code src="./demo/refreshDeps.tsx" />
 
@@ -41,7 +41,11 @@ useEffect(() => {
 
 ### Options
 
-| Property          | Description                                                                                                                    | Type                   | Default |
-| ----------------- | ------------------------------------------------------------------------------------------------------------------------------ | ---------------------- | ------- |
-| refreshDeps       | When the content of the array changes, trigger refresh.                                                                        | `React.DependencyList` | `[]`    |
-| refreshDepsAction | Customize the request behavior for dependency refresh, this parameter is called after initialization and dependencies changes. | `() => void`           | -       |
+| Property          | Description                                                                                                   | Type                   | Default |
+| ----------------- | ------------------------------------------------------------------------------------------------------------- | ---------------------- | ------- |
+| refreshDeps       | When the content of the array changes, trigger refresh.                                                       | `React.DependencyList` | `[]`    |
+| refreshDepsAction | Customize the request behavior during dependency refresh; this parameter is invoked when dependencies change. | `() => void`           | -       |
+
+## Remark
+
+- If you set `options.manual = true`, both `refreshDeps` and `refreshDepsAction` are no longer effective, you need to trigger the request by `run/runAsync`.

@@ -34,7 +34,7 @@
   "dependencies": {
     "@babel/runtime": "^7.21.0",
     "ahooks": "^3.4.1",
-    "query-string": "^6.9.0",
+    "query-string": "^8.1.0",
     "tslib": "^2.4.1"
   },
   "gitHead": "11f6ad571bd365c95ecb9409ca3050cbbfc9b34a"

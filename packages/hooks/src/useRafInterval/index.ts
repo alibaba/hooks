@@ -3,7 +3,7 @@ import useLatest from '../useLatest';
 import { isNumber } from '../utils';
 
 interface Handle {
-  id: number | NodeJS.Timer;
+  id: number | ReturnType<typeof setInterval>;
 }
 
 const setRafInterval = function (callback: () => void, delay: number = 0): Handle {
@@ -12,15 +12,15 @@ const setRafInterval = function (callback: () => void, delay: number = 0): Handl
       id: setInterval(callback, delay),
     };
   }
-  let start = new Date().getTime();
+  let start = Date.now();
   const handle: Handle = {
     id: 0,
   };
   const loop = () => {
-    const current = new Date().getTime();
+    const current = Date.now();
     if (current - start >= delay) {
       callback();
-      start = new Date().getTime();
+      start = Date.now();
     }
     handle.id = requestAnimationFrame(loop);
   };
@@ -28,7 +28,7 @@ const setRafInterval = function (callback: () => void, delay: number = 0): Handl
   return handle;
 };
 
-function cancelAnimationFrameIsNotDefined(t: any): t is NodeJS.Timer {
+function cancelAnimationFrameIsNotDefined(t: any): t is ReturnType<typeof setInterval> {
   return typeof cancelAnimationFrame === typeof undefined;
 }
 
@@ -51,26 +51,24 @@ function useRafInterval(
   const fnRef = useLatest(fn);
   const timerRef = useRef<Handle>();
 
+  const clear = useCallback(() => {
+    if (timerRef.current) {
+      clearRafInterval(timerRef.current);
+    }
+  }, []);
+
   useEffect(() => {
-    if (!isNumber(delay) || delay < 0) return;
+    if (!isNumber(delay) || delay < 0) {
+      return;
+    }
     if (immediate) {
       fnRef.current();
     }
     timerRef.current = setRafInterval(() => {
       fnRef.current();
     }, delay);
-    return () => {
-      if (timerRef.current) {
-        clearRafInterval(timerRef.current);
-      }
-    };
+    return clear;
   }, [delay]);
-
-  const clear = useCallback(() => {
-    if (timerRef.current) {
-      clearRafInterval(timerRef.current);
-    }
-  }, []);
 
   return clear;
 }

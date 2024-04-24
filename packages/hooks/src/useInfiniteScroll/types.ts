@@ -9,6 +9,7 @@ export interface InfiniteScrollResult<TData extends Data> {
   data: TData;
   loading: boolean;
   loadingMore: boolean;
+  error?: Error;
   noMore: boolean;
 
   loadMore: () => void;

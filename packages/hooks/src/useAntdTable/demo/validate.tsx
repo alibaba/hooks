@@ -88,7 +88,7 @@ export default () => {
   return (
     <div>
       {searchForm}
-      <Table columns={columns} rowKey="email" {...tableProps} />
+      <Table columns={columns} rowKey="email" style={{ overflow: 'auto' }} {...tableProps} />
 
       <div style={{ background: '#f5f5f5', padding: 8 }}>
         <p>Current Table:</p>
