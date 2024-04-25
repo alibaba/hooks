@@ -196,7 +196,7 @@ describe('useSelections', () => {
   });
 
   it('clearAll should work correct', async () => {
-    const caseCallback = (data, newData, remainData) => {
+    const runCase = (data, newData, remainData) => {
       const { result } = renderHook(() => {
         const [list, setList] = useState(data);
         const hook = useSelections(list, {
@@ -232,7 +232,7 @@ describe('useSelections', () => {
       expect(result.current.hook.partiallySelected).toBe(false);
     };
 
-    caseCallback(_data, [3, 4, 5], [1, 2]);
-    caseCallback(_dataObj, [{ id: 3 }, { id: 4 }, { id: 5 }], [{ id: 1 }, { id: 2 }]);
+    runCase(_data, [3, 4, 5], [1, 2]);
+    runCase(_dataObj, [{ id: 3 }, { id: 4 }, { id: 5 }], [{ id: 1 }, { id: 2 }]);
   });
 });
