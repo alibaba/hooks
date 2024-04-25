@@ -10,6 +10,12 @@ export enum ReadyState {
   Closed = 3,
 }
 
+export interface HeartbeatOptions {
+  message?: string;
+  returnMessage?: string;
+  interval?: number;
+}
+
 export interface Options {
   reconnectLimit?: number;
   reconnectInterval?: number;
@@ -18,8 +24,8 @@ export interface Options {
   onClose?: (event: WebSocketEventMap['close'], instance: WebSocket) => void;
   onMessage?: (message: WebSocketEventMap['message'], instance: WebSocket) => void;
   onError?: (event: WebSocketEventMap['error'], instance: WebSocket) => void;
-
   protocols?: string | string[];
+  heartbeat?: boolean | HeartbeatOptions;
 }
 
 export interface Result {
@@ -41,7 +47,11 @@ export default function useWebSocket(socketUrl: string, options: Options = {}): 
     onMessage,
     onError,
     protocols,
+    heartbeat = false,
   } = options;
+
+  const { message: heartbeatMessage = 'ping', interval: heartbeatInterval = 60 * 1000 } =
+    typeof heartbeat === 'object' ? heartbeat : {};
 
   const onOpenRef = useLatest(onOpen);
   const onCloseRef = useLatest(onClose);
@@ -51,6 +61,7 @@ export default function useWebSocket(socketUrl: string, options: Options = {}): 
   const reconnectTimesRef = useRef(0);
   const reconnectTimerRef = useRef<ReturnType<typeof setTimeout>>();
   const websocketRef = useRef<WebSocket>();
+  const heartbeatTimerRef = useRef<ReturnType<typeof setTimeout>>();
 
   const [latestMessage, setLatestMessage] = useState<WebSocketEventMap['message']>();
   const [readyState, setReadyState] = useState<ReadyState>(ReadyState.Closed);
@@ -98,10 +109,18 @@ export default function useWebSocket(socketUrl: string, options: Options = {}): 
       }
       onOpenRef.current?.(event, ws);
       reconnectTimesRef.current = 0;
+      if (heartbeat) {
+        heartbeatTimerRef.current = setInterval(() => {
+          ws.send(heartbeatMessage);
+        }, heartbeatInterval);
+      }
       setReadyState(ws.readyState || ReadyState.Open);
     };
     ws.onmessage = (message: WebSocketEventMap['message']) => {
       if (websocketRef.current !== ws) {
+        return;
+      }
+      if (heartbeat && typeof heartbeat !== 'boolean' && heartbeat.returnMessage === message.data) {
         return;
       }
       onMessageRef.current?.(message, ws);
@@ -116,6 +135,9 @@ export default function useWebSocket(socketUrl: string, options: Options = {}): 
       // closed by disconnect or closed by server
       if (!websocketRef.current || websocketRef.current === ws) {
         setReadyState(ws.readyState || ReadyState.Closed);
+        if (heartbeat) {
+          clearInterval(heartbeatTimerRef.current);
+        }
       }
     };
 
