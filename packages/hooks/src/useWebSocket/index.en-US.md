@@ -64,6 +64,15 @@ useWebSocket(socketUrl: string, options?: Options): Result;
 | reconnectInterval | Retry interval(ms)                 | `number`                                                               | `3000`  |
 | manual            | Manually starts connection         | `boolean`                                                              | `false` |
 | protocols         | Sub protocols                      | `string` \| `string[]`                                                 | -       |
+| heartbeat         | Heartbeat options                  | `boolean` \| `HeartbeatOptions`                                        | `false` |
+
+### HeartbeatOptions
+
+| 参数          | 说明                                                                 | 类型     | 默认值 |
+| ------------- | -------------------------------------------------------------------- | -------- | ------ |
+| message       | Heartbeat message                                                    | `string` | `ping` |
+| returnMessage | Heartbeat response message, `latestMessage` will ignore this message | `string` | -      |
+| interval      | Heartbeat Interval(ms)                                               | `number` | `6000` |
 
 ### Result
 

@@ -23,6 +23,12 @@ enum ReadyState {
   Closed = 3,
 }
 
+interface HeartbeatOptions{
+  message?: string;
+  returnMessage?: string;
+  interval?: number;
+}
+
 interface Options {
   reconnectLimit?: number;
   reconnectInterval?: number;
@@ -31,6 +37,7 @@ interface Options {
   onMessage?: (message: WebSocketEventMap['message'], instance: WebSocket) => void;
   onError?: (event: WebSocketEventMap['error'], instance: WebSocket) => void;
   protocols?: string | string[];
+  heartbeat?: boolean | HeartbeatOptions;
 }
 
 interface Result {
@@ -64,6 +71,15 @@ useWebSocket(socketUrl: string, options?: Options): Result;
 | reconnectInterval | 重试时间间隔（ms）     | `number`                                                               | `3000`  |
 | manual            | 手动启动连接           | `boolean`                                                              | `false` |
 | protocols         | 子协议                 | `string` \| `string[]`                                                 | -       |
+| heartbeat         | 心跳                   | `boolean` \| `HeartbeatOptions`                                        | `false` |
+
+### HeartbeatOptions
+
+| 参数          | 说明                                       | 类型     | 默认值 |
+| ------------- | ------------------------------------------ | -------- | ------ |
+| message       | 心跳消息                                   | `string` | `ping` |
+| returnMessage | 心跳回复消息，`latestMessage` 会忽略该消息 | `string` | -      |
+| interval      | 心跳时间间隔（ms）                         | `number` | `6000` |
 
 ### Result
 
