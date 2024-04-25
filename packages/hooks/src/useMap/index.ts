@@ -6,6 +6,10 @@ function useMap<K, T>(initialValue?: Iterable<readonly [K, T]>) {
   const [map, setMap] = useState<Map<K, T>>(getInitValue);
 
   const set = (key: K, entry: T) => {
+    const value = map.get(key);
+    if (value && value === entry) {
+      return;
+    }
     setMap((prev) => {
       const temp = new Map(prev);
       temp.set(key, entry);
