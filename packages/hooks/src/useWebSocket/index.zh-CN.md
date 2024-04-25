@@ -59,7 +59,7 @@ useWebSocket(socketUrl: string, options?: Options): Result;
 | socketUrl | 必填，webSocket 地址 | `string`  | -      |
 | options   | 可选，连接配置项     | `Options` | -      |
 
-#### Options
+### Options
 
 | 参数              | 说明                   | 类型                                                                   | 默认值  |
 | ----------------- | ---------------------- | ---------------------------------------------------------------------- | ------- |
