@@ -1,4 +1,5 @@
 import { act, renderHook } from '@testing-library/react';
+import { useState } from 'react';
 import useSelections from '../index';
 import type { Options } from '../index';
 
@@ -192,5 +193,38 @@ describe('useSelections', () => {
 
     expect(result.current.selected).toEqual(_selected);
     expect(result.current.isSelected(_selectedItem)).toBe(true);
+  });
+
+  it('clearAll should work correct', async () => {
+    const { result } = renderHook(() => {
+      const [list, setList] = useState(data);
+      const hook = useSelections(list);
+      return { setList, hook };
+    });
+    const { setSelected, unSelectAll, clearAll } = result.current.hook;
+
+    act(() => {
+      setSelected([1, 2, 3]);
+    });
+    expect(result.current.hook.selected).toEqual([1, 2, 3]);
+    expect(result.current.hook.allSelected).toBe(true);
+
+    act(() => {
+      result.current.setList([3, 4, 5]);
+    });
+    expect(result.current.hook.allSelected).toBe(false);
+
+    act(() => {
+      unSelectAll();
+    });
+    expect(result.current.hook.selected).toEqual([1, 2]);
+
+    act(() => {
+      clearAll();
+    });
+    expect(result.current.hook.selected).toEqual([]);
+    expect(result.current.hook.allSelected).toEqual(false);
+    expect(result.current.hook.noneSelected).toBe(true);
+    expect(result.current.hook.partiallySelected).toBe(false);
   });
 });
