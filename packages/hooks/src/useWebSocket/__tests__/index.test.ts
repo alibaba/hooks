@@ -144,4 +144,57 @@ describe('useWebSocket', () => {
     act(() => wsServer1.close());
     act(() => wsServer2.close());
   });
+
+  it('should send heartbeat message periodically', async () => {
+    jest.spyOn(global, 'clearInterval');
+
+    const wsServer = new WS(wsUrl);
+    renderHook(() => useWebSocket(wsUrl, { heartbeat: { interval: 100 } }));
+    await act(async () => {
+      await wsServer.connected;
+      return promise;
+    });
+
+    jest.advanceTimersByTime(100);
+    await expect(wsServer).toReceiveMessage('ping');
+
+    jest.advanceTimersByTime(100);
+    await expect(wsServer).toReceiveMessage('ping');
+
+    expect(wsServer).toHaveReceivedMessages(['ping', 'ping']);
+
+    act(() => wsServer.close());
+    await act(async () => {
+      await wsServer.closed;
+      return promise;
+    });
+    expect(clearInterval).toHaveBeenCalledTimes(1);
+  });
+
+  it('should ignore heartbeat response message', async () => {
+    const wsServer = new WS(wsUrl);
+    const hooks = renderHook(() =>
+      useWebSocket(wsUrl, { heartbeat: { interval: 100, returnMessage: 'pong' } }),
+    );
+    await act(async () => {
+      await wsServer.connected;
+      return promise;
+    });
+
+    jest.advanceTimersByTime(100);
+    await expect(wsServer).toReceiveMessage('ping');
+
+    act(() => {
+      wsServer.send('pong');
+    });
+    expect(hooks.result.current.latestMessage?.data).toBeUndefined();
+
+    const nowTime = `${Date.now()}`;
+    act(() => {
+      wsServer.send(nowTime);
+    });
+    expect(hooks.result.current.latestMessage?.data).toBe(nowTime);
+
+    act(() => wsServer.close());
+  });
 });
