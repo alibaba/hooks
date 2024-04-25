@@ -69,6 +69,7 @@ const {
   data: TData;
   loading: boolean;
   loadingMore: boolean;
+  error?: Error;
   noMore: boolean;
   loadMore: () => void;
   loadMoreAsync: () => Promise<TData>;
@@ -95,8 +96,8 @@ const {
 ### Result
 
 | Property      | Description                                                                                                                                       | Type                     |
-| ------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------ | ----------- |
-| data          | The data returned by the service, where the `list` attribute is the aggregated data                                                               | `TData` \                | `undefined` |
+| ------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------ |
+| data          | The data returned by the service, where the `list` attribute is the aggregated data                                                               | `TData` \| `undefined`   |
 | loading       | Is the first request in progress                                                                                                                  | `boolean`                |
 | loadingMore   | Is more data request in progress                                                                                                                  | `boolean`                |
 | noMore        | Whether there is no more data, it will take effect after configuring `options.isNoMore`                                                           | `boolean`                |

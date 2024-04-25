@@ -34,10 +34,10 @@ const [inViewport, ratio] = useInViewport(
 
 ### Params
 
-| 参数    | 说明                       | 类型                   | 默认值 |
-| ------- | -------------------------- | ---------------------- | ------ |
-| target  | DOM 节点或者 Ref，支持数组 | `Target` \| `Target[]` | -      |
-| options | 设置                       | `Options`              | -      |
+| 参数    | 说明                       | 类型                     | 默认值 |
+| ------- | -------------------------- | ------------------------ | ------ |
+| target  | DOM 节点或者 Ref，支持数组 | `Target` \| `Target[]`   | -      |
+| options | 设置                       | `Options` \| `undefined` | -      |
 
 ### Options
 
