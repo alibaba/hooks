@@ -1,4 +1,5 @@
 import { act, renderHook } from '@testing-library/react';
+import { useState } from 'react';
 import useSelections from '../index';
 import type { Options } from '../index';
 
@@ -192,5 +193,46 @@ describe('useSelections', () => {
 
     expect(result.current.selected).toEqual(_selected);
     expect(result.current.isSelected(_selectedItem)).toBe(true);
+  });
+
+  it('clearAll should work correct', async () => {
+    const runCase = (data, newData, remainData) => {
+      const { result } = renderHook(() => {
+        const [list, setList] = useState(data);
+        const hook = useSelections(list, {
+          itemKey: 'id',
+        });
+
+        return { setList, hook };
+      });
+      const { setSelected, unSelectAll, clearAll } = result.current.hook;
+
+      act(() => {
+        setSelected(data);
+      });
+      expect(result.current.hook.selected).toEqual(data);
+      expect(result.current.hook.allSelected).toBe(true);
+
+      act(() => {
+        result.current.setList(newData);
+      });
+      expect(result.current.hook.allSelected).toBe(false);
+
+      act(() => {
+        unSelectAll();
+      });
+      expect(result.current.hook.selected).toEqual(remainData);
+
+      act(() => {
+        clearAll();
+      });
+      expect(result.current.hook.selected).toEqual([]);
+      expect(result.current.hook.allSelected).toEqual(false);
+      expect(result.current.hook.noneSelected).toBe(true);
+      expect(result.current.hook.partiallySelected).toBe(false);
+    };
+
+    runCase(_data, [3, 4, 5], [1, 2]);
+    runCase(_dataObj, [{ id: 3 }, { id: 4 }, { id: 5 }], [{ id: 1 }, { id: 2 }]);
   });
 });
