@@ -24,15 +24,12 @@ function Counter() {
     listenStorageChange: true,
   });
 
-  const add = () => setCount(count! + 1);
-  const clear = () => setCount();
-
   return (
     <div style={{ marginBottom: '8px' }}>
-      <button style={{ marginRight: '8px' }} onClick={add}>
+      <button style={{ marginRight: '8px' }} onClick={() => setCount(count! + 1)}>
         count: {count}
       </button>
-      <button onClick={clear}>Clear</button>
+      <button onClick={() => setCount()}>Clear</button>
     </div>
   );
 }
