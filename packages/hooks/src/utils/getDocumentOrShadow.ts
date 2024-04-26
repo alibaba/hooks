@@ -8,6 +8,7 @@ const checkIfAllInShadow = (targets: BasicTarget[]): boolean => {
     const targetElement = getTargetElement(item);
     if (!targetElement) return false;
     if (targetElement.getRootNode() instanceof ShadowRoot) return true;
+    return false;
   });
 };
 
