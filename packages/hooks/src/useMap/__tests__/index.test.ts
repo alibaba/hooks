@@ -98,6 +98,17 @@ describe('useMap', () => {
     ]);
   });
 
+  it('should not render if set same key-value pair', () => {
+    const { result } = setup([['hello', 'world']]);
+    const [prevValue, utils] = result.current;
+
+    act(() => {
+      utils.set('hello', 'world');
+    });
+
+    expect(prevValue).toBe(result.current[0]);
+  });
+
   it('should override current value if setting existing key', () => {
     const { result } = setup([
       ['foo', 'bar'],
@@ -167,6 +178,17 @@ describe('useMap', () => {
       ['b', 2],
       ['c', 3],
     ]);
+  });
+
+  it('should not render if remove non-existing key', () => {
+    const { result } = setup([['hello', 'world']]);
+    const [prevValue, utils] = result.current;
+
+    act(() => {
+      utils.remove('hi');
+    });
+
+    expect(prevValue).toBe(result.current[0]);
   });
 
   it('reset should be work', () => {
