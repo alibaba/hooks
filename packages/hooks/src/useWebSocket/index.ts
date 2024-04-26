@@ -18,6 +18,7 @@ export interface Options {
   onClose?: (event: WebSocketEventMap['close'], instance: WebSocket) => void;
   onMessage?: (message: WebSocketEventMap['message'], instance: WebSocket) => void;
   onError?: (event: WebSocketEventMap['error'], instance: WebSocket) => void;
+  onMaxAttempt?: () => void;
 
   protocols?: string | string[];
 }
@@ -40,6 +41,7 @@ export default function useWebSocket(socketUrl: string, options: Options = {}): 
     onClose,
     onMessage,
     onError,
+    onMaxAttempt,
     protocols,
   } = options;
 
@@ -47,6 +49,7 @@ export default function useWebSocket(socketUrl: string, options: Options = {}): 
   const onCloseRef = useLatest(onClose);
   const onMessageRef = useLatest(onMessage);
   const onErrorRef = useLatest(onError);
+  const onMaxAttemptRef = useLatest(onMaxAttempt);
 
   const reconnectTimesRef = useRef(0);
   const reconnectTimerRef = useRef<ReturnType<typeof setTimeout>>();
