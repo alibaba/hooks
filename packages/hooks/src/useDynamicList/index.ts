@@ -1,4 +1,5 @@
 import { useCallback, useRef, useState } from 'react';
+import isDev from '../utils/isDev';
 
 const useDynamicList = <T>(initialList: T[] = []) => {
   const counterRef = useRef(-1);
@@ -77,6 +78,37 @@ const useDynamicList = <T>(initialList: T[] = []) => {
     });
   }, []);
 
+  const batchRemove = useCallback((indexes: number[]) => {
+    if (!Array.isArray(indexes)) {
+      if (isDev) {
+        console.error(
+          `\`indexes\` parameter of \`batchRemove\` function expected to be an array, but got "${typeof indexes}".`,
+        );
+      }
+      return;
+    }
+    if (!indexes.length) {
+      return;
+    }
+
+    setList((prevList) => {
+      const newKeyList: number[] = [];
+      const newList = prevList.filter((item, index) => {
+        const shouldKeep = !indexes.includes(index);
+
+        if (shouldKeep) {
+          newKeyList.push(getKey(index));
+        }
+
+        return shouldKeep;
+      });
+
+      keyList.current = newKeyList;
+
+      return newList;
+    });
+  }, []);
+
   const move = useCallback((oldIndex: number, newIndex: number) => {
     if (oldIndex === newIndex) {
       return;
@@ -150,6 +182,7 @@ const useDynamicList = <T>(initialList: T[] = []) => {
     merge,
     replace,
     remove,
+    batchRemove,
     getKey,
     getIndex,
     move,
