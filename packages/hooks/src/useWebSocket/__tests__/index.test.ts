@@ -155,10 +155,8 @@ describe('useWebSocket', () => {
       return promise;
     });
 
-    jest.advanceTimersByTime(100);
     await expect(wsServer).toReceiveMessage('ping');
 
-    jest.advanceTimersByTime(100);
     await expect(wsServer).toReceiveMessage('ping');
 
     expect(wsServer).toHaveReceivedMessages(['ping', 'ping']);
@@ -181,7 +179,6 @@ describe('useWebSocket', () => {
       return promise;
     });
 
-    jest.advanceTimersByTime(100);
     await expect(wsServer).toReceiveMessage('ping');
 
     act(() => {
