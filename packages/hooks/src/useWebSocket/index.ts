@@ -61,7 +61,7 @@ export default function useWebSocket(socketUrl: string, options: Options = {}): 
   const reconnectTimesRef = useRef(0);
   const reconnectTimerRef = useRef<ReturnType<typeof setTimeout>>();
   const websocketRef = useRef<WebSocket>();
-  const heartbeatTimerRef = useRef<ReturnType<typeof setTimeout>>();
+  const heartbeatTimerRef = useRef<ReturnType<typeof setInterval>>();
 
   const [latestMessage, setLatestMessage] = useState<WebSocketEventMap['message']>();
   const [readyState, setReadyState] = useState<ReadyState>(ReadyState.Closed);
@@ -160,6 +160,10 @@ export default function useWebSocket(socketUrl: string, options: Options = {}): 
   const disconnect = () => {
     if (reconnectTimerRef.current) {
       clearTimeout(reconnectTimerRef.current);
+    }
+
+    if (heartbeatTimerRef.current) {
+      clearInterval(heartbeatTimerRef.current);
     }
 
     reconnectTimesRef.current = reconnectLimit;
