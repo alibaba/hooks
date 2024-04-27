@@ -60,6 +60,7 @@ useWebSocket(socketUrl: string, options?: Options): Result;
 | onClose           | WebSocket close callback           | `(event: WebSocketEventMap['close'], instance: WebSocket) => void`     | -       |
 | onMessage         | WebSocket receive message callback | `(message: WebSocketEventMap['message'], instance: WebSocket) => void` | -       |
 | onError           | WebSocket error callback           | `(event: WebSocketEventMap['error'], instance: WebSocket) => void`     | -       |
+| onMaxAttempt      | Reconnect attempts exceed callback | `() => void`                                                           | -       |
 | reconnectLimit    | Retry times                        | `number`                                                               | `3`     |
 | reconnectInterval | Retry interval(ms)                 | `number`                                                               | `3000`  |
 | manual            | Manually starts connection         | `boolean`                                                              | `false` |

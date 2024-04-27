@@ -60,6 +60,7 @@ useWebSocket(socketUrl: string, options?: Options): Result;
 | onClose           | webSocket 关闭回调     | `(event: WebSocketEventMap['close'], instance: WebSocket) => void`     | -       |
 | onMessage         | webSocket 收到消息回调 | `(message: WebSocketEventMap['message'], instance: WebSocket) => void` | -       |
 | onError           | webSocket 错误回调     | `(event: WebSocketEventMap['error'], instance: WebSocket) => void`     | -       |
+| onMaxAttempt      | 重试最大次数回调       | `() => void`                                                           | -       |
 | reconnectLimit    | 重试次数               | `number`                                                               | `3`     |
 | reconnectInterval | 重试时间间隔（ms）     | `number`                                                               | `3000`  |
 | manual            | 手动启动连接           | `boolean`                                                              | `false` |
