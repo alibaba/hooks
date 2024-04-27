@@ -54,6 +54,7 @@ export default function useWebSocket(socketUrl: string, options: Options = {}): 
   const reconnectTimesRef = useRef(0);
   const reconnectTimerRef = useRef<ReturnType<typeof setTimeout>>();
   const websocketRef = useRef<WebSocket>();
+  const maxAttemptThrottle = useRef<ReturnType<typeof setTimeout>>();
 
   const [latestMessage, setLatestMessage] = useState<WebSocketEventMap['message']>();
   const [readyState, setReadyState] = useState<ReadyState>(ReadyState.Closed);
@@ -72,6 +73,14 @@ export default function useWebSocket(socketUrl: string, options: Options = {}): 
         connectWs();
         reconnectTimesRef.current++;
       }, reconnectInterval);
+    } else {
+      if (maxAttemptThrottle.current) {
+        clearTimeout(maxAttemptThrottle.current);
+      }
+
+      maxAttemptThrottle.current = setTimeout(() => {
+        onMaxAttemptRef.current?.();
+      }, 100);
     }
   };
 
@@ -141,6 +150,10 @@ export default function useWebSocket(socketUrl: string, options: Options = {}): 
   const disconnect = () => {
     if (reconnectTimerRef.current) {
       clearTimeout(reconnectTimerRef.current);
+    }
+
+    if (maxAttemptThrottle.current) {
+      clearTimeout(maxAttemptThrottle.current);
     }
 
     reconnectTimesRef.current = reconnectLimit;
