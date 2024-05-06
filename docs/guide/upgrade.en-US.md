@@ -43,7 +43,7 @@ The package.json will be:
 
 Now, ahooks in your project is still v4, and ahooks4 is v5:
 
-```tsx
+```tsx | pure
 import React from 'react';
 import { useRequest } from 'ahooks'; // v3
 import { useRequest } from 'ahooks4'; // v4

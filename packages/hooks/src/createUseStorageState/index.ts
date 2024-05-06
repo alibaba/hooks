@@ -70,7 +70,10 @@ export function createUseStorageState(getStorage: () => Storage | undefined) {
 
     const updateState = (value?: SetState<T>) => {
       const currentState = isFunction(value) ? value(state) : value;
-      setState(currentState);
+
+      if (!listenStorageChange) {
+        setState(currentState);
+      }
 
       try {
         let newValue: string | null;
@@ -126,5 +129,6 @@ export function createUseStorageState(getStorage: () => Storage | undefined) {
 
     return [state, useMemoizedFn(updateState)] as const;
   }
+
   return useStorageState;
 }

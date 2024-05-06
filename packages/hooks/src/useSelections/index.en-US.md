@@ -14,17 +14,9 @@ This hook is used for Checkbox group, supports multiple selection, single select
 
 ## Examples
 
-### Default usage
-
 <code src="./demo/demo1.tsx"></code>
-
-### Object array
-
-<code src="./demo/demo2.tsx" />
-
-### Pagination
-
-<code src="./demo/demo3.tsx" />
+<code src="./demo/demo2.tsx"></code>
+<code src="./demo/demo3.tsx"></code>
 
 ## API
 
@@ -41,6 +33,14 @@ const result: Result = useSelections<T>(items: T[], options?: Options<T>);
 const result: Result = useSelections<T>(items: T[], defaultSelected?: T[]);
 ```
 
+### Params
+
+<!-- prettier-ignore -->
+| Property | Description | Type | Default |
+| --- | --- | --- | --- |
+| items | Data items | `T[]` | - |
+| options | Optional configuration | `Options` | - |
+
 ### Options
 
 <!-- prettier-ignore -->
@@ -53,7 +53,7 @@ const result: Result = useSelections<T>(items: T[], defaultSelected?: T[]);
 
 | Property          | Description                                                                                                                                                                                                                                               | Type                                                                |
 | ----------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------- |
-| selected          | Selected Items                                                                                                                                                                                                                                            | `T[]`                                                               |
+| selected          | Selected items                                                                                                                                                                                                                                            | `T[]`                                                               |
 | allSelected       | Is all items selected                                                                                                                                                                                                                                     | `boolean`                                                           |
 | noneSelected      | Is no item selected                                                                                                                                                                                                                                       | `boolean`                                                           |
 | partiallySelected | Is partially items selected                                                                                                                                                                                                                               | `boolean`                                                           |
@@ -65,3 +65,4 @@ const result: Result = useSelections<T>(items: T[], defaultSelected?: T[]);
 | selectAll         | Select all items                                                                                                                                                                                                                                          | `() => void`                                                        |
 | unSelectAll       | UnSelect all items                                                                                                                                                                                                                                        | `() => void`                                                        |
 | toggleAll         | Toggle select all items                                                                                                                                                                                                                                   | `() => void`                                                        |
+| clearAll          | Clear all selected (In general, `clearAll` is equivalent to `unSelectAll`. If the items is dynamic, `clearAll` will clear "all selected data", while `unSelectAll` will only clear "the currently selected data in the items")                            | `() => void`                                                        |

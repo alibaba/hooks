@@ -1,9 +1,9 @@
 /**
  * title: Get the trigger key
- * desc: Multiple shortcuts are registered by a hook, each corresponding to a different logic.
+ * description: Multiple shortcuts are registered by a hook, each corresponding to a different logic.
  *
  * title.zh-CN: 获取触发的按键
- * desc.zh-CN: 单个 hook 注册多个快捷键，每个快捷键对应不同逻辑。
+ * description.zh-CN: 单个 hook 注册多个快捷键，每个快捷键对应不同逻辑。
  */
 
 import React, { useState } from 'react';

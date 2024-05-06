@@ -43,7 +43,7 @@ $ bun add ahooks4@npm:ahooks@4
 
 现在，你项目中的 ahooks 还是 v3 版本，ahooks4 是 v4 版本：
 
-```tsx
+```tsx | pure
 import React from 'react';
 import { useRequest } from 'ahooks'; // v3
 import { useRequest } from 'ahooks4'; // v4

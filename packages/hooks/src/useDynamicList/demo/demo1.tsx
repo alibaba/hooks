@@ -7,12 +7,13 @@
  */
 
 import React from 'react';
-import { Input, Space } from 'antd';
+import { Button, Input, Space } from 'antd';
 import { MinusCircleOutlined, PlusCircleOutlined } from '@ant-design/icons';
 import { useDynamicList } from 'ahooks';
 
 export default () => {
-  const { list, remove, getKey, insert, replace } = useDynamicList(['David', 'Jack']);
+  const { list, remove, batchRemove, getKey, insert, replace } = useDynamicList(['David', 'Jack']);
+  const listIndexes = list.map((item, index) => index);
 
   const Row = (index: number, item: any) => (
     <Space key={getKey(index)}>
@@ -27,11 +28,25 @@ export default () => {
   );
 
   return (
-    <>
-      <Space style={{ marginBottom: 16 }} direction="vertical">
-        {list.map((ele, index) => Row(index, ele))}
+    <Space direction="vertical">
+      <Space direction="vertical">{list.map((ele, index) => Row(index, ele))}</Space>
+      <Space>
+        <Button
+          danger
+          disabled={list.length <= 1}
+          onClick={() => batchRemove(listIndexes.filter((index) => index % 2 === 0))}
+        >
+          Remove odd items
+        </Button>
+        <Button
+          danger
+          disabled={list.length <= 1}
+          onClick={() => batchRemove(listIndexes.filter((index) => index % 2 !== 0))}
+        >
+          Remove even items
+        </Button>
       </Space>
-      <p>{JSON.stringify(list)}</p>
-    </>
+      <div>{JSON.stringify([list])}</div>
+    </Space>
   );
 };

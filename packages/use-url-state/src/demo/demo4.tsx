@@ -1,9 +1,9 @@
 /**
  * title: Multi-state management (split)
- * desc: useUrlState can handle multiple useUrlState updates simultaneously
+ * description: useUrlState can handle multiple useUrlState updates simultaneously
  *
  * title.zh-CN: 多状态管理 (拆分)
- * desc.zh-CN: useUrlState 可以同时处理多个 useUrlState 更新
+ * description.zh-CN: useUrlState 可以同时处理多个 useUrlState 更新
  */
 
 import React from 'react';

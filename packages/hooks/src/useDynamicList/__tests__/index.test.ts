@@ -3,6 +3,15 @@ import useDynamicList from '../index';
 
 describe('useDynamicList', () => {
   const setUp = (props: any): any => renderHook(() => useDynamicList(props));
+  const warnSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
+
+  afterEach(() => {
+    warnSpy.mockReset();
+  });
+
+  afterAll(() => {
+    warnSpy.mockRestore();
+  });
 
   it('getKey should work', () => {
     const hook = setUp([1, 2, 3]);
@@ -97,6 +106,18 @@ describe('useDynamicList', () => {
       hook.result.current.remove(7);
     });
     expect(hook.result.current.list.length).toBe(7);
+
+    // batch remove
+    act(() => {
+      hook.result.current.batchRemove(1);
+    });
+    expect(warnSpy).toHaveBeenCalledWith(
+      '`indexes` parameter of `batchRemove` function expected to be an array, but got "number".',
+    );
+    act(() => {
+      hook.result.current.batchRemove([0, 1, 2]);
+    });
+    expect(hook.result.current.list.length).toBe(4);
   });
 
   it('same items should have different keys', () => {

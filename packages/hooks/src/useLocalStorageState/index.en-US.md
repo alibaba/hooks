@@ -17,10 +17,7 @@ A Hook that store state into localStorage.
 <code src="./demo/demo1.tsx"></code>
 <code src="./demo/demo2.tsx"></code>
 <code src="./demo/demo3.tsx"></code>
-
-### Sync state with localStorage
-
-<code src="./demo/demo4.tsx" />
+<code src="./demo/demo4.tsx"></code>
 
 ## API
 
