@@ -14,9 +14,11 @@ export interface Options {
 }
 
 function useSwipeEvent(target: BasicTarget, options: Options) {
-  const touchStartX = useRef(null);
-  const touchStartY = useRef(null);
-  const startTime = useRef(0);
+  const screenWidth = window.screen.width;
+  const screenHeight = window.screen.height;
+  const touchStartX = useRef<number | null>(null);
+  const touchStartY = useRef<number | null>(null);
+  const startTime = useRef<number>(0);
   const {
     threshold = 50,
     maxTime = 300,
@@ -43,52 +45,32 @@ function useSwipeEvent(target: BasicTarget, options: Options) {
       const diffX = touchEndX - touchStartX.current;
       const diffY = touchEndY - touchStartY.current;
       const totalTime = Date.now() - startTime.current;
+      const isHorizontalSwipe = Math.abs(diffX) > Math.abs(diffY);
 
-      if (Math.abs(diffX) > Math.abs(diffY)) {
-        // horizontal swipe
-        if (Math.abs(diffX) < threshold) {
-          return;
-        }
+      if (isHorizontalSwipe) {
+        const distanceX = diffX;
+        const isFastSwipe = Math.abs(diffX) >= threshold && totalTime <= maxTime;
+        const isTriggerSwipe =
+          isFastSwipe || (totalTime > maxTime && Math.abs(diffX) / screenWidth > screenRatioX);
 
-        if (totalTime > maxTime) {
-          // swipe slow
-          const ratio = Math.abs(diffX) / window.screen.width;
-          if (ratio > screenRatioX) {
-            if (diffX > 0 && onSwipeRight) {
-              onSwipeRight(diffX, event);
-            } else if (diffX < 0 && onSwipeLeft) {
-              onSwipeLeft(diffX, event);
-            }
-          }
-        } else {
-          // immediate swipe
+        if (isTriggerSwipe) {
           if (diffX > 0 && onSwipeRight) {
-            onSwipeRight(diffX, event);
+            onSwipeRight(distanceX, event);
           } else if (diffX < 0 && onSwipeLeft) {
-            onSwipeLeft(diffX, event);
+            onSwipeLeft(distanceX, event);
           }
         }
       } else {
-        // vertical swipe
-        if (Math.abs(diffY) < threshold) {
-          return;
-        }
+        const distanceY = diffY;
+        const isFastSwipe = Math.abs(diffY) >= threshold && totalTime <= maxTime;
+        const isTriggerSwipe =
+          isFastSwipe || (totalTime > maxTime && Math.abs(diffY) / screenHeight > screenRatioY);
 
-        if (totalTime > maxTime) {
-          // swipe slow
-          const ratio = Math.abs(diffY) / window.screen.height;
-          if (ratio > screenRatioY) {
-            if (diffY > 0 && onSwipeDown) {
-              onSwipeDown(diffY, event);
-            } else if (diffY < 0 && onSwipeUp) {
-              onSwipeUp(diffY, event);
-            }
-          }
-        } else {
+        if (isTriggerSwipe) {
           if (diffY > 0 && onSwipeDown) {
-            onSwipeDown(diffY, event);
+            onSwipeDown(distanceY, event);
           } else if (diffY < 0 && onSwipeUp) {
-            onSwipeUp(diffY, event);
+            onSwipeUp(distanceY, event);
           }
         }
       }
