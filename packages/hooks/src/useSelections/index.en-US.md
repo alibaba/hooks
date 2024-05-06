@@ -36,6 +36,14 @@ const result: Result = useSelections<T>(items: T[], options?: Options<T>);
 const result: Result = useSelections<T>(items: T[], defaultSelected?: T[]);
 ```
 
+### Params
+
+<!-- prettier-ignore -->
+| Property | Description | Type | Default |
+| --- | --- | --- | --- |
+| items | Data items | `T[]` | - |
+| options | Optional configuration | `Options` | - |
+
 ### Options
 
 <!-- prettier-ignore -->
@@ -48,7 +56,7 @@ const result: Result = useSelections<T>(items: T[], defaultSelected?: T[]);
 
 | Property          | Description                                                                                                                                                                                                                                               | Type                                                                |
 | ----------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------- |
-| selected          | Selected Items                                                                                                                                                                                                                                            | `T[]`                                                               |
+| selected          | Selected items                                                                                                                                                                                                                                            | `T[]`                                                               |
 | allSelected       | Is all items selected                                                                                                                                                                                                                                     | `boolean`                                                           |
 | noneSelected      | Is no item selected                                                                                                                                                                                                                                       | `boolean`                                                           |
 | partiallySelected | Is partially items selected                                                                                                                                                                                                                               | `boolean`                                                           |
@@ -60,3 +68,4 @@ const result: Result = useSelections<T>(items: T[], defaultSelected?: T[]);
 | selectAll         | Select all items                                                                                                                                                                                                                                          | `() => void`                                                        |
 | unSelectAll       | UnSelect all items                                                                                                                                                                                                                                        | `() => void`                                                        |
 | toggleAll         | Toggle select all items                                                                                                                                                                                                                                   | `() => void`                                                        |
+| clearAll          | Clear all selected (In general, `clearAll` is equivalent to `unSelectAll`. If the items is dynamic, `clearAll` will clear "all selected data", while `unSelectAll` will only clear "the currently selected data in the items")                            | `() => void`                                                        |
