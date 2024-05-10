@@ -58,4 +58,5 @@ You can experience the effect through the following example.
 
 - `options.pollingInterval`, `options.pollingWhenHidden` support dynamic changes.
 - If you set `options.manual = true`, the initialization will not start polling, you need start it by `run/runAsync`.
+- If the `pollingInterval` changes from 0 to a value greater than 0, polling will not start automatically, and you need start it by `run/runAsync`.
 - The polling logic is to wait for `pollingInterval` time after each request is completed, and then initiate the next request.
