@@ -1,6 +1,6 @@
 {
   "name": "ahooks",
-  "version": "3.7.10",
+  "version": "3.7.11",
   "description": "react hooks library",
   "keywords": [
     "ahooks",
@@ -37,6 +37,7 @@
     "dayjs": "^1.9.1",
     "js-cookie": "^2.x.x",
     "lodash": "^4.17.21",
+    "react-fast-compare": "^3.2.2",
     "resize-observer-polyfill": "^1.5.1",
     "screenfull": "^5.0.0",
     "tslib": "^2.4.1"
