@@ -83,3 +83,5 @@ export function useResponsive() {
 
   return state;
 }
+
+export default useResponsive
