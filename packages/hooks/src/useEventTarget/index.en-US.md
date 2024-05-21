@@ -20,7 +20,7 @@ A hook that encapsulates `onChange` and `value` logic for form controls that obt
 ## API
 
 ```typescript
-const [value, { onChange, reset }] = useEventTarget<T, U>(Options<T, U>);
+const [value, { onChange, reset, setValue }] = useEventTarget<T, U>(Options<T, U>);
 ```
 
 ### Result
@@ -30,6 +30,7 @@ const [value, { onChange, reset }] = useEventTarget<T, U>(Options<T, U>);
 | value    | component value                             | `T`                                     |
 | onChange | callback when value changes                 | `(e: { target: { value: T } }) => void` |
 | reset    | function to reset the value to initialValue | `() => void`                            |
+| setValue | function to set value directly              | `(value: T) => void`                    |
 
 ### Options
 

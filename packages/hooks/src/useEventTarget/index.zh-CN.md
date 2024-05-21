@@ -20,7 +20,7 @@ nav:
 ## API
 
 ```typescript
-const [value, { onChange, reset }] = useEventTarget<T, U>(Options<T, U>);
+const [value, { onChange, reset, setValue }] = useEventTarget<T, U>(Options<T, U>);
 ```
 
 ### Result
@@ -30,6 +30,7 @@ const [value, { onChange, reset }] = useEventTarget<T, U>(Options<T, U>);
 | value    | 表单控件的值                 | `T`                                     |
 | onChange | 表单控件值发生变化时候的回调 | `(e: { target: { value: T } }) => void` |
 | reset    | 重置函数                     | `() => void`                            |
+| setValue | 直接设置 state 值的函数      | `(value: T) => void`                    |
 
 ### Options
 

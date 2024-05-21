@@ -19,6 +19,10 @@ describe('useEventTarget', () => {
     });
     expect(hook.result.current[0]).toBe('def');
     act(() => {
+      hook.result.current[1].setValue('foo');
+    });
+    expect(hook.result.current[0]).toBe('foo');
+    act(() => {
       hook.result.current[1].reset();
     });
     expect(hook.result.current[0]).toBe('abc');
