@@ -50,7 +50,7 @@ import useRafTimeout from './useRafTimeout';
 import useReactive from './useReactive';
 import useRequest, { clearCache } from './useRequest';
 import useResetState from './useResetState';
-import { configResponsive, useResponsive } from './useResponsive';
+import useResponsive, { configResponsive } from './useResponsive';
 import useSafeState from './useSafeState';
 import useScroll from './useScroll';
 import useSelections from './useSelections';

@@ -49,7 +49,7 @@ export function configResponsive(config: ResponsiveConfig) {
   if (info) calculate();
 }
 
-export function useResponsive() {
+function useResponsive() {
   if (isBrowser && !listening) {
     info = {};
     calculate();
@@ -84,4 +84,4 @@ export function useResponsive() {
   return state;
 }
 
-export default useResponsive
+export default useResponsive;
