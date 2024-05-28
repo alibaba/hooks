@@ -183,6 +183,10 @@ describe('useSelections', () => {
       expect(result.current.noneSelected).toBe(false);
       expect(result.current.allSelected).toBe(true);
       expect(result.current.partiallySelected).toBe(false);
+
+      act(() => {
+        expect(() => setSelected(undefined!)).not.toThrowError();
+      });
     };
 
     runCaseCallback(caseCallback, caseCallback);
