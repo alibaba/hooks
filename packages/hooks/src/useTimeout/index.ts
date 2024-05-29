@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import useMemoizedFn from '../useMemoizedFn';
 import { isNumber } from '../utils';
 
@@ -6,11 +6,25 @@ export interface UseTimeoutOptions {
   defaultActive?: boolean;
 }
 
-const useTimeout = (fn: () => void, delay?: number, options?: UseTimeoutOptions) => {
+const useTimeout = (
+  fn: () => void,
+  delay?: number,
+  options?: UseTimeoutOptions,
+): {
+  clear: () => void;
+  start: () => void;
+  isActive: boolean;
+} => {
   const { defaultActive = true } = options || {};
 
+  const [isActive, setIsActive] = useState(defaultActive);
   const timerCallback = useMemoizedFn(fn);
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const start = () => {
+    setIsActive(true);
+    timerRef.current = setTimeout(timerCallback, delay);
+  };
 
   const clear = useCallback(() => {
     if (timerRef.current) {
@@ -20,25 +34,14 @@ const useTimeout = (fn: () => void, delay?: number, options?: UseTimeoutOptions)
 
   useEffect(() => {
     if (!defaultActive) return;
+    if (!isNumber(delay) || delay < 0) return;
 
-    if (!isNumber(delay) || delay < 0) {
-      return;
-    }
+    start();
 
-    timerRef.current = setTimeout(timerCallback, delay);
     return clear;
   }, [delay, defaultActive]);
 
-  return clear;
+  return { clear, start, isActive };
 };
-
-// const {
-//   start,
-//   pause,
-//   clear,
-//   isActive,
-// } = useTimeout(fn, delay, {
-//   defaultActive: false
-// })
 
 export default useTimeout;
