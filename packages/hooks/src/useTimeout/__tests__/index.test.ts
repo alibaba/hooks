@@ -1,12 +1,14 @@
 import { renderHook } from '@testing-library/react';
-import useTimeout from '../index';
+import useTimeout, { type UseTimeoutOptions } from '../index';
 
 interface ParamsObj {
   fn: (...arg: any) => any;
   delay: number | undefined;
+  options?: UseTimeoutOptions;
 }
 
-const setUp = ({ fn, delay }: ParamsObj) => renderHook(() => useTimeout(fn, delay));
+const setUp = ({ fn, delay, options }: ParamsObj) =>
+  renderHook(() => useTimeout(fn, delay, options));
 
 describe('useTimeout', () => {
   jest.useFakeTimers();
@@ -44,5 +46,26 @@ describe('useTimeout', () => {
     jest.advanceTimersByTime(30);
     expect(callback).toHaveBeenCalledTimes(0);
     expect(clearTimeout).toHaveBeenCalledTimes(1);
+  });
+
+  it('timeout should not be called if defaultActive is false ', () => {
+    const callback = jest.fn();
+
+    setUp({ fn: callback, delay: 20, options: { defaultActive: false } });
+
+    expect(callback).not.toBeCalled();
+    jest.advanceTimersByTime(70);
+    expect(callback).not.toBeCalled();
+    expect(clearTimeout).toHaveBeenCalledTimes(0);
+  });
+
+  it('timeout should be called if defaultActive is true ', () => {
+    const callback = jest.fn();
+
+    setUp({ fn: callback, delay: 20, options: { defaultActive: true } });
+
+    expect(callback).not.toBeCalled();
+    jest.advanceTimersByTime(70);
+    expect(callback).toHaveBeenCalledTimes(1);
   });
 });
