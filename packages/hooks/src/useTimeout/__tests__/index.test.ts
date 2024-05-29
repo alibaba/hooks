@@ -1,4 +1,4 @@
-import { renderHook } from '@testing-library/react';
+import { renderHook, act } from '@testing-library/react';
 import useTimeout, { type UseTimeoutOptions } from '../index';
 
 interface ParamsObj {
@@ -42,7 +42,7 @@ describe('useTimeout', () => {
     const hook = setUp({ fn: callback, delay: 20 });
     expect(callback).not.toBeCalled();
 
-    hook.result.current();
+    hook.result.current.clear();
     jest.advanceTimersByTime(30);
     expect(callback).toHaveBeenCalledTimes(0);
     expect(clearTimeout).toHaveBeenCalledTimes(1);
@@ -67,5 +67,52 @@ describe('useTimeout', () => {
     expect(callback).not.toBeCalled();
     jest.advanceTimersByTime(70);
     expect(callback).toHaveBeenCalledTimes(1);
+  });
+
+  it('timeout should be called if start is called when defaultActive is false ', () => {
+    const callback = jest.fn();
+
+    const hook = setUp({ fn: callback, delay: 20, options: { defaultActive: false } });
+
+    expect(callback).not.toBeCalled();
+    jest.advanceTimersByTime(70);
+    expect(callback).not.toBeCalled();
+
+    hook.result.current.start();
+    jest.advanceTimersByTime(70);
+    expect(callback).toHaveBeenCalledTimes(1);
+  });
+
+  it('callback should not be called if called clear after call start', () => {
+    const callback = jest.fn();
+
+    const hook = setUp({ fn: callback, delay: 20, options: { defaultActive: false } });
+
+    expect(callback).not.toBeCalled();
+    jest.advanceTimersByTime(70);
+    expect(callback).not.toBeCalled();
+
+    hook.result.current.start();
+    jest.advanceTimersByTime(10);
+    hook.result.current.clear();
+    expect(callback).not.toBeCalled();
+    expect(clearTimeout).toHaveBeenCalledTimes(1);
+  });
+
+  it('isActive should match setTimeout active state', () => {
+    const callback = jest.fn();
+
+    const hook = setUp({ fn: callback, delay: 20, options: { defaultActive: false } });
+    expect(hook.result.current.isActive).toBe(false);
+    expect(callback).not.toBeCalled();
+
+    act(() => {
+      hook.result.current.start();
+    });
+
+    expect(hook.result.current.isActive).toBe(true);
+    jest.advanceTimersByTime(70);
+    expect(callback).toHaveBeenCalledTimes(1);
+    expect(hook.result.current.isActive).toBe(true);
   });
 });
