@@ -13,7 +13,7 @@ export default () => {
   const [count, setCount] = useState(0);
   const [delay, setDelay] = useState<number | undefined>(1000);
 
-  const clear = useTimeout(() => {
+  const { clear, isActive } = useTimeout(() => {
     setCount(count + 1);
   }, delay);
 
@@ -21,7 +21,17 @@ export default () => {
     <div>
       <p> count: {count} </p>
       <p style={{ marginTop: 16 }}> Delay: {delay} </p>
-      <button onClick={() => setDelay((t) => (!!t ? t + 1000 : 1000))} style={{ marginRight: 8 }}>
+      <div>
+        setTimeout status:{' '}
+        <span style={{ color: isActive ? 'green' : 'red' }}>
+          {isActive ? 'enabled' : 'disabled'}
+        </span>
+      </div>
+
+      <button
+        onClick={() => setDelay((t) => (!!t ? t + 1000 : 1000))}
+        style={{ marginRight: 8, marginTop: 16 }}
+      >
         Delay + 1000
       </button>
       <button
