@@ -33,7 +33,7 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.21.0",
-    "ahooks": "^3.4.1",
+    "ahooks": "^3.8.0",
     "query-string": "^8.1.0",
     "tslib": "^2.4.1"
   },
