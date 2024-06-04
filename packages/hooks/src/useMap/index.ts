@@ -21,7 +21,6 @@ function useMap<K, T>(initialValue?: Iterable<readonly [K, T]>) {
   };
 
   const remove = (key: K) => {
-    if (!map.get(key)) {
     if (!map.has(key)) {
       return;
     }
