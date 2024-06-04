@@ -62,6 +62,7 @@ describe('useResetState', () => {
     const hook = setUp({
       count: random,
     });
+
     act(() => {
       hook.result.current.setState({ count: Math.random() });
     });
