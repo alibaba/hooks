@@ -99,14 +99,25 @@ describe('useMap', () => {
   });
 
   it('should not render if set same key-value pair', () => {
-    const { result } = setup([['hello', 'world']]);
-    const [prevValue, utils] = result.current;
+    let count = 0;
+    const { result } = renderHook(() => {
+      count++;
+
+      return useMap([['hello', 'world']]);
+    });
+    const [, utils] = result.current;
+
+    expect(count).toBe(1);
 
     act(() => {
       utils.set('hello', 'world');
     });
+    expect(count).toBe(1);
 
-    expect(prevValue).toBe(result.current[0]);
+    act(() => {
+      utils.set('hello', 'ahooks');
+    });
+    expect(count).toBe(2);
   });
 
   it('should override current value if setting existing key', () => {
@@ -181,14 +192,25 @@ describe('useMap', () => {
   });
 
   it('should not render if remove non-existing key', () => {
-    const { result } = setup([['hello', 'world']]);
-    const [prevValue, utils] = result.current;
+    let count = 0;
+    const { result } = renderHook(() => {
+      count++;
+
+      return useMap([['hello', 'world']]);
+    });
+    const [, utils] = result.current;
+
+    expect(count).toBe(1);
 
     act(() => {
       utils.remove('hi');
     });
+    expect(count).toBe(1);
 
-    expect(prevValue).toBe(result.current[0]);
+    act(() => {
+      utils.remove('hello');
+    });
+    expect(count).toBe(2);
   });
 
   it('reset should be work', () => {
