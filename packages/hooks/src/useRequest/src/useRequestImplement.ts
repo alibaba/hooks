@@ -63,6 +63,7 @@ function useRequestImplement<TData, TParams extends any[]>(
     data: fetchInstance.state.data,
     error: fetchInstance.state.error,
     params: fetchInstance.state.params || [],
+    pollingLoading: fetchInstance.state.pollingLoading,
     cancel: useMemoizedFn(fetchInstance.cancel.bind(fetchInstance)),
     refresh: useMemoizedFn(fetchInstance.refresh.bind(fetchInstance)),
     refreshAsync: useMemoizedFn(fetchInstance.refreshAsync.bind(fetchInstance)),

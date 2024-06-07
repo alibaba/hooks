@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import useUpdateEffect from '../../../useUpdateEffect';
 import type { Plugin, Timeout } from '../types';
 import isDocumentVisible from '../utils/isDocumentVisible';
@@ -11,6 +11,7 @@ const usePollingPlugin: Plugin<any, any[]> = (
   const timerRef = useRef<Timeout>();
   const unsubscribeRef = useRef<() => void>();
   const countRef = useRef<number>(0);
+  const pollingLoadingRef = useRef(false);
 
   const stopPolling = () => {
     if (timerRef.current) {
@@ -32,12 +33,17 @@ const usePollingPlugin: Plugin<any, any[]> = (
   return {
     onBefore: () => {
       stopPolling();
+      return {
+        pollingLoading: pollingLoadingRef.current,
+      };
     },
     onError: () => {
       countRef.current += 1;
+      pollingLoadingRef.current = false;
     },
     onSuccess: () => {
       countRef.current = 0;
+      pollingLoadingRef.current = false;
     },
     onFinally: () => {
       if (
@@ -49,15 +55,20 @@ const usePollingPlugin: Plugin<any, any[]> = (
           // if pollingWhenHidden = false && document is hidden, then stop polling and subscribe revisible
           if (!pollingWhenHidden && !isDocumentVisible()) {
             unsubscribeRef.current = subscribeReVisible(() => {
+              pollingLoadingRef.current = true;
               fetchInstance.refresh();
             });
           } else {
+            pollingLoadingRef.current = true;
             fetchInstance.refresh();
           }
         }, pollingInterval);
       } else {
         countRef.current = 0;
       }
+      return {
+        pollingLoading: pollingLoadingRef.current,
+      };
     },
     onCancel: () => {
       stopPolling();

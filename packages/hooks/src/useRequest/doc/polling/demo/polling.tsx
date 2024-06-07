@@ -1,5 +1,5 @@
 import { useRequest } from 'ahooks';
-import React from 'react';
+import React, { useState } from 'react';
 import Mock from 'mockjs';
 
 function getUsername() {
@@ -12,14 +12,14 @@ function getUsername() {
 }
 
 export default () => {
-  const { data, loading, run, cancel } = useRequest(getUsername, {
-    pollingInterval: 1000,
+  const { data, loading, run, cancel, pollingLoading } = useRequest(getUsername, {
+    pollingInterval: 10000,
     pollingWhenHidden: false,
   });
 
   return (
     <>
-      <p>Username: {loading ? 'Loading' : data}</p>
+      <p>Username: {pollingLoading ? 'PollingLoading' : loading ? 'Loading' : data}</p>
       <button type="button" onClick={run}>
         start
       </button>
