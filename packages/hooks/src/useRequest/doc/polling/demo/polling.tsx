@@ -13,7 +13,7 @@ function getUsername() {
 
 export default () => {
   const { data, loading, run, cancel, pollingLoading } = useRequest(getUsername, {
-    pollingInterval: 10000,
+    pollingInterval: 1000,
     pollingWhenHidden: false,
   });
 

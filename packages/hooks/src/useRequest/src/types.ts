@@ -120,6 +120,7 @@ export interface Result<TData, TParams extends any[]> {
   run: Fetch<TData, TParams>['run'];
   runAsync: Fetch<TData, TParams>['runAsync'];
   mutate: Fetch<TData, TParams>['mutate'];
+  pollingLoading?: boolean;
 }
 
 export type Timeout = ReturnType<typeof setTimeout>;

@@ -72,6 +72,7 @@ const usePollingPlugin: Plugin<any, any[]> = (
     },
     onCancel: () => {
       stopPolling();
+      pollingLoadingRef.current = false;
     },
   };
 };
