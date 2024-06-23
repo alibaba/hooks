@@ -10,9 +10,9 @@ export const createDeepCompareEffect: CreateUpdateEffect = (hook) => (effect, de
   const signalRef = useRef<number>(0);
 
   if (deps === undefined || !depsEqual(deps, ref.current)) {
-    ref.current = deps;
     signalRef.current += 1;
   }
+  ref.current = deps;
 
   hook(effect, [signalRef.current]);
 };
