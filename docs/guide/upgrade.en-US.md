@@ -36,7 +36,7 @@ useRequest has been rewritten:
 - Removed `pagination` related options, it is recommended to use `usePagination` or `useAntdTable` to achieve paging ability.
 - Removed `loadMore` related options, it is recommended to use `useInfiniteScroll` to achieve unlimited loading ability.
 - Removed `fetchKey`, that is, deleted concurrent request.
-- Removed `formatResult`, `initialData`, and `thrownError`.
+- Removed `formatResult`, `initialData`, and `throwOnError`.
 - The request library is no longer integrated by default, and `service` no longer supports string or object.
 - Added `runAsync` and `refreshAsync`, the original `run` no longer returns Promise.
 - Added error retry ability.
