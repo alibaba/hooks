@@ -18,11 +18,13 @@ describe('useLatest', () => {
   });
 
   it('useLatest with reference variable should work', async () => {
-    const { result, rerender } = setUp({});
+    const val1 = {};
+    const { result, rerender } = setUp(val1);
 
-    expect(result.current.current).toEqual({});
+    expect(result.current.current).toBe(val1);
 
-    rerender([]);
-    expect(result.current.current).toEqual([]);
+    const val2 = [];
+    rerender(val2);
+    expect(result.current.current).toBe(val2);
   });
 });
