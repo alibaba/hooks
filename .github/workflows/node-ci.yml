@@ -21,7 +21,7 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
 
-      - name: pnpm run intall, build
+      - name: pnpm run install, build
         run: |
           pnpm run init
         env:
