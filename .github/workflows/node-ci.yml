@@ -15,15 +15,13 @@ jobs:
 
       - name: Install pnpm
         uses: pnpm/action-setup@v2.2.4
-        with:
-          version: 7
 
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
 
-      - name: pnpm run intall, build
+      - name: pnpm run install, build
         run: |
           pnpm run init
         env:

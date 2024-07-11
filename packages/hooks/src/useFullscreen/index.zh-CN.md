@@ -21,6 +21,10 @@ nav:
 
 <code src="./demo/demo3.tsx" />
 
+### 与其它全屏操作共存
+
+<code src="./demo/demo4.tsx" />
+
 ## API
 
 ```typescript

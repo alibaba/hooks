@@ -1,20 +1,18 @@
-/* eslint-disable no-empty */
 import { useState } from 'react';
+import useEventListener from '../useEventListener';
 import useMemoizedFn from '../useMemoizedFn';
 import useUpdateEffect from '../useUpdateEffect';
 import { isFunction, isUndef } from '../utils';
 
-export interface IFuncUpdater<T> {
-  (previousState?: T): T;
-}
-export interface IFuncStorage {
-  (): Storage;
-}
+export const SYNC_STORAGE_EVENT_NAME = 'AHOOKS_SYNC_STORAGE_EVENT_NAME';
+
+export type SetState<S> = S | ((prevState?: S) => S);
 
 export interface Options<T> {
+  defaultValue?: T | (() => T);
+  listenStorageChange?: boolean;
   serializer?: (value: T) => string;
   deserializer?: (value: string) => T;
-  defaultValue?: T | IFuncUpdater<T>;
   onError?: (error: unknown) => void;
 }
 
@@ -22,6 +20,7 @@ export function createUseStorageState(getStorage: () => Storage | undefined) {
   function useStorageState<T>(key: string, options: Options<T> = {}) {
     let storage: Storage | undefined;
     const {
+      listenStorageChange = false,
       onError = (e) => {
         console.error(e);
       },
@@ -63,28 +62,73 @@ export function createUseStorageState(getStorage: () => Storage | undefined) {
       return options.defaultValue;
     }
 
-    const [state, setState] = useState(() => getStoredValue());
+    const [state, setState] = useState(getStoredValue);
 
     useUpdateEffect(() => {
       setState(getStoredValue());
     }, [key]);
 
-    const updateState = (value?: T | IFuncUpdater<T>) => {
+    const updateState = (value?: SetState<T>) => {
       const currentState = isFunction(value) ? value(state) : value;
-      setState(currentState);
 
-      if (isUndef(currentState)) {
-        storage?.removeItem(key);
-      } else {
-        try {
-          storage?.setItem(key, serializer(currentState));
-        } catch (e) {
-          console.error(e);
+      if (!listenStorageChange) {
+        setState(currentState);
+      }
+
+      try {
+        let newValue: string | null;
+        const oldValue = storage?.getItem(key);
+
+        if (isUndef(currentState)) {
+          newValue = null;
+          storage?.removeItem(key);
+        } else {
+          newValue = serializer(currentState);
+          storage?.setItem(key, newValue);
         }
+
+        dispatchEvent(
+          // send custom event to communicate within same page
+          // importantly this should not be a StorageEvent since those cannot
+          // be constructed with a non-built-in storage area
+          new CustomEvent(SYNC_STORAGE_EVENT_NAME, {
+            detail: {
+              key,
+              newValue,
+              oldValue,
+              storageArea: storage,
+            },
+          }),
+        );
+      } catch (e) {
+        onError(e);
       }
     };
 
+    const syncState = (event: StorageEvent) => {
+      if (event.key !== key || event.storageArea !== storage) {
+        return;
+      }
+
+      setState(getStoredValue());
+    };
+
+    const syncStateFromCustomEvent = (event: CustomEvent<StorageEvent>) => {
+      syncState(event.detail);
+    };
+
+    // from another document
+    useEventListener('storage', syncState, {
+      enable: listenStorageChange,
+    });
+
+    // from the same document but different hooks
+    useEventListener(SYNC_STORAGE_EVENT_NAME, syncStateFromCustomEvent, {
+      enable: listenStorageChange,
+    });
+
     return [state, useMemoizedFn(updateState)] as const;
   }
+
   return useStorageState;
 }

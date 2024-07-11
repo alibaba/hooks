@@ -11,6 +11,7 @@ import { useLatest } from 'ahooks';
 
 export default () => {
   const [count, setCount] = useState(0);
+  const [count2, setCount2] = useState(0);
 
   const latestCountRef = useLatest(count);
 
@@ -21,9 +22,17 @@ export default () => {
     return () => clearInterval(interval);
   }, []);
 
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCount2(count2 + 1);
+    }, 1000);
+    return () => clearInterval(interval);
+  }, []);
+
   return (
     <>
-      <p>count: {count}</p>
+      <p>count(useLatest): {count}</p>
+      <p>count(defult): {count2}</p>
     </>
   );
 };

@@ -3,6 +3,8 @@
   "compilerOptions": {
     "rootDir": "src",
     "outDir": "lib",
-    "composite": true
-  }
+    "composite": true,
+    "declaration": true
+  },
+  "include": ["src"]
 }
