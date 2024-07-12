@@ -36,13 +36,13 @@ function useEventListener<K extends keyof WindowEventMap>(
   options?: Options<Window>,
 ): void;
 function useEventListener(
-  eventName: string,
+  eventName: string | string[],
   handler: (event: Event) => void,
   options?: Options<Window>,
 ): void;
-function useEventListener(eventName: string, handler: noop, options: Options): void;
+function useEventListener(eventName: string | string[], handler: noop, options: Options): void;
 
-function useEventListener(eventName: string, handler: noop, options: Options = {}) {
+function useEventListener(eventName: string | string[], handler: noop, options: Options = {}) {
   const { enable = true } = options;
 
   const handlerRef = useLatest(handler);
@@ -62,15 +62,21 @@ function useEventListener(eventName: string, handler: noop, options: Options = {
         return handlerRef.current(event);
       };
 
-      targetElement.addEventListener(eventName, eventListener, {
-        capture: options.capture,
-        once: options.once,
-        passive: options.passive,
+      const eventNameArray = Array.isArray(eventName) ? eventName : [eventName];
+
+      eventNameArray.forEach((eventName) => {
+        targetElement.addEventListener(eventName, eventListener, {
+          capture: options.capture,
+          once: options.once,
+          passive: options.passive,
+        });
       });
 
       return () => {
-        targetElement.removeEventListener(eventName, eventListener, {
-          capture: options.capture,
+        eventNameArray.forEach((eventName) => {
+          targetElement.removeEventListener(eventName, eventListener, {
+            capture: options.capture,
+          });
         });
       };
     },

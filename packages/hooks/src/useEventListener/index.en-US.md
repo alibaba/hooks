@@ -29,11 +29,11 @@ useEventListener(
 
 ### Property
 
-| Property  | Description            | type                  | default |
-| --------- | ---------------------- | --------------------- | ------- |
-| eventName | Event name             | `string`              | -       |
-| handler   | Callback function      | `(ev: Event) => void` | -       |
-| options   | More options(optional) | `Options`             | -       |
+| Property  | Description            | type                   | default |
+| --------- | ---------------------- | ---------------------- | ------- |
+| eventName | Event name             | `string` \| `string[]` | -       |
+| handler   | Callback function      | `(ev: Event) => void`  | -       |
+| options   | More options(optional) | `Options`              | -       |
 
 ### Options
 
