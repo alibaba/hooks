@@ -1,5 +1,5 @@
 import 'intersection-observer';
-import { useState } from 'react';
+import { useCallback, useRef, useState } from 'react';
 import type { BasicTarget } from '../utils/domTarget';
 import { getTargetElement } from '../utils/domTarget';
 import useEffectWithTarget from '../utils/useEffectWithTarget';
@@ -18,6 +18,11 @@ function useInViewport(target: BasicTarget | BasicTarget[], options?: Options) {
 
   const [state, setState] = useState<boolean>();
   const [ratio, setRatio] = useState<number>();
+  const ref = useRef<IntersectionObserver>();
+
+  const disconnect = useCallback(() => {
+    ref.current?.disconnect();
+  }, []);
 
   useEffectWithTarget(
     () => {
@@ -28,7 +33,7 @@ function useInViewport(target: BasicTarget | BasicTarget[], options?: Options) {
         return;
       }
 
-      const observer = new IntersectionObserver(
+      ref.current = new IntersectionObserver(
         (entries) => {
           for (const entry of entries) {
             setRatio(entry.intersectionRatio);
@@ -42,17 +47,15 @@ function useInViewport(target: BasicTarget | BasicTarget[], options?: Options) {
         },
       );
 
-      els.forEach((el) => observer.observe(el!));
+      els.forEach((el) => ref.current?.observe(el!));
 
-      return () => {
-        observer.disconnect();
-      };
+      return disconnect;
     },
-    [options?.rootMargin, options?.threshold, callback],
+    [options?.rootMargin, options?.threshold, callback, disconnect],
     target,
   );
 
-  return [state, ratio] as const;
+  return [state, ratio, disconnect] as const;
 }
 
 export default useInViewport;

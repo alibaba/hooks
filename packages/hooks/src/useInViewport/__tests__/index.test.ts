@@ -78,4 +78,24 @@ describe('useInViewport', () => {
     unmount();
     expect(disconnect).toBeCalled();
   });
+
+  it('should disconnect when disconnect is called', async () => {
+    const { result } = renderHook(() => useInViewport(targetEl));
+    const calls = mockIntersectionObserver.mock.calls;
+    const [onChange] = calls[calls.length - 1];
+
+    act(() => {
+      onChange([{ targetEl, isIntersecting: true, intersectionRatio: 0.5 }]);
+    });
+    const [inViewport, ratio, disconnect] = result.current;
+    expect(inViewport).toBeTruthy();
+    expect(ratio).toBe(0.5);
+    disconnect();
+
+    act(() => {
+      onChange([{ targetEl, isIntersecting: false, intersectionRatio: 0 }]);
+    });
+    expect(inViewport).toBeTruthy();
+    expect(ratio).toBe(0.5);
+  });
 });
