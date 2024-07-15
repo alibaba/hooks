@@ -1,5 +1,5 @@
 import dayjs from 'dayjs';
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import useLatest from '../useLatest';
 import { isNumber } from '../utils/index';
 
@@ -8,7 +8,7 @@ export type TDate = dayjs.ConfigType;
 export interface Options {
   leftTime?: number;
   targetDate?: TDate;
-  interval?: number;
+  interval?: number; // 保留interval选项，以便在需要时使用setInterval
   onEnd?: () => void;
 }
 
@@ -20,59 +20,87 @@ export interface FormattedRes {
   milliseconds: number;
 }
 
-const calcLeft = (target?: TDate) => {
+const calcLeft = (target?: TDate): number => {
   if (!target) {
     return 0;
   }
-  // https://stackoverflow.com/questions/4310953/invalid-date-in-safari
   const left = dayjs(target).valueOf() - Date.now();
   return left < 0 ? 0 : left;
 };
 
-const parseMs = (milliseconds: number): FormattedRes => {
-  return {
-    days: Math.floor(milliseconds / 86400000),
-    hours: Math.floor(milliseconds / 3600000) % 24,
-    minutes: Math.floor(milliseconds / 60000) % 60,
-    seconds: Math.floor(milliseconds / 1000) % 60,
-    milliseconds: Math.floor(milliseconds) % 1000,
-  };
-};
+const parseMs = (milliseconds: number): FormattedRes => ({
+  days: Math.floor(milliseconds / 86400000),
+  hours: Math.floor(milliseconds / 3600000) % 24,
+  minutes: Math.floor(milliseconds / 60000) % 60,
+  seconds: Math.floor(milliseconds / 1000) % 60,
+  milliseconds: Math.floor(milliseconds) % 1000,
+});
 
 const useCountdown = (options: Options = {}) => {
-  const { leftTime, targetDate, interval = 1000, onEnd } = options || {};
+  const { leftTime, targetDate, interval = 1000, onEnd } = options;
 
   const memoLeftTime = useMemo<TDate>(() => {
-    return isNumber(leftTime) && leftTime > 0 ? Date.now() + leftTime : undefined;
+    if (isNumber(leftTime) && leftTime > 0) {
+      return Date.now() + leftTime;
+    }
+    return undefined;
   }, [leftTime]);
 
   const target = 'leftTime' in options ? memoLeftTime : targetDate;
-
-  const [timeLeft, setTimeLeft] = useState(() => calcLeft(target));
-
+  const [timeLeft, setTimeLeft] = useState<number>(() => calcLeft(target));
   const onEndRef = useLatest(onEnd);
+  const requestRef = useRef<number | null>(null);
+  const intervalRef = useRef<number | null>(null);
+
+  const update = () => {
+    const targetLeft = calcLeft(target);
+    setTimeLeft(targetLeft);
+
+    if (targetLeft === 0) {
+      if (requestRef.current) {
+        cancelAnimationFrame(requestRef.current);
+      }
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current);
+      }
+      onEndRef.current?.();
+    } else {
+      requestRef.current = requestAnimationFrame(update);
+    }
+  };
 
   useEffect(() => {
     if (!target) {
-      // for stop
       setTimeLeft(0);
       return;
     }
 
-    // 立即执行一次
     setTimeLeft(calcLeft(target));
 
-    const timer = setInterval(() => {
-      const targetLeft = calcLeft(target);
-      setTimeLeft(targetLeft);
-      if (targetLeft === 0) {
-        clearInterval(timer);
-        onEndRef.current?.();
-      }
-    }, interval);
+    if ('requestAnimationFrame' in window && typeof requestAnimationFrame !== 'undefined') {
+      requestRef.current = requestAnimationFrame(update);
+    } else {
+      intervalRef.current = window.setInterval(() => {
+        const targetLeft = calcLeft(target);
+        setTimeLeft(targetLeft);
+        if (targetLeft === 0) {
+          if (intervalRef.current) {
+            clearInterval(intervalRef.current);
+          }
+          onEndRef.current?.();
+        }
+      }, interval);
+    }
 
-    return () => clearInterval(timer);
-  }, [target, interval]);
+    return () => {
+      if (requestRef.current) {
+        cancelAnimationFrame(requestRef.current);
+      }
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current);
+      }
+    };
+  }, [target, interval, onEndRef]);
 
   const formattedRes = useMemo(() => parseMs(timeLeft), [timeLeft]);
 
