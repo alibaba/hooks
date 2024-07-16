@@ -17,6 +17,10 @@ Use addEventListener elegant by Hook.
 
 <code src="./demo/demo2.tsx" />
 
+### Listen for multiple events
+
+<code src="./demo/demo3.tsx" />
+
 ## API
 
 ```typescript

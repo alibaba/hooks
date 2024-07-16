@@ -17,6 +17,10 @@ nav:
 
 <code src="./demo/demo2.tsx" />
 
+### 监听多个事件
+
+<code src="./demo/demo3.tsx" />
+
 ## API
 
 ```typescript

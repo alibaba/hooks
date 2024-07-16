@@ -64,8 +64,8 @@ function useEventListener(eventName: string | string[], handler: noop, options: 
 
       const eventNameArray = Array.isArray(eventName) ? eventName : [eventName];
 
-      eventNameArray.forEach((eventName) => {
-        targetElement.addEventListener(eventName, eventListener, {
+      eventNameArray.forEach((event) => {
+        targetElement.addEventListener(event, eventListener, {
           capture: options.capture,
           once: options.once,
           passive: options.passive,
@@ -73,8 +73,8 @@ function useEventListener(eventName: string | string[], handler: noop, options: 
       });
 
       return () => {
-        eventNameArray.forEach((eventName) => {
-          targetElement.removeEventListener(eventName, eventListener, {
+        eventNameArray.forEach((event) => {
+          targetElement.removeEventListener(event, eventListener, {
             capture: options.capture,
           });
         });
