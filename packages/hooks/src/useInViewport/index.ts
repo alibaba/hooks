@@ -13,6 +13,12 @@ export interface Options {
   callback?: CallbackType;
 }
 
+export type Result = [boolean | undefined, number | undefined, () => void] & {
+  inViewport?: boolean;
+  ratio?: number;
+  disconnect: () => void;
+};
+
 function useInViewport(target: BasicTarget | BasicTarget[], options?: Options) {
   const { callback, ...option } = options || {};
 
@@ -55,7 +61,14 @@ function useInViewport(target: BasicTarget | BasicTarget[], options?: Options) {
     target,
   );
 
-  return [state, ratio, disconnect] as const;
+  const result = [state, ratio, disconnect] as Result;
+
+  // Support object destructuring, by adding the specific values.
+  result.inViewport = result[0];
+  result.ratio = result[1];
+  result.disconnect = result[2];
+
+  return result;
 }
 
 export default useInViewport;
