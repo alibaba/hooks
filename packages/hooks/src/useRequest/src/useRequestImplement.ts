@@ -14,7 +14,7 @@ function useRequestImplement<TData, TParams extends any[]>(
   options: Options<TData, TParams> = {},
   plugins: Plugin<TData, TParams>[] = [],
 ) {
-  const { manual = false, ...rest } = options;
+  const { manual = false, ready = true, ...rest } = options;
 
   if (isDev) {
     if (options.defaultParams && !Array.isArray(options.defaultParams)) {
@@ -24,6 +24,7 @@ function useRequestImplement<TData, TParams extends any[]>(
 
   const fetchOptions = {
     manual,
+    ready,
     ...rest,
   };
 
@@ -46,7 +47,7 @@ function useRequestImplement<TData, TParams extends any[]>(
   fetchInstance.pluginImpls = plugins.map((p) => p(fetchInstance, fetchOptions));
 
   useMount(() => {
-    if (!manual) {
+    if (!manual && ready) {
       // useCachePlugin can set fetchInstance.state.params from cache when init
       const params = fetchInstance.state.params || options.defaultParams || [];
       // @ts-ignore
