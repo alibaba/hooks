@@ -31,4 +31,5 @@ return <div>{ loading ? 'Loading...' : data }</div>
 
 ## 备注
 
-`options.loadingDelay` 支持动态变化。
+- `options.loadingDelay` 支持动态变化。
+- 如果同时设置 `options.loadingDelay` 和 `options.staleTime` , 注意 `options.loadingDelay` 的值需要大于 `options.staleTime` 才有效果。
