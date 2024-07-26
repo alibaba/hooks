@@ -35,6 +35,7 @@ function useEventTarget<T, U = T>(options?: Options<T, U>) {
     {
       onChange,
       reset,
+      setValue,
     },
   ] as const;
 }
