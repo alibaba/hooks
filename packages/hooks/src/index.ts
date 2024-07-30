@@ -40,6 +40,7 @@ import useLongPress from './useLongPress';
 import useMap from './useMap';
 import useMemoizedFn from './useMemoizedFn';
 import useMount from './useMount';
+import useMouseInElement from './useMouseInElement';
 import useMouse from './useMouse';
 import useNetwork from './useNetwork';
 import usePagination from './usePagination';
@@ -101,6 +102,7 @@ export {
   useDebounceEffect,
   usePrevious,
   useMouse,
+  useMouseInElement,
   useScroll,
   useClickAway,
   useFullscreen,
