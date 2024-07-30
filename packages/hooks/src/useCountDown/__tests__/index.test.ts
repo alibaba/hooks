@@ -51,13 +51,15 @@ describe('useCountDown', () => {
     act(() => {
       jest.advanceTimersByTime(1000);
     });
-    expect(result.current[0]).toBe(4000);
+    expect(result.current[0]).toBeGreaterThanOrEqual(4000);
+    expect(result.current[0]).toBeLessThanOrEqual(4100);
     expect(result.current[1].seconds).toBe(4);
 
     act(() => {
       jest.advanceTimersByTime(4000);
     });
-    expect(result.current[0]).toBe(0);
+    expect(result.current[0]).toBeGreaterThanOrEqual(0);
+    expect(result.current[0]).toBeLessThanOrEqual(100);
     expect(result.current[1].seconds).toBe(0);
 
     act(() => {
@@ -80,13 +82,15 @@ describe('useCountDown', () => {
     act(() => {
       jest.advanceTimersByTime(1000);
     });
-    expect(result.current[0]).toBe(4000);
+    expect(result.current[0]).toBeGreaterThanOrEqual(4000);
+    expect(result.current[0]).toBeLessThanOrEqual(4100);
     expect(result.current[1].seconds).toBe(4);
 
     act(() => {
       jest.advanceTimersByTime(4000);
     });
-    expect(result.current[0]).toBe(0);
+    expect(result.current[0]).toBeGreaterThanOrEqual(0);
+    expect(result.current[0]).toBeLessThanOrEqual(100);
     expect(result.current[1].seconds).toBe(0);
   });
 
@@ -106,7 +110,8 @@ describe('useCountDown', () => {
     act(() => {
       jest.advanceTimersByTime(1000);
     });
-    expect(result.current[0]).toBe(4000);
+    expect(result.current[0]).toBeGreaterThanOrEqual(4000);
+    expect(result.current[0]).toBeLessThanOrEqual(4100);
     expect(result.current[1].seconds).toBe(4);
 
     rerender({
@@ -169,13 +174,15 @@ describe('useCountDown', () => {
     act(() => {
       jest.advanceTimersByTime(1000);
     });
-    expect(result.current[0]).toBe(4000);
+    expect(result.current[0]).toBeGreaterThanOrEqual(4000);
+    expect(result.current[0]).toBeLessThanOrEqual(4100);
     expect(result.current[1].seconds).toBe(4);
 
     act(() => {
       jest.advanceTimersByTime(4000);
     });
-    expect(result.current[0]).toBe(0);
+    expect(result.current[0]).toBeGreaterThanOrEqual(0);
+    expect(result.current[0]).toBeLessThanOrEqual(100);
     expect(result.current[1].seconds).toBe(0);
 
     act(() => {
@@ -195,13 +202,15 @@ describe('useCountDown', () => {
     act(() => {
       jest.advanceTimersByTime(1000);
     });
-    expect(result.current[0]).toBe(4000);
+    expect(result.current[0]).toBeGreaterThanOrEqual(4000);
+    expect(result.current[0]).toBeLessThanOrEqual(4100);
     expect(result.current[1].seconds).toBe(4);
 
     act(() => {
       jest.advanceTimersByTime(4000);
     });
-    expect(result.current[0]).toBe(0);
+    expect(result.current[0]).toBeGreaterThanOrEqual(0);
+    expect(result.current[0]).toBeLessThanOrEqual(100);
     expect(result.current[1].seconds).toBe(0);
   });
 
@@ -215,7 +224,8 @@ describe('useCountDown', () => {
     act(() => {
       jest.advanceTimersByTime(1000);
     });
-    expect(result.current[0]).toBe(4000);
+    expect(result.current[0]).toBeGreaterThanOrEqual(4000);
+    expect(result.current[0]).toBeLessThanOrEqual(4100);
     expect(result.current[1].seconds).toBe(4);
 
     rerender({ leftTime: undefined });
@@ -253,13 +263,15 @@ describe('useCountDown', () => {
       leftTime: 6000,
       targetDate: targetDate,
     });
-    expect(result.current[0]).toBe(4000);
+    expect(result.current[0]).toBeGreaterThanOrEqual(4000);
+    expect(result.current[0]).toBeLessThanOrEqual(4100);
 
     targetDate = Date.now() + 9000;
     rerender({
       leftTime: 6000,
       targetDate: targetDate,
     });
-    expect(result.current[0]).toBe(4000);
+    expect(result.current[0]).toBeGreaterThanOrEqual(4000);
+    expect(result.current[0]).toBeLessThanOrEqual(4100);
   });
 });

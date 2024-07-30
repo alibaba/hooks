@@ -41,6 +41,7 @@ const parseMs = (milliseconds: number): FormattedRes => {
 
 const useCountdown = (options: Options = {}) => {
   const { leftTime, targetDate, interval = 1000, onEnd } = options || {};
+  let animateId;
 
   const memoLeftTime = useMemo<TDate>(() => {
     return isNumber(leftTime) && leftTime > 0 ? Date.now() + leftTime : undefined;
@@ -62,16 +63,21 @@ const useCountdown = (options: Options = {}) => {
     // 立即执行一次
     setTimeLeft(calcLeft(target));
 
-    const timer = setInterval(() => {
+    const animate = () => {
       const targetLeft = calcLeft(target);
       setTimeLeft(targetLeft);
       if (targetLeft === 0) {
-        clearInterval(timer);
         onEndRef.current?.();
+      } else {
+        animateId = requestAnimationFrame(animate);
       }
-    }, interval);
+    };
 
-    return () => clearInterval(timer);
+    animateId = requestAnimationFrame(animate);
+
+    return () => {
+      cancelAnimationFrame(animateId);
+    };
   }, [target, interval]);
 
   const formattedRes = useMemo(() => parseMs(timeLeft), [timeLeft]);
