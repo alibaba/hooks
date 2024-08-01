@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 
 const matchMedia = window.matchMedia('(prefers-color-scheme: dark)');
 
-function getTheme() {
+function useCurrentTheme() {
   const [theme, setTheme] = useState<'light' | 'dark'>(() => {
     return matchMedia.matches ? 'dark' : 'light';
   });
@@ -34,12 +34,12 @@ export function useTheme() {
     return preferredThemeMode ? preferredThemeMode : 'system';
   });
 
-  const setThemeModeWithLocalStorage = (themeMode: ThemeModeType) => {
-    localStorage.setItem('themeMode', themeMode);
-    setThemeMode(themeMode);
+  const setThemeModeWithLocalStorage = (mode: ThemeModeType) => {
+    setThemeMode(mode);
+    localStorage.setItem('themeMode', mode);
   };
 
-  const currentTheme = getTheme();
+  const currentTheme = useCurrentTheme();
 
   const theme = themeMode === 'system' ? currentTheme : themeMode;
 

@@ -1,35 +1,43 @@
-import { renderHook } from '@testing-library/react';
-import { act } from 'react-dom/test-utils';
+Object.defineProperty(window, 'matchMedia', {
+  writable: true,
+  value: jest.fn().mockImplementation((query) => ({
+    matches: false,
+    media: query,
+    onchange: null,
+    addListener: jest.fn(), // deprecated
+    removeListener: jest.fn(), // deprecated
+    addEventListener: jest.fn(),
+    removeEventListener: jest.fn(),
+    dispatchEvent: jest.fn(),
+  })),
+});
+
+import { act, renderHook } from '@testing-library/react';
 import { useTheme } from '../index';
 
 describe('useTheme', () => {
-  it('init themeMode', () => {
-    const {
-      result: { current },
-    } = renderHook(() => useTheme());
-    expect(current.themeMode).toBe('system');
+  test('themeMode init', () => {
+    const { result } = renderHook(useTheme);
+    expect(result.current.themeMode).toBe('system');
   });
 
-  it('setThemeMode', () => {
-    const {
-      result: { current },
-    } = renderHook(() => useTheme());
+  test('setThemeMode light', () => {
+    const { result } = renderHook(useTheme);
+    act(() => result.current.setThemeMode('light'));
+    expect(result.current.theme).toBe('light');
+    expect(result.current.themeMode).toBe('light');
+  });
 
-    act(() => {
-      current.setThemeMode('light');
-    });
-    expect(current.theme).toBe('light');
-    expect(current.themeMode).toBe('light');
+  test('setThemeMode dark', () => {
+    const { result } = renderHook(useTheme);
+    act(() => result.current.setThemeMode('dark'));
+    expect(result.current.theme).toBe('dark');
+    expect(result.current.themeMode).toBe('dark');
+  });
 
-    act(() => {
-      current.setThemeMode('dark');
-    });
-    expect(current.theme).toBe('dark');
-    expect(current.themeMode).toBe('dark');
-
-    act(() => {
-      current.setThemeMode('system');
-    });
-    expect(current.themeMode).toBe('system');
+  test('setThemeMode system', () => {
+    const { result } = renderHook(useTheme);
+    act(() => result.current.setThemeMode('system'));
+    expect(result.current.themeMode).toBe('system');
   });
 });
