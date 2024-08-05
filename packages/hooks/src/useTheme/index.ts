@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import useMemoizedFn from '../useMemoizedFn';
 
 const matchMedia = window.matchMedia('(prefers-color-scheme: dark)');
 
@@ -28,7 +29,11 @@ function useCurrentTheme() {
 
 export type ThemeModeType = 'light' | 'dark' | 'system';
 
-export function useTheme() {
+type PropsType = {
+  localStorageKey?: string;
+};
+
+export function useTheme(props: PropsType) {
   const [themeMode, setThemeMode] = useState<ThemeModeType>(() => {
     const preferredThemeMode = localStorage.getItem('themeMode') as ThemeModeType | null;
     return preferredThemeMode ? preferredThemeMode : 'system';
@@ -36,7 +41,7 @@ export function useTheme() {
 
   const setThemeModeWithLocalStorage = (mode: ThemeModeType) => {
     setThemeMode(mode);
-    localStorage.setItem('themeMode', mode);
+    props.localStorageKey?.length && localStorage.setItem(props.localStorageKey, mode);
   };
 
   const currentTheme = useCurrentTheme();
@@ -46,6 +51,6 @@ export function useTheme() {
   return {
     theme,
     themeMode,
-    setThemeMode: setThemeModeWithLocalStorage,
+    setThemeMode: useMemoizedFn(setThemeModeWithLocalStorage),
   };
 }
