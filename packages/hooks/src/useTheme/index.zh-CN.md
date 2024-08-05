@@ -5,7 +5,7 @@ nav:
 
 # useTheme
 
-获取并设置主题的 Hook，并将 "themeMode" 存储在 localStorage 中。
+获取并设置当前主题，并将 `themeMode` 存储在 `localStorage` 中。
 
 ## 代码演示
 
@@ -20,6 +20,12 @@ const { theme, themeMode, setThemeMode } = useTheme({
   localStorageKey?: string;
 });
 ```
+
+### 参数
+
+| 参数            | 说明                                 | 类型     | 默认值    |
+| --------------- | ------------------------------------ | -------- | --------- |
+| localStorageKey | localStorage 中用于存放主题模式的键. | `string` | undefined |
 
 ### 返回值
 
