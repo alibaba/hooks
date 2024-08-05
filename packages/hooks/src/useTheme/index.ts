@@ -35,14 +35,16 @@ type PropsType = {
 };
 
 export function useTheme(props: PropsType) {
+  const { localStorageKey } = props;
   const [themeMode, setThemeMode] = useState<ThemeModeType>(() => {
-    const preferredThemeMode = localStorage.getItem('themeMode') as ThemeModeType | null;
+    const preferredThemeMode =
+      localStorageKey?.length && (localStorage.getItem(localStorageKey) as ThemeModeType | null);
     return preferredThemeMode ? preferredThemeMode : 'system';
   });
 
   const setThemeModeWithLocalStorage = (mode: ThemeModeType) => {
     setThemeMode(mode);
-    props.localStorageKey?.length && localStorage.setItem(props.localStorageKey, mode);
+    localStorageKey?.length && localStorage.setItem(localStorageKey, mode);
   };
 
   const currentTheme = useCurrentTheme();
