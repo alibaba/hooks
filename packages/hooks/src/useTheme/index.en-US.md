@@ -5,7 +5,7 @@ nav:
 
 # useTheme
 
-This hook is used to get and set the theme, and store the themeMode into localStorage.
+This hook is used to get and set the theme, and store the `themeMode` into `localStorage`.
 
 ## Examples
 
