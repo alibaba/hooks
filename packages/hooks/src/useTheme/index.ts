@@ -33,7 +33,7 @@ type PropsType = {
   localStorageKey?: string;
 };
 
-export function useTheme(props: PropsType) {
+export function useTheme(props: PropsType = {}) {
   const { localStorageKey } = props;
   const [themeMode, setThemeMode] = useState<ThemeModeType>(() => {
     const preferredThemeMode =
