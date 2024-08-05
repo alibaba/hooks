@@ -10,7 +10,6 @@ function useCurrentTheme() {
 
   useEffect(() => {
     // 监听系统颜色切换
-    const listener = (event: { matches: boolean }) => {
     const listener: MediaQueryList['onchange'] = (event) => {
       if (event.matches) {
         setTheme('dark');

@@ -21,6 +21,12 @@ const { theme, themeMode, setThemeMode } = useTheme({
 });
 ```
 
+### Params
+
+| Property        | Description                                           | Type     | Default   |
+| --------------- | ----------------------------------------------------- | -------- | --------- |
+| localStorageKey | The key in localStorage to store selected theme mode. | `string` | undefined |
+
 ### Result
 
 | Property     | Description           | Type                                            | Default                                                                               |
