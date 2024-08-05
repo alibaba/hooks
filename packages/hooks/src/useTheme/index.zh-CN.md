@@ -16,7 +16,9 @@ nav:
 ## API
 
 ```typescript
-const { theme, themeMode, setThemeMode } = useTheme();
+const { theme, themeMode, setThemeMode } = useTheme({
+  localStorageKey?: string;
+});
 ```
 
 ### 返回值

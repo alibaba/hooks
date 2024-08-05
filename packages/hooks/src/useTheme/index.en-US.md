@@ -16,7 +16,9 @@ This hook is used to get and set the theme, and store the themeMode into localSt
 ## API
 
 ```typescript
-const { theme, themeMode, setThemeMode } = useTheme();
+const { theme, themeMode, setThemeMode } = useTheme({
+  localStorageKey?: string;
+});
 ```
 
 ### Result
