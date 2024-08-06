@@ -8,12 +8,17 @@ function useValueMutation<T, V>(
 ) {
   const prevValueRef = useRef(value);
   const [changedValue, setChangedValue] = useState<T>(value);
+  const isUncontrolledRef = useRef(false);
   const onInnerChange = useMemoizedFn((newVal: T) => {
+    isUncontrolledRef.current = true;
     setChangedValue(newVal);
     return onChange(newVal);
   });
   const equal = isEqual(prevValueRef.current, value) || isEqual(value, changedValue);
-  const curValue = equal ? changedValue : value;
+  if (!equal) {
+    isUncontrolledRef.current = false;
+  }
+  const curValue = isUncontrolledRef.current ? changedValue : value;
 
   prevValueRef.current = value;
   return [curValue, onInnerChange] as const;

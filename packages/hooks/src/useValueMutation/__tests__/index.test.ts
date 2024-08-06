@@ -28,6 +28,17 @@ describe('useMutableValue', () => {
     expect(hook.result.current[0]).toBe(newValue);
   });
 
+  it('test repeat call with the same value', () => {
+    const hook = setUp('test', () => {});
+    const [, onChange] = hook.result.current;
+    act(() => onChange('new value'));
+    const newValue = 'new value1';
+    hook.rerender([newValue, () => {}]);
+    expect(hook.result.current[0]).toBe(newValue);
+    hook.rerender([newValue, () => {}]);
+    expect(hook.result.current[0]).toBe(newValue);
+  });
+
   it('onChange should be called', () => {
     const testOnChange = jest.fn();
     const hook = setUp('test', testOnChange);
