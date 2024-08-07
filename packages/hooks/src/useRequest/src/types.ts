@@ -13,7 +13,12 @@ export interface FetchState<TData, TParams extends any[]> {
   data?: TData;
   error?: Error;
 }
-
+export type pluginsOptions = {
+  pollingNow?: boolean;
+  returnNow?: boolean;
+  stopNow?: boolean;
+  cacheData?: any;
+};
 export interface PluginReturn<TData, TParams extends any[]> {
   onBefore?: (params: TParams) =>
     | ({
@@ -29,7 +34,7 @@ export interface PluginReturn<TData, TParams extends any[]> {
     servicePromise?: Promise<TData>;
   };
 
-  onSuccess?: (data: TData, params: TParams) => void;
+  onSuccess?: (data: TData, params: TParams, options: pluginsOptions) => void;
   onError?: (e: Error, params: TParams) => void;
   onFinally?: (params: TParams, data?: TData, e?: Error) => void;
   onCancel?: () => void;
@@ -94,10 +99,10 @@ export interface Options<TData, TParams extends any[]> {
 }
 
 export type Plugin<TData, TParams extends any[]> = {
-  (fetchInstance: Fetch<TData, TParams>, options: Options<TData, TParams>): PluginReturn<
-    TData,
-    TParams
-  >;
+  (
+    fetchInstance: Fetch<TData, TParams>,
+    options: Options<TData, TParams>,
+  ): PluginReturn<TData, TParams>;
   onInit?: (options: Options<TData, TParams>) => Partial<FetchState<TData, TParams>>;
 };
 

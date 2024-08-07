@@ -60,3 +60,4 @@ You can experience the effect through the following example.
 - If you set `options.manual = true`, the initialization will not start polling, you need start it by `run/runAsync`.
 - If the `pollingInterval` changes from 0 to a value greater than 0, polling will not start automatically, and you need start it by `run/runAsync`.
 - The polling logic is to wait for `pollingInterval` time after each request is completed, and then initiate the next request.
+- When `pollingInterval`, `cacheKey`, and `staleTime` are all set, the system will wait for a duration of `pollingInterval`. If the data is still within the freshness time, no request will be sent. If the data is no longer fresh, the next request will be initiated.
