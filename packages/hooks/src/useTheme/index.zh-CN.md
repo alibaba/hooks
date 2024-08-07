@@ -25,7 +25,7 @@ const { theme, themeMode, setThemeMode } = useTheme({
 
 | 参数            | 说明                                 | 类型     | 默认值    |
 | --------------- | ------------------------------------ | -------- | --------- |
-| localStorageKey | localStorage 中用于存放主题模式的键. | `string` | `undefined` |
+| localStorageKey | localStorage 中用于存放主题模式的键 | `string` | `undefined` |
 
 ### 返回值
 
