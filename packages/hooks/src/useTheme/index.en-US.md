@@ -25,7 +25,7 @@ const { theme, themeMode, setThemeMode } = useTheme({
 
 | Property        | Description                                           | Type     | Default   |
 | --------------- | ----------------------------------------------------- | -------- | --------- |
-| localStorageKey | The key in localStorage to store selected theme mode. | `string` | undefined |
+| localStorageKey | The key in localStorage to store selected theme mode | `string` | `undefined` |
 
 ### Result
 
