@@ -17,6 +17,10 @@ nav:
 
 <code src="./demo/demo2.tsx" />
 
+### 监听多个事件
+
+<code src="./demo/demo3.tsx" />
+
 ## API
 
 ```typescript
@@ -29,11 +33,11 @@ useEventListener(
 
 ### Params
 
-| 参数      | 说明       | 类型                  | 默认值 |
-| --------- | ---------- | --------------------- | ------ |
-| eventName | 事件名称   | `string`              | -      |
-| handler   | 处理函数   | `(ev: Event) => void` | -      |
-| options   | 设置(可选) | `Options`             | -      |
+| 参数      | 说明       | 类型                   | 默认值 |
+| --------- | ---------- | ---------------------- | ------ |
+| eventName | 事件名称   | `string` \| `string[]` | -      |
+| handler   | 处理函数   | `(ev: Event) => void`  | -      |
+| options   | 设置(可选) | `Options`              | -      |
 
 ### Options
 
