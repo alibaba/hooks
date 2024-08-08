@@ -1,54 +1,64 @@
 import { useEffect, useState } from 'react';
 import useMemoizedFn from '../useMemoizedFn';
 
+export enum ThemeMode {
+  LIGHT = 'light',
+  DARK = 'dark',
+  SYSTEM = 'system',
+}
+
+export type ThemeModeType = `${ThemeMode}`;
+
 const matchMedia = window.matchMedia('(prefers-color-scheme: dark)');
 
 function useCurrentTheme() {
   const [theme, setTheme] = useState<'light' | 'dark'>(() => {
-    return matchMedia.matches ? 'dark' : 'light';
+    return matchMedia.matches ? ThemeMode.DARK : ThemeMode.LIGHT;
   });
 
   useEffect(() => {
-    // 监听系统颜色切换
-    const listener: MediaQueryList['onchange'] = (event) => {
+    const onThemeChange: MediaQueryList['onchange'] = (event) => {
       if (event.matches) {
-        setTheme('dark');
+        setTheme(ThemeMode.DARK);
       } else {
-        setTheme('light');
+        setTheme(ThemeMode.LIGHT);
       }
     };
 
-    matchMedia.addEventListener('change', listener);
+    matchMedia.addEventListener('change', onThemeChange);
 
     return () => {
-      matchMedia.removeEventListener('change', listener);
+      matchMedia.removeEventListener('change', onThemeChange);
     };
   }, []);
+
   return theme;
 }
 
-export type ThemeModeType = 'light' | 'dark' | 'system';
-
-type PropsType = {
+type Options = {
   localStorageKey?: string;
 };
 
-export function useTheme(props: PropsType = {}) {
-  const { localStorageKey } = props;
+export default function useTheme(options: Options = {}) {
+  const { localStorageKey } = options;
+
   const [themeMode, setThemeMode] = useState<ThemeModeType>(() => {
     const preferredThemeMode =
       localStorageKey?.length && (localStorage.getItem(localStorageKey) as ThemeModeType | null);
-    return preferredThemeMode ? preferredThemeMode : 'system';
+
+    return preferredThemeMode ? preferredThemeMode : ThemeMode.SYSTEM;
   });
 
   const setThemeModeWithLocalStorage = (mode: ThemeModeType) => {
     setThemeMode(mode);
-    localStorageKey?.length && localStorage.setItem(localStorageKey, mode);
+
+    if (localStorageKey?.length) {
+      localStorage.setItem(localStorageKey, mode);
+    }
   };
 
   const currentTheme = useCurrentTheme();
-
-  const theme = themeMode === 'system' ? currentTheme : themeMode;
+  const theme = themeMode === ThemeMode.SYSTEM ? currentTheme : themeMode;
 
   return {
     theme,
