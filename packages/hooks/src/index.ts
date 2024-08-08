@@ -48,6 +48,7 @@ import useRafInterval from './useRafInterval';
 import useRafState from './useRafState';
 import useRafTimeout from './useRafTimeout';
 import useReactive from './useReactive';
+import useRefState from './useRefState';
 import useRequest, { clearCache } from './useRequest';
 import useResetState from './useResetState';
 import useResponsive, { configResponsive } from './useResponsive';
@@ -156,4 +157,5 @@ export {
   useRafTimeout,
   useResetState,
   useMutationObserver,
+  useRefState,
 };
