@@ -9,19 +9,27 @@ export enum ThemeMode {
 
 export type ThemeModeType = `${ThemeMode}`;
 
+export type ThemeType = 'light' | 'dark';
+
 const matchMedia = window.matchMedia('(prefers-color-scheme: dark)');
 
-function useCurrentTheme() {
-  const [theme, setTheme] = useState<'light' | 'dark'>(() => {
-    return matchMedia.matches ? ThemeMode.DARK : ThemeMode.LIGHT;
+type Callback = (theme: ThemeType) => void;
+
+function useCurrentTheme(callback: Callback = () => {}) {
+  const [theme, setTheme] = useState<ThemeType>(() => {
+    const init = matchMedia.matches ? ThemeMode.DARK : ThemeMode.LIGHT;
+    callback(init);
+    return init;
   });
 
   useEffect(() => {
     const onThemeChange: MediaQueryList['onchange'] = (event) => {
       if (event.matches) {
         setTheme(ThemeMode.DARK);
+        callback(ThemeMode.DARK);
       } else {
         setTheme(ThemeMode.LIGHT);
+        callback(ThemeMode.LIGHT);
       }
     };
 
@@ -30,17 +38,18 @@ function useCurrentTheme() {
     return () => {
       matchMedia.removeEventListener('change', onThemeChange);
     };
-  }, []);
+  }, [callback]);
 
   return theme;
 }
 
 type Options = {
   localStorageKey?: string;
+  onChange?: Callback;
 };
 
 export default function useTheme(options: Options = {}) {
-  const { localStorageKey } = options;
+  const { localStorageKey, onChange } = options;
 
   const [themeMode, setThemeMode] = useState<ThemeModeType>(() => {
     const preferredThemeMode =
@@ -57,7 +66,7 @@ export default function useTheme(options: Options = {}) {
     }
   };
 
-  const currentTheme = useCurrentTheme();
+  const currentTheme = useCurrentTheme(onChange);
   const theme = themeMode === ThemeMode.SYSTEM ? currentTheme : themeMode;
 
   return {
