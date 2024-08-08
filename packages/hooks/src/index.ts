@@ -2,6 +2,7 @@ import { createUpdateEffect } from './createUpdateEffect';
 import useAntdTable from './useAntdTable';
 import useAsyncEffect from './useAsyncEffect';
 import useBoolean from './useBoolean';
+import useBounding from './useBounding';
 import useClickAway from './useClickAway';
 import useControllableValue from './useControllableValue';
 import useCookieState from './useCookieState';
@@ -90,6 +91,7 @@ export {
   useUpdateEffect,
   useUpdateLayoutEffect,
   useBoolean,
+  useBounding,
   useToggle,
   useDocumentVisibility,
   useSelections,
