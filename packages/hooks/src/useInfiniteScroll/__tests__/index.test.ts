@@ -8,7 +8,7 @@ let count = 0;
 export async function mockRequest() {
   await sleep(1000);
   if (count >= 1) {
-    return { list: [] };
+    return { list: [4, 5, 6] };
   }
   count++;
   return {
@@ -18,6 +18,14 @@ export async function mockRequest() {
 }
 
 const targetEl = document.createElement('div');
+
+// set target property
+function setTargetInfo(key: 'scrollTop', value) {
+  Object.defineProperty(targetEl, key, {
+    value,
+    configurable: true,
+  });
+}
 
 const setup = <T extends Data>(service: Service<T>, options?: InfiniteScrollOptions<T>) =>
   renderHook(() => useInfiniteScroll(service, options));
@@ -93,19 +101,13 @@ describe('useInfiniteScroll', () => {
       jest.advanceTimersByTime(1000);
     });
     expect(result.current.loading).toBe(false);
-
-    // mock scroll
-    Object.defineProperties(targetEl, {
-      clientHeight: {
-        value: 150,
-      },
-      scrollHeight: {
-        value: 300,
-      },
-      scrollTop: {
-        value: 100,
-      },
-    });
+    const scrollHeightSpy = jest
+      .spyOn(targetEl, 'scrollHeight', 'get')
+      .mockImplementation(() => 150);
+    const clientHeightSpy = jest
+      .spyOn(targetEl, 'clientHeight', 'get')
+      .mockImplementation(() => 300);
+    setTargetInfo('scrollTop', 100);
     act(() => {
       events['scroll']();
     });
@@ -121,8 +123,79 @@ describe('useInfiniteScroll', () => {
       events['scroll']();
     });
     expect(result.current.loadingMore).toBe(false);
+    // get list by order
+    expect(result.current.data?.list).toMatchObject([1, 2, 3, 4, 5, 6]);
 
     mockAddEventListener.mockRestore();
+    scrollHeightSpy.mockRestore();
+    clientHeightSpy.mockRestore();
+  });
+
+  it('should auto load when scroll to top', async () => {
+    const events = {};
+    const mockAddEventListener = jest
+      .spyOn(targetEl, 'addEventListener')
+      .mockImplementation((eventName, callback) => {
+        events[eventName] = callback;
+      });
+    // Mock scrollTo using Object.defineProperty
+    Object.defineProperty(targetEl, 'scrollTo', {
+      value: (x: number, y: number) => {
+        setTargetInfo('scrollTop', y);
+      },
+      writable: true,
+    });
+
+    const { result } = setup(mockRequest, {
+      target: targetEl,
+      direction: 'top',
+      isNoMore: (d) => d?.nextId === undefined,
+    });
+    // not work when loading
+    expect(result.current.loading).toBe(true);
+    events['scroll']();
+    await act(async () => {
+      jest.advanceTimersByTime(1000);
+    });
+    expect(result.current.loading).toBe(false);
+
+    // mock first scroll
+    const scrollHeightSpy = jest
+      .spyOn(targetEl, 'scrollHeight', 'get')
+      .mockImplementation(() => 150);
+    const clientHeightSpy = jest
+      .spyOn(targetEl, 'clientHeight', 'get')
+      .mockImplementation(() => 500);
+    setTargetInfo('scrollTop', 300);
+
+    act(() => {
+      events['scroll']();
+    });
+    // mock scroll upward
+    setTargetInfo('scrollTop', 50);
+
+    act(() => {
+      events['scroll']();
+    });
+
+    expect(result.current.loadingMore).toBe(true);
+    await act(async () => {
+      jest.advanceTimersByTime(1000);
+    });
+    expect(result.current.loadingMore).toBe(false);
+    //reverse order
+    expect(result.current.data?.list).toMatchObject([4, 5, 6, 1, 2, 3]);
+
+    // not work when no more
+    expect(result.current.noMore).toBe(true);
+    act(() => {
+      events['scroll']();
+    });
+    expect(result.current.loadingMore).toBe(false);
+
+    mockAddEventListener.mockRestore();
+    scrollHeightSpy.mockRestore();
+    clientHeightSpy.mockRestore();
   });
 
   it('reload should be work', async () => {
