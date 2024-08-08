@@ -99,6 +99,7 @@ export const menus = [
       'useResponsive',
       'useScroll',
       'useSize',
+      'useFreezeScroll',
       'useFocusWithin',
     ],
   },
