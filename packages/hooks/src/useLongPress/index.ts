@@ -54,7 +54,7 @@ function useLongPress(
       };
 
       function getClientPosition(event: EventType) {
-        if (event instanceof TouchEvent) {
+        if ('TouchEvent' in window && event instanceof TouchEvent) {
           return {
             clientX: event.touches[0].clientX,
             clientY: event.touches[0].clientY,
