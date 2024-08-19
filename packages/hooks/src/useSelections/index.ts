@@ -36,6 +36,10 @@ export default function useSelections<T>(items: T[], options?: T[] | Options<T>)
   const selectedMap = useMemo(() => {
     const keyToItemMap = new Map();
 
+    if (!Array.isArray(selected)) {
+      return keyToItemMap;
+    }
+
     selected.forEach((item) => {
       keyToItemMap.set(getKey(item), item);
     });
