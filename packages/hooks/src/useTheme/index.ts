@@ -13,12 +13,9 @@ export type ThemeType = 'light' | 'dark';
 
 const matchMedia = window.matchMedia('(prefers-color-scheme: dark)');
 
-type Callback = (theme: ThemeType) => void;
-
-function useCurrentTheme(callback: Callback = () => {}) {
+function useCurrentTheme() {
   const [theme, setTheme] = useState<ThemeType>(() => {
     const init = matchMedia.matches ? ThemeMode.DARK : ThemeMode.LIGHT;
-    callback(init);
     return init;
   });
 
@@ -26,10 +23,8 @@ function useCurrentTheme(callback: Callback = () => {}) {
     const onThemeChange: MediaQueryList['onchange'] = (event) => {
       if (event.matches) {
         setTheme(ThemeMode.DARK);
-        callback(ThemeMode.DARK);
       } else {
         setTheme(ThemeMode.LIGHT);
-        callback(ThemeMode.LIGHT);
       }
     };
 
@@ -38,18 +33,17 @@ function useCurrentTheme(callback: Callback = () => {}) {
     return () => {
       matchMedia.removeEventListener('change', onThemeChange);
     };
-  }, [callback]);
+  }, []);
 
   return theme;
 }
 
 type Options = {
   localStorageKey?: string;
-  onChange?: Callback;
 };
 
 export default function useTheme(options: Options = {}) {
-  const { localStorageKey, onChange } = options;
+  const { localStorageKey } = options;
 
   const [themeMode, setThemeMode] = useState<ThemeModeType>(() => {
     const preferredThemeMode =
@@ -66,7 +60,7 @@ export default function useTheme(options: Options = {}) {
     }
   };
 
-  const currentTheme = useCurrentTheme(onChange);
+  const currentTheme = useCurrentTheme();
   const theme = themeMode === ThemeMode.SYSTEM ? currentTheme : themeMode;
 
   return {
