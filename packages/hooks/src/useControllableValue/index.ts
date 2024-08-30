@@ -4,11 +4,11 @@ import { isFunction } from '../utils';
 import useMemoizedFn from '../useMemoizedFn';
 import useUpdate from '../useUpdate';
 
-export interface Options<T> {
+export interface Options<T, P extends Props = Props> {
   defaultValue?: T;
-  defaultValuePropName?: string;
-  valuePropName?: string;
-  trigger?: string;
+  defaultValuePropName?: keyof P;
+  valuePropName?: keyof P;
+  trigger?: keyof P;
 }
 
 export type Props = Record<string, any>;
@@ -22,11 +22,14 @@ export interface StandardProps<T> {
 function useControllableValue<T = any>(
   props: StandardProps<T>,
 ): [T, (v: SetStateAction<T>) => void];
-function useControllableValue<T = any>(
-  props?: Props,
-  options?: Options<T>,
+function useControllableValue<T = any, P extends Props = Props>(
+  props?: P,
+  options?: Options<T, P>,
 ): [T, (v: SetStateAction<T>, ...args: any[]) => void];
-function useControllableValue<T = any>(props: Props = {}, options: Options<T> = {}) {
+function useControllableValue<T = any, P extends Props = Props>(
+  props: P = {} as P,
+  options: Options<T, P> = {},
+) {
   const {
     defaultValue,
     defaultValuePropName = 'defaultValue',
@@ -54,7 +57,7 @@ function useControllableValue<T = any>(props: Props = {}, options: Options<T> = 
 
   const update = useUpdate();
 
-  function setState(v: SetStateAction<T>, ...args: any[]) {
+  function setState(v: SetStateAction<T | undefined>, ...args: any[]) {
     const r = isFunction(v) ? v(stateRef.current) : v;
 
     if (!isControlled) {
