@@ -116,6 +116,6 @@ export const menus = [
   },
   {
     title: 'Dev',
-    children: ['useTrackedEffect', 'useWhyDidYouUpdate'],
+    children: ['useTrackedEffect', 'useWhyDidYouUpdate', 'useLogger'],
   },
 ];
