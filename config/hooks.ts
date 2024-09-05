@@ -76,6 +76,7 @@ export const menus = [
       'useRafTimeout',
       'useLockFn',
       'useUpdate',
+      'useLogger',
     ],
   },
   {
