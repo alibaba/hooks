@@ -8,10 +8,15 @@ interface Result {
 
 const resultData = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13'];
 
-function getLoadMoreList(nextId: string | undefined, limit: number): Promise<Result> {
+setInterval(() => {
+  resultData.push(resultData.length.toString());
+}, 10000);
+
+function getLoadMoreList(latestId: number | undefined, limit: number): Promise<Result> {
+  console.log('getLoadMoreList: ', resultData.length);
   let start = 0;
-  if (nextId) {
-    start = resultData.findIndex((i) => i === nextId);
+  if (latestId) {
+    start = resultData.findIndex((_, index) => index === latestId) + 1;
   }
   const end = start + limit;
   const list = resultData.slice(start, end);
@@ -29,11 +34,12 @@ function getLoadMoreList(nextId: string | undefined, limit: number): Promise<Res
 export default () => {
   const ref = useRef<HTMLDivElement>(null);
 
-  const { data, loading, loadMore, loadingMore, noMore } = useInfiniteScroll(
-    (d) => getLoadMoreList(d?.nextId, 4),
+  const { data, loading, loadMore, loadingMore, noMore, trulyNoMore } = useInfiniteScroll(
+    (d) => getLoadMoreList(d?.list?.length, 4),
     {
       target: ref,
       isNoMore: (d) => d?.nextId === undefined,
+      forcedLoadMore: true,
     },
   );
 
@@ -45,7 +51,7 @@ export default () => {
         <div>
           {data?.list?.map((item) => (
             <div key={item} style={{ padding: 12, border: '1px solid #f5f5f5' }}>
-              item-{item}
+              ite32132m-{item}
             </div>
           ))}
         </div>
@@ -58,7 +64,7 @@ export default () => {
           </button>
         )}
 
-        {noMore && <span>No more data</span>}
+        {trulyNoMore && <span>No more data</span>}
       </div>
     </div>
   );
