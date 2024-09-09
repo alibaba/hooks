@@ -1,5 +1,5 @@
 import { renderHook, act } from '../../utils/tests';
-import { useResponsive } from '../';
+import useResponsive from '../';
 
 describe('useResponsive', () => {
   function changeWidth(width: number) {
