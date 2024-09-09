@@ -1,8 +1,10 @@
 import type { SetStateAction } from 'react';
-import { useEffect, useMemo } from 'react';
+import { useCallback, useEffect, useMemo } from 'react';
 import isBrowser from '../utils/isBrowser';
 import type { Options as UseStorageStateOption } from '../createUseStorageState';
 import { createUseStorageState } from '../createUseStorageState';
+import dayjs from 'dayjs';
+import useMemoizedFn from '../useMemoizedFn';
 
 export type StorageType = 'localStorage' | 'sessionStorage';
 export type ExpireTimeProp = 'createTime' | 'updateTime';
@@ -10,9 +12,9 @@ export type ExpireTimeProp = 'createTime' | 'updateTime';
 /** 单条记录的存储的数据类型 */
 type UnitStorageState<T> = {
   subKey: Exclude<Options<T>['subKey'], undefined>;
-  createTime: number;
+  createTime: string;
   createTimeFormat: string;
-  updateTime: number;
+  updateTime: string;
   updateTimeFormat: string;
   /** 用户数据 */
   data?: T;
@@ -33,8 +35,11 @@ interface Options<T> {
   maxCount?: number;
   /** 缓存版本号 */
   version?: number | string;
+  timeFormat?: string;
   useStorageStateOptions?: UseStorageStateOption<T>;
 }
+
+type StorageStateRecorder<T> = Record<string, Record<string, UnitStorageState<T>>>;
 
 export default function <T>(
   key: string,
@@ -44,9 +49,12 @@ export default function <T>(
   (unitData: SetUnitDataState<T>) => void,
   {
     delete: (subKey?: string | undefined) => void;
-    storageState: UnitStorageState<T>[] | undefined;
-    setStorageState: (
-      value?: UnitStorageState<T>[] | SetStateAction<UnitStorageState<T>[] | undefined> | undefined,
+    storageStateRecorder: StorageStateRecorder<T> | undefined;
+    setStorageStateRecorder: (
+      value?:
+        | StorageStateRecorder<T>
+        | SetStateAction<StorageStateRecorder<T> | undefined>
+        | undefined,
     ) => void;
   },
 ] {
@@ -57,16 +65,32 @@ export default function <T>(
       );
     }
   }, [options?.version, options?.subKey]);
-  const { version = 'default', subKey = 'default' } = options || {};
-  const storageKey = useMemo(() => {
+  const {
+    version = 'default',
+    subKey = 'default',
+    maxCount = 100,
+    // default storage six months
+    expire = 1000 * 60 * 60 * 24 * 180,
+    expireTimeProp = 'updateTime',
+    timeFormat = 'YYYY-MM-DD HH-mm-ss',
+  } = options || {};
+
+  const getRealityStorageKey = (
+    storageKey: string,
+    storageVersion: string | number = 'default',
+    storageSubkey: string | number = 'default',
+  ) => {
     const valueStrTransfer = (value) => {
-      return value ? `_${value}` : '';
+      return `_${value}`;
     };
 
-    return `${key}${valueStrTransfer(options?.version)}${valueStrTransfer(options?.subKey)}`;
-  }, [key, options?.version, options?.subKey]);
-
-  const useStorageState = createUseStorageState(() => {
+    return `${storageKey}${valueStrTransfer(storageVersion)}${valueStrTransfer(storageSubkey)}`;
+  };
+  const storageKey = useMemo(
+    () => getRealityStorageKey(key, version, subKey),
+    [key, version, subKey],
+  );
+  const getStorage = useCallback(() => {
     if (isBrowser) {
       if (options?.storageType === 'sessionStorage') {
         return sessionStorage;
@@ -75,24 +99,79 @@ export default function <T>(
       }
     }
     return undefined;
-  });
-  const [pageCacheKeysRecorder, setPageCacheKeysRecorder] = useStorageState(
-    `${key}_all_keys_recorder`,
-    {},
-  );
+  }, []);
+  const useStorageState = createUseStorageState(getStorage);
 
+  const [pageCache, setPageCache] = useStorageState(storageKey, options?.useStorageStateOptions);
+
+  // ============================= hanlde recorder =============================
+  const [pageCacheKeysRecorder, setPageCacheKeysRecorder] = useStorageState<
+    StorageStateRecorder<T>
+  >(`${key}_all_keys_recorder`, {});
   useEffect(() => {
+    const curTime = dayjs(new Date()).format(timeFormat);
+    const curKeyStorageRecorder = pageCacheKeysRecorder?.[key];
+    // ================ calculate current key's storage's count ================
+    let curStoragedCount = 0;
+    Object.keys(curKeyStorageRecorder || {}).forEach((subKeyItem) => {
+      Object.keys(curKeyStorageRecorder?.[subKeyItem] || {})?.forEach((versionItem) => {
+        const curStorageRecorder = curKeyStorageRecorder?.[subKeyItem][
+          versionItem
+        ] as UnitStorageState<T>;
+
+        // remove expired storage
+        if (dayjs(curTime).diff(curStorageRecorder[expireTimeProp]) > expire * 1000) {
+          getStorage()?.removeItem(getRealityStorageKey(key, subKeyItem, versionItem));
+        } else {
+          curStoragedCount++;
+        }
+      });
+    });
+
+    // remove the other vesrion or subkey when reach to max count.
+    if (curStoragedCount > maxCount) {
+      const versionKeys = Object.keys(curKeyStorageRecorder?.[subKey] || {});
+
+      if (versionKeys.length > 0) {
+        getStorage()?.removeItem(getRealityStorageKey(key, subKey, versionKeys[0]));
+      } else {
+        const subKeys = Object.keys(curKeyStorageRecorder || {});
+
+        if (subKeys.length > 0) {
+          const removeVersionKeys = Object.keys(curKeyStorageRecorder?.[subKeys[0]] || {});
+
+          if (removeVersionKeys.length) {
+            getStorage()?.removeItem(getRealityStorageKey(key, subKeys[0], removeVersionKeys[0]));
+          }
+        }
+      }
+    }
+
     const handlePreKeyRecorder = (preKeyRecorder: any) => {
+      const finalDataStateRecord: UnitStorageState<T> = {
+        ...curKeyStorageRecorder?.[subKey][version],
+        ...(curKeyStorageRecorder?.[subKey][version]
+          ? {}
+          : {
+              createTime: curTime,
+              createTimeFormat: timeFormat,
+            }),
+        updateTime: curTime,
+        updateTimeFormat: timeFormat,
+        subKey,
+        data: pageCache,
+      };
+
       if (preKeyRecorder) {
         if (preKeyRecorder[subKey]) {
-          preKeyRecorder[subKey][version] = {};
+          preKeyRecorder[subKey][version] = finalDataStateRecord;
         } else {
-          preKeyRecorder[subKey] = { [version]: {} };
+          preKeyRecorder[subKey] = { [version]: finalDataStateRecord };
         }
       }
     };
 
-    if (!pageCacheKeysRecorder?.[key]) {
+    if (!curKeyStorageRecorder) {
       const newPageCacheKeysRecorder = {
         [key]: {},
       };
@@ -102,16 +181,34 @@ export default function <T>(
       setPageCacheKeysRecorder(newPageCacheKeysRecorder);
     } else {
       const newPageCacheKeysRecorder = {
-        ...pageCacheKeysRecorder[key],
+        ...pageCacheKeysRecorder,
       };
 
       handlePreKeyRecorder(newPageCacheKeysRecorder);
 
       setPageCacheKeysRecorder(newPageCacheKeysRecorder);
     }
-  }, []);
+  });
 
-  const [pageCache, setPageCache] = useStorageState(storageKey, options?.useStorageStateOptions);
+  const deleteStorageBySubKey = useMemoizedFn((deleteSubKey) => {
+    setPageCache(undefined);
 
-  return [];
+    // ===================== find all keys and remove =====================
+    const curSubKeyStorageRecorder = pageCacheKeysRecorder?.[key]?.[deleteSubKey] || {};
+    const versionKeys = Object.keys(curSubKeyStorageRecorder);
+
+    versionKeys.forEach((versionItem) => {
+      getStorage()?.removeItem(getRealityStorageKey(key, deleteSubKey, versionItem));
+    });
+  });
+
+  return [
+    pageCache,
+    setPageCache,
+    {
+      delete: deleteStorageBySubKey,
+      storageStateRecorder: pageCacheKeysRecorder,
+      setStorageStateRecorder: setPageCacheKeysRecorder,
+    },
+  ];
 }
