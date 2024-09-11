@@ -7,13 +7,15 @@
  */
 
 import React from 'react';
-import { useLocalStorageState } from 'ahooks';
+import usePageCacheState from '..';
 
 const defaultArray = ['a', 'e', 'i', 'o', 'u'];
 
 export default function () {
-  const [value, setValue] = useLocalStorageState('use-local-storage-state-demo2', {
-    defaultValue: defaultArray,
+  const [value, setValue] = usePageCacheState('use-local-storage-state-demo2', {
+    useStorageStateOptions: {
+      defaultValue: defaultArray,
+    },
   });
 
   return (
@@ -22,7 +24,7 @@ export default function () {
       <button
         type="button"
         style={{ marginRight: '16px' }}
-        onClick={() => setValue([...value, Math.random().toString(36).slice(-1)])}
+        onClick={() => setValue([...(value || []), Math.random().toString(36).slice(-1)])}
       >
         push random
       </button>

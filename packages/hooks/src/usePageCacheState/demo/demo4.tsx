@@ -7,7 +7,7 @@
  */
 
 import React from 'react';
-import { useLocalStorageState } from 'ahooks';
+import usePageCacheState from '..';
 
 export default function () {
   return (
@@ -19,9 +19,11 @@ export default function () {
 }
 
 function Counter() {
-  const [count, setCount] = useLocalStorageState('use-local-storage-state-demo4', {
-    defaultValue: 0,
-    listenStorageChange: true,
+  const [count, setCount] = usePageCacheState('use-local-storage-state-demo4', {
+    useStorageStateOptions: {
+      defaultValue: 0,
+      listenStorageChange: true,
+    },
   });
 
   return (

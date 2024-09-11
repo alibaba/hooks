@@ -8,14 +8,17 @@
 
 import React from 'react';
 import { useLocalStorageState } from 'ahooks';
+import usePageCacheState from '..';
 
 export default function () {
-  const [message, setMessage] = useLocalStorageState<string | undefined>(
+  const [message, setMessage] = usePageCacheState<string | undefined>(
     'use-local-storage-state-demo3',
     {
-      defaultValue: 'Hello~',
-      serializer: (v) => v ?? '',
-      deserializer: (v) => v,
+      useStorageStateOptions: {
+        defaultValue: 'Hello~',
+        serializer: (v) => v ?? '',
+        deserializer: (v) => v,
+      },
     },
   );
 

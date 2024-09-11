@@ -3,7 +3,7 @@ nav:
   path: /hooks
 ---
 
-# useLocalStorageState
+# usePageCacheState
 
 将状态存储在 localStorage 中的 Hook 。
 
@@ -39,7 +39,7 @@ interface Options<T> {
   onError?: (error: unknown) => void;
 }
 
-const [state, setState] = useLocalStorageState<T>(
+const [state, setState] = usePageCacheState<T>(
   key: string,
   options: Options<T>
 ): [T?, (value?: SetState<T>) => void];
@@ -54,14 +54,14 @@ const [state, setState] = useLocalStorageState<T>(
 
 ### Options
 
-| 参数                | 说明                                                                                                                              | 类型                       | 默认值                        |
-| ------------------- | --------------------------------------------------------------------------------------------------------------------------------- | -------------------------- | ----------------------------- |
-| defaultValue        | 默认值                                                                                                                            | `any \| (() => any)`       | -                             |
-| listenStorageChange | 是否监听存储变化。如果是 `true`，当存储值变化时，所有 `key` 相同的 `useLocalStorageState` 会同步状态，包括同一浏览器不同 tab 之间 | `boolean`                  | `false`                       |
-| serializer          | 自定义序列化方法                                                                                                                  | `(value: any) => string`   | `JSON.stringify`              |
-| deserializer        | 自定义反序列化方法                                                                                                                | `(value: string) => any`   | `JSON.parse`                  |
-| onError             | 错误回调函数                                                                                                                      | `(error: unknown) => void` | `(e) => { console.error(e) }` |
+| 参数                | 说明                                                                                                                           | 类型                       | 默认值                        |
+| ------------------- | ------------------------------------------------------------------------------------------------------------------------------ | -------------------------- | ----------------------------- |
+| defaultValue        | 默认值                                                                                                                         | `any \| (() => any)`       | -                             |
+| listenStorageChange | 是否监听存储变化。如果是 `true`，当存储值变化时，所有 `key` 相同的 `usePageCacheState` 会同步状态，包括同一浏览器不同 tab 之间 | `boolean`                  | `false`                       |
+| serializer          | 自定义序列化方法                                                                                                               | `(value: any) => string`   | `JSON.stringify`              |
+| deserializer        | 自定义反序列化方法                                                                                                             | `(value: string) => any`   | `JSON.parse`                  |
+| onError             | 错误回调函数                                                                                                                   | `(error: unknown) => void` | `(e) => { console.error(e) }` |
 
 ## 备注
 
-useLocalStorageState 在往 localStorage 写入数据前，会先调用一次 `serializer`，在读取数据之后，会先调用一次 `deserializer`。
+usePageCacheState 在往 localStorage 写入数据前，会先调用一次 `serializer`，在读取数据之后，会先调用一次 `deserializer`。

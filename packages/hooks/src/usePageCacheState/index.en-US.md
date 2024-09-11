@@ -3,7 +3,7 @@ nav:
   path: /hooks
 ---
 
-# useLocalStorageState
+# usePageCacheState
 
 A Hook that store state into localStorage.
 
@@ -39,7 +39,7 @@ interface Options<T> {
   onError?: (error: unknown) => void;
 }
 
-const [state, setState] = useLocalStorageState<T>(
+const [state, setState] = usePageCacheState<T>(
   key: string,
   options: Options<T>
 ): [T?, (value?: SetState<T>) => void];
@@ -54,14 +54,14 @@ const [state, setState] = useLocalStorageState<T>(
 
 ### Options
 
-| Property            | Description                                                                                                                                                                                             | Type                       | Default                       |
-| ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------- | ----------------------------- |
-| defaultValue        | Default value                                                                                                                                                                                           | `any \| (() => any)`       | -                             |
-| listenStorageChange | Whether to listen storage changes. If `true`, when the stored value changes, all `useLocalStorageState` with the same `key` will synchronize their states, including different tabs of the same browser | `boolean`                  | `false`                       |
-| serializer          | Custom serialization method                                                                                                                                                                             | `(value: any) => string`   | `JSON.stringify`              |
-| deserializer        | Custom deserialization method                                                                                                                                                                           | `(value: string) => any`   | `JSON.parse`                  |
-| onError             | On error callback                                                                                                                                                                                       | `(error: unknown) => void` | `(e) => { console.error(e) }` |
+| Property            | Description                                                                                                                                                                                          | Type                       | Default                       |
+| ------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------- | ----------------------------- |
+| defaultValue        | Default value                                                                                                                                                                                        | `any \| (() => any)`       | -                             |
+| listenStorageChange | Whether to listen storage changes. If `true`, when the stored value changes, all `usePageCacheState` with the same `key` will synchronize their states, including different tabs of the same browser | `boolean`                  | `false`                       |
+| serializer          | Custom serialization method                                                                                                                                                                          | `(value: any) => string`   | `JSON.stringify`              |
+| deserializer        | Custom deserialization method                                                                                                                                                                        | `(value: string) => any`   | `JSON.parse`                  |
+| onError             | On error callback                                                                                                                                                                                    | `(error: unknown) => void` | `(e) => { console.error(e) }` |
 
 ## Remark
 
-useLocalStorageState will call `serializer` before write data to localStorage, and call `deserializer` once after read data.
+usePageCacheState will call `serializer` before write data to localStorage, and call `deserializer` once after read data.

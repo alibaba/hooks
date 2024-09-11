@@ -41,23 +41,7 @@ interface Options<T> {
 
 type StorageStateRecorder<T> = Record<string, Record<string, UnitStorageState<T>>>;
 
-export default function <T>(
-  key: string,
-  options?: Options<T>,
-): [
-  unitData: T | undefined,
-  (unitData: SetUnitDataState<T>) => void,
-  {
-    delete: (subKey?: string | undefined) => void;
-    storageStateRecorder: StorageStateRecorder<T> | undefined;
-    setStorageStateRecorder: (
-      value?:
-        | StorageStateRecorder<T>
-        | SetStateAction<StorageStateRecorder<T> | undefined>
-        | undefined,
-    ) => void;
-  },
-] {
+export default function <T>(key: string, options?: Options<T>) {
   useEffect(() => {
     if ([options?.version, options?.subKey].includes('default')) {
       console.warn(
@@ -73,6 +57,7 @@ export default function <T>(
     expire = 1000 * 60 * 60 * 24 * 180,
     expireTimeProp = 'updateTime',
     timeFormat = 'YYYY-MM-DD HH-mm-ss',
+    storageType = 'localStorage',
   } = options || {};
 
   const getRealityStorageKey = (
@@ -92,9 +77,9 @@ export default function <T>(
   );
   const getStorage = useCallback(() => {
     if (isBrowser) {
-      if (options?.storageType === 'sessionStorage') {
+      if (storageType === 'sessionStorage') {
         return sessionStorage;
-      } else if (options?.storageType === 'localStorage') {
+      } else if (storageType === 'localStorage') {
         return localStorage;
       }
     }
@@ -149,8 +134,8 @@ export default function <T>(
 
     const handlePreKeyRecorder = (preKeyRecorder: any) => {
       const finalDataStateRecord: UnitStorageState<T> = {
-        ...curKeyStorageRecorder?.[subKey][version],
-        ...(curKeyStorageRecorder?.[subKey][version]
+        ...curKeyStorageRecorder?.[subKey]?.[version],
+        ...(curKeyStorageRecorder?.[subKey]?.[version]
           ? {}
           : {
               createTime: curTime,
@@ -188,7 +173,7 @@ export default function <T>(
 
       setPageCacheKeysRecorder(newPageCacheKeysRecorder);
     }
-  });
+  }, [pageCache]);
 
   const deleteStorageBySubKey = useMemoizedFn((deleteSubKey) => {
     setPageCache(undefined);
@@ -210,5 +195,5 @@ export default function <T>(
       storageStateRecorder: pageCacheKeysRecorder,
       setStorageStateRecorder: setPageCacheKeysRecorder,
     },
-  ];
+  ] as const;
 }

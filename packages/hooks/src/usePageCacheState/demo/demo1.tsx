@@ -7,13 +7,15 @@
  */
 
 import React from 'react';
-import { useLocalStorageState } from 'ahooks';
+import usePageCacheState from '..';
 
 export default function () {
-  const [message, setMessage] = useLocalStorageState<string | undefined>(
+  const [message, setMessage] = usePageCacheState<string | undefined>(
     'use-local-storage-state-demo1',
     {
-      defaultValue: 'Hello~',
+      useStorageStateOptions: {
+        defaultValue: 'Hello~',
+      },
     },
   );
 
