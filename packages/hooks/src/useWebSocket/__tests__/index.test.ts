@@ -149,36 +149,53 @@ describe('useWebSocket', () => {
     jest.spyOn(global, 'clearInterval');
 
     const wsServer = new WS(wsUrl);
-    renderHook(() => useWebSocket(wsUrl, { heartbeat: { interval: 100 } }));
+    renderHook(() =>
+      useWebSocket(wsUrl, {
+        heartbeat: {
+          interval: 100,
+          responseTimeout: 200,
+        },
+      }),
+    );
+
+    // Called on mount
+    expect(clearInterval).toHaveBeenCalledTimes(1);
+
     await act(async () => {
       await wsServer.connected;
+      await sleep(110);
       return promise;
     });
+    expect(wsServer.messages).toStrictEqual(['ping']);
 
-    await expect(wsServer).toReceiveMessage('ping');
-
-    await expect(wsServer).toReceiveMessage('ping');
-
-    expect(wsServer).toHaveReceivedMessages(['ping', 'ping']);
-
-    act(() => wsServer.close());
     await act(async () => {
+      await sleep(110);
+    });
+    expect(wsServer.messages).toStrictEqual(['ping', 'ping']);
+
+    expect(clearInterval).toHaveBeenCalledTimes(1);
+    await act(async () => {
+      wsServer.close();
       await wsServer.closed;
+      await sleep(110);
       return promise;
     });
-    expect(clearInterval).toHaveBeenCalledTimes(1);
+    expect(clearInterval).toHaveBeenCalledTimes(2);
   });
+
+  // TODO: 更详细的测试心跳相关的所有参数
+  // TODO: 心跳逻辑 demo 完善、demo 测试
 
   it('should ignore heartbeat response message', async () => {
     const wsServer = new WS(wsUrl);
     const hooks = renderHook(() =>
-      useWebSocket(wsUrl, { heartbeat: { interval: 100, returnMessage: 'pong' } }),
+      useWebSocket(wsUrl, { heartbeat: { interval: 100, responseMessage: 'pong' } }),
     );
+
     await act(async () => {
       await wsServer.connected;
       return promise;
     });
-
     await expect(wsServer).toReceiveMessage('ping');
 
     act(() => {

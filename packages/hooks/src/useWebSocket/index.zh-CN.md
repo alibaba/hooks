@@ -13,6 +13,10 @@ nav:
 
 <code src="./demo/demo1.tsx" />
 
+### 测试示例
+
+<code src="./demo/demo2.tsx" />
+
 ## API
 
 ```typescript
@@ -25,7 +29,7 @@ enum ReadyState {
 
 interface HeartbeatOptions{
   message?: string;
-  returnMessage?: string;
+  responseMessage?: string;
   interval?: number;
 }
 
@@ -75,11 +79,11 @@ useWebSocket(socketUrl: string, options?: Options): Result;
 
 ### HeartbeatOptions
 
-| 参数          | 说明                                       | 类型     | 默认值 |
-| ------------- | ------------------------------------------ | -------- | ------ |
-| message       | 心跳消息                                   | `string` | `ping` |
-| returnMessage | 心跳回复消息，`latestMessage` 会忽略该消息 | `string` | -      |
-| interval      | 心跳时间间隔（ms）                         | `number` | `6000` |
+| 参数            | 说明                                       | 类型     | 默认值 |
+| --------------- | ------------------------------------------ | -------- | ------ |
+| message         | 心跳消息                                   | `string` | `ping` |
+| responseMessage | 心跳回复消息，`latestMessage` 会忽略该消息 | `string` | `pong` |
+| interval        | 心跳时间间隔（ms）                         | `number` | `6000` |
 
 ### Result
 

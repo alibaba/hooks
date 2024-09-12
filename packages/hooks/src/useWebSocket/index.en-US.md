@@ -68,11 +68,11 @@ useWebSocket(socketUrl: string, options?: Options): Result;
 
 ### HeartbeatOptions
 
-| 参数          | 说明                                                                 | 类型     | 默认值 |
-| ------------- | -------------------------------------------------------------------- | -------- | ------ |
-| message       | Heartbeat message                                                    | `string` | `ping` |
-| returnMessage | Heartbeat response message, `latestMessage` will ignore this message | `string` | -      |
-| interval      | Heartbeat Interval(ms)                                               | `number` | `6000` |
+| 参数            | 说明                                                                 | 类型     | 默认值 |
+| --------------- | -------------------------------------------------------------------- | -------- | ------ |
+| message         | Heartbeat message                                                    | `string` | `ping` |
+| responseMessage | Heartbeat response message, `latestMessage` will ignore this message | `string` | -      |
+| interval        | Heartbeat Interval(ms)                                               | `number` | `6000` |
 
 ### Result
 
