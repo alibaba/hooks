@@ -19,6 +19,7 @@ export default function () {
         serializer: (v) => v ?? '',
         deserializer: (v) => v,
       },
+      expire: 10,
     },
   );
 

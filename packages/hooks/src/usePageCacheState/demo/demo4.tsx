@@ -24,6 +24,7 @@ function Counter() {
       defaultValue: 0,
       listenStorageChange: true,
     },
+    expire: 10,
   });
 
   return (

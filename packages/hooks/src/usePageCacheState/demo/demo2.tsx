@@ -16,6 +16,7 @@ export default function () {
     useStorageStateOptions: {
       defaultValue: defaultArray,
     },
+    expire: 10,
   });
 
   return (

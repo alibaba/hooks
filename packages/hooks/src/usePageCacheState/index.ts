@@ -56,7 +56,7 @@ export default function <T>(key: string, options?: Options<T>) {
     // default storage six months
     expire = 1000 * 60 * 60 * 24 * 180,
     expireTimeProp = 'updateTime',
-    timeFormat = 'YYYY-MM-DD HH-mm-ss',
+    timeFormat = 'YYYY-MM-DD HH:mm:ss',
     storageType = 'localStorage',
   } = options || {};
 
@@ -100,12 +100,20 @@ export default function <T>(key: string, options?: Options<T>) {
     let curStoragedCount = 0;
     Object.keys(curKeyStorageRecorder || {}).forEach((subKeyItem) => {
       Object.keys(curKeyStorageRecorder?.[subKeyItem] || {})?.forEach((versionItem) => {
-        const curStorageRecorder = curKeyStorageRecorder?.[subKeyItem][
+        const curStorageRecorder = curKeyStorageRecorder?.[subKeyItem]?.[
           versionItem
         ] as UnitStorageState<T>;
 
         // remove expired storage
-        if (dayjs(curTime).diff(curStorageRecorder[expireTimeProp]) > expire * 1000) {
+        if (
+          !curStorageRecorder ||
+          dayjs(curTime).diff(dayjs(curStorageRecorder[expireTimeProp])) > expire * 1000
+        ) {
+          if (subKeyItem === subKey && versionItem === version) {
+            setPageCache(options?.useStorageStateOptions?.defaultValue);
+            console.log('setPageCache: ', subKey, version);
+            return;
+          }
           getStorage()?.removeItem(getRealityStorageKey(key, subKeyItem, versionItem));
         } else {
           curStoragedCount++;
@@ -161,7 +169,7 @@ export default function <T>(key: string, options?: Options<T>) {
         [key]: {},
       };
 
-      handlePreKeyRecorder(newPageCacheKeysRecorder);
+      handlePreKeyRecorder(newPageCacheKeysRecorder[key]);
 
       setPageCacheKeysRecorder(newPageCacheKeysRecorder);
     } else {
@@ -169,11 +177,11 @@ export default function <T>(key: string, options?: Options<T>) {
         ...pageCacheKeysRecorder,
       };
 
-      handlePreKeyRecorder(newPageCacheKeysRecorder);
+      handlePreKeyRecorder(pageCacheKeysRecorder[key]);
 
       setPageCacheKeysRecorder(newPageCacheKeysRecorder);
     }
-  }, [pageCache]);
+  }, [pageCache, storageKey, subKey, maxCount, expire, expireTimeProp, timeFormat, storageType]);
 
   const deleteStorageBySubKey = useMemoizedFn((deleteSubKey) => {
     setPageCache(undefined);
