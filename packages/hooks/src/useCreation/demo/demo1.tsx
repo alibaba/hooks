@@ -19,10 +19,14 @@ class Foo {
 
 export default function () {
   const foo = useCreation(() => new Foo(), []);
+  const foo_shallow = useCreation(() => new Foo(), [{}]);
+  const foo_deep = useCreation(() => new Foo(), [{}], { isDeepComparison: true });
   const [, setFlag] = useState({});
   return (
     <>
-      <p>{foo.data}</p>
+      <p>shallow comparison 1：{foo.data}</p>
+      <p>shallow comparison 2：{foo_shallow.data}</p>
+      <p>deep comparison：{foo_deep.data}</p>
       <button
         type="button"
         onClick={() => {

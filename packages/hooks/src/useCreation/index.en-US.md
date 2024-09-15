@@ -16,6 +16,7 @@ And similar to `useRef`, you can use `useCreation` to create some constants. But
 ```javascript
 const a = useRef(new Subject()); // A new Subject instance is created in every render.
 const b = useCreation(() => new Subject(), []); // By using factory function, Subject is only instantiated once.
+const c = useCreation(() => new Subject(), [{}], { isDeepComparison: true }); // Dependencies will be deeply compared.
 ```
 
 ## Examples
@@ -26,13 +27,20 @@ const b = useCreation(() => new Subject(), []); // By using factory function, Su
 
 ## API
 
-```javascript
-function useCreation<T>(factory: () => T, deps: any[]): T;
+```typescript
+function useCreation<T>(factory: () => T, deps: any[], options?: Options): T;
 ```
 
 ### Params
 
-| Property | Description                              | Type        | Default |
-| -------- | ---------------------------------------- | ----------- | ------- |
-| factory  | A function used for creating the object. | `() => any` | -       |
-| deps     | The dependencies list.                   | `any[]`     | -       |
+| Property | Description                                                 | Type        | Default |
+| -------- | ----------------------------------------------------------- | ----------- | ------- |
+| factory  | A function used for creating the object.                    | `() => any` | -       |
+| deps     | The dependencies list.                                      | `any[]`     | -       |
+| options  | Config the compare behavior. See the Options section below. | `Options`   | -       |
+
+### Options
+
+| Property         | Description                                                                                                    | Type      | Default |
+| ---------------- | -------------------------------------------------------------------------------------------------------------- | --------- | ------- |
+| isDeepComparison | Are dependencies deeply compared using [react-fast-compare](https://www.npmjs.com/package/react-fast-compare)? | `boolean` | `false` |
