@@ -41,6 +41,6 @@ function useCreation<T>(factory: () => T, deps: any[], options?: Options): T;
 
 ### Options
 
-| Property         | Description                                                                                     | Type      | Default |
-| ---------------- | ----------------------------------------------------------------------------------------------- | --------- | ------- |
-| isDeepComparison | 依赖项是否使用[react-fast-compare](https://www.npmjs.com/package/react-fast-compare)进行深比较? | `boolean` | `false` |
+| Property         | Description                                                                                    | Type      | Default |
+| ---------------- | ---------------------------------------------------------------------------------------------- | --------- | ------- |
+| isDeepComparison | 依赖项是否使用[react-fast-compare](https://www.npmjs.com/package/react-fast-compare)进行深比较 | `boolean` | `false` |
