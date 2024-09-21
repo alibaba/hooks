@@ -1,6 +1,6 @@
 <p align="center">
-  <a href="https://ahooks.js.org">
-    <img width="200" src="https://ahooks.js.org/logo.svg">
+  <a href="https://ahooks.pages.dev">
+    <img width="200" src="https://ahooks.pages.dev/logo.svg">
   </a>
 </p>
 
@@ -24,8 +24,8 @@ English | [简体中文](https://github.com/alibaba/hooks/blob/master/README.zh-
 
 ## 📚 Documentation
 
-- [English](https://ahooks.js.org/)
-- [中文](https://ahooks.js.org/zh-CN/)
+- [English](https://ahooks.pages.dev/)
+- [中文](https://ahooks.pages.dev/zh-CN/)
 
 ## ✨ Features
 
@@ -57,6 +57,14 @@ import { useRequest } from 'ahooks';
 ## 💻 Online Demo
 
 [![Edit demo for ahooks](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/demo-for-ahooks-forked-fg79k?file=/src/App.js)
+
+## 🔥 Usage Trend
+
+[Usage Trend of ahooks](https://npm-compare.com/ahooks#timeRange=THREE_YEARS)
+  
+<a href="https://npm-compare.com/ahooks#timeRange=THREE_YEARS" target="_blank">
+  <img src="https://npm-compare.com/img/npm-trend/THREE_YEARS/ahooks.png" width="50%" alt="NPM Usage Trend of ahooks" />
+</a>
 
 ## 🤝 Contributing
 
