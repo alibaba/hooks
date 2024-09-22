@@ -18,6 +18,7 @@ export async function mockRequest() {
 }
 
 const targetEl = document.createElement('div');
+const scrollToBottomEl = document.createElement('div');
 
 const setup = <T extends Data>(service: Service<T>, options?: InfiniteScrollOptions<T>) =>
   renderHook(() => useInfiniteScroll(service, options));
@@ -119,6 +120,105 @@ describe('useInfiniteScroll', () => {
     expect(result.current.noMore).toBe(true);
     act(() => {
       events['scroll']();
+    });
+    expect(result.current.loadingMore).toBe(false);
+
+    mockAddEventListener.mockRestore();
+  });
+
+  it('should not be trriggerd when not scroll to bottom and configured with "forcedLoadMore"', async () => {
+    const events = {};
+    const mockAddEventListener = jest
+      .spyOn(targetEl, 'addEventListener')
+      .mockImplementation((eventName, callback) => {
+        events[eventName] = callback;
+      });
+    const { result } = setup(mockRequest, {
+      target: targetEl,
+      isNoMore: (d) => d?.nextId === undefined,
+      forcedLoadMore: true,
+    });
+    // not work when loading
+    expect(result.current.loading).toBe(true);
+    events['scroll']();
+    await act(async () => {
+      jest.advanceTimersByTime(1000);
+    });
+    expect(result.current.loading).toBe(false);
+
+    // mock scroll
+    Object.defineProperties(targetEl, {
+      clientHeight: {
+        value: 150,
+      },
+      scrollHeight: {
+        value: 300,
+      },
+      scrollTop: {
+        value: 100,
+      },
+    });
+
+    act(() => {
+      events['scroll']();
+    });
+    // should not be trriggerd when not scroll to bottom
+    expect(result.current.loadingMore).toBe(false);
+    mockAddEventListener.mockRestore();
+  });
+
+  it('should always load when configured with "forcedLoadMore"', async () => {
+    const events = {};
+    const mockAddEventListener = jest
+      .spyOn(scrollToBottomEl, 'addEventListener')
+      .mockImplementation((eventName, callback) => {
+        events[eventName] = callback;
+      });
+    const { result } = setup(mockRequest, {
+      target: scrollToBottomEl,
+      isNoMore: (d) => d?.nextId === undefined,
+      forcedLoadMore: true,
+    });
+    // not work when loading
+    expect(result.current.loading).toBe(true);
+    events['scroll']();
+    await act(async () => {
+      jest.advanceTimersByTime(1000);
+    });
+    expect(result.current.loading).toBe(false);
+
+    // mock scroll
+    Object.defineProperties(scrollToBottomEl, {
+      clientHeight: {
+        value: 150,
+      },
+      scrollHeight: {
+        value: 300,
+      },
+      scrollTop: {
+        value: 150,
+      },
+    });
+
+    act(() => {
+      events['scroll']();
+    });
+    expect(result.current.loadingMore).toBe(true);
+    await act(async () => {
+      jest.advanceTimersByTime(1000);
+    });
+    expect(result.current.loadingMore).toBe(false);
+
+    // still work when no more
+    expect(result.current.noMore).toBe(false);
+    expect(result.current.trulyNoMore).toBe(true);
+    act(() => {
+      events['scroll']();
+    });
+
+    expect(result.current.loadingMore).toBe(true);
+    await act(async () => {
+      jest.advanceTimersByTime(1000);
     });
     expect(result.current.loadingMore).toBe(false);
 

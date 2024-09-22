@@ -79,16 +79,22 @@ const useInfiniteScroll = <TData extends Data>(
     },
   );
 
-  const loadMore = useMemoizedFn((isNeedForcedLoadMore = false) => {
+  const loadMore = useMemoizedFn((isScrollToBottom = false) => {
     if (noMore) return;
+    // when set `forcedLoadMore`, only user scroll to bottom will trrigger load more
+    if (forcedLoadMore && !isScrollToBottom) return;
+
     setLoadingMore(true);
-    run(finalData, isNeedForcedLoadMore);
+    run(finalData, forcedLoadMore && isScrollToBottom);
   });
 
-  const loadMoreAsync = useMemoizedFn((isNeedForcedLoadMore = false) => {
+  const loadMoreAsync = useMemoizedFn((isScrollToBottom = false) => {
     if (noMore) return Promise.reject();
+    // when set `forcedLoadMore`, only user scroll to bottom will trrigger load more
+    if (forcedLoadMore && !isScrollToBottom) return Promise.reject();
+
     setLoadingMore(true);
-    return runAsync(finalData, isNeedForcedLoadMore);
+    return runAsync(finalData, forcedLoadMore && isScrollToBottom);
   });
 
   const reload = () => {
@@ -113,11 +119,13 @@ const useInfiniteScroll = <TData extends Data>(
     const scrollHeight = getScrollHeight(el);
     const clientHeight = getClientHeight(el);
 
-    // when set `forcedLoadMore`, only user scroll to bottom will trrigger load more
-    if (!forcedLoadMore && scrollHeight - scrollTop <= clientHeight + threshold) {
+    if (scrollHeight - scrollTop <= clientHeight + threshold) {
+      if (scrollHeight - scrollTop <= clientHeight) {
+        loadMore(true);
+        return;
+      }
+
       loadMore();
-    } else if (scrollHeight - scrollTop <= clientHeight) {
-      loadMore(true);
     }
   };
 
