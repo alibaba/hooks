@@ -6,11 +6,11 @@
  * desc.zh-CN: 对于普通的字符串，可能你不需要默认的 `JSON.stringify/JSON.parse` 来序列化。
  */
 
-import React from 'react';
-import { useLocalStorageState } from 'ahooks';
+import React, { useState } from 'react';
 import usePageCacheState from '..';
+import { Select } from 'antd';
 
-export default function () {
+const UserDataDisplayer = ({ userId }: { userId: string }) => {
   const [message, setMessage] = usePageCacheState<string | undefined>(
     'use-local-storage-state-demo3',
     {
@@ -19,6 +19,7 @@ export default function () {
         serializer: (v) => v ?? '',
         deserializer: (v) => v,
       },
+      subKey: userId,
       expire: 10,
     },
   );
@@ -36,6 +37,31 @@ export default function () {
       <button type="button" onClick={() => setMessage(undefined)}>
         Clear
       </button>
+    </>
+  );
+};
+
+export default function () {
+  const [userId, setUserId] = useState<string>('');
+
+  return (
+    <>
+      <Select
+        style={{ width: 100 }}
+        options={[
+          {
+            label: 'jack',
+            value: 'jack',
+          },
+          {
+            label: 'peter',
+            value: 'peter',
+          },
+        ]}
+        value={userId}
+        onChange={setUserId}
+      />
+      {userId && <UserDataDisplayer userId={userId} />}
     </>
   );
 }

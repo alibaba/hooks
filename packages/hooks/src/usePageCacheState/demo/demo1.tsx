@@ -16,7 +16,7 @@ export default function () {
       useStorageStateOptions: {
         defaultValue: 'Hello~',
       },
-      expire: 10,
+      storageType: 'sessionStorage',
     },
   );
 
