@@ -148,10 +148,13 @@ describe('useWebSocket', () => {
   it('should send heartbeat message periodically', async () => {
     jest.spyOn(global, 'clearInterval');
 
+    const pingMessage = Date.now().toString();
+
     const wsServer = new WS(wsUrl);
     renderHook(() =>
       useWebSocket(wsUrl, {
         heartbeat: {
+          message: pingMessage,
           interval: 100,
           responseTimeout: 200,
         },
@@ -166,12 +169,12 @@ describe('useWebSocket', () => {
       await sleep(110);
       return promise;
     });
-    expect(wsServer.messages).toStrictEqual(['ping']);
+    expect(wsServer.messages).toStrictEqual([pingMessage]);
 
     await act(async () => {
       await sleep(110);
     });
-    expect(wsServer.messages).toStrictEqual(['ping', 'ping']);
+    expect(wsServer.messages).toStrictEqual([pingMessage, pingMessage]);
 
     expect(clearInterval).toHaveBeenCalledTimes(1);
     await act(async () => {
@@ -183,8 +186,30 @@ describe('useWebSocket', () => {
     expect(clearInterval).toHaveBeenCalledTimes(2);
   });
 
-  // TODO: 更详细的测试心跳相关的所有参数
-  // TODO: 心跳逻辑 demo 完善、demo 测试
+  it('disconnect if no heartbeat message received', async () => {
+    const wsServer = new WS(wsUrl);
+    const hooks = renderHook(() =>
+      useWebSocket(wsUrl, {
+        heartbeat: {
+          interval: 100,
+          responseTimeout: 200,
+        },
+      }),
+    );
+
+    await act(async () => {
+      await wsServer.connected;
+      await sleep(350);
+      return promise;
+    });
+
+    expect(hooks.result.current.readyState).toBe(ReadyState.Closed);
+
+    await act(async () => {
+      await wsServer.closed;
+      return promise;
+    });
+  });
 
   it('should ignore heartbeat response message', async () => {
     const wsServer = new WS(wsUrl);
