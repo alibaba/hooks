@@ -63,8 +63,8 @@ export default function useWebSocket(socketUrl: string, options: Options = {}): 
   const {
     message: heartbeatMessage = DEFAULT_MESSAGE.PING,
     responseMessage = DEFAULT_MESSAGE.PONG,
-    interval = 1000,
-    responseTimeout = 1000,
+    interval = 5 * 1000,
+    responseTimeout = 10 * 1000,
   } = isObject(heartbeat) ? heartbeat : {};
 
   const onOpenRef = useLatest(onOpen);
