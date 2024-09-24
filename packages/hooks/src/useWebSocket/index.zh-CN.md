@@ -13,7 +13,25 @@ nav:
 
 <code src="./demo/demo1.tsx" />
 
-### 测试示例
+### 心跳示例
+
+通过设置 `heartbeat`，可以启用心跳机制，`useWebSocket` 在连接成功后，每隔 `interval` 毫秒发送一个 `message`，如果超过 `responseTimeout` 时间未收到任何消息，可能表示连接出问题，将关闭连接。
+
+需要注意的是，如果定义了 `responseMessage`，该消息将被忽略，不会触发 `onMessage` 事件，也不会更新 `latestMessage`。
+
+```tsx | pure
+useWebSocket(
+  'wss://ws.postman-echo.com/raw',
+  {
+    heartbeat: {
+      message: 'ping',
+      responseMessage: 'pong',
+      interval: 3000,
+      responseTimeout: 10000,
+    }
+  }
+);
+```
 
 <code src="./demo/demo2.tsx" />
 
@@ -31,6 +49,7 @@ interface HeartbeatOptions{
   message?: string;
   responseMessage?: string;
   interval?: number;
+  responseTimeout? :number;
 }
 
 interface Options {
@@ -79,11 +98,12 @@ useWebSocket(socketUrl: string, options?: Options): Result;
 
 ### HeartbeatOptions
 
-| 参数            | 说明                                       | 类型     | 默认值 |
-| --------------- | ------------------------------------------ | -------- | ------ |
-| message         | 心跳消息                                   | `string` | `ping` |
-| responseMessage | 心跳回复消息，`latestMessage` 会忽略该消息 | `string` | `pong` |
-| interval        | 心跳时间间隔（ms）                         | `number` | `6000` |
+| 参数            | 说明                                                                         | 类型     | 默认值  |
+| --------------- | ---------------------------------------------------------------------------- | -------- | ------- |
+| message         | 心跳消息                                                                     | `string` | `ping`  |
+| responseMessage | 心跳回复消息，`onMessage`、`latestMessage` 会忽略该消息                      | `string` | `pong`  |
+| interval        | 心跳时间间隔（ms）                                                           | `number` | `5000`  |
+| responseTimeout | 心跳超时时间(ms)，超过此时间未收到心跳消息或其他消息将视为连接异常并断开连接 | `number` | `10000` |
 
 ### Result
 

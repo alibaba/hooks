@@ -13,6 +13,28 @@ A hook for WebSocket.
 
 <code src="./demo/demo1.tsx" />
 
+### Heartbeat example
+
+By setting the `heartbeat`, you can enable the heartbeat mechanism. After a successful connection, `useWebSocket` will send a `message` every `interval` milliseconds. If no messages are received within the `responseTimeout`, it may indicate that there is an issue with the connection, and the connection will be closed.
+
+It is important to note that if a `responseMessage` is defined, it will be ignored, and it will not trigger the `onMessage` event or update the `latestMessage`.
+
+```tsx | pure
+useWebSocket(
+  'wss://ws.postman-echo.com/raw',
+  {
+    heartbeat: {
+      message: 'ping',
+      responseMessage: 'pong',
+      interval: 3000,
+      responseTimeout: 10000,
+    }
+  }
+);
+```
+
+<code src="./demo/demo2.tsx" />
+
 ## API
 
 ```typescript
@@ -23,6 +45,13 @@ enum ReadyState {
   Closed = 3,
 }
 
+interface HeartbeatOptions{
+  message?: string;
+  responseMessage?: string;
+  interval?: number;
+  responseTimeout? :number;
+}
+
 interface Options {
   reconnectLimit?: number;
   reconnectInterval?: number;
@@ -31,6 +60,7 @@ interface Options {
   onMessage?: (message: WebSocketEventMap['message'], instance: WebSocket) => void;
   onError?: (event: WebSocketEventMap['error'], instance: WebSocket) => void;
   protocols?: string | string[];
+  heartbeat?: boolean | HeartbeatOptions;
 }
 
 interface Result {
@@ -68,11 +98,12 @@ useWebSocket(socketUrl: string, options?: Options): Result;
 
 ### HeartbeatOptions
 
-| 参数            | 说明                                                                 | 类型     | 默认值 |
-| --------------- | -------------------------------------------------------------------- | -------- | ------ |
-| message         | Heartbeat message                                                    | `string` | `ping` |
-| responseMessage | Heartbeat response message, `latestMessage` will ignore this message | `string` | -      |
-| interval        | Heartbeat Interval(ms)                                               | `number` | `6000` |
+| 参数            | 说明                                                                                                                                                                                     | 类型     | 默认值  |
+| --------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------- | ------- |
+| message         | Heartbeat message                                                                                                                                                                        | `string` | `ping`  |
+| responseMessage | Heartbeat response message; the `onMessage` and `latestMessage` will ignore this message.                                                                                                | `string` | `pong`  |
+| interval        | Heartbeat Interval(ms)                                                                                                                                                                   | `number` | `5000`  |
+| responseTimeout | The heartbeat timeout (ms) indicates that if no heartbeat messages or other messages are received within this time, the connection will be considered abnormal and will be disconnected. | `number` | `10000` |
 
 ### Result
 

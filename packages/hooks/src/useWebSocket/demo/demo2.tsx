@@ -15,7 +15,10 @@ export default () => {
     'wss://ws.postman-echo.com/raw',
     {
       heartbeat: {
-        interval: 1000 * 3,
+        message: 'ping',
+        responseMessage: 'pong',
+        interval: 3000,
+        responseTimeout: 10000,
       },
     },
   );
