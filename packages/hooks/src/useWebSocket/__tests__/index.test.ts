@@ -199,7 +199,7 @@ describe('useWebSocket', () => {
 
     await act(async () => {
       await wsServer.connected;
-      await sleep(350);
+      await sleep(310);
       return promise;
     });
 
