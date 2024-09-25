@@ -26,7 +26,9 @@ function useControllableValue<T = any>(
   props?: Props,
   options?: Options<T>,
 ): [T, (v: SetStateAction<T>, ...args: any[]) => void];
-function useControllableValue<T = any>(props: Props = {}, options: Options<T> = {}) {
+function useControllableValue<T = any>(defaultProps: Props, options: Options<T> = {}) {
+  const props = defaultProps ?? {};
+
   const {
     defaultValue,
     defaultValuePropName = 'defaultValue',
