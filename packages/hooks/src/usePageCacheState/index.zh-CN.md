@@ -5,63 +5,87 @@ nav:
 
 # usePageCacheState
 
-将状态存储在 localStorage 中的 Hook 。
+usePageCacheState 是一个处理页面级缓存的解决方案。它记录当前页面的完整状态到缓存中，通常涉及缓存大量数据。您可以使用 localStorage 或 sessionStorage 来存储缓存的数据。
 
 ## 代码演示
 
-### 将 state 存储在 localStorage 中
+### 将状态存入 sessionStorage
 
 <code src="./demo/demo1.tsx" />
 
-### 存储复杂类型数据
+### 存储临时数据
 
 <code src="./demo/demo2.tsx" />
 
-### 自定义序列化和反序列化函数
+### 存储不同用户的数据
 
 <code src="./demo/demo3.tsx" />
 
-### 将 state 与 localStorage 保持同步
-
-<code src="./demo/demo4.tsx" />
-
 ## API
 
-如果想从 localStorage 中删除这条数据，可以使用 `setState()` 或 `setState(undefined)` 。
+`useStorageStateOptions` 与 `useLocalStorageState` 和 `useSessionStorageState` 的属性相同，您可以将这些属性传递给 `useStorageStateOptions` 以获得相同的性能。
 
 ```typescript
-type SetState<S> = S | ((prevState?: S) => S);
+export type StorageType = 'localStorage' | 'sessionStorage';
+export type ExpireTimeProp = 'createTime' | 'updateTime';
+
+/** 单条记录的存储的数据类型 */
+type UnitStorageState<T> = {
+  subKey: Exclude<Options<T>['subKey'], undefined>;
+  createTime: string;
+  createTimeFormat: string;
+  updateTime: string;
+  updateTimeFormat: string;
+  /** 用户数据 */
+  data?: T;
+};
+
+export type SetUnitDataState<S> = S | ((prevState?: S) => S);
 
 interface Options<T> {
-  defaultValue?: T | (() => T);
-  serializer?: (value: T) => string;
-  deserializer?: (value: string) => T;
-  onError?: (error: unknown) => void;
+  /** 缓存类型 */
+  storageType?: StorageType;
+  /** 二级key。用于区分同个页面，不同用户的缓存 */
+  subKey?: string;
+  /** 过期时间 单位秒 s */
+  expire?: number;
+  /** 用于计算过期时间取值属性 */
+  expireTimeProp?: ExpireTimeProp;
+  /** 最大数量 */
+  maxCount?: number;
+  /** 缓存版本号 */
+  version?: number | string;
+  timeFormat?: string;
+  useStorageStateOptions?: UseStorageStateOption<T>;
 }
 
-const [state, setState] = usePageCacheState<T>(
-  key: string,
-  options: Options<T>
-): [T?, (value?: SetState<T>) => void];
+type StorageStateRecorder<T> = Record<string, Record<string, UnitStorageState<T>>>;
+
+
+const [state, setState] = usePageCacheState<T>(key: string, options?: Options<T>): [T | undefined, (value?: SetState<T> | undefined) => void, {
+  delete: (this: any, deleteSubKey: any) => void;
+  storageStateRecorder: StorageStateRecorder<...> | undefined;
+  setStorageStateRecorder: (value?: SetState<...> | undefined) => void;
+}];
 ```
 
 ### Result
 
-| 参数     | 说明                   | 类型                            |
-| -------- | ---------------------- | ------------------------------- |
-| state    | 本地 `localStorage` 值 | `T`                             |
-| setState | 设置 `localStorage` 值 | `(value?: SetState<T>) => void` |
+| 参数          | 说明                 | 类型                                                                                                                                                                                       |
+| ------------- | -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| state         | 存储的值             | `T`                                                                                                                                                                                        |
+| setState      | 更新存储的值         | `(value?: SetState<T>) => void`                                                                                                                                                            |
+| operateStates | 操作所有存储值的记录 | `{ delete: (this: any, deleteSubKey: any) => void; storageStateRecorder: StorageStateRecorder<...> \| undefined; setStorageStateRecorder: (value?: SetState<...> \| undefined) => void; }` |
 
 ### Options
 
-| 参数                | 说明                                                                                                                           | 类型                       | 默认值                        |
-| ------------------- | ------------------------------------------------------------------------------------------------------------------------------ | -------------------------- | ----------------------------- |
-| defaultValue        | 默认值                                                                                                                         | `any \| (() => any)`       | -                             |
-| listenStorageChange | 是否监听存储变化。如果是 `true`，当存储值变化时，所有 `key` 相同的 `usePageCacheState` 会同步状态，包括同一浏览器不同 tab 之间 | `boolean`                  | `false`                       |
-| serializer          | 自定义序列化方法                                                                                                               | `(value: any) => string`   | `JSON.stringify`              |
-| deserializer        | 自定义反序列化方法                                                                                                             | `(value: string) => any`   | `JSON.parse`                  |
-| onError             | 错误回调函数                                                                                                                   | `(error: unknown) => void` | `(e) => { console.error(e) }` |
-
-## 备注
-
-usePageCacheState 在往 localStorage 写入数据前，会先调用一次 `serializer`，在读取数据之后，会先调用一次 `deserializer`。
+| 参数                   | 说明                                                             | 类型                                 | 默认值                      |
+| ---------------------- | ---------------------------------------------------------------- | ------------------------------------ | --------------------------- |
+| storageType            | 存储数据值的类型                                                 | `'localStorage' \| 'sessionStorage'` | `'localStorage'`            |
+| subKey                 | 二级键。用于区分同个页面不同用户的缓存                           | `string`                             | `default`                   |
+| expire                 | 过期时间（秒）                                                   | `number`                             | `1000 * 60 * 60 * 24 * 180` |
+| expireTimeProp         | 用于计算过期时间的属性                                           | `string`                             | `'updateTime'`              |
+| maxCount               | 最大存储项目数                                                   | `number`                             | `100`                       |
+| version                | 缓存版本号                                                       | `number \| string`                   | `'default'`                 |
+| timeFormat             | 时间表示格式                                                     | `string`                             | `'YYYY-MM-DD HH:mm:ss'`     |
+| useStorageStateOptions | 与 `useLocalStorageState` 和 `useSessionStorageState` 的属性相同 | `UseStorageStateOption<T>`           | -                           |
