@@ -106,20 +106,14 @@ const useInfiniteScroll = <TData extends Data>(
   };
 
   const scrollMethod = () => {
-    let el = getTargetElement(target);
-    if (!el) {
-      return;
-    }
+    const el = getTargetElement(target);
+    if (!el) return;
 
-    el = el === document ? document.documentElement : el;
+    const targetEl = el === document ? document.documentElement : el;
+    const scrollTop = getScrollTop(targetEl);
+    const scrollHeight = getScrollHeight(targetEl);
+    const clientHeight = getClientHeight(targetEl);
 
-    const scrollTop = getScrollTop(el);
-    const scrollHeight = getScrollHeight(el);
-    const clientHeight = getClientHeight(el);
-
-    if (!isScrollToTop && scrollHeight - scrollTop <= clientHeight + threshold) {
-      loadMore();
-    }
     if (isScrollToTop) {
       if (
         lastScrollTop.current !== undefined &&
@@ -130,6 +124,8 @@ const useInfiniteScroll = <TData extends Data>(
       }
       lastScrollTop.current = scrollTop;
       scrollBottom.current = scrollHeight - scrollTop;
+    } else if (scrollHeight - scrollTop <= clientHeight + threshold) {
+      loadMore();
     }
   };
 
