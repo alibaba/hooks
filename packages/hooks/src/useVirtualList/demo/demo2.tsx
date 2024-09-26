@@ -44,7 +44,7 @@ export default () => {
           scroll to
         </button>
       </div>
-      <div ref={containerRef} style={{ height: '300px', overflow: 'auto' }}>
+      <div ref={containerRef} style={{ height: '300px', overflow: 'auto', border: '1px solid' }}>
         <div ref={wrapperRef}>
           {list.map((ele) => (
             <div
