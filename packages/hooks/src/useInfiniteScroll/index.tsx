@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useMemo, useRef, useState } from 'react';
 import useEventListener from '../useEventListener';
 import useMemoizedFn from '../useMemoizedFn';
 import useRequest from '../useRequest';
@@ -15,6 +15,7 @@ const useInfiniteScroll = <TData extends Data>(
     target,
     isNoMore,
     threshold = 100,
+    direction = 'bottom',
     reloadDeps = [],
     manual,
     onBefore,
@@ -25,6 +26,11 @@ const useInfiniteScroll = <TData extends Data>(
 
   const [finalData, setFinalData] = useState<TData>();
   const [loadingMore, setLoadingMore] = useState(false);
+  const isScrollToTop = direction === 'top';
+  // lastScrollTop is used to determine whether the scroll direction is up or down
+  const lastScrollTop = useRef<number>();
+  // scrollBottom is used to record the distance from the bottom of the scroll bar
+  const scrollBottom = useRef<number>(0);
 
   const noMore = useMemo(() => {
     if (!isNoMore) return false;
@@ -42,7 +48,9 @@ const useInfiniteScroll = <TData extends Data>(
       } else {
         setFinalData({
           ...currentData,
-          list: [...(lastData.list ?? []), ...currentData.list],
+          list: isScrollToTop
+            ? [...currentData.list, ...(lastData.list ?? [])]
+            : [...(lastData.list ?? []), ...currentData.list],
         });
       }
       return currentData;
@@ -56,9 +64,19 @@ const useInfiniteScroll = <TData extends Data>(
       onBefore: () => onBefore?.(),
       onSuccess: (d) => {
         setTimeout(() => {
-          // eslint-disable-next-line @typescript-eslint/no-use-before-define
-          scrollMethod();
+          if (isScrollToTop) {
+            let el = getTargetElement(target);
+            el = el === document ? document.documentElement : el;
+            if (el) {
+              const scrollHeight = getScrollHeight(el);
+              (el as Element).scrollTo(0, scrollHeight - scrollBottom.current);
+            }
+          } else {
+            // eslint-disable-next-line @typescript-eslint/no-use-before-define
+            scrollMethod();
+          }
         });
+
         onSuccess?.(d);
       },
       onError: (e) => onError?.(e),
@@ -88,18 +106,25 @@ const useInfiniteScroll = <TData extends Data>(
   };
 
   const scrollMethod = () => {
-    let el = getTargetElement(target);
-    if (!el) {
-      return;
-    }
+    const el = getTargetElement(target);
+    if (!el) return;
 
-    el = el === document ? document.documentElement : el;
+    const targetEl = el === document ? document.documentElement : el;
+    const scrollTop = getScrollTop(targetEl);
+    const scrollHeight = getScrollHeight(targetEl);
+    const clientHeight = getClientHeight(targetEl);
 
-    const scrollTop = getScrollTop(el);
-    const scrollHeight = getScrollHeight(el);
-    const clientHeight = getClientHeight(el);
-
-    if (scrollHeight - scrollTop <= clientHeight + threshold) {
+    if (isScrollToTop) {
+      if (
+        lastScrollTop.current !== undefined &&
+        lastScrollTop.current > scrollTop &&
+        scrollTop <= threshold
+      ) {
+        loadMore();
+      }
+      lastScrollTop.current = scrollTop;
+      scrollBottom.current = scrollHeight - scrollTop;
+    } else if (scrollHeight - scrollTop <= clientHeight + threshold) {
       loadMore();
     }
   };
