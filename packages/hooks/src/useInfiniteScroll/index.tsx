@@ -21,18 +21,28 @@ const useInfiniteScroll = <TData extends Data>(
     onSuccess,
     onError,
     onFinally,
+    forcedLoadMore = false,
   } = options;
 
   const [finalData, setFinalData] = useState<TData>();
   const [loadingMore, setLoadingMore] = useState(false);
 
-  const noMore = useMemo(() => {
-    if (!isNoMore) return false;
-    return isNoMore(finalData);
+  const { noMore, trulyNoMore } = useMemo(() => {
+    if (!isNoMore)
+      return {
+        noMore: false,
+        trulyNoMore: false,
+      };
+    const dataIsNoMore = isNoMore(finalData);
+
+    return {
+      noMore: !forcedLoadMore && dataIsNoMore,
+      trulyNoMore: dataIsNoMore,
+    };
   }, [finalData]);
 
   const { loading, error, run, runAsync, cancel } = useRequest(
-    async (lastData?: TData) => {
+    async (lastData?: TData, _isNeedForcedLoadMore?: boolean) => {
       const currentData = await service(lastData);
       if (!lastData) {
         setFinalData({
@@ -54,8 +64,12 @@ const useInfiniteScroll = <TData extends Data>(
         onFinally?.(d, e);
       },
       onBefore: () => onBefore?.(),
-      onSuccess: (d) => {
+      onSuccess: (d, isNeedForcedLoadMore) => {
         setTimeout(() => {
+          // if request trrigered by forced load more, is no need to check again
+          if (isNeedForcedLoadMore) {
+            return;
+          }
           // eslint-disable-next-line @typescript-eslint/no-use-before-define
           scrollMethod();
         });
@@ -65,16 +79,22 @@ const useInfiniteScroll = <TData extends Data>(
     },
   );
 
-  const loadMore = useMemoizedFn(() => {
+  const loadMore = useMemoizedFn((isScrollToBottom = false) => {
     if (noMore) return;
+    // when set `forcedLoadMore`, only user scroll to bottom will trrigger load more
+    if (forcedLoadMore && !isScrollToBottom) return;
+
     setLoadingMore(true);
-    run(finalData);
+    run(finalData, forcedLoadMore && isScrollToBottom);
   });
 
-  const loadMoreAsync = useMemoizedFn(() => {
+  const loadMoreAsync = useMemoizedFn((isScrollToBottom = false) => {
     if (noMore) return Promise.reject();
+    // when set `forcedLoadMore`, only user scroll to bottom will trrigger load more
+    if (forcedLoadMore && !isScrollToBottom) return Promise.reject();
+
     setLoadingMore(true);
-    return runAsync(finalData);
+    return runAsync(finalData, forcedLoadMore && isScrollToBottom);
   });
 
   const reload = () => {
@@ -100,6 +120,11 @@ const useInfiniteScroll = <TData extends Data>(
     const clientHeight = getClientHeight(el);
 
     if (scrollHeight - scrollTop <= clientHeight + threshold) {
+      if (scrollHeight - scrollTop <= clientHeight) {
+        loadMore(true);
+        return;
+      }
+
       loadMore();
     }
   };
@@ -125,7 +150,8 @@ const useInfiniteScroll = <TData extends Data>(
     error,
     loadingMore,
     noMore,
-
+    /** when set `forcedLoadMore` true, `noMore` will be always true, use `trulyNoMore` to judge data whther is no more */
+    trulyNoMore,
     loadMore,
     loadMoreAsync,
     reload: useMemoizedFn(reload),

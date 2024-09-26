@@ -39,6 +39,15 @@ useInfiniteScroll 的第一个参数 `service` 是一个异步函数，对这个
 
 <code src="./demo/scroll.tsx" />
 
+## 滚动强制无限加载
+
+当没有更多数据时，用户依旧想尝试加载可能更新的数据，可以配置`options.forcedLoadMore`来进行强制加载。
+
+- `options.forcedLoadMore` 当 `options.isNoMore`为`true`时滚动到底部依旧强制加载
+- `options.trulyNoMore` 当配置`options.forcedLoadMore`为`true`时， `options.isNoMore`为`true`一直为`true`，需要使用`options.trulyNoMore`来判断是不是没有更多数据了
+
+<code src="./demo/scrollForcedLoadMore.tsx" />
+
 ## 数据重置
 
 通过 `reload` 即可实现数据重置，下面示例我们演示在 `filter` 变化后，重置数据到第一页。

@@ -11,7 +11,8 @@ export interface InfiniteScrollResult<TData extends Data> {
   loadingMore: boolean;
   error?: Error;
   noMore: boolean;
-
+  /** when set `forcedLoadMore` true, `noMore` will be always true, use `trulyNoMore` to judge data whther is no more */
+  trulyNoMore: boolean;
   loadMore: () => void;
   loadMoreAsync: () => Promise<TData>;
   reload: () => void;
@@ -26,6 +27,7 @@ export interface InfiniteScrollOptions<TData extends Data> {
   threshold?: number;
 
   manual?: boolean;
+  forcedLoadMore?: boolean;
   reloadDeps?: DependencyList;
 
   onBefore?: () => void;

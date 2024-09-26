@@ -39,6 +39,14 @@ In the infinite scrolling scenario, the most common case is to automatically loa
 
 <code src="./demo/scroll.tsx" />
 
+## Scroll Forced Infinite Loading
+
+When there is no more data, but the user still wants to try loading potentially updated data, you can configure `options.forcedLoadMore` for forced loading.
+
+- `options.forcedLoadMore` When `options.isNoMore` is `true`, scrolling to the bottom will still trigger forced loading.
+- `options.trulyNoMore` When `options.forcedLoadMore` is set to `true`, `options.isNoMore` will remain `true`, so you need to use `options.trulyNoMore` to determine if there is truly no more data.
+  <code src="./demo/scrollForcedLoadMore.tsx" />
+
 ## Data reset
 
 The data can be reset by `reload`. The following example shows that after the `filter` changes, the data is reset to the first page.
