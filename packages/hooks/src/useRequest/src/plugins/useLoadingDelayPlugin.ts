@@ -4,15 +4,22 @@ import type { Plugin, Timeout } from '../types';
 const useLoadingDelayPlugin: Plugin<any, any[]> = (fetchInstance, { loadingDelay, ready }) => {
   const timerRef = useRef<Timeout>();
 
-  if (!loadingDelay) {
-    return {};
-  }
-
   const cancelTimeout = () => {
     if (timerRef.current) {
       clearTimeout(timerRef.current);
     }
   };
+
+  if (!loadingDelay) {
+    return {
+      onFinally: () => {
+        cancelTimeout();
+      },
+      onCancel: () => {
+        cancelTimeout();
+      }
+    };
+  }
 
   return {
     onBefore: () => {
