@@ -25,6 +25,8 @@ group:
 
 通过设置 `staleTime`，我们可以指定数据新鲜时间，在这个时间内，不会重新发起请求。下面的示例设置了 5s 的新鲜时间，你可以通过点击按钮来体验效果
 
+当你需要强制获取新数据时可以在 `refresh` 中配置 `skipStaleTime` 为 `true`,将跳过 `staleTime` 进行刷新
+
 <code src="./demo/staleTime.tsx" />
 
 ### 数据共享

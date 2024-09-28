@@ -16,7 +16,7 @@ async function getArticle(): Promise<{ data: string; time: number }> {
 }
 
 const Article = () => {
-  const { data, loading } = useRequest(getArticle, {
+  const { data, loading, refresh } = useRequest(getArticle, {
     cacheKey: 'staleTime-demo',
     staleTime: 5000,
   });
@@ -25,6 +25,21 @@ const Article = () => {
   }
   return (
     <>
+      <br />
+      <button type="button" onClick={() => refresh()}>
+        refresh
+      </button>
+      <button
+        type="button"
+        onClick={() =>
+          refresh({
+            skipStaleTime: true,
+          })
+        }
+        style={{ marginLeft: '10px' }}
+      >
+        refresh:skipStaleTime
+      </button>
       <p>Background loading: {loading ? 'true' : 'false'}</p>
       <p>Latest request time: {data?.time}</p>
       <p>{data?.data}</p>
@@ -36,7 +51,7 @@ export default () => {
   const [state, { toggle }] = useBoolean();
   return (
     <div>
-      <button type="button" onClick={() => toggle()}>
+      <button type="button" style={{ marginBottom: '10px' }} onClick={() => toggle()}>
         show/hidden
       </button>
       {state && <Article />}

@@ -1,5 +1,6 @@
 import { useRef } from 'react';
 import type { Plugin, Timeout } from '../types';
+import { Trigger } from '../types';
 
 const useRetryPlugin: Plugin<any, any[]> = (fetchInstance, { retryInterval, retryCount }) => {
   const timerRef = useRef<Timeout>();
@@ -32,6 +33,7 @@ const useRetryPlugin: Plugin<any, any[]> = (fetchInstance, { retryInterval, retr
         const timeout = retryInterval ?? Math.min(1000 * 2 ** countRef.current, 30000);
         timerRef.current = setTimeout(() => {
           triggerByRetry.current = true;
+          fetchInstance.setTrigger(Trigger.RETRY);
           fetchInstance.refresh();
         }, timeout);
       } else {
