@@ -12,6 +12,7 @@ export interface FetchState<TData, TParams extends any[]> {
   params?: TParams;
   data?: TData;
   error?: Error;
+  pollingLoading?: boolean;
 }
 
 export interface PluginReturn<TData, TParams extends any[]> {
@@ -94,10 +95,10 @@ export interface Options<TData, TParams extends any[]> {
 }
 
 export type Plugin<TData, TParams extends any[]> = {
-  (fetchInstance: Fetch<TData, TParams>, options: Options<TData, TParams>): PluginReturn<
-    TData,
-    TParams
-  >;
+  (
+    fetchInstance: Fetch<TData, TParams>,
+    options: Options<TData, TParams>,
+  ): PluginReturn<TData, TParams>;
   onInit?: (options: Options<TData, TParams>) => Partial<FetchState<TData, TParams>>;
 };
 
@@ -119,6 +120,7 @@ export interface Result<TData, TParams extends any[]> {
   run: Fetch<TData, TParams>['run'];
   runAsync: Fetch<TData, TParams>['runAsync'];
   mutate: Fetch<TData, TParams>['mutate'];
+  pollingLoading?: boolean;
 }
 
 export type Timeout = ReturnType<typeof setTimeout>;
