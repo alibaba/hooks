@@ -56,3 +56,4 @@ More information refer to [Intersection Observer API](https://developer.mozilla.
 | ---------- | ---------------------------------------------------------------------------------------- | ------------------------ |
 | inViewport | Is visible                                                                               | `boolean` \| `undefined` |
 | ratio      | Current visible ratio, updated every time the node set by `options.threshold` is reached | `number` \| `undefined`  |
+| disconnect | cancel watch subscription                                                                | `() => void`             |
