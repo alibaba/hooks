@@ -15,6 +15,7 @@ const useCachePlugin: Plugin<any, any[]> = (
     staleTime = 0,
     setCache: customSetCache,
     getCache: customGetCache,
+    pollingInterval,
   },
 ) => {
   const unSubscribeRef = useRef<() => void>();
@@ -76,11 +77,22 @@ const useCachePlugin: Plugin<any, any[]> = (
 
       // If the data is fresh, stop request
       if (staleTime === -1 || new Date().getTime() - cacheData.time <= staleTime) {
-        return {
+        const commonData = {
           loading: false,
           data: cacheData?.data,
           error: undefined,
           returnNow: true,
+        };
+        // handle polling status
+        if (pollingInterval) {
+          return {
+            ...commonData,
+            pollingNow: true,
+          };
+        }
+        return {
+          ...commonData,
+          pollingNow: false,
         };
       } else {
         // If the data is stale, return data, and request continue
@@ -103,15 +115,19 @@ const useCachePlugin: Plugin<any, any[]> = (
       setCachePromise(cacheKey, servicePromise);
       return { servicePromise };
     },
-    onSuccess: (data, params) => {
+    onSuccess: (data, params, options) => {
       if (cacheKey) {
         // cancel subscribe, avoid trgger self
         unSubscribeRef.current?.();
-        _setCache(cacheKey, {
-          data,
-          params,
-          time: new Date().getTime(),
-        });
+        // avoid set the cache repeatly when pollingNow and returnNow
+        if (options.pollingNow && options.returnNow) {
+        } else {
+          _setCache(cacheKey, {
+            data,
+            params,
+            time: new Date().getTime(),
+          });
+        }
         // resubscribe
         unSubscribeRef.current = subscribe(cacheKey, (d) => {
           fetchInstance.setState({ data: d });
