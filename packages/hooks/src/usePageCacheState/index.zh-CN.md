@@ -79,13 +79,13 @@ const [state, setState] = usePageCacheState<T>(key: string, options?: Options<T>
 
 ### Options
 
-| 参数                   | 说明                                                             | 类型                                 | 默认值                      |
-| ---------------------- | ---------------------------------------------------------------- | ------------------------------------ | --------------------------- |
-| storageType            | 存储数据值的类型                                                 | `'localStorage' \| 'sessionStorage'` | `'localStorage'`            |
-| subKey                 | 二级键。用于区分同个页面不同用户的缓存                           | `string`                             | `default`                   |
-| expire                 | 过期时间（秒）                                                   | `number`                             | `1000 * 60 * 60 * 24 * 180` |
-| expireTimeProp         | 用于计算过期时间的属性                                           | `string`                             | `'updateTime'`              |
-| maxCount               | 最大存储项目数                                                   | `number`                             | `100`                       |
-| version                | 缓存版本号                                                       | `number \| string`                   | `'default'`                 |
-| timeFormat             | 时间表示格式                                                     | `string`                             | `'YYYY-MM-DD HH:mm:ss'`     |
-| useStorageStateOptions | 与 `useLocalStorageState` 和 `useSessionStorageState` 的属性相同 | `UseStorageStateOption<T>`           | -                           |
+| 参数                   | 说明                                                             | 类型                                 | 默认值                         |
+| ---------------------- | ---------------------------------------------------------------- | ------------------------------------ | ------------------------------ |
+| storageType            | 存储数据值的类型                                                 | `'localStorage' \| 'sessionStorage'` | `'localStorage'`               |
+| subKey                 | 二级键。用于区分同个页面不同用户的缓存                           | `string`                             | `default`                      |
+| expire                 | 过期时间（秒）                                                   | `number`                             | `60 * 60 * 24 * 180`(半年)     |
+| expireTimeProp         | 用于计算过期时间的属性                                           | `string`                             | `'createTime' \| 'updateTime'` |
+| maxCount               | 最大存储项目数                                                   | `number`                             | `100`                          |
+| version                | 缓存版本号                                                       | `number \| string`                   | `'default'`                    |
+| timeFormat             | 时间表示格式,同`dayjs`                                           | `string`                             | `'YYYY-MM-DD HH:mm:ss'`        |
+| useStorageStateOptions | 与 `useLocalStorageState` 和 `useSessionStorageState` 的属性相同 | `UseStorageStateOption<T>`           | -                              |

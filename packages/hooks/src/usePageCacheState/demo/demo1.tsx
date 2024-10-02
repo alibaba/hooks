@@ -1,9 +1,9 @@
 /**
- * title: Store state into localStorage
- * desc: Refresh this page and you will get the state from localStorage.
+ * title: Store state into sessionStorage
+ * desc: Refresh this page and you will get the state from sessionStorage.
  *
- * title.zh-CN: 将 state 存储在 localStorage 中
- * desc.zh-CN: 刷新页面后，可以看到输入框中的内容被从 localStorage 中恢复了。
+ * title.zh-CN: 将 state 存储在 sessionStorage 中
+ * desc.zh-CN: 刷新页面后，可以看到输入框中的内容被从 sessionStorage 中恢复了。
  */
 
 import React from 'react';

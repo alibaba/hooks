@@ -1,9 +1,9 @@
 /**
- * title: Store complex types such as array or object
- * desc: useLocalStorageState will do the serialization and deserialization work automatically.
+ * title: Set the validity period of data
+ * desc: The cached data will be cleared in 10 seconds.
  *
- * title.zh-CN: 存储数组或对象等复杂类型
- * desc.zh-CN: useLocalStorageState 会自动处理序列化和反序列化的操作。
+ * title.zh-CN: 设置数据的有效期
+ * desc.zh-CN: 缓存的数据将在10秒后被清除。
  */
 
 import React from 'react';

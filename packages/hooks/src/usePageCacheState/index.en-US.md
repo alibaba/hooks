@@ -79,13 +79,13 @@ const [state, setState] = usePageCacheState<T>(key: string, options?: Options<T>
 
 ### Options
 
-| Property               | Description                                                                      | Type                                 | Default                     |
-| ---------------------- | -------------------------------------------------------------------------------- | ------------------------------------ | --------------------------- |
-| storageType            | type of storage data value                                                       | `'localStorage' \| 'sessionStorage'` | `'localStorage'`            |
-| subKey                 | Secondary key. Used to differentiate cache for different users on the same page. | `string`                             | `default`                   |
-| expire                 | Expiration time in seconds (s)method                                             | `number`                             | `1000 * 60 * 60 * 24 * 180` |
-| expireTimeProp         | Property used to calculate the expiration time                                   | `string`                             | `'updateTime'`              |
-| maxCount               | Maximum number of items to store                                                 | `number`                             | `100`                       |
-| version                | Cache version number                                                             | `number \| string`                   | `'default'`                 |
-| timeFormat             | Format for time representation                                                   | `string`                             | `'YYYY-MM-DD HH:mm:ss'`     |
-| useStorageStateOptions | same as the props of `useLocalStorageState` and `useSessionStorageState`         | `UseStorageStateOption<T>`           | -                           |
+| Property               | Description                                                                      | Type                                 | Default                          |
+| ---------------------- | -------------------------------------------------------------------------------- | ------------------------------------ | -------------------------------- |
+| storageType            | type of storage data value                                                       | `'localStorage' \| 'sessionStorage'` | `'localStorage'`                 |
+| subKey                 | Secondary key. Used to differentiate cache for different users on the same page. | `string`                             | `default`                        |
+| expire                 | Expiration time in seconds (s)                                                   | `number`                             | `60 * 60 * 24 * 180`(six months) |
+| expireTimeProp         | Property used to calculate the expiration time                                   | `'createTime' \| 'updateTime'`       | `'updateTime'`                   |
+| maxCount               | Maximum number of items to store                                                 | `number`                             | `100`                            |
+| version                | Cache version number                                                             | `number \| string`                   | `'default'`                      |
+| timeFormat             | Time format, same as `dayjs`                                                     | `string`                             | `'YYYY-MM-DD HH:mm:ss'`          |
+| useStorageStateOptions | same as the props of `useLocalStorageState` and `useSessionStorageState`         | `UseStorageStateOption<T>`           | -                                |
