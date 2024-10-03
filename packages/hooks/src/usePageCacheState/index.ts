@@ -8,31 +8,31 @@ import useMemoizedFn from '../useMemoizedFn';
 export type StorageType = 'localStorage' | 'sessionStorage';
 export type ExpireTimeProp = 'createTime' | 'updateTime';
 
-/** 单条记录的存储的数据类型 */
+/** Data type for storing a single record */
 type UnitStorageState<T> = {
   subKey: Exclude<Options<T>['subKey'], undefined>;
   createTime: string;
   createTimeFormat: string;
   updateTime: string;
   updateTimeFormat: string;
-  /** 用户数据 */
+  /** User data */
   data?: T;
 };
 
 export type SetUnitDataState<S> = S | ((prevState?: S) => S);
 
 export interface Options<T> {
-  /** 缓存类型 */
+  /** Cache type */
   storageType?: StorageType;
-  /** 二级key。用于区分同个页面，不同用户的缓存 */
+  /** Secondary key. Used to differentiate cache between different users on the same page */
   subKey?: string;
-  /** 过期时间 单位秒 s */
+  /** Expiration time in seconds */
   expire?: number;
-  /** 用于计算过期时间取值属性 */
+  /** Property used to calculate expiration time */
   expireTimeProp?: ExpireTimeProp;
-  /** 最大数量 */
+  /** Maximum count */
   maxCount?: number;
-  /** 缓存版本号 */
+  /** Cache version number */
   version?: number | string;
   timeFormat?: string;
   useStorageStateOptions?: UseStorageStateOption<T>;

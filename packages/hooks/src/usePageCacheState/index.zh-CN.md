@@ -65,17 +65,18 @@ type StorageStateRecorder<T> = Record<string, Record<string, UnitStorageState<T>
 const [state, setState] = usePageCacheState<T>(key: string, options?: Options<T>): [T | undefined, (value?: SetState<T> | undefined) => void, {
   delete: (this: any, deleteSubKey: any) => void;
   storageStateRecorder: StorageStateRecorder<...> | undefined;
-  setStorageStateRecorder: (value?: SetState<...> | undefined) => void;
+  /** 获取数据在缓存中的真实缓存key  */
+  getRealityStorageKey: (storageKey: string, storageVersion?: string | number, storageSubkey?: string | number) => string
 }];
 ```
 
 ### Result
 
-| 参数          | 说明                 | 类型                                                                                                                                                                                       |
-| ------------- | -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| state         | 存储的值             | `T`                                                                                                                                                                                        |
-| setState      | 更新存储的值         | `(value?: SetState<T>) => void`                                                                                                                                                            |
-| operateStates | 操作所有存储值的记录 | `{ delete: (this: any, deleteSubKey: any) => void; storageStateRecorder: StorageStateRecorder<...> \| undefined; setStorageStateRecorder: (value?: SetState<...> \| undefined) => void; }` |
+| 参数          | 说明                 | 类型                                                                                                                                                                                                                                                                                                                   |
+| ------------- | -------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| state         | 存储的值             | `T`                                                                                                                                                                                                                                                                                                                    |
+| setState      | 更新存储的值         | `(value?: SetState<T>) => void`                                                                                                                                                                                                                                                                                        |
+| operateStates | 操作所有存储值的记录 | `{ delete: (this: any, deleteSubKey: any) => void; storageStateRecorder: StorageStateRecorder<...> \| undefined; setStorageStateRecorder: (value?: SetState<...> \| undefined) => void; };  getRealityStorageKey: (storageKey: string, storageVersion?: string \| number, storageSubkey?: string \| number) => string` |
 
 ### Options
 
