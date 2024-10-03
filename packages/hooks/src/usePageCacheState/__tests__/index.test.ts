@@ -1,19 +1,29 @@
 import { renderHook, act } from '@testing-library/react';
-import type { Options } from '../../createUseStorageState';
+import type { Options } from '../index';
 import usePageCacheState from '../index';
 
 describe('usePageCacheState', () => {
+  beforeAll(() => {
+    jest.useFakeTimers();
+  });
+
+  afterAll(() => {
+    jest.useRealTimers();
+  });
+
   const setUp = <T>(key: string, value: T, options?: Options<T>) =>
     renderHook(() => {
-      const [state, setState] = usePageCacheState<T>(key, {
+      const [state, setState, operations] = usePageCacheState<T>(key, {
+        ...options,
         useStorageStateOptions: {
           defaultValue: value,
-          ...options,
+          ...options?.useStorageStateOptions,
         },
       });
       return {
         state,
         setState,
+        operations,
       } as const;
     });
 
@@ -115,8 +125,12 @@ describe('usePageCacheState', () => {
 
   it('should sync state when changes', async () => {
     const LOCAL_STORAGE_KEY = 'test-sync-state';
-    const hook = setUp(LOCAL_STORAGE_KEY, 'foo', { listenStorageChange: true });
-    const anotherHook = setUp(LOCAL_STORAGE_KEY, 'bar', { listenStorageChange: true });
+    const hook = setUp(LOCAL_STORAGE_KEY, 'foo', {
+      useStorageStateOptions: { listenStorageChange: true },
+    });
+    const anotherHook = setUp(LOCAL_STORAGE_KEY, 'bar', {
+      useStorageStateOptions: { listenStorageChange: true },
+    });
 
     expect(hook.result.current.state).toBe('foo');
     expect(anotherHook.result.current.state).toBe('bar');
@@ -128,5 +142,65 @@ describe('usePageCacheState', () => {
     act(() => anotherHook.result.current.setState('qux'));
     expect(hook.result.current.state).toBe('qux');
     expect(anotherHook.result.current.state).toBe('qux');
+  });
+
+  it('expired and over count data should be cleared', async () => {
+    const LOCAL_STORAGE_KEY = 'test-clear-data-key';
+    let hook = setUp(LOCAL_STORAGE_KEY, 'A', { expire: 5 });
+    const getRealityStorageKey = hook.result.current.operations.getRealityStorageKey;
+    act(() => {
+      hook.result.current.setState('B');
+    });
+
+    await act(async () => {
+      jest.advanceTimersByTime(6000);
+    });
+
+    hook.unmount();
+    hook = setUp(LOCAL_STORAGE_KEY, 'A', { expire: 5 });
+    // remove expired data and use default value
+    expect(hook.result.current.state).toBe('A');
+    hook.unmount();
+    let secondHook = setUp(LOCAL_STORAGE_KEY, 'A2', {
+      expire: 5,
+      maxCount: 2,
+      version: '2',
+      subKey: 'test',
+    });
+    expect(JSON.parse(localStorage.getItem(getRealityStorageKey(LOCAL_STORAGE_KEY)) || '')).toBe(
+      'A',
+    );
+    const thirdHook = setUp(LOCAL_STORAGE_KEY, 'A3', {
+      expire: 5,
+      maxCount: 2,
+      version: '3',
+      subKey: 'test3',
+    });
+    // remove over count data
+    expect(localStorage.getItem(getRealityStorageKey(LOCAL_STORAGE_KEY))).toBe(null);
+
+    secondHook.result.current.setState('B2');
+    await act(async () => {
+      jest.advanceTimersByTime(6000);
+    });
+    act(() => {
+      thirdHook.result.current.setState('B3');
+    });
+
+    console.log(
+      'getRealityStorageKey(LOCAL_STORAGE_KEY ',
+      getRealityStorageKey(LOCAL_STORAGE_KEY, '2', 'test'),
+    );
+    // remove other vesrions expired data
+    expect(localStorage.getItem(getRealityStorageKey(LOCAL_STORAGE_KEY, '2', 'test'))).toBe(null);
+    secondHook.unmount();
+    secondHook = setUp(LOCAL_STORAGE_KEY, 'A2', {
+      expire: 5,
+      maxCount: 2,
+      version: '2',
+      subKey: 'test',
+    });
+    expect(secondHook.result.current.state).toBe('A2');
+    expect(thirdHook.result.current.state).toBe('B3');
   });
 });

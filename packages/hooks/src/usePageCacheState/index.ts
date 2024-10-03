@@ -1,4 +1,3 @@
-import type { SetStateAction } from 'react';
 import { useCallback, useEffect, useMemo } from 'react';
 import isBrowser from '../utils/isBrowser';
 import type { Options as UseStorageStateOption } from '../createUseStorageState';
@@ -22,7 +21,7 @@ type UnitStorageState<T> = {
 
 export type SetUnitDataState<S> = S | ((prevState?: S) => S);
 
-interface Options<T> {
+export interface Options<T> {
   /** 缓存类型 */
   storageType?: StorageType;
   /** 二级key。用于区分同个页面，不同用户的缓存 */
@@ -93,9 +92,11 @@ export default function <T>(key: string, options?: Options<T>) {
   const [pageCacheKeysRecorder, setPageCacheKeysRecorder] = useStorageState<
     StorageStateRecorder<T>
   >(`${key}_all_keys_recorder`, {});
+
+  // remove data when expired or over count
   useEffect(() => {
     const curTime = dayjs(new Date()).format(timeFormat);
-    const curKeyStorageRecorder = pageCacheKeysRecorder?.[key];
+    const curKeyStorageRecorder = pageCacheKeysRecorder;
     // ================ calculate current key's storage's count ================
     let curStoragedCount = 0;
     Object.keys(curKeyStorageRecorder || {}).forEach((subKeyItem) => {
@@ -109,12 +110,13 @@ export default function <T>(key: string, options?: Options<T>) {
           !curStorageRecorder ||
           dayjs(curTime).diff(dayjs(curStorageRecorder[expireTimeProp])) > expire * 1000
         ) {
+          // set default value when data is cleared
           if (subKeyItem === subKey && versionItem === version) {
             setPageCache(options?.useStorageStateOptions?.defaultValue);
-            console.log('setPageCache: ', subKey, version);
             return;
           }
-          getStorage()?.removeItem(getRealityStorageKey(key, subKeyItem, versionItem));
+
+          getStorage()?.removeItem(getRealityStorageKey(key, versionItem, subKeyItem));
         } else {
           curStoragedCount++;
         }
@@ -125,8 +127,8 @@ export default function <T>(key: string, options?: Options<T>) {
     if (curStoragedCount > maxCount) {
       const versionKeys = Object.keys(curKeyStorageRecorder?.[subKey] || {});
 
-      if (versionKeys.length > 0) {
-        getStorage()?.removeItem(getRealityStorageKey(key, subKey, versionKeys[0]));
+      if (versionKeys.length > 1) {
+        getStorage()?.removeItem(getRealityStorageKey(key, versionKeys[0], subKey));
       } else {
         const subKeys = Object.keys(curKeyStorageRecorder || {});
 
@@ -134,17 +136,23 @@ export default function <T>(key: string, options?: Options<T>) {
           const removeVersionKeys = Object.keys(curKeyStorageRecorder?.[subKeys[0]] || {});
 
           if (removeVersionKeys.length) {
-            getStorage()?.removeItem(getRealityStorageKey(key, subKeys[0], removeVersionKeys[0]));
+            getStorage()?.removeItem(getRealityStorageKey(key, removeVersionKeys[0], subKeys[0]));
           }
         }
       }
     }
+  }, [pageCacheKeysRecorder]);
+
+  // update recorder
+  useEffect(() => {
+    const curKeyStorageRecorder = pageCacheKeysRecorder;
+    const curTime = dayjs(new Date()).format(timeFormat);
 
     const handlePreKeyRecorder = (preKeyRecorder: any) => {
+      const preUnitStorageState = curKeyStorageRecorder?.[subKey]?.[version];
       const finalDataStateRecord: UnitStorageState<T> = {
-        ...curKeyStorageRecorder?.[subKey]?.[version],
-        ...(curKeyStorageRecorder?.[subKey]?.[version]
-          ? {}
+        ...(preUnitStorageState
+          ? preUnitStorageState
           : {
               createTime: curTime,
               createTimeFormat: timeFormat,
@@ -165,19 +173,17 @@ export default function <T>(key: string, options?: Options<T>) {
     };
 
     if (!curKeyStorageRecorder) {
-      const newPageCacheKeysRecorder = {
-        [key]: {},
-      };
+      const newPageCacheKeysRecorder = {};
 
-      handlePreKeyRecorder(newPageCacheKeysRecorder[key]);
+      handlePreKeyRecorder(newPageCacheKeysRecorder);
 
       setPageCacheKeysRecorder(newPageCacheKeysRecorder);
     } else {
       const newPageCacheKeysRecorder = {
-        ...pageCacheKeysRecorder,
+        ...curKeyStorageRecorder,
       };
 
-      handlePreKeyRecorder(pageCacheKeysRecorder[key]);
+      handlePreKeyRecorder(newPageCacheKeysRecorder);
 
       setPageCacheKeysRecorder(newPageCacheKeysRecorder);
     }
@@ -191,7 +197,7 @@ export default function <T>(key: string, options?: Options<T>) {
     const versionKeys = Object.keys(curSubKeyStorageRecorder);
 
     versionKeys.forEach((versionItem) => {
-      getStorage()?.removeItem(getRealityStorageKey(key, deleteSubKey, versionItem));
+      getStorage()?.removeItem(getRealityStorageKey(key, versionItem, deleteSubKey));
     });
   });
 
@@ -202,6 +208,7 @@ export default function <T>(key: string, options?: Options<T>) {
       delete: deleteStorageBySubKey,
       storageStateRecorder: pageCacheKeysRecorder,
       setStorageStateRecorder: setPageCacheKeysRecorder,
+      getRealityStorageKey,
     },
   ] as const;
 }
