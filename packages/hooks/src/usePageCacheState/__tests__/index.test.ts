@@ -187,10 +187,6 @@ describe('usePageCacheState', () => {
       thirdHook.result.current.setState('B3');
     });
 
-    console.log(
-      'getRealityStorageKey(LOCAL_STORAGE_KEY ',
-      getRealityStorageKey(LOCAL_STORAGE_KEY, '2', 'test'),
-    );
     // remove other vesrions expired data
     expect(localStorage.getItem(getRealityStorageKey(LOCAL_STORAGE_KEY, '2', 'test'))).toBe(null);
     secondHook.unmount();
