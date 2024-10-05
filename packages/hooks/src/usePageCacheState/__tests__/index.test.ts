@@ -179,7 +179,9 @@ describe('usePageCacheState', () => {
     // remove over count data
     expect(localStorage.getItem(getRealityStorageKey(LOCAL_STORAGE_KEY))).toBe(null);
 
-    secondHook.result.current.setState('B2');
+    act(() => {
+      secondHook.result.current.setState('B2');
+    });
     await act(async () => {
       jest.advanceTimersByTime(6000);
     });
@@ -198,5 +200,33 @@ describe('usePageCacheState', () => {
     });
     expect(secondHook.result.current.state).toBe('A2');
     expect(thirdHook.result.current.state).toBe('B3');
+
+    const thirdHookOtherVersion = setUp(LOCAL_STORAGE_KEY, 'A3', {
+      expire: 5,
+      version: '4',
+      subKey: 'test3',
+    });
+
+    // test delete all versions in a subKey
+    let recorder = thirdHookOtherVersion.result.current.operations.storageStateRecorder || {};
+    let versionsMap = recorder['test3'];
+    expect(Object.keys(versionsMap).toString()).toBe('3,4');
+    act(() => {
+      thirdHookOtherVersion.result.current.operations.delete('test3');
+    });
+    recorder = thirdHookOtherVersion.result.current.operations.storageStateRecorder || {};
+    versionsMap = recorder['test3'];
+    // only keep own version
+    expect(Object.keys(versionsMap || {}).toString()).toBe('4');
+
+    // test `setStorageStateRecorder`
+    act(() => {
+      thirdHookOtherVersion.result.current.operations.setStorageStateRecorder({});
+    });
+    expect(
+      Object.keys(
+        thirdHookOtherVersion.result.current.operations.storageStateRecorder || {},
+      ).toString(),
+    ).toBe('');
   });
 });

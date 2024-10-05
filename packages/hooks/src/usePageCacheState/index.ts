@@ -93,7 +93,7 @@ export default function <T>(key: string, options?: Options<T>) {
   // ============================= hanlde recorder =============================
   const [pageCacheKeysRecorder, setPageCacheKeysRecorder] = useStorageState<
     StorageStateRecorder<T>
-  >(`${key}_all_keys_recorder`, {});
+  >(`${key}_storage_state_recorder`, {});
 
   // remove data when expired or over count
   useEffect(() => {
@@ -195,11 +195,20 @@ export default function <T>(key: string, options?: Options<T>) {
     setPageCache(undefined);
 
     // ===================== find all keys and remove =====================
-    const curSubKeyStorageRecorder = pageCacheKeysRecorder?.[key]?.[deleteSubKey] || {};
+    if (!pageCacheKeysRecorder) {
+      return;
+    }
+    const curSubKeyStorageRecorder = pageCacheKeysRecorder?.[deleteSubKey] || {};
     const versionKeys = Object.keys(curSubKeyStorageRecorder);
 
     versionKeys.forEach((versionItem) => {
       getStorage()?.removeItem(getRealityStorageKey(key, versionItem, deleteSubKey));
+    });
+
+    delete pageCacheKeysRecorder[deleteSubKey];
+
+    setPageCacheKeysRecorder({
+      ...pageCacheKeysRecorder,
     });
   });
 
