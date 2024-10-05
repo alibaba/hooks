@@ -5,6 +5,8 @@ import { createUseStorageState } from '../createUseStorageState';
 import dayjs from 'dayjs';
 import useMemoizedFn from '../useMemoizedFn';
 
+const DEFAULT_VALUE = 'default';
+
 export type StorageType = 'localStorage' | 'sessionStorage';
 export type ExpireTimeProp = 'createTime' | 'updateTime';
 
@@ -42,15 +44,15 @@ type StorageStateRecorder<T> = Record<string, Record<string, UnitStorageState<T>
 
 export default function <T>(key: string, options?: Options<T>) {
   useEffect(() => {
-    if ([options?.version, options?.subKey].includes('default')) {
+    if ([options?.version, options?.subKey].includes(DEFAULT_VALUE)) {
       console.warn(
         'do not use "default" as value of your version or subKey, these will cause you get random data!',
       );
     }
   }, [options?.version, options?.subKey]);
   const {
-    version = 'default',
-    subKey = 'default',
+    version = DEFAULT_VALUE,
+    subKey = DEFAULT_VALUE,
     maxCount = 100,
     // default storage six months
     expire = 1000 * 60 * 60 * 24 * 180,
@@ -61,8 +63,8 @@ export default function <T>(key: string, options?: Options<T>) {
 
   const getRealityStorageKey = (
     storageKey: string,
-    storageVersion: string | number = 'default',
-    storageSubkey: string | number = 'default',
+    storageVersion: string | number = DEFAULT_VALUE,
+    storageSubkey: string | number = DEFAULT_VALUE,
   ) => {
     const valueStrTransfer = (value) => {
       return `_${value}`;
@@ -189,7 +191,7 @@ export default function <T>(key: string, options?: Options<T>) {
     }
   }, [pageCache, storageKey, subKey, maxCount, expire, expireTimeProp, timeFormat, storageType]);
 
-  const deleteStorageBySubKey = useMemoizedFn((deleteSubKey) => {
+  const deleteStorageBySubKey = useMemoizedFn((deleteSubKey = DEFAULT_VALUE) => {
     setPageCache(undefined);
 
     // ===================== find all keys and remove =====================
