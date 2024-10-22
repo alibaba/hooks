@@ -2,11 +2,7 @@
   "name": "ahooks",
   "version": "3.8.2",
   "description": "react hooks library",
-  "keywords": [
-    "ahooks",
-    "umi hooks",
-    "react hooks"
-  ],
+  "keywords": ["ahooks", "umi hooks", "react hooks"],
   "main": "./lib/index.js",
   "module": "./es/index.js",
   "types": "./lib/index.d.ts",
@@ -24,14 +20,7 @@
   "scripts": {
     "build": "gulp && webpack-cli"
   },
-  "files": [
-    "dist",
-    "lib",
-    "es",
-    "metadata.json",
-    "package.json",
-    "README.md"
-  ],
+  "files": ["dist", "lib", "es", "metadata.json", "package.json", "README.md"],
   "dependencies": {
     "@babel/runtime": "^7.21.0",
     "dayjs": "^1.9.1",
