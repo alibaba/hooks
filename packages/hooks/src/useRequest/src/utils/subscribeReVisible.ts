@@ -9,15 +9,18 @@ function subscribe(listener: Listener) {
   listeners.push(listener);
   return function unsubscribe() {
     const index = listeners.indexOf(listener);
-    listeners.splice(index, 1);
+    if (index > -1) {
+      listeners.splice(index, 1);
+    }
   };
 }
 
 if (isBrowser) {
   const revalidate = () => {
     if (!isDocumentVisible()) return;
-    for (let i = 0; i < listeners.length; i++) {
-      const listener = listeners[i];
+    const copyListeners = [...listeners];
+    for (let i = 0; i < copyListeners.length; i++) {
+      const listener = copyListeners[i];
       listener();
     }
   };
