@@ -144,4 +144,96 @@ describe('useWebSocket', () => {
     act(() => wsServer1.close());
     act(() => wsServer2.close());
   });
+
+  it('should send heartbeat message periodically', async () => {
+    jest.spyOn(global, 'clearInterval');
+
+    const pingMessage = Date.now().toString();
+
+    const wsServer = new WS(wsUrl);
+    renderHook(() =>
+      useWebSocket(wsUrl, {
+        heartbeat: {
+          message: pingMessage,
+          interval: 100,
+          responseTimeout: 200,
+        },
+      }),
+    );
+
+    // Called on mount
+    expect(clearInterval).toHaveBeenCalledTimes(1);
+
+    await act(async () => {
+      await wsServer.connected;
+      await sleep(110);
+      return promise;
+    });
+    expect(wsServer.messages).toStrictEqual([pingMessage]);
+
+    await act(async () => {
+      await sleep(110);
+    });
+    expect(wsServer.messages).toStrictEqual([pingMessage, pingMessage]);
+
+    expect(clearInterval).toHaveBeenCalledTimes(1);
+    await act(async () => {
+      wsServer.close();
+      await wsServer.closed;
+      await sleep(110);
+      return promise;
+    });
+    expect(clearInterval).toHaveBeenCalledTimes(2);
+  });
+
+  it('disconnect if no heartbeat message received', async () => {
+    const wsServer = new WS(wsUrl);
+    const hooks = renderHook(() =>
+      useWebSocket(wsUrl, {
+        heartbeat: {
+          interval: 100,
+          responseTimeout: 200,
+        },
+      }),
+    );
+
+    await act(async () => {
+      await wsServer.connected;
+      await sleep(310);
+      return promise;
+    });
+
+    expect(hooks.result.current.readyState).toBe(ReadyState.Closed);
+
+    await act(async () => {
+      await wsServer.closed;
+      return promise;
+    });
+  });
+
+  it('should ignore heartbeat response message', async () => {
+    const wsServer = new WS(wsUrl);
+    const hooks = renderHook(() =>
+      useWebSocket(wsUrl, { heartbeat: { interval: 100, responseMessage: 'pong' } }),
+    );
+
+    await act(async () => {
+      await wsServer.connected;
+      return promise;
+    });
+    await expect(wsServer).toReceiveMessage('ping');
+
+    act(() => {
+      wsServer.send('pong');
+    });
+    expect(hooks.result.current.latestMessage?.data).toBeUndefined();
+
+    const nowTime = `${Date.now()}`;
+    act(() => {
+      wsServer.send(nowTime);
+    });
+    expect(hooks.result.current.latestMessage?.data).toBe(nowTime);
+
+    act(() => wsServer.close());
+  });
 });
