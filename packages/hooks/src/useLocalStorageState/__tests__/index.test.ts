@@ -127,4 +127,17 @@ describe('useLocalStorageState', () => {
     expect(hook.result.current.state).toBe('qux');
     expect(anotherHook.result.current.state).toBe('qux');
   });
+
+  it('should support expiration time', async () => {
+    const LOCAL_STORAGE_KEY = 'test-expiration-time';
+    const hook = setUp(LOCAL_STORAGE_KEY, 'initial', { expirationTime: 1000 });
+    expect(hook.result.current.state).toBe('initial');
+    act(() => {
+      hook.result.current.setState('updated');
+    });
+    expect(hook.result.current.state).toBe('updated');
+    await new Promise((resolve) => setTimeout(resolve, 1500));
+    const newHook = setUp(LOCAL_STORAGE_KEY, undefined, { expirationTime: 1000 });
+    expect(newHook.result.current.state).toBeUndefined();
+  });
 });

@@ -11,6 +11,7 @@ export type SetState<S> = S | ((prevState?: S) => S);
 export interface Options<T> {
   defaultValue?: T | (() => T);
   listenStorageChange?: boolean;
+  expirationTime?: number;
   serializer?: (value: T) => string;
   deserializer?: (value: string) => T;
   onError?: (error: unknown) => void;
@@ -21,6 +22,7 @@ export function createUseStorageState(getStorage: () => Storage | undefined) {
     let storage: Storage | undefined;
     const {
       listenStorageChange = false,
+      expirationTime,
       onError = (e) => {
         console.error(e);
       },
@@ -33,18 +35,38 @@ export function createUseStorageState(getStorage: () => Storage | undefined) {
       onError(err);
     }
 
-    const serializer = (value: T) => {
-      if (options.serializer) {
-        return options.serializer(value);
+    const serializer = (value: T): string => {
+      if (expirationTime) {
+        const storageData = {
+          data: options.serializer ? options.serializer(value) : value,
+          timestamp: Date.now(),
+        };
+        return JSON.stringify(storageData);
       }
-      return JSON.stringify(value);
+      return options.serializer ? options.serializer(value) : JSON.stringify(value);
     };
 
-    const deserializer = (value: string): T => {
-      if (options.deserializer) {
-        return options.deserializer(value);
+    const deserializer = (value: string): T | undefined => {
+      try {
+        const parsed = JSON.parse(value);
+        if (expirationTime) {
+          if (parsed.timestamp && Date.now() - parsed.timestamp > expirationTime) {
+            storage?.removeItem(key);
+            return undefined;
+          }
+          if (options.deserializer) {
+            return options.deserializer(parsed.data as string);
+          }
+          return parsed.data;
+        }
+        if (options.deserializer) {
+          return options.deserializer(value);
+        }
+        return parsed;
+      } catch (e) {
+        onError(e);
+        return undefined;
       }
-      return JSON.parse(value);
     };
 
     function getStoredValue() {
