@@ -25,6 +25,10 @@ nav:
 
 <code src="./demo/demo4.tsx" />
 
+### 自定义过期时间
+
+<code src="./demo/demo5.tsx" />
+
 ## API
 
 如果想从 localStorage 中删除这条数据，可以使用 `setState()` 或 `setState(undefined)` 。
@@ -34,6 +38,8 @@ type SetState<S> = S | ((prevState?: S) => S);
 
 interface Options<T> {
   defaultValue?: T | (() => T);
+  listenStorageChange?: boolean;
+  expirationTime?: number;
   serializer?: (value: T) => string;
   deserializer?: (value: string) => T;
   onError?: (error: unknown) => void;
@@ -58,6 +64,7 @@ const [state, setState] = useLocalStorageState<T>(
 | ------------------- | --------------------------------------------------------------------------------------------------------------------------------- | -------------------------- | ----------------------------- |
 | defaultValue        | 默认值                                                                                                                            | `any \| (() => any)`       | -                             |
 | listenStorageChange | 是否监听存储变化。如果是 `true`，当存储值变化时，所有 `key` 相同的 `useLocalStorageState` 会同步状态，包括同一浏览器不同 tab 之间 | `boolean`                  | `false`                       |
+| expirationTime      | 过期时间，单位毫秒。如果过期时间到达，数据将被清除。                                                                              | `number`                   | -                             |
 | serializer          | 自定义序列化方法                                                                                                                  | `(value: any) => string`   | `JSON.stringify`              |
 | deserializer        | 自定义反序列化方法                                                                                                                | `(value: string) => any`   | `JSON.parse`                  |
 | onError             | 错误回调函数                                                                                                                      | `(error: unknown) => void` | `(e) => { console.error(e) }` |
