@@ -20,7 +20,11 @@ const useAutoRunPlugin: Plugin<any, any[]> = (
   useUpdateEffect(() => {
     if (!manual && ready) {
       hasAutoRun.current = true;
-      fetchInstance.run(...defaultParams);
+      if (params.length > 0) {
+        fetchInstance.run(...params);
+      } else {
+        fetchInstance.run(...defaultParams);
+      }
     }
   }, [ready]);
 
