@@ -9,14 +9,15 @@ const usePollingPlugin: Plugin<any, any[]> = (
   { pollingInterval, pollingWhenHidden = true, pollingErrorRetryCount = -1 },
 ) => {
   const timerRef = useRef<Timeout>();
-  const unsubscribeRef = useRef<() => void>();
+  const unsubscribeRef = useRef<(() => void)[]>([]);
   const countRef = useRef<number>(0);
 
   const stopPolling = () => {
     if (timerRef.current) {
       clearTimeout(timerRef.current);
     }
-    unsubscribeRef.current?.();
+    unsubscribeRef.current.forEach((unsubscribe) => unsubscribe());
+    unsubscribeRef.current = [];
   };
 
   useUpdateEffect(() => {
@@ -48,9 +49,11 @@ const usePollingPlugin: Plugin<any, any[]> = (
         timerRef.current = setTimeout(() => {
           // if pollingWhenHidden = false && document is hidden, then stop polling and subscribe revisible
           if (!pollingWhenHidden && !isDocumentVisible()) {
-            unsubscribeRef.current = subscribeReVisible(() => {
-              fetchInstance.refresh();
-            });
+            unsubscribeRef.current.push(
+              subscribeReVisible(() => {
+                fetchInstance.refresh();
+              }),
+            );
           } else {
             fetchInstance.refresh();
           }
