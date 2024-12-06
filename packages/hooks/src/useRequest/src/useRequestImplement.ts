@@ -56,7 +56,7 @@ function useRequestImplement<TData, TParams extends any[]>(
   });
 
   useUnmount(() => {
-    fetchInstance.cancel();
+    fetchInstance.cancel(true);
   });
 
   return {
