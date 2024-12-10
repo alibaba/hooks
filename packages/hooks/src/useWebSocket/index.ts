@@ -43,17 +43,18 @@ export default function useWebSocket(socketUrl: string, options: Options = {}): 
     protocols,
   } = options;
 
+  const [latestMessage, setLatestMessage] = useState<WebSocketEventMap['message']>();
+  const [readyState, setReadyState] = useState<ReadyState>(ReadyState.Closed);
+
   const onOpenRef = useLatest(onOpen);
   const onCloseRef = useLatest(onClose);
   const onMessageRef = useLatest(onMessage);
   const onErrorRef = useLatest(onError);
+  const readyStateRef = useLatest(readyState);
 
   const reconnectTimesRef = useRef(0);
   const reconnectTimerRef = useRef<ReturnType<typeof setTimeout>>();
   const websocketRef = useRef<WebSocket>();
-
-  const [latestMessage, setLatestMessage] = useState<WebSocketEventMap['message']>();
-  const [readyState, setReadyState] = useState<ReadyState>(ReadyState.Closed);
 
   const reconnect = () => {
     if (
@@ -123,7 +124,7 @@ export default function useWebSocket(socketUrl: string, options: Options = {}): 
   };
 
   const sendMessage: WebSocket['send'] = (message) => {
-    if (readyState === ReadyState.Open) {
+    if (readyStateRef.current === ReadyState.Open) {
       websocketRef.current?.send(message);
     } else {
       throw new Error('WebSocket disconnected');
