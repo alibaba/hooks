@@ -134,4 +134,14 @@ describe('useKeyPress ', () => {
     hook2.unmount();
     hook1.unmount();
   });
+
+  it('test single special key when use exactMatch', async () => {
+    const { unmount } = renderHook(() => useKeyPress(['shift'], callback,{
+      events: ["keyup"],
+      exactMatch: true,
+    }));
+    fireEvent.keyDown(document, { key: 'shift', keyCode: 16 });
+    expect(callback.mock.calls.length).toBe(1);
+    unmount();
+  });
 });
