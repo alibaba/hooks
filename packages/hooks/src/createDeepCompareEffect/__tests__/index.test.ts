@@ -1,5 +1,5 @@
-import { act, renderHook } from '@testing-library/react';
-import { useEffect, useLayoutEffect, useState } from 'react';
+import { renderHook } from '@testing-library/react';
+import { useEffect, useLayoutEffect, useState, act } from 'react';
 import { createDeepCompareEffect } from '../index';
 
 describe('createDeepCompareEffect', () => {

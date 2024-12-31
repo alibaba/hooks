@@ -1,4 +1,5 @@
-import { renderHook, act } from '@testing-library/react';
+import { renderHook } from '@testing-library/react';
+import { act } from 'react';
 import { useRef, useCallback, useState } from 'react';
 import useLockFn from '../index';
 import { sleep } from '../../utils/testingHelpers';

@@ -1,5 +1,5 @@
-import React, { useRef } from 'react';
-import { renderHook, act, render, screen } from '@testing-library/react';
+import React, { useRef ,act } from 'react';
+import { renderHook, render, screen } from '@testing-library/react';
 import useSize from '../index';
 
 let callback;

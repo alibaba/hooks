@@ -1,4 +1,4 @@
-import { act } from '@testing-library/react';
+import { act } from 'react';
 import { setup } from '.';
 
 describe('useUrlState', () => {

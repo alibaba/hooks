@@ -1,4 +1,5 @@
-import { act, renderHook } from '@testing-library/react';
+import { renderHook } from '@testing-library/react';
+import { act } from 'react';
 import useMap from '../index';
 
 const setup = (initialMap?: Iterable<[any, any]>) => renderHook(() => useMap(initialMap));
