@@ -1,4 +1,5 @@
-import { renderHook, act } from '@testing-library/react';
+import { renderHook } from '@testing-library/react';
+import { act } from 'react';
 import useTextSelection from '../index';
 
 // test about Resize Observer see https://github.com/que-etc/resize-observer-polyfill/tree/master/tests

@@ -1,5 +1,6 @@
-import { act, renderHook, waitFor } from '@testing-library/react';
+import { renderHook, waitFor } from '@testing-library/react';
 import { render } from '@testing-library/react';
+import { act } from 'react';
 import useRequest, { clearCache } from '../index';
 import { request } from '../../utils/testingHelpers';
 import React, { useState } from 'react';
