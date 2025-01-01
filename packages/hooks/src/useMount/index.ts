@@ -1,8 +1,9 @@
 import { useEffect } from 'react';
+import { type EffectCallback } from 'react';
 import { isFunction } from '../utils';
 import isDev from '../utils/isDev';
 
-const useMount = (fn: () => void) => {
+const useMount = (fn: EffectCallback) => {
   if (isDev) {
     if (!isFunction(fn)) {
       console.error(
@@ -12,7 +13,7 @@ const useMount = (fn: () => void) => {
   }
 
   useEffect(() => {
-    fn?.();
+    return fn?.();
   }, []);
 };
 

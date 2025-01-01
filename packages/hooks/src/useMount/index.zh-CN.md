@@ -16,11 +16,11 @@ nav:
 ## API
 
 ```typescript
-useMount(fn: () => void);
+useMount(fn: EffectCallback);
 ```
 
 ### 参数
 
 | 参数 | 说明               | 类型         | 默认值 |
 | ---- | ------------------ | ------------ | ------ |
-| fn   | 初始化时执行的函数 | `() => void` | -      |
+| fn   | 初始化时执行的函数 | `EffectCallback` | -      |
