@@ -347,4 +347,37 @@ describe('useAntdTable', () => {
       expect(queryArgs.pageSize).toBe(100);
     });
   });
+
+  it("should defaultParams work with manual is  true", async () => {
+    queryArgs = undefined;
+    form.resetFields();
+    changeSearchType("advance");
+
+    act(() => {
+      renderHook((o) => {
+        const [myForm] = Form.useForm();
+
+        useAntdTable(
+          asyncFn,
+          o || {
+            form: myForm,
+            defaultParams: [
+              {
+                current: 2,
+                pageSize: 10,
+              },
+              { name: "hello", phone: "123" },
+            ],
+            defaultType: "advance",
+          }
+        );
+
+        useEffect(() => {
+          // defaultParams works
+          expect(myForm.getFieldValue("name")).toBe("hello");
+          expect(queryArgs).toBe(undefined);
+        }, []);
+      });
+    });
+  });
 });

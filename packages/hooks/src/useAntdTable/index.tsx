@@ -211,7 +211,9 @@ const useAntdTable = <TData extends Data, TParams extends Params>(
     if (ready) {
       allFormDataRef.current = defaultParams?.[1] || {};
       restoreForm();
-      _submit(defaultParams?.[0]);
+      if (!manual) {
+        _submit(defaultParams?.[0]);
+      }
     }
   }, []);
 
