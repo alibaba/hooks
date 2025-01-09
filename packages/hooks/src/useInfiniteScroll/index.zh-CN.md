@@ -36,8 +36,13 @@ useInfiniteScroll 的第一个参数 `service` 是一个异步函数，对这个
 
 - `options.target` 指定父级元素（父级元素需设置固定高度，且支持内部滚动）
 - `options.isNoMore` 判断是不是没有更多数据了
+- `options.direction` 滚动的方向，默认为向下滚动
 
+向下滚动示例
 <code src="./demo/scroll.tsx" />
+
+向上滚动示例
+<code src="./demo/scrollTop.tsx" />
 
 ## 数据重置
 
@@ -111,14 +116,15 @@ const {
 
 ### Options
 
-| 参数       | 说明                                                                                                                                                             | 类型                                                        | 默认值  |
-| ---------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------- | ------- |
-| target     | 父级容器，如果存在，则在滚动到底部时，自动触发 `loadMore`。需要配合 `isNoMore` 使用，以便知道什么时候到最后一页了。 **当 target 为 document 时，定义为整个视口** | `() => Element` \| `Element` \| `MutableRefObject<Element>` | -       |
-| isNoMore   | 是否有最后一页的判断逻辑，入参为当前聚合后的 `data`                                                                                                              | `(data?: TData) => boolean`                                 | -       |
-| threshold  | 下拉自动加载，距离底部距离阈值                                                                                                                                   | `number`                                                    | `100`   |
-| reloadDeps | 变化后，会自动触发 `reload`                                                                                                                                      | `any[]`                                                     | -       |
-| manual     | <ul><li> 默认 `false`。 即在初始化时自动执行 service。</li><li>如果设置为 `true`，则需要手动调用 `reload` 或 `reloadAsync` 触发执行。 </li></ul>                 | `boolean`                                                   | `false` |
-| onBefore   | service 执行前触发                                                                                                                                               | `() => void`                                                | -       |
-| onSuccess  | service resolve 时触发                                                                                                                                           | `(data: TData) => void`                                     | -       |
-| onError    | service reject 时触发                                                                                                                                            | `(e: Error) => void`                                        | -       |
-| onFinally  | service 执行完成时触发                                                                                                                                           | `(data?: TData, e?: Error) => void`                         | -       |
+| 参数       | 说明                                                                                                                                                             | 类型                                                        | 默认值   |
+| ---------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------- | -------- |
+| target     | 父级容器，如果存在，则在滚动到底部时，自动触发 `loadMore`。需要配合 `isNoMore` 使用，以便知道什么时候到最后一页了。 **当 target 为 document 时，定义为整个视口** | `() => Element` \| `Element` \| `MutableRefObject<Element>` | -        |
+| isNoMore   | 是否有最后一页的判断逻辑，入参为当前聚合后的 `data`                                                                                                              | `(data?: TData) => boolean`                                 | -        |
+| threshold  | 下拉自动加载，距离底部距离阈值                                                                                                                                   | `number`                                                    | `100`    |
+| direction  | 滚动的方向                                                                                                                                                       | `bottom` \| `top`                                           | `bottom` |
+| reloadDeps | 变化后，会自动触发 `reload`                                                                                                                                      | `any[]`                                                     | -        |
+| manual     | <ul><li> 默认 `false`。 即在初始化时自动执行 service。</li><li>如果设置为 `true`，则需要手动调用 `reload` 或 `reloadAsync` 触发执行。 </li></ul>                 | `boolean`                                                   | `false`  |
+| onBefore   | service 执行前触发                                                                                                                                               | `() => void`                                                | -        |
+| onSuccess  | service resolve 时触发                                                                                                                                           | `(data: TData) => void`                                     | -        |
+| onError    | service reject 时触发                                                                                                                                            | `(e: Error) => void`                                        | -        |
+| onFinally  | service 执行完成时触发                                                                                                                                           | `(data?: TData, e?: Error) => void`                         | -        |

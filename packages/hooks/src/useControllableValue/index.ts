@@ -26,7 +26,9 @@ function useControllableValue<T = any>(
   props?: Props,
   options?: Options<T>,
 ): [T, (v: SetStateAction<T>, ...args: any[]) => void];
-function useControllableValue<T = any>(props: Props = {}, options: Options<T> = {}) {
+function useControllableValue<T = any>(defaultProps: Props, options: Options<T> = {}) {
+  const props = defaultProps ?? {};
+
   const {
     defaultValue,
     defaultValuePropName = 'defaultValue',
@@ -35,13 +37,13 @@ function useControllableValue<T = any>(props: Props = {}, options: Options<T> = 
   } = options;
 
   const value = props[valuePropName] as T;
-  const isControlled = props.hasOwnProperty(valuePropName);
+  const isControlled = Object.prototype.hasOwnProperty.call(props, valuePropName);
 
   const initialValue = useMemo(() => {
     if (isControlled) {
       return value;
     }
-    if (props.hasOwnProperty(defaultValuePropName)) {
+    if (Object.prototype.hasOwnProperty.call(props, defaultValuePropName)) {
       return props[defaultValuePropName];
     }
     return defaultValue;

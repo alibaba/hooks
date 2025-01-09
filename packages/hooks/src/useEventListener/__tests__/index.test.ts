@@ -32,6 +32,34 @@ describe('useEventListener', () => {
     expect(state).toBe(1);
   });
 
+  it('test on event list listener', async () => {
+    let state: number = 0;
+    const onClick = () => {
+      state++;
+    };
+    const onKeydown = () => {
+      state++;
+    };
+    const { rerender, unmount } = renderHook(
+      () => (
+        useEventListener('click', onClick, { target: () => container }),
+        useEventListener('keydown', onKeydown, { target: () => container })
+      ),
+    );
+
+    document.body.click();
+    document.body.dispatchEvent(new KeyboardEvent('keydown'));
+    expect(state).toBe(0);
+    rerender();
+    container.click();
+    container.dispatchEvent(new KeyboardEvent('keydown'));
+    expect(state).toBe(2);
+    unmount();
+    document.body.click();
+    document.body.dispatchEvent(new KeyboardEvent('keydown'));
+    expect(state).toBe(2);
+  });
+
   it('test "enable" parameter', () => {
     let state = 0;
     let enable = true;

@@ -1,12 +1,8 @@
 {
   "name": "ahooks",
-  "version": "3.8.0",
+  "version": "3.8.2",
   "description": "react hooks library",
-  "keywords": [
-    "ahooks",
-    "umi hooks",
-    "react hooks"
-  ],
+  "keywords": ["ahooks", "umi hooks", "react hooks"],
   "main": "./lib/index.js",
   "module": "./es/index.js",
   "types": "./lib/index.d.ts",
@@ -24,19 +20,12 @@
   "scripts": {
     "build": "gulp && webpack-cli"
   },
-  "files": [
-    "dist",
-    "lib",
-    "es",
-    "metadata.json",
-    "package.json",
-    "README.md"
-  ],
+  "files": ["dist", "lib", "es", "metadata.json", "package.json", "README.md"],
   "dependencies": {
     "@babel/runtime": "^7.21.0",
     "dayjs": "^1.9.1",
     "intersection-observer": "^0.12.0",
-    "js-cookie": "^2.x.x",
+    "js-cookie": "^3.0.5",
     "lodash": "^4.17.21",
     "react-fast-compare": "^3.2.2",
     "resize-observer-polyfill": "^1.5.1",
@@ -49,7 +38,7 @@
   "devDependencies": {
     "@alifd/next": "^1.20.6",
     "@ant-design/icons": "^5.0.1",
-    "@types/js-cookie": "^2.x.x",
+    "@types/js-cookie": "^3.0.6",
     "@types/lodash": "^4.14.202",
     "antd": "^5.2.1",
     "jest-websocket-mock": "^2.1.0",
