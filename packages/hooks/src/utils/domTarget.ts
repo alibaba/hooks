@@ -1,6 +1,7 @@
 import type { MutableRefObject } from 'react';
 import { isFunction } from './index';
 import isBrowser from './isBrowser';
+import { getDOM } from './dom';
 
 type TargetValue<T> = T | undefined | null;
 
@@ -30,5 +31,5 @@ export function getTargetElement<T extends TargetType>(target: BasicTarget<T>, d
     targetElement = target;
   }
 
-  return targetElement;
+  return getDOM(targetElement) ?? defaultElement;
 }
