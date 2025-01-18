@@ -31,5 +31,5 @@ export function getTargetElement<T extends TargetType>(target: BasicTarget<T>, d
     targetElement = target;
   }
 
-  return (getDOM(targetElement) ?? defaultElement) as T;
+  return getDOM(targetElement)
 }
