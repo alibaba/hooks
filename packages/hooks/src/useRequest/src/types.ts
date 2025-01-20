@@ -1,4 +1,5 @@
 import type { DependencyList } from 'react';
+import type { BasicTarget } from '../../utils/domTarget';
 import type Fetch from './Fetch';
 import type { CachedData } from './utils/cache';
 
@@ -87,6 +88,12 @@ export interface Options<TData, TParams extends any[]> {
   retryCount?: number;
   retryInterval?: number;
 
+  // viewport
+  target?: BasicTarget | BasicTarget[];
+  root?: BasicTarget<Element>;
+  rootMargin?: string;
+  threshold?: number | number[];
+
   // ready
   ready?: boolean;
 
@@ -94,10 +101,10 @@ export interface Options<TData, TParams extends any[]> {
 }
 
 export type Plugin<TData, TParams extends any[]> = {
-  (fetchInstance: Fetch<TData, TParams>, options: Options<TData, TParams>): PluginReturn<
-    TData,
-    TParams
-  >;
+  (
+    fetchInstance: Fetch<TData, TParams>,
+    options: Options<TData, TParams>,
+  ): PluginReturn<TData, TParams>;
   onInit?: (options: Options<TData, TParams>) => Partial<FetchState<TData, TParams>>;
 };
 

@@ -1,6 +1,16 @@
 import { act, renderHook, waitFor } from '@testing-library/react';
-import useRequest from '../index';
 import { request } from '../../utils/testingHelpers';
+import useRequest from '../index';
+
+const targetEl = document.createElement('div');
+document.body.appendChild(targetEl);
+
+const mockIntersectionObserver = jest.fn().mockReturnValue({
+  observe: jest.fn(),
+  disconnect: jest.fn,
+});
+
+window.IntersectionObserver = mockIntersectionObserver;
 
 describe('useAutoRunPlugin', () => {
   jest.useFakeTimers();
@@ -283,5 +293,70 @@ describe('useAutoRunPlugin', () => {
     await waitFor(() => expect(hook.result.current.loading).toBe(false));
     expect(hook.result.current.params).toEqual([2]);
     expect(fn).toHaveBeenCalledTimes(1);
+  });
+
+  it('should work when target is in viewport', async () => {
+    const obj = { request };
+
+    const mockRequest = jest.spyOn(obj, 'request');
+
+    hook = setUp(obj.request, {
+      target: targetEl,
+    });
+
+    const calls = mockIntersectionObserver.mock.calls;
+    const [onChange] = calls[calls.length - 1];
+
+    expect(mockRequest).toHaveBeenCalledTimes(0);
+    act(() => onChange([{ isIntersecting: true }]));
+    expect(mockRequest).toHaveBeenCalledTimes(1);
+  });
+
+  it('should work once when target is in viewport', async () => {
+    const obj = { request };
+
+    const mockRequest = jest.spyOn(obj, 'request');
+
+    hook = setUp(obj.request, {
+      target: targetEl,
+    });
+
+    const calls = mockIntersectionObserver.mock.calls;
+    const [onChange] = calls[calls.length - 1];
+
+    act(() => onChange([{ isIntersecting: true }]));
+    act(() => onChange([{ isIntersecting: false }]));
+    act(() => onChange([{ isIntersecting: true }]));
+    expect(mockRequest).toHaveBeenCalledTimes(1);
+  });
+
+  it('should work when target is in viewport and refreshDeps changed', async () => {
+    let dep = 1;
+
+    const obj = { request };
+
+    const mockRequest = jest.spyOn(obj, 'request');
+
+    hook = setUp(obj.request, {
+      refreshDeps: [dep],
+      target: targetEl,
+    });
+
+    const calls = mockIntersectionObserver.mock.calls;
+    const [onChange] = calls[calls.length - 1];
+
+    act(() => onChange([{ isIntersecting: true }]));
+    act(() => onChange([{ isIntersecting: false }]));
+    expect(mockRequest).toHaveBeenCalledTimes(1);
+
+    dep = 2;
+    hook.rerender({
+      refreshDeps: [dep],
+      target: targetEl,
+    });
+
+    expect(mockRequest).toHaveBeenCalledTimes(1);
+    act(() => onChange([{ isIntersecting: true }]));
+    expect(mockRequest).toHaveBeenCalledTimes(2);
   });
 });
