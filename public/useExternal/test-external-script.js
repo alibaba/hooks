@@ -1,5 +1,5 @@
 window.TEST_SCRIPT = {
-  start: function () {
+  start() {
     return 'Hello World';
   },
 };
