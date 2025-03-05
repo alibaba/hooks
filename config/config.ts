@@ -38,8 +38,8 @@ export default {
   manifest: {},
   hash: true,
   alias: {
-    ahooks: process.cwd() + '/packages/hooks/src/index.ts',
-    '@ahooksjs/use-url-state': process.cwd() + '/packages/use-url-state/src/index.ts',
+    ahooks: `${process.cwd()}/packages/hooks/src/index.ts`,
+    '@ahooksjs/use-url-state': `${process.cwd()}/packages/use-url-state/src/index.ts`,
   },
   resolve: {
     includes: ['docs', 'packages/hooks/src', 'packages/use-url-state'],
