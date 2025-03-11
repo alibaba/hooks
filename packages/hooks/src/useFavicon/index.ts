@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
 
 const ImgTypeMap = {
   SVG: 'image/svg+xml',
@@ -9,7 +9,7 @@ const ImgTypeMap = {
 
 type ImgTypes = keyof typeof ImgTypeMap;
 
-const useFavicon = (href: string) => {
+const useFavicon = (href: string, deps?: React.DependencyList) => {
   useEffect(() => {
     if (!href) return;
 
@@ -24,7 +24,7 @@ const useFavicon = (href: string) => {
     link.rel = 'shortcut icon';
 
     document.getElementsByTagName('head')[0].appendChild(link);
-  }, [href]);
+  }, [href, ...(deps ?? [])]);
 };
 
 export default useFavicon;
