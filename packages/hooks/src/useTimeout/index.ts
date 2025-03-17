@@ -4,7 +4,7 @@ import { isNumber } from '../utils';
 
 const useTimeout = (fn: () => void, delay?: number) => {
   const timerCallback = useMemoizedFn(fn);
-  const timerRef = useRef<NodeJS.Timer | null>(null);
+  const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const clear = useCallback(() => {
     if (timerRef.current) {

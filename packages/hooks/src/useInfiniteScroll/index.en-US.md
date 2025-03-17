@@ -36,8 +36,13 @@ In the infinite scrolling scenario, the most common case is to automatically loa
 
 - `options.target` specifies the parent element, The parent element needs to set a fixed height and support internal scrolling
 - `options.isNoMore` determines if there is no more data
+- `options.direction` determines the direction of scrolling, the default is `bottom`
 
+the scroll to bottom demo
 <code src="./demo/scroll.tsx" />
+
+the scroll to top demo
+<code src="./demo/scrollTop.tsx" />
 
 ## Data reset
 
@@ -69,6 +74,7 @@ const {
   data: TData;
   loading: boolean;
   loadingMore: boolean;
+  error?: Error;
   noMore: boolean;
   loadMore: () => void;
   loadMoreAsync: () => Promise<TData>;
@@ -100,6 +106,7 @@ const {
 | loading       | Is the first request in progress                                                                                                                  | `boolean`                |
 | loadingMore   | Is more data request in progress                                                                                                                  | `boolean`                |
 | noMore        | Whether there is no more data, it will take effect after configuring `options.isNoMore`                                                           | `boolean`                |
+| error         | Request error message                                                                                                                             | `Error`                  |
 | loadMore      | Load more data, it will automatically catch the exception, and handle it through `options.onError`                                                | `() => void`             |
 | loadMoreAsync | Load more data, which is consistent with the behavior of `loadMore`, but returns Promise, so you need to handle the exception yourself            | `() => Promise<TData>`   |
 | reload        | Load the first page of data, it will automatically catch the exception, and handle it through `options.onError`                                   | `() => void`             |
@@ -109,14 +116,15 @@ const {
 
 ### Options
 
-| Property   | Description                                                                                                                                                                                                                                          | Type                                                        | Default |
-| ---------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------- | ------- |
-| target     | specifies the parent element. If it exists, it will trigger the `loadMore` when scrolling to the bottom. Needs to work with `isNoMore` to know when there is no more data to load. **when target is document, it is defined as the entire viewport** | `() => Element` \| `Element` \| `MutableRefObject<Element>` | -       |
-| isNoMore   | determines if there is no more data, the input parameter is the latest merged `data`                                                                                                                                                                 | `(data?: TData) => boolean`                                 | -       |
-| threshold  | The pixel threshold to the bottom for the scrolling to load                                                                                                                                                                                          | `number`                                                    | `100`   |
-| reloadDeps | When the content of the array changes, `reload` will be triggered                                                                                                                                                                                    | `any[]`                                                     | -       |
-| manual     | <ul><li> The default is `false`. That is, the service is automatically executed during initialization. </li><li>If set to `true`, you need to manually call `run` or `runAsync` to trigger execution </li></ul>                                      | `boolean`                                                   | `false` |
-| onBefore   | Triggered before service execution                                                                                                                                                                                                                   | `() => void`                                                | -       |
-| onSuccess  | Triggered when service resolve                                                                                                                                                                                                                       | `(data: TData) => void`                                     | -       |
-| onError    | Triggered when service reject                                                                                                                                                                                                                        | `(e: Error) => void`                                        | -       |
-| onFinally  | Triggered when service execution is complete                                                                                                                                                                                                         | `(data?: TData, e?: Error) => void`                         | -       |
+| Property   | Description                                                                                                                                                                                                                                          | Type                                                        | Default  |
+| ---------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------- | -------- |
+| target     | specifies the parent element. If it exists, it will trigger the `loadMore` when scrolling to the bottom. Needs to work with `isNoMore` to know when there is no more data to load. **when target is document, it is defined as the entire viewport** | `() => Element` \| `Element` \| `MutableRefObject<Element>` | -        |
+| isNoMore   | determines if there is no more data, the input parameter is the latest merged `data`                                                                                                                                                                 | `(data?: TData) => boolean`                                 | -        |
+| threshold  | The pixel threshold to the bottom for the scrolling to load                                                                                                                                                                                          | `number`                                                    | `100`    |
+| direction  | The direction of the scrolling                                                                                                                                                                                                                       | `bottom` \|`top`                                            | `bottom` |
+| reloadDeps | When the content of the array changes, `reload` will be triggered                                                                                                                                                                                    | `any[]`                                                     | -        |
+| manual     | <ul><li> The default is `false`. That is, the service is automatically executed during initialization. </li><li>If set to `true`, you need to manually call `run` or `runAsync` to trigger execution </li></ul>                                      | `boolean`                                                   | `false`  |
+| onBefore   | Triggered before service execution                                                                                                                                                                                                                   | `() => void`                                                | -        |
+| onSuccess  | Triggered when service resolve                                                                                                                                                                                                                       | `(data: TData) => void`                                     | -        |
+| onError    | Triggered when service reject                                                                                                                                                                                                                        | `(e: Error) => void`                                        | -        |
+| onFinally  | Triggered when service execution is complete                                                                                                                                                                                                         | `(data?: TData, e?: Error) => void`                         | -        |

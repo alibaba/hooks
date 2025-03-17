@@ -12,6 +12,7 @@ type Options<T extends Target = Target> = {
   capture?: boolean;
   once?: boolean;
   passive?: boolean;
+  enable?: boolean;
 };
 
 function useEventListener<K extends keyof HTMLElementEventMap>(
@@ -34,13 +35,24 @@ function useEventListener<K extends keyof WindowEventMap>(
   handler: (ev: WindowEventMap[K]) => void,
   options?: Options<Window>,
 ): void;
-function useEventListener(eventName: string, handler: noop, options: Options): void;
+function useEventListener(
+  eventName: string | string[],
+  handler: (event: Event) => void,
+  options?: Options<Window>,
+): void;
+function useEventListener(eventName: string | string[], handler: noop, options: Options): void;
 
-function useEventListener(eventName: string, handler: noop, options: Options = {}) {
+function useEventListener(eventName: string | string[], handler: noop, options: Options = {}) {
+  const { enable = true } = options;
+
   const handlerRef = useLatest(handler);
 
   useEffectWithTarget(
     () => {
+      if (!enable) {
+        return;
+      }
+
       const targetElement = getTargetElement(options.target, window);
       if (!targetElement?.addEventListener) {
         return;
@@ -50,19 +62,25 @@ function useEventListener(eventName: string, handler: noop, options: Options = {
         return handlerRef.current(event);
       };
 
-      targetElement.addEventListener(eventName, eventListener, {
-        capture: options.capture,
-        once: options.once,
-        passive: options.passive,
+      const eventNameArray = Array.isArray(eventName) ? eventName : [eventName];
+
+      eventNameArray.forEach((event) => {
+        targetElement.addEventListener(event, eventListener, {
+          capture: options.capture,
+          once: options.once,
+          passive: options.passive,
+        });
       });
 
       return () => {
-        targetElement.removeEventListener(eventName, eventListener, {
-          capture: options.capture,
+        eventNameArray.forEach((event) => {
+          targetElement.removeEventListener(event, eventListener, {
+            capture: options.capture,
+          });
         });
       };
     },
-    [eventName, options.capture, options.once, options.passive],
+    [eventName, options.capture, options.once, options.passive, enable],
     options.target,
   );
 }

@@ -3,17 +3,20 @@ import useFullscreen from '../index';
 import type { Options } from '../index';
 import type { BasicTarget } from '../../utils/domTarget';
 
-const targetEl = document.createElement('div');
+let globalHook: any;
+let targetEl: any;
 const events = {
   fullscreenchange: new Set(),
   fullscreenerror: new Set(),
 };
-
-const setup = (target: BasicTarget, options?: Options) =>
-  renderHook(() => useFullscreen(target, options));
+const setup = (target: BasicTarget, options?: Options) => {
+  globalHook = renderHook(() => useFullscreen(target, options));
+  return globalHook;
+};
 
 describe('useFullscreen', () => {
   beforeEach(() => {
+    targetEl = document.createElement('div');
     document.body.appendChild(targetEl);
     jest.spyOn(HTMLElement.prototype, 'requestFullscreen').mockImplementation(() => {
       Object.defineProperty(document, 'fullscreenElement', {
@@ -42,6 +45,7 @@ describe('useFullscreen', () => {
   afterEach(() => {
     document.body.removeChild(targetEl);
     events.fullscreenchange.clear();
+    globalHook?.unmount();
   });
 
   afterAll(() => {
@@ -163,10 +167,11 @@ describe('useFullscreen', () => {
   });
 
   it('enterFullscreen should not work when target is not element', () => {
-    const { result } = setup(null);
+    const onEnter = jest.fn();
+    const { result } = setup(null, { onEnter });
     const { enterFullscreen } = result.current[1];
     enterFullscreen();
-    expect(events.fullscreenchange.size).toBe(0);
+    expect(onEnter).not.toBeCalled();
   });
 
   it('should remove event listener when unmount', () => {

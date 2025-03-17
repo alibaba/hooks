@@ -21,12 +21,14 @@ export default () => {
 
   const { selected, allSelected, isSelected, toggle, toggleAll, partiallySelected } = useSelections(
     list,
-    [1],
+    {
+      defaultSelected: [1],
+    },
   );
 
   return (
     <div>
-      <div>Selected : {selected.join(',')}</div>
+      <div>Selected: {selected.join(',')}</div>
       <div style={{ borderBottom: '1px solid #E9E9E9', padding: '10px 0' }}>
         <Checkbox checked={allSelected} onClick={toggleAll} indeterminate={partiallySelected}>
           Check all

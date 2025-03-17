@@ -9,6 +9,8 @@ export default {
     type: 'none',
     exclude: [],
   },
+  // https://github.com/alibaba/hooks/issues/2155
+  extraBabelIncludes: ['filter-obj'],
   extraBabelPlugins: [
     [
       'babel-plugin-import',
@@ -67,7 +69,7 @@ export default {
         ],
       },
       { title: '更新日志', path: 'https://github.com/alibaba/hooks/releases' },
-      { title: '国内镜像', path: 'https://ahooks.gitee.io/zh-CN' },
+      { title: '国内镜像', path: 'https://ahooks.pages.dev' },
       { title: 'GitHub', path: 'https://github.com/alibaba/hooks' },
     ],
     'en-US': [
@@ -87,7 +89,7 @@ export default {
         ],
       },
       { title: 'Releases', path: 'https://github.com/alibaba/hooks/releases' },
-      { title: '国内镜像', path: 'https://ahooks.gitee.io/zh-CN' },
+      { title: '国内镜像', path: 'https://ahooks.pages.dev' },
       { title: 'GitHub', path: 'https://github.com/alibaba/hooks' },
     ],
   },
@@ -180,20 +182,27 @@ export default {
   scripts: [
     'https://s4.cnzz.com/z_stat.php?id=1278992092&web_id=1278992092',
     `
-  const insertVersion = function(){
+  const insertVersion = function() {
+    const logo = document.querySelector('.__dumi-default-navbar-logo');
+    if (!logo) return;
     const dom = document.createElement('span');
     dom.id = 'logo-version';
     dom.innerHTML = '${packages.version}';
-    const logo = document.querySelector('.__dumi-default-navbar-logo');
-    if(logo){
-      logo.parentNode.insertBefore(dom, logo.nextSibling);
-    }else{
-      setTimeout(()=>{
-        insertVersion();
-      }, 1000)
+    logo.parentNode.insertBefore(dom, logo.nextSibling);
+  };
+  const observer = new MutationObserver((mutationsList, observer) => {
+    for (const mutation of mutationsList) {
+      if (mutation.type === 'childList') {
+        const logoVersion = document.querySelector('#logo-version');
+        if (logoVersion) {
+          observer.disconnect();
+        } else {
+          insertVersion();
+        }
+      }
     }
-  }
-  insertVersion();
+  });
+  observer.observe(document.body, { childList: true, subtree: true });
   `,
   ],
 };

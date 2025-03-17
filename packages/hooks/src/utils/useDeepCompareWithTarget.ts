@@ -13,9 +13,9 @@ const useDeepCompareEffectWithTarget = (
   const signalRef = useRef<number>(0);
 
   if (!depsEqual(deps, ref.current)) {
-    ref.current = deps;
     signalRef.current += 1;
   }
+  ref.current = deps;
 
   useEffectWithTarget(effect, [signalRef.current], target);
 };

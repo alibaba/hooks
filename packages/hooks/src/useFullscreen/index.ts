@@ -1,8 +1,7 @@
-import { useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import screenfull from 'screenfull';
 import useLatest from '../useLatest';
 import useMemoizedFn from '../useMemoizedFn';
-import useUnmount from '../useUnmount';
 import type { BasicTarget } from '../utils/domTarget';
 import { getTargetElement } from '../utils/domTarget';
 import { isBoolean } from '../utils';
@@ -26,7 +25,18 @@ const useFullscreen = (target: BasicTarget, options?: Options) => {
   const onExitRef = useLatest(onExit);
   const onEnterRef = useLatest(onEnter);
 
-  const [state, setState] = useState(false);
+  // The state of full screen may be changed by other scripts/components,
+  // so the initial value needs to be computed dynamically.
+  const [state, setState] = useState(getIsFullscreen);
+  const stateRef = useRef(getIsFullscreen());
+
+  function getIsFullscreen() {
+    return (
+      screenfull.isEnabled &&
+      !!screenfull.element &&
+      screenfull.element === getTargetElement(target)
+    );
+  }
 
   const invokeCallback = (fullscreen: boolean) => {
     if (fullscreen) {
@@ -36,23 +46,20 @@ const useFullscreen = (target: BasicTarget, options?: Options) => {
     }
   };
 
-  // Memoized, otherwise it will be listened multiple times.
-  const onScreenfullChange = useMemoizedFn(() => {
-    if (screenfull.isEnabled) {
-      const el = getTargetElement(target);
-
-      if (!screenfull.element) {
-        invokeCallback(false);
-        setState(false);
-        screenfull.off('change', onScreenfullChange);
-      } else {
-        const isFullscreen = screenfull.element === el;
-
-        invokeCallback(isFullscreen);
-        setState(isFullscreen);
-      }
+  const updateFullscreenState = (fullscreen: boolean) => {
+    // Prevent repeated calls when the state is not changed.
+    if (stateRef.current !== fullscreen) {
+      invokeCallback(fullscreen);
+      setState(fullscreen);
+      stateRef.current = fullscreen;
     }
-  });
+  };
+
+  const onScreenfullChange = () => {
+    const fullscreen = getIsFullscreen();
+
+    updateFullscreenState(fullscreen);
+  };
 
   const togglePageFullscreen = (fullscreen: boolean) => {
     const el = getTargetElement(target);
@@ -84,11 +91,7 @@ const useFullscreen = (target: BasicTarget, options?: Options) => {
       }
     }
 
-    // Prevent repeated calls when the state is not changed.
-    if (state !== fullscreen) {
-      invokeCallback(fullscreen);
-      setState(fullscreen);
-    }
+    updateFullscreenState(fullscreen);
   };
 
   const enterFullscreen = () => {
@@ -104,7 +107,6 @@ const useFullscreen = (target: BasicTarget, options?: Options) => {
     if (screenfull.isEnabled) {
       try {
         screenfull.request(el);
-        screenfull.on('change', onScreenfullChange);
       } catch (error) {
         console.error(error);
       }
@@ -134,11 +136,17 @@ const useFullscreen = (target: BasicTarget, options?: Options) => {
     }
   };
 
-  useUnmount(() => {
-    if (screenfull.isEnabled && !pageFullscreen) {
-      screenfull.off('change', onScreenfullChange);
+  useEffect(() => {
+    if (!screenfull.isEnabled || pageFullscreen) {
+      return;
     }
-  });
+
+    screenfull.on('change', onScreenfullChange);
+
+    return () => {
+      screenfull.off('change', onScreenfullChange);
+    };
+  }, []);
 
   return [
     state,

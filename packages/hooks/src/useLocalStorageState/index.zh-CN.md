@@ -21,31 +21,46 @@ nav:
 
 <code src="./demo/demo3.tsx" />
 
+### 将 state 与 localStorage 保持同步
+
+<code src="./demo/demo4.tsx" />
+
 ## API
 
 如果想从 localStorage 中删除这条数据，可以使用 `setState()` 或 `setState(undefined)` 。
 
 ```typescript
+type SetState<S> = S | ((prevState?: S) => S);
+
 interface Options<T> {
   defaultValue?: T | (() => T);
   serializer?: (value: T) => string;
   deserializer?: (value: string) => T;
+  onError?: (error: unknown) => void;
 }
 
 const [state, setState] = useLocalStorageState<T>(
   key: string,
   options: Options<T>
-): [T?, (value?: T | ((previousState: T) => T)) => void];
+): [T?, (value?: SetState<T>) => void];
 ```
+
+### Result
+
+| 参数     | 说明                   | 类型                            |
+| -------- | ---------------------- | ------------------------------- |
+| state    | 本地 `localStorage` 值 | `T`                             |
+| setState | 设置 `localStorage` 值 | `(value?: SetState<T>) => void` |
 
 ### Options
 
-| 参数         | 说明               | 类型                       | 默认值                        |
-| ------------ | ------------------ | -------------------------- | ----------------------------- |
-| defaultValue | 默认值             | `any \| (() => any)`       | -                             |
-| serializer   | 自定义序列化方法   | `(value: any) => string`   | `JSON.stringify`              |
-| deserializer | 自定义反序列化方法 | `(value: string) => any`   | `JSON.parse`                  |
-| onError      | 错误回调函数       | `(error: unknown) => void` | `(e) => { console.error(e) }` |
+| 参数                | 说明                                                                                                                              | 类型                       | 默认值                        |
+| ------------------- | --------------------------------------------------------------------------------------------------------------------------------- | -------------------------- | ----------------------------- |
+| defaultValue        | 默认值                                                                                                                            | `any \| (() => any)`       | -                             |
+| listenStorageChange | 是否监听存储变化。如果是 `true`，当存储值变化时，所有 `key` 相同的 `useLocalStorageState` 会同步状态，包括同一浏览器不同 tab 之间 | `boolean`                  | `false`                       |
+| serializer          | 自定义序列化方法                                                                                                                  | `(value: any) => string`   | `JSON.stringify`              |
+| deserializer        | 自定义反序列化方法                                                                                                                | `(value: string) => any`   | `JSON.parse`                  |
+| onError             | 错误回调函数                                                                                                                      | `(error: unknown) => void` | `(e) => { console.error(e) }` |
 
 ## 备注
 

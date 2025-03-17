@@ -1,5 +1,5 @@
 const getScrollTop = (el: Document | Element) => {
-  if (el === document || el === document.body) {
+  if (el === document || el === document.documentElement || el === document.body) {
     return Math.max(
       window.pageYOffset,
       document.documentElement.scrollTop,
