@@ -6,12 +6,7 @@
   "module": "./es/index.js",
   "types": "./lib/index.d.ts",
   "unpkg": "dist/ahooks-use-url-state.js",
-  "files": [
-    "dist",
-    "lib",
-    "es",
-    "package.json"
-  ],
+  "files": ["dist", "lib", "es", "package.json"],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/alibaba/hooks.git"
@@ -29,7 +24,7 @@
   "homepage": "https://github.com/alibaba/hooks",
   "peerDependencies": {
     "react": "^16.8.0 || ^17.0.0 || ^18.0.0",
-    "react-router": "^5.0.0 || ^6.0.0"
+    "react-router": "^5.0.0 || ^6.0.0 || ^7.0.0"
   },
   "dependencies": {
     "@babel/runtime": "^7.21.0",

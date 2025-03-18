@@ -40,7 +40,7 @@ const useUrlState = <S extends UrlState = UrlState>(
 
   // react-router v5
   const history = rc.useHistory?.();
-  // react-router v6
+  // react-router v6&v7
   const navigate = rc.useNavigate?.();
 
   const update = useUpdate();
