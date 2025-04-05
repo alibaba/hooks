@@ -56,6 +56,11 @@ jobs:
           key: ${{ runner.os }}-pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}
           restore-keys: |
             ${{ runner.os }}-pnpm-
+            
+      - name: Reset up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '16' 
 
       - name: Build documentation
         run: npm run build:doc
