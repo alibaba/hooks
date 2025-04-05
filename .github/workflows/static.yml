@@ -33,7 +33,10 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '18' 
-          
+
+      - name: Set NODE_OPTIONS environment variable
+        run: echo "NODE_OPTIONS=--openssl-legacy-provider" >> $GITHUB_ENV
+      
       - name: Setup pnpm
         run: |
             npm install --global corepack@latest
