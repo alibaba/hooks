@@ -35,10 +35,10 @@ jobs:
           node-version: '18' 
 
       - name: Install dependencies
-        run: npm install
+        run: pnpm install
 
       - name: Build documentation
-        run: npm run build:doc
+        run: pnpm run build:doc
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
