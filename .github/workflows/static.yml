@@ -33,9 +33,27 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '18' 
+          
+      - name: Setup pnpm
+        run: |
+            npm install --global corepack@latest
+            corepack enable
+            corepack prepare pnpm@latest --activate
+            echo "$(pnpm bin --global)" >> $GITHUB_PATH
+
       - name: Install dependencies
-        run: npm install
-        
+        run: pnpm install
+
+      - name: Cache pnpm dependencies
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.pnpm-store
+            node_modules
+          key: ${{ runner.os }}-pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-
+
       - name: Build documentation
         run: npm run build:doc
 
