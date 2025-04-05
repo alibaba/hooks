@@ -48,21 +48,8 @@ jobs:
           corepack prepare pnpm@latest --activate
           echo "$(pnpm bin --global)" >> $GITHUB_PATH
 
-      - name: Install dependencies
-        run: pnpm install
-
-      - name: Cache pnpm dependencies
-        uses: actions/cache@v3
-        with:
-          path: |
-            ~/.pnpm-store
-            node_modules
-          key: ${{ runner.os }}-pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}
-          restore-keys: |
-            ${{ runner.os }}-pnpm-
-
       - name: Build documentation
-        run: pnpm run build:doc
+        run: npm run build:doc
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
