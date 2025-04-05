@@ -32,22 +32,8 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '16' 
-
-      - name: Setup pnpm
-        run: |
-          npm install --global corepack@latest
-          corepack enable
-          corepack prepare pnpm@latest --activate
-          echo "$(pnpm bin --global)" >> $GITHUB_PATH
-
-      - name: Setup pnpm
-        run: |
-          npm install --global corepack@latest
-          corepack enable
-          corepack prepare pnpm@latest --activate
-          echo "$(pnpm bin --global)" >> $GITHUB_PATH
-
+          node-version: '18' 
+          
       - name: Build documentation
         run: npm run build:doc
 
