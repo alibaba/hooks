@@ -29,7 +29,7 @@ function useMemoizedFn<T extends noop>(fn: T) {
     };
   }
 
-  return memoizedFn.current as T;
+  return memoizedFn.current as PickFunction<T>;
 }
 
 export default useMemoizedFn;
