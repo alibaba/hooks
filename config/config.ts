@@ -45,6 +45,7 @@ export default {
   resolve: {
     includes: ['docs', 'packages/hooks/src', 'packages/use-url-state'],
   },
+  publicPath: '/',
   links: [
     {
       rel: 'stylesheet',
@@ -70,7 +71,7 @@ export default {
         ],
       },
       { title: '更新日志', path: 'https://github.com/alibaba/hooks/releases' },
-      { title: '国内镜像', path: 'https://ahooks.pages.dev' },
+      { title: '备用镜像', path: 'https://alibaba.github.io/hooks/' },
       { title: 'GitHub', path: 'https://github.com/alibaba/hooks' },
     ],
     'en-US': [
@@ -90,7 +91,7 @@ export default {
         ],
       },
       { title: 'Releases', path: 'https://github.com/alibaba/hooks/releases' },
-      { title: '国内镜像', path: 'https://ahooks.pages.dev' },
+      { title: '国内镜像', path: 'https://alibaba.github.io/hooks/' },
       { title: 'GitHub', path: 'https://github.com/alibaba/hooks' },
     ],
   },
