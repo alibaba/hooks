@@ -68,4 +68,3 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./dist  # 构建后的静态文件目录
-          publish_branch: gh-pages  # 部署到的分支
