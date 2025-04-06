@@ -37,6 +37,7 @@ export default {
   dynamicImport: {},
   manifest: {},
   hash: true,
+  publicPath: './',
   alias: {
     ahooks: process.cwd() + '/packages/hooks/src/index.ts',
     '@ahooksjs/use-url-state': process.cwd() + '/packages/use-url-state/src/index.ts',
@@ -49,7 +50,7 @@ export default {
       rel: 'stylesheet',
       href: 'https://unpkg.com/@alifd/theme-design-pro@0.6.2/dist/next-noreset.min.css',
     },
-    { rel: 'stylesheet', href: '/style.css' },
+    { rel: 'stylesheet', href: './style.css' },
   ],
   navs: {
     'zh-CN': [

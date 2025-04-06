@@ -9,7 +9,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write
   pages: write
   id-token: write
 
@@ -25,6 +25,8 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
+    env:
+      NODE_OPTIONS: --openssl-legacy-provider
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -33,6 +35,27 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '18' 
+      
+      - name: Setup pnpm
+        run: |
+            npm install --global corepack@latest
+            corepack enable
+            corepack prepare pnpm@latest --activate
+            echo "$(pnpm bin --global)" >> $GITHUB_PATH
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Cache pnpm dependencies
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.pnpm-store
+            node_modules
+          key: ${{ runner.os }}-pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-
+            
 
       - name: Build documentation
         run: npm run build:doc
@@ -40,11 +63,9 @@ jobs:
       - name: Setup Pages
         uses: actions/configure-pages@v5
 
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: 'dist'  # 指定上传dist目录
-
       - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./dist  # 构建后的静态文件目录
+          force_orphan: true
