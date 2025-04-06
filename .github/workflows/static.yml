@@ -9,7 +9,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: true
+  contents: write
   pages: write
   id-token: write
 
