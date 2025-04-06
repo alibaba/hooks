@@ -9,7 +9,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: true
   pages: write
   id-token: write
 
@@ -68,3 +68,4 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./dist  # 构建后的静态文件目录
+          force_orphan: true
