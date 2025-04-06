@@ -35,9 +35,6 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '18' 
-
-      - name: Set NODE_OPTIONS environment variable
-        run: echo "NODE_OPTIONS=--openssl-legacy-provider" >> $GITHUB_ENV
       
       - name: Setup pnpm
         run: |
@@ -69,7 +66,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: 'dist'  # 指定上传dist目录
+          path: dist/  # 指定上传dist目录
 
       - name: Deploy to GitHub Pages
         id: deployment
