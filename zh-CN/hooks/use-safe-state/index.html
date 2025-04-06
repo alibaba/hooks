@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no"
+    />
+    <link rel="shortcut icon" type="image/x-icon" href="/simple-logo.svg" />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/@alifd/theme-design-pro@0.6.2/dist/next-noreset.min.css"
+    />
+    <link rel="stylesheet" href="/hooks/style.css" />
+    <script>
+      window.routerBase = "/";
+    </script>
+    <script>
+      //! umi version: 3.5.42
+    </script>
+    <script>
+      !(function () {
+        var e =
+            navigator.cookieEnabled && void 0 !== window.localStorage
+              ? localStorage.getItem("dumi:prefers-color")
+              : "auto",
+          o = window.matchMedia("(prefers-color-scheme: dark)").matches,
+          t = ["light", "dark", "auto"];
+        document.documentElement.setAttribute(
+          "data-prefers-color",
+          e === t[2] ? (o ? t[1] : t[0]) : t.indexOf(e) > -1 ? e : t[0]
+        );
+      })();
+    </script>
+    <title>useSafeState - ahooks 3.0</title>
+  </head>
+  <body>
+    <div id="root"></div>
+
+    <script src="https://s4.cnzz.com/z_stat.php?id=1278992092&amp;web_id=1278992092"></script>
+    <script>
+      const insertVersion = function () {
+        const logo = document.querySelector(".__dumi-default-navbar-logo");
+        if (!logo) return;
+        const dom = document.createElement("span");
+        dom.id = "logo-version";
+        dom.innerHTML = "3.8.4";
+        logo.parentNode.insertBefore(dom, logo.nextSibling);
+      };
+      const observer = new MutationObserver((mutationsList, observer) => {
+        for (const mutation of mutationsList) {
+          if (mutation.type === "childList") {
+            const logoVersion = document.querySelector("#logo-version");
+            if (logoVersion) {
+              observer.disconnect();
+            } else {
+              insertVersion();
+            }
+          }
+        }
+      });
+      observer.observe(document.body, { childList: true, subtree: true });
+    </script>
+    <script src="/hooks/umi.51c9c199.js"></script>
+  </body>
+</html>
