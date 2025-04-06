@@ -5,25 +5,19 @@ import isOnline from './isOnline';
 
 type Listener = () => void;
 
-const listeners: Listener[] = [];
+const listeners = new Set<Listener>();
 
 function subscribe(listener: Listener) {
-  listeners.push(listener);
+  listeners.add(listener);
   return function unsubscribe() {
-    const index = listeners.indexOf(listener);
-    if (index > -1) {
-      listeners.splice(index, 1);
-    }
+    listeners.has(listener) && listeners.delete(listener);
   };
 }
 
 if (isBrowser) {
   const revalidate = () => {
     if (!isDocumentVisible() || !isOnline()) return;
-    for (let i = 0; i < listeners.length; i++) {
-      const listener = listeners[i];
-      listener();
-    }
+    listeners.forEach((listener) => listener());
   };
   window.addEventListener('visibilitychange', revalidate, false);
   window.addEventListener('focus', revalidate, false);
