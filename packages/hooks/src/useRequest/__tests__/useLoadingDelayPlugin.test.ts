@@ -1,7 +1,7 @@
 import { act, renderHook, waitFor } from '@testing-library/react';
 import type { RenderHookResult } from '@testing-library/react';
 import useRequest from '../index';
-import { request } from '../../utils/testingHelpers';
+import { request, sleep } from '../../utils/testingHelpers';
 
 describe('useLoadingDelayPlugin', () => {
   jest.useFakeTimers();
@@ -74,5 +74,31 @@ describe('useLoadingDelayPlugin', () => {
     });
 
     await waitFor(() => expect(hook.result.current.loading).toBe(true));
+  });
+
+  it.only('useLoadingDelayPlugin should update loading when loadingDelay is reset and refreshDeps is changed', async () => {
+    jest.useRealTimers();
+
+    let loadingDelay: number | null = 1500;
+
+    act(() => {
+      hook = setUp(request, {
+        loadingDelay,
+      });
+    });
+
+    expect(hook.result.current.loading).toBe(false);
+
+    loadingDelay = null;
+
+    hook.rerender({
+      loadingDelay,
+    });
+
+    await act(async () => {
+      await sleep(1600);
+    });
+
+    expect(hook.result.current.loading).toBe(false);
   });
 });
