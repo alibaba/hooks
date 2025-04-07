@@ -32,7 +32,7 @@ export default () => {
   return (
     <div>
       <p>Username: {data}</p>
-      <button onClick={refresh} type="button">
+      <button onClick={() => refresh()} type="button">
         Refresh
       </button>
     </div>
