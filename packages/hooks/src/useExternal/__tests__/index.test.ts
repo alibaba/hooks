@@ -1,4 +1,5 @@
-import { renderHook, act } from '@testing-library/react';
+import { renderHook } from '@testing-library/react';
+import { act } from 'react';
 import useExternal, { Options } from '../index';
 import { fireEvent } from '@testing-library/react';
 

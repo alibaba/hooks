@@ -1,5 +1,6 @@
-import { act, renderHook, waitFor } from '@testing-library/react';
+import { renderHook, waitFor } from '@testing-library/react';
 import type { RenderHookResult } from '@testing-library/react';
+import { act } from 'react';
 import useRequest from '../index';
 import { request } from '../../utils/testingHelpers';
 

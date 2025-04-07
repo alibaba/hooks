@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import { renderHook, act } from '@testing-library/react';
+import { renderHook } from '@testing-library/react';
+import { act } from 'react';
 import useInfiniteScroll from '..';
 import type { Data, Service, InfiniteScrollOptions } from '../types';
 import { sleep } from '../../utils/testingHelpers';

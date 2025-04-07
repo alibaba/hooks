@@ -1,4 +1,5 @@
-import { act, renderHook } from '@testing-library/react';
+import { renderHook } from '@testing-library/react';
+import { act } from 'react';
 import WS from 'jest-websocket-mock';
 import { sleep } from '../../utils/testingHelpers';
 import useWebSocket, { ReadyState } from '../index';

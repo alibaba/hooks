@@ -1,6 +1,6 @@
-import { renderHook, act } from '@testing-library/react';
+import { renderHook } from '@testing-library/react';
 import useWhyDidYouUpdate from '../index';
-import { useState } from 'react';
+import { useState, act } from 'react';
 
 describe('useWhyDidYouUpdate', () => {
   it('should work', () => {

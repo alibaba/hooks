@@ -1,6 +1,6 @@
-import { renderHook, act } from '@testing-library/react';
+import { renderHook } from '@testing-library/react';
 import useAsyncEffect from '../index';
-import { useState } from 'react';
+import { useState, act } from 'react';
 import { sleep } from '../../utils/testingHelpers';
 
 describe('useAsyncEffect', () => {

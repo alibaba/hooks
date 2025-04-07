@@ -1,4 +1,5 @@
-import { renderHook, act } from '@testing-library/react';
+import { renderHook } from '@testing-library/react';
+import { act } from 'react';
 import useFullscreen from '../index';
 import type { Options } from '../index';
 import type { BasicTarget } from '../../utils/domTarget';
