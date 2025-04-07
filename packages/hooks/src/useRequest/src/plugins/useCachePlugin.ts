@@ -75,7 +75,7 @@ const useCachePlugin: Plugin<any, any[]> = (
       }
 
       // If the data is fresh, stop request
-      if (staleTime === -1 || new Date().getTime() - cacheData.time <= staleTime) {
+      if (staleTime === -1 || new Date().getTime() - cacheData.time < staleTime) {
         return {
           loading: false,
           data: cacheData?.data,
