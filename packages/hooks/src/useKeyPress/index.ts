@@ -174,6 +174,12 @@ function genFilterKey(event: KeyboardEvent, keyFilter: KeyType, exactMatch: bool
 
   // 字符串依次判断是否有组合键
   const genArr = keyFilter.split('.');
+
+  // 如果只有一个则不需要判断是不是组合按键
+  if (genArr.length === 1){
+    return aliasKeyCodeMap[keyFilter.toLowerCase()]=== event.keyCode
+  }
+
   let genLen = 0;
 
   for (const key of genArr) {
