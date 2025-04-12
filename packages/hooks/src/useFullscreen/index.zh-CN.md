@@ -33,7 +33,7 @@ const [isFullscreen, {
   exitFullscreen,
   toggleFullscreen,
   isEnabled,
-}] = useFullScreen(
+}] = useFullscreen(
   target,
   options?: Options
 );
