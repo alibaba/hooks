@@ -35,12 +35,38 @@ const {
 } = useHistoryTravel<T>(initialValue?: T, maxLength: number = 0);
 ```
 
+```typescript
+const {
+  value,
+  setValue,
+  commit,
+  backLength,
+  forwardLength,
+  go,
+  back,
+  forward
+} = useHistoryTravel<T>(
+  initialValue?: T,
+  options?: {
+    maxLength?: number;
+    manual?: boolean;
+  });
+```
+
 ### Params
 
-| 参数         | 说明                                                      | 类型     | 默认值   |
-| ------------ | --------------------------------------------------------- | -------- | -------- |
-| initialValue | 可选，初始值                                              | `any`    | -        |
-| maxLength    | 可选，限制历史记录最大长度,超过最大长度后将删除第一个记录 | `number` | 0 不限制 |
+| 参数         | 说明                                                      | 类型      | 默认值   |
+| ------------ | --------------------------------------------------------- | --------- | -------- |
+| initialValue | 可选，初始值                                              | `any`     | -        |
+| maxLength    | 可选，限制历史记录最大长度,超过最大长度后将删除第一个记录 | `number`  | 0 不限制 |
+| options      | 可选，配置项                                              | `Options` | -        |
+
+### Options
+
+| 参数      | 说明                                                      | 类型      | 默认值   |
+| --------- | --------------------------------------------------------- | --------- | -------- |
+| maxLength | 可选，限制历史记录最大长度,超过最大长度后将删除第一个记录 | `number`  | 0 不限制 |
+| manual    | 可选，是否通过 commit 手动提交记录                        | `boolean` | false    |
 
 ### Result
 
@@ -48,6 +74,7 @@ const {
 | ------------- | --------------------------------------------- | ------------------------------- |
 | value         | 当前值                                        | `T`                             |
 | setValue      | 设置 value                                    | `(value: T) => void`            |
+| commit        | 手动提交记录                                  | `(value: T) => void`            |
 | backLength    | 可回退历史长度                                | `number`                        |
 | forwardLength | 可前进历史长度                                | `number`                        |
 | go            | 前进步数, step < 0 为后退， step > 0 时为前进 | `(step: number) => void`        |
