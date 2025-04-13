@@ -135,12 +135,15 @@ export default class Fetch<TData, TParams extends any[]> {
     });
   }
 
-  cancel() {
+  cancel(isUnmount = false) {
     this.count += 1;
     this.setState({
       loading: false,
     });
 
+    if(!isUnmount){
+      this.options.onCancel?.();
+    }
     this.runPluginHandler('onCancel');
   }
 
