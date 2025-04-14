@@ -23,10 +23,11 @@ const { data } = useRequest(getUsername, {
 
 ### Options
 
-| 参数                 | 说明                                         | 类型      | 默认值  |
-| -------------------- | -------------------------------------------- | --------- | ------- |
-| refreshOnWindowFocus | 在屏幕重新获取焦点或重新显示时，重新发起请求 | `boolean` | `false` |
-| focusTimespan        | 重新请求间隔，单位为毫秒                     | `number`  | `5000`  |
+| 参数                 | 说明                                         | 类型                              | 默认值                        |
+| -------------------- | -------------------------------------------- | --------------------------------- | ----------------------------- |
+| refreshOnWindowFocus | 在屏幕重新获取焦点或重新显示时，重新发起请求 | `boolean`                         | `false`                       |
+| focusTimespan        | 重新请求间隔，单位为毫秒                     | `number`                          | `5000`                        |
+| focusEvents          | 触发重新请求的事件                           | (`visibilitychange` \| `focus`)[] | ['visibilitychange', 'focus'] |
 
 ## 备注
 
