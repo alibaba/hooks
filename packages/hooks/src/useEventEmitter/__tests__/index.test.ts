@@ -13,6 +13,9 @@ describe('useEventEmitter', () => {
       event$.useSubscription((val) => {
         setCount((c) => c + val + 10);
       });
+      event$.useSubscription(async (val) => {
+        setCount((c) => c + val + 10);
+      }, 'async');
       return {
         event$,
         count,
@@ -29,5 +32,17 @@ describe('useEventEmitter', () => {
       hook.result.current.event$.emit(2);
     });
     expect(hook.result.current.count).toBe(26);
+  });
+
+  it('asyncEmit and subscribe should work', async () => {
+    const hook = setUp();
+    await act(async () => {
+      await hook.result.current.event$.asyncEmit(1, 'async');
+    });
+    expect(hook.result.current.count).toBe(11);
+    await act(async () => {
+      await hook.result.current.event$.asyncEmit(2, 'async');
+    });
+    expect(hook.result.current.count).toBe(23);
   });
 });
