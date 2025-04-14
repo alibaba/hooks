@@ -13,6 +13,7 @@ export default class Fetch<TData, TParams extends any[]> {
     params: undefined,
     data: undefined,
     error: undefined,
+    polling: undefined,
   };
 
   constructor(
@@ -86,15 +87,15 @@ export default class Fetch<TData, TParams extends any[]> {
       }
 
       // const formattedResult = this.options.formatResultRef.current ? this.options.formatResultRef.current(res) : res;
+      this.options.onSuccess?.(res, params);
 
+      const { polling } = this.runPluginHandler('onSuccess', res, params);
       this.setState({
         data: res,
         error: undefined,
         loading: false,
+        polling,
       });
-
-      this.options.onSuccess?.(res, params);
-      this.runPluginHandler('onSuccess', res, params);
 
       this.options.onFinally?.(params, res, undefined);
 
@@ -109,13 +110,14 @@ export default class Fetch<TData, TParams extends any[]> {
         return new Promise(() => {});
       }
 
+      this.options.onError?.(error, params);
+
+      const { polling } = this.runPluginHandler('onError', error, params);
       this.setState({
         error,
         loading: false,
+        polling,
       });
-
-      this.options.onError?.(error, params);
-      this.runPluginHandler('onError', error, params);
 
       this.options.onFinally?.(params, undefined, error);
 
@@ -137,11 +139,12 @@ export default class Fetch<TData, TParams extends any[]> {
 
   cancel() {
     this.count += 1;
+
+    const { polling } = this.runPluginHandler('onCancel');
     this.setState({
       loading: false,
+      polling,
     });
-
-    this.runPluginHandler('onCancel');
   }
 
   refresh() {
