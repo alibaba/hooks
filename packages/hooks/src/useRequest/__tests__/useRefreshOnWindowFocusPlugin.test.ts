@@ -2,6 +2,7 @@ import { act, renderHook, waitFor } from '@testing-library/react';
 import { fireEvent } from '@testing-library/react';
 import useRequest from '../index';
 import { request } from '../../utils/testingHelpers';
+import { Trigger } from '../src/types';
 
 describe('useRefreshOnWindowFocusPlugin', () => {
   jest.useFakeTimers();
@@ -9,10 +10,15 @@ describe('useRefreshOnWindowFocusPlugin', () => {
   const setUp = (service, options) => renderHook((o) => useRequest(service, o || options));
 
   let hook;
-  it('useRefreshOnWindowFocusPlugin should work', async () => {
+  it('useRefreshOnWindowFocusPlugin should work, trigger should be correct', async () => {
+    let triggerValue;
+    const beforeCallback = (_, trigger) => {
+      triggerValue = trigger;
+    };
     act(() => {
       hook = setUp(request, {
         refreshOnWindowFocus: true,
+        onBefore: beforeCallback,
         focusTimespan: 5000,
       });
     });
@@ -25,7 +31,7 @@ describe('useRefreshOnWindowFocusPlugin', () => {
       fireEvent.focus(window);
     });
     expect(hook.result.current.loading).toBe(true);
-
+    expect(triggerValue).toBe(Trigger.REFRESH_ON_WINDOW_FOCUS);
     act(() => {
       jest.advanceTimersByTime(2000);
     });

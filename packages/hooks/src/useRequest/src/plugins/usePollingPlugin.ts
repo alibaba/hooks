@@ -3,6 +3,7 @@ import useUpdateEffect from '../../../useUpdateEffect';
 import type { Plugin, Timeout } from '../types';
 import isDocumentVisible from '../utils/isDocumentVisible';
 import subscribeReVisible from '../utils/subscribeReVisible';
+import { Trigger } from '../types';
 
 const usePollingPlugin: Plugin<any, any[]> = (
   fetchInstance,
@@ -46,6 +47,7 @@ const usePollingPlugin: Plugin<any, any[]> = (
         (pollingErrorRetryCount !== -1 && countRef.current <= pollingErrorRetryCount)
       ) {
         timerRef.current = setTimeout(() => {
+          fetchInstance.setTrigger(Trigger.POLLING);
           // if pollingWhenHidden = false && document is hidden, then stop polling and subscribe revisible
           if (!pollingWhenHidden && !isDocumentVisible()) {
             unsubscribeRef.current = subscribeReVisible(() => {

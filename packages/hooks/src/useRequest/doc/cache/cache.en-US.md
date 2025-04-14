@@ -25,6 +25,7 @@ In the following example, we set the `cacheKey`. When the component is loaded fo
 
 By setting `staleTime`, we can specify the data retention time, during which time the request will not be re-run. The following example sets a fresh time of 5s, you can experience the effect by clicking the button
 
+When you need to force new data, you can configure `skipStaleTime` to `true` in `refresh`, which will skip `staleTime` to refresh
 <code src="./demo/staleTime.tsx" />
 
 ### Data sharing
