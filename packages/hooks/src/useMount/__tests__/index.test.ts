@@ -3,16 +3,22 @@ import useMount from '../index';
 
 describe('useMount', () => {
   it('test mount', async () => {
+    const destructor = jest.fn();
     const fn = jest.fn();
+    fn.mockReturnValue(destructor);
     const hook = renderHook(() => useMount(fn));
-    expect(fn).toBeCalledTimes(1);
+    expect(fn).toHaveBeenCalledTimes(1);
+    expect(destructor).toHaveBeenCalledTimes(0);
     hook.rerender();
-    expect(fn).toBeCalledTimes(1);
+    expect(fn).toHaveBeenCalledTimes(1);
+    expect(destructor).toHaveBeenCalledTimes(0);
     hook.unmount();
-    expect(fn).toBeCalledTimes(1);
+    expect(fn).toHaveBeenCalledTimes(1);
+    expect(destructor).toHaveBeenCalledTimes(1);
 
     renderHook(() => useMount(fn)).unmount();
-    expect(fn).toBeCalledTimes(2);
+    expect(fn).toHaveBeenCalledTimes(2);
+    expect(destructor).toHaveBeenCalledTimes(2);
   });
 
   // it('should output error when fn is not a function', () => {
