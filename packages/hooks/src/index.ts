@@ -76,6 +76,7 @@ import useWebSocket from './useWebSocket';
 import useWhyDidYouUpdate from './useWhyDidYouUpdate';
 import useMutationObserver from './useMutationObserver';
 import useTheme from './useTheme';
+import useStickyFixed from './useStickyFixed';
 
 export {
   useRequest,
@@ -158,4 +159,5 @@ export {
   useResetState,
   useMutationObserver,
   useTheme,
+  useStickyFixed,
 };
