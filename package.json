@@ -78,8 +78,6 @@
     "webpack-merge": "^4.2.2"
   },
   "commitlint": {
-    "extends": [
-      "@commitlint/config-conventional"
-    ]
+    "extends": ["@commitlint/config-conventional"]
   }
 }

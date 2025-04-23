@@ -94,7 +94,7 @@ describe('useStorageState', () => {
 
     act(() => hook.result.current.setState('value'));
     expect(hook.result.current.state).toBe('value');
-    act(() => hook.result.current.setState(null));
+    act(() => hook.result.current.setState(undefined));
     expect(hook.result.current.state).toBeUndefined();
   });
 });
