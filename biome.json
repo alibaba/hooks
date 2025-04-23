@@ -1,8 +1,7 @@
 {
   "$schema": "./node_modules/@biomejs/biome/configuration_schema.json",
   "files": {
-    "ignoreUnknown": true,
-    "include": ["./**/*.{js,jsx,ts,tsx,json,yml,yaml}"]
+    "ignoreUnknown": true
   },
   "vcs": {
     "enabled": true,
