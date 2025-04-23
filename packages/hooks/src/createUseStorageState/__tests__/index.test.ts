@@ -5,7 +5,7 @@ import { createUseStorageState } from '../index';
 class TestStorage implements Storage {
   [name: string]: any;
 
-  length: number = 0;
+  length = 0;
 
   _values = new Map<string, string>();
 
@@ -94,7 +94,7 @@ describe('useStorageState', () => {
 
     act(() => hook.result.current.setState('value'));
     expect(hook.result.current.state).toBe('value');
-    act(() => hook.result.current.setState());
+    act(() => hook.result.current.setState(null));
     expect(hook.result.current.state).toBeUndefined();
   });
 });
