@@ -33,6 +33,10 @@ nav:
 
 <code src="./demo/demo6.tsx" />
 
+### 支持事件监听选项
+
+<code src="./demo/demo7.tsx" />
+
 ## API
 
 ```typescript
@@ -42,7 +46,8 @@ type DocumentEventKey = keyof DocumentEventMap;
 useClickAway<T extends Event = Event>(
   onClickAway: (event: T) => void,
   target: Target | Target[],
-  eventName?: DocumentEventKey | DocumentEventKey[]
+  eventName?: DocumentEventKey | DocumentEventKey[],
+  options?: boolean | AddEventListenerOptions
 );
 ```
 
@@ -53,3 +58,4 @@ useClickAway<T extends Event = Event>(
 | onClickAway | 触发函数                     | `(event: T) => void`                       | -       |
 | target      | DOM 节点或者 Ref，支持数组   | `Target` \| `Target[]`                     | -       |
 | eventName   | 指定需要监听的事件，支持数组 | `DocumentEventKey` \| `DocumentEventKey[]` | `click` |
+| options     | 事件监听选项                 | `boolean` \| `AddEventListenerOptions`      | `false` |

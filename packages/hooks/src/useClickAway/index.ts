@@ -10,8 +10,10 @@ export default function useClickAway<T extends Event = Event>(
   onClickAway: (event: T) => void,
   target: BasicTarget | BasicTarget[],
   eventName: DocumentEventKey | DocumentEventKey[] = 'click',
+  options?: boolean | AddEventListenerOptions,
 ) {
   const onClickAwayRef = useLatest(onClickAway);
+  const optionsRef = useLatest(options);
 
   useEffectWithTarget(
     () => {
@@ -32,10 +34,14 @@ export default function useClickAway<T extends Event = Event>(
 
       const eventNames = Array.isArray(eventName) ? eventName : [eventName];
 
-      eventNames.forEach((event) => documentOrShadow.addEventListener(event, handler));
+      eventNames.forEach((event) =>
+        documentOrShadow.addEventListener(event, handler, optionsRef.current),
+      );
 
       return () => {
-        eventNames.forEach((event) => documentOrShadow.removeEventListener(event, handler));
+        eventNames.forEach((event) =>
+          documentOrShadow.removeEventListener(event, handler, optionsRef.current),
+        );
       };
     },
     Array.isArray(eventName) ? eventName : [eventName],

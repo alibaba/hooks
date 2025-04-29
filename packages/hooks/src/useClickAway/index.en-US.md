@@ -33,6 +33,10 @@ Listen for click events outside the target element.
 
 <code src="./demo/demo6.tsx"/>
 
+### Support event listener options
+
+<code src="./demo/demo7.tsx"/>
+
 ## API
 
 ```typescript
@@ -42,7 +46,8 @@ type DocumentEventKey = keyof DocumentEventMap;
 useClickAway<T extends Event = Event>(
   onClickAway: (event: T) => void,
   target: Target | Target[],
-  eventName?: DocumentEventKey | DocumentEventKey[]
+  eventName?: DocumentEventKey | DocumentEventKey[],
+  options?: boolean | AddEventListenerOptions
 );
 ```
 
@@ -53,3 +58,4 @@ useClickAway<T extends Event = Event>(
 | onClickAway | Trigger Function                            | `(event: T) => void`                       | -       |
 | target      | DOM elements or Ref, support array          | `Target` \| `Target[]`                     | -       |
 | eventName   | Set the event to be listened, support array | `DocumentEventKey` \| `DocumentEventKey[]` | `click` |
+| options     | Event listener options                       | `boolean` \| `AddEventListenerOptions`      | `false` |
