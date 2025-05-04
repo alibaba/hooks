@@ -1,14 +1,9 @@
-import React from "react";
-import type { Dispatch, SetStateAction } from "react";
-import useUnmount from "../useUnmount";
+import React from 'react';
+import type { Dispatch, SetStateAction } from 'react';
+import useUnmount from '../useUnmount';
 
-function useRafState<S>(
-  initialState: S | (() => S)
-): [S, Dispatch<SetStateAction<S>>];
-function useRafState<S = undefined>(): [
-  S | undefined,
-  Dispatch<SetStateAction<S | undefined>>
-];
+function useRafState<S>(initialState: S | (() => S)): [S, Dispatch<SetStateAction<S>>];
+function useRafState<S = undefined>(): [S | undefined, Dispatch<SetStateAction<S | undefined>>];
 
 function useRafState<S>(initialState?: S | (() => S)) {
   const ref = React.useRef(0);

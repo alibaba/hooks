@@ -1,9 +1,9 @@
-import { renderHook, act } from "@testing-library/react";
-import { useState } from "react";
-import useDeepCompareEffect from "../index";
+import { renderHook, act } from '@testing-library/react';
+import { useState } from 'react';
+import useDeepCompareEffect from '../index';
 
-describe("useDeepCompareEffect", () => {
-  it("test deep compare", async () => {
+describe('useDeepCompareEffect', () => {
+  it('test deep compare', async () => {
     const hook = renderHook(() => {
       const [x, setX] = useState(0);
       const [y, setY] = useState({});
