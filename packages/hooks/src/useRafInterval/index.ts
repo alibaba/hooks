@@ -28,11 +28,11 @@ const setRafInterval = (callback: () => void, delay: number = 0): Handle => {
   return handle;
 };
 
-function cancelAnimationFrameIsNotDefined(
+const cancelAnimationFrameIsNotDefined = (
   t: any
-): t is ReturnType<typeof setInterval> {
-  return typeof cancelAnimationFrame === typeof undefined;
-}
+): t is ReturnType<typeof setTimeout> => {
+  return typeof cancelAnimationFrame === "undefined";
+};
 
 const clearRafInterval = (handle: Handle) => {
   if (cancelAnimationFrameIsNotDefined(handle.id)) {

@@ -1,13 +1,13 @@
-import { useEffect, useState } from "react";
-import type { DependencyList, EffectCallback } from "react";
-import type { ThrottleOptions } from "../useThrottle/throttleOptions";
-import useThrottleFn from "../useThrottleFn";
-import useUpdateEffect from "../useUpdateEffect";
+import { useEffect, useState } from 'react';
+import type { DependencyList, EffectCallback } from 'react';
+import type { ThrottleOptions } from '../useThrottle/throttleOptions';
+import useThrottleFn from '../useThrottleFn';
+import useUpdateEffect from '../useUpdateEffect';
 
 function useThrottleEffect(
   effect: EffectCallback,
   deps?: DependencyList,
-  options?: ThrottleOptions
+  options?: ThrottleOptions,
 ) {
   const [flag, setFlag] = useState({});
 

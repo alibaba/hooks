@@ -1,7 +1,7 @@
-import { useRef, useState } from "react";
-import type { BasicTarget } from "../utils/domTarget";
-import { getTargetElement } from "../utils/domTarget";
-import useEffectWithTarget from "../utils/useEffectWithTarget";
+import { useRef, useState } from 'react';
+import type { BasicTarget } from '../utils/domTarget';
+import { getTargetElement } from '../utils/domTarget';
+import useEffectWithTarget from '../utils/useEffectWithTarget';
 
 interface Rect {
   top: number;
@@ -25,7 +25,7 @@ const initRect: Rect = {
 };
 
 const initState: State = {
-  text: "",
+  text: '',
   ...initRect,
 };
 
@@ -38,8 +38,7 @@ function getRectFromSelection(selection: Selection | null): Rect {
     return initRect;
   }
   const range = selection.getRangeAt(0);
-  const { height, width, top, left, right, bottom } =
-    range.getBoundingClientRect();
+  const { height, width, top, left, right, bottom } = range.getBoundingClientRect();
   return {
     height,
     width,
@@ -66,13 +65,13 @@ function useTextSelection(target?: BasicTarget<Document | Element>): State {
 
       const mouseupHandler = () => {
         let selObj: Selection | null = null;
-        let text = "";
+        let text = '';
         let rect = initRect;
         if (!window.getSelection) {
           return;
         }
         selObj = window.getSelection();
-        text = selObj ? selObj.toString() : "";
+        text = selObj ? selObj.toString() : '';
         if (text && isInRangeRef.current) {
           rect = getRectFromSelection(selObj);
           setState({ ...state, text, ...rect });
@@ -100,17 +99,17 @@ function useTextSelection(target?: BasicTarget<Document | Element>): State {
         isInRangeRef.current = el.contains(e.target);
       };
 
-      el.addEventListener("mouseup", mouseupHandler);
+      el.addEventListener('mouseup', mouseupHandler);
 
-      document.addEventListener("mousedown", mousedownHandler);
+      document.addEventListener('mousedown', mousedownHandler);
 
       return () => {
-        el.removeEventListener("mouseup", mouseupHandler);
-        document.removeEventListener("mousedown", mousedownHandler);
+        el.removeEventListener('mouseup', mouseupHandler);
+        document.removeEventListener('mousedown', mousedownHandler);
       };
     },
     [],
-    target
+    target,
   );
 
   return state;

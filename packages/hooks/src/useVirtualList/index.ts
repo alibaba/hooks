@@ -1,13 +1,13 @@
-import { useEffect, useMemo, useState, useRef } from "react";
-import type { CSSProperties } from "react";
-import useEventListener from "../useEventListener";
-import useLatest from "../useLatest";
-import useMemoizedFn from "../useMemoizedFn";
-import useSize from "../useSize";
-import { getTargetElement } from "../utils/domTarget";
-import type { BasicTarget } from "../utils/domTarget";
-import { isNumber } from "../utils";
-import useUpdateEffect from "../useUpdateEffect";
+import { useEffect, useMemo, useState, useRef } from 'react';
+import type { CSSProperties } from 'react';
+import useEventListener from '../useEventListener';
+import useLatest from '../useLatest';
+import useMemoizedFn from '../useMemoizedFn';
+import useSize from '../useSize';
+import { getTargetElement } from '../utils/domTarget';
+import type { BasicTarget } from '../utils/domTarget';
+import { isNumber } from '../utils';
+import useUpdateEffect from '../useUpdateEffect';
 
 type ItemHeight<T> = (index: number, data: T) => number;
 
@@ -27,9 +27,7 @@ const useVirtualList = <T = any>(list: T[], options: Options<T>) => {
 
   const scrollTriggerByScrollToFunc = useRef(false);
 
-  const [targetList, setTargetList] = useState<{ index: number; data: T }[]>(
-    []
-  );
+  const [targetList, setTargetList] = useState<{ index: number; data: T }[]>([]);
 
   const [wrapperStyle, setWrapperStyle] = useState<CSSProperties>({});
 
@@ -76,11 +74,7 @@ const useVirtualList = <T = any>(list: T[], options: Options<T>) => {
     }
     const height = list
       .slice(0, index)
-      .reduce<number>(
-        (sum, _, i) =>
-          sum + (itemHeightRef.current as ItemHeight<T>)(i, list[i]),
-        0
-      );
+      .reduce<number>((sum, _, i) => sum + (itemHeightRef.current as ItemHeight<T>)(i, list[i]), 0);
     return height;
   };
 
@@ -89,9 +83,8 @@ const useVirtualList = <T = any>(list: T[], options: Options<T>) => {
       return list.length * itemHeightRef.current;
     }
     return list.reduce<number>(
-      (sum, _, index) =>
-        sum + (itemHeightRef.current as ItemHeight<T>)(index, list[index]),
-      0
+      (sum, _, index) => sum + (itemHeightRef.current as ItemHeight<T>)(index, list[index]),
+      0,
     );
   }, [list]);
 
@@ -110,15 +103,15 @@ const useVirtualList = <T = any>(list: T[], options: Options<T>) => {
       const offsetTop = getDistanceTop(start);
 
       setWrapperStyle({
-        height: totalHeight - offsetTop + "px",
-        marginTop: offsetTop + "px",
+        height: totalHeight - offsetTop + 'px',
+        marginTop: offsetTop + 'px',
       });
 
       setTargetList(
         list.slice(start, end).map((ele, index) => ({
           data: ele,
           index: index + start,
-        }))
+        })),
       );
     }
   };
@@ -126,9 +119,7 @@ const useVirtualList = <T = any>(list: T[], options: Options<T>) => {
   useUpdateEffect(() => {
     const wrapper = getTargetElement(wrapperTarget) as HTMLElement;
     if (wrapper) {
-      Object.keys(wrapperStyle).forEach(
-        (key) => (wrapper.style[key] = wrapperStyle[key])
-      );
+      Object.keys(wrapperStyle).forEach((key) => (wrapper.style[key] = wrapperStyle[key]));
     }
   }, [wrapperStyle]);
 
@@ -140,7 +131,7 @@ const useVirtualList = <T = any>(list: T[], options: Options<T>) => {
   }, [size?.width, size?.height, list]);
 
   useEventListener(
-    "scroll",
+    'scroll',
     (e) => {
       if (scrollTriggerByScrollToFunc.current) {
         scrollTriggerByScrollToFunc.current = false;
@@ -151,7 +142,7 @@ const useVirtualList = <T = any>(list: T[], options: Options<T>) => {
     },
     {
       target: containerTarget,
-    }
+    },
   );
 
   const scrollTo = (index: number) => {

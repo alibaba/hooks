@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef } from 'react';
 
 export type IProps = Record<string, any>;
 
@@ -20,7 +20,7 @@ function useWhyDidYouUpdate(componentName: string, props: IProps) {
       });
 
       if (Object.keys(changedProps).length) {
-        console.log("[why-did-you-update]", componentName, changedProps);
+        console.log('[why-did-you-update]', componentName, changedProps);
       }
     }
 

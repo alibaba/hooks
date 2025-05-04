@@ -1,5 +1,5 @@
-import type { BasicTarget } from "../utils/domTarget";
-import { getTargetElement } from "../utils/domTarget";
+import type { BasicTarget } from '../utils/domTarget';
+import { getTargetElement } from '../utils/domTarget';
 
 declare type TargetValue<T> = T | undefined | null;
 
@@ -23,9 +23,7 @@ const getShadow = (node: TargetValue<Element>) => {
   return node.getRootNode();
 };
 
-const getDocumentOrShadow = (
-  target: BasicTarget | BasicTarget[]
-): Document | Node => {
+const getDocumentOrShadow = (target: BasicTarget | BasicTarget[]): Document | Node => {
   if (!target || !document.getRootNode) {
     return document;
   }

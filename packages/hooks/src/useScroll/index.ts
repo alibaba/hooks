@@ -1,8 +1,8 @@
-import useRafState from "../useRafState";
-import useLatest from "../useLatest";
-import type { BasicTarget } from "../utils/domTarget";
-import { getTargetElement } from "../utils/domTarget";
-import useEffectWithTarget from "../utils/useEffectWithTarget";
+import useRafState from '../useRafState';
+import useLatest from '../useLatest';
+import type { BasicTarget } from '../utils/domTarget';
+import { getTargetElement } from '../utils/domTarget';
+import useEffectWithTarget from '../utils/useEffectWithTarget';
 
 type Position = { left: number; top: number };
 
@@ -11,7 +11,7 @@ export type ScrollListenController = (val: Position) => boolean;
 
 function useScroll(
   target?: Target,
-  shouldUpdate: ScrollListenController = () => true
+  shouldUpdate: ScrollListenController = () => true,
 ): Position | undefined {
   const [position, setPosition] = useRafState<Position>();
 
@@ -39,12 +39,12 @@ function useScroll(
               left: Math.max(
                 window.pageXOffset,
                 document.documentElement.scrollLeft,
-                document.body.scrollLeft
+                document.body.scrollLeft,
               ),
               top: Math.max(
                 window.pageYOffset,
                 document.documentElement.scrollTop,
-                document.body.scrollTop
+                document.body.scrollTop,
               ),
             };
           }
@@ -61,13 +61,13 @@ function useScroll(
 
       updatePosition();
 
-      el.addEventListener("scroll", updatePosition);
+      el.addEventListener('scroll', updatePosition);
       return () => {
-        el.removeEventListener("scroll", updatePosition);
+        el.removeEventListener('scroll', updatePosition);
       };
     },
     [],
-    target
+    target,
   );
 
   return position;

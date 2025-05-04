@@ -1,8 +1,6 @@
-import { useRef, useCallback } from "react";
+import { useRef, useCallback } from 'react';
 
-function useLockFn<P extends any[] = any[], V = any>(
-  fn: (...args: P) => Promise<V>
-) {
+function useLockFn<P extends any[] = any[], V = any>(fn: (...args: P) => Promise<V>) {
   const lockRef = useRef(false);
 
   return useCallback(
@@ -20,7 +18,7 @@ function useLockFn<P extends any[] = any[], V = any>(
         lockRef.current = false;
       }
     },
-    [fn]
+    [fn],
   );
 }
 

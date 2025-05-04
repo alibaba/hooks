@@ -1,11 +1,11 @@
-import type { DebouncedFunc, ThrottleSettings } from "lodash";
-import throttle from "lodash/throttle";
-import { useEffect, useRef } from "react";
-import type { Plugin } from "../types";
+import type { DebouncedFunc, ThrottleSettings } from 'lodash';
+import throttle from 'lodash/throttle';
+import { useEffect, useRef } from 'react';
+import type { Plugin } from '../types';
 
 const useThrottlePlugin: Plugin<any, any[]> = (
   fetchInstance,
-  { throttleWait, throttleLeading, throttleTrailing }
+  { throttleWait, throttleLeading, throttleTrailing },
 ) => {
   const throttledRef = useRef<DebouncedFunc<any>>(null);
 
@@ -26,7 +26,7 @@ const useThrottlePlugin: Plugin<any, any[]> = (
           callback();
         },
         throttleWait,
-        options
+        options,
       );
 
       // throttle runAsync should be promise

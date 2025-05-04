@@ -1,5 +1,5 @@
-import { useState } from "react";
-import useMemoizedFn from "../useMemoizedFn";
+import { useState } from 'react';
+import useMemoizedFn from '../useMemoizedFn';
 
 function useSet<K>(initialValue?: Iterable<K>) {
   const getInitValue = () => new Set(initialValue);

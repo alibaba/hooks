@@ -31,11 +31,13 @@ const setRafTimeout = (callback: () => void, delay: number = 0): Handle => {
   return handle;
 };
 
-function cancelAnimationFrameIsNotDefined(t: any): t is NodeJS.Timer {
-  return typeof cancelAnimationFrame === typeof undefined;
-}
+const cancelAnimationFrameIsNotDefined = (
+  t: any
+): t is ReturnType<typeof setTimeout> => {
+  return typeof cancelAnimationFrame === "undefined";
+};
 
-const clearRafTimeout = function (handle: Handle) {
+const clearRafTimeout = (handle: Handle) => {
   if (cancelAnimationFrameIsNotDefined(handle.id)) {
     return clearTimeout(handle.id);
   }

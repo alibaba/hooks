@@ -1,17 +1,11 @@
-import { useRef } from "react";
-import useUpdateEffect from "../../../useUpdateEffect";
-import type { Plugin } from "../types";
+import { useRef } from 'react';
+import useUpdateEffect from '../../../useUpdateEffect';
+import type { Plugin } from '../types';
 
 // support refreshDeps & ready
 const useAutoRunPlugin: Plugin<any, any[]> = (
   fetchInstance,
-  {
-    manual,
-    ready = true,
-    defaultParams = [],
-    refreshDeps = [],
-    refreshDepsAction,
-  }
+  { manual, ready = true, defaultParams = [], refreshDeps = [], refreshDepsAction },
 ) => {
   const hasAutoRun = useRef(false);
   hasAutoRun.current = false;

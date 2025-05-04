@@ -1,4 +1,4 @@
-declare module "*.jpg";
+declare module '*.jpg';
 
 interface Window {
   TEST_SCRIPT?: any;

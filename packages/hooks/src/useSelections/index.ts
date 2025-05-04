@@ -1,7 +1,7 @@
-import React from "react";
-import isPlainObject from "lodash/isPlainObject";
-import useMemoizedFn from "../useMemoizedFn";
-import { isFunction, isString } from "../utils";
+import React from 'react';
+import isPlainObject from 'lodash/isPlainObject';
+import useMemoizedFn from '../useMemoizedFn';
+import { isFunction, isString } from '../utils';
 
 export interface Options<T> {
   defaultSelected?: T[];
@@ -10,7 +10,7 @@ export interface Options<T> {
 
 function useSelections<T>(items: T[], options?: T[] | Options<T>) {
   let defaultSelected: T[] = [];
-  let itemKey: Options<T>["itemKey"];
+  let itemKey: Options<T>['itemKey'];
 
   if (Array.isArray(options)) {
     defaultSelected = options;
@@ -82,17 +82,17 @@ function useSelections<T>(items: T[], options?: T[] | Options<T>) {
 
   const noneSelected = React.useMemo<boolean>(
     () => items.every((item) => !selectedMap.has(getKey(item))),
-    [items, selectedMap]
+    [items, selectedMap],
   );
 
   const allSelected = React.useMemo<boolean>(
     () => items.every((item) => selectedMap.has(getKey(item))) && !noneSelected,
-    [items, selectedMap, noneSelected]
+    [items, selectedMap, noneSelected],
   );
 
   const partiallySelected = React.useMemo<boolean>(
     () => !noneSelected && !allSelected,
-    [noneSelected, allSelected]
+    [noneSelected, allSelected],
   );
 
   const toggleAll = () => (allSelected ? unSelectAll() : selectAll());

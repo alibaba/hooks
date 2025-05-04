@@ -1,19 +1,17 @@
-import throttle from "lodash/throttle";
-import { useMemo } from "react";
-import useLatest from "../useLatest";
-import type { ThrottleOptions } from "../useThrottle/throttleOptions";
-import useUnmount from "../useUnmount";
-import { isFunction } from "../utils";
-import isDev from "../utils/isDev";
+import throttle from 'lodash/throttle';
+import { useMemo } from 'react';
+import useLatest from '../useLatest';
+import type { ThrottleOptions } from '../useThrottle/throttleOptions';
+import useUnmount from '../useUnmount';
+import { isFunction } from '../utils';
+import isDev from '../utils/isDev';
 
 type noop = (...args: any[]) => any;
 
 function useThrottleFn<T extends noop>(fn: T, options?: ThrottleOptions) {
   if (isDev) {
     if (!isFunction(fn)) {
-      console.error(
-        `useThrottleFn expected parameter is a function, got ${typeof fn}`
-      );
+      console.error(`useThrottleFn expected parameter is a function, got ${typeof fn}`);
     }
   }
 
@@ -28,9 +26,9 @@ function useThrottleFn<T extends noop>(fn: T, options?: ThrottleOptions) {
           return fnRef.current(...args);
         },
         wait,
-        options
+        options,
       ),
-    []
+    [],
   );
 
   useUnmount(() => {
