@@ -1,12 +1,13 @@
 import { act, renderHook, waitFor } from '@testing-library/react';
-import { Form } from 'antd';
 import { sleep } from '../../utils/testingHelpers';
 import useAntdTable from '../index';
-import React from 'react';
+import { useEffect } from 'react';
+import { Form } from 'antd';
 
 interface Query {
   current: number;
   pageSize: number;
+
   [key: string]: any;
 }
 
@@ -24,7 +25,7 @@ describe('useAntdTable', () => {
 
   let searchType = 'simple';
 
-  const form: any = {
+  const form = {
     getInternalHooks: () => {},
     initialValue: {
       name: 'default name',
@@ -373,7 +374,7 @@ describe('useAntdTable', () => {
           },
         );
 
-        React.useEffect(() => {
+        useEffect(() => {
           // defaultParams works
           expect(myForm.getFieldValue('name')).toBe('hello');
           expect(queryArgs).toBe(undefined);
