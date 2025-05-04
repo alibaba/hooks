@@ -1,15 +1,14 @@
-import { act, renderHook, waitFor } from "@testing-library/react";
-import { render } from "@testing-library/react";
-import useRequest, { clearCache } from "../index";
-import { request } from "../../utils/testingHelpers";
-import React, { useState } from "react";
-import "jest-localstorage-mock";
+import { act, renderHook, waitFor } from '@testing-library/react';
+import { render } from '@testing-library/react';
+import useRequest, { clearCache } from '../index';
+import { request } from '../../utils/testingHelpers';
+import React, { useState } from 'react';
+import 'jest-localstorage-mock';
 
-describe("useCachePlugin", () => {
+describe('useCachePlugin', () => {
   jest.useFakeTimers();
 
-  const setup = (service, options) =>
-    renderHook(() => useRequest(service, options));
+  const setup = (service, options) => renderHook(() => useRequest(service, options));
 
   const testCacheKey = async (options: any) => {
     const hook = setup(request, options);
@@ -18,52 +17,52 @@ describe("useCachePlugin", () => {
       jest.advanceTimersByTime(1000);
     });
     expect(hook.result.current.loading).toBe(false);
-    expect(hook.result.current.data).toBe("success");
+    expect(hook.result.current.data).toBe('success');
     hook.unmount();
   };
 
-  it("useRequest cacheKey should work", async () => {
+  it('useRequest cacheKey should work', async () => {
     await testCacheKey({
-      cacheKey: "testCacheKey",
+      cacheKey: 'testCacheKey',
     });
 
     jest.advanceTimersByTime(100);
 
     const hook2 = setup(request, {
-      cacheKey: "testCacheKey",
+      cacheKey: 'testCacheKey',
     });
     expect(hook2.result.current.loading).toBe(true);
-    expect(hook2.result.current.data).toBe("success");
+    expect(hook2.result.current.data).toBe('success');
     await act(async () => {
       jest.advanceTimersByTime(1000);
     });
     expect(hook2.result.current.loading).toBe(false);
   });
 
-  it("useRequest staleTime should work", async () => {
+  it('useRequest staleTime should work', async () => {
     await testCacheKey({
-      cacheKey: "testStaleTime",
+      cacheKey: 'testStaleTime',
       staleTime: 3000,
     });
 
     jest.advanceTimersByTime(1000);
 
     const hook2 = setup(request, {
-      cacheKey: "testStaleTime",
+      cacheKey: 'testStaleTime',
       staleTime: 3000,
     });
     expect(hook2.result.current.loading).toBe(false);
-    expect(hook2.result.current.data).toBe("success");
+    expect(hook2.result.current.data).toBe('success');
     hook2.unmount();
 
     jest.advanceTimersByTime(3001);
 
     const hook3 = setup(request, {
-      cacheKey: "testStaleTime",
+      cacheKey: 'testStaleTime',
       staleTime: 3000,
     });
     expect(hook3.result.current.loading).toBe(true);
-    expect(hook3.result.current.data).toBe("success");
+    expect(hook3.result.current.data).toBe('success');
 
     await act(async () => {
       jest.advanceTimersByTime(1000);
@@ -71,26 +70,26 @@ describe("useCachePlugin", () => {
     expect(hook3.result.current.loading).toBe(false);
   });
 
-  it("useRequest cacheTime should work", async () => {
+  it('useRequest cacheTime should work', async () => {
     await testCacheKey({
-      cacheKey: "testCacheTime",
+      cacheKey: 'testCacheTime',
       cacheTime: 5000,
     });
 
     jest.advanceTimersByTime(1000);
 
     const hook2 = setup(request, {
-      cacheKey: "testCacheTime",
+      cacheKey: 'testCacheTime',
       cacheTime: 5000,
     });
     expect(hook2.result.current.loading).toBe(true);
-    expect(hook2.result.current.data).toBe("success");
+    expect(hook2.result.current.data).toBe('success');
     hook2.unmount();
 
     jest.advanceTimersByTime(5001);
 
     const hook3 = setup(request, {
-      cacheKey: "testCacheTime",
+      cacheKey: 'testCacheTime',
       cacheTime: 5000,
     });
     expect(hook3.result.current.loading).toBe(true);
@@ -100,36 +99,36 @@ describe("useCachePlugin", () => {
       jest.advanceTimersByTime(1000);
     });
     expect(hook3.result.current.loading).toBe(false);
-    expect(hook3.result.current.data).toBe("success");
+    expect(hook3.result.current.data).toBe('success');
   });
 
-  it("clearCache should work", async () => {
-    await testCacheKey("testClearCache");
+  it('clearCache should work', async () => {
+    await testCacheKey('testClearCache');
 
-    clearCache("testClearCache");
+    clearCache('testClearCache');
     const hook2 = setup(request, {
-      cacheKey: "testClearCache",
+      cacheKey: 'testClearCache',
     });
     expect(hook2.result.current.loading).toBe(true);
     expect(hook2.result.current.data).toBeUndefined();
   });
 
-  it("setCache/getCache should work", async () => {
+  it('setCache/getCache should work', async () => {
     const cacheKey = `setCacheKey`;
     await testCacheKey({
       cacheKey,
       setCache: (data) => localStorage.setItem(cacheKey, JSON.stringify(data)),
-      getCache: () => JSON.parse(localStorage.getItem(cacheKey) || "{}"),
+      getCache: () => JSON.parse(localStorage.getItem(cacheKey) || '{}'),
     });
 
     jest.advanceTimersByTime(1000);
     const hook2 = setup(request, {
       cacheKey,
       setCache: (data) => localStorage.setItem(cacheKey, JSON.stringify(data)),
-      getCache: () => JSON.parse(localStorage.getItem(cacheKey) || "{}"),
+      getCache: () => JSON.parse(localStorage.getItem(cacheKey) || '{}'),
     });
     expect(hook2.result.current.loading).toBe(true);
-    expect(hook2.result.current.data).toBe("success");
+    expect(hook2.result.current.data).toBe('success');
 
     await act(async () => {
       jest.advanceTimersByTime(1000);
@@ -137,9 +136,9 @@ describe("useCachePlugin", () => {
     expect(hook2.result.current.loading).toBe(false);
   });
 
-  it("cache should work when change data immediately", async () => {
+  it('cache should work when change data immediately', async () => {
     const { result } = setup(request, {
-      cacheKey: "mutateCacheKey",
+      cacheKey: 'mutateCacheKey',
     });
     act(() => {
       result.current.mutate(1);
@@ -149,12 +148,12 @@ describe("useCachePlugin", () => {
       jest.advanceTimersByTime(1000);
     });
     expect(result.current.loading).toBe(false);
-    expect(result.current.data).toBe("success");
+    expect(result.current.data).toBe('success');
   });
 
   //github.com/alibaba/hooks/issues/1859
-  it("error should reset with activeKey", async () => {
-    const errSpy = jest.spyOn(console, "error").mockImplementation(() => {});
+  it('error should reset with activeKey', async () => {
+    const errSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
 
     let res = {} as any;
     const TestComponent = () => {
