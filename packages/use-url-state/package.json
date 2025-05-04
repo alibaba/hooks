@@ -6,12 +6,7 @@
   "module": "./es/index.js",
   "types": "./lib/index.d.ts",
   "unpkg": "dist/ahooks-use-url-state.js",
-  "files": [
-    "dist",
-    "lib",
-    "es",
-    "package.json"
-  ],
+  "files": ["dist", "lib", "es", "package.json"],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/alibaba/hooks.git"

@@ -1,13 +1,13 @@
-import { useCallback, useEffect, useRef } from "react";
-import useLatest from "../useLatest";
-import { isNumber } from "../utils";
+import { useCallback, useEffect, useRef } from 'react';
+import useLatest from '../useLatest';
+import { isNumber } from '../utils';
 
 interface Handle {
   id: ReturnType<typeof setInterval> | ReturnType<typeof requestAnimationFrame>;
 }
 
 const setRafInterval = (callback: () => void, delay: number = 0): Handle => {
-  if (typeof requestAnimationFrame === "undefined") {
+  if (typeof requestAnimationFrame === 'undefined') {
     return {
       id: setInterval(callback, delay),
     };
@@ -28,10 +28,8 @@ const setRafInterval = (callback: () => void, delay: number = 0): Handle => {
   return handle;
 };
 
-const cancelAnimationFrameIsNotDefined = (
-  t: any
-): t is ReturnType<typeof setTimeout> => {
-  return typeof cancelAnimationFrame === "undefined";
+const cancelAnimationFrameIsNotDefined = (t: any): t is ReturnType<typeof setTimeout> => {
+  return typeof cancelAnimationFrame === 'undefined';
 };
 
 const clearRafInterval = (handle: Handle) => {
@@ -46,7 +44,7 @@ function useRafInterval(
   delay: number | undefined,
   options?: {
     immediate?: boolean;
-  }
+  },
 ) {
   const immediate = options?.immediate;
 
