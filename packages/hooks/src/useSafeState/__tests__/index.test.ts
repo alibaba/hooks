@@ -1,8 +1,8 @@
-import { act, renderHook, RenderHookResult } from '@testing-library/react';
-import useSafeState from '../index';
+import { act, renderHook } from "@testing-library/react";
+import useSafeState from "../index";
 
-describe('useSetState', () => {
-  const setUp = (initialValue: any) =>
+describe("useSetState", () => {
+  const setUp = <S>(initialValue: S | (() => S)) =>
     renderHook(() => {
       const [state, setState] = useSafeState(initialValue);
       return {
@@ -11,14 +11,14 @@ describe('useSetState', () => {
       } as const;
     });
 
-  it('should support initialValue', () => {
+  it("should support initialValue", () => {
     const hook = setUp({
-      hello: 'world',
+      hello: "world",
     });
-    expect(hook.result.current.state).toEqual({ hello: 'world' });
+    expect(hook.result.current.state).toEqual({ hello: "world" });
   });
 
-  it('should support update', () => {
+  it("should support update", () => {
     const hook = setUp(0);
     act(() => {
       hook.result.current.setState(5);
@@ -26,7 +26,7 @@ describe('useSetState', () => {
     expect(hook.result.current.state).toBe(5);
   });
 
-  it('should not support update when unmount', () => {
+  it("should not support update when unmount", () => {
     const hook = setUp(0);
     hook.unmount();
     act(() => {

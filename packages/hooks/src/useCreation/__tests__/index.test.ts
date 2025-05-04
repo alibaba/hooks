@@ -1,8 +1,8 @@
-import { renderHook, act } from '@testing-library/react';
-import { useState } from 'react';
-import useCreation from '../index';
+import { renderHook, act } from "@testing-library/react";
+import { useState } from "react";
+import useCreation from "../index";
 
-describe('useCreation', () => {
+describe("useCreation", () => {
   class Foo {
     constructor() {
       this.data = Math.random();
@@ -11,7 +11,7 @@ describe('useCreation', () => {
     data: number;
   }
 
-  const setUp = (): any =>
+  const setUp = () =>
     renderHook(() => {
       const [count, setCount] = useState(0);
       const [, setFlag] = useState({});
@@ -24,7 +24,7 @@ describe('useCreation', () => {
       };
     });
 
-  it('should work', () => {
+  it("should work", () => {
     const hook = setUp();
     const { foo } = hook.result.current;
     act(() => {

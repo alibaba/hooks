@@ -1,10 +1,10 @@
-import { act, renderHook } from '@testing-library/react';
-import useResetState from '../index';
+import { act, renderHook } from "@testing-library/react";
+import useResetState from "../index";
 
-describe('useResetState', () => {
-  const setUp = (initialState) =>
+describe("useResetState", () => {
+  const setUp = <S>(initialValue: S | (() => S)) =>
     renderHook(() => {
-      const [state, setState, resetState] = useResetState(initialState);
+      const [state, setState, resetState] = useResetState(initialValue);
 
       return {
         state,
@@ -13,29 +13,29 @@ describe('useResetState', () => {
       } as const;
     });
 
-  it('should support initialValue', () => {
+  it("should support initialValue", () => {
     const hook = setUp({
-      hello: 'world',
+      hello: "world",
     });
-    expect(hook.result.current.state).toEqual({ hello: 'world' });
+    expect(hook.result.current.state).toEqual({ hello: "world" });
   });
 
-  it('should support functional initialValue', () => {
+  it("should support functional initialValue", () => {
     const hook = setUp(() => ({
-      hello: 'world',
+      hello: "world",
     }));
-    expect(hook.result.current.state).toEqual({ hello: 'world' });
+    expect(hook.result.current.state).toEqual({ hello: "world" });
   });
 
-  it('should reset state', () => {
+  it("should reset state", () => {
     const hook = setUp({
-      hello: '',
+      hello: "",
       count: 0,
     });
 
     act(() => {
       hook.result.current.setState({
-        hello: 'world',
+        hello: "world",
         count: 1,
       });
     });
@@ -44,10 +44,10 @@ describe('useResetState', () => {
       hook.result.current.resetState();
     });
 
-    expect(hook.result.current.state).toEqual({ hello: '', count: 0 });
+    expect(hook.result.current.state).toEqual({ hello: "", count: 0 });
   });
 
-  it('should support function update', () => {
+  it("should support function update", () => {
     const hook = setUp({
       count: 0,
     });
@@ -57,7 +57,7 @@ describe('useResetState', () => {
     expect(hook.result.current.state).toEqual({ count: 1 });
   });
 
-  it('should keep random initial state', () => {
+  it("should keep random initial state", () => {
     const random = Math.random();
     const hook = setUp({
       count: random,
@@ -74,7 +74,7 @@ describe('useResetState', () => {
     expect(hook.result.current.state).toEqual({ count: random });
   });
 
-  it('should support random functional initialValue', () => {
+  it("should support random functional initialValue", () => {
     const random = Math.random();
     const hook = setUp(() => ({
       count: random,

@@ -1,13 +1,13 @@
-import type { DebouncedFunc, DebounceSettings } from 'lodash';
-import debounce from 'lodash/debounce';
-import { useEffect, useMemo, useRef } from 'react';
-import type { Plugin } from '../types';
+import type { DebouncedFunc, DebounceSettings } from "lodash";
+import debounce from "lodash/debounce";
+import { useEffect, useMemo, useRef } from "react";
+import type { Plugin } from "../types";
 
 const useDebouncePlugin: Plugin<any, any[]> = (
   fetchInstance,
-  { debounceWait, debounceLeading, debounceTrailing, debounceMaxWait },
+  { debounceWait, debounceLeading, debounceTrailing, debounceMaxWait }
 ) => {
-  const debouncedRef = useRef<DebouncedFunc<any>>(undefined);
+  const debouncedRef = useRef<DebouncedFunc<any>>(null);
 
   const options = useMemo(() => {
     const ret: DebounceSettings = {};
@@ -32,7 +32,7 @@ const useDebouncePlugin: Plugin<any, any[]> = (
           callback();
         },
         debounceWait,
-        options,
+        options
       );
 
       // debounce runAsync should be promise

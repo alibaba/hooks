@@ -1,18 +1,19 @@
-import { renderHook } from '@testing-library/react';
-import useTimeout from '../index';
+import { renderHook } from "@testing-library/react";
+import useTimeout from "../index";
 
 interface ParamsObj {
   fn: (...arg: any) => any;
-  delay: number | undefined;
+  delay?: number;
 }
 
-const setUp = ({ fn, delay }: ParamsObj) => renderHook(() => useTimeout(fn, delay));
+const setUp = ({ fn, delay }: ParamsObj) =>
+  renderHook(() => useTimeout(fn, delay));
 
-describe('useTimeout', () => {
+describe("useTimeout", () => {
   jest.useFakeTimers();
-  jest.spyOn(global, 'clearTimeout');
+  jest.spyOn(global, "clearTimeout");
 
-  it('timeout should work', () => {
+  it("timeout should work", () => {
     const callback = jest.fn();
 
     setUp({ fn: callback, delay: 20 });
@@ -22,7 +23,7 @@ describe('useTimeout', () => {
     expect(callback).toHaveBeenCalledTimes(1);
   });
 
-  it('timeout should stop', () => {
+  it("timeout should stop", () => {
     const callback = jest.fn();
 
     setUp({ fn: callback, delay: undefined });
@@ -34,7 +35,7 @@ describe('useTimeout', () => {
     expect(callback).toHaveBeenCalledTimes(0);
   });
 
-  it('timeout should be clear', () => {
+  it("timeout should be clear", () => {
     const callback = jest.fn();
 
     const hook = setUp({ fn: callback, delay: 20 });
