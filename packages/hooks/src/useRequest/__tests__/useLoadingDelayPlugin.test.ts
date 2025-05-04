@@ -1,19 +1,23 @@
-import { act, renderHook, waitFor } from '@testing-library/react';
-import type { RenderHookResult } from '@testing-library/react';
-import useRequest from '../index';
-import { request } from '../../utils/testingHelpers';
+import { act, renderHook, waitFor } from "@testing-library/react";
+import type { RenderHookResult } from "@testing-library/react";
+import useRequest from "../index";
+import { request } from "../../utils/testingHelpers";
 
-describe('useLoadingDelayPlugin', () => {
+describe("useLoadingDelayPlugin", () => {
   jest.useFakeTimers();
 
-  const setUp = (service, options) => renderHook((o) => useRequest(service, o || options));
+  const setUp = (
+    service: Parameters<typeof useRequest>[0],
+    options: Parameters<typeof useRequest>[1]
+  ) => renderHook((o) => useRequest(service, o || options));
+
   let hook: RenderHookResult<ReturnType<typeof useRequest>, any>;
 
   afterEach(() => {
     hook.unmount();
   });
 
-  it('useLoadingDelayPlugin should work', async () => {
+  it("useLoadingDelayPlugin should work", async () => {
     act(() => {
       hook = setUp(request, {
         loadingDelay: 2000,
@@ -45,7 +49,7 @@ describe('useLoadingDelayPlugin', () => {
     expect(hook.result.current.loading).toBe(false);
   });
 
-  it('useLoadingDelayPlugin should no update loading when ready is false', async () => {
+  it("useLoadingDelayPlugin should no update loading when ready is false", async () => {
     act(() => {
       hook = setUp(request, {
         loadingDelay: 2000,
@@ -61,7 +65,7 @@ describe('useLoadingDelayPlugin', () => {
     await waitFor(() => expect(hook.result.current.loading).toBe(false));
   });
 
-  it('useLoadingDelayPlugin should update loading when ready is undefined', async () => {
+  it("useLoadingDelayPlugin should update loading when ready is undefined", async () => {
     act(() => {
       hook = setUp(request, {
         loadingDelay: 2000,

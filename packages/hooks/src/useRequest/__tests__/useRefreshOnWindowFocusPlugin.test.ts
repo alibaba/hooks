@@ -1,16 +1,20 @@
-import type { RenderHookResult } from '@testing-library/react';
-import { act, renderHook, waitFor } from '@testing-library/react';
-import { fireEvent } from '@testing-library/react';
-import useRequest from '../index';
-import { request } from '../../utils/testingHelpers';
+import type { RenderHookResult } from "@testing-library/react";
+import { act, renderHook, waitFor } from "@testing-library/react";
+import { fireEvent } from "@testing-library/react";
+import useRequest from "../index";
+import { request } from "../../utils/testingHelpers";
 
-describe('useRefreshOnWindowFocusPlugin', () => {
+describe("useRefreshOnWindowFocusPlugin", () => {
   jest.useFakeTimers();
 
-  const setUp = (service, options) => renderHook((o) => useRequest(service, o || options));
+  const setUp = (
+    service: Parameters<typeof useRequest>[0],
+    options: Parameters<typeof useRequest>[1]
+  ) => renderHook((o) => useRequest(service, o || options));
 
   let hook: RenderHookResult<any, any>;
-  it('useRefreshOnWindowFocusPlugin should work', async () => {
+
+  it("useRefreshOnWindowFocusPlugin should work", async () => {
     act(() => {
       hook = setUp(request, {
         refreshOnWindowFocus: true,
@@ -38,7 +42,7 @@ describe('useRefreshOnWindowFocusPlugin', () => {
     expect(hook.result.current.loading).toBe(true);
   });
 
-  it('fix: multiple unsubscriptions should not delete the last subscription listener ', async () => {
+  it("fix: multiple unsubscriptions should not delete the last subscription listener ", async () => {
     let hook1;
     let hook2;
     act(() => {

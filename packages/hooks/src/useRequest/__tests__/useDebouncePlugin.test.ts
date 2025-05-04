@@ -1,12 +1,17 @@
-import { act, renderHook, waitFor } from '@testing-library/react';
-import useRequest from '../index';
-import { request } from '../../utils/testingHelpers';
+import type { RenderHookResult } from "@testing-library/react";
+import { act, renderHook, waitFor } from "@testing-library/react";
+import useRequest from "../index";
+import { request } from "../../utils/testingHelpers";
 
-describe('useDebouncePlugin', () => {
-  const setUp = (service, options) => renderHook((o) => useRequest(service, o || options));
+describe("useDebouncePlugin", () => {
+  const setUp = (
+    service: Parameters<typeof useRequest>[0],
+    options: Parameters<typeof useRequest>[1]
+  ) => renderHook((o) => useRequest(service, o || options));
 
-  let hook;
-  it('useDebouncePlugin should work', async () => {
+  let hook: RenderHookResult<any, any>;
+
+  it("useDebouncePlugin should work", async () => {
     jest.useFakeTimers();
     const callback = jest.fn();
 
@@ -19,7 +24,7 @@ describe('useDebouncePlugin', () => {
         {
           manual: true,
           debounceWait: 100,
-        },
+        }
       );
     });
 

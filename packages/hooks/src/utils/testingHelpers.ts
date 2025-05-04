@@ -7,13 +7,13 @@ export function sleep(time: number) {
 }
 
 export function request(req: any) {
-  return new Promise((resolve, reject) =>
+  return new Promise<string>((resolve, reject) =>
     setTimeout(() => {
       if (req === 0) {
-        reject(new Error('fail'));
+        reject(new Error("fail"));
       } else {
-        resolve('success');
+        resolve("success");
       }
-    }, 1000),
+    }, 1000)
   );
 }
