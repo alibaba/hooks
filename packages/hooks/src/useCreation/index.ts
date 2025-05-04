@@ -1,6 +1,6 @@
-import type { DependencyList } from "react";
-import { useRef } from "react";
-import depsAreSame from "../utils/depsAreSame";
+import type { DependencyList } from 'react';
+import { useRef } from 'react';
+import depsAreSame from '../utils/depsAreSame';
 
 const useCreation = <T>(factory: () => T, deps: DependencyList) => {
   const { current } = useRef({

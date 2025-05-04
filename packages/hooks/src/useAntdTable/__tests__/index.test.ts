@@ -1,8 +1,8 @@
-import { act, renderHook, waitFor } from "@testing-library/react";
-import { Form } from "antd";
-import { sleep } from "../../utils/testingHelpers";
-import useAntdTable from "../index";
-import React from "react";
+import { act, renderHook, waitFor } from '@testing-library/react';
+import { Form } from 'antd';
+import { sleep } from '../../utils/testingHelpers';
+import useAntdTable from '../index';
+import React from 'react';
 
 interface Query {
   current: number;
@@ -10,7 +10,7 @@ interface Query {
   [key: string]: any;
 }
 
-describe("useAntdTable", () => {
+describe('useAntdTable', () => {
   // jest.useFakeTimers();
 
   let queryArgs: any;
@@ -22,18 +22,18 @@ describe("useAntdTable", () => {
     });
   };
 
-  let searchType = "simple";
+  let searchType = 'simple';
 
   const form: any = {
     getInternalHooks: () => {},
     initialValue: {
-      name: "default name",
+      name: 'default name',
     },
     fieldsValue: {
-      name: "default name",
+      name: 'default name',
     },
     getFieldsValue() {
-      if (searchType === "simple") {
+      if (searchType === 'simple') {
         return {
           name: this.fieldsValue.name,
         };
@@ -62,8 +62,7 @@ describe("useAntdTable", () => {
     searchType = type;
   };
 
-  const setUp = (service, options) =>
-    renderHook((o) => useAntdTable(service, o || options));
+  const setUp = (service, options) => renderHook((o) => useAntdTable(service, o || options));
 
   let hook: any;
 
@@ -73,10 +72,10 @@ describe("useAntdTable", () => {
   //   hook?.unmount();
   // });
 
-  it("should fetch after first render", async () => {
+  it('should fetch after first render', async () => {
     queryArgs = undefined;
     form.resetFields();
-    changeSearchType("simple");
+    changeSearchType('simple');
 
     act(() => {
       hook = setUp(asyncFn, {});
@@ -85,15 +84,13 @@ describe("useAntdTable", () => {
     expect(hook.result.current.tableProps.loading).toBe(false);
     expect(hook.result.current.tableProps.pagination.current).toBe(1);
     expect(hook.result.current.tableProps.pagination.pageSize).toBe(10);
-    await waitFor(() =>
-      expect(hook.result.current.tableProps.pagination.total).toBe(20)
-    );
+    await waitFor(() => expect(hook.result.current.tableProps.pagination.total).toBe(20));
   });
 
-  it("should defaultParams work", async () => {
+  it('should defaultParams work', async () => {
     queryArgs = undefined;
     form.resetFields();
-    changeSearchType("advance");
+    changeSearchType('advance');
     act(() => {
       hook = setUp(asyncFn, {
         form,
@@ -102,24 +99,24 @@ describe("useAntdTable", () => {
             current: 2,
             pageSize: 10,
           },
-          { name: "hello", phone: "123" },
+          { name: 'hello', phone: '123' },
         ],
-        defaultType: "advance",
+        defaultType: 'advance',
       });
     });
     const { search } = hook.result.current;
     expect(hook.result.current.tableProps.loading).toBe(false);
     await waitFor(() => expect(queryArgs.current).toBe(2));
     expect(queryArgs.pageSize).toBe(10);
-    expect(queryArgs.name).toBe("hello");
-    expect(queryArgs.phone).toBe("123");
-    expect(search.type).toBe("advance");
+    expect(queryArgs.name).toBe('hello');
+    expect(queryArgs.phone).toBe('123');
+    expect(search.type).toBe('advance');
   });
 
-  it("should stop the query when validate fields failed", async () => {
+  it('should stop the query when validate fields failed', async () => {
     queryArgs = undefined;
     form.resetFields();
-    changeSearchType("advance");
+    changeSearchType('advance');
     act(() => {
       hook = setUp(asyncFn, {
         form: { ...form, validateFields: () => Promise.reject() },
@@ -128,9 +125,9 @@ describe("useAntdTable", () => {
             current: 2,
             pageSize: 10,
           },
-          { name: "hello", phone: "123" },
+          { name: 'hello', phone: '123' },
         ],
-        defaultType: "advance",
+        defaultType: 'advance',
       });
     });
 
@@ -138,10 +135,10 @@ describe("useAntdTable", () => {
     expect(queryArgs).toBeUndefined();
   });
 
-  it("should ready work", async () => {
+  it('should ready work', async () => {
     queryArgs = undefined;
     form.resetFields();
-    changeSearchType("advance");
+    changeSearchType('advance');
 
     act(() => {
       hook = setUp(asyncFn, {
@@ -152,9 +149,9 @@ describe("useAntdTable", () => {
             current: 2,
             pageSize: 10,
           },
-          { name: "hello", phone: "123" },
+          { name: 'hello', phone: '123' },
         ],
-        defaultType: "advance",
+        defaultType: 'advance',
       });
     });
     await sleep(1);
@@ -168,24 +165,24 @@ describe("useAntdTable", () => {
           current: 2,
           pageSize: 10,
         },
-        { name: "hello", phone: "456" },
+        { name: 'hello', phone: '456' },
       ],
-      defaultType: "advance",
+      defaultType: 'advance',
     });
 
     const { search } = hook.result.current;
     expect(hook.result.current.tableProps.loading).toBe(false);
     await waitFor(() => expect(queryArgs.current).toBe(2));
     expect(queryArgs.pageSize).toBe(10);
-    expect(queryArgs.name).toBe("hello");
-    expect(queryArgs.phone).toBe("456");
-    expect(search.type).toBe("advance");
+    expect(queryArgs.name).toBe('hello');
+    expect(queryArgs.phone).toBe('456');
+    expect(search.type).toBe('advance');
   });
 
-  it("should antd v3 work", async () => {
+  it('should antd v3 work', async () => {
     queryArgs = undefined;
     form.resetFields();
-    changeSearchType("simple");
+    changeSearchType('simple');
 
     const v3Form = {
       ...form,
@@ -199,10 +196,10 @@ describe("useAntdTable", () => {
       },
       getFieldInstance(key: string) {
         // 根据不同的 type 返回不同的 fieldsValues
-        if (searchType === "simple") {
-          return ["name"].includes(key);
+        if (searchType === 'simple') {
+          return ['name'].includes(key);
         }
-        return ["name", "email", "phone"].includes(key);
+        return ['name', 'email', 'phone'].includes(key);
       },
     };
 
@@ -213,8 +210,8 @@ describe("useAntdTable", () => {
     expect(hook.result.current.tableProps.loading).toBe(false);
     await waitFor(() => expect(queryArgs.current).toBe(1));
     expect(queryArgs.pageSize).toBe(10);
-    expect(queryArgs.name).toBe("default name");
-    expect(search.type).toBe("simple");
+    expect(queryArgs.name).toBe('default name');
+    expect(search.type).toBe('simple');
 
     // /* 切换 分页 */
     act(() => {
@@ -225,20 +222,20 @@ describe("useAntdTable", () => {
     });
     await waitFor(() => expect(queryArgs.current).toBe(2));
     expect(queryArgs.pageSize).toBe(5);
-    expect(queryArgs.name).toBe("default name");
+    expect(queryArgs.name).toBe('default name');
 
     /* 改变 name， 提交表单 */
-    v3Form.fieldsValue.name = "change name";
+    v3Form.fieldsValue.name = 'change name';
     act(() => {
       search.submit();
     });
     await waitFor(() => expect(queryArgs.current).toBe(1));
     expect(queryArgs.current).toBe(1);
     // expect(queryArgs.pageSize).toBe(5);
-    expect(queryArgs.name).toBe("change name");
+    expect(queryArgs.name).toBe('change name');
   });
 
-  it("should reset pageSize in defaultParams", async () => {
+  it('should reset pageSize in defaultParams', async () => {
     queryArgs = undefined;
     form.resetFields();
     act(() => {
@@ -282,7 +279,7 @@ describe("useAntdTable", () => {
     });
   });
 
-  it("should reset pageSize in defaultPageSize", async () => {
+  it('should reset pageSize in defaultPageSize', async () => {
     queryArgs = undefined;
     form.resetFields();
     act(() => {
@@ -325,7 +322,7 @@ describe("useAntdTable", () => {
     });
   });
 
-  it("search submit use default params", async () => {
+  it('search submit use default params', async () => {
     queryArgs = undefined;
     form.resetFields();
     act(() => {
@@ -352,10 +349,10 @@ describe("useAntdTable", () => {
     });
   });
 
-  it("should defaultParams work with manual is  true", async () => {
+  it('should defaultParams work with manual is  true', async () => {
     queryArgs = undefined;
     form.resetFields();
-    changeSearchType("advance");
+    changeSearchType('advance');
 
     act(() => {
       renderHook((o) => {
@@ -370,15 +367,15 @@ describe("useAntdTable", () => {
                 current: 2,
                 pageSize: 10,
               },
-              { name: "hello", phone: "123" },
+              { name: 'hello', phone: '123' },
             ],
-            defaultType: "advance",
-          }
+            defaultType: 'advance',
+          },
         );
 
         React.useEffect(() => {
           // defaultParams works
-          expect(myForm.getFieldValue("name")).toBe("hello");
+          expect(myForm.getFieldValue('name')).toBe('hello');
           expect(queryArgs).toBe(undefined);
         }, []);
       });
