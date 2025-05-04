@@ -1,6 +1,8 @@
 import { act, renderHook, waitFor } from '@testing-library/react';
 import { sleep } from '../../utils/testingHelpers';
 import useAntdTable from '../index';
+import { useEffect } from 'react';
+import { Form } from 'antd';
 
 interface Query {
   current: number;
@@ -23,7 +25,7 @@ describe('useAntdTable', () => {
 
   let searchType = 'simple';
 
-  const form: any = {
+  const form = {
     getInternalHooks: () => {},
     initialValue: {
       name: 'default name',
@@ -348,10 +350,10 @@ describe('useAntdTable', () => {
     });
   });
 
-  it("should defaultParams work with manual is  true", async () => {
+  it('should defaultParams work with manual is  true', async () => {
     queryArgs = undefined;
     form.resetFields();
-    changeSearchType("advance");
+    changeSearchType('advance');
 
     act(() => {
       renderHook((o) => {
@@ -366,15 +368,15 @@ describe('useAntdTable', () => {
                 current: 2,
                 pageSize: 10,
               },
-              { name: "hello", phone: "123" },
+              { name: 'hello', phone: '123' },
             ],
-            defaultType: "advance",
-          }
+            defaultType: 'advance',
+          },
         );
 
         useEffect(() => {
           // defaultParams works
-          expect(myForm.getFieldValue("name")).toBe("hello");
+          expect(myForm.getFieldValue('name')).toBe('hello');
           expect(queryArgs).toBe(undefined);
         }, []);
       });
