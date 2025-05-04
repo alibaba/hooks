@@ -1,14 +1,17 @@
-import { act, renderHook, waitFor } from '@testing-library/react';
-import useRequest from '../index';
-import { request } from '../../utils/testingHelpers';
+import type { RenderHookResult } from "@testing-library/react";
+import { act, renderHook, waitFor } from "@testing-library/react";
+import useRequest from "../index";
+import { request } from "../../utils/testingHelpers";
 
-describe('usePollingPlugin', () => {
+describe("usePollingPlugin", () => {
   jest.useFakeTimers();
 
-  const setUp = (service, options) => renderHook((o) => useRequest(service, o || options));
+  const setUp = (service, options) =>
+    renderHook((o) => useRequest(service, o || options));
 
-  let hook;
-  it('usePollingPlugin pollingInterval=100 pollingWhenHidden=true  should work', async () => {
+  let hook: RenderHookResult<any, any>;
+
+  it("usePollingPlugin pollingInterval=100 pollingWhenHidden=true  should work", async () => {
     const callback = jest.fn();
     act(() => {
       hook = setUp(
@@ -19,7 +22,7 @@ describe('usePollingPlugin', () => {
         {
           pollingInterval: 100,
           pollingWhenHidden: true,
-        },
+        }
       );
     });
     expect(hook.result.current.loading).toBe(true);
@@ -28,7 +31,7 @@ describe('usePollingPlugin', () => {
       jest.runAllTimers();
     });
     await waitFor(() => expect(hook.result.current.loading).toBe(false));
-    expect(hook.result.current.data).toBe('success');
+    expect(hook.result.current.data).toBe("success");
     expect(callback).toHaveBeenCalledTimes(1);
 
     act(() => {
@@ -64,11 +67,11 @@ describe('usePollingPlugin', () => {
     await waitFor(() => expect(callback).toHaveBeenCalledTimes(5));
   });
 
-  let hook2;
-  it('usePollingPlugin pollingErrorRetryCount=3 should work', async () => {
+  let hook2: RenderHookResult<any, any>;
+  it("usePollingPlugin pollingErrorRetryCount=3 should work", async () => {
     // if request error and set pollingErrorRetryCount
     // and the number of consecutive failures exceeds pollingErrorRetryCount, polling stops
-    let errorCallback;
+    let errorCallback: jest.Mock | undefined = undefined;
     act(() => {
       errorCallback = jest.fn();
       hook2 = setUp(() => request(0), {

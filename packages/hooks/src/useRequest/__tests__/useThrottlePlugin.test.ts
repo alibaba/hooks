@@ -1,14 +1,16 @@
-import { act, renderHook } from '@testing-library/react';
-import useRequest from '../index';
-import { request } from '../../utils/testingHelpers';
+import type { RenderHookResult } from "@testing-library/react";
+import { act, renderHook } from "@testing-library/react";
+import useRequest from "../index";
+import { request } from "../../utils/testingHelpers";
 
-describe('useThrottlePlugin', () => {
+describe("useThrottlePlugin", () => {
   jest.useFakeTimers();
 
-  const setUp = (service, options) => renderHook((o) => useRequest(service, o || options));
+  const setUp = (service, options) =>
+    renderHook((o) => useRequest(service, o || options));
 
-  let hook;
-  it('useThrottlePlugin should work', async () => {
+  let hook: RenderHookResult<any, any>;
+  it("useThrottlePlugin should work", async () => {
     const callback = jest.fn();
 
     act(() => {
@@ -20,7 +22,7 @@ describe('useThrottlePlugin', () => {
         {
           manual: true,
           throttleWait: 100,
-        },
+        }
       );
     });
 
