@@ -1,7 +1,7 @@
-import Cookies from 'js-cookie';
-import { useState } from 'react';
-import useMemoizedFn from '../useMemoizedFn';
-import { isFunction, isString } from '../utils';
+import Cookies from "js-cookie";
+import { useState } from "react";
+import useMemoizedFn from "../useMemoizedFn";
+import { isFunction, isString } from "../utils";
 
 export type State = string | undefined;
 
@@ -13,7 +13,9 @@ function useCookieState(cookieKey: string, options: Options = {}) {
   const [state, setState] = useState<State>(() => {
     const cookieValue = Cookies.get(cookieKey);
 
-    if (isString(cookieValue)) return cookieValue;
+    if (isString(cookieValue)) {
+      return cookieValue;
+    }
 
     if (isFunction(options.defaultValue)) {
       return options.defaultValue();
@@ -25,8 +27,9 @@ function useCookieState(cookieKey: string, options: Options = {}) {
   const updateState = useMemoizedFn(
     (
       newValue: State | ((prevState: State) => State),
-      newOptions: Cookies.CookieAttributes = {},
+      newOptions: Cookies.CookieAttributes = {}
     ) => {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { defaultValue, ...restOptions } = { ...options, ...newOptions };
       const value = isFunction(newValue) ? newValue(state) : newValue;
 
@@ -37,7 +40,7 @@ function useCookieState(cookieKey: string, options: Options = {}) {
       } else {
         Cookies.set(cookieKey, value, restOptions);
       }
-    },
+    }
   );
 
   return [state, updateState] as const;

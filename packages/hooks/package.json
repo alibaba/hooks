@@ -2,7 +2,11 @@
   "name": "ahooks",
   "version": "3.8.4",
   "description": "react hooks library",
-  "keywords": ["ahooks", "umi hooks", "react hooks"],
+  "keywords": [
+    "ahooks",
+    "umi hooks",
+    "react hooks"
+  ],
   "main": "./lib/index.js",
   "module": "./es/index.js",
   "types": "./lib/index.d.ts",
@@ -20,7 +24,14 @@
   "scripts": {
     "build": "gulp && webpack-cli"
   },
-  "files": ["dist", "lib", "es", "metadata.json", "package.json", "README.md"],
+  "files": [
+    "dist",
+    "lib",
+    "es",
+    "metadata.json",
+    "package.json",
+    "README.md"
+  ],
   "dependencies": {
     "@babel/runtime": "^7.21.0",
     "dayjs": "^1.9.1",
@@ -32,9 +43,6 @@
     "screenfull": "^5.0.0",
     "tslib": "^2.4.1"
   },
-  "peerDependencies": {
-    "react": "^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0"
-  },
   "devDependencies": {
     "@alifd/next": "^1.20.6",
     "@ant-design/icons": "^5.0.1",
@@ -45,6 +53,10 @@
     "mockjs": "^1.1.0",
     "react-drag-listview": "^0.1.6",
     "react-json-view": "^1.21.3"
+  },
+  "peerDependencies": {
+    "react": "^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0",
+    "react-dom": "^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0"
   },
   "engines": {
     "node": ">=8.0.0"

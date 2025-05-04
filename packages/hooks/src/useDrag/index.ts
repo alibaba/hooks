@@ -1,10 +1,10 @@
-import { useRef } from 'react';
-import useLatest from '../useLatest';
-import useMount from '../useMount';
-import { isString } from '../utils';
-import type { BasicTarget } from '../utils/domTarget';
-import { getTargetElement } from '../utils/domTarget';
-import useEffectWithTarget from '../utils/useEffectWithTarget';
+import { useRef } from "react";
+import useLatest from "../useLatest";
+import useMount from "../useMount";
+import { isString } from "../utils";
+import type { BasicTarget } from "../utils/domTarget";
+import { getTargetElement } from "../utils/domTarget";
+import useEffectWithTarget from "../utils/useEffectWithTarget";
 
 export interface Options {
   onDragStart?: (event: React.DragEvent) => void;
@@ -19,7 +19,7 @@ export interface Options {
 const useDrag = <T>(data: T, target: BasicTarget, options: Options = {}) => {
   const optionsRef = useLatest(options);
   const dataRef = useLatest(data);
-  const imageElementRef = useRef<Element>();
+  const imageElementRef = useRef<Element>(null);
 
   const { dragImage } = optionsRef.current;
 
@@ -47,12 +47,16 @@ const useDrag = <T>(data: T, target: BasicTarget, options: Options = {}) => {
 
       const onDragStart = (event: React.DragEvent) => {
         optionsRef.current.onDragStart?.(event);
-        event.dataTransfer.setData('custom', JSON.stringify(dataRef.current));
+        event.dataTransfer.setData("custom", JSON.stringify(dataRef.current));
 
         if (dragImage?.image && imageElementRef.current) {
           const { offsetX = 0, offsetY = 0 } = dragImage;
 
-          event.dataTransfer.setDragImage(imageElementRef.current, offsetX, offsetY);
+          event.dataTransfer.setDragImage(
+            imageElementRef.current,
+            offsetX,
+            offsetY
+          );
         }
       };
 
@@ -60,18 +64,18 @@ const useDrag = <T>(data: T, target: BasicTarget, options: Options = {}) => {
         optionsRef.current.onDragEnd?.(event);
       };
 
-      targetElement.setAttribute('draggable', 'true');
+      targetElement.setAttribute("draggable", "true");
 
-      targetElement.addEventListener('dragstart', onDragStart as any);
-      targetElement.addEventListener('dragend', onDragEnd as any);
+      targetElement.addEventListener("dragstart", onDragStart as any);
+      targetElement.addEventListener("dragend", onDragEnd as any);
 
       return () => {
-        targetElement.removeEventListener('dragstart', onDragStart as any);
-        targetElement.removeEventListener('dragend', onDragEnd as any);
+        targetElement.removeEventListener("dragstart", onDragStart as any);
+        targetElement.removeEventListener("dragend", onDragEnd as any);
       };
     },
     [],
-    target,
+    target
   );
 };
 

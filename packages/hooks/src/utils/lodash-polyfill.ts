@@ -1,12 +1,13 @@
-import debounce from 'lodash/debounce';
+import debounce from "lodash/debounce";
 
 function isNodeOrWeb() {
   const freeGlobal =
-    (typeof global === 'undefined' ? 'undefined' : typeof global) == 'object' &&
+    (typeof global === "undefined" ? "undefined" : typeof global) == "object" &&
     global &&
     global.Object === Object &&
     global;
-  const freeSelf = typeof self == 'object' && self && self.Object === Object && self;
+  const freeSelf =
+    typeof self == "object" && self && self.Object === Object && self;
   return freeGlobal || freeSelf;
 }
 

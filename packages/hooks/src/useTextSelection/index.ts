@@ -1,7 +1,7 @@
-import { useRef, useState } from 'react';
-import type { BasicTarget } from '../utils/domTarget';
-import { getTargetElement } from '../utils/domTarget';
-import useEffectWithTarget from '../utils/useEffectWithTarget';
+import { useRef, useState } from "react";
+import type { BasicTarget } from "../utils/domTarget";
+import { getTargetElement } from "../utils/domTarget";
+import useEffectWithTarget from "../utils/useEffectWithTarget";
 
 interface Rect {
   top: number;
@@ -25,7 +25,7 @@ const initRect: Rect = {
 };
 
 const initState: State = {
-  text: '',
+  text: "",
   ...initRect,
 };
 
@@ -38,7 +38,8 @@ function getRectFromSelection(selection: Selection | null): Rect {
     return initRect;
   }
   const range = selection.getRangeAt(0);
-  const { height, width, top, left, right, bottom } = range.getBoundingClientRect();
+  const { height, width, top, left, right, bottom } =
+    range.getBoundingClientRect();
   return {
     height,
     width,
@@ -65,11 +66,13 @@ function useTextSelection(target?: BasicTarget<Document | Element>): State {
 
       const mouseupHandler = () => {
         let selObj: Selection | null = null;
-        let text = '';
+        let text = "";
         let rect = initRect;
-        if (!window.getSelection) return;
+        if (!window.getSelection) {
+          return;
+        }
         selObj = window.getSelection();
-        text = selObj ? selObj.toString() : '';
+        text = selObj ? selObj.toString() : "";
         if (text && isInRangeRef.current) {
           rect = getRectFromSelection(selObj);
           setState({ ...state, text, ...rect });
@@ -79,30 +82,35 @@ function useTextSelection(target?: BasicTarget<Document | Element>): State {
       // 任意点击都需要清空之前的 range
       const mousedownHandler = (e) => {
         // 如果是鼠标右键需要跳过 这样选中的数据就不会被清空
-        if (e.button === 2) return;
-
-        if (!window.getSelection) return;
+        if (e.button === 2) {
+          return;
+        }
+        if (!window.getSelection) {
+          return;
+        }
         if (stateRef.current.text) {
           setState({ ...initState });
         }
         isInRangeRef.current = false;
         const selObj = window.getSelection();
-        if (!selObj) return;
+        if (!selObj) {
+          return;
+        }
         selObj.removeAllRanges();
         isInRangeRef.current = el.contains(e.target);
       };
 
-      el.addEventListener('mouseup', mouseupHandler);
+      el.addEventListener("mouseup", mouseupHandler);
 
-      document.addEventListener('mousedown', mousedownHandler);
+      document.addEventListener("mousedown", mousedownHandler);
 
       return () => {
-        el.removeEventListener('mouseup', mouseupHandler);
-        document.removeEventListener('mousedown', mousedownHandler);
+        el.removeEventListener("mouseup", mouseupHandler);
+        document.removeEventListener("mousedown", mousedownHandler);
       };
     },
     [],
-    target,
+    target
   );
 
   return state;

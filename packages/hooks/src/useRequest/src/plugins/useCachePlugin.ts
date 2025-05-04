@@ -1,11 +1,11 @@
-import { useRef } from 'react';
-import useCreation from '../../../useCreation';
-import useUnmount from '../../../useUnmount';
-import type { Plugin } from '../types';
-import { setCache, getCache } from '../utils/cache';
-import type { CachedData } from '../utils/cache';
-import { setCachePromise, getCachePromise } from '../utils/cachePromise';
-import { trigger, subscribe } from '../utils/cacheSubscribe';
+import { useRef } from "react";
+import useCreation from "../../../useCreation";
+import useUnmount from "../../../useUnmount";
+import type { Plugin } from "../types";
+import { setCache, getCache } from "../utils/cache";
+import type { CachedData } from "../utils/cache";
+import { setCachePromise, getCachePromise } from "../utils/cachePromise";
+import { trigger, subscribe } from "../utils/cacheSubscribe";
 
 const useCachePlugin: Plugin<any, any[]> = (
   fetchInstance,
@@ -15,11 +15,11 @@ const useCachePlugin: Plugin<any, any[]> = (
     staleTime = 0,
     setCache: customSetCache,
     getCache: customGetCache,
-  },
+  }
 ) => {
-  const unSubscribeRef = useRef<() => void>();
+  const unSubscribeRef = useRef<() => void>(null);
 
-  const currentPromiseRef = useRef<Promise<any>>();
+  const currentPromiseRef = useRef<Promise<any>>(null);
 
   const _setCache = (key: string, cachedData: CachedData) => {
     if (customSetCache) {
@@ -44,10 +44,13 @@ const useCachePlugin: Plugin<any, any[]> = (
 
     // get data from cache when init
     const cacheData = _getCache(cacheKey);
-    if (cacheData && Object.hasOwnProperty.call(cacheData, 'data')) {
+    if (cacheData && Object.hasOwnProperty.call(cacheData, "data")) {
       fetchInstance.state.data = cacheData.data;
       fetchInstance.state.params = cacheData.params;
-      if (staleTime === -1 || new Date().getTime() - cacheData.time <= staleTime) {
+      if (
+        staleTime === -1 ||
+        new Date().getTime() - cacheData.time <= staleTime
+      ) {
         fetchInstance.state.loading = false;
       }
     }
@@ -70,12 +73,15 @@ const useCachePlugin: Plugin<any, any[]> = (
     onBefore: (params) => {
       const cacheData = _getCache(cacheKey, params);
 
-      if (!cacheData || !Object.hasOwnProperty.call(cacheData, 'data')) {
+      if (!cacheData || !Object.hasOwnProperty.call(cacheData, "data")) {
         return {};
       }
 
       // If the data is fresh, stop request
-      if (staleTime === -1 || new Date().getTime() - cacheData.time <= staleTime) {
+      if (
+        staleTime === -1 ||
+        new Date().getTime() - cacheData.time <= staleTime
+      ) {
         return {
           loading: false,
           data: cacheData?.data,

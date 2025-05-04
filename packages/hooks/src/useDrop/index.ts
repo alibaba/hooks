@@ -1,8 +1,8 @@
-import useLatest from '../useLatest';
-import type { BasicTarget } from '../utils/domTarget';
-import { getTargetElement } from '../utils/domTarget';
-import useEffectWithTarget from '../utils/useEffectWithTarget';
-import { useRef } from 'react';
+import useLatest from "../useLatest";
+import type { BasicTarget } from "../utils/domTarget";
+import { getTargetElement } from "../utils/domTarget";
+import useEffectWithTarget from "../utils/useEffectWithTarget";
+import { useRef } from "react";
 
 export interface Options {
   onFiles?: (files: File[], event?: React.DragEvent) => void;
@@ -20,7 +20,7 @@ const useDrop = (target: BasicTarget, options: Options = {}) => {
   const optionsRef = useLatest(options);
 
   // https://stackoverflow.com/a/26459269
-  const dragEnterTarget = useRef<any>();
+  const dragEnterTarget = useRef<EventTarget>(null);
 
   useEffectWithTarget(
     () => {
@@ -31,16 +31,16 @@ const useDrop = (target: BasicTarget, options: Options = {}) => {
 
       const onData = (
         dataTransfer: DataTransfer,
-        event: React.DragEvent | React.ClipboardEvent,
+        event: React.DragEvent | React.ClipboardEvent
       ) => {
-        const uri = dataTransfer.getData('text/uri-list');
-        const dom = dataTransfer.getData('custom');
+        const uri = dataTransfer.getData("text/uri-list");
+        const dom = dataTransfer.getData("custom");
 
         if (dom && optionsRef.current.onDom) {
           let data = dom;
           try {
             data = JSON.parse(dom);
-          } catch (e) {
+          } catch {
             data = dom;
           }
           optionsRef.current.onDom(data, event as React.DragEvent);
@@ -52,12 +52,23 @@ const useDrop = (target: BasicTarget, options: Options = {}) => {
           return;
         }
 
-        if (dataTransfer.files && dataTransfer.files.length && optionsRef.current.onFiles) {
-          optionsRef.current.onFiles(Array.from(dataTransfer.files), event as React.DragEvent);
+        if (
+          dataTransfer.files &&
+          dataTransfer.files.length &&
+          optionsRef.current.onFiles
+        ) {
+          optionsRef.current.onFiles(
+            Array.from(dataTransfer.files),
+            event as React.DragEvent
+          );
           return;
         }
 
-        if (dataTransfer.items && dataTransfer.items.length && optionsRef.current.onText) {
+        if (
+          dataTransfer.items &&
+          dataTransfer.items.length &&
+          optionsRef.current.onText
+        ) {
           dataTransfer.items[0].getAsString((text) => {
             optionsRef.current.onText!(text, event as React.ClipboardEvent);
           });
@@ -94,22 +105,22 @@ const useDrop = (target: BasicTarget, options: Options = {}) => {
         optionsRef.current.onPaste?.(event);
       };
 
-      targetElement.addEventListener('dragenter', onDragEnter as any);
-      targetElement.addEventListener('dragover', onDragOver as any);
-      targetElement.addEventListener('dragleave', onDragLeave as any);
-      targetElement.addEventListener('drop', onDrop as any);
-      targetElement.addEventListener('paste', onPaste as any);
+      targetElement.addEventListener("dragenter", onDragEnter as any);
+      targetElement.addEventListener("dragover", onDragOver as any);
+      targetElement.addEventListener("dragleave", onDragLeave as any);
+      targetElement.addEventListener("drop", onDrop as any);
+      targetElement.addEventListener("paste", onPaste as any);
 
       return () => {
-        targetElement.removeEventListener('dragenter', onDragEnter as any);
-        targetElement.removeEventListener('dragover', onDragOver as any);
-        targetElement.removeEventListener('dragleave', onDragLeave as any);
-        targetElement.removeEventListener('drop', onDrop as any);
-        targetElement.removeEventListener('paste', onPaste as any);
+        targetElement.removeEventListener("dragenter", onDragEnter as any);
+        targetElement.removeEventListener("dragover", onDragOver as any);
+        targetElement.removeEventListener("dragleave", onDragLeave as any);
+        targetElement.removeEventListener("drop", onDrop as any);
+        targetElement.removeEventListener("paste", onPaste as any);
       };
     },
     [],
-    target,
+    target
   );
 };
 

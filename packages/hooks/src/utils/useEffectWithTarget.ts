@@ -1,5 +1,5 @@
-import { useEffect } from 'react';
-import createEffectWithTarget from './createEffectWithTarget';
+import { useEffect } from "react";
+import createEffectWithTarget from "./createEffectWithTarget";
 
 const useEffectWithTarget = createEffectWithTarget(useEffect);
 

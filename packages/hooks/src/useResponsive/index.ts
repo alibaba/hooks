@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react';
-import isBrowser from '../utils/isBrowser';
+import { useEffect, useState } from "react";
+import isBrowser from "../utils/isBrowser";
 
 type Subscriber = () => void;
 
@@ -21,7 +21,9 @@ let responsiveConfig: ResponsiveConfig = {
 function handleResize() {
   const oldInfo = info;
   calculate();
-  if (oldInfo === info) return;
+  if (oldInfo === info) {
+    return;
+  }
   for (const subscriber of subscribers) {
     subscriber();
   }
@@ -53,18 +55,20 @@ function useResponsive() {
   if (isBrowser && !listening) {
     info = {};
     calculate();
-    window.addEventListener('resize', handleResize);
+    window.addEventListener("resize", handleResize);
     listening = true;
   }
   const [state, setState] = useState<ResponsiveInfo>(info);
 
   useEffect(() => {
-    if (!isBrowser) return;
+    if (!isBrowser) {
+      return;
+    }
 
     // In React 18's StrictMode, useEffect perform twice, resize listener is remove, so handleResize is never perform.
     // https://github.com/alibaba/hooks/issues/1910
     if (!listening) {
-      window.addEventListener('resize', handleResize);
+      window.addEventListener("resize", handleResize);
     }
 
     const subscriber = () => {
@@ -75,7 +79,7 @@ function useResponsive() {
     return () => {
       subscribers.delete(subscriber);
       if (subscribers.size === 0) {
-        window.removeEventListener('resize', handleResize);
+        window.removeEventListener("resize", handleResize);
         listening = false;
       }
     };

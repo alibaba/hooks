@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react';
-import { isObject } from '../utils';
+import { useEffect, useState } from "react";
+import { isObject } from "../utils";
 
 export interface NetworkState {
   since?: Date;
@@ -13,20 +13,24 @@ export interface NetworkState {
 }
 
 enum NetworkEventType {
-  ONLINE = 'online',
-  OFFLINE = 'offline',
-  CHANGE = 'change',
+  ONLINE = "online",
+  OFFLINE = "offline",
+  CHANGE = "change",
 }
 
 function getConnection() {
   const nav = navigator as any;
-  if (!isObject(nav)) return null;
+  if (!isObject(nav)) {
+    return null;
+  }
   return nav.connection || nav.mozConnection || nav.webkitConnection;
 }
 
 function getConnectionProperty(): NetworkState {
   const c = getConnection();
-  if (!c) return {};
+  if (!c) {
+    return {};
+  }
   return {
     rtt: c.rtt,
     type: c.type,
@@ -79,7 +83,10 @@ function useNetwork(): NetworkState {
     return () => {
       window.removeEventListener(NetworkEventType.ONLINE, onOnline);
       window.removeEventListener(NetworkEventType.OFFLINE, onOffline);
-      connection?.removeEventListener(NetworkEventType.CHANGE, onConnectionChange);
+      connection?.removeEventListener(
+        NetworkEventType.CHANGE,
+        onConnectionChange
+      );
     };
   }, []);
 

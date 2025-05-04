@@ -1,11 +1,18 @@
-import type { DependencyList, EffectCallback, useEffect, useLayoutEffect } from 'react';
-import { useRef } from 'react';
-import useUnmount from '../useUnmount';
-import depsAreSame from './depsAreSame';
-import type { BasicTarget } from './domTarget';
-import { getTargetElement } from './domTarget';
+import type {
+  DependencyList,
+  EffectCallback,
+  useEffect,
+  useLayoutEffect,
+} from "react";
+import { useRef } from "react";
+import useUnmount from "../useUnmount";
+import depsAreSame from "./depsAreSame";
+import type { BasicTarget } from "./domTarget";
+import { getTargetElement } from "./domTarget";
 
-const createEffectWithTarget = (useEffectType: typeof useEffect | typeof useLayoutEffect) => {
+const createEffectWithTarget = (
+  useEffectType: typeof useEffect | typeof useLayoutEffect
+) => {
   /**
    *
    * @param effect
@@ -15,14 +22,14 @@ const createEffectWithTarget = (useEffectType: typeof useEffect | typeof useLayo
   const useEffectWithTarget = (
     effect: EffectCallback,
     deps: DependencyList,
-    target: BasicTarget<any> | BasicTarget<any>[],
+    target: BasicTarget<any> | BasicTarget<any>[]
   ) => {
     const hasInitRef = useRef(false);
 
     const lastElementRef = useRef<(Element | null)[]>([]);
     const lastDepsRef = useRef<DependencyList>([]);
 
-    const unLoadRef = useRef<any>();
+    const unLoadRef = useRef<any>(null);
 
     useEffectType(() => {
       const targets = Array.isArray(target) ? target : [target];
