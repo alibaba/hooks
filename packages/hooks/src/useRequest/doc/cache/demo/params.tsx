@@ -1,14 +1,14 @@
-import { useBoolean } from "ahooks";
-import useRequest from "../../../";
-import Mock from "mockjs";
-import React, { useState } from "react";
+import { useBoolean } from 'ahooks';
+import useRequest from '../../../';
+import Mock from 'mockjs';
+import React, { useState } from 'react';
 
 const getArticle = async (keyword: string) => {
-  console.log("cacheKey", keyword);
+  console.log('cacheKey', keyword);
   return new Promise<{ data: string; time: number }>((resolve) => {
     setTimeout(() => {
       resolve({
-        data: Mock.mock("@paragraph"),
+        data: Mock.mock('@paragraph'),
         time: Date.now(),
       });
     }, 1000);
@@ -17,10 +17,10 @@ const getArticle = async (keyword: string) => {
 
 const Article = () => {
   const { data, params, loading, run } = useRequest(getArticle, {
-    cacheKey: "cacheKey-demo",
+    cacheKey: 'cacheKey-demo',
   });
 
-  const [keyword, setKeyword] = useState(params[0] || "");
+  const [keyword, setKeyword] = useState(params[0] || '');
 
   if (!data && loading) {
     return <p>Loading</p>;
@@ -42,7 +42,7 @@ const Article = () => {
           Get
         </button>
       </div>
-      <p>Background loading: {loading ? "true" : "false"}</p>
+      <p>Background loading: {loading ? 'true' : 'false'}</p>
       <p>Latest request time: {data?.time}</p>
       <p>Keyword: {keyword}</p>
       <p>{data?.data}</p>
@@ -54,11 +54,7 @@ export default () => {
   const [state, { toggle }] = useBoolean();
   return (
     <div>
-      <button
-        type="button"
-        onClick={() => toggle()}
-        style={{ marginBottom: 16 }}
-      >
+      <button type='button' onClick={() => toggle()} style={{ marginBottom: 16 }}>
         show/hidden
       </button>
       {state && <Article />}
