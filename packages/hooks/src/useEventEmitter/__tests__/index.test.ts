@@ -1,8 +1,8 @@
-import { renderHook, act } from "@testing-library/react";
-import { useState } from "react";
-import useEventEmitter from "../index";
+import { renderHook, act } from '@testing-library/react';
+import { useState } from 'react';
+import useEventEmitter from '../index';
 
-describe("useEventEmitter", () => {
+describe('useEventEmitter', () => {
   const setUp = () =>
     renderHook(() => {
       const event$ = useEventEmitter<number>();
@@ -19,7 +19,7 @@ describe("useEventEmitter", () => {
       };
     });
 
-  it("emit and subscribe should work", () => {
+  it('emit and subscribe should work', () => {
     const hook = setUp();
     act(() => {
       hook.result.current.event$.emit(1);

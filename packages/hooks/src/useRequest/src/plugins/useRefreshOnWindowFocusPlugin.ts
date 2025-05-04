@@ -1,12 +1,12 @@
-import { useEffect, useRef } from "react";
-import useUnmount from "../../../useUnmount";
-import type { Plugin } from "../types";
-import limit from "../utils/limit";
-import subscribeFocus from "../utils/subscribeFocus";
+import { useEffect, useRef } from 'react';
+import useUnmount from '../../../useUnmount';
+import type { Plugin } from '../types';
+import limit from '../utils/limit';
+import subscribeFocus from '../utils/subscribeFocus';
 
 const useRefreshOnWindowFocusPlugin: Plugin<any, any[]> = (
   fetchInstance,
-  { refreshOnWindowFocus, focusTimespan = 5000 }
+  { refreshOnWindowFocus, focusTimespan = 5000 },
 ) => {
   const unsubscribeRef = useRef<() => void>(null);
 
@@ -16,10 +16,7 @@ const useRefreshOnWindowFocusPlugin: Plugin<any, any[]> = (
 
   useEffect(() => {
     if (refreshOnWindowFocus) {
-      const limitRefresh = limit(
-        fetchInstance.refresh.bind(fetchInstance),
-        focusTimespan
-      );
+      const limitRefresh = limit(fetchInstance.refresh.bind(fetchInstance), focusTimespan);
       unsubscribeRef.current = subscribeFocus(() => {
         limitRefresh();
       });

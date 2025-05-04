@@ -1,7 +1,7 @@
-import type { RenderHookResult } from "@testing-library/react";
-import { act, renderHook } from "@testing-library/react";
-import useThrottleFn from "../index";
-import { sleep } from "../../utils/testingHelpers";
+import type { RenderHookResult } from '@testing-library/react';
+import { act, renderHook } from '@testing-library/react';
+import useThrottleFn from '../index';
+import { sleep } from '../../utils/testingHelpers';
 
 interface ParamsObj {
   fn: (...arg: any) => any;
@@ -9,13 +9,12 @@ interface ParamsObj {
   wait: number;
 }
 
-const setUp = ({ fn, wait }: ParamsObj) =>
-  renderHook(() => useThrottleFn(fn, { wait }));
+const setUp = ({ fn, wait }: ParamsObj) => renderHook(() => useThrottleFn(fn, { wait }));
 
 let hook: RenderHookResult<any, any>;
 
-describe("useThrottleFn", () => {
-  it("run, cancel and flush should work", async () => {
+describe('useThrottleFn', () => {
+  it('run, cancel and flush should work', async () => {
     let count = 0;
     const throttleFn = (gap: number) => {
       count += gap;
