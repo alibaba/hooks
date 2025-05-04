@@ -1,13 +1,7 @@
 /* eslint-disable @typescript-eslint/no-parameter-properties */
-import { isFunction } from "../../utils";
-import type React from "react";
-import type {
-  FetchState,
-  Options,
-  PluginReturn,
-  Service,
-  Subscribe,
-} from "./types";
+import { isFunction } from '../../utils';
+import type React from 'react';
+import type { FetchState, Options, PluginReturn, Service, Subscribe } from './types';
 
 export default class Fetch<TData, TParams extends any[]> {
   pluginImpls: PluginReturn<TData, TParams>[];
@@ -25,7 +19,7 @@ export default class Fetch<TData, TParams extends any[]> {
     public serviceRef: React.RefObject<Service<TData, TParams>>,
     public options: Options<TData, TParams>,
     public subscribe: Subscribe,
-    public initState: Partial<FetchState<TData, TParams>> = {}
+    public initState: Partial<FetchState<TData, TParams>> = {},
   ) {
     this.state = {
       ...this.state,
@@ -56,7 +50,7 @@ export default class Fetch<TData, TParams extends any[]> {
       stopNow = false,
       returnNow = false,
       ...state
-    } = this.runPluginHandler("onBefore", params);
+    } = this.runPluginHandler('onBefore', params);
 
     // stop request
     if (stopNow) {
@@ -78,11 +72,7 @@ export default class Fetch<TData, TParams extends any[]> {
 
     try {
       // replace service
-      let { servicePromise } = this.runPluginHandler(
-        "onRequest",
-        this.serviceRef.current,
-        params
-      );
+      let { servicePromise } = this.runPluginHandler('onRequest', this.serviceRef.current, params);
 
       if (!servicePromise) {
         servicePromise = this.serviceRef.current(...params);
@@ -104,12 +94,12 @@ export default class Fetch<TData, TParams extends any[]> {
       });
 
       this.options.onSuccess?.(res, params);
-      this.runPluginHandler("onSuccess", res, params);
+      this.runPluginHandler('onSuccess', res, params);
 
       this.options.onFinally?.(params, res, undefined);
 
       if (currentCount === this.count) {
-        this.runPluginHandler("onFinally", params, res, undefined);
+        this.runPluginHandler('onFinally', params, res, undefined);
       }
 
       return res;
@@ -125,12 +115,12 @@ export default class Fetch<TData, TParams extends any[]> {
       });
 
       this.options.onError?.(error, params);
-      this.runPluginHandler("onError", error, params);
+      this.runPluginHandler('onError', error, params);
 
       this.options.onFinally?.(params, undefined, error);
 
       if (currentCount === this.count) {
-        this.runPluginHandler("onFinally", params, undefined, error);
+        this.runPluginHandler('onFinally', params, undefined, error);
       }
 
       throw error;
@@ -151,7 +141,7 @@ export default class Fetch<TData, TParams extends any[]> {
       loading: false,
     });
 
-    this.runPluginHandler("onCancel");
+    this.runPluginHandler('onCancel');
   }
 
   refresh() {
@@ -166,7 +156,7 @@ export default class Fetch<TData, TParams extends any[]> {
 
   mutate(data?: TData | ((oldData?: TData) => TData | undefined)) {
     const targetData = isFunction(data) ? data(this.state.data) : data;
-    this.runPluginHandler("onMutate", targetData);
+    this.runPluginHandler('onMutate', targetData);
     this.setState({
       data: targetData,
     });
