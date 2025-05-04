@@ -1,19 +1,19 @@
-import type { RenderHookResult } from "@testing-library/react";
-import { act, renderHook, waitFor } from "@testing-library/react";
-import useRequest from "../index";
-import { request } from "../../utils/testingHelpers";
+import type { RenderHookResult } from '@testing-library/react';
+import { act, renderHook, waitFor } from '@testing-library/react';
+import useRequest from '../index';
+import { request } from '../../utils/testingHelpers';
 
-describe("useRetryPlugin", () => {
+describe('useRetryPlugin', () => {
   jest.useFakeTimers();
 
   const setUp = (
     service: Parameters<typeof useRequest>[0],
-    options: Parameters<typeof useRequest>[1]
+    options: Parameters<typeof useRequest>[1],
   ) => renderHook((o) => useRequest(service, o || options));
 
   let hook: RenderHookResult<any, any>;
 
-  it("useRetryPlugin should work", async () => {
+  it('useRetryPlugin should work', async () => {
     let errorCallback: jest.Mock | undefined = undefined;
     act(() => {
       errorCallback = jest.fn();

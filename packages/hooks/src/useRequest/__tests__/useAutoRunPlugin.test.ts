@@ -1,19 +1,19 @@
-import type { RenderHookResult } from "@testing-library/react";
-import { act, renderHook, waitFor } from "@testing-library/react";
-import useRequest from "../index";
-import { request } from "../../utils/testingHelpers";
+import type { RenderHookResult } from '@testing-library/react';
+import { act, renderHook, waitFor } from '@testing-library/react';
+import useRequest from '../index';
+import { request } from '../../utils/testingHelpers';
 
-describe("useAutoRunPlugin", () => {
+describe('useAutoRunPlugin', () => {
   jest.useFakeTimers();
 
   const setUp = (
     service: Parameters<typeof useRequest>[0],
-    options: Parameters<typeof useRequest>[1]
+    options: Parameters<typeof useRequest>[1],
   ) => renderHook((o) => useRequest(service, o || options));
 
   let hook: RenderHookResult<any, any>;
 
-  it("useAutoRunPlugin ready should work", async () => {
+  it('useAutoRunPlugin ready should work', async () => {
     let dep = 1;
     act(() => {
       hook = setUp(request, {
@@ -44,7 +44,7 @@ describe("useAutoRunPlugin", () => {
     expect(hook.result.current.loading).toBe(false);
   });
 
-  it("useAutoRunPlugin manual=false ready=true work fine", async () => {
+  it('useAutoRunPlugin manual=false ready=true work fine', async () => {
     act(() => {
       hook = setUp(request, {
         ready: true,
@@ -73,7 +73,7 @@ describe("useAutoRunPlugin", () => {
     await waitFor(() => expect(hook.result.current.loading).toBe(false));
   });
 
-  it("useAutoRunPlugin manual=false ready=false work fine", async () => {
+  it('useAutoRunPlugin manual=false ready=false work fine', async () => {
     act(() => {
       hook = setUp(request, {
         ready: false,
@@ -98,7 +98,7 @@ describe("useAutoRunPlugin", () => {
     expect(hook.result.current.loading).toBe(false);
   });
 
-  it("useAutoRunPlugin manual=false ready&defaultParams work fine", async () => {
+  it('useAutoRunPlugin manual=false ready&defaultParams work fine', async () => {
     act(() => {
       hook = setUp(request, {
         ready: false,
@@ -137,7 +137,7 @@ describe("useAutoRunPlugin", () => {
     expect(hook.result.current.params).toEqual([3]);
   });
 
-  it("useAutoRunPlugin manual=true ready work fine", async () => {
+  it('useAutoRunPlugin manual=true ready work fine', async () => {
     act(() => {
       hook = setUp(request, {
         ready: false,
@@ -166,7 +166,7 @@ describe("useAutoRunPlugin", () => {
     await waitFor(() => expect(hook.result.current.loading).toBe(false));
   });
 
-  it("useAutoRunPlugin manual=false refreshDeps should work", async () => {
+  it('useAutoRunPlugin manual=false refreshDeps should work', async () => {
     let dep = 1;
     act(() => {
       hook = setUp(request, {
@@ -197,7 +197,7 @@ describe("useAutoRunPlugin", () => {
     expect(hook.result.current.loading).toBe(false);
   });
 
-  it("useAutoRunPlugin manual=true refreshDeps should work", async () => {
+  it('useAutoRunPlugin manual=true refreshDeps should work', async () => {
     let dep = 1;
     act(() => {
       hook = setUp(request, {
@@ -215,7 +215,7 @@ describe("useAutoRunPlugin", () => {
     expect(hook.result.current.loading).toBe(false);
   });
 
-  it("useAutoRunPlugin refreshDepsAction should work", async () => {
+  it('useAutoRunPlugin refreshDepsAction should work', async () => {
     let dep = 1;
     let count = 0;
     const refreshDepsAction = () => {
@@ -258,13 +258,13 @@ describe("useAutoRunPlugin", () => {
     expect(count).toBe(2);
   });
 
-  it("useAutoRunPlugin ready & refreshDeps change same time work fine", async () => {
+  it('useAutoRunPlugin ready & refreshDeps change same time work fine', async () => {
     const fn = jest.fn();
 
     const asyncFn = () => {
       return new Promise<string>((resolve) => {
         fn();
-        return resolve("success");
+        return resolve('success');
       });
     };
 
