@@ -1,12 +1,12 @@
-import type { RenderHookResult } from "@testing-library/react";
-import { act, renderHook } from "@testing-library/react";
-import useThrottleEffect from "../index";
-import { sleep } from "../../utils/testingHelpers";
+import type { RenderHookResult } from '@testing-library/react';
+import { act, renderHook } from '@testing-library/react';
+import useThrottleEffect from '../index';
+import { sleep } from '../../utils/testingHelpers';
 
 let hook: RenderHookResult<any, any>;
 
-describe("useThrottleEffect", () => {
-  it("useThrottleEffect should work", async () => {
+describe('useThrottleEffect', () => {
+  it('useThrottleEffect should work', async () => {
     const mockEffect = jest.fn(() => {});
     const mockCleanUp = jest.fn(() => {});
     act(() => {
@@ -20,9 +20,9 @@ describe("useThrottleEffect", () => {
               };
             },
             [value],
-            { wait }
+            { wait },
           ),
-        { initialProps: { value: 1, wait: 200 } }
+        { initialProps: { value: 1, wait: 200 } },
       );
     });
 
@@ -47,7 +47,7 @@ describe("useThrottleEffect", () => {
     expect(mockCleanUp.mock.calls.length).toBe(2);
   });
 
-  it("should cancel timeout on unmount", async () => {
+  it('should cancel timeout on unmount', async () => {
     const mockEffect = jest.fn(() => {});
     const mockCleanUp = jest.fn(() => {});
 
@@ -61,9 +61,9 @@ describe("useThrottleEffect", () => {
             };
           },
           [props],
-          { wait: 200 }
+          { wait: 200 },
         ),
-      { initialProps: 0 }
+      { initialProps: 0 },
     );
 
     await act(async () => {

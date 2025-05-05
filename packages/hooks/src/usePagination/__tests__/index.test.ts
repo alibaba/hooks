@@ -1,13 +1,13 @@
-import type { RenderHookResult } from "@testing-library/react";
-import { renderHook, act, waitFor } from "@testing-library/react";
-import usePagination from "../";
+import type { RenderHookResult } from '@testing-library/react';
+import { renderHook, act, waitFor } from '@testing-library/react';
+import usePagination from '../';
 
 // 初始化
 // 基本 action
 // refreshDeps
 // cache
 
-describe("usePagination", () => {
+describe('usePagination', () => {
   let queryArgs: any;
   const asyncFn = (query: any) => {
     queryArgs = query;
@@ -21,12 +21,12 @@ describe("usePagination", () => {
 
   const setUp = (
     service: Parameters<typeof usePagination>[0],
-    options: Parameters<typeof usePagination>[1]
+    options: Parameters<typeof usePagination>[1],
   ) => renderHook((o) => usePagination(service, o || options));
 
   let hook: RenderHookResult<any, any>;
 
-  it("should fetch after first render", async () => {
+  it('should fetch after first render', async () => {
     queryArgs = undefined;
     act(() => {
       hook = setUp(asyncFn, {});
@@ -42,7 +42,7 @@ describe("usePagination", () => {
     expect(hook.result.current.pagination.totalPage).toBe(6);
   });
 
-  it("should action work", async () => {
+  it('should action work', async () => {
     queryArgs = undefined;
     act(() => {
       hook = setUp(asyncFn, {});
@@ -89,7 +89,7 @@ describe("usePagination", () => {
     expect(hook.result.current.pagination.totalPage).toBe(6);
   });
 
-  it("should refreshDeps work", async () => {
+  it('should refreshDeps work', async () => {
     queryArgs = undefined;
     let dep = 1;
     act(() => {
@@ -121,7 +121,7 @@ describe("usePagination", () => {
     expect(hook.result.current.pagination.pageSize).toBe(20);
   });
 
-  it("should default params work", async () => {
+  it('should default params work', async () => {
     queryArgs = undefined;
     act(() => {
       hook = setUp(asyncFn, {
