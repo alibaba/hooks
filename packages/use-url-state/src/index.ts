@@ -1,15 +1,15 @@
-import { useMemoizedFn, useUpdate } from "ahooks";
-import qs from "query-string";
-import type { ParseOptions, StringifyOptions } from "query-string";
-import { useMemo, useRef } from "react";
-import type * as React from "react";
-import * as tmp from "react-router";
+import { useMemoizedFn, useUpdate } from 'ahooks';
+import qs from 'query-string';
+import type { ParseOptions, StringifyOptions } from 'query-string';
+import { useMemo, useRef } from 'react';
+import type * as React from 'react';
+import * as tmp from 'react-router';
 
 // ignore waring `"export 'useNavigate' (imported as 'rc') was not found in 'react-router'`
 const rc = tmp as any;
 
 export interface Options {
-  navigateMode?: "push" | "replace";
+  navigateMode?: 'push' | 'replace';
   parseOptions?: ParseOptions;
   stringifyOptions?: StringifyOptions;
 }
@@ -28,15 +28,11 @@ type UrlState = Record<string, any>;
 
 const useUrlState = <S extends UrlState = UrlState>(
   initialState?: S | (() => S),
-  options?: Options
+  options?: Options,
 ) => {
   type State = Partial<{ [key in keyof S]: string }>;
 
-  const {
-    navigateMode = "push",
-    parseOptions,
-    stringifyOptions,
-  } = options || {};
+  const { navigateMode = 'push', parseOptions, stringifyOptions } = options || {};
 
   const mergedParseOptions = { ...baseParseConfig, ...parseOptions };
   const mergedStringifyOptions = {
@@ -55,7 +51,7 @@ const useUrlState = <S extends UrlState = UrlState>(
   const update = useUpdate();
 
   const initialStateRef = useRef(
-    typeof initialState === "function" ? initialState() : initialState || {}
+    typeof initialState === 'function' ? initialState() : initialState || {},
   );
 
   const queryFromUrl = useMemo(() => {
@@ -67,11 +63,11 @@ const useUrlState = <S extends UrlState = UrlState>(
       ...initialStateRef.current,
       ...queryFromUrl,
     }),
-    [queryFromUrl]
+    [queryFromUrl],
   );
 
   const setState = (s: React.SetStateAction<State>) => {
-    const newQuery = typeof s === "function" ? s(targetQuery) : s;
+    const newQuery = typeof s === 'function' ? s(targetQuery) : s;
 
     // 1. 如果 setState 后，search 没变化，就需要 update 来触发一次更新。比如 demo1 直接点击 clear，就需要 update 来触发更新。
     // 2. update 和 history 的更新会合并，不会造成多次更新
@@ -80,29 +76,21 @@ const useUrlState = <S extends UrlState = UrlState>(
       history[navigateMode](
         {
           hash: location.hash,
-          search:
-            qs.stringify(
-              { ...queryFromUrl, ...newQuery },
-              mergedStringifyOptions
-            ) || "?",
+          search: qs.stringify({ ...queryFromUrl, ...newQuery }, mergedStringifyOptions) || '?',
         },
-        location.state
+        location.state,
       );
     }
     if (navigate) {
       navigate(
         {
           hash: location.hash,
-          search:
-            qs.stringify(
-              { ...queryFromUrl, ...newQuery },
-              mergedStringifyOptions
-            ) || "?",
+          search: qs.stringify({ ...queryFromUrl, ...newQuery }, mergedStringifyOptions) || '?',
         },
         {
-          replace: navigateMode === "replace",
+          replace: navigateMode === 'replace',
           state: location.state,
-        }
+        },
       );
     }
   };
