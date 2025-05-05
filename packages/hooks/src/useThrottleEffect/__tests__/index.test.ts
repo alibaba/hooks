@@ -1,11 +1,12 @@
-import { act, renderHook } from '@testing-library/react';
-import useThrottleEffect from '../index';
-import { sleep } from '../../utils/testingHelpers';
+import type { RenderHookResult } from "@testing-library/react";
+import { act, renderHook } from "@testing-library/react";
+import useThrottleEffect from "../index";
+import { sleep } from "../../utils/testingHelpers";
 
-let hook;
+let hook: RenderHookResult<any, any>;
 
-describe('useThrottleEffect', () => {
-  it('useThrottleEffect should work', async () => {
+describe("useThrottleEffect", () => {
+  it("useThrottleEffect should work", async () => {
     const mockEffect = jest.fn(() => {});
     const mockCleanUp = jest.fn(() => {});
     act(() => {
@@ -19,9 +20,9 @@ describe('useThrottleEffect', () => {
               };
             },
             [value],
-            { wait },
+            { wait }
           ),
-        { initialProps: { value: 1, wait: 200 } },
+        { initialProps: { value: 1, wait: 200 } }
       );
     });
 
@@ -46,11 +47,11 @@ describe('useThrottleEffect', () => {
     expect(mockCleanUp.mock.calls.length).toBe(2);
   });
 
-  it('should cancel timeout on unmount', async () => {
+  it("should cancel timeout on unmount", async () => {
     const mockEffect = jest.fn(() => {});
     const mockCleanUp = jest.fn(() => {});
 
-    const hook = renderHook(
+    const hook2 = renderHook(
       (props) =>
         useThrottleEffect(
           () => {
@@ -60,18 +61,18 @@ describe('useThrottleEffect', () => {
             };
           },
           [props],
-          { wait: 200 },
+          { wait: 200 }
         ),
-      { initialProps: 0 },
+      { initialProps: 0 }
     );
 
     await act(async () => {
       expect(mockEffect.mock.calls.length).toBe(1);
       expect(mockCleanUp.mock.calls.length).toBe(0);
 
-      hook.rerender(1);
+      hook2.rerender(1);
       await sleep(50);
-      hook.unmount();
+      hook2.unmount();
 
       expect(mockEffect.mock.calls.length).toBe(1);
       expect(mockCleanUp.mock.calls.length).toBe(1);
