@@ -21,7 +21,9 @@ let responsiveConfig: ResponsiveConfig = {
 function handleResize() {
   const oldInfo = info;
   calculate();
-  if (oldInfo === info) return;
+  if (oldInfo === info) {
+    return;
+  }
   for (const subscriber of subscribers) {
     subscriber();
   }
@@ -59,7 +61,9 @@ function useResponsive() {
   const [state, setState] = useState<ResponsiveInfo>(info);
 
   useEffect(() => {
-    if (!isBrowser) return;
+    if (!isBrowser) {
+      return;
+    }
 
     // In React 18's StrictMode, useEffect perform twice, resize listener is remove, so handleResize is never perform.
     // https://github.com/alibaba/hooks/issues/1910

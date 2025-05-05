@@ -6,8 +6,8 @@ export function sleep(time: number) {
   });
 }
 
-export function request(req) {
-  return new Promise((resolve, reject) =>
+export function request(req: any) {
+  return new Promise<string>((resolve, reject) =>
     setTimeout(() => {
       if (req === 0) {
         reject(new Error('fail'));

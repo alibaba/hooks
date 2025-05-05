@@ -7,9 +7,10 @@ const useThrottlePlugin: Plugin<any, any[]> = (
   fetchInstance,
   { throttleWait, throttleLeading, throttleTrailing },
 ) => {
-  const throttledRef = useRef<DebouncedFunc<any>>();
+  const throttledRef = useRef<DebouncedFunc<any>>(null);
 
   const options: ThrottleSettings = {};
+
   if (throttleLeading !== undefined) {
     options.leading = throttleLeading;
   }

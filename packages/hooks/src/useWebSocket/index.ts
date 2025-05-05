@@ -28,10 +28,10 @@ export interface Result {
   disconnect: () => void;
   connect: () => void;
   readyState: ReadyState;
-  webSocketIns?: WebSocket;
+  webSocketIns?: WebSocket | null;
 }
 
-export default function useWebSocket(socketUrl: string, options: Options = {}): Result {
+function useWebSocket(socketUrl: string, options: Options = {}): Result {
   const {
     reconnectLimit = 3,
     reconnectInterval = 3 * 1000,
@@ -49,10 +49,12 @@ export default function useWebSocket(socketUrl: string, options: Options = {}): 
   const onErrorRef = useLatest(onError);
 
   const reconnectTimesRef = useRef(0);
-  const reconnectTimerRef = useRef<ReturnType<typeof setTimeout>>();
-  const websocketRef = useRef<WebSocket>();
+  const reconnectTimerRef = useRef<ReturnType<typeof setTimeout>>(null);
 
-  const [latestMessage, setLatestMessage] = useState<WebSocketEventMap['message']>();
+  const websocketRef = useRef<WebSocket>(null);
+
+  const [latestMessage, setLatestMessage] = useState<MessageEvent>();
+
   const [readyState, setReadyState] = useState<ReadyState>(ReadyState.Closed);
 
   const reconnect = () => {
@@ -142,7 +144,7 @@ export default function useWebSocket(socketUrl: string, options: Options = {}): 
 
     reconnectTimesRef.current = reconnectLimit;
     websocketRef.current?.close();
-    websocketRef.current = undefined;
+    websocketRef.current = null;
   };
 
   useEffect(() => {
@@ -164,3 +166,5 @@ export default function useWebSocket(socketUrl: string, options: Options = {}): 
     webSocketIns: websocketRef.current,
   };
 }
+
+export default useWebSocket;

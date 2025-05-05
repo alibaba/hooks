@@ -67,7 +67,9 @@ function useTextSelection(target?: BasicTarget<Document | Element>): State {
         let selObj: Selection | null = null;
         let text = '';
         let rect = initRect;
-        if (!window.getSelection) return;
+        if (!window.getSelection) {
+          return;
+        }
         selObj = window.getSelection();
         text = selObj ? selObj.toString() : '';
         if (text && isInRangeRef.current) {
@@ -79,15 +81,20 @@ function useTextSelection(target?: BasicTarget<Document | Element>): State {
       // 任意点击都需要清空之前的 range
       const mousedownHandler = (e) => {
         // 如果是鼠标右键需要跳过 这样选中的数据就不会被清空
-        if (e.button === 2) return;
-
-        if (!window.getSelection) return;
+        if (e.button === 2) {
+          return;
+        }
+        if (!window.getSelection) {
+          return;
+        }
         if (stateRef.current.text) {
           setState({ ...initState });
         }
         isInRangeRef.current = false;
         const selObj = window.getSelection();
-        if (!selObj) return;
+        if (!selObj) {
+          return;
+        }
         selObj.removeAllRanges();
         isInRangeRef.current = el.contains(e.target);
       };

@@ -1,3 +1,4 @@
+import type { RenderHookResult } from '@testing-library/react';
 import { act, renderHook, waitFor } from '@testing-library/react';
 import useRequest from '../index';
 import { request } from '../../utils/testingHelpers';
@@ -5,9 +6,12 @@ import { request } from '../../utils/testingHelpers';
 describe('useAutoRunPlugin', () => {
   jest.useFakeTimers();
 
-  const setUp = (service, options) => renderHook((o) => useRequest(service, o || options));
+  const setUp = (
+    service: Parameters<typeof useRequest>[0],
+    options: Parameters<typeof useRequest>[1],
+  ) => renderHook((o) => useRequest(service, o || options));
 
-  let hook;
+  let hook: RenderHookResult<any, any>;
 
   it('useAutoRunPlugin ready should work', async () => {
     let dep = 1;
@@ -258,7 +262,7 @@ describe('useAutoRunPlugin', () => {
     const fn = jest.fn();
 
     const asyncFn = () => {
-      return new Promise((resolve) => {
+      return new Promise<string>((resolve) => {
         fn();
         return resolve('success');
       });

@@ -3,16 +3,16 @@ import React from 'react';
 import { useRequest, clearCache, useBoolean } from 'ahooks';
 import { message } from 'antd';
 
-async function getArticle(): Promise<{ data: string; time: number }> {
-  return new Promise((resolve) => {
+const getArticle = async () => {
+  return new Promise<{ data: string; time: number }>((resolve) => {
     setTimeout(() => {
       resolve({
         data: Mock.mock('@paragraph'),
-        time: new Date().getTime(),
+        time: Date.now(),
       });
     }, 3000);
   });
-}
+};
 
 const Article = ({ cacheKey }) => {
   const { data, loading } = useRequest(getArticle, {
@@ -41,7 +41,7 @@ export default () => {
   return (
     <div>
       <p>
-        <button type="button" onClick={() => toggle()}>
+        <button type='button' onClick={() => toggle()}>
           show/hidden
         </button>
       </p>
@@ -58,11 +58,11 @@ export default () => {
         <button onClick={() => clear()}>Clear All</button>
       </p>
       <h2>Article 1</h2>
-      {state && <Article cacheKey="Article1" />}
+      {state && <Article cacheKey='Article1' />}
       <h2>Article 2</h2>
-      {state && <Article cacheKey="Article2" />}
+      {state && <Article cacheKey='Article2' />}
       <h2>Article 3</h2>
-      {state && <Article cacheKey="Article3" />}
+      {state && <Article cacheKey='Article3' />}
     </div>
   );
 };

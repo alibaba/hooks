@@ -74,7 +74,7 @@ const useVirtualList = <T = any>(list: T[], options: Options<T>) => {
     }
     const height = list
       .slice(0, index)
-      .reduce((sum, _, i) => sum + (itemHeightRef.current as ItemHeight<T>)(i, list[i]), 0);
+      .reduce<number>((sum, _, i) => sum + (itemHeightRef.current as ItemHeight<T>)(i, list[i]), 0);
     return height;
   };
 
@@ -82,7 +82,7 @@ const useVirtualList = <T = any>(list: T[], options: Options<T>) => {
     if (isNumber(itemHeightRef.current)) {
       return list.length * itemHeightRef.current;
     }
-    return list.reduce(
+    return list.reduce<number>(
       (sum, _, index) => sum + (itemHeightRef.current as ItemHeight<T>)(index, list[index]),
       0,
     );

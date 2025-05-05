@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import React from 'react';
 import { isObject } from '../utils';
 
 export interface NetworkState {
@@ -20,13 +20,17 @@ enum NetworkEventType {
 
 function getConnection() {
   const nav = navigator as any;
-  if (!isObject(nav)) return null;
+  if (!isObject(nav)) {
+    return null;
+  }
   return nav.connection || nav.mozConnection || nav.webkitConnection;
 }
 
 function getConnectionProperty(): NetworkState {
   const c = getConnection();
-  if (!c) return {};
+  if (!c) {
+    return {};
+  }
   return {
     rtt: c.rtt,
     type: c.type,
@@ -38,7 +42,7 @@ function getConnectionProperty(): NetworkState {
 }
 
 function useNetwork(): NetworkState {
-  const [state, setState] = useState(() => {
+  const [state, setState] = React.useState(() => {
     return {
       since: undefined,
       online: navigator?.onLine,
@@ -46,7 +50,7 @@ function useNetwork(): NetworkState {
     };
   });
 
-  useEffect(() => {
+  React.useEffect(() => {
     const onOnline = () => {
       setState((prevState) => ({
         ...prevState,

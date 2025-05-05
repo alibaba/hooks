@@ -1,8 +1,9 @@
+import type { RenderHookResult } from '@testing-library/react';
 import { act, renderHook } from '@testing-library/react';
 import useThrottle from '../index';
 import { sleep } from '../../utils/testingHelpers';
 
-let hook;
+let hook: RenderHookResult<any, any>;
 
 describe('useThrottle', () => {
   it('default useThrottle should work', async () => {
@@ -32,7 +33,11 @@ describe('useThrottle', () => {
     let mountedState = 0;
     act(() => {
       hook = renderHook(() =>
-        useThrottle(mountedState, { wait: 500, leading: false, trailing: false }),
+        useThrottle(mountedState, {
+          wait: 500,
+          leading: false,
+          trailing: false,
+        }),
       );
     });
 

@@ -2,9 +2,9 @@ import { act, renderHook } from '@testing-library/react';
 import useResetState from '../index';
 
 describe('useResetState', () => {
-  const setUp = (initialState) =>
+  const setUp = <S>(initialValue: S | (() => S)) =>
     renderHook(() => {
-      const [state, setState, resetState] = useResetState(initialState);
+      const [state, setState, resetState] = useResetState(initialValue);
 
       return {
         state,

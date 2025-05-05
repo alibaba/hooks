@@ -6,6 +6,7 @@ import isBrowser from '../utils/isBrowser';
 import useEffectWithTarget from '../utils/useEffectWithTarget';
 
 type EventType = MouseEvent | TouchEvent;
+
 export interface Options {
   delay?: number;
   moveThreshold?: { x?: number; y?: number };
@@ -15,8 +16,9 @@ export interface Options {
 
 const touchSupported =
   isBrowser &&
-  // @ts-ignore
-  ('ontouchstart' in window || (window.DocumentTouch && document instanceof DocumentTouch));
+  ('ontouchstart' in window ||
+    // @ts-ignore
+    (window.DocumentTouch && document instanceof DocumentTouch));
 
 function useLongPress(
   onLongPress: (event: EventType) => void,
@@ -27,7 +29,8 @@ function useLongPress(
   const onClickRef = useLatest(onClick);
   const onLongPressEndRef = useLatest(onLongPressEnd);
 
-  const timerRef = useRef<ReturnType<typeof setTimeout>>();
+  const timerRef = useRef<ReturnType<typeof setTimeout>>(null);
+
   const isTriggeredRef = useRef(false);
   const pervPositionRef = useRef({ x: 0, y: 0 });
   const hasMoveThreshold = !!(
@@ -88,7 +91,7 @@ function useLongPress(
       const onMove = (event: TouchEvent) => {
         if (timerRef.current && overThreshold(event)) {
           clearTimeout(timerRef.current);
-          timerRef.current = undefined;
+          timerRef.current = null;
         }
       };
 
