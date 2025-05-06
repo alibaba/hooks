@@ -1,7 +1,15 @@
 /* eslint-disable @typescript-eslint/no-parameter-properties */
 import { isFunction } from '../../utils';
 import type { MutableRefObject } from 'react';
-import type { FetchState, Options, PluginReturn, Service, Subscribe } from './types';
+import type {
+  FetchState,
+  HookReturnType,
+  HookType,
+  Options,
+  PluginReturn,
+  Service,
+  Subscribe,
+} from './types';
 
 export default class Fetch<TData, TParams extends any[]> {
   pluginImpls: PluginReturn<TData, TParams>[];
@@ -36,7 +44,10 @@ export default class Fetch<TData, TParams extends any[]> {
     this.subscribe();
   }
 
-  runPluginHandler(event: keyof PluginReturn<TData, TParams>, ...rest: any[]) {
+  runPluginHandler<T extends keyof PluginReturn<TData, TParams>>(
+    event: T,
+    ...rest: any[]
+  ): HookReturnType<T, PluginReturn<TData, TParams>, HookType<T, PluginReturn<TData, TParams>>> {
     // @ts-ignore
     const r = this.pluginImpls.map((i) => i[event]?.(...rest)).filter(Boolean);
     return Object.assign({}, ...r);
@@ -50,7 +61,7 @@ export default class Fetch<TData, TParams extends any[]> {
       stopNow = false,
       returnNow = false,
       ...state
-    } = this.runPluginHandler('onBefore', params);
+    } = this.runPluginHandler('onBefore', params) || {};
 
     // stop request
     if (stopNow) {
@@ -65,7 +76,7 @@ export default class Fetch<TData, TParams extends any[]> {
 
     // return now
     if (returnNow) {
-      return Promise.resolve(state.data);
+      return Promise.resolve(state.data as TData);
     }
 
     this.options.onBefore?.(params);
