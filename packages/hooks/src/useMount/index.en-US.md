@@ -16,11 +16,11 @@ A hook that executes a function after the component is mounted.
 ## API
 
 ```typescript
-useMount(fn: () => void);
+useMount(fn: EffectCallback);
 ```
 
 ### Params
 
 | Property | Description                 | Type         | Default |
 | -------- | --------------------------- | ------------ | ------- |
-| fn       | The function to be executed | `() => void` | -       |
+| fn       | The function to be executed | `EffectCallback` | -       |
