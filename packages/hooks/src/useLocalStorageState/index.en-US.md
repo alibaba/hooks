@@ -34,6 +34,7 @@ type SetState<S> = S | ((prevState?: S) => S);
 
 interface Options<T> {
   defaultValue?: T | (() => T);
+  listenStorageChange?: boolean;
   serializer?: (value: T) => string;
   deserializer?: (value: string) => T;
   onError?: (error: unknown) => void;
