@@ -116,4 +116,36 @@ describe('usePollingPlugin', () => {
     });
     await waitFor(() => expect(errorCallback).toHaveBeenCalledTimes(5));
   });
+
+  //github.com/alibaba/hooks/issues/2505
+  it('useRequest pollingInterval should work when set staleTime', async () => {
+    const callback = jest.fn();
+    act(() => {
+      hook = setUp(
+        () => {
+          callback();
+          return request(1);
+        },
+        {
+          staleTime: 3 * 1000,
+          pollingInterval: 1 * 1000,
+          cacheKey: 'testStaleTime',
+        },
+      );
+    });
+    expect(hook.result.current.loading).toBe(true);
+    act(() => {
+      jest.runAllTimers();
+    });
+    await waitFor(() => expect(hook.result.current.loading).toBe(false));
+    expect(hook.result.current.data).toBe('success');
+    expect(callback).toHaveBeenCalledTimes(1);
+
+    act(() => {
+      jest.runAllTimers();
+    });
+    await waitFor(() => expect(hook.result.current.loading).toBe(false));
+    expect(hook.result.current.data).toBe('success');
+    expect(callback).toHaveBeenCalledTimes(2);
+  });
 });
