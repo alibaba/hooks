@@ -1,4 +1,4 @@
-import { useMemo, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { isFunction } from '../utils';
 import isDev from '../utils/isDev';
 
@@ -20,7 +20,9 @@ function useMemoizedFn<T extends noop>(fn: T) {
 
   // why not write `fnRef.current = fn`?
   // https://github.com/alibaba/hooks/issues/728
-  fnRef.current = useMemo<T>(() => fn, [fn]);
+  useEffect(() => {
+    fnRef.current = fn;
+  }, [fn]);
 
   const memoizedFn = useRef<PickFunction<T>>();
   if (!memoizedFn.current) {
