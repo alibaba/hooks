@@ -18,6 +18,7 @@ export interface Options {
   onClose?: (event: WebSocketEventMap['close'], instance: WebSocket) => void;
   onMessage?: (message: WebSocketEventMap['message'], instance: WebSocket) => void;
   onError?: (event: WebSocketEventMap['error'], instance: WebSocket) => void;
+  onMaxAttempt?: () => void;
 
   protocols?: string | string[];
 }
@@ -40,6 +41,7 @@ export default function useWebSocket(socketUrl: string, options: Options = {}): 
     onClose,
     onMessage,
     onError,
+    onMaxAttempt,
     protocols,
   } = options;
 
@@ -47,10 +49,12 @@ export default function useWebSocket(socketUrl: string, options: Options = {}): 
   const onCloseRef = useLatest(onClose);
   const onMessageRef = useLatest(onMessage);
   const onErrorRef = useLatest(onError);
+  const onMaxAttemptRef = useLatest(onMaxAttempt);
 
   const reconnectTimesRef = useRef(0);
   const reconnectTimerRef = useRef<ReturnType<typeof setTimeout>>();
   const websocketRef = useRef<WebSocket>();
+  const maxAttemptThrottle = useRef<ReturnType<typeof setTimeout>>();
 
   const [latestMessage, setLatestMessage] = useState<WebSocketEventMap['message']>();
   const [readyState, setReadyState] = useState<ReadyState>(ReadyState.Closed);
@@ -69,6 +73,14 @@ export default function useWebSocket(socketUrl: string, options: Options = {}): 
         connectWs();
         reconnectTimesRef.current++;
       }, reconnectInterval);
+    } else {
+      if (maxAttemptThrottle.current) {
+        clearTimeout(maxAttemptThrottle.current);
+      }
+
+      maxAttemptThrottle.current = setTimeout(() => {
+        onMaxAttemptRef.current?.();
+      }, 100);
     }
   };
 
@@ -138,6 +150,10 @@ export default function useWebSocket(socketUrl: string, options: Options = {}): 
   const disconnect = () => {
     if (reconnectTimerRef.current) {
       clearTimeout(reconnectTimerRef.current);
+    }
+
+    if (maxAttemptThrottle.current) {
+      clearTimeout(maxAttemptThrottle.current);
     }
 
     reconnectTimesRef.current = reconnectLimit;
