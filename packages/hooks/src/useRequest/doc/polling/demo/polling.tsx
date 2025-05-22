@@ -12,7 +12,7 @@ function getUsername() {
 }
 
 export default () => {
-  const { data, loading, run, cancel } = useRequest(getUsername, {
+  const { data, loading, run, cancel, polling } = useRequest(getUsername, {
     pollingInterval: 1000,
     pollingWhenHidden: false,
   });
@@ -20,6 +20,8 @@ export default () => {
   return (
     <>
       <p>Username: {loading ? 'Loading' : data}</p>
+      <p>pollingCounter: {polling?.pollingCounter}</p>
+      <p>isPolling: {polling?.isPolling ? 'polling...' : 'not polling'}</p>
       <button type="button" onClick={run}>
         start
       </button>
