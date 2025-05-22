@@ -35,12 +35,38 @@ const {
 } = useHistoryTravel<T>(initialValue?: T, maxLength: number = 0 );
 ```
 
+```typescript
+const {
+  value,
+  setValue,
+  commit,
+  backLength,
+  forwardLength,
+  go,
+  back,
+  forward
+} = useHistoryTravel<T>(
+  initialValue?: T,
+  options?: {
+    maxLength?: number;
+    manual?: boolean;
+  });
+```
+
 ### Params
 
-| Property     | Description                                                                                                               | Type     | Default     |
-| ------------ | ------------------------------------------------------------------------------------------------------------------------- | -------- | ----------- |
-| initialValue | Optional initial value                                                                                                    | `T`      | -           |
-| maxLength    | Optional limit the maximum length of history records. If the maximum length is exceeded, the first record will be deleted | `number` | 0 unlimited |
+| Property     | Description                                                                                                               | Type      | Default     |
+| ------------ | ------------------------------------------------------------------------------------------------------------------------- | --------- | ----------- |
+| initialValue | Optional initial value                                                                                                    | `T`       | -           |
+| maxLength    | Optional limit the maximum length of history records. If the maximum length is exceeded, the first record will be deleted | `number`  | 0 unlimited |
+| options      | Options                                                                                                                   | `Options` | -           |
+
+### Options
+
+| Property  | Description                                                                                                               | Type      | Default     |
+| --------- | ------------------------------------------------------------------------------------------------------------------------- | --------- | ----------- |
+| maxLength | Optional limit the maximum length of history records. If the maximum length is exceeded, the first record will be deleted | `number`  | 0 unlimited |
+| manual    | Optional Whether to manually submit the record through `commit`                                                           | `boolean` | false       |
 
 ### Result
 
@@ -48,6 +74,7 @@ const {
 | ------------- | --------------------------------------------------------------------------------- | ------------------------------- |
 | value         | Current value                                                                     | `T`                             |
 | setValue      | Set value                                                                         | `(value: T) => void`            |
+| commit        | Manually submit records                                                           | `(value: T) => void`            |
 | backLength    | The length of backward history                                                    | `number`                        |
 | forwardLength | The length of forward history                                                     | `number`                        |
 | go            | Move between the history, move backward on step < 0，and move forward on step > 0 | `(step: number) => void`        |
