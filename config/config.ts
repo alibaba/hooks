@@ -45,7 +45,6 @@ export default {
   resolve: {
     includes: ['docs', 'packages/hooks/src', 'packages/use-url-state'],
   },
-  publicPath: '/',
   links: [
     {
       rel: 'stylesheet',
