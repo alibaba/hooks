@@ -1,13 +1,13 @@
-import { useEffect, useState } from 'react';
-import type { DependencyList, EffectCallback } from 'react';
-import type { DebounceOptions } from '../useDebounce/debounceOptions';
-import useDebounceFn from '../useDebounceFn';
-import useUpdateEffect from '../useUpdateEffect';
+import { useEffect, useState } from "react";
+import type { DependencyList, EffectCallback } from "react";
+import type { DebounceOptions } from "../useDebounce/debounceOptions";
+import useDebounceFn from "../useDebounceFn";
+import useUpdateEffect from "../useUpdateEffect";
 
 function useDebounceEffect(
   effect: EffectCallback,
   deps?: DependencyList,
-  options?: DebounceOptions,
+  options?: DebounceOptions
 ) {
   const [flag, setFlag] = useState({});
 
@@ -16,7 +16,10 @@ function useDebounceEffect(
   }, options);
 
   useEffect(() => {
-    return run();
+    run();
+    return () => {
+      run.cancel();
+    };
   }, deps);
 
   useUpdateEffect(effect, [flag]);
