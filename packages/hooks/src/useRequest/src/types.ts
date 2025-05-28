@@ -1,6 +1,7 @@
 import type { DependencyList } from 'react';
 import type Fetch from './Fetch';
 import type { CachedData } from './utils/cache';
+import type { FocusEvent } from './utils/subscribeFocus';
 
 export type Service<TData, TParams extends any[]> = (...args: TParams) => Promise<TData>;
 export type Subscribe = () => void;
@@ -64,6 +65,7 @@ export interface Options<TData, TParams extends any[]> {
   // refresh on window focus
   refreshOnWindowFocus?: boolean;
   focusTimespan?: number;
+  focusEvents?: FocusEvent[];
 
   // debounce
   debounceWait?: number;
