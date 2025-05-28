@@ -130,6 +130,7 @@ function useLongPress(
         } else {
           targetElement.removeEventListener('touchstart', onStart);
           targetElement.removeEventListener('touchend', onEndWithClick);
+          targetElement.removeEventListener('touchcancel', onEnd);
           if (hasMoveThreshold) targetElement.removeEventListener('touchmove', onMove);
         }
       };
