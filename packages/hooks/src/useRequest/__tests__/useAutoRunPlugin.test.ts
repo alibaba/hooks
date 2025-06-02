@@ -1,6 +1,7 @@
 import { act, renderHook, waitFor } from '@testing-library/react';
 import useRequest from '../index';
 import { request } from '../../utils/testingHelpers';
+import { Trigger } from '../src/types';
 
 describe('useAutoRunPlugin', () => {
   jest.useFakeTimers();
@@ -9,13 +10,19 @@ describe('useAutoRunPlugin', () => {
 
   let hook;
 
-  it('useAutoRunPlugin ready should work', async () => {
-    let dep = 1;
+  it('useAutoRunPlugin ready should work, trigger should be correct', async () => {
+    let dep = 1,
+      triggerValue;
+    const beforeCallback = (_, trigger) => {
+      triggerValue = trigger;
+    };
     act(() => {
       hook = setUp(request, {
         refreshDeps: [dep],
+        onBefore: beforeCallback,
       });
     });
+    expect(triggerValue).toBe(Trigger.AUTO);
     expect(hook.result.current.loading).toBe(true);
 
     act(() => {
@@ -26,7 +33,9 @@ describe('useAutoRunPlugin', () => {
     dep = 2;
     hook.rerender({
       refreshDeps: [dep],
+      onBefore: beforeCallback,
     });
+    expect(triggerValue).toBe(Trigger.REFRESH_DEPS);
     expect(hook.result.current.loading).toBe(true);
 
     act(() => {
@@ -36,7 +45,10 @@ describe('useAutoRunPlugin', () => {
 
     hook.rerender({
       refreshDeps: [dep],
+      onBefore: beforeCallback,
     });
+    // 不会改变
+    expect(triggerValue).toBe(Trigger.REFRESH_DEPS);
     expect(hook.result.current.loading).toBe(false);
   });
 

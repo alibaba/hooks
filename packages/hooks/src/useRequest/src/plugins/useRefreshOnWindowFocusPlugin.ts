@@ -3,7 +3,7 @@ import useUnmount from '../../../useUnmount';
 import type { Plugin } from '../types';
 import limit from '../utils/limit';
 import subscribeFocus from '../utils/subscribeFocus';
-
+import { Trigger } from '../types';
 const useRefreshOnWindowFocusPlugin: Plugin<any, any[]> = (
   fetchInstance,
   { refreshOnWindowFocus, focusTimespan = 5000 },
@@ -18,6 +18,7 @@ const useRefreshOnWindowFocusPlugin: Plugin<any, any[]> = (
     if (refreshOnWindowFocus) {
       const limitRefresh = limit(fetchInstance.refresh.bind(fetchInstance), focusTimespan);
       unsubscribeRef.current = subscribeFocus(() => {
+        fetchInstance.setTrigger(Trigger.REFRESH_ON_WINDOW_FOCUS);
         limitRefresh();
       });
     }

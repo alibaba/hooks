@@ -128,7 +128,7 @@ const {
   params: TParams || [],
   run: (...params: TParams) => void,
   runAsync: (...params: TParams) => Promise<TData>,
-  refresh: () => void,
+  refresh: (options?: RefreshOptions) => void,
   refreshAsync: () => Promise<TData>,
   mutate: (data?: TData | ((oldData?: TData) => (TData | undefined))) => void,
   cancel: () => void,
@@ -137,7 +137,7 @@ const {
   {
     manual?: boolean,
     defaultParams?: TParams,
-    onBefore?: (params: TParams) => void,
+    onBefore?: (params: TParams, trigget: Trigger) => void,
     onSuccess?: (data: TData, params: TParams) => void,
     onError?: (e: Error, params: TParams) => void,
     onFinally?: (params: TParams, data?: TData, e?: Error) => void,
@@ -155,7 +155,7 @@ const {
 | params       | An array of parameters for the service being executed. For example, you triggered `run(1, 2, 3)`, then params is equal to `[1, 2, 3]`                                                   | `TParams` \| `[]`                                                     |
 | run          | <ul><li> Manually trigger the execution of the service, and the parameters will be passed to the service</li><li>Automatic handling of exceptions, feedback through `onError`</li></ul> | `(...params : TParams) => void`                                       |
 | runAsync     | The usage is the same as `run`, but it returns a Promise, so you need to handle the exception yourself.                                                                                 | `(...params: TParams) => Promise<TData>`                              |
-| refresh      | Use the last params, call `run` again                                                                                                                                                   | `() => void`                                                          |
+| refresh      | Use the last params, call `run` again                                                                                                                                                   | `(options?:RefreshOptions) => void`                                   |
 | refreshAsync | Use the last params, call `runAsync` again                                                                                                                                              | `() => Promise<TData>`                                                |
 | mutate       | Mutate `data` directly                                                                                                                                                                  | `(data?: TData / ((oldData?: TData) => (TData / undefined))) => void` |
 | cancel       | Ignore the current promise response                                                                                                                                                     | `() => void`                                                          |
@@ -166,9 +166,29 @@ const {
 | ------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------- | ------- |
 | manual        | <ul><li> The default is `false`. That is, the service is automatically executed during initialization. </li><li>If set to `true`, you need to manually call `run` or `runAsync` to trigger execution. </li></ul> | `boolean`                                            | `false` |
 | defaultParams | The parameters passed to the service at the first default execution                                                                                                                                              | `TParams`                                            | -       |
-| onBefore      | Triggered before service execution                                                                                                                                                                               | `(params: TParams) => void`                          | -       |
+| onBefore      | Triggered before service execution                                                                                                                                                                               | `(params: TParams, trigget: Trigger) => void`        | -       |
 | onSuccess     | Triggered when service resolve                                                                                                                                                                                   | `(data: TData, params: TParams) => void`             | -       |
 | onError       | Triggered when service reject                                                                                                                                                                                    | `(e: Error, params: TParams) => void`                | -       |
 | onFinally     | Triggered when service execution is complete                                                                                                                                                                     | `(params: TParams, data?: TData, e?: Error) => void` | -       |
+
+### RefreshOptions
+
+| 参数          | 说明             | 类型      | 默认值  |
+| ------------- | ---------------- | --------- | ------- |
+| skipStaleTime | skip `staleTime` | `boolean` | `false` |
+
+### Trigger
+
+| EnumValue               | Description               |
+| ----------------------- | ------------------------- |
+| AUTO                    | From first time auto run  |
+| RUN                     | Call `run`                |
+| RUN_ASYNC               | Call `runAsync`           |
+| REFRESH                 | Call `refresh`            |
+| REFRESH_ASYNC           | Call `refreshAsync`       |
+| POLLING                 | From polling              |
+| REFRESH_DEPS            | From refreshDeps          |
+| REFRESH_ON_WINDOW_FOCUS | From refreshOnWindowFocus |
+| RETRY                   | From retry                |
 
 Above we have introduced the most basic functionalities of useRequest, and then we will introduce some more advanced functionalities.

@@ -1,12 +1,29 @@
 /* eslint-disable @typescript-eslint/no-parameter-properties */
 import { isFunction } from '../../utils';
 import type { MutableRefObject } from 'react';
-import type { FetchState, Options, PluginReturn, Service, Subscribe } from './types';
+import type {
+  FetchState,
+  Options,
+  PluginReturn,
+  Service,
+  Subscribe,
+  RefreshOptions,
+  TempConfig,
+} from './types';
+import { Trigger } from './types';
+import { pick, keys } from 'lodash-es';
+
+const getDefaultTempConfig: () => TempConfig = () => ({
+  trigger: undefined,
+  skipStaleTime: false,
+});
 
 export default class Fetch<TData, TParams extends any[]> {
   pluginImpls: PluginReturn<TData, TParams>[];
 
   count: number = 0;
+
+  tempConfig: TempConfig = getDefaultTempConfig();
 
   state: FetchState<TData, TParams> = {
     loading: false,
@@ -35,6 +52,32 @@ export default class Fetch<TData, TParams extends any[]> {
     };
     this.subscribe();
   }
+  setTempConfig(config?: Partial<TempConfig>) {
+    this.tempConfig = {
+      ...this.tempConfig,
+      // 不允许修改触发器类型
+      ...pick(
+        config,
+        keys(getDefaultTempConfig()).filter((key) => key !== 'trigger'),
+      ),
+    };
+  }
+  getTempConfig(key: keyof TempConfig | undefined) {
+    if (key) {
+      return this.tempConfig[key];
+    }
+    return this.tempConfig;
+  }
+  setTrigger(triggerValue: Trigger) {
+    if (this.tempConfig.trigger) {
+      return;
+    }
+    this.tempConfig.trigger = triggerValue;
+  }
+
+  resetTempConfig() {
+    this.tempConfig = getDefaultTempConfig();
+  }
 
   runPluginHandler(event: keyof PluginReturn<TData, TParams>, ...rest: any[]) {
     // @ts-ignore
@@ -44,6 +87,7 @@ export default class Fetch<TData, TParams extends any[]> {
 
   async runAsync(...params: TParams): Promise<TData> {
     this.count += 1;
+    this.setTrigger(Trigger.RUN_ASYNC);
     const currentCount = this.count;
 
     const {
@@ -54,6 +98,7 @@ export default class Fetch<TData, TParams extends any[]> {
 
     // stop request
     if (stopNow) {
+      this.resetTempConfig();
       return new Promise(() => {});
     }
 
@@ -65,11 +110,12 @@ export default class Fetch<TData, TParams extends any[]> {
 
     // return now
     if (returnNow) {
+      this.resetTempConfig();
       return Promise.resolve(state.data);
     }
 
-    this.options.onBefore?.(params);
-
+    this.options.onBefore?.(params, this.tempConfig.trigger);
+    this.resetTempConfig();
     try {
       // replace service
       let { servicePromise } = this.runPluginHandler('onRequest', this.serviceRef.current, params);
@@ -128,6 +174,7 @@ export default class Fetch<TData, TParams extends any[]> {
   }
 
   run(...params: TParams) {
+    this.setTrigger(Trigger.RUN);
     this.runAsync(...params).catch((error) => {
       if (!this.options.onError) {
         console.error(error);
@@ -144,12 +191,15 @@ export default class Fetch<TData, TParams extends any[]> {
     this.runPluginHandler('onCancel');
   }
 
-  refresh() {
+  refresh(options?: RefreshOptions) {
+    this.setTempConfig(options);
+    this.setTrigger(Trigger.REFRESH);
     // @ts-ignore
     this.run(...(this.state.params || []));
   }
 
   refreshAsync() {
+    this.setTrigger(Trigger.REFRESH_ASYNC);
     // @ts-ignore
     return this.runAsync(...(this.state.params || []));
   }

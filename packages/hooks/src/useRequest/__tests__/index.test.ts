@@ -1,6 +1,7 @@
 import { act, renderHook, waitFor } from '@testing-library/react';
 import useRequest from '../index';
 import { request } from '../../utils/testingHelpers';
+import { Trigger } from '../src/types';
 
 const errorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
 
@@ -201,5 +202,49 @@ describe('useRequest', () => {
     await waitFor(() => expect(hook.result.current.data).toBe('success'));
     expect(hook.result.current.loading).toBe(false);
     hook.unmount();
+  });
+
+  it('useRequest trigger should return in onBefore, trigger should be correct', async () => {
+    let triggerValue;
+    const beforeCallback = (_, trigger) => {
+      triggerValue = trigger;
+    };
+    act(() => {
+      hook = setUp(request, {
+        onBefore: beforeCallback,
+      });
+    });
+    expect(triggerValue).toBe(Trigger.AUTO);
+    act(() => {
+      jest.runAllTimers();
+    });
+    act(() => {
+      hook.result.current.run();
+    });
+    expect(triggerValue).toBe(Trigger.RUN);
+    act(() => {
+      jest.runAllTimers();
+    });
+    act(() => {
+      hook.result.current.runAsync();
+    });
+    expect(triggerValue).toBe(Trigger.RUN_ASYNC);
+    act(() => {
+      jest.runAllTimers();
+    });
+    act(() => {
+      hook.result.current.refresh();
+    });
+    expect(triggerValue).toBe(Trigger.REFRESH);
+    act(() => {
+      jest.runAllTimers();
+    });
+    act(() => {
+      hook.result.current.refreshAsync();
+    });
+    expect(triggerValue).toBe(Trigger.REFRESH_ASYNC);
+    act(() => {
+      jest.runAllTimers();
+    });
   });
 });
