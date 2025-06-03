@@ -31,11 +31,44 @@ event$.useSubscription(val => {
 
 对于**子组件**通知**父组件**的情况，我们仍然推荐直接使用 `props` 传递一个 `onEvent` 函数。而对于**父组件**通知**子组件**的情况，可以使用 `forwardRef` 获取子组件的 ref ，再进行子组件的方法调用。 `useEventEmitter` 适合的是在**距离较远**的组件之间进行事件通知，或是在**多个**组件之间共享事件通知。
 
+通过指定事件名称精准调用。
+
+```js
+event$.useSubscription(val => {
+  console.log(val);
+},'console');
+event$.emit('hello','console')
+```
+
+调用异步方法并获取结果。
+
+```js
+event$.useSubscription(async (val) => {
+return `async ${val}`
+},'console');
+const res = await event$.asyncEmit('hello','console')
+console.log(res[0]);
+```
+
+支持订阅方法传入依赖项(保证订阅方法内部的state值为最新)
+
+```js
+const [status,setStatus] = useState('');
+event$.useSubscription((val) => {
+  console.log("new status:",status)
+},'console',[status]);
+const res = event$.emit('hello','console')
+```
+
 ## 代码演示
 
 ### 父组件向子组件共享事件
 
 <code src="./demo/demo1.tsx" />
+
+### 不同组件共享异步事件(可同步执行)
+
+<code src="./demo/demo2.tsx" />
 
 ## API
 
@@ -45,7 +78,8 @@ const result: Result = useEventEmitter<T>();
 
 ### Result
 
-| 参数            | 说明             | 类型                                   |
-| --------------- | ---------------- | -------------------------------------- |
-| emit            | 发送一个事件通知 | `(val: T) => void`                     |
-| useSubscription | 订阅事件         | `(callback: (val: T) => void) => void` |
+| 参数            | 说明                 | 类型                                   |
+| --------------- | -------------------- | -------------------------------------- |
+| emit            | 发送一个事件通知     | `(val: T) => []:any`                   |
+| asyncEmit       | 发送一个异步事件通知 | `(val: T, name?: string) => []:any`    |
+| useSubscription | 订阅事件             | `(callback: (val: T) => void) => void` |
