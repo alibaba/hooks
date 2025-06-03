@@ -31,4 +31,5 @@ You can quickly click the button in the example below to experience the effect
 
 ## Remark
 
-`options.loadingDelay` supports dynamic changes.
+- `options.loadingDelay` supports dynamic changes.
+- If both `options.loadingDelay` and `options.staleTime` are set, note that the value of `options.loadingDelay` needs to be greater than `options.staleTime` to have an effect.
