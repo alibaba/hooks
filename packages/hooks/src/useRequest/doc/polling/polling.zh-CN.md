@@ -60,3 +60,4 @@ const { data, run, cancel } = useRequest(getUsername, {
 - 如果设置 `options.manual = true`，则初始化不会启动轮询，需要通过 `run/runAsync` 触发开始。
 - 如果设置 `pollingInterval` 由 `0` 变成 `大于 0` 的值，不会启动轮询，需要通过 `run/runAsync` 触发开始。
 - 轮询原理是在每次请求完成后，等待 `pollingInterval` 时间，发起下一次请求。
+- 当同时设置了`pollingInterval`,`cacheKey`,`staleTime`后，等待 `pollingInterval` 时间，如果仍然在数据新鲜时间內,不会发送请求。如果不在数据新鲜时间內,则发起下一次请求。

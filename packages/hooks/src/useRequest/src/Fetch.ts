@@ -1,7 +1,14 @@
 /* eslint-disable @typescript-eslint/no-parameter-properties */
 import { isFunction } from '../../utils';
 import type { MutableRefObject } from 'react';
-import type { FetchState, Options, PluginReturn, Service, Subscribe } from './types';
+import type {
+  FetchState,
+  Options,
+  PluginReturn,
+  pluginsOptions,
+  Service,
+  Subscribe,
+} from './types';
 
 export default class Fetch<TData, TParams extends any[]> {
   pluginImpls: PluginReturn<TData, TParams>[];
@@ -49,6 +56,7 @@ export default class Fetch<TData, TParams extends any[]> {
     const {
       stopNow = false,
       returnNow = false,
+      pollingNow = false,
       ...state
     } = this.runPluginHandler('onBefore', params);
 
@@ -63,23 +71,46 @@ export default class Fetch<TData, TParams extends any[]> {
       ...state,
     });
 
+    const options: pluginsOptions = {
+      pollingNow,
+      returnNow,
+      stopNow,
+      cacheData: state.data,
+    };
     // return now
     if (returnNow) {
+      this.handleFn(params, currentCount, options);
       return Promise.resolve(state.data);
     }
 
+    return this.handleFn(params, currentCount, options);
+  }
+  async handleFn(params: TParams, currentCount: number, options: pluginsOptions) {
     this.options.onBefore?.(params);
-
+    const nowPollAndCacheFlag = options.pollingNow && options.returnNow;
+    let servicePromise;
     try {
-      // replace service
-      let { servicePromise } = this.runPluginHandler('onRequest', this.serviceRef.current, params);
-
-      if (!servicePromise) {
-        servicePromise = this.serviceRef.current(...params);
+      // avoid request when Polling and returnNow
+      if (!nowPollAndCacheFlag) {
+        servicePromise = this.runPluginHandler(
+          'onRequest',
+          this.serviceRef.current,
+          params,
+        ).servicePromise;
+        // replace service
+        if (!servicePromise) {
+          servicePromise = this.serviceRef.current(...params);
+        }
+      } else {
+        servicePromise = null;
       }
 
-      const res = await servicePromise;
-
+      let res;
+      if (nowPollAndCacheFlag) {
+        res = options.cacheData;
+      } else {
+        res = await servicePromise;
+      }
       if (currentCount !== this.count) {
         // prevent run.then when request is canceled
         return new Promise(() => {});
@@ -94,7 +125,7 @@ export default class Fetch<TData, TParams extends any[]> {
       });
 
       this.options.onSuccess?.(res, params);
-      this.runPluginHandler('onSuccess', res, params);
+      this.runPluginHandler('onSuccess', res, params, options);
 
       this.options.onFinally?.(params, res, undefined);
 
