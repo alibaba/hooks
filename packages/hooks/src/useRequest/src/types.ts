@@ -122,3 +122,13 @@ export interface Result<TData, TParams extends any[]> {
 }
 
 export type Timeout = ReturnType<typeof setTimeout>;
+
+// Plugin Hooks type, eg: onBefore
+export type HookType<T, K> = T extends keyof K ? K[T] : never;
+
+// Plugin Hooks ReturnType
+export type HookReturnType<T, K, F extends HookType<T, K>> = T extends keyof K
+  ? F extends (...args: any[]) => any
+    ? ReturnType<F>
+    : never
+  : never;
