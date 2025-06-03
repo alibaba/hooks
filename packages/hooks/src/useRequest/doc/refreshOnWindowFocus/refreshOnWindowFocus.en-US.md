@@ -23,10 +23,11 @@ You can click outside the browser, and then click the current page to experience
 
 ### Options
 
-| Property             | Description                                                              | Type      | Default |
-| -------------------- | ------------------------------------------------------------------------ | --------- | ------- |
-| refreshOnWindowFocus | Whether to re-initiate the request when the screen refocus or revisible. | `boolean` | `false` |
-| focusTimespan        | Re-request interval, in milliseconds                                     | `number`  | `5000`  |
+| Property             | Description                                                              | Type                              | Default                       |
+| -------------------- | ------------------------------------------------------------------------ | --------------------------------- | ----------------------------- |
+| refreshOnWindowFocus | Whether to re-initiate the request when the screen refocus or revisible. | `boolean`                         | `false`                       |
+| focusTimespan        | Re-request interval, in milliseconds                                     | `number`                          | `5000`                        |
+| focusEvents          | Specify event(s) to trigger Re-request                                   | (`visibilitychange` \| `focus`)[] | ['visibilitychange', 'focus'] |
 
 ## Remark
 
