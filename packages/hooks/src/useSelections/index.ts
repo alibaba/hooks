@@ -1,7 +1,7 @@
-import React from 'react';
-import isPlainObject from 'lodash/isPlainObject';
-import useMemoizedFn from '../useMemoizedFn';
-import { isFunction, isString } from '../utils';
+import isPlainObject from "lodash/isPlainObject";
+import useMemoizedFn from "../useMemoizedFn";
+import { isFunction, isString } from "../utils";
+import { useMemo, useState } from "react";
 
 export interface Options<T> {
   defaultSelected?: T[];
@@ -10,7 +10,7 @@ export interface Options<T> {
 
 function useSelections<T>(items: T[], options?: T[] | Options<T>) {
   let defaultSelected: T[] = [];
-  let itemKey: Options<T>['itemKey'];
+  let itemKey: Options<T>["itemKey"];
 
   if (Array.isArray(options)) {
     defaultSelected = options;
@@ -30,9 +30,9 @@ function useSelections<T>(items: T[], options?: T[] | Options<T>) {
     return item as React.Key;
   };
 
-  const [selected, setSelected] = React.useState<T[]>(defaultSelected);
+  const [selected, setSelected] = useState<T[]>(defaultSelected);
 
-  const selectedMap = React.useMemo(() => {
+  const selectedMap = useMemo(() => {
     const keyToItemMap = new Map<React.Key, T>();
 
     if (!Array.isArray(selected)) {
@@ -80,19 +80,19 @@ function useSelections<T>(items: T[], options?: T[] | Options<T>) {
     setSelected(Array.from<T>(selectedMap.values()));
   };
 
-  const noneSelected = React.useMemo<boolean>(
+  const noneSelected = useMemo<boolean>(
     () => items.every((item) => !selectedMap.has(getKey(item))),
-    [items, selectedMap],
+    [items, selectedMap]
   );
 
-  const allSelected = React.useMemo<boolean>(
+  const allSelected = useMemo<boolean>(
     () => items.every((item) => selectedMap.has(getKey(item))) && !noneSelected,
-    [items, selectedMap, noneSelected],
+    [items, selectedMap, noneSelected]
   );
 
-  const partiallySelected = React.useMemo<boolean>(
+  const partiallySelected = useMemo<boolean>(
     () => !noneSelected && !allSelected,
-    [noneSelected, allSelected],
+    [noneSelected, allSelected]
   );
 
   const toggleAll = () => (allSelected ? unSelectAll() : selectAll());

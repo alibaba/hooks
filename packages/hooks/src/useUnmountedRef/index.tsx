@@ -1,8 +1,8 @@
-import React from 'react';
+import { useEffect, useRef } from "react";
 
 const useUnmountedRef = () => {
-  const unmountedRef = React.useRef(false);
-  React.useEffect(() => {
+  const unmountedRef = useRef(false);
+  useEffect(() => {
     unmountedRef.current = false;
     return () => {
       unmountedRef.current = true;

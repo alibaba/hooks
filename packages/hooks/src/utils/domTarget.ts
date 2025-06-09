@@ -1,6 +1,6 @@
-import type React from 'react';
-import { isFunction } from './index';
-import isBrowser from './isBrowser';
+import { isFunction } from "./index";
+import isBrowser from "./isBrowser";
+import type { RefObject } from "react";
 
 type TargetValue<T> = T | undefined | null;
 
@@ -9,9 +9,12 @@ type TargetType = HTMLElement | Element | Window | Document;
 export type BasicTarget<T extends TargetType = Element> =
   | (() => TargetValue<T>)
   | TargetValue<T>
-  | React.RefObject<TargetValue<T>>;
+  | RefObject<TargetValue<T>>;
 
-export function getTargetElement<T extends TargetType>(target: BasicTarget<T>, defaultElement?: T) {
+export function getTargetElement<T extends TargetType>(
+  target: BasicTarget<T>,
+  defaultElement?: T
+) {
   if (!isBrowser) {
     return undefined;
   }
@@ -24,7 +27,7 @@ export function getTargetElement<T extends TargetType>(target: BasicTarget<T>, d
 
   if (isFunction(target)) {
     targetElement = target();
-  } else if ('current' in target) {
+  } else if ("current" in target) {
     targetElement = target.current;
   } else {
     targetElement = target;
