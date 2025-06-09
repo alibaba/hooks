@@ -1,13 +1,13 @@
-import { useCallback, useEffect, useRef } from 'react';
-import useLatest from '../useLatest';
-import { isNumber } from '../utils';
+import { useCallback, useEffect, useRef } from "react";
+import useLatest from "../useLatest";
+import { isNumber } from "../utils";
 
 interface Handle {
   id: ReturnType<typeof setTimeout> | ReturnType<typeof requestAnimationFrame>;
 }
 
 const setRafTimeout = (callback: () => void, delay: number = 0): Handle => {
-  if (typeof requestAnimationFrame === 'undefined') {
+  if (typeof requestAnimationFrame === "undefined") {
     return {
       id: setTimeout(callback, delay),
     };
@@ -31,8 +31,10 @@ const setRafTimeout = (callback: () => void, delay: number = 0): Handle => {
   return handle;
 };
 
-const cancelAnimationFrameIsNotDefined = (t: any): t is ReturnType<typeof setTimeout> => {
-  return typeof cancelAnimationFrame === 'undefined';
+const cancelAnimationFrameIsNotDefined = (
+  t: any
+): t is ReturnType<typeof setTimeout> => {
+  return typeof cancelAnimationFrame === "undefined";
 };
 
 const clearRafTimeout = (handle: Handle) => {
@@ -44,7 +46,7 @@ const clearRafTimeout = (handle: Handle) => {
 
 function useRafTimeout(fn: () => void, delay: number | undefined) {
   const fnRef = useLatest(fn);
-  const timerRef = useRef<Handle>(null);
+  const timerRef = useRef<Handle>(undefined);
 
   const clear = useCallback(() => {
     if (timerRef.current) {

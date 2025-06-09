@@ -1,9 +1,8 @@
-import { useRef } from 'react';
-import useLatest from '../useLatest';
-import type { BasicTarget } from '../utils/domTarget';
-import { getTargetElement } from '../utils/domTarget';
-import isBrowser from '../utils/isBrowser';
-import useEffectWithTarget from '../utils/useEffectWithTarget';
+import { useRef } from "react";
+import useLatest from "../useLatest";
+import type { BasicTarget } from "../utils/domTarget";
+import { getTargetElement } from "../utils/domTarget";
+import useEffectWithTarget from "../utils/useEffectWithTarget";
 
 type EventType = MouseEvent | TouchEvent;
 export interface Options {
@@ -16,13 +15,14 @@ export interface Options {
 function useLongPress(
   onLongPress: (event: EventType) => void,
   target: BasicTarget,
-  { delay = 300, moveThreshold, onClick, onLongPressEnd }: Options = {},
+  { delay = 300, moveThreshold, onClick, onLongPressEnd }: Options = {}
 ) {
   const onLongPressRef = useLatest(onLongPress);
   const onClickRef = useLatest(onClick);
   const onLongPressEndRef = useLatest(onLongPressEnd);
 
-  const timerRef = useRef<ReturnType<typeof setTimeout>>();
+  const timerRef = useRef<ReturnType<typeof setTimeout>>(undefined);
+
   const isTriggeredRef = useRef(false);
   const pervPositionRef = useRef({ x: 0, y: 0 });
   const mousePressed = useRef(false);
@@ -51,7 +51,7 @@ function useLongPress(
       };
 
       function getClientPosition(event: EventType) {
-        if ('TouchEvent' in window && event instanceof TouchEvent) {
+        if ("TouchEvent" in window && event instanceof TouchEvent) {
           return {
             clientX: event.touches[0].clientX,
             clientY: event.touches[0].clientY,
@@ -64,8 +64,6 @@ function useLongPress(
           };
         }
 
-        console.warn('Unsupported event type');
-
         return { clientX: 0, clientY: 0 };
       }
 
@@ -77,7 +75,9 @@ function useLongPress(
       };
 
       const onTouchStart = (event: TouchEvent) => {
-        if (touchPressed.current) return;
+        if (touchPressed.current) {
+          return;
+        }
         touchPressed.current = true;
 
         if (hasMoveThreshold) {
@@ -89,7 +89,9 @@ function useLongPress(
       };
 
       const onMouseDown = (event: MouseEvent) => {
-        if ((event as any)?.sourceCapabilities?.firesTouchEvents) return;
+        if ((event as any)?.sourceCapabilities?.firesTouchEvents) {
+          return;
+        }
 
         mousePressed.current = true;
 
@@ -108,7 +110,9 @@ function useLongPress(
       };
 
       const onTouchEnd = (event: TouchEvent) => {
-        if (!touchPressed.current) return;
+        if (!touchPressed.current) {
+          return;
+        }
         touchPressed.current = false;
 
         if (timerRef.current) {
@@ -125,8 +129,12 @@ function useLongPress(
       };
 
       const onMouseUp = (event: MouseEvent) => {
-        if ((event as any)?.sourceCapabilities?.firesTouchEvents) return;
-        if (!mousePressed.current) return;
+        if ((event as any)?.sourceCapabilities?.firesTouchEvents) {
+          return;
+        }
+        if (!mousePressed.current) {
+          return;
+        }
         mousePressed.current = false;
 
         if (timerRef.current) {
@@ -143,7 +151,9 @@ function useLongPress(
       };
 
       const onMouseLeave = (event: MouseEvent) => {
-        if (!mousePressed.current) return;
+        if (!mousePressed.current) {
+          return;
+        }
         mousePressed.current = false;
 
         if (timerRef.current) {
@@ -156,15 +166,15 @@ function useLongPress(
         }
       };
 
-      targetElement.addEventListener('mousedown', onMouseDown);
-      targetElement.addEventListener('mouseup', onMouseUp);
-      targetElement.addEventListener('mouseleave', onMouseLeave);
-      targetElement.addEventListener('touchstart', onTouchStart);
-      targetElement.addEventListener('touchend', onTouchEnd);
+      targetElement.addEventListener("mousedown", onMouseDown);
+      targetElement.addEventListener("mouseup", onMouseUp);
+      targetElement.addEventListener("mouseleave", onMouseLeave);
+      targetElement.addEventListener("touchstart", onTouchStart);
+      targetElement.addEventListener("touchend", onTouchEnd);
 
       if (hasMoveThreshold) {
-        targetElement.addEventListener('mousemove', onMove);
-        targetElement.addEventListener('touchmove', onMove);
+        targetElement.addEventListener("mousemove", onMove);
+        targetElement.addEventListener("touchmove", onMove);
       }
 
       return () => {
@@ -173,20 +183,20 @@ function useLongPress(
           isTriggeredRef.current = false;
         }
 
-        targetElement.removeEventListener('mousedown', onMouseDown);
-        targetElement.removeEventListener('mouseup', onMouseUp);
-        targetElement.removeEventListener('mouseleave', onMouseLeave);
-        targetElement.removeEventListener('touchstart', onTouchStart);
-        targetElement.removeEventListener('touchend', onTouchEnd);
+        targetElement.removeEventListener("mousedown", onMouseDown);
+        targetElement.removeEventListener("mouseup", onMouseUp);
+        targetElement.removeEventListener("mouseleave", onMouseLeave);
+        targetElement.removeEventListener("touchstart", onTouchStart);
+        targetElement.removeEventListener("touchend", onTouchEnd);
 
         if (hasMoveThreshold) {
-          targetElement.removeEventListener('mousemove', onMove);
-          targetElement.removeEventListener('touchmove', onMove);
+          targetElement.removeEventListener("mousemove", onMove);
+          targetElement.removeEventListener("touchmove", onMove);
         }
       };
     },
     [],
-    target,
+    target
   );
 }
 

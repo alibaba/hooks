@@ -1,5 +1,5 @@
-import React from 'react';
-import { isObject } from '../utils';
+import { useEffect, useState } from "react";
+import { isObject } from "../utils";
 
 export interface NetworkState {
   since?: Date;
@@ -13,9 +13,9 @@ export interface NetworkState {
 }
 
 enum NetworkEventType {
-  ONLINE = 'online',
-  OFFLINE = 'offline',
-  CHANGE = 'change',
+  ONLINE = "online",
+  OFFLINE = "offline",
+  CHANGE = "change",
 }
 
 function getConnection() {
@@ -42,7 +42,7 @@ function getConnectionProperty(): NetworkState {
 }
 
 function useNetwork(): NetworkState {
-  const [state, setState] = React.useState(() => {
+  const [state, setState] = useState(() => {
     return {
       since: undefined,
       online: navigator?.onLine,
@@ -50,7 +50,7 @@ function useNetwork(): NetworkState {
     };
   });
 
-  React.useEffect(() => {
+  useEffect(() => {
     const onOnline = () => {
       setState((prevState) => ({
         ...prevState,
@@ -83,7 +83,10 @@ function useNetwork(): NetworkState {
     return () => {
       window.removeEventListener(NetworkEventType.ONLINE, onOnline);
       window.removeEventListener(NetworkEventType.OFFLINE, onOffline);
-      connection?.removeEventListener(NetworkEventType.CHANGE, onConnectionChange);
+      connection?.removeEventListener(
+        NetworkEventType.CHANGE,
+        onConnectionChange
+      );
     };
   }, []);
 
