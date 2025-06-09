@@ -1,10 +1,10 @@
-import { useState } from 'react';
-import useEventListener from '../useEventListener';
-import useMemoizedFn from '../useMemoizedFn';
-import useUpdateEffect from '../useUpdateEffect';
-import { isFunction, isUndef } from '../utils';
+import { useState } from "react";
+import useEventListener from "../useEventListener";
+import useMemoizedFn from "../useMemoizedFn";
+import useUpdateEffect from "../useUpdateEffect";
+import { isFunction, isUndef } from "../utils";
 
-export const SYNC_STORAGE_EVENT_NAME = 'AHOOKS_SYNC_STORAGE_EVENT_NAME';
+export const SYNC_STORAGE_EVENT_NAME = "AHOOKS_SYNC_STORAGE_EVENT_NAME";
 
 export type SetState<S> = S | ((prevState?: S) => S);
 
@@ -98,7 +98,7 @@ export function createUseStorageState(getStorage: () => Storage | undefined) {
               oldValue,
               storageArea: storage,
             },
-          }),
+          })
         );
       } catch (e) {
         onError(e);
@@ -118,7 +118,7 @@ export function createUseStorageState(getStorage: () => Storage | undefined) {
     };
 
     // from another document
-    useEventListener('storage', syncState, {
+    useEventListener("storage", syncState, {
       enable: listenStorageChange,
     });
 
