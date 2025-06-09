@@ -1,8 +1,8 @@
-import { useRef } from "react";
-import useLatest from "../useLatest";
-import type { BasicTarget } from "../utils/domTarget";
-import { getTargetElement } from "../utils/domTarget";
-import useEffectWithTarget from "../utils/useEffectWithTarget";
+import { useRef } from 'react';
+import useLatest from '../useLatest';
+import type { BasicTarget } from '../utils/domTarget';
+import { getTargetElement } from '../utils/domTarget';
+import useEffectWithTarget from '../utils/useEffectWithTarget';
 
 type EventType = MouseEvent | TouchEvent;
 export interface Options {
@@ -15,7 +15,7 @@ export interface Options {
 function useLongPress(
   onLongPress: (event: EventType) => void,
   target: BasicTarget,
-  { delay = 300, moveThreshold, onClick, onLongPressEnd }: Options = {}
+  { delay = 300, moveThreshold, onClick, onLongPressEnd }: Options = {},
 ) {
   const onLongPressRef = useLatest(onLongPress);
   const onClickRef = useLatest(onClick);
@@ -51,7 +51,7 @@ function useLongPress(
       };
 
       function getClientPosition(event: EventType) {
-        if ("TouchEvent" in window && event instanceof TouchEvent) {
+        if ('TouchEvent' in window && event instanceof TouchEvent) {
           return {
             clientX: event.touches[0].clientX,
             clientY: event.touches[0].clientY,
@@ -166,15 +166,15 @@ function useLongPress(
         }
       };
 
-      targetElement.addEventListener("mousedown", onMouseDown);
-      targetElement.addEventListener("mouseup", onMouseUp);
-      targetElement.addEventListener("mouseleave", onMouseLeave);
-      targetElement.addEventListener("touchstart", onTouchStart);
-      targetElement.addEventListener("touchend", onTouchEnd);
+      targetElement.addEventListener('mousedown', onMouseDown);
+      targetElement.addEventListener('mouseup', onMouseUp);
+      targetElement.addEventListener('mouseleave', onMouseLeave);
+      targetElement.addEventListener('touchstart', onTouchStart);
+      targetElement.addEventListener('touchend', onTouchEnd);
 
       if (hasMoveThreshold) {
-        targetElement.addEventListener("mousemove", onMove);
-        targetElement.addEventListener("touchmove", onMove);
+        targetElement.addEventListener('mousemove', onMove);
+        targetElement.addEventListener('touchmove', onMove);
       }
 
       return () => {
@@ -183,20 +183,20 @@ function useLongPress(
           isTriggeredRef.current = false;
         }
 
-        targetElement.removeEventListener("mousedown", onMouseDown);
-        targetElement.removeEventListener("mouseup", onMouseUp);
-        targetElement.removeEventListener("mouseleave", onMouseLeave);
-        targetElement.removeEventListener("touchstart", onTouchStart);
-        targetElement.removeEventListener("touchend", onTouchEnd);
+        targetElement.removeEventListener('mousedown', onMouseDown);
+        targetElement.removeEventListener('mouseup', onMouseUp);
+        targetElement.removeEventListener('mouseleave', onMouseLeave);
+        targetElement.removeEventListener('touchstart', onTouchStart);
+        targetElement.removeEventListener('touchend', onTouchEnd);
 
         if (hasMoveThreshold) {
-          targetElement.removeEventListener("mousemove", onMove);
-          targetElement.removeEventListener("touchmove", onMove);
+          targetElement.removeEventListener('mousemove', onMove);
+          targetElement.removeEventListener('touchmove', onMove);
         }
       };
     },
     [],
-    target
+    target,
   );
 }
 
