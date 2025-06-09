@@ -12,7 +12,7 @@
   "scripts": {
     "init": "pnpm install && pnpm run build",
     "start": "pnpm run dev",
-    "dev": "set NODE_OPTIONS=--openssl-legacy-provider && dumi dev",
+    "dev": "cross-env NODE_OPTIONS=--openssl-legacy-provider dumi dev",
     "clean-dist": "rimraf 'packages/*/{lib,es,node_modules,dist}'",
     "clean": "pnpm run clean-dist && rimraf node_modules",
     "build": "pnpm -r --filter=./packages/* run build",
@@ -20,7 +20,7 @@
     "coveralls": "jest --coverage --coverageReporters=text-lcov | coveralls",
     "lint": "eslint --ignore-pattern **/__tests__/* --ignore-pattern **/demo/* \"packages/*/src/**/*.{ts,tsx}\" --cache",
     "pretty": "biome format --fix --staged",
-    "build:doc": "set NODE_OPTIONS=--openssl-legacy-provider && dumi build",
+    "build:doc": "cross-env NODE_OPTIONS=--openssl-legacy-provider dumi build",
     "build:doc-github": "node scripts/build-with-relative-paths.js",
     "pub:doc-surge": "surge ./dist --domain ahooks.js.org",
     "pub:doc-gitee": "cd ./dist && rm -rf .git && touch .spa && touch .nojekyll && git init && git remote add origin git@gitee.com:ahooks/ahooks.git && git add -A && git commit -m \"publish docs\" && git push origin main -f && echo https://gitee.com/ahooks/ahooks/pages",
@@ -84,6 +84,8 @@
     "react-dom": "^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0"
   },
   "commitlint": {
-    "extends": ["@commitlint/config-conventional"]
+    "extends": [
+      "@commitlint/config-conventional"
+    ]
   }
 }

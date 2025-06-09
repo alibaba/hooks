@@ -37,7 +37,7 @@ export default {
   dynamicImport: {},
   manifest: {},
   hash: true,
-  publicPath: './',
+  publicPath: '/',
   alias: {
     ahooks: process.cwd() + '/packages/hooks/src/index.ts',
     '@ahooksjs/use-url-state': process.cwd() + '/packages/use-url-state/src/index.ts',
@@ -45,7 +45,6 @@ export default {
   resolve: {
     includes: ['docs', 'packages/hooks/src', 'packages/use-url-state'],
   },
-  publicPath: '/',
   links: [
     {
       rel: 'stylesheet',
