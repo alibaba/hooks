@@ -1,7 +1,7 @@
-import { useEffect, useRef, useState } from "react";
-import useLatest from "../useLatest";
-import useMemoizedFn from "../useMemoizedFn";
-import useUnmount from "../useUnmount";
+import { useEffect, useRef, useState } from 'react';
+import useLatest from '../useLatest';
+import useMemoizedFn from '../useMemoizedFn';
+import useUnmount from '../useUnmount';
 
 export enum ReadyState {
   Connecting = 0,
@@ -14,20 +14,17 @@ export interface Options {
   reconnectLimit?: number;
   reconnectInterval?: number;
   manual?: boolean;
-  onOpen?: (event: WebSocketEventMap["open"], instance: WebSocket) => void;
-  onClose?: (event: WebSocketEventMap["close"], instance: WebSocket) => void;
-  onMessage?: (
-    message: WebSocketEventMap["message"],
-    instance: WebSocket
-  ) => void;
-  onError?: (event: WebSocketEventMap["error"], instance: WebSocket) => void;
+  onOpen?: (event: WebSocketEventMap['open'], instance: WebSocket) => void;
+  onClose?: (event: WebSocketEventMap['close'], instance: WebSocket) => void;
+  onMessage?: (message: WebSocketEventMap['message'], instance: WebSocket) => void;
+  onError?: (event: WebSocketEventMap['error'], instance: WebSocket) => void;
 
   protocols?: string | string[];
 }
 
 export interface Result {
-  latestMessage?: WebSocketEventMap["message"];
-  sendMessage: WebSocket["send"];
+  latestMessage?: WebSocketEventMap['message'];
+  sendMessage: WebSocket['send'];
   disconnect: () => void;
   connect: () => void;
   readyState: ReadyState;
@@ -105,7 +102,7 @@ function useWebSocket(socketUrl: string, options: Options = {}): Result {
       reconnectTimesRef.current = 0;
       setReadyState(ws.readyState || ReadyState.Open);
     };
-    ws.onmessage = (message: WebSocketEventMap["message"]) => {
+    ws.onmessage = (message: WebSocketEventMap['message']) => {
       if (websocketRef.current !== ws) {
         return;
       }
@@ -127,11 +124,11 @@ function useWebSocket(socketUrl: string, options: Options = {}): Result {
     websocketRef.current = ws;
   };
 
-  const sendMessage: WebSocket["send"] = (message) => {
+  const sendMessage: WebSocket['send'] = (message) => {
     if (readyState === ReadyState.Open) {
       websocketRef.current?.send(message);
     } else {
-      throw new Error("WebSocket disconnected");
+      throw new Error('WebSocket disconnected');
     }
   };
 
