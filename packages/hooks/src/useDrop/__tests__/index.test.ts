@@ -1,5 +1,6 @@
 import { renderHook } from '@testing-library/react';
-import useDrop, { Options } from '../index';
+import type { Options } from '../index';
+import useDrop from '../index';
 import type { BasicTarget } from '../../utils/domTarget';
 
 const setup = (target: unknown, options?: Options) =>

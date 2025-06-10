@@ -3,17 +3,17 @@ import Mock from 'mockjs';
 import React from 'react';
 import { useRequest } from 'ahooks';
 
-async function getArticle(): Promise<{ data: string; time: number }> {
+const getArticle = async () => {
   console.log('cacheKey-staleTime');
-  return new Promise((resolve) => {
+  return new Promise<{ data: string; time: number }>((resolve) => {
     setTimeout(() => {
       resolve({
         data: Mock.mock('@paragraph'),
-        time: new Date().getTime(),
+        time: Date.now(),
       });
     }, 1000);
   });
-}
+};
 
 const Article = () => {
   const { data, loading } = useRequest(getArticle, {
@@ -36,7 +36,7 @@ export default () => {
   const [state, { toggle }] = useBoolean();
   return (
     <div>
-      <button type="button" onClick={() => toggle()}>
+      <button type='button' onClick={() => toggle()}>
         show/hidden
       </button>
       {state && <Article />}

@@ -3,11 +3,11 @@ import useLatest from '../useLatest';
 import { isNumber } from '../utils';
 
 interface Handle {
-  id: number | NodeJS.Timeout;
+  id: ReturnType<typeof setTimeout> | ReturnType<typeof requestAnimationFrame>;
 }
 
-const setRafTimeout = function (callback: () => void, delay: number = 0): Handle {
-  if (typeof requestAnimationFrame === typeof undefined) {
+const setRafTimeout = (callback: () => void, delay: number = 0): Handle => {
+  if (typeof requestAnimationFrame === 'undefined') {
     return {
       id: setTimeout(callback, delay),
     };
@@ -17,10 +17,10 @@ const setRafTimeout = function (callback: () => void, delay: number = 0): Handle
     id: 0,
   };
 
-  const startTime = new Date().getTime();
+  const startTime = Date.now();
 
   const loop = () => {
-    const current = new Date().getTime();
+    const current = Date.now();
     if (current - startTime >= delay) {
       callback();
     } else {
@@ -31,11 +31,11 @@ const setRafTimeout = function (callback: () => void, delay: number = 0): Handle
   return handle;
 };
 
-function cancelAnimationFrameIsNotDefined(t: any): t is NodeJS.Timer {
-  return typeof cancelAnimationFrame === typeof undefined;
-}
+const cancelAnimationFrameIsNotDefined = (t: any): t is ReturnType<typeof setTimeout> => {
+  return typeof cancelAnimationFrame === 'undefined';
+};
 
-const clearRafTimeout = function (handle: Handle) {
+const clearRafTimeout = (handle: Handle) => {
   if (cancelAnimationFrameIsNotDefined(handle.id)) {
     return clearTimeout(handle.id);
   }
@@ -44,7 +44,7 @@ const clearRafTimeout = function (handle: Handle) {
 
 function useRafTimeout(fn: () => void, delay: number | undefined) {
   const fnRef = useLatest(fn);
-  const timerRef = useRef<Handle>();
+  const timerRef = useRef<Handle>(undefined);
 
   const clear = useCallback(() => {
     if (timerRef.current) {
@@ -53,7 +53,9 @@ function useRafTimeout(fn: () => void, delay: number | undefined) {
   }, []);
 
   useEffect(() => {
-    if (!isNumber(delay) || delay < 0) return;
+    if (!isNumber(delay) || delay < 0) {
+      return;
+    }
     timerRef.current = setRafTimeout(() => {
       fnRef.current();
     }, delay);

@@ -3,7 +3,7 @@ import useTimeout from '../index';
 
 interface ParamsObj {
   fn: (...arg: any) => any;
-  delay: number | undefined;
+  delay?: number;
 }
 
 const setUp = ({ fn, delay }: ParamsObj) => renderHook(() => useTimeout(fn, delay));

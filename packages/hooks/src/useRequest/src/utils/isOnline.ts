@@ -1,8 +1,10 @@
 import isBrowser from '../../../utils/isBrowser';
 
-export default function isOnline(): boolean {
+const isOnline = () => {
   if (isBrowser && typeof navigator.onLine !== 'undefined') {
     return navigator.onLine;
   }
   return true;
-}
+};
+
+export default isOnline;

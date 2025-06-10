@@ -19,7 +19,7 @@ export interface Options {
 const useDrag = <T>(data: T, target: BasicTarget, options: Options = {}) => {
   const optionsRef = useLatest(options);
   const dataRef = useLatest(data);
-  const imageElementRef = useRef<Element>();
+  const imageElementRef = useRef<Element>(undefined);
 
   const { dragImage } = optionsRef.current;
 

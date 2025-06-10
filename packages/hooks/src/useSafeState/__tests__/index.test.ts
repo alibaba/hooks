@@ -1,8 +1,8 @@
-import { act, renderHook, RenderHookResult } from '@testing-library/react';
+import { act, renderHook } from '@testing-library/react';
 import useSafeState from '../index';
 
 describe('useSetState', () => {
-  const setUp = (initialValue: any) =>
+  const setUp = <S>(initialValue: S | (() => S)) =>
     renderHook(() => {
       const [state, setState] = useSafeState(initialValue);
       return {

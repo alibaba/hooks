@@ -7,7 +7,7 @@ const useAutoRunPlugin: Plugin<any, any[]> = (
   fetchInstance,
   { manual, ready = true, defaultParams = [], refreshDeps = [], refreshDepsAction },
 ) => {
-  const hasAutoRun = useRef(false);
+  const hasAutoRun = useRef<boolean>(false);
   hasAutoRun.current = false;
 
   useUpdateEffect(() => {

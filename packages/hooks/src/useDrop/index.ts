@@ -20,7 +20,7 @@ const useDrop = (target: BasicTarget, options: Options = {}) => {
   const optionsRef = useLatest(options);
 
   // https://stackoverflow.com/a/26459269
-  const dragEnterTarget = useRef<any>();
+  const dragEnterTarget = useRef<EventTarget>(undefined);
 
   useEffectWithTarget(
     () => {
@@ -40,7 +40,7 @@ const useDrop = (target: BasicTarget, options: Options = {}) => {
           let data = dom;
           try {
             data = JSON.parse(dom);
-          } catch (e) {
+          } catch {
             data = dom;
           }
           optionsRef.current.onDom(data, event as React.DragEvent);

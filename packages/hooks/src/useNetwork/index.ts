@@ -20,13 +20,17 @@ enum NetworkEventType {
 
 function getConnection() {
   const nav = navigator as any;
-  if (!isObject(nav)) return null;
+  if (!isObject(nav)) {
+    return null;
+  }
   return nav.connection || nav.mozConnection || nav.webkitConnection;
 }
 
 function getConnectionProperty(): NetworkState {
   const c = getConnection();
-  if (!c) return {};
+  if (!c) {
+    return {};
+  }
   return {
     rtt: c.rtt,
     type: c.type,
