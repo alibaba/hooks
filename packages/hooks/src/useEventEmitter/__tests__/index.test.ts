@@ -3,7 +3,7 @@ import { useState } from 'react';
 import useEventEmitter from '../index';
 
 describe('useEventEmitter', () => {
-  const setUp = (): any =>
+  const setUp = () =>
     renderHook(() => {
       const event$ = useEventEmitter<number>();
       const [count, setCount] = useState(0);

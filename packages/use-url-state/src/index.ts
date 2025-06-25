@@ -31,29 +31,34 @@ const useUrlState = <S extends UrlState = UrlState>(
   options?: Options,
 ) => {
   type State = Partial<{ [key in keyof S]: string }>;
+
   const { navigateMode = 'push', parseOptions, stringifyOptions } = options || {};
 
   const mergedParseOptions = { ...baseParseConfig, ...parseOptions };
-  const mergedStringifyOptions = { ...baseStringifyConfig, ...stringifyOptions };
+  const mergedStringifyOptions = {
+    ...baseStringifyConfig,
+    ...stringifyOptions,
+  };
 
   const location = rc.useLocation();
 
   // react-router v5
   const history = rc.useHistory?.();
-  // react-router v6
+
+  // react-router v6 & v7
   const navigate = rc.useNavigate?.();
 
   const update = useUpdate();
 
   const initialStateRef = useRef(
-    typeof initialState === 'function' ? (initialState as () => S)() : initialState || {},
+    typeof initialState === 'function' ? initialState() : initialState || {},
   );
 
   const queryFromUrl = useMemo(() => {
     return qs.parse(location.search, mergedParseOptions);
   }, [location.search]);
 
-  const targetQuery: State = useMemo(
+  const targetQuery = useMemo<State>(
     () => ({
       ...initialStateRef.current,
       ...queryFromUrl,

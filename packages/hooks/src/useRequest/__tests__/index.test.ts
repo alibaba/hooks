@@ -1,3 +1,4 @@
+import type { RenderHookResult } from '@testing-library/react';
 import { act, renderHook, waitFor } from '@testing-library/react';
 import useRequest from '../index';
 import { request } from '../../utils/testingHelpers';
@@ -13,11 +14,17 @@ describe('useRequest', () => {
     errorSpy.mockRestore();
   });
 
-  const setUp = (service, options) => renderHook((o) => useRequest(service, o || options));
-  let hook;
+  const setUp = (
+    service: Parameters<typeof useRequest>[0],
+    options: Parameters<typeof useRequest>[1],
+  ) => renderHook((o) => useRequest(service, o || options));
+
+  let hook: RenderHookResult<any, any>;
+
   it('useRequest should auto run', async () => {
-    let value, success;
-    const successCallback = (text) => {
+    let value;
+    let success;
+    const successCallback = (text: string) => {
       success = text;
     };
     const errorCallback = jest.fn();
@@ -27,7 +34,7 @@ describe('useRequest', () => {
     const finallyCallback = () => {
       value = 'finally';
     };
-    //auto run success
+    // auto run success
     act(() => {
       hook = setUp(request, {
         onSuccess: successCallback,

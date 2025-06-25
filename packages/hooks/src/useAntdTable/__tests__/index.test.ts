@@ -1,3 +1,4 @@
+import type { RenderHookResult } from '@testing-library/react';
 import { act, renderHook, waitFor } from '@testing-library/react';
 import { sleep } from '../../utils/testingHelpers';
 import useAntdTable from '../index';
@@ -63,15 +64,12 @@ describe('useAntdTable', () => {
     searchType = type;
   };
 
-  const setUp = (service, options) => renderHook((o) => useAntdTable(service, o || options));
+  const setUp = (
+    service: Parameters<typeof useAntdTable>[0],
+    options: Parameters<typeof useAntdTable>[1],
+  ) => renderHook((o) => useAntdTable(service, o || options));
 
-  let hook: any;
-
-  // afterEach(() => {
-  //   form.resetFields();
-  //   changeSearchType('simple');
-  //   hook?.unmount();
-  // });
+  let hook: RenderHookResult<any, any>;
 
   it('should fetch after first render', async () => {
     queryArgs = undefined;
@@ -198,9 +196,9 @@ describe('useAntdTable', () => {
       getFieldInstance(key: string) {
         // 根据不同的 type 返回不同的 fieldsValues
         if (searchType === 'simple') {
-          return ['name'].includes(key);
+          return ['name'].includes(key) as any;
         }
-        return ['name', 'email', 'phone'].includes(key);
+        return ['name', 'email', 'phone'].includes(key) as any;
       },
     };
 
@@ -289,7 +287,7 @@ describe('useAntdTable', () => {
         defaultParams: {
           current: 1,
           pageSize: 10,
-        },
+        } as any,
         defaultPageSize: 20,
       });
     });

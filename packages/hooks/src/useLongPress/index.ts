@@ -2,7 +2,6 @@ import { useRef } from 'react';
 import useLatest from '../useLatest';
 import type { BasicTarget } from '../utils/domTarget';
 import { getTargetElement } from '../utils/domTarget';
-import isBrowser from '../utils/isBrowser';
 import useEffectWithTarget from '../utils/useEffectWithTarget';
 
 type EventType = MouseEvent | TouchEvent;
@@ -22,7 +21,8 @@ function useLongPress(
   const onClickRef = useLatest(onClick);
   const onLongPressEndRef = useLatest(onLongPressEnd);
 
-  const timerRef = useRef<ReturnType<typeof setTimeout>>();
+  const timerRef = useRef<ReturnType<typeof setTimeout>>(undefined);
+
   const isTriggeredRef = useRef(false);
   const pervPositionRef = useRef({ x: 0, y: 0 });
   const mousePressed = useRef(false);
@@ -64,8 +64,6 @@ function useLongPress(
           };
         }
 
-        console.warn('Unsupported event type');
-
         return { clientX: 0, clientY: 0 };
       }
 
@@ -77,7 +75,9 @@ function useLongPress(
       };
 
       const onTouchStart = (event: TouchEvent) => {
-        if (touchPressed.current) return;
+        if (touchPressed.current) {
+          return;
+        }
         touchPressed.current = true;
 
         if (hasMoveThreshold) {
@@ -89,7 +89,9 @@ function useLongPress(
       };
 
       const onMouseDown = (event: MouseEvent) => {
-        if ((event as any)?.sourceCapabilities?.firesTouchEvents) return;
+        if ((event as any)?.sourceCapabilities?.firesTouchEvents) {
+          return;
+        }
 
         mousePressed.current = true;
 
@@ -108,7 +110,9 @@ function useLongPress(
       };
 
       const onTouchEnd = (event: TouchEvent) => {
-        if (!touchPressed.current) return;
+        if (!touchPressed.current) {
+          return;
+        }
         touchPressed.current = false;
 
         if (timerRef.current) {
@@ -125,8 +129,12 @@ function useLongPress(
       };
 
       const onMouseUp = (event: MouseEvent) => {
-        if ((event as any)?.sourceCapabilities?.firesTouchEvents) return;
-        if (!mousePressed.current) return;
+        if ((event as any)?.sourceCapabilities?.firesTouchEvents) {
+          return;
+        }
+        if (!mousePressed.current) {
+          return;
+        }
         mousePressed.current = false;
 
         if (timerRef.current) {
@@ -143,7 +151,9 @@ function useLongPress(
       };
 
       const onMouseLeave = (event: MouseEvent) => {
-        if (!mousePressed.current) return;
+        if (!mousePressed.current) {
+          return;
+        }
         mousePressed.current = false;
 
         if (timerRef.current) {
