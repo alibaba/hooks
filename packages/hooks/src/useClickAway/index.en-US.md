@@ -37,7 +37,7 @@ useClickAway<T extends Event = Event>(
 ### Params
 
 | Property    | Description                                    | Type                                       | Default |
-| ----------- | ---------------------------------------------- | ------------------------------------------ | ------- |
+| --- | --- | --- | --- |
 | onClickAway | Trigger Function                               | `(event: T) => void`                       | -       |
 | target      | DOM elements or Ref or Function, support array | `Target` \| `Target[]`                     | -       |
 | eventName   | Set the event to be listened, support array    | `DocumentEventKey` \| `DocumentEventKey[]` | `click` |

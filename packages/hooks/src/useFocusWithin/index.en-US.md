@@ -33,14 +33,14 @@ const isFocusWithin = useFocusWithin(
 ### Params
 
 | Property | Description        | Type                                                        | Default |
-| -------- | ------------------ | ----------------------------------------------------------- | ------- |
+| --- | --- | --- | --- |
 | target   | DOM element or ref | `() => Element` \| `Element` \| `MutableRefObject<Element>` | -       |
 | options  | More config        | `Options`                                                   | -       |
 
 ### Options
 
 | Property | Description                             | Type                               | Default |
-| -------- | --------------------------------------- | ---------------------------------- | ------- |
+| --- | --- | --- | --- |
 | onFocus  | Callback to be executed on focus        | `(e: FocusEvent) => void`          | -       |
 | onBlur   | Callback to be executed on blur         | `(e: FocusEvent) => void`          | -       |
 | onChange | Callback to be executed on focus change | `(isFocusWithin: boolean) => void` | -       |
@@ -48,5 +48,5 @@ const isFocusWithin = useFocusWithin(
 ### Result
 
 | Property      | Description                              | Type      |
-| ------------- | ---------------------------------------- | --------- |
+| --- | --- | --- |
 | isFocusWithin | Whether the focus is in the current area | `boolean` |

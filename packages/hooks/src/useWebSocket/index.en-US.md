@@ -51,14 +51,14 @@ useWebSocket(socketUrl: string, options?: Options): Result;
 ### Params
 
 | Property  | Description                    | Type      | Default |
-| --------- | ------------------------------ | --------- | ------- |
+| --- | --- | --- | --- |
 | socketUrl | Required, webSocket url        | `string`  | -       |
 | options   | connect the configuration item | `Options` | -       |
 
 ### Options
 
 | Options Property  | Description                        | Type                                                                   | Default |
-| ----------------- | ---------------------------------- | ---------------------------------------------------------------------- | ------- |
+| --- | --- | --- | --- |
 | onOpen            | The webSocket connect callback     | `(event: WebSocketEventMap['open'], instance: WebSocket) => void`      | -       |
 | onClose           | WebSocket close callback           | `(event: WebSocketEventMap['close'], instance: WebSocket) => void`     | -       |
 | onMessage         | WebSocket receive message callback | `(message: WebSocketEventMap['message'], instance: WebSocket) => void` | -       |
@@ -71,7 +71,7 @@ useWebSocket(socketUrl: string, options?: Options): Result;
 ### Result
 
 | Options Property | Description                                                                            | Type                           |
-| ---------------- | -------------------------------------------------------------------------------------- | ------------------------------ |
+| --- | --- | --- |
 | latestMessage    | Latest message                                                                         | `WebSocketEventMap['message']` |
 | sendMessage      | Send message function                                                                  | `WebSocket['send']`            |
 | disconnect       | Disconnect webSocket manually                                                          | `() => void`                   |

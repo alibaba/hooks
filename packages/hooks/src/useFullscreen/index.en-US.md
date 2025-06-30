@@ -36,14 +36,14 @@ const [isFullscreen, {
 ### Params
 
 | Property | Description        | Type                                                        | Default |
-| -------- | ------------------ | ----------------------------------------------------------- | ------- |
+| --- | --- | --- | --- |
 | target   | DOM element or ref | `Element` \| `() => Element` \| `MutableRefObject<Element>` | -       |
 | options  | Setting            | `Options`                                                   | -       |
 
 ### Options
 
 | Property       | Description                                                                                                                   | Type                                                   | Default |
-| -------------- | ----------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------ | ------- |
+| --- | --- | --- | --- |
 | onExit         | Exit full screen trigger                                                                                                      | `() => void`                                           | -       |
 | onEnter        | Enter full screen trigger                                                                                                     | `() => void`                                           | -       |
 | pageFullscreen | Whether to enable full screen of page. If its type is object, it can set `className` and `z-index` of the full screen element | `boolean` \| `{ className?: string, zIndex?: number }` | `false` |
@@ -51,7 +51,7 @@ const [isFullscreen, {
 ### Result
 
 | Property         | Description          | Type         |
-| ---------------- | -------------------- | ------------ |
+| --- | --- | --- |
 | isFullscreen     | Is full screen       | `boolean`    |
 | enterFullscreen  | Enter full screen    | `() => void` |
 | exitFullscreen   | Exit full screen     | `() => void` |

@@ -46,14 +46,14 @@ const [state, setState] = useLocalStorageState<T>(
 ### Result
 
 | 参数     | 说明                   | 类型                            |
-| -------- | ---------------------- | ------------------------------- |
+| --- | --- | --- |
 | state    | 本地 `localStorage` 值 | `T`                             |
 | setState | 设置 `localStorage` 值 | `(value?: SetState<T>) => void` |
 
 ### Options
 
 | 参数                | 说明                                                                                                                              | 类型                       | 默认值                        |
-| ------------------- | --------------------------------------------------------------------------------------------------------------------------------- | -------------------------- | ----------------------------- |
+| --- | --- | --- | --- |
 | defaultValue        | 默认值                                                                                                                            | `any \| (() => any)`       | -                             |
 | listenStorageChange | 是否监听存储变化。如果是 `true`，当存储值变化时，所有 `key` 相同的 `useLocalStorageState` 会同步状态，包括同一浏览器不同 tab 之间 | `boolean`                  | `false`                       |
 | serializer          | 自定义序列化方法                                                                                                                  | `(value: any) => string`   | `JSON.stringify`              |

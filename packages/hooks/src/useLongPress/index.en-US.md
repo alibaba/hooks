@@ -36,7 +36,7 @@ useLongPress(
 ### Params
 
 | Property    | Description                  | Type                                                        | Default |
-| ----------- | ---------------------------- | ----------------------------------------------------------- | ------- |
+| --- | --- | --- | --- |
 | onLongPress | Trigger function             | `(event: MouseEvent \| TouchEvent) => void`                 | -       |
 | target      | DOM node or Ref              | `Element` \| `() => Element` \| `MutableRefObject<Element>` | -       |
 | options     | Optional configuration items | `Options`                                                   | `{}`    |
@@ -44,7 +44,7 @@ useLongPress(
 ### Options
 
 | Property       | Description                                                                         | Type                                        | Default |
-| -------------- | ----------------------------------------------------------------------------------- | ------------------------------------------- | ------- |
+| --- | --- | --- | --- |
 | delay          | Long press time                                                                     | `number`                                    | `300`   |
 | moveThreshold  | Move threshold after press. If exceeded, the long press function won't be triggered | `{ x?: number; y?: number }`                | -       |
 | onClick        | Click event                                                                         | `(event: MouseEvent \| TouchEvent) => void` | -       |

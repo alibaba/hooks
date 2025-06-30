@@ -32,14 +32,14 @@ const {
 ### Params
 
 | Property | Description                        | Type                      | Default |
-| -------- | ---------------------------------- | ------------------------- | ------- |
+| --- | --- | --- | --- |
 | fn       | The function to debounce.          | `(...args: any[]) => any` | -       |
 | options  | Config for the debounce behaviors. | `Options`                 | -       |
 
 ### Options
 
 | Property | Description                                                         | Type      | Default |
-| -------- | ------------------------------------------------------------------- | --------- | ------- |
+| --- | --- | --- | --- |
 | wait     | The number of milliseconds to delay.                                | `number`  | `1000`  |
 | leading  | Specify invoking on the leading edge of the timeout.                | `boolean` | `false` |
 | trailing | Specify invoking on the trailing edge of the timeout.               | `boolean` | `true`  |
@@ -48,7 +48,7 @@ const {
 ### Result
 
 | Property | Description                                            | Type                      |
-| -------- | ------------------------------------------------------ | ------------------------- |
+| --- | --- | --- |
 | run      | invoke and pass parameters to fn.                      | `(...args: any[]) => any` |
 | cancel   | Cancel the invocation of currently debounced function. | `() => void`              |
 | flush    | Immediately invoke currently debounced function.       | `() => void`              |

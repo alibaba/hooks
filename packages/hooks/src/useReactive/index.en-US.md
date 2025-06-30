@@ -28,7 +28,7 @@ const state = useReactive(initialValue: Record<string, any>);
 ### Params
 
 | Params       | Description   | Type                  | Default |
-| ------------ | ------------- | --------------------- | ------- |
+| --- | --- | --- | --- |
 | initialState | Current state | `Record<string, any>` | -       |
 
 ## FAQ

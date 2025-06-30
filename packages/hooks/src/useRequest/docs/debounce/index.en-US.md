@@ -30,7 +30,7 @@ You can quickly enter text in the input box below to experience the effect
 The usage and effect of all debounce property are the same as [lodash.debounce](https://lodash.com/docs/4.17.15#debounce)
 
 | Property         | Description                                                                  | Type      | Default Value |
-| ---------------- | ---------------------------------------------------------------------------- | --------- | ------------- |
+| --- | --- | --- | --- |
 | debounceWait     | Debounce delay time, in milliseconds. After setting, enter the debounce mode | `number`  | -             |
 | debounceLeading  | Execute the request before the delay starts                                  | `boolean` | `false`       |
 | debounceTrailing | Execute the request after the delay ends                                     | `boolean` | `true`        |

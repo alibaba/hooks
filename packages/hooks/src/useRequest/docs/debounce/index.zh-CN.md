@@ -30,7 +30,7 @@ const { data, run } = useRequest(getUsername, {
 debounce 所有参数用法和效果同 [lodash.debounce](https://www.lodashjs.com/docs/lodash.debounce/)
 
 | 参数             | 说明                                           | 类型      | 默认值  |
-| ---------------- | ---------------------------------------------- | --------- | ------- |
+| --- | --- | --- | --- |
 | debounceWait     | 防抖等待时间, 单位为毫秒，设置后，进入防抖模式 | `number`  | -       |
 | debounceLeading  | 在延迟开始前执行调用                           | `boolean` | `false` |
 | debounceTrailing | 在延迟结束后执行调用                           | `boolean` | `true`  |

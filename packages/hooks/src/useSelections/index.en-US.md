@@ -45,20 +45,20 @@ const result: Result = useSelections<T>(items: T[], defaultSelected?: T[]);
 
 | Property | Description | Type | Default |
 | --- | --- | --- | --- |
-| items | Data items | `T[]` | - |
-| options | Optional configuration | `Options` | - |
+| items | Data items | `T[]` | --- |
+| options | Optional configuration | `Options` | --- |
 
 ### Options
 
 | Property | Description | Type | Default |
 | --- | --- | --- | --- |
 | defaultSelected | Default selected data | `T[]` | `[]` |
-| itemKey | The unique key of data item. Typically, this parameter needs to be specified when the data source is an array of object | `string` \| `(item: T) => React.Key` | - |
+| itemKey | The unique key of data item. Typically, this parameter needs to be specified when the data source is an array of object | `string` \| `(item: T) => React.Key` | --- |
 
 ### Result
 
 | Property          | Description                                                                                                                                                                                                                                               | Type                                                                |
-| ----------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------- |
+| --- | --- | --- |
 | selected          | Selected items                                                                                                                                                                                                                                            | `T[]`                                                               |
 | allSelected       | Is all items selected                                                                                                                                                                                                                                     | `boolean`                                                           |
 | noneSelected      | Is no item selected                                                                                                                                                                                                                                       | `boolean`                                                           |

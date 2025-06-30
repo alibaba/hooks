@@ -48,13 +48,13 @@ const memoizedFn = useMemoizedFn<T>(fn: T): T;
 ### Result
 
 | Property   | Description                                       | Type                      |
-| ---------- | ------------------------------------------------- | ------------------------- |
+| --- | --- | --- |
 | memoizedFn | Function that the reference address never changes | `(...args: any[]) => any` |
 
 ### Params
 
 | Property | Description                       | Type                      | Default |
-| -------- | --------------------------------- | ------------------------- | ------- |
+| --- | --- | --- | --- |
 | fn       | Function that require persistence | `(...args: any[]) => any` | -       |
 
 ## FAQ

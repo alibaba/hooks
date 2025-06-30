@@ -30,7 +30,7 @@ You can quickly enter text in the input box below to experience the effect
 The usage and effects of all throttle property are the same as [lodash.throttle](https://lodash.com/docs/4.17.15#throttle)
 
 | Property         | Description                                                                 | Type      | Default Value |
-| ---------------- | --------------------------------------------------------------------------- | --------- | ------------- |
+| --- | --- | --- | --- |
 | throttleWait     | Throttle wait time, in milliseconds. After setting, enter the throttle mode | `number`  | -             |
 | throttleLeading  | Execute the request before throttling starts                                | `boolean` | `true`        |
 | throttleTrailing | Execute the request after throttling ends                                   | `boolean` | `true`        |

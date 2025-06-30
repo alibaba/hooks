@@ -34,7 +34,7 @@ const [
 ### Result
 
 | Property | Description      | Type                                 |
-| -------- | ---------------- | ------------------------------------ |
+| --- | --- | --- |
 | map      | Map object       | `Map<K, V>`                          |
 | set      | Add item         | `(key: K, value: V) => void`         |
 | get      | Get item         | `(key: K) => V \| undefined`         |
@@ -45,5 +45,5 @@ const [
 ### Params
 
 | Property     | Description                 | Type               | Default |
-| ------------ | --------------------------- | ------------------ | ------- |
+| --- | --- | --- | --- |
 | initialValue | Optional, set default value | `Iterable<[K, V]>` | -       |

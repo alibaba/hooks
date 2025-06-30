@@ -35,14 +35,14 @@ const {
 ### Params
 
 | Property     | Description                                                                                                               | Type     | Default     |
-| ------------ | ------------------------------------------------------------------------------------------------------------------------- | -------- | ----------- |
+| --- | --- | --- | --- |
 | initialValue | Optional initial value                                                                                                    | `T`      | -           |
 | maxLength    | Optional limit the maximum length of history records. If the maximum length is exceeded, the first record will be deleted | `number` | 0 unlimited |
 
 ### Result
 
 | Property      | Description                                                                       | Type                            |
-| ------------- | --------------------------------------------------------------------------------- | ------------------------------- |
+| --- | --- | --- |
 | value         | Current value                                                                     | `T`                             |
 | setValue      | Set value                                                                         | `(value: T) => void`            |
 | backLength    | The length of backward history                                                    | `number`                        |

@@ -26,12 +26,12 @@ const [state, setState] = useSetState<T>(initialState);
 ### Result
 
 | Property | Description          | Type                                                                                      | Default |
-| -------- | -------------------- | ----------------------------------------------------------------------------------------- | ------- |
+| --- | --- | --- | --- |
 | state    | Current state        | `T`                                                                                       | -       |
 | setState | Update current state | `(state: Partial<T> \| null) => void` \| `((prevState: T) => Partial<T> \| null) => void` | -       |
 
 ### Params
 
 | Property     | Description   | Type           | Default |
-| ------------ | ------------- | -------------- | ------- |
+| --- | --- | --- | --- |
 | initialState | Initial state | `T \| () => T` | -       |

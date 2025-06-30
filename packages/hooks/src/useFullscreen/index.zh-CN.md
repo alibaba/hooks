@@ -36,14 +36,14 @@ const [isFullscreen, {
 ### Params
 
 | 参数    | 说明             | 类型                                                        | 默认值 |
-| ------- | ---------------- | ----------------------------------------------------------- | ------ |
+| --- | --- | --- | --- |
 | target  | DOM 节点或者 ref | `Element` \| `() => Element` \| `MutableRefObject<Element>` | -      |
 | options | 设置             | `Options`                                                   | -      |
 
 ### Options
 
 | 参数           | 说明                                                                   | 类型                                                   | 默认值  |
-| -------------- | ---------------------------------------------------------------------- | ------------------------------------------------------ | ------- |
+| --- | --- | --- | --- |
 | onExit         | 退出全屏触发                                                           | `() => void`                                           | -       |
 | onEnter        | 全屏触发                                                               | `() => void`                                           | -       |
 | pageFullscreen | 是否是页面全屏。当参数类型为对象时，可以设置全屏元素的类名和 `z-index` | `boolean` \| `{ className?: string, zIndex?: number }` | `false` |
@@ -51,7 +51,7 @@ const [isFullscreen, {
 ### Result
 
 | 参数             | 说明         | 类型         |
-| ---------------- | ------------ | ------------ |
+| --- | --- | --- |
 | isFullscreen     | 是否全屏     | `boolean`    |
 | enterFullscreen  | 设置全屏     | `() => void` |
 | exitFullscreen   | 退出全屏     | `() => void` |

@@ -38,7 +38,7 @@ useKeyPress(
 ### Params
 
 | Property     | Description                                                      | Type                                                            | Default |
-| ------------ | ---------------------------------------------------------------- | --------------------------------------------------------------- | ------- |
+| --- | --- | --- | --- |
 | keyFilter    | Support keyCode、alias、combination keys、array、custom function | `KeyType` \| `KeyType[]` \| `(event: KeyboardEvent) => boolean` | -       |
 | eventHandler | Callback function                                                | `(event: KeyboardEvent, key: KeyType) => void`                  | -       |
 | options      | Advanced options                                                 | `Options`                                                       | -       |
@@ -46,7 +46,7 @@ useKeyPress(
 ### Options
 
 | Property   | Description                                                                                                                                    | Type                                                        | Default       |
-| ---------- | ---------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------- | ------------- |
+| --- | --- | --- | --- |
 | events     | Trigger Events                                                                                                                                 | `('keydown' \| 'keyup')[]`                                  | `['keydown']` |
 | target     | DOM element or ref                                                                                                                             | `() => Element` \| `Element` \| `MutableRefObject<Element>` | -             |
 | exactMatch | Exact match. If set `true`, the event will only be trigger when the keys match exactly. For example, pressing [shift + c] will not trigger [c] | `boolean`                                                   | `false`       |

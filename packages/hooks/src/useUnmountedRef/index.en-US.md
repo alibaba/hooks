@@ -25,5 +25,5 @@ const unmountRef: { current: boolean } = useUnmountedRef();
 ### Result
 
 | Property   | Description                        | Type                   |
-| ---------- | ---------------------------------- | ---------------------- |
+| --- | --- | --- |
 | unmountRef | Whether the component is unmounted | `{ current: boolean }` |

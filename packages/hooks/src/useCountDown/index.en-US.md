@@ -55,7 +55,7 @@ const [countdown, formattedRes] = useCountDown(
 ### Params
 
 | Property   | Description                                  | Type         | Default |
-| ---------- | -------------------------------------------- | ------------ | ------- |
+| --- | --- | --- | --- |
 | leftTime   | The rest of time, in milliseconds            | `number`     | -       |
 | targetDate | Target time                                  | `TDate`      | -       |
 | interval   | Time interval between ticks, in milliseconds | `number`     | `1000`  |
@@ -64,7 +64,7 @@ const [countdown, formattedRes] = useCountDown(
 ### Return
 
 | Params          | Description                              | Type           |
-| --------------- | ---------------------------------------- | -------------- |
+| --- | --- | --- |
 | countdown       | Timestamp to targetDate, in milliseconds | `number`       |
 | formattedResult | Formatted countdown                      | `FormattedRes` |
 

@@ -149,7 +149,7 @@ const {
 ### Result
 
 | Property     | Description                                                                                                                                                                             | Type                                                                    |
-| ------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------- |
+| --- | --- | --- |
 | data         | Data returned by service                                                                                                                                                                | `TData` \| `undefined`                                                  |
 | error        | Exception thrown by service                                                                                                                                                             | `Error` \| `undefined`                                                  |
 | loading      | Is the service being executed                                                                                                                                                           | `boolean`                                                               |
@@ -164,7 +164,7 @@ const {
 ### Options
 
 | Property      | Description                                                                                                                                                                                                      | Type                                                 | Default |
-| ------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------- | ------- |
+| --- | --- | --- | --- |
 | manual        | <ul><li> The default is `false`. That is, the service is automatically executed during initialization. </li><li>If set to `true`, you need to manually call `run` or `runAsync` to trigger execution. </li></ul> | `boolean`                                            | `false` |
 | defaultParams | The parameters passed to the service at the first default execution                                                                                                                                              | `TParams`                                            | -       |
 | onBefore      | Triggered before service execution                                                                                                                                                                               | `(params: TParams) => void`                          | -       |

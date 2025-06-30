@@ -115,7 +115,7 @@ const {
 ### Result
 
 | Property          | Description                                     | Type                  |
-| ----------------- | ----------------------------------------------- | --------------------- |
+| --- | --- | --- |
 | tableProps        | The data required by the `Table` component      | -                     |
 | paginationProps   | The data required by the `Pagination` component | -                     |
 | search.type       | Current form type                               | `simple` \| `advance` |
@@ -126,7 +126,7 @@ const {
 ### Params
 
 | Property        | Description                                                                                | Type                     | Default  |
-| --------------- | ------------------------------------------------------------------------------------------ | ------------------------ | -------- |
+| --- | --- | --- | --- |
 | field           | `Form` instance                                                                            | -                        | -        |
 | defaultType     | Default form type                                                                          | `simple` \| `advance`    | `simple` |
 | defaultParams   | Default parameters, the first item is paging data, the second item is form data            | `[pagination, formData]` | -        |

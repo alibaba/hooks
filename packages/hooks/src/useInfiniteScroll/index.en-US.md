@@ -106,7 +106,7 @@ const {
 ### Result
 
 | Property      | Description                                                                                                                                       | Type                     |
-| ------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------ |
+| --- | --- | --- |
 | data          | The data returned by the service, where the `list` attribute is the aggregated data                                                               | `TData` \| `undefined`   |
 | loading       | Is the first request in progress                                                                                                                  | `boolean`                |
 | loadingMore   | Is more data request in progress                                                                                                                  | `boolean`                |
@@ -122,7 +122,7 @@ const {
 ### Options
 
 | Property   | Description                                                                                                                                                                                                                                          | Type                                                        | Default  |
-| ---------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------- | -------- |
+| --- | --- | --- | --- |
 | target     | specifies the parent element. If it exists, it will trigger the `loadMore` when scrolling to the bottom. Needs to work with `isNoMore` to know when there is no more data to load. **when target is document, it is defined as the entire viewport** | `() => Element` \| `Element` \| `MutableRefObject<Element>` | -        |
 | isNoMore   | determines if there is no more data, the input parameter is the latest merged `data`                                                                                                                                                                 | `(data?: TData) => boolean`                                 | -        |
 | threshold  | The pixel threshold to the bottom for the scrolling to load                                                                                                                                                                                          | `number`                                                    | `100`    |

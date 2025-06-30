@@ -27,7 +27,7 @@ You can quickly click the button in the example below to experience the effect
 ## API
 
 | Property     | Description                                       | Type     | Default |
-| ------------ | ------------------------------------------------- | -------- | ------- |
+| --- | --- | --- | --- |
 | loadingDelay | Set the delay time for `loading` to become `true` | `number` | `0`     |
 
 ## Remark
