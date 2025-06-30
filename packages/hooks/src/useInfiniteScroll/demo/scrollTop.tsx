@@ -76,7 +76,7 @@ export default () => {
         <div>
           <div style={{ marginBottom: 10 }}>
             {!noMore && (
-              <button type="button" onClick={loadMore} disabled={loadingMore}>
+              <button type='button' onClick={loadMore} disabled={loadingMore}>
                 {loadingMore ? 'Loading more...' : 'Click to load more'}
               </button>
             )}
