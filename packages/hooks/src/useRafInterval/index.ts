@@ -3,11 +3,11 @@ import useLatest from '../useLatest';
 import { isNumber } from '../utils';
 
 interface Handle {
-  id: number | ReturnType<typeof setInterval>;
+  id: ReturnType<typeof setInterval> | ReturnType<typeof requestAnimationFrame>;
 }
 
-const setRafInterval = function (callback: () => void, delay: number = 0): Handle {
-  if (typeof requestAnimationFrame === typeof undefined) {
+const setRafInterval = (callback: () => void, delay: number = 0): Handle => {
+  if (typeof requestAnimationFrame === 'undefined') {
     return {
       id: setInterval(callback, delay),
     };
@@ -28,11 +28,11 @@ const setRafInterval = function (callback: () => void, delay: number = 0): Handl
   return handle;
 };
 
-function cancelAnimationFrameIsNotDefined(t: any): t is ReturnType<typeof setInterval> {
-  return typeof cancelAnimationFrame === typeof undefined;
-}
+const cancelAnimationFrameIsNotDefined = (t: any): t is ReturnType<typeof setTimeout> => {
+  return typeof cancelAnimationFrame === 'undefined';
+};
 
-const clearRafInterval = function (handle: Handle) {
+const clearRafInterval = (handle: Handle) => {
   if (cancelAnimationFrameIsNotDefined(handle.id)) {
     return clearInterval(handle.id);
   }
@@ -49,7 +49,7 @@ function useRafInterval(
   const immediate = options?.immediate;
 
   const fnRef = useLatest(fn);
-  const timerRef = useRef<Handle>();
+  const timerRef = useRef<Handle>(undefined);
 
   const clear = useCallback(() => {
     if (timerRef.current) {

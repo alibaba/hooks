@@ -7,7 +7,7 @@ const useDebouncePlugin: Plugin<any, any[]> = (
   fetchInstance,
   { debounceWait, debounceLeading, debounceTrailing, debounceMaxWait },
 ) => {
-  const debouncedRef = useRef<DebouncedFunc<any>>();
+  const debouncedRef = useRef<DebouncedFunc<any>>(undefined);
 
   const options = useMemo(() => {
     const ret: DebounceSettings = {};
@@ -28,7 +28,7 @@ const useDebouncePlugin: Plugin<any, any[]> = (
       const _originRunAsync = fetchInstance.runAsync.bind(fetchInstance);
 
       debouncedRef.current = debounce(
-        (callback) => {
+        (callback: (...args: any[]) => void) => {
           callback();
         },
         debounceWait,
@@ -38,7 +38,7 @@ const useDebouncePlugin: Plugin<any, any[]> = (
       // debounce runAsync should be promise
       // https://github.com/lodash/lodash/issues/4400#issuecomment-834800398
       fetchInstance.runAsync = (...args) => {
-        return new Promise((resolve, reject) => {
+        return new Promise<void>((resolve, reject) => {
           debouncedRef.current?.(() => {
             _originRunAsync(...args)
               .then(resolve)

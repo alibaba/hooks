@@ -6,7 +6,11 @@ import { request } from '../../utils/testingHelpers';
 describe('useLoadingDelayPlugin', () => {
   jest.useFakeTimers();
 
-  const setUp = (service, options) => renderHook((o) => useRequest(service, o || options));
+  const setUp = (
+    service: Parameters<typeof useRequest>[0],
+    options: Parameters<typeof useRequest>[1],
+  ) => renderHook((o) => useRequest(service, o || options));
+
   let hook: RenderHookResult<ReturnType<typeof useRequest>, any>;
 
   afterEach(() => {

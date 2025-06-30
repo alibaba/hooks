@@ -1,7 +1,7 @@
 import { renderHook } from '@testing-library/react';
 import useLatest from '../index';
 
-const setUp = (val) => renderHook((state) => useLatest(state), { initialProps: val });
+const setUp = (val: any) => renderHook((state) => useLatest(state), { initialProps: val });
 
 describe('useLatest', () => {
   it('useLatest with basic variable should work', async () => {

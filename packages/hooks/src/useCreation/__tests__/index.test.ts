@@ -11,7 +11,7 @@ describe('useCreation', () => {
     data: number;
   }
 
-  const setUp = (): any =>
+  const setUp = () =>
     renderHook(() => {
       const [count, setCount] = useState(0);
       const [, setFlag] = useState({});
