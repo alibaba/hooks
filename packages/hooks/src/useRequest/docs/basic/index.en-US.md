@@ -18,8 +18,6 @@ By default, the first parameter of `useRequest` is an asynchronous function, whi
 const { data, error, loading } = useRequest(service);
 ```
 
-<br />
-
 <code src="./demo/default.tsx"></code>
 
 ## Manually trigger

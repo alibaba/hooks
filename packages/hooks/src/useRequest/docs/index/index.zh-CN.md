@@ -32,8 +32,6 @@ demo:
 const { data, error, loading } = useRequest(getUsername);
 ```
 
-<br />
-
 <code src="./demo/default.tsx"></code>
 
 ## 手动触发
@@ -45,8 +43,6 @@ const { loading, run } = useRequest(changeUsername, {
   manual: true
 });
 ```
-
-<br />
 
 <code src="./demo/manual.tsx"></code>
 

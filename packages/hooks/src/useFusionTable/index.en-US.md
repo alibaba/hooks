@@ -30,8 +30,6 @@ useFusionTable encapsulates the commonly used [Fusion Form](https://fusion.desig
 <Pagination {...paginationProps} />
 ```
 
-<br />
-
 <code src="./demo/table.tsx"></code>
 
 ### Form and Table data binding

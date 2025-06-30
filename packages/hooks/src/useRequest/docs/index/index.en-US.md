@@ -32,8 +32,6 @@ The first parameter of `useRequest` is an asynchronous function, which will be a
 const { data, error, loading } = useRequest(getUsername);
 ```
 
-<br />
-
 <code src="./demo/default.tsx"></code>
 
 ## Manual trigger
@@ -45,8 +43,6 @@ const { loading, run } = useRequest(changeUsername, {
   manual: true
 });
 ```
-
-<br />
 
 <code src="./demo/manual.tsx"></code>
 

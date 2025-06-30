@@ -34,8 +34,6 @@ demo:
 <Pagination {...paginationProps} />
 ```
 
-<br />
-
 <code src="./demo/table.tsx"></code>
 
 ### Form 与 Table 联动
