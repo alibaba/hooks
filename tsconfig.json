@@ -14,5 +14,6 @@
     "strictNullChecks": true,
     "importHelpers": true
   },
+  "include": [".dumirc.ts"],
   "exclude": ["node_modules", "lib", "es", "dist", "example"]
 }
