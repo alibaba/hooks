@@ -1,9 +1,14 @@
 ---
-nav:
-  path: /hooks
+title: useSessionStorageState
+nav: Hooks
+group:
+  title: State
+  order: 4
+order: 7
+toc: content
+demo:
+  cols: 2
 ---
-
-# useSessionStorageState
 
 A Hook for store state into sessionStorage.
 

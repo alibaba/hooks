@@ -1,9 +1,9 @@
 /**
- * title: Basic Usage
- * desc: Basic countdown management.
+ * title: Countdown to target time
+ * description: Basic countdown management.
  *
- * title.zh-CN: 基础用法
- * desc.zh-CN: 基础的倒计时管理。
+ * title.zh-CN: 到未来某一时间点的倒计时
+ * description.zh-CN: 基础的倒计时管理。
  */
 
 import React from 'react';

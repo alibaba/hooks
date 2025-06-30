@@ -1,13 +1,13 @@
 /**
  * title: Default usage
- * desc: Do async check when component is mounted.
+ * description: Do async check when component is mounted.
  *
  * title.zh-CN: 基础用法
- * desc.zh-CN: 组件加载时进行异步的检查
+ * description.zh-CN: 组件加载时进行异步的检查
  */
 
-import { useAsyncEffect } from 'ahooks';
 import React, { useState } from 'react';
+import { useAsyncEffect } from 'ahooks';
 
 function mockCheck(): Promise<boolean> {
   return new Promise((resolve) => {

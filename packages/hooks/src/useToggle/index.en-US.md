@@ -1,21 +1,21 @@
 ---
-nav:
-  path: /hooks
+title: useToggle
+nav: Hooks
+group:
+  title: State
+  order: 4
+order: 3
+toc: content
+demo:
+  cols: 2
 ---
-
-# useToggle
 
 A hook that toggle states.
 
 ## Examples
 
-### Default usage
-
-<code src="./demo/demo1.tsx" />
-
-### Advanced usage
-
-<code src="./demo/demo2.tsx" />
+<code src="./demo/demo1.tsx"></code>
+<code src="./demo/demo2.tsx"></code>
 
 ## API
 

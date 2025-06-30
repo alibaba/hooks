@@ -1,21 +1,21 @@
 ---
-nav:
-  path: /hooks
+title: useExternal
+nav: Hooks
+group:
+  title: Dom
+  order: 6
+order: 6
+toc: content
+demo:
+  cols: 2
 ---
-
-# useExternal
 
 Dynamically load JS or CSS, useExternal can ensure that the resource are globally unique.
 
 ## Example
 
-### Basic Usage
-
-<code src="./demo/demo1.tsx" />
-
-### Load CSS
-
-<code src="./demo/demo2.tsx" />
+<code src="./demo/demo1.tsx"></code>
+<code src="./demo/demo2.tsx"></code>
 
 ## API
 

@@ -6,17 +6,17 @@
 
 <div align="center">
 
-A high-quality & reliable React Hooks library.
+A high-quality & reliable React Hooks library
 
-[![NPM version][image-1]][1]
-[![NPM downloads][image-2]][2]
+[![NPM version](https://img.shields.io/npm/v/ahooks.svg)](https://www.npmjs.com/package/ahooks)
+[![NPM downloads](https://img.shields.io/npm/dw/ahooks.svg)](https://npmjs.org/package/ahooks)
 [![npm](https://img.shields.io/npm/dw/ahooks-v2?label=downloads%28v2%29)](https://www.npmjs.com/package/ahooks-v2)
 [![npm](https://img.shields.io/github/issues/alibaba/hooks)](https://github.com/alibaba/hooks/issues)
 [![Coverage Status](https://coveralls.io/repos/github/alibaba/hooks/badge.svg?branch=master)](https://coveralls.io/github/alibaba/hooks?branch=master)
 ![gzip size](https://img.badgesize.io/https:/unpkg.com/ahooks/dist/ahooks.js?label=gzip%20size&compression=gzip)
 [![Percentage of issues still open](http://isitmaintained.com/badge/open/alibaba/hooks.svg)](http://isitmaintained.com/project/alibaba/hooks "Percentage of issues still open")
 [![Average time to resolve an issue](http://isitmaintained.com/badge/resolution/alibaba/hooks.svg)](http://isitmaintained.com/project/alibaba/hooks "Average time to resolve an issue")
-![GitHub](https://img.shields.io/github/license/alibaba/hooks)
+[![GitHub](https://img.shields.io/github/license/alibaba/hooks)](https://github.com/alibaba/hooks/blob/master/LICENSE)
 
 English | [简体中文](https://github.com/alibaba/hooks/blob/master/README.zh-CN.md)
 
@@ -82,8 +82,3 @@ Thanks to all the contributors:
 <img src="https://github.com/user-attachments/assets/0ba7a370-2a69-442f-b746-9eb16bbbc46c" width="200" style='display:inline' />
 <img src="https://github.com/user-attachments/assets/a08693d3-bfcc-4aca-b2b0-2d9c23012858" width="200" style='display:inline' />
 <img src="https://github.com/user-attachments/assets/15a505a7-06d1-4e72-ab02-6fad968323f1" width="200" style='display:inline' />
-
-[1]: https://www.npmjs.com/package/ahooks
-[2]: https://npmjs.org/package/ahooks
-[image-1]: https://img.shields.io/npm/v/ahooks.svg?style=flat
-[image-2]: https://img.shields.io/npm/dw/ahooks.svg?style=flat

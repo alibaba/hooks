@@ -1,17 +1,20 @@
 ---
-nav:
-  path: /hooks
+title: useDebounceFn
+nav: Hooks
+group:
+  title: Effect
+  order: 5
+order: 5
+toc: content
+demo:
+  cols: 2
 ---
-
-# useDebounceFn
 
 A hook that deal with the debounced function.
 
 ## Examples
 
-### Default usage
-
-<code src="./demo/demo1.tsx" />
+<code src="./demo/demo1.tsx"></code>
 
 ## API
 

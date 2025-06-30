@@ -1,17 +1,20 @@
 ---
-nav:
-  path: /hooks
+title: useWhyDidYouUpdate
+nav: Hooks
+group:
+  title: Dev
+  order: 8
+order: 2
+toc: content
+demo:
+  cols: 2
 ---
-
-# useWhyDidYouUpdate
 
 Help developers troubleshoot what changes have caused component rerender.
 
 ## Examples
 
-### Default usage
-
-<code src="./demo/demo1.tsx" />
+<code src="./demo/demo1.tsx"></code>
 
 ## API
 

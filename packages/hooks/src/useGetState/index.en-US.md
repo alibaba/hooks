@@ -1,17 +1,20 @@
 ---
-nav:
-  path: /hooks
+title: useGetState
+nav: Hooks
+group:
+  title: State
+  order: 4
+order: 15
+toc: content
+demo:
+  cols: 2
 ---
-
-# useGetState
 
 Add a getter method to the return value of `React.useState` to get the latest value
 
 ## Examples
 
-### Default usage
-
-<code src="./demo/demo1.tsx" />
+<code src="./demo/demo1.tsx"></code>
 
 ## TypeScript definition
 

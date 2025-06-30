@@ -1,25 +1,24 @@
 ---
-nav:
-  path: /hooks
+title: useCountDown
+nav: Hooks
+group:
+  title: Scene
+  order: 2
+order: 10
+toc: content
+demo:
+  cols: 2
 ---
-
-# useCountDown
 
 一个用于管理倒计时的 Hook。
 
-## 到未来某一时间点的倒计时
+## 代码演示
 
-<code src="./demo/demo1.tsx" />
+<code src="./demo/demo1.tsx"></code>
+<code src="./demo/demo2.tsx"></code>
+<code src="./demo/demo3.tsx"></code>
 
-## 配置项动态变化
-
-<code src="./demo/demo2.tsx" />
-
-## 通过 leftTime 配置剩余时间
-
-<code src="./demo/demo3.tsx" />
-
-**说明**
+### 说明
 
 useCountDown 的精度为毫秒，可能会造成以下几个问题
 

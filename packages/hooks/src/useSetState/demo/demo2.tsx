@@ -7,6 +7,7 @@
  */
 
 import React from 'react';
+import { Button } from 'antd';
 import { useSetState } from 'ahooks';
 
 interface State {
@@ -21,13 +22,14 @@ export default () => {
   });
 
   return (
-    <div>
+    <>
+      <Button
+        style={{ marginBottom: 8 }}
+        onClick={() => setState((prev) => ({ count: prev.count + 1 }))}
+      >
+        count + 1
+      </Button>
       <pre>{JSON.stringify(state, null, 2)}</pre>
-      <p>
-        <button type="button" onClick={() => setState((prev) => ({ count: prev.count + 1 }))}>
-          count + 1
-        </button>
-      </p>
-    </div>
+    </>
   );
 };

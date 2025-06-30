@@ -1,9 +1,9 @@
 /**
  * title: Customize Image
- * desc: Customize image that follow the mouse pointer during dragging.
+ * description: Customize image that follow the mouse pointer during dragging.
  *
  * title.zh-CN: 自定义拖拽图像
- * desc.zh-CN: 自定义拖拽过程中跟随鼠标指针的图像。
+ * description.zh-CN: 自定义拖拽过程中跟随鼠标指针的图像。
  */
 
 import React, { useRef } from 'react';
@@ -29,7 +29,7 @@ export default () => {
 
   return (
     <div ref={dragRef} style={{ display: 'flex' }}>
-      <img style={COMMON_STYLE} src="/simple-logo.svg" />
+      <img style={COMMON_STYLE} src='/simple-logo.svg' />
       <div style={COMMON_STYLE}>drag me</div>
     </div>
   );

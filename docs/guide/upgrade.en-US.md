@@ -1,4 +1,10 @@
-## v2 to v3
+---
+title: v2 to v3
+order: 1
+toc: content
+demo:
+  cols: 2
+---
 
 Compared with the ahooks v2 version, the changes in the ahooks v3 version mainly include:
 

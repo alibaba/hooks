@@ -1,17 +1,20 @@
 ---
-nav:
-  path: /hooks
+title: useBoolean
+nav: Hooks
+group:
+  title: State
+  order: 4
+order: 2
+toc: content
+demo:
+  cols: 2
 ---
-
-# useBoolean
 
 A hook that elegantly manages boolean state.
 
 ## Examples
 
-### Default usage
-
-<code src="./demo/demo1.tsx" />
+<code src="./demo/demo1.tsx"></code>
 
 ## API
 

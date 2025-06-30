@@ -5,6 +5,7 @@
  */
 
 import React, { useRef } from 'react';
+import { Button, Card, Space } from 'antd';
 import { useFullscreen } from 'ahooks';
 
 export default () => {
@@ -14,19 +15,13 @@ export default () => {
   });
 
   return (
-    <div style={{ background: 'white' }}>
-      <div ref={ref} style={{ background: '#4B6BCD', padding: 12 }}>
-        <div style={{ marginBottom: 16 }}>{isFullscreen ? 'Fullscreen' : 'Not fullscreen'}</div>
-        <button type="button" onClick={enterFullscreen}>
-          enterFullscreen
-        </button>
-        <button type="button" onClick={exitFullscreen} style={{ margin: '0 8px' }}>
-          exitFullscreen
-        </button>
-        <button type="button" onClick={toggleFullscreen}>
-          toggleFullscreen
-        </button>
-      </div>
-    </div>
+    <Card ref={ref} style={{ background: '#4b6bcd' }}>
+      <Space style={{ marginBottom: 16 }} wrap>
+        <Button onClick={enterFullscreen}>Enter Fullscreen</Button>
+        <Button onClick={exitFullscreen}>Exit Fullscreen</Button>
+        <Button onClick={toggleFullscreen}>Toggle Fullscreen</Button>
+      </Space>
+      <div>{isFullscreen ? 'Fullscreen' : 'Not Fullscreen'}</div>
+    </Card>
   );
 };

@@ -1,17 +1,20 @@
 ---
-nav:
-  path: /hooks
+title: useDocumentVisibility
+nav: Hooks
+group:
+  title: Dom
+  order: 6
+order: 3
+toc: content
+demo:
+  cols: 2
 ---
-
-# useDocumentVisibility
 
 监听页面是否可见，参考 [visibilityState API](https://developer.mozilla.org/docs/Web/API/Document/visibilityState)
 
 ## 代码演示
 
-### 基础用法
-
-<code src="./demo/demo1.tsx" />
+<code src="./demo/demo1.tsx"></code>
 
 ## API
 

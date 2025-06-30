@@ -1,21 +1,21 @@
 ---
-nav:
-  path: /hooks
+title: useMouse
+nav: Hooks
+group:
+  title: Dom
+  order: 6
+order: 15
+toc: content
+demo:
+  cols: 2
 ---
-
-# useMouse
 
 Track cursor position
 
 ## Examples
 
-### Default Usage
-
-<code src="./demo/demo1.tsx" />
-
-### Mouse position relative to the element
-
-<code src="./demo/demo2.tsx" />
+<code src="./demo/demo1.tsx"></code>
+<code src="./demo/demo2.tsx"></code>
 
 ## API
 

@@ -1,9 +1,14 @@
 ---
-nav:
-  path: /hooks
+title: useRafInterval
+nav: Hooks
+group:
+  title: Effect
+  order: 5
+order: 11
+toc: content
+demo:
+  cols: 2
 ---
-
-# useRafInterval
 
 用 `requestAnimationFrame` 模拟实现 `setInterval`，API 和 `useInterval` 保持一致，好处是可以在页面不渲染的时候停止执行定时器，比如页面隐藏或最小化等。
 
@@ -16,13 +21,8 @@ nav:
 
 ## 代码演示
 
-### 基础用法
-
-<code src="./demo/demo1.tsx" />
-
-### 进阶使用
-
-<code src="./demo/demo2.tsx" />
+<code src="./demo/demo1.tsx"></code>
+<code src="./demo/demo2.tsx"></code>
 
 ## API
 

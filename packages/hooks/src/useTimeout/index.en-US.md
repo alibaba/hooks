@@ -1,18 +1,21 @@
 ---
-nav:
-  path: /hooks
+title: useTimeout
+nav: Hooks
+group:
+  title: Effect
+  order: 5
+order: 12
+toc: content
+demo:
+  cols: 2
 ---
-
-# useTimeout
 
 A hook that handles the `setTimeout` timer function.
 
 ## Examples
 
-### Default usage
-
-<code src="./demo/demo1.tsx" />
-<code src="./demo/demo2.tsx" />
+<code src="./demo/demo1.tsx"></code>
+<code src="./demo/demo2.tsx"></code>
 
 ## API
 

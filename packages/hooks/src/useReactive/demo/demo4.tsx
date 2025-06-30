@@ -1,10 +1,13 @@
 /**
- * desc: useReactive returns a proxy object which always has the same reference. If `useEffect`, `useMemo`, `useCallback` and props passed to child component rely on the proxy, none of the above will be invoked by any changes to the proxy.
+ * title: Notice
+ * description: useReactive returns a proxy object which always has the same reference. If `useEffect`, `useMemo`, `useCallback` and props passed to child component rely on the proxy, none of the above will be invoked by any changes to the proxy.
  *
- * desc.zh-CN: useReactive 产生可操作的代理对象一直都是同一个引用，`useEffect` , `useMemo` ,`useCallback` ,`子组件属性传递` 等如果依赖的是这个代理对象是**不会**引起重新执行。
+ * title.zh-CN: 注意
+ * description.zh-CN: useReactive 产生可操作的代理对象一直都是同一个引用，`useEffect` , `useMemo` ,`useCallback` ,`子组件属性传递` 等如果依赖的是这个代理对象是**不会**引起重新执行。
  */
 
 import React, { useEffect, useState } from 'react';
+import { Button } from 'antd';
 import { useReactive } from 'ahooks';
 
 export default () => {
@@ -26,15 +29,11 @@ export default () => {
 
   return (
     <div>
-      <button style={{ marginTop: 20 }} onClick={() => (state.count += 1)}>
-        stateCount + 1
-      </button>
-      <p>stateCount:{stateCount}</p>
+      <p>stateCount: {stateCount}</p>
+      <Button onClick={() => (state.count += 1)}>stateCount + 1</Button>
 
-      <button style={{ marginTop: 20 }} onClick={() => (state2.count += 1)}>
-        stateCount2 + 1
-      </button>
-      <p>stateCount2:{stateCount2}</p>
+      <p style={{ marginTop: 16 }}>stateCount2: {stateCount2}</p>
+      <Button onClick={() => (state2.count += 1)}>stateCount2 + 1</Button>
     </div>
   );
 };

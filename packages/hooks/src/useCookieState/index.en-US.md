@@ -1,25 +1,22 @@
 ---
-nav:
-  path: /hooks
+title: useCookieState
+nav: Hooks
+group:
+  title: State
+  order: 4
+order: 5
+toc: content
+demo:
+  cols: 2
 ---
-
-# useCookieState
 
 A Hook that store state into Cookie.
 
 ## Examples
 
-### Store state into Cookie
-
-<code src="./demo/demo1.tsx" />
-
-### SetState can receive function
-
-<code src="./demo/demo2.tsx" />
-
-### Use the option property to configure Cookie
-
-<code src="./demo/demo3.tsx" />
+<code src="./demo/demo1.tsx"></code>
+<code src="./demo/demo2.tsx"></code>
+<code src="./demo/demo3.tsx"></code>
 
 ## API
 

@@ -1,17 +1,20 @@
 ---
-nav:
-  path: /hooks
+title: useThrottleEffect
+nav: Hooks
+group:
+  title: Effect
+  order: 5
+order: 7
+toc: content
+demo:
+  cols: 2
 ---
-
-# useThrottleEffect
 
 为 `useEffect` 增加节流的能力。
 
 ## 代码演示
 
-### 基础用法
-
-<code src="./demo/demo1.tsx" />
+<code src="./demo/demo1.tsx"></code>
 
 ## API
 

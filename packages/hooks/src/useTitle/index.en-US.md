@@ -1,17 +1,20 @@
 ---
-nav:
-  path: /hooks
+title: useTitle
+nav: Hooks
+group:
+  title: Dom
+  order: 6
+order: 7
+toc: content
+demo:
+  cols: 2
 ---
-
-# useTitle
 
 A hook that set title of the page.
 
 ## Examples
 
-### Default usage
-
-<code src="./demo/demo1.tsx" />
+<code src="./demo/demo1.tsx"></code>
 
 ## API
 

@@ -1,17 +1,20 @@
 ---
-nav:
-  path: /hooks
+title: useSet
+nav: Hooks
+group:
+  title: State
+  order: 4
+order: 11
+toc: content
+demo:
+  cols: 2
 ---
-
-# useSet
 
 A hook that can manage the state of Set.
 
 ## Examples
 
-### Default usage
-
-<code src="./demo/demo1.tsx" />
+<code src="./demo/demo1.tsx"></code>
 
 ## API
 

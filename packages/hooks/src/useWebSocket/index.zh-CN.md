@@ -1,17 +1,20 @@
 ---
-nav:
-  path: /hooks
+title: useWebSocket
+nav: Hooks
+group:
+  title: Scene
+  order: 2
+order: 13
+toc: content
+demo:
+  cols: 2
 ---
-
-# useWebSocket
 
 用于处理 WebSocket 的 Hook。
 
 ## 代码演示
 
-### 基础用法
-
-<code src="./demo/demo1.tsx" />
+<code src="./demo/demo1.tsx"></code>
 
 ## API
 
@@ -52,7 +55,7 @@ useWebSocket(socketUrl: string, options?: Options): Result;
 | socketUrl | 必填，webSocket 地址 | `string`  | -      |
 | options   | 可选，连接配置项     | `Options` | -      |
 
-#### Options
+### Options
 
 | 参数              | 说明                   | 类型                                                                   | 默认值  |
 | ----------------- | ---------------------- | ---------------------------------------------------------------------- | ------- |

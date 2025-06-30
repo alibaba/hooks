@@ -1,9 +1,14 @@
 ---
-nav:
-  path: /hooks
+title: useSelections
+nav: Hooks
+group:
+  title: Scene
+  order: 2
+order: 9
+toc: content
+demo:
+  cols: 2
 ---
-
-# useSelections
 
 常见联动 Checkbox 逻辑封装，支持多选，单选，全选逻辑，还提供了是否选择，是否全选，是否半选的状态。
 
@@ -11,15 +16,15 @@ nav:
 
 ### 基础用法
 
-<code src="./demo/demo1.tsx" />
+<code src="./demo/demo1.tsx"></code>
 
 ### 对象数组
 
-<code src="./demo/demo2.tsx" />
+<code src="./demo/demo2.tsx"></code>
 
 ### 分页多选
 
-<code src="./demo/demo3.tsx" />
+<code src="./demo/demo3.tsx"></code>
 
 ## API
 

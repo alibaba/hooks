@@ -1,17 +1,20 @@
 ---
-nav:
-  path: /hooks
+title: useThrottleFn
+nav: Hooks
+group:
+  title: Effect
+  order: 5
+order: 6
+toc: content
+demo:
+  cols: 2
 ---
-
-# useThrottleFn
 
 A hook that deal with the throttled function.
 
 ## Examples
 
-### Default usage
-
-<code src="./demo/demo1.tsx" />
+<code src="./demo/demo1.tsx"></code>
 
 ## API
 

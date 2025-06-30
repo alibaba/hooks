@@ -1,21 +1,21 @@
 ---
-nav:
-  path: /hooks
+title: useSize
+nav: Hooks
+group:
+  title: Dom
+  order: 6
+order: 18
+toc: content
+demo:
+  cols: 2
 ---
-
-# useSize
 
 监听 DOM 节点尺寸变化的 Hook。
 
 ## 代码演示
 
-### 基础用法
-
-<code src="./demo/demo1.tsx" />
-
-### 传入 DOM 节点
-
-<code src="./demo/demo2.tsx" />
+<code src="./demo/demo1.tsx"></code>
+<code src="./demo/demo2.tsx"></code>
 
 ## API
 

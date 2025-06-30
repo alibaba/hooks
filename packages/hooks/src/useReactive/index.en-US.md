@@ -1,29 +1,23 @@
 ---
-nav:
-  path: /hooks
+title: useReactive
+nav: Hooks
+group:
+  title: Advanced
+  order: 7
+order: 7
+toc: content
+demo:
+  cols: 2
 ---
-
-## useReactive
 
 It offers data reactivity when manipulating states and views, in which case `useState` is unnecessary for state definition. Modifying properties will automatically lead to view rerendering.
 
 ## Examples
 
-### Default Usage
-
-<code src="./demo/demo1.tsx" />
-
-### Array
-
-<code src="./demo/demo2.tsx" />
-
-### Computed Properties
-
-<code src="./demo/demo3.tsx" />
-
-### Notice
-
-<code  src="./demo/demo4.tsx" />
+<code src="./demo/demo1.tsx"></code>
+<code src="./demo/demo2.tsx"></code>
+<code src="./demo/demo3.tsx"></code>
+<code src="./demo/demo4.tsx"></code>
 
 ## API
 
@@ -31,7 +25,7 @@ It offers data reactivity when manipulating states and views, in which case `use
 const state = useReactive(initialValue: Record<string, any>);
 ```
 
-## Params
+### Params
 
 | Params       | Description   | Type                  | Default |
 | ------------ | ------------- | --------------------- | ------- |

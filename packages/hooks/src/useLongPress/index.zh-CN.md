@@ -1,9 +1,14 @@
 ---
-nav:
-  path: /hooks
+title: useLongPress
+nav: Hooks
+group:
+  title: Dom
+  order: 6
+order: 14
+toc: content
+demo:
+  cols: 2
 ---
-
-# useLongPress
 
 监听目标元素的长按事件。
 
@@ -11,15 +16,9 @@ nav:
 
 ### 基本使用
 
-<code src="./demo/demo1.tsx"/>
-
-### 同时监听点击和长按事件
-
-<code src="./demo/demo2.tsx"/>
-
-### 移动阈值
-
-<code src="./demo/demo3.tsx"/>
+<code src="./demo/demo1.tsx"></code>
+<code src="./demo/demo2.tsx"></code>
+<code src="./demo/demo3.tsx"></code>
 
 ## API
 
@@ -53,6 +52,6 @@ useLongPress(
 | onClick        | 点击事件                             | `(event: MouseEvent \| TouchEvent) => void` | -      |
 | onLongPressEnd | 长按结束事件                         | `(event: MouseEvent \| TouchEvent) => void` | -      |
 
-### 备注
+## 备注
 
 禁用在手机上长按选择文本的能力请参考：https://stackoverflow.com/a/11237968

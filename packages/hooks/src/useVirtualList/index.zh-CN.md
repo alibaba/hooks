@@ -1,21 +1,21 @@
 ---
-nav:
-  path: /hooks
+title: useVirtualList
+nav: Hooks
+group:
+  title: Scene
+  order: 2
+order: 6
+toc: content
+demo:
+  cols: 2
 ---
-
-# useVirtualList
 
 提供虚拟化列表能力的 Hook，用于解决展示海量数据渲染时首屏渲染缓慢和滚动卡顿问题。
 
 ## 代码演示
 
-### 基础用法
-
-<code src="./demo/demo1.tsx" />
-
-### 动态元素高度
-
-<code src="./demo/demo2.tsx" />
+<code src="./demo/demo1.tsx"></code>
+<code src="./demo/demo2.tsx"></code>
 
 ## API
 

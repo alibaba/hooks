@@ -1,29 +1,23 @@
 ---
-nav:
-  path: /hooks
+title: useDynamicList
+nav: Hooks
+group:
+  title: Scene
+  order: 2
+order: 5
+toc: content
+demo:
+  cols: 2
 ---
-
-# useDynamicList
 
 一个帮助你管理动态列表状态，并能生成唯一 key 的 Hook。
 
 ## 代码演示
 
-### 基础用法
-
-<code src="./demo/demo1.tsx" />
-
-### 在 antd Form 中使用
-
-<code src="./demo/demo2.tsx" />
-
-### 在 antd Form 中使用的另一种写法
-
-<code src="./demo/demo3.tsx" />
-
-### 可拖拽的动态表格
-
-<code src="./demo/demo4.tsx" />
+<code src="./demo/demo1.tsx"></code>
+<code src="./demo/demo2.tsx"></code>
+<code src="./demo/demo3.tsx"></code>
+<code src="./demo/demo4.tsx"></code>
 
 ## API
 

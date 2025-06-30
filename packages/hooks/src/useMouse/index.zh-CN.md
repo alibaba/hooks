@@ -1,21 +1,21 @@
 ---
-nav:
-  path: /hooks
+title: useMouse
+nav: Hooks
+group:
+  title: Dom
+  order: 6
+order: 15
+toc: content
+demo:
+  cols: 2
 ---
-
-# useMouse
 
 监听鼠标位置
 
 ## 代码演示
 
-### 基础用法
-
-<code src="./demo/demo1.tsx" />
-
-### 获取鼠标相对于元素的位置
-
-<code src="./demo/demo2.tsx" />
+<code src="./demo/demo1.tsx"></code>
+<code src="./demo/demo2.tsx"></code>
 
 ## API
 

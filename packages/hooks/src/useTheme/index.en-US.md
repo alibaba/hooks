@@ -1,6 +1,13 @@
 ---
-nav:
-  path: /hooks
+title: useTheme
+nav: Hooks
+group:
+  title: Scene
+  order: 2
+order: 14
+toc: content
+demo:
+  cols: 2
 ---
 
 # useTheme
@@ -11,7 +18,7 @@ This hook is used to get and set the theme, and store the `themeMode` into `loca
 
 ### Default usage
 
-<code src="./demo/demo1.tsx" />
+<code src="./demo/demo1.tsx"></code>
 
 ## API
 

@@ -1,9 +1,14 @@
 ---
-nav:
-  path: /hooks
+title: useRafTimeout
+nav: Hooks
+group:
+  title: Effect
+  order: 5
+order: 13
+toc: content
+demo:
+  cols: 2
 ---
-
-# useRafTimeout
 
 用 `requestAnimationFrame` 模拟实现 `setTimeout`，API 和 `useTimeout` 保持一致，好处是可以在页面不渲染的时候不触发函数执行，比如页面隐藏或最小化等。
 
@@ -11,13 +16,8 @@ nav:
 
 ## 代码演示
 
-### 基础用法
-
-<code src="./demo/demo1.tsx" />
-
-### 进阶使用
-
-<code src="./demo/demo2.tsx" />
+<code src="./demo/demo1.tsx"></code>
+<code src="./demo/demo2.tsx"></code>
 
 ## API
 

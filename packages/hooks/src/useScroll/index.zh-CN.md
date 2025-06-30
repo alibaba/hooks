@@ -1,25 +1,22 @@
 ---
-nav:
-  path: /hooks
+title: useScroll
+nav: Hooks
+group:
+  title: Dom
+  order: 6
+order: 17
+toc: content
+demo:
+  cols: 2
 ---
-
-# useScroll
 
 监听元素的滚动位置。
 
 ## 代码演示
 
-### 基础用法
-
-<code src="./demo/demo1.tsx" />
-
-### 监测整页的滚动
-
-<code src="./demo/demo2.tsx" />
-
-### 控制滚动状态的监听
-
-<code src="./demo/demo3.tsx" />
+<code src="./demo/demo1.tsx"></code>
+<code src="./demo/demo2.tsx"></code>
+<code src="./demo/demo3.tsx"></code>
 
 ## API
 

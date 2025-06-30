@@ -1,29 +1,23 @@
 ---
-nav:
-  path: /hooks
+title: useFullscreen
+nav: Hooks
+group:
+  title: Dom
+  order: 6
+order: 9
+toc: content
+demo:
+  cols: 2
 ---
-
-# useFullscreen
 
 manages DOM full screen.
 
 ## Examples
 
-### Default usage
-
-<code src="./demo/demo1.tsx" />
-
-### Image full screen
-
-<code src="./demo/demo2.tsx" />
-
-### Page full screen
-
-<code src="./demo/demo3.tsx" />
-
-### Coexist with other full screen operations
-
-<code src="./demo/demo4.tsx" />
+<code src="./demo/demo1.tsx"></code>
+<code src="./demo/demo2.tsx"></code>
+<code src="./demo/demo3.tsx"></code>
+<code src="./demo/demo4.tsx"></code>
 
 ## API
 

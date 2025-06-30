@@ -1,25 +1,25 @@
 ---
-nav:
-  path: /hooks
+title: useEventListener
+nav: Hooks
+group:
+  title: Dom
+  order: 6
+order: 1
+toc: content
+demo:
+  cols: 2
 ---
-
-# useEventListener
 
 优雅的使用 addEventListener。
 
 ## 代码演示
 
-### 基础用法
-
-<code src="./demo/demo1.tsx" />
-
-### 监听 keydown 事件
-
-<code src="./demo/demo2.tsx" />
+<code src="./demo/demo1.tsx"></code>
+<code src="./demo/demo2.tsx"></code>
 
 ### 监听多个事件
 
-<code src="./demo/demo3.tsx" />
+<code src="./demo/demo3.tsx"></code>
 
 ## API
 

@@ -1,17 +1,20 @@
 ---
-nav:
-  path: /hooks
+title: useLockFn
+nav: Hooks
+group:
+  title: Effect
+  order: 5
+order: 14
+toc: content
+demo:
+  cols: 2
 ---
-
-# useLockFn
 
 Add lock to an async function to prevent parallel executions.
 
 ## Examples
 
-### Basic usage
-
-<code src="./demo/demo1.tsx" />
+<code src="./demo/demo1.tsx"></code>
 
 ## API
 

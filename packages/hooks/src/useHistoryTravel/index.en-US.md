@@ -1,25 +1,22 @@
 ---
-nav:
-  path: /hooks
+title: useHistoryTravel
+nav: Hooks
+group:
+  title: Scene
+  order: 2
+order: 7
+toc: content
+demo:
+  cols: 2
 ---
-
-# useHistoryTravel
 
 A hook to manage state change history. It provides encapsulation methods to travel through the history.
 
 ## Examples
 
-### Basic usage
-
-<code src="./demo/demo1.tsx" />
-
-### Todo List
-
-<code src="./demo/demo2.tsx" />
-
-### Limit maximum history length
-
-<code src="./demo/demo3.tsx" />
+<code src="./demo/demo1.tsx"></code>
+<code src="./demo/demo2.tsx"></code>
+<code src="./demo/demo3.tsx"></code>
 
 ## API
 

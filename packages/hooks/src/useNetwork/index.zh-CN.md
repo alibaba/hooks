@@ -1,17 +1,20 @@
 ---
-nav:
-  path: /hooks
+title: useNetwork
+nav: Hooks
+group:
+  title: Scene
+  order: 2
+order: 8
+toc: content
+demo:
+  cols: 2
 ---
-
-# useNetwork
 
 管理网络连接状态的 Hook。
 
 ## 代码演示
 
-### 基础用法
-
-<code src="./demo/demo1.tsx" />
+<code src="./demo/demo1.tsx"></code>
 
 ## API
 

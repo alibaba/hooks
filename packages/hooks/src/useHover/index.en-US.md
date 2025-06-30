@@ -1,21 +1,21 @@
 ---
-nav:
-  path: /hooks
+title: useHover
+nav: Hooks
+group:
+  title: Dom
+  order: 6
+order: 10
+toc: content
+demo:
+  cols: 2
 ---
-
-# useHover
 
 A hook that tracks whether the element is being hovered.
 
 ## Examples
 
-### Default usage
-
-<code src="./demo/demo1.tsx" />
-
-### Pass in DOM element
-
-<code src="./demo/demo2.tsx" />
+<code src="./demo/demo1.tsx"></code>
+<code src="./demo/demo2.tsx"></code>
 
 ## API
 

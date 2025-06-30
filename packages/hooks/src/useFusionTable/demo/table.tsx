@@ -1,5 +1,5 @@
-import { Pagination, Table } from '@alifd/next';
 import React from 'react';
+import { Pagination, Table } from '@alifd/next';
 import { useFusionTable } from 'ahooks';
 
 interface Item {
@@ -32,11 +32,11 @@ const AppList = () => {
 
   return (
     <>
-      <Table {...tableProps} primaryKey="email">
-        <Table.Column title="name" dataIndex="name.last" width={140} />
-        <Table.Column title="email" dataIndex="email" width={500} />
-        <Table.Column title="phone" dataIndex="phone" width={500} />
-        <Table.Column title="gender" dataIndex="gender" width={500} />
+      <Table {...tableProps} primaryKey='email'>
+        <Table.Column title='name' dataIndex='name.last' width={140} />
+        <Table.Column title='email' dataIndex='email' width={500} />
+        <Table.Column title='phone' dataIndex='phone' width={500} />
+        <Table.Column title='gender' dataIndex='gender' width={500} />
       </Table>
       <Pagination style={{ marginTop: 16 }} {...paginationProps} />
     </>
