@@ -1,9 +1,9 @@
 /**
  * title: Listen to multiple events.
- * desc: Mouse hover or over the button to preview.
+ * description: Mouse hover or over the button to preview.
  *
  * title.zh-CN: 监听多个事件
- * desc.zh-CN: 鼠标移入移出按钮查看效果。
+ * description.zh-CN: 鼠标移入移出按钮查看效果。
  */
 
 import React, { useRef, useState } from 'react';
@@ -22,7 +22,7 @@ export default () => {
   );
 
   return (
-    <button ref={ref} type="button">
+    <button ref={ref} type='button'>
       You Option is {value}
     </button>
   );

@@ -1,9 +1,9 @@
 /**
  * title: Default usage
- * desc: Automatically merge object.
+ * description: Automatically merge object.
  *
  * title.zh-CN: 基础用法
- * desc.zh-CN: 自动合并对象。
+ * description.zh-CN: 自动合并对象。
  */
 
 import React from 'react';

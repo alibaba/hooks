@@ -1,9 +1,9 @@
 /**
  * title: Coexist with other full screen operations
- * desc: The element's full screen may be modified by other scripts, don't worry, ahooks can work with them.
+ * description: The element's full screen may be modified by other scripts, don't worry, ahooks can work with them.
  *
  * title.zh-CN: 与其它全屏操作共存
- * desc.zh-CN: 元素的全屏情况可能被其它脚本修改，不用担心，ahooks 可以与它们共存。
+ * description.zh-CN: 元素的全屏情况可能被其它脚本修改，不用担心，ahooks 可以与它们共存。
  */
 
 import React, { useRef } from 'react';

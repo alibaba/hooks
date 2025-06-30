@@ -1,9 +1,9 @@
 /**
  * title: Object array
- * desc: When array items are object, you need to specify the field name for the unique key.
+ * description: When array items are object, you need to specify the field name for the unique key.
  *
  * title.zh-CN: 对象数组
- * desc.zh-CN: 数组项是对象时，需要指定唯一 key 的字段名称。
+ * description.zh-CN: 数组项是对象时，需要指定唯一 key 的字段名称。
  */
 
 import { Checkbox, Col, Row } from 'antd';
