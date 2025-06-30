@@ -16,8 +16,6 @@ This hook is used to get and set the theme, and store the `themeMode` into `loca
 
 ## Examples
 
-### Default usage
-
 <code src="./demo/demo1.tsx"></code>
 
 ## API

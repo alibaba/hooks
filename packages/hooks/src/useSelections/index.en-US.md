@@ -14,16 +14,8 @@ This hook is used for Checkbox group, supports multiple selection, single select
 
 ## Examples
 
-### Default usage
-
 <code src="./demo/demo1.tsx"></code>
-
-### Object array
-
 <code src="./demo/demo2.tsx"></code>
-
-### Pagination
-
 <code src="./demo/demo3.tsx"></code>
 
 ## API

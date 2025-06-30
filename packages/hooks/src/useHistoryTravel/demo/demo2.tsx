@@ -42,21 +42,6 @@ export default () => {
 
   return (
     <Space direction='vertical'>
-      <div
-        style={{
-          border: '1px dashed #ccc',
-          borderRadius: 4,
-          padding: 8,
-          marginBottom: 8,
-        }}
-      >
-        <h4>TODO List</h4>
-        <ul style={{ marginLeft: 16 }}>
-          {value.map((it, index) => (
-            <li key={index}>{it}</li>
-          ))}
-        </ul>
-      </div>
       <Space wrap>
         <Input
           style={{ width: 200 }}
@@ -65,6 +50,8 @@ export default () => {
           placeholder='Please enter TODO name'
         />
         <Button onClick={onAdd}>Add TODO</Button>
+      </Space>
+      <Space wrap>
         <Button disabled={backLength <= 0} onClick={back}>
           Undo
         </Button>
@@ -84,6 +71,21 @@ export default () => {
         />
         <Button onClick={onGo}>Go</Button>
       </Space>
+      <div
+        style={{
+          border: '1px dashed #ccc',
+          borderRadius: 4,
+          padding: 8,
+          marginBottom: 8,
+        }}
+      >
+        <h4>TODO List</h4>
+        <ul style={{ marginLeft: 16 }}>
+          {value.map((it, index) => (
+            <li key={index}>{it}</li>
+          ))}
+        </ul>
+      </div>
     </Space>
   );
 };

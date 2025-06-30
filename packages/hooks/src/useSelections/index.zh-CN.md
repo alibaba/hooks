@@ -14,16 +14,8 @@ demo:
 
 ## 代码演示
 
-### 基础用法
-
 <code src="./demo/demo1.tsx"></code>
-
-### 对象数组
-
 <code src="./demo/demo2.tsx"></code>
-
-### 分页多选
-
 <code src="./demo/demo3.tsx"></code>
 
 ## API

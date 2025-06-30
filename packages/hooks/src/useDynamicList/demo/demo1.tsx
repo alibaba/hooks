@@ -29,7 +29,9 @@ export default () => {
 
   return (
     <>
-      {list.map((ele, index) => Row(index, ele))}
+      <Space style={{ marginBottom: 16 }} direction='vertical'>
+        {list.map((ele, index) => Row(index, ele))}
+      </Space>
 
       <Space style={{ marginBottom: 16 }}>
         <Button

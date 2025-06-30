@@ -17,9 +17,6 @@ demo:
 <code src="./demo/demo1.tsx"></code>
 <code src="./demo/demo2.tsx"></code>
 <code src="./demo/demo3.tsx"></code>
-
-### 将 state 与 localStorage 保持同步
-
 <code src="./demo/demo4.tsx"></code>
 
 ## API
