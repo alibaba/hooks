@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Mock from 'mockjs';
-import { Button, Pagination } from 'antd';
+import { Button, Pagination, Select } from 'antd';
 import { usePagination, useBoolean, useUpdateEffect } from 'ahooks';
 
 interface UserListItem {
@@ -66,15 +66,16 @@ const PaginationComponent: React.FC = () => {
 
   return (
     <div>
-      <select
-        value={gender}
+      <Select
         style={{ width: 180, marginBottom: 24 }}
-        onChange={(e) => setGender(e.target.value)}
         placeholder='select gender'
-      >
-        <option value='male'>male</option>
-        <option value='female'>female</option>
-      </select>
+        value={gender}
+        options={[
+          { label: 'male', value: 'male' },
+          { label: 'female', value: 'female' },
+        ]}
+        onChange={(value) => setGender(value)}
+      />
       {loading && !data ? (
         <p>loading</p>
       ) : (
@@ -104,10 +105,12 @@ export default () => {
   const [state, { toggle }] = useBoolean();
   return (
     <div>
-      <p>You can click the button multiple times, the conditions of pagination will be cached.</p>
-      <p>
-        <Button onClick={() => toggle()}>show/hide</Button>
-      </p>
+      <div>
+        You can click the button multiple times, the conditions of pagination will be cached.
+      </div>
+      <div style={{ margin: '8px 0 16px 0' }}>
+        <Button onClick={() => toggle()}>Show/Hide</Button>
+      </div>
       {state && <PaginationComponent />}
     </div>
   );

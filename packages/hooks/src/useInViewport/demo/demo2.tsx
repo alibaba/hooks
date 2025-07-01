@@ -17,6 +17,10 @@ export default () => {
 
   return (
     <div>
+      <div style={{ marginBottom: 16, color: inViewport ? '#87d068' : '#f50' }}>
+        <p>inViewport: {inViewport ? 'visible' : 'hidden'}</p>
+        <p>ratio: {ratio}</p>
+      </div>
       <div
         style={{
           width: 300,
@@ -43,10 +47,6 @@ export default () => {
             observer dom
           </div>
         </div>
-      </div>
-      <div style={{ marginTop: 16, color: inViewport ? '#87d068' : '#f50' }}>
-        <p>inViewport: {inViewport ? 'visible' : 'hidden'}</p>
-        <p>ratio: {ratio}</p>
       </div>
     </div>
   );

@@ -27,15 +27,6 @@ export default () => {
 
   return (
     <div>
-      <Space style={{ marginBottom: 16, width: '100%', justifyContent: 'flex-end' }} wrap>
-        <InputNumber
-          style={{ width: 200 }}
-          placeholder='line number'
-          value={value}
-          onChange={(val) => onChange(Number(val))}
-        />
-        <Button onClick={() => scrollTo(Number(value))}>Scroll to</Button>
-      </Space>
       <div ref={containerRef} style={{ height: '300px', overflow: 'auto' }}>
         <div ref={wrapperRef}>
           {list.map((ele) => (
@@ -56,6 +47,15 @@ export default () => {
           ))}
         </div>
       </div>
+      <Space style={{ marginTop: 16, width: '100%', justifyContent: 'flex-end' }} wrap>
+        <InputNumber
+          style={{ width: 200 }}
+          placeholder='line number'
+          value={value}
+          onChange={(val) => onChange(Number(val))}
+        />
+        <Button onClick={() => scrollTo(Number(value))}>Scroll to</Button>
+      </Space>
     </div>
   );
 };

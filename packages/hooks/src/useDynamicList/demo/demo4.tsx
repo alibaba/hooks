@@ -9,7 +9,7 @@
 import React, { useState } from 'react';
 import ReactDragListView from 'react-drag-listview';
 import { Button, Form, Input, Space, Table } from 'antd';
-import { DragOutlined } from '@ant-design/icons';
+import { DragOutlined, MinusCircleOutlined } from '@ant-design/icons';
 import { useDynamicList } from 'ahooks';
 
 interface Item {
@@ -59,13 +59,11 @@ export default () => {
       title: 'Memo',
       dataIndex: 'memo',
       render: (text: string, row: Item, index: number) => (
-        <Space wrap>
+        <Space>
           <Form.Item name={['params', getKey(index), 'memo']} initialValue={text} noStyle>
             <Input placeholder='please input the memo' />
           </Form.Item>
-          <Button danger onClick={() => remove(index)}>
-            Delete
-          </Button>
+          <MinusCircleOutlined onClick={() => remove(index)} />
         </Space>
       ),
     },

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Mock from 'mockjs';
-import { Pagination } from 'antd';
+import { Pagination, Select } from 'antd';
 import { usePagination } from 'ahooks';
 
 interface UserListItem {
@@ -65,15 +65,16 @@ export default () => {
 
   return (
     <div>
-      <select
-        value={gender}
-        style={{ width: 180, marginBottom: 24 }}
-        onChange={(e) => setGender(e.target.value)}
+      <Select
+        style={{ width: 180, marginBottom: 16 }}
         placeholder='select gender'
-      >
-        <option value='male'>male</option>
-        <option value='female'>female</option>
-      </select>
+        options={[
+          { label: 'male', value: 'male' },
+          { label: 'female', value: 'female' },
+        ]}
+        value={gender}
+        onChange={(value) => setGender(value)}
+      />
       {loading ? (
         <p>loading</p>
       ) : (

@@ -7,6 +7,7 @@
  */
 
 import React, { useRef, useState } from 'react';
+import { Button } from 'antd';
 import { useEventListener } from 'ahooks';
 
 export default () => {
@@ -21,9 +22,5 @@ export default () => {
     { target: ref },
   );
 
-  return (
-    <button ref={ref} type='button'>
-      You Option is {value}
-    </button>
-  );
+  return <Button ref={ref}>You Option is {value}</Button>;
 };

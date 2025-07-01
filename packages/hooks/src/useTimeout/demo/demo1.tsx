@@ -1,20 +1,20 @@
 /**
  * title: Basic usage
- * description: Execute once after 3000ms
+ * description: Execute once after 2000ms
  *
  * title.zh-CN: 基础用法
- * description.zh-CN: 3000ms 后执行一次
+ * description.zh-CN: 2000ms 后执行一次
  */
 
 import React, { useState } from 'react';
 import { useTimeout } from 'ahooks';
 
 export default () => {
-  const [state, setState] = useState(1);
+  const [state, setState] = useState(0);
 
   useTimeout(() => {
     setState(state + 1);
-  }, 3000);
+  }, 2000);
 
   return <div>{state}</div>;
 };

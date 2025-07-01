@@ -1,5 +1,6 @@
 import React from 'react';
 import Mock from 'mockjs';
+import { Button } from 'antd';
 import { useBoolean, useRequest } from 'ahooks';
 
 const getArticle = async () => {
@@ -36,9 +37,9 @@ export default () => {
 
   return (
     <div>
-      <button type='button' onClick={() => toggle()}>
-        show/hidden
-      </button>
+      <Button style={{ marginBottom: 8 }} onClick={() => toggle()}>
+        Show/Hidden
+      </Button>
       {state && <Article />}
     </div>
   );

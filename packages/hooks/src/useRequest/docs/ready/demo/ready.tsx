@@ -20,7 +20,7 @@ export default () => {
   return (
     <div>
       <p>Username: {loading ? 'Loading' : data}</p>
-      <Space>
+      <Space style={{ marginTop: 8 }}>
         Ready: {JSON.stringify(ready)}
         <Button onClick={toggle}>Toggle Ready</Button>
       </Space>

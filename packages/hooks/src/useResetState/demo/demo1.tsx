@@ -15,6 +15,7 @@ export default () => {
     hello: '',
     value: Math.random(),
   };
+
   const initialValueMemo = useMemo(() => {
     return initialValue;
   }, []);
@@ -23,11 +24,7 @@ export default () => {
 
   return (
     <div>
-      <div>initial state: </div>
-      <pre>{JSON.stringify(initialValueMemo, null, 2)}</pre>
-      <div>current state: </div>
-      <pre>{JSON.stringify(state, null, 2)}</pre>
-      <Space>
+      <Space style={{ marginBottom: 8 }}>
         <Button
           onClick={() =>
             setState(() => ({
@@ -40,6 +37,10 @@ export default () => {
         </Button>
         <Button onClick={resetState}>resetState</Button>
       </Space>
+      <div>initial state: </div>
+      <pre>{JSON.stringify(initialValueMemo, null, 2)}</pre>
+      <div>current state: </div>
+      <pre>{JSON.stringify(state, null, 2)}</pre>
     </div>
   );
 };

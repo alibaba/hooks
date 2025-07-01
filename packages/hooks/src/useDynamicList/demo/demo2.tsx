@@ -53,11 +53,11 @@ export default () => {
   return (
     <>
       <Form form={form}>
-        <Form.Item name='names' initialValue={['David', 'Jack']}>
+        <Form.Item name='names' initialValue={['David', 'Jack']} style={{ marginBottom: 0 }}>
           <DynamicInputs />
         </Form.Item>
       </Form>
-      <Space style={{ marginBottom: 16 }} wrap>
+      <Space style={{ margin: '16px 0' }} wrap>
         <Button
           type='primary'
           onClick={() =>

@@ -24,6 +24,7 @@ export default () => {
         rules={[{ required: true, message: 'required' }]}
         name={['names', getKey(index)]}
         initialValue={item}
+        style={{ marginBottom: 0 }}
       >
         <Input placeholder='Please enter your name' />
       </Form.Item>
@@ -39,7 +40,7 @@ export default () => {
       <Form form={form}>
         <Space direction='vertical'>{list.map((ele, index) => Row(index, ele))}</Space>
       </Form>
-      <Space style={{ marginBottom: 16 }} wrap>
+      <Space style={{ margin: '16px 0' }} wrap>
         <Button
           type='primary'
           onClick={() =>

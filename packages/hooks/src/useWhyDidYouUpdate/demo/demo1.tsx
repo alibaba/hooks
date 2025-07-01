@@ -36,9 +36,7 @@ export default () => {
       <Demo count={count} />
       <Space style={{ margin: '8px 0 16px 0' }} wrap>
         <Button onClick={() => setCount((prevCount) => prevCount - 1)}>count -</Button>
-        <Button onClick={() => setCount((prevCount) => prevCount + 1)} style={{ marginLeft: 8 }}>
-          count +
-        </Button>
+        <Button onClick={() => setCount((prevCount) => prevCount + 1)}>count +</Button>
       </Space>
       <p>Please open the browser console to view the output!</p>
     </div>

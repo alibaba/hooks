@@ -15,6 +15,9 @@ export default () => {
 
   return (
     <div>
+      <div style={{ marginBottom: 16, color: inViewport ? '#87d068' : '#f50' }}>
+        inViewport: {inViewport ? 'visible' : 'hidden'}
+      </div>
       <div
         style={{
           width: 300,
@@ -40,9 +43,6 @@ export default () => {
             observer dom
           </div>
         </div>
-      </div>
-      <div style={{ marginTop: 16, color: inViewport ? '#87d068' : '#f50' }}>
-        inViewport: {inViewport ? 'visible' : 'hidden'}
       </div>
     </div>
   );
