@@ -6,7 +6,7 @@ export default defineConfig({
   mfsu: false,
   ssr: false,
   manifest: {},
-  publicPath: '/',
+  base: '/hooks/',
   alias: {
     ahooks: `${process.cwd()}/packages/hooks/src/index.ts`,
     '@ahooksjs/use-url-state': `${process.cwd()}/packages/use-url-state/src/index.ts`,
@@ -78,8 +78,8 @@ export default defineConfig({
       'v1.x': 'http://hooks.umijs.org/',
     },
     localesEnhance: [
-      { id: 'en-US', switchPrefix: 'En' },
-      { id: 'zh-CN', switchPrefix: '中' },
+      { id: 'en-US', switchPrefix: '中' },
+      { id: 'zh-CN', switchPrefix: 'En' },
     ],
     sidebarGroupModePath: ['/guide', '/hooks', '/blog'],
     nav: {
@@ -95,7 +95,7 @@ export default defineConfig({
         { title: 'Hooks', link: '/zh-CN/hooks/index' },
         { title: '博客', link: '/zh-CN/blog/function' },
         { title: '更新日志', link: 'https://github.com/alibaba/hooks/releases' },
-        { title: '备用镜像', path: 'https://alibaba.github.io/hooks' },
+        { title: '备用镜像', link: 'https://alibaba.github.io/hooks' },
       ],
     },
     footer:
