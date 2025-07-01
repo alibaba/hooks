@@ -7,6 +7,7 @@
  */
 
 import React from 'react';
+import { Button } from 'antd';
 import useUrlState from '@ahooksjs/use-url-state';
 
 export default () => {
@@ -23,8 +24,9 @@ export default () => {
   );
 
   return (
-    <div>
-      <button
+    <>
+      <div style={{ marginBottom: 8 }}>ids: {JSON.stringify(state.ids)}</div>
+      <Button
         onClick={() => {
           const arr = Array(3)
             .fill(1)
@@ -32,9 +34,8 @@ export default () => {
           setState({ ids: arr });
         }}
       >
-        变更数组state
-      </button>
-      <div>ids: {JSON.stringify(state.ids)}</div>
-    </div>
+        Mutate array
+      </Button>
+    </>
   );
 };

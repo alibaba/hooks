@@ -7,6 +7,7 @@
  */
 
 import React from 'react';
+import { Button, Space } from 'antd';
 import useUrlState from '@ahooksjs/use-url-state';
 
 export default () => {
@@ -14,17 +15,11 @@ export default () => {
 
   return (
     <>
-      <button
-        style={{ marginRight: 8 }}
-        type='button'
-        onClick={() => setState({ count: Number(state.count || 0) + 1 })}
-      >
-        add
-      </button>
-      <button type='button' onClick={() => setState({ count: undefined })}>
-        clear
-      </button>
       <div>state: {state?.count}</div>
+      <Space style={{ marginTop: 8 }}>
+        <Button onClick={() => setState({ count: Number(state.count || 0) + 1 })}>Add</Button>
+        <Button onClick={() => setState({ count: undefined })}>Clear</Button>
+      </Space>
     </>
   );
 };
