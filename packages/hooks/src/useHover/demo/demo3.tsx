@@ -6,8 +6,8 @@
  * desc.zh-CN: 使用 ref 或者传入 DOM 元素。
  */
 
-import React, { useRef, useState } from "react";
-import { useHover } from "ahooks";
+import React, { useRef, useState } from 'react';
+import { useHover } from 'ahooks';
 
 export default () => {
   const ref = useRef(null);
@@ -20,12 +20,9 @@ export default () => {
   });
   return (
     <div ref={ref}>
-      <div>isHovering: {isHovering ? "hover" : "leave hover"}</div>
+      <div>isHovering: {isHovering ? 'hover' : 'leave hover'}</div>
 
-      <div>
-        isLongHovering: {isLongHovering ? "long Hover" : "leave Hover"}{" "}
-        (delay：1000ms)
-      </div>
+      <div>isLongHovering: {isLongHovering ? 'long Hover' : 'leave Hover'} (delay：1000ms)</div>
     </div>
   );
 };
