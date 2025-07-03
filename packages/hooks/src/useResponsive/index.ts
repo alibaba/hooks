@@ -8,7 +8,7 @@ const subscribers = new Set<Subscriber>();
 type ResponsiveConfig = Record<string, number>;
 type ResponsiveInfo = Record<string, boolean>;
 
-let info: ResponsiveInfo;
+let info: ResponsiveInfo = {};
 
 let responsiveConfig: ResponsiveConfig = {
   xs: 0,
