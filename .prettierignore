@@ -1,6 +1,8 @@
 .DS_Store
 .dumi/tmp
 .dumi/tmp-production
+.umi
+.umi-production
 !dumi
 *lock.yaml
 .github
