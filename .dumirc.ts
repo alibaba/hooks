@@ -2,11 +2,14 @@ import { defineConfig } from 'dumi';
 
 const packages = require('./packages/hooks/package.json');
 
+const basePath = process.env.DEPLOY_ENV === 'github' ? '/hooks' : '';
+
 export default defineConfig({
   mfsu: false,
   ssr: false,
   manifest: {},
-  base: '/hooks/',
+  publicPath: `${basePath}/`,
+  base: `${basePath}/`,
   alias: {
     ahooks: `${process.cwd()}/packages/hooks/src/index.ts`,
     '@ahooksjs/use-url-state': `${process.cwd()}/packages/use-url-state/src/index.ts`,
@@ -22,13 +25,13 @@ export default defineConfig({
   sitemap: {
     hostname: 'https://ahooks.js.org/',
   },
-  favicons: ['/simple-logo.svg'],
+  favicons: [`${basePath}/simple-logo.svg`],
   locales: [
     { id: 'en-US', name: 'English' },
     { id: 'zh-CN', name: '中文' },
   ],
   themeConfig: {
-    logo: '/logo.svg',
+    logo: `${basePath}/logo.svg`,
     title: 'ahooks',
     bannerConfig: {
       showBanner: false,
@@ -107,7 +110,7 @@ export default defineConfig({
       rel: 'stylesheet',
       href: 'https://unpkg.com/@alifd/theme-design-pro@0.6.2/dist/next-noreset.min.css',
     },
-    { rel: 'stylesheet', href: '/style.css' },
+    { rel: 'stylesheet', href: `${basePath}/style.css` },
   ],
   extraBabelPlugins: [
     [

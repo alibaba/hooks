@@ -57,7 +57,7 @@ jobs:
             ${{ runner.os }}-pnpm-
 
       - name: Build documentation
-        run: npm run build:doc
+        run: npm run build:doc-github
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
