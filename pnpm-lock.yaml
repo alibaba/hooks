@@ -72,7 +72,7 @@ importers:
         specifier: ^5.1.0
         version: 5.1.0
       dumi:
-        specifier: ^2.3.0-beta.7
+        specifier: ^2.4.21
         version: 2.4.21(@babel/core@7.27.1)(@swc/helpers@0.5.1)(@types/node@22.15.3)(@types/react@19.1.2)(eslint@8.57.1)(jest@29.7.0(@types/node@22.15.3)(babel-plugin-macros@3.1.0)(ts-node@10.9.2(@swc/core@1.9.2(@swc/helpers@0.5.1))(@types/node@20.5.1)(typescript@5.8.3)))(lightningcss@1.22.1)(prettier@3.6.2)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(rollup@3.29.5)(stylelint@13.13.1)(sugarss@2.0.0)(terser@5.39.0)(type-fest@4.40.1)(typescript@5.8.3)(webpack@5.99.7)
       eslint:
         specifier: ^8.56.0
@@ -7619,10 +7619,6 @@ packages:
   mime-types@2.1.35:
     resolution: {integrity: sha512-ZDY+bPm5zTTF+YpCrAU9nK0UgICYPT0QtT1NZWFv4s++TNkcgVaT0g6+4R2uI4MjQjzysHB1zxuWL50hzaeXiw==}
     engines: {node: '>= 0.6'}
-
-  mime@1.4.1:
-    resolution: {integrity: sha512-KI1+qOZu5DcW6wayYHSzR/tXKCDC5Om4s1z2QJjDULzLcmf3DvzS7oluY4HCTrc+9FiKmWUgeNLg7W3uIQvxtQ==}
-    hasBin: true
 
   mime@1.6.0:
     resolution: {integrity: sha512-x0Vn8spI+wuJ1O6S7gnbaQg8Pxh4NNHb7KSINmEWKiPE4RKOplvijn+NkmYmmRgP68mc70j2EbeTFRsrswaQeg==}
@@ -20076,7 +20072,7 @@ snapshots:
       graceful-fs: 4.2.11
       image-size: 0.5.5
       make-dir: 2.1.0
-      mime: 1.4.1
+      mime: 1.6.0
       needle: 3.3.1
       source-map: 0.6.1
 
@@ -20090,7 +20086,7 @@ snapshots:
       graceful-fs: 4.2.11
       image-size: 0.5.5
       make-dir: 2.1.0
-      mime: 1.4.1
+      mime: 1.6.0
       needle: 3.3.1
       source-map: 0.6.1
 
@@ -20786,9 +20782,6 @@ snapshots:
   mime-types@2.1.35:
     dependencies:
       mime-db: 1.52.0
-
-  mime@1.4.1:
-    optional: true
 
   mime@1.6.0: {}
 
@@ -21738,7 +21731,7 @@ snapshots:
       lodash: 4.17.21
       postcss: 8.5.3
 
-  postcss-syntax@0.36.2(postcss-html@0.36.0)(postcss-less@3.1.4)(postcss-scss@2.1.1)(postcss@7.0.39):
+  postcss-syntax@0.36.2(postcss-html@0.36.0(postcss-syntax@0.36.2(postcss@8.5.3))(postcss@7.0.39))(postcss-less@3.1.4)(postcss-scss@2.1.1)(postcss@7.0.39):
     dependencies:
       postcss: 7.0.39
     optionalDependencies:
@@ -23653,7 +23646,7 @@ snapshots:
       postcss-sass: 0.4.4
       postcss-scss: 2.1.1
       postcss-selector-parser: 6.1.2
-      postcss-syntax: 0.36.2(postcss-html@0.36.0)(postcss-less@3.1.4)(postcss-scss@2.1.1)(postcss@7.0.39)
+      postcss-syntax: 0.36.2(postcss-html@0.36.0(postcss-syntax@0.36.2(postcss@8.5.3))(postcss@7.0.39))(postcss-less@3.1.4)(postcss-scss@2.1.1)(postcss@7.0.39)
       postcss-value-parser: 4.2.0
       resolve-from: 5.0.0
       slash: 3.0.0
