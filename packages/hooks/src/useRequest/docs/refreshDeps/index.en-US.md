@@ -42,10 +42,10 @@ useEffect(() => {
 
 ### Options
 
-| Property          | Description                                                                                                   | Type                   | Default |
+| Property | Description | Type | Default |
 | --- | --- | --- | --- |
-| refreshDeps       | When the content of the array changes, trigger refresh.                                                       | `React.DependencyList` | `[]`    |
-| refreshDepsAction | Customize the request behavior during dependency refresh; this parameter is invoked when dependencies change. | `() => void`           | -       |
+| refreshDeps | When the content of the array changes, trigger refresh. | `React.DependencyList` | `[]` |
+| refreshDepsAction | Customize the request behavior during dependency refresh; this parameter is invoked when dependencies change. | `() => void` | - |
 
 ## Remark
 

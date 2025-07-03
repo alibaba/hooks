@@ -14,6 +14,7 @@ A hook that encapsulates `onChange` and `value` logic for form controls that obt
 
 ## Example
 
+<!-- prettier-ignore -->
 <code src="./demo/demo1.tsx"></code>
 <code src="./demo/demo2.tsx"></code>
 
@@ -26,7 +27,7 @@ const [value, { onChange, reset }] = useEventTarget<T, U>(Options<T, U>);
 ### Result
 
 | Property | Description                                 | Type                                    |
-| --- | --- | --- |
+| -------- | ------------------------------------------- | --------------------------------------- |
 | value    | component value                             | `T`                                     |
 | onChange | callback when value changes                 | `(e: { target: { value: T } }) => void` |
 | reset    | function to reset the value to initialValue | `() => void`                            |
@@ -34,6 +35,6 @@ const [value, { onChange, reset }] = useEventTarget<T, U>(Options<T, U>);
 ### Options
 
 | Property     | Description                                | Type              | Default |
-| --- | --- | --- | --- |
+| ------------ | ------------------------------------------ | ----------------- | ------- |
 | initialValue | initial value                              | `T`               | -       |
 | transformer  | custom transform function applied to value | `(value: U) => T` | -       |

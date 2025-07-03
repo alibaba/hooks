@@ -12,10 +12,10 @@ demo:
 
 ```tsx | pure
 const { loading, data } = useRequest(getUsername, {
-  loadingDelay: 300
+  loadingDelay: 300,
 });
 
-return <div>{ loading ? 'Loading...' : data }</div>
+return <div>{loading ? 'Loading...' : data}</div>;
 ```
 
 例如上面的场景，假如 `getUsername` 在 300ms 内返回，则 `loading` 不会变成 `true`，避免了页面展示 `Loading...` 的情况。
@@ -27,7 +27,7 @@ return <div>{ loading ? 'Loading...' : data }</div>
 ## API
 
 | 参数         | 说明                                  | 类型     | 默认值 |
-| --- | --- | --- | --- |
+| ------------ | ------------------------------------- | -------- | ------ |
 | loadingDelay | 设置 `loading` 变成 `true` 的延迟时间 | `number` | `0`    |
 
 ## 备注

@@ -28,11 +28,11 @@ useMutationObserver(
 
 ## Params
 
-| Property | Description           | Type                                                                | Default |
+| Property | Description | Type | Default |
 | --- | --- | --- | --- |
-| target   | DOM element or ref    | `() => Element` \| `Element` \| `MutableRefObject<Element>`         | -       |
-| callback | The callback function | `(mutations: MutationRecord[], observer: MutationObserver) => void` | -       |
-| options  | Setting               | `MutationObserverInit`                                              | -       |
+| target | DOM element or ref | `() => Element` \| `Element` \| `MutableRefObject<Element>` | - |
+| callback | The callback function | `(mutations: MutationRecord[], observer: MutationObserver) => void` | - |
+| options | Setting | `MutationObserverInit` | - |
 
 ### Options
 

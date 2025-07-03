@@ -42,18 +42,18 @@ You can experience the effect through the following example.
 ### Return
 
 | Property | Description   | Type                                     |
-| --- | --- | --- |
+| -------- | ------------- | ---------------------------------------- |
 | run      | Start polling | `(...params: TParams) => void`           |
 | runAsync | Start polling | `(...params: TParams) => Promise<TData>` |
 | cancel   | Stop polling  | `() => void`                             |
 
 ### Options
 
-| Property               | Description                                                                                                                                                                  | Type      | Default |
+| Property | Description | Type | Default |
 | --- | --- | --- | --- |
-| pollingInterval        | Polling interval, in milliseconds. If the value is greater than 0, the polling mode is activated.                                                                            | `number`  | `0`     |
-| pollingWhenHidden      | Whether to continue polling when the page is hidden. If set to false, polling will be temporarily paused when the page is hidden, and resume when the page is visible again. | `boolean` | `true`  |
-| pollingErrorRetryCount | Number of polling error retries. If set to -1, an infinite number of times                                                                                                   | `number`  | `-1`    |
+| pollingInterval | Polling interval, in milliseconds. If the value is greater than 0, the polling mode is activated. | `number` | `0` |
+| pollingWhenHidden | Whether to continue polling when the page is hidden. If set to false, polling will be temporarily paused when the page is hidden, and resume when the page is visible again. | `boolean` | `true` |
+| pollingErrorRetryCount | Number of polling error retries. If set to -1, an infinite number of times | `number` | `-1` |
 
 ## Remark
 

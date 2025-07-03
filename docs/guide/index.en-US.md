@@ -24,7 +24,7 @@ ahooks, pronounced [eɪ hʊks], is a high-quality and reliable React Hooks libra
 ## 🔨 Usage
 
 ```ts
-import { useRequest } from "ahooks";
+import { useRequest } from 'ahooks';
 ```
 
 ## 💻 Online Demo

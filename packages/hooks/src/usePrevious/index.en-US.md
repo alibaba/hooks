@@ -14,6 +14,7 @@ A Hook to return the previous state.
 
 ## Examples
 
+<!-- prettier-ignore -->
 <code src="./demo/demo1.tsx"></code>
 <code src="./demo/demo2.tsx"></code>
 
@@ -29,12 +30,12 @@ const previousState: T = usePrevious<T>(
 ### Result
 
 | Property      | Description        | Type |
-| --- | --- | --- |
+| ------------- | ------------------ | ---- |
 | previousState | The previous value | `T`  |
 
 ### Params
 
-| Property     | Description                                                   | Type                                         | Default                      |
+| Property | Description | Type | Default |
 | --- | --- | --- | --- |
-| state        | The state that needs to be tracked                            | `T`                                          | -                            |
+| state | The state that needs to be tracked | `T` | - |
 | shouldUpdate | Optional. Customize whether the state value should be updated | `(prev: T \| undefined, next: T) => boolean` | `(a, b) => !Object.is(a, b)` |

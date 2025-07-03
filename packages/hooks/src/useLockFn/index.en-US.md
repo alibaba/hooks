@@ -27,11 +27,11 @@ function useLockFn<P extends any[] = any[], V = any>(
 ### Result
 
 | Property | Description                  | Type                               |
-| --- | --- | --- |
+| -------- | ---------------------------- | ---------------------------------- |
 | fn       | The async function with lock | `(...args: any[]) => Promise<any>` |
 
 ### Params
 
 | Property | Description       | Type                               | Default |
-| --- | --- | --- | --- |
+| -------- | ----------------- | ---------------------------------- | ------- |
 | fn       | An async function | `(...args: any[]) => Promise<any>` | -       |

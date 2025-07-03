@@ -19,18 +19,16 @@ demo:
 ## API
 
 ```typescript
-const [current, {
-  inc,
-  dec,
-  set,
-  reset
-}] = useCounter(initialValue, { min, max });
+const [current, { inc, dec, set, reset }] = useCounter(initialValue, {
+  min,
+  max,
+});
 ```
 
 ### Result
 
 | 参数    | 说明         | 类型                                                   |
-| --- | --- | --- |
+| ------- | ------------ | ------------------------------------------------------ |
 | current | 当前值       | `number`                                               |
 | inc     | 加，默认加 1 | `(delta?: number) => void`                             |
 | dec     | 减，默认减 1 | `(delta?: number) => void`                             |
@@ -40,7 +38,7 @@ const [current, {
 ### Params
 
 | 参数         | 说明   | 类型     | 默认值 |
-| --- | --- | --- | --- |
+| ------------ | ------ | -------- | ------ |
 | initialValue | 默认值 | `number` | `0`    |
 | min          | 最小值 | `number` | -      |
 | max          | 最大值 | `number` | -      |

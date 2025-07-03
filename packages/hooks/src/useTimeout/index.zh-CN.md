@@ -14,6 +14,7 @@ demo:
 
 ## 代码演示
 
+<!-- prettier-ignore -->
 <code src="./demo/demo1.tsx"></code>
 <code src="./demo/demo2.tsx"></code>
 
@@ -28,13 +29,13 @@ useTimeout(
 
 ### Params
 
-| 参数  | 说明                                                                       | 类型                    |
+| 参数 | 说明 | 类型 |
 | --- | --- | --- |
-| fn    | 待执行函数                                                                 | `() => void`            |
+| fn | 待执行函数 | `() => void` |
 | delay | 定时时间（单位为毫秒）,支持动态变化，，当取值为 `undefined` 时会停止计时器 | `number` \| `undefined` |
 
 ### Result
 
 | 参数         | 说明       | 类型         |
-| --- | --- | --- |
+| ------------ | ---------- | ------------ |
 | clearTimeout | 清除定时器 | `() => void` |

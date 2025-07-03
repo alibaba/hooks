@@ -26,10 +26,10 @@ useWhyDidYouUpdate(componentName: string, props: IProps): void;
 
 ### Params
 
-| Property      | Description                                                                                 | Type     | Default |
+| Property | Description | Type | Default |
 | --- | --- | --- | --- |
-| componentName | Required, the name of the observation component                                             | `string` | -       |
-| props         | Required, data to be observed (`state` or `props` and other data that may lead to rerender) | `object` | -       |
+| componentName | Required, the name of the observation component | `string` | - |
+| props | Required, data to be observed (`state` or `props` and other data that may lead to rerender) | `object` | - |
 
 ### Result
 

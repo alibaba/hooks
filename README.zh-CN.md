@@ -8,15 +8,7 @@
 
 一套高质量可靠的 React Hooks 库
 
-[![NPM version](https://img.shields.io/npm/v/ahooks.svg)](https://www.npmjs.com/package/ahooks)
-[![NPM downloads](https://img.shields.io/npm/dw/ahooks.svg)](https://npmjs.org/package/ahooks)
-[![npm](https://img.shields.io/npm/dw/ahooks-v2?label=downloads%28v2%29)](https://www.npmjs.com/package/ahooks-v2)
-[![npm](https://img.shields.io/github/issues/alibaba/hooks)](https://github.com/alibaba/hooks/issues)
-[![Coverage Status](https://coveralls.io/repos/github/alibaba/hooks/badge.svg?branch=master)](https://coveralls.io/github/alibaba/hooks?branch=master)
-![gzip size](https://img.badgesize.io/https:/unpkg.com/ahooks/dist/ahooks.js?label=gzip%20size&compression=gzip)
-[![Percentage of issues still open](http://isitmaintained.com/badge/open/alibaba/hooks.svg)](http://isitmaintained.com/project/alibaba/hooks "Percentage of issues still open")
-[![Average time to resolve an issue](http://isitmaintained.com/badge/resolution/alibaba/hooks.svg)](http://isitmaintained.com/project/alibaba/hooks "Average time to resolve an issue")
-[![GitHub](https://img.shields.io/github/license/alibaba/hooks)](https://github.com/alibaba/hooks/blob/master/LICENSE)
+[![NPM version](https://img.shields.io/npm/v/ahooks.svg)](https://www.npmjs.com/package/ahooks) [![NPM downloads](https://img.shields.io/npm/dw/ahooks.svg)](https://npmjs.org/package/ahooks) [![npm](https://img.shields.io/npm/dw/ahooks-v2?label=downloads%28v2%29)](https://www.npmjs.com/package/ahooks-v2) [![npm](https://img.shields.io/github/issues/alibaba/hooks)](https://github.com/alibaba/hooks/issues) [![Coverage Status](https://coveralls.io/repos/github/alibaba/hooks/badge.svg?branch=master)](https://coveralls.io/github/alibaba/hooks?branch=master) ![gzip size](https://img.badgesize.io/https:/unpkg.com/ahooks/dist/ahooks.js?label=gzip%20size&compression=gzip) [![Percentage of issues still open](http://isitmaintained.com/badge/open/alibaba/hooks.svg)](http://isitmaintained.com/project/alibaba/hooks 'Percentage of issues still open') [![Average time to resolve an issue](http://isitmaintained.com/badge/resolution/alibaba/hooks.svg)](http://isitmaintained.com/project/alibaba/hooks 'Average time to resolve an issue') [![GitHub](https://img.shields.io/github/license/alibaba/hooks)](https://github.com/alibaba/hooks/blob/master/LICENSE)
 
 [English](https://github.com/alibaba/hooks/blob/master/README.md) | 简体中文
 
@@ -51,7 +43,7 @@ $ bun add ahooks
 ## 🔨 使用
 
 ```ts
-import { useRequest } from "ahooks";
+import { useRequest } from 'ahooks';
 ```
 
 ## 💻 在线体验

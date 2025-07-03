@@ -21,6 +21,7 @@ demo:
 
 ## 代码演示
 
+<!-- prettier-ignore -->
 <code src="./demo/demo1.tsx"></code>
 <code src="./demo/demo2.tsx"></code>
 
@@ -37,7 +38,7 @@ useRafInterval(
 ### Params
 
 | 参数    | 说明                                        | 类型                    |
-| --- | --- | --- |
+| ------- | ------------------------------------------- | ----------------------- |
 | fn      | 要定时调用的函数                            | `() => void`            |
 | delay   | 间隔时间，当取值 `undefined` 时会停止计时器 | `number` \| `undefined` |
 | options | 配置计时器的行为                            | `Options`               |
@@ -45,11 +46,11 @@ useRafInterval(
 ### Options
 
 | 参数      | 说明                     | 类型      | 默认值  |
-| --- | --- | --- | --- |
+| --------- | ------------------------ | --------- | ------- |
 | immediate | 是否在首次渲染时立即执行 | `boolean` | `false` |
 
 ### Result
 
 | 参数          | 说明       | 类型         |
-| --- | --- | --- |
+| ------------- | ---------- | ------------ |
 | clearInterval | 清除定时器 | `() => void` |

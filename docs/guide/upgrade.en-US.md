@@ -125,79 +125,62 @@ v3 fixed some problems in react-refresh (HMR) mode. Refer to "[React Hooks & rea
 ### Breaking Changes
 
 - useBoolean
-
   - `toggle` no longer accepts parameters
   - Added `set`
 
 - useToggle
-
   - `toggle` no longer accepts parameters
   - Added `set`
 
 - useSet
-
   - Removed `has` method, use `state.has` instead
 
 - useCookieState
-
   - `setState(null)` is no longer supported to delete cookies, please use `setState(undefined)` or `setState()` instead
 
 - useCountDown
-
   - Deleted the return value of `setTargetDate`, you can dynamically change `options.targetDate` to achieve the same effect
 
 - useLocalStorageState / useSessionStorageState
-
   - The second parameter changed from `defaultValue` to `Options`, use `options.defaultValue` instead
   - Added `options.serializer` and `options.deserializer` to support custom sequence method
 
 - useDynamicList
-
   - `sortForm` was renamed to `sortList`
 
 - useDrag & useDrop
-
   - API is redesigned and needs to be upgraded according to the new document
 
 - useExternal
-
   - API has undergone major adjustments, please refer to the documentation
   - No longer supports image type resources
   - The resource becomes globally unique and will not be loaded repeatedly. At the same time, if there are multiple references, the resource will be deleted only after all references are unloaded
 
 - useFullscreen
-
   - API has been renamed, please refer to the documentation
 
 - useVirtualList
-
   - API is redesigned and needs to be upgraded according to the new document
   - Added a `data` parameter to the function type `options.itemHeight` parameter
 
 - useInViewport
-
   - API has been upgraded, please refer to the documentation
   - Added visible ratio ability
 
 - useScroll
-
   - The return value type is changed from `{ left?: number, top?: number }` to `{ left: number, top: number } | undefined`
 
 - useSize
-
   - The return value type is changed from `{ width?: number, height?: number }` to `{ width: number, height: number } | undefined`
 
 - useKeyPress
-
   - All aliases have been modified, please refer to the documentation
 
 - useAntdTable
-
   - Removed `options.formatResult`
   - More changes are the same as useRequest
 
 - useFusionTable
-
   - Removed `options.formatResult`
   - More changes are the same as useRequest
 
@@ -208,11 +191,9 @@ v3 fixed some problems in react-refresh (HMR) mode. Refer to "[React Hooks & rea
 ### Optimization
 
 - useUrlState
-
   - Supported React Router v6
 
 - useControllableValue
-
   - Optimized logic to avoid unnecessary re-render
 
 - More other optimizations

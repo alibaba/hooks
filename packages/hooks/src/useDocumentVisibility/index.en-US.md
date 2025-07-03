@@ -24,6 +24,6 @@ const documentVisibility = useDocumentVisibility();
 
 ### Result
 
-| Property           | Description                     | Type                                               |
+| Property | Description | Type |
 | --- | --- | --- |
 | documentVisibility | Whether the document is visible | `visible`\| `hidden` \| `prerender` \| `undefined` |

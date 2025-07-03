@@ -14,6 +14,7 @@ A hook that toggle states.
 
 ## Examples
 
+<!-- prettier-ignore -->
 <code src="./demo/demo1.tsx"></code>
 <code src="./demo/demo2.tsx"></code>
 
@@ -30,22 +31,22 @@ const [state, { toggle, set, setLeft, setRight }] = useToggle<T, U>(defaultValue
 ### Params
 
 | Property     | Description                 | Type | Default |
-| --- | --- | --- | --- |
+| ------------ | --------------------------- | ---- | ------- |
 | defaultValue | The default value. Optional | `T`  | `false` |
 | reverseValue | The reverse value. Optional | `U`  | -       |
 
 ### Result
 
 | Property | Description                            | Type      |
-| --- | --- | --- |
+| -------- | -------------------------------------- | --------- |
 | state    | Current state                          | -         |
 | actions  | A set of methods to update state value | `Actions` |
 
 ### Actions
 
-| Property | Description                                                                                                   | Type                      |
+| Property | Description | Type |
 | --- | --- | --- |
-| toggle   | Toggle state                                                                                                  | `() => void`              |
-| set      | Set state                                                                                                     | `(state: T \| U) => void` |
-| setLeft  | Set state to `defaultValue`                                                                                   | `() => void`              |
-| setRight | Set state to `reverseValue` if `reverseValue` is available. Otherwise set it to the reverse of `defaultValue` | `() => void`              |
+| toggle | Toggle state | `() => void` |
+| set | Set state | `(state: T \| U) => void` |
+| setLeft | Set state to `defaultValue` | `() => void` |
+| setRight | Set state to `reverseValue` if `reverseValue` is available. Otherwise set it to the reverse of `defaultValue` | `() => void` |

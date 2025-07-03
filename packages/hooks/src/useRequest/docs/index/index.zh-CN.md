@@ -40,7 +40,7 @@ const { data, error, loading } = useRequest(getUsername);
 
 ```js
 const { loading, run } = useRequest(changeUsername, {
-  manual: true
+  manual: true,
 });
 ```
 

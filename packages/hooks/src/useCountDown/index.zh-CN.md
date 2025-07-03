@@ -14,6 +14,7 @@ demo:
 
 ## 代码演示
 
+<!-- prettier-ignore -->
 <code src="./demo/demo1.tsx"></code>
 <code src="./demo/demo2.tsx"></code>
 <code src="./demo/demo3.tsx"></code>
@@ -42,20 +43,18 @@ interface FormattedRes {
   milliseconds: number;
 }
 
-const [countdown, formattedRes] = useCountDown(
-  {
-    leftTime,
-    targetDate,
-    interval,
-    onEnd
-  }
-);
+const [countdown, formattedRes] = useCountDown({
+  leftTime,
+  targetDate,
+  interval,
+  onEnd,
+});
 ```
 
 ### Params
 
 | 参数       | 说明                 | 类型         | 默认值 |
-| --- | --- | --- | --- |
+| ---------- | -------------------- | ------------ | ------ |
 | leftTime   | 剩余时间（毫秒）     | `number`     | -      |
 | targetDate | 目标时间             | `TDate`      | -      |
 | interval   | 变化时间间隔（毫秒） | `number`     | `1000` |
@@ -64,7 +63,7 @@ const [countdown, formattedRes] = useCountDown(
 ### Result
 
 | 参数         | 说明                 | 类型           |
-| --- | --- | --- |
+| ------------ | -------------------- | -------------- |
 | countdown    | 倒计时时间戳（毫秒） | `number`       |
 | formattedRes | 格式化后的倒计时     | `FormattedRes` |
 

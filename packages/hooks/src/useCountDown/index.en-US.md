@@ -14,6 +14,7 @@ A hook for manage countdown.
 
 ## Examples
 
+<!-- prettier-ignore -->
 <code src="./demo/demo1.tsx"></code>
 <code src="./demo/demo2.tsx"></code>
 <code src="./demo/demo3.tsx"></code>
@@ -42,20 +43,18 @@ interface FormattedRes {
   milliseconds: number;
 }
 
-const [countdown, formattedRes] = useCountDown(
-  {
-    leftTime,
-    targetDate,
-    interval,
-    onEnd
-  }
-);
+const [countdown, formattedRes] = useCountDown({
+  leftTime,
+  targetDate,
+  interval,
+  onEnd,
+});
 ```
 
 ### Params
 
 | Property   | Description                                  | Type         | Default |
-| --- | --- | --- | --- |
+| ---------- | -------------------------------------------- | ------------ | ------- |
 | leftTime   | The rest of time, in milliseconds            | `number`     | -       |
 | targetDate | Target time                                  | `TDate`      | -       |
 | interval   | Time interval between ticks, in milliseconds | `number`     | `1000`  |
@@ -64,7 +63,7 @@ const [countdown, formattedRes] = useCountDown(
 ### Return
 
 | Params          | Description                              | Type           |
-| --- | --- | --- |
+| --------------- | ---------------------------------------- | -------------- |
 | countdown       | Timestamp to targetDate, in milliseconds | `number`       |
 | formattedResult | Formatted countdown                      | `FormattedRes` |
 

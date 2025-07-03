@@ -13,7 +13,7 @@ demo:
 ```tsx | pure
 const { data, run } = useRequest(getUsername, {
   throttleWait: 300,
-  manual: true
+  manual: true,
 });
 ```
 
@@ -30,7 +30,7 @@ const { data, run } = useRequest(getUsername, {
 throttle 所有参数用法和效果同 [lodash.throttle](https://www.lodashjs.com/docs/lodash.throttle/)
 
 | 参数             | 说明                                           | 类型      | 默认值 |
-| --- | --- | --- | --- |
+| ---------------- | ---------------------------------------------- | --------- | ------ |
 | throttleWait     | 节流等待时间, 单位为毫秒，设置后，进入节流模式 | `number`  | -      |
 | throttleLeading  | 在节流开始前执行调用                           | `boolean` | `true` |
 | throttleTrailing | 在节流结束后执行调用                           | `boolean` | `true` |

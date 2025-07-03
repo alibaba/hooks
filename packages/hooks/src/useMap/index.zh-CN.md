@@ -19,22 +19,13 @@ demo:
 ## API
 
 ```typescript
-const [
-  map,
-  {
-    set,
-    setAll,
-    remove,
-    reset,
-    get
-  }
-] = useMap<K, V>(initialValue);
+const [map, { set, setAll, remove, reset, get }] = useMap<K, V>(initialValue);
 ```
 
 ### Result
 
 | 参数   | 说明                  | 类型                                 |
-| --- | --- | --- |
+| ------ | --------------------- | ------------------------------------ |
 | map    | Map 对象              | `Map<K, V>`                          |
 | set    | 添加元素              | `(key: K, value: V) => void`         |
 | get    | 获取元素              | `(key: K) => V \| undefined`         |
@@ -45,5 +36,5 @@ const [
 ### Params
 
 | 参数         | 说明                        | 类型               | 默认值 |
-| --- | --- | --- | --- |
+| ------------ | --------------------------- | ------------------ | ------ |
 | initialValue | 可选项，传入默认的 Map 参数 | `Iterable<[K, V]>` | -      |

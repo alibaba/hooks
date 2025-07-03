@@ -28,11 +28,11 @@ useMutationObserver(
 
 ### Params
 
-| 参数     | 说明             | 类型                                                                | 默认值 |
+| 参数 | 说明 | 类型 | 默认值 |
 | --- | --- | --- | --- |
-| callback | 触发的回调函数   | `(mutations: MutationRecord[], observer: MutationObserver) => void` | -      |
-| target   | DOM 节点或者 Ref | `Element` \| `() => Element` \| `MutableRefObject<Element>`         | -      |
-| options  | 设置项           | `MutationObserverInit`                                              | `{}`   |
+| callback | 触发的回调函数 | `(mutations: MutationRecord[], observer: MutationObserver) => void` | - |
+| target | DOM 节点或者 Ref | `Element` \| `() => Element` \| `MutableRefObject<Element>` | - |
+| options | 设置项 | `MutationObserverInit` | `{}` |
 
 ### Options
 

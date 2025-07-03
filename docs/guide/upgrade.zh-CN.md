@@ -125,79 +125,62 @@ v3 修复了在 react-refresh（HMR）模式下的一些问题。参考《[React
 ### Breaking Changes
 
 - useBoolean
-
   - `toggle` 不再接收参数
   - 增加了 `set`
 
 - useToggle
-
   - `toggle` 不再接收参数
   - 增加了 `set`
 
 - useSet
-
   - 删除了 `has` 方法，使用 `state.has` 代替
 
 - useCookieState
-
   - 不再支持 `setState(null)` 删除 Cookie，请使用 `setState(undefined)` 或 `setState()` 替代
 
 - useCountDown
-
   - 删除了 `setTargetDate` 返回值，可以动态改变 `options.targetDate` 实现相同效果
 
 - useLocalStorageState / useSessionStorageState
-
   - 第二个参数从 `defaultValue` 变为了 `Options`，使用 `options.defaultValue` 代替
   - 增加了 `options.serializer` 和 `options.deserializer`，支持自定义序列法方法
 
 - useDynamicList
-
   - `sortForm` 改名为 `sortList`
 
 - useDrag & useDrop
-
   - API 重新设计，需要对照新的文档做升级
 
 - useExternal
-
   - API 进行了比较大的调整，请查阅文档
   - 不再支持图片类型资源
   - 资源在全局变成唯一的，不会重复加载，同时如果有多处引用，只有等全部引用卸载之后，才会删除该资源
 
 - useFullscreen
-
   - API 进行了重命名，请查阅文档
 
 - useVirtualList
-
   - API 重新设计，需要对照新的文档做升级
   - `options.itemHeight` 函数型参数增加了 `data` 参数
 
 - useInViewport
-
   - API 进行了升级，请查阅文档
   - 增加了可见比例能力
 
 - useScroll
-
   - 返回值类型从 `{ left?: number, top?: number }` 改为 `{ left: number, top: number } | undefined`
 
 - useSize
-
   - 返回值类型从 `{ width?: number, height?: number }` 改为 `{ width: number, height: number } | undefined`
 
 - useKeyPress
-
   - 修改了所有别名，请查阅文档
 
 - useAntdTable
-
   - 删除了 `options.formatResult`
   - 更多变更同 useRequest
 
 - useFusionTable
-
   - 删除了 `options.formatResult`
   - 更多变更同 useRequest
 
@@ -208,11 +191,9 @@ v3 修复了在 react-refresh（HMR）模式下的一些问题。参考《[React
 ### 优化
 
 - useUrlState
-
   - 支持了 React Router v6
 
 - useControllableValue
-
   - 优化了代码逻辑，避免了不必要的 re-render
 
 - 更多其它优化

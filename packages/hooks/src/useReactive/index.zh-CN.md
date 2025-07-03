@@ -14,6 +14,7 @@ demo:
 
 ## 代码演示
 
+<!-- prettier-ignore -->
 <code src="./demo/demo1.tsx"></code>
 <code src="./demo/demo2.tsx" ></code>
 <code src="./demo/demo3.tsx" ></code>
@@ -28,7 +29,7 @@ const state = useReactive(initialState: Record<string, any>);
 ### 参数
 
 | 参数         | 说明           | 类型                  | 默认值 |
-| --- | --- | --- | --- |
+| ------------ | -------------- | --------------------- | ------ |
 | initialState | 当前的数据对象 | `Record<string, any>` | -      |
 
 ## FAQ

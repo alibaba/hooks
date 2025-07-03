@@ -14,6 +14,7 @@ A hook that handles the `setInterval` timer function.
 
 ## Examples
 
+<!-- prettier-ignore -->
 <code src="./demo/demo1.tsx"></code>
 <code src="./demo/demo2.tsx"></code>
 
@@ -29,20 +30,20 @@ useInterval(
 
 ### Params
 
-| Property | Description                                                                                                                                                   | Type                    |
+| Property | Description | Type |
 | --- | --- | --- |
-| fn       | The function to be executed every `delay` milliseconds.                                                                                                       | `() => void`            |
-| delay    | The time in milliseconds, the timer should delay in between executions of the specified function. The timer will be cancelled if delay is set to `undefined`. | `number` \| `undefined` |
-| options  | Config of the interval behavior.                                                                                                                              | `Options`               |
+| fn | The function to be executed every `delay` milliseconds. | `() => void` |
+| delay | The time in milliseconds, the timer should delay in between executions of the specified function. The timer will be cancelled if delay is set to `undefined`. | `number` \| `undefined` |
+| options | Config of the interval behavior. | `Options` |
 
 ### Options
 
-| Property  | Description                                                            | Type      | Default |
+| Property | Description | Type | Default |
 | --- | --- | --- | --- |
 | immediate | Whether the function should be executed immediately on first execution | `boolean` | `false` |
 
 ### Result
 
 | Property      | Description    | Type         |
-| --- | --- | --- |
+| ------------- | -------------- | ------------ |
 | clearInterval | clear interval | `() => void` |

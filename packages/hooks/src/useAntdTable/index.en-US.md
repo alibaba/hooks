@@ -116,7 +116,7 @@ const {
 ### Result
 
 | Property          | Description                                | Type                  |
-| --- | --- | --- |
+| ----------------- | ------------------------------------------ | --------------------- |
 | tableProps        | The data required by the `Table` component | -                     |
 | search.type       | Current form type                          | `simple` \| `advance` |
 | search.changeType | Switch form type                           | `() => void`          |
@@ -125,10 +125,10 @@ const {
 
 ### Params
 
-| Property        | Description                                                                                | Type                     | Default  |
+| Property | Description | Type | Default |
 | --- | --- | --- | --- |
-| form            | `Form` instance                                                                            | -                        | -        |
-| defaultType     | Default form type                                                                          | `simple` \| `advance`    | `simple` |
-| defaultParams   | Default parameters, the first item is paging data, the second item is form data            | `[pagination, formData]` | -        |
-| defaultPageSize | Default page size                                                                          | `number`                 | `10`     |
-| refreshDeps     | Changes in `refreshDeps` will reset current to the first page and re-initiate the request. | `React.DependencyList`   | `[]`     |
+| form | `Form` instance | - | - |
+| defaultType | Default form type | `simple` \| `advance` | `simple` |
+| defaultParams | Default parameters, the first item is paging data, the second item is form data | `[pagination, formData]` | - |
+| defaultPageSize | Default page size | `number` | `10` |
+| refreshDeps | Changes in `refreshDeps` will reset current to the first page and re-initiate the request. | `React.DependencyList` | `[]` |

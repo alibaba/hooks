@@ -42,10 +42,10 @@ useEffect(() => {
 
 ### Options
 
-| 参数              | 说明                                                                                                                                                       | 类型         | 默认值 |
+| 参数 | 说明 | 类型 | 默认值 |
 | --- | --- | --- | --- |
-| refreshDeps       | 依赖数组。当数组内容变化后[刷新（重复上一次请求）](https://ahooks.js.org/zh-CN/hooks/use-request/basic/#刷新重复上一次请求)。同 `useEffect` 的第二个参数。 | `any[]`      | `[]`   |
-| refreshDepsAction | 自定义依赖数组变化时的请求行为。                                                                                                                           | `() => void` | -      |
+| refreshDeps | 依赖数组。当数组内容变化后[刷新（重复上一次请求）](https://ahooks.js.org/zh-CN/hooks/use-request/basic/#刷新重复上一次请求)。同 `useEffect` 的第二个参数。 | `any[]` | `[]` |
+| refreshDepsAction | 自定义依赖数组变化时的请求行为。 | `() => void` | - |
 
 ## 备注
 

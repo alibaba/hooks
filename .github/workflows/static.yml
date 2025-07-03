@@ -3,7 +3,7 @@ name: Deploy static content to Pages
 on:
   # Runs on pushes targeting the default branch
   push:
-    branches: ["master"]
+    branches: ['master']
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -16,7 +16,7 @@ permissions:
 # Allow only one concurrent deployment, skipping runs queued between the run in-progress and latest queued.
 # However, do NOT cancel in-progress runs as we want to allow these production deployments to complete.
 concurrency:
-  group: "pages"
+  group: 'pages'
   cancel-in-progress: false
 
 jobs:
@@ -34,14 +34,14 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '18' 
-      
+          node-version: '18'
+
       - name: Setup pnpm
         run: |
-            npm install --global corepack@latest
-            corepack enable
-            corepack prepare pnpm@latest --activate
-            echo "$(pnpm bin --global)" >> $GITHUB_PATH
+          npm install --global corepack@latest
+          corepack enable
+          corepack prepare pnpm@latest --activate
+          echo "$(pnpm bin --global)" >> $GITHUB_PATH
 
       - name: Install dependencies
         run: pnpm install
@@ -55,7 +55,6 @@ jobs:
           key: ${{ runner.os }}-pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}
           restore-keys: |
             ${{ runner.os }}-pnpm-
-            
 
       - name: Build documentation
         run: npm run build:doc
@@ -67,6 +66,5 @@ jobs:
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./dist  # 构建后的静态文件目录
+          publish_dir: ./dist # 构建后的静态文件目录
           force_orphan: true
-

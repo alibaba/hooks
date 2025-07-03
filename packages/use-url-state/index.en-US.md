@@ -63,21 +63,21 @@ const [state, setState] = useUrlState(initialState, options);
 ### Params
 
 | Property     | Description                    | Type           | Default |
-| --- | --- | --- | --- |
+| ------------ | ------------------------------ | -------------- | ------- |
 | initialState | InitialState, same as useState | `S \| () => S` | -       |
 | options      | Url config                     | `Options`      | -       |
 
 ### Options
 
-| Property         | Description                                                                                                 | Type                  | Default  |
+| Property | Description | Type | Default |
 | --- | --- | --- | --- |
-| navigateMode     | Type of history navigate mode                                                                               | `'push' \| 'replace'` | `'push'` |
-| parseOptions     | [parse](https://github.com/sindresorhus/query-string#parsestring-options) options of `query-string`         | `ParseOptions`        | -        |
-| stringifyOptions | [stringify](https://github.com/sindresorhus/query-string#stringifyobject-options) options of `query-string` | `StringifyOptions`    | -        |
+| navigateMode | Type of history navigate mode | `'push' \| 'replace'` | `'push'` |
+| parseOptions | [parse](https://github.com/sindresorhus/query-string#parsestring-options) options of `query-string` | `ParseOptions` | - |
+| stringifyOptions | [stringify](https://github.com/sindresorhus/query-string#stringifyobject-options) options of `query-string` | `StringifyOptions` | - |
 
 ### Result
 
-| Property | Description                                  | Type                                              |
+| Property | Description | Type |
 | --- | --- | --- |
-| state    | Url query object                             | `object`                                          |
+| state | Url query object | `object` |
 | setState | Same as useState, but state should be object | `(state: S) => void \| (() => ((state: S) => S))` |

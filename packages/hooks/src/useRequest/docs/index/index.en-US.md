@@ -40,7 +40,7 @@ If `options.manual = true` is set, useRequest will not be executed by default, a
 
 ```js
 const { loading, run } = useRequest(changeUsername, {
-  manual: true
+  manual: true,
 });
 ```
 

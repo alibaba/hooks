@@ -82,8 +82,7 @@ export default () => {
 };
 ```
 
-Compared with `useEffect`, `useUpdateEffect` ignores the first execution and only executes when the deps changes. In the normal mode of the above code, `useUpdateEffect` will never be executed, because deps is an empty array and will never change.
-But in react-refresh mode, during HMR, `useUpdateEffect` and `useEffect` are executed at the same time.
+Compared with `useEffect`, `useUpdateEffect` ignores the first execution and only executes when the deps changes. In the normal mode of the above code, `useUpdateEffect` will never be executed, because deps is an empty array and will never change. But in react-refresh mode, during HMR, `useUpdateEffect` and `useEffect` are executed at the same time.
 
 ![Kapture 2021-05-10 at 12.26.19.gif](https://camo.githubusercontent.com/18000e2859234c5ca4d7613985dab82cba0a654cca53a9df5bc63dfcd126cce7/68747470733a2f2f63646e2e6e6c61726b2e636f6d2f79757175652f302f323032312f6769662f3138393335302f313632303632303739373138392d36613561366434302d616637372d343339642d616462632d3230666430343664636663302e67696623636c69656e7449643d7563376235663533362d656661652d342666726f6d3d64726f702669643d753065323737343631266d617267696e3d2535426f626a6563742532304f626a656374253544266e616d653d4b617074757265253230323032312d30352d3130253230617425323031322e32362e31392e676966266f726967696e4865696768743d383736266f726967696e57696474683d31323534266f726967696e616c547970653d62696e6172792673697a653d373937383135267374617475733d646f6e65267374796c653d6e6f6e65267461736b49643d7564613336343363622d386435312d346437322d626461322d3362333431353762313530)
 

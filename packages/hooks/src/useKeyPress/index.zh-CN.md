@@ -16,6 +16,7 @@ demo:
 
 ### 基础用法
 
+<!-- prettier-ignore -->
 <code src="./demo/demo1.tsx"></code>
 <code src="./demo/demo6.tsx"></code>
 <code src="./demo/demo7.tsx"></code>
@@ -39,20 +40,20 @@ useKeyPress(
 
 ### Params
 
-| 参数         | 说明                                         | 类型                                                            | 默认值 |
+| 参数 | 说明 | 类型 | 默认值 |
 | --- | --- | --- | --- |
-| keyFilter    | 支持 keyCode、别名、组合键、数组、自定义函数 | `KeyType` \| `KeyType[]` \| `(event: KeyboardEvent) => boolean` | -      |
-| eventHandler | 回调函数                                     | `(event: KeyboardEvent, key: KeyType) => void`                  | -      |
-| options      | 可选配置项                                   | `Options`                                                       | -      |
+| keyFilter | 支持 keyCode、别名、组合键、数组、自定义函数 | `KeyType` \| `KeyType[]` \| `(event: KeyboardEvent) => boolean` | - |
+| eventHandler | 回调函数 | `(event: KeyboardEvent, key: KeyType) => void` | - |
+| options | 可选配置项 | `Options` | - |
 
 ### Options
 
-| 参数       | 说明                                                                                        | 类型                                                        | 默认值        |
+| 参数 | 说明 | 类型 | 默认值 |
 | --- | --- | --- | --- |
-| events     | 触发事件                                                                                    | `('keydown' \| 'keyup')[]`                                  | `['keydown']` |
-| target     | DOM 节点或者 ref                                                                            | `() => Element` \| `Element` \| `MutableRefObject<Element>` | -             |
-| exactMatch | 精确匹配。如果开启，则只有在按键完全匹配的情况下触发事件。比如按键 [shift + c] 不会触发 [c] | `boolean`                                                   | `false`       |
-| useCapture | 是否阻止事件冒泡                                                                            | `boolean`                                                   | `false`       |
+| events | 触发事件 | `('keydown' \| 'keyup')[]` | `['keydown']` |
+| target | DOM 节点或者 ref | `() => Element` \| `Element` \| `MutableRefObject<Element>` | - |
+| exactMatch | 精确匹配。如果开启，则只有在按键完全匹配的情况下触发事件。比如按键 [shift + c] 不会触发 [c] | `boolean` | `false` |
+| useCapture | 是否阻止事件冒泡 | `boolean` | `false` |
 
 ## Remarks
 

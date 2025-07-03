@@ -14,6 +14,7 @@ This hook is used for Checkbox group, supports multiple selection, single select
 
 ## Examples
 
+<!-- prettier-ignore -->
 <code src="./demo/demo1.tsx"></code>
 <code src="./demo/demo2.tsx"></code>
 <code src="./demo/demo3.tsx"></code>
@@ -35,10 +36,10 @@ const result: Result = useSelections<T>(items: T[], defaultSelected?: T[]);
 
 ### Params
 
-| Property | Description | Type | Default |
-| --- | --- | --- | --- |
-| items | Data items | `T[]` | --- |
-| options | Optional configuration | `Options` | --- |
+| Property | Description            | Type      | Default |
+| -------- | ---------------------- | --------- | ------- |
+| items    | Data items             | `T[]`     | ---     |
+| options  | Optional configuration | `Options` | ---     |
 
 ### Options
 
@@ -49,18 +50,18 @@ const result: Result = useSelections<T>(items: T[], defaultSelected?: T[]);
 
 ### Result
 
-| Property          | Description                                                                                                                                                                                                                                               | Type                                                                |
+| Property | Description | Type |
 | --- | --- | --- |
-| selected          | Selected items                                                                                                                                                                                                                                            | `T[]`                                                               |
-| allSelected       | Is all items selected                                                                                                                                                                                                                                     | `boolean`                                                           |
-| noneSelected      | Is no item selected                                                                                                                                                                                                                                       | `boolean`                                                           |
-| partiallySelected | Is partially items selected                                                                                                                                                                                                                               | `boolean`                                                           |
-| isSelected        | Whether item is selected                                                                                                                                                                                                                                  | `(value: T) => boolean`                                             |
-| setSelected       | Select multiple items. When executed multiple times, the later return value overwrites the previous one, so if you want to merge the results of multiple operations, you need to do this manually: `setSelected((oldArray) => oldArray.concat(newArray))` | `(value: T[]) => void  \| (value: (prevState: T[]) => T[]) => void` |
-| select            | Select single item                                                                                                                                                                                                                                        | `(value: T) => void`                                                |
-| unSelect          | UnSelect single item                                                                                                                                                                                                                                      | `(value: T) => void`                                                |
-| toggle            | Toggle single item select status                                                                                                                                                                                                                          | `(value: T) => void`                                                |
-| selectAll         | Select all items                                                                                                                                                                                                                                          | `() => void`                                                        |
-| unSelectAll       | UnSelect all items                                                                                                                                                                                                                                        | `() => void`                                                        |
-| toggleAll         | Toggle select all items                                                                                                                                                                                                                                   | `() => void`                                                        |
-| clearAll          | Clear all selected (In general, `clearAll` is equivalent to `unSelectAll`. If the items is dynamic, `clearAll` will clear "all selected data", while `unSelectAll` will only clear "the currently selected data in the items")                            | `() => void`                                                        |
+| selected | Selected items | `T[]` |
+| allSelected | Is all items selected | `boolean` |
+| noneSelected | Is no item selected | `boolean` |
+| partiallySelected | Is partially items selected | `boolean` |
+| isSelected | Whether item is selected | `(value: T) => boolean` |
+| setSelected | Select multiple items. When executed multiple times, the later return value overwrites the previous one, so if you want to merge the results of multiple operations, you need to do this manually: `setSelected((oldArray) => oldArray.concat(newArray))` | `(value: T[]) => void  \| (value: (prevState: T[]) => T[]) => void` |
+| select | Select single item | `(value: T) => void` |
+| unSelect | UnSelect single item | `(value: T) => void` |
+| toggle | Toggle single item select status | `(value: T) => void` |
+| selectAll | Select all items | `() => void` |
+| unSelectAll | UnSelect all items | `() => void` |
+| toggleAll | Toggle select all items | `() => void` |
+| clearAll | Clear all selected (In general, `clearAll` is equivalent to `unSelectAll`. If the items is dynamic, `clearAll` will clear "all selected data", while `unSelectAll` will only clear "the currently selected data in the items") | `() => void` |

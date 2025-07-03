@@ -19,22 +19,13 @@ A hook that can manage the state of Map.
 ## API
 
 ```typescript
-const [
-  map,
-  {
-    set,
-    setAll,
-    remove,
-    reset,
-    get
-  }
-] = useMap<K, V>(initialValue);
+const [map, { set, setAll, remove, reset, get }] = useMap<K, V>(initialValue);
 ```
 
 ### Result
 
 | Property | Description      | Type                                 |
-| --- | --- | --- |
+| -------- | ---------------- | ------------------------------------ |
 | map      | Map object       | `Map<K, V>`                          |
 | set      | Add item         | `(key: K, value: V) => void`         |
 | get      | Get item         | `(key: K) => V \| undefined`         |
@@ -45,5 +36,5 @@ const [
 ### Params
 
 | Property     | Description                 | Type               | Default |
-| --- | --- | --- | --- |
+| ------------ | --------------------------- | ------------------ | ------- |
 | initialValue | Optional, set default value | `Iterable<[K, V]>` | -       |

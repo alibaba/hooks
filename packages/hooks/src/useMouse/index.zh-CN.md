@@ -14,6 +14,7 @@ demo:
 
 ## 代码演示
 
+<!-- prettier-ignore -->
 <code src="./demo/demo1.tsx"></code>
 <code src="./demo/demo2.tsx"></code>
 
@@ -39,13 +40,13 @@ const state: {
 ### Params
 
 | 参数   | 说明             | 类型                                                        |
-| --- | --- | --- |
+| ------ | ---------------- | ----------------------------------------------------------- |
 | target | DOM 节点或者 Ref | `Element` \| `() => Element` \| `MutableRefObject<Element>` |
 
 ### Result
 
 | 参数        | 说明                           | 类型     |
-| --- | --- | --- |
+| ----------- | ------------------------------ | -------- |
 | screenX     | 距离显示器左侧的距离           | `number` |
 | screenY     | 距离显示器顶部的距离           | `number` |
 | clientX     | 距离当前视窗左侧的距离         | `number` |

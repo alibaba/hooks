@@ -14,6 +14,7 @@ Listen for click events outside the target element.
 
 ## Examples
 
+<!-- prettier-ignore -->
 <code src="./demo/demo1.tsx"></code>
 <code src="./demo/demo2.tsx"></code>
 <code src="./demo/demo3.tsx"></code>
@@ -36,8 +37,8 @@ useClickAway<T extends Event = Event>(
 
 ### Params
 
-| Property    | Description                                    | Type                                       | Default |
+| Property | Description | Type | Default |
 | --- | --- | --- | --- |
-| onClickAway | Trigger Function                               | `(event: T) => void`                       | -       |
-| target      | DOM elements or Ref or Function, support array | `Target` \| `Target[]`                     | -       |
-| eventName   | Set the event to be listened, support array    | `DocumentEventKey` \| `DocumentEventKey[]` | `click` |
+| onClickAway | Trigger Function | `(event: T) => void` | - |
+| target | DOM elements or Ref or Function, support array | `Target` \| `Target[]` | - |
+| eventName | Set the event to be listened, support array | `DocumentEventKey` \| `DocumentEventKey[]` | `click` |

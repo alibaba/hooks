@@ -25,5 +25,5 @@ useUnmount(fn: () => void);
 ### Params
 
 | Property | Description                 | Type         | Default |
-| --- | --- | --- | --- |
+| -------- | --------------------------- | ------------ | ------- |
 | fn       | The function to be executed | `() => void` | -       |

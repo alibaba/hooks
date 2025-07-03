@@ -14,6 +14,7 @@ useSetState works similar to `this.setState` of class component, used to manage 
 
 ## Examples
 
+<!-- prettier-ignore -->
 <code src="./demo/demo1.tsx"></code>
 <code src="./demo/demo2.tsx"></code>
 
@@ -25,13 +26,13 @@ const [state, setState] = useSetState<T>(initialState);
 
 ### Result
 
-| Property | Description          | Type                                                                                      | Default |
+| Property | Description | Type | Default |
 | --- | --- | --- | --- |
-| state    | Current state        | `T`                                                                                       | -       |
-| setState | Update current state | `(state: Partial<T> \| null) => void` \| `((prevState: T) => Partial<T> \| null) => void` | -       |
+| state | Current state | `T` | - |
+| setState | Update current state | `(state: Partial<T> \| null) => void` \| `((prevState: T) => Partial<T> \| null) => void` | - |
 
 ### Params
 
 | Property     | Description   | Type           | Default |
-| --- | --- | --- | --- |
+| ------------ | ------------- | -------------- | ------- |
 | initialState | Initial state | `T \| () => T` | -       |

@@ -36,6 +36,7 @@ const func = useMemoizedFn(() => {
 
 ## 代码演示
 
+<!-- prettier-ignore -->
 <code src="./demo/demo1.tsx"></code>
 <code src="./demo/demo2.tsx"></code>
 
@@ -48,13 +49,13 @@ const memoizedFn = useMemoizedFn<T>(fn: T): T;
 ### Result
 
 | 参数       | 说明                       | 类型                      |
-| --- | --- | --- |
+| ---------- | -------------------------- | ------------------------- |
 | memoizedFn | 引用地址永远不会变化的函数 | `(...args: any[]) => any` |
 
 ### Params
 
 | 参数 | 说明             | 类型                      | 默认值 |
-| --- | --- | --- | --- |
+| ---- | ---------------- | ------------------------- | ------ |
 | fn   | 需要持久化的函数 | `(...args: any[]) => any` | -      |
 
 ## FAQ

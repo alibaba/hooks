@@ -26,12 +26,12 @@ If `options.manual = true` is set, `useRequest` will not be executed by default,
 
 ```tsx | pure
 const { loading, run, runAsync } = useRequest(service, {
-  manual: true
+  manual: true,
 });
 
 <button onClick={run} disabled={loading}>
   {loading ? 'Loading' : 'Edit'}
-</button>
+</button>;
 ```
 
 The difference between `run` and `runAsync` is:
@@ -40,11 +40,13 @@ The difference between `run` and `runAsync` is:
 - `runAsync` is a asynchronous function that returns a `Promise`. If you use `runAsync` to call it, it means you need to catch the exception yourself.
 
   ```ts
-  runAsync().then((data) => {
-    console.log(data);
-  }).catch((error) => {
-    console.log(error);
-  })
+  runAsync()
+    .then((data) => {
+      console.log(data);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
   ```
 
 Next, we will demonstrate the difference between `run` and `runAsync` through the simple scenario of editing the username.
@@ -146,28 +148,28 @@ const {
 
 ### Result
 
-| Property     | Description                                                                                                                                                                             | Type                                                                    |
+| Property | Description | Type |
 | --- | --- | --- |
-| data         | Data returned by service                                                                                                                                                                | `TData` \| `undefined`                                                  |
-| error        | Exception thrown by service                                                                                                                                                             | `Error` \| `undefined`                                                  |
-| loading      | Is the service being executed                                                                                                                                                           | `boolean`                                                               |
-| params       | An array of parameters for the service being executed. For example, you triggered `run(1, 2, 3)`, then params is equal to `[1, 2, 3]`                                                   | `TParams` \| `[]`                                                       |
-| run          | <ul><li> Manually trigger the execution of the service, and the parameters will be passed to the service</li><li>Automatic handling of exceptions, feedback through `onError`</li></ul> | `(...params : TParams) => void`                                         |
-| runAsync     | The usage is the same as `run`, but it returns a Promise, so you need to handle the exception yourself.                                                                                 | `(...params: TParams) => Promise<TData>`                                |
-| refresh      | Use the last params, call `run` again                                                                                                                                                   | `() => void`                                                            |
-| refreshAsync | Use the last params, call `runAsync` again                                                                                                                                              | `() => Promise<TData>`                                                  |
-| mutate       | Mutate `data` directly                                                                                                                                                                  | `(data?: TData \| ((oldData?: TData) => (TData \| undefined))) => void` |
-| cancel       | Ignore the current promise response                                                                                                                                                     | `() => void`                                                            |
+| data | Data returned by service | `TData` \| `undefined` |
+| error | Exception thrown by service | `Error` \| `undefined` |
+| loading | Is the service being executed | `boolean` |
+| params | An array of parameters for the service being executed. For example, you triggered `run(1, 2, 3)`, then params is equal to `[1, 2, 3]` | `TParams` \| `[]` |
+| run | <ul><li> Manually trigger the execution of the service, and the parameters will be passed to the service</li><li>Automatic handling of exceptions, feedback through `onError`</li></ul> | `(...params : TParams) => void` |
+| runAsync | The usage is the same as `run`, but it returns a Promise, so you need to handle the exception yourself. | `(...params: TParams) => Promise<TData>` |
+| refresh | Use the last params, call `run` again | `() => void` |
+| refreshAsync | Use the last params, call `runAsync` again | `() => Promise<TData>` |
+| mutate | Mutate `data` directly | `(data?: TData \| ((oldData?: TData) => (TData \| undefined))) => void` |
+| cancel | Ignore the current promise response | `() => void` |
 
 ### Options
 
-| Property      | Description                                                                                                                                                                                                      | Type                                                 | Default |
+| Property | Description | Type | Default |
 | --- | --- | --- | --- |
-| manual        | <ul><li> The default is `false`. That is, the service is automatically executed during initialization. </li><li>If set to `true`, you need to manually call `run` or `runAsync` to trigger execution. </li></ul> | `boolean`                                            | `false` |
-| defaultParams | The parameters passed to the service at the first default execution                                                                                                                                              | `TParams`                                            | -       |
-| onBefore      | Triggered before service execution                                                                                                                                                                               | `(params: TParams) => void`                          | -       |
-| onSuccess     | Triggered when service resolve                                                                                                                                                                                   | `(data: TData, params: TParams) => void`             | -       |
-| onError       | Triggered when service reject                                                                                                                                                                                    | `(e: Error, params: TParams) => void`                | -       |
-| onFinally     | Triggered when service execution is complete                                                                                                                                                                     | `(params: TParams, data?: TData, e?: Error) => void` | -       |
+| manual | <ul><li> The default is `false`. That is, the service is automatically executed during initialization. </li><li>If set to `true`, you need to manually call `run` or `runAsync` to trigger execution. </li></ul> | `boolean` | `false` |
+| defaultParams | The parameters passed to the service at the first default execution | `TParams` | - |
+| onBefore | Triggered before service execution | `(params: TParams) => void` | - |
+| onSuccess | Triggered when service resolve | `(data: TData, params: TParams) => void` | - |
+| onError | Triggered when service reject | `(e: Error, params: TParams) => void` | - |
+| onFinally | Triggered when service execution is complete | `(params: TParams, data?: TData, e?: Error) => void` | - |
 
 Above we have introduced the most basic functionalities of useRequest, and then we will introduce some more advanced functionalities.

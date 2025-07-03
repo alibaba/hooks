@@ -14,6 +14,7 @@ demo:
 
 ## 代码演示
 
+<!-- prettier-ignore -->
 <code src="./demo/demo1.tsx"></code>
 <code src="./demo/demo2.tsx"></code>
 
@@ -26,7 +27,7 @@ const [value, { onChange, reset }] = useEventTarget<T, U>(Options<T, U>);
 ### Result
 
 | 参数     | 说明                         | 类型                                    |
-| --- | --- | --- |
+| -------- | ---------------------------- | --------------------------------------- |
 | value    | 表单控件的值                 | `T`                                     |
 | onChange | 表单控件值发生变化时候的回调 | `(e: { target: { value: T } }) => void` |
 | reset    | 重置函数                     | `() => void`                            |
@@ -34,6 +35,6 @@ const [value, { onChange, reset }] = useEventTarget<T, U>(Options<T, U>);
 ### Options
 
 | 参数         | 说明                         | 类型              | 默认值 |
-| --- | --- | --- | --- |
+| ------------ | ---------------------------- | ----------------- | ------ |
 | initialValue | 可选项, 初始值               | `T`               | -      |
 | transformer  | 可选项，可自定义回调值的转化 | `(value: U) => T` | -      |

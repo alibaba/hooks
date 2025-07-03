@@ -116,21 +116,21 @@ const {
 
 ### Result
 
-| 参数              | 说明                                                          | 类型                  |
+| 参数 | 说明 | 类型 |
 | --- | --- | --- |
-| tableProps        | `Table` 组件需要的数据，直接透传给 `Table` 组件即可           | -                     |
-| paginationProps   | `Pagination` 组件需要的数据，直接透传给 `Pagination` 组件即可 | -                     |
-| search.type       | 当前表单类型                                                  | `simple` \| `advance` |
-| search.changeType | 切换表单类型                                                  | `() => void`          |
-| search.submit     | 提交表单                                                      | `() => void`          |
-| search.reset      | 重置当前表单                                                  | `() => void`          |
+| tableProps | `Table` 组件需要的数据，直接透传给 `Table` 组件即可 | - |
+| paginationProps | `Pagination` 组件需要的数据，直接透传给 `Pagination` 组件即可 | - |
+| search.type | 当前表单类型 | `simple` \| `advance` |
+| search.changeType | 切换表单类型 | `() => void` |
+| search.submit | 提交表单 | `() => void` |
+| search.reset | 重置当前表单 | `() => void` |
 
 ### Params
 
-| 参数            | 说明                                                          | 类型                     | 默认值   |
+| 参数 | 说明 | 类型 | 默认值 |
 | --- | --- | --- | --- |
-| field           | `Form` 实例                                                   | -                        | -        |
-| defaultType     | 默认表单类型                                                  | `simple` \| `advance`    | `simple` |
-| defaultParams   | 默认参数，第一项为分页数据，第二项为表单数据                  | `[pagination, formData]` | -        |
-| defaultPageSize | 默认分页数量                                                  | `number`                 | `10`     |
-| refreshDeps     | `refreshDeps` 变化，会重置 current 到第一页，并重新发起请求。 | `React.DependencyList`   | `[]`     |
+| field | `Form` 实例 | - | - |
+| defaultType | 默认表单类型 | `simple` \| `advance` | `simple` |
+| defaultParams | 默认参数，第一项为分页数据，第二项为表单数据 | `[pagination, formData]` | - |
+| defaultPageSize | 默认分页数量 | `number` | `10` |
+| refreshDeps | `refreshDeps` 变化，会重置 current 到第一页，并重新发起请求。 | `React.DependencyList` | `[]` |
