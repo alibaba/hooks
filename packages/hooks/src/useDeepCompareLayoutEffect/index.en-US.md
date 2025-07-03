@@ -1,17 +1,20 @@
 ---
-nav:
-  path: /hooks
+title: useDeepCompareLayoutEffect
+nav: Hooks
+group:
+  title: Effect
+  order: 5
+order: 9
+toc: content
+demo:
+  cols: 2
 ---
-
-# useDeepCompareLayoutEffect
 
 Usage is the same as `useLayoutEffect`, but deps are compared with [react-fast-compare](https://www.npmjs.com/package/react-fast-compare).
 
 ## Examples
 
-### Default usage
-
-<code src="./demo/demo1.tsx" />
+<code src="./demo/demo1.tsx"></code>
 
 ## API
 

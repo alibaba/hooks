@@ -1,9 +1,14 @@
 ---
-nav:
-  path: /hooks
+title: useInfiniteScroll
+nav: Hooks
+group:
+  title: Scene
+  order: 2
+order: 3
+toc: content
+demo:
+  cols: 2
 ---
-
-# useInfiniteScroll
 
 useInfiniteScroll 封装了常见的无限滚动逻辑。
 
@@ -22,13 +27,13 @@ useInfiniteScroll 的第一个参数 `service` 是一个异步函数，对这个
 
 第一个例子我们演示最基本的无限滚动写法。
 
-<code src="./demo/default.tsx" />
+<code src="./demo/default.tsx"></code>
 
 ## 分页
 
 在数据固定场景下，我们有时候会用 `page` 和 `pageSize` 来请求新的分页数据。
 
-<code src="./demo/pagination.tsx" />
+<code src="./demo/pagination.tsx"></code>
 
 ## 滚动自动加载
 
@@ -38,23 +43,21 @@ useInfiniteScroll 的第一个参数 `service` 是一个异步函数，对这个
 - `options.isNoMore` 判断是不是没有更多数据了
 - `options.direction` 滚动的方向，默认为向下滚动
 
-向下滚动示例
-<code src="./demo/scroll.tsx" />
+向下滚动示例：<code src="./demo/scroll.tsx"></code>
 
-向上滚动示例
-<code src="./demo/scrollTop.tsx" />
+向上滚动示例：<code src="./demo/scrollTop.tsx"></code>
 
 ## 数据重置
 
 通过 `reload` 即可实现数据重置，下面示例我们演示在 `filter` 变化后，重置数据到第一页。
 
-<code src="./demo/reload.tsx" />
+<code src="./demo/reload.tsx"></code>
 
 以上代码可以通过 `reloadDeps` 语法糖实现，当 `reloadDeps` 变化时，会自动触发 `reload`。
 
 ```ts
 const result = useInfiniteScroll(service, {
-  reloadDeps: [keyword]
+  reloadDeps: [keyword],
 });
 ```
 
@@ -62,7 +65,7 @@ const result = useInfiniteScroll(service, {
 
 通过 `mutate`，我们可以直接修改当前 `data`。下面示例演示了删除某条数据。
 
-<code src="./demo/mutate.tsx" />
+<code src="./demo/mutate.tsx"></code>
 
 ## API
 
@@ -100,31 +103,31 @@ const {
 
 ### Result
 
-| 参数          | 说明                                                                       | 类型                     |
-| ------------- | -------------------------------------------------------------------------- | ------------------------ |
-| data          | service 返回的数据，其中的 `list` 属性为聚合后数据                         | `TData` \| `undefined`   |
-| loading       | 是否正在进行首次请求                                                       | `boolean`                |
-| loadingMore   | 是否正在进行更多数据请求                                                   | `boolean`                |
-| noMore        | 是否没有更多数据了，配置 `options.isNoMore` 后生效                         | `boolean`                |
-| error         | 请求错误消息                                                               | `Error`                  |
-| loadMore      | 加载更多数据，会自动捕获异常，通过 `options.onError` 处理                  | `() => void`             |
-| loadMoreAsync | 加载更多数据，与 `loadMore` 行为一致，但返回的是 Promise，需要自行处理异常 | `() => Promise<TData>`   |
-| reload        | 加载第一页数据，会自动捕获异常，通过 `options.onError` 处理                | `() => void`             |
-| reloadAsync   | 加载第一页数据，与 `reload` 行为一致，但返回的是 Promise，需要自行处理异常 | `() => Promise<TData>`   |
-| mutate        | 直接修改 `data`                                                            | `(data?: TData) => void` |
-| cancel        | 忽略当前 Promise 的响应                                                    | `() => void`             |
+| 参数 | 说明 | 类型 |
+| --- | --- | --- |
+| data | service 返回的数据，其中的 `list` 属性为聚合后数据 | `TData` \| `undefined` |
+| loading | 是否正在进行首次请求 | `boolean` |
+| loadingMore | 是否正在进行更多数据请求 | `boolean` |
+| noMore | 是否没有更多数据了，配置 `options.isNoMore` 后生效 | `boolean` |
+| error | 请求错误消息 | `Error` |
+| loadMore | 加载更多数据，会自动捕获异常，通过 `options.onError` 处理 | `() => void` |
+| loadMoreAsync | 加载更多数据，与 `loadMore` 行为一致，但返回的是 Promise，需要自行处理异常 | `() => Promise<TData>` |
+| reload | 加载第一页数据，会自动捕获异常，通过 `options.onError` 处理 | `() => void` |
+| reloadAsync | 加载第一页数据，与 `reload` 行为一致，但返回的是 Promise，需要自行处理异常 | `() => Promise<TData>` |
+| mutate | 直接修改 `data` | `(data?: TData) => void` |
+| cancel | 忽略当前 Promise 的响应 | `() => void` |
 
 ### Options
 
-| 参数       | 说明                                                                                                                                                             | 类型                                                        | 默认值   |
-| ---------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------- | -------- |
-| target     | 父级容器，如果存在，则在滚动到底部时，自动触发 `loadMore`。需要配合 `isNoMore` 使用，以便知道什么时候到最后一页了。 **当 target 为 document 时，定义为整个视口** | `() => Element` \| `Element` \| `MutableRefObject<Element>` | -        |
-| isNoMore   | 是否有最后一页的判断逻辑，入参为当前聚合后的 `data`                                                                                                              | `(data?: TData) => boolean`                                 | -        |
-| threshold  | 下拉自动加载，距离底部距离阈值                                                                                                                                   | `number`                                                    | `100`    |
-| direction  | 滚动的方向                                                                                                                                                       | `bottom` \| `top`                                           | `bottom` |
-| reloadDeps | 变化后，会自动触发 `reload`                                                                                                                                      | `any[]`                                                     | -        |
-| manual     | <ul><li> 默认 `false`。 即在初始化时自动执行 service。</li><li>如果设置为 `true`，则需要手动调用 `reload` 或 `reloadAsync` 触发执行。 </li></ul>                 | `boolean`                                                   | `false`  |
-| onBefore   | service 执行前触发                                                                                                                                               | `() => void`                                                | -        |
-| onSuccess  | service resolve 时触发                                                                                                                                           | `(data: TData) => void`                                     | -        |
-| onError    | service reject 时触发                                                                                                                                            | `(e: Error) => void`                                        | -        |
-| onFinally  | service 执行完成时触发                                                                                                                                           | `(data?: TData, e?: Error) => void`                         | -        |
+| 参数 | 说明 | 类型 | 默认值 |
+| --- | --- | --- | --- |
+| target | 父级容器，如果存在，则在滚动到底部时，自动触发 `loadMore`。需要配合 `isNoMore` 使用，以便知道什么时候到最后一页了。 **当 target 为 document 时，定义为整个视口** | `() => Element` \| `Element` \| `MutableRefObject<Element>` | - |
+| isNoMore | 是否有最后一页的判断逻辑，入参为当前聚合后的 `data` | `(data?: TData) => boolean` | - |
+| threshold | 下拉自动加载，距离底部距离阈值 | `number` | `100` |
+| direction | 滚动的方向 | `bottom` \| `top` | `bottom` |
+| reloadDeps | 变化后，会自动触发 `reload` | `any[]` | - |
+| manual | <ul><li> 默认 `false`。 即在初始化时自动执行 service。</li><li>如果设置为 `true`，则需要手动调用 `reload` 或 `reloadAsync` 触发执行。 </li></ul> | `boolean` | `false` |
+| onBefore | service 执行前触发 | `() => void` | - |
+| onSuccess | service resolve 时触发 | `(data: TData) => void` | - |
+| onError | service reject 时触发 | `(e: Error) => void` | - |
+| onFinally | service 执行完成时触发 | `(data?: TData, e?: Error) => void` | - |

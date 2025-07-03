@@ -11,6 +11,9 @@ coverage
 .DS_Store
 .umi
 .umi-production
+.dumi/tmp
+.dumi/tmp-test
+.dumi/tmp-production
 page
 lerna-debug.log
 tsconfig.tsbuildinfo

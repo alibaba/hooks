@@ -1,41 +1,39 @@
 ---
-nav:
-  path: /hooks
+title: useFocusWithin
+nav: Hooks
+group:
+  title: Dom
+  order: 6
+order: 19
+toc: content
+demo:
+  cols: 2
 ---
-
-# useFocusWithin
 
 监听当前焦点是否在某个区域之内，同 css 属性 [:focus-within](https://developer.mozilla.org/en-US/docs/Web/CSS/:focus-within)。
 
 ## 代码演示
 
-### 基础用法
-
-<code src="./demo/demo1.tsx" />
-
-### 传入 DOM 元素
-
-<code src="./demo/demo2.tsx" />
+<!-- prettier-ignore -->
+<code src="./demo/demo1.tsx"></code>
+<code src="./demo/demo2.tsx"></code>
 
 ## API
 
 ```typescript
-const isFocusWithin = useFocusWithin(
-  target,
-  {
-   onFocus,
-   onBlur,
-   onChange
-  }
-);
+const isFocusWithin = useFocusWithin(target, {
+  onFocus,
+  onBlur,
+  onChange,
+});
 ```
 
 ### Params
 
-| 参数    | 说明                  | 类型                                                        | 默认值 |
-| ------- | --------------------- | ----------------------------------------------------------- | ------ |
-| target  | DOM 节点或者 Ref 对象 | `() => Element` \| `Element` \| `MutableRefObject<Element>` | -      |
-| options | 额外的配置项          | `Options`                                                   | -      |
+| 参数 | 说明 | 类型 | 默认值 |
+| --- | --- | --- | --- |
+| target | DOM 节点或者 Ref 对象 | `() => Element` \| `Element` \| `MutableRefObject<Element>` | - |
+| options | 额外的配置项 | `Options` | - |
 
 ### Options
 

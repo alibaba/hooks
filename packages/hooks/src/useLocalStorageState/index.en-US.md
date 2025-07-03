@@ -1,29 +1,24 @@
 ---
-nav:
-  path: /hooks
+title: useLocalStorageState
+nav: Hooks
+group:
+  title: State
+  order: 4
+order: 6
+toc: content
+demo:
+  cols: 2
 ---
-
-# useLocalStorageState
 
 A Hook that store state into localStorage.
 
 ## Examples
 
-### Store state into localStorage
-
-<code src="./demo/demo1.tsx" />
-
-### Store complex types of data
-
-<code src="./demo/demo2.tsx" />
-
-### Custom serialization and deserialization functions
-
-<code src="./demo/demo3.tsx" />
-
-### Sync state with localStorage
-
-<code src="./demo/demo4.tsx" />
+<!-- prettier-ignore -->
+<code src="./demo/demo1.tsx"></code>
+<code src="./demo/demo2.tsx"></code>
+<code src="./demo/demo3.tsx"></code>
+<code src="./demo/demo4.tsx"></code>
 
 ## API
 
@@ -55,13 +50,13 @@ const [state, setState] = useLocalStorageState<T>(
 
 ### Options
 
-| Property            | Description                                                                                                                                                                                             | Type                       | Default                       |
-| ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------- | ----------------------------- |
-| defaultValue        | Default value                                                                                                                                                                                           | `any \| (() => any)`       | -                             |
-| listenStorageChange | Whether to listen storage changes. If `true`, when the stored value changes, all `useLocalStorageState` with the same `key` will synchronize their states, including different tabs of the same browser | `boolean`                  | `false`                       |
-| serializer          | Custom serialization method                                                                                                                                                                             | `(value: any) => string`   | `JSON.stringify`              |
-| deserializer        | Custom deserialization method                                                                                                                                                                           | `(value: string) => any`   | `JSON.parse`                  |
-| onError             | On error callback                                                                                                                                                                                       | `(error: unknown) => void` | `(e) => { console.error(e) }` |
+| Property | Description | Type | Default |
+| --- | --- | --- | --- |
+| defaultValue | Default value | `any \| (() => any)` | - |
+| listenStorageChange | Whether to listen storage changes. If `true`, when the stored value changes, all `useLocalStorageState` with the same `key` will synchronize their states, including different tabs of the same browser | `boolean` | `false` |
+| serializer | Custom serialization method | `(value: any) => string` | `JSON.stringify` |
+| deserializer | Custom deserialization method | `(value: string) => any` | `JSON.parse` |
+| onError | On error callback | `(error: unknown) => void` | `(e) => { console.error(e) }` |
 
 ## Remark
 

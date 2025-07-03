@@ -1,14 +1,14 @@
 /**
  * title: Prevent duplicated submits
- * desc: Before the `submit` function finishes, the other click actions will be ignored.
+ * description: Before the `submit` function finishes, the other click actions will be ignored.
  *
  * title.zh-CN: 防止重复提交
- * desc.zh-CN: 在 `submit` 函数执行完成前，其余的点击动作都会被忽略。
+ * description.zh-CN: 在 `submit` 函数执行完成前，其余的点击动作都会被忽略。
  */
 
-import { useLockFn } from 'ahooks';
-import { message } from 'antd';
 import React, { useState } from 'react';
+import { Button, message } from 'antd';
+import { useLockFn } from 'ahooks';
 
 function mockApiRequest() {
   return new Promise<void>((resolve) => {
@@ -30,8 +30,10 @@ export default () => {
 
   return (
     <>
-      <p>Submit count: {count}</p>
-      <button onClick={submit}>Submit</button>
+      <p>submit count: {count}</p>
+      <Button style={{ marginTop: 8 }} onClick={submit}>
+        Submit
+      </Button>
     </>
   );
 };

@@ -1,21 +1,22 @@
 ---
-nav:
-  path: /hooks
+title: useToggle
+nav: Hooks
+group:
+  title: State
+  order: 4
+order: 3
+toc: content
+demo:
+  cols: 2
 ---
-
-# useToggle
 
 A hook that toggle states.
 
 ## Examples
 
-### Default usage
-
-<code src="./demo/demo1.tsx" />
-
-### Advanced usage
-
-<code src="./demo/demo2.tsx" />
+<!-- prettier-ignore -->
+<code src="./demo/demo1.tsx"></code>
+<code src="./demo/demo2.tsx"></code>
 
 ## API
 
@@ -43,9 +44,9 @@ const [state, { toggle, set, setLeft, setRight }] = useToggle<T, U>(defaultValue
 
 ### Actions
 
-| Property | Description                                                                                                   | Type                      |
-| -------- | ------------------------------------------------------------------------------------------------------------- | ------------------------- |
-| toggle   | Toggle state                                                                                                  | `() => void`              |
-| set      | Set state                                                                                                     | `(state: T \| U) => void` |
-| setLeft  | Set state to `defaultValue`                                                                                   | `() => void`              |
-| setRight | Set state to `reverseValue` if `reverseValue` is available. Otherwise set it to the reverse of `defaultValue` | `() => void`              |
+| Property | Description | Type |
+| --- | --- | --- |
+| toggle | Toggle state | `() => void` |
+| set | Set state | `(state: T \| U) => void` |
+| setLeft | Set state to `defaultValue` | `() => void` |
+| setRight | Set state to `reverseValue` if `reverseValue` is available. Otherwise set it to the reverse of `defaultValue` | `() => void` |

@@ -1,12 +1,13 @@
 /**
  * title: Default usage
- * desc: Automatically merge object.
+ * description: Automatically merge object.
  *
  * title.zh-CN: 基础用法
- * desc.zh-CN: 自动合并对象。
+ * description.zh-CN: 自动合并对象。
  */
 
 import React from 'react';
+import { Button, Space } from 'antd';
 import { useSetState } from 'ahooks';
 
 interface State {
@@ -20,16 +21,12 @@ export default () => {
   });
 
   return (
-    <div>
+    <>
+      <Space style={{ marginBottom: 8 }} wrap>
+        <Button onClick={() => setState({ hello: 'world' })}>Set hello</Button>
+        <Button onClick={() => setState({ foo: 'bar' })}>Set foo</Button>
+      </Space>
       <pre>{JSON.stringify(state, null, 2)}</pre>
-      <p>
-        <button type="button" onClick={() => setState({ hello: 'world' })}>
-          set hello
-        </button>
-        <button type="button" onClick={() => setState({ foo: 'bar' })} style={{ margin: '0 8px' }}>
-          set foo
-        </button>
-      </p>
-    </div>
+    </>
   );
 };

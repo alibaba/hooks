@@ -1,29 +1,24 @@
 ---
-nav:
-  path: /hooks
+title: useFullscreen
+nav: Hooks
+group:
+  title: Dom
+  order: 6
+order: 9
+toc: content
+demo:
+  cols: 2
 ---
-
-# useFullscreen
 
 manages DOM full screen.
 
 ## Examples
 
-### Default usage
-
-<code src="./demo/demo1.tsx" />
-
-### Image full screen
-
-<code src="./demo/demo2.tsx" />
-
-### Page full screen
-
-<code src="./demo/demo3.tsx" />
-
-### Coexist with other full screen operations
-
-<code src="./demo/demo4.tsx" />
+<!-- prettier-ignore -->
+<code src="./demo/demo1.tsx"></code>
+<code src="./demo/demo2.tsx"></code>
+<code src="./demo/demo3.tsx"></code>
+<code src="./demo/demo4.tsx"></code>
 
 ## API
 
@@ -41,17 +36,17 @@ const [isFullscreen, {
 
 ### Params
 
-| Property | Description        | Type                                                        | Default |
-| -------- | ------------------ | ----------------------------------------------------------- | ------- |
-| target   | DOM element or ref | `Element` \| `() => Element` \| `MutableRefObject<Element>` | -       |
-| options  | Setting            | `Options`                                                   | -       |
+| Property | Description | Type | Default |
+| --- | --- | --- | --- |
+| target | DOM element or ref | `Element` \| `() => Element` \| `MutableRefObject<Element>` | - |
+| options | Setting | `Options` | - |
 
 ### Options
 
-| Property       | Description                                                                                                                   | Type                                                   | Default |
-| -------------- | ----------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------ | ------- |
-| onExit         | Exit full screen trigger                                                                                                      | `() => void`                                           | -       |
-| onEnter        | Enter full screen trigger                                                                                                     | `() => void`                                           | -       |
+| Property | Description | Type | Default |
+| --- | --- | --- | --- |
+| onExit | Exit full screen trigger | `() => void` | - |
+| onEnter | Enter full screen trigger | `() => void` | - |
 | pageFullscreen | Whether to enable full screen of page. If its type is object, it can set `className` and `z-index` of the full screen element | `boolean` \| `{ className?: string, zIndex?: number }` | `false` |
 
 ### Result

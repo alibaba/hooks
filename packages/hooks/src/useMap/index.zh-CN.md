@@ -1,29 +1,25 @@
 ---
-nav:
-  path: /hooks
+title: useMap
+nav: Hooks
+group:
+  title: State
+  order: 4
+order: 10
+toc: content
+demo:
+  cols: 2
 ---
-
-# useMap
 
 管理 Map 类型状态的 Hook。
 
 ## 代码演示
 
-<code src="./demo/demo1.tsx" />
+<code src="./demo/demo1.tsx"></code>
 
 ## API
 
 ```typescript
-const [
-  map,
-  {
-    set,
-    setAll,
-    remove,
-    reset,
-    get
-  }
-] = useMap<K, V>(initialValue);
+const [map, { set, setAll, remove, reset, get }] = useMap<K, V>(initialValue);
 ```
 
 ### Result

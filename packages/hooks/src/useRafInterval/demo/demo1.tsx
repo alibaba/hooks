@@ -1,9 +1,9 @@
 /**
  * title: Basic usage
- * desc: Execute once per 1000ms.
+ * description: Execute once per 1000ms.
  *
  * title.zh-CN: 基础用法
- * desc.zh-CN: 每1000ms，执行一次
+ * description.zh-CN: 每 1000ms，执行一次。
  */
 
 import React, { useState } from 'react';

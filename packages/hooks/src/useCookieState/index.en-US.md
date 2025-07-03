@@ -1,25 +1,23 @@
 ---
-nav:
-  path: /hooks
+title: useCookieState
+nav: Hooks
+group:
+  title: State
+  order: 4
+order: 5
+toc: content
+demo:
+  cols: 2
 ---
-
-# useCookieState
 
 A Hook that store state into Cookie.
 
 ## Examples
 
-### Store state into Cookie
-
-<code src="./demo/demo1.tsx" />
-
-### SetState can receive function
-
-<code src="./demo/demo2.tsx" />
-
-### Use the option property to configure Cookie
-
-<code src="./demo/demo3.tsx" />
+<!-- prettier-ignore -->
+<code src="./demo/demo1.tsx"></code>
+<code src="./demo/demo2.tsx"></code>
+<code src="./demo/demo3.tsx"></code>
 
 ## API
 
@@ -59,13 +57,13 @@ setState can update cookie options, which will be merged with the options set by
 
 ### Options
 
-| Property     | Description                                                                                | Type                                                       | Default     |
-| ------------ | ------------------------------------------------------------------------------------------ | ---------------------------------------------------------- | ----------- |
-| defaultValue | Optional. Default value, but not store to Cookie                                           | `string` \| `undefined` \| `(() => (string \| undefined))` | `undefined` |
-| expires      | Optional. Set Cookie expiration time                                                       | `number` \| `Date`                                         | -           |
-| path         | Optional. Specify available paths                                                          | `string`                                                   | `/`         |
-| domain       | Optional. Specify available domain. Default creation domain                                | `string`                                                   | -           |
-| secure       | Optional. Specify whether the Cookie can only be transmitted over secure protocol as https | `boolean`                                                  | `false`     |
-| sameSite     | Optional. Specify whether the browser can send this Cookie along with cross-site requests  | `strict` \| `lax` \| `none`                                | -           |
+| Property | Description | Type | Default |
+| --- | --- | --- | --- |
+| defaultValue | Optional. Default value, but not store to Cookie | `string` \| `undefined` \| `(() => (string \| undefined))` | `undefined` |
+| expires | Optional. Set Cookie expiration time | `number` \| `Date` | - |
+| path | Optional. Specify available paths | `string` | `/` |
+| domain | Optional. Specify available domain. Default creation domain | `string` | - |
+| secure | Optional. Specify whether the Cookie can only be transmitted over secure protocol as https | `boolean` | `false` |
+| sameSite | Optional. Specify whether the browser can send this Cookie along with cross-site requests | `strict` \| `lax` \| `none` | - |
 
 Options is same as [js-cookie attributes](https://github.com/js-cookie/js-cookie#cookie-attributes).

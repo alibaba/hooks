@@ -1,17 +1,20 @@
 ---
-nav:
-  path: /hooks
+title: useUnmount
+nav: Hooks
+group:
+  title: LifeCycle
+  order: 3
+order: 2
+toc: content
+demo:
+  cols: 2
 ---
-
-# useUnmount
 
 在组件卸载（unmount）时执行的 Hook。
 
 ## 代码演示
 
-### 基础用法
-
-<code src="./demo/demo1.tsx" />
+<code src="./demo/demo1.tsx"></code>
 
 ## API
 

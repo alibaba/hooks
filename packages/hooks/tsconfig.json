@@ -4,7 +4,12 @@
     "rootDir": "src",
     "outDir": "lib",
     "composite": true,
-    "declaration": true
+    "declaration": true,
+    "paths": {
+      "@@/*": [".dumi/tmp/*"],
+      "ahooks": ["packages/hooks/src/index.ts"],
+      "ahooks/es/*": ["packages/hooks/src/*"]
+    }
   },
   "include": ["src"]
 }

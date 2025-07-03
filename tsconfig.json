@@ -7,10 +7,6 @@
     "downlevelIteration": true,
     "sourceMap": true,
     "baseUrl": ".",
-    "paths": {
-      "@/*": ["src/*"],
-      "@ahooksjs/use-url-state": ["./packages/use-url-state/src/index.ts"]
-    },
     "allowJs": true,
     "allowSyntheticDefaultImports": true,
     "skipLibCheck": true,

@@ -1,7 +1,7 @@
 import React from 'react';
-import { Table, Pagination, Field, Form, Input, Select, Icon } from '@alifd/next';
-import { useFusionTable } from 'ahooks';
 import ReactJson from 'react-json-view';
+import { Table, Pagination, Field, Form, Input, Icon } from '@alifd/next';
+import { useFusionTable } from 'ahooks';
 
 interface Item {
   name: {
@@ -17,7 +17,7 @@ interface Result {
   list: Item[];
 }
 
-const getTableData = ({ current, pageSize }, formData: Object): Promise<Result> => {
+const getTableData = ({ current, pageSize }, formData: object): Promise<Result> => {
   let query = `page=${current}&size=${pageSize}`;
   Object.entries(formData).forEach(([key, value]) => {
     if (value) {
@@ -48,11 +48,11 @@ const AppList = () => {
         style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end' }}
         field={field}
       >
-        <Form.Item label=" ">
+        <Form.Item label=' '>
           <Input
-            name="name"
-            innerAfter={<Icon type="search" size="xs" onClick={submit} style={{ margin: 4 }} />}
-            placeholder="enter name"
+            name='name'
+            innerAfter={<Icon type='search' size='xs' onClick={submit} style={{ margin: 4 }} />}
+            placeholder='enter name'
             onPressEnter={submit}
             {...field.init('name', { rules: [{ required: true }] })}
           />
@@ -64,11 +64,11 @@ const AppList = () => {
   return (
     <>
       {searchForm}
-      <Table {...tableProps} primaryKey="email">
-        <Table.Column title="name" dataIndex="name.last" width={140} />
-        <Table.Column title="email" dataIndex="email" width={500} />
-        <Table.Column title="phone" dataIndex="phone" width={500} />
-        <Table.Column title="gender" dataIndex="gender" width={500} />
+      <Table {...tableProps} primaryKey='email'>
+        <Table.Column title='name' dataIndex='name.last' width={140} />
+        <Table.Column title='email' dataIndex='email' width={500} />
+        <Table.Column title='phone' dataIndex='phone' width={500} />
+        <Table.Column title='gender' dataIndex='gender' width={500} />
       </Table>
       <Pagination style={{ marginTop: 16 }} {...paginationProps} />
       <div style={{ background: '#f5f5f5', padding: 8, marginTop: 16 }}>

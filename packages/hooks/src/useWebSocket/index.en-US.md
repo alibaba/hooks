@@ -1,17 +1,20 @@
 ---
-nav:
-  path: /hooks
+title: useWebSocket
+nav: Hooks
+group:
+  title: Scene
+  order: 2
+order: 13
+toc: content
+demo:
+  cols: 2
 ---
-
-# useWebSocket
 
 A hook for WebSocket.
 
 ## Examples
 
-### Default usage
-
-<code src="./demo/demo1.tsx" />
+<code src="./demo/demo1.tsx"></code>
 
 ## API
 
@@ -52,26 +55,26 @@ useWebSocket(socketUrl: string, options?: Options): Result;
 | socketUrl | Required, webSocket url        | `string`  | -       |
 | options   | connect the configuration item | `Options` | -       |
 
-#### Options
+### Options
 
-| Options Property  | Description                        | Type                                                                   | Default |
-| ----------------- | ---------------------------------- | ---------------------------------------------------------------------- | ------- |
-| onOpen            | The webSocket connect callback     | `(event: WebSocketEventMap['open'], instance: WebSocket) => void`      | -       |
-| onClose           | WebSocket close callback           | `(event: WebSocketEventMap['close'], instance: WebSocket) => void`     | -       |
-| onMessage         | WebSocket receive message callback | `(message: WebSocketEventMap['message'], instance: WebSocket) => void` | -       |
-| onError           | WebSocket error callback           | `(event: WebSocketEventMap['error'], instance: WebSocket) => void`     | -       |
-| reconnectLimit    | Retry times                        | `number`                                                               | `3`     |
-| reconnectInterval | Retry interval(ms)                 | `number`                                                               | `3000`  |
-| manual            | Manually starts connection         | `boolean`                                                              | `false` |
-| protocols         | Sub protocols                      | `string` \| `string[]`                                                 | -       |
+| Options Property | Description | Type | Default |
+| --- | --- | --- | --- |
+| onOpen | The webSocket connect callback | `(event: WebSocketEventMap['open'], instance: WebSocket) => void` | - |
+| onClose | WebSocket close callback | `(event: WebSocketEventMap['close'], instance: WebSocket) => void` | - |
+| onMessage | WebSocket receive message callback | `(message: WebSocketEventMap['message'], instance: WebSocket) => void` | - |
+| onError | WebSocket error callback | `(event: WebSocketEventMap['error'], instance: WebSocket) => void` | - |
+| reconnectLimit | Retry times | `number` | `3` |
+| reconnectInterval | Retry interval(ms) | `number` | `3000` |
+| manual | Manually starts connection | `boolean` | `false` |
+| protocols | Sub protocols | `string` \| `string[]` | - |
 
 ### Result
 
-| Options Property | Description                                                                            | Type                           |
-| ---------------- | -------------------------------------------------------------------------------------- | ------------------------------ |
-| latestMessage    | Latest message                                                                         | `WebSocketEventMap['message']` |
-| sendMessage      | Send message function                                                                  | `WebSocket['send']`            |
-| disconnect       | Disconnect webSocket manually                                                          | `() => void`                   |
-| connect          | Connect webSocket manually. If already connected, close the current one and reconnect. | `() => void`                   |
-| readyState       | Current webSocket connection status                                                    | `ReadyState`                   |
-| webSocketIns     | WebSocket instance                                                                     | `WebSocket`                    |
+| Options Property | Description | Type |
+| --- | --- | --- |
+| latestMessage | Latest message | `WebSocketEventMap['message']` |
+| sendMessage | Send message function | `WebSocket['send']` |
+| disconnect | Disconnect webSocket manually | `() => void` |
+| connect | Connect webSocket manually. If already connected, close the current one and reconnect. | `() => void` |
+| readyState | Current webSocket connection status | `ReadyState` |
+| webSocketIns | WebSocket instance | `WebSocket` |

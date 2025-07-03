@@ -1,4 +1,5 @@
 import React from 'react';
+import { Button } from 'antd';
 import { useInfiniteScroll } from 'ahooks';
 
 interface Result {
@@ -45,14 +46,12 @@ export default () => {
           ))}
         </div>
       )}
-
       <div style={{ marginTop: 8 }}>
         {hasMore && (
-          <button type="button" onClick={loadMore} disabled={loadingMore}>
+          <Button onClick={loadMore} disabled={loadingMore}>
             {loadingMore ? 'Loading more...' : 'Click to load more'}
-          </button>
+          </Button>
         )}
-
         {!hasMore && <span>No more data</span>}
       </div>
     </div>

@@ -1,15 +1,18 @@
 /**
- * title: TodoList
- * desc: Redo and undo operations
+ * title: Todo List
+ * description: Redo and undo operations.
  *
  * title.zh-CN: 可撤销恢复的 Todo List
- * desc.zh-CN: 可以实现撤销恢复等操作。
+ * description.zh-CN: 可以实现撤销恢复等操作。
  */
 
-import { useHistoryTravel } from 'ahooks';
 import React, { useState } from 'react';
+import { Button, Input, InputNumber, Space } from 'antd';
+import { useHistoryTravel } from 'ahooks';
 
 export default () => {
+  const [inputValue, setInputValue] = useState('');
+  const [step, setStep] = useState(0);
   const {
     value = [],
     setValue,
@@ -20,9 +23,6 @@ export default () => {
     go,
     reset,
   } = useHistoryTravel(['do homework']);
-
-  const [inputValue, setInputValue] = useState('');
-  const [step, setStep] = useState(-1);
 
   const onAdd = () => {
     setValue([...value, inputValue]);
@@ -41,53 +41,51 @@ export default () => {
   };
 
   return (
-    <div>
-      <div style={{ border: '1px solid #ebedf1', padding: 16, marginBottom: 16 }}>
-        <h3>TODO List</h3>
-        <ul>
+    <Space direction='vertical'>
+      <Space wrap>
+        <Input
+          style={{ width: 200 }}
+          value={inputValue}
+          onChange={(e) => setInputValue(e.target.value)}
+          placeholder='Please enter TODO name'
+        />
+        <Button onClick={onAdd}>Add TODO</Button>
+      </Space>
+      <Space wrap>
+        <Button disabled={backLength <= 0} onClick={back}>
+          Undo
+        </Button>
+        <Button disabled={forwardLength <= 0} onClick={forward}>
+          Redo
+        </Button>
+        <Button disabled={!backLength && !forwardLength} onClick={onReset}>
+          Reset
+        </Button>
+      </Space>
+      <Space wrap>
+        <InputNumber
+          value={step}
+          onChange={(val) => setStep(val as number)}
+          max={forwardLength}
+          min={backLength * -1}
+        />
+        <Button onClick={onGo}>Go</Button>
+      </Space>
+      <div
+        style={{
+          border: '1px dashed #ccc',
+          borderRadius: 4,
+          padding: 8,
+          marginBottom: 8,
+        }}
+      >
+        <h4>TODO List</h4>
+        <ul style={{ marginLeft: 16 }}>
           {value.map((it, index) => (
             <li key={index}>{it}</li>
           ))}
         </ul>
       </div>
-      <div style={{ marginBottom: 16 }}>
-        <input
-          value={inputValue}
-          onChange={(e) => setInputValue(e.target.value)}
-          placeholder="Please enter TODO name"
-          style={{ width: 200, marginRight: 8 }}
-        />
-        <button type="button" onClick={onAdd} style={{ marginRight: 8 }}>
-          Add TODO
-        </button>
-        <button type="button" disabled={backLength <= 0} onClick={back} style={{ marginRight: 8 }}>
-          Undo
-        </button>
-        <button
-          type="button"
-          disabled={forwardLength <= 0}
-          onClick={forward}
-          style={{ marginRight: 8 }}
-        >
-          Redo
-        </button>
-        <button type="button" disabled={!backLength && !forwardLength} onClick={onReset}>
-          Reset
-        </button>
-      </div>
-      <div>
-        <input
-          type="number"
-          value={step}
-          onChange={(e) => setStep(e.target.value as any)}
-          max={forwardLength}
-          min={backLength * -1}
-          style={{ marginRight: 8, width: 60 }}
-        />
-        <button type="button" onClick={onGo}>
-          Go
-        </button>
-      </div>
-    </div>
+    </Space>
   );
 };

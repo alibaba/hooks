@@ -1,12 +1,13 @@
 /**
  * title: Default usage
- * desc: Display the changed deps when effect function is executed.
+ * description: Display the changed deps when effect function is executed.
  *
  * title.zh-CN: 基础用法
- * desc.zh-CN: 查看每次 effect 执行时发生变化的依赖项
+ * description.zh-CN: 查看每次 effect 执行时发生变化的依赖项
  */
 
 import React, { useState } from 'react';
+import { Button } from 'antd';
 import { useTrackedEffect } from 'ahooks';
 
 export default () => {
@@ -22,14 +23,14 @@ export default () => {
 
   return (
     <div>
-      <p>Please open the browser console to view the output!</p>
-      <div>
+      <p style={{ marginBottom: 16 }}>Please open the browser console to view the output!</p>
+      <div style={{ marginBottom: 16 }}>
+        <Button onClick={() => setCount((c) => c + 1)}>count + 1</Button>
         <p>Count: {count}</p>
-        <button onClick={() => setCount((c) => c + 1)}>count + 1</button>
       </div>
-      <div style={{ marginTop: 16 }}>
+      <div>
+        <Button onClick={() => setCount2((c) => c + 1)}>count + 1</Button>
         <p>Count2: {count2}</p>
-        <button onClick={() => setCount2((c) => c + 1)}>count + 1</button>
       </div>
     </div>
   );

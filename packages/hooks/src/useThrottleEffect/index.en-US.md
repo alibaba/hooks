@@ -1,17 +1,20 @@
 ---
-nav:
-  path: /hooks
+title: useThrottleEffect
+nav: Hooks
+group:
+  title: Effect
+  order: 5
+order: 7
+toc: content
+demo:
+  cols: 2
 ---
-
-# useThrottleEffect
 
 Throttle your `useEffect`.
 
 ## Examples
 
-### Default usage
-
-<code src="./demo/demo1.tsx" />
+<code src="./demo/demo1.tsx"></code>
 
 ## API
 
@@ -25,11 +28,11 @@ useThrottleEffect(
 
 ### Params
 
-| Property | Description                                                  | Type             | Default |
-| -------- | ------------------------------------------------------------ | ---------------- | ------- |
-| effect   | The effect callback.                                         | `EffectCallback` | -       |
-| deps     | The dependencies list.                                       | `DependencyList` | -       |
-| options  | Config the throttle behavior. See the Options section below. | `Options`        | -       |
+| Property | Description | Type | Default |
+| --- | --- | --- | --- |
+| effect | The effect callback. | `EffectCallback` | - |
+| deps | The dependencies list. | `DependencyList` | - |
+| options | Config the throttle behavior. See the Options section below. | `Options` | - |
 
 ### Options
 

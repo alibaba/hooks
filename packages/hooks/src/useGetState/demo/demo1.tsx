@@ -1,12 +1,13 @@
 /**
  * title: Open console to view logs
- * desc: The counter prints the value every 3 seconds
+ * description: The counter prints the value every 3 seconds
  *
  * title.zh-CN: 打开控制台查看输出
- * desc.zh-CN: 计数器每 3 秒打印一次值
+ * description.zh-CN: 计数器每 3 秒打印一次值
  */
 
 import React, { useEffect } from 'react';
+import { Button } from 'antd';
 import { useGetState } from 'ahooks';
 
 export default () => {
@@ -22,5 +23,5 @@ export default () => {
     };
   }, []);
 
-  return <button onClick={() => setCount((count) => count + 1)}>count: {count}</button>;
+  return <Button onClick={() => setCount((item) => item + 1)}>count: {count}</Button>;
 };

@@ -1,12 +1,13 @@
 /**
  * title: Basic usage
- * desc: This hook is exactly the same as useEffect, except it skips running the effect for the first time.
+ * description: This hook is exactly the same as useEffect, except it skips running the effect for the first time.
  *
  * title.zh-CN: 基础用法
- * desc.zh-CN: 使用上与 useEffect 完全相同，只是它忽略了首次执行，只在依赖项更新时执行。
+ * description.zh-CN: 使用上与 useEffect 完全相同，只是它忽略了首次执行，只在依赖项更新时执行。
  */
 
 import React, { useEffect, useState } from 'react';
+import { Button } from 'antd';
 import { useUpdateEffect } from 'ahooks';
 
 export default () => {
@@ -20,6 +21,7 @@ export default () => {
 
   useUpdateEffect(() => {
     setUpdateEffectCount((c) => c + 1);
+
     return () => {
       // do something
     };
@@ -29,11 +31,9 @@ export default () => {
     <div>
       <p>effectCount: {effectCount}</p>
       <p>updateEffectCount: {updateEffectCount}</p>
-      <p>
-        <button type="button" onClick={() => setCount((c) => c + 1)}>
-          reRender
-        </button>
-      </p>
+      <Button style={{ marginTop: 8 }} onClick={() => setCount((c) => c + 1)}>
+        reRender
+      </Button>
     </div>
   );
 };

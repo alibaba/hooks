@@ -1,12 +1,13 @@
 /**
  * title: SetState can receive function
- * desc: Function updater is also acceptable with useCookieState's setState，similar to how useState is used.
+ * description: Function updater is also acceptable with useCookieState's setState，similar to how useState is used.
  *
  * title.zh-CN: setState 可以接收函数
- * desc.zh-CN: useCookieState 的 setState 可以接收 function updater，就像 useState 那样。
+ * description.zh-CN: useCookieState 的 setState 可以接收 function updater，就像 useState 那样。
  */
 
 import React from 'react';
+import { Button, Space } from 'antd';
 import { useCookieState } from 'ahooks';
 
 export default function App() {
@@ -17,23 +18,11 @@ export default function App() {
   return (
     <>
       <p>{value}</p>
-      <button
-        type="button"
-        style={{ marginRight: '16px' }}
-        onClick={() => setValue((v) => String(Number(v) + 1))}
-      >
-        inc +
-      </button>
-      <button
-        type="button"
-        style={{ marginRight: '16px' }}
-        onClick={() => setValue((v) => String(Number(v) - 1))}
-      >
-        dec -
-      </button>
-      <button type="button" onClick={() => setValue('0')}>
-        reset
-      </button>
+      <Space style={{ marginTop: 8 }} wrap>
+        <Button onClick={() => setValue((v) => String(Number(v) + 1))}>inc +</Button>
+        <Button onClick={() => setValue((v) => String(Number(v) - 1))}>dec -</Button>
+        <Button onClick={() => setValue('0')}>reset</Button>
+      </Space>
     </>
   );
 }

@@ -1,25 +1,23 @@
 ---
-nav:
-  path: /hooks
+title: useScroll
+nav: Hooks
+group:
+  title: Dom
+  order: 6
+order: 17
+toc: content
+demo:
+  cols: 2
 ---
-
-# useScroll
 
 监听元素的滚动位置。
 
 ## 代码演示
 
-### 基础用法
-
-<code src="./demo/demo1.tsx" />
-
-### 监测整页的滚动
-
-<code src="./demo/demo2.tsx" />
-
-### 控制滚动状态的监听
-
-<code src="./demo/demo3.tsx" />
+<!-- prettier-ignore -->
+<code src="./demo/demo1.tsx"></code>
+<code src="./demo/demo2.tsx"></code>
+<code src="./demo/demo3.tsx"></code>
 
 ## API
 
@@ -29,10 +27,10 @@ const position = useScroll(target, shouldUpdate);
 
 ### Params
 
-| 参数         | 说明                 | 类型                                                                        | 默认值       |
-| ------------ | -------------------- | --------------------------------------------------------------------------- | ------------ |
-| target       | DOM 节点或者 ref     | `Element` \| `Document` \| `(() => Element)` \| `MutableRefObject<Element>` | `document`   |
-| shouldUpdate | 控制是否更新滚动信息 | `({ top: number, left: number }) => boolean`                                | `() => true` |
+| 参数 | 说明 | 类型 | 默认值 |
+| --- | --- | --- | --- |
+| target | DOM 节点或者 ref | `Element` \| `Document` \| `(() => Element)` \| `MutableRefObject<Element>` | `document` |
+| shouldUpdate | 控制是否更新滚动信息 | `({ top: number, left: number }) => boolean` | `() => true` |
 
 ### Result
 

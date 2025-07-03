@@ -1,38 +1,39 @@
 ---
-nav:
-  path: /hooks
+title: useCounter
+nav: Hooks
+group:
+  title: Scene
+  order: 2
+order: 11
+toc: content
+demo:
+  cols: 2
 ---
-
-# useCounter
 
 A hook that manage counter.
 
 ## Examples
 
-### Default usage
-
-<code src="./demo/demo1.tsx" />
+<code src="./demo/demo1.tsx"></code>
 
 ## API
 
 ```typescript
-const [current, {
-  inc,
-  dec,
-  set,
-  reset
-}] = useCounter(initialValue, { min, max });
+const [current, { inc, dec, set, reset }] = useCounter(initialValue, {
+  min,
+  max,
+});
 ```
 
 ### Result
 
-| Property | Description                          | Type                                                   |
-| -------- | ------------------------------------ | ------------------------------------------------------ |
-| current  | Current value                        | `number`                                               |
-| inc      | Increment, default delta is 1        | `(delta?: number) => void`                             |
-| dec      | Decrement, default delta is 1        | `(delta?: number) => void`                             |
-| set      | Set current value                    | `(value: number` \| `((c: number) => number)) => void` |
-| reset    | Reset current value to initial value | `() => void`                                           |
+| Property | Description | Type |
+| --- | --- | --- |
+| current | Current value | `number` |
+| inc | Increment, default delta is 1 | `(delta?: number) => void` |
+| dec | Decrement, default delta is 1 | `(delta?: number) => void` |
+| set | Set current value | `(value: number` \| `((c: number) => number)) => void` |
+| reset | Reset current value to initial value | `() => void` |
 
 ### Params
 

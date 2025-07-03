@@ -1,9 +1,14 @@
 ---
-nav:
-  path: /hooks
+title: useIsomorphicLayoutEffect
+nav: Hooks
+group:
+  title: Advanced
+  order: 7
+order: 4
+toc: content
+demo:
+  cols: 2
 ---
-
-# useIsomorphicLayoutEffect
 
 在 SSR 模式下，使用 useLayoutEffect 时，会出现以下警告
 

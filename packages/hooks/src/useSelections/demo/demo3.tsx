@@ -1,9 +1,9 @@
 /**
  * title: Pagination
- * desc: Load data with pagination and enable cross-page selection.
+ * description: Load data with pagination and enable cross-page selection.
  *
  * title.zh-CN: 分页多选
- * desc.zh-CN: 分页加载数据，并跨页选择。
+ * description.zh-CN: 分页加载数据，并跨页选择。
  */
 
 import { Checkbox, Divider, Pagination, Spin } from 'antd';
@@ -94,7 +94,7 @@ export default () => {
       })}
       <Pagination
         style={{ margin: '12px 0 16px 0' }}
-        size="small"
+        size='small'
         showSizeChanger
         current={pagination.current}
         pageSize={pagination.pageSize}

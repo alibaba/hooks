@@ -1,25 +1,23 @@
 ---
-nav:
-  path: /hooks
+title: useControllableValue
+nav: Hooks
+group:
+  title: Advanced
+  order: 7
+order: 1
+toc: content
+demo:
+  cols: 2
 ---
-
-# useControllableValue
 
 在某些组件开发时，我们需要组件的状态既可以自己管理，也可以被外部控制，`useControllableValue` 就是帮你管理这种状态的 Hook。
 
 ## 代码演示
 
-### 非受控组件
-
-<code src="./demo/demo1.tsx" />
-
-### 受控组件
-
-<code src="./demo/demo2.tsx" />
-
-### 无 value，有 onChange 的组件
-
-<code src="./demo/demo3.tsx" />
+<!-- prettier-ignore -->
+<code src="./demo/demo1.tsx"></code>
+<code src="./demo/demo2.tsx"></code>
+<code src="./demo/demo3.tsx"></code>
 
 ## API
 
@@ -43,9 +41,9 @@ const [state, setState] = useControllableValue(props: Record<string, any>, optio
 
 ### Options
 
-| 参数                 | 说明                                                    | 类型     | 默认值         |
-| -------------------- | ------------------------------------------------------- | -------- | -------------- |
-| defaultValue         | 默认值，会被 `props.defaultValue` 和 `props.value` 覆盖 | -        | -              |
-| defaultValuePropName | 默认值的属性名                                          | `string` | `defaultValue` |
-| valuePropName        | 值的属性名                                              | `string` | `value`        |
-| trigger              | 修改值时，触发的函数                                    | `string` | `onChange`     |
+| 参数 | 说明 | 类型 | 默认值 |
+| --- | --- | --- | --- |
+| defaultValue | 默认值，会被 `props.defaultValue` 和 `props.value` 覆盖 | - | - |
+| defaultValuePropName | 默认值的属性名 | `string` | `defaultValue` |
+| valuePropName | 值的属性名 | `string` | `value` |
+| trigger | 修改值时，触发的函数 | `string` | `onChange` |

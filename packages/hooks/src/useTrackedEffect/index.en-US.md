@@ -1,17 +1,20 @@
 ---
-nav:
-  path: /hooks
+title: useTrackedEffect
+nav: Hooks
+group:
+  title: Dev
+  order: 8
+order: 1
+toc: content
+demo:
+  cols: 2
 ---
-
-# useTrackedEffect
 
 A hook of useEffect that allow us to track which dependencies caused the effect to trigger.
 
 ## Examples
 
-### Basic usage
-
-<code src="./demo/demo1.tsx" />
+<code src="./demo/demo1.tsx"></code>
 
 ## API
 

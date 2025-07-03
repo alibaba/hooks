@@ -1,31 +1,25 @@
 ---
-nav:
-  path: /hooks
+title: useMap
+nav: Hooks
+group:
+  title: State
+  order: 4
+order: 10
+toc: content
+demo:
+  cols: 2
 ---
-
-# useMap
 
 A hook that can manage the state of Map.
 
 ## Examples
 
-### Default usage
-
-<code src="./demo/demo1.tsx" />
+<code src="./demo/demo1.tsx"></code>
 
 ## API
 
 ```typescript
-const [
-  map,
-  {
-    set,
-    setAll,
-    remove,
-    reset,
-    get
-  }
-] = useMap<K, V>(initialValue);
+const [map, { set, setAll, remove, reset, get }] = useMap<K, V>(initialValue);
 ```
 
 ### Result

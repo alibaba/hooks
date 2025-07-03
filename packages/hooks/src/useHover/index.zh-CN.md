@@ -1,41 +1,39 @@
 ---
-nav:
-  path: /hooks
+title: useHover
+nav: Hooks
+group:
+  title: Dom
+  order: 6
+order: 10
+toc: content
+demo:
+  cols: 2
 ---
-
-# useHover
 
 监听 DOM 元素是否有鼠标悬停。
 
 ## 代码演示
 
-### 基础用法
-
-<code src="./demo/demo1.tsx" />
-
-### 传入 DOM 元素
-
-<code src="./demo/demo2.tsx" />
+<!-- prettier-ignore -->
+<code src="./demo/demo1.tsx"></code>
+<code src="./demo/demo2.tsx"></code>
 
 ## API
 
 ```javascript
-const isHovering = useHover(
-  target,
-  {
-   onEnter,
-   onLeave,
-   onChange
-  }
-);
+const isHovering = useHover(target, {
+  onEnter,
+  onLeave,
+  onChange,
+});
 ```
 
 ### Params
 
-| 参数    | 说明                  | 类型                                                        | 默认值 |
-| ------- | --------------------- | ----------------------------------------------------------- | ------ |
-| target  | DOM 节点或者 Ref 对象 | `() => Element` \| `Element` \| `MutableRefObject<Element>` | -      |
-| options | 额外的配置项          | `Options`                                                   | -      |
+| 参数 | 说明 | 类型 | 默认值 |
+| --- | --- | --- | --- |
+| target | DOM 节点或者 Ref 对象 | `() => Element` \| `Element` \| `MutableRefObject<Element>` | - |
+| options | 额外的配置项 | `Options` | - |
 
 ### Options
 

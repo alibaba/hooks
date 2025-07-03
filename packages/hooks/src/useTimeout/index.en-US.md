@@ -1,18 +1,22 @@
 ---
-nav:
-  path: /hooks
+title: useTimeout
+nav: Hooks
+group:
+  title: Effect
+  order: 5
+order: 12
+toc: content
+demo:
+  cols: 2
 ---
-
-# useTimeout
 
 A hook that handles the `setTimeout` timer function.
 
 ## Examples
 
-### Default usage
-
-<code src="./demo/demo1.tsx" />
-<code src="./demo/demo2.tsx" />
+<!-- prettier-ignore -->
+<code src="./demo/demo1.tsx"></code>
+<code src="./demo/demo2.tsx"></code>
 
 ## API
 
@@ -25,10 +29,10 @@ useTimeout(
 
 ### Params
 
-| Property | Description                                                                                                            | Type                    |
-| -------- | ---------------------------------------------------------------------------------------------------------------------- | ----------------------- |
-| fn       | The function to be executed after `delay` milliseconds.                                                                | `() => void`            |
-| delay    | The number of milliseconds to wait before executing the function. The timer will be cancelled if delay is `undefined`. | `number` \| `undefined` |
+| Property | Description | Type |
+| --- | --- | --- |
+| fn | The function to be executed after `delay` milliseconds. | `() => void` |
+| delay | The number of milliseconds to wait before executing the function. The timer will be cancelled if delay is `undefined`. | `number` \| `undefined` |
 
 ### Result
 

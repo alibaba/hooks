@@ -1,4 +1,5 @@
 import React, { useRef } from 'react';
+import { Button } from 'antd';
 import { useInfiniteScroll } from 'ahooks';
 
 interface Result {
@@ -38,7 +39,16 @@ export default () => {
   );
 
   return (
-    <div ref={ref} style={{ height: 150, overflow: 'auto', border: '1px solid', padding: 12 }}>
+    <div
+      ref={ref}
+      style={{
+        height: 150,
+        overflow: 'auto',
+        border: '1px dashed #ccc',
+        borderRadius: 4,
+        padding: 12,
+      }}
+    >
       {loading ? (
         <p>loading</p>
       ) : (
@@ -50,14 +60,12 @@ export default () => {
           ))}
         </div>
       )}
-
       <div style={{ marginTop: 8 }}>
         {!noMore && (
-          <button type="button" onClick={loadMore} disabled={loadingMore}>
+          <Button onClick={loadMore} disabled={loadingMore}>
             {loadingMore ? 'Loading more...' : 'Click to load more'}
-          </button>
+          </Button>
         )}
-
         {noMore && <span>No more data</span>}
       </div>
     </div>

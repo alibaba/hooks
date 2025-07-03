@@ -1,9 +1,14 @@
 ---
-nav:
-  path: /hooks
+title: useRafInterval
+nav: Hooks
+group:
+  title: Effect
+  order: 5
+order: 11
+toc: content
+demo:
+  cols: 2
 ---
-
-# useRafInterval
 
 A hook implements with `requestAnimationFrame` for better performance. The API is consistent with `useInterval`, the advantage is that the execution of the timer can be stopped when the page is not rendering, such as page hiding or minimization.
 
@@ -16,13 +21,9 @@ Please note that the following two cases are likely to be inapplicable, and `use
 
 ## Examples
 
-### Default usage
-
-<code src="./demo/demo1.tsx" />
-
-### Advanced usage
-
-<code src="./demo/demo2.tsx" />
+<!-- prettier-ignore -->
+<code src="./demo/demo1.tsx"></code>
+<code src="./demo/demo2.tsx"></code>
 
 ## API
 
@@ -36,16 +37,16 @@ useRafInterval(
 
 ### Params
 
-| Property | Description                                                                                                                                                   | Type                    |
-| -------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------- |
-| fn       | The function to be executed every `delay` milliseconds.                                                                                                       | `() => void`            |
-| delay    | The time in milliseconds, the timer should delay in between executions of the specified function. The timer will be cancelled if delay is set to `undefined`. | `number` \| `undefined` |
-| options  | Config of the interval behavior.                                                                                                                              | `Options`               |
+| Property | Description | Type |
+| --- | --- | --- |
+| fn | The function to be executed every `delay` milliseconds. | `() => void` |
+| delay | The time in milliseconds, the timer should delay in between executions of the specified function. The timer will be cancelled if delay is set to `undefined`. | `number` \| `undefined` |
+| options | Config of the interval behavior. | `Options` |
 
 ### Options
 
-| Property  | Description                                                            | Type      | Default |
-| --------- | ---------------------------------------------------------------------- | --------- | ------- |
+| Property | Description | Type | Default |
+| --- | --- | --- | --- |
 | immediate | Whether the function should be executed immediately on first execution | `boolean` | `false` |
 
 ### Result

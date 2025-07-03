@@ -1,21 +1,22 @@
 ---
-nav:
-  path: /hooks
+title: useSetState
+nav: Hooks
+group:
+  title: State
+  order: 4
+order: 1
+toc: content
+demo:
+  cols: 2
 ---
-
-# useSetState
 
 useSetState works similar to `this.setState` of class component, used to manage the state of object type.
 
 ## Examples
 
-### Default usage
-
-<code src="./demo/demo1.tsx" />
-
-### Updating with callback
-
-<code src="./demo/demo2.tsx" />
+<!-- prettier-ignore -->
+<code src="./demo/demo1.tsx"></code>
+<code src="./demo/demo2.tsx"></code>
 
 ## API
 
@@ -25,10 +26,10 @@ const [state, setState] = useSetState<T>(initialState);
 
 ### Result
 
-| Property | Description          | Type                                                                                      | Default |
-| -------- | -------------------- | ----------------------------------------------------------------------------------------- | ------- |
-| state    | Current state        | `T`                                                                                       | -       |
-| setState | Update current state | `(state: Partial<T> \| null) => void` \| `((prevState: T) => Partial<T> \| null) => void` | -       |
+| Property | Description | Type | Default |
+| --- | --- | --- | --- |
+| state | Current state | `T` | - |
+| setState | Update current state | `(state: Partial<T> \| null) => void` \| `((prevState: T) => Partial<T> \| null) => void` | - |
 
 ### Params
 

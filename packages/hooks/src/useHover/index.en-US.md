@@ -1,41 +1,39 @@
 ---
-nav:
-  path: /hooks
+title: useHover
+nav: Hooks
+group:
+  title: Dom
+  order: 6
+order: 10
+toc: content
+demo:
+  cols: 2
 ---
-
-# useHover
 
 A hook that tracks whether the element is being hovered.
 
 ## Examples
 
-### Default usage
-
-<code src="./demo/demo1.tsx" />
-
-### Pass in DOM element
-
-<code src="./demo/demo2.tsx" />
+<!-- prettier-ignore -->
+<code src="./demo/demo1.tsx"></code>
+<code src="./demo/demo2.tsx"></code>
 
 ## API
 
 ```javascript
-const isHovering = useHover(
-  target,
-  {
-   onEnter,
-   onLeave,
-   onChange
-  }
-);
+const isHovering = useHover(target, {
+  onEnter,
+  onLeave,
+  onChange,
+});
 ```
 
 ### Params
 
-| Property | Description        | Type                                                        | Default |
-| -------- | ------------------ | ----------------------------------------------------------- | ------- |
-| target   | DOM element or ref | `() => Element` \| `Element` \| `MutableRefObject<Element>` | -       |
-| options  | More config        | `Options`                                                   | -       |
+| Property | Description | Type | Default |
+| --- | --- | --- | --- |
+| target | DOM element or ref | `() => Element` \| `Element` \| `MutableRefObject<Element>` | - |
+| options | More config | `Options` | - |
 
 ### Options
 

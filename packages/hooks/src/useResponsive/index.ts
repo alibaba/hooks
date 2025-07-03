@@ -33,7 +33,7 @@ let listening = false;
 
 function calculate() {
   const width = window.innerWidth;
-  const newInfo = {} as ResponsiveInfo;
+  const newInfo: ResponsiveInfo = {};
   let shouldUpdate = false;
   for (const key of Object.keys(responsiveConfig)) {
     newInfo[key] = width >= responsiveConfig[key];
@@ -48,7 +48,9 @@ function calculate() {
 
 export function configResponsive(config: ResponsiveConfig) {
   responsiveConfig = config;
-  if (info) calculate();
+  if (info) {
+    calculate();
+  }
 }
 
 function useResponsive() {

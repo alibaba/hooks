@@ -1,10 +1,14 @@
 ---
-nav:
-  title: Hooks
-  path: /hooks
+title: useAntdTable
+nav: Hooks
+group:
+  title: Scene
+  order: 2
+order: 1
+toc: content
+demo:
+  cols: 2
 ---
-
-# useAntdTable
 
 `useAntdTable` 基于 `useRequest` 实现，封装了常用的 [Ant Design Form](https://ant.design/components/form-cn/) 与 [Ant Design Table](https://ant.design/components/table-cn/) 联动逻辑，并且同时支持 antd v3 和 v4。
 
@@ -27,9 +31,7 @@ nav:
 <Table columns={columns} rowKey="email" {...tableProps} />
 ```
 
-<br />
-
-<code src="./demo/table.tsx" />
+<code src="./demo/table.tsx"></code>
 
 ### Form 与 Table 联动
 
@@ -42,7 +44,7 @@ nav:
 
 以下示例你可以体验表单与表格联动。
 
-<code src="./demo/form.tsx" />
+<code src="./demo/form.tsx"></code>
 
 ### 初始化数据
 
@@ -52,19 +54,19 @@ nav:
 
 以下示例在初始化时设置了分页数据和表单数据。
 
-<code src="./demo/init.tsx" />
+<code src="./demo/init.tsx"></code>
 
 ### 表单验证
 
 表单提交之前，我们会调用 `form.validateFields` 来校验表单数据，如果验证不通过，则不会发起请求。
 
-<code src="./demo/validate.tsx" />
+<code src="./demo/validate.tsx"></code>
 
 ### 缓存
 
 通过设置 `cacheKey`，我们可以实现 `Form` 与 `Table` 数据缓存。
 
-<code src="./demo/cache.tsx" />
+<code src="./demo/cache.tsx"></code>
 
 ## API
 
@@ -123,10 +125,10 @@ const {
 
 ### Params
 
-| 参数            | 说明                                                          | 类型                     | 默认值   |
-| --------------- | ------------------------------------------------------------- | ------------------------ | -------- |
-| form            | `Form` 实例                                                   | -                        | -        |
-| defaultType     | 默认表单类型                                                  | `simple` \| `advance`    | `simple` |
-| defaultParams   | 默认参数，第一项为分页数据，第二项为表单数据                  | `[pagination, formData]` | -        |
-| defaultPageSize | 默认分页数量                                                  | `number`                 | `10`     |
-| refreshDeps     | `refreshDeps` 变化，会重置 current 到第一页，并重新发起请求。 | `React.DependencyList`   | `[]`     |
+| 参数 | 说明 | 类型 | 默认值 |
+| --- | --- | --- | --- |
+| form | `Form` 实例 | - | - |
+| defaultType | 默认表单类型 | `simple` \| `advance` | `simple` |
+| defaultParams | 默认参数，第一项为分页数据，第二项为表单数据 | `[pagination, formData]` | - |
+| defaultPageSize | 默认分页数量 | `number` | `10` |
+| refreshDeps | `refreshDeps` 变化，会重置 current 到第一页，并重新发起请求。 | `React.DependencyList` | `[]` |

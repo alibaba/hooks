@@ -1,29 +1,24 @@
 ---
-nav:
-  path: /hooks
+title: useFullscreen
+nav: Hooks
+group:
+  title: Dom
+  order: 6
+order: 9
+toc: content
+demo:
+  cols: 2
 ---
-
-# useFullscreen
 
 管理 DOM 全屏的 Hook。
 
 ## 代码演示
 
-### 基础用法
-
-<code src="./demo/demo1.tsx" />
-
-### 图片全屏
-
-<code src="./demo/demo2.tsx" />
-
-### 页面全屏
-
-<code src="./demo/demo3.tsx" />
-
-### 与其它全屏操作共存
-
-<code src="./demo/demo4.tsx" />
+<!-- prettier-ignore -->
+<code src="./demo/demo1.tsx"></code>
+<code src="./demo/demo2.tsx"></code>
+<code src="./demo/demo3.tsx"></code>
+<code src="./demo/demo4.tsx"></code>
 
 ## API
 
@@ -41,17 +36,17 @@ const [isFullscreen, {
 
 ### Params
 
-| 参数    | 说明             | 类型                                                        | 默认值 |
-| ------- | ---------------- | ----------------------------------------------------------- | ------ |
-| target  | DOM 节点或者 ref | `Element` \| `() => Element` \| `MutableRefObject<Element>` | -      |
-| options | 设置             | `Options`                                                   | -      |
+| 参数 | 说明 | 类型 | 默认值 |
+| --- | --- | --- | --- |
+| target | DOM 节点或者 ref | `Element` \| `() => Element` \| `MutableRefObject<Element>` | - |
+| options | 设置 | `Options` | - |
 
 ### Options
 
-| 参数           | 说明                                                                   | 类型                                                   | 默认值  |
-| -------------- | ---------------------------------------------------------------------- | ------------------------------------------------------ | ------- |
-| onExit         | 退出全屏触发                                                           | `() => void`                                           | -       |
-| onEnter        | 全屏触发                                                               | `() => void`                                           | -       |
+| 参数 | 说明 | 类型 | 默认值 |
+| --- | --- | --- | --- |
+| onExit | 退出全屏触发 | `() => void` | - |
+| onEnter | 全屏触发 | `() => void` | - |
 | pageFullscreen | 是否是页面全屏。当参数类型为对象时，可以设置全屏元素的类名和 `z-index` | `boolean` \| `{ className?: string, zIndex?: number }` | `false` |
 
 ### Result

@@ -1,9 +1,14 @@
 ---
-nav:
-  path: /hooks
+title: useFusionTable
+nav: Hooks
+group:
+  title: Scene
+  order: 2
+order: 2
+toc: content
+demo:
+  cols: 2
 ---
-
-# useFusionTable
 
 封装了常用的 [Fusion Form](https://fusion.design/pc/component/basic/form) 与 [Fusion Table](https://fusion.design/pc/component/basic/table) 联动逻辑。
 
@@ -29,9 +34,7 @@ nav:
 <Pagination {...paginationProps} />
 ```
 
-<br />
-
-<code src="./demo/table.tsx" />
+<code src="./demo/table.tsx"></code>
 
 ### Form 与 Table 联动
 
@@ -44,7 +47,7 @@ nav:
 
 以下示例你可以体验表单与表格联动。
 
-<code src="./demo/form.tsx" />
+<code src="./demo/form.tsx"></code>
 
 ### 初始化数据
 
@@ -54,19 +57,19 @@ nav:
 
 以下示例在初始化时设置了分页数据和表单数据。
 
-<code src="./demo/init.tsx" />
+<code src="./demo/init.tsx"></code>
 
 ### 表单验证
 
 表单提交之前，我们会自动校验表单数据，如果验证不通过，则不会发起请求。
 
-<code src="./demo/validate.tsx" />
+<code src="./demo/validate.tsx"></code>
 
 ### 数据缓存
 
 通过设置 `cacheKey`，我们可以实现 `Form` 与 `Table` 数据缓存。
 
-<code src="./demo/cache.tsx" />
+<code src="./demo/cache.tsx"></code>
 
 ## API
 
@@ -113,21 +116,21 @@ const {
 
 ### Result
 
-| 参数              | 说明                                                          | 类型                  |
-| ----------------- | ------------------------------------------------------------- | --------------------- |
-| tableProps        | `Table` 组件需要的数据，直接透传给 `Table` 组件即可           | -                     |
-| paginationProps   | `Pagination` 组件需要的数据，直接透传给 `Pagination` 组件即可 | -                     |
-| search.type       | 当前表单类型                                                  | `simple` \| `advance` |
-| search.changeType | 切换表单类型                                                  | `() => void`          |
-| search.submit     | 提交表单                                                      | `() => void`          |
-| search.reset      | 重置当前表单                                                  | `() => void`          |
+| 参数 | 说明 | 类型 |
+| --- | --- | --- |
+| tableProps | `Table` 组件需要的数据，直接透传给 `Table` 组件即可 | - |
+| paginationProps | `Pagination` 组件需要的数据，直接透传给 `Pagination` 组件即可 | - |
+| search.type | 当前表单类型 | `simple` \| `advance` |
+| search.changeType | 切换表单类型 | `() => void` |
+| search.submit | 提交表单 | `() => void` |
+| search.reset | 重置当前表单 | `() => void` |
 
 ### Params
 
-| 参数            | 说明                                                          | 类型                     | 默认值   |
-| --------------- | ------------------------------------------------------------- | ------------------------ | -------- |
-| field           | `Form` 实例                                                   | -                        | -        |
-| defaultType     | 默认表单类型                                                  | `simple` \| `advance`    | `simple` |
-| defaultParams   | 默认参数，第一项为分页数据，第二项为表单数据                  | `[pagination, formData]` | -        |
-| defaultPageSize | 默认分页数量                                                  | `number`                 | `10`     |
-| refreshDeps     | `refreshDeps` 变化，会重置 current 到第一页，并重新发起请求。 | `React.DependencyList`   | `[]`     |
+| 参数 | 说明 | 类型 | 默认值 |
+| --- | --- | --- | --- |
+| field | `Form` 实例 | - | - |
+| defaultType | 默认表单类型 | `simple` \| `advance` | `simple` |
+| defaultParams | 默认参数，第一项为分页数据，第二项为表单数据 | `[pagination, formData]` | - |
+| defaultPageSize | 默认分页数量 | `number` | `10` |
+| refreshDeps | `refreshDeps` 变化，会重置 current 到第一页，并重新发起请求。 | `React.DependencyList` | `[]` |
