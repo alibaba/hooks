@@ -70,7 +70,7 @@
     "react-dom": "^19.1.0",
     "react-drag-listview": "^0.1.6",
     "react-router": "^6.4.2",
-    "react-shadow": "^19.0.3",
+    "react-shadow": "^20.6.0",
     "rimraf": "^3.0.2",
     "surge": "^0.21.3",
     "ts-jest": "^29.1.1",
