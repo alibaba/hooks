@@ -13,6 +13,10 @@ import React from 'react';
 const MyComponent = () => {
   useMount(() => {
     message.info('mount');
+
+    return () => {
+      message.info('unmount');
+    };
   });
 
   return <div>Hello World</div>;
@@ -23,7 +27,7 @@ export default () => {
 
   return (
     <>
-      <button type="button" onClick={toggle}>
+      <button type='button' onClick={toggle}>
         {state ? 'unmount' : 'mount'}
       </button>
       {state && <MyComponent />}
