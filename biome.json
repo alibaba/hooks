@@ -11,7 +11,8 @@
   "linter": {
     "rules": {
       "style": {
-        "noNonNullAssertion": "off"
+        "noNonNullAssertion": "off",
+        "noEnum": "error"
       },
       "correctness": {
         "useHookAtTopLevel": "error"
@@ -22,7 +23,7 @@
     }
   },
   "formatter": {
-    "lineWidth": 100,
+    "lineWidth": 120,
     "indentStyle": "space"
   },
   "javascript": {
