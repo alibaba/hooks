@@ -34,8 +34,8 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '18' 
-      
+          node-version: 22
+
       - name: Setup pnpm
         run: |
             npm install --global corepack@latest
@@ -47,7 +47,7 @@ jobs:
         run: pnpm install
 
       - name: Cache pnpm dependencies
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: |
             ~/.pnpm-store
@@ -55,7 +55,6 @@ jobs:
           key: ${{ runner.os }}-pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}
           restore-keys: |
             ${{ runner.os }}-pnpm-
-            
 
       - name: Build documentation
         run: npm run build:doc
@@ -69,4 +68,3 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./dist  # 构建后的静态文件目录
           force_orphan: true
-

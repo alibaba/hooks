@@ -9,7 +9,7 @@ jobs:
     strategy:
       matrix:
         mode: ['normal', 'strict']
-        node-version: [18.x, 20.x]
+        node-version: [20, 22]
 
     steps:
       - uses: actions/checkout@v4
