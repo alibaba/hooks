@@ -30,3 +30,56 @@ describe('useHover', () => {
     expect(trigger).toBe(2);
   });
 });
+
+describe('useHover - onLongHover', () => {
+  beforeEach(() => {
+    jest.useFakeTimers();
+  });
+
+  afterEach(() => {
+    jest.useRealTimers();
+  });
+
+  it('should call onLongHover(true) after longHoverDuration', () => {
+    const onLongHover = jest.fn();
+    const { getByText } = render(<button>Hover</button>);
+    renderHook(() => useHover(getByText('Hover'), { onLongHover, longHoverDuration: 300 }));
+
+    act(() => {
+      fireEvent.mouseEnter(getByText('Hover'));
+    });
+    expect(onLongHover).not.toBeCalled();
+    act(() => {
+      jest.advanceTimersByTime(300);
+    });
+    expect(onLongHover).toHaveBeenCalledWith(true);
+  });
+
+  it('should call onLongHover(false) on mouseleave if timer exists', () => {
+    const onLongHover = jest.fn();
+    const { getByText } = render(<button>Hover</button>);
+    renderHook(() => useHover(getByText('Hover'), { onLongHover, longHoverDuration: 300 }));
+    act(() => {
+      fireEvent.mouseEnter(getByText('Hover'));
+    });
+    act(() => {
+      fireEvent.mouseLeave(getByText('Hover'));
+    });
+    expect(onLongHover).toHaveBeenCalledWith(false);
+  });
+
+  it('should not call onLongHover(true) if mouse leaves before duration', () => {
+    const onLongHover = jest.fn();
+    const { getByText } = render(<button>Hover</button>);
+    renderHook(() => useHover(getByText('Hover'), { onLongHover, longHoverDuration: 300 }));
+    act(() => {
+      fireEvent.mouseEnter(getByText('Hover'));
+    });
+    act(() => {
+      jest.advanceTimersByTime(200);
+      fireEvent.mouseLeave(getByText('Hover'));
+    });
+    expect(onLongHover).toHaveBeenCalledTimes(1);
+    expect(onLongHover).toHaveBeenCalledWith(false);
+  });
+});

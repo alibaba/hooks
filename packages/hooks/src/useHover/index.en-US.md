@@ -17,6 +17,10 @@ A hook that tracks whether the element is being hovered.
 
 <code src="./demo/demo2.tsx" />
 
+### Long term hover event
+
+<code src="./demo/demo3.tsx" />
+
 ## API
 
 ```javascript
