@@ -11,8 +11,7 @@
   "linter": {
     "rules": {
       "style": {
-        "noNonNullAssertion": "off",
-        "noEnum": "error"
+        "noNonNullAssertion": "off"
       },
       "correctness": {
         "useHookAtTopLevel": "error"
