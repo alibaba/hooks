@@ -1,7 +1,11 @@
 import { act, renderHook } from '@testing-library/react';
 import { useBroadcastChannel } from '../index';
 
-describe('useBroadcastChannel', () => {
+// Skip tests if BroadcastChannel is not available (i.e., not running in a browser)
+const describeOrSkip =
+  typeof BroadcastChannel === 'undefined' ? describe.skip : describe;
+
+describeOrSkip('useBroadcastChannel', () => {
   it('should send and receive messages', () => {
     const channelName = 'test-channel';
     let received: string | null = null;
