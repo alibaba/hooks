@@ -3,7 +3,8 @@ import type { Options, Props } from '../index';
 import useControllableValue from '../index';
 
 describe('useControllableValue', () => {
-  const setUp = (props?: Props, options?: Options<any>) => renderHook(() => useControllableValue(props, options));
+  const setUp = (props?: Props, options?: Options<any>) =>
+    renderHook(() => useControllableValue(props, options));
 
   it('defaultValue should work', () => {
     const hook = setUp({ defaultValue: 1 });

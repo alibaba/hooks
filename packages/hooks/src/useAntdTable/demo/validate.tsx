@@ -74,7 +74,11 @@ export default () => {
             <Option value='female'>female</Option>
           </Select>
         </Form.Item>
-        <Form.Item name='name' initialValue='jack' rules={[{ required: true, message: 'name is required' }]}>
+        <Form.Item
+          name='name'
+          initialValue='jack'
+          rules={[{ required: true, message: 'name is required' }]}
+        >
           <Input.Search placeholder='enter name' style={{ width: 240 }} onSearch={submit} />
         </Form.Item>
       </Form>

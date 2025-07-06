@@ -3,7 +3,10 @@ import throttle from 'lodash/throttle';
 import { useEffect, useRef } from 'react';
 import type { Plugin } from '../types';
 
-const useThrottlePlugin: Plugin<any, any[]> = (fetchInstance, { throttleWait, throttleLeading, throttleTrailing }) => {
+const useThrottlePlugin: Plugin<any, any[]> = (
+  fetchInstance,
+  { throttleWait, throttleLeading, throttleTrailing },
+) => {
   const throttledRef = useRef<DebouncedFunc<any>>(undefined);
 
   const options: ThrottleSettings = {};

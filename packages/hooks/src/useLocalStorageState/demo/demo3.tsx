@@ -10,11 +10,14 @@ import React from 'react';
 import { useLocalStorageState } from 'ahooks';
 
 export default function () {
-  const [message, setMessage] = useLocalStorageState<string | undefined>('use-local-storage-state-demo3', {
-    defaultValue: 'Hello~',
-    serializer: (v) => v ?? '',
-    deserializer: (v) => v,
-  });
+  const [message, setMessage] = useLocalStorageState<string | undefined>(
+    'use-local-storage-state-demo3',
+    {
+      defaultValue: 'Hello~',
+      serializer: (v) => v ?? '',
+      deserializer: (v) => v,
+    },
+  );
 
   return (
     <>

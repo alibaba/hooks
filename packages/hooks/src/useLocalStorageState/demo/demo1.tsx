@@ -10,9 +10,12 @@ import React from 'react';
 import { useLocalStorageState } from 'ahooks';
 
 export default function () {
-  const [message, setMessage] = useLocalStorageState<string | undefined>('use-local-storage-state-demo1', {
-    defaultValue: 'Hello~',
-  });
+  const [message, setMessage] = useLocalStorageState<string | undefined>(
+    'use-local-storage-state-demo1',
+    {
+      defaultValue: 'Hello~',
+    },
+  );
 
   return (
     <>

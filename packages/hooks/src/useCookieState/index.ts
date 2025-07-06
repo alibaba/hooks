@@ -25,7 +25,10 @@ function useCookieState(cookieKey: string, options: Options = {}) {
   });
 
   const updateState = useMemoizedFn(
-    (newValue: State | ((prevState: State) => State), newOptions: Cookies.CookieAttributes = {}) => {
+    (
+      newValue: State | ((prevState: State) => State),
+      newOptions: Cookies.CookieAttributes = {},
+    ) => {
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { defaultValue, ...restOptions } = { ...options, ...newOptions };
       const value = isFunction(newValue) ? newValue(state) : newValue;

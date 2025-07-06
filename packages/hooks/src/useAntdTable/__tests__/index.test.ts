@@ -64,8 +64,10 @@ describe('useAntdTable', () => {
     searchType = type;
   };
 
-  const setUp = (service: Parameters<typeof useAntdTable>[0], options: Parameters<typeof useAntdTable>[1]) =>
-    renderHook((o) => useAntdTable(service, o || options));
+  const setUp = (
+    service: Parameters<typeof useAntdTable>[0],
+    options: Parameters<typeof useAntdTable>[1],
+  ) => renderHook((o) => useAntdTable(service, o || options));
 
   let hook: RenderHookResult<any, any>;
 

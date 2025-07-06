@@ -11,7 +11,10 @@ import React from 'react';
 
 export default () => {
   const maxLength = 3;
-  const { value, setValue, backLength, forwardLength, back, forward } = useHistoryTravel<string>('', maxLength);
+  const { value, setValue, backLength, forwardLength, back, forward } = useHistoryTravel<string>(
+    '',
+    maxLength,
+  );
 
   return (
     <div>

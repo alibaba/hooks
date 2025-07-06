@@ -9,7 +9,13 @@ import { trigger, subscribe } from '../utils/cacheSubscribe';
 
 const useCachePlugin: Plugin<any, any[]> = (
   fetchInstance,
-  { cacheKey, cacheTime = 5 * 60 * 1000, staleTime = 0, setCache: customSetCache, getCache: customGetCache },
+  {
+    cacheKey,
+    cacheTime = 5 * 60 * 1000,
+    staleTime = 0,
+    setCache: customSetCache,
+    getCache: customGetCache,
+  },
 ) => {
   const unSubscribeRef = useRef<() => void>(undefined);
 

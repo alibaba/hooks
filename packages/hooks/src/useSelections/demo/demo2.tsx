@@ -19,10 +19,13 @@ export default () => {
     return [1, 2, 3, 4, 5, 6, 7, 8].map((id) => ({ id }));
   }, [hideOdd]);
 
-  const { selected, allSelected, isSelected, toggle, toggleAll, partiallySelected } = useSelections(list, {
-    defaultSelected: [{ id: 1 }],
-    itemKey: 'id',
-  });
+  const { selected, allSelected, isSelected, toggle, toggleAll, partiallySelected } = useSelections(
+    list,
+    {
+      defaultSelected: [{ id: 1 }],
+      itemKey: 'id',
+    },
+  );
 
   return (
     <div>

@@ -9,7 +9,10 @@ type Position = { left: number; top: number };
 export type Target = BasicTarget<Element | Document>;
 export type ScrollListenController = (val: Position) => boolean;
 
-function useScroll(target?: Target, shouldUpdate: ScrollListenController = () => true): Position | undefined {
+function useScroll(
+  target?: Target,
+  shouldUpdate: ScrollListenController = () => true,
+): Position | undefined {
   const [position, setPosition] = useRafState<Position>();
 
   const shouldUpdateRef = useLatest(shouldUpdate);
@@ -33,8 +36,16 @@ function useScroll(target?: Target, shouldUpdate: ScrollListenController = () =>
             // https://developer.mozilla.org/zh-CN/docs/Web/API/Document/scrollingElement
             // https://stackoverflow.com/questions/28633221/document-body-scrolltop-firefox-returns-0-only-js
             newPosition = {
-              left: Math.max(window.pageXOffset, document.documentElement.scrollLeft, document.body.scrollLeft),
-              top: Math.max(window.pageYOffset, document.documentElement.scrollTop, document.body.scrollTop),
+              left: Math.max(
+                window.pageXOffset,
+                document.documentElement.scrollLeft,
+                document.body.scrollLeft,
+              ),
+              top: Math.max(
+                window.pageYOffset,
+                document.documentElement.scrollTop,
+                document.body.scrollTop,
+              ),
             };
           }
         } else {

@@ -8,7 +8,11 @@ interface Result {
 
 const resultData = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13'];
 
-function getLoadMoreList(nextId: string | undefined, limit: number, keyword: string): Promise<Result> {
+function getLoadMoreList(
+  nextId: string | undefined,
+  limit: number,
+  keyword: string,
+): Promise<Result> {
   let start = 0;
   if (nextId) {
     start = resultData.findIndex((i) => i === nextId);

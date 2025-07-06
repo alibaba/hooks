@@ -23,7 +23,7 @@
     }
   },
   "formatter": {
-    "lineWidth": 120,
+    "lineWidth": 100,
     "indentStyle": "space"
   },
   "javascript": {

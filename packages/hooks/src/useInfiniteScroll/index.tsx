@@ -7,7 +7,10 @@ import { getTargetElement } from '../utils/domTarget';
 import { getClientHeight, getScrollHeight, getScrollTop } from '../utils/rect';
 import type { Data, InfiniteScrollOptions, Service } from './types';
 
-const useInfiniteScroll = <TData extends Data>(service: Service<TData>, options: InfiniteScrollOptions<TData> = {}) => {
+const useInfiniteScroll = <TData extends Data>(
+  service: Service<TData>,
+  options: InfiniteScrollOptions<TData> = {},
+) => {
   const {
     target,
     isNoMore,
@@ -120,7 +123,11 @@ const useInfiniteScroll = <TData extends Data>(service: Service<TData>, options:
     const clientHeight = getClientHeight(targetEl);
 
     if (isScrollToTop) {
-      if (lastScrollTop.current !== undefined && lastScrollTop.current > scrollTop && scrollTop <= threshold) {
+      if (
+        lastScrollTop.current !== undefined &&
+        lastScrollTop.current > scrollTop &&
+        scrollTop <= threshold
+      ) {
         loadMore();
       }
       lastScrollTop.current = scrollTop;

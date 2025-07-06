@@ -31,7 +31,11 @@ const useFullscreen = (target: BasicTarget, options?: Options) => {
   const stateRef = useRef(getIsFullscreen());
 
   function getIsFullscreen() {
-    return screenfull.isEnabled && !!screenfull.element && screenfull.element === getTargetElement(target);
+    return (
+      screenfull.isEnabled &&
+      !!screenfull.element &&
+      screenfull.element === getTargetElement(target)
+    );
   }
 
   const invokeCallback = (fullscreen: boolean) => {

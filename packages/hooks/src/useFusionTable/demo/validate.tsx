@@ -43,7 +43,11 @@ const AppList = () => {
 
   const searchForm = (
     <div>
-      <Form inline style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end' }} field={field}>
+      <Form
+        inline
+        style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end' }}
+        field={field}
+      >
         <Form.Item label=' '>
           <Input
             name='name'

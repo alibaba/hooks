@@ -19,11 +19,15 @@ describe('useWhyDidYouUpdate', () => {
     act(() => {
       hook.result.current.setCount(1);
     });
-    expect(console.log).toHaveBeenCalledWith('[why-did-you-update]', 'UseWhyDidYouUpdateComponent', {
-      count: {
-        from: 100,
-        to: 1,
+    expect(console.log).toHaveBeenCalledWith(
+      '[why-did-you-update]',
+      'UseWhyDidYouUpdateComponent',
+      {
+        count: {
+          from: 100,
+          to: 1,
+        },
       },
-    });
+    );
   });
 });

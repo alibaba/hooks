@@ -19,7 +19,10 @@ interface Result {
   list: Item[];
 }
 
-const getTableData = ({ current, pageSize, sorter, filters, extra }, formData: Object): Promise<Result> => {
+const getTableData = (
+  { current, pageSize, sorter, filters, extra },
+  formData: Object,
+): Promise<Result> => {
   console.log(sorter, filters, extra);
   let query = `page=${current}&size=${pageSize}`;
   Object.entries(formData).forEach(([key, value]) => {

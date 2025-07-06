@@ -4,8 +4,10 @@ import useRequest from '../index';
 import { request } from '../../utils/testingHelpers';
 
 describe('useDebouncePlugin', () => {
-  const setUp = (service: Parameters<typeof useRequest>[0], options: Parameters<typeof useRequest>[1]) =>
-    renderHook((o) => useRequest(service, o || options));
+  const setUp = (
+    service: Parameters<typeof useRequest>[0],
+    options: Parameters<typeof useRequest>[1],
+  ) => renderHook((o) => useRequest(service, o || options));
 
   let hook: RenderHookResult<any, any>;
 

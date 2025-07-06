@@ -28,7 +28,11 @@ const Article = () => {
   return (
     <>
       <div>
-        <input style={{ width: 300 }} value={keyword} onChange={(e) => setKeyword(e.target.value)} />
+        <input
+          style={{ width: 300 }}
+          value={keyword}
+          onChange={(e) => setKeyword(e.target.value)}
+        />
         <button
           style={{ marginLeft: 8 }}
           onClick={() => {

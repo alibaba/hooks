@@ -28,8 +28,12 @@ export default () => {
         run
       </button>
 
-      <div style={{ margin: '24px 0', width: 300 }}>Username: {action.loading ? 'Loading...' : action.data}</div>
-      <div>Username: {withLoadingDelayAction.loading ? 'Loading...' : withLoadingDelayAction.data}</div>
+      <div style={{ margin: '24px 0', width: 300 }}>
+        Username: {action.loading ? 'Loading...' : action.data}
+      </div>
+      <div>
+        Username: {withLoadingDelayAction.loading ? 'Loading...' : withLoadingDelayAction.data}
+      </div>
     </div>
   );
 };

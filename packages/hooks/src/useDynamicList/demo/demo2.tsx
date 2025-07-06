@@ -11,7 +11,13 @@ import { useDynamicList } from 'ahooks';
 import { Button, Form, Input } from 'antd';
 import React, { useEffect, useState } from 'react';
 
-const DynamicInputs = ({ value = [], onChange }: { value?: string[]; onChange?: (value: string[]) => void }) => {
+const DynamicInputs = ({
+  value = [],
+  onChange,
+}: {
+  value?: string[];
+  onChange?: (value: string[]) => void;
+}) => {
   const { list, remove, getKey, insert, replace, resetList } = useDynamicList(value);
 
   useEffect(() => {

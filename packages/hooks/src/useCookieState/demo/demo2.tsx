@@ -17,10 +17,18 @@ export default function App() {
   return (
     <>
       <p>{value}</p>
-      <button type='button' style={{ marginRight: '16px' }} onClick={() => setValue((v) => String(Number(v) + 1))}>
+      <button
+        type='button'
+        style={{ marginRight: '16px' }}
+        onClick={() => setValue((v) => String(Number(v) + 1))}
+      >
         inc +
       </button>
-      <button type='button' style={{ marginRight: '16px' }} onClick={() => setValue((v) => String(Number(v) - 1))}>
+      <button
+        type='button'
+        style={{ marginRight: '16px' }}
+        onClick={() => setValue((v) => String(Number(v) - 1))}
+      >
         dec -
       </button>
       <button type='button' onClick={() => setValue('0')}>

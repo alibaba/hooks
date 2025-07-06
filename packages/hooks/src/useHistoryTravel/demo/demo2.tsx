@@ -63,7 +63,12 @@ export default () => {
         <button type='button' disabled={backLength <= 0} onClick={back} style={{ marginRight: 8 }}>
           Undo
         </button>
-        <button type='button' disabled={forwardLength <= 0} onClick={forward} style={{ marginRight: 8 }}>
+        <button
+          type='button'
+          disabled={forwardLength <= 0}
+          onClick={forward}
+          style={{ marginRight: 8 }}
+        >
           Redo
         </button>
         <button type='button' disabled={!backLength && !forwardLength} onClick={onReset}>

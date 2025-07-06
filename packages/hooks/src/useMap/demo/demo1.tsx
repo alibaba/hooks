@@ -12,7 +12,11 @@ export default () => {
       <button type='button' onClick={() => set(String(Date.now()), new Date().toJSON())}>
         Add
       </button>
-      <button type='button' onClick={() => setAll([['text', 'this is a new Map']])} style={{ margin: '0 8px' }}>
+      <button
+        type='button'
+        onClick={() => setAll([['text', 'this is a new Map']])}
+        style={{ margin: '0 8px' }}
+      >
         Set new Map
       </button>
       <button type='button' onClick={() => remove('msg')} disabled={!get('msg')}>

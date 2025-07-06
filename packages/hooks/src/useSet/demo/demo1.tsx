@@ -9,7 +9,12 @@ export default () => {
       <button type='button' onClick={() => add(String(Date.now()))}>
         Add Timestamp
       </button>
-      <button type='button' onClick={() => remove('Hello')} disabled={!set.has('Hello')} style={{ margin: '0 8px' }}>
+      <button
+        type='button'
+        onClick={() => remove('Hello')}
+        disabled={!set.has('Hello')}
+        style={{ margin: '0 8px' }}
+      >
         Remove Hello
       </button>
       <button type='button' onClick={() => reset()}>

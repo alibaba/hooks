@@ -212,7 +212,8 @@ function genKeyFormatter(keyFilter: KeyFilter, exactMatch: boolean): KeyPredicat
     return (event: KeyboardEvent) => genFilterKey(event, keyFilter, exactMatch);
   }
   if (Array.isArray(keyFilter)) {
-    return (event: KeyboardEvent) => keyFilter.find((item) => genFilterKey(event, item, exactMatch));
+    return (event: KeyboardEvent) =>
+      keyFilter.find((item) => genFilterKey(event, item, exactMatch));
   }
   return () => Boolean(keyFilter);
 }

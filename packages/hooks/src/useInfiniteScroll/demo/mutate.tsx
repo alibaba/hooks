@@ -35,7 +35,9 @@ function deleteItem(id: string) {
 }
 
 export default () => {
-  const { data, loading, loadMore, loadingMore, mutate } = useInfiniteScroll((d) => getLoadMoreList(d?.nextId, 4));
+  const { data, loading, loadMore, loadingMore, mutate } = useInfiniteScroll((d) =>
+    getLoadMoreList(d?.nextId, 4),
+  );
 
   const {
     loading: deleteLading,

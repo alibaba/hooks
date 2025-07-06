@@ -90,7 +90,10 @@ function useSelections<T>(items: T[], options?: T[] | Options<T>) {
     [items, selectedMap, noneSelected],
   );
 
-  const partiallySelected = useMemo<boolean>(() => !noneSelected && !allSelected, [noneSelected, allSelected]);
+  const partiallySelected = useMemo<boolean>(
+    () => !noneSelected && !allSelected,
+    [noneSelected, allSelected],
+  );
 
   const toggleAll = () => (allSelected ? unSelectAll() : selectAll());
 

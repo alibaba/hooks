@@ -88,7 +88,12 @@ export default () => {
           />
         </ReactDragListView>
       </Form>
-      <Button style={{ marginTop: 8 }} block type='dashed' onClick={() => push({ name: 'new row', age: '25' })}>
+      <Button
+        style={{ marginTop: 8 }}
+        block
+        type='dashed'
+        onClick={() => push({ name: 'new row', age: '25' })}
+      >
         + Add row
       </Button>
       <Button

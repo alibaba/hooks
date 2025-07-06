@@ -47,7 +47,11 @@ const AppList = () => {
 
   const advanceSearchForm = (
     <div>
-      <Form inline style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end' }} field={field}>
+      <Form
+        inline
+        style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end' }}
+        field={field}
+      >
         <Form.Item label='name:'>
           <Input name='name' placeholder='name' />
         </Form.Item>
@@ -79,7 +83,11 @@ const AppList = () => {
 
   const searchForm = (
     <div>
-      <Form inline style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end' }} field={field}>
+      <Form
+        inline
+        style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end' }}
+        field={field}
+      >
         <Form.Item label=' '>
           <Select name='gender' defaultValue='all' onChange={submit}>
             <Select.Option value='all'>all</Select.Option>

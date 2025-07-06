@@ -33,7 +33,11 @@ export default () => {
       <button type='button' style={{ marginRight: 8 }} onClick={() => setPath('')}>
         unload
       </button>
-      <button type='button' style={{ marginRight: 8 }} onClick={() => setPath('/useExternal/bootstrap-badge.css')}>
+      <button
+        type='button'
+        style={{ marginRight: 8 }}
+        onClick={() => setPath('/useExternal/bootstrap-badge.css')}
+      >
         load
       </button>
     </>

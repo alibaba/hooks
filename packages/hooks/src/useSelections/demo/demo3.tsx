@@ -68,9 +68,12 @@ export default () => {
     getData(pagination);
   }, []);
 
-  const { selected, allSelected, isSelected, toggle, toggleAll, partiallySelected } = useSelections(dataList, {
-    itemKey: 'id',
-  });
+  const { selected, allSelected, isSelected, toggle, toggleAll, partiallySelected } = useSelections(
+    dataList,
+    {
+      itemKey: 'id',
+    },
+  );
 
   return (
     <Spin spinning={loading}>
@@ -79,7 +82,11 @@ export default () => {
 
         return (
           <div key={id} style={{ display: 'flex', flexDirection: 'row' }}>
-            <Checkbox style={{ padding: '4px 8px' }} onClick={() => toggle(item)} checked={isSelected(item)}>
+            <Checkbox
+              style={{ padding: '4px 8px' }}
+              onClick={() => toggle(item)}
+              checked={isSelected(item)}
+            >
               {title}
             </Checkbox>
           </div>

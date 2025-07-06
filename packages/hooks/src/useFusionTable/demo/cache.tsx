@@ -17,7 +17,10 @@ interface Result {
   list: Item[];
 }
 
-const getTableData = ({ current, pageSize, filters, sorter }, formData: Object): Promise<Result> => {
+const getTableData = (
+  { current, pageSize, filters, sorter },
+  formData: Object,
+): Promise<Result> => {
   console.log(sorter, filters);
 
   let query = `page=${current}&size=${pageSize}`;
@@ -49,7 +52,11 @@ const AppList = () => {
 
   const searchFrom = (
     <div style={{ marginBottom: 16 }}>
-      <Form field={field} inline style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center' }}>
+      <Form
+        field={field}
+        inline
+        style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center' }}
+      >
         <Form.Item label='name:'>
           <Input name='name' placeholder='name' />
         </Form.Item>

@@ -29,7 +29,10 @@ const useDrop = (target: BasicTarget, options: Options = {}) => {
         return;
       }
 
-      const onData = (dataTransfer: DataTransfer, event: React.DragEvent | React.ClipboardEvent) => {
+      const onData = (
+        dataTransfer: DataTransfer,
+        event: React.DragEvent | React.ClipboardEvent,
+      ) => {
         const uri = dataTransfer.getData('text/uri-list');
         const dom = dataTransfer.getData('custom');
 

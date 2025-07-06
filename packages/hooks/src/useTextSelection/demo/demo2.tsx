@@ -49,7 +49,10 @@ export default () => {
       <p id='translate-dom' style={{ padding: 20, border: '1px solid' }}>
         Translation of this paragraph;Translation of this paragraph;Translation of this paragraph;
       </p>
-      <Popover content={<Spin spinning={loading}>{loading ? 'Translating……' : data}</Spin>} open={open}>
+      <Popover
+        content={<Spin spinning={loading}>{loading ? 'Translating……' : data}</Spin>}
+        open={open}
+      >
         <span
           style={{
             position: 'fixed',

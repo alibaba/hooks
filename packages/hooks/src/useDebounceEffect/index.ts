@@ -4,7 +4,11 @@ import type { DebounceOptions } from '../useDebounce/debounceOptions';
 import useDebounceFn from '../useDebounceFn';
 import useUpdateEffect from '../useUpdateEffect';
 
-function useDebounceEffect(effect: EffectCallback, deps?: DependencyList, options?: DebounceOptions) {
+function useDebounceEffect(
+  effect: EffectCallback,
+  deps?: DependencyList,
+  options?: DebounceOptions,
+) {
   const [flag, setFlag] = useState({});
 
   const { run } = useDebounceFn(() => {

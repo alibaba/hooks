@@ -4,7 +4,10 @@ import isDev from '../utils/isDev';
 
 type noop = (this: any, ...args: any[]) => any;
 
-type PickFunction<T extends noop> = (this: ThisParameterType<T>, ...args: Parameters<T>) => ReturnType<T>;
+type PickFunction<T extends noop> = (
+  this: ThisParameterType<T>,
+  ...args: Parameters<T>
+) => ReturnType<T>;
 
 const useMemoizedFn = <T extends noop>(fn: T) => {
   if (isDev) {

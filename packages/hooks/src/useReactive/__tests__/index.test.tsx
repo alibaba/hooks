@@ -51,7 +51,11 @@ const Demo = () => {
       <button style={{ marginRight: '10px' }} onClick={() => state.arr.shift()} role='shiftbtn'>
         shift
       </button>
-      <button style={{ marginRight: '10px' }} role='unshiftbtn' onClick={() => state.arr.unshift(2)}>
+      <button
+        style={{ marginRight: '10px' }}
+        role='unshiftbtn'
+        onClick={() => state.arr.unshift(2)}
+      >
         unshift
       </button>
       <button style={{ marginRight: '10px' }} role='reverse' onClick={() => state.arr.reverse()}>

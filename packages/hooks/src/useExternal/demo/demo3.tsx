@@ -37,7 +37,11 @@ export default () => {
       <button type='button' style={{ marginRight: 8 }} onClick={() => setPath('')}>
         unload
       </button>
-      <button type='button' style={{ marginRight: 8 }} onClick={() => setPath('/useExternal/bootstrap-badge.css')}>
+      <button
+        type='button'
+        style={{ marginRight: 8 }}
+        onClick={() => setPath('/useExternal/bootstrap-badge.css')}
+      >
         load
       </button>
       <hr />
@@ -48,7 +52,11 @@ export default () => {
       <button type='button' style={{ marginRight: 8 }} onClick={() => setPath2('')}>
         unload
       </button>
-      <button type='button' style={{ marginRight: 8 }} onClick={() => setPath2('/useExternal/bootstrap-badge.css')}>
+      <button
+        type='button'
+        style={{ marginRight: 8 }}
+        onClick={() => setPath2('/useExternal/bootstrap-badge.css')}
+      >
         load
       </button>
     </>
