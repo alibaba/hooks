@@ -94,7 +94,7 @@ export default () => {
       })}
       <Pagination
         style={{ margin: '12px 0 16px 0' }}
-        size='small'
+        size="small"
         showSizeChanger
         current={pagination.current}
         pageSize={pagination.pageSize}

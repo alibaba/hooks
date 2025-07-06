@@ -41,7 +41,7 @@ export default () => {
   return (
     <div>
       <p>
-        <button type='button' onClick={() => toggle()}>
+        <button type="button" onClick={() => toggle()}>
           show/hidden
         </button>
       </p>
@@ -58,11 +58,11 @@ export default () => {
         <button onClick={() => clear()}>Clear All</button>
       </p>
       <h2>Article 1</h2>
-      {state && <Article cacheKey='Article1' />}
+      {state && <Article cacheKey="Article1" />}
       <h2>Article 2</h2>
-      {state && <Article cacheKey='Article2' />}
+      {state && <Article cacheKey="Article2" />}
       <h2>Article 3</h2>
-      {state && <Article cacheKey='Article3' />}
+      {state && <Article cacheKey="Article3" />}
     </div>
   );
 };

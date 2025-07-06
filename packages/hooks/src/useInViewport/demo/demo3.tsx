@@ -45,7 +45,7 @@ export default () => {
 
   return (
     <div
-      id='parent-scroll'
+      id="parent-scroll"
       style={{ width: 300, height: 300, border: '1px solid', display: 'flex', overflow: 'hidden' }}
     >
       <div style={{ width: '30%', backgroundColor: '#f0f0f0' }}>
@@ -67,7 +67,7 @@ export default () => {
           ))}
         </ul>
       </div>
-      <div id='content-scroll' style={{ flex: 1, overflowY: 'scroll', position: 'relative' }}>
+      <div id="content-scroll" style={{ flex: 1, overflowY: 'scroll', position: 'relative' }}>
         {menus.map((menu, index) => (
           <div
             ref={(el: HTMLDivElement) => {

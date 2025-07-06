@@ -24,7 +24,7 @@ export default function () {
     <>
       <p>{foo.data}</p>
       <button
-        type='button'
+        type="button"
         onClick={() => {
           setFlag({});
         }}

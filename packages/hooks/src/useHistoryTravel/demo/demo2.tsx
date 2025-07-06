@@ -54,37 +54,37 @@ export default () => {
         <input
           value={inputValue}
           onChange={(e) => setInputValue(e.target.value)}
-          placeholder='Please enter TODO name'
+          placeholder="Please enter TODO name"
           style={{ width: 200, marginRight: 8 }}
         />
-        <button type='button' onClick={onAdd} style={{ marginRight: 8 }}>
+        <button type="button" onClick={onAdd} style={{ marginRight: 8 }}>
           Add TODO
         </button>
-        <button type='button' disabled={backLength <= 0} onClick={back} style={{ marginRight: 8 }}>
+        <button type="button" disabled={backLength <= 0} onClick={back} style={{ marginRight: 8 }}>
           Undo
         </button>
         <button
-          type='button'
+          type="button"
           disabled={forwardLength <= 0}
           onClick={forward}
           style={{ marginRight: 8 }}
         >
           Redo
         </button>
-        <button type='button' disabled={!backLength && !forwardLength} onClick={onReset}>
+        <button type="button" disabled={!backLength && !forwardLength} onClick={onReset}>
           Reset
         </button>
       </div>
       <div>
         <input
-          type='number'
+          type="number"
           value={step}
           onChange={(e) => setStep(e.target.value as any)}
           max={forwardLength}
           min={backLength * -1}
           style={{ marginRight: 8, width: 60 }}
         />
-        <button type='button' onClick={onGo}>
+        <button type="button" onClick={onGo}>
           Go
         </button>
       </div>

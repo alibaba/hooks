@@ -36,7 +36,7 @@ export default () => {
   const [state, { toggle }] = useBoolean();
   return (
     <div>
-      <button type='button' onClick={() => toggle()}>
+      <button type="button" onClick={() => toggle()}>
         show/hidden
       </button>
       {state && <Article />}

@@ -25,7 +25,7 @@ export default () => {
     <>
       <p>count: {count}</p>
       <button
-        type='button'
+        type="button"
         onClick={() => {
           setCount((c) => c + 1);
         }}
@@ -58,7 +58,7 @@ const ExpensiveTree = React.memo<{ [key: string]: any }>(({ showCount }) => {
   return (
     <div>
       <p>Render Count: {renderCountRef.current}</p>
-      <button type='button' onClick={showCount}>
+      <button type="button" onClick={showCount}>
         showParentCount
       </button>
     </div>

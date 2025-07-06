@@ -25,7 +25,7 @@ export default () => {
           name={['names', getKey(index)]}
           initialValue={item}
         >
-          <Input style={{ width: 300 }} placeholder='Please enter your name' />
+          <Input style={{ width: 300 }} placeholder="Please enter your name" />
         </Form.Item>
       </div>
       <div style={{ marginTop: 4 }}>
@@ -51,7 +51,7 @@ export default () => {
     <>
       <Form form={form}>{list.map((ele, index) => Row(index, ele))}</Form>
       <Button
-        type='primary'
+        type="primary"
         onClick={() =>
           form
             .validateFields()

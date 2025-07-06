@@ -18,20 +18,20 @@ export default function App() {
     <>
       <p>{value}</p>
       <button
-        type='button'
+        type="button"
         style={{ marginRight: '16px' }}
         onClick={() => setValue((v) => String(Number(v) + 1))}
       >
         inc +
       </button>
       <button
-        type='button'
+        type="button"
         style={{ marginRight: '16px' }}
         onClick={() => setValue((v) => String(Number(v) - 1))}
       >
         dec -
       </button>
-      <button type='button' onClick={() => setValue('0')}>
+      <button type="button" onClick={() => setValue('0')}>
         reset
       </button>
     </>

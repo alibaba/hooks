@@ -29,14 +29,14 @@ export default () => {
       <div style={{ textAlign: 'right', marginBottom: 16 }}>
         <input
           style={{ width: 120 }}
-          placeholder='line number'
-          type='number'
+          placeholder="line number"
+          type="number"
           value={value}
           onChange={(e) => onChange(Number(e.target.value))}
         />
         <button
           style={{ marginLeft: 8 }}
-          type='button'
+          type="button"
           onClick={() => {
             scrollTo(Number(value));
           }}

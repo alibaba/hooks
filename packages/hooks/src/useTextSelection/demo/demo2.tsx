@@ -46,7 +46,7 @@ export default () => {
 
   return (
     <div>
-      <p id='translate-dom' style={{ padding: 20, border: '1px solid' }}>
+      <p id="translate-dom" style={{ padding: 20, border: '1px solid' }}>
         Translation of this paragraph;Translation of this paragraph;Translation of this paragraph;
       </p>
       <Popover

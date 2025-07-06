@@ -52,28 +52,28 @@ const AppList = () => {
         style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end' }}
         field={field}
       >
-        <Form.Item label='name:'>
-          <Input name='name' placeholder='name' />
+        <Form.Item label="name:">
+          <Input name="name" placeholder="name" />
         </Form.Item>
-        <Form.Item label='email:'>
-          <Input name='email' placeholder='email' />
+        <Form.Item label="email:">
+          <Input name="email" placeholder="email" />
         </Form.Item>
-        <Form.Item label='phone:'>
-          <Input name='phone' placeholder='phone' />
+        <Form.Item label="phone:">
+          <Input name="phone" placeholder="phone" />
         </Form.Item>
 
-        <Form.Item label=' '>
-          <Form.Submit loading={loading} type='primary' onClick={submit}>
+        <Form.Item label=" ">
+          <Form.Submit loading={loading} type="primary" onClick={submit}>
             Search
           </Form.Submit>
         </Form.Item>
 
-        <Form.Item label=' '>
+        <Form.Item label=" ">
           <Button onClick={reset}>reset</Button>
         </Form.Item>
 
-        <Form.Item label=' '>
-          <Button text type='primary' onClick={changeType}>
+        <Form.Item label=" ">
+          <Button text type="primary" onClick={changeType}>
             Simple Search
           </Button>
         </Form.Item>
@@ -88,25 +88,25 @@ const AppList = () => {
         style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end' }}
         field={field}
       >
-        <Form.Item label=' '>
-          <Select name='gender' defaultValue='all' onChange={submit}>
-            <Select.Option value='all'>all</Select.Option>
-            <Select.Option value='male'>male</Select.Option>
-            <Select.Option value='female'>female</Select.Option>
+        <Form.Item label=" ">
+          <Select name="gender" defaultValue="all" onChange={submit}>
+            <Select.Option value="all">all</Select.Option>
+            <Select.Option value="male">male</Select.Option>
+            <Select.Option value="female">female</Select.Option>
           </Select>
         </Form.Item>
 
-        <Form.Item label=' '>
+        <Form.Item label=" ">
           <Input
-            name='name'
-            innerAfter={<Icon type='search' size='xs' onClick={submit} style={{ margin: 4 }} />}
-            placeholder='enter name'
+            name="name"
+            innerAfter={<Icon type="search" size="xs" onClick={submit} style={{ margin: 4 }} />}
+            placeholder="enter name"
             onPressEnter={submit}
           />
         </Form.Item>
 
-        <Form.Item label=' '>
-          <Button text type='primary' onClick={changeType}>
+        <Form.Item label=" ">
+          <Button text type="primary" onClick={changeType}>
             Advanced Search
           </Button>
         </Form.Item>
@@ -117,11 +117,11 @@ const AppList = () => {
   return (
     <>
       {type === 'simple' ? searchForm : advanceSearchForm}
-      <Table {...tableProps} primaryKey='email'>
-        <Table.Column title='name' dataIndex='name.last' width={140} />
-        <Table.Column title='email' dataIndex='email' width={500} />
-        <Table.Column title='phone' dataIndex='phone' width={500} />
-        <Table.Column title='gender' dataIndex='gender' width={500} />
+      <Table {...tableProps} primaryKey="email">
+        <Table.Column title="name" dataIndex="name.last" width={140} />
+        <Table.Column title="email" dataIndex="email" width={500} />
+        <Table.Column title="phone" dataIndex="phone" width={500} />
+        <Table.Column title="gender" dataIndex="gender" width={500} />
       </Table>
       <Pagination style={{ marginTop: 16 }} {...paginationProps} />
       <div style={{ background: '#f5f5f5', padding: 8, marginTop: 16 }}>

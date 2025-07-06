@@ -39,7 +39,7 @@ export default () => {
   });
 
   return (
-    <Space direction='vertical'>
+    <Space direction="vertical">
       <p>Username: {loading ? 'loading...' : data}</p>
       <Button onClick={() => setUserId(Math.random())}>
         Use latest id to refresh (by `refreshDeps`)

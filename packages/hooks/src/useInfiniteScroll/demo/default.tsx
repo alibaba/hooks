@@ -47,7 +47,7 @@ export default () => {
 
       <div style={{ marginTop: 8 }}>
         {data?.nextId && (
-          <button type='button' onClick={loadMore} disabled={loadingMore}>
+          <button type="button" onClick={loadMore} disabled={loadingMore}>
             {loadingMore ? 'Loading more...' : 'Click to load more'}
           </button>
         )}

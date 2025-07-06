@@ -24,7 +24,7 @@ const Parent = () => {
   return (
     <>
       <ControllableComponent value={state} onChange={setState} />
-      <button type='button' onClick={clear} style={{ marginLeft: 8 }}>
+      <button type="button" onClick={clear} style={{ marginLeft: 8 }}>
         Clear
       </button>
     </>

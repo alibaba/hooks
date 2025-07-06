@@ -16,13 +16,13 @@ export default () => {
     <div ref={ref} style={{ background: 'white' }}>
       <div style={{ marginBottom: 16 }}>{isFullscreen ? 'Fullscreen' : 'Not fullscreen'}</div>
       <div>
-        <button type='button' onClick={enterFullscreen}>
+        <button type="button" onClick={enterFullscreen}>
           enterFullscreen
         </button>
-        <button type='button' onClick={exitFullscreen} style={{ margin: '0 8px' }}>
+        <button type="button" onClick={exitFullscreen} style={{ margin: '0 8px' }}>
           exitFullscreen
         </button>
-        <button type='button' onClick={toggleFullscreen}>
+        <button type="button" onClick={toggleFullscreen}>
           toggleFullscreen
         </button>
       </div>

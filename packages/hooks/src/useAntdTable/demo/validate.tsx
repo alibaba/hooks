@@ -67,19 +67,19 @@ export default () => {
   const searchForm = (
     <div style={{ marginBottom: 16 }}>
       <Form form={form} style={{ display: 'flex', justifyContent: 'flex-end' }}>
-        <Form.Item name='gender' initialValue='male'>
+        <Form.Item name="gender" initialValue="male">
           <Select style={{ width: 120, marginRight: 16 }} onChange={submit}>
-            <Option value=''>all</Option>
-            <Option value='male'>male</Option>
-            <Option value='female'>female</Option>
+            <Option value="">all</Option>
+            <Option value="male">male</Option>
+            <Option value="female">female</Option>
           </Select>
         </Form.Item>
         <Form.Item
-          name='name'
-          initialValue='jack'
+          name="name"
+          initialValue="jack"
           rules={[{ required: true, message: 'name is required' }]}
         >
-          <Input.Search placeholder='enter name' style={{ width: 240 }} onSearch={submit} />
+          <Input.Search placeholder="enter name" style={{ width: 240 }} onSearch={submit} />
         </Form.Item>
       </Form>
     </div>
@@ -88,7 +88,7 @@ export default () => {
   return (
     <div>
       {searchForm}
-      <Table columns={columns} rowKey='email' style={{ overflow: 'auto' }} {...tableProps} />
+      <Table columns={columns} rowKey="email" style={{ overflow: 'auto' }} {...tableProps} />
 
       <div style={{ background: '#f5f5f5', padding: 8 }}>
         <p>Current Table:</p>

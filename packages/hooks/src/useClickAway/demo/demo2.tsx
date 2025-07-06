@@ -21,7 +21,7 @@ export default () => {
 
   return (
     <div>
-      <button type='button' id='use-click-away-button'>
+      <button type="button" id="use-click-away-button">
         box
       </button>
       <p>counter: {counter}</p>

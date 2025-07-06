@@ -22,7 +22,7 @@ export default () => {
 
   return (
     <div>
-      <button ref={ref} type='button'>
+      <button ref={ref} type="button">
         box
       </button>
       <p>counter: {counter}</p>

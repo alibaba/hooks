@@ -22,5 +22,5 @@ export default () => {
     },
   });
 
-  return <div id='hover-div'>{isHovering ? 'hover' : 'leaveHover'}</div>;
+  return <div id="hover-div">{isHovering ? 'hover' : 'leaveHover'}</div>;
 };

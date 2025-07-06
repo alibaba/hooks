@@ -19,7 +19,7 @@ export default () => {
     <div key={getKey(index)} style={{ marginBottom: 16 }}>
       <Input
         style={{ width: 300 }}
-        placeholder='Please enter name'
+        placeholder="Please enter name"
         onChange={(e) => replace(index, e.target.value)}
         value={item}
       />

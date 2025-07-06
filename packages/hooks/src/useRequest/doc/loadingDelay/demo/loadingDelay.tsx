@@ -24,7 +24,7 @@ export default () => {
 
   return (
     <div>
-      <button type='button' onClick={trigger}>
+      <button type="button" onClick={trigger}>
         run
       </button>
 

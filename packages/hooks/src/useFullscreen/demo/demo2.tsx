@@ -13,9 +13,9 @@ export default () => {
   return (
     <div style={{ background: 'white' }}>
       <div style={{ marginBottom: 16 }}>
-        <img id='fullscreen-img' src={img} style={{ width: 320 }} alt='' />
+        <img id="fullscreen-img" src={img} style={{ width: 320 }} alt="" />
       </div>
-      <button type='button' onClick={enterFullscreen}>
+      <button type="button" onClick={enterFullscreen}>
         enterFullscreen
       </button>
     </div>

@@ -31,10 +31,10 @@ export default () => {
       <input
         onChange={(e) => setState(e.target.value)}
         value={state}
-        placeholder='Please enter userId'
+        placeholder="Please enter userId"
         style={{ width: 240, marginRight: 16 }}
       />
-      <button type='button' onClick={onChange}>
+      <button type="button" onClick={onChange}>
         GetUserName
       </button>
       <p style={{ marginTop: 8 }}>UserId: {params[0]}</p>

@@ -25,7 +25,7 @@ export default () => {
     <>
       <p>count: {count}</p>
       <button
-        type='button'
+        type="button"
         onClick={() => {
           setCount((c) => c + 1);
         }}
@@ -33,10 +33,10 @@ export default () => {
         Add Count
       </button>
       <div style={{ marginTop: 16 }}>
-        <button type='button' onClick={callbackFn}>
+        <button type="button" onClick={callbackFn}>
           call callbackFn
         </button>
-        <button type='button' onClick={memoizedFn} style={{ marginLeft: 8 }}>
+        <button type="button" onClick={memoizedFn} style={{ marginLeft: 8 }}>
           call memoizedFn
         </button>
       </div>

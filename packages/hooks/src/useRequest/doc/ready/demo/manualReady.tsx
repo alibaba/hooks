@@ -28,7 +28,7 @@ export default () => {
       </p>
       <p>
         Username: {loading ? 'Loading' : data}
-        <button type='button' onClick={run} style={{ marginLeft: 16 }}>
+        <button type="button" onClick={run} style={{ marginLeft: 16 }}>
           run
         </button>
       </p>

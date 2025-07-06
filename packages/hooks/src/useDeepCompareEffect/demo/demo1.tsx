@@ -22,7 +22,7 @@ export default () => {
       <p>effectCount: {effectCountRef.current}</p>
       <p>deepCompareCount: {deepCompareCountRef.current}</p>
       <p>
-        <button type='button' onClick={() => setCount((c) => c + 1)}>
+        <button type="button" onClick={() => setCount((c) => c + 1)}>
           reRender
         </button>
       </p>

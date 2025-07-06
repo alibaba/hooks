@@ -60,10 +60,10 @@ export default () => {
         value={gender}
         style={{ width: 180, marginBottom: 24 }}
         onChange={(e) => setGender(e.target.value)}
-        placeholder='select gender'
+        placeholder="select gender"
       >
-        <option value='male'>male</option>
-        <option value='female'>female</option>
+        <option value="male">male</option>
+        <option value="female">female</option>
       </select>
       {loading ? (
         <p>loading</p>

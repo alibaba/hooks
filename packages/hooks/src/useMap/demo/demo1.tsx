@@ -9,20 +9,20 @@ export default () => {
 
   return (
     <div>
-      <button type='button' onClick={() => set(String(Date.now()), new Date().toJSON())}>
+      <button type="button" onClick={() => set(String(Date.now()), new Date().toJSON())}>
         Add
       </button>
       <button
-        type='button'
+        type="button"
         onClick={() => setAll([['text', 'this is a new Map']])}
         style={{ margin: '0 8px' }}
       >
         Set new Map
       </button>
-      <button type='button' onClick={() => remove('msg')} disabled={!get('msg')}>
+      <button type="button" onClick={() => remove('msg')} disabled={!get('msg')}>
         Remove 'msg'
       </button>
-      <button type='button' onClick={() => reset()} style={{ margin: '0 8px' }}>
+      <button type="button" onClick={() => reset()} style={{ margin: '0 8px' }}>
         Reset
       </button>
       <div style={{ marginTop: 16 }}>

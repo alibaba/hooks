@@ -48,7 +48,7 @@ export default () => {
 
       <div style={{ marginTop: 8 }}>
         {hasMore && (
-          <button type='button' onClick={loadMore} disabled={loadingMore}>
+          <button type="button" onClick={loadMore} disabled={loadingMore}>
             {loadingMore ? 'Loading more...' : 'Click to load more'}
           </button>
         )}
