@@ -127,7 +127,7 @@ export function createUseStorageState(getStorage: () => Storage | undefined) {
       enable: listenStorageChange,
     });
 
-    return [state, useMemoizedFn(updateState)] as const;
+    return [state, useMemoizedFn(updateState) as (value: SetState<T>) => void] as const;
   }
 
   return useStorageState;
