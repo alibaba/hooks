@@ -17,10 +17,10 @@ export default () => {
     onLeave: () => {
       console.log('onLeave');
     },
-    onChange: isHover => {
+    onChange: (isHover) => {
       console.log('onChange', isHover);
     },
   });
 
-  return <div id="hover-div">{isHovering ? 'hover' : 'leaveHover'}</div>;
+  return <div id='hover-div'>{isHovering ? 'hover' : 'leaveHover'}</div>;
 };

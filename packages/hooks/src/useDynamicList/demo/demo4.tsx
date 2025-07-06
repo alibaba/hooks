@@ -38,7 +38,7 @@ export default () => {
         <>
           <DragOutlined style={{ cursor: 'move', marginRight: 8 }} />
           <Form.Item name={['params', getKey(index), 'name']} initialValue={text} noStyle>
-            <Input style={{ width: 120, marginRight: 16 }} placeholder="name" />
+            <Input style={{ width: 120, marginRight: 16 }} placeholder='name' />
           </Form.Item>
         </>
       ),
@@ -49,7 +49,7 @@ export default () => {
       key: 'age',
       render: (text: string, row: Item, index: number) => (
         <Form.Item name={['params', getKey(index), 'age']} initialValue={text} noStyle>
-          <Input style={{ width: 120, marginRight: 16 }} placeholder="age" />
+          <Input style={{ width: 120, marginRight: 16 }} placeholder='age' />
         </Form.Item>
       ),
     },
@@ -60,7 +60,7 @@ export default () => {
       render: (text: string, row: Item, index: number) => (
         <>
           <Form.Item name={['params', getKey(index), 'memo']} initialValue={text} noStyle>
-            <Input style={{ width: 300, marginRight: 16 }} placeholder="please input the memo" />
+            <Input style={{ width: 300, marginRight: 16 }} placeholder='please input the memo' />
           </Form.Item>
           <Button.Group>
             <Button danger onClick={() => remove(index)}>
@@ -88,16 +88,11 @@ export default () => {
           />
         </ReactDragListView>
       </Form>
-      <Button
-        style={{ marginTop: 8 }}
-        block
-        type="dashed"
-        onClick={() => push({ name: 'new row', age: '25' })}
-      >
+      <Button style={{ marginTop: 8 }} block type='dashed' onClick={() => push({ name: 'new row', age: '25' })}>
         + Add row
       </Button>
       <Button
-        type="primary"
+        type='primary'
         style={{ marginTop: 16 }}
         onClick={() => {
           form

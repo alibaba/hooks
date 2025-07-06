@@ -16,12 +16,12 @@ export default () => {
     <>
       <button
         style={{ marginRight: 8 }}
-        type="button"
+        type='button'
         onClick={() => setState({ count: Number(state.count || 0) + 1 })}
       >
         add
       </button>
-      <button type="button" onClick={() => setState({ count: undefined })}>
+      <button type='button' onClick={() => setState({ count: undefined })}>
         clear
       </button>
       <div>state: {state?.count}</div>

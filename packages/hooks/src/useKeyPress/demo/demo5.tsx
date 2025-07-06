@@ -58,7 +58,7 @@ export default () => {
     <div>
       <div>
         <p>Input and pressing enter: {text}</p>
-        <input id="input" style={{ width: 300, marginRight: 24 }} />
+        <input id='input' style={{ width: 300, marginRight: 24 }} />
       </div>
       <div style={{ marginTop: 24 }}>
         <p>Input and pressing enter: {textRef}</p>
@@ -66,7 +66,7 @@ export default () => {
       </div>
       <div style={{ marginTop: 24 }}>
         <p>Input after enter change: {textSync}</p>
-        <input id="input2" style={{ width: 300, marginRight: 24 }} />
+        <input id='input2' style={{ width: 300, marginRight: 24 }} />
       </div>
     </div>
   );

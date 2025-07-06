@@ -19,9 +19,7 @@ export interface StandardProps<T> {
   onChange: (val: T) => void;
 }
 
-function useControllableValue<T = any>(
-  props: StandardProps<T>,
-): [T, (v: SetStateAction<T>) => void];
+function useControllableValue<T = any>(props: StandardProps<T>): [T, (v: SetStateAction<T>) => void];
 function useControllableValue<T = any>(
   props?: Props,
   options?: Options<T>,

@@ -28,10 +28,7 @@ export default () => {
     refreshDeps: [userId],
     refreshDepsAction: () => {
       if (!isNumber(userId)) {
-        console.log(
-          `parameter "userId" expected to be a number, but got ${typeof userId}.`,
-          userId,
-        );
+        console.log(`parameter "userId" expected to be a number, but got ${typeof userId}.`, userId);
         return;
       }
       run(userId);
@@ -39,11 +36,9 @@ export default () => {
   });
 
   return (
-    <Space direction="vertical">
+    <Space direction='vertical'>
       <p>Username: {loading ? 'loading...' : data}</p>
-      <Button onClick={() => setUserId(Math.random())}>
-        Use latest id to refresh (by `refreshDeps`)
-      </Button>
+      <Button onClick={() => setUserId(Math.random())}>Use latest id to refresh (by `refreshDeps`)</Button>
       <Button onClick={() => run(Math.random())}>Use latest id to refresh (by `run`)</Button>
     </Space>
   );

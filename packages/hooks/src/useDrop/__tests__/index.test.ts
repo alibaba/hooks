@@ -3,8 +3,7 @@ import type { Options } from '../index';
 import useDrop from '../index';
 import type { BasicTarget } from '../../utils/domTarget';
 
-const setup = (target: unknown, options?: Options) =>
-  renderHook(() => useDrop(target as BasicTarget, options));
+const setup = (target: unknown, options?: Options) => renderHook(() => useDrop(target as BasicTarget, options));
 
 const events = {};
 const mockTarget = {

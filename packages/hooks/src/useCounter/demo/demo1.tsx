@@ -17,7 +17,7 @@ export default () => {
       <p>{current} [max: 10; min: 1;]</p>
       <div>
         <button
-          type="button"
+          type='button'
           onClick={() => {
             inc();
           }}
@@ -26,7 +26,7 @@ export default () => {
           inc()
         </button>
         <button
-          type="button"
+          type='button'
           onClick={() => {
             dec();
           }}
@@ -35,7 +35,7 @@ export default () => {
           dec()
         </button>
         <button
-          type="button"
+          type='button'
           onClick={() => {
             set(3);
           }}
@@ -43,7 +43,7 @@ export default () => {
         >
           set(3)
         </button>
-        <button type="button" onClick={reset} style={{ marginRight: 8 }}>
+        <button type='button' onClick={reset} style={{ marginRight: 8 }}>
           reset()
         </button>
       </div>

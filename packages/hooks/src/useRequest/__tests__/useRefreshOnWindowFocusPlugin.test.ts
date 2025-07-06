@@ -7,10 +7,8 @@ import { request } from '../../utils/testingHelpers';
 describe('useRefreshOnWindowFocusPlugin', () => {
   jest.useFakeTimers();
 
-  const setUp = (
-    service: Parameters<typeof useRequest>[0],
-    options: Parameters<typeof useRequest>[1],
-  ) => renderHook((o) => useRequest(service, o || options));
+  const setUp = (service: Parameters<typeof useRequest>[0], options: Parameters<typeof useRequest>[1]) =>
+    renderHook((o) => useRequest(service, o || options));
 
   let hook: RenderHookResult<any, any>;
   let hook1: RenderHookResult<any, any>;

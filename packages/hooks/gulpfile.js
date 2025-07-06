@@ -15,8 +15,7 @@ async function genDesc(mdPath) {
   }
   const mdFile = fs.readFileSync(mdPath, 'utf8');
   const { content } = gm(mdFile);
-  let description =
-    (content.replace(/\r\n/g, '\n').match(/# \w+[\s\n]+(.+?)(?:, |\. |\n|\.\n)/m) || [])[1] || '';
+  let description = (content.replace(/\r\n/g, '\n').match(/# \w+[\s\n]+(.+?)(?:, |\. |\n|\.\n)/m) || [])[1] || '';
 
   description = description.trim();
   description = description.charAt(0).toLowerCase() + description.slice(1);

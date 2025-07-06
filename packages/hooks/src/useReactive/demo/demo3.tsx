@@ -24,11 +24,11 @@ export default () => {
           e.preventDefault();
         }}
       >
-        <input type="text" value={state.bug} onChange={(e) => (state.bug = e.target.value)} />
-        <button type="submit" style={{ marginLeft: '10px' }}>
+        <input type='text' value={state.bug} onChange={(e) => (state.bug = e.target.value)} />
+        <button type='submit' style={{ marginLeft: '10px' }}>
           Add
         </button>
-        <button type="button" style={{ marginLeft: '10px' }} onClick={() => state.bugs.pop()}>
+        <button type='button' style={{ marginLeft: '10px' }} onClick={() => state.bugs.pop()}>
           Delete
         </button>
       </form>

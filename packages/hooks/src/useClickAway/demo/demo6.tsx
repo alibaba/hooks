@@ -3,7 +3,7 @@
  * desc: Add the addEventListener to shadow DOM root instead of the document
  *
  * title.zh-CN: 支持 shadow DOM
- * desc.zh-CN: 将 addEventListener 添加到 shadow DOM root 
+ * desc.zh-CN: 将 addEventListener 添加到 shadow DOM root
  */
 
 import React, { useState, useRef } from 'react';
@@ -24,7 +24,7 @@ export default () => {
   return (
     <root.div>
       <div>
-        <button type="button" ref={ref}>
+        <button type='button' ref={ref}>
           box
         </button>
         <p>counter: {counter}</p>

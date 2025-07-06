@@ -7,8 +7,7 @@ interface ParamsObj {
   options?: { immediate: boolean };
 }
 
-const setUp = ({ fn, delay, options }: ParamsObj) =>
-  renderHook(() => useRafInterval(fn, delay, options));
+const setUp = ({ fn, delay, options }: ParamsObj) => renderHook(() => useRafInterval(fn, delay, options));
 
 const FRAME_TIME = 16;
 describe('useRafInterval', () => {

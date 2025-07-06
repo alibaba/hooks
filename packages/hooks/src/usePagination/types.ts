@@ -4,12 +4,9 @@ export type Data = { total: number; list: any[] };
 
 export type Params = [{ current: number; pageSize: number; [key: string]: any }, ...any[]];
 
-export type Service<TData extends Data, TParams extends Params> = (
-  ...args: TParams
-) => Promise<TData>;
+export type Service<TData extends Data, TParams extends Params> = (...args: TParams) => Promise<TData>;
 
-export interface PaginationResult<TData extends Data, TParams extends Params>
-  extends Result<TData, TParams> {
+export interface PaginationResult<TData extends Data, TParams extends Params> extends Result<TData, TParams> {
   pagination: {
     current: number;
     pageSize: number;
@@ -21,8 +18,7 @@ export interface PaginationResult<TData extends Data, TParams extends Params>
   };
 }
 
-export interface PaginationOptions<TData extends Data, TParams extends Params>
-  extends Options<TData, TParams> {
+export interface PaginationOptions<TData extends Data, TParams extends Params> extends Options<TData, TParams> {
   defaultPageSize?: number;
   defaultCurrent?: number;
 }

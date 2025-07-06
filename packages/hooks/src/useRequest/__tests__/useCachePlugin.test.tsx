@@ -8,10 +8,8 @@ import 'jest-localstorage-mock';
 describe('useCachePlugin', () => {
   jest.useFakeTimers();
 
-  const setup = (
-    service: Parameters<typeof useRequest>[0],
-    options: Parameters<typeof useRequest>[1],
-  ) => renderHook(() => useRequest(service, options));
+  const setup = (service: Parameters<typeof useRequest>[0], options: Parameters<typeof useRequest>[1]) =>
+    renderHook(() => useRequest(service, options));
 
   const testCacheKey = async (options: any) => {
     const hook = setup(request, options);

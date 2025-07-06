@@ -11,13 +11,7 @@ import { useDynamicList } from 'ahooks';
 import { Button, Form, Input } from 'antd';
 import React, { useEffect, useState } from 'react';
 
-const DynamicInputs = ({
-  value = [],
-  onChange,
-}: {
-  value?: string[];
-  onChange?: (value: string[]) => void;
-}) => {
+const DynamicInputs = ({ value = [], onChange }: { value?: string[]; onChange?: (value: string[]) => void }) => {
   const { list, remove, getKey, insert, replace, resetList } = useDynamicList(value);
 
   useEffect(() => {
@@ -35,7 +29,7 @@ const DynamicInputs = ({
     <div key={getKey(index)} style={{ marginBottom: 16 }}>
       <Input
         style={{ width: 300 }}
-        placeholder="Please enter name"
+        placeholder='Please enter name'
         onChange={(e) => replace(index, e.target.value)}
         value={item}
       />
@@ -68,12 +62,12 @@ export default () => {
   return (
     <>
       <Form form={form}>
-        <Form.Item name="names" initialValue={['David', 'Jack']}>
+        <Form.Item name='names' initialValue={['David', 'Jack']}>
           <DynamicInputs />
         </Form.Item>
       </Form>
       <Button
-        type="primary"
+        type='primary'
         onClick={() =>
           form
             .validateFields()

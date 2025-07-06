@@ -29,13 +29,10 @@ function getLoadMoreList(nextId: string | undefined, limit: number): Promise<Res
 export default () => {
   const ref = useRef<HTMLDivElement>(null);
 
-  const { data, loading, loadMore, loadingMore, noMore } = useInfiniteScroll(
-    (d) => getLoadMoreList(d?.nextId, 4),
-    {
-      target: ref,
-      isNoMore: (d) => d?.nextId === undefined,
-    },
-  );
+  const { data, loading, loadMore, loadingMore, noMore } = useInfiniteScroll((d) => getLoadMoreList(d?.nextId, 4), {
+    target: ref,
+    isNoMore: (d) => d?.nextId === undefined,
+  });
 
   return (
     <div ref={ref} style={{ height: 150, overflow: 'auto', border: '1px solid', padding: 12 }}>
@@ -53,7 +50,7 @@ export default () => {
 
       <div style={{ marginTop: 8 }}>
         {!noMore && (
-          <button type="button" onClick={loadMore} disabled={loadingMore}>
+          <button type='button' onClick={loadMore} disabled={loadingMore}>
             {loadingMore ? 'Loading more...' : 'Click to load more'}
           </button>
         )}

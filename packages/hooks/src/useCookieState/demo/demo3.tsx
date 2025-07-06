@@ -20,7 +20,7 @@ export default function App() {
     <>
       <p>{value}</p>
       <button
-        type="button"
+        type='button'
         style={{ marginRight: 16 }}
         onClick={() =>
           setValue((v) => String(Number(v) + 1), {
@@ -31,7 +31,7 @@ export default function App() {
         inc + (10s expires)
       </button>
       <button
-        type="button"
+        type='button'
         style={{ marginRight: 16 }}
         onClick={() =>
           setValue((v) => String(Number(v) - 1), {
@@ -41,7 +41,7 @@ export default function App() {
       >
         dec - (10s expires)
       </button>
-      <button type="button" onClick={() => setValue('0')}>
+      <button type='button' onClick={() => setValue('0')}>
         reset
       </button>
     </>

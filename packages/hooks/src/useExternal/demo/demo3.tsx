@@ -18,15 +18,15 @@ export default () => {
 
   return (
     <>
-      <div className="bd-example">
-        <span className="badge badge-pill badge-primary">Primary</span>
-        <span className="badge badge-pill badge-secondary">Secondary</span>
-        <span className="badge badge-pill badge-success">Success</span>
-        <span className="badge badge-pill badge-danger">Danger</span>
-        <span className="badge badge-pill badge-warning">Warning</span>
-        <span className="badge badge-pill badge-info">Info</span>
-        <span className="badge badge-pill badge-light">Light</span>
-        <span className="badge badge-pill badge-dark">Dark</span>
+      <div className='bd-example'>
+        <span className='badge badge-pill badge-primary'>Primary</span>
+        <span className='badge badge-pill badge-secondary'>Secondary</span>
+        <span className='badge badge-pill badge-success'>Success</span>
+        <span className='badge badge-pill badge-danger'>Danger</span>
+        <span className='badge badge-pill badge-warning'>Warning</span>
+        <span className='badge badge-pill badge-info'>Info</span>
+        <span className='badge badge-pill badge-light'>Light</span>
+        <span className='badge badge-pill badge-dark'>Dark</span>
       </div>
       <br />
 
@@ -34,14 +34,10 @@ export default () => {
       <p>
         Status: <b>{status}</b>
       </p>
-      <button type="button" style={{ marginRight: 8 }} onClick={() => setPath('')}>
+      <button type='button' style={{ marginRight: 8 }} onClick={() => setPath('')}>
         unload
       </button>
-      <button
-        type="button"
-        style={{ marginRight: 8 }}
-        onClick={() => setPath('/useExternal/bootstrap-badge.css')}
-      >
+      <button type='button' style={{ marginRight: 8 }} onClick={() => setPath('/useExternal/bootstrap-badge.css')}>
         load
       </button>
       <hr />
@@ -49,14 +45,10 @@ export default () => {
       <p>
         Status: <b>{status2}</b>
       </p>
-      <button type="button" style={{ marginRight: 8 }} onClick={() => setPath2('')}>
+      <button type='button' style={{ marginRight: 8 }} onClick={() => setPath2('')}>
         unload
       </button>
-      <button
-        type="button"
-        style={{ marginRight: 8 }}
-        onClick={() => setPath2('/useExternal/bootstrap-badge.css')}
-      >
+      <button type='button' style={{ marginRight: 8 }} onClick={() => setPath2('/useExternal/bootstrap-badge.css')}>
         load
       </button>
     </>

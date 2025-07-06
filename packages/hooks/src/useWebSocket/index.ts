@@ -58,10 +58,7 @@ function useWebSocket(socketUrl: string, options: Options = {}): Result {
   const [readyState, setReadyState] = useState<ReadyState>(ReadyState.Closed);
 
   const reconnect = () => {
-    if (
-      reconnectTimesRef.current < reconnectLimit &&
-      websocketRef.current?.readyState !== ReadyState.Open
-    ) {
+    if (reconnectTimesRef.current < reconnectLimit && websocketRef.current?.readyState !== ReadyState.Open) {
       if (reconnectTimerRef.current) {
         clearTimeout(reconnectTimerRef.current);
       }

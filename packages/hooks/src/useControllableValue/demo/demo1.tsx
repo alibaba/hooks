@@ -16,7 +16,7 @@ export default (props: any) => {
   return (
     <>
       <input value={state} onChange={(e) => setState(e.target.value)} style={{ width: 300 }} />
-      <button type="button" onClick={() => setState('')} style={{ marginLeft: 8 }}>
+      <button type='button' onClick={() => setState('')} style={{ marginLeft: 8 }}>
         Clear
       </button>
     </>

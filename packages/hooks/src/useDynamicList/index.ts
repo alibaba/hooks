@@ -39,10 +39,7 @@ const useDynamicList = <T>(initialList: T[] = []) => {
 
   const getKey = useCallback((index: number) => keyList.current[index], []);
 
-  const getIndex = useCallback(
-    (key: number) => keyList.current.findIndex((ele) => ele === key),
-    [],
-  );
+  const getIndex = useCallback((key: number) => keyList.current.findIndex((ele) => ele === key), []);
 
   const merge = useCallback((index: number, items: T[]) => {
     setList((l) => {

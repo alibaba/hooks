@@ -27,9 +27,7 @@ function getLoadMoreList(nextId: string | undefined, limit: number): Promise<Res
 }
 
 export default () => {
-  const { data, loading, loadMore, loadingMore } = useInfiniteScroll((d) =>
-    getLoadMoreList(d?.nextId, 4),
-  );
+  const { data, loading, loadMore, loadingMore } = useInfiniteScroll((d) => getLoadMoreList(d?.nextId, 4));
 
   return (
     <div>
@@ -47,7 +45,7 @@ export default () => {
 
       <div style={{ marginTop: 8 }}>
         {data?.nextId && (
-          <button type="button" onClick={loadMore} disabled={loadingMore}>
+          <button type='button' onClick={loadMore} disabled={loadingMore}>
             {loadingMore ? 'Loading more...' : 'Click to load more'}
           </button>
         )}

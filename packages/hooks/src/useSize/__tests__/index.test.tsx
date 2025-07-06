@@ -21,12 +21,10 @@ describe('useSize', () => {
   });
 
   it('should work when target is a `MutableRefObject`', async () => {
-    const mockRaf = jest
-      .spyOn(window, 'requestAnimationFrame')
-      .mockImplementation((cb: FrameRequestCallback) => {
-        cb(0);
-        return 0;
-      });
+    const mockRaf = jest.spyOn(window, 'requestAnimationFrame').mockImplementation((cb: FrameRequestCallback) => {
+      cb(0);
+      return 0;
+    });
 
     function Setup() {
       const ref = useRef(null);
@@ -57,12 +55,10 @@ describe('useSize', () => {
   });
 
   it('should work', () => {
-    const mockRaf = jest
-      .spyOn(window, 'requestAnimationFrame')
-      .mockImplementation((cb: FrameRequestCallback) => {
-        cb(0);
-        return 0;
-      });
+    const mockRaf = jest.spyOn(window, 'requestAnimationFrame').mockImplementation((cb: FrameRequestCallback) => {
+      cb(0);
+      return 0;
+    });
     const targetEl = document.createElement('div');
     const { result } = renderHook(() => useSize(targetEl));
 

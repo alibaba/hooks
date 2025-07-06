@@ -20,13 +20,13 @@ export default function () {
     <>
       <p>{value?.join('-')}</p>
       <button
-        type="button"
+        type='button'
         style={{ marginRight: '16px' }}
         onClick={() => setValue([...value, Math.random().toString(36).slice(-1)])}
       >
         push random
       </button>
-      <button type="button" onClick={() => setValue(defaultArray)}>
+      <button type='button' onClick={() => setValue(defaultArray)}>
         reset
       </button>
     </>

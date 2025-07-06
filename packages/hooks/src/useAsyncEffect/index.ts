@@ -8,10 +8,7 @@ function isAsyncGenerator(
   return isFunction(val[Symbol.asyncIterator]);
 }
 
-function useAsyncEffect(
-  effect: () => AsyncGenerator<void, void, void> | Promise<void>,
-  deps?: DependencyList,
-) {
+function useAsyncEffect(effect: () => AsyncGenerator<void, void, void> | Promise<void>, deps?: DependencyList) {
   useEffect(() => {
     const e = effect();
     let cancelled = false;

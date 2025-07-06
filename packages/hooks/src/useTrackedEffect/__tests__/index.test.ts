@@ -19,9 +19,7 @@ describe('useTrackedEffect', () => {
     let var1 = 0;
     const var2 = '0';
     const var3 = { value: 0 };
-    const { rerender } = renderHook(() =>
-      useTrackedEffect(mockEffectWithTracked, [var1, var2, var3]),
-    );
+    const { rerender } = renderHook(() => useTrackedEffect(mockEffectWithTracked, [var1, var2, var3]));
     expect(mockEffectWithTracked).toHaveBeenCalledTimes(1);
     rerender();
     expect(changedDepIndexes).toHaveLength(3);
@@ -35,9 +33,7 @@ describe('useTrackedEffect', () => {
     let var1 = 0;
     let var2 = '0';
     const var3 = { value: 0 };
-    const { rerender } = renderHook(() =>
-      useTrackedEffect(mockEffectWithTracked, [var1, var2, var3]),
-    );
+    const { rerender } = renderHook(() => useTrackedEffect(mockEffectWithTracked, [var1, var2, var3]));
     expect(mockEffectWithTracked).toHaveBeenCalledTimes(1);
     rerender();
     expect(changedDepIndexes).toHaveLength(3);
@@ -59,9 +55,7 @@ describe('useTrackedEffect', () => {
     let var1 = 0;
     let var2 = '0';
     const var3 = { value: 0 };
-    const { rerender } = renderHook(() =>
-      useTrackedEffect(mockEffectWithTracked, [var1, var2, var3]),
-    );
+    const { rerender } = renderHook(() => useTrackedEffect(mockEffectWithTracked, [var1, var2, var3]));
     expect(mockEffectWithTracked).toHaveBeenCalledTimes(1);
     rerender();
     expect(changedDepIndexes).toHaveLength(3);
@@ -82,9 +76,7 @@ describe('useTrackedEffect', () => {
     let var1 = 0;
     const var2 = '0';
     const var3 = { value: 0 };
-    const { rerender } = renderHook(() =>
-      useTrackedEffect(mockEffectWithTracked, [var1, var2, var3]),
-    );
+    const { rerender } = renderHook(() => useTrackedEffect(mockEffectWithTracked, [var1, var2, var3]));
     expect(mockEffectWithTracked).toHaveBeenCalledTimes(1);
     rerender();
     expect(changedDepIndexes).toHaveLength(3);
@@ -97,9 +89,7 @@ describe('useTrackedEffect', () => {
     const var1 = 0;
     const var2 = '0';
     const var3 = { value: 0 };
-    const { rerender } = renderHook(() =>
-      useTrackedEffect(mockEffectWithTracked, [var1, var2, var3]),
-    );
+    const { rerender } = renderHook(() => useTrackedEffect(mockEffectWithTracked, [var1, var2, var3]));
     expect(mockEffectWithTracked).toHaveBeenCalledTimes(1);
     rerender();
     expect(changedDepIndexes).toHaveLength(3);

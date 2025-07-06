@@ -24,7 +24,7 @@ export default () => {
     <div>
       <pre>{JSON.stringify(state, null, 2)}</pre>
       <p>
-        <button type="button" onClick={() => setState((prev) => ({ count: prev.count + 1 }))}>
+        <button type='button' onClick={() => setState((prev) => ({ count: prev.count + 1 }))}>
           count + 1
         </button>
       </p>

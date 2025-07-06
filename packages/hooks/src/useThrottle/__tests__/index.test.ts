@@ -59,9 +59,7 @@ describe('useThrottle', () => {
   it('leading:true & trailing:false of options useThrottle should work', async () => {
     let mountedState = 0;
     act(() => {
-      hook = renderHook(() =>
-        useThrottle(mountedState, { wait: 500, leading: true, trailing: false }),
-      );
+      hook = renderHook(() => useThrottle(mountedState, { wait: 500, leading: true, trailing: false }));
     });
 
     expect(hook.result.current).toBe(0);
@@ -89,9 +87,7 @@ describe('useThrottle', () => {
   it('leading:false & trailing:true of options useThrottle should work', async () => {
     let mountedState = 0;
     act(() => {
-      hook = renderHook(() =>
-        useThrottle(mountedState, { wait: 500, leading: false, trailing: true }),
-      );
+      hook = renderHook(() => useThrottle(mountedState, { wait: 500, leading: false, trailing: true }));
     });
 
     expect(hook.result.current).toBe(0);

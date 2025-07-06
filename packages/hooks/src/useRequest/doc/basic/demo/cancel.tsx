@@ -33,13 +33,13 @@ export default () => {
       <input
         onChange={(e) => setState(e.target.value)}
         value={state}
-        placeholder="Please enter username"
+        placeholder='Please enter username'
         style={{ width: 240, marginRight: 16 }}
       />
-      <button disabled={loading} type="button" onClick={() => run(state)}>
+      <button disabled={loading} type='button' onClick={() => run(state)}>
         {loading ? 'Loading' : 'Edit'}
       </button>
-      <button type="button" onClick={cancel} style={{ marginLeft: 16 }}>
+      <button type='button' onClick={cancel} style={{ marginLeft: 16 }}>
         Cancel
       </button>
     </div>

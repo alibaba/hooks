@@ -19,7 +19,7 @@ export default () => {
       <div>theme: {theme}</div>
       <div>themeMode: {themeMode}</div>
       <button
-        type="button"
+        type='button'
         onClick={() => {
           setThemeMode('dark');
         }}
@@ -27,7 +27,7 @@ export default () => {
         use dark theme
       </button>
       <button
-        type="button"
+        type='button'
         onClick={() => {
           setThemeMode('light');
         }}
@@ -35,7 +35,7 @@ export default () => {
         use light theme
       </button>
       <button
-        type="button"
+        type='button'
         onClick={() => {
           setThemeMode('system');
         }}

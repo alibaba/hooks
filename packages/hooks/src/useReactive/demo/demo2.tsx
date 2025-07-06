@@ -9,32 +9,32 @@ export default () => {
   return (
     <div>
       <p>
-        state.arr: <span role="test-array">{JSON.stringify(state.arr)}</span>
+        state.arr: <span role='test-array'>{JSON.stringify(state.arr)}</span>
       </p>
       <button
         style={{ marginRight: '10px' }}
         onClick={() => state.arr.push(Math.floor(Math.random() * 100))}
-        role="pushbtn"
+        role='pushbtn'
       >
         push
       </button>
-      <button style={{ marginRight: '10px' }} onClick={() => state.arr.pop()} role="popbtn">
+      <button style={{ marginRight: '10px' }} onClick={() => state.arr.pop()} role='popbtn'>
         pop
       </button>
-      <button style={{ marginRight: '10px' }} onClick={() => state.arr.shift()} role="shiftbtn">
+      <button style={{ marginRight: '10px' }} onClick={() => state.arr.shift()} role='shiftbtn'>
         shift
       </button>
       <button
         style={{ marginRight: '10px' }}
-        role="unshiftbtn"
+        role='unshiftbtn'
         onClick={() => state.arr.unshift(Math.floor(Math.random() * 100))}
       >
         unshift
       </button>
-      <button style={{ marginRight: '10px' }} role="reverse" onClick={() => state.arr.reverse()}>
+      <button style={{ marginRight: '10px' }} role='reverse' onClick={() => state.arr.reverse()}>
         reverse
       </button>
-      <button style={{ marginRight: '10px' }} role="sort" onClick={() => state.arr.sort()}>
+      <button style={{ marginRight: '10px' }} role='sort' onClick={() => state.arr.sort()}>
         sort
       </button>
     </div>

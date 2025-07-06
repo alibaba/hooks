@@ -11,14 +11,9 @@ enum ReadyState {
 export default () => {
   const messageHistory = useRef<any[]>([]);
 
-  const { readyState, sendMessage, latestMessage, disconnect, connect } = useWebSocket(
-    'wss://ws.postman-echo.com/raw',
-  );
+  const { readyState, sendMessage, latestMessage, disconnect, connect } = useWebSocket('wss://ws.postman-echo.com/raw');
 
-  messageHistory.current = useMemo(
-    () => messageHistory.current.concat(latestMessage),
-    [latestMessage],
-  );
+  messageHistory.current = useMemo(() => messageHistory.current.concat(latestMessage), [latestMessage]);
 
   return (
     <div>

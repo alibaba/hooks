@@ -17,13 +17,8 @@ export default () => {
 
   return (
     <div>
-      <input
-        value={value}
-        onChange={onChange}
-        style={{ width: 200, marginRight: 20 }}
-        placeholder="Please type here"
-      />
-      <button type="button" onClick={reset}>
+      <input value={value} onChange={onChange} style={{ width: 200, marginRight: 20 }} placeholder='Please type here' />
+      <button type='button' onClick={reset}>
         reset
       </button>
     </div>

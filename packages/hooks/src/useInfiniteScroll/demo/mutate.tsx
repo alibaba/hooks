@@ -35,9 +35,7 @@ function deleteItem(id: string) {
 }
 
 export default () => {
-  const { data, loading, loadMore, loadingMore, mutate } = useInfiniteScroll((d) =>
-    getLoadMoreList(d?.nextId, 4),
-  );
+  const { data, loading, loadMore, loadingMore, mutate } = useInfiniteScroll((d) => getLoadMoreList(d?.nextId, 4));
 
   const {
     loading: deleteLading,
@@ -77,7 +75,7 @@ export default () => {
 
       <div style={{ marginTop: 8 }}>
         {data?.nextId && (
-          <button type="button" onClick={loadMore} disabled={loadingMore}>
+          <button type='button' onClick={loadMore} disabled={loadingMore}>
             {loadingMore ? 'Loading more...' : 'Click to load more'}
           </button>
         )}

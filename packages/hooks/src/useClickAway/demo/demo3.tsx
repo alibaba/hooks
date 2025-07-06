@@ -19,10 +19,10 @@ export default () => {
 
   return (
     <div>
-      <button type="button" ref={ref1}>
+      <button type='button' ref={ref1}>
         box1
       </button>
-      <button type="button" ref={ref2} style={{ marginLeft: 16 }}>
+      <button type='button' ref={ref2} style={{ marginLeft: 16 }}>
         box2
       </button>
       <p>counter: {counter}</p>

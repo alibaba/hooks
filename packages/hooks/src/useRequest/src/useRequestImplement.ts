@@ -35,12 +35,7 @@ function useRequestImplement<TData, TParams extends any[]>(
   const fetchInstance = useCreation(() => {
     const initState = plugins.map((p) => p?.onInit?.(fetchOptions)).filter(Boolean);
 
-    return new Fetch<TData, TParams>(
-      serviceRef,
-      fetchOptions,
-      update,
-      Object.assign({}, ...initState),
-    );
+    return new Fetch<TData, TParams>(serviceRef, fetchOptions, update, Object.assign({}, ...initState));
   }, []);
   fetchInstance.options = fetchOptions;
   // run all plugins hooks

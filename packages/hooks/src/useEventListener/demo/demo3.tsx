@@ -22,7 +22,7 @@ export default () => {
   );
 
   return (
-    <button ref={ref} type="button">
+    <button ref={ref} type='button'>
       You Option is {value}
     </button>
   );

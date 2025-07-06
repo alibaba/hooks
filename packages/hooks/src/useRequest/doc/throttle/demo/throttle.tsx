@@ -19,7 +19,7 @@ export default () => {
 
   return (
     <div>
-      <input placeholder="Search Emails" onChange={(e) => run(e.target.value)} />
+      <input placeholder='Search Emails' onChange={(e) => run(e.target.value)} />
       {loading ? (
         <p>loading</p>
       ) : (

@@ -17,7 +17,7 @@ const MessageBox: FC<{
     <div style={{ paddingBottom: 24 }}>
       <p>You received a message</p>
       <button
-        type="button"
+        type='button'
         onClick={() => {
           props.focus$.emit();
         }}
@@ -35,9 +35,7 @@ const InputBox: FC<{
   props.focus$.useSubscription(() => {
     inputRef.current.focus();
   });
-  return (
-    <input ref={inputRef} placeholder="Enter reply" style={{ width: '100%', padding: '4px' }} />
-  );
+  return <input ref={inputRef} placeholder='Enter reply' style={{ width: '100%', padding: '4px' }} />;
 };
 
 export default function () {

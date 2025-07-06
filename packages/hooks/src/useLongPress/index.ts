@@ -27,10 +27,7 @@ function useLongPress(
   const pervPositionRef = useRef({ x: 0, y: 0 });
   const mousePressed = useRef(false);
   const touchPressed = useRef(false);
-  const hasMoveThreshold = !!(
-    (moveThreshold?.x && moveThreshold.x > 0) ||
-    (moveThreshold?.y && moveThreshold.y > 0)
-  );
+  const hasMoveThreshold = !!((moveThreshold?.x && moveThreshold.x > 0) || (moveThreshold?.y && moveThreshold.y > 0));
 
   useEffectWithTarget(
     () => {
@@ -44,10 +41,7 @@ function useLongPress(
         const offsetX = Math.abs(clientX - pervPositionRef.current.x);
         const offsetY = Math.abs(clientY - pervPositionRef.current.y);
 
-        return !!(
-          (moveThreshold?.x && offsetX > moveThreshold.x) ||
-          (moveThreshold?.y && offsetY > moveThreshold.y)
-        );
+        return !!((moveThreshold?.x && offsetX > moveThreshold.x) || (moveThreshold?.y && offsetY > moveThreshold.y));
       };
 
       function getClientPosition(event: EventType) {

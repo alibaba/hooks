@@ -16,13 +16,13 @@ export default () => {
     <div>
       <p>Effects：{`${state}`}</p>
       <p>
-        <button type="button" onClick={toggle}>
+        <button type='button' onClick={toggle}>
           Toggle
         </button>
-        <button type="button" onClick={setLeft} style={{ margin: '0 8px' }}>
+        <button type='button' onClick={setLeft} style={{ margin: '0 8px' }}>
           Toggle False
         </button>
-        <button type="button" onClick={setRight}>
+        <button type='button' onClick={setRight}>
           Toggle True
         </button>
       </p>

@@ -7,8 +7,7 @@ interface ParamsObj {
   options?: { immediate: boolean };
 }
 
-const setUp = ({ fn, delay, options }: ParamsObj) =>
-  renderHook(() => useInterval(fn, delay, options));
+const setUp = ({ fn, delay, options }: ParamsObj) => renderHook(() => useInterval(fn, delay, options));
 
 describe('useInterval', () => {
   jest.useFakeTimers();

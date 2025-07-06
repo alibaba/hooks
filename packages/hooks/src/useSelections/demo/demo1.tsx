@@ -19,12 +19,9 @@ export default () => {
     return [1, 2, 3, 4, 5, 6, 7, 8];
   }, [hideOdd]);
 
-  const { selected, allSelected, isSelected, toggle, toggleAll, partiallySelected } = useSelections(
-    list,
-    {
-      defaultSelected: [1],
-    },
-  );
+  const { selected, allSelected, isSelected, toggle, toggleAll, partiallySelected } = useSelections(list, {
+    defaultSelected: [1],
+  });
 
   return (
     <div>

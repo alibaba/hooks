@@ -19,10 +19,8 @@ describe('usePagination', () => {
     });
   };
 
-  const setUp = (
-    service: Parameters<typeof usePagination>[0],
-    options: Parameters<typeof usePagination>[1],
-  ) => renderHook((o) => usePagination(service, o || options));
+  const setUp = (service: Parameters<typeof usePagination>[0], options: Parameters<typeof usePagination>[1]) =>
+    renderHook((o) => usePagination(service, o || options));
 
   let hook: RenderHookResult<any, any>;
 

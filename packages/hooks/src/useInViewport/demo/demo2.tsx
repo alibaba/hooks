@@ -16,11 +16,11 @@ export default () => {
   });
   return (
     <div>
-      <div style={{ width: 300, height: 300, overflow: 'scroll', border: '1px solid' }} id="parent">
+      <div style={{ width: 300, height: 300, overflow: 'scroll', border: '1px solid' }} id='parent'>
         scroll here
         <div style={{ height: 800 }}>
           <div
-            id="children"
+            id='children'
             style={{
               border: '1px solid',
               height: 100,

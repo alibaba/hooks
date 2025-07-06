@@ -14,7 +14,7 @@ export default () => {
   return (
     <input
       value={message}
-      placeholder="Please enter some words..."
+      placeholder='Please enter some words...'
       onChange={(e) => setMessage(e.target.value)}
       style={{ width: 300 }}
     />

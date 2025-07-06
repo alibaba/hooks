@@ -85,11 +85,9 @@ describe('useInfiniteScroll', () => {
 
   it('should auto load when scroll to bottom', async () => {
     const events = {};
-    const mockAddEventListener = jest
-      .spyOn(targetEl, 'addEventListener')
-      .mockImplementation((eventName, callback) => {
-        events[eventName] = callback;
-      });
+    const mockAddEventListener = jest.spyOn(targetEl, 'addEventListener').mockImplementation((eventName, callback) => {
+      events[eventName] = callback;
+    });
     const { result } = setup(mockRequest, {
       target: targetEl,
       isNoMore: (d) => d?.nextId === undefined,
@@ -101,12 +99,8 @@ describe('useInfiniteScroll', () => {
       jest.advanceTimersByTime(1000);
     });
     expect(result.current.loading).toBe(false);
-    const scrollHeightSpy = jest
-      .spyOn(targetEl, 'scrollHeight', 'get')
-      .mockImplementation(() => 150);
-    const clientHeightSpy = jest
-      .spyOn(targetEl, 'clientHeight', 'get')
-      .mockImplementation(() => 300);
+    const scrollHeightSpy = jest.spyOn(targetEl, 'scrollHeight', 'get').mockImplementation(() => 150);
+    const clientHeightSpy = jest.spyOn(targetEl, 'clientHeight', 'get').mockImplementation(() => 300);
     setTargetInfo('scrollTop', 100);
     act(() => {
       events['scroll']();
@@ -133,11 +127,9 @@ describe('useInfiniteScroll', () => {
 
   it('should auto load when scroll to top', async () => {
     const events = {};
-    const mockAddEventListener = jest
-      .spyOn(targetEl, 'addEventListener')
-      .mockImplementation((eventName, callback) => {
-        events[eventName] = callback;
-      });
+    const mockAddEventListener = jest.spyOn(targetEl, 'addEventListener').mockImplementation((eventName, callback) => {
+      events[eventName] = callback;
+    });
     // Mock scrollTo using Object.defineProperty
     Object.defineProperty(targetEl, 'scrollTo', {
       value: (x: number, y: number) => {
@@ -160,12 +152,8 @@ describe('useInfiniteScroll', () => {
     expect(result.current.loading).toBe(false);
 
     // mock first scroll
-    const scrollHeightSpy = jest
-      .spyOn(targetEl, 'scrollHeight', 'get')
-      .mockImplementation(() => 150);
-    const clientHeightSpy = jest
-      .spyOn(targetEl, 'clientHeight', 'get')
-      .mockImplementation(() => 500);
+    const scrollHeightSpy = jest.spyOn(targetEl, 'scrollHeight', 'get').mockImplementation(() => 150);
+    const clientHeightSpy = jest.spyOn(targetEl, 'clientHeight', 'get').mockImplementation(() => 500);
     setTargetInfo('scrollTop', 300);
 
     act(() => {

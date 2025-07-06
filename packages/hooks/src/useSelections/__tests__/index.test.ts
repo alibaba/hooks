@@ -19,10 +19,7 @@ interface CaseCallback<T = number | object> {
   (data: T[], selected: T[], selectedItem: T): void;
 }
 
-const runCaseCallback = (
-  dataCallback: CaseCallback<number>,
-  objDataCallback: CaseCallback<object>,
-) => {
+const runCaseCallback = (dataCallback: CaseCallback<number>, objDataCallback: CaseCallback<object>) => {
   dataCallback(_data, _selected, _selectedItem);
   objDataCallback(_dataObj, _selectedObj, _selectedItemObj);
 };

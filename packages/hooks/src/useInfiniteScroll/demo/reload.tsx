@@ -8,11 +8,7 @@ interface Result {
 
 const resultData = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13'];
 
-function getLoadMoreList(
-  nextId: string | undefined,
-  limit: number,
-  keyword: string,
-): Promise<Result> {
+function getLoadMoreList(nextId: string | undefined, limit: number, keyword: string): Promise<Result> {
   let start = 0;
   if (nextId) {
     start = resultData.findIndex((i) => i === nextId);
@@ -59,7 +55,7 @@ export default () => {
 
       <div style={{ marginTop: 8 }}>
         {data?.nextId && (
-          <button type="button" onClick={loadMore} disabled={loadingMore}>
+          <button type='button' onClick={loadMore} disabled={loadingMore}>
             {loadingMore ? 'Loading more...' : 'Click to load more'}
           </button>
         )}

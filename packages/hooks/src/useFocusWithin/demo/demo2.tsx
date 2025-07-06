@@ -15,7 +15,7 @@ export default () => {
   return (
     <div>
       <div
-        id="focus-area"
+        id='focus-area'
         style={{
           padding: 16,
           backgroundColor: isFocusWithin ? 'red' : '',

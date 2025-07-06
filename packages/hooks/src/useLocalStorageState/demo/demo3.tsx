@@ -10,26 +10,23 @@ import React from 'react';
 import { useLocalStorageState } from 'ahooks';
 
 export default function () {
-  const [message, setMessage] = useLocalStorageState<string | undefined>(
-    'use-local-storage-state-demo3',
-    {
-      defaultValue: 'Hello~',
-      serializer: (v) => v ?? '',
-      deserializer: (v) => v,
-    },
-  );
+  const [message, setMessage] = useLocalStorageState<string | undefined>('use-local-storage-state-demo3', {
+    defaultValue: 'Hello~',
+    serializer: (v) => v ?? '',
+    deserializer: (v) => v,
+  });
 
   return (
     <>
       <input
         value={message || ''}
-        placeholder="Please enter some words..."
+        placeholder='Please enter some words...'
         onChange={(e) => setMessage(e.target.value)}
       />
-      <button style={{ margin: '0 8px' }} type="button" onClick={() => setMessage('Hello~')}>
+      <button style={{ margin: '0 8px' }} type='button' onClick={() => setMessage('Hello~')}>
         Reset
       </button>
-      <button type="button" onClick={() => setMessage(undefined)}>
+      <button type='button' onClick={() => setMessage(undefined)}>
         Clear
       </button>
     </>

@@ -30,9 +30,7 @@ export default () => {
         <button style={{ marginRight: '8px' }} onClick={toggleFullscreen}>
           ahooks toggleFullscreen
         </button>
-        <button onClick={() => vanillaToggleFullscreen(ref.current)}>
-          vanilla toggleFullscreen
-        </button>
+        <button onClick={() => vanillaToggleFullscreen(ref.current)}>vanilla toggleFullscreen</button>
       </div>
     </div>
   );

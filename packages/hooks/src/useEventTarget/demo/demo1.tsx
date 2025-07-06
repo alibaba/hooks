@@ -15,7 +15,7 @@ export default () => {
   return (
     <div>
       <input value={value} onChange={onChange} style={{ width: 200, marginRight: 20 }} />
-      <button type="button" onClick={reset}>
+      <button type='button' onClick={reset}>
         reset
       </button>
     </div>

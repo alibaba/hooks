@@ -46,11 +46,7 @@ export default class Fetch<TData, TParams extends any[]> {
     this.count += 1;
     const currentCount = this.count;
 
-    const {
-      stopNow = false,
-      returnNow = false,
-      ...state
-    } = this.runPluginHandler('onBefore', params);
+    const { stopNow = false, returnNow = false, ...state } = this.runPluginHandler('onBefore', params);
 
     // stop request
     if (stopNow) {

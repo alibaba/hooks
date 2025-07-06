@@ -20,10 +20,10 @@ export default () => {
   return (
     <>
       <p>Username: {loading ? 'Loading' : data}</p>
-      <button type="button" onClick={run}>
+      <button type='button' onClick={run}>
         start
       </button>
-      <button type="button" onClick={cancel} style={{ marginLeft: 16 }}>
+      <button type='button' onClick={cancel} style={{ marginLeft: 16 }}>
         stop
       </button>
     </>

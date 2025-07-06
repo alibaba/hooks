@@ -54,10 +54,10 @@ export default () => {
           style={{ width: 220 }}
           value={nameInput}
           onChange={(e) => setNameInput(e.target.value)}
-          placeholder="new name"
+          placeholder='new name'
         />
         <button
-          type="button"
+          type='button'
           onClick={() => {
             setState((s) => ({ ...s, name: nameInput }));
           }}
@@ -71,10 +71,10 @@ export default () => {
           style={{ width: 220 }}
           value={jobInput}
           onChange={(e) => setJobInput(e.target.value)}
-          placeholder="new job"
+          placeholder='new job'
         />
         <button
-          type="button"
+          type='button'
           onClick={() => {
             setState((s) => ({ ...s, job: jobInput }));
           }}
