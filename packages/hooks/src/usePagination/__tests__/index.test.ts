@@ -1,3 +1,4 @@
+import type { RenderHookResult } from '@testing-library/react';
 import { renderHook, act, waitFor } from '@testing-library/react';
 import usePagination from '../';
 
@@ -7,8 +8,8 @@ import usePagination from '../';
 // cache
 
 describe('usePagination', () => {
-  let queryArgs;
-  const asyncFn = (query) => {
+  let queryArgs: any;
+  const asyncFn = (query: any) => {
     queryArgs = query;
     return Promise.resolve({
       current: query.current,
@@ -18,9 +19,12 @@ describe('usePagination', () => {
     });
   };
 
-  const setUp = (service, options) => renderHook((o) => usePagination(service, o || options));
+  const setUp = (
+    service: Parameters<typeof usePagination>[0],
+    options: Parameters<typeof usePagination>[1],
+  ) => renderHook((o) => usePagination(service, o || options));
 
-  let hook;
+  let hook: RenderHookResult<any, any>;
 
   it('should fetch after first render', async () => {
     queryArgs = undefined;

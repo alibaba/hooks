@@ -1,3 +1,4 @@
+import type { RenderHookResult } from '@testing-library/react';
 import { act, renderHook, waitFor } from '@testing-library/react';
 import useRequest from '../index';
 import { request } from '../../utils/testingHelpers';
@@ -5,9 +6,13 @@ import { request } from '../../utils/testingHelpers';
 describe('usePollingPlugin', () => {
   jest.useFakeTimers();
 
-  const setUp = (service, options) => renderHook((o) => useRequest(service, o || options));
+  const setUp = (
+    service: Parameters<typeof useRequest>[0],
+    options: Parameters<typeof useRequest>[1],
+  ) => renderHook((o) => useRequest(service, o || options));
 
-  let hook;
+  let hook: RenderHookResult<any, any>;
+
   it('usePollingPlugin pollingInterval=100 pollingWhenHidden=true  should work', async () => {
     const callback = jest.fn();
     act(() => {
@@ -64,11 +69,11 @@ describe('usePollingPlugin', () => {
     await waitFor(() => expect(callback).toHaveBeenCalledTimes(5));
   });
 
-  let hook2;
+  let hook2: RenderHookResult<any, any>;
   it('usePollingPlugin pollingErrorRetryCount=3 should work', async () => {
     // if request error and set pollingErrorRetryCount
     // and the number of consecutive failures exceeds pollingErrorRetryCount, polling stops
-    let errorCallback;
+    let errorCallback: jest.Mock | undefined = undefined;
     act(() => {
       errorCallback = jest.fn();
       hook2 = setUp(() => request(0), {

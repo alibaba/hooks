@@ -2,17 +2,17 @@ import Mock from 'mockjs';
 import React from 'react';
 import { useRequest } from 'ahooks';
 
-async function getArticle(): Promise<{ data: string; time: number }> {
+const getArticle = async () => {
   console.log('cacheKey-share');
-  return new Promise((resolve) => {
+  return new Promise<{ data: string; time: number }>((resolve) => {
     setTimeout(() => {
       resolve({
         data: Mock.mock('@paragraph'),
-        time: new Date().getTime(),
+        time: Date.now(),
       });
     }, 3000);
   });
-}
+};
 
 const Article = () => {
   const { data, loading, refresh } = useRequest(getArticle, {
@@ -25,7 +25,7 @@ const Article = () => {
     <>
       <p>Background loading: {loading ? 'true' : 'false'}</p>
       <p>
-        <button onClick={refresh} type="button">
+        <button onClick={refresh} type='button'>
           更新
         </button>
       </p>

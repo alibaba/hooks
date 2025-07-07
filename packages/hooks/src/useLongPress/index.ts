@@ -21,7 +21,8 @@ function useLongPress(
   const onClickRef = useLatest(onClick);
   const onLongPressEndRef = useLatest(onLongPressEnd);
 
-  const timerRef = useRef<ReturnType<typeof setTimeout>>();
+  const timerRef = useRef<ReturnType<typeof setTimeout>>(undefined);
+
   const isTriggeredRef = useRef(false);
   const pervPositionRef = useRef({ x: 0, y: 0 });
   const isPressed = useRef(false);
@@ -58,6 +59,7 @@ function useLongPress(
       const onPointerDown = (event: PointerEvent) => {
         if (isPressed.current) return;
 
+
         isPressed.current = true;
         pointerId.current = event.pointerId;
 
@@ -80,6 +82,7 @@ function useLongPress(
           timerRef.current = undefined;
         }
       };
+
 
       const onPointerUp = (event: PointerEvent) => {
         if (!isPressed.current || event.pointerId !== pointerId.current) return;
@@ -106,6 +109,8 @@ function useLongPress(
 
         isPressed.current = false;
         pointerId.current = null;
+
+
 
         if (timerRef.current) {
           clearTimeout(timerRef.current);
