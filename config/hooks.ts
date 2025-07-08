@@ -48,6 +48,7 @@ export const menus = [
       'useCookieState',
       'useLocalStorageState',
       'useSessionStorageState',
+      'usePageCacheState',
       'useDebounce',
       'useThrottle',
       'useMap',
