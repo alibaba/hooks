@@ -2,7 +2,11 @@
   "name": "ahooks",
   "version": "3.9.0",
   "description": "react hooks library",
-  "keywords": ["ahooks", "umi hooks", "react hooks"],
+  "keywords": [
+    "ahooks",
+    "umi hooks",
+    "react hooks"
+  ],
   "main": "./lib/index.js",
   "module": "./es/index.js",
   "types": "./lib/index.d.ts",
@@ -20,7 +24,14 @@
   "scripts": {
     "build": "gulp && webpack-cli"
   },
-  "files": ["dist", "lib", "es", "metadata.json", "package.json", "README.md"],
+  "files": [
+    "dist",
+    "lib",
+    "es",
+    "metadata.json",
+    "package.json",
+    "README.md"
+  ],
   "dependencies": {
     "@babel/runtime": "^7.21.0",
     "dayjs": "^1.9.1",
@@ -32,27 +43,12 @@
     "screenfull": "^5.0.0",
     "tslib": "^2.4.1"
   },
-  "devDependencies": {
-    "@alifd/next": "^1.27.32",
-    "@ant-design/icons": "^5.6.1",
-    "@types/js-cookie": "^3.0.6",
-    "@types/lodash": "^4.17.20",
-    "@types/react": "^19.1.2",
-    "@types/react-dom": "^19.1.3",
-    "antd": "^5.26.3",
-    "jest-websocket-mock": "^2.1.0",
-    "mockjs": "^1.1.0",
-    "react": "^19.1.0",
-    "react-dom": "^19.1.0",
-    "react-drag-listview": "^0.1.6",
-    "react-json-view": "^1.21.3"
-  },
   "peerDependencies": {
     "react": "^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0",
     "react-dom": "^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0"
   },
   "engines": {
-    "node": ">=8.0.0"
+    "node": ">=20"
   },
   "license": "MIT",
   "gitHead": "11f6ad571bd365c95ecb9409ca3050cbbfc9b34a"

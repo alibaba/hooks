@@ -11,24 +11,18 @@ fs.copyFileSync(configPath, backupPath);
 try {
   // 读取配置文件
   let config = fs.readFileSync(configPath, 'utf8');
-  
+
   // 修改配置
-  config = config.replace(
-    /publicPath: ['"].*['"],/,
-    "publicPath: '/hooks/',"
-  );
+  config = config.replace(/publicPath: ['"].*['"],/, "publicPath: '/hooks/',");
   config = config.replace(
     /{ rel: 'stylesheet', href: '\/style\.css' }/,
-    "{ rel: 'stylesheet', href: '/hooks/style.css' }"
+    "{ rel: 'stylesheet', href: '/hooks/style.css' }",
   );
-  config = config.replace(
-    /logo: '\/logo\.svg',/,
-    "logo: '/hooks/logo.svg',"
-  );
-  
+  config = config.replace(/logo: '\/logo\.svg',/, "logo: '/hooks/logo.svg',");
+
   // 写入修改后的配置
   fs.writeFileSync(configPath, config);
-  
+
   // 运行构建命令
   execSync('pnpm run build:doc', { stdio: 'inherit' });
 
@@ -60,9 +54,8 @@ try {
 
   // 返回到项目根目录
   process.chdir(path.join(__dirname, '..'));
-
 } finally {
   // 恢复原配置
   fs.copyFileSync(backupPath, configPath);
   fs.unlinkSync(backupPath);
-} 
+}

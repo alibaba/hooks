@@ -17,7 +17,7 @@ export default () => {
     onLeave: () => {
       console.log('onLeave');
     },
-    onChange: isHover => {
+    onChange: (isHover) => {
       console.log('onChange', isHover);
     },
   });

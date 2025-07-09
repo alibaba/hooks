@@ -30,7 +30,6 @@ const useUrlState = <S extends UrlState = UrlState>(
   initialState?: S | (() => S),
   options?: Options,
 ) => {
-
   type State = Partial<{
     [key in keyof S]: Required<S>[key] extends any[] ? string[] : string;
   }>;
