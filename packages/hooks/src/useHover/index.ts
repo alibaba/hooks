@@ -1,17 +1,22 @@
 import useBoolean from '../useBoolean';
 import useEventListener from '../useEventListener';
 import type { BasicTarget } from '../utils/domTarget';
+import { useRef } from 'react';
 
 export interface Options {
   onEnter?: () => void;
   onLeave?: () => void;
   onChange?: (isHovering: boolean) => void;
+  onLongHover?: (isLongHovering: boolean) => void;
+  longHoverDuration?: number;
 }
 
 export default (target: BasicTarget, options?: Options): boolean => {
-  const { onEnter, onLeave, onChange } = options || {};
+  const { onEnter, onLeave, onChange, onLongHover, longHoverDuration = 500 } = options || {};
 
   const [state, { setTrue, setFalse }] = useBoolean(false);
+
+  const timerRef = useRef<number | null>(null);
 
   useEventListener(
     'mouseenter',
@@ -19,6 +24,11 @@ export default (target: BasicTarget, options?: Options): boolean => {
       onEnter?.();
       setTrue();
       onChange?.(true);
+      if (onLongHover) {
+        timerRef.current = window.setTimeout(() => {
+          onLongHover?.(true);
+        }, longHoverDuration);
+      }
     },
     {
       target,
@@ -31,6 +41,11 @@ export default (target: BasicTarget, options?: Options): boolean => {
       onLeave?.();
       setFalse();
       onChange?.(false);
+      if (timerRef.current) {
+        clearTimeout(timerRef.current);
+        timerRef.current = null;
+        onLongHover?.(false);
+      }
     },
     {
       target,

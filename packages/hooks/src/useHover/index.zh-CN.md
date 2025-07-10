@@ -17,6 +17,10 @@ nav:
 
 <code src="./demo/demo2.tsx" />
 
+### 长时间悬停事件
+
+<code src="./demo/demo3.tsx" />
+
 ## API
 
 ```javascript
