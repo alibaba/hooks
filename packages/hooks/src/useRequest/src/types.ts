@@ -1,4 +1,5 @@
 import type { DependencyList } from 'react';
+import type { BasicTarget } from '../../utils/domTarget';
 import type Fetch from './Fetch';
 import type { CachedData } from './utils/cache';
 
@@ -86,6 +87,12 @@ export interface Options<TData, TParams extends any[]> {
   // retry
   retryCount?: number;
   retryInterval?: number;
+
+  // viewport
+  target?: BasicTarget | BasicTarget[];
+  root?: BasicTarget<Element>;
+  rootMargin?: string;
+  threshold?: number | number[];
 
   // ready
   ready?: boolean;
