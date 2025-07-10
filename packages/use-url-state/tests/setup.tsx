@@ -1,9 +1,9 @@
-import React from 'react';
 import { render } from '@testing-library/react';
 import type { MemoryRouterProps } from 'react-router';
 import { MemoryRouter, useLocation } from 'react-router';
-import useUrlState from '..';
-import type { Options } from '..';
+import type { Options } from 'src';
+import useUrlState from 'src';
+import { expect, test } from 'vitest';
 
 export const setup = (
   initialEntries: MemoryRouterProps['initialEntries'],
@@ -28,6 +28,6 @@ export const setup = (
   return res;
 };
 
-it('useUrlState should be defined', () => {
+test('useUrlState should be defined', () => {
   expect(useUrlState).toBeDefined();
 });
