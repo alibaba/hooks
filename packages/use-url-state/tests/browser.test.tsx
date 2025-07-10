@@ -1,8 +1,9 @@
 import { act } from '@testing-library/react';
-import { setup } from '.';
+import { describe, expect, test } from 'vitest';
+import { setup } from './setup';
 
 describe('useUrlState', () => {
-  it('state should be url search params', () => {
+  test('state should be url search params', () => {
     const res = setup([
       {
         pathname: '/index',
@@ -12,7 +13,7 @@ describe('useUrlState', () => {
     expect(res.state).toMatchObject({ count: '1' });
   });
 
-  it('url shoule be changed when use setState', () => {
+  test('url shoule be changed when use setState', () => {
     const res = setup(['/index']);
     expect(res.state).toMatchObject({});
     act(() => {
@@ -21,7 +22,7 @@ describe('useUrlState', () => {
     expect(res.state).toMatchObject({ count: '1' });
   });
 
-  it('multiple states should be work', () => {
+  test('multiple states should be work', () => {
     const res = setup(['/index']);
     act(() => {
       res.setState({ page: 1 });
@@ -32,7 +33,7 @@ describe('useUrlState', () => {
     expect(res.state).toMatchObject({ page: '1', pageSize: '10' });
   });
 
-  it('query-string options should work', async () => {
+  test('query-string options should work', async () => {
     const res = setup(
       [
         {
@@ -58,7 +59,7 @@ describe('useUrlState', () => {
     expect(res.state).toMatchObject({ foo: ['4', '5', '6'] });
   });
 
-  it('location.state should be remain', () => {
+  test('location.state should be remain', () => {
     const res = setup([
       {
         pathname: '/index',

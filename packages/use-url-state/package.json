@@ -17,7 +17,9 @@
     "url": "git+https://github.com/alibaba/hooks.git"
   },
   "scripts": {
-    "build": "gulp && webpack-cli"
+    "build": "gulp && webpack-cli",
+    "test": "vitest run",
+    "test:cov": "vitest run --coverage"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"

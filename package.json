@@ -50,6 +50,7 @@
     "@types/react-dom": "^19.1.6",
     "@types/react-router": "^5.1.19",
     "@umijs/fabric": "^2.1.0",
+    "@vitest/coverage-istanbul": "^3.2.4",
     "antd": "^5.26.3",
     "babel-plugin-import": "^1.12.0",
     "coveralls": "^3.1.1",
@@ -67,6 +68,7 @@
     "jest-environment-jsdom": "^29.4.1",
     "jest-localstorage-mock": "^2.4.18",
     "jest-websocket-mock": "^2.1.0",
+    "jsdom": "^26.1.0",
     "mockjs": "^1.1.0",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
@@ -78,6 +80,7 @@
     "surge": "^0.21.3",
     "ts-jest": "^29.1.1",
     "typescript": "^5.8.3",
+    "vitest": "^3.2.4",
     "webpack": "^5.99.9",
     "webpack-cli": "^6.0.1",
     "webpack-merge": "^6.0.1"
