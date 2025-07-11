@@ -12,6 +12,10 @@ export interface FetchState<TData, TParams extends any[]> {
   params?: TParams;
   data?: TData;
   error?: Error;
+  polling?: {
+    pollingCounter: number;
+    isPolling: boolean;
+  };
 }
 
 export interface PluginReturn<TData, TParams extends any[]> {
@@ -27,7 +31,7 @@ export interface PluginReturn<TData, TParams extends any[]> {
     params: TParams,
   ) => {
     servicePromise?: Promise<TData>;
-  };
+  } | void;
 
   onSuccess?: (data: TData, params: TParams) => void;
   onError?: (e: Error, params: TParams) => void;
@@ -56,7 +60,10 @@ export interface Options<TData, TParams extends any[]> {
   // loading delay
   loadingDelay?: number;
 
-  // polling
+  polling?: {
+    pollingCounter: number;
+    isPolling: boolean;
+  };
   pollingInterval?: number;
   pollingWhenHidden?: boolean;
   pollingErrorRetryCount?: number;
@@ -113,6 +120,10 @@ export interface Result<TData, TParams extends any[]> {
   data?: TData;
   error?: Error;
   params: TParams | [];
+  polling?: {
+    pollingCounter: number;
+    isPolling: boolean;
+  };
   cancel: Fetch<TData, TParams>['cancel'];
   refresh: Fetch<TData, TParams>['refresh'];
   refreshAsync: Fetch<TData, TParams>['refreshAsync'];

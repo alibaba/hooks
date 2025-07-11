@@ -11,6 +11,7 @@ const usePollingPlugin: Plugin<any, any[]> = (
   const timerRef = useRef<Timeout>(undefined);
   const unsubscribeRef = useRef<() => void>(undefined);
   const countRef = useRef<number>(0);
+  const pollingCountRef = useRef<number>(0);
 
   const stopPolling = () => {
     if (timerRef.current) {
@@ -32,12 +33,33 @@ const usePollingPlugin: Plugin<any, any[]> = (
   return {
     onBefore: () => {
       stopPolling();
+      return {
+        polling: {
+          pollingCounter: pollingCountRef.current,
+          isPolling: pollingInterval > 0,
+        },
+      };
+    },
+    onRequest: () => {
+      pollingCountRef.current += 1;
     },
     onError: () => {
       countRef.current += 1;
+      return {
+        polling: {
+          pollingCounter: pollingCountRef.current,
+          isPolling: true,
+        },
+      };
     },
     onSuccess: () => {
       countRef.current = 0;
+      return {
+        polling: {
+          pollingCounter: pollingCountRef.current,
+          isPolling: true,
+        },
+      };
     },
     onFinally: () => {
       if (
@@ -57,10 +79,28 @@ const usePollingPlugin: Plugin<any, any[]> = (
         }, pollingInterval);
       } else {
         countRef.current = 0;
+
+        if (pollingCountRef.current !== 0) {
+          pollingCountRef.current = 0;
+          fetchInstance.setState({
+            polling: {
+              pollingCounter: pollingCountRef.current,
+              isPolling: false,
+            },
+          });
+        }
       }
     },
     onCancel: () => {
       stopPolling();
+
+      pollingCountRef.current = 0;
+      return {
+        polling: {
+          pollingCounter: pollingCountRef.current,
+          isPolling: false,
+        },
+      };
     },
   };
 };
