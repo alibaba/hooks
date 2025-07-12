@@ -11,7 +11,7 @@ module.exports = {
   preset: 'ts-jest/presets/js-with-ts',
   testEnvironment: 'jsdom',
   clearMocks: true,
-  testPathIgnorePatterns: ['/.history/'],
+  testPathIgnorePatterns: ['/.history/', '<rootDir>/packages/use-url-state/'],
   modulePathIgnorePatterns: ['<rootDir>/package.json'],
   resetMocks: false,
   setupFiles: ['./jest.setup.js', 'jest-localstorage-mock', './match-media-mock.js'],

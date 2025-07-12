@@ -31,9 +31,9 @@ import useUrlState from '@ahooksjs/use-url-state';
 
 ### CodeSandbox Demo
 
-React Router V5：https://codesandbox.io/s/suspicious-feather-cz4e0?file=/App.tsx
+React Router V5: https://codesandbox.io/s/suspicious-feather-cz4e0?file=/App.tsx
 
-React Router V6：https://codesandbox.io/s/autumn-shape-odrt9?file=/App.tsx
+React Router V6: https://codesandbox.io/s/autumn-shape-odrt9?file=/App.tsx
 
 ### Default usage
 
