@@ -1,5 +1,5 @@
 import { act, renderHook } from '@testing-library/react';
-import { useBroadcastChannel } from '../index';
+import useBroadcastChannel from '../index';
 
 // Skip tests if BroadcastChannel is not available (i.e., not running in a browser)
 const describeOrSkip =

@@ -1,5 +1,5 @@
 import useLocalStorageState from '../../useLocalStorageState';
-import { useBroadcastChannel } from '../index';
+import useBroadcastChannel from '../index';
 
 interface IAuthMessage {
   type: 'LOGOUT';

@@ -5,7 +5,7 @@ interface BroadcastChannelOptions<T> {
   onMessageError?: (event: MessageEvent) => void;
 }
 
-export function useBroadcastChannel<T>(
+export default function useBroadcastChannel<T>(
   channelName: string,
   options: BroadcastChannelOptions<T> = {}
 ) {
