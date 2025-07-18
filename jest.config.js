@@ -14,7 +14,7 @@ module.exports = {
   testPathIgnorePatterns: [
     '/.history/',
     '<rootDir>/packages/use-url-state/',
-    '<rootDir>/packages/hooks/src/**/tests/',
+    '<rootDir>/packages/hooks/src/.*/tests/',
   ],
   modulePathIgnorePatterns: ['<rootDir>/package.json'],
   resetMocks: false,
@@ -30,6 +30,7 @@ module.exports = {
     '!**/es/**',
     '!**/lib/**',
     '!**/dist/**',
+    '!**/packages/hooks/src/**/tests/**',
   ],
   transformIgnorePatterns: [`node_modules/(?!(?:.pnpm/)?(${esmModules.join('|')}))`],
 };
