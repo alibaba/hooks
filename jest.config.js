@@ -14,6 +14,9 @@ module.exports = {
   testPathIgnorePatterns: [
     '/.history/',
     '<rootDir>/packages/use-url-state/',
+    '<rootDir>/packages/hooks/es/',
+    '<rootDir>/packages/hooks/lib/',
+    '<rootDir>/packages/hooks/dist/',
     '<rootDir>/packages/hooks/src/.*/tests/',
   ],
   modulePathIgnorePatterns: ['<rootDir>/package.json'],
