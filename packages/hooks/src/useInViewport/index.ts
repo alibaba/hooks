@@ -1,5 +1,5 @@
 import 'intersection-observer';
-import { useState } from 'react';
+import { useCallback, useRef, useState } from 'react';
 import type { BasicTarget } from '../utils/domTarget';
 import { getTargetElement } from '../utils/domTarget';
 import useEffectWithTarget from '../utils/useEffectWithTarget';
@@ -13,11 +13,22 @@ export interface Options {
   callback?: CallbackType;
 }
 
+export type Result = [boolean | undefined, number | undefined, () => void] & {
+  inViewport?: boolean;
+  ratio?: number;
+  disconnect: () => void;
+};
+
 function useInViewport(target: BasicTarget | BasicTarget[], options?: Options) {
   const { callback, ...option } = options || {};
 
   const [state, setState] = useState<boolean>();
   const [ratio, setRatio] = useState<number>();
+  const ref = useRef<IntersectionObserver>();
+
+  const disconnect = useCallback(() => {
+    ref.current?.disconnect();
+  }, []);
 
   useEffectWithTarget(
     () => {
@@ -28,7 +39,7 @@ function useInViewport(target: BasicTarget | BasicTarget[], options?: Options) {
         return;
       }
 
-      const observer = new IntersectionObserver(
+      ref.current = new IntersectionObserver(
         (entries) => {
           for (const entry of entries) {
             setRatio(entry.intersectionRatio);
@@ -42,17 +53,22 @@ function useInViewport(target: BasicTarget | BasicTarget[], options?: Options) {
         },
       );
 
-      els.forEach((el) => observer.observe(el!));
+      els.forEach((el) => ref.current?.observe(el!));
 
-      return () => {
-        observer.disconnect();
-      };
+      return disconnect;
     },
-    [options?.rootMargin, options?.threshold, callback],
+    [options?.rootMargin, options?.threshold, callback, disconnect],
     target,
   );
 
-  return [state, ratio] as const;
+  const result = [state, ratio, disconnect] as Result;
+
+  // Support object destructuring, by adding the specific values.
+  result.inViewport = result[0];
+  result.ratio = result[1];
+  result.disconnect = result[2];
+
+  return result;
 }
 
 export default useInViewport;
