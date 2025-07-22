@@ -1,9 +1,10 @@
-import { renderHook, act } from '@testing-library/react';
+import { act, renderHook } from '@testing-library/react';
+import { afterAll, afterEach, describe, expect, test, vi } from 'vitest';
 import useDynamicList from '../index';
 
 describe('useDynamicList', () => {
   const setUp = (props: any): any => renderHook(() => useDynamicList(props));
-  const warnSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
+  const warnSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
 
   afterEach(() => {
     warnSpy.mockReset();
@@ -13,7 +14,7 @@ describe('useDynamicList', () => {
     warnSpy.mockRestore();
   });
 
-  it('getKey should work', () => {
+  test('getKey should work', () => {
     const hook = setUp([1, 2, 3]);
     expect(hook.result.current.list[0]).toBe(1);
     expect(hook.result.current.getKey(0)).toBe(0);
@@ -21,7 +22,7 @@ describe('useDynamicList', () => {
     expect(hook.result.current.getKey(2)).toBe(2);
   });
 
-  it('methods should work', () => {
+  test('methods should work', () => {
     const hook = setUp([
       { name: 'aaa', age: 18 },
       { name: 'bbb', age: 19 },
@@ -120,7 +121,7 @@ describe('useDynamicList', () => {
     expect(hook.result.current.list.length).toBe(4);
   });
 
-  it('same items should have different keys', () => {
+  test('same items should have different keys', () => {
     const hook = setUp([1, 1, 1, 1]);
     expect(hook.result.current.getKey(0)).toBe(0);
     expect(hook.result.current.getKey(1)).toBe(1);
@@ -145,7 +146,7 @@ describe('useDynamicList', () => {
     expect(hook.result.current.getKey(7)).toBe(7);
   });
 
-  it('initialValue changes', () => {
+  test('initialValue changes', () => {
     const hook = renderHook(({ initialValue }) => useDynamicList(initialValue), {
       initialProps: {
         initialValue: [1],
@@ -169,7 +170,7 @@ describe('useDynamicList', () => {
     expect(hook.result.current.getKey(0)).toBe(2);
   });
 
-  it('sortList', () => {
+  test('sortList', () => {
     const hook = setUp([1, 2, 3, 4]);
     const formData = [
       {

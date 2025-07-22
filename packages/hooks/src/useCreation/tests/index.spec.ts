@@ -1,5 +1,6 @@
-import { renderHook, act } from '@testing-library/react';
+import { act, renderHook } from '@testing-library/react';
 import { useState } from 'react';
+import { describe, expect, test } from 'vitest';
 import useCreation from '../index';
 
 describe('useCreation', () => {
@@ -24,7 +25,7 @@ describe('useCreation', () => {
       };
     });
 
-  it('should work', () => {
+  test('should work', () => {
     const hook = setUp();
     const { foo } = hook.result.current;
     act(() => {

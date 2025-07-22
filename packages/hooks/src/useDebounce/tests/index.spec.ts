@@ -1,9 +1,10 @@
 import { act, renderHook } from '@testing-library/react';
-import useDebounce from '../index';
+import { describe, expect, test } from 'vitest';
 import { sleep } from '../../utils/testingHelpers';
+import useDebounce from '../index';
 
 describe('useDebounce', () => {
-  it('useDebounce wait:200ms', async () => {
+  test('useDebounce wait:200ms', async () => {
     let mountedState = 0;
     const { result, rerender } = renderHook(() => useDebounce(mountedState, { wait: 200 }));
     expect(result.current).toBe(0);

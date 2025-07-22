@@ -1,5 +1,6 @@
 import type { RenderHookResult } from '@testing-library/react';
 import { act, renderHook } from '@testing-library/react';
+import { describe, expect, test } from 'vitest';
 import { sleep } from '../../utils/testingHelpers';
 import useDebounceFn from '../index';
 
@@ -19,7 +20,7 @@ const setUp = ({ fn, wait }: ParamsObj) => renderHook(() => useDebounceFn(fn, { 
 let hook: RenderHookResult<any, any>;
 
 describe('useDebounceFn', () => {
-  it('run, cancel and flush should work', async () => {
+  test('run, cancel and flush should work', async () => {
     act(() => {
       hook = setUp({
         fn: debounceFn,
@@ -55,11 +56,4 @@ describe('useDebounceFn', () => {
       expect(count).toBe(7);
     });
   });
-
-  // it('should output error when fn is not a function', () => {
-  //   const errSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
-  //   renderHook(() => useDebounceFn(1 as any));
-  //   expect(errSpy).toBeCalledWith('useDebounceFn expected parameter is a function, got number');
-  //   errSpy.mockRestore();
-  // });
 });
