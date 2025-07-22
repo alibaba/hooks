@@ -1,4 +1,5 @@
 import { act, renderHook } from '@testing-library/react';
+import { describe, expect, test } from 'vitest';
 import type { Options } from '../index';
 import { createUseStorageState } from '../index';
 
@@ -62,7 +63,7 @@ describe('useStorageState', () => {
     );
   };
 
-  it('should get defaultValue for a given key', () => {
+  test('should get defaultValue for a given key', () => {
     const hook = setUp({ key: 'key1', defaultValue: 'value1' });
     expect(hook.result.current.state).toBe('value1');
 
@@ -70,7 +71,7 @@ describe('useStorageState', () => {
     expect(hook.result.current.state).toBe('value2');
   });
 
-  it('should get default and set value for a given key', () => {
+  test('should get default and set value for a given key', () => {
     const hook = setUp({ key: 'key', defaultValue: 'defaultValue' });
     expect(hook.result.current.state).toBe('defaultValue');
     act(() => {
@@ -81,7 +82,7 @@ describe('useStorageState', () => {
     expect(hook.result.current.state).toBe('setValue');
   });
 
-  it('should remove value for a given key', () => {
+  test('should remove value for a given key', () => {
     const hook = setUp({ key: 'key' });
     act(() => {
       hook.result.current.setState('value');
