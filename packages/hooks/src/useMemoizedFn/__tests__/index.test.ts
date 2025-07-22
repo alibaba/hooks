@@ -1,5 +1,4 @@
-import type { RenderHookResult } from '@testing-library/react';
-import { act, renderHook } from '@testing-library/react';
+import { act, type RenderHookResult, renderHook } from '@testing-library/react';
 import { useState } from 'react';
 import useMemoizedFn from '../';
 

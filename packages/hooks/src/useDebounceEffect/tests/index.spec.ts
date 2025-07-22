@@ -1,5 +1,4 @@
-import type { RenderHookResult } from '@testing-library/react';
-import { act, renderHook } from '@testing-library/react';
+import { act, type RenderHookResult, renderHook } from '@testing-library/react';
 import { describe, expect, test, vi } from 'vitest';
 import { sleep } from '../../utils/testingHelpers';
 import useDebounceEffect from '../index';

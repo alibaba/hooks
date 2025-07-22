@@ -1,7 +1,6 @@
-import type { RenderHookResult } from '@testing-library/react';
-import { act, renderHook } from '@testing-library/react';
-import useRequest from '../index';
+import { act, type RenderHookResult, renderHook } from '@testing-library/react';
 import { request } from '../../utils/testingHelpers';
+import useRequest from '../index';
 
 describe('useThrottlePlugin', () => {
   jest.useFakeTimers();
