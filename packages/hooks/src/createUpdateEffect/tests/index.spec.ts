@@ -1,9 +1,10 @@
 import { renderHook } from '@testing-library/react';
 import { useEffect, useLayoutEffect } from 'react';
+import { describe, expect, test } from 'vitest';
 import { createUpdateEffect } from '../index';
 
 describe('createUpdateEffect', () => {
-  it('should work for useEffect', () => {
+  test('should work for useEffect', () => {
     const useUpdateEffect = createUpdateEffect(useEffect);
 
     let mountedState = 1;
@@ -17,7 +18,7 @@ describe('createUpdateEffect', () => {
     expect(mountedState).toBe(2);
   });
 
-  it('should work for useLayoutEffect', () => {
+  test('should work for useLayoutEffect', () => {
     const useUpdateLayoutEffect = createUpdateEffect(useLayoutEffect);
 
     let mountedState = 1;
