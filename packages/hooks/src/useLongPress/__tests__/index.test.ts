@@ -6,7 +6,8 @@ const mockCallback = jest.fn();
 const mockClickCallback = jest.fn();
 const mockLongPressEndCallback = jest.fn();
 
-let events = {};
+let events: Record<string, (event?: any) => void> = {};
+
 const mockTarget = {
   addEventListener: jest.fn((event, callback) => {
     events[event] = callback;
@@ -14,6 +15,24 @@ const mockTarget = {
   removeEventListener: jest.fn((event) => {
     Reflect.deleteProperty(events, event);
   }),
+  setPointerCapture: jest.fn(),
+};
+
+// 模拟 PointerEvent
+const createPointerEvent = (
+  type: string,
+  pointerId = 1,
+  clientX = 0,
+  clientY = 0,
+): PointerEvent => {
+  return {
+    type,
+    pointerId,
+    clientX,
+    clientY,
+    preventDefault: jest.fn(),
+    stopPropagation: jest.fn(),
+  } as unknown as PointerEvent;
 };
 
 const setup = (onLongPress: any, target, options?: Options) =>
@@ -22,6 +41,7 @@ const setup = (onLongPress: any, target, options?: Options) =>
 describe('useLongPress', () => {
   beforeEach(() => {
     jest.useFakeTimers();
+    jest.clearAllMocks();
   });
 
   afterEach(() => {
@@ -35,9 +55,16 @@ describe('useLongPress', () => {
       onLongPressEnd: mockLongPressEndCallback,
     });
     expect(mockTarget.addEventListener).toBeCalled();
-    events['mousedown']();
+
+    const pointerDownEvent = createPointerEvent('pointerdown');
+    events.pointerdown(pointerDownEvent);
+    expect(mockTarget.setPointerCapture).toBeCalledWith(pointerDownEvent.pointerId);
+
     jest.advanceTimersByTime(350);
-    events['mouseleave']();
+
+    const pointerCancelEvent = createPointerEvent('pointercancel', pointerDownEvent.pointerId);
+    events.pointercancel(pointerCancelEvent);
+
     expect(mockCallback).toBeCalledTimes(1);
     expect(mockLongPressEndCallback).toBeCalledTimes(1);
     expect(mockClickCallback).toBeCalledTimes(0);
@@ -49,10 +76,19 @@ describe('useLongPress', () => {
       onLongPressEnd: mockLongPressEndCallback,
     });
     expect(mockTarget.addEventListener).toBeCalled();
-    events['mousedown']();
-    events['mouseup']();
-    events['mousedown']();
-    events['mouseup']();
+
+    const pointerDown1 = createPointerEvent('pointerdown', 1);
+    events.pointerdown(pointerDown1);
+
+    const pointerUp1 = createPointerEvent('pointerup', 1);
+    events.pointerup(pointerUp1);
+
+    const pointerDown2 = createPointerEvent('pointerdown', 2);
+    events.pointerdown(pointerDown2);
+
+    const pointerUp2 = createPointerEvent('pointerup', 2);
+    events.pointerup(pointerUp2);
+
     expect(mockCallback).toBeCalledTimes(0);
     expect(mockLongPressEndCallback).toBeCalledTimes(0);
     expect(mockClickCallback).toBeCalledTimes(2);
@@ -64,11 +100,20 @@ describe('useLongPress', () => {
       onLongPressEnd: mockLongPressEndCallback,
     });
     expect(mockTarget.addEventListener).toBeCalled();
-    events['mousedown']();
+
+    const longPressDown = createPointerEvent('pointerdown', 1);
+    events.pointerdown(longPressDown);
     jest.advanceTimersByTime(350);
-    events['mouseup']();
-    events['mousedown']();
-    events['mouseup']();
+
+    const longPressUp = createPointerEvent('pointerup', 1);
+    events.pointerup(longPressUp);
+
+    const clickDown = createPointerEvent('pointerdown', 2);
+    events.pointerdown(clickDown);
+
+    const clickUp = createPointerEvent('pointerup', 2);
+    events.pointerup(clickUp);
+
     expect(mockCallback).toBeCalledTimes(1);
     expect(mockLongPressEndCallback).toBeCalledTimes(1);
     expect(mockClickCallback).toBeCalledTimes(1);
@@ -81,19 +126,41 @@ describe('useLongPress', () => {
         y: 20,
       },
     });
-    expect(events['mousemove']).toBeDefined();
-    events['mousedown'](new MouseEvent('mousedown'));
-    events['mousemove'](
-      new MouseEvent('mousemove', {
-        clientX: 40,
-        clientY: 10,
-      }),
-    );
+    expect(events.pointermove).toBeDefined();
+
+    const pointerDown = createPointerEvent('pointerdown', 1, 0, 0);
+    events.pointerdown(pointerDown);
+
+    const pointerMove = createPointerEvent('pointermove', 1, 40, 10);
+    events.pointermove(pointerMove);
+
     jest.advanceTimersByTime(320);
     expect(mockCallback).not.toBeCalled();
 
     unmount();
-    expect(events['mousemove']).toBeUndefined();
+    expect(events.pointermove).toBeUndefined();
+  });
+
+  it('should handle multiple pointer interactions correctly', () => {
+    setup(mockCallback, mockTarget);
+
+    const pointer1Down = createPointerEvent('pointerdown', 1);
+    events.pointerdown(pointer1Down);
+
+    const pointer2Down = createPointerEvent('pointerdown', 2);
+    events.pointerdown(pointer2Down);
+
+    jest.advanceTimersByTime(350);
+
+    const pointer2Up = createPointerEvent('pointerup', 2);
+    events.pointerup(pointer2Up);
+
+    const pointer1Up = createPointerEvent('pointerup', 1);
+    events.pointerup(pointer1Up);
+
+    expect(mockCallback).toBeCalledTimes(1);
+    expect(mockTarget.setPointerCapture).toBeCalledWith(1);
+    expect(mockTarget.setPointerCapture).toBeCalledTimes(1);
   });
 
   it(`should not work when target don't support addEventListener method`, () => {
@@ -103,7 +170,7 @@ describe('useLongPress', () => {
       },
     });
 
-    setup(() => {}, mockTarget);
+    setup(() => { }, mockTarget);
     expect(Object.keys(events)).toHaveLength(0);
   });
 });
