@@ -33,7 +33,7 @@ describe('useVirtualList', () => {
       hook = renderHook(() => useVirtualList(list, options));
     };
 
-    it('test return list size', () => {
+    it('test return list size when itemHeight is divisible', () => {
       setup(Array.from(Array(99999).keys()), {
         containerTarget: () => container,
         wrapperTarget: () => wrapper,
@@ -47,6 +47,22 @@ describe('useVirtualList', () => {
       // 10 items plus 5 overscan * 2
       expect(hook.result.current[0].length).toBe(20);
       expect(container.scrollTop).toBe(80 * 30);
+    });
+
+    it('test return list size when itemHeight is not divisible', () => {
+      setup(Array.from(Array(99999).keys()), {
+        containerTarget: () => container,
+        wrapperTarget: () => wrapper,
+        itemHeight: 35,
+      });
+
+      act(() => {
+        hook.result.current[1](80);
+      });
+
+      // 9 items plus 5 overscan * 2
+      expect(hook.result.current[0].length).toBe(19);
+      expect(container.scrollTop).toBe(80 * 35);
     });
 
     it('test with fixed height', () => {
@@ -79,6 +95,7 @@ describe('useVirtualList', () => {
         },
       });
 
+      // the sum of itemHeight is divisible
       act(() => {
         hook.result.current[1](20);
       });
@@ -86,7 +103,7 @@ describe('useVirtualList', () => {
       // average height for easy calculation
       const averageHeight = (30 + 60) / 2;
 
-      expect(hook.result.current[0].length).toBe(Math.floor(300 / averageHeight));
+      expect(hook.result.current[0].length).toBe(Math.ceil(300 / averageHeight));
       expect(container.scrollTop).toBe(10 * 30 + 10 * 60);
       expect((hook.result.current[0][0] as { data: number }).data).toBe(20);
       expect((hook.result.current[0][0] as { index: number }).index).toBe(20);

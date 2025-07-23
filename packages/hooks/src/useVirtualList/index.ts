@@ -31,39 +31,47 @@ const useVirtualList = <T = any>(list: T[], options: Options<T>) => {
 
   const [wrapperStyle, setWrapperStyle] = useState<CSSProperties>({});
 
-  const getVisibleCount = (containerHeight: number, fromIndex: number) => {
+  const getVisibleCount = (containerHeight: number, fromIndex: number, scrollTop: number) => {
     if (isNumber(itemHeightRef.current)) {
-      return Math.ceil(containerHeight / itemHeightRef.current);
+      const count = Math.ceil(containerHeight / itemHeightRef.current);
+      // If the scrolled distance is an integer multiple of itemHeight, just take count, otherwise +1
+      return scrollTop % itemHeightRef.current ? count + 1 : count;
     }
 
     let sum = 0;
     let endIndex = 0;
-    for (let i = fromIndex; i < list.length; i++) {
+    // get the index of the last element
+    for (let i = 0; i < list.length; i++) {
       const height = itemHeightRef.current(i, list[i]);
       sum += height;
       endIndex = i;
-      if (sum >= containerHeight) {
+      if (sum >= containerHeight + scrollTop) {
         break;
       }
     }
-    return endIndex - fromIndex;
+    return endIndex - fromIndex + 1;
   };
 
+  // 当前显示第一个元素的下标
   const getOffset = (scrollTop: number) => {
     if (isNumber(itemHeightRef.current)) {
       return Math.floor(scrollTop / itemHeightRef.current);
     }
+
     let sum = 0;
     let offset = 0;
     for (let i = 0; i < list.length; i++) {
       const height = itemHeightRef.current(i, list[i]);
       sum += height;
-      if (sum >= scrollTop) {
+      if (sum === scrollTop) {
+        offset = i + 1;
+        break;
+      } else if (sum > scrollTop) {
         offset = i;
         break;
       }
     }
-    return offset + 1;
+    return offset;
   };
 
   // 获取上部高度
@@ -95,7 +103,7 @@ const useVirtualList = <T = any>(list: T[], options: Options<T>) => {
       const { scrollTop, clientHeight } = container;
 
       const offset = getOffset(scrollTop);
-      const visibleCount = getVisibleCount(clientHeight, offset);
+      const visibleCount = getVisibleCount(clientHeight, offset, scrollTop);
 
       const start = Math.max(0, offset - overscan);
       const end = Math.min(list.length, offset + visibleCount + overscan);
