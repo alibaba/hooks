@@ -1,6 +1,7 @@
 import { useRef, useState } from 'react';
 import useMemoizedFn from '../useMemoizedFn';
 import { isNumber } from '../utils';
+import isDev from '../utils/isDev';
 
 interface IData<T> {
   present?: T;
@@ -31,7 +32,31 @@ const split = <T>(step: number, targetArr: T[]) => {
   };
 };
 
-export default function useHistoryTravel<T>(initialValue?: T, maxLength: number = 0) {
+export default function useHistoryTravel<T>(
+  initialValue?: T,
+  options?:
+    | {
+        maxLength?: number;
+        manual?: boolean;
+      }
+    | number,
+) {
+  let maxLength = 0;
+  let manual = false;
+
+  if (typeof options === 'number') {
+    maxLength = options;
+
+    if (isDev) {
+      console.warn(
+        '[ahooks: useHistoryTravel] `maxLength` is deprecated which will be removed in next major version, please use `options.maxLength` instead.',
+      );
+    }
+  } else if (typeof options === 'object') {
+    maxLength = options?.maxLength ?? maxLength;
+    manual = options?.manual ?? manual;
+  }
+
   const [history, setHistory] = useState<IData<T | undefined>>({
     present: initialValue,
     past: [],
@@ -53,7 +78,7 @@ export default function useHistoryTravel<T>(initialValue?: T, maxLength: number 
     });
   };
 
-  const updateValue = (val: T) => {
+  const updateValue = useMemoizedFn((val: T) => {
     const _past = [...past, present];
     const maxLengthNum = isNumber(maxLength) ? maxLength : Number(maxLength);
     // maximum number of records exceeded
@@ -67,7 +92,23 @@ export default function useHistoryTravel<T>(initialValue?: T, maxLength: number 
       future: [],
       past: _past,
     });
-  };
+  });
+
+  const updateValueWithoutRecord = useMemoizedFn((val?: T) => {
+    setHistory({
+      present: val,
+      future: future,
+      past: past,
+    });
+  });
+
+  const commit = useMemoizedFn((val?: T) => {
+    if (val) {
+      updateValue(val);
+      return;
+    }
+    return present && updateValue(present);
+  });
 
   const _forward = (step: number = 1) => {
     if (future.length === 0) {
@@ -109,7 +150,8 @@ export default function useHistoryTravel<T>(initialValue?: T, maxLength: number 
     value: present,
     backLength: past.length,
     forwardLength: future.length,
-    setValue: useMemoizedFn(updateValue),
+    setValue: manual ? updateValueWithoutRecord : updateValue,
+    commit,
     go: useMemoizedFn(go),
     back: useMemoizedFn(() => {
       go(-1);
