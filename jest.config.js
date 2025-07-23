@@ -21,7 +21,7 @@ module.exports = {
   ],
   modulePathIgnorePatterns: ['<rootDir>/package.json'],
   resetMocks: false,
-  setupFiles: ['./jest.setup.js', 'jest-localstorage-mock'],
+  setupFiles: ['./jest.setup.js'],
   setupFilesAfterEnv: ['@testing-library/jest-dom/extend-expect'],
   transform: {
     '^.+\\.tsx?$': ['ts-jest', { tsconfig: 'tsconfig.json' }],
