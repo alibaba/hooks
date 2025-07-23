@@ -1,24 +1,26 @@
-import { useRequest } from "ahooks";
-import Mock from "mockjs";
-import React, { useState } from "react";
+import { useRequest } from 'ahooks';
+import Mock from 'mockjs';
+import React, { useState } from 'react';
 
 function getUsername(id: string): Promise<string> {
   return new Promise((resolve) => {
     setTimeout(() => {
-      resolve(id);
+      resolve(Mock.mock('@name'));
     }, 1000);
   });
 }
 
 export default () => {
-  const [state, setState] = useState("");
+  const [state, setState] = useState('');
 
   // get username
   const {
     data: username,
     run,
     params,
-  } = useRequest(getUsername, { params: [state] });
+  } = useRequest(getUsername, {
+    defaultParams: ['1'],
+  });
 
   const onChange = () => {
     run(state);
