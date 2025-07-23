@@ -1,33 +1,33 @@
-import type { RenderHookResult } from '@testing-library/react';
-import { act, renderHook, waitFor } from '@testing-library/react';
-import useRequest from '../index';
+import { act, type RenderHookResult, renderHook } from '@testing-library/react';
+import { afterAll, beforeAll, describe, expect, test, vi } from 'vitest';
 import { request } from '../../utils/testingHelpers';
+import useRequest from '../index';
 
-const errorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
+const errorSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
 
 describe('useRequest', () => {
   beforeAll(() => {
-    jest.useFakeTimers();
+    vi.useFakeTimers();
   });
 
   afterAll(() => {
     errorSpy.mockRestore();
   });
 
-  const setUp = (
-    service: Parameters<typeof useRequest>[0],
-    options: Parameters<typeof useRequest>[1],
-  ) => renderHook((o) => useRequest(service, o || options));
+  const setUp = <TData = string, TParams extends any[] = any[]>(
+    service: (...args: TParams) => Promise<TData>,
+    options?: Parameters<typeof useRequest<TData, TParams>>[1],
+  ) => renderHook((o) => useRequest<TData, TParams>(service, o || options));
 
   let hook: RenderHookResult<any, any>;
 
-  it('useRequest should auto run', async () => {
-    let value;
-    let success;
-    const successCallback = (text: string) => {
-      success = text;
+  test('useRequest should auto run', async () => {
+    let value = '';
+    let success: string | undefined;
+    const successCallback = (data: string) => {
+      success = data;
     };
-    const errorCallback = jest.fn();
+    const errorCallback = vi.fn();
     const beforeCallback = () => {
       value = 'before';
     };
@@ -47,10 +47,10 @@ describe('useRequest', () => {
     expect(value).toBe('before');
     expect(success).toBeUndefined();
 
-    act(() => {
-      jest.runAllTimers();
+    await act(async () => {
+      vi.advanceTimersByTime(1000);
     });
-    await waitFor(() => expect(hook.result.current.loading).toBe(false));
+    expect(hook.result.current.loading).toBe(false);
     expect(success).toBe('success');
     expect(hook.result.current.data).toBe('success');
     expect(value).toBe('finally');
@@ -62,10 +62,10 @@ describe('useRequest', () => {
     });
     expect(hook.result.current.loading).toBe(true);
 
-    act(() => {
-      jest.runAllTimers();
+    await act(async () => {
+      vi.advanceTimersByTime(1000);
     });
-    await waitFor(() => expect(hook.result.current.error).toEqual(new Error('fail')));
+    expect(hook.result.current.error).toEqual(new Error('fail'));
     expect(hook.result.current.loading).toBe(false);
     expect(errorCallback).toHaveBeenCalledTimes(1);
 
@@ -75,11 +75,11 @@ describe('useRequest', () => {
     });
     expect(hook.result.current.loading).toBe(true);
 
-    act(() => {
-      jest.runAllTimers();
+    await act(async () => {
+      vi.advanceTimersByTime(1000);
     });
     expect(hook.result.current.data).toBe('success');
-    await waitFor(() => expect(hook.result.current.loading).toBe(false));
+    expect(hook.result.current.loading).toBe(false);
     expect(errorCallback).toHaveBeenCalledTimes(1);
     hook.unmount();
 
@@ -92,16 +92,16 @@ describe('useRequest', () => {
     });
     expect(hook.result.current.loading).toBe(true);
 
-    act(() => {
-      jest.runAllTimers();
+    await act(async () => {
+      vi.advanceTimersByTime(1000);
     });
-    await waitFor(() => expect(hook.result.current.error).toEqual(new Error('fail')));
+    expect(hook.result.current.error).toEqual(new Error('fail'));
     expect(hook.result.current.loading).toBe(false);
     expect(errorCallback).toHaveBeenCalledTimes(2);
     hook.unmount();
   });
 
-  it('useRequest should be manually triggered', async () => {
+  test('useRequest should be manually triggered', async () => {
     act(() => {
       hook = setUp(request, {
         manual: true,
@@ -113,25 +113,25 @@ describe('useRequest', () => {
     });
     expect(hook.result.current.loading).toBe(true);
 
-    act(() => {
-      jest.runAllTimers();
+    await act(async () => {
+      vi.advanceTimersByTime(1000);
     });
-    await waitFor(() => expect(hook.result.current.loading).toBe(false));
+    expect(hook.result.current.loading).toBe(false);
     expect(hook.result.current.data).toBe('success');
     act(() => {
       hook.result.current.run(0);
     });
     expect(hook.result.current.loading).toBe(true);
 
-    act(() => {
-      jest.runAllTimers();
+    await act(async () => {
+      vi.advanceTimersByTime(1000);
     });
-    await waitFor(() => expect(hook.result.current.loading).toBe(false));
+    expect(hook.result.current.loading).toBe(false);
     expect(hook.result.current.error).toEqual(new Error('fail'));
     hook.unmount();
   });
 
-  it('useRequest runAsync should work', async () => {
+  test('useRequest runAsync should work', async () => {
     let success = '',
       error = '';
 
@@ -143,49 +143,49 @@ describe('useRequest', () => {
     act(() => {
       hook.result.current
         .runAsync(0)
-        .then((res) => {
+        .then((res: any) => {
           success = res;
         })
-        .catch((err) => {
+        .catch((err: any) => {
           error = err;
         });
     });
 
-    act(() => {
-      jest.runAllTimers();
+    await act(async () => {
+      vi.advanceTimersByTime(1000);
     });
     expect(success).toBe('');
-    await waitFor(() => expect(error).toEqual(new Error('fail')));
+    expect(error).toEqual(new Error('fail'));
     success = '';
     error = '';
     act(() => {
       hook.result.current
         .runAsync(1)
-        .then((res) => {
+        .then((res: any) => {
           success = res;
         })
-        .catch((err) => {
+        .catch((err: any) => {
           error = err;
         });
     });
 
-    act(() => {
-      jest.runAllTimers();
+    await act(async () => {
+      vi.advanceTimersByTime(1000);
     });
-    await waitFor(() => expect(success).toBe('success'));
+    expect(success).toBe('success');
     expect(error).toBe('');
     hook.unmount();
   });
 
-  it('useRequest mutate should work', async () => {
+  test('useRequest mutate should work', async () => {
     act(() => {
       hook = setUp(request, {});
     });
 
-    act(() => {
-      jest.runAllTimers();
+    await act(async () => {
+      vi.advanceTimersByTime(1000);
     });
-    await waitFor(() => expect(hook.result.current.data).toBe('success'));
+    expect(hook.result.current.data).toBe('success');
     act(() => {
       hook.result.current.mutate('hello');
     });
@@ -193,19 +193,19 @@ describe('useRequest', () => {
     hook.unmount();
   });
 
-  it('useRequest defaultParams should work', async () => {
+  test('useRequest defaultParams should work', async () => {
     act(() => {
-      hook = setUp(request, {
+      hook = setUp<string, [number, number, number]>(request, {
         defaultParams: [1, 2, 3],
       });
     });
     expect(hook.result.current.loading).toBe(true);
 
-    act(() => {
-      jest.runAllTimers();
+    await act(async () => {
+      vi.advanceTimersByTime(1000);
     });
     expect(hook.result.current.params).toEqual([1, 2, 3]);
-    await waitFor(() => expect(hook.result.current.data).toBe('success'));
+    expect(hook.result.current.data).toBe('success');
     expect(hook.result.current.loading).toBe(false);
     hook.unmount();
   });

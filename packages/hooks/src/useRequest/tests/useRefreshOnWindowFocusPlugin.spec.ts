@@ -1,22 +1,21 @@
-import type { RenderHookResult } from '@testing-library/react';
-import { act, renderHook, waitFor } from '@testing-library/react';
-import { fireEvent } from '@testing-library/react';
-import useRequest from '../index';
+import { act, fireEvent, type RenderHookResult, renderHook } from '@testing-library/react';
+import { describe, expect, test, vi } from 'vitest';
 import { request } from '../../utils/testingHelpers';
+import useRequest from '../index';
 
 describe('useRefreshOnWindowFocusPlugin', () => {
-  jest.useFakeTimers();
+  vi.useFakeTimers();
 
-  const setUp = (
-    service: Parameters<typeof useRequest>[0],
-    options: Parameters<typeof useRequest>[1],
-  ) => renderHook((o) => useRequest(service, o || options));
+  const setUp = <TData = string, TParams extends any[] = any[]>(
+    service: (...args: TParams) => Promise<TData>,
+    options?: Parameters<typeof useRequest<TData, TParams>>[1],
+  ) => renderHook((o) => useRequest<TData, TParams>(service, o || options));
 
   let hook: RenderHookResult<any, any>;
   let hook1: RenderHookResult<any, any>;
   let hook2: RenderHookResult<any, any>;
 
-  it('useRefreshOnWindowFocusPlugin should work', async () => {
+  test('useRefreshOnWindowFocusPlugin should work', async () => {
     act(() => {
       hook = setUp(request, {
         refreshOnWindowFocus: true,
@@ -24,27 +23,27 @@ describe('useRefreshOnWindowFocusPlugin', () => {
       });
     });
     expect(hook.result.current.loading).toBe(true);
-    act(() => {
-      jest.advanceTimersByTime(1001);
+    await act(async () => {
+      vi.advanceTimersByTime(1001);
     });
-    await waitFor(() => expect(hook.result.current.loading).toBe(false));
+    expect(hook.result.current.loading).toBe(false);
     act(() => {
       fireEvent.focus(window);
     });
     expect(hook.result.current.loading).toBe(true);
 
-    act(() => {
-      jest.advanceTimersByTime(2000);
+    await act(async () => {
+      vi.advanceTimersByTime(2000);
     });
-    await waitFor(() => expect(hook.result.current.loading).toBe(false));
+    expect(hook.result.current.loading).toBe(false);
     act(() => {
-      jest.advanceTimersByTime(3000);
+      vi.advanceTimersByTime(3000);
       fireEvent.focus(window);
     });
     expect(hook.result.current.loading).toBe(true);
   });
 
-  it('fix: multiple unsubscriptions should not delete the last subscription listener ', async () => {
+  test('fix: multiple unsubscriptions should not delete the last subscription listener ', async () => {
     act(() => {
       hook1 = setUp(request, {
         refreshOnWindowFocus: true,
@@ -57,10 +56,10 @@ describe('useRefreshOnWindowFocusPlugin', () => {
     expect(hook1.result.current.loading).toBe(true);
     expect(hook2.result.current.loading).toBe(true);
 
-    act(() => {
-      jest.advanceTimersByTime(1001);
+    await act(async () => {
+      vi.advanceTimersByTime(1001);
     });
-    await waitFor(() => expect(hook1.result.current.loading).toBe(false));
+    expect(hook1.result.current.loading).toBe(false);
     expect(hook2.result.current.loading).toBe(false);
 
     act(() => {
@@ -70,17 +69,17 @@ describe('useRefreshOnWindowFocusPlugin', () => {
     expect(hook1.result.current.loading).toBe(true);
     expect(hook2.result.current.loading).toBe(true);
 
-    act(() => {
-      jest.advanceTimersByTime(2000);
+    await act(async () => {
+      vi.advanceTimersByTime(2000);
     });
 
-    await waitFor(() => expect(hook1.result.current.loading).toBe(false));
+    expect(hook1.result.current.loading).toBe(false);
     expect(hook2.result.current.loading).toBe(false);
 
     hook1.unmount();
 
     act(() => {
-      jest.advanceTimersByTime(3000);
+      vi.advanceTimersByTime(3000);
       fireEvent.focus(window);
     });
 

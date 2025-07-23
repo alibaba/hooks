@@ -1,7 +1,7 @@
-import type { RenderHookResult } from '@testing-library/react';
-import { act, renderHook, waitFor } from '@testing-library/react';
-import useRequest from '../index';
+import { act, type RenderHookResult, renderHook } from '@testing-library/react';
+import { describe, expect, test, vi } from 'vitest';
 import { request } from '../../utils/testingHelpers';
+import useRequest from '../index';
 
 describe('useDebouncePlugin', () => {
   const setUp = (
@@ -11,9 +11,9 @@ describe('useDebouncePlugin', () => {
 
   let hook: RenderHookResult<any, any>;
 
-  it('useDebouncePlugin should work', async () => {
-    jest.useFakeTimers();
-    const callback = jest.fn();
+  test('useDebouncePlugin should work', () => {
+    vi.useFakeTimers();
+    const callback = vi.fn();
 
     act(() => {
       hook = setUp(
@@ -30,44 +30,44 @@ describe('useDebouncePlugin', () => {
 
     act(() => {
       hook.result.current.run(1);
-      jest.advanceTimersByTime(50);
+      vi.advanceTimersByTime(50);
       hook.result.current.run(2);
-      jest.advanceTimersByTime(50);
+      vi.advanceTimersByTime(50);
       hook.result.current.run(3);
-      jest.advanceTimersByTime(50);
+      vi.advanceTimersByTime(50);
       hook.result.current.run(4);
     });
 
     act(() => {
-      jest.runAllTimers();
+      vi.runAllTimers();
     });
-    await waitFor(() => expect(callback).toHaveBeenCalledTimes(1));
+    expect(callback).toHaveBeenCalledTimes(1);
 
     act(() => {
       hook.result.current.run(1);
-      jest.advanceTimersByTime(50);
+      vi.advanceTimersByTime(50);
       hook.result.current.run(2);
-      jest.advanceTimersByTime(50);
+      vi.advanceTimersByTime(50);
       hook.result.current.run(3);
-      jest.advanceTimersByTime(50);
+      vi.advanceTimersByTime(50);
       hook.result.current.run(4);
     });
 
     act(() => {
-      jest.runAllTimers();
+      vi.runAllTimers();
     });
-    await waitFor(() => expect(callback).toHaveBeenCalledTimes(2));
+    expect(callback).toHaveBeenCalledTimes(2);
 
     act(() => {
       hook.result.current.run(1);
-      jest.advanceTimersByTime(50);
+      vi.advanceTimersByTime(50);
       hook.result.current.run(2);
-      jest.advanceTimersByTime(50);
+      vi.advanceTimersByTime(50);
       hook.result.current.cancel();
     });
 
     act(() => {
-      jest.runAllTimers();
+      vi.runAllTimers();
     });
     expect(callback).toHaveBeenCalledTimes(2);
 
