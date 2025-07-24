@@ -1,11 +1,11 @@
-import { useMemo } from "react"
- function getNestedValue(record: any, path: string): any {
+import { useMemo } from 'react';
+function getNestedValue(record: any, path: string): any {
   return path.split('.').reduce((acc, key) => (acc ? acc[key] : undefined), record);
 }
 export default function useRowSpan<T extends Record<string, any>>(
   data: T[],
   hierarchy: string[] = [],
-  currentPageData?: T[]
+  currentPageData?: T[],
 ) {
   const getRowSpan = useMemo(() => {
     if (!data || data.length === 0) {
@@ -21,9 +21,9 @@ export default function useRowSpan<T extends Record<string, any>>(
 
     const spanMap: Record<string, Record<string, { rowspan: number }>> = {};
 
-    processedData.forEach(item => {
+    processedData.forEach((item) => {
       spanMap[item.key] = {};
-      hierarchy.forEach(field => {
+      hierarchy.forEach((field) => {
         spanMap[item.key][field] = { rowspan: 1 };
       });
     });
@@ -37,7 +37,10 @@ export default function useRowSpan<T extends Record<string, any>>(
           i > 0 &&
           hierarchy
             .slice(0, level)
-            .every(h => getNestedValue(processedData[i], h) === getNestedValue(processedData[i - 1], h)) &&
+            .every(
+              (h) =>
+                getNestedValue(processedData[i], h) === getNestedValue(processedData[i - 1], h),
+            ) &&
           getNestedValue(processedData[i], field) === getNestedValue(processedData[i - 1], field);
 
         console.log(`Checking merge for field ${field} at index ${i}:`, shouldMerge);

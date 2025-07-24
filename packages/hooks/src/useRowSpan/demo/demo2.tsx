@@ -1,8 +1,8 @@
-import React from "react";
-import { Table } from "antd";
-import { useState, useMemo } from "react";
-import { useRowSpan } from "ahooks"
-import type { TableProps } from "antd";
+import React from 'react';
+import { Table } from 'antd';
+import { useState, useMemo } from 'react';
+import { useRowSpan } from 'ahooks';
+import type { TableProps } from 'antd';
 
 interface DataType {
   key: string;
@@ -18,81 +18,81 @@ interface DataType {
 
 const data: DataType[] = [
   {
-    city: "四川",
+    city: '四川',
     user: {
-      school: "四中",
-      name: "小红",
+      school: '四中',
+      name: '小红',
       age: 18,
-      six: "女",
+      six: '女',
     },
-    key: "1",
-    remark: "备注1",
+    key: '1',
+    remark: '备注1',
   },
   {
-    city: "四川",
+    city: '四川',
     user: {
-      school: "四中",
-      name: "小明",
+      school: '四中',
+      name: '小明',
       age: 18,
-      six: "女",
+      six: '女',
     },
-    key: "2",
-    remark: "备注1",
+    key: '2',
+    remark: '备注1',
   },
   {
-    city: "四川",
+    city: '四川',
     user: {
-      school: "七中",
-      name: "小王",
+      school: '七中',
+      name: '小王',
       age: 20,
-      six: "男",
+      six: '男',
     },
-    key: "4",
-    remark: "备注4",
+    key: '4',
+    remark: '备注4',
   },
   {
-    city: "重庆",
+    city: '重庆',
     user: {
-      school: "七中",
-      name: "小吴",
+      school: '七中',
+      name: '小吴',
       age: 24,
-      six: "男",
+      six: '男',
     },
-    key: "7",
-    remark: "备注7",
+    key: '7',
+    remark: '备注7',
   },
   {
-    city: "重庆",
+    city: '重庆',
     user: {
-      school: "三中",
-      name: "花花",
+      school: '三中',
+      name: '花花',
       age: 22,
-      six: "女",
+      six: '女',
     },
-    key: "9",
-    remark: "备注9",
+    key: '9',
+    remark: '备注9',
   },
   {
-    city: "湖北",
+    city: '湖北',
     user: {
-      school: "六中",
-      name: "晨晨",
+      school: '六中',
+      name: '晨晨',
       age: 24,
-      six: "男",
+      six: '男',
     },
-    key: "13",
-    remark: "备注19",
+    key: '13',
+    remark: '备注19',
   },
   {
-    city: "广东",
+    city: '广东',
     user: {
-      school: "中山大学附中",
-      name: "华华",
+      school: '中山大学附中',
+      name: '华华',
       age: 25,
-      six: "女",
+      six: '女',
     },
-    key: "19",
-    remark: "备注19",
+    key: '19',
+    remark: '备注19',
   },
 ];
 
@@ -106,57 +106,61 @@ const Demo2 = () => {
     return data.slice(startIndex, endIndex);
   }, [current, pageSize]);
 
-  const getRowSpan = useRowSpan(data, ["city", "user.school", "user.six","remark"], currentPageData);
+  const getRowSpan = useRowSpan(
+    data,
+    ['city', 'user.school', 'user.six', 'remark'],
+    currentPageData,
+  );
 
-  const columns: TableProps<DataType>["columns"] = [
+  const columns: TableProps<DataType>['columns'] = [
     {
-      title: "城市",
-      dataIndex: "city",
-      key: "city",
+      title: '城市',
+      dataIndex: 'city',
+      key: 'city',
       onCell: (record) => ({
-        rowSpan: getRowSpan(record, "city").rowspan,
-        style: { textAlign: "center", verticalAlign: "middle" },
+        rowSpan: getRowSpan(record, 'city').rowspan,
+        style: { textAlign: 'center', verticalAlign: 'middle' },
       }),
     },
     {
-      title: "学校",
-      dataIndex: "user.school",
-      key: "school",
+      title: '学校',
+      dataIndex: 'user.school',
+      key: 'school',
       onCell: (record) => ({
-        rowSpan: getRowSpan(record, "user.school").rowspan,
-        style: { textAlign: "center", verticalAlign: "middle" },
+        rowSpan: getRowSpan(record, 'user.school').rowspan,
+        style: { textAlign: 'center', verticalAlign: 'middle' },
       }),
-      render:(text,record)=>record.user.school
+      render: (text, record) => record.user.school,
     },
     {
-      title: "名字",
-      dataIndex: "user.name",
-      key: "name",
-      render: (text, record) => record.user.name
+      title: '名字',
+      dataIndex: 'user.name',
+      key: 'name',
+      render: (text, record) => record.user.name,
     },
     {
-      title: "年龄",
-      dataIndex: "user.age",
-      key: "age",
-      render: (text, record) => record.user.age
+      title: '年龄',
+      dataIndex: 'user.age',
+      key: 'age',
+      render: (text, record) => record.user.age,
     },
     {
-      title: "性别",
-      dataIndex: "user.six",
-      key: "six",
+      title: '性别',
+      dataIndex: 'user.six',
+      key: 'six',
       onCell: (record) => ({
-        rowSpan: getRowSpan(record, "user.six").rowspan,
-        style: { textAlign: "center", verticalAlign: "middle" },
+        rowSpan: getRowSpan(record, 'user.six').rowspan,
+        style: { textAlign: 'center', verticalAlign: 'middle' },
       }),
-      render: (text, record) => record.user.six
+      render: (text, record) => record.user.six,
     },
     {
-      title: "性别",
-      dataIndex: "remark",
-      key: "remark",
+      title: '性别',
+      dataIndex: 'remark',
+      key: 'remark',
       onCell: (record) => ({
-        rowSpan: getRowSpan(record, "remark").rowspan,
-        style: { textAlign: "center", verticalAlign: "middle" },
+        rowSpan: getRowSpan(record, 'remark').rowspan,
+        style: { textAlign: 'center', verticalAlign: 'middle' },
       }),
     },
   ];

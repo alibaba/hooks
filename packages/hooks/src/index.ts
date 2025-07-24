@@ -158,5 +158,5 @@ export {
   useResetState,
   useMutationObserver,
   useTheme,
-  useRowSpan
+  useRowSpan,
 };

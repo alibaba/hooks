@@ -32,7 +32,7 @@ export const menus = [
       'useTextSelection',
       'useWebSocket',
       'useTheme',
-      'useRowSpan'
+      'useRowSpan',
     ],
   },
   {
