@@ -3,6 +3,5 @@
   "compilerOptions": {
     "rootDir": "src"
   },
-  "include": ["src"],
-  "references": [{ "path": "../hooks" }]
+  "include": ["src"]
 }

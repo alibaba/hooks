@@ -1,10 +1,11 @@
-import { renderHook, act } from '@testing-library/react';
-import useAsyncEffect from '../index';
+import { act, renderHook } from '@testing-library/react';
 import { useState } from 'react';
+import { describe, expect, test } from 'vitest';
 import { sleep } from '../../utils/testingHelpers';
+import useAsyncEffect from '../index';
 
 describe('useAsyncEffect', () => {
-  it('should work without clean up', async () => {
+  test('should work without clean up', async () => {
     const hook = renderHook(() => {
       const [x, setX] = useState(0);
       useAsyncEffect(async () => {
@@ -20,7 +21,7 @@ describe('useAsyncEffect', () => {
     expect(hook.result.current).toBe(1);
   });
 
-  it('should work with yield break', async () => {
+  test('should work with yield break', async () => {
     const hook = renderHook(() => {
       const [x, setX] = useState(1);
       const [y, setY] = useState(0);

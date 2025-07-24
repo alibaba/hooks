@@ -1,10 +1,11 @@
-import { renderHook, act } from '@testing-library/react';
+import { act, renderHook } from '@testing-library/react';
+import { describe, expect, test } from 'vitest';
 import useBoolean from '../index';
 
 const setUp = (defaultValue?: boolean) => renderHook(() => useBoolean(defaultValue));
 
 describe('useBoolean', () => {
-  it('test on methods', async () => {
+  test('test on methods', async () => {
     const { result } = setUp();
     expect(result.current[0]).toBe(false);
     act(() => {
@@ -43,7 +44,7 @@ describe('useBoolean', () => {
     expect(result.current[0]).toBe(true);
   });
 
-  it('test on default value', () => {
+  test('test on default value', () => {
     const hook1 = setUp(true);
     expect(hook1.result.current[0]).toBe(true);
     const hook2 = setUp();

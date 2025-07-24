@@ -1,9 +1,10 @@
 import { act, renderHook } from '@testing-library/react';
 import { useEffect, useLayoutEffect, useState } from 'react';
+import { describe, expect, test } from 'vitest';
 import { createDeepCompareEffect } from '../index';
 
 describe('createDeepCompareEffect', () => {
-  it('should work for useEffect', async () => {
+  test('should work for useEffect', async () => {
     const useDeepCompareEffect = createDeepCompareEffect(useEffect);
 
     const hook = renderHook(() => {
@@ -30,7 +31,7 @@ describe('createDeepCompareEffect', () => {
     expect(hook.result.current.x).toBe(2);
   });
 
-  it('should work for useLayoutEffect', async () => {
+  test('should work for useLayoutEffect', async () => {
     const useDeepCompareLayoutEffect = createDeepCompareEffect(useLayoutEffect);
 
     const hook = renderHook(() => {
@@ -57,7 +58,7 @@ describe('createDeepCompareEffect', () => {
     expect(hook.result.current.x).toBe(2);
   });
 
-  it('deps is undefined should rerender in useEffect', async () => {
+  test('deps is undefined should rerender in useEffect', async () => {
     const useDeepCompareLayoutEffect = createDeepCompareEffect(useEffect);
     let count = 0;
     const hook = renderHook(() => {
@@ -73,7 +74,7 @@ describe('createDeepCompareEffect', () => {
     expect(count).toBe(3);
   });
 
-  it('deps is undefined should rerender in useLayoutEffect', async () => {
+  test('deps is undefined should rerender in useLayoutEffect', async () => {
     const useDeepCompareLayoutEffect = createDeepCompareEffect(useLayoutEffect);
     let count = 0;
     const hook = renderHook(() => {

@@ -18,5 +18,5 @@
     "strictNullChecks": true,
     "importHelpers": true
   },
-  "exclude": ["node_modules", "lib", "es", "dist", "example"]
+  "exclude": ["node_modules", "lib", "es", "dist", "example", "vitest.config.ts"]
 }

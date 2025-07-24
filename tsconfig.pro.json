@@ -9,6 +9,7 @@
     "**/__test__",
     "**/demo",
     "example",
-    "gulpfile.js"
+    "gulpfile.js",
+    "vitest.config.ts"
   ]
 }
