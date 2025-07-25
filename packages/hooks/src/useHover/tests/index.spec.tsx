@@ -1,11 +1,10 @@
-// write your test cases here
+import { act, fireEvent, render, renderHook } from '@testing-library/react';
 import React from 'react';
-import { renderHook, act } from '@testing-library/react';
-import { render, fireEvent } from '@testing-library/react';
+import { describe, expect, test } from 'vitest';
 import useHover from '../index';
 
 describe('useHover', () => {
-  it('should work', () => {
+  test('should work', () => {
     const { getByText } = render(<button>Hover</button>);
     let trigger = 0;
     const { result } = renderHook(() =>

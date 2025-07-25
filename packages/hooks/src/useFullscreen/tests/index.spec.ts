@@ -1,14 +1,27 @@
-import { renderHook, act } from '@testing-library/react';
-import useFullscreen from '../index';
-import type { Options } from '../index';
+import { act, renderHook } from '@testing-library/react';
+import screenfull from 'screenfull';
+import { afterAll, afterEach, beforeEach, describe, expect, test, vi } from 'vitest';
 import type { BasicTarget } from '../../utils/domTarget';
+import useFullscreen, { type Options } from '../index';
+
+// Mock screenfull
+vi.mock('screenfull', () => ({
+  default: {
+    isEnabled: true,
+    element: null,
+    request: vi.fn(),
+    exit: vi.fn(),
+    on: vi.fn(),
+    off: vi.fn(),
+  },
+}));
+
+const mockScreenfull = screenfull as any;
 
 let globalHook: any;
 let targetEl: any;
-const events = {
-  fullscreenchange: new Set(),
-  fullscreenerror: new Set(),
-};
+let changeCallback: any;
+
 const setup = (target: BasicTarget, options?: Options) => {
   globalHook = renderHook(() => useFullscreen(target, options));
   return globalHook;
@@ -18,96 +31,104 @@ describe('useFullscreen', () => {
   beforeEach(() => {
     targetEl = document.createElement('div');
     document.body.appendChild(targetEl);
-    jest.spyOn(HTMLElement.prototype, 'requestFullscreen').mockImplementation(() => {
-      Object.defineProperty(document, 'fullscreenElement', {
-        value: targetEl,
-      });
-      return Promise.resolve();
-    });
-    jest.spyOn(document, 'exitFullscreen').mockImplementation(() => {
-      Object.defineProperty(document, 'fullscreenElement', {
-        value: null,
-      });
-      return Promise.resolve();
-    });
-    jest.spyOn(document, 'addEventListener').mockImplementation((eventName, callback) => {
-      if (events[eventName]) {
-        events[eventName].add(callback);
+
+    // Reset screenfull mocks
+    mockScreenfull.element = null;
+    mockScreenfull.on.mockImplementation((event: string, callback: any) => {
+      if (event === 'change') {
+        changeCallback = callback;
       }
     });
-    jest.spyOn(document, 'removeEventListener').mockImplementation((eventName, callback) => {
-      if (events[eventName]) {
-        events[eventName].delete(callback);
-      }
+    mockScreenfull.off.mockImplementation(() => {});
+    mockScreenfull.request.mockImplementation((el: any) => {
+      mockScreenfull.element = el;
+      return Promise.resolve();
     });
+    mockScreenfull.exit.mockImplementation(() => {
+      mockScreenfull.element = null;
+      return Promise.resolve();
+    });
+
+    vi.clearAllMocks();
   });
 
   afterEach(() => {
     document.body.removeChild(targetEl);
-    events.fullscreenchange.clear();
     globalHook?.unmount();
+    changeCallback = null;
   });
 
   afterAll(() => {
-    jest.resetAllMocks();
+    vi.resetAllMocks();
   });
 
-  it('enterFullscreen/exitFullscreen should be work', () => {
+  test('enterFullscreen/exitFullscreen should be work', () => {
     const { result } = setup(targetEl);
     const { enterFullscreen, exitFullscreen } = result.current[1];
+
     enterFullscreen();
+    expect(mockScreenfull.request).toBeCalledWith(targetEl);
+
     act(() => {
-      events.fullscreenchange.forEach((fn: any) => fn());
+      if (changeCallback) changeCallback();
     });
     expect(result.current[0]).toBe(true);
 
     exitFullscreen();
+    expect(mockScreenfull.exit).toBeCalled();
+
     act(() => {
-      events.fullscreenchange.forEach((fn: any) => fn());
+      if (changeCallback) changeCallback();
     });
     expect(result.current[0]).toBe(false);
   });
 
-  it('toggleFullscreen should be work', () => {
+  test('toggleFullscreen should be work', () => {
     const { result } = setup(targetEl);
     const { toggleFullscreen } = result.current[1];
+
     toggleFullscreen();
+    expect(mockScreenfull.request).toBeCalledWith(targetEl);
+
     act(() => {
-      events.fullscreenchange.forEach((fn: any) => fn());
+      if (changeCallback) changeCallback();
     });
     expect(result.current[0]).toBe(true);
 
     toggleFullscreen();
+    expect(mockScreenfull.exit).toBeCalled();
+
     act(() => {
-      events.fullscreenchange.forEach((fn: any) => fn());
+      if (changeCallback) changeCallback();
     });
     expect(result.current[0]).toBe(false);
   });
 
-  it('onExit/onEnter should be called', () => {
-    const onExit = jest.fn();
-    const onEnter = jest.fn();
+  test('onExit/onEnter should be called', () => {
+    const onExit = vi.fn();
+    const onEnter = vi.fn();
     const { result } = setup(targetEl, {
       onExit,
       onEnter,
     });
     const { toggleFullscreen } = result.current[1];
+
     toggleFullscreen();
     act(() => {
-      events.fullscreenchange.forEach((fn: any) => fn());
+      if (changeCallback) changeCallback();
     });
     expect(onEnter).toBeCalled();
 
     toggleFullscreen();
     act(() => {
-      events.fullscreenchange.forEach((fn: any) => fn());
+      if (changeCallback) changeCallback();
     });
     expect(onExit).toBeCalled();
   });
 
-  it('onExit/onEnter should not be called', () => {
-    const onExit = jest.fn();
-    const onEnter = jest.fn();
+  test('onExit/onEnter should not be called', () => {
+    const onExit = vi.fn();
+    const onEnter = vi.fn();
     const { result } = setup(targetEl, {
       onExit,
       onEnter,
@@ -116,28 +137,29 @@ describe('useFullscreen', () => {
 
     // `onExit` should not be called when not full screen
     exitFullscreen();
-    act(() => events.fullscreenchange.forEach((fn: any) => fn()));
+    act(() => {
+      if (changeCallback) changeCallback();
+    });
     expect(onExit).not.toBeCalled();
 
     // Enter full screen
     enterFullscreen();
-    act(() => events.fullscreenchange.forEach((fn: any) => fn()));
+    act(() => {
+      if (changeCallback) changeCallback();
+    });
     expect(onEnter).toBeCalled();
     onEnter.mockReset();
 
     // `onEnter` should not be called when full screen
     enterFullscreen();
-    // There is no need to write: `act(() => events.fullscreenchange.forEach((fn: any) => fn()));`,
-    // because in a real browser, if it is already in full screen, calling `enterFullscreen` again
-    // will not trigger the `change` event.
     expect(onEnter).not.toBeCalled();
   });
 
-  it('pageFullscreen should be work', () => {
+  test('pageFullscreen should be work', () => {
     const PAGE_FULLSCREEN_CLASS_NAME = 'test-page-fullscreen';
     const PAGE_FULLSCREEN_Z_INDEX = 101;
-    const onExit = jest.fn();
-    const onEnter = jest.fn();
+    const onExit = vi.fn();
+    const onEnter = vi.fn();
     const { result } = setup(targetEl, {
       onExit,
       onEnter,
@@ -166,71 +188,92 @@ describe('useFullscreen', () => {
     expect(getStyleEl()?.getAttribute('id')).toBeUndefined();
   });
 
-  it('enterFullscreen should not work when target is not element', () => {
-    const onEnter = jest.fn();
+  test('enterFullscreen should not work when target is not element', () => {
+    const onEnter = vi.fn();
     const { result } = setup(null, { onEnter });
     const { enterFullscreen } = result.current[1];
     enterFullscreen();
+    expect(mockScreenfull.request).not.toBeCalled();
     expect(onEnter).not.toBeCalled();
   });
 
-  it('should remove event listener when unmount', () => {
-    const { result, unmount } = setup(targetEl);
-    const { enterFullscreen } = result.current[1];
-    enterFullscreen();
-    const size = events.fullscreenchange.size;
+  test('should remove event listener when unmount', () => {
+    const { unmount } = setup(targetEl);
+    expect(mockScreenfull.on).toBeCalledWith('change', expect.any(Function));
+
     unmount();
-    expect(events.fullscreenchange.size).toBe(size - 1);
+    expect(mockScreenfull.off).toBeCalledWith('change', expect.any(Function));
   });
 
-  it('`isFullscreen` should be false when use `document.exitFullscreen`', () => {
+  test('`isFullscreen` should be false when use `document.exitFullscreen`', () => {
     const { result } = setup(targetEl);
     const { enterFullscreen } = result.current[1];
+
     enterFullscreen();
     act(() => {
-      events['fullscreenchange'].forEach((fn: any) => fn());
+      if (changeCallback) changeCallback();
     });
     expect(result.current[0]).toBe(true);
 
-    document.exitFullscreen();
+    // Simulate external exit fullscreen
+    mockScreenfull.element = null;
     act(() => {
-      events['fullscreenchange'].forEach((fn: any) => fn());
+      if (changeCallback) changeCallback();
     });
     expect(result.current[0]).toBe(false);
   });
 
-  it('mutli element full screen should be correct', () => {
+  test('mutli element full screen should be correct', () => {
     const targetEl2 = document.createElement('p');
+    document.body.appendChild(targetEl2);
+
+    // Store separate change callbacks for each hook
+    let changeCallback1: any = null;
+    let changeCallback2: any = null;
+
+    // Override mock to track multiple callbacks
+    mockScreenfull.on.mockImplementation((event: string, callback: any) => {
+      if (event === 'change') {
+        if (!changeCallback1) {
+          changeCallback1 = callback;
+        } else if (!changeCallback2) {
+          changeCallback2 = callback;
+        }
+      }
+    });
+
     const hook = setup(targetEl);
     const hook2 = setup(targetEl2);
 
     // target1 full screen
     hook.result.current[1].enterFullscreen();
+    expect(mockScreenfull.element).toBe(targetEl);
     act(() => {
-      events['fullscreenchange'].forEach((fn: any) => fn());
+      if (changeCallback1) changeCallback1();
+      if (changeCallback2) changeCallback2();
     });
     expect(hook.result.current[0]).toBe(true);
 
-    // target2 full screen
+    // target2 full screen (this should make target1 not fullscreen)
     hook2.result.current[1].enterFullscreen();
-    Object.defineProperty(document, 'fullscreenElement', {
-      value: targetEl2,
-    });
+    expect(mockScreenfull.element).toBe(targetEl2);
     act(() => {
-      events['fullscreenchange'].forEach((fn: any) => fn());
+      if (changeCallback1) changeCallback1();
+      if (changeCallback2) changeCallback2();
     });
     expect(hook.result.current[0]).toBe(false);
     expect(hook2.result.current[0]).toBe(true);
 
-    // target2 exit full screen
+    // target2 exit full screen (no element is fullscreen now)
     hook2.result.current[1].exitFullscreen();
-    Object.defineProperty(document, 'fullscreenElement', {
-      value: targetEl,
-    });
+    expect(mockScreenfull.element).toBe(null);
     act(() => {
-      events['fullscreenchange'].forEach((fn: any) => fn());
+      if (changeCallback1) changeCallback1();
+      if (changeCallback2) changeCallback2();
     });
-    expect(hook.result.current[0]).toBe(true);
+    expect(hook.result.current[0]).toBe(false);
     expect(hook2.result.current[0]).toBe(false);
+
+    document.body.removeChild(targetEl2);
   });
 });

@@ -1,6 +1,7 @@
+import { cleanup, fireEvent, render } from '@testing-library/react';
 import React, { useRef } from 'react';
-import useFocusWithin, { Options } from '../index';
-import { render, fireEvent } from '@testing-library/react';
+import { beforeEach, describe, expect, test, vi } from 'vitest';
+import useFocusWithin, { type Options } from '../index';
 
 const setup = (options?: Options) => {
   const TestComponent = () => {
@@ -25,22 +26,26 @@ const setup = (options?: Options) => {
 };
 
 describe('useFocusWithin', () => {
-  it('should call onFocus/onBlur', () => {
-    const onFocus = jest.fn();
-    const onBlur = jest.fn();
+  beforeEach(() => {
+    cleanup();
+    vi.clearAllMocks();
+  });
+  test('should call onFocus/onBlur', () => {
+    const onFocus = vi.fn();
+    const onBlur = vi.fn();
     const result = setup({ onFocus, onBlur });
-    fireEvent.focusIn(result.getByLabelText('First Name'));
+    fireEvent.focusIn(result.getAllByLabelText('First Name')[0]);
     expect(onFocus).toBeCalled();
-    fireEvent.focusOut(result.getByLabelText('First Name'));
+    fireEvent.focusOut(result.getAllByLabelText('First Name')[0]);
     expect(onBlur).toBeCalled();
   });
 
-  it('should call onChange', () => {
-    const onChange = jest.fn();
+  test('should call onChange', () => {
+    const onChange = vi.fn();
     const result = setup({ onChange });
-    fireEvent.focusIn(result.getByLabelText('First Name'));
+    fireEvent.focusIn(result.getAllByLabelText('First Name')[0]);
     expect(onChange).toBeCalledWith(true);
-    fireEvent.focusOut(result.getByLabelText('First Name'));
+    fireEvent.focusOut(result.getAllByLabelText('First Name')[0]);
     expect(onChange).toHaveBeenLastCalledWith(false);
   });
 });
