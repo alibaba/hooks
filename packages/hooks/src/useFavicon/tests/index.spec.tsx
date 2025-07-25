@@ -1,29 +1,30 @@
 import { renderHook } from '@testing-library/react';
+import { describe, expect, test } from 'vitest';
 import useFavicon from '../index';
 
 describe('useFavicon', () => {
-  it('should set the favicon', () => {
+  test('should set the favicon', () => {
     expect(document.querySelector("link[rel*='icon']")).toBeNull();
     renderHook(() => useFavicon('favicon.ico'));
     expect(document.querySelector("link[rel*='icon']")).not.toBeNull();
   });
 
-  it('should support svg/png/ico/gif', () => {
+  test('should support svg/png/ico/gif', () => {
     const { rerender } = renderHook((url: string) => useFavicon(url));
-    const suffixs = ['svg', 'png', 'ico', 'gif'];
+    const suffixes = ['svg', 'png', 'ico', 'gif'] as const;
     const imgTypeMap = {
       svg: 'image/svg+xml',
       ico: 'image/x-icon',
       gif: 'image/gif',
       png: 'image/png',
-    };
-    suffixs.forEach((suffix) => {
+    } as const;
+    suffixes.forEach((suffix) => {
       const url = `favicon.${suffix}`;
       rerender(url);
       const link = document.querySelector("link[rel*='icon']") as HTMLLinkElement;
-      expect(link).toHaveAttribute('type', imgTypeMap[suffix]);
-      expect(link).toHaveAttribute('href', url);
-      expect(link).toHaveAttribute('rel', 'shortcut icon');
+      expect(link.getAttribute('type')).toBe(imgTypeMap[suffix]);
+      expect(link.getAttribute('href')).toBe(url);
+      expect(link.getAttribute('rel')).toBe('shortcut icon');
     });
   });
 });

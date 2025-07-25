@@ -1,4 +1,5 @@
 import { renderHook } from '@testing-library/react';
+import { afterEach, beforeEach, describe, expect, test } from 'vitest';
 import useEventListener from '../index';
 
 describe('useEventListener', () => {
@@ -13,7 +14,7 @@ describe('useEventListener', () => {
     document.body.removeChild(container);
   });
 
-  it('test on click listener', async () => {
+  test('test on click listener', async () => {
     let state: number = 0;
     const onClick = () => {
       state++;
@@ -32,7 +33,7 @@ describe('useEventListener', () => {
     expect(state).toBe(1);
   });
 
-  it('test on event list listener', async () => {
+  test('test on event list listener', async () => {
     let state: number = 0;
     const onClick = () => {
       state++;
@@ -60,7 +61,7 @@ describe('useEventListener', () => {
     expect(state).toBe(2);
   });
 
-  it('test "enable" parameter', () => {
+  test('test "enable" parameter', () => {
     let state = 0;
     let enable = true;
     const onClick = () => state++;
