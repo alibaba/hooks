@@ -113,12 +113,6 @@ importers:
       jest-environment-jsdom:
         specifier: ^29.4.1
         version: 29.7.0
-      jest-localstorage-mock:
-        specifier: ^2.4.18
-        version: 2.4.26
-      jest-websocket-mock:
-        specifier: ^2.1.0
-        version: 2.5.0
       jsdom:
         specifier: ^26.1.0
         version: 26.1.0
@@ -158,6 +152,9 @@ importers:
       vitest:
         specifier: ^3.2.4
         version: 3.2.4(@types/node@22.15.3)(jsdom@26.1.0)(terser@5.39.0)
+      vitest-websocket-mock:
+        specifier: ^0.5.0
+        version: 0.5.0(vitest@3.2.4(@types/node@22.15.3)(jsdom@26.1.0)(terser@5.39.0))
       webpack:
         specifier: ^5.99.9
         version: 5.99.9(webpack-cli@6.0.1)
@@ -5277,10 +5274,6 @@ packages:
     resolution: {integrity: sha512-kYA8IJcSYtST2BY9I+SMC32nDpBT3J2NvWJx8+JCuCdl/CR1I4EKUJROiP8XtCcxqgTTBGJNdbB1A8XRKbTetw==}
     engines: {node: ^14.15.0 || ^16.10.0 || >=18.0.0}
 
-  jest-localstorage-mock@2.4.26:
-    resolution: {integrity: sha512-owAJrYnjulVlMIXOYQIPRCCn3MmqI3GzgfZCXdD3/pmwrIvFMXcKVWZ+aMc44IzaASapg0Z4SEFxR+v5qxDA2w==}
-    engines: {node: '>=6.16.0'}
-
   jest-matcher-utils@29.7.0:
     resolution: {integrity: sha512-sBkD+Xi9DtcChsI3L3u0+N0opgPYnCRPtGcQYrgXmR+hmt/fYfWAL0xRXYU8eWOdfuLgBe0YCW3AFtnRLagq/g==}
     engines: {node: ^14.15.0 || ^16.10.0 || >=18.0.0}
@@ -5337,9 +5330,6 @@ packages:
   jest-watcher@29.7.0:
     resolution: {integrity: sha512-49Fg7WXkU3Vl2h6LbLtMQ/HyB6rXSIX7SqvBLQmssRBGN9I0PNvPmAmCWSOY6SOvrjhI/F7/bGAv9RtnsPA03g==}
     engines: {node: ^14.15.0 || ^16.10.0 || >=18.0.0}
-
-  jest-websocket-mock@2.5.0:
-    resolution: {integrity: sha512-a+UJGfowNIWvtIKIQBHoEWIUqRxxQHFx4CXT+R5KxxKBtEQ5rS3pPOV/5299sHzqbmeCzxxY5qE4+yfXePePig==}
 
   jest-worker@24.9.0:
     resolution: {integrity: sha512-51PE4haMSXcHohnSMdM42anbvZANYTqMrr52tVKPqqsPJMzoP6FYYDVqahX/HrAoKEKz3uUPzSvKs9A3qR4iVw==}
@@ -8817,6 +8807,11 @@ packages:
       yaml:
         optional: true
 
+  vitest-websocket-mock@0.5.0:
+    resolution: {integrity: sha512-vzBWeuF/kD/OCOFzB7WAclb7PxfI105qPkZtdOkPMwZdilBskQjJL4l319JtPtmeovDU7ZVhO3hTfGPjM4txQQ==}
+    peerDependencies:
+      vitest: '>=3'
+
   vitest@3.2.4:
     resolution: {integrity: sha512-LUCP5ev3GURDysTWiP47wRRUpLKMOfPh+yKTx3kVIEiu5KOMeqzpnYNsKyOoVrULivR8tLcks4+lga33Whn90A==}
     engines: {node: ^18.0.0 || ^20.0.0 || >=22.0.0}
@@ -10331,7 +10326,7 @@ snapshots:
       '@types/node': 20.5.1
       chalk: 4.1.2
       cosmiconfig: 8.3.6(typescript@5.8.3)
-      cosmiconfig-typescript-loader: 4.4.0(@types/node@20.5.1)(cosmiconfig@8.3.6(typescript@5.8.3))(ts-node@10.9.2(@types/node@22.15.3)(typescript@5.8.3))(typescript@5.8.3)
+      cosmiconfig-typescript-loader: 4.4.0(@types/node@20.5.1)(cosmiconfig@8.3.6(typescript@5.8.3))(ts-node@10.9.2(@types/node@20.5.1)(typescript@5.8.3))(typescript@5.8.3)
       lodash.isplainobject: 4.0.6
       lodash.merge: 4.6.2
       lodash.uniq: 4.5.0
@@ -11175,7 +11170,7 @@ snapshots:
     dependencies:
       '@types/yargs-parser': 21.0.3
 
-  '@typescript-eslint/eslint-plugin@5.62.0(@typescript-eslint/parser@5.62.0(eslint@7.32.0)(typescript@5.8.3))(eslint@7.32.0)(typescript@5.8.3)':
+  '@typescript-eslint/eslint-plugin@5.62.0(@typescript-eslint/parser@5.62.0(eslint@7.32.0)(typescript@5.8.3))(eslint@7.32.0)(typescript@4.9.5)':
     dependencies:
       '@eslint-community/regexpp': 4.12.1
       '@typescript-eslint/parser': 5.62.0(eslint@7.32.0)(typescript@4.9.5)
@@ -11190,7 +11185,7 @@ snapshots:
       semver: 7.7.1
       tsutils: 3.21.0(typescript@4.9.5)
     optionalDependencies:
-      typescript: 5.8.3
+      typescript: 4.9.5
     transitivePeerDependencies:
       - supports-color
 
@@ -11422,14 +11417,14 @@ snapshots:
       '@babel/preset-env': 7.27.1(@babel/core@7.27.1)
       '@babel/preset-react': 7.27.1(@babel/core@7.27.1)
       '@babel/preset-typescript': 7.27.1(@babel/core@7.27.1)
-      '@typescript-eslint/eslint-plugin': 5.62.0(@typescript-eslint/parser@5.62.0(eslint@7.32.0)(typescript@5.8.3))(eslint@7.32.0)(typescript@5.8.3)
+      '@typescript-eslint/eslint-plugin': 5.62.0(@typescript-eslint/parser@5.62.0(eslint@7.32.0)(typescript@5.8.3))(eslint@7.32.0)(typescript@4.9.5)
       '@typescript-eslint/parser': 5.62.0(eslint@7.32.0)(typescript@4.9.5)
       chalk: 4.1.2
       eslint: 7.32.0
       eslint-config-prettier: 8.10.0(eslint@7.32.0)
       eslint-formatter-pretty: 4.1.0
       eslint-plugin-babel: 5.3.1(eslint@7.32.0)
-      eslint-plugin-jest: 24.7.0(@typescript-eslint/eslint-plugin@5.62.0(@typescript-eslint/parser@5.62.0(eslint@7.32.0)(typescript@4.9.5))(eslint@7.32.0)(typescript@4.9.5))(eslint@7.32.0)(typescript@4.9.5)
+      eslint-plugin-jest: 24.7.0(@typescript-eslint/eslint-plugin@5.62.0(@typescript-eslint/parser@5.62.0(eslint@7.32.0)(typescript@5.8.3))(eslint@7.32.0)(typescript@5.8.3))(eslint@7.32.0)(typescript@4.9.5)
       eslint-plugin-promise: 6.6.0(eslint@7.32.0)
       eslint-plugin-react: 7.37.5(eslint@7.32.0)
       eslint-plugin-react-hooks: 4.6.2(eslint@7.32.0)
@@ -12983,7 +12978,7 @@ snapshots:
 
   core-util-is@1.0.3: {}
 
-  cosmiconfig-typescript-loader@4.4.0(@types/node@20.5.1)(cosmiconfig@8.3.6(typescript@5.8.3))(ts-node@10.9.2(@types/node@22.15.3)(typescript@5.8.3))(typescript@5.8.3):
+  cosmiconfig-typescript-loader@4.4.0(@types/node@20.5.1)(cosmiconfig@8.3.6(typescript@5.8.3))(ts-node@10.9.2(@types/node@20.5.1)(typescript@5.8.3))(typescript@5.8.3):
     dependencies:
       '@types/node': 20.5.1
       cosmiconfig: 8.3.6(typescript@5.8.3)
@@ -13742,12 +13737,12 @@ snapshots:
       eslint: 7.32.0
       eslint-rule-composer: 0.3.0
 
-  eslint-plugin-jest@24.7.0(@typescript-eslint/eslint-plugin@5.62.0(@typescript-eslint/parser@5.62.0(eslint@7.32.0)(typescript@4.9.5))(eslint@7.32.0)(typescript@4.9.5))(eslint@7.32.0)(typescript@4.9.5):
+  eslint-plugin-jest@24.7.0(@typescript-eslint/eslint-plugin@5.62.0(@typescript-eslint/parser@5.62.0(eslint@7.32.0)(typescript@5.8.3))(eslint@7.32.0)(typescript@5.8.3))(eslint@7.32.0)(typescript@4.9.5):
     dependencies:
       '@typescript-eslint/experimental-utils': 4.33.0(eslint@7.32.0)(typescript@4.9.5)
       eslint: 7.32.0
     optionalDependencies:
-      '@typescript-eslint/eslint-plugin': 5.62.0(@typescript-eslint/parser@5.62.0(eslint@7.32.0)(typescript@5.8.3))(eslint@7.32.0)(typescript@5.8.3)
+      '@typescript-eslint/eslint-plugin': 5.62.0(@typescript-eslint/parser@5.62.0(eslint@7.32.0)(typescript@5.8.3))(eslint@7.32.0)(typescript@4.9.5)
     transitivePeerDependencies:
       - supports-color
       - typescript
@@ -15564,8 +15559,6 @@ snapshots:
       jest-get-type: 29.6.3
       pretty-format: 29.7.0
 
-  jest-localstorage-mock@2.4.26: {}
-
   jest-matcher-utils@29.7.0:
     dependencies:
       chalk: 4.1.2
@@ -15722,11 +15715,6 @@ snapshots:
       emittery: 0.13.1
       jest-util: 29.7.0
       string-length: 4.0.2
-
-  jest-websocket-mock@2.5.0:
-    dependencies:
-      jest-diff: 29.7.0
-      mock-socket: 9.3.1
 
   jest-worker@24.9.0:
     dependencies:
@@ -19925,6 +19913,12 @@ snapshots:
       '@types/node': 22.15.3
       fsevents: 2.3.3
       terser: 5.39.0
+
+  vitest-websocket-mock@0.5.0(vitest@3.2.4(@types/node@22.15.3)(jsdom@26.1.0)(terser@5.39.0)):
+    dependencies:
+      '@vitest/utils': 3.2.4
+      mock-socket: 9.3.1
+      vitest: 3.2.4(@types/node@22.15.3)(jsdom@26.1.0)(terser@5.39.0)
 
   vitest@3.2.4(@types/node@22.15.3)(jsdom@26.1.0)(terser@5.39.0):
     dependencies:
