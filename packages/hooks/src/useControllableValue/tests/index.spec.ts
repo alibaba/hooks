@@ -1,4 +1,5 @@
 import { act, renderHook } from '@testing-library/react';
+import { describe, expect, test } from 'vitest';
 import type { Options, Props } from '../index';
 import useControllableValue from '../index';
 
@@ -6,26 +7,26 @@ describe('useControllableValue', () => {
   const setUp = (props?: Props, options?: Options<any>) =>
     renderHook(() => useControllableValue(props, options));
 
-  it('defaultValue should work', () => {
+  test('defaultValue should work', () => {
     const hook = setUp({ defaultValue: 1 });
     expect(hook.result.current[0]).toBe(1);
   });
 
-  it('value should work', () => {
+  test('value should work', () => {
     const hook = setUp({ defaultValue: 1, value: 2 });
     expect(hook.result.current[0]).toBe(2);
   });
 
-  it('state should be undefined', () => {
+  test('state should be undefined', () => {
     const hook = setUp();
     expect(hook.result.current[0]).toBeUndefined();
   });
 
-  it('onChange should work', () => {
+  test('onChange should work', () => {
     let extraParam: string = '';
     const props = {
       value: 2,
-      onChange(v: any, extra) {
+      onChange(v: any, extra: any) {
         this.value = v;
         extraParam = extra;
       },
@@ -39,7 +40,7 @@ describe('useControllableValue', () => {
     expect(extraParam).toBe('extraParam');
   });
 
-  it('test on state update', () => {
+  test('test on state update', () => {
     const props: any = {
       value: 1,
     };
@@ -52,7 +53,7 @@ describe('useControllableValue', () => {
     expect(result.current[0]).toBe(3);
   });
 
-  it('test set state', async () => {
+  test('test set state', async () => {
     const { result } = setUp({
       newValue: 1,
     });
@@ -66,11 +67,11 @@ describe('useControllableValue', () => {
     act(() => setValue(55));
     expect(result.current[0]).toBe(55);
 
-    act(() => setValue((prevState) => prevState + 1));
+    act(() => setValue((prevState: number) => prevState + 1));
     expect(result.current[0]).toBe(56);
   });
 
-  it('type inference should work', async () => {
+  test('type inference should work', async () => {
     type Value = {
       foo: number;
     };
