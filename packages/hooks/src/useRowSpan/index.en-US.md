@@ -16,7 +16,7 @@ Generate row span data based on the original data source, suitable for merging r
 ## API
 
 ```typescript
-const getRowSpan = useRowSpan(allData, ["city", "school", "six"], currentPageData);
+const getRowSpan = useRowSpan(allData, ["city", "school", "gender"], currentPageData);
 ```
 ### Params
 

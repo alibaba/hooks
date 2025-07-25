@@ -9,7 +9,7 @@ interface DataType {
   school: string;
   name: string;
   age: number;
-  six: string;
+  gender: string;
 }
 
 const data: DataType[] = [
@@ -18,7 +18,7 @@ const data: DataType[] = [
     school: '四中',
     name: '小红',
     age: 18,
-    six: '女',
+    gender: '女',
     key: '1',
   },
   {
@@ -26,7 +26,7 @@ const data: DataType[] = [
     school: '四中',
     name: '小明',
     age: 18,
-    six: '女',
+    gender: '女',
     key: '2',
   },
   {
@@ -34,7 +34,7 @@ const data: DataType[] = [
     school: '四中',
     name: '小李',
     age: 19,
-    six: '女',
+    gender: '女',
     key: '3',
   },
   {
@@ -42,7 +42,7 @@ const data: DataType[] = [
     school: '七中',
     name: '小王',
     age: 20,
-    six: '女',
+    gender: '女',
     key: '4',
   },
   {
@@ -50,7 +50,7 @@ const data: DataType[] = [
     school: '七中',
     name: '小张',
     age: 20,
-    six: '男',
+    gender: '男',
     key: '5',
   },
   {
@@ -58,7 +58,7 @@ const data: DataType[] = [
     school: '七中',
     name: '小赵',
     age: 21,
-    six: '女',
+    gender: '女',
     key: '6',
   },
   {
@@ -66,7 +66,7 @@ const data: DataType[] = [
     school: '七中',
     name: '小吴',
     age: 24,
-    six: '男',
+    gender: '男',
     key: '7',
   },
   {
@@ -74,7 +74,7 @@ const data: DataType[] = [
     school: '七中',
     name: '小周',
     age: 24,
-    six: '女',
+    gender: '女',
     key: '8',
   },
   {
@@ -82,7 +82,7 @@ const data: DataType[] = [
     school: '三中',
     name: '花花',
     age: 22,
-    six: '女',
+    gender: '女',
     key: '9',
   },
   {
@@ -90,7 +90,7 @@ const data: DataType[] = [
     school: '三中',
     name: '草草',
     age: 22,
-    six: '男',
+    gender: '男',
     key: '10',
   },
   {
@@ -98,7 +98,7 @@ const data: DataType[] = [
     school: '三中',
     name: '莹莹',
     age: 23,
-    six: '女',
+    gender: '女',
     key: '11',
   },
   {
@@ -106,7 +106,7 @@ const data: DataType[] = [
     school: '一中',
     name: '明明',
     age: 25,
-    six: '男',
+    gender: '男',
     key: '12',
   },
   {
@@ -114,7 +114,7 @@ const data: DataType[] = [
     school: '六中',
     name: '晨晨',
     age: 24,
-    six: '男',
+    gender: '男',
     key: '13',
   },
   {
@@ -122,7 +122,7 @@ const data: DataType[] = [
     school: '六中',
     name: '亮亮',
     age: 24,
-    six: '男',
+    gender: '男',
     key: '14',
   },
   {
@@ -130,7 +130,7 @@ const data: DataType[] = [
     school: '六中',
     name: '丽丽',
     age: 26,
-    six: '女',
+    gender: '女',
     key: '15',
   },
   {
@@ -138,7 +138,7 @@ const data: DataType[] = [
     school: '一中',
     name: '刚刚',
     age: 27,
-    six: '男',
+    gender: '男',
     key: '16',
   },
   {
@@ -146,7 +146,7 @@ const data: DataType[] = [
     school: '一中',
     name: '芳芳',
     age: 27,
-    six: '女',
+    gender: '女',
     key: '17',
   },
   {
@@ -154,7 +154,7 @@ const data: DataType[] = [
     school: '二中',
     name: '强强',
     age: 28,
-    six: '男',
+    gender: '男',
     key: '18',
   },
   {
@@ -162,7 +162,7 @@ const data: DataType[] = [
     school: '中山大学附中',
     name: '华华',
     age: 25,
-    six: '女',
+    gender: '女',
     key: '19',
   },
   {
@@ -170,7 +170,7 @@ const data: DataType[] = [
     school: '深圳中学',
     name: '鹏鹏',
     age: 26,
-    six: '男',
+    gender: '男',
     key: '20',
   },
 ];
@@ -184,7 +184,7 @@ const Demo = () => {
     return data.slice(startIndex, endIndex);
   }, [current, pageSize]);
 
-  const getRowSpan = useRowSpan(data, ['city', 'school', 'six'], currentPageData);
+  const getRowSpan = useRowSpan(data, ['city', 'school', 'gender'], currentPageData);
 
   const columns: TableProps<DataType>['columns'] = [
     {
@@ -217,10 +217,10 @@ const Demo = () => {
     },
     {
       title: '性别',
-      dataIndex: 'six',
-      key: 'six',
+      dataIndex: 'gender',
+      key: 'gender',
       onCell: (record) => ({
-        rowSpan: getRowSpan(record, 'six').rowspan,
+        rowSpan: getRowSpan(record, 'gender').rowspan,
         style: { textAlign: 'center', verticalAlign: 'middle' },
       }),
     },

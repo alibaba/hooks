@@ -11,7 +11,7 @@ interface DataType {
     school: string;
     name: string;
     age: number;
-    six: string;
+    gender: string;
   };
   remark: string;
 }
@@ -23,7 +23,7 @@ const data: DataType[] = [
       school: '四中',
       name: '小红',
       age: 18,
-      six: '女',
+      gender: '女',
     },
     key: '1',
     remark: '备注1',
@@ -34,7 +34,7 @@ const data: DataType[] = [
       school: '四中',
       name: '小明',
       age: 18,
-      six: '女',
+      gender: '女',
     },
     key: '2',
     remark: '备注1',
@@ -45,7 +45,7 @@ const data: DataType[] = [
       school: '七中',
       name: '小王',
       age: 20,
-      six: '男',
+      gender: '男',
     },
     key: '4',
     remark: '备注4',
@@ -56,7 +56,7 @@ const data: DataType[] = [
       school: '七中',
       name: '小吴',
       age: 24,
-      six: '男',
+      gender: '男',
     },
     key: '7',
     remark: '备注7',
@@ -67,7 +67,7 @@ const data: DataType[] = [
       school: '三中',
       name: '花花',
       age: 22,
-      six: '女',
+      gender: '女',
     },
     key: '9',
     remark: '备注9',
@@ -78,7 +78,7 @@ const data: DataType[] = [
       school: '六中',
       name: '晨晨',
       age: 24,
-      six: '男',
+      gender: '男',
     },
     key: '13',
     remark: '备注19',
@@ -89,7 +89,7 @@ const data: DataType[] = [
       school: '中山大学附中',
       name: '华华',
       age: 25,
-      six: '女',
+      gender: '女',
     },
     key: '19',
     remark: '备注19',
@@ -108,7 +108,7 @@ const Demo2 = () => {
 
   const getRowSpan = useRowSpan(
     data,
-    ['city', 'user.school', 'user.six', 'remark'],
+    ['city', 'user.school', 'user.gender', 'remark'],
     currentPageData,
   );
 
@@ -146,13 +146,13 @@ const Demo2 = () => {
     },
     {
       title: '性别',
-      dataIndex: 'user.six',
-      key: 'six',
+      dataIndex: 'user.gender',
+      key: 'gender',
       onCell: (record) => ({
-        rowSpan: getRowSpan(record, 'user.six').rowspan,
+        rowSpan: getRowSpan(record, 'user.gender').rowspan,
         style: { textAlign: 'center', verticalAlign: 'middle' },
       }),
-      render: (text, record) => record.user.six,
+      render: (text, record) => record.user.gender,
     },
     {
       title: '性别',

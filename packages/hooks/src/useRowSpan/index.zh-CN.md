@@ -19,7 +19,7 @@ nav:
 ### API
 
 ```typescript
-const getRowSpan = useRowSpan(data, ["city", "school", "six"], currentPageData);
+const getRowSpan = useRowSpan(data, ["city", "school", "gender"], currentPageData);
 ```
 
 ### Params
