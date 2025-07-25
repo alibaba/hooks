@@ -1,24 +1,28 @@
 import { renderHook } from '@testing-library/react';
+import { beforeEach, describe, expect, test, vi } from 'vitest';
+import type { BasicTarget } from '../../utils/domTarget';
 import type { Options } from '../index';
 import useDrag from '../index';
-import type { BasicTarget } from '../../utils/domTarget';
 
 const setup = <T>(data: T, target: BasicTarget, options?: Options) =>
   renderHook((newData: T) => useDrag(newData ? newData : data, target, options));
 
 const events: Record<string, (event: any) => void> = {};
 const mockTarget = {
-  addEventListener: jest.fn((event, callback) => {
+  addEventListener: vi.fn((event, callback) => {
     events[event] = callback;
   }),
-  removeEventListener: jest.fn((event) => {
+  removeEventListener: vi.fn((event) => {
     Reflect.deleteProperty(events, event);
   }),
-  setAttribute: jest.fn(),
+  setAttribute: vi.fn(),
 };
 
 describe('useDrag', () => {
-  it('should add/remove listener on mount/unmount', () => {
+  beforeEach(() => {
+    vi.clearAllMocks();
+  });
+  test('should add/remove listener on mount/unmount', () => {
     const { unmount } = setup(1, mockTarget as any);
     expect(mockTarget.addEventListener).toBeCalled();
     expect(mockTarget.addEventListener.mock.calls[0][0]).toBe('dragstart');
@@ -28,12 +32,12 @@ describe('useDrag', () => {
     expect(mockTarget.removeEventListener).toBeCalled();
   });
 
-  it('should triggle drag callback', () => {
-    const onDragStart = jest.fn();
-    const onDragEnd = jest.fn();
+  test('should trigger drag callback', () => {
+    const onDragStart = vi.fn();
+    const onDragEnd = vi.fn();
     const mockEvent = {
       dataTransfer: {
-        setData: jest.fn(),
+        setData: vi.fn(),
       },
     };
     const hook = setup(1, mockTarget as any, {
@@ -55,7 +59,7 @@ describe('useDrag', () => {
     expect(onDragEnd).toBeCalled();
   });
 
-  it(`should not work when target don't support addEventListener method`, () => {
+  test(`should not work when target don't support addEventListener method`, () => {
     Object.defineProperty(mockTarget, 'addEventListener', {
       get() {
         return false;
