@@ -1,3 +1,4 @@
+import { describe, expect, test } from 'vitest';
 import { isBoolean, isFunction, isNumber, isObject, isString, isUndef } from '../index';
 
 describe('shared utils methods', () => {
@@ -29,7 +30,7 @@ describe('shared utils methods', () => {
   test('isObject', () => {
     expect(isObject({})).toBe(true);
     expect(isObject([])).toBe(true);
-    expect(isObject(new RegExp(''))).toBe(true);
+    expect(isObject(/(?:)/)).toBe(true);
     expect(isObject(new Date())).toBe(true);
 
     expect(isObject(null)).toBe(false);
