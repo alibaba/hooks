@@ -1,4 +1,5 @@
 import { act, renderHook } from '@testing-library/react';
+import { describe, expect, test } from 'vitest';
 import useResetState from '../index';
 
 describe('useResetState', () => {
@@ -13,21 +14,21 @@ describe('useResetState', () => {
       } as const;
     });
 
-  it('should support initialValue', () => {
+  test('should support initialValue', () => {
     const hook = setUp({
       hello: 'world',
     });
     expect(hook.result.current.state).toEqual({ hello: 'world' });
   });
 
-  it('should support functional initialValue', () => {
+  test('should support functional initialValue', () => {
     const hook = setUp(() => ({
       hello: 'world',
     }));
     expect(hook.result.current.state).toEqual({ hello: 'world' });
   });
 
-  it('should reset state', () => {
+  test('should reset state', () => {
     const hook = setUp({
       hello: '',
       count: 0,
@@ -47,7 +48,7 @@ describe('useResetState', () => {
     expect(hook.result.current.state).toEqual({ hello: '', count: 0 });
   });
 
-  it('should support function update', () => {
+  test('should support function update', () => {
     const hook = setUp({
       count: 0,
     });
@@ -57,7 +58,7 @@ describe('useResetState', () => {
     expect(hook.result.current.state).toEqual({ count: 1 });
   });
 
-  it('should keep random initial state', () => {
+  test('should keep random initial state', () => {
     const random = Math.random();
     const hook = setUp({
       count: random,
@@ -74,7 +75,7 @@ describe('useResetState', () => {
     expect(hook.result.current.state).toEqual({ count: random });
   });
 
-  it('should support random functional initialValue', () => {
+  test('should support random functional initialValue', () => {
     const random = Math.random();
     const hook = setUp(() => ({
       count: random,

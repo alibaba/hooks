@@ -1,4 +1,5 @@
 import { act, renderHook } from '@testing-library/react';
+import { describe, expect, test } from 'vitest';
 import useSetState from '../index';
 
 describe('useSetState', () => {
@@ -11,14 +12,14 @@ describe('useSetState', () => {
       } as const;
     });
 
-  it('should support initialValue', () => {
+  test('should support initialValue', () => {
     const hook = setUp({
       hello: 'world',
     });
     expect(hook.result.current.state).toEqual({ hello: 'world' });
   });
 
-  it('should support object', () => {
+  test('should support object', () => {
     const hook = setUp<any>({
       hello: 'world',
     });
@@ -28,7 +29,7 @@ describe('useSetState', () => {
     expect(hook.result.current.state).toEqual({ hello: 'world', foo: 'bar' });
   });
 
-  it('should support function update', () => {
+  test('should support function update', () => {
     const hook = setUp({
       count: 0,
     });

@@ -1,5 +1,6 @@
-import { fireEvent, render, renderHook, act } from '@testing-library/react';
+import { act, fireEvent, render, renderHook } from '@testing-library/react';
 import React from 'react';
+import { describe, expect, test } from 'vitest';
 import useReactive from '../';
 
 const Demo = () => {
@@ -22,10 +23,10 @@ const Demo = () => {
   return (
     <div>
       <p>
-        counter state.count：<span role="addCount">{state.count}</span>
+        counter state.count:<span role="addCount">{state.count}</span>
       </p>
       <p>
-        delete property：<span role="deleteProperty">{state.foo}</span>
+        delete property:<span role="deleteProperty">{state.foo}</span>
       </p>
 
       <button role="addCountBtn" onClick={() => (state.count += 1)}>
@@ -81,7 +82,7 @@ const Demo = () => {
 };
 
 describe('test useReactive feature', () => {
-  it('test count', () => {
+  test('test count', () => {
     const wrap = render(<Demo />);
 
     const count = wrap.getByRole('addCount');
@@ -114,13 +115,13 @@ describe('test useReactive feature', () => {
     expect(count.textContent).toBe('-3');
   });
 
-  it('test array', () => {
+  test('test array', () => {
     const wrap = render(<Demo />);
-    const testArray = wrap.getByRole('test-array');
-    const pushbtn = wrap.getByRole('pushbtn');
-    const popbtn = wrap.getByRole('popbtn');
-    const shiftbtn = wrap.getByRole('shiftbtn');
-    const unshiftbtn = wrap.getByRole('unshiftbtn');
+    const testArray = wrap.getAllByRole('test-array')[0];
+    const pushbtn = wrap.getAllByRole('pushbtn')[0];
+    const popbtn = wrap.getAllByRole('popbtn')[0];
+    const shiftbtn = wrap.getAllByRole('shiftbtn')[0];
+    const unshiftbtn = wrap.getAllByRole('unshiftbtn')[0];
     act(() => {
       fireEvent.click(pushbtn);
     });
@@ -139,7 +140,7 @@ describe('test useReactive feature', () => {
     expect(JSON.parse(testArray.textContent as any).length).toBe(1);
   });
 
-  it('test special objects', () => {
+  test('test special objects', () => {
     const { result } = renderHook(() => {
       // Almost all of the built-in objects are tested.
       // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects
@@ -195,7 +196,7 @@ describe('test useReactive feature', () => {
     expect(() => result.current.v.Module).not.toThrowError();
   });
 
-  it('test JSX element', () => {
+  test('test JSX element', () => {
     const hook = renderHook(() => useReactive({ html: <div role="id">foo</div> }));
     const proxy = hook.result.current;
     const wrap = render(proxy.html);
@@ -210,7 +211,7 @@ describe('test useReactive feature', () => {
     hook.unmount();
   });
 
-  it('test read-only and non-configurable data property', () => {
+  test('test read-only and non-configurable data property', () => {
     const obj = {} as { user: { name: string } };
     Reflect.defineProperty(obj, 'user', {
       value: { name: 'foo' },
@@ -225,11 +226,11 @@ describe('test useReactive feature', () => {
     hook.unmount();
   });
 
-  it('test input1', () => {
+  test('test input1', () => {
     const wrap = render(<Demo />);
 
-    const input = wrap.getByRole('input1');
-    const inputVal = wrap.getByRole('inputVal1');
+    const input = wrap.getAllByRole('input1')[0];
+    const inputVal = wrap.getAllByRole('inputVal1')[0];
     act(() => {
       fireEvent.change(input, { target: { value: 'a' } });
     });
@@ -241,11 +242,11 @@ describe('test useReactive feature', () => {
     expect(inputVal.textContent).toBe('bbb');
   });
 
-  it('delete object property', () => {
+  test('delete object property', () => {
     const wrap = render(<Demo />);
 
-    const deleteProperty = wrap.getByRole('deleteProperty');
-    const deletePropertyBtn = wrap.getByRole('deletePropertyBtn');
+    const deleteProperty = wrap.getAllByRole('deleteProperty')[0];
+    const deletePropertyBtn = wrap.getAllByRole('deletePropertyBtn')[0];
     expect(deleteProperty.textContent).toBe('foo');
 
     act(() => {
@@ -254,7 +255,7 @@ describe('test useReactive feature', () => {
     expect(deleteProperty.textContent).toBe('');
   });
 
-  it('access from self to prototype chain', () => {
+  test('access from self to prototype chain', () => {
     const parent: Record<string, string> = {
       name: 'parent',
       get value() {

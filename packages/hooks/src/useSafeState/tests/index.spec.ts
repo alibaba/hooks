@@ -1,4 +1,5 @@
 import { act, renderHook } from '@testing-library/react';
+import { describe, expect, test } from 'vitest';
 import useSafeState from '../index';
 
 describe('useSetState', () => {
@@ -11,14 +12,14 @@ describe('useSetState', () => {
       } as const;
     });
 
-  it('should support initialValue', () => {
+  test('should support initialValue', () => {
     const hook = setUp({
       hello: 'world',
     });
     expect(hook.result.current.state).toEqual({ hello: 'world' });
   });
 
-  it('should support update', () => {
+  test('should support update', () => {
     const hook = setUp(0);
     act(() => {
       hook.result.current.setState(5);
@@ -26,7 +27,7 @@ describe('useSetState', () => {
     expect(hook.result.current.state).toBe(5);
   });
 
-  it('should not support update when unmount', () => {
+  test('should not support update when unmount', () => {
     const hook = setUp(0);
     hook.unmount();
     act(() => {
