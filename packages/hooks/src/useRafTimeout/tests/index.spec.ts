@@ -1,4 +1,6 @@
 import { renderHook } from '@testing-library/react';
+import { afterAll, beforeAll, describe, expect, test, vi } from 'vitest';
+
 import useRafTimeout from '../index';
 
 interface ParamsObj {
@@ -11,37 +13,37 @@ const setUp = ({ fn, delay }: ParamsObj) => renderHook(() => useRafTimeout(fn, d
 const FRAME_TIME = 16.7;
 describe('useRafTimeout', () => {
   beforeAll(() => {
-    jest.useFakeTimers({ legacyFakeTimers: false });
+    vi.useFakeTimers();
   });
   afterAll(() => {
-    jest.restoreAllMocks();
+    vi.restoreAllMocks();
   });
 
-  it('timeout should work', () => {
-    const callback = jest.fn();
+  test('timeout should work', () => {
+    const callback = vi.fn();
     setUp({ fn: callback, delay: FRAME_TIME });
     expect(callback).not.toBeCalled();
-    jest.advanceTimersByTime(FRAME_TIME * 2.5);
+    vi.advanceTimersByTime(FRAME_TIME * 2.5);
     expect(callback).toHaveBeenCalledTimes(1);
   });
 
-  it('timeout should stop when delay is undefined', () => {
+  test('timeout should stop when delay is undefined', () => {
     const delay: number | undefined = undefined;
-    const callback = jest.fn();
+    const callback = vi.fn();
     setUp({ fn: callback, delay });
     expect(callback).not.toBeCalled();
-    jest.advanceTimersByTime(FRAME_TIME * 1.5);
+    vi.advanceTimersByTime(FRAME_TIME * 1.5);
     expect(callback).not.toBeCalled();
   });
 
-  it('timeout should be clear', () => {
-    const callback = jest.fn();
+  test('timeout should be clear', () => {
+    const callback = vi.fn();
 
     const hook = setUp({ fn: callback, delay: FRAME_TIME });
     expect(callback).not.toBeCalled();
 
     hook.result.current();
-    jest.advanceTimersByTime(FRAME_TIME * 2.5);
+    vi.advanceTimersByTime(FRAME_TIME * 2.5);
     expect(callback).toHaveBeenCalledTimes(0);
   });
 });

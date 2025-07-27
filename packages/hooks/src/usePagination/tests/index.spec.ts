@@ -1,5 +1,6 @@
 import type { RenderHookResult } from '@testing-library/react';
-import { renderHook, act, waitFor } from '@testing-library/react';
+import { act, renderHook, waitFor } from '@testing-library/react';
+import { describe, expect, test } from 'vitest';
 import usePagination from '../';
 
 // 初始化
@@ -26,7 +27,7 @@ describe('usePagination', () => {
 
   let hook: RenderHookResult<any, any>;
 
-  it('should fetch after first render', async () => {
+  test('should fetch after first render', async () => {
     queryArgs = undefined;
     act(() => {
       hook = setUp(asyncFn, {});
@@ -42,7 +43,7 @@ describe('usePagination', () => {
     expect(hook.result.current.pagination.totalPage).toBe(6);
   });
 
-  it('should action work', async () => {
+  test('should action work', async () => {
     queryArgs = undefined;
     act(() => {
       hook = setUp(asyncFn, {});
@@ -89,7 +90,7 @@ describe('usePagination', () => {
     expect(hook.result.current.pagination.totalPage).toBe(6);
   });
 
-  it('should refreshDeps work', async () => {
+  test('should refreshDeps work', async () => {
     queryArgs = undefined;
     let dep = 1;
     act(() => {
@@ -121,7 +122,7 @@ describe('usePagination', () => {
     expect(hook.result.current.pagination.pageSize).toBe(20);
   });
 
-  it('should default params work', async () => {
+  test('should default params work', async () => {
     queryArgs = undefined;
     act(() => {
       hook = setUp(asyncFn, {

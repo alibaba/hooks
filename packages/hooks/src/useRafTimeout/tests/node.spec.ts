@@ -1,4 +1,5 @@
 import { renderHook } from '@testing-library/react';
+import { afterAll, beforeAll, describe, expect, test, vi } from 'vitest';
 import useRafTimeout from '../index';
 
 interface ParamsObj {
@@ -11,12 +12,12 @@ const setUp = ({ fn, delay }: ParamsObj) => renderHook(() => useRafTimeout(fn, d
 const FRAME_TIME = 16.7;
 describe('useRafTimeout', () => {
   beforeAll(() => {
-    jest.useFakeTimers({ legacyFakeTimers: false });
+    vi.useFakeTimers();
   });
   afterAll(() => {
-    jest.restoreAllMocks();
+    vi.restoreAllMocks();
   });
-  it('should downgrade to setTimeout when requstAnimationFrame is undefined', () => {
+  test('should downgrade to setTimeout when requstAnimationFrame is undefined', () => {
     const _requestAnimationFrame = global.requestAnimationFrame;
     const _cancelAnimationFrame = global.cancelAnimationFrame;
 
@@ -25,10 +26,10 @@ describe('useRafTimeout', () => {
     // @ts-ignore
     delete global.cancelAnimationFrame;
 
-    const callback = jest.fn();
+    const callback = vi.fn();
     setUp({ fn: callback, delay: FRAME_TIME });
     expect(callback).not.toBeCalled();
-    jest.advanceTimersByTime(FRAME_TIME * 1.5);
+    vi.advanceTimersByTime(FRAME_TIME * 1.5);
     expect(callback).toHaveBeenCalledTimes(1);
 
     global.requestAnimationFrame = _requestAnimationFrame;

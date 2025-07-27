@@ -1,4 +1,5 @@
 import { renderHook } from '@testing-library/react';
+import { beforeAll, afterAll, describe, test, expect, vi } from 'vitest';
 import useRafInterval from '../index';
 
 interface ParamsObj {
@@ -13,19 +14,19 @@ const setUp = ({ fn, delay, options }: ParamsObj) =>
 const FRAME_TIME = 16;
 describe('useRafInterval', () => {
   beforeAll(() => {
-    jest.useFakeTimers();
+    vi.useFakeTimers();
   });
   afterAll(() => {
-    jest.restoreAllMocks();
+    vi.restoreAllMocks();
   });
-  it('should downgrade to setInterval when requstAnimationFrame is undefined', () => {
+  test('should downgrade to setInterval when requstAnimationFrame is undefined', () => {
     Object.defineProperty(window, 'cancelAnimationFrame', { value: undefined });
     Object.defineProperty(window, 'requestAnimationFrame', { value: undefined });
 
-    const callback = jest.fn();
+    const callback = vi.fn();
     setUp({ fn: callback, delay: FRAME_TIME });
     expect(callback).not.toBeCalled();
-    jest.advanceTimersByTime(FRAME_TIME * 1.5);
+    vi.advanceTimersByTime(FRAME_TIME * 1.5);
     expect(callback).toHaveBeenCalledTimes(1);
   });
 });
