@@ -1,0 +1,121 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`useResponsive > should response to window width changes 1`] = `
+{
+  "lg": true,
+  "md": true,
+  "sm": true,
+  "xl": false,
+  "xs": true,
+}
+`;
+
+exports[`useResponsive > should response to window width changes 2`] = `
+{
+  "lg": false,
+  "md": false,
+  "sm": false,
+  "xl": false,
+  "xs": true,
+}
+`;
+
+exports[`useResponsive > should response to window width changes 3`] = `
+{
+  "lg": false,
+  "md": false,
+  "sm": true,
+  "xl": false,
+  "xs": true,
+}
+`;
+
+exports[`useResponsive > should response to window width changes 4`] = `
+{
+  "lg": false,
+  "md": true,
+  "sm": true,
+  "xl": false,
+  "xs": true,
+}
+`;
+
+exports[`useResponsive > should response to window width changes 5`] = `
+{
+  "lg": true,
+  "md": true,
+  "sm": true,
+  "xl": false,
+  "xs": true,
+}
+`;
+
+exports[`useResponsive > should response to window width changes 6`] = `
+{
+  "lg": true,
+  "md": true,
+  "sm": true,
+  "xl": true,
+  "xs": true,
+}
+`;
+
+exports[`useResponsive should response to window width changes 1`] = `
+{
+  "lg": true,
+  "md": true,
+  "sm": true,
+  "xl": false,
+  "xs": true,
+}
+`;
+
+exports[`useResponsive should response to window width changes 2`] = `
+{
+  "lg": false,
+  "md": false,
+  "sm": false,
+  "xl": false,
+  "xs": true,
+}
+`;
+
+exports[`useResponsive should response to window width changes 3`] = `
+{
+  "lg": false,
+  "md": false,
+  "sm": true,
+  "xl": false,
+  "xs": true,
+}
+`;
+
+exports[`useResponsive should response to window width changes 4`] = `
+{
+  "lg": false,
+  "md": true,
+  "sm": true,
+  "xl": false,
+  "xs": true,
+}
+`;
+
+exports[`useResponsive should response to window width changes 5`] = `
+{
+  "lg": true,
+  "md": true,
+  "sm": true,
+  "xl": false,
+  "xs": true,
+}
+`;
+
+exports[`useResponsive should response to window width changes 6`] = `
+{
+  "lg": true,
+  "md": true,
+  "sm": true,
+  "xl": true,
+  "xs": true,
+}
+`;

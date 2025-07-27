@@ -10,7 +10,7 @@ export default defineConfig({
   },
   test: {
     environment: 'jsdom',
-    include: ['tests/**/*.{test,spec}.?(c|m)[jt]s?(x)'],
+    include: ['tests/**/*.spec.ts?(x)'],
     coverage: {
       provider: 'istanbul',
       include: ['src/**/*.ts'],
