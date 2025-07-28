@@ -1,15 +1,16 @@
-import { act, renderHook } from '@testing-library/react';
+import { renderHook } from '@testing-library/react';
+import { describe, test, expect } from 'vitest';
 import useRowSpan from '../index';
 
 describe('useRowSpan', () => {
   // 测试基本功能
-  it('should return a function when input data is empty', () => {
+  test('should return a function when input data is empty', () => {
     const { result } = renderHook(() => useRowSpan([], ['key']));
     expect(typeof result.current).toBe('function');
   });
 
   // 测试正常情况下的 rowSpan 计算
-  it('should calculate rowSpan correctly for same consecutive values', () => {
+  test('should calculate rowSpan correctly for same consecutive values', () => {
     const data = [
       { id: 1, name: 'A' },
       { id: 2, name: 'A' },
@@ -27,7 +28,7 @@ describe('useRowSpan', () => {
   });
 
   // 测试所有数据都相同时的情况
-  it('should calculate rowSpan correctly when all values are the same', () => {
+  test('should calculate rowSpan correctly when all values are the same', () => {
     const data = [
       { id: 1, category: 'X' },
       { id: 2, category: 'X' },
@@ -42,7 +43,7 @@ describe('useRowSpan', () => {
   });
 
   // 测试所有数据都不同情况
-  it('should calculate rowSpan correctly when all values are different', () => {
+  test('should calculate rowSpan correctly when all values are different', () => {
     const data = [
       { id: 1, type: 'A' },
       { id: 2, type: 'B' },
@@ -57,7 +58,7 @@ describe('useRowSpan', () => {
   });
 
   // 测试嵌套属性路径
-  it('should work with nested property path', () => {
+  test('should work with nested property path', () => {
     const data = [
       { id: 1, user: { department: 'IT' } },
       { id: 2, user: { department: 'IT' } },
@@ -72,7 +73,7 @@ describe('useRowSpan', () => {
   });
 
   // 测试包含 undefined 或 null 值的情况
-  it('should handle null or undefined values correctly', () => {
+  test('should handle null or undefined values correctly', () => {
     const data = [
       { id: 1, value: null },
       { id: 2, value: null },
