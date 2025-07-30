@@ -7,4 +7,4 @@ alwaysApply: false
 
 - 使用 vitest 和 @testing-library/react 编写单元测试
 - 测试覆盖率要求 100%
-- 测试文件放在 tests 目录，命名格式为：index.spec.ts 或 xxx.spec.ts
+- 测试文件放在 __tests__ 目录，命名格式为：index.spec.ts 或 xxx.spec.ts
