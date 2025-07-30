@@ -1,3 +1,4 @@
+import { describe, expect, test, beforeEach, afterEach } from 'vitest';
 import { renderHook } from '@testing-library/react';
 import useClickAway from '../index';
 
@@ -18,7 +19,7 @@ describe('useClickAway', () => {
     document.body.removeChild(container1);
   });
 
-  it('test on dom optional', async () => {
+  test('test on dom optional', async () => {
     let state: number = 0;
     const { rerender, unmount } = renderHook((dom: any) =>
       useClickAway(() => {
@@ -43,7 +44,7 @@ describe('useClickAway', () => {
     expect(state).toBe(2);
   });
 
-  it('should works on multiple target', async () => {
+  test('should works on multiple target', async () => {
     let state: number = 0;
     const { rerender, unmount } = renderHook((dom: any) =>
       useClickAway(() => {

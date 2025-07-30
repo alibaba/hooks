@@ -1,3 +1,4 @@
+import { describe, expect, test, beforeEach, vi } from 'vitest';
 import { renderHook, act } from '@testing-library/react';
 import useExternal, { Options } from '../index';
 import { fireEvent } from '@testing-library/react';
@@ -10,7 +11,7 @@ describe('useExternal', () => {
     document.head.innerHTML = '';
   });
 
-  it('should load a script', () => {
+  test('should load a script', () => {
     const path = 'https://ahooks.js.org/useExternal/test-external-script.js';
     const { result } = setup(path, {
       js: {
@@ -25,7 +26,7 @@ describe('useExternal', () => {
     expect(result.current).toBe('ready');
   });
 
-  it('should load a css', () => {
+  test('should load a css', () => {
     const path = 'https://ahooks.js.org/useExternal/bootstrap-badge.css';
     const { result } = setup(path, {
       css: {
@@ -40,12 +41,12 @@ describe('useExternal', () => {
     expect(result.current).toBe('ready');
   });
 
-  it('status should be unset without path', () => {
+  test('status should be unset without path', () => {
     const { result } = setup('');
     expect(result.current).toBe('unset');
   });
 
-  it('status should be error when load failed', async () => {
+  test('status should be error when load failed', async () => {
     const { result } = setup('xx.js');
     const script = document.querySelector('script') as HTMLScriptElement;
     act(() => {
@@ -54,13 +55,13 @@ describe('useExternal', () => {
     expect(result.current).toBe('error');
   });
 
-  it('should throw error when provide unsupported type', () => {
-    const mockSpy = jest.spyOn(console, 'error').mockImplementationOnce(() => {});
+  test('should throw error when provide unsupported type', () => {
+    const mockSpy = vi.spyOn(console, 'error').mockImplementationOnce(() => {});
     setup('ahooks.ts');
     expect(mockSpy).toBeCalled();
   });
 
-  it('should not load again when the js exists', () => {
+  test('should not load again when the js exists', () => {
     const path = 'a.js';
     const hook1 = setup(path);
     const script = document.querySelector('script') as HTMLScriptElement;
@@ -73,7 +74,7 @@ describe('useExternal', () => {
     expect(hook2.result.current).toBe('ready');
   });
 
-  it('should not load again when the css exists', () => {
+  test('should not load again when the css exists', () => {
     const path = 'a.css';
     const hook1 = setup(path);
     const link = document.querySelector('link') as HTMLLinkElement;
@@ -86,7 +87,7 @@ describe('useExternal', () => {
     expect(hook2.result.current).toBe('ready');
   });
 
-  it('should remove when not use', () => {
+  test('should remove when not use', () => {
     const { unmount } = setup('b.js');
     const script = document.querySelector('script') as HTMLScriptElement;
     act(() => {
@@ -95,7 +96,7 @@ describe('useExternal', () => {
     unmount();
     expect(document.querySelector('script')).toBeNull();
   });
-  it('should not remove when keepWhenUnused is true', () => {
+  test('should not remove when keepWhenUnused is true', () => {
     // https://github.com/alibaba/hooks/discussions/2163
     const { result, unmount } = setup('b.js', {
       keepWhenUnused: true,
@@ -108,7 +109,7 @@ describe('useExternal', () => {
     expect(result.current).toBe('ready');
   });
 
-  it('css preload should work in IE Edge', () => {
+  test('css preload should work in IE Edge', () => {
     Object.defineProperty(HTMLLinkElement.prototype, 'hideFocus', {
       value: true,
     });

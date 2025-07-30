@@ -1,8 +1,9 @@
+import { describe, expect, test } from 'vitest';
 import { renderHook, act } from '@testing-library/react';
 import useEventTarget from '../index';
 
 describe('useEventTarget', () => {
-  it('should work without initial value', async () => {
+  test('should work without initial value', async () => {
     const hook = renderHook(() => useEventTarget());
     expect(hook.result.current[0]).toBeUndefined();
     act(() => {
@@ -11,7 +12,7 @@ describe('useEventTarget', () => {
     expect(hook.result.current[0]).toBe('abc');
   });
 
-  it('should work with initial value', async () => {
+  test('should work with initial value', async () => {
     const hook = renderHook(() => useEventTarget({ initialValue: 'abc' }));
     expect(hook.result.current[0]).toBe('abc');
     act(() => {
@@ -24,7 +25,7 @@ describe('useEventTarget', () => {
     expect(hook.result.current[0]).toBe('abc');
   });
 
-  it('should work with transformer', () => {
+  test('should work with transformer', () => {
     const hook = renderHook(() =>
       useEventTarget({
         transformer: (str: string) => str.toUpperCase(),
@@ -38,7 +39,7 @@ describe('useEventTarget', () => {
     expect(hook.result.current[0]).toBe('DEF');
   });
 
-  it('should be able to transform to any type', () => {
+  test('should be able to transform to any type', () => {
     const hook = renderHook(() =>
       useEventTarget<string, number>({
         transformer: (num: number) => String(num),

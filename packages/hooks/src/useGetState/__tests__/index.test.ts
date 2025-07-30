@@ -1,3 +1,4 @@
+import { describe, expect, test } from 'vitest';
 import { act, renderHook } from '@testing-library/react';
 import useGetState from '../index';
 
@@ -12,12 +13,12 @@ describe('useGetState', () => {
       } as const;
     });
 
-  it('should support initialValue', () => {
+  test('should support initialValue', () => {
     const hook = setUp(() => 0);
     expect(hook.result.current.state).toBe(0);
   });
 
-  it('should support update', () => {
+  test('should support update', () => {
     const hook = setUp(0);
     act(() => {
       hook.result.current.setState(1);
@@ -25,7 +26,7 @@ describe('useGetState', () => {
     expect(hook.result.current.getState()).toBe(1);
   });
 
-  it('should getState frozen', () => {
+  test('should getState frozen', () => {
     const hook = setUp(0);
     const prevGetState = hook.result.current.getState;
     act(() => {

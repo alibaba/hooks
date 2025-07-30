@@ -1,3 +1,4 @@
+import { describe, expect, test } from 'vitest';
 import type { RenderHookResult } from '@testing-library/react';
 import { act, renderHook, waitFor } from '@testing-library/react';
 import { sleep } from '../../utils/testingHelpers';
@@ -13,7 +14,7 @@ interface Query {
 }
 
 describe('useAntdTable', () => {
-  // jest.useFakeTimers();
+  // vi.useFakeTimers();
 
   let queryArgs: any;
   const asyncFn = (query: Query, formData: any = {}) => {
@@ -71,7 +72,7 @@ describe('useAntdTable', () => {
 
   let hook: RenderHookResult<any, any>;
 
-  it('should fetch after first render', async () => {
+  test('should fetch after first render', async () => {
     queryArgs = undefined;
     form.resetFields();
     changeSearchType('simple');
@@ -86,7 +87,7 @@ describe('useAntdTable', () => {
     await waitFor(() => expect(hook.result.current.tableProps.pagination.total).toBe(20));
   });
 
-  it('should defaultParams work', async () => {
+  test('should defaultParams work', async () => {
     queryArgs = undefined;
     form.resetFields();
     changeSearchType('advance');
@@ -112,7 +113,7 @@ describe('useAntdTable', () => {
     expect(search.type).toBe('advance');
   });
 
-  it('should stop the query when validate fields failed', async () => {
+  test('should stop the query when validate fields failed', async () => {
     queryArgs = undefined;
     form.resetFields();
     changeSearchType('advance');
@@ -134,7 +135,7 @@ describe('useAntdTable', () => {
     expect(queryArgs).toBeUndefined();
   });
 
-  it('should ready work', async () => {
+  test('should ready work', async () => {
     queryArgs = undefined;
     form.resetFields();
     changeSearchType('advance');
@@ -178,7 +179,7 @@ describe('useAntdTable', () => {
     expect(search.type).toBe('advance');
   });
 
-  it('should antd v3 work', async () => {
+  test('should antd v3 work', async () => {
     queryArgs = undefined;
     form.resetFields();
     changeSearchType('simple');
@@ -234,7 +235,7 @@ describe('useAntdTable', () => {
     expect(queryArgs.name).toBe('change name');
   });
 
-  it('should reset pageSize in defaultParams', async () => {
+  test('should reset pageSize in defaultParams', async () => {
     queryArgs = undefined;
     form.resetFields();
     act(() => {
@@ -278,7 +279,7 @@ describe('useAntdTable', () => {
     });
   });
 
-  it('should reset pageSize in defaultPageSize', async () => {
+  test('should reset pageSize in defaultPageSize', async () => {
     queryArgs = undefined;
     form.resetFields();
     act(() => {
@@ -321,7 +322,7 @@ describe('useAntdTable', () => {
     });
   });
 
-  it('search submit use default params', async () => {
+  test('search submit use default params', async () => {
     queryArgs = undefined;
     form.resetFields();
     act(() => {
@@ -348,7 +349,7 @@ describe('useAntdTable', () => {
     });
   });
 
-  it('should defaultParams work with manual is  true', async () => {
+  test('should defaultParams work with manual is  true', async () => {
     queryArgs = undefined;
     form.resetFields();
     changeSearchType('advance');

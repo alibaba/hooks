@@ -1,3 +1,4 @@
+import { describe, expect, test } from 'vitest';
 import { renderHook } from '@testing-library/react';
 import type { ShouldUpdateFunc } from '../';
 import usePrevious from '../';
@@ -12,11 +13,11 @@ describe('usePrevious', () => {
     });
   }
 
-  it('should return undefined on init', () => {
+  test('should return undefined on init', () => {
     expect(getHook().result.current).toBeUndefined();
   });
 
-  it('should update previous value only after render with different value', () => {
+  test('should update previous value only after render with different value', () => {
     const hook = getHook(0, () => true);
 
     expect(hook.result.current).toBeUndefined();
@@ -36,7 +37,7 @@ describe('usePrevious', () => {
     expect(hook.result.current).toBe(4);
   });
 
-  it('should not update previous value if current value is the same', () => {
+  test('should not update previous value if current value is the same', () => {
     const hook = getHook(0);
     expect(hook.result.current).toBeUndefined();
     hook.rerender({ val: 1 });
@@ -45,7 +46,7 @@ describe('usePrevious', () => {
     expect(hook.result.current).toBe(0);
   });
 
-  it('should work fine with `undefined` values', () => {
+  test('should work fine with `undefined` values', () => {
     const hook = renderHook(({ value }) => usePrevious(value), {
       initialProps: { value: undefined as undefined | number },
     });
@@ -62,7 +63,7 @@ describe('usePrevious', () => {
     expect(hook.result.current).toBeUndefined();
   });
 
-  it('should receive a predicate as a second parameter that will compare prev and current', () => {
+  test('should receive a predicate as a second parameter that will compare prev and current', () => {
     const obj1 = { label: 'John', value: 'john' };
     const obj2 = { label: 'Jonny', value: 'john' };
     const obj3 = { label: 'Kate', value: 'kate' };

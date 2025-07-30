@@ -1,3 +1,4 @@
+import { describe, expect, test, beforeEach, afterEach, vi } from 'vitest';
 import { renderHook } from '@testing-library/react';
 import useTimeout from '../index';
 
@@ -9,40 +10,49 @@ interface ParamsObj {
 const setUp = ({ fn, delay }: ParamsObj) => renderHook(() => useTimeout(fn, delay));
 
 describe('useTimeout', () => {
-  jest.useFakeTimers();
-  jest.spyOn(global, 'clearTimeout');
+  let clearTimeoutSpy: any;
 
-  it('timeout should work', () => {
-    const callback = jest.fn();
+  beforeEach(() => {
+    vi.useFakeTimers();
+    clearTimeoutSpy = vi.spyOn(global, 'clearTimeout');
+  });
+
+  afterEach(() => {
+    vi.useRealTimers();
+    clearTimeoutSpy.mockRestore();
+  });
+
+  test('timeout should work', () => {
+    const callback = vi.fn();
 
     setUp({ fn: callback, delay: 20 });
 
-    expect(callback).not.toBeCalled();
-    jest.advanceTimersByTime(70);
+    expect(callback).not.toHaveBeenCalled();
+    vi.advanceTimersByTime(70);
     expect(callback).toHaveBeenCalledTimes(1);
   });
 
-  it('timeout should stop', () => {
-    const callback = jest.fn();
+  test('timeout should stop', () => {
+    const callback = vi.fn();
 
     setUp({ fn: callback, delay: undefined });
-    jest.advanceTimersByTime(50);
+    vi.advanceTimersByTime(50);
     expect(callback).toHaveBeenCalledTimes(0);
 
     setUp({ fn: callback, delay: -2 });
-    jest.advanceTimersByTime(50);
+    vi.advanceTimersByTime(50);
     expect(callback).toHaveBeenCalledTimes(0);
   });
 
-  it('timeout should be clear', () => {
-    const callback = jest.fn();
+  test('timeout should be clear', () => {
+    const callback = vi.fn();
 
     const hook = setUp({ fn: callback, delay: 20 });
-    expect(callback).not.toBeCalled();
+    expect(callback).not.toHaveBeenCalled();
 
     hook.result.current();
-    jest.advanceTimersByTime(30);
+    vi.advanceTimersByTime(30);
     expect(callback).toHaveBeenCalledTimes(0);
-    expect(clearTimeout).toHaveBeenCalledTimes(1);
+    expect(clearTimeoutSpy).toHaveBeenCalledTimes(1);
   });
 });

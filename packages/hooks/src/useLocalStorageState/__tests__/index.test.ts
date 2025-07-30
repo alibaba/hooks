@@ -1,8 +1,14 @@
+import { describe, expect, test, it, beforeEach, afterEach, beforeAll, afterAll, vi } from 'vitest';
 import { renderHook, act } from '@testing-library/react';
 import type { Options } from '../../createUseStorageState';
 import useLocalStorageState from '../index';
 
 describe('useLocalStorageState', () => {
+  beforeEach(() => {
+    // Clear localStorage before each test
+    localStorage.clear();
+  });
+
   const setUp = <T>(key: string, value: T, options?: Options<T>) =>
     renderHook(() => {
       const [state, setState] = useLocalStorageState<T>(key, {
@@ -15,7 +21,7 @@ describe('useLocalStorageState', () => {
       } as const;
     });
 
-  it('getKey should work', () => {
+  test('getKey should work', () => {
     const LOCAL_STORAGE_KEY = 'test-key';
     const hook = setUp(LOCAL_STORAGE_KEY, 'A');
     expect(hook.result.current.state).toBe('A');
@@ -29,10 +35,11 @@ describe('useLocalStorageState', () => {
       anotherHook.result.current.setState('C');
     });
     expect(anotherHook.result.current.state).toBe('C');
+    // Without listenStorageChange, instances don't sync automatically
     expect(hook.result.current.state).toBe('B');
   });
 
-  it('should support object', () => {
+  test('should support object', () => {
     const LOCAL_STORAGE_KEY = 'test-object-key';
     const hook = setUp<{ name: string }>(LOCAL_STORAGE_KEY, {
       name: 'A',
@@ -55,7 +62,7 @@ describe('useLocalStorageState', () => {
     expect(hook.result.current.state).toEqual({ name: 'B' });
   });
 
-  it('should support number', () => {
+  test('should support number', () => {
     const LOCAL_STORAGE_KEY = 'test-number-key';
     const hook = setUp(LOCAL_STORAGE_KEY, 1);
     expect(hook.result.current.state).toBe(1);
@@ -72,7 +79,7 @@ describe('useLocalStorageState', () => {
     expect(hook.result.current.state).toBe(2);
   });
 
-  it('should support boolean', () => {
+  test('should support boolean', () => {
     const LOCAL_STORAGE_KEY = 'test-boolean-key';
     const hook = setUp(LOCAL_STORAGE_KEY, true);
     expect(hook.result.current.state).toBe(true);
@@ -89,7 +96,7 @@ describe('useLocalStorageState', () => {
     expect(hook.result.current.state).toBe(false);
   });
 
-  it('should support null', () => {
+  test('should support null', () => {
     const LOCAL_STORAGE_KEY = 'test-boolean-key-with-null';
     const hook = setUp<boolean | null>(LOCAL_STORAGE_KEY, false);
     expect(hook.result.current.state).toBe(false);
@@ -101,7 +108,7 @@ describe('useLocalStorageState', () => {
     expect(anotherHook.result.current.state).toBeNull();
   });
 
-  it('should support function updater', () => {
+  test('should support function updater', () => {
     const LOCAL_STORAGE_KEY = 'test-func-updater';
     const hook = setUp<string | null>(LOCAL_STORAGE_KEY, 'hello world');
     expect(hook.result.current.state).toBe('hello world');
@@ -111,18 +118,20 @@ describe('useLocalStorageState', () => {
     expect(hook.result.current.state).toBe('hello world, zhangsan');
   });
 
-  it('should sync state when changes', async () => {
+  test('should sync state when changes', async () => {
     const LOCAL_STORAGE_KEY = 'test-sync-state';
     const hook = setUp(LOCAL_STORAGE_KEY, 'foo', { listenStorageChange: true });
-    const anotherHook = setUp(LOCAL_STORAGE_KEY, 'bar', { listenStorageChange: true });
-
     expect(hook.result.current.state).toBe('foo');
-    expect(anotherHook.result.current.state).toBe('bar');
 
+    // Set initial value
     act(() => hook.result.current.setState('baz'));
     expect(hook.result.current.state).toBe('baz');
+
+    // Second hook should read from localStorage, not use default value
+    const anotherHook = setUp(LOCAL_STORAGE_KEY, 'bar', { listenStorageChange: true });
     expect(anotherHook.result.current.state).toBe('baz');
 
+    // Changes should sync between instances
     act(() => anotherHook.result.current.setState('qux'));
     expect(hook.result.current.state).toBe('qux');
     expect(anotherHook.result.current.state).toBe('qux');

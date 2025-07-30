@@ -1,9 +1,10 @@
+import { describe, expect, test } from 'vitest';
 import { renderHook, act } from '@testing-library/react';
 import useUpdate from '..';
 import useMemoizedFn from '../../useMemoizedFn';
 
 describe('useUpdate', () => {
-  it('should update', () => {
+  test('should update', () => {
     let count = 0;
     const hooks = renderHook(() => {
       const update = useUpdate();
@@ -20,7 +21,7 @@ describe('useUpdate', () => {
     act(hooks.result.current.onChange);
     expect(hooks.result.current.count).toBe(1);
   });
-  it('should return same update function', () => {
+  test('should return same update function', () => {
     const hooks = renderHook(() => useUpdate());
     const preUpdate = hooks.result.current;
     hooks.rerender();

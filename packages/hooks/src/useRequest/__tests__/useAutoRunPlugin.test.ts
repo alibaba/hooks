@@ -1,10 +1,11 @@
+import { describe, expect, test, vi } from 'vitest';
 import type { RenderHookResult } from '@testing-library/react';
 import { act, renderHook, waitFor } from '@testing-library/react';
 import useRequest from '../index';
 import { request } from '../../utils/testingHelpers';
 
 describe('useAutoRunPlugin', () => {
-  jest.useFakeTimers();
+  vi.useFakeTimers();
 
   const setUp = (
     service: Parameters<typeof useRequest>[0],
@@ -13,7 +14,7 @@ describe('useAutoRunPlugin', () => {
 
   let hook: RenderHookResult<any, any>;
 
-  it('useAutoRunPlugin ready should work', async () => {
+  test('useAutoRunPlugin ready should work', async () => {
     let dep = 1;
     act(() => {
       hook = setUp(request, {
@@ -23,7 +24,7 @@ describe('useAutoRunPlugin', () => {
     expect(hook.result.current.loading).toBe(true);
 
     act(() => {
-      jest.runAllTimers();
+      vi.runAllTimers();
     });
     await waitFor(() => expect(hook.result.current.loading).toBe(false));
 
@@ -34,7 +35,7 @@ describe('useAutoRunPlugin', () => {
     expect(hook.result.current.loading).toBe(true);
 
     act(() => {
-      jest.runAllTimers();
+      vi.runAllTimers();
     });
     await waitFor(() => expect(hook.result.current.loading).toBe(false));
 
@@ -44,7 +45,7 @@ describe('useAutoRunPlugin', () => {
     expect(hook.result.current.loading).toBe(false);
   });
 
-  it('useAutoRunPlugin manual=false ready=true work fine', async () => {
+  test('useAutoRunPlugin manual=false ready=true work fine', async () => {
     act(() => {
       hook = setUp(request, {
         ready: true,
@@ -53,7 +54,7 @@ describe('useAutoRunPlugin', () => {
 
     expect(hook.result.current.loading).toBe(true);
     act(() => {
-      jest.runAllTimers();
+      vi.runAllTimers();
     });
     await waitFor(() => expect(hook.result.current.loading).toBe(false));
 
@@ -68,12 +69,12 @@ describe('useAutoRunPlugin', () => {
 
     expect(hook.result.current.loading).toBe(true);
     act(() => {
-      jest.runAllTimers();
+      vi.runAllTimers();
     });
     await waitFor(() => expect(hook.result.current.loading).toBe(false));
   });
 
-  it('useAutoRunPlugin manual=false ready=false work fine', async () => {
+  test('useAutoRunPlugin manual=false ready=false work fine', async () => {
     act(() => {
       hook = setUp(request, {
         ready: false,
@@ -88,7 +89,7 @@ describe('useAutoRunPlugin', () => {
 
     expect(hook.result.current.loading).toBe(true);
     act(() => {
-      jest.runAllTimers();
+      vi.runAllTimers();
     });
     await waitFor(() => expect(hook.result.current.loading).toBe(false));
 
@@ -98,7 +99,7 @@ describe('useAutoRunPlugin', () => {
     expect(hook.result.current.loading).toBe(false);
   });
 
-  it('useAutoRunPlugin manual=false ready&defaultParams work fine', async () => {
+  test('useAutoRunPlugin manual=false ready&defaultParams work fine', async () => {
     act(() => {
       hook = setUp(request, {
         ready: false,
@@ -115,7 +116,7 @@ describe('useAutoRunPlugin', () => {
 
     expect(hook.result.current.loading).toBe(true);
     act(() => {
-      jest.runAllTimers();
+      vi.runAllTimers();
     });
     await waitFor(() => expect(hook.result.current.loading).toBe(false));
     expect(hook.result.current.params).toEqual([2]);
@@ -131,13 +132,13 @@ describe('useAutoRunPlugin', () => {
 
     expect(hook.result.current.loading).toBe(true);
     act(() => {
-      jest.runAllTimers();
+      vi.runAllTimers();
     });
     await waitFor(() => expect(hook.result.current.loading).toBe(false));
     expect(hook.result.current.params).toEqual([3]);
   });
 
-  it('useAutoRunPlugin manual=true ready work fine', async () => {
+  test('useAutoRunPlugin manual=true ready work fine', async () => {
     act(() => {
       hook = setUp(request, {
         ready: false,
@@ -161,12 +162,12 @@ describe('useAutoRunPlugin', () => {
     });
     expect(hook.result.current.loading).toBe(true);
     act(() => {
-      jest.runAllTimers();
+      vi.runAllTimers();
     });
     await waitFor(() => expect(hook.result.current.loading).toBe(false));
   });
 
-  it('useAutoRunPlugin manual=false refreshDeps should work', async () => {
+  test('useAutoRunPlugin manual=false refreshDeps should work', async () => {
     let dep = 1;
     act(() => {
       hook = setUp(request, {
@@ -176,7 +177,7 @@ describe('useAutoRunPlugin', () => {
     expect(hook.result.current.loading).toBe(true);
 
     act(() => {
-      jest.runAllTimers();
+      vi.runAllTimers();
     });
     await waitFor(() => expect(hook.result.current.loading).toBe(false));
 
@@ -187,7 +188,7 @@ describe('useAutoRunPlugin', () => {
     expect(hook.result.current.loading).toBe(true);
 
     act(() => {
-      jest.runAllTimers();
+      vi.runAllTimers();
     });
     await waitFor(() => expect(hook.result.current.loading).toBe(false));
 
@@ -197,7 +198,7 @@ describe('useAutoRunPlugin', () => {
     expect(hook.result.current.loading).toBe(false);
   });
 
-  it('useAutoRunPlugin manual=true refreshDeps should work', async () => {
+  test('useAutoRunPlugin manual=true refreshDeps should work', async () => {
     let dep = 1;
     act(() => {
       hook = setUp(request, {
@@ -215,7 +216,7 @@ describe('useAutoRunPlugin', () => {
     expect(hook.result.current.loading).toBe(false);
   });
 
-  it('useAutoRunPlugin refreshDepsAction should work', async () => {
+  test('useAutoRunPlugin refreshDepsAction should work', async () => {
     let dep = 1;
     let count = 0;
     const refreshDepsAction = () => {
@@ -230,7 +231,7 @@ describe('useAutoRunPlugin', () => {
     expect(hook.result.current.loading).toBe(true);
 
     act(() => {
-      jest.runAllTimers();
+      vi.runAllTimers();
     });
     await waitFor(() => expect(hook.result.current.loading).toBe(false));
 
@@ -258,8 +259,8 @@ describe('useAutoRunPlugin', () => {
     expect(count).toBe(2);
   });
 
-  it('useAutoRunPlugin ready & refreshDeps change same time work fine', async () => {
-    const fn = jest.fn();
+  test('useAutoRunPlugin ready & refreshDeps change same time work fine', async () => {
+    const fn = vi.fn();
 
     const asyncFn = () => {
       return new Promise<string>((resolve) => {

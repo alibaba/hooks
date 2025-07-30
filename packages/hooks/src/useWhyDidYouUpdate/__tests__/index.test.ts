@@ -1,10 +1,11 @@
+import { describe, expect, test, vi } from 'vitest';
 import { renderHook, act } from '@testing-library/react';
 import useWhyDidYouUpdate from '../index';
 import { useState } from 'react';
 
 describe('useWhyDidYouUpdate', () => {
-  it('should work', () => {
-    console.log = jest.fn();
+  test('should work', () => {
+    console.log = vi.fn();
     const setup = () =>
       renderHook(() => {
         const [count, setCount] = useState(100);

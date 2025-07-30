@@ -1,3 +1,4 @@
+import { describe, expect, test } from 'vitest';
 import { renderHook, act } from '@testing-library/react';
 import useTextSelection from '../index';
 
@@ -71,7 +72,7 @@ describe('useTextSelection', () => {
     };
   }
 
-  it('on textSelection', async () => {
+  test('on textSelection', async () => {
     initGetSelection({ left: 10, top: 10, height: 100, width: 100, text: 'on textSelection' });
 
     // TODO
@@ -94,7 +95,7 @@ describe('useTextSelection', () => {
     hook.unmount();
   });
 
-  it('keep/cancel the selected text range', async () => {
+  test('keep/cancel the selected text range', async () => {
     initGetSelection({ text: 'aaa' });
 
     const hook = renderHook(() => useTextSelection(() => document));

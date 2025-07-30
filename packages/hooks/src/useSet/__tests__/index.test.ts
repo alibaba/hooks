@@ -1,10 +1,11 @@
+import { describe, expect, test } from 'vitest';
 import { renderHook, act } from '@testing-library/react';
 import useSet from '../index';
 
 const setUp = <K>(initialSet?: Iterable<K>) => renderHook(() => useSet(initialSet));
 
 describe('useSet', () => {
-  it('should init set and utils', () => {
+  test('should init set and utils', () => {
     const { result } = setUp([1, 2]);
     const [set, utils] = result.current;
 
@@ -16,7 +17,7 @@ describe('useSet', () => {
     });
   });
 
-  it('should init empty set if no initial set provided', () => {
+  test('should init empty set if no initial set provided', () => {
     const { result } = setUp();
     expect(result.current[0]).toEqual(new Set());
 
@@ -24,7 +25,7 @@ describe('useSet', () => {
     expect(result1.current[0]).toEqual(new Set());
   });
 
-  it('should have an initially provided key', () => {
+  test('should have an initially provided key', () => {
     const { result } = setUp(['a']);
     const [set, utils] = result.current;
 
@@ -36,7 +37,7 @@ describe('useSet', () => {
     expect(value).toBe(true);
   });
 
-  it('should have an added key', () => {
+  test('should have an added key', () => {
     const { result } = setUp();
 
     act(() => {
@@ -51,7 +52,7 @@ describe('useSet', () => {
     expect(value).toBe(true);
   });
 
-  it('should get false for non-existing key', () => {
+  test('should get false for non-existing key', () => {
     const { result } = setUp(['a']);
     const [set] = result.current;
 
@@ -63,7 +64,7 @@ describe('useSet', () => {
     expect(value).toBe(false);
   });
 
-  it('should add a new key', () => {
+  test('should add a new key', () => {
     const { result } = setUp(['oldKey']);
     const [, utils] = result.current;
 
@@ -74,7 +75,7 @@ describe('useSet', () => {
     expect(result.current[0]).toEqual(new Set(['oldKey', 'newKey']));
   });
 
-  it('should work if setting existing key', () => {
+  test('should work if setting existing key', () => {
     const { result } = setUp(['oldKey']);
     const [, utils] = result.current;
 
@@ -85,7 +86,7 @@ describe('useSet', () => {
     expect(result.current[0]).toEqual(new Set(['oldKey']));
   });
 
-  it('should remove existing key', () => {
+  test('should remove existing key', () => {
     const { result } = setUp([1, 2]);
     const [, utils] = result.current;
 
@@ -96,7 +97,7 @@ describe('useSet', () => {
     expect(result.current[0]).toEqual(new Set([1]));
   });
 
-  it('should do nothing if removing non-existing key', () => {
+  test('should do nothing if removing non-existing key', () => {
     const { result } = setUp(['a', 'b']);
     const [, utils] = result.current;
 
@@ -107,7 +108,7 @@ describe('useSet', () => {
     expect(result.current[0]).toEqual(new Set(['a', 'b']));
   });
 
-  it('should reset to initial set provided', () => {
+  test('should reset to initial set provided', () => {
     const { result } = setUp([1]);
     const [, utils] = result.current;
 
@@ -124,7 +125,7 @@ describe('useSet', () => {
     expect(result.current[0]).toEqual(new Set([1]));
   });
 
-  it('should memoized its utils methods', () => {
+  test('should memoized its utils methods', () => {
     const { result } = setUp(['a', 'b']);
     const [, utils] = result.current;
     const { add, remove, reset } = utils;

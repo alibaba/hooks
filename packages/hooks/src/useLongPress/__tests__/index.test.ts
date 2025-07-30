@@ -1,17 +1,18 @@
+import { describe, expect, test, it, beforeEach, afterEach, vi } from 'vitest';
 import { renderHook } from '@testing-library/react';
 import useLongPress from '../index';
 import type { Options } from '../index';
 
-const mockCallback = jest.fn();
-const mockClickCallback = jest.fn();
-const mockLongPressEndCallback = jest.fn();
+const mockCallback = vi.fn();
+const mockClickCallback = vi.fn();
+const mockLongPressEndCallback = vi.fn();
 
 let events = {};
 const mockTarget = {
-  addEventListener: jest.fn((event, callback) => {
+  addEventListener: vi.fn((event, callback) => {
     events[event] = callback;
   }),
-  removeEventListener: jest.fn((event) => {
+  removeEventListener: vi.fn((event) => {
     Reflect.deleteProperty(events, event);
   }),
 };
@@ -21,60 +22,64 @@ const setup = (onLongPress: any, target, options?: Options) =>
 
 describe('useLongPress', () => {
   beforeEach(() => {
-    jest.useFakeTimers();
+    vi.useFakeTimers();
   });
 
   afterEach(() => {
     events = {};
-    jest.useRealTimers();
+    vi.useRealTimers();
+    // Clear all mocks
+    mockCallback.mockClear();
+    mockClickCallback.mockClear();
+    mockLongPressEndCallback.mockClear();
   });
 
-  it('longPress callback correct', () => {
+  test('longPress callback correct', () => {
     setup(mockCallback, mockTarget, {
       onClick: mockClickCallback,
       onLongPressEnd: mockLongPressEndCallback,
     });
-    expect(mockTarget.addEventListener).toBeCalled();
+    expect(mockTarget.addEventListener).toHaveBeenCalled();
     events['mousedown']();
-    jest.advanceTimersByTime(350);
+    vi.advanceTimersByTime(350);
     events['mouseleave']();
-    expect(mockCallback).toBeCalledTimes(1);
-    expect(mockLongPressEndCallback).toBeCalledTimes(1);
-    expect(mockClickCallback).toBeCalledTimes(0);
+    expect(mockCallback).toHaveBeenCalledTimes(1);
+    expect(mockLongPressEndCallback).toHaveBeenCalledTimes(1);
+    expect(mockClickCallback).toHaveBeenCalledTimes(0);
   });
 
-  it('click callback correct', () => {
+  test('click callback correct', () => {
     setup(mockCallback, mockTarget, {
       onClick: mockClickCallback,
       onLongPressEnd: mockLongPressEndCallback,
     });
-    expect(mockTarget.addEventListener).toBeCalled();
+    expect(mockTarget.addEventListener).toHaveBeenCalled();
     events['mousedown']();
     events['mouseup']();
     events['mousedown']();
     events['mouseup']();
-    expect(mockCallback).toBeCalledTimes(0);
-    expect(mockLongPressEndCallback).toBeCalledTimes(0);
-    expect(mockClickCallback).toBeCalledTimes(2);
+    expect(mockCallback).toHaveBeenCalledTimes(0);
+    expect(mockLongPressEndCallback).toHaveBeenCalledTimes(0);
+    expect(mockClickCallback).toHaveBeenCalledTimes(2);
   });
 
-  it('longPress and click callback correct', () => {
+  test('longPress and click callback correct', () => {
     setup(mockCallback, mockTarget, {
       onClick: mockClickCallback,
       onLongPressEnd: mockLongPressEndCallback,
     });
-    expect(mockTarget.addEventListener).toBeCalled();
+    expect(mockTarget.addEventListener).toHaveBeenCalled();
     events['mousedown']();
-    jest.advanceTimersByTime(350);
+    vi.advanceTimersByTime(350);
     events['mouseup']();
     events['mousedown']();
     events['mouseup']();
-    expect(mockCallback).toBeCalledTimes(1);
-    expect(mockLongPressEndCallback).toBeCalledTimes(1);
-    expect(mockClickCallback).toBeCalledTimes(1);
+    expect(mockCallback).toHaveBeenCalledTimes(1);
+    expect(mockLongPressEndCallback).toHaveBeenCalledTimes(1);
+    expect(mockClickCallback).toHaveBeenCalledTimes(1);
   });
 
-  it('onLongPress should not be called when over the threshold', () => {
+  test('onLongPress should not be called when over the threshold', () => {
     const { unmount } = setup(mockCallback, mockTarget, {
       moveThreshold: {
         x: 30,
@@ -89,14 +94,14 @@ describe('useLongPress', () => {
         clientY: 10,
       }),
     );
-    jest.advanceTimersByTime(320);
-    expect(mockCallback).not.toBeCalled();
+    vi.advanceTimersByTime(320);
+    expect(mockCallback).not.toHaveBeenCalled();
 
     unmount();
     expect(events['mousemove']).toBeUndefined();
   });
 
-  it(`should not work when target don't support addEventListener method`, () => {
+  test(`should not work when target don't support addEventListener method`, () => {
     Object.defineProperty(mockTarget, 'addEventListener', {
       get() {
         return false;

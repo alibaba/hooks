@@ -1,3 +1,4 @@
+import { describe, expect, test, vi } from 'vitest';
 import { renderHook } from '@testing-library/react';
 import type { Options } from '../index';
 import useDrag from '../index';
@@ -8,32 +9,32 @@ const setup = <T>(data: T, target: BasicTarget, options?: Options) =>
 
 const events: Record<string, (event: any) => void> = {};
 const mockTarget = {
-  addEventListener: jest.fn((event, callback) => {
+  addEventListener: vi.fn((event, callback) => {
     events[event] = callback;
   }),
-  removeEventListener: jest.fn((event) => {
+  removeEventListener: vi.fn((event) => {
     Reflect.deleteProperty(events, event);
   }),
-  setAttribute: jest.fn(),
+  setAttribute: vi.fn(),
 };
 
 describe('useDrag', () => {
-  it('should add/remove listener on mount/unmount', () => {
+  test('should add/remove listener on mount/unmount', () => {
     const { unmount } = setup(1, mockTarget as any);
-    expect(mockTarget.addEventListener).toBeCalled();
+    expect(mockTarget.addEventListener).toHaveBeenCalled();
     expect(mockTarget.addEventListener.mock.calls[0][0]).toBe('dragstart');
     expect(mockTarget.addEventListener.mock.calls[1][0]).toBe('dragend');
-    expect(mockTarget.setAttribute).toBeCalledWith('draggable', 'true');
+    expect(mockTarget.setAttribute).toHaveBeenCalledWith('draggable', 'true');
     unmount();
-    expect(mockTarget.removeEventListener).toBeCalled();
+    expect(mockTarget.removeEventListener).toHaveBeenCalled();
   });
 
-  it('should triggle drag callback', () => {
-    const onDragStart = jest.fn();
-    const onDragEnd = jest.fn();
+  test('should triggle drag callback', () => {
+    const onDragStart = vi.fn();
+    const onDragEnd = vi.fn();
     const mockEvent = {
       dataTransfer: {
-        setData: jest.fn(),
+        setData: vi.fn(),
       },
     };
     const hook = setup(1, mockTarget as any, {
@@ -41,27 +42,30 @@ describe('useDrag', () => {
       onDragEnd,
     });
     events.dragstart(mockEvent);
-    expect(onDragStart).toBeCalled();
-    expect(mockEvent.dataTransfer.setData).toBeCalledWith('custom', '1');
+    expect(onDragStart).toHaveBeenCalled();
+    expect(mockEvent.dataTransfer.setData).toHaveBeenCalledWith('custom', '1');
     events.dragend(mockEvent);
-    expect(onDragEnd).toBeCalled();
+    expect(onDragEnd).toHaveBeenCalled();
 
     hook.rerender(2);
 
     events.dragstart(mockEvent);
-    expect(onDragStart).toBeCalled();
+    expect(onDragStart).toHaveBeenCalled();
     expect(mockEvent.dataTransfer.setData).toHaveBeenLastCalledWith('custom', '2');
     events.dragend(mockEvent);
-    expect(onDragEnd).toBeCalled();
+    expect(onDragEnd).toHaveBeenCalled();
   });
 
-  it(`should not work when target don't support addEventListener method`, () => {
+  test(`should not work when target don't support addEventListener method`, () => {
+    // Reset the mock before this test
+    mockTarget.setAttribute.mockClear();
+
     Object.defineProperty(mockTarget, 'addEventListener', {
       get() {
         return false;
       },
     });
     setup(1, mockTarget as any);
-    expect(mockTarget.setAttribute).not.toBeCalled();
+    expect(mockTarget.setAttribute).not.toHaveBeenCalled();
   });
 });

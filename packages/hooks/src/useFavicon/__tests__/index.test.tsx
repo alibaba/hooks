@@ -1,14 +1,15 @@
+import { describe, expect, test } from 'vitest';
 import { renderHook } from '@testing-library/react';
 import useFavicon from '../index';
 
 describe('useFavicon', () => {
-  it('should set the favicon', () => {
+  test('should set the favicon', () => {
     expect(document.querySelector("link[rel*='icon']")).toBeNull();
     renderHook(() => useFavicon('favicon.ico'));
     expect(document.querySelector("link[rel*='icon']")).not.toBeNull();
   });
 
-  it('should support svg/png/ico/gif', () => {
+  test('should support svg/png/ico/gif', () => {
     const { rerender } = renderHook((url: string) => useFavicon(url));
     const suffixs = ['svg', 'png', 'ico', 'gif'];
     const imgTypeMap = {

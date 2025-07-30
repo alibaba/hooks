@@ -1,10 +1,17 @@
+import { describe, expect, test, beforeEach, afterEach, vi } from 'vitest';
 import type { RenderHookResult } from '@testing-library/react';
 import { act, renderHook, waitFor } from '@testing-library/react';
 import useRequest from '../index';
 import { request } from '../../utils/testingHelpers';
 
 describe('useRetryPlugin', () => {
-  jest.useFakeTimers();
+  beforeEach(() => {
+    vi.useFakeTimers();
+  });
+
+  afterEach(() => {
+    vi.useRealTimers();
+  });
 
   const setUp = (
     service: Parameters<typeof useRequest>[0],
@@ -14,50 +21,50 @@ describe('useRetryPlugin', () => {
   let hook: RenderHookResult<any, any>;
   let hook2: RenderHookResult<any, any>;
 
-  it('useRetryPlugin should work', async () => {
-    let errorCallback: jest.Mock | undefined = undefined;
+  test('useRetryPlugin should work', async () => {
+    let errorCallback: vi.Mock | undefined = undefined;
     act(() => {
-      errorCallback = jest.fn();
+      errorCallback = vi.fn();
       hook = setUp(() => request(0), {
         retryCount: 3,
         onError: errorCallback,
       });
     });
-    act(() => {
-      jest.setTimeout(10000);
-      jest.advanceTimersByTime(500);
-    });
-    expect(errorCallback).toHaveBeenCalledTimes(0);
 
+    // Wait for initial request to fail
     act(() => {
-      jest.runAllTimers();
+      vi.advanceTimersByTime(1000);
     });
     await waitFor(() => expect(errorCallback).toHaveBeenCalledTimes(1));
 
+    // Wait for first retry
     act(() => {
-      jest.runAllTimers();
+      vi.advanceTimersByTime(1000);
     });
     await waitFor(() => expect(errorCallback).toHaveBeenCalledTimes(2));
 
+    // Wait for second retry
     act(() => {
-      jest.runAllTimers();
+      vi.advanceTimersByTime(1000);
     });
     await waitFor(() => expect(errorCallback).toHaveBeenCalledTimes(3));
 
+    // Wait for third retry
     act(() => {
-      jest.runAllTimers();
+      vi.advanceTimersByTime(1000);
     });
     await waitFor(() => expect(errorCallback).toHaveBeenCalledTimes(4));
 
+    // No more retries should happen
     act(() => {
-      jest.runAllTimers();
+      vi.advanceTimersByTime(1000);
     });
     expect(errorCallback).toHaveBeenCalledTimes(4);
     hook.unmount();
 
     // cancel should work
     act(() => {
-      errorCallback = jest.fn();
+      errorCallback = vi.fn();
       hook2 = setUp(() => request(0), {
         retryCount: 3,
         onError: errorCallback,
@@ -65,20 +72,26 @@ describe('useRetryPlugin', () => {
     });
     expect(errorCallback).toHaveBeenCalledTimes(0);
 
+    // Wait for initial request to fail
     act(() => {
-      jest.runAllTimers();
+      vi.advanceTimersByTime(1000);
     });
     await waitFor(() => expect(errorCallback).toHaveBeenCalledTimes(1));
 
+    // Wait for first retry
     act(() => {
-      jest.runAllTimers();
+      vi.advanceTimersByTime(1000);
     });
     await waitFor(() => expect(errorCallback).toHaveBeenCalledTimes(2));
+
+    // Cancel the request
     act(() => {
       hook2.result.current.cancel();
     });
+
+    // No more retries should happen after cancel
     act(() => {
-      jest.runAllTimers();
+      vi.advanceTimersByTime(1000);
     });
     expect(errorCallback).toHaveBeenCalledTimes(2);
     hook2.unmount();

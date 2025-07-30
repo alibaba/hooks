@@ -1,10 +1,11 @@
+import { describe, expect, test, vi } from 'vitest';
 import { renderHook } from '@testing-library/react';
 import useMount from '../index';
 
 describe('useMount', () => {
-  it('test mount', async () => {
-    const destructor = jest.fn();
-    const fn = jest.fn();
+  test('test mount', async () => {
+    const destructor = vi.fn();
+    const fn = vi.fn();
     fn.mockReturnValue(destructor);
     const hook = renderHook(() => useMount(fn));
     expect(fn).toHaveBeenCalledTimes(1);
@@ -21,8 +22,8 @@ describe('useMount', () => {
     expect(destructor).toHaveBeenCalledTimes(2);
   });
 
-  // it('should output error when fn is not a function', () => {
-  //   const errSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
+  // test('should output error when fn is not a function', () => {
+  //   const errSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
   //   renderHook(() => useMount(1 as any));
   //   expect(errSpy).toBeCalledWith(
   //     'useMount: parameter `fn` expected to be a function, but got "number".',

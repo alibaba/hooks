@@ -10,6 +10,7 @@ export default defineConfig({
   },
   test: {
     environment: 'jsdom',
+    globals: true,
     include: ['tests/**/*.{test,spec}.?(c|m)[jt]s?(x)'],
     coverage: {
       provider: 'istanbul',

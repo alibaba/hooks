@@ -1,5 +1,5 @@
+import { describe, expect, test } from 'vitest';
 import { fireEvent, render, renderHook, act } from '@testing-library/react';
-import React from 'react';
 import useReactive from '../';
 
 const Demo = () => {
@@ -81,7 +81,7 @@ const Demo = () => {
 };
 
 describe('test useReactive feature', () => {
-  it('test count', () => {
+  test('test count', () => {
     const wrap = render(<Demo />);
 
     const count = wrap.getByRole('addCount');
@@ -114,7 +114,7 @@ describe('test useReactive feature', () => {
     expect(count.textContent).toBe('-3');
   });
 
-  it('test array', () => {
+  test('test array', () => {
     const wrap = render(<Demo />);
     const testArray = wrap.getByRole('test-array');
     const pushbtn = wrap.getByRole('pushbtn');
@@ -139,7 +139,7 @@ describe('test useReactive feature', () => {
     expect(JSON.parse(testArray.textContent as any).length).toBe(1);
   });
 
-  it('test special objects', () => {
+  test('test special objects', () => {
     const { result } = renderHook(() => {
       // Almost all of the built-in objects are tested.
       // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects
@@ -195,7 +195,7 @@ describe('test useReactive feature', () => {
     expect(() => result.current.v.Module).not.toThrowError();
   });
 
-  it('test JSX element', () => {
+  test('test JSX element', () => {
     const hook = renderHook(() => useReactive({ html: <div role="id">foo</div> }));
     const proxy = hook.result.current;
     const wrap = render(proxy.html);
@@ -210,7 +210,7 @@ describe('test useReactive feature', () => {
     hook.unmount();
   });
 
-  it('test read-only and non-configurable data property', () => {
+  test('test read-only and non-configurable data property', () => {
     const obj = {} as { user: { name: string } };
     Reflect.defineProperty(obj, 'user', {
       value: { name: 'foo' },
@@ -225,7 +225,7 @@ describe('test useReactive feature', () => {
     hook.unmount();
   });
 
-  it('test input1', () => {
+  test('test input1', () => {
     const wrap = render(<Demo />);
 
     const input = wrap.getByRole('input1');
@@ -241,7 +241,7 @@ describe('test useReactive feature', () => {
     expect(inputVal.textContent).toBe('bbb');
   });
 
-  it('delete object property', () => {
+  test('delete object property', () => {
     const wrap = render(<Demo />);
 
     const deleteProperty = wrap.getByRole('deleteProperty');
@@ -254,7 +254,7 @@ describe('test useReactive feature', () => {
     expect(deleteProperty.textContent).toBe('');
   });
 
-  it('access from self to prototype chain', () => {
+  test('access from self to prototype chain', () => {
     const parent: Record<string, string> = {
       name: 'parent',
       get value() {

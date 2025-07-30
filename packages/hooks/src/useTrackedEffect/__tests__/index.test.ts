@@ -1,3 +1,4 @@
+import { describe, expect, test, beforeEach, vi } from 'vitest';
 import { renderHook } from '@testing-library/react';
 import useTrackedEffect from '../index';
 
@@ -6,16 +7,26 @@ describe('useTrackedEffect', () => {
   let changedDepIndexes = [];
   let prevDependencies = [];
   let currentDependencies = [];
-  const mockEffectCleanup = jest.fn();
-  const mockEffectCallback = jest.fn().mockReturnValue(mockEffectCleanup);
-  const mockEffectWithTracked = jest.fn().mockImplementation((changes, prevDeps, curDeps) => {
+  const mockEffectCleanup = vi.fn();
+  const mockEffectCallback = vi.fn().mockReturnValue(mockEffectCleanup);
+  const mockEffectWithTracked = vi.fn().mockImplementation((changes, prevDeps, curDeps) => {
     //This effect callback accept an addition parameter which contains indexes of dependecies which changed their equalities.
     changedDepIndexes = changes;
     prevDependencies = prevDeps;
     currentDependencies = curDeps;
     return mockEffectCleanup;
   });
-  it("should run provided effect and return single changed dependecy's index ", () => {
+
+  beforeEach(() => {
+    // Reset all mocks before each test
+    mockEffectCleanup.mockClear();
+    mockEffectCallback.mockClear();
+    mockEffectWithTracked.mockClear();
+    changedDepIndexes = [];
+    prevDependencies = [];
+    currentDependencies = [];
+  });
+  test("should run provided effect and return single changed dependecy's index ", () => {
     let var1 = 0;
     const var2 = '0';
     const var3 = { value: 0 };
@@ -31,7 +42,7 @@ describe('useTrackedEffect', () => {
     expect(changedDepIndexes).toHaveLength(1);
     expect(changedDepIndexes[0]).toBe(0);
   });
-  it('should run provided effect and return correct dependencies (previous and current)', () => {
+  test('should run provided effect and return correct dependencies (previous and current)', () => {
     let var1 = 0;
     let var2 = '0';
     const var3 = { value: 0 };
@@ -55,7 +66,7 @@ describe('useTrackedEffect', () => {
     expect(prevDependencies[1]).toBe('1');
     expect(currentDependencies[1]).toBe('2');
   });
-  it(" should run provided effect and return multiple changed dependecy's indexes", () => {
+  test(" should run provided effect and return multiple changed dependecy's indexes", () => {
     let var1 = 0;
     let var2 = '0';
     const var3 = { value: 0 };
@@ -78,7 +89,7 @@ describe('useTrackedEffect', () => {
     expect(changedDepIndexes).toHaveLength(1);
     expect(changedDepIndexes[0]).toBe(1);
   });
-  it('should run provided effect and return empty if no dependency changed', () => {
+  test('should run provided effect and return empty if no dependency changed', () => {
     let var1 = 0;
     const var2 = '0';
     const var3 = { value: 0 };
@@ -93,7 +104,7 @@ describe('useTrackedEffect', () => {
     rerender();
     expect(changedDepIndexes).toHaveLength(0);
   });
-  it('should run provided effect and make sure reference equality is correct', () => {
+  test('should run provided effect and make sure reference equality is correct', () => {
     const var1 = 0;
     const var2 = '0';
     const var3 = { value: 0 };
@@ -109,7 +120,7 @@ describe('useTrackedEffect', () => {
     expect(changedDepIndexes).toHaveLength(0);
   });
 
-  it('should run clean-up provided on unmount as a normal useEffect', () => {
+  test('should run clean-up provided on unmount as a normal useEffect', () => {
     const { unmount } = renderHook(() => useTrackedEffect(mockEffectCallback));
     expect(mockEffectCleanup).not.toHaveBeenCalled();
 

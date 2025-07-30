@@ -1,10 +1,11 @@
+import { describe, expect, test } from 'vitest';
 import { act, renderHook } from '@testing-library/react';
 import useMap from '../index';
 
 const setup = (initialMap?: Iterable<[any, any]>) => renderHook(() => useMap(initialMap));
 
 describe('useMap', () => {
-  it('should init map and utils', () => {
+  test('should init map and utils', () => {
     const { result } = setup([
       ['foo', 'bar'],
       ['a', 1],
@@ -24,7 +25,7 @@ describe('useMap', () => {
     });
   });
 
-  it('should init empty map if not initial object provided', () => {
+  test('should init empty map if not initial object provided', () => {
     const { result } = setup();
     expect([...result.current[0]]).toEqual([]);
 
@@ -32,7 +33,7 @@ describe('useMap', () => {
     expect([...result2.current[0]]).toEqual([]);
   });
 
-  it('should get corresponding value for initial provided key', () => {
+  test('should get corresponding value for initial provided key', () => {
     const { result } = setup([
       ['foo', 'bar'],
       ['a', 1],
@@ -47,7 +48,7 @@ describe('useMap', () => {
     expect(value).toBe(1);
   });
 
-  it('should get corresponding value for existing provided key', () => {
+  test('should get corresponding value for existing provided key', () => {
     const { result } = setup([
       ['foo', 'bar'],
       ['a', 1],
@@ -65,7 +66,7 @@ describe('useMap', () => {
     expect(value).toBe(99);
   });
 
-  it('should get undefined for non-existing provided key', () => {
+  test('should get undefined for non-existing provided key', () => {
     const { result } = setup([
       ['foo', 'bar'],
       ['a', 1],
@@ -80,7 +81,7 @@ describe('useMap', () => {
     expect(value).toBeUndefined();
   });
 
-  it('should set new key-value pair', () => {
+  test('should set new key-value pair', () => {
     const { result } = setup([
       ['foo', 'bar'],
       ['a', 1],
@@ -98,7 +99,7 @@ describe('useMap', () => {
     ]);
   });
 
-  it('should override current value if setting existing key', () => {
+  test('should override current value if setting existing key', () => {
     const { result } = setup([
       ['foo', 'bar'],
       ['a', 1],
@@ -115,7 +116,7 @@ describe('useMap', () => {
     ]);
   });
 
-  it('should set new map', () => {
+  test('should set new map', () => {
     const { result } = setup([
       ['foo', 'bar'],
       ['a', 1],
@@ -141,7 +142,7 @@ describe('useMap', () => {
     expect([...result.current[0]]).toEqual([]);
   });
 
-  it('remove should be work', () => {
+  test('remove should be work', () => {
     const { result } = setup([['msg', 'hello']]);
     const { remove } = result.current[1];
     expect(result.current[0].size).toBe(1);
@@ -169,7 +170,7 @@ describe('useMap', () => {
     ]);
   });
 
-  it('reset should be work', () => {
+  test('reset should be work', () => {
     const { result } = setup([['msg', 'hello']]);
     const { set, reset } = result.current[1];
     act(() => {

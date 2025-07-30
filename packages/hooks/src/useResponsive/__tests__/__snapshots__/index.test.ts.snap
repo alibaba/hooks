@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`useResponsive should response to window width changes 1`] = `
+exports[`useResponsive > should response to window width changes 1`] = `
 {
   "lg": true,
   "md": true,
@@ -10,7 +10,7 @@ exports[`useResponsive should response to window width changes 1`] = `
 }
 `;
 
-exports[`useResponsive should response to window width changes 2`] = `
+exports[`useResponsive > should response to window width changes 2`] = `
 {
   "lg": false,
   "md": false,
@@ -20,7 +20,7 @@ exports[`useResponsive should response to window width changes 2`] = `
 }
 `;
 
-exports[`useResponsive should response to window width changes 3`] = `
+exports[`useResponsive > should response to window width changes 3`] = `
 {
   "lg": false,
   "md": false,
@@ -30,7 +30,7 @@ exports[`useResponsive should response to window width changes 3`] = `
 }
 `;
 
-exports[`useResponsive should response to window width changes 4`] = `
+exports[`useResponsive > should response to window width changes 4`] = `
 {
   "lg": false,
   "md": true,
@@ -40,7 +40,7 @@ exports[`useResponsive should response to window width changes 4`] = `
 }
 `;
 
-exports[`useResponsive should response to window width changes 5`] = `
+exports[`useResponsive > should response to window width changes 5`] = `
 {
   "lg": true,
   "md": true,
@@ -50,7 +50,7 @@ exports[`useResponsive should response to window width changes 5`] = `
 }
 `;
 
-exports[`useResponsive should response to window width changes 6`] = `
+exports[`useResponsive > should response to window width changes 6`] = `
 {
   "lg": true,
   "md": true,

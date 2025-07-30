@@ -1,3 +1,4 @@
+import { describe, expect, test } from 'vitest';
 import { renderHook, act } from '@testing-library/react';
 import useCookieState from '../index';
 import type { Options } from '../index';
@@ -13,7 +14,7 @@ describe('useCookieState', () => {
       } as const;
     });
 
-  it('getKey should work', () => {
+  test('getKey should work', () => {
     const COOKIE = 'test-key';
     const hook = setUp(COOKIE, {
       defaultValue: 'A',
@@ -35,7 +36,7 @@ describe('useCookieState', () => {
     expect(Cookies.get(COOKIE)).toBe('C');
   });
 
-  it('should support undefined', () => {
+  test('should support undefined', () => {
     const COOKIE = 'test-boolean-key-with-undefined';
     const hook = setUp(COOKIE, {
       defaultValue: 'undefined',
@@ -58,7 +59,7 @@ describe('useCookieState', () => {
     expect(Cookies.get(COOKIE)).toBeUndefined();
   });
 
-  it('should support empty string', () => {
+  test('should support empty string', () => {
     Cookies.set('test-key-empty-string', '');
     expect(Cookies.get('test-key-empty-string')).toBe('');
     const COOKIE = 'test-key-empty-string';
@@ -68,7 +69,7 @@ describe('useCookieState', () => {
     expect(hook.result.current.state).toBe('');
   });
 
-  it('should support function updater', () => {
+  test('should support function updater', () => {
     const COOKIE = 'test-func-updater';
     const hook = setUp(COOKIE, {
       defaultValue: () => 'hello world',
@@ -80,7 +81,7 @@ describe('useCookieState', () => {
     expect(hook.result.current.state).toBe('hello world, zhangsan');
   });
 
-  it('using the same cookie name', () => {
+  test('using the same cookie name', () => {
     const COOKIE_NAME = 'test-same-cookie-name';
     const { result: result1 } = setUp(COOKIE_NAME, { defaultValue: 'A' });
     const { result: result2 } = setUp(COOKIE_NAME, { defaultValue: 'B' });

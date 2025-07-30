@@ -1,3 +1,4 @@
+import { describe, expect, test } from 'vitest';
 import { renderHook, act } from '@testing-library/react';
 import useToggle from '../index';
 
@@ -8,12 +9,12 @@ const callToggle = (hook: any) => {
 };
 
 describe('useToggle', () => {
-  it('test on init', async () => {
+  test('test on init', async () => {
     const hook = renderHook(() => useToggle());
     expect(hook.result.current[0]).toBeFalsy();
   });
 
-  it('test on methods', async () => {
+  test('test on methods', async () => {
     const hook = renderHook(() => useToggle('Hello'));
     expect(hook.result.current[0]).toBe('Hello');
     callToggle(hook);
@@ -28,7 +29,7 @@ describe('useToggle', () => {
     expect(hook.result.current[0]).toBeFalsy();
   });
 
-  it('test on optional', () => {
+  test('test on optional', () => {
     const hook = renderHook(() => useToggle('Hello', 'World'));
     callToggle(hook);
     expect(hook.result.current[0]).toBe('World');

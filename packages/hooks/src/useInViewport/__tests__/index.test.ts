@@ -1,13 +1,14 @@
+import { describe, expect, test, vi } from 'vitest';
 import { act, renderHook } from '@testing-library/react';
 import useInViewport from '../index';
 
 const targetEl = document.createElement('div');
 document.body.appendChild(targetEl);
 
-const observe = jest.fn();
-const disconnect = jest.fn();
+const observe = vi.fn();
+const disconnect = vi.fn();
 
-const mockIntersectionObserver = jest.fn().mockReturnValue({
+const mockIntersectionObserver = vi.fn().mockReturnValue({
   observe,
   disconnect,
 });
@@ -15,7 +16,7 @@ const mockIntersectionObserver = jest.fn().mockReturnValue({
 window.IntersectionObserver = mockIntersectionObserver;
 
 describe('useInViewport', () => {
-  it('should work when target is in viewport', async () => {
+  test('should work when target is in viewport', async () => {
     const { result } = renderHook(() => useInViewport(targetEl));
     const calls = mockIntersectionObserver.mock.calls;
     const [onChange] = calls[calls.length - 1];
@@ -35,9 +36,9 @@ describe('useInViewport', () => {
     expect(ratio).toBe(0.5);
   });
 
-  it('should work when target array is in viewport and has a callback', async () => {
+  test('should work when target array is in viewport and has a callback', async () => {
     const targetEls: HTMLDivElement[] = [];
-    const callback = jest.fn();
+    const callback = vi.fn();
     for (let i = 0; i < 2; i++) {
       const target = document.createElement('div');
       document.body.appendChild(target);
@@ -63,13 +64,15 @@ describe('useInViewport', () => {
     expect(result.current[1]).toBe(0.5);
   });
 
-  it('should not work when target is null', async () => {
+  test('should not work when target is null', async () => {
+    const initialCallCount = mockIntersectionObserver.mock.calls.length;
     renderHook(() => useInViewport(null));
     const calls = mockIntersectionObserver.mock.calls;
-    expect(calls[calls.length - 1]).toBeUndefined();
+    // Should not create new IntersectionObserver when target is null
+    expect(calls.length).toBe(initialCallCount);
   });
 
-  it('should disconnect when unmount', async () => {
+  test('should disconnect when unmount', async () => {
     mockIntersectionObserver.mockReturnValue({
       observe: () => null,
       disconnect,

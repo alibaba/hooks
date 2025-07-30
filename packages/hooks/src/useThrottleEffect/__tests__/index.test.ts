@@ -1,3 +1,4 @@
+import { describe, expect, test, vi } from 'vitest';
 import type { RenderHookResult } from '@testing-library/react';
 import { act, renderHook } from '@testing-library/react';
 import useThrottleEffect from '../index';
@@ -6,9 +7,9 @@ import { sleep } from '../../utils/testingHelpers';
 let hook: RenderHookResult<any, any>;
 
 describe('useThrottleEffect', () => {
-  it('useThrottleEffect should work', async () => {
-    const mockEffect = jest.fn(() => {});
-    const mockCleanUp = jest.fn(() => {});
+  test('useThrottleEffect should work', async () => {
+    const mockEffect = vi.fn(() => {});
+    const mockCleanUp = vi.fn(() => {});
     act(() => {
       hook = renderHook(
         ({ value, wait }) =>
@@ -47,9 +48,9 @@ describe('useThrottleEffect', () => {
     expect(mockCleanUp.mock.calls.length).toBe(2);
   });
 
-  it('should cancel timeout on unmount', async () => {
-    const mockEffect = jest.fn(() => {});
-    const mockCleanUp = jest.fn(() => {});
+  test('should cancel timeout on unmount', async () => {
+    const mockEffect = vi.fn(() => {});
+    const mockCleanUp = vi.fn(() => {});
 
     const hook2 = renderHook(
       (props) =>

@@ -1,8 +1,9 @@
+import { describe, expect, test } from 'vitest';
 import { renderHook } from '@testing-library/react';
 import useUpdateLayoutEffect from '../index';
 
 describe('useUpdateLayoutEffect', () => {
-  it('test on mounted', async () => {
+  test('test on mounted', async () => {
     let mountedState = 1;
     const hook = renderHook(() =>
       useUpdateLayoutEffect(() => {
@@ -13,7 +14,7 @@ describe('useUpdateLayoutEffect', () => {
     hook.rerender();
     expect(mountedState).toBe(2);
   });
-  it('test on optional', () => {
+  test('test on optional', () => {
     let mountedState = 1;
     const hook = renderHook(() =>
       useUpdateLayoutEffect(() => {

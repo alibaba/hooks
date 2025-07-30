@@ -1,3 +1,4 @@
+import { describe, expect, test } from 'vitest';
 import { renderHook, act } from '@testing-library/react';
 import useSessionStorageState from '../index';
 
@@ -11,7 +12,7 @@ describe('useSessionStorageState', () => {
       } as const;
     });
 
-  it('should support object', () => {
+  test('should support object', () => {
     const LOCAL_STORAGE_KEY = 'test-object-key';
     const hook = setUp<{ name: string }>(LOCAL_STORAGE_KEY, {
       name: 'A',
@@ -34,7 +35,7 @@ describe('useSessionStorageState', () => {
     expect(hook.result.current.state).toEqual({ name: 'B' });
   });
 
-  it('should support function updater', () => {
+  test('should support function updater', () => {
     const LOCAL_STORAGE_KEY = 'test-func-updater';
     const hook = setUp<string | null>(LOCAL_STORAGE_KEY, 'hello world');
     expect(hook.result.current.state).toBe('hello world');

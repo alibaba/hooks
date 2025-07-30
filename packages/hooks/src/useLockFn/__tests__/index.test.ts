@@ -1,3 +1,4 @@
+import { describe, expect, test } from 'vitest';
 import { renderHook, act } from '@testing-library/react';
 import { useRef, useCallback, useState } from 'react';
 import useLockFn from '../index';
@@ -24,7 +25,7 @@ describe('useLockFn', () => {
       };
     });
 
-  it('should work', async () => {
+  test('should work', async () => {
     const hook = setUp();
     const { locked, countRef } = hook.result.current;
     locked(1);
@@ -41,7 +42,7 @@ describe('useLockFn', () => {
     expect(countRef.current).toBe(5);
   });
 
-  it('should same', () => {
+  test('should same', () => {
     const hook = setUp();
     const preLocked = hook.result.current.locked;
     hook.rerender();

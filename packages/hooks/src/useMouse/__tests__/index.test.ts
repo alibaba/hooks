@@ -1,3 +1,4 @@
+import { describe, expect, test, vi } from 'vitest';
 import { renderHook, waitFor } from '@testing-library/react';
 import useMouse from '../index';
 
@@ -9,31 +10,32 @@ describe('useMouse', () => {
         clientY: y,
         screenX: x,
         screenY: y,
+        // In JSDOM, pageX and pageY are set to clientX and clientY by default
       }),
     );
   }
 
-  it('on mouseMove', async () => {
+  test('on mouseMove', async () => {
     const hook = renderHook(() => useMouse());
     expect(hook.result.current.pageX).toBeNaN();
     expect(hook.result.current.pageY).toBeNaN();
 
     moveMouse(10, 10);
 
-    // can't manually set pageX & pageY for mouseEvent, default undefined here.
-    await waitFor(() => expect(hook.result.current.pageX).toBeUndefined());
-    expect(hook.result.current.pageY).toBeUndefined();
+    // In JSDOM, pageX and pageY are set to clientX and clientY by default
+    await waitFor(() => expect(hook.result.current.pageX).toBe(10));
+    expect(hook.result.current.pageY).toBe(10);
     expect(hook.result.current.clientX).toBe(10);
     expect(hook.result.current.clientY).toBe(10);
     expect(hook.result.current.screenX).toBe(10);
     expect(hook.result.current.screenY).toBe(10);
   });
 
-  it('should be work with target', async () => {
+  test('should be work with target', async () => {
     const events = {};
-    const getBoundingClientRectMock = jest.spyOn(HTMLElement.prototype, 'getBoundingClientRect');
-    jest.spyOn(document, 'addEventListener').mockImplementation(
-      jest.fn((event: any, callback: any) => {
+    const getBoundingClientRectMock = vi.spyOn(HTMLElement.prototype, 'getBoundingClientRect');
+    vi.spyOn(document, 'addEventListener').mockImplementation(
+      vi.fn((event: any, callback: any) => {
         events[event] = callback;
       }),
     );

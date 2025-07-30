@@ -1,3 +1,4 @@
+import { describe, expect, test, beforeEach, beforeAll, afterAll, vi } from 'vitest';
 import { useState } from 'react';
 import { renderHook, act } from '@testing-library/react';
 import useInfiniteScroll from '..';
@@ -36,23 +37,23 @@ describe('useInfiniteScroll', () => {
   });
 
   beforeAll(() => {
-    jest.useFakeTimers();
+    vi.useFakeTimers();
   });
 
   afterAll(() => {
-    jest.useRealTimers();
+    vi.useRealTimers();
   });
 
-  it('should auto load', async () => {
+  test('should auto load', async () => {
     const { result } = setup(mockRequest);
     expect(result.current.loading).toBe(true);
     await act(async () => {
-      jest.advanceTimersByTime(1000);
+      vi.advanceTimersByTime(1000);
     });
     expect(result.current.loading).toBe(false);
   });
 
-  it('loadMore should be work', async () => {
+  test('loadMore should be work', async () => {
     const { result } = setup(mockRequest, { manual: true });
     const { loadMore, loading } = result.current;
     expect(loading).toBe(false);
@@ -61,31 +62,31 @@ describe('useInfiniteScroll', () => {
     });
     expect(result.current.loadingMore).toBe(true);
     await act(async () => {
-      jest.advanceTimersByTime(1000);
+      vi.advanceTimersByTime(1000);
     });
     expect(result.current.loadingMore).toBe(false);
   });
 
-  it('noMore should be true when isNoMore is true', async () => {
+  test('noMore should be true when isNoMore is true', async () => {
     const { result } = setup(mockRequest, {
       isNoMore: (d) => d?.nextId === undefined,
     });
     const { loadMore } = result.current;
     await act(async () => {
-      jest.advanceTimersByTime(1000);
+      vi.advanceTimersByTime(1000);
     });
 
     expect(result.current.noMore).toBe(false);
     act(() => loadMore());
     await act(async () => {
-      jest.advanceTimersByTime(1000);
+      vi.advanceTimersByTime(1000);
     });
     expect(result.current.noMore).toBe(true);
   });
 
-  it('should auto load when scroll to bottom', async () => {
+  test('should auto load when scroll to bottom', async () => {
     const events = {};
-    const mockAddEventListener = jest
+    const mockAddEventListener = vi
       .spyOn(targetEl, 'addEventListener')
       .mockImplementation((eventName, callback) => {
         events[eventName] = callback;
@@ -98,22 +99,18 @@ describe('useInfiniteScroll', () => {
     expect(result.current.loading).toBe(true);
     events['scroll']();
     await act(async () => {
-      jest.advanceTimersByTime(1000);
+      vi.advanceTimersByTime(1000);
     });
     expect(result.current.loading).toBe(false);
-    const scrollHeightSpy = jest
-      .spyOn(targetEl, 'scrollHeight', 'get')
-      .mockImplementation(() => 150);
-    const clientHeightSpy = jest
-      .spyOn(targetEl, 'clientHeight', 'get')
-      .mockImplementation(() => 300);
+    const scrollHeightSpy = vi.spyOn(targetEl, 'scrollHeight', 'get').mockImplementation(() => 150);
+    const clientHeightSpy = vi.spyOn(targetEl, 'clientHeight', 'get').mockImplementation(() => 300);
     setTargetInfo('scrollTop', 100);
     act(() => {
       events['scroll']();
     });
     expect(result.current.loadingMore).toBe(true);
     await act(async () => {
-      jest.advanceTimersByTime(1000);
+      vi.advanceTimersByTime(1000);
     });
     expect(result.current.loadingMore).toBe(false);
 
@@ -131,9 +128,9 @@ describe('useInfiniteScroll', () => {
     clientHeightSpy.mockRestore();
   });
 
-  it('should auto load when scroll to top', async () => {
+  test('should auto load when scroll to top', async () => {
     const events = {};
-    const mockAddEventListener = jest
+    const mockAddEventListener = vi
       .spyOn(targetEl, 'addEventListener')
       .mockImplementation((eventName, callback) => {
         events[eventName] = callback;
@@ -155,17 +152,13 @@ describe('useInfiniteScroll', () => {
     expect(result.current.loading).toBe(true);
     events['scroll']();
     await act(async () => {
-      jest.advanceTimersByTime(1000);
+      vi.advanceTimersByTime(1000);
     });
     expect(result.current.loading).toBe(false);
 
     // mock first scroll
-    const scrollHeightSpy = jest
-      .spyOn(targetEl, 'scrollHeight', 'get')
-      .mockImplementation(() => 150);
-    const clientHeightSpy = jest
-      .spyOn(targetEl, 'clientHeight', 'get')
-      .mockImplementation(() => 500);
+    const scrollHeightSpy = vi.spyOn(targetEl, 'scrollHeight', 'get').mockImplementation(() => 150);
+    const clientHeightSpy = vi.spyOn(targetEl, 'clientHeight', 'get').mockImplementation(() => 500);
     setTargetInfo('scrollTop', 300);
 
     act(() => {
@@ -180,7 +173,7 @@ describe('useInfiniteScroll', () => {
 
     expect(result.current.loadingMore).toBe(true);
     await act(async () => {
-      jest.advanceTimersByTime(1000);
+      vi.advanceTimersByTime(1000);
     });
     expect(result.current.loadingMore).toBe(false);
     //reverse order
@@ -198,8 +191,8 @@ describe('useInfiniteScroll', () => {
     clientHeightSpy.mockRestore();
   });
 
-  it('reload should be work', async () => {
-    const fn = jest.fn(() => Promise.resolve({ list: [] }));
+  test('reload should be work', async () => {
+    const fn = vi.fn(() => Promise.resolve({ list: [] }));
     const { result } = setup(fn);
     const { reload } = result.current;
     expect(fn).toBeCalledTimes(1);
@@ -210,8 +203,8 @@ describe('useInfiniteScroll', () => {
     });
   });
 
-  it('reload should be triggered when reloadDeps change', async () => {
-    const fn = jest.fn(() => Promise.resolve({ list: [] }));
+  test('reload should be triggered when reloadDeps change', async () => {
+    const fn = vi.fn(() => Promise.resolve({ list: [] }));
     const { result } = renderHook(() => {
       const [value, setValue] = useState('');
       const res = useInfiniteScroll(fn, {
@@ -232,7 +225,7 @@ describe('useInfiniteScroll', () => {
     });
   });
 
-  it('reload data should be latest', async () => {
+  test('reload data should be latest', async () => {
     let listCount = 5;
     const mockRequestFn = async () => {
       await sleep(1000);
@@ -248,24 +241,24 @@ describe('useInfiniteScroll', () => {
     const { result } = setup(mockRequestFn);
 
     await act(async () => {
-      jest.advanceTimersByTime(1000);
+      vi.advanceTimersByTime(1000);
     });
     expect(result.current.data).toMatchObject({ list: [1, 2, 3, 4, 5], nextId: 5 });
 
     listCount = 3;
     await act(async () => {
       result.current.reload();
-      jest.advanceTimersByTime(1000);
+      vi.advanceTimersByTime(1000);
     });
 
     expect(result.current.data).toMatchObject({ list: [1, 2, 3], nextId: 3 });
   });
 
-  it('mutate should be work', async () => {
+  test('mutate should be work', async () => {
     const { result } = setup(mockRequest);
     const { mutate } = result.current;
     await act(async () => {
-      jest.advanceTimersByTime(1000);
+      vi.advanceTimersByTime(1000);
     });
     expect(result.current.data).toMatchObject({ list: [1, 2, 3], nextId: 1 });
     const newData = {
@@ -276,8 +269,8 @@ describe('useInfiniteScroll', () => {
     expect(result.current.data).toMatchObject(newData);
   });
 
-  it('cancel should be work', () => {
-    const onSuccess = jest.fn();
+  test('cancel should be work', () => {
+    const onSuccess = vi.fn();
     const { result } = setup(mockRequest, {
       onSuccess,
     });
@@ -288,25 +281,25 @@ describe('useInfiniteScroll', () => {
     expect(onSuccess).not.toBeCalled();
   });
 
-  it('onBefore/onSuccess/onFinally should be called', async () => {
-    const onBefore = jest.fn();
-    const onSuccess = jest.fn();
-    const onFinally = jest.fn();
+  test('onBefore/onSuccess/onFinally should be called', async () => {
+    const onBefore = vi.fn();
+    const onSuccess = vi.fn();
+    const onFinally = vi.fn();
     const { result } = setup(mockRequest, {
       onBefore,
       onSuccess,
       onFinally,
     });
     await act(async () => {
-      jest.advanceTimersByTime(1000);
+      vi.advanceTimersByTime(1000);
     });
     expect(onBefore).toBeCalled();
     expect(onSuccess).toBeCalled();
     expect(onFinally).toBeCalled();
   });
 
-  it('onError should be called when throw error', async () => {
-    const onError = jest.fn();
+  test('onError should be called when throw error', async () => {
+    const onError = vi.fn();
     const mockRequestError = () => {
       return Promise.reject('error');
     };
@@ -319,7 +312,7 @@ describe('useInfiniteScroll', () => {
     expect(onError).toBeCalled();
   });
 
-  it('loadMoreAsync should be work', async () => {
+  test('loadMoreAsync should be work', async () => {
     const { result } = setup(mockRequest, {
       manual: true,
     });
@@ -331,12 +324,12 @@ describe('useInfiniteScroll', () => {
       });
     });
     await act(async () => {
-      jest.advanceTimersByTime(1000);
+      vi.advanceTimersByTime(1000);
     });
   });
 
-  it('reloadAsync should be work', async () => {
-    const fn = jest.fn(() => Promise.resolve({ list: [] }));
+  test('reloadAsync should be work', async () => {
+    const fn = vi.fn(() => Promise.resolve({ list: [] }));
     const { result } = setup(fn);
     const { reloadAsync } = result.current;
     expect(fn).toBeCalledTimes(1);
@@ -351,12 +344,12 @@ describe('useInfiniteScroll', () => {
     });
   });
 
-  it('loading should be true when reload after loadMore', async () => {
+  test('loading should be true when reload after loadMore', async () => {
     const { result } = setup(mockRequest);
     expect(result.current.loading).toBeTruthy();
     const { reload, loadMore } = result.current;
     await act(async () => {
-      jest.advanceTimersByTime(1000);
+      vi.advanceTimersByTime(1000);
     });
 
     expect(result.current.loading).toBeFalsy();
@@ -368,18 +361,18 @@ describe('useInfiniteScroll', () => {
     expect(result.current.loading).toBeTruthy();
 
     await act(async () => {
-      jest.advanceTimersByTime(1000);
+      vi.advanceTimersByTime(1000);
     });
 
     expect(result.current.loading).toBeFalsy();
   });
 
-  it('loading should be true when reloadAsync after loadMore', async () => {
+  test('loading should be true when reloadAsync after loadMore', async () => {
     const { result } = setup(mockRequest);
     expect(result.current.loading).toBeTruthy();
     const { reloadAsync, loadMore } = result.current;
     await act(async () => {
-      jest.advanceTimersByTime(1000);
+      vi.advanceTimersByTime(1000);
     });
 
     expect(result.current.loading).toBeFalsy();
@@ -391,13 +384,13 @@ describe('useInfiniteScroll', () => {
     expect(result.current.loading).toBeTruthy();
 
     await act(async () => {
-      jest.advanceTimersByTime(1000);
+      vi.advanceTimersByTime(1000);
     });
 
     expect(result.current.loading).toBeFalsy();
   });
 
-  it('list can be null or undefined', async () => {
+  test('list can be null or undefined', async () => {
     // @ts-ignore
     const { result } = setup(async function () {
       await sleep(1000);
@@ -412,7 +405,7 @@ describe('useInfiniteScroll', () => {
 
     const { loadMore } = result.current;
     await act(async () => {
-      jest.advanceTimersByTime(1000);
+      vi.advanceTimersByTime(1000);
     });
 
     expect(result.current.loading).toBeFalsy();
@@ -422,12 +415,12 @@ describe('useInfiniteScroll', () => {
     });
   });
 
-  it('error result', async () => {
+  test('error result', async () => {
     const { result } = setup(async () => {
       throw new Error('error message');
     });
     await act(async () => {
-      jest.advanceTimersByTime(1000);
+      vi.advanceTimersByTime(1000);
     });
 
     expect(result.current.error?.message).toBe('error message');

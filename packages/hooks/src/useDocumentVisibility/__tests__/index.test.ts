@@ -1,10 +1,11 @@
+import { describe, expect, test, afterAll, vi } from 'vitest';
 import useDocumentVisibility from '../index';
 import { renderHook, act } from '@testing-library/react';
 
-const mockIsBrowser = jest.fn();
-const mockDocumentVisibilityState = jest.spyOn(document, 'visibilityState', 'get');
+const mockIsBrowser = vi.fn();
+const mockDocumentVisibilityState = vi.spyOn(document, 'visibilityState', 'get');
 
-jest.mock('../../utils/isBrowser', () => {
+vi.mock('../../utils/isBrowser', () => {
   return {
     __esModule: true,
     get default() {
@@ -14,11 +15,11 @@ jest.mock('../../utils/isBrowser', () => {
 });
 
 afterAll(() => {
-  jest.clearAllMocks();
+  vi.clearAllMocks();
 });
 
 describe('useDocumentVisibility', () => {
-  it('isBrowser effect corrent', async () => {
+  test('isBrowser effect corrent', async () => {
     mockDocumentVisibilityState.mockReturnValue('hidden');
     // Object.defineProperty(document, 'visibilityState', { value: 'hidden', writable: true });
     mockIsBrowser.mockReturnValue(false);
@@ -26,7 +27,7 @@ describe('useDocumentVisibility', () => {
     expect(result.current).toBe('visible');
   });
 
-  it('visibilitychange update correct ', async () => {
+  test('visibilitychange update correct ', async () => {
     mockDocumentVisibilityState.mockReturnValue('hidden');
     // Object.defineProperty(document, 'visibilityState', { value: 'hidden', writable: true });
     mockIsBrowser.mockReturnValue(true);

@@ -1,3 +1,4 @@
+import { describe, expect, test, vi } from 'vitest';
 import type { RenderHookResult } from '@testing-library/react';
 import { act, renderHook } from '@testing-library/react';
 import useDebounceEffect from '../index';
@@ -6,10 +7,10 @@ import { sleep } from '../../utils/testingHelpers';
 let hook: RenderHookResult<any, any>;
 
 describe('useDebounceEffect', () => {
-  it('useDebounceEffect should work', async () => {
+  test('useDebounceEffect should work', async () => {
     let mountedState = 1;
-    const mockEffect = jest.fn(() => {});
-    const mockCleanUp = jest.fn(() => {});
+    const mockEffect = vi.fn(() => {});
+    const mockCleanUp = vi.fn(() => {});
     act(() => {
       hook = renderHook(() =>
         useDebounceEffect(
@@ -50,9 +51,9 @@ describe('useDebounceEffect', () => {
     expect(mockCleanUp.mock.calls.length).toBe(1);
   });
 
-  it('should cancel timeout on unmount', async () => {
-    const mockEffect = jest.fn(() => {});
-    const mockCleanUp = jest.fn(() => {});
+  test('should cancel timeout on unmount', async () => {
+    const mockEffect = vi.fn(() => {});
+    const mockCleanUp = vi.fn(() => {});
 
     const hook2 = renderHook(
       (props) =>

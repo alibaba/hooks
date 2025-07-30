@@ -1,3 +1,4 @@
+import { describe, expect, test } from 'vitest';
 import type { RenderHookResult } from '@testing-library/react';
 import { act, renderHook } from '@testing-library/react';
 import useThrottleFn from '../index';
@@ -14,7 +15,7 @@ const setUp = ({ fn, wait }: ParamsObj) => renderHook(() => useThrottleFn(fn, { 
 let hook: RenderHookResult<any, any>;
 
 describe('useThrottleFn', () => {
-  it('run, cancel and flush should work', async () => {
+  test('run, cancel and flush should work', async () => {
     let count = 0;
     const throttleFn = (gap: number) => {
       count += gap;
@@ -57,8 +58,8 @@ describe('useThrottleFn', () => {
     });
   });
 
-  // it('should output error when fn is not a function', () => {
-  //   const errSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
+  // test('should output error when fn is not a function', () => {
+  //   const errSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
   //   renderHook(() => useThrottleFn(1 as any));
   //   expect(errSpy).toBeCalledWith('useThrottleFn expected parameter is a function, got number');
   //   errSpy.mockRestore();

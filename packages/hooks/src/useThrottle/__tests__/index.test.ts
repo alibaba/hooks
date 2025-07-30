@@ -1,3 +1,4 @@
+import { describe, expect, test } from 'vitest';
 import type { RenderHookResult } from '@testing-library/react';
 import { act, renderHook } from '@testing-library/react';
 import useThrottle from '../index';
@@ -6,7 +7,7 @@ import { sleep } from '../../utils/testingHelpers';
 let hook: RenderHookResult<any, any>;
 
 describe('useThrottle', () => {
-  it('default useThrottle should work', async () => {
+  test('default useThrottle should work', async () => {
     let mountedState = 1;
     act(() => {
       hook = renderHook(() => useThrottle(mountedState, { wait: 500 }));
@@ -29,7 +30,7 @@ describe('useThrottle', () => {
     expect(hook.result.current).toBe(4);
   });
 
-  it('leading:false & trailing:false of options useThrottle should work', async () => {
+  test('leading:false & trailing:false of options useThrottle should work', async () => {
     let mountedState = 0;
     act(() => {
       hook = renderHook(() =>
@@ -56,7 +57,7 @@ describe('useThrottle', () => {
     expect(hook.result.current).toBe(0);
   });
 
-  it('leading:true & trailing:false of options useThrottle should work', async () => {
+  test('leading:true & trailing:false of options useThrottle should work', async () => {
     let mountedState = 0;
     act(() => {
       hook = renderHook(() =>
@@ -86,7 +87,7 @@ describe('useThrottle', () => {
     expect(hook.result.current).toBe(3);
   });
 
-  it('leading:false & trailing:true of options useThrottle should work', async () => {
+  test('leading:false & trailing:true of options useThrottle should work', async () => {
     let mountedState = 0;
     act(() => {
       hook = renderHook(() =>

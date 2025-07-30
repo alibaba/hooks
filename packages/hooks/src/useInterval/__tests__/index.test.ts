@@ -1,3 +1,4 @@
+import { describe, expect, test, beforeEach, afterEach, vi } from 'vitest';
 import { renderHook } from '@testing-library/react';
 import useInterval from '../index';
 
@@ -11,48 +12,57 @@ const setUp = ({ fn, delay, options }: ParamsObj) =>
   renderHook(() => useInterval(fn, delay, options));
 
 describe('useInterval', () => {
-  jest.useFakeTimers();
-  jest.spyOn(global, 'clearInterval');
+  let clearIntervalSpy: any;
 
-  it('interval should work', () => {
-    const callback = jest.fn();
+  beforeEach(() => {
+    vi.useFakeTimers();
+    clearIntervalSpy = vi.spyOn(global, 'clearInterval');
+  });
+
+  afterEach(() => {
+    vi.useRealTimers();
+    clearIntervalSpy.mockRestore();
+  });
+
+  test('interval should work', () => {
+    const callback = vi.fn();
     setUp({ fn: callback, delay: 20 });
-    expect(callback).not.toBeCalled();
-    jest.advanceTimersByTime(70);
+    expect(callback).not.toHaveBeenCalled();
+    vi.advanceTimersByTime(70);
     expect(callback).toHaveBeenCalledTimes(3);
   });
 
-  it('interval should stop', () => {
-    const callback = jest.fn();
+  test('interval should stop', () => {
+    const callback = vi.fn();
 
     setUp({ fn: callback, delay: undefined });
-    jest.advanceTimersByTime(50);
+    vi.advanceTimersByTime(50);
     expect(callback).toHaveBeenCalledTimes(0);
 
     setUp({ fn: callback, delay: -2 });
-    jest.advanceTimersByTime(50);
+    vi.advanceTimersByTime(50);
     expect(callback).toHaveBeenCalledTimes(0);
   });
 
-  it('immediate in options should work', () => {
-    const callback = jest.fn();
+  test('immediate in options should work', () => {
+    const callback = vi.fn();
     setUp({ fn: callback, delay: 20, options: { immediate: true } });
-    expect(callback).toBeCalled();
+    expect(callback).toHaveBeenCalled();
     expect(callback).toHaveBeenCalledTimes(1);
-    jest.advanceTimersByTime(50);
+    vi.advanceTimersByTime(50);
     expect(callback).toHaveBeenCalledTimes(3);
   });
 
-  it('interval should be clear', () => {
-    const callback = jest.fn();
+  test('interval should be clear', () => {
+    const callback = vi.fn();
     const hook = setUp({ fn: callback, delay: 20 });
 
-    expect(callback).not.toBeCalled();
+    expect(callback).not.toHaveBeenCalled();
 
     hook.result.current();
-    jest.advanceTimersByTime(70);
+    vi.advanceTimersByTime(70);
     // not to be called
     expect(callback).toHaveBeenCalledTimes(0);
-    expect(clearInterval).toHaveBeenCalledTimes(1);
+    expect(clearIntervalSpy).toHaveBeenCalledTimes(1);
   });
 });

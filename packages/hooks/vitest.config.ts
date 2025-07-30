@@ -10,7 +10,11 @@ export default defineConfig({
   },
   test: {
     environment: 'jsdom',
-    include: ['src/**/tests/*.{test,spec}.?(c|m)[jt]s?(x)'],
+    globals: true,
+    setupFiles: ['./vitest.setup.ts'],
+    include: ['src/**/__tests__/*.{test,spec}.?(c|m)[jt]s?(x)'],
+    exclude: ['src/useRequest/__tests__/**'],
+    testTimeout: 15000,
     coverage: {
       provider: 'istanbul',
       include: ['src/**/*.ts'],

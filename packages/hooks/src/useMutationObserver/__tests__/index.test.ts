@@ -1,3 +1,4 @@
+import { describe, expect, test, beforeEach, afterEach, vi } from 'vitest';
 import { renderHook } from '@testing-library/react';
 import useMutationObserver from '../index';
 
@@ -15,16 +16,16 @@ describe('useMutationObserver', () => {
     document.body.removeChild(container);
   });
 
-  it('should callback work when target style be changed', async () => {
-    const callback = jest.fn();
+  test('should callback work when target style be changed', async () => {
+    const callback = vi.fn();
     const { rerender } = renderHook(() => useMutationObserver(callback, () => container, options));
     container.style.backgroundColor = '#000';
     await rerender();
     expect(callback).toBeCalled();
   });
 
-  it('should callback work when target node tree be changed', async () => {
-    const callback = jest.fn();
+  test('should callback work when target node tree be changed', async () => {
+    const callback = vi.fn();
     const { rerender } = renderHook(() => useMutationObserver(callback, () => container, options));
     const paraEl = document.createElement('p');
     container.appendChild(paraEl);
@@ -32,8 +33,8 @@ describe('useMutationObserver', () => {
     expect(callback).toBeCalled();
   });
 
-  it('should not work when target is null', async () => {
-    const callback = jest.fn();
+  test('should not work when target is null', async () => {
+    const callback = vi.fn();
     const { rerender } = renderHook(() => useMutationObserver(callback, null, options));
     container.style.backgroundColor = '#000';
     await rerender();

@@ -1,8 +1,9 @@
+import { describe, expect, test } from 'vitest';
 import useNetwork from '../index';
 import { renderHook, act } from '@testing-library/react';
 
 describe('useNetwork', () => {
-  it('toggle network state', () => {
+  test('toggle network state', () => {
     const { result } = renderHook(() => useNetwork());
     expect(result.current.online).toBeTruthy();
     act(() => {

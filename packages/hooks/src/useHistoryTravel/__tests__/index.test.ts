@@ -1,8 +1,9 @@
+import { describe, expect, test } from 'vitest';
 import { renderHook, act } from '@testing-library/react';
 import useHistoryTravel from '../index';
 
 describe('useHistoryTravel', () => {
-  it('should work without initial value', async () => {
+  test('should work without initial value', async () => {
     const hook = renderHook(() => useHistoryTravel());
     expect(hook.result.current.value).toBeUndefined();
     act(() => {
@@ -11,7 +12,7 @@ describe('useHistoryTravel', () => {
     expect(hook.result.current.value).toBe('test');
   });
 
-  it('should work with null and undefined without initial value', async () => {
+  test('should work with null and undefined without initial value', async () => {
     const nullHook = renderHook(() => useHistoryTravel());
     expect(nullHook.result.current.value).toBeUndefined();
     act(() => {
@@ -31,7 +32,7 @@ describe('useHistoryTravel', () => {
     expect(undefHook.result.current.backLength).toBe(2);
   });
 
-  it('should work with initial value', async () => {
+  test('should work with initial value', async () => {
     const hook = renderHook(() => useHistoryTravel('abc'));
     expect(hook.result.current.value).toBe('abc');
     act(() => {
@@ -40,7 +41,7 @@ describe('useHistoryTravel', () => {
     expect(hook.result.current.value).toBe('def');
   });
 
-  it('should work with null and undefined with initial value', async () => {
+  test('should work with null and undefined with initial value', async () => {
     const nullHook = renderHook(() => useHistoryTravel<null | string>('abc'));
     act(() => {
       nullHook.result.current.setValue(null);
@@ -55,7 +56,7 @@ describe('useHistoryTravel', () => {
     expect(undefHook.result.current.backLength).toBe(1);
   });
 
-  it('back and forward should work', () => {
+  test('back and forward should work', () => {
     const hook = renderHook(() => useHistoryTravel());
     act(() => {
       hook.result.current.setValue('ddd');
@@ -78,7 +79,7 @@ describe('useHistoryTravel', () => {
     expect(hook.result.current.value).toBe('def');
   });
 
-  it('go should work for negative step', () => {
+  test('go should work for negative step', () => {
     const hook = renderHook(() => useHistoryTravel('init'));
     act(() => {
       hook.result.current.setValue('abc');
@@ -99,7 +100,7 @@ describe('useHistoryTravel', () => {
     expect(hook.result.current.value).toBe('init');
   });
 
-  it('go should work for positive step', () => {
+  test('go should work for positive step', () => {
     const hook = renderHook(() => useHistoryTravel('init'));
     act(() => {
       hook.result.current.setValue('abc');
@@ -124,7 +125,7 @@ describe('useHistoryTravel', () => {
     expect(hook.result.current.value).toBe('hij');
   });
 
-  it('reset should reset state to initial by default', () => {
+  test('reset should reset state to initial by default', () => {
     const hook = renderHook(() => useHistoryTravel('init'));
     act(() => {
       hook.result.current.setValue('abc');
@@ -148,7 +149,7 @@ describe('useHistoryTravel', () => {
     expect(hook.result.current.forwardLength).toBe(0);
   });
 
-  it('reset should reset state to new initial if provided', () => {
+  test('reset should reset state to new initial if provided', () => {
     const hook = renderHook(() => useHistoryTravel('init'));
     act(() => {
       hook.result.current.setValue('abc');
@@ -172,7 +173,7 @@ describe('useHistoryTravel', () => {
     expect(hook.result.current.forwardLength).toBe(0);
   });
 
-  it('reset new initial value should work with undefined', () => {
+  test('reset new initial value should work with undefined', () => {
     const hook = renderHook(() => useHistoryTravel('init'));
     act(() => {
       hook.result.current.setValue('abc');
@@ -196,7 +197,7 @@ describe('useHistoryTravel', () => {
     expect(hook.result.current.forwardLength).toBe(0);
   });
 
-  it('should work without max length', async () => {
+  test('should work without max length', async () => {
     const hook = renderHook(() => useHistoryTravel());
     expect(hook.result.current.backLength).toBe(0);
     for (let i = 1; i <= 100; i++) {
@@ -209,7 +210,7 @@ describe('useHistoryTravel', () => {
     expect(hook.result.current.value).toBe(100);
   });
 
-  it('should work with max length', async () => {
+  test('should work with max length', async () => {
     const hook = renderHook(() => useHistoryTravel(0, 10));
     expect(hook.result.current.backLength).toBe(0);
     for (let i = 1; i <= 100; i++) {

@@ -1,3 +1,4 @@
+import { describe, expect, test } from 'vitest';
 import { renderHook, act } from '../../utils/tests';
 import useResponsive from '../';
 
@@ -12,7 +13,7 @@ describe('useResponsive', () => {
 
   const hook = renderHook(() => useResponsive());
 
-  it('should response to window width changes', () => {
+  test('should response to window width changes', () => {
     expect(hook.result.current).toMatchSnapshot();
     changeWidth(300);
     expect(hook.result.current).toMatchSnapshot();
