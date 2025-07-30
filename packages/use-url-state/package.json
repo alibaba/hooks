@@ -19,7 +19,8 @@
   "scripts": {
     "build": "gulp && webpack-cli",
     "test": "vitest run",
-    "test:cov": "vitest run --coverage"
+    "test:cov": "vitest run --coverage",
+    "coveralls": "vitest run --coverage --coverage.reporter=text-lcov | coveralls"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"

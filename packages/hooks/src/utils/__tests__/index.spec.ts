@@ -1,3 +1,4 @@
+import { describe, expect, test } from 'vitest';
 import { isBoolean, isFunction, isNumber, isObject, isString, isUndef } from '../index';
 
 describe('shared utils methods', () => {
