@@ -6,7 +6,7 @@
   width: 250px;
 }
 
-a[title='站长统计'] {
+a[title="站长统计"] {
   display: none;
 }
 
@@ -15,15 +15,15 @@ button {
   padding: 4px;
 }
 
-input[type='number'] {
+input[type="number"] {
   border: 1px solid rgb(118, 118, 118);
 }
 
-[data-prefers-color='dark'] button {
+[data-prefers-color="dark"] button {
   color: #141414;
 }
 
-[data-prefers-color='dark'] input {
+[data-prefers-color="dark"] input {
   color: #141414;
 }
 

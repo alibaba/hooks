@@ -37,6 +37,7 @@ export default {
   dynamicImport: {},
   manifest: {},
   hash: true,
+  publicPath: '/',
   alias: {
     ahooks: process.cwd() + '/packages/hooks/src/index.ts',
     '@ahooksjs/use-url-state': process.cwd() + '/packages/use-url-state/src/index.ts',
@@ -69,7 +70,7 @@ export default {
         ],
       },
       { title: '更新日志', path: 'https://github.com/alibaba/hooks/releases' },
-      { title: '国内镜像', path: 'https://ahooks.pages.dev' },
+      { title: '备用镜像', path: 'https://alibaba.github.io/hooks/' },
       { title: 'GitHub', path: 'https://github.com/alibaba/hooks' },
     ],
     'en-US': [
@@ -89,7 +90,7 @@ export default {
         ],
       },
       { title: 'Releases', path: 'https://github.com/alibaba/hooks/releases' },
-      { title: '国内镜像', path: 'https://ahooks.pages.dev' },
+      { title: '国内镜像', path: 'https://alibaba.github.io/hooks/' },
       { title: 'GitHub', path: 'https://github.com/alibaba/hooks' },
     ],
   },

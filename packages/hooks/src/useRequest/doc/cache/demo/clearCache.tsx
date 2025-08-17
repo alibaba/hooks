@@ -3,16 +3,16 @@ import React from 'react';
 import { useRequest, clearCache, useBoolean } from 'ahooks';
 import { message } from 'antd';
 
-async function getArticle(): Promise<{ data: string; time: number }> {
-  return new Promise((resolve) => {
+const getArticle = async () => {
+  return new Promise<{ data: string; time: number }>((resolve) => {
     setTimeout(() => {
       resolve({
         data: Mock.mock('@paragraph'),
-        time: new Date().getTime(),
+        time: Date.now(),
       });
     }, 3000);
   });
-}
+};
 
 const Article = ({ cacheKey }) => {
   const { data, loading } = useRequest(getArticle, {

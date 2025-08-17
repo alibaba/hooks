@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-parameter-properties */
+import type { RefObject } from 'react';
 import { isFunction } from '../../utils';
-import type { MutableRefObject } from 'react';
 import type { FetchState, Options, PluginReturn, Service, Subscribe } from './types';
 
 export default class Fetch<TData, TParams extends any[]> {
@@ -16,7 +16,7 @@ export default class Fetch<TData, TParams extends any[]> {
   };
 
   constructor(
-    public serviceRef: MutableRefObject<Service<TData, TParams>>,
+    public serviceRef: RefObject<Service<TData, TParams>>,
     public options: Options<TData, TParams>,
     public subscribe: Subscribe,
     public initState: Partial<FetchState<TData, TParams>> = {},

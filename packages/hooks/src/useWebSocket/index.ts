@@ -31,7 +31,7 @@ export interface Result {
   webSocketIns?: WebSocket;
 }
 
-export default function useWebSocket(socketUrl: string, options: Options = {}): Result {
+function useWebSocket(socketUrl: string, options: Options = {}): Result {
   const {
     reconnectLimit = 3,
     reconnectInterval = 3 * 1000,
@@ -53,8 +53,10 @@ export default function useWebSocket(socketUrl: string, options: Options = {}): 
   const readyStateRef = useLatest(readyState);
 
   const reconnectTimesRef = useRef(0);
-  const reconnectTimerRef = useRef<ReturnType<typeof setTimeout>>();
-  const websocketRef = useRef<WebSocket>();
+  const reconnectTimerRef = useRef<ReturnType<typeof setTimeout>>(undefined);
+
+  const websocketRef = useRef<WebSocket>(undefined);
+
 
   const reconnect = () => {
     if (
@@ -165,3 +167,5 @@ export default function useWebSocket(socketUrl: string, options: Options = {}): 
     webSocketIns: websocketRef.current,
   };
 }
+
+export default useWebSocket;
