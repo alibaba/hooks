@@ -31,7 +31,7 @@ The usage and effect of all debounce property are the same as [lodash.debounce](
 | Property         | Description                                                                  | Type      | Default Value |
 | ---------------- | ---------------------------------------------------------------------------- | --------- | ------------- |
 | debounceWait     | Debounce delay time, in milliseconds. After setting, enter the debounce mode | `number`  | -             |
-| debounceLeading  | Execute the request before the delay starts `                                | `boolean` | `false`       |
+| debounceLeading  | Execute the request before the delay starts                                  | `boolean` | `false`       |
 | debounceTrailing | Execute the request after the delay ends                                     | `boolean` | `true`        |
 | debounceMaxWait  | The maximum time request is allowed to be delayed before it’s executed       | `number`  | -             |
 

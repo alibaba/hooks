@@ -13,7 +13,9 @@ function useCookieState(cookieKey: string, options: Options = {}) {
   const [state, setState] = useState<State>(() => {
     const cookieValue = Cookies.get(cookieKey);
 
-    if (isString(cookieValue)) return cookieValue;
+    if (isString(cookieValue)) {
+      return cookieValue;
+    }
 
     if (isFunction(options.defaultValue)) {
       return options.defaultValue();
@@ -27,6 +29,7 @@ function useCookieState(cookieKey: string, options: Options = {}) {
       newValue: State | ((prevState: State) => State),
       newOptions: Cookies.CookieAttributes = {},
     ) => {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { defaultValue, ...restOptions } = { ...options, ...newOptions };
       const value = isFunction(newValue) ? newValue(state) : newValue;
 

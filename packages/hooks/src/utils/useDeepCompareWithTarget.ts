@@ -9,7 +9,7 @@ const useDeepCompareEffectWithTarget = (
   deps: DependencyList,
   target: BasicTarget<any> | BasicTarget<any>[],
 ) => {
-  const ref = useRef<DependencyList>();
+  const ref = useRef<DependencyList>(undefined);
   const signalRef = useRef<number>(0);
 
   if (!depsEqual(deps, ref.current)) {

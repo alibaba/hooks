@@ -1,7 +1,7 @@
-import type { MutableRefObject } from 'react';
 import { isFunction } from './index';
 import isBrowser from './isBrowser';
 import { getDOM } from './dom';
+import type { RefObject } from 'react';
 
 type TargetValue<T> = T | undefined | null;
 
@@ -10,7 +10,7 @@ type TargetType = HTMLElement | Element | Window | Document;
 export type BasicTarget<T extends TargetType = Element> =
   | (() => TargetValue<T>)
   | TargetValue<T>
-  | MutableRefObject<TargetValue<T>>;
+  | RefObject<TargetValue<T>>;
 
 export function getTargetElement<T extends TargetType>(target: BasicTarget<T>, defaultElement?: T) {
   if (!isBrowser) {
