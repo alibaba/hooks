@@ -7,16 +7,7 @@ module.exports = {
   resolve: {
     extensions: ['.json', '.js'],
   },
-  // module: {
-  //   rules: [
-  //     {
-  //       test: /\.jsx?$/,
-  //       use: {
-  //         loader: 'babel-loader',
-  //       },
-  //     }
-  //   ],
-  // },
+  // Rspack 兼容 webpack 的 externals 配置
   externals: [
     {
       react: 'React',
