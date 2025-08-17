@@ -20,6 +20,7 @@
     "sourceMap": true, // 生成源映射文件
     "sourceRoot": "${configDir}", // 源文件的根目录
     "declaration": true, // 生成 .d.ts 文件
+    "isolatedModules": true, // 每个文件都作为单独的模块处理
     // 检查
     "strict": true,
     "allowJs": true,
@@ -33,7 +34,7 @@
     "${configDir}/types",
     "${configDir}/scripts",
     "${configDir}/docs",
-    "${configDir}/tests",
+    "${configDir}/__tests__",
     "${configDir}/e2e",
     "${configDir}/demo",
     "${configDir}/example",

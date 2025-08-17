@@ -1,23 +1,28 @@
 {
   "name": "@ahooksjs/use-url-state",
+  "type": "module",
   "version": "3.6.0",
   "description": "A hook that stores the state into url query parameters.",
-  "main": "./lib/index.js",
-  "module": "./es/index.js",
-  "types": "./lib/index.d.ts",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "unpkg": "dist/ahooks-use-url-state.js",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "require": "./dist/index.cjs",
+      "import": "./dist/index.js"
+    }
+  },
   "files": [
-    "dist",
-    "lib",
-    "es",
-    "package.json"
+    "dist"
   ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/alibaba/hooks.git"
   },
   "scripts": {
-    "build": "gulp && webpack-cli",
+    "build": "rslib build",
     "test": "vitest run",
     "test:cov": "vitest run --coverage"
   },
@@ -31,10 +36,8 @@
   "homepage": "https://github.com/alibaba/hooks",
   "gitHead": "11f6ad571bd365c95ecb9409ca3050cbbfc9b34a",
   "dependencies": {
-    "@babel/runtime": "^7.21.0",
-    "ahooks": "^3.4.1",
-    "query-string": "^8.1.0",
-    "tslib": "^2.4.1"
+    "ahooks": "workspace:*",
+    "query-string": "^8.1.0"
   },
   "peerDependencies": {
     "react": "^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0",
