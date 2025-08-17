@@ -57,7 +57,6 @@ function useWebSocket(socketUrl: string, options: Options = {}): Result {
 
   const websocketRef = useRef<WebSocket>(undefined);
 
-
   const reconnect = () => {
     if (
       reconnectTimesRef.current < reconnectLimit &&
