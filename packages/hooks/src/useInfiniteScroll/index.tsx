@@ -42,29 +42,30 @@ const useInfiniteScroll = <TData extends Data>(
   const { loading, error, run, runAsync, cancel } = useRequest(
     async (lastData?: TData) => {
       const currentData = await service(lastData);
-      if (!lastData) {
-        setFinalData({
-          ...currentData,
-          list: [...(currentData.list ?? [])],
-        });
-      } else {
-        setFinalData({
-          ...currentData,
-          list: isScrollToTop
-            ? [...currentData.list, ...(lastData.list ?? [])]
-            : [...(lastData.list ?? []), ...currentData.list],
-        });
-      }
-      return currentData;
+      return { currentData, lastData };
     },
     {
       manual,
       onFinally: (_, d, e) => {
         setLoadingMore(false);
-        onFinally?.(d, e);
+        onFinally?.(d?.currentData, e);
       },
       onBefore: () => onBefore?.(),
       onSuccess: (d) => {
+        if (!d.lastData) {
+          setFinalData({
+            ...d.currentData,
+            list: [...(d.currentData.list ?? [])],
+          });
+        } else {
+          setFinalData({
+            ...d.currentData,
+            list: isScrollToTop
+              ? [...d.currentData.list, ...(d.lastData.list ?? [])]
+              : [...(d.lastData.list ?? []), ...d.currentData.list],
+          });
+        }
+
         setTimeout(() => {
           if (isScrollToTop) {
             let el = getTargetElement(target);
@@ -79,7 +80,7 @@ const useInfiniteScroll = <TData extends Data>(
           }
         });
 
-        onSuccess?.(d);
+        onSuccess?.(d.currentData);
       },
       onError: (e) => onError?.(e),
     },
@@ -93,12 +94,17 @@ const useInfiniteScroll = <TData extends Data>(
     run(finalData);
   });
 
+  const runAsyncForCurrent = async () => {
+    const res = await runAsync(finalData);
+    return res.currentData
+  }
+
   const loadMoreAsync = useMemoizedFn(() => {
     if (noMore) {
       return Promise.reject();
     }
     setLoadingMore(true);
-    return runAsync(finalData);
+    return runAsyncForCurrent()
   });
 
   const reload = () => {
@@ -108,7 +114,7 @@ const useInfiniteScroll = <TData extends Data>(
 
   const reloadAsync = () => {
     setLoadingMore(false);
-    return runAsync();
+    return runAsyncForCurrent()
   };
 
   const scrollMethod = () => {
