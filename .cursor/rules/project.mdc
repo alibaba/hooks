@@ -1,0 +1,24 @@
+---
+description:
+globs:
+alwaysApply: true
+---
+ # 项目背景
+
+这是由蚂蚁团队开发的一个高质量、可靠的 React Hooks 库。
+
+- 易学易用
+- 支持 SSR
+- 对输入输出函数做了特殊处理，避免闭包问题
+- 包含大量提炼自业务的高级 Hooks
+- 包含丰富的基础 Hooks
+- 使用 TypeScript 构建，提供完整的类型定义文件
+
+# 编码规范
+
+- 使用 TypeScript 和 React 书写
+- 避免引入新依赖，严控打包体积
+- 兼容现代浏览器
+- 支持服务端渲染
+- 保持向下兼容，避免 breaking change
+- 合理使用 React.memo、useMemo 和 useCallback 优化性能

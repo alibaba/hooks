@@ -3,23 +3,23 @@ import Mock from 'mockjs';
 import React from 'react';
 import { useRequest } from 'ahooks';
 
-async function getArticle(): Promise<{ data: string; time: number }> {
-  return new Promise((resolve) => {
+const getArticle = async () => {
+  return new Promise<{ data: string; time: number }>((resolve) => {
     setTimeout(() => {
       resolve({
         data: Mock.mock('@paragraph'),
-        time: new Date().getTime(),
+        time: Date.now(),
       });
     }, 1000);
   });
-}
+};
 
 const cacheKey = 'setCache-demo';
 
-const Article = () => {
+const Article: React.FC = () => {
   const { data, loading } = useRequest(getArticle, {
     cacheKey,
-    setCache: (data) => localStorage.setItem(cacheKey, JSON.stringify(data)),
+    setCache: (value) => localStorage.setItem(cacheKey, JSON.stringify(value)),
     getCache: () => JSON.parse(localStorage.getItem(cacheKey) || '{}'),
   });
   if (!data && loading) {

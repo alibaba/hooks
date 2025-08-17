@@ -1,3 +1,4 @@
 #!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
 
-PATH=$(pwd)/.node/bin:$(pwd)/node_modules/.bin:$PATH lint-staged
+npm run pretty

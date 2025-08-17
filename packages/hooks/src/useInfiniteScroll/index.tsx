@@ -28,41 +28,44 @@ const useInfiniteScroll = <TData extends Data>(
   const [loadingMore, setLoadingMore] = useState(false);
   const isScrollToTop = direction === 'top';
   // lastScrollTop is used to determine whether the scroll direction is up or down
-  const lastScrollTop = useRef<number>();
+  const lastScrollTop = useRef<number>(undefined);
   // scrollBottom is used to record the distance from the bottom of the scroll bar
   const scrollBottom = useRef<number>(0);
 
   const noMore = useMemo(() => {
-    if (!isNoMore) return false;
+    if (!isNoMore) {
+      return false;
+    }
     return isNoMore(finalData);
   }, [finalData]);
 
   const { loading, error, run, runAsync, cancel } = useRequest(
     async (lastData?: TData) => {
       const currentData = await service(lastData);
-      if (!lastData) {
-        setFinalData({
-          ...currentData,
-          list: [...(currentData.list ?? [])],
-        });
-      } else {
-        setFinalData({
-          ...currentData,
-          list: isScrollToTop
-            ? [...currentData.list, ...(lastData.list ?? [])]
-            : [...(lastData.list ?? []), ...currentData.list],
-        });
-      }
-      return currentData;
+      return { currentData, lastData };
     },
     {
       manual,
       onFinally: (_, d, e) => {
         setLoadingMore(false);
-        onFinally?.(d, e);
+        onFinally?.(d?.currentData, e);
       },
       onBefore: () => onBefore?.(),
       onSuccess: (d) => {
+        if (!d.lastData) {
+          setFinalData({
+            ...d.currentData,
+            list: [...(d.currentData.list ?? [])],
+          });
+        } else {
+          setFinalData({
+            ...d.currentData,
+            list: isScrollToTop
+              ? [...d.currentData.list, ...(d.lastData.list ?? [])]
+              : [...(d.lastData.list ?? []), ...d.currentData.list],
+          });
+        }
+
         setTimeout(() => {
           if (isScrollToTop) {
             let el = getTargetElement(target);
@@ -77,22 +80,31 @@ const useInfiniteScroll = <TData extends Data>(
           }
         });
 
-        onSuccess?.(d);
+        onSuccess?.(d.currentData);
       },
       onError: (e) => onError?.(e),
     },
   );
 
   const loadMore = useMemoizedFn(() => {
-    if (noMore) return;
+    if (noMore) {
+      return;
+    }
     setLoadingMore(true);
     run(finalData);
   });
 
+  const runAsyncForCurrent = async () => {
+    const res = await runAsync(finalData);
+    return res.currentData
+  }
+
   const loadMoreAsync = useMemoizedFn(() => {
-    if (noMore) return Promise.reject();
+    if (noMore) {
+      return Promise.reject();
+    }
     setLoadingMore(true);
-    return runAsync(finalData);
+    return runAsyncForCurrent()
   });
 
   const reload = () => {
@@ -102,12 +114,14 @@ const useInfiniteScroll = <TData extends Data>(
 
   const reloadAsync = () => {
     setLoadingMore(false);
-    return runAsync();
+    return runAsyncForCurrent()
   };
 
   const scrollMethod = () => {
     const el = getTargetElement(target);
-    if (!el) return;
+    if (!el) {
+      return;
+    }
 
     const targetEl = el === document ? document.documentElement : el;
     const scrollTop = getScrollTop(targetEl);

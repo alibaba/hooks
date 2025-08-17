@@ -3,17 +3,17 @@ import useRequest from '../../../';
 import Mock from 'mockjs';
 import React, { useState } from 'react';
 
-async function getArticle(keyword: string): Promise<{ data: string; time: number }> {
+const getArticle = async (keyword: string) => {
   console.log('cacheKey', keyword);
-  return new Promise((resolve) => {
+  return new Promise<{ data: string; time: number }>((resolve) => {
     setTimeout(() => {
       resolve({
         data: Mock.mock('@paragraph'),
-        time: new Date().getTime(),
+        time: Date.now(),
       });
     }, 1000);
   });
-}
+};
 
 const Article = () => {
   const { data, params, loading, run } = useRequest(getArticle, {

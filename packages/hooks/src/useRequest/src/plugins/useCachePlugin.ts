@@ -17,9 +17,9 @@ const useCachePlugin: Plugin<any, any[]> = (
     getCache: customGetCache,
   },
 ) => {
-  const unSubscribeRef = useRef<() => void>();
+  const unSubscribeRef = useRef<() => void>(undefined);
 
-  const currentPromiseRef = useRef<Promise<any>>();
+  const currentPromiseRef = useRef<Promise<any>>(undefined);
 
   const _setCache = (key: string, cachedData: CachedData) => {
     if (customSetCache) {
@@ -47,7 +47,7 @@ const useCachePlugin: Plugin<any, any[]> = (
     if (cacheData && Object.hasOwnProperty.call(cacheData, 'data')) {
       fetchInstance.state.data = cacheData.data;
       fetchInstance.state.params = cacheData.params;
-      if (staleTime === -1 || new Date().getTime() - cacheData.time <= staleTime) {
+      if (staleTime === -1 || Date.now() - cacheData.time <= staleTime) {
         fetchInstance.state.loading = false;
       }
     }
@@ -75,7 +75,7 @@ const useCachePlugin: Plugin<any, any[]> = (
       }
 
       // If the data is fresh, stop request
-      if (staleTime === -1 || new Date().getTime() - cacheData.time <= staleTime) {
+      if (staleTime === -1 || Date.now() - cacheData.time <= staleTime) {
         return {
           loading: false,
           data: cacheData?.data,
@@ -110,7 +110,7 @@ const useCachePlugin: Plugin<any, any[]> = (
         _setCache(cacheKey, {
           data,
           params,
-          time: new Date().getTime(),
+          time: Date.now(),
         });
         // resubscribe
         unSubscribeRef.current = subscribe(cacheKey, (d) => {
@@ -125,7 +125,7 @@ const useCachePlugin: Plugin<any, any[]> = (
         _setCache(cacheKey, {
           data,
           params: fetchInstance.state.params,
-          time: new Date().getTime(),
+          time: Date.now(),
         });
         // resubscribe
         unSubscribeRef.current = subscribe(cacheKey, (d) => {
