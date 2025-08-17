@@ -49,5 +49,5 @@ export default () => {
     },
   ];
 
-  return <Table columns={columns} rowKey="email" {...tableProps} />;
+  return <Table columns={columns} rowKey="email" style={{ overflow: 'auto' }} {...tableProps} />;
 };

@@ -22,6 +22,12 @@ Or with pnpm
 pnpm add @ahooksjs/use-url-state
 ```
 
+Or with Bun
+
+```bash
+bun add @ahooksjs/use-url-state
+```
+
 ## Example
 
 ```javascript

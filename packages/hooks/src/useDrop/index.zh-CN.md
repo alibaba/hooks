@@ -19,6 +19,10 @@ nav:
 
 <code src="./demo/demo1.tsx" />
 
+### 自定义拖拽图像
+
+<code src="./demo/demo2.tsx" />
+
 ## API
 
 ### useDrag
@@ -41,10 +45,19 @@ useDrag<T>(
 
 #### DragOptions
 
-| 参数        | 说明           | 类型                           | 默认值 |
-| ----------- | -------------- | ------------------------------ | ------ |
-| onDragStart | 开始拖拽的回调 | `(e: React.DragEvent) => void` | -      |
-| onDragEnd   | 结束拖拽的回调 | `(e: React.DragEvent) => void` | -      |
+| 参数        | 说明                               | 类型                           | 默认值 |
+| ----------- | ---------------------------------- | ------------------------------ | ------ |
+| onDragStart | 开始拖拽的回调                     | `(e: React.DragEvent) => void` | -      |
+| onDragEnd   | 结束拖拽的回调                     | `(e: React.DragEvent) => void` | -      |
+| dragImage   | 自定义拖拽过程中跟随鼠标指针的图像 | `DragImageOptions`             | -      |
+
+#### DragImageOptions
+
+| 参数    | 说明                                                                                                                                                                                                                                       | 类型                | 默认值 |
+| ------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------- | ------ |
+| image   | 拖拽过程中跟随鼠标指针的图像。图像通常是一个 [`<img>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/img) 元素，但也可以是 [`<canvas>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/canvas) 或任何其他图像元素。 | `string \| Element` | -      |
+| offsetX | 水平偏移                                                                                                                                                                                                                                   | `number`            | 0      |
+| offsetY | 垂直偏移                                                                                                                                                                                                                                   | `number`            | 0      |
 
 ### useDrop
 

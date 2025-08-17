@@ -131,7 +131,7 @@ export default () => {
     <div>
       <Button onClick={() => setReady((r) => !r)}>toggle ready</Button>
       {type === 'simple' ? searchForm : advanceSearchForm}
-      <Table columns={columns} rowKey="email" {...tableProps} />
+      <Table columns={columns} rowKey="email" style={{ overflow: 'auto' }} {...tableProps} />
 
       <div style={{ background: '#f5f5f5', padding: 8 }}>
         <p>Current Table:</p>

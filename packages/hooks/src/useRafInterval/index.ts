@@ -3,24 +3,24 @@ import useLatest from '../useLatest';
 import { isNumber } from '../utils';
 
 interface Handle {
-  id: number | NodeJS.Timer;
+  id: ReturnType<typeof setInterval> | ReturnType<typeof requestAnimationFrame>;
 }
 
-const setRafInterval = function (callback: () => void, delay: number = 0): Handle {
-  if (typeof requestAnimationFrame === typeof undefined) {
+const setRafInterval = (callback: () => void, delay: number = 0): Handle => {
+  if (typeof requestAnimationFrame === 'undefined') {
     return {
       id: setInterval(callback, delay),
     };
   }
-  let start = new Date().getTime();
+  let start = Date.now();
   const handle: Handle = {
     id: 0,
   };
   const loop = () => {
-    const current = new Date().getTime();
+    const current = Date.now();
     if (current - start >= delay) {
       callback();
-      start = new Date().getTime();
+      start = Date.now();
     }
     handle.id = requestAnimationFrame(loop);
   };
@@ -28,11 +28,11 @@ const setRafInterval = function (callback: () => void, delay: number = 0): Handl
   return handle;
 };
 
-function cancelAnimationFrameIsNotDefined(t: any): t is NodeJS.Timer {
-  return typeof cancelAnimationFrame === typeof undefined;
-}
+const cancelAnimationFrameIsNotDefined = (t: any): t is ReturnType<typeof setTimeout> => {
+  return typeof cancelAnimationFrame === 'undefined';
+};
 
-const clearRafInterval = function (handle: Handle) {
+const clearRafInterval = (handle: Handle) => {
   if (cancelAnimationFrameIsNotDefined(handle.id)) {
     return clearInterval(handle.id);
   }
@@ -49,28 +49,26 @@ function useRafInterval(
   const immediate = options?.immediate;
 
   const fnRef = useLatest(fn);
-  const timerRef = useRef<Handle>();
-
-  useEffect(() => {
-    if (!isNumber(delay) || delay < 0) return;
-    if (immediate) {
-      fnRef.current();
-    }
-    timerRef.current = setRafInterval(() => {
-      fnRef.current();
-    }, delay);
-    return () => {
-      if (timerRef.current) {
-        clearRafInterval(timerRef.current);
-      }
-    };
-  }, [delay]);
+  const timerRef = useRef<Handle>(undefined);
 
   const clear = useCallback(() => {
     if (timerRef.current) {
       clearRafInterval(timerRef.current);
     }
   }, []);
+
+  useEffect(() => {
+    if (!isNumber(delay) || delay < 0) {
+      return;
+    }
+    if (immediate) {
+      fnRef.current();
+    }
+    timerRef.current = setRafInterval(() => {
+      fnRef.current();
+    }, delay);
+    return clear;
+  }, [delay]);
 
   return clear;
 }

@@ -31,6 +31,7 @@ export const menus = [
       'useCounter',
       'useTextSelection',
       'useWebSocket',
+      'useTheme',
     ],
   },
   {

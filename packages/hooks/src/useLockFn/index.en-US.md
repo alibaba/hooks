@@ -16,7 +16,7 @@ Add lock to an async function to prevent parallel executions.
 ## API
 
 ```typescript
-function useLockFn<P extends any[] = any[], V extends any = any>(
+function useLockFn<P extends any[] = any[], V = any>(
   fn: (...args: P) => Promise<V>
 ): fn: (...args: P) => Promise<V | undefined>;
 ```

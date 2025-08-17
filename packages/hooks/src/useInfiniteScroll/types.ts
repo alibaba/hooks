@@ -9,6 +9,7 @@ export interface InfiniteScrollResult<TData extends Data> {
   data: TData;
   loading: boolean;
   loadingMore: boolean;
+  error?: Error;
   noMore: boolean;
 
   loadMore: () => void;
@@ -23,6 +24,7 @@ export interface InfiniteScrollOptions<TData extends Data> {
   target?: BasicTarget<Element | Document>;
   isNoMore?: (data?: TData) => boolean;
   threshold?: number;
+  direction?: 'bottom' | 'top';
 
   manual?: boolean;
   reloadDeps?: DependencyList;

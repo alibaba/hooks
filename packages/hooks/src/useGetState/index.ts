@@ -1,5 +1,6 @@
 import type { Dispatch, SetStateAction } from 'react';
-import { useState, useRef, useCallback } from 'react';
+import { useState, useCallback } from 'react';
+import useLatest from '../useLatest';
 
 type GetStateAction<S> = () => S;
 
@@ -13,8 +14,7 @@ function useGetState<S = undefined>(): [
 ];
 function useGetState<S>(initialState?: S) {
   const [state, setState] = useState(initialState);
-  const stateRef = useRef(state);
-  stateRef.current = state;
+  const stateRef = useLatest(state);
 
   const getState = useCallback(() => stateRef.current, []);
 

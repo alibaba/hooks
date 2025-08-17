@@ -27,7 +27,7 @@ Listen for the long press event of the target element.
 useLongPress(
   onLongPress: (event: MouseEvent | TouchEvent) => void,
   target: Target,
-  options?: {
+  options: {
     delay?: number;
     moveThreshold?: { x?: number; y?: number };
     onClick?: (event: MouseEvent | TouchEvent) => void;
@@ -42,7 +42,7 @@ useLongPress(
 | ----------- | ---------------------------- | ----------------------------------------------------------- | ------- |
 | onLongPress | Trigger function             | `(event: MouseEvent \| TouchEvent) => void`                 | -       |
 | target      | DOM node or Ref              | `Element` \| `() => Element` \| `MutableRefObject<Element>` | -       |
-| options     | Optional configuration items | `Options`                                                   | -       |
+| options     | Optional configuration items | `Options`                                                   | `{}`    |
 
 ### Options
 

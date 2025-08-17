@@ -1,5 +1,5 @@
 import { useMemoizedFn, useUpdate } from 'ahooks';
-import { parse, stringify } from 'query-string';
+import qs from 'query-string';
 import type { ParseOptions, StringifyOptions } from 'query-string';
 import { useMemo, useRef } from 'react';
 import type * as React from 'react';
@@ -30,30 +30,37 @@ const useUrlState = <S extends UrlState = UrlState>(
   initialState?: S | (() => S),
   options?: Options,
 ) => {
-  type State = Partial<{ [key in keyof S]: any }>;
+  type State = Partial<{
+    [key in keyof S]: Required<S>[key] extends any[] ? string[] : string;
+  }>;
+
   const { navigateMode = 'push', parseOptions, stringifyOptions } = options || {};
 
   const mergedParseOptions = { ...baseParseConfig, ...parseOptions };
-  const mergedStringifyOptions = { ...baseStringifyConfig, ...stringifyOptions };
+  const mergedStringifyOptions = {
+    ...baseStringifyConfig,
+    ...stringifyOptions,
+  };
 
   const location = rc.useLocation();
 
   // react-router v5
   const history = rc.useHistory?.();
-  // react-router v6
+
+  // react-router v6 & v7
   const navigate = rc.useNavigate?.();
 
   const update = useUpdate();
 
   const initialStateRef = useRef(
-    typeof initialState === 'function' ? (initialState as () => S)() : initialState || {},
+    typeof initialState === 'function' ? initialState() : initialState || {},
   );
 
   const queryFromUrl = useMemo(() => {
-    return parse(location.search, mergedParseOptions);
+    return qs.parse(location.search, mergedParseOptions);
   }, [location.search]);
 
-  const targetQuery: State = useMemo(
+  const targetQuery = useMemo<State>(
     () => ({
       ...initialStateRef.current,
       ...queryFromUrl,
@@ -71,7 +78,7 @@ const useUrlState = <S extends UrlState = UrlState>(
       history[navigateMode](
         {
           hash: location.hash,
-          search: stringify({ ...queryFromUrl, ...newQuery }, mergedStringifyOptions) || '?',
+          search: qs.stringify({ ...queryFromUrl, ...newQuery }, mergedStringifyOptions) || '?',
         },
         location.state,
       );
@@ -80,7 +87,7 @@ const useUrlState = <S extends UrlState = UrlState>(
       navigate(
         {
           hash: location.hash,
-          search: stringify({ ...queryFromUrl, ...newQuery }, mergedStringifyOptions) || '?',
+          search: qs.stringify({ ...queryFromUrl, ...newQuery }, mergedStringifyOptions) || '?',
         },
         {
           replace: navigateMode === 'replace',

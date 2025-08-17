@@ -1,33 +1,37 @@
-import React from 'react';
+import React, { useMemo } from 'react';
+import { Button, Space } from 'antd';
 import { useResetState } from 'ahooks';
 
-interface State {
-  hello: string;
-  count: number;
-}
-
 export default () => {
-  const [state, setState, resetState] = useResetState<State>({
+  const initialValue = {
     hello: '',
-    count: 0,
-  });
+    value: Math.random(),
+  };
+  const initialValueMemo = useMemo(() => {
+    return initialValue;
+  }, []);
+
+  const [state, setState, resetState] = useResetState(initialValue);
 
   return (
     <div>
+      <div>initial state: </div>
+      <pre>{JSON.stringify(initialValueMemo, null, 2)}</pre>
+      <div>current state: </div>
       <pre>{JSON.stringify(state, null, 2)}</pre>
-      <p>
-        <button
-          type="button"
-          style={{ marginRight: '8px' }}
-          onClick={() => setState({ hello: 'world', count: 1 })}
+      <Space>
+        <Button
+          onClick={() =>
+            setState(() => ({
+              hello: 'world',
+              value: Math.random(),
+            }))
+          }
         >
-          set hello and count
-        </button>
-
-        <button type="button" onClick={resetState}>
-          resetState
-        </button>
-      </p>
+          set hello and value
+        </Button>
+        <Button onClick={resetState}>resetState</Button>
+      </Space>
     </div>
   );
 };

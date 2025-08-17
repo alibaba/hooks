@@ -70,8 +70,8 @@ export default () => {
         {isHovering ? 'release here' : 'drop here'}
       </div>
 
-      <div style={{ display: 'flex', marginTop: 8 }}>
-        {['1', '2', '3', '4', '5'].map((e, i) => (
+      <div style={{ display: 'flex', marginTop: 8, overflow: 'auto' }}>
+        {['1', '2', '3', '4', '5'].map((e) => (
           <DragItem key={e} data={e} />
         ))}
       </div>

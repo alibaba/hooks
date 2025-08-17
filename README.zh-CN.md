@@ -14,8 +14,8 @@
 [![Coverage Status](https://coveralls.io/repos/github/alibaba/hooks/badge.svg?branch=master)](https://coveralls.io/github/alibaba/hooks?branch=master)
 [![npm](https://img.shields.io/github/issues/alibaba/hooks)](https://github.com/alibaba/hooks/issues)
 ![gzip size](https://img.badgesize.io/https:/unpkg.com/ahooks/dist/ahooks.js?label=gzip%20size&compression=gzip)
-[![Percentage of issues still open](http://isitmaintained.com/badge/open/alibaba/hooks.svg)](http://isitmaintained.com/project/alibaba/hooks 'Percentage of issues still open')
-[![Average time to resolve an issue](http://isitmaintained.com/badge/resolution/alibaba/hooks.svg)](http://isitmaintained.com/project/alibaba/hooks 'Average time to resolve an issue')
+[![Percentage of issues still open](http://isitmaintained.com/badge/open/alibaba/hooks.svg)](http://isitmaintained.com/project/alibaba/hooks "Percentage of issues still open")
+[![Average time to resolve an issue](http://isitmaintained.com/badge/resolution/alibaba/hooks.svg)](http://isitmaintained.com/project/alibaba/hooks "Average time to resolve an issue")
 ![GitHub](https://img.shields.io/github/license/alibaba/hooks)
 
 [English](https://github.com/alibaba/hooks/blob/master/README.md) | 简体中文
@@ -44,12 +44,14 @@ $ npm install --save ahooks
 $ yarn add ahooks
 # or
 $ pnpm add ahooks
+# or
+$ bun add ahooks
 ```
 
 ## 🔨 使用
 
 ```js
-import { useRequest } from 'ahooks';
+import { useRequest } from "ahooks";
 ```
 
 ## 💻 在线体验
@@ -77,7 +79,9 @@ $ pnpm start
 
 ## 👥 交流讨论
 
-<img src="https://user-images.githubusercontent.com/12526493/163084546-ed7a18a8-f05b-484e-a32c-049a05c350fd.JPG" width="200" style='display:inline'/><img src="https://user-images.githubusercontent.com/12526493/163084577-bab53c55-610e-4efe-96c7-eb0dd076c100.JPG" width="200" style='display:inline'/><img src="https://user-images.githubusercontent.com/12526493/163084584-bfb789fe-b5f4-4cd6-b4a5-2444bd67c1a5.JPG" width="200" style='display:inline'/>
+<img src="https://github.com/user-attachments/assets/0ba7a370-2a69-442f-b746-9eb16bbbc46c" width="200" style='display:inline' />
+<img src="https://github.com/user-attachments/assets/a08693d3-bfcc-4aca-b2b0-2d9c23012858" width="200" style='display:inline' />
+<img src="https://github.com/user-attachments/assets/15a505a7-06d1-4e72-ab02-6fad968323f1" width="200" style='display:inline' />
 
 [1]: https://www.npmjs.com/package/ahooks
 [2]: https://npmjs.org/package/ahooks

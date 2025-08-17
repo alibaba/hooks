@@ -21,6 +21,10 @@ manages DOM full screen.
 
 <code src="./demo/demo3.tsx" />
 
+### Coexist with other full screen operations
+
+<code src="./demo/demo4.tsx" />
+
 ## API
 
 ```typescript

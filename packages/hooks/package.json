@@ -1,6 +1,6 @@
 {
   "name": "ahooks",
-  "version": "3.7.8",
+  "version": "3.9.1",
   "description": "react hooks library",
   "keywords": [
     "ahooks",
@@ -22,7 +22,9 @@
   "repository": "https://github.com/alibaba/hooks",
   "homepage": "https://github.com/alibaba/hooks",
   "scripts": {
-    "build": "gulp && webpack-cli"
+    "build": "gulp && webpack-cli",
+    "test": "vitest run",
+    "test:cov": "vitest run --coverage"
   },
   "files": [
     "dist",
@@ -34,33 +36,21 @@
   ],
   "dependencies": {
     "@babel/runtime": "^7.21.0",
-    "@types/js-cookie": "^2.x.x",
-    "ahooks-v3-count": "^1.0.0",
     "dayjs": "^1.9.1",
     "intersection-observer": "^0.12.0",
-    "js-cookie": "^2.x.x",
-    "lodash-es": "^4.17.21",
+    "js-cookie": "^3.0.5",
+    "lodash": "^4.17.21",
+    "react-fast-compare": "^3.2.2",
     "resize-observer-polyfill": "^1.5.1",
     "screenfull": "^5.0.0",
     "tslib": "^2.4.1"
   },
   "peerDependencies": {
-    "react": "^16.8.0 || ^17.0.0 || ^18.0.0"
-  },
-  "devDependencies": {
-    "@alifd/next": "^1.20.6",
-    "@ant-design/icons": "^5.0.1",
-    "@types/enzyme": "^3.10.5",
-    "antd": "^5.2.1",
-    "enzyme-adapter-react-16": "^1.15.4",
-    "jest-websocket-mock": "^2.1.0",
-    "mock-socket": "^9.0.3",
-    "mockjs": "^1.1.0",
-    "react-drag-listview": "^0.1.6",
-    "react-json-view": "^1.21.3"
+    "react": "^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0",
+    "react-dom": "^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0"
   },
   "engines": {
-    "node": ">=8.0.0"
+    "node": ">=20"
   },
   "license": "MIT",
   "gitHead": "11f6ad571bd365c95ecb9409ca3050cbbfc9b34a"

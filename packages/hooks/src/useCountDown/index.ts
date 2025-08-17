@@ -42,13 +42,11 @@ const parseMs = (milliseconds: number): FormattedRes => {
 const useCountdown = (options: Options = {}) => {
   const { leftTime, targetDate, interval = 1000, onEnd } = options || {};
 
-  const target = useMemo<TDate>(() => {
-    if ('leftTime' in options) {
-      return isNumber(leftTime) && leftTime > 0 ? Date.now() + leftTime : undefined;
-    } else {
-      return targetDate;
-    }
-  }, [leftTime, targetDate]);
+  const memoLeftTime = useMemo<TDate>(() => {
+    return isNumber(leftTime) && leftTime > 0 ? Date.now() + leftTime : undefined;
+  }, [leftTime]);
+
+  const target = 'leftTime' in options ? memoLeftTime : targetDate;
 
   const [timeLeft, setTimeLeft] = useState(() => calcLeft(target));
 

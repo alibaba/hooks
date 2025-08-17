@@ -1,5 +1,5 @@
 import React from 'react';
-import { Table, Pagination, Field, Form, Input, Button, Select, Icon } from '@alifd/next';
+import { Table, Pagination, Field, Form, Input, Button, Icon } from '@alifd/next';
 import { useFusionTable } from 'ahooks';
 import ReactJson from 'react-json-view';
 
@@ -44,7 +44,11 @@ const AppList = () => {
     <div>
       <Form
         inline
-        style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end' }}
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'flex-end',
+        }}
         field={field}
       >
         <Form.Item label="name:">
@@ -80,17 +84,13 @@ const AppList = () => {
     <div>
       <Form
         inline
-        style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end' }}
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'flex-end',
+        }}
         field={field}
       >
-        <Form.Item label=" ">
-          <Select name="gender" defaultValue="all" onChange={submit}>
-            <Select.Option value="all">all</Select.Option>
-            <Select.Option value="male">male</Select.Option>
-            <Select.Option value="female">female</Select.Option>
-          </Select>
-        </Form.Item>
-
         <Form.Item label=" ">
           <Input
             name="name"

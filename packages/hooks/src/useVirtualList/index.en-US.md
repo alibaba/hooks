@@ -33,10 +33,10 @@ const [list, scrollTo] = useVirtualList<T>(
 
 ### Params
 
-| Property     | Description                                           | Type      | Default |
-| ------------ | ----------------------------------------------------- | --------- | ------- |
-| originalList | The original list that contains a lot of data entries | `T[]`     | `[]`    |
-| options      | config                                                | `Options` | -       |
+| Property     | Description                                                                                                                                                | Type      | Default |
+| ------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------- | --------- | ------- |
+| originalList | The original list that contains a lot of data entries. **Attention: must undergo useMemo processing or never change, otherwise there will be a dead loop** | `T[]`     | `[]`    |
+| options      | config                                                                                                                                                     | `Options` | -       |
 
 ### Options
 

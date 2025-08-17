@@ -17,8 +17,8 @@ footer: Open-source MIT Licensed | Copyright © 2019-present<br />Powered by [du
 [![npm](https://img.shields.io/github/issues/alibaba/hooks)](https://github.com/alibaba/hooks/issues)
 [![Coverage Status](https://coveralls.io/repos/github/alibaba/hooks/badge.svg?branch=master)](https://coveralls.io/github/alibaba/hooks?branch=master)
 ![gzip size](https://img.badgesize.io/https:/unpkg.com/ahooks/dist/ahooks.js?label=gzip%20size&compression=gzip)
-[![Percentage of issues still open](http://isitmaintained.com/badge/open/alibaba/hooks.svg)](http://isitmaintained.com/project/alibaba/hooks 'Percentage of issues still open')
-[![Average time to resolve an issue](http://isitmaintained.com/badge/resolution/alibaba/hooks.svg)](http://isitmaintained.com/project/alibaba/hooks 'Average time to resolve an issue')
+[![Percentage of issues still open](http://isitmaintained.com/badge/open/alibaba/hooks.svg)](http://isitmaintained.com/project/alibaba/hooks "Percentage of issues still open")
+[![Average time to resolve an issue](http://isitmaintained.com/badge/resolution/alibaba/hooks.svg)](http://isitmaintained.com/project/alibaba/hooks "Average time to resolve an issue")
 ![GitHub](https://img.shields.io/github/license/alibaba/hooks)
 
 ## ✨ Features
@@ -30,6 +30,7 @@ footer: Open-source MIT Licensed | Copyright © 2019-present<br />Powered by [du
 - Contains a comprehensive collection of basic Hooks
 - Written in TypeScript with predictable static types
 
+
 ## 📦 Install
 
 ```bash
@@ -38,12 +39,14 @@ $ npm install --save ahooks
 $ yarn add ahooks
 # or
 $ pnpm add ahooks
+# or
+$ bun add ahooks
 ```
 
 ## 🔨 Usage
 
 ```ts
-import { useRequest } from 'ahooks';
+import { useRequest } from "ahooks";
 ```
 
 ## 💻 Online Demo
@@ -71,7 +74,9 @@ Thanks to all the contributors:
 
 ## 👥 Discuss
 
-<img src="https://user-images.githubusercontent.com/60802048/201606568-9ce53e3f-2e1c-4dc3-869f-fb3cf6196904.JPG" width="200" style='display:inline'/><img src="https://user-images.githubusercontent.com/60802048/201606896-31abd486-cc3e-4cc4-beea-1b244a4c5595.JPG" width="200" style='display:inline'/><img src="https://user-images.githubusercontent.com/60802048/201606953-c33f3f52-eb91-42bc-8da7-1e941e823144.JPG" width="200" style='display:inline'/>
+<img src="https://github.com/user-attachments/assets/0ba7a370-2a69-442f-b746-9eb16bbbc46c" width="200" style='display:inline' />
+<img src="https://github.com/user-attachments/assets/a08693d3-bfcc-4aca-b2b0-2d9c23012858" width="200" style='display:inline' />
+<img src="https://github.com/user-attachments/assets/15a505a7-06d1-4e72-ab02-6fad968323f1" width="200" style='display:inline' />
 
 [1]: https://www.npmjs.com/package/ahooks
 [2]: https://npmjs.org/package/ahooks

@@ -50,7 +50,7 @@ const { data, run, cancel } = useRequest(getUsername, {
 
 | 参数                   | 说明                                                                                                   | 类型      | 默认值 |
 | ---------------------- | ------------------------------------------------------------------------------------------------------ | --------- | ------ |
-| pollingInterval        | 轮询间隔，单位为毫秒。如果值大于 0，则启动轮询模式。                                                   | `number`  | `0`    |
+| pollingInterval        | 轮询间隔，单位为毫秒。如果值大于 0，则处于轮询模式。                                                   | `number`  | `0`    |
 | pollingWhenHidden      | 在页面隐藏时，是否继续轮询。如果设置为 false，在页面隐藏时会暂时停止轮询，页面重新显示时继续上次轮询。 | `boolean` | `true` |
 | pollingErrorRetryCount | 轮询错误重试次数。如果设置为 -1，则无限次                                                              | `number`  | `-1`   |
 
@@ -58,4 +58,5 @@ const { data, run, cancel } = useRequest(getUsername, {
 
 - `options.pollingInterval`、`options.pollingWhenHidden` 支持动态变化。
 - 如果设置 `options.manual = true`，则初始化不会启动轮询，需要通过 `run/runAsync` 触发开始。
+- 如果设置 `pollingInterval` 由 `0` 变成 `大于 0` 的值，不会启动轮询，需要通过 `run/runAsync` 触发开始。
 - 轮询原理是在每次请求完成后，等待 `pollingInterval` 时间，发起下一次请求。

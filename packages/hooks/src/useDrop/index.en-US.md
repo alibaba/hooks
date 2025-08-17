@@ -19,6 +19,10 @@ A pair of hooks to help you manage data transfer between drag and drop
 
 <code src="./demo/demo1.tsx" />
 
+### Customize Image
+
+<code src="./demo/demo2.tsx" />
+
 ## API
 
 ### useDrag
@@ -41,10 +45,19 @@ useDrag<T>(
 
 #### DragOptions
 
-| Property    | Description            | Type                           | Default |
-| ----------- | ---------------------- | ------------------------------ | ------- |
-| onDragStart | On drag start callback | `(e: React.DragEvent) => void` | -       |
-| onDragEnd   | On drag end callback   | `(e: React.DragEvent) => void` | -       |
+| Property    | Description                                                   | Type                           | Default |
+| ----------- | ------------------------------------------------------------- | ------------------------------ | ------- |
+| onDragStart | On drag start callback                                        | `(e: React.DragEvent) => void` | -       |
+| onDragEnd   | On drag end callback                                          | `(e: React.DragEvent) => void` | -       |
+| dragImage   | Customize image that follow the mouse pointer during dragging | `DragImageOptions`             | -       |
+
+#### DragImageOptions
+
+| 参数    | 说明                                                                                                                                                                                                                                                                                                          | 类型                | 默认值 |
+| ------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------- | ------ |
+| image   | An image Element element to use for the drag feedback image. The image will typically be an [`<img>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/img) element but it can also be a [`<canvas>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/canvas) or any other visible element | `string \| Element` | -      |
+| offsetX | the horizontal offset within the image                                                                                                                                                                                                                                                                        | `number`            | 0      |
+| offsetY | the vertical offset within the image                                                                                                                                                                                                                                                                          | `number`            | 0      |
 
 ### useDrop
 
