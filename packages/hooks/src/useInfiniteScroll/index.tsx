@@ -96,15 +96,15 @@ const useInfiniteScroll = <TData extends Data>(
 
   const runAsyncForCurrent = async () => {
     const res = await runAsync(finalData);
-    return res.currentData
-  }
+    return res.currentData;
+  };
 
   const loadMoreAsync = useMemoizedFn(() => {
     if (noMore) {
       return Promise.reject();
     }
     setLoadingMore(true);
-    return runAsyncForCurrent()
+    return runAsyncForCurrent();
   });
 
   const reload = () => {
@@ -114,7 +114,7 @@ const useInfiniteScroll = <TData extends Data>(
 
   const reloadAsync = () => {
     setLoadingMore(false);
-    return runAsyncForCurrent()
+    return runAsyncForCurrent();
   };
 
   const scrollMethod = () => {
