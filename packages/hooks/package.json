@@ -23,7 +23,7 @@
   "homepage": "https://github.com/alibaba/hooks",
   "scripts": {
     "build": "gulp && webpack-cli",
-    "test": "vitest run",
+    "test": "vitest run --color",
     "test:cov": "vitest run --coverage"
   },
   "files": [
