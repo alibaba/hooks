@@ -22,6 +22,26 @@ describe('useMount', () => {
     expect(destructor).toHaveBeenCalledTimes(2);
   });
 
+  test('test mount with async function', async () => {
+    const mockAsyncFn = vi.fn().mockResolvedValue(undefined);
+    const hook = renderHook(() => useMount(mockAsyncFn));
+    expect(mockAsyncFn).toHaveBeenCalledTimes(1);
+    hook.rerender();
+    expect(mockAsyncFn).toHaveBeenCalledTimes(1);
+    hook.unmount();
+    expect(mockAsyncFn).toHaveBeenCalledTimes(1);
+  });
+
+  test('test mount with async function that returns cleanup', async () => {
+    const cleanup = vi.fn();
+    const mockAsyncFn = vi.fn().mockResolvedValue(cleanup);
+    const hook = renderHook(() => useMount(mockAsyncFn));
+    expect(mockAsyncFn).toHaveBeenCalledTimes(1);
+    hook.unmount();
+    // Cleanup should not be called for async functions
+    expect(cleanup).toHaveBeenCalledTimes(0);
+  });
+
   // test('should output error when fn is not a function', () => {
   //   const errSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
   //   renderHook(() => useMount(1 as any));

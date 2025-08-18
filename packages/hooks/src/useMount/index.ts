@@ -3,7 +3,9 @@ import { type EffectCallback } from 'react';
 import { isFunction } from '../utils';
 import isDev from '../utils/isDev';
 
-const useMount = (fn: EffectCallback) => {
+type MountCallback = EffectCallback | (() => Promise<void | (() => void)>);
+
+const useMount = (fn: MountCallback) => {
   if (isDev) {
     if (!isFunction(fn)) {
       console.error(
@@ -13,7 +15,12 @@ const useMount = (fn: EffectCallback) => {
   }
 
   useEffect(() => {
-    return fn?.();
+    const result = fn?.();
+    // If fn returns a Promise, don't return it as cleanup function
+    if (result && typeof result === 'object' && typeof (result as any).then === 'function') {
+      return;
+    }
+    return result as ReturnType<EffectCallback>;
   }, []);
 };
 
