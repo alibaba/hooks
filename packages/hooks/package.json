@@ -53,5 +53,8 @@
     "node": ">=20"
   },
   "license": "MIT",
-  "gitHead": "11f6ad571bd365c95ecb9409ca3050cbbfc9b34a"
+  "gitHead": "11f6ad571bd365c95ecb9409ca3050cbbfc9b34a",
+  "devDependencies": {
+    "moment": "^2.30.1"
+  }
 }
