@@ -15,6 +15,7 @@
     "paths": {
       "src/*": ["${configDir}/src/*"]
     },
+    "types": [],
     "rootDir": "${configDir}",
     "outDir": "${configDir}/dist",
     "sourceMap": true, // 生成源映射文件
