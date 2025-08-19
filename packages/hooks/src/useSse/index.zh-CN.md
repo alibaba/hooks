@@ -5,50 +5,44 @@ nav:
 
 # useSse
 
-用于监听 Server-Sent Events（SSE）流，提供自动重连与生命周期回调，适配 AI 流式对话等场景。
+一个用于 Server-Sent Events (SSE) 的 Hook，支持自动重连和消息回调。
 
-### 基本用法
+## 代码演示
 
-```tsx
-import React, { useMemo, useRef } from 'react';
-import { useSse } from 'ahooks';
+### 基础用法
 
-export default () => {
-  const historyRef = useRef<any[]>([]);
-  const { readyState, latestMessage, connect, disconnect } = useSse('/api/sse');
+<code src="./demo/demo1.tsx" />
 
-  historyRef.current = useMemo(() => historyRef.current.concat(latestMessage), [latestMessage]);
+## API
 
-  return (
-    <div>
-      <button onClick={() => connect()} style={{ marginRight: 8 }}>连接</button>
-      <button onClick={() => disconnect()} style={{ marginRight: 8 }}>断开</button>
-      <div>readyState: {readyState}</div>
-      <div style={{ marginTop: 8 }}>
-        {historyRef.current.map((m, i) => (
-          <p key={i}>{m?.data}</p>
-        ))}
-      </div>
-    </div>
-  );
-};
-```
-
-### API
-
-```ts
+```typescript
 const { readyState, latestMessage, connect, disconnect, eventSource } = useSse(
   url: string,
-  options?: {
-    manual?: boolean;
-    withCredentials?: boolean;
-    reconnectLimit?: number;
-    reconnectInterval?: number; // 毫秒
-    events?: string[]; // 监听命名事件
-    onOpen?: (ev: Event, instance: EventSource) => void;
-    onMessage?: (msg: MessageEvent, instance: EventSource) => void;
-    onError?: (ev: Event, instance: EventSource) => void;
-    onEvent?: (eventName: string, ev: MessageEvent, instance: EventSource) => void;
-  }
+  options?: UseSseOptions
 )
 ```
+
+### Options
+
+| 参数                 | 说明                                   | 类型                                           | 默认值       |
+| -------------------- | -------------------------------------- | ---------------------------------------------- | ------------ |
+| manual               | 是否手动连接                           | `boolean`                                      | `false`      |
+| withCredentials      | 是否携带跨域凭证                       | `boolean`                                      | `false`      |
+| reconnectLimit       | 最大重连次数                           | `number`                                       | `3`          |
+| reconnectInterval    | 重连间隔（毫秒）                       | `number`                                       | `3000`       |
+| respectServerRetry   | 是否遵循服务端下发的 retry 时间        | `boolean`                                      | `false`      |
+| onOpen               | 连接成功回调                           | `(es: EventSource) => void`                    | -            |
+| onMessage            | 收到消息回调                           | `(ev: MessageEvent, es: EventSource) => void`  | -            |
+| onError              | 出错回调                               | `(ev: Event, es: EventSource) => void`         | -            |
+| onReconnect          | 发生重连时回调                         | `(attempt: number, es: EventSource) => void`   | -            |
+| onEvent              | 自定义事件回调                         | `(event: string, ev: MessageEvent, es: EventSource) => void` | - |
+
+### Result
+
+| 参数          | 说明                   | 类型                                  |
+| ------------- | ---------------------- | ------------------------------------- |
+| readyState    | 当前连接状态           | `ReadyState` (0: 连接中, 1: 已连接, 2: 已关闭, 3: 重连中) |
+| latestMessage | 收到的最新消息         | `MessageEvent` \| `null`              |
+| connect       | 手动连接函数           | `() => void`                          |
+| disconnect    | 手动断开函数           | `() => void`                          |
+| eventSource   | 原生 EventSource 实例  | `EventSource` \| `null`               |

@@ -1,158 +1,145 @@
-import { useEffect, useRef, useState } from 'react';
-import useLatest from '../useLatest';
-import useMemoizedFn from '../useMemoizedFn';
-import useUnmount from '../useUnmount';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
 export enum ReadyState {
   Connecting = 0,
   Open = 1,
   Closed = 2,
+  Reconnecting = 3,
 }
 
-export interface Options {
-  manual?: boolean;
-  withCredentials?: boolean;
-  reconnectLimit?: number;
-  reconnectInterval?: number;
-  events?: string[];
-  onOpen?: (event: Event, instance: EventSource) => void;
-  onMessage?: (message: MessageEvent, instance: EventSource) => void;
-  onError?: (event: Event, instance: EventSource) => void;
-  onEvent?: (eventName: string, event: MessageEvent, instance: EventSource) => void;
+export interface UseSseOptions {
+  manual?: boolean; // 是否手动连接（默认自动）
+  withCredentials?: boolean; // 是否携带跨域凭证
+  reconnectLimit?: number; // 最大重连次数
+  reconnectInterval?: number; // 默认重连间隔（毫秒）
+  respectServerRetry?: boolean; // 是否遵循服务端下发的 retry 时间
+  onOpen?: (es: EventSource) => void; // 连接成功回调
+  onMessage?: (ev: MessageEvent, es: EventSource) => void; // 收到消息回调
+  onError?: (ev: Event, es: EventSource) => void; // 出错回调
+  onReconnect?: (attempt: number, es: EventSource | null) => void; //  发生重连时回调
+  onEvent?: (event: string, ev: MessageEvent, es: EventSource) => void; // 自定义事件回调
 }
 
-export interface Result {
-  latestMessage?: MessageEvent;
-  connect: () => void;
-  disconnect: () => void;
-  readyState: ReadyState;
-  eventSource?: EventSource;
-}
-
-function useSse(url: string, options: Options = {}): Result {
+/**
+ * useSse - 一个支持自动重连 & 回调的 SSE Hook
+ */
+export default function useSse(url: string, options: UseSseOptions = {}) {
   const {
-    manual = false,
-    withCredentials = false,
+    manual,
+    withCredentials,
     reconnectLimit = 3,
-    reconnectInterval = 3 * 1000,
-    events = [],
+    reconnectInterval = 3000,
+    respectServerRetry = false,
     onOpen,
     onMessage,
     onError,
+    onReconnect,
     onEvent,
   } = options;
 
-  const onOpenRef = useLatest(onOpen);
-  const onMessageRef = useLatest(onMessage);
-  const onErrorRef = useLatest(onError);
-  const onEventRef = useLatest(onEvent);
+  const [readyState, setReadyState] = useState<ReadyState>(
+    manual ? ReadyState.Closed : ReadyState.Connecting,
+  );
 
-  const reconnectTimesRef = useRef(0);
-  const reconnectTimerRef = useRef<ReturnType<typeof setTimeout>>(undefined);
-  const esRef = useRef<EventSource>(undefined);
+  const [latestMessage, setLatestMessage] = useState<MessageEvent | null>(null);
 
-  const [latestMessage, setLatestMessage] = useState<MessageEvent>();
-  const [readyState, setReadyState] = useState<ReadyState>(ReadyState.Closed);
+  const eventSourceRef = useRef<EventSource | null>(null);
 
-  const reconnect = () => {
-    if (
-      reconnectTimesRef.current < reconnectLimit &&
-      esRef.current?.readyState !== ReadyState.Open
-    ) {
-      if (reconnectTimerRef.current) {
-        clearTimeout(reconnectTimerRef.current);
-      }
-      reconnectTimerRef.current = setTimeout(() => {
-        // eslint-disable-next-line @typescript-eslint/no-use-before-define
-        connectEs();
-        reconnectTimesRef.current++;
-      }, reconnectInterval);
+  const reconnectAttempts = useRef(0);
+
+  const reconnectTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const cleanup = useCallback(() => {
+    if (eventSourceRef.current) {
+      eventSourceRef.current.close();
+      eventSourceRef.current = null;
     }
-  };
-
-  const bindNamedEvents = (es: EventSource) => {
-    events.forEach((eventName) => {
-      es.addEventListener(eventName, (e) => {
-        onEventRef.current?.(eventName, e as MessageEvent, es);
-      });
-    });
-  };
-
-  const connectEs = () => {
-    if (reconnectTimerRef.current) {
-      clearTimeout(reconnectTimerRef.current);
+    if (reconnectTimer.current) {
+      clearTimeout(reconnectTimer.current);
+      reconnectTimer.current = null;
     }
+  }, []);
 
-    if (esRef.current) {
-      esRef.current.close();
-    }
-
-    const es = new EventSource(url, { withCredentials });
+  const connect = useCallback(() => {
+    cleanup();
     setReadyState(ReadyState.Connecting);
 
-    es.onopen = (event) => {
-      if (esRef.current !== es) return;
-      reconnectTimesRef.current = 0;
+    const es = new EventSource(url, { withCredentials });
+    eventSourceRef.current = es;
+
+    es.onopen = () => {
+      reconnectAttempts.current = 0;
       setReadyState(ReadyState.Open);
-      onOpenRef.current?.(event, es);
+      onOpen?.(es);
     };
 
-    es.onmessage = (message) => {
-      if (esRef.current !== es) return;
-      setLatestMessage(message);
-      onMessageRef.current?.(message, es);
+    es.onmessage = (ev) => {
+      setLatestMessage(ev);
+      onMessage?.(ev, es);
     };
 
-    es.onerror = (event) => {
-      // Note: native EventSource auto-reconnects. We still provide a manual reconnect mechanism
-      // to give users control when connection is closed or encounters persistent errors.
-      onErrorRef.current?.(event, es);
-      // If closed by server or network, try manual reconnect
-      if (esRef.current === es && es.readyState === EventSource.CLOSED) {
-        setReadyState(ReadyState.Closed);
-        reconnect();
+    es.onerror = (ev) => {
+      setReadyState(ReadyState.Closed);
+      onError?.(ev, es);
+
+      if (reconnectAttempts.current < reconnectLimit) {
+        reconnectAttempts.current += 1;
+
+        const delay =
+          respectServerRetry && (ev as any)?.retry ? (ev as any).retry : reconnectInterval;
+
+        setReadyState(ReadyState.Reconnecting);
+
+        onReconnect?.(reconnectAttempts.current, es);
+
+        reconnectTimer.current = setTimeout(() => {
+          connect();
+        }, delay);
       } else {
-        setReadyState((es.readyState as ReadyState) ?? ReadyState.Connecting);
+        cleanup();
       }
     };
 
-    bindNamedEvents(es);
-
-    esRef.current = es;
-  };
-
-  const connect = () => {
-    reconnectTimesRef.current = 0;
-    connectEs();
-  };
-
-  const disconnect = () => {
-    if (reconnectTimerRef.current) {
-      clearTimeout(reconnectTimerRef.current);
+    if (onEvent) {
+      es.addEventListener('custom', (ev) => {
+        onEvent('custom', ev as MessageEvent, es);
+      });
     }
-    reconnectTimesRef.current = reconnectLimit;
-    esRef.current?.close();
-    esRef.current = undefined;
+  }, [
+    url,
+    withCredentials,
+    reconnectLimit,
+    reconnectInterval,
+    respectServerRetry,
+    onOpen,
+    onMessage,
+    onError,
+    onReconnect,
+    onEvent,
+    cleanup,
+  ]);
+
+  /**
+   * 手动断开连接
+   */
+  const disconnect = useCallback(() => {
+    cleanup();
     setReadyState(ReadyState.Closed);
-  };
+  }, [cleanup]);
 
+  /**
+   * 初始化：非 manual 模式下自动连接
+   */
   useEffect(() => {
-    if (!manual && url) {
-      connect();
-    }
-  }, [url, manual, withCredentials]);
-
-  useUnmount(() => {
-    disconnect();
-  });
+    if (!manual) connect();
+    return cleanup;
+  }, [manual, connect, cleanup]);
 
   return {
-    latestMessage,
-    connect: useMemoizedFn(connect),
-    disconnect: useMemoizedFn(disconnect),
     readyState,
-    eventSource: esRef.current,
+    latestMessage,
+    eventSource: eventSourceRef.current,
+    connect,
+    disconnect,
   };
 }
-
-export default useSse;
