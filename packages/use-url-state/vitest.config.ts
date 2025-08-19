@@ -9,6 +9,7 @@ export default defineConfig({
     },
   },
   test: {
+    reporters: ['default', 'verbose'],
     environment: 'jsdom',
     include: ['__tests__/**/*.spec.ts?(x)'],
     coverage: {
