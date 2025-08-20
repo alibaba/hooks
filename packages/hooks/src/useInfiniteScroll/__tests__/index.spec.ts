@@ -1,4 +1,4 @@
-import { act, renderHook } from '@testing-library/react';
+import { act, renderHook, waitFor } from '@testing-library/react';
 import { useState } from 'react';
 import { afterAll, beforeAll, beforeEach, describe, expect, test, vi } from 'vitest';
 import { sleep } from '../../utils/testingHelpers';
@@ -424,5 +424,42 @@ describe('useInfiniteScroll', () => {
     });
 
     expect(result.current.error?.message).toBe('error message');
+  });
+
+  test('reloadAsync should reset data and restart from page=1', async () => {
+    const PAGE_SIZE = 2;
+
+    // Vitest 的 mock
+    const getLoadMoreListMock = vi.fn((page: number, pageSize: number) => {
+      const start = (page - 1) * pageSize + 1;
+      const list = Array.from({ length: pageSize }, (_, i) => start + i);
+      return Promise.resolve({ list });
+    });
+
+    const { result } = renderHook(() =>
+      useInfiniteScroll((d) => {
+        const page = d ? Math.ceil(d.list.length / PAGE_SIZE) + 1 : 1;
+        return getLoadMoreListMock(page, PAGE_SIZE);
+      }),
+    );
+
+    await act(async () => {
+      await result.current.loadMoreAsync();
+    });
+    expect(getLoadMoreListMock).toHaveBeenLastCalledWith(1, PAGE_SIZE);
+    expect(result.current.data?.list.length).toBe(2);
+
+    await act(async () => {
+      await result.current.loadMoreAsync();
+    });
+    expect(getLoadMoreListMock).toHaveBeenLastCalledWith(2, PAGE_SIZE);
+    expect(result.current.data?.list.length).toBe(4);
+
+    await act(async () => {
+      await result.current.reloadAsync();
+    });
+    expect(getLoadMoreListMock).toHaveBeenLastCalledWith(1, PAGE_SIZE);
+    expect(result.current.data?.list.length).toBe(2);
+    expect(result.current.data?.list).toEqual([1, 2]);
   });
 });
