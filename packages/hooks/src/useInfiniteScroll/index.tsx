@@ -94,8 +94,8 @@ const useInfiniteScroll = <TData extends Data>(
     run(finalData);
   });
 
-  const runAsyncForCurrent = async () => {
-    const res = await runAsync(finalData);
+  const runAsyncForCurrent = async (data?: TData) => {
+    const res = await runAsync(data);
     return res.currentData;
   };
 
@@ -104,7 +104,7 @@ const useInfiniteScroll = <TData extends Data>(
       return Promise.reject();
     }
     setLoadingMore(true);
-    return runAsyncForCurrent();
+    return runAsyncForCurrent(finalData);
   });
 
   const reload = () => {
