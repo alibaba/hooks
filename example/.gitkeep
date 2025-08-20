@@ -1,0 +1,15 @@
+import React from 'react';
+import { useBoolean } from 'ahooks';
+
+export default function Demo() {
+  const [state, { toggle, setTrue, setFalse }] = useBoolean(false);
+
+  return (
+    <div>
+      <p>Current state: {state ? 'ON' : 'OFF'}</p>
+      <button onClick={toggle}>Toggle</button>
+      <button onClick={setTrue}>Set True</button>
+      <button onClick={setFalse}>Set False</button>
+    </div>
+  );
+}
