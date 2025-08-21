@@ -7,13 +7,13 @@ import { expect, test } from 'vitest';
 
 export const setup = (
   initialEntries: MemoryRouterProps['initialEntries'],
-  initialState: any = {},
+  baseState: any = {},
   options?: Options,
 ) => {
   const res = {} as any;
 
   const Component = () => {
-    const [state, setState] = useUrlState(initialState, options);
+    const [state, setState] = useUrlState(baseState, options);
     const location = useLocation();
     Object.assign(res, { state, setState, location });
     return null;
