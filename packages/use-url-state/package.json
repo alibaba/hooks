@@ -18,8 +18,8 @@
   },
   "scripts": {
     "build": "gulp && webpack-cli",
-    "test": "vitest run",
-    "test:cov": "vitest run --coverage"
+    "test": "vitest run --color",
+    "test:cov": "vitest run --color --coverage"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
