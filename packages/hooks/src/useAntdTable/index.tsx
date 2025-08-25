@@ -250,7 +250,11 @@ const useAntdTable = <TData extends Data, TParams extends Params>(
     }
     if (!manual) {
       hasAutoRun.current = true;
-      result.pagination.changeCurrent(1);
+      if (options.refreshDepsAction) {
+        options.refreshDepsAction();
+      } else {
+        result.pagination.changeCurrent(1);
+      }
     }
   }, [...refreshDeps]);
 
