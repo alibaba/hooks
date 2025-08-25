@@ -34,7 +34,7 @@ const Demo2: React.FC = () => {
     setIsChecking(true);
     try {
       const permission = await checkPermission();
-      console.log('[demo3]>>checkClipboardPermission>>permission:', permission);
+      console.log('checkClipboardPermission', permission);
       setHasPermission(permission);
     } catch (error:any) {
       addError('PERMISSION_CHECK_FAILED', error?.message);
