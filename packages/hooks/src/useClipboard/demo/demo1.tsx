@@ -116,10 +116,10 @@ const Demo1: React.FC = () => {
         </Card>
 
         <Button type='primary' onClick={() => handlePaste()}>
-          CopyDisplayText
+          Paste(DisplayText)
         </Button>
         <Button type='primary' onClick={() => handlePaste(true)}>
-          CopyData
+          Paste(Data)
         </Button>
         {/* 显示粘贴的数据 */}
         {pastedData && (
