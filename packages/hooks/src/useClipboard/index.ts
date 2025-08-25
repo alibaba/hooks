@@ -243,20 +243,29 @@ function useClipboard(): UseClipboard {
         throw error;
       }
 
-      let errorCode = 'PASTE_FAILED';
-      let errorMessage = 'Failed to read from clipboard';
+const errorMap = {
+ ['NotAllowedError']: {
+    code: 'PERMISSION_DENIED',
+    message: 'Clipboard read access denied. Please grant permission.'
+  },
+  ['SECURITY_ERROR']: {
+    code: 'SECURITY_ERROR',
+    message: 'Clipboard access blocked by security policy'
+  }
+};
 
-      if (error instanceof Error) {
-        if (error.name === 'NotAllowedError') {
-          errorCode = 'PERMISSION_DENIED';
-          errorMessage = 'Clipboard read access denied. Please grant permission.';
-        } else if (error.name === 'SecurityError') {
-          errorCode = 'SECURITY_ERROR';
-          errorMessage = 'Clipboard access blocked by security policy';
-        } else {
-          errorMessage = `${errorMessage}: ${error.message}`;
-        }
-      }
+let errorCode = 'COPY_FAILED';
+let errorMessage = 'Failed to copy to clipboard';
+
+if (error instanceof Error) {
+  const mapped = errorMap[error.name];
+  if (mapped) {
+    errorCode = mapped.code;
+    errorMessage = mapped.message;
+  } else {
+    errorMessage = `${errorMessage}: ${error.message}`;
+  }
+}
 
       throw new ClipboardError(errorMessage, errorCode);
     }
