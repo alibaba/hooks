@@ -19,6 +19,10 @@ A hook for manage countdown.
 
 <code src="./demo/demo3.tsx" />
 
+## Config currentServerTime
+
+<code src="./demo/demo4.tsx" />
+
 ## API
 
 ```typescript
@@ -37,6 +41,7 @@ const [countdown, formattedRes] = useCountDown(
     leftTime,
     targetDate,
     interval,
+    currentServerTime,
     onEnd
   }
 );
@@ -53,6 +58,8 @@ If you only need to be accurate to the second, you can use it like this `Math.ro
 
 If both `leftTime` and `targetDate` are passed, the `targetDate` is ignored, the `leftTime` is dominant.
 
+If 'currentServerTime' is not configured, the local time is used for the countdown.
+
 ### Params
 
 | Property   | Description                                  | Type         | Default |
@@ -60,6 +67,7 @@ If both `leftTime` and `targetDate` are passed, the `targetDate` is ignored, the
 | leftTime   | The rest of time, in milliseconds            | `number`     | -       |
 | targetDate | Target time                                  | `TDate`      | -       |
 | interval   | Time interval between ticks, in milliseconds | `number`     | `1000`  |
+| currentServerTime   | Current server time, in milliseconds | `number`     | -  |
 | onEnd      | Function to call when countdown completes    | `() => void` | -       |
 
 ### Return
@@ -71,4 +79,4 @@ If both `leftTime` and `targetDate` are passed, the `targetDate` is ignored, the
 
 ## Remark
 
-`leftTime`、`targetDate`、`interval`、`onEnd` support dynamic change.
+`leftTime`、`targetDate`、`interval`、`currentServerTime`、`onEnd` support dynamic change.
