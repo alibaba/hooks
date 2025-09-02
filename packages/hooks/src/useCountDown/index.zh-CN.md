@@ -19,6 +19,10 @@ nav:
 
 <code src="./demo/demo3.tsx" />
 
+## 通过 currentServerTime 配置当前服务器时间
+
+<code src="./demo/demo4.tsx" />
+
 **说明**
 
 useCountDown 的精度为毫秒，可能会造成以下几个问题
@@ -28,7 +32,9 @@ useCountDown 的精度为毫秒，可能会造成以下几个问题
 
 如果你的精度只要到秒就好了，可以这样用 `Math.round(countdown / 1000)`。
 
-如果同时传了 `leftTime` 和 `targetDate`，则会忽略 `targetDate`，以 `leftTime` 为主
+如果同时传了 `leftTime` 和 `targetDate`，则会忽略 `targetDate`，以 `leftTime` 为主。
+
+如果没有配置 `currentServerTime` ，则会使用本地时间进行倒计时 。
 
 ## API
 
@@ -48,6 +54,7 @@ const [countdown, formattedRes] = useCountDown(
     leftTime,
     targetDate,
     interval,
+    currentServerTime,
     onEnd
   }
 );
@@ -60,6 +67,7 @@ const [countdown, formattedRes] = useCountDown(
 | leftTime   | 剩余时间（毫秒）     | `number`     | -      |
 | targetDate | 目标时间             | `TDate`      | -      |
 | interval   | 变化时间间隔（毫秒） | `number`     | `1000` |
+| currentServerTime   | 当前服务器时间（毫秒） | `number`     | - |
 | onEnd      | 倒计时结束触发       | `() => void` | -      |
 
 ### Result
@@ -71,4 +79,4 @@ const [countdown, formattedRes] = useCountDown(
 
 ## 备注
 
-`leftTime`、`targetDate`、`interval`、`onEnd` 支持动态变化
+`leftTime`、`targetDate`、`interval`、`currentServerTime`、`onEnd` 支持动态变化
