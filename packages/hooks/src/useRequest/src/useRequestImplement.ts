@@ -1,24 +1,29 @@
-import useCreation from '../../useCreation';
-import useLatest from '../../useLatest';
-import useMemoizedFn from '../../useMemoizedFn';
-import useMount from '../../useMount';
-import useUnmount from '../../useUnmount';
-import useUpdate from '../../useUpdate';
-import isDev from '../../utils/isDev';
+import useCreation from "../../useCreation";
+import useLatest from "../../useLatest";
+import useMemoizedFn from "../../useMemoizedFn";
+import useMount from "../../useMount";
+import useUnmount from "../../useUnmount";
+import useUpdate from "../../useUpdate";
+import isDev from "../../utils/isDev";
 
-import Fetch from './Fetch';
-import type { Options, Plugin, Result, Service } from './types';
+import Fetch from "./Fetch";
+import type { Options, Plugin, Result, Service } from "./types";
 
 function useRequestImplement<TData, TParams extends any[]>(
   service: Service<TData, TParams>,
   options: Options<TData, TParams> = {},
-  plugins: Plugin<TData, TParams>[] = [],
+  plugins: Plugin<TData, TParams>[] = []
 ) {
   const { manual = false, ready = true, ...rest } = options;
 
   if (isDev) {
     if (options.defaultParams && !Array.isArray(options.defaultParams)) {
-      console.warn(`expected defaultParams is array, got ${typeof options.defaultParams}`);
+      console.warn(
+        `expected defaultParams is array, got ${typeof options.defaultParams}`
+      );
+    }
+    if (options.params && !Array.isArray(options.params)) {
+      console.warn(`expected params is array, got ${typeof options.params}`);
     }
   }
 
@@ -33,18 +38,22 @@ function useRequestImplement<TData, TParams extends any[]>(
   const update = useUpdate();
 
   const fetchInstance = useCreation(() => {
-    const initState = plugins.map((p) => p?.onInit?.(fetchOptions)).filter(Boolean);
+    const initState = plugins
+      .map((p) => p?.onInit?.(fetchOptions))
+      .filter(Boolean);
 
     return new Fetch<TData, TParams>(
       serviceRef,
       fetchOptions,
       update,
-      Object.assign({}, ...initState),
+      Object.assign({}, ...initState)
     );
   }, []);
   fetchInstance.options = fetchOptions;
   // run all plugins hooks
-  fetchInstance.pluginImpls = plugins.map((p) => p(fetchInstance, fetchOptions));
+  fetchInstance.pluginImpls = plugins.map((p) =>
+    p(fetchInstance, fetchOptions)
+  );
 
   useMount(() => {
     if (!manual && ready) {
