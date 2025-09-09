@@ -146,8 +146,8 @@ describe('useWebSocket', () => {
   });
 });
 
-it('should call onMaxAttempt when reconnect attempts exceeded and unable to connect to server', async () => {
-  const onMaxAttempt = jest.fn();
+test('should call onMaxAttempt when reconnect attempts exceeded and unable to connect to server', async () => {
+  const onMaxAttempt = vi.fn();
 
   renderHook(() =>
     useWebSocket('ws://localhost:8888', {
@@ -163,8 +163,8 @@ it('should call onMaxAttempt when reconnect attempts exceeded and unable to conn
   expect(onMaxAttempt).toBeCalledTimes(1);
 });
 
-it('should call onMaxAttempt when reconnect attempts exceed and server disconnects', async () => {
-  const onMaxAttempt = jest.fn();
+test('should call onMaxAttempt when reconnect attempts exceed and server disconnects', async () => {
+  const onMaxAttempt = vi.fn();
 
   const wsServer = new WS(wsUrl);
 
