@@ -1,15 +1,14 @@
-import { useMemo, useState } from 'react';
-import type { Key } from 'react';
 import isPlainObject from 'lodash/isPlainObject';
 import useMemoizedFn from '../useMemoizedFn';
 import { isFunction, isString } from '../utils';
+import { useMemo, useState } from 'react';
 
 export interface Options<T> {
   defaultSelected?: T[];
-  itemKey?: string | ((item: T) => Key);
+  itemKey?: string | ((item: T) => React.Key);
 }
 
-export default function useSelections<T>(items: T[], options?: T[] | Options<T>) {
+function useSelections<T>(items: T[], options?: T[] | Options<T>) {
   let defaultSelected: T[] = [];
   let itemKey: Options<T>['itemKey'];
 
@@ -20,7 +19,7 @@ export default function useSelections<T>(items: T[], options?: T[] | Options<T>)
     itemKey = options?.itemKey ?? itemKey;
   }
 
-  const getKey = (item: T): Key => {
+  const getKey = (item: T) => {
     if (isFunction(itemKey)) {
       return itemKey(item);
     }
@@ -28,13 +27,13 @@ export default function useSelections<T>(items: T[], options?: T[] | Options<T>)
       return item[itemKey];
     }
 
-    return item as Key;
+    return item as React.Key;
   };
 
   const [selected, setSelected] = useState<T[]>(defaultSelected);
 
   const selectedMap = useMemo(() => {
-    const keyToItemMap = new Map();
+    const keyToItemMap = new Map<React.Key, T>();
 
     if (!Array.isArray(selected)) {
       return keyToItemMap;
@@ -78,20 +77,20 @@ export default function useSelections<T>(items: T[], options?: T[] | Options<T>)
     items.forEach((item) => {
       selectedMap.delete(getKey(item));
     });
-    setSelected(Array.from(selectedMap.values()));
+    setSelected(Array.from<T>(selectedMap.values()));
   };
 
-  const noneSelected = useMemo(
+  const noneSelected = useMemo<boolean>(
     () => items.every((item) => !selectedMap.has(getKey(item))),
     [items, selectedMap],
   );
 
-  const allSelected = useMemo(
+  const allSelected = useMemo<boolean>(
     () => items.every((item) => selectedMap.has(getKey(item))) && !noneSelected,
     [items, selectedMap, noneSelected],
   );
 
-  const partiallySelected = useMemo(
+  const partiallySelected = useMemo<boolean>(
     () => !noneSelected && !allSelected,
     [noneSelected, allSelected],
   );
@@ -119,3 +118,5 @@ export default function useSelections<T>(items: T[], options?: T[] | Options<T>)
     toggleAll: useMemoizedFn(toggleAll),
   } as const;
 }
+
+export default useSelections;

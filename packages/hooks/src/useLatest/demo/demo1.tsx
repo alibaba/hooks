@@ -32,7 +32,7 @@ export default () => {
   return (
     <>
       <p>count(useLatest): {count}</p>
-      <p>count(defult): {count2}</p>
+      <p>count(default): {count2}</p>
     </>
   );
 };

@@ -2,7 +2,7 @@ import { useEffect, useRef } from 'react';
 
 export type IProps = Record<string, any>;
 
-export default function useWhyDidYouUpdate(componentName: string, props: IProps) {
+function useWhyDidYouUpdate(componentName: string, props: IProps) {
   const prevProps = useRef<IProps>({});
 
   useEffect(() => {
@@ -27,3 +27,5 @@ export default function useWhyDidYouUpdate(componentName: string, props: IProps)
     prevProps.current = props;
   });
 }
+
+export default useWhyDidYouUpdate;

@@ -27,35 +27,42 @@ const baseStringifyConfig: StringifyOptions = {
 type UrlState = Record<string, any>;
 
 const useUrlState = <S extends UrlState = UrlState>(
-  initialState?: S | (() => S),
+  baseState?: S | (() => S),
   options?: Options,
 ) => {
-  type State = Partial<{ [key in keyof S]: any }>;
+  type State = Partial<{
+    [key in keyof S]: Required<S>[key] extends any[] ? string[] : string;
+  }>;
+
   const { navigateMode = 'push', parseOptions, stringifyOptions } = options || {};
 
   const mergedParseOptions = { ...baseParseConfig, ...parseOptions };
-  const mergedStringifyOptions = { ...baseStringifyConfig, ...stringifyOptions };
+  const mergedStringifyOptions = {
+    ...baseStringifyConfig,
+    ...stringifyOptions,
+  };
 
   const location = rc.useLocation();
 
   // react-router v5
   const history = rc.useHistory?.();
-  // react-router v6
+
+  // react-router v6 & v7
   const navigate = rc.useNavigate?.();
 
   const update = useUpdate();
 
-  const initialStateRef = useRef(
-    typeof initialState === 'function' ? (initialState as () => S)() : initialState || {},
+  const baseStateRef = useRef(
+    typeof baseState === 'function' ? baseState() : baseState || {},
   );
 
   const queryFromUrl = useMemo(() => {
     return qs.parse(location.search, mergedParseOptions);
   }, [location.search]);
 
-  const targetQuery: State = useMemo(
+  const targetQuery = useMemo<State>(
     () => ({
-      ...initialStateRef.current,
+      ...baseStateRef.current,
       ...queryFromUrl,
     }),
     [queryFromUrl],

@@ -1,6 +1,6 @@
 {
   "name": "@ahooksjs/use-url-state",
-  "version": "3.5.1",
+  "version": "3.6.0",
   "description": "A hook that stores the state into url query parameters.",
   "main": "./lib/index.js",
   "module": "./es/index.js",
@@ -17,7 +17,9 @@
     "url": "git+https://github.com/alibaba/hooks.git"
   },
   "scripts": {
-    "build": "gulp && webpack-cli"
+    "build": "gulp && webpack-cli",
+    "test": "vitest run --color",
+    "test:cov": "vitest run --color --coverage"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
@@ -27,15 +29,16 @@
     "url": "https://github.com/alibaba/hooks/issues"
   },
   "homepage": "https://github.com/alibaba/hooks",
-  "peerDependencies": {
-    "react": "^16.8.0 || ^17.0.0 || ^18.0.0",
-    "react-router": "^5.0.0 || ^6.0.0"
-  },
+  "gitHead": "11f6ad571bd365c95ecb9409ca3050cbbfc9b34a",
   "dependencies": {
     "@babel/runtime": "^7.21.0",
     "ahooks": "^3.4.1",
     "query-string": "^8.1.0",
     "tslib": "^2.4.1"
   },
-  "gitHead": "11f6ad571bd365c95ecb9409ca3050cbbfc9b34a"
+  "peerDependencies": {
+    "react": "^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0",
+    "react-dom": "^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0",
+    "react-router": "^5.0.0 || ^6.0.0 || ^7.0.0"
+  }
 }

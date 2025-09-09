@@ -40,7 +40,7 @@ export function createUseStorageState(getStorage: () => Storage | undefined) {
       return JSON.stringify(value);
     };
 
-    const deserializer = (value: string): T => {
+    const deserializer = (value: string) => {
       if (options.deserializer) {
         return options.deserializer(value);
       }
@@ -62,13 +62,13 @@ export function createUseStorageState(getStorage: () => Storage | undefined) {
       return options.defaultValue;
     }
 
-    const [state, setState] = useState(getStoredValue);
+    const [state, setState] = useState<T>(getStoredValue);
 
     useUpdateEffect(() => {
       setState(getStoredValue());
     }, [key]);
 
-    const updateState = (value?: SetState<T>) => {
+    const updateState = (value: SetState<T>) => {
       const currentState = isFunction(value) ? value(state) : value;
 
       if (!listenStorageChange) {
@@ -127,7 +127,7 @@ export function createUseStorageState(getStorage: () => Storage | undefined) {
       enable: listenStorageChange,
     });
 
-    return [state, useMemoizedFn(updateState)] as const;
+    return [state, useMemoizedFn(updateState) as (value: SetState<T>) => void] as const;
   }
 
   return useStorageState;

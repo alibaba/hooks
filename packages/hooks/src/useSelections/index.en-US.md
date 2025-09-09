@@ -38,7 +38,6 @@ const result: Result = useSelections<T>(items: T[], defaultSelected?: T[]);
 
 ### Params
 
-<!-- prettier-ignore -->
 | Property | Description | Type | Default |
 | --- | --- | --- | --- |
 | items | Data items | `T[]` | - |
@@ -46,7 +45,6 @@ const result: Result = useSelections<T>(items: T[], defaultSelected?: T[]);
 
 ### Options
 
-<!-- prettier-ignore -->
 | Property | Description | Type | Default |
 | --- | --- | --- | --- |
 | defaultSelected | Default selected data | `T[]` | `[]` |

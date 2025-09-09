@@ -31,9 +31,9 @@ import useUrlState from '@ahooksjs/use-url-state';
 
 ### CodeSandbox Demo
 
-React Router V5：https://codesandbox.io/s/suspicious-feather-cz4e0?file=/App.tsx
+React Router V5: https://codesandbox.io/s/suspicious-feather-cz4e0?file=/App.tsx
 
-React Router V6：https://codesandbox.io/s/autumn-shape-odrt9?file=/App.tsx
+React Router V6: https://codesandbox.io/s/autumn-shape-odrt9?file=/App.tsx
 
 ### Default usage
 
@@ -54,15 +54,15 @@ React Router V6：https://codesandbox.io/s/autumn-shape-odrt9?file=/App.tsx
 ## API
 
 ```typescript
-const [state, setState] = useUrlState(initialState, options);
+const [state, setState] = useUrlState(baseState, options);
 ```
 
 ### Params
 
-| Property     | Description                    | Type           | Default |
-| ------------ | ------------------------------ | -------------- | ------- |
-| initialState | InitialState, same as useState | `S \| () => S` | -       |
-| options      | Url config                     | `Options`      | -       |
+| Property  | Description                                                                                    | Type           | Default |
+| --------- | ---------------------------------------------------------------------------------------------- | -------------- | ------- |
+| baseState | URL search params will be merged into BaseState | `S \| () => S` | -       |
+| options   | Url config                                                                                     | `Options`      | -       |
 
 ### Options
 

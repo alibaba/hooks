@@ -31,9 +31,9 @@ import useUrlState from '@ahooksjs/use-url-state';
 
 ### 在线演示
 
-React Router V5：https://codesandbox.io/s/suspicious-feather-cz4e0?file=/App.tsx
+React Router V5: https://codesandbox.io/s/suspicious-feather-cz4e0?file=/App.tsx
 
-React Router V6：https://codesandbox.io/s/autumn-shape-odrt9?file=/App.tsx
+React Router V6: https://codesandbox.io/s/autumn-shape-odrt9?file=/App.tsx
 
 ### 基础用法
 
@@ -54,15 +54,15 @@ React Router V6：https://codesandbox.io/s/autumn-shape-odrt9?file=/App.tsx
 ## API
 
 ```typescript
-const [state, setState] = useUrlState(initialState, options);
+const [state, setState] = useUrlState(baseState, options);
 ```
 
 ### Params
 
-| 参数         | 说明     | 类型           | 默认值 |
-| ------------ | -------- | -------------- | ------ |
-| initialState | 初始状态 | `S \| () => S` | -      |
-| options      | url 配置 | `Options`      | -      |
+| 参数      | 说明                                                           | 类型           | 默认值 |
+| --------- | -------------------------------------------------------------- | -------------- | ------ |
+| baseState | 基准状态，URL 查询参数会在此基础上进行合并 | `S \| () => S` | -      |
+| options   | url 配置                                                       | `Options`      | -      |
 
 ### Options
 

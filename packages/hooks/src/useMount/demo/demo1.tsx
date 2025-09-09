@@ -13,6 +13,10 @@ import React from 'react';
 const MyComponent = () => {
   useMount(() => {
     message.info('mount');
+
+    return () => {
+      message.info('unmount');
+    };
   });
 
   return <div>Hello World</div>;
