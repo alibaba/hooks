@@ -57,7 +57,7 @@ function useWebSocket(socketUrl: string, options: Options = {}): Result {
 
   const reconnectTimesRef = useRef(0);
   const reconnectTimerRef = useRef<ReturnType<typeof setTimeout>>(undefined);
-  const maxAttemptThrottle = useRef<ReturnType<typeof setTimeout>>();
+  const maxAttemptThrottle = useRef<ReturnType<typeof setTimeout>>(undefined);
 
   const websocketRef = useRef<WebSocket>(undefined);
 
