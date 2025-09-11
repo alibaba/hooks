@@ -1,5 +1,4 @@
 import { Form, Input, Select, Table } from 'antd';
-import React from 'react';
 import { useAntdTable } from 'ahooks';
 import ReactJson from 'react-json-view';
 
@@ -19,7 +18,16 @@ interface Result {
   list: Item[];
 }
 
-const getTableData = ({ current, pageSize }, formData: Object): Promise<Result> => {
+const getTableData = (
+  {
+    current,
+    pageSize,
+  }: {
+    current: number;
+    pageSize: number;
+  },
+  formData: Object,
+): Promise<Result> => {
   let query = `page=${current}&size=${pageSize}`;
   Object.entries(formData).forEach(([key, value]) => {
     if (value) {

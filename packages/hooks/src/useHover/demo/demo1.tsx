@@ -6,7 +6,7 @@
  * desc.zh-CN: 使用 ref 设置需要监听的元素。
  */
 
-import React, { useRef } from 'react';
+import { useRef } from 'react';
 import { useHover } from 'ahooks';
 
 export default () => {

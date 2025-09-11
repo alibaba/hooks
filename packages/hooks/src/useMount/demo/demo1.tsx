@@ -8,8 +8,6 @@
 
 import { useMount, useBoolean } from 'ahooks';
 import { message } from 'antd';
-import React from 'react';
-
 const MyComponent = () => {
   useMount(() => {
     message.info('mount');

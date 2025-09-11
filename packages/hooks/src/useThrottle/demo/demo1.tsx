@@ -6,7 +6,7 @@
  * desc.zh-CN: ThrottledValue 每隔 500ms 变化一次。
  */
 
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useThrottle } from 'ahooks';
 
 export default () => {

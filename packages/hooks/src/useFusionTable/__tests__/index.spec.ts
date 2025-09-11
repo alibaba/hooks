@@ -10,7 +10,13 @@ type Result = {
 
 let count = 0;
 const total = 40;
-const getTableData = async ({ current, pageSize }): Promise<Result> => {
+const getTableData = async ({
+  current,
+  pageSize,
+}: {
+  current: number;
+  pageSize: number;
+}): Promise<Result> => {
   if (count * current >= total) {
     return {
       total,
@@ -38,7 +44,7 @@ const mockField = {
   getNames() {
     return [];
   },
-  setValues(v) {
+  setValues(v: any) {
     values = v;
   },
   getValues() {
@@ -47,12 +53,13 @@ const mockField = {
   resetToDefault() {
     values = {};
   },
-  validate(names, callback) {
+  validate(names: any, callback: (err: any, values: any) => void) {
     callback(null, values);
   },
 };
 
-const setup = (service, options = {}) => renderHook(() => useFusionTable(service, options));
+const setup = (service: any, options: any = {}) =>
+  renderHook(() => useFusionTable(service, options));
 
 describe('useFusionTable', () => {
   beforeEach(() => {

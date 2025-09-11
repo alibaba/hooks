@@ -7,7 +7,6 @@
  */
 
 import { useFocusWithin } from 'ahooks';
-import React from 'react';
 
 export default () => {
   const isFocusWithin = useFocusWithin(() => document.getElementById('focus-area'));

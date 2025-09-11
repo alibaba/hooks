@@ -1,5 +1,4 @@
 import { Button, Field, Form, Icon, Input, Pagination, Select, Table } from '@alifd/next';
-import React from 'react';
 import { useFusionTable } from 'ahooks';
 import ReactJson from 'react-json-view';
 
@@ -17,7 +16,10 @@ interface Result {
   list: Item[];
 }
 
-const getTableData = ({ current, pageSize }, formData: Object): Promise<Result> => {
+const getTableData = (
+  { current, pageSize }: { current: number; pageSize: number },
+  formData: Object,
+): Promise<Result> => {
   let query = `page=${current}&size=${pageSize}`;
   Object.entries(formData).forEach(([key, value]) => {
     if (value) {
@@ -34,7 +36,7 @@ const getTableData = ({ current, pageSize }, formData: Object): Promise<Result> 
 };
 
 const AppList = () => {
-  const field = Field.useField([]);
+  const field = Field.useField({} as any);
   const { paginationProps, tableProps, search, loading, params } = useFusionTable(getTableData, {
     field,
     defaultParams: [

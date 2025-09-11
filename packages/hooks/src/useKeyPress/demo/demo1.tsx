@@ -6,7 +6,7 @@
  * desc.zh-CN: 支持键盘事件中的 keyCode 和别名，请按 ArrowUp 或 ArrowDown 键进行演示。
  */
 
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useKeyPress } from 'ahooks';
 
 export default () => {

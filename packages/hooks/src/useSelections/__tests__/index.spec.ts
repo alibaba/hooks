@@ -201,7 +201,7 @@ describe('useSelections', () => {
   });
 
   test('clearAll should work correct', async () => {
-    const runCase = (data, newData, remainData) => {
+    const runCase = (data: any, newData: any, remainData: any) => {
       const { result } = renderHook(() => {
         const [list, setList] = useState(data);
         const hook = useSelections(list, {

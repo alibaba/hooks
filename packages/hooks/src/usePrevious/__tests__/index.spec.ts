@@ -70,15 +70,15 @@ describe('usePrevious', () => {
     type Obj = { label: string; value: string };
     const predicate = (a: Obj | undefined, b: Obj) => (a ? a.value !== b.value : true);
 
-    const hook = getHook(obj1 as Obj, predicate);
+    const hook = getHook(obj1 as Obj, predicate as any);
 
     expect(hook.result.current).toBeUndefined();
 
-    hook.rerender({ val: obj2, cmp: predicate });
+    hook.rerender({ val: obj2, cmp: predicate as any });
 
     expect(hook.result.current).toBeUndefined();
 
-    hook.rerender({ val: obj3, cmp: predicate });
+    hook.rerender({ val: obj3, cmp: predicate as any });
 
     expect(hook.result.current).toBe(obj1);
   });

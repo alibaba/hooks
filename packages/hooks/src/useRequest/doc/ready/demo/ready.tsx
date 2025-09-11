@@ -1,7 +1,5 @@
 import { useRequest, useToggle } from 'ahooks';
 import Mock from 'mockjs';
-import React from 'react';
-
 function getUsername() {
   return new Promise((resolve) => {
     setTimeout(() => {
@@ -25,7 +23,7 @@ export default () => {
           Toggle Ready
         </button>
       </p>
-      <p>Username: {loading ? 'Loading' : data}</p>
+      <p>Username: {loading ? 'Loading' : String(data)}</p>
     </>
   );
 };

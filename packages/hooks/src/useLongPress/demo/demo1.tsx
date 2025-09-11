@@ -6,7 +6,7 @@
  * desc.zh-CN: 请长按按钮查看效果。
  */
 
-import React, { useState, useRef } from 'react';
+import { useState, useRef } from 'react';
 import { useLongPress } from 'ahooks';
 
 export default () => {

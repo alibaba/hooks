@@ -144,7 +144,7 @@ function isValidKeyType(value: unknown): value is string | number {
 // 根据 event 计算激活键数量
 function countKeyByEvent(event: KeyboardEvent) {
   const countOfModifier = Object.keys(modifierKey).reduce((total, key) => {
-    if (modifierKey[key](event)) {
+    if ((modifierKey as any)[key](event)) {
       return total + 1;
     }
 
@@ -178,9 +178,9 @@ function genFilterKey(event: KeyboardEvent, keyFilter: KeyType, exactMatch: bool
 
   for (const key of genArr) {
     // 组合键
-    const genModifier = modifierKey[key];
+    const genModifier = (modifierKey as any)[key];
     // keyCode 别名
-    const aliasKeyCode: number | number[] = aliasKeyCodeMap[key.toLowerCase()];
+    const aliasKeyCode: number | number[] = (aliasKeyCodeMap as any)[key.toLowerCase()];
 
     if ((genModifier && genModifier(event)) || (aliasKeyCode && aliasKeyCode === event.keyCode)) {
       genLen++;
@@ -236,13 +236,14 @@ function useKeyPress(
         return;
       }
 
-      const callbackHandler = (event: KeyboardEvent) => {
+      const callbackHandler = (event: Event) => {
+        const keyEvent = event as KeyboardEvent;
         const genGuard = genKeyFormatter(keyFilterRef.current, exactMatch);
-        const keyGuard = genGuard(event);
-        const firedKey = isValidKeyType(keyGuard) ? keyGuard : event.key;
+        const keyGuard = genGuard(keyEvent);
+        const firedKey = isValidKeyType(keyGuard) ? keyGuard : keyEvent.key;
 
         if (keyGuard) {
-          return eventHandlerRef.current?.(event, firedKey);
+          return eventHandlerRef.current?.(keyEvent, firedKey);
         }
       };
 

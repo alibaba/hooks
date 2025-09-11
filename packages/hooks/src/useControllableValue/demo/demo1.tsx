@@ -5,7 +5,6 @@
  * title.zh-CN: 非受控组件
  * desc.zh-CN: 如果 props 中没有 value，则组件内部自己管理 state
  */
-import React from 'react';
 import { useControllableValue } from 'ahooks';
 
 export default (props: any) => {

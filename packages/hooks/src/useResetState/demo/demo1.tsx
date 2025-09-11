@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import { useMemo } from 'react';
 import { Button, Space } from 'antd';
 import { useResetState } from 'ahooks';
 

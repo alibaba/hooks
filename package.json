@@ -30,7 +30,8 @@
     "pub:beta": "pnpm run build && pnpm -r --filter=./packages/* publish --tag beta",
     "preinstall": "npx only-allow pnpm",
     "prepare": "husky install",
-    "commit": "git add -A && czg"
+    "commit": "git add -A && czg",
+    "tsc": "pnpm --filter=./packages/* tsc"
   },
   "devDependencies": {
     "@alifd/next": "^1.27.32",

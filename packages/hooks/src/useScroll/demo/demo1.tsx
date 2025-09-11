@@ -6,7 +6,7 @@
  * desc.zh-CN: 尝试滚动一下文字内容。
  */
 
-import React, { useRef } from 'react';
+import { useRef } from 'react';
 import { useScroll } from 'ahooks';
 
 export default () => {

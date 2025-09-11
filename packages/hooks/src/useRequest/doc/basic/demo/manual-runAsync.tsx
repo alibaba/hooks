@@ -7,7 +7,7 @@
  */
 
 import { message } from 'antd';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useRequest } from 'ahooks';
 
 function editUsername(username: string): Promise<void> {
@@ -35,7 +35,7 @@ export default () => {
       setState('');
       message.success(`The username was changed to "${state}" !`);
     } catch (error) {
-      message.error(error.message);
+      message.error((error as Error).message);
     }
   };
 

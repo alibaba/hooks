@@ -5,7 +5,7 @@
  */
 
 import { message } from 'antd';
-import React, { useState, useRef } from 'react';
+import { useState, useRef } from 'react';
 import { useRequest } from 'ahooks';
 import Mock from 'mockjs';
 
@@ -31,7 +31,7 @@ function editUsername(username: string): Promise<void> {
 
 export default () => {
   // store last username
-  const lastRef = useRef<string>();
+  const lastRef = useRef<string | undefined>(undefined);
 
   const [state, setState] = useState('');
 
@@ -52,7 +52,7 @@ export default () => {
   });
 
   const onChange = () => {
-    lastRef.current = username;
+    lastRef.current = username || undefined;
     mutate(state);
     edit(state);
   };

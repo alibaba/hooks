@@ -6,7 +6,7 @@
  * desc.zh-CN: 鼠标移入移出按钮查看效果。
  */
 
-import React, { useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { useEventListener } from 'ahooks';
 
 export default () => {

@@ -6,7 +6,6 @@
  * desc.zh-CN: 简单的 counter 管理示例。
  */
 
-import React from 'react';
 import { useCounter } from 'ahooks';
 
 export default () => {

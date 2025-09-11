@@ -24,7 +24,7 @@ function useSelections<T>(items: T[], options?: T[] | Options<T>) {
       return itemKey(item);
     }
     if (isString(itemKey) && isPlainObject(item)) {
-      return item[itemKey];
+      return (item as any)[itemKey];
     }
 
     return item as React.Key;

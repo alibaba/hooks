@@ -6,7 +6,6 @@
  * desc.zh-CN: 在组件中调用 useResponsive 可以获取并订阅浏览器窗口的响应式信息。
  */
 
-import React from 'react';
 import { configResponsive, useResponsive } from 'ahooks';
 
 configResponsive({

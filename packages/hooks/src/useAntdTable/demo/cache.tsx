@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Button, Col, Form, Input, Row, Table, Select } from 'antd';
 import { useAntdTable, clearCache } from 'ahooks';
 import ReactJson from 'react-json-view';
@@ -20,8 +20,20 @@ interface Result {
 }
 
 const getTableData = (
-  { current, pageSize, sorter, filters, extra },
-  formData: Object,
+  {
+    current,
+    pageSize,
+    sorter,
+    filters,
+    extra,
+  }: {
+    current: number;
+    pageSize: number;
+    sorter: any;
+    filters: any;
+    extra: any;
+  },
+  formData: Record<string, any>,
 ): Promise<Result> => {
   console.log(sorter, filters, extra);
   let query = `page=${current}&size=${pageSize}`;

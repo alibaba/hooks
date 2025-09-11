@@ -19,7 +19,8 @@
   "scripts": {
     "build": "gulp && webpack-cli",
     "test": "vitest run --color",
-    "test:cov": "vitest run --color --coverage"
+    "test:cov": "vitest run --color --coverage",
+    "tsc": "tsc --noEmit"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"

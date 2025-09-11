@@ -5,7 +5,7 @@
  */
 
 import { useRafState } from 'ahooks';
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 
 export default () => {
   const [state, setState] = useRafState({

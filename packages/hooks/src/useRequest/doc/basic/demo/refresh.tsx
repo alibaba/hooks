@@ -6,7 +6,7 @@
 
 import { useRequest } from 'ahooks';
 import Mock from 'mockjs';
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 
 function getUsername(id: number): Promise<string> {
   console.log('use-request-refresh-id', id);

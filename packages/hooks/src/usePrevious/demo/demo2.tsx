@@ -6,7 +6,7 @@
  * desc.zh-CN: 只有 shouldUpdate function 返回 true 时，才会记录值的变化。
  */
 
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { usePrevious } from 'ahooks';
 
 interface Person {
@@ -38,8 +38,8 @@ export default () => {
   const [state, setState] = useState({ name: 'Jack', job: 'student' });
   const [nameInput, setNameInput] = useState('');
   const [jobInput, setJobInput] = useState('');
-  const previousName = usePrevious(state, nameCompareFunction);
-  const previousJob = usePrevious(state, jobCompareFunction);
+  const previousName = usePrevious(state, nameCompareFunction as any);
+  const previousJob = usePrevious(state, jobCompareFunction as any);
 
   return (
     <>

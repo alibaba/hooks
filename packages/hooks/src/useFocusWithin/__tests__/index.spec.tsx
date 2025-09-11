@@ -1,5 +1,5 @@
 import { cleanup, fireEvent, render } from '@testing-library/react';
-import React, { useRef } from 'react';
+import { useRef } from 'react';
 import { beforeEach, describe, expect, test, vi } from 'vitest';
 import useFocusWithin, { type Options } from '../index';
 

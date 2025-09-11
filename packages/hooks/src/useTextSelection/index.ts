@@ -79,7 +79,7 @@ function useTextSelection(target?: BasicTarget<Document | Element>): State {
       };
 
       // 任意点击都需要清空之前的 range
-      const mousedownHandler = (e) => {
+      const mousedownHandler = (e: MouseEvent) => {
         // 如果是鼠标右键需要跳过 这样选中的数据就不会被清空
         if (e.button === 2) {
           return;
@@ -96,7 +96,7 @@ function useTextSelection(target?: BasicTarget<Document | Element>): State {
           return;
         }
         selObj.removeAllRanges();
-        isInRangeRef.current = el.contains(e.target);
+        isInRangeRef.current = el.contains(e.target as Node);
       };
 
       el.addEventListener('mouseup', mouseupHandler);

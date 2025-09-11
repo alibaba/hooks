@@ -1,7 +1,7 @@
 import { useBoolean } from 'ahooks';
 import useRequest from '../../../';
 import Mock from 'mockjs';
-import React, { useState } from 'react';
+import { useState } from 'react';
 
 const getArticle = async (keyword: string) => {
   console.log('cacheKey', keyword);

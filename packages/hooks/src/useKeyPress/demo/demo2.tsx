@@ -6,7 +6,7 @@
  * desc.zh-CN: 支持使用别名，更多内容请[查看备注](#remarks)。
  */
 
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useKeyPress } from 'ahooks';
 
 export default () => {

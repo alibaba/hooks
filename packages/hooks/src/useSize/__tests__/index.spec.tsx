@@ -1,5 +1,5 @@
 import { act, render, renderHook, screen } from '@testing-library/react';
-import React, { useRef } from 'react';
+import { useRef } from 'react';
 import { describe, expect, test, vi } from 'vitest';
 import useSize from '../index';
 

@@ -6,7 +6,7 @@
  * desc.zh-CN: 传入 `callback`, 使得 `IntersectionObserver` 的回调被调用时，用户可以做一些自定义操作。
  */
 import { useInViewport, useMemoizedFn } from 'ahooks';
-import React, { useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 
 const menus = ['menu-1', 'menu-2', 'menu-3'];
 const content = {
@@ -27,7 +27,7 @@ export default () => {
     }
   });
 
-  const handleMenuClick = (index) => {
+  const handleMenuClick = (index: number) => {
     const contentEl = document.getElementById('content-scroll');
     const top = menuRef.current[index]?.offsetTop;
 
@@ -83,7 +83,7 @@ export default () => {
               fontSize: 16,
             }}
           >
-            {content[menu]}
+            {content[menu as keyof typeof content]}
           </div>
         ))}
       </div>

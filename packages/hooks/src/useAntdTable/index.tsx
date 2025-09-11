@@ -62,7 +62,7 @@ const useAntdTable = <TData extends Data, TParams extends Params>(
 
     // antd 3
     const allFieldsValue = form.getFieldsValue();
-    const activeFieldsValue = {};
+    const activeFieldsValue: Record<string | number, any> = {};
     Object.keys(allFieldsValue).forEach((key: string) => {
       if (form.getFieldInstance ? form.getFieldInstance(key) : true) {
         activeFieldsValue[key] = allFieldsValue[key];
@@ -106,7 +106,7 @@ const useAntdTable = <TData extends Data, TParams extends Params>(
     }
 
     // antd v3
-    const activeFieldsValue = {};
+    const activeFieldsValue: Record<string | number, any> = {};
     Object.keys(allFormDataRef.current).forEach((key) => {
       if (form.getFieldInstance ? form.getFieldInstance(key) : true) {
         activeFieldsValue[key] = allFormDataRef.current[key];
@@ -121,7 +121,7 @@ const useAntdTable = <TData extends Data, TParams extends Params>(
       ...allFormDataRef.current,
       ...activeFieldsValue,
     };
-    setType((t) => (t === 'simple' ? 'advance' : 'simple'));
+    setType((t: string) => (t === 'simple' ? 'advance' : 'simple'));
   };
 
   const _submit = (initPagination?: TParams[0]) => {

@@ -1,8 +1,8 @@
 import { useDeepCompareEffect } from 'ahooks';
-import React, { useEffect, useState, useRef } from 'react';
+import { useEffect, useState, useRef } from 'react';
 
 export default () => {
-  const [count, setCount] = useState(0);
+  const [, setCount] = useState(0);
   const effectCountRef = useRef(0);
   const deepCompareCountRef = useRef(0);
 
