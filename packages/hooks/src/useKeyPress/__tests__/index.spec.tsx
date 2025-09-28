@@ -109,7 +109,7 @@ describe('useKeyPress ', () => {
   test('test key in `eventHandler` parameter', async () => {
     let pressedKey;
     const KEYS = ['c', 'shift.c', 'shift.ctrl.c'];
-    const callbackKey = (e, key) => {
+    const callbackKey = (e: any, key: any) => {
       pressedKey = key;
     };
 

@@ -6,7 +6,7 @@
  * desc.zh-CN: 单个 hook 注册多个快捷键，每个快捷键对应不同逻辑。
  */
 
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useKeyPress } from 'ahooks';
 
 export default () => {
@@ -25,7 +25,7 @@ export default () => {
   };
 
   useKeyPress(['w', 's', 'shift.c'], (e, key) => {
-    keyCallbackMap[key]();
+    keyCallbackMap[key as keyof typeof keyCallbackMap]();
   });
 
   return (

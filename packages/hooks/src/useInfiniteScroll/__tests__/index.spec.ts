@@ -1,4 +1,4 @@
-import { act, renderHook, waitFor } from '@testing-library/react';
+import { act, renderHook } from '@testing-library/react';
 import { useState } from 'react';
 import { afterAll, beforeAll, beforeEach, describe, expect, test, vi } from 'vitest';
 import { sleep } from '../../utils/testingHelpers';
@@ -21,7 +21,7 @@ export async function mockRequest() {
 const targetEl = document.createElement('div');
 
 // set target property
-function setTargetInfo(key: 'scrollTop', value) {
+function setTargetInfo(key: 'scrollTop', value: any) {
   Object.defineProperty(targetEl, key, {
     value,
     configurable: true,
@@ -85,10 +85,10 @@ describe('useInfiniteScroll', () => {
   });
 
   test('should auto load when scroll to bottom', async () => {
-    const events = {};
+    const events: Record<string, any> = {};
     const mockAddEventListener = vi
       .spyOn(targetEl, 'addEventListener')
-      .mockImplementation((eventName, callback) => {
+      .mockImplementation((eventName: string, callback: any) => {
         events[eventName] = callback;
       });
     const { result } = setup(mockRequest, {
@@ -129,10 +129,10 @@ describe('useInfiniteScroll', () => {
   });
 
   test('should auto load when scroll to top', async () => {
-    const events = {};
+    const events: Record<string, any> = {};
     const mockAddEventListener = vi
       .spyOn(targetEl, 'addEventListener')
-      .mockImplementation((eventName, callback) => {
+      .mockImplementation((eventName: string, callback: any) => {
         events[eventName] = callback;
       });
     // Mock scrollTo using Object.defineProperty
@@ -285,7 +285,7 @@ describe('useInfiniteScroll', () => {
     const onBefore = vi.fn();
     const onSuccess = vi.fn();
     const onFinally = vi.fn();
-    const { result } = setup(mockRequest, {
+    setup(mockRequest, {
       onBefore,
       onSuccess,
       onFinally,

@@ -6,7 +6,6 @@
  * desc.zh-CN: 加载 js 文件，例如引入 [test-external-script.js](/useExternal/test-external-script.js)
  */
 
-import React from 'react';
 import { useExternal } from 'ahooks';
 
 export default () => {
@@ -22,7 +21,7 @@ export default () => {
         Status: <b>{status}</b>
       </p>
       <p>
-        Response: <i>{status === 'ready' ? window.TEST_SCRIPT?.start() : '-'}</i>
+        Response: <i>{status === 'ready' ? (window as any).TEST_SCRIPT?.start() : '-'}</i>
       </p>
     </>
   );

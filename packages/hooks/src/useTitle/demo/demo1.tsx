@@ -6,7 +6,6 @@
  * desc.zh-CN: 设置页面标题
  */
 
-import React from 'react';
 import { useTitle } from 'ahooks';
 
 export default () => {

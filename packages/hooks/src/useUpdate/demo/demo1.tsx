@@ -6,7 +6,6 @@
  * desc.zh-CN: 强制组件重新渲染。
  */
 
-import React from 'react';
 import { useUpdate } from 'ahooks';
 
 export default () => {

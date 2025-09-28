@@ -1,5 +1,4 @@
 import { Pagination, Table } from '@alifd/next';
-import React from 'react';
 import { useFusionTable } from 'ahooks';
 
 interface Item {
@@ -16,7 +15,13 @@ interface Result {
   list: Item[];
 }
 
-const getTableData = ({ current, pageSize }): Promise<Result> => {
+const getTableData = ({
+  current,
+  pageSize,
+}: {
+  current: number;
+  pageSize: number;
+}): Promise<Result> => {
   const query = `page=${current}&size=${pageSize}`;
 
   return fetch(`https://randomuser.me/api?results=${pageSize}&${query}`)

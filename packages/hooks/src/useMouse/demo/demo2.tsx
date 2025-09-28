@@ -6,7 +6,7 @@
  * desc.zh-CN: 通过传入目标元素，可以获取鼠标相对于元素的位置。
  */
 
-import React, { useRef } from 'react';
+import { useRef } from 'react';
 import { useMouse } from 'ahooks';
 
 export default () => {

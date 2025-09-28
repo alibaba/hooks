@@ -9,7 +9,6 @@
 import { MinusCircleOutlined, PlusCircleOutlined } from '@ant-design/icons';
 import { useDynamicList } from 'ahooks';
 import { Button, Input, Space } from 'antd';
-import React from 'react';
 
 export default () => {
   const { list, remove, batchRemove, getKey, insert, replace } = useDynamicList(['David', 'Jack']);

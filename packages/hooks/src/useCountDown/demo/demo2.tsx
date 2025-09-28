@@ -6,7 +6,7 @@
  * desc.zh-CN: 动态变更配置项, 适用于验证码或类似场景，时间结束后会触发 onEnd 回调。
  */
 
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useCountDown } from 'ahooks';
 
 export default () => {

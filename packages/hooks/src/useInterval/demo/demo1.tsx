@@ -6,7 +6,7 @@
  * desc.zh-CN: 每1000ms，执行一次
  */
 
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useInterval } from 'ahooks';
 
 export default () => {

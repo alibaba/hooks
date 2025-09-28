@@ -1,5 +1,4 @@
 import Mock from 'mockjs';
-import React from 'react';
 import { useRequest } from 'ahooks';
 
 const getArticle = async () => {

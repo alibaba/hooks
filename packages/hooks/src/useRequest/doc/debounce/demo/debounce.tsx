@@ -1,7 +1,5 @@
 import { useRequest } from 'ahooks';
 import Mock from 'mockjs';
-import React from 'react';
-
 async function getEmail(search?: string): Promise<string[]> {
   console.log('debounce getEmail', search);
   return new Promise((resolve) => {

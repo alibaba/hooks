@@ -46,7 +46,10 @@ describe('useInViewport', () => {
       targetEls.push(target);
     }
 
-    const getValue = (isIntersecting, intersectionRatio) => ({ isIntersecting, intersectionRatio });
+    const getValue = (isIntersecting: any, intersectionRatio: any) => ({
+      isIntersecting,
+      intersectionRatio,
+    });
 
     const { result } = renderHook(() => useInViewport(targetEls, { callback }));
     const calls = mockIntersectionObserver.mock.calls;

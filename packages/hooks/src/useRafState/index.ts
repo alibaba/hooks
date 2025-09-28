@@ -13,7 +13,7 @@ function useRafState<S>(initialState?: S | (() => S)) {
     cancelAnimationFrame(ref.current);
 
     ref.current = requestAnimationFrame(() => {
-      setState(value);
+      setState(value as any);
     });
   }, []);
 

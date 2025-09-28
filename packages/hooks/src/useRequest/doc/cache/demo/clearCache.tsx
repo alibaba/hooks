@@ -1,5 +1,4 @@
 import Mock from 'mockjs';
-import React from 'react';
 import { useRequest, clearCache, useBoolean } from 'ahooks';
 import { message } from 'antd';
 
@@ -14,7 +13,7 @@ const getArticle = async () => {
   });
 };
 
-const Article = ({ cacheKey }) => {
+const Article = ({ cacheKey }: { cacheKey: string }) => {
   const { data, loading } = useRequest(getArticle, {
     cacheKey,
   });

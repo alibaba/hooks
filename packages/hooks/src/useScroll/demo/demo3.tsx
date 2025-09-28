@@ -6,7 +6,7 @@
  * desc.zh-CN: 在垂直方向 100px 到 200px 的滚动范围内监听
  */
 
-import React, { useRef } from 'react';
+import { useRef } from 'react';
 import { useScroll } from 'ahooks';
 
 export default () => {

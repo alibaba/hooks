@@ -6,8 +6,6 @@
 
 import { useRequest } from 'ahooks';
 import Mock from 'mockjs';
-import React from 'react';
-
 function getUsername(): Promise<string> {
   return new Promise((resolve) => {
     setTimeout(() => {

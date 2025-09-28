@@ -8,7 +8,7 @@
 
 import { CheckOutlined } from '@ant-design/icons';
 import { useKeyPress } from 'ahooks';
-import React, { useState } from 'react';
+import { useState } from 'react';
 
 export default () => {
   const [state, setState] = useState<number>();

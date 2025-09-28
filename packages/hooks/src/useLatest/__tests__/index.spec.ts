@@ -24,7 +24,7 @@ describe('useLatest', () => {
 
     expect(result.current.current).toBe(val1);
 
-    const val2 = [];
+    const val2: any[] = [];
     rerender(val2);
     expect(result.current.current).toBe(val2);
   });

@@ -1,11 +1,10 @@
-import React from 'react';
 import { useReactive } from 'ahooks';
 
 export default () => {
   const state = useReactive({
     bug: '',
     bugs: ['feat', 'fix', 'chore'],
-    addBug(bug) {
+    addBug(bug: any) {
       this.bugs.push(bug);
     },
     get bugsCount() {

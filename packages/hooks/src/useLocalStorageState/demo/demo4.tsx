@@ -6,7 +6,6 @@
  * desc.zh-CN: 存储值变化时，所有 `key` 相同的 `useLocalStorageState` 会同步状态，包括同一浏览器不同 tab 之间（尝试打开两个此页面，点击其中一个页面的按钮，另一个页面的 count 会自动更新）
  */
 
-import React from 'react';
 import { useLocalStorageState } from 'ahooks';
 
 export default function () {
@@ -29,7 +28,7 @@ function Counter() {
       <button style={{ marginRight: '8px' }} onClick={() => setCount(count! + 1)}>
         count: {count}
       </button>
-      <button onClick={() => setCount()}>Clear</button>
+      <button onClick={() => setCount(0)}>Clear</button>
     </div>
   );
 }

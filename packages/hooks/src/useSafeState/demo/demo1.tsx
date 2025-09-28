@@ -1,5 +1,5 @@
 import { useSafeState } from 'ahooks';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 const Child = () => {
   const [value, setValue] = useSafeState<string>();

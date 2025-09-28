@@ -1,5 +1,5 @@
 import { useKeyPress } from 'ahooks';
-import React, { useState } from 'react';
+import { useState } from 'react';
 
 export default () => {
   const [num, setNum] = useState<string>();

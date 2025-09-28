@@ -6,7 +6,6 @@
  * desc.zh-CN: useCookieState 的 setState 可以接收 function updater，就像 useState 那样。
  */
 
-import React from 'react';
 import { useCookieState } from 'ahooks';
 
 export default function App() {

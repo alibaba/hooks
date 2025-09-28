@@ -6,7 +6,7 @@
  * desc.zh-CN: 自定义拖拽过程中跟随鼠标指针的图像。
  */
 
-import React, { useRef } from 'react';
+import { useRef } from 'react';
 import { useDrag } from 'ahooks';
 
 const COMMON_STYLE: React.CSSProperties = {

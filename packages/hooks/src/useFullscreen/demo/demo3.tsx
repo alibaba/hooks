@@ -4,7 +4,7 @@
  * title.zh-CN: 页面全屏
  */
 
-import React, { useRef } from 'react';
+import { useRef } from 'react';
 import { useFullscreen } from 'ahooks';
 
 export default () => {

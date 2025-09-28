@@ -6,10 +6,10 @@
  * desc.zh-CN: 元素的全屏情况可能被其它脚本修改，不用担心，ahooks 可以与它们共存。
  */
 
-import React, { useRef } from 'react';
+import { useRef } from 'react';
 import { useFullscreen } from 'ahooks';
 
-function vanillaToggleFullscreen(element) {
+function vanillaToggleFullscreen(element: HTMLElement) {
   const isFullscreen = !!document.fullscreenElement;
 
   if (isFullscreen) {
@@ -30,7 +30,7 @@ export default () => {
         <button style={{ marginRight: '8px' }} onClick={toggleFullscreen}>
           ahooks toggleFullscreen
         </button>
-        <button onClick={() => vanillaToggleFullscreen(ref.current)}>
+        <button onClick={() => ref.current && vanillaToggleFullscreen(ref.current)}>
           vanilla toggleFullscreen
         </button>
       </div>

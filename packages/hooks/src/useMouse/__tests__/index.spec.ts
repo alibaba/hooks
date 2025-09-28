@@ -29,7 +29,7 @@ describe('useMouse', () => {
   });
 
   test('should be work with target', async () => {
-    const events = {};
+    const events: Record<string, any> = {};
     const getBoundingClientRectMock = vi.spyOn(HTMLElement.prototype, 'getBoundingClientRect');
     vi.spyOn(document, 'addEventListener').mockImplementation(
       vi.fn((event: any, callback: any) => {

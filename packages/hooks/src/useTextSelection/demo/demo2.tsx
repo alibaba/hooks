@@ -8,7 +8,7 @@
 
 import { useRequest, useTextSelection } from 'ahooks';
 import { Popover, Spin } from 'antd';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 const getResult = (keyword: string): Promise<string> => {
   const trimedText = keyword.trim() !== '';

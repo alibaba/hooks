@@ -6,7 +6,7 @@
  * desc.zh-CN: 点击按钮查看效果。
  */
 
-import React, { useState, useRef } from 'react';
+import { useState, useRef } from 'react';
 import { useEventListener } from 'ahooks';
 
 export default () => {

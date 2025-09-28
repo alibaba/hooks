@@ -7,7 +7,7 @@
  */
 
 import { useWhyDidYouUpdate } from 'ahooks';
-import React, { useState } from 'react';
+import { useState } from 'react';
 
 const Demo: React.FC<{ count: number }> = (props) => {
   const [randomNum, setRandomNum] = useState(Math.random());

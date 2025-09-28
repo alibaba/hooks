@@ -17,7 +17,7 @@ const mockTarget = {
   }),
 };
 
-const setup = (onLongPress: any, target, options?: Options) =>
+const setup = (onLongPress: any, target: any, options?: Options) =>
   renderHook(() => useLongPress(onLongPress, target, options));
 
 describe('useLongPress', () => {

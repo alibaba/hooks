@@ -6,7 +6,7 @@
  * desc.zh-CN: 渲染大量数据
  */
 
-import React, { useMemo, useRef } from 'react';
+import { useMemo, useRef } from 'react';
 import { useVirtualList } from 'ahooks';
 
 export default () => {

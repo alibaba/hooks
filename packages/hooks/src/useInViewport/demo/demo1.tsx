@@ -6,7 +6,7 @@
  * desc.zh-CN: 监听元素是否在可见区域内
  */
 
-import React, { useRef } from 'react';
+import { useRef } from 'react';
 import { useInViewport } from 'ahooks';
 
 export default () => {

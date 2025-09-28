@@ -52,9 +52,7 @@ const useUrlState = <S extends UrlState = UrlState>(
 
   const update = useUpdate();
 
-  const baseStateRef = useRef(
-    typeof baseState === 'function' ? baseState() : baseState || {},
-  );
+  const baseStateRef = useRef(typeof baseState === 'function' ? baseState() : baseState || {});
 
   const queryFromUrl = useMemo(() => {
     return qs.parse(location.search, mergedParseOptions);

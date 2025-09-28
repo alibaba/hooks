@@ -1,5 +1,5 @@
 import { act, render, renderHook } from '@testing-library/react';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { describe, expect, test, vi } from 'vitest';
 import { request } from '../../utils/testingHelpers';
 import useRequest, { clearCache } from '../index';

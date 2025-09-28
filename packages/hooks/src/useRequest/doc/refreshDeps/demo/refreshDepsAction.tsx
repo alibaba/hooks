@@ -6,7 +6,7 @@
  * desc.zh-CN: 该示例展示了当依赖数组变化时，首先校验参数合法性，然后发起新的请求。
  */
 
-import React, { useState } from 'react';
+import { useState } from 'react';
 import Mock from 'mockjs';
 import isNumber from 'lodash/isNumber';
 import { Button, Space } from 'antd';

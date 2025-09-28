@@ -6,7 +6,6 @@
  * desc.zh-CN: 切换 boolean，可以接收默认值。
  */
 
-import React from 'react';
 import { useBoolean } from 'ahooks';
 
 export default () => {

@@ -6,7 +6,6 @@
  * desc.zh-CN: useUrlState 可以同时管理多个状态
  */
 
-import React from 'react';
 import useUrlState from '@ahooksjs/use-url-state';
 
 export default () => {
@@ -19,14 +18,14 @@ export default () => {
         <span style={{ paddingLeft: 8 }}>
           <button
             onClick={() => {
-              setState((s) => ({ page: Number(s.page) + 1 }));
+              setState((s) => ({ page: `${Number(s.page) + 1}` }));
             }}
           >
             +
           </button>
           <button
             onClick={() => {
-              setState((s) => ({ page: Number(s.page) - 1 }));
+              setState((s) => ({ page: `${Number(s.page) - 1}` }));
             }}
             style={{ margin: '0 8px' }}
           >
@@ -47,14 +46,14 @@ export default () => {
         <span style={{ paddingLeft: 8 }}>
           <button
             onClick={() => {
-              setState((s) => ({ pageSize: Number(s.pageSize) + 1 }));
+              setState((s) => ({ pageSize: `${Number(s.pageSize) + 1}` }));
             }}
           >
             +
           </button>
           <button
             onClick={() => {
-              setState((s) => ({ pageSize: Number(s.pageSize) - 1 }));
+              setState((s) => ({ pageSize: `${Number(s.pageSize) - 1}` }));
             }}
             style={{ margin: '0 8px' }}
           >

@@ -1,5 +1,5 @@
 import { useRequest } from 'ahooks';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { message } from 'antd';
 
 function editUsername(username: string) {

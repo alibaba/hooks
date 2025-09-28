@@ -1,5 +1,5 @@
 import { useDeepCompareLayoutEffect } from 'ahooks';
-import React, { useLayoutEffect, useState, useRef } from 'react';
+import { useLayoutEffect, useState, useRef } from 'react';
 
 export default () => {
   const [, setCount] = useState(0);

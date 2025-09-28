@@ -50,10 +50,10 @@ describe('useAntdTable', () => {
     resetFields() {
       this.fieldsValue = { ...this.initialValue };
     },
-    validateFields(fields) {
-      const targetFields = {};
-      fields.forEach((field) => {
-        targetFields[field] = this.fieldsValue[field];
+    validateFields(fields: any[]) {
+      const targetFields: Record<string | number, any> = {};
+      fields.forEach((field: string | number) => {
+        targetFields[field] = (this.fieldsValue as any)[field];
       });
       return Promise.resolve(targetFields);
     },
@@ -185,10 +185,10 @@ describe('useAntdTable', () => {
     const v3Form = {
       ...form,
       getInternalHooks: undefined,
-      validateFields: function (fields, callback) {
-        const targetFields = {};
-        fields.forEach((field) => {
-          targetFields[field] = this.fieldsValue[field];
+      validateFields: function (fields: any[], callback: (arg0: undefined, arg1: {}) => void) {
+        const targetFields: Record<string | number, any> = {};
+        fields.forEach((field: string | number) => {
+          targetFields[field] = (this.fieldsValue as any)[field];
         });
         callback(undefined, targetFields);
       },

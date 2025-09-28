@@ -6,7 +6,6 @@
  * desc.zh-CN: 对于普通的字符串，可能你不需要默认的 `JSON.stringify/JSON.parse` 来序列化。
  */
 
-import React from 'react';
 import { useLocalStorageState } from 'ahooks';
 
 export default function () {

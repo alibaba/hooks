@@ -6,7 +6,7 @@
  * desc.zh-CN: 使用 ref 设置需要监听的区域。可以通过鼠标点击外部区域，或者使用键盘的 `tab` 等按键来切换焦点。
  */
 
-import React, { useRef } from 'react';
+import { useRef } from 'react';
 import { useFocusWithin } from 'ahooks';
 import { message } from 'antd';
 

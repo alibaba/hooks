@@ -6,7 +6,7 @@
  * desc.zh-CN: 父组件创建了一个 `focus$` 事件，并且将它传递给了两个子组件。在 MessageBox 中调用 `focus$.emit` ，InputBox 组件就可以收到通知。
  */
 
-import React, { useRef, FC } from 'react';
+import { useRef, type FC } from 'react';
 import { useEventEmitter } from 'ahooks';
 import { EventEmitter } from 'ahooks/lib/useEventEmitter';
 
@@ -31,9 +31,9 @@ const MessageBox: FC<{
 const InputBox: FC<{
   focus$: EventEmitter<void>;
 }> = function (props) {
-  const inputRef = useRef<any>();
+  const inputRef = useRef<HTMLInputElement>(null);
   props.focus$.useSubscription(() => {
-    inputRef.current.focus();
+    inputRef.current?.focus();
   });
   return (
     <input ref={inputRef} placeholder="Enter reply" style={{ width: '100%', padding: '4px' }} />

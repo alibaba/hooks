@@ -6,7 +6,6 @@
  * desc.zh-CN: useLocalStorageState 会自动处理序列化和反序列化的操作。
  */
 
-import React from 'react';
 import { useLocalStorageState } from 'ahooks';
 
 const defaultArray = ['a', 'e', 'i', 'o', 'u'];

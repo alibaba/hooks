@@ -8,8 +8,6 @@
 
 import { useBoolean, useUnmount } from 'ahooks';
 import { message } from 'antd';
-import React from 'react';
-
 const MyComponent = () => {
   useUnmount(() => {
     message.info('unmount');

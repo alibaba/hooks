@@ -7,8 +7,6 @@
  */
 
 import { useTheme } from 'ahooks';
-import React from 'react';
-
 export default () => {
   const { theme, themeMode, setThemeMode } = useTheme({
     localStorageKey: 'themeMode',

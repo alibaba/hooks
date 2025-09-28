@@ -1,5 +1,4 @@
 import { useRequest } from 'ahooks';
-import React from 'react';
 import Mock from 'mockjs';
 import { message } from 'antd';
 
@@ -25,7 +24,7 @@ export default () => {
 
   return (
     <>
-      <p>Username: {loading ? 'Loading' : data}</p>
+      <p>Username: {loading ? 'Loading' : String(data)}</p>
       <button type="button" onClick={run}>
         start
       </button>

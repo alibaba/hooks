@@ -7,9 +7,9 @@ import useDrop from '../index';
 const setup = (target: unknown, options?: Options) =>
   renderHook(() => useDrop(target as BasicTarget, options));
 
-const events = {};
+const events: Record<string, (event?: any) => void> = {};
 const mockTarget = {
-  addEventListener: vi.fn((event, callback) => {
+  addEventListener: vi.fn((event: string, callback: (event?: any) => void) => {
     events[event] = callback;
   }),
   removeEventListener: vi.fn((event) => {
@@ -92,7 +92,7 @@ describe('useDrop', () => {
   test('should call onText on drop', async () => {
     vi.spyOn(mockEvent.dataTransfer, 'items', 'get').mockReturnValue([
       {
-        getAsString: (callback) => {
+        getAsString: (callback: (text: string) => void) => {
           callback('drop text');
         },
       },
@@ -121,8 +121,9 @@ describe('useDrop', () => {
 
   test('should call onUri on drop', async () => {
     const url = 'https://alipay.com';
-    vi.spyOn(mockEvent.dataTransfer, 'getData').mockImplementation((format: string) => {
+    vi.spyOn(mockEvent.dataTransfer, 'getData').mockImplementation((format?: string) => {
       if (format === 'text/uri-list') return url;
+      return undefined;
     });
 
     const onUri = vi.fn();
@@ -138,8 +139,9 @@ describe('useDrop', () => {
     const data = {
       value: 'mock',
     };
-    vi.spyOn(mockEvent.dataTransfer, 'getData').mockImplementation((format: string) => {
+    vi.spyOn(mockEvent.dataTransfer, 'getData').mockImplementation((format?: string) => {
       if (format === 'custom') return data;
+      return undefined;
     });
 
     const onDom = vi.fn();
@@ -151,8 +153,9 @@ describe('useDrop', () => {
     expect(onDom.mock.calls[0][0]).toMatchObject(data);
 
     // catch JSON.parse error
-    vi.spyOn(mockEvent.dataTransfer, 'getData').mockImplementation((format: string) => {
+    vi.spyOn(mockEvent.dataTransfer, 'getData').mockImplementation((format?: string) => {
       if (format === 'custom') return {};
+      return undefined;
     });
     events['dragenter'](mockEvent);
     events['drop'](mockEvent);
@@ -162,7 +165,7 @@ describe('useDrop', () => {
   test('should call onText on paste', async () => {
     vi.spyOn(mockEvent.clipboardData, 'items', 'get').mockReturnValue([
       {
-        getAsString: (callback) => {
+        getAsString: (callback: (text: string) => void) => {
           callback('paste text');
         },
       },
