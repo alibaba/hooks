@@ -193,6 +193,61 @@ describe('useRequest', () => {
     hook.unmount();
   });
 
+  test('runAsync should resolve immediately when ready=false', async () => {
+    // manual = true
+    act(() => {
+      hook = setUp(request, {
+        manual: true,
+        ready: false,
+      });
+    });
+    expect(hook.result.current.loading).toBe(false);
+
+    let resolved = false;
+    let value: any = 'init';
+
+    await act(async () => {
+      hook.result.current
+        .runAsync(1)
+        .then((res: any) => {
+          resolved = true;
+          value = res;
+        });
+      await Promise.resolve();
+    });
+
+    expect(resolved).toBe(true);
+    expect(value).toBeUndefined();
+    expect(hook.result.current.loading).toBe(false);
+    hook.unmount();
+
+    // manual = false
+    act(() => {
+      hook = setUp(request, {
+        ready: false,
+      });
+    });
+    expect(hook.result.current.loading).toBe(false);
+
+    resolved = false;
+    value = 'init';
+
+    await act(async () => {
+      hook.result.current
+        .runAsync(1)
+        .then((res: any) => {
+          resolved = true;
+          value = res;
+        });
+      await Promise.resolve();
+    });
+
+    expect(resolved).toBe(true);
+    expect(value).toBeUndefined();
+    expect(hook.result.current.loading).toBe(false);
+    hook.unmount();
+  });
+
   test('useRequest defaultParams should work', async () => {
     act(() => {
       hook = setUp<string, [number, number, number]>(request, {
