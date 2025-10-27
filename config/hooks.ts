@@ -65,6 +65,7 @@ export const menus = [
       'useUpdateEffect',
       'useUpdateLayoutEffect',
       'useAsyncEffect',
+      'useImmediateEffect',
       'useDebounceEffect',
       'useDebounceFn',
       'useThrottleFn',
