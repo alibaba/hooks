@@ -19,12 +19,14 @@ export interface Options<T> {
 export function createUseStorageState(getStorage: () => Storage | undefined) {
   function useStorageState<T>(key: string, options: Options<T> = {}) {
     let storage: Storage | undefined;
-    const {
-      listenStorageChange = false,
-      onError = (e) => {
-        console.error(e);
-      },
-    } = options;
+
+    const { listenStorageChange = false } = options;
+
+    const serializer = isFunction(options.serializer) ? options.serializer : JSON.stringify;
+
+    const deserializer = isFunction(options.deserializer) ? options.deserializer : JSON.parse;
+
+    const onError = isFunction(options.onError) ? options.onError : console.error;
 
     // https://github.com/alibaba/hooks/issues/800
     try {
@@ -32,20 +34,6 @@ export function createUseStorageState(getStorage: () => Storage | undefined) {
     } catch (err) {
       onError(err);
     }
-
-    const serializer = (value: T) => {
-      if (options.serializer) {
-        return options.serializer(value);
-      }
-      return JSON.stringify(value);
-    };
-
-    const deserializer = (value: string) => {
-      if (options.deserializer) {
-        return options.deserializer(value);
-      }
-      return JSON.parse(value);
-    };
 
     function getStoredValue() {
       try {
