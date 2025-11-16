@@ -21,7 +21,7 @@ export default () => {
     <div>
       <p> count: {count} </p>
       <p style={{ marginTop: 16 }}> Delay: {delay} </p>
-      <button onClick={() => setDelay((t) => (!!t ? t + 1000 : 1000))} style={{ marginRight: 8 }}>
+      <button onClick={() => setDelay((t) => (t ? t + 1000 : 1000))} style={{ marginRight: 8 }}>
         Delay + 1000
       </button>
       <button

@@ -44,7 +44,7 @@ const useCachePlugin: Plugin<any, any[]> = (
 
     // get data from cache when init
     const cacheData = _getCache(cacheKey);
-    if (cacheData && Object.hasOwnProperty.call(cacheData, 'data')) {
+    if (cacheData && Object.hasOwn(cacheData, 'data')) {
       fetchInstance.state.data = cacheData.data;
       fetchInstance.state.params = cacheData.params;
       if (staleTime === -1 || Date.now() - cacheData.time <= staleTime) {
@@ -70,7 +70,7 @@ const useCachePlugin: Plugin<any, any[]> = (
     onBefore: (params) => {
       const cacheData = _getCache(cacheKey, params);
 
-      if (!cacheData || !Object.hasOwnProperty.call(cacheData, 'data')) {
+      if (!cacheData || !Object.hasOwn(cacheData, 'data')) {
         return {};
       }
 

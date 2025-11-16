@@ -5,7 +5,7 @@
  */
 
 import { useFullscreen } from 'ahooks';
-// @ts-ignore - Image import
+// @ts-expect-error - Image import
 import img from './react-hooks.jpg';
 
 export default () => {

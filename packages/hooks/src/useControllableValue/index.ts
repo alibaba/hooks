@@ -37,13 +37,13 @@ function useControllableValue<T = any>(defaultProps?: Props, options: Options<T>
   } = options;
 
   const value = props[valuePropName] as T;
-  const isControlled = Object.prototype.hasOwnProperty.call(props, valuePropName);
+  const isControlled = Object.hasOwn(props, valuePropName);
 
   const initialValue = useMemo(() => {
     if (isControlled) {
       return value;
     }
-    if (Object.prototype.hasOwnProperty.call(props, defaultValuePropName)) {
+    if (Object.hasOwn(props, defaultValuePropName)) {
       return props[defaultValuePropName];
     }
     return defaultValue;

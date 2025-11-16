@@ -137,7 +137,7 @@ const useAntdTable = <TData extends Data, TParams extends Params>(
             current: 1,
           };
           if (!form) {
-            // @ts-ignore
+            // @ts-expect-error
             run(pagination);
             return;
           }
@@ -148,7 +148,7 @@ const useAntdTable = <TData extends Data, TParams extends Params>(
             ...values,
           };
 
-          // @ts-ignore
+          // @ts-expect-error
           run(pagination, values, {
             allFormData: allFormDataRef.current,
             type,
@@ -185,7 +185,7 @@ const useAntdTable = <TData extends Data, TParams extends Params>(
   const onTableChange = (pagination: any, filters: any, sorter: any, extra: any) => {
     const [oldPaginationParams, ...restParams] = params || [];
     run(
-      // @ts-ignore
+      // @ts-expect-error
       {
         ...oldPaginationParams,
         current: pagination.current,
@@ -204,7 +204,7 @@ const useAntdTable = <TData extends Data, TParams extends Params>(
     if (params.length > 0) {
       allFormDataRef.current = cacheFormTableData?.allFormData || {};
       restoreForm();
-      // @ts-ignore
+      // @ts-expect-error
       run(...params);
       return;
     }

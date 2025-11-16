@@ -50,7 +50,7 @@ function useRequestImplement<TData, TParams extends any[]>(
     if (!manual && ready) {
       // useCachePlugin can set fetchInstance.state.params from cache when init
       const params = fetchInstance.state.params || options.defaultParams || [];
-      // @ts-ignore
+      // @ts-expect-error
       fetchInstance.run(...params);
     }
   });

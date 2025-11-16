@@ -53,7 +53,7 @@ async function genMetaData() {
   return metadata;
 }
 
-gulp.task('metadata', async function () {
+gulp.task('metadata', async () => {
   const metadata = await genMetaData();
   await fse.writeJson('metadata.json', metadata, { spaces: 2 });
 });

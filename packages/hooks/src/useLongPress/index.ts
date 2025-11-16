@@ -93,6 +93,13 @@ function useLongPress(
           return;
         }
 
+        // Only handle left mouse button (button 0)
+        // Ignore right-click (button 2) and middle-click (button 1)
+        // If button is undefined (e.g., in tests), default to left button
+        if (event?.button !== undefined && event.button !== 0) {
+          return;
+        }
+
         mousePressed.current = true;
 
         if (hasMoveThreshold) {
@@ -166,11 +173,19 @@ function useLongPress(
         }
       };
 
+      const onContextMenu = (event: Event) => {
+        // Prevent context menu if long press was triggered
+        if (isTriggeredRef.current) {
+          event.preventDefault();
+        }
+      };
+
       targetElement.addEventListener('mousedown', onMouseDown as EventListener);
       targetElement.addEventListener('mouseup', onMouseUp as EventListener);
       targetElement.addEventListener('mouseleave', onMouseLeave as EventListener);
       targetElement.addEventListener('touchstart', onTouchStart as EventListener);
       targetElement.addEventListener('touchend', onTouchEnd as EventListener);
+      targetElement.addEventListener('contextmenu', onContextMenu as EventListener);
 
       if (hasMoveThreshold) {
         targetElement.addEventListener('mousemove', onMove as EventListener);
@@ -188,6 +203,7 @@ function useLongPress(
         targetElement.removeEventListener('mouseleave', onMouseLeave as EventListener);
         targetElement.removeEventListener('touchstart', onTouchStart as EventListener);
         targetElement.removeEventListener('touchend', onTouchEnd as EventListener);
+        targetElement.removeEventListener('contextmenu', onContextMenu as EventListener);
 
         if (hasMoveThreshold) {
           targetElement.removeEventListener('mousemove', onMove as EventListener);

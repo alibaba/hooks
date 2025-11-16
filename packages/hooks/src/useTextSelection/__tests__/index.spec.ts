@@ -33,7 +33,7 @@ describe('useTextSelection', () => {
 
   function initGetSelection({ top = 0, left = 0, height = 0, width = 0, text = 'hello world!' }) {
     // TODO
-    // @ts-ignore
+    // @ts-expect-error
     window.getSelection = () => {
       return {
         toString: () => {
@@ -63,7 +63,7 @@ describe('useTextSelection', () => {
     initGetSelection({ left: 10, top: 10, height: 100, width: 100, text: 'on textSelection' });
 
     // TODO
-    // @ts-ignore
+    // @ts-expect-error
     const hook = renderHook(() => useTextSelection(() => document));
 
     expect(hook.result.current.text).toBe('');

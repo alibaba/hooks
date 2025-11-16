@@ -37,7 +37,7 @@ export default class Fetch<TData, TParams extends any[]> {
   }
 
   runPluginHandler(event: keyof PluginReturn<TData, TParams>, ...rest: any[]) {
-    // @ts-ignore
+    // @ts-expect-error
     const r = this.pluginImpls.map((i) => i[event]?.(...rest)).filter(Boolean);
     return Object.assign({}, ...r);
   }
@@ -145,12 +145,12 @@ export default class Fetch<TData, TParams extends any[]> {
   }
 
   refresh() {
-    // @ts-ignore
+    // @ts-expect-error
     this.run(...(this.state.params || []));
   }
 
   refreshAsync() {
-    // @ts-ignore
+    // @ts-expect-error
     return this.runAsync(...(this.state.params || []));
   }
 

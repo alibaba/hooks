@@ -21,10 +21,7 @@ export default () => {
     <div>
       <p> count: {count} </p>
       <p style={{ marginTop: 16 }}> interval: {interval} </p>
-      <button
-        onClick={() => setInterval((t) => (!!t ? t + 1000 : 1000))}
-        style={{ marginRight: 8 }}
-      >
+      <button onClick={() => setInterval((t) => (t ? t + 1000 : 1000))} style={{ marginRight: 8 }}>
         interval + 1000
       </button>
       <button

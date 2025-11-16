@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { type EffectCallback } from 'react';
+import type { EffectCallback } from 'react';
 import { isFunction } from '../utils';
 import isDev from '../utils/isDev';
 

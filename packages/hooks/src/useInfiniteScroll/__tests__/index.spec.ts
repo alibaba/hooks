@@ -391,7 +391,7 @@ describe('useInfiniteScroll', () => {
   });
 
   test('list can be null or undefined', async () => {
-    // @ts-ignore
+    // @ts-expect-error
     const { result } = setup(async () => {
       await sleep(1000);
       count++;

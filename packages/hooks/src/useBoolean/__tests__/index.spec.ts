@@ -33,12 +33,12 @@ describe('useBoolean', () => {
     });
     expect(result.current[0]).toBe(true);
     act(() => {
-      // @ts-ignore
+      // @ts-expect-error
       result.current[1].set(0);
     });
     expect(result.current[0]).toBe(false);
     act(() => {
-      // @ts-ignore
+      // @ts-expect-error
       result.current[1].set('a');
     });
     expect(result.current[0]).toBe(true);
@@ -49,13 +49,13 @@ describe('useBoolean', () => {
     expect(hook1.result.current[0]).toBe(true);
     const hook2 = setUp();
     expect(hook2.result.current[0]).toBe(false);
-    // @ts-ignore
+    // @ts-expect-error
     const hook3 = setUp(0);
     expect(hook3.result.current[0]).toBe(false);
-    // @ts-ignore
+    // @ts-expect-error
     const hook4 = setUp('');
     expect(hook4.result.current[0]).toBe(false);
-    // @ts-ignore
+    // @ts-expect-error
     const hook5 = setUp('hello');
     expect(hook5.result.current[0]).toBe(true);
   });
