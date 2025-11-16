@@ -1,6 +1,6 @@
 import { useBoolean } from 'ahooks';
 import Mock from 'mockjs';
-import type React from 'react';
+import React from 'react';
 import { useRequest } from 'ahooks';
 
 const getArticle = async () => {

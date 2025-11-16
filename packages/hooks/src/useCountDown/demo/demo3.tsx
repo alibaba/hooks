@@ -6,7 +6,7 @@
  * desc.zh-CN: 剩余时间毫秒数的倒计时
  */
 
-import type React from 'react';
+import React from 'react';
 import { useCountDown } from 'ahooks';
 
 const App: React.FC = () => {

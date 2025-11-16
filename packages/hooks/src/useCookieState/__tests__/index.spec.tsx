@@ -52,7 +52,7 @@ describe('useCookieState', () => {
     expect(anotherHook.result.current.state).toBe('false');
     expect(Cookies.get(COOKIE)).toBeUndefined();
     act(() => {
-      // @ts-expect-error
+      // @ts-ignore
       hook.result.current.setState();
     });
     expect(hook.result.current.state).toBeUndefined();

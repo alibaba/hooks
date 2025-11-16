@@ -8,27 +8,29 @@
 
 import { useRef, type FC } from 'react';
 import { useEventEmitter } from 'ahooks';
-import type { EventEmitter } from 'ahooks/lib/useEventEmitter';
+import { EventEmitter } from 'ahooks/lib/useEventEmitter';
 
 const MessageBox: FC<{
   focus$: EventEmitter<void>;
-}> = (props) => (
-  <div style={{ paddingBottom: 24 }}>
-    <p>You received a message</p>
-    <button
-      type="button"
-      onClick={() => {
-        props.focus$.emit();
-      }}
-    >
-      Reply
-    </button>
-  </div>
-);
+}> = function (props) {
+  return (
+    <div style={{ paddingBottom: 24 }}>
+      <p>You received a message</p>
+      <button
+        type="button"
+        onClick={() => {
+          props.focus$.emit();
+        }}
+      >
+        Reply
+      </button>
+    </div>
+  );
+};
 
 const InputBox: FC<{
   focus$: EventEmitter<void>;
-}> = (props) => {
+}> = function (props) {
   const inputRef = useRef<HTMLInputElement>(null);
   props.focus$.useSubscription(() => {
     inputRef.current?.focus();

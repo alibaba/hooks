@@ -136,7 +136,7 @@ describe('useMap', () => {
     ]);
 
     act(() => {
-      // @ts-expect-error
+      // @ts-ignore
       utils.setAll();
     });
     expect([...result.current[0]]).toEqual([]);

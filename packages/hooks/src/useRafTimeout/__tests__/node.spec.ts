@@ -21,9 +21,9 @@ describe('useRafTimeout', () => {
     const _requestAnimationFrame = global.requestAnimationFrame;
     const _cancelAnimationFrame = global.cancelAnimationFrame;
 
-    // @ts-expect-error
+    // @ts-ignore
     delete global.requestAnimationFrame;
-    // @ts-expect-error
+    // @ts-ignore
     delete global.cancelAnimationFrame;
 
     const callback = vi.fn();

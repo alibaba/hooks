@@ -18,7 +18,7 @@ const setCache = (key: CachedKey, cacheTime: number, cachedData: CachedData) => 
     clearTimeout(currentCache.timer);
   }
 
-  let timer: Timer | undefined;
+  let timer: Timer | undefined = undefined;
 
   if (cacheTime > -1) {
     // if cache out, clear it
