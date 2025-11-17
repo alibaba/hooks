@@ -46,7 +46,6 @@ const loadScript: LoadExternal = (path, props = {}) => {
     });
 
     newScript.setAttribute('data-status', 'loading');
-    document.body.appendChild(newScript);
 
     return {
       ref: newScript,
@@ -78,7 +77,6 @@ const loadCss: LoadExternal = (path, props = {}) => {
       newCss.as = 'style';
     }
     newCss.setAttribute('data-status', 'loading');
-    document.head.appendChild(newCss);
 
     return {
       ref: newCss,
@@ -102,13 +100,16 @@ const useExternal = (path?: string, options?: Options) => {
       setStatus('unset');
       return;
     }
+    let appendType: 'css' | 'js' | undefined;
     const pathname = path.replace(/[|#].*$/, '');
     if (options?.type === 'css' || (!options?.type && /(^css!|\.css$)/.test(pathname))) {
       const result = loadCss(path, options?.css);
+      appendType = 'css';
       ref.current = result.ref;
       setStatus(result.status);
     } else if (options?.type === 'js' || (!options?.type && /(^js!|\.js$)/.test(pathname))) {
       const result = loadScript(path, options?.js);
+      appendType = 'js';
       ref.current = result.ref;
       setStatus(result.status);
     } else {
@@ -137,6 +138,18 @@ const useExternal = (path?: string, options?: Options) => {
 
     ref.current.addEventListener('load', handler);
     ref.current.addEventListener('error', handler);
+
+    if (appendType === 'css') {
+      document.head.appendChild(ref.current);
+    } else if (appendType === 'js') {
+      document.body.appendChild(ref.current);
+    } else {
+      console.error(
+        "Cannot infer the type of external resource, and please provide a type ('js' | 'css'). " +
+          'Refer to the https://ahooks.js.org/hooks/dom/use-external/#options',
+      );
+    }
+
     return () => {
       ref.current?.removeEventListener('load', handler);
       ref.current?.removeEventListener('error', handler);
