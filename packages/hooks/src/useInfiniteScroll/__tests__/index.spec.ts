@@ -67,6 +67,47 @@ describe('useInfiniteScroll', () => {
     expect(result.current.loadingMore).toBe(false);
   });
 
+  test('should ignore concurrent loadMore calls', async () => {
+    const requestSpy = vi.fn(mockRequest);
+    const { result } = setup(requestSpy, { manual: true });
+    const { loadMore } = result.current;
+
+    act(() => {
+      loadMore();
+    });
+    expect(result.current.loadingMore).toBe(true);
+
+    act(() => {
+      loadMore();
+    });
+    expect(result.current.loadingMore).toBe(true);
+
+    await act(async () => {
+      vi.advanceTimersByTime(1000);
+    });
+
+    expect(result.current.loadingMore).toBe(false);
+    expect(requestSpy).toHaveBeenCalledTimes(1);
+  });
+
+  test('should correct loading and loadingMore state when loadMore', async () => {
+    const { result } = setup(mockRequest, { manual: true });
+    const { loadMore } = result.current;
+    expect(result.current.loading).toBe(false);
+    expect(result.current.loadingMore).toBe(false);
+
+    act(() => {
+      loadMore();
+    });
+    expect(result.current.loading).toBe(false);
+    expect(result.current.loadingMore).toBe(true);
+    await act(async () => {
+      vi.advanceTimersByTime(1000);
+    });
+    expect(result.current.loading).toBe(false);
+    expect(result.current.loadingMore).toBe(false);
+  });
+
   test('noMore should be true when isNoMore is true', async () => {
     const { result } = setup(mockRequest, {
       isNoMore: (d) => d?.nextId === undefined,
@@ -442,18 +483,29 @@ describe('useInfiniteScroll', () => {
         return getLoadMoreListMock(page, PAGE_SIZE);
       }),
     );
-
-    await act(async () => {
-      await result.current.loadMoreAsync();
-    });
+    expect(result.current.loading).toBe(true);
+    expect(result.current.data).toBeUndefined();
+    expect(result.current.loadingMore).toBe(false);
     expect(getLoadMoreListMock).toHaveBeenLastCalledWith(1, PAGE_SIZE);
+    // wait for the first request to finish
+    await act(async () => {
+      vi.advanceTimersByTime(1000);
+    });
+    expect(result.current.loading).toBe(false);
     expect(result.current.data?.list.length).toBe(2);
+    expect(result.current.loadingMore).toBe(false);
 
     await act(async () => {
       await result.current.loadMoreAsync();
     });
     expect(getLoadMoreListMock).toHaveBeenLastCalledWith(2, PAGE_SIZE);
     expect(result.current.data?.list.length).toBe(4);
+
+    await act(async () => {
+      await result.current.loadMoreAsync();
+    });
+    expect(getLoadMoreListMock).toHaveBeenLastCalledWith(3, PAGE_SIZE);
+    expect(result.current.data?.list.length).toBe(6);
 
     await act(async () => {
       await result.current.reloadAsync();

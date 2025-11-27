@@ -37,7 +37,7 @@ const useInfiniteScroll = <TData extends Data>(
       return false;
     }
     return isNoMore(finalData);
-  }, [finalData]);
+  }, [finalData, isNoMore]);
 
   const { loading, error, run, runAsync, cancel } = useRequest(
     async (lastData?: TData) => {
@@ -87,7 +87,7 @@ const useInfiniteScroll = <TData extends Data>(
   );
 
   const loadMore = useMemoizedFn(() => {
-    if (noMore) {
+    if (noMore || loading) {
       return;
     }
     setLoadingMore(true);
@@ -100,7 +100,7 @@ const useInfiniteScroll = <TData extends Data>(
   };
 
   const loadMoreAsync = useMemoizedFn(() => {
-    if (noMore) {
+    if (noMore || loading) {
       return Promise.reject();
     }
     setLoadingMore(true);
