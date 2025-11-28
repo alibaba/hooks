@@ -1,4 +1,4 @@
-import isPlainObject from 'lodash/isPlainObject';
+import isPlainObject from 'lodash-es/isPlainObject';
 import useMemoizedFn from '../useMemoizedFn';
 import { isFunction, isString } from '../utils';
 import { useMemo, useState } from 'react';

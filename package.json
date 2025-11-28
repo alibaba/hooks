@@ -43,7 +43,7 @@
     "@commitlint/cli": "^17.1.2",
     "@commitlint/config-conventional": "^17.1.0",
     "@testing-library/react": "^16.3.0",
-    "@types/lodash": "^4.17.20",
+    "@types/lodash-es": "^4.17.12",
     "@types/mockjs": "^1.0.7",
     "@types/react": "^19.1.8",
     "@types/react-dom": "^19.1.6",

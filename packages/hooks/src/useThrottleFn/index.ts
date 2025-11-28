@@ -1,4 +1,4 @@
-import throttle from 'lodash/throttle';
+import throttle from 'lodash-es/throttle';
 import { useMemo } from 'react';
 import useLatest from '../useLatest';
 import type { ThrottleOptions } from '../useThrottle/throttleOptions';
@@ -8,7 +8,16 @@ import isDev from '../utils/isDev';
 
 type noop = (...args: any[]) => any;
 
-function useThrottleFn<T extends noop>(fn: T, options?: ThrottleOptions) {
+export interface ThrottledFn<T extends noop> {
+  run: ((...args: Parameters<T>) => ReturnType<T> | undefined) & {
+    cancel: () => void;
+    flush: () => ReturnType<T> | undefined;
+  };
+  cancel: () => void;
+  flush: () => ReturnType<T> | undefined;
+}
+
+function useThrottleFn<T extends noop>(fn: T, options?: ThrottleOptions): ThrottledFn<T> {
   if (isDev) {
     if (!isFunction(fn)) {
       console.error(`useThrottleFn expected parameter is a function, got ${typeof fn}`);

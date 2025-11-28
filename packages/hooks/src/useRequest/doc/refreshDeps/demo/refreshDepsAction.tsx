@@ -8,7 +8,7 @@
 
 import { useState } from 'react';
 import Mock from 'mockjs';
-import isNumber from 'lodash/isNumber';
+import isNumber from 'lodash-es/isNumber';
 import { Button, Space } from 'antd';
 import { useRequest } from 'ahooks';
 

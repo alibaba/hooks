@@ -8,7 +8,16 @@ import isDev from '../utils/isDev';
 
 type noop = (...args: any[]) => any;
 
-function useDebounceFn<T extends noop>(fn: T, options?: DebounceOptions) {
+export interface DebouncedFn<T extends noop> {
+  run: ((...args: Parameters<T>) => ReturnType<T> | undefined) & {
+    cancel: () => void;
+    flush: () => ReturnType<T> | undefined;
+  };
+  cancel: () => void;
+  flush: () => ReturnType<T> | undefined;
+}
+
+function useDebounceFn<T extends noop>(fn: T, options?: DebounceOptions): DebouncedFn<T> {
   if (isDev) {
     if (!isFunction(fn)) {
       console.error(`useDebounceFn expected parameter is a function, got ${typeof fn}`);
