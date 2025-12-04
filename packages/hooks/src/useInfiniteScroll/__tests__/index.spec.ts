@@ -32,15 +32,23 @@ const setup = <T extends Data>(service: Service<T>, options?: InfiniteScrollOpti
   renderHook(() => useInfiniteScroll(service, options));
 
 describe('useInfiniteScroll', () => {
+  let mockRaf: ReturnType<typeof vi.spyOn>;
+
   beforeEach(() => {
     count = 0;
   });
 
   beforeAll(() => {
     vi.useFakeTimers();
+    // Mock requestAnimationFrame to execute callbacks immediately
+    mockRaf = vi.spyOn(window, 'requestAnimationFrame').mockImplementation((cb: FrameRequestCallback) => {
+      cb(0);
+      return 0;
+    }) as ReturnType<typeof vi.spyOn>;
   });
 
   afterAll(() => {
+    mockRaf.mockRestore();
     vi.useRealTimers();
   });
 
@@ -175,6 +183,7 @@ describe('useInfiniteScroll', () => {
     await act(async () => {
       vi.advanceTimersByTime(1000);
     });
+
     expect(result.current.loadingMore).toBe(false);
     //reverse order
     expect(result.current.data?.list).toMatchObject([4, 5, 6, 1, 2, 3]);
