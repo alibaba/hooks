@@ -32,15 +32,23 @@ const setup = <T extends Data>(service: Service<T>, options?: InfiniteScrollOpti
   renderHook(() => useInfiniteScroll(service, options));
 
 describe('useInfiniteScroll', () => {
+  let mockRaf: ReturnType<typeof vi.spyOn>;
+
   beforeEach(() => {
     count = 0;
   });
 
   beforeAll(() => {
     vi.useFakeTimers();
+    // Mock requestAnimationFrame to execute callbacks immediately
+    mockRaf = vi.spyOn(window, 'requestAnimationFrame').mockImplementation((cb: FrameRequestCallback) => {
+      cb(0);
+      return 0;
+    }) as ReturnType<typeof vi.spyOn>;
   });
 
   afterAll(() => {
+    mockRaf.mockRestore();
     vi.useRealTimers();
   });
 
@@ -175,6 +183,7 @@ describe('useInfiniteScroll', () => {
     await act(async () => {
       vi.advanceTimersByTime(1000);
     });
+
     expect(result.current.loadingMore).toBe(false);
     //reverse order
     expect(result.current.data?.list).toMatchObject([4, 5, 6, 1, 2, 3]);
@@ -461,5 +470,64 @@ describe('useInfiniteScroll', () => {
     expect(getLoadMoreListMock).toHaveBeenLastCalledWith(1, PAGE_SIZE);
     expect(result.current.data?.list.length).toBe(2);
     expect(result.current.data?.list).toEqual([1, 2]);
+  });
+
+  test('service should be called only once when scrolling to bottom multiple times quickly', async () => {
+    const mockService = vi.fn(async () => {
+      await sleep(1000);
+      return { list: [1, 2, 3], nextId: 1 };
+    });
+
+    const events: Record<string, any> = {};
+    const mockAddEventListener = vi
+      .spyOn(targetEl, 'addEventListener')
+      .mockImplementation((eventName: string, callback: any) => {
+        events[eventName] = callback;
+      });
+
+    const scrollHeightSpy = vi.spyOn(targetEl, 'scrollHeight', 'get').mockImplementation(() => 150);
+    const clientHeightSpy = vi.spyOn(targetEl, 'clientHeight', 'get').mockImplementation(() => 100);
+
+    const { result } = setup(mockService, {
+      target: targetEl,
+      isNoMore: (d) => d?.nextId === undefined,
+    });
+
+    // Wait for initial load to complete
+    await act(async () => {
+      vi.advanceTimersByTime(1000);
+    });
+    expect(result.current.loading).toBe(false);
+    expect(mockService).toHaveBeenCalledTimes(1);
+
+    // Set scroll position to bottom (scrollHeight - scrollTop <= clientHeight + threshold)
+    // 150 - 50 = 100 <= 100 + 100 = 200, so it should trigger loadMore
+    setTargetInfo('scrollTop', 50);
+
+    // Trigger scroll event multiple times quickly (before first request completes)
+    act(() => {
+      events['scroll']();
+    });
+
+    // Service should be called once more (total 2 times: initial + loadMore)
+    expect(mockService).toHaveBeenCalledTimes(2);
+
+    // Trigger more scroll events while loading
+    act(() => {
+      events['scroll']();
+    });
+    act(() => {
+      events['scroll']();
+    });
+    act(() => {
+      events['scroll']();
+    });
+
+    // Service should still only be called twice (no additional calls during loading)
+    expect(mockService).toHaveBeenCalledTimes(2);
+
+    mockAddEventListener.mockRestore();
+    scrollHeightSpy.mockRestore();
+    clientHeightSpy.mockRestore();
   });
 });
