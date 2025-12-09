@@ -18,11 +18,11 @@ const setRafInterval = (callback: () => void, delay: number = 0): Handle => {
   };
   const loop = () => {
     const current = Date.now();
+    handle.id = requestAnimationFrame(loop);
     if (current - start >= delay) {
       callback();
       start = Date.now();
     }
-    handle.id = requestAnimationFrame(loop);
   };
   handle.id = requestAnimationFrame(loop);
   return handle;
