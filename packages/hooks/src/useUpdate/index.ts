@@ -1,9 +1,10 @@
-import { useCallback, useState } from 'react';
+import { useState } from "react";
+import useMemoizedFn from "../useMemoizedFn";
 
 const useUpdate = () => {
   const [, setState] = useState({});
 
-  return useCallback(() => setState({}), []);
+  return useMemoizedFn(() => setState({}));
 };
 
 export default useUpdate;
