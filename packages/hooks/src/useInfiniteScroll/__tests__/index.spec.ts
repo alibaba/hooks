@@ -41,10 +41,12 @@ describe('useInfiniteScroll', () => {
   beforeAll(() => {
     vi.useFakeTimers();
     // Mock requestAnimationFrame to execute callbacks immediately
-    mockRaf = vi.spyOn(window, 'requestAnimationFrame').mockImplementation((cb: FrameRequestCallback) => {
-      cb(0);
-      return 0;
-    }) as ReturnType<typeof vi.spyOn>;
+    mockRaf = vi
+      .spyOn(window, 'requestAnimationFrame')
+      .mockImplementation((cb: FrameRequestCallback) => {
+        cb(0);
+        return 0;
+      }) as ReturnType<typeof vi.spyOn>;
   });
 
   afterAll(() => {
