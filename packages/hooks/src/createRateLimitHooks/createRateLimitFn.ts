@@ -17,7 +17,10 @@ interface BaseRateLimitOptions {
   wait?: number;
 }
 
-export function createRateLimitFn<T extends noop, Options extends BaseRateLimitOptions = BaseRateLimitOptions>(
+export function createRateLimitFn<
+  T extends noop,
+  Options extends BaseRateLimitOptions = BaseRateLimitOptions,
+>(
   rateLimitFn: (
     func: (...args: Parameters<T>) => ReturnType<T>,
     wait: number,
