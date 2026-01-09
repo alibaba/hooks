@@ -21,6 +21,9 @@ export function createRateLimitEffect<T extends noop, Options = any>(
   ) {
     const [flag, setFlag] = useState({});
 
+    // Note: The type assertion is safe here because we're creating a zero-argument
+    // callback that matches the noop signature. The callback will be called without
+    // arguments by the rate-limiting logic.
     const { run } = useRateLimitFn(
       (() => {
         setFlag({});

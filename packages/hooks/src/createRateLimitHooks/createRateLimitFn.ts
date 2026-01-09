@@ -12,7 +12,12 @@ export interface RateLimitFunction<T extends noop> {
   flush: () => void;
 }
 
-export function createRateLimitFn<T extends noop, Options = any>(
+// Base constraint for rate limit options to ensure they have a 'wait' property
+interface BaseRateLimitOptions {
+  wait?: number;
+}
+
+export function createRateLimitFn<T extends noop, Options extends BaseRateLimitOptions = BaseRateLimitOptions>(
   rateLimitFn: (
     func: (...args: Parameters<T>) => ReturnType<T>,
     wait: number,
@@ -29,7 +34,7 @@ export function createRateLimitFn<T extends noop, Options = any>(
 
     const fnRef = useLatest(fn);
 
-    const wait = (options as any)?.wait ?? 1000;
+    const wait = options?.wait ?? 1000;
 
     // Note: We intentionally use an empty dependency array here.
     // The rateLimitFn is created once and captures the latest fn via fnRef.current

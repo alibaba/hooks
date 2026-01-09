@@ -15,6 +15,9 @@ export function createRateLimitValue<T extends noop, Options = any>(
   return function useRateLimitValue<V>(value: V, options?: Options) {
     const [rateLimited, setRateLimited] = useState(value);
 
+    // Note: The type assertion is safe here because we're creating a zero-argument
+    // callback that matches the noop signature. The callback will be called without
+    // arguments by the rate-limiting logic.
     const { run } = useRateLimitFn(
       (() => {
         setRateLimited(value);
