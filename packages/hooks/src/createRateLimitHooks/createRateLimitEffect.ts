@@ -1,14 +1,13 @@
 import { useEffect, useState } from 'react';
 import type { DependencyList, EffectCallback } from 'react';
 import useUpdateEffect from '../useUpdateEffect';
-import type { RateLimitOptions } from './createRateLimitFn';
 
 type noop = (...args: any[]) => any;
 
-export function createRateLimitEffect<T extends noop>(
+export function createRateLimitEffect<T extends noop, Options = any>(
   useRateLimitFn: (
     fn: T,
-    options?: RateLimitOptions,
+    options?: Options,
   ) => {
     run: T;
     cancel: () => void;
@@ -18,7 +17,7 @@ export function createRateLimitEffect<T extends noop>(
   return function useRateLimitEffect(
     effect: EffectCallback,
     deps?: DependencyList,
-    options?: RateLimitOptions,
+    options?: Options,
   ) {
     const [flag, setFlag] = useState({});
 

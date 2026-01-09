@@ -4,7 +4,7 @@ import { createRateLimitFn } from '../createRateLimitHooks';
 
 type noop = (...args: any[]) => any;
 
-const useThrottleFn = createRateLimitFn<noop>(throttle, 'useThrottleFn');
+const useThrottleFn = createRateLimitFn<noop, ThrottleOptions>(throttle, 'useThrottleFn');
 
 export default useThrottleFn;
 export type { ThrottleOptions };

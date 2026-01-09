@@ -1,19 +1,18 @@
 import { useEffect, useState } from 'react';
-import type { RateLimitOptions } from './createRateLimitFn';
 
 type noop = (...args: any[]) => any;
 
-export function createRateLimitValue<T extends noop>(
+export function createRateLimitValue<T extends noop, Options = any>(
   useRateLimitFn: (
     fn: T,
-    options?: RateLimitOptions,
+    options?: Options,
   ) => {
     run: T;
     cancel: () => void;
     flush: () => void;
   },
 ) {
-  return function useRateLimitValue<V>(value: V, options?: RateLimitOptions) {
+  return function useRateLimitValue<V>(value: V, options?: Options) {
     const [rateLimited, setRateLimited] = useState(value);
 
     const { run } = useRateLimitFn(

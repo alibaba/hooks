@@ -6,28 +6,21 @@ import isDev from '../utils/isDev';
 
 type noop = (...args: any[]) => any;
 
-export interface RateLimitOptions {
-  wait?: number;
-  leading?: boolean;
-  trailing?: boolean;
-  maxWait?: number;
-}
-
 export interface RateLimitFunction<T extends noop> {
   (...args: Parameters<T>): ReturnType<T>;
   cancel: () => void;
   flush: () => void;
 }
 
-export function createRateLimitFn<T extends noop>(
+export function createRateLimitFn<T extends noop, Options = any>(
   rateLimitFn: (
     func: (...args: Parameters<T>) => ReturnType<T>,
     wait: number,
-    options?: RateLimitOptions,
+    options?: Options,
   ) => RateLimitFunction<T>,
   hookName: string,
 ) {
-  return function useRateLimitFn(fn: T, options?: RateLimitOptions) {
+  return function useRateLimitFn(fn: T, options?: Options) {
     if (isDev) {
       if (!isFunction(fn)) {
         console.error(`${hookName} expected parameter is a function, got ${typeof fn}`);
@@ -36,7 +29,7 @@ export function createRateLimitFn<T extends noop>(
 
     const fnRef = useLatest(fn);
 
-    const wait = options?.wait ?? 1000;
+    const wait = (options as any)?.wait ?? 1000;
 
     // Note: We intentionally use an empty dependency array here.
     // The rateLimitFn is created once and captures the latest fn via fnRef.current
