@@ -76,9 +76,6 @@ const useInfiniteScroll = <TData extends Data>(
                 const scrollHeight = getScrollHeight(el);
                 (el as Element).scrollTo(0, scrollHeight - scrollBottom.current);
               }
-            } else {
-              // eslint-disable-next-line @typescript-eslint/no-use-before-define
-              scrollMethod();
             }
           });
         });
@@ -145,6 +142,9 @@ const useInfiniteScroll = <TData extends Data>(
       loadMore();
     }
   };
+  useUpdateEffect(() => {
+    scrollMethod();
+  }, [finalData]);
 
   useEventListener(
     'scroll',
