@@ -68,7 +68,7 @@ function useRequestImplement<TData, TParams extends any[]>(
     refresh: useMemoizedFn(fetchInstance.refresh.bind(fetchInstance)),
     refreshAsync: useMemoizedFn(fetchInstance.refreshAsync.bind(fetchInstance)),
     run: useMemoizedFn(fetchInstance.run.bind(fetchInstance)),
-    runAsync: useMemoizedFn(fetchInstance.runAsync.bind(fetchInstance)),
+    runAsync: useMemoizedFn((...args: TParams) => fetchInstance.runAsync(...args)),
     mutate: useMemoizedFn(fetchInstance.mutate.bind(fetchInstance)),
   } as Result<TData, TParams>;
 }
