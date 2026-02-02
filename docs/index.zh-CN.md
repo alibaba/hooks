@@ -73,9 +73,9 @@ $ pnpm start
 
 ## 👥 交流讨论
 
-<img src="https://github.com/user-attachments/assets/0ba7a370-2a69-442f-b746-9eb16bbbc46c" width="200" style='display:inline' />
-<img src="https://github.com/user-attachments/assets/a08693d3-bfcc-4aca-b2b0-2d9c23012858" width="200" style='display:inline' />
-<img src="https://github.com/user-attachments/assets/15a505a7-06d1-4e72-ab02-6fad968323f1" width="200" style='display:inline' />
+<img alt="ahooks 交流群1" src="https://github.com/user-attachments/assets/0ba7a370-2a69-442f-b746-9eb16bbbc46c" width="200" style='display:inline' />
+<img alt="ahooks 交流群2" src="https://github.com/user-attachments/assets/a08693d3-bfcc-4aca-b2b0-2d9c23012858" width="200" style='display:inline' />
+<img alt="ahooks 交流群3" src="https://github.com/user-attachments/assets/15a505a7-06d1-4e72-ab02-6fad968323f1" width="200" style='display:inline' />
 
 [1]: https://www.npmjs.com/package/ahooks
 [2]: https://npmjs.org/package/ahooks
