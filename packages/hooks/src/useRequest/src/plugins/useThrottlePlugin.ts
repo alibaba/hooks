@@ -22,6 +22,10 @@ const useThrottlePlugin: Plugin<any, any[]> = (
     if (throttleWait) {
       const _originRunAsync = fetchInstance.runAsync.bind(fetchInstance);
 
+      // Track the current promise and when it was created
+      let currentPromise: Promise<any> | null = null;
+      let promiseCreatedAt = 0;
+
       throttledRef.current = throttle(
         (callback) => {
           callback();
@@ -33,13 +37,42 @@ const useThrottlePlugin: Plugin<any, any[]> = (
       // throttle runAsync should be promise
       // https://github.com/lodash/lodash/issues/4400#issuecomment-834800398
       fetchInstance.runAsync = (...args) => {
-        return new Promise((resolve, reject) => {
+        const now = Date.now();
+
+        // If there's a current promise and it was created within the throttle window,
+        // return it to share the result
+        if (currentPromise && now - promiseCreatedAt < throttleWait) {
+          return currentPromise;
+        }
+
+        // Create a new promise
+        promiseCreatedAt = now;
+        currentPromise = new Promise((resolve, reject) => {
           throttledRef.current?.(() => {
+            // Execute the request
             _originRunAsync(...args)
-              .then(resolve)
-              .catch(reject);
+              .then((result) => {
+                resolve(result);
+                // Clear current promise after a delay to allow trailing calls
+                setTimeout(() => {
+                  if (currentPromise && Date.now() - promiseCreatedAt >= throttleWait) {
+                    currentPromise = null;
+                  }
+                }, 0);
+              })
+              .catch((error) => {
+                reject(error);
+                // Clear current promise after a delay to allow trailing calls
+                setTimeout(() => {
+                  if (currentPromise && Date.now() - promiseCreatedAt >= throttleWait) {
+                    currentPromise = null;
+                  }
+                }, 0);
+              });
           });
         });
+
+        return currentPromise;
       };
 
       return () => {

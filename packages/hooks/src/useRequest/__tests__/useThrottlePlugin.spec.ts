@@ -110,4 +110,53 @@ describe('useThrottlePlugin', () => {
     // Should only execute twice: first call (leading) and call after throttle window
     expect(callback).toHaveBeenCalledTimes(2);
   });
+
+  test('useThrottlePlugin should resolve all promises when using runAsync', async () => {
+    let requestCount = 0;
+
+    act(() => {
+      hook = setUp(
+        () => {
+          requestCount++;
+          return request({ id: requestCount });
+        },
+        {
+          manual: true,
+          throttleWait: 100,
+          throttleLeading: true,
+          throttleTrailing: false,
+        },
+      );
+    });
+
+    let resolved1 = false;
+    let resolved2 = false;
+    let rejected2 = false;
+
+    // Make two calls within throttle window
+    const p1 = hook.result.current.runAsync(1);
+    const p2 = hook.result.current.runAsync(2);
+
+    p1.then(() => {
+      resolved1 = true;
+    });
+    p2.then(() => {
+      resolved2 = true;
+    }).catch(() => {
+      rejected2 = true;
+    });
+
+    // Advance time for throttle and request
+    await act(async () => {
+      vi.advanceTimersByTime(100); // throttle wait
+      vi.advanceTimersByTime(1000); // request wait
+      await Promise.resolve();
+    });
+
+    // First promise should be resolved
+    expect(resolved1).toBe(true);
+    // Second promise should be either resolved or rejected (not hanging)
+    expect(resolved2 || rejected2).toBe(true);
+    expect(requestCount).toBe(1); // Only one request should be made
+  });
 });
