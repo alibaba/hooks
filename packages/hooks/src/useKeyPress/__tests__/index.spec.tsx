@@ -16,6 +16,48 @@ describe('useKeyPress ', () => {
     unmount();
   });
 
+  test('test standard key aliases', async () => {
+    const { unmount } = renderHook(() => useKeyPress(['arrowleft', 'escape'], callback));
+    fireEvent.keyDown(document, { key: 'ArrowLeft', keyCode: 37 });
+    fireEvent.keyDown(document, { key: 'Escape', keyCode: 27 });
+    expect(callback.mock.calls.length).toBe(2);
+    unmount();
+  });
+
+  test('test standard vs legacy key aliases', async () => {
+    const aliasCallback = vi.fn();
+    const { unmount } = renderHook(() =>
+      useKeyPress(
+        [
+          'control',
+          'ctrl',
+          'escape',
+          'esc',
+          'arrowleft',
+          'leftarrow',
+          'spacebar',
+          'space',
+          'contextmenu',
+          'selectkey',
+          'pause',
+          'pausebreak',
+        ],
+        aliasCallback,
+      ),
+    );
+
+    fireEvent.keyDown(document, { key: 'Control', keyCode: 17, ctrlKey: true });
+    fireEvent.keyDown(document, { key: 'Escape', keyCode: 27 });
+    fireEvent.keyDown(document, { key: 'ArrowLeft', keyCode: 37 });
+    fireEvent.keyDown(document, { key: ' ', keyCode: 32 });
+    fireEvent.keyDown(document, { key: 'ContextMenu', keyCode: 93 });
+    fireEvent.keyDown(document, { key: 'Pause', keyCode: 19 });
+
+    // each event should match once (first alias hit)
+    expect(aliasCallback.mock.calls.length).toBe(6);
+    unmount();
+  });
+
   test('test modifier key', async () => {
     const { unmount } = renderHook(() => useKeyPress(['ctrl'], callback));
     fireEvent.keyDown(document, { key: 'ctrl', keyCode: 17, ctrlKey: true });
