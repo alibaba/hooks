@@ -73,6 +73,7 @@ import useUpdateEffect from './useUpdateEffect';
 import useUpdateLayoutEffect from './useUpdateLayoutEffect';
 import useVirtualList from './useVirtualList';
 import useWebSocket from './useWebSocket';
+import useSse from './useSse';
 import useWhyDidYouUpdate from './useWhyDidYouUpdate';
 import useMutationObserver from './useMutationObserver';
 import useTheme from './useTheme';
@@ -133,6 +134,7 @@ export {
   useFavicon,
   useCountDown,
   useWebSocket,
+  useSse,
   useLockFn,
   useUnmountedRef,
   useExternal,
