@@ -19,7 +19,7 @@ nav:
 
 ### 精确匹配
 
-<code src="./demo/demo7.tsx">
+<code src="./demo/demo7.tsx" />
 
 ### 监听多个按键
 
@@ -69,8 +69,7 @@ useKeyPress(
 
 ## Remarks
 
-1. 按键别名见 [代码](https://github.com/alibaba/hooks/blob/master/packages/hooks/src/useKeyPress/index.ts#L21)
-
+1. 支持部分浏览器标准按键值。参考文档：[MDN 键值表](https://developer.mozilla.org/en-US/docs/Web/API/UI_Events/Keyboard_event_key_values)。完整列表见 [代码](https://github.com/alibaba/hooks/blob/master/packages/hooks/src/useKeyPress/index.ts#L21)
 2. 修饰键
 
 ```text

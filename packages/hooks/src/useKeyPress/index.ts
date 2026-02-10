@@ -35,20 +35,33 @@ const aliasKeyCodeMap = {
   tab: 9,
   enter: 13,
   shift: 16,
+  // Legacy alias kept for compatibility; standard name is "control".
   ctrl: 17,
+  control: 17,
   alt: 18,
+  // Legacy alias kept for compatibility; standard name is "pause".
   pausebreak: 19,
+  pause: 19,
   capslock: 20,
+  // Legacy alias kept for compatibility; standard name is "escape".
   esc: 27,
+  escape: 27,
+  // Legacy alias kept for compatibility; standard name is "spacebar" (non-standard but widely used).
   space: 32,
+  spacebar: 32,
   pageup: 33,
   pagedown: 34,
   end: 35,
   home: 36,
+  // Legacy aliases kept for compatibility; standard names are "arrowleft/arrowup/arrowright/arrowdown".
   leftarrow: 37,
+  arrowleft: 37,
   uparrow: 38,
+  arrowup: 38,
   rightarrow: 39,
+  arrowright: 39,
   downarrow: 40,
+  arrowdown: 40,
   insert: 45,
   delete: 46,
   a: 65,
@@ -80,7 +93,9 @@ const aliasKeyCodeMap = {
   leftwindowkey: 91,
   rightwindowkey: 92,
   meta: isAppleDevice ? [91, 93] : [91, 92],
+  // Legacy alias kept for compatibility; standard name is "contextmenu".
   selectkey: 93,
+  contextmenu: 93,
   numpad0: 96,
   numpad1: 97,
   numpad2: 98,
