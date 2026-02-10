@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import useLatest from '../useLatest';
 import useMemoizedFn from '../useMemoizedFn';
+import useMount from '../useMount';
 import useUnmount from '../useUnmount';
 
 export enum ReadyState {
@@ -146,6 +147,13 @@ function useWebSocket(socketUrl: string, options: Options = {}): Result {
     websocketRef.current?.close();
     websocketRef.current = undefined;
   };
+
+  useMount(() => {
+    reconnectTimesRef.current = 0;
+    reconnectTimerRef.current = undefined;
+    websocketRef.current = undefined;
+    unmountedRef.current = false;
+  });
 
   useEffect(() => {
     if (!manual && socketUrl) {
