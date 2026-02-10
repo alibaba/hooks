@@ -14,9 +14,9 @@ nav:
 useIsomorphicLayoutEffect 源码如下：
 
 ```js
-const useIsomorphicLayoutEffect = isBrowser ? useLayoutEffect : useEffect;
+const useIsomorphicLayoutEffect = isBrowser ? useLayoutEffect : noop;
 ```
 
-在非浏览器环境返回 useEffect，在浏览器环境返回 useLayoutEffect。
+在浏览器环境返回 useLayoutEffect，在非浏览器环境返回空函数以避免 SSR 警告。
 
 更多信息可以参考 [useLayoutEffect and SSR](https://medium.com/@alexandereardon/uselayouteffect-and-ssr-192986cdcf7a)
