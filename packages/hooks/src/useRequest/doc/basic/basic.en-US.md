@@ -62,6 +62,7 @@ Next, we will demonstrate the difference between `run` and `runAsync` through th
 - `onSuccess`: Triggered when the request is resolved
 - `onError`: Triggered when the request is rejected
 - `onFinally`: Triggered when the request is completed
+- `onCancel`: Triggered when the request is canceled
 
 <code src="./demo/lifeCycle.tsx" />
 

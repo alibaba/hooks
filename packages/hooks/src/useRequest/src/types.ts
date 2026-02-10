@@ -46,6 +46,7 @@ export interface Options<TData, TParams extends any[]> {
   onError?: (e: Error, params: TParams) => void;
   // formatResult?: (res: any) => TData;
   onFinally?: (params: TParams, data?: TData, e?: Error) => void;
+  onCancel?: () => void;
 
   defaultParams?: TParams;
 
