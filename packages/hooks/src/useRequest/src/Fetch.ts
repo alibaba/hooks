@@ -54,7 +54,7 @@ export default class Fetch<TData, TParams extends any[]> {
 
     // stop request
     if (stopNow) {
-      return new Promise(() => {});
+      return Promise.resolve(state.data);
     }
 
     this.setState({
