@@ -58,4 +58,16 @@ describe('useRafInterval', () => {
     // not to be called
     expect(callback).toHaveBeenCalledTimes(0);
   });
+
+  test('execute clear in the callback and interval should be clear', () => {
+    const callback = vi.fn().mockImplementation(() => hook.result.current());
+    const hook = setUp({ fn: callback, delay: FRAME_TIME });
+
+    expect(callback).not.toBeCalled();
+
+    vi.advanceTimersByTime(FRAME_TIME * 1.5);
+    expect(callback).toHaveBeenCalledTimes(1);
+    vi.advanceTimersByTime(FRAME_TIME * 1.5);
+    expect(callback).toHaveBeenCalledTimes(1);
+  });
 });
