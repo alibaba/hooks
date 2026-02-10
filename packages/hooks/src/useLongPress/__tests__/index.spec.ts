@@ -100,13 +100,79 @@ describe('useLongPress', () => {
   });
 
   test(`should not work when target don't support addEventListener method`, () => {
-    Object.defineProperty(mockTarget, 'addEventListener', {
-      get() {
-        return false;
-      },
-    });
+    const customTarget = {
+      addEventListener: false,
+      removeEventListener: vi.fn(),
+    };
 
-    setup(() => {}, mockTarget);
+    setup(() => {}, customTarget as any);
     expect(Object.keys(events)).toHaveLength(0);
+  });
+
+  test('should ignore right-click (button 2)', () => {
+    setup(mockCallback, mockTarget, {
+      onClick: mockClickCallback,
+      onLongPressEnd: mockLongPressEndCallback,
+    });
+    expect(mockTarget.addEventListener).toBeCalled();
+    // Simulate right-click
+    events['mousedown'](new MouseEvent('mousedown', { button: 2 }));
+    vi.advanceTimersByTime(350);
+    events['mouseup'](new MouseEvent('mouseup', { button: 2 }));
+    expect(mockCallback).toBeCalledTimes(0);
+    expect(mockLongPressEndCallback).toBeCalledTimes(0);
+    expect(mockClickCallback).toBeCalledTimes(0);
+  });
+
+  test('should ignore middle-click (button 1)', () => {
+    setup(mockCallback, mockTarget, {
+      onClick: mockClickCallback,
+      onLongPressEnd: mockLongPressEndCallback,
+    });
+    expect(mockTarget.addEventListener).toBeCalled();
+    // Simulate middle-click
+    events['mousedown'](new MouseEvent('mousedown', { button: 1 }));
+    vi.advanceTimersByTime(350);
+    events['mouseup'](new MouseEvent('mouseup', { button: 1 }));
+    expect(mockCallback).toBeCalledTimes(0);
+    expect(mockLongPressEndCallback).toBeCalledTimes(0);
+    expect(mockClickCallback).toBeCalledTimes(0);
+  });
+
+  test('should prevent context menu when long press is triggered', () => {
+    setup(mockCallback, mockTarget, {
+      onClick: mockClickCallback,
+      onLongPressEnd: mockLongPressEndCallback,
+    });
+    expect(mockTarget.addEventListener).toBeCalled();
+    expect(events['contextmenu']).toBeDefined();
+
+    // Trigger long press
+    events['mousedown'](new MouseEvent('mousedown', { button: 0 }));
+    vi.advanceTimersByTime(350);
+
+    // Now context menu event should be prevented
+    const mockEvent = { preventDefault: vi.fn() };
+    events['contextmenu'](mockEvent);
+    expect(mockEvent.preventDefault).toBeCalledTimes(1);
+
+    events['mouseup'](new MouseEvent('mouseup', { button: 0 }));
+  });
+
+  test('should not prevent context menu when long press is not triggered', () => {
+    setup(mockCallback, mockTarget, {
+      onClick: mockClickCallback,
+      onLongPressEnd: mockLongPressEndCallback,
+    });
+    expect(mockTarget.addEventListener).toBeCalled();
+
+    // Don't trigger long press - just a quick click
+    events['mousedown'](new MouseEvent('mousedown', { button: 0 }));
+    events['mouseup'](new MouseEvent('mouseup', { button: 0 }));
+
+    // Context menu event should not be prevented
+    const mockEvent = { preventDefault: vi.fn() };
+    events['contextmenu'](mockEvent);
+    expect(mockEvent.preventDefault).toBeCalledTimes(0);
   });
 });
