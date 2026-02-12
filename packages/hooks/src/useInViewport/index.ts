@@ -1,4 +1,3 @@
-import 'intersection-observer';
 import { useState } from 'react';
 import type { BasicTarget } from '../utils/domTarget';
 import { getTargetElement } from '../utils/domTarget';
