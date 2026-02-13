@@ -20,7 +20,7 @@ nav:
 ## API
 
 ```typescript
-const [state, setState] = useSetState<T>(initialState);
+const [state, setState] = useSetState<T>(initialState?);
 ```
 
 ### Result
@@ -34,4 +34,4 @@ const [state, setState] = useSetState<T>(initialState);
 
 | 参数         | 说明     | 类型           | 默认值 |
 | ------------ | -------- | -------------- | ------ |
-| initialState | 初始状态 | `T \| () => T` | -      |
+| initialState | 初始状态 | `T \| () => T` | `{}`   |
