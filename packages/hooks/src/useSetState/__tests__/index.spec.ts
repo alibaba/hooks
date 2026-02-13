@@ -3,7 +3,7 @@ import { describe, expect, test } from 'vitest';
 import useSetState from '../index';
 
 describe('useSetState', () => {
-  const setUp = <T extends object>(initialValue: T) =>
+  const setUp = <T extends object>(initialValue?: T) =>
     renderHook(() => {
       const [state, setState] = useSetState<T>(initialValue);
       return {
@@ -37,5 +37,23 @@ describe('useSetState', () => {
       hook.result.current.setState((prev) => ({ count: prev.count + 1 }));
     });
     expect(hook.result.current.state).toEqual({ count: 1 });
+  });
+
+  test('should support empty initial state', () => {
+    const hook = renderHook(() => {
+      const [state, setState] = useSetState<{ hello?: string }>();
+      return {
+        state,
+        setState,
+      } as const;
+    });
+
+    expect(hook.result.current.state).toEqual({});
+
+    act(() => {
+      hook.result.current.setState({ hello: 'world' });
+    });
+
+    expect(hook.result.current.state).toEqual({ hello: 'world' });
   });
 });
