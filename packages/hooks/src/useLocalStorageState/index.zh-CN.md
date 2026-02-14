@@ -34,6 +34,7 @@ type SetState<S> = S | ((prevState?: S) => S);
 
 interface Options<T> {
   defaultValue?: T | (() => T);
+  getInitialValueInEffect?: boolean;
   listenStorageChange?: boolean;
   serializer?: (value: T) => string;
   deserializer?: (value: string) => T;
@@ -58,6 +59,7 @@ const [state, setState] = useLocalStorageState<T>(
 | 参数                | 说明                                                                                                                              | 类型                       | 默认值                        |
 | ------------------- | --------------------------------------------------------------------------------------------------------------------------------- | -------------------------- | ----------------------------- |
 | defaultValue        | 默认值                                                                                                                            | `any \| (() => any)`       | -                             |
+| getInitialValueInEffect | 是否在挂载后通过 effect 读取 localStorage，可用于避免 SSR hydration 不一致                                                                 | `boolean`                  | `false`                       |
 | listenStorageChange | 是否监听存储变化。如果是 `true`，当存储值变化时，所有 `key` 相同的 `useLocalStorageState` 会同步状态，包括同一浏览器不同 tab 之间 | `boolean`                  | `false`                       |
 | serializer          | 自定义序列化方法                                                                                                                  | `(value: any) => string`   | `JSON.stringify`              |
 | deserializer        | 自定义反序列化方法                                                                                                                | `(value: string) => any`   | `JSON.parse`                  |
