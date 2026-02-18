@@ -207,12 +207,10 @@ describe('useRequest', () => {
     let value: any = 'init';
 
     await act(async () => {
-      hook.result.current
-        .runAsync(1)
-        .then((res: any) => {
-          resolved = true;
-          value = res;
-        });
+      hook.result.current.runAsync(1).then((res: any) => {
+        resolved = true;
+        value = res;
+      });
       await Promise.resolve();
     });
 
@@ -233,12 +231,10 @@ describe('useRequest', () => {
     value = 'init';
 
     await act(async () => {
-      hook.result.current
-        .runAsync(1)
-        .then((res: any) => {
-          resolved = true;
-          value = res;
-        });
+      hook.result.current.runAsync(1).then((res: any) => {
+        resolved = true;
+        value = res;
+      });
       await Promise.resolve();
     });
 
@@ -263,5 +259,28 @@ describe('useRequest', () => {
     expect(hook.result.current.data).toBe('success');
     expect(hook.result.current.loading).toBe(false);
     hook.unmount();
+  });
+
+  test('should infer default parameter types from service', () => {
+    const service = async (a = 1, b = 1) => {
+      return `${a + b}`;
+    };
+
+    const { result } = renderHook(() =>
+      useRequest(service, {
+        manual: true,
+      }),
+    );
+
+    act(() => {
+      result.current.run(1, 2);
+    });
+
+    const assertRunParamTypes = () => {
+      // @ts-expect-error should reject non-number params
+      result.current.run('1', 2);
+    };
+
+    expect(assertRunParamTypes).toBeDefined();
   });
 });
