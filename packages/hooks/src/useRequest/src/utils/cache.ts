@@ -12,11 +12,15 @@ interface RecordData extends CachedData {
 
 const cache = new Map<CachedKey, RecordData>();
 
+const clearTimer = (cachedData?: RecordData) => {
+  if (cachedData?.timer) {
+    clearTimeout(cachedData.timer)
+  }
+}
+
 const setCache = (key: CachedKey, cacheTime: number, cachedData: CachedData) => {
   const currentCache = cache.get(key);
-  if (currentCache?.timer) {
-    clearTimeout(currentCache.timer);
-  }
+  clearTimer(currentCache);
 
   let timer: Timer | undefined = undefined;
 
@@ -40,8 +44,15 @@ const getCache = (key: CachedKey) => {
 const clearCache = (key?: string | string[]) => {
   if (key) {
     const cacheKeys = Array.isArray(key) ? key : [key];
-    cacheKeys.forEach((cacheKey) => cache.delete(cacheKey));
+    cacheKeys.forEach((cacheKey) => {
+      const currentCache = cache.get(cacheKey);
+      clearTimer(currentCache);
+      cache.delete(cacheKey);
+    });
   } else {
+    for (const currentCache of cache.values()) {
+      clearTimer(currentCache);
+    }
     cache.clear();
   }
 };
