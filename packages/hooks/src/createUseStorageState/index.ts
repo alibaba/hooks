@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import useEventListener from '../useEventListener';
 import useMemoizedFn from '../useMemoizedFn';
 import useUpdateEffect from '../useUpdateEffect';
@@ -63,15 +63,25 @@ export function createUseStorageState(getStorage: () => Storage | undefined) {
     }
 
     const [state, setState] = useState<T>(getStoredValue);
+    const stateRef = useRef(state);
+    stateRef.current = state;
 
     useUpdateEffect(() => {
-      setState(getStoredValue());
+      const nextState = getStoredValue();
+      stateRef.current = nextState;
+      setState(nextState);
     }, [key]);
 
     const updateState = (value: SetState<T>) => {
-      const currentState = isFunction(value) ? value(state) : value;
+      const previousState = stateRef.current;
+      const currentState = isFunction(value) ? value(previousState) : value;
+
+      if (Object.is(currentState, previousState)) {
+        return;
+      }
 
       if (!listenStorageChange) {
+        stateRef.current = currentState;
         setState(currentState);
       }
 
@@ -110,7 +120,14 @@ export function createUseStorageState(getStorage: () => Storage | undefined) {
         return;
       }
 
-      setState(getStoredValue());
+      const nextState = getStoredValue();
+
+      if (Object.is(nextState, stateRef.current)) {
+        return;
+      }
+
+      stateRef.current = nextState;
+      setState(nextState);
     };
 
     const syncStateFromCustomEvent = (event: CustomEvent<StorageEvent>) => {
