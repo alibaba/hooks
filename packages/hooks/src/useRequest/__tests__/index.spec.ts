@@ -207,12 +207,10 @@ describe('useRequest', () => {
     let value: any = 'init';
 
     await act(async () => {
-      hook.result.current
-        .runAsync(1)
-        .then((res: any) => {
-          resolved = true;
-          value = res;
-        });
+      hook.result.current.runAsync(1).then((res: any) => {
+        resolved = true;
+        value = res;
+      });
       await Promise.resolve();
     });
 
@@ -233,12 +231,10 @@ describe('useRequest', () => {
     value = 'init';
 
     await act(async () => {
-      hook.result.current
-        .runAsync(1)
-        .then((res: any) => {
-          resolved = true;
-          value = res;
-        });
+      hook.result.current.runAsync(1).then((res: any) => {
+        resolved = true;
+        value = res;
+      });
       await Promise.resolve();
     });
 

@@ -1,5 +1,5 @@
-import { useState } from "react";
-import useMemoizedFn from "../useMemoizedFn";
+import { useState } from 'react';
+import useMemoizedFn from '../useMemoizedFn';
 
 const useUpdate = () => {
   const [, setState] = useState({});
