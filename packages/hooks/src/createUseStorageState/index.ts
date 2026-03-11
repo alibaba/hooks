@@ -1,10 +1,10 @@
-import { useRef, useState } from 'react';
-import useEventListener from '../useEventListener';
-import useMemoizedFn from '../useMemoizedFn';
-import useUpdateEffect from '../useUpdateEffect';
-import { isFunction, isUndef } from '../utils';
+import { useRef, useState } from "react";
+import useEventListener from "../useEventListener";
+import useMemoizedFn from "../useMemoizedFn";
+import useUpdateEffect from "../useUpdateEffect";
+import { isFunction, isUndef } from "../utils";
 
-export const SYNC_STORAGE_EVENT_NAME = 'AHOOKS_SYNC_STORAGE_EVENT_NAME';
+export const SYNC_STORAGE_EVENT_NAME = "AHOOKS_SYNC_STORAGE_EVENT_NAME";
 
 export type SetState<S> = S | ((prevState?: S) => S);
 
@@ -16,17 +16,25 @@ export interface Options<T> {
   onError?: (error: unknown) => void;
 }
 
-export function createUseStorageState(getStorage: () => Storage | undefined) {
-  function useStorageState<T>(key: string, options: Options<T> = {}) {
+export const createUseStorageState = (
+  getStorage: () => Storage | undefined
+) => {
+  const useStorageState = <T>(key: string, options: Options<T> = {}) => {
     let storage: Storage | undefined;
 
     const { listenStorageChange = false } = options;
 
-    const serializer = isFunction(options.serializer) ? options.serializer : JSON.stringify;
+    const serializer = isFunction(options.serializer)
+      ? options.serializer
+      : JSON.stringify;
 
-    const deserializer = isFunction(options.deserializer) ? options.deserializer : JSON.parse;
+    const deserializer = isFunction(options.deserializer)
+      ? options.deserializer
+      : JSON.parse;
 
-    const onError = isFunction(options.onError) ? options.onError : console.error;
+    const onError = isFunction(options.onError)
+      ? options.onError
+      : console.error;
 
     // https://github.com/alibaba/hooks/issues/800
     try {
@@ -35,7 +43,7 @@ export function createUseStorageState(getStorage: () => Storage | undefined) {
       onError(err);
     }
 
-    function getStoredValue() {
+    const getStoredValue = () => {
       try {
         const raw = storage?.getItem(key);
         if (raw) {
@@ -48,7 +56,7 @@ export function createUseStorageState(getStorage: () => Storage | undefined) {
         return options.defaultValue();
       }
       return options.defaultValue;
-    }
+    };
 
     const [state, setState] = useState<T>(getStoredValue);
 
@@ -57,6 +65,9 @@ export function createUseStorageState(getStorage: () => Storage | undefined) {
 
     useUpdateEffect(() => {
       const nextState = getStoredValue();
+      if (Object.is(nextState, stateRef.current)) {
+        return; // 新旧状态相同，不更新 state，避免 setState 带来不必要的 re-render
+      }
       stateRef.current = nextState;
       setState(nextState);
     }, [key]);
@@ -66,7 +77,7 @@ export function createUseStorageState(getStorage: () => Storage | undefined) {
       const currentState = isFunction(value) ? value(previousState) : value;
 
       if (Object.is(currentState, previousState)) {
-        return;
+        return; // 新旧状态相同，不更新 state，避免 setState 带来不必要的 re-render
       }
 
       if (!listenStorageChange) {
@@ -97,7 +108,7 @@ export function createUseStorageState(getStorage: () => Storage | undefined) {
               oldValue,
               storageArea: storage,
             },
-          }),
+          })
         );
       } catch (e) {
         onError(e);
@@ -112,7 +123,7 @@ export function createUseStorageState(getStorage: () => Storage | undefined) {
       const nextState = getStoredValue();
 
       if (Object.is(nextState, stateRef.current)) {
-        return;
+        return; // 新旧状态相同，不更新 state，避免 setState 带来不必要的 re-render
       }
 
       stateRef.current = nextState;
@@ -124,7 +135,7 @@ export function createUseStorageState(getStorage: () => Storage | undefined) {
     };
 
     // from another document
-    useEventListener('storage', syncState, {
+    useEventListener("storage", syncState, {
       enable: listenStorageChange,
     });
 
@@ -133,8 +144,11 @@ export function createUseStorageState(getStorage: () => Storage | undefined) {
       enable: listenStorageChange,
     });
 
-    return [state, useMemoizedFn(updateState) as (value: SetState<T>) => void] as const;
-  }
+    return [
+      state,
+      useMemoizedFn(updateState) as (value: SetState<T>) => void,
+    ] as const;
+  };
 
   return useStorageState;
-}
+};
