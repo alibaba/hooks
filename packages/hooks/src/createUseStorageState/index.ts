@@ -1,10 +1,10 @@
-import { useRef, useState } from "react";
-import useEventListener from "../useEventListener";
-import useMemoizedFn from "../useMemoizedFn";
-import useUpdateEffect from "../useUpdateEffect";
-import { isFunction, isUndef } from "../utils";
+import { useRef, useState } from 'react';
+import useEventListener from '../useEventListener';
+import useMemoizedFn from '../useMemoizedFn';
+import useUpdateEffect from '../useUpdateEffect';
+import { isFunction, isUndef } from '../utils';
 
-export const SYNC_STORAGE_EVENT_NAME = "AHOOKS_SYNC_STORAGE_EVENT_NAME";
+export const SYNC_STORAGE_EVENT_NAME = 'AHOOKS_SYNC_STORAGE_EVENT_NAME';
 
 export type SetState<S> = S | ((prevState?: S) => S);
 
@@ -16,25 +16,17 @@ export interface Options<T> {
   onError?: (error: unknown) => void;
 }
 
-export const createUseStorageState = (
-  getStorage: () => Storage | undefined
-) => {
+export const createUseStorageState = (getStorage: () => Storage | undefined) => {
   const useStorageState = <T>(key: string, options: Options<T> = {}) => {
     let storage: Storage | undefined;
 
     const { listenStorageChange = false } = options;
 
-    const serializer = isFunction(options.serializer)
-      ? options.serializer
-      : JSON.stringify;
+    const serializer = isFunction(options.serializer) ? options.serializer : JSON.stringify;
 
-    const deserializer = isFunction(options.deserializer)
-      ? options.deserializer
-      : JSON.parse;
+    const deserializer = isFunction(options.deserializer) ? options.deserializer : JSON.parse;
 
-    const onError = isFunction(options.onError)
-      ? options.onError
-      : console.error;
+    const onError = isFunction(options.onError) ? options.onError : console.error;
 
     // https://github.com/alibaba/hooks/issues/800
     try {
@@ -108,7 +100,7 @@ export const createUseStorageState = (
               oldValue,
               storageArea: storage,
             },
-          })
+          }),
         );
       } catch (e) {
         onError(e);
@@ -135,7 +127,7 @@ export const createUseStorageState = (
     };
 
     // from another document
-    useEventListener("storage", syncState, {
+    useEventListener('storage', syncState, {
       enable: listenStorageChange,
     });
 
@@ -144,10 +136,7 @@ export const createUseStorageState = (
       enable: listenStorageChange,
     });
 
-    return [
-      state,
-      useMemoizedFn(updateState) as (value: SetState<T>) => void,
-    ] as const;
+    return [state, useMemoizedFn(updateState) as (value: SetState<T>) => void] as const;
   };
 
   return useStorageState;
