@@ -9,6 +9,7 @@ export interface Options {
   leftTime?: number;
   targetDate?: TDate;
   interval?: number;
+  currentServerTime?: number;
   onEnd?: () => void;
 }
 
@@ -20,12 +21,23 @@ export interface FormattedRes {
   milliseconds: number;
 }
 
-const calcLeft = (target?: TDate) => {
+const calcLeft = (
+  target?: TDate,
+  momentTimeInfo?: {
+    serverTime: number;
+    localTime: number;
+  }
+) => {
   if (!target) {
     return 0;
   }
   // https://stackoverflow.com/questions/4310953/invalid-date-in-safari
-  const left = dayjs(target).valueOf() - Date.now();
+  const left =
+    // 如果服务器时间存在，则使用服务器时间，并动态计算时间差值，否则使用本地时间
+    dayjs(target).valueOf() -
+    (momentTimeInfo?.serverTime
+      ? momentTimeInfo.serverTime + Date.now() - momentTimeInfo.localTime
+      : Date.now());
   return left < 0 ? 0 : left;
 };
 
@@ -40,15 +52,37 @@ const parseMs = (milliseconds: number): FormattedRes => {
 };
 
 const useCountdown = (options: Options = {}) => {
-  const { leftTime, targetDate, interval = 1000, onEnd } = options || {};
+  const {
+    leftTime,
+    targetDate,
+    interval = 1000,
+    currentServerTime,
+    onEnd,
+  } = options || {};
+
+  /** 缓存此刻时间，保存当前服务器时间和本地时间，用于动态计算时间差，单位ms */
+  const momentTimeInfo = useMemo(
+    () => ({
+      serverTime: currentServerTime || 0,
+      localTime: currentServerTime ? Date.now() : 0,
+    }),
+    [currentServerTime]
+  );
 
   const memoLeftTime = useMemo<TDate>(() => {
-    return isNumber(leftTime) && leftTime > 0 ? Date.now() + leftTime : undefined;
-  }, [leftTime]);
+    return isNumber(leftTime) && leftTime > 0
+      ? // 如果传入服务器时间，则使用服务器时间,并动态计算时间差值，否则使用本地时间
+        (momentTimeInfo.serverTime
+          ? momentTimeInfo.serverTime + Date.now() - momentTimeInfo.localTime
+          : Date.now()) + leftTime
+      : undefined;
+  }, [leftTime, momentTimeInfo]);
 
   const target = 'leftTime' in options ? memoLeftTime : targetDate;
 
-  const [timeLeft, setTimeLeft] = useState(() => calcLeft(target));
+  const [timeLeft, setTimeLeft] = useState(() =>
+    calcLeft(target, momentTimeInfo)
+  );
 
   const onEndRef = useLatest(onEnd);
 
@@ -60,10 +94,10 @@ const useCountdown = (options: Options = {}) => {
     }
 
     // 立即执行一次
-    setTimeLeft(calcLeft(target));
+    setTimeLeft(calcLeft(target, momentTimeInfo));
 
     const timer = setInterval(() => {
-      const targetLeft = calcLeft(target);
+      const targetLeft = calcLeft(target, momentTimeInfo);
       setTimeLeft(targetLeft);
       if (targetLeft === 0) {
         clearInterval(timer);
@@ -72,7 +106,7 @@ const useCountdown = (options: Options = {}) => {
     }, interval);
 
     return () => clearInterval(timer);
-  }, [target, interval]);
+  }, [target, interval, momentTimeInfo]);
 
   const formattedRes = useMemo(() => parseMs(timeLeft), [timeLeft]);
 
