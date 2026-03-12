@@ -16,8 +16,8 @@ export interface Options<T> {
   onError?: (error: unknown) => void;
 }
 
-export function createUseStorageState(getStorage: () => Storage | undefined) {
-  function useStorageState<T>(key: string, options: Options<T> = {}) {
+export const createUseStorageState = (getStorage: () => Storage | undefined) => {
+  const useStorageState = <T>(key: string, options: Options<T> = {}) => {
     let storage: Storage | undefined;
 
     const { listenStorageChange = false } = options;
@@ -35,7 +35,7 @@ export function createUseStorageState(getStorage: () => Storage | undefined) {
       onError(err);
     }
 
-    function getStoredValue() {
+    const getStoredValue = () => {
       try {
         const raw = storage?.getItem(key);
         if (raw) {
@@ -48,7 +48,7 @@ export function createUseStorageState(getStorage: () => Storage | undefined) {
         return options.defaultValue();
       }
       return options.defaultValue;
-    }
+    };
 
     const [state, setState] = useState<T>(getStoredValue);
 
@@ -57,6 +57,9 @@ export function createUseStorageState(getStorage: () => Storage | undefined) {
 
     useUpdateEffect(() => {
       const nextState = getStoredValue();
+      if (Object.is(nextState, stateRef.current)) {
+        return; // 新旧状态相同，不更新 state，避免 setState 带来不必要的 re-render
+      }
       stateRef.current = nextState;
       setState(nextState);
     }, [key]);
@@ -66,7 +69,7 @@ export function createUseStorageState(getStorage: () => Storage | undefined) {
       const currentState = isFunction(value) ? value(previousState) : value;
 
       if (Object.is(currentState, previousState)) {
-        return;
+        return; // 新旧状态相同，不更新 state，避免 setState 带来不必要的 re-render
       }
 
       if (!listenStorageChange) {
@@ -112,7 +115,7 @@ export function createUseStorageState(getStorage: () => Storage | undefined) {
       const nextState = getStoredValue();
 
       if (Object.is(nextState, stateRef.current)) {
-        return;
+        return; // 新旧状态相同，不更新 state，避免 setState 带来不必要的 re-render
       }
 
       stateRef.current = nextState;
@@ -133,8 +136,8 @@ export function createUseStorageState(getStorage: () => Storage | undefined) {
       enable: listenStorageChange,
     });
 
-    return [state, useMemoizedFn(updateState) as (value: SetState<T>) => void] as const;
-  }
+    return [state, useMemoizedFn(updateState)] as const;
+  };
 
   return useStorageState;
-}
+};
