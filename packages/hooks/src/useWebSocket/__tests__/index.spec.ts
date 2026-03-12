@@ -145,3 +145,52 @@ describe('useWebSocket', () => {
     act(() => wsServer2.close());
   });
 });
+
+test('should call onMaxAttempt when reconnect attempts exceeded and unable to connect to server', async () => {
+  const onMaxAttempt = vi.fn();
+
+  renderHook(() =>
+    useWebSocket('ws://localhost:8888', {
+      onMaxAttempt,
+      reconnectInterval: 100,
+    }),
+  );
+
+  await act(async () => {
+    await sleep(500);
+  });
+
+  expect(onMaxAttempt).toBeCalledTimes(1);
+});
+
+test('should call onMaxAttempt when reconnect attempts exceed and server disconnects', async () => {
+  const onMaxAttempt = vi.fn();
+
+  const wsServer = new WS(wsUrl);
+
+  renderHook(() =>
+    useWebSocket(wsUrl, {
+      onMaxAttempt,
+      reconnectInterval: 100,
+      reconnectLimit: 1,
+    }),
+  );
+
+  await act(async () => {
+    await wsServer.connected;
+  });
+
+  wsServer.close();
+
+  await act(async () => {
+    await wsServer.connected;
+  });
+
+  wsServer.close();
+
+  await act(async () => {
+    await sleep(500);
+  });
+
+  expect(onMaxAttempt).toBeCalledTimes(1);
+});
