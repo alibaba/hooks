@@ -260,4 +260,27 @@ describe('useRequest', () => {
     expect(hook.result.current.loading).toBe(false);
     hook.unmount();
   });
+
+  test('should infer default parameter types from service', () => {
+    const service = async (a = 1, b = 1) => {
+      return `${a + b}`;
+    };
+
+    const { result } = renderHook(() =>
+      useRequest(service, {
+        manual: true,
+      }),
+    );
+
+    act(() => {
+      result.current.run(1, 2);
+    });
+
+    const assertRunParamTypes = () => {
+      // @ts-expect-error should reject non-number params
+      result.current.run('1', 2);
+    };
+
+    expect(assertRunParamTypes).toBeDefined();
+  });
 });
