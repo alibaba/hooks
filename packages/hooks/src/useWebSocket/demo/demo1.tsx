@@ -1,4 +1,4 @@
-import { useRef, useMemo } from 'react';
+import { useState, useEffect } from 'react';
 import { useWebSocket } from 'ahooks';
 
 enum ReadyState {
@@ -9,16 +9,17 @@ enum ReadyState {
 }
 
 export default () => {
-  const messageHistory = useRef<any[]>([]);
+  const [messageHistory, setMessageHistory] = useState<WebSocketEventMap['message'][]>([]);
 
   const { readyState, sendMessage, latestMessage, disconnect, connect } = useWebSocket(
     'wss://ws.postman-echo.com/raw',
   );
 
-  messageHistory.current = useMemo(
-    () => messageHistory.current.concat(latestMessage),
-    [latestMessage],
-  );
+  useEffect(() => {
+    if (latestMessage !== undefined) {
+      setMessageHistory((prev) => [...prev, latestMessage]);
+    }
+  }, [latestMessage]);
 
   return (
     <div>
@@ -45,7 +46,7 @@ export default () => {
       <div style={{ marginTop: 8 }}>readyState: {readyState}</div>
       <div style={{ marginTop: 8 }}>
         <p>received message: </p>
-        {messageHistory.current.map((message, index) => (
+        {messageHistory.map((message, index) => (
           <p key={index} style={{ wordWrap: 'break-word' }}>
             {message?.data}
           </p>
