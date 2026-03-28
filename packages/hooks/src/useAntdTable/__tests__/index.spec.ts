@@ -85,6 +85,19 @@ describe('useAntdTable', () => {
     await waitFor(() => expect(hook.result.current.tableProps.pagination.total).toBe(20));
   });
 
+  test('should defaultCurrent work', async () => {
+    queryArgs = undefined;
+    form.resetFields();
+    changeSearchType('simple');
+
+    act(() => {
+      hook = setUp(asyncFn, { defaultCurrent: 2 });
+    });
+
+    await waitFor(() => expect(queryArgs.current).toBe(2));
+    expect(queryArgs.pageSize).toBe(10);
+  });
+
   test('should defaultParams work', async () => {
     queryArgs = undefined;
     form.resetFields();

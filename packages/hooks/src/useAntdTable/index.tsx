@@ -134,7 +134,7 @@ const useAntdTable = <TData extends Data, TParams extends Params>(
           const pagination = initPagination || {
             pageSize: options.defaultPageSize || 10,
             ...(params?.[0] || {}),
-            current: 1,
+            current: options.defaultCurrent || 1,
           };
           if (!form) {
             // @ts-ignore
@@ -176,7 +176,7 @@ const useAntdTable = <TData extends Data, TParams extends Params>(
         ? undefined
         : {
             pageSize: options.defaultPageSize || options.defaultParams?.[0]?.pageSize || 10,
-            current: 1,
+            current: options.defaultCurrent || 1,
             ...(defaultParams?.[0] || {}),
           },
     );
