@@ -5,8 +5,8 @@ const path = require('node:path');
 module.exports = merge(common, {
   entry: './es/index.js',
   output: {
-    filename: 'ahooks-use-url-state.js',
-    library: 'ahooksUseUrlState',
+    filename: 'ahooks.js-use-url-state.js',
+    library: 'ahooksJsUseUrlState',
     path: path.resolve(__dirname, './dist'),
   },
 });

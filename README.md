@@ -27,6 +27,12 @@ English | [简体中文](https://github.com/alibaba/hooks/blob/master/README.zh-
 - [English](https://ahooks.js.org/)
 - [中文](https://ahooks.js.org/zh-CN/)
 
+> Notice
+>
+> `use-url-state` is now published as `@ahooks.js/use-url-state`.
+>
+> If you are installing or upgrading this package, please use the new package name.
+
 ## ✨ Features
 
 - Easy to learn and use

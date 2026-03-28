@@ -9,22 +9,28 @@ group:
 
 通过 url query 来管理 state 的 Hook。
 
+> 重要提示
+>
+> 当前包已使用新包名 `@ahooks.js/use-url-state` 发布。
+>
+> 如果你之前使用的是旧包名，请尽快迁移到新的包名。
+
 ## 安装
 
 ```bash
-npm i @ahooksjs/use-url-state -S
+npm i @ahooks.js/use-url-state -S
 ```
 
 > 该 Hooks 基于 `react-router` 的 useLocation & useHistory & useNavigate 进行 query 管理，所以使用该 Hooks 之前，你需要保证
 >
 > 1\. 你项目正在使用 `react-router` 5.x 或 6.x 版本来管理路由
 >
-> 2\. 独立安装了 @ahooksjs/use-url-state
+> 2\. 独立安装了 @ahooks.js/use-url-state
 
 ## 使用
 
 ```js
-import useUrlState from '@ahooksjs/use-url-state';
+import useUrlState from '@ahooks.js/use-url-state';
 ```
 
 ## 代码演示

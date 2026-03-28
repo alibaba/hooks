@@ -20,6 +20,16 @@ npm install ahooks-v2 --save
 npm install ahooks --save
 ```
 
+## `use-url-state` 包名变更
+
+独立包 `use-url-state` 现已使用新包名 `@ahooks.js/use-url-state` 发布。
+
+如果你是首次安装，或者正在从旧包名升级，请改用新的包名：
+
+```bash
+npm install @ahooks.js/use-url-state --save
+```
+
 ## 全新的 useRequest
 
 useRequest 完全进行了重写：
