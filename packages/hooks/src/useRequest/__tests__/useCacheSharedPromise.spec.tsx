@@ -35,7 +35,7 @@ describe('useCachePlugin shared promise loading', () => {
     expect(hook1.result.current.loading).toBe(false);
     expect(hook2.result.current.loading).toBe(false);
 
-    // Advance time past staleTime=0 to make data stale
+    // Advance time past staleTime (default 0) to make data stale
     vi.advanceTimersByTime(1);
 
     // Now hook1 manually triggers a new request

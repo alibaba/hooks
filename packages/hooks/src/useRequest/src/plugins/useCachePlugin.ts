@@ -5,7 +5,7 @@ import type { Plugin } from '../types';
 import { setCache, getCache } from '../utils/cache';
 import type { CachedData } from '../utils/cache';
 import { setCachePromise, getCachePromise } from '../utils/cachePromise';
-import { trigger, subscribe } from '../utils/cacheSubscribe';
+import { trigger, subscribe, triggerLoading, subscribeLoading } from '../utils/cacheSubscribe';
 
 const useCachePlugin: Plugin<any, any[]> = (
   fetchInstance,
@@ -18,6 +18,7 @@ const useCachePlugin: Plugin<any, any[]> = (
   },
 ) => {
   const unSubscribeRef = useRef<() => void>(undefined);
+  const unSubscribeLoadingRef = useRef<() => void>(undefined);
 
   const currentPromiseRef = useRef<Promise<any>>(undefined);
 
@@ -54,12 +55,18 @@ const useCachePlugin: Plugin<any, any[]> = (
 
     // subscribe same cachekey update, trigger update
     unSubscribeRef.current = subscribe(cacheKey, (data) => {
-      fetchInstance.setState({ data });
+      fetchInstance.setState({ data, loading: false });
+    });
+
+    // subscribe same cachekey loading update, trigger update
+    unSubscribeLoadingRef.current = subscribeLoading(cacheKey, () => {
+      fetchInstance.setState({ loading: true });
     });
   }, []);
 
   useUnmount(() => {
     unSubscribeRef.current?.();
+    unSubscribeLoadingRef.current?.();
   });
 
   if (!cacheKey) {
@@ -101,6 +108,8 @@ const useCachePlugin: Plugin<any, any[]> = (
       servicePromise = service(...args);
       currentPromiseRef.current = servicePromise;
       setCachePromise(cacheKey, servicePromise);
+      // notify other same cacheKey components that loading has started
+      triggerLoading(cacheKey);
       return { servicePromise };
     },
     onSuccess: (data, params) => {
@@ -114,7 +123,7 @@ const useCachePlugin: Plugin<any, any[]> = (
         });
         // resubscribe
         unSubscribeRef.current = subscribe(cacheKey, (d) => {
-          fetchInstance.setState({ data: d });
+          fetchInstance.setState({ data: d, loading: false });
         });
       }
     },
@@ -129,7 +138,7 @@ const useCachePlugin: Plugin<any, any[]> = (
         });
         // resubscribe
         unSubscribeRef.current = subscribe(cacheKey, (d) => {
-          fetchInstance.setState({ data: d });
+          fetchInstance.setState({ data: d, loading: false });
         });
       }
     },
