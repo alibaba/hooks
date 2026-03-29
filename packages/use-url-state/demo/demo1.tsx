@@ -6,7 +6,7 @@
  * desc.zh-CN: 将状态同步到 url query 中。通过设置值为 `undefined`, 可以从 url query 上彻底删除某个属性，从而使用默认值。
  */
 
-import useUrlState from '@ahooksjs/use-url-state';
+import useUrlState from '@ahooks.js/use-url-state';
 
 export default () => {
   const [state, setState] = useUrlState({ count: '1' });

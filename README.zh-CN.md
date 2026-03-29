@@ -27,6 +27,12 @@
 - [English](https://ahooks.js.org/)
 - [中文](https://ahooks.js.org/zh-CN/)
 
+> 公告
+>
+> `use-url-state` 已改为使用新包名 `@ahooks.js/use-url-state` 发布。
+>
+> 如果你正在安装或升级这个包，请使用新的包名。
+
 ## ✨ 特性
 
 - 易学易用

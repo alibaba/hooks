@@ -3,7 +3,7 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "@ahooksjs/use-url-state": ["./src/index.ts"]
+      "@ahooks.js/use-url-state": ["./src/index.ts"]
     }
   }
 }
