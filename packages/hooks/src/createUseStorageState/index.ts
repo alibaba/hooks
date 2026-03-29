@@ -1,6 +1,7 @@
 import { useRef, useState } from 'react';
 import useEventListener from '../useEventListener';
 import useMemoizedFn from '../useMemoizedFn';
+import useMount from '../useMount';
 import useUpdateEffect from '../useUpdateEffect';
 import { isFunction, isUndef } from '../utils';
 
@@ -10,6 +11,7 @@ export type SetState<S> = S | ((prevState?: S) => S);
 
 export interface Options<T> {
   defaultValue?: T | (() => T);
+  getInitialValueInEffect?: boolean;
   listenStorageChange?: boolean;
   serializer?: (value: T) => string;
   deserializer?: (value: string) => T;
@@ -19,8 +21,7 @@ export interface Options<T> {
 export const createUseStorageState = (getStorage: () => Storage | undefined) => {
   const useStorageState = <T>(key: string, options: Options<T> = {}) => {
     let storage: Storage | undefined;
-
-    const { listenStorageChange = false } = options;
+    const { listenStorageChange = false, getInitialValueInEffect = false } = options;
 
     const serializer = isFunction(options.serializer) ? options.serializer : JSON.stringify;
 
@@ -44,13 +45,32 @@ export const createUseStorageState = (getStorage: () => Storage | undefined) => 
       } catch (e) {
         onError(e);
       }
+      return getDefaultValue();
+    }
+
+    function getDefaultValue() {
       if (isFunction(options.defaultValue)) {
         return options.defaultValue();
       }
+
       return options.defaultValue;
     };
 
-    const [state, setState] = useState<T>(getStoredValue);
+    const [state, setState] = useState<T>(() => {
+      if (getInitialValueInEffect) {
+        return getDefaultValue();
+      }
+
+      return getStoredValue();
+    });
+
+    useMount(() => {
+      if (!getInitialValueInEffect) {
+        return;
+      }
+
+      setState(getStoredValue());
+    });
 
     const stateRef = useRef<T>(state);
     stateRef.current = state;
