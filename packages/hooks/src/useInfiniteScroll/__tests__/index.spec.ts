@@ -532,4 +532,84 @@ describe('useInfiniteScroll', () => {
     scrollHeightSpy.mockRestore();
     clientHeightSpy.mockRestore();
   });
+
+  test('should auto loadMore after initial load when container is not full, and second request receives the latest finalData', async () => {
+    setTargetInfo('scrollTop', 0);
+    const scrollHeightSpy = vi.spyOn(targetEl, 'scrollHeight', 'get').mockImplementation(() => 50);
+    const clientHeightSpy = vi.spyOn(targetEl, 'clientHeight', 'get').mockImplementation(() => 300);
+
+    let capturedLastData: any;
+    const service = vi.fn(async (lastData?: any) => {
+      capturedLastData = lastData;
+      await sleep(1000);
+      if (!lastData) {
+        return { list: [1, 2, 3], nextId: 1 };
+      }
+      return { list: [4, 5, 6] };
+    });
+
+    const { result } = setup(service, {
+      target: targetEl,
+      isNoMore: (d) => d?.nextId === undefined,
+    });
+
+    // Wait for initial load to complete
+    await act(async () => {
+      vi.advanceTimersByTime(1000);
+    });
+
+    // Container is not full, so scrollMethod should have auto-triggered loadMore
+    expect(result.current.loadingMore).toBe(true);
+    // The second call must receive the up-to-date finalData (not the stale closure value)
+    expect(capturedLastData).toMatchObject({ list: [1, 2, 3], nextId: 1 });
+
+    await act(async () => {
+      vi.advanceTimersByTime(1000);
+    });
+    expect(result.current.data?.list).toMatchObject([1, 2, 3, 4, 5, 6]);
+    expect(result.current.noMore).toBe(true);
+
+    scrollHeightSpy.mockRestore();
+    clientHeightSpy.mockRestore();
+  });
+
+  test('mutate should not trigger extra loadMore', async () => {
+    setTargetInfo('scrollTop', 0);
+    const scrollHeightSpy = vi.spyOn(targetEl, 'scrollHeight', 'get').mockImplementation(() => 50);
+    const clientHeightSpy = vi.spyOn(targetEl, 'clientHeight', 'get').mockImplementation(() => 300);
+
+    const service = vi.fn(mockRequest);
+    const { result } = setup(service, {
+      target: targetEl,
+      isNoMore: (d) => d?.nextId === undefined,
+    });
+
+    // Wait for initial load to complete; this auto-triggers a second load
+    await act(async () => {
+      vi.advanceTimersByTime(1000);
+    });
+    // Wait for the auto-triggered second load to complete
+    await act(async () => {
+      vi.advanceTimersByTime(1000);
+    });
+    expect(result.current.noMore).toBe(true);
+
+    const callCountAfterLoad = service.mock.calls.length;
+
+    // Mutate with data that makes noMore false, so loadMore *would* fire if scrollMethod ran
+    act(() => {
+      result.current.mutate({ list: [10, 20], nextId: 1 });
+    });
+
+    // Wait for any effects to run
+    await act(async () => {
+      vi.advanceTimersByTime(100);
+    });
+
+    // mutate should NOT trigger additional requests via scrollMethod
+    expect(service).toBeCalledTimes(callCountAfterLoad);
+
+    scrollHeightSpy.mockRestore();
+    clientHeightSpy.mockRestore();
+  });
 });
