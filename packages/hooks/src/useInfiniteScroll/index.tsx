@@ -68,21 +68,19 @@ const useInfiniteScroll = <TData extends Data>(
           });
         }
 
-        setTimeout(() => {
-          // use requestAnimationFrame to ensure the scroll position is updated (To ensure compatibility react 19)
-          requestAnimationFrame(() => {
-            if (isScrollToTop) {
+        if (isScrollToTop) {
+          setTimeout(() => {
+            // use requestAnimationFrame to ensure the scroll position is updated (To ensure compatibility react 19)
+            requestAnimationFrame(() => {
               let el = getTargetElement(target);
               el = el === document ? document.documentElement : el;
               if (el) {
                 const scrollHeight = getScrollHeight(el);
                 (el as Element).scrollTo(0, scrollHeight - scrollBottom.current);
               }
-            }
+            });
           });
-        });
-
-        if (!isScrollToTop) {
+        } else {
           shouldScrollCheckRef.current = true;
         }
         onSuccess?.(d.currentData);
