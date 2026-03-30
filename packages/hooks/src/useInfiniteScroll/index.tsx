@@ -31,6 +31,8 @@ const useInfiniteScroll = <TData extends Data>(
   const lastScrollTop = useRef<number>(undefined);
   // scrollBottom is used to record the distance from the bottom of the scroll bar
   const scrollBottom = useRef<number>(0);
+  // flag: set in onSuccess (bottom direction only) to trigger scrollMethod via effect
+  const pendingBottomScrollCheckRef = useRef(false);
 
   const noMore = useMemo(() => {
     if (!isNoMore) {
@@ -66,23 +68,21 @@ const useInfiniteScroll = <TData extends Data>(
           });
         }
 
-        setTimeout(() => {
-          // use requestAnimationFrame to ensure the scroll position is updated (To ensure compatibility react 19)
-          requestAnimationFrame(() => {
-            if (isScrollToTop) {
+        if (isScrollToTop) {
+          setTimeout(() => {
+            // use requestAnimationFrame to ensure the scroll position is updated (To ensure compatibility react 19)
+            requestAnimationFrame(() => {
               let el = getTargetElement(target);
               el = el === document ? document.documentElement : el;
               if (el) {
                 const scrollHeight = getScrollHeight(el);
                 (el as Element).scrollTo(0, scrollHeight - scrollBottom.current);
               }
-            } else {
-              // eslint-disable-next-line @typescript-eslint/no-use-before-define
-              scrollMethod();
-            }
+            });
           });
-        });
-
+        } else {
+          pendingBottomScrollCheckRef.current = true;
+        }
         onSuccess?.(d.currentData);
       },
       onError: (e) => onError?.(e),
@@ -145,6 +145,13 @@ const useInfiniteScroll = <TData extends Data>(
       loadMore();
     }
   };
+  useUpdateEffect(() => {
+    if (!pendingBottomScrollCheckRef.current) {
+      return;
+    }
+    pendingBottomScrollCheckRef.current = false;
+    scrollMethod();
+  }, [finalData]);
 
   useEventListener(
     'scroll',
