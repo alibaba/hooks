@@ -32,7 +32,7 @@ const useInfiniteScroll = <TData extends Data>(
   // scrollBottom is used to record the distance from the bottom of the scroll bar
   const scrollBottom = useRef<number>(0);
   // flag: set in onSuccess (bottom direction only) to trigger scrollMethod via effect
-  const shouldScrollCheckRef = useRef(false);
+  const pendingBottomScrollCheckRef = useRef(false);
 
   const noMore = useMemo(() => {
     if (!isNoMore) {
@@ -81,7 +81,7 @@ const useInfiniteScroll = <TData extends Data>(
             });
           });
         } else {
-          shouldScrollCheckRef.current = true;
+          pendingBottomScrollCheckRef.current = true;
         }
         onSuccess?.(d.currentData);
       },
@@ -146,10 +146,10 @@ const useInfiniteScroll = <TData extends Data>(
     }
   };
   useUpdateEffect(() => {
-    if (!shouldScrollCheckRef.current) {
+    if (!pendingBottomScrollCheckRef.current) {
       return;
     }
-    shouldScrollCheckRef.current = false;
+    pendingBottomScrollCheckRef.current = false;
     scrollMethod();
   }, [finalData]);
 
