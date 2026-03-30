@@ -566,7 +566,7 @@ describe('useInfiniteScroll', () => {
     await act(async () => {
       vi.advanceTimersByTime(1000);
     });
-    expect(result.current.data?.list).toMatchObject([1, 2, 3, 4, 5, 6]);
+    expect(result.current.data?.list).toEqual([1, 2, 3, 4, 5, 6]);
     expect(result.current.noMore).toBe(true);
 
     scrollHeightSpy.mockRestore();
