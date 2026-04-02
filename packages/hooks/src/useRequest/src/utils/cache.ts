@@ -14,9 +14,9 @@ const cache = new Map<CachedKey, RecordData>();
 
 const clearTimer = (cachedData?: RecordData) => {
   if (cachedData?.timer) {
-    clearTimeout(cachedData.timer)
+    clearTimeout(cachedData.timer);
   }
-}
+};
 
 const setCache = (key: CachedKey, cacheTime: number, cachedData: CachedData) => {
   const currentCache = cache.get(key);
