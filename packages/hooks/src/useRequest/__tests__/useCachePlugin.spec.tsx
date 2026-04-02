@@ -115,6 +115,36 @@ describe('useCachePlugin', () => {
     expect(hook2.result.current.data).toBeUndefined();
   });
 
+  test('clearCache/setCache should work', async () => {
+    const cacheKey = 'testClearCacheSetCache';
+    const options = {
+      cacheKey,
+      cacheTime: 3000,
+    };
+
+    await testCacheKey(options);
+
+    clearCache(cacheKey);
+
+    const hook2 = setup(request, options);
+    expect(hook2.result.current.loading).toBe(true);
+    expect(hook2.result.current.data).toBeUndefined();
+
+    await act(async () => {
+      vi.advanceTimersByTime(1000);
+    });
+    expect(hook2.result.current.loading).toBe(false);
+    expect(hook2.result.current.data).toBe('success');
+    hook2.unmount();
+
+    vi.advanceTimersByTime(2000);
+
+    const hook3 = setup(request, options);
+    expect(hook3.result.current.loading).toBe(true);
+    expect(hook3.result.current.data).toBe('success');
+    hook3.unmount();
+  });
+
   test('setCache/getCache should work', async () => {
     const cacheKey = `setCacheKey`;
     await testCacheKey({
