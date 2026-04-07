@@ -6,13 +6,11 @@
  * desc.zh-CN: 父组件创建了一个 `focus$` 事件，并且将它传递给了两个子组件。在 MessageBox 中调用 `focus$.emit` ，InputBox 组件就可以收到通知。
  */
 
-import { useRef, type FC } from 'react';
-import { useEventEmitter } from 'ahooks';
-import { EventEmitter } from 'ahooks/lib/useEventEmitter';
+import React, { useRef } from "react";
+import { useEventEmitter } from "ahooks";
+import type { EventEmitter } from "..";
 
-const MessageBox: FC<{
-  focus$: EventEmitter<void>;
-}> = function (props) {
+const MessageBox: React.FC<{ focus$: EventEmitter<void> }> = (props) => {
   return (
     <div style={{ paddingBottom: 24 }}>
       <p>You received a message</p>
@@ -28,19 +26,21 @@ const MessageBox: FC<{
   );
 };
 
-const InputBox: FC<{
-  focus$: EventEmitter<void>;
-}> = function (props) {
+const InputBox: React.FC<{ focus$: EventEmitter<void> }> = (props) => {
   const inputRef = useRef<HTMLInputElement>(null);
   props.focus$.useSubscription(() => {
     inputRef.current?.focus();
   });
   return (
-    <input ref={inputRef} placeholder="Enter reply" style={{ width: '100%', padding: '4px' }} />
+    <input
+      ref={inputRef}
+      placeholder="Enter reply"
+      style={{ width: "100%", padding: "4px" }}
+    />
   );
 };
 
-export default function () {
+const Demo: React.FC = () => {
   const focus$ = useEventEmitter();
   return (
     <>
@@ -48,4 +48,6 @@ export default function () {
       <InputBox focus$={focus$} />
     </>
   );
-}
+};
+
+export default Demo;
