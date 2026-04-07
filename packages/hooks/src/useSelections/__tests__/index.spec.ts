@@ -1,8 +1,8 @@
-import { act, renderHook } from "@testing-library/react";
-import { useState } from "react";
-import { describe, expect, test } from "vitest";
-import type { Options } from "../index";
-import useSelections from "../index";
+import { act, renderHook } from '@testing-library/react';
+import { useState } from 'react';
+import { describe, expect, test } from 'vitest';
+import type { Options } from '../index';
+import useSelections from '../index';
 
 const _data = [1, 2, 3];
 const _selected = [1];
@@ -16,26 +16,22 @@ const setup = <T>(items: T[], options?: T[] | Options<T>) => {
   return renderHook(() => useSelections(items, options));
 };
 
-type CaseCallback<T = number | object> = (
-  data: T[],
-  selected: T[],
-  selectedItem: T
-) => void;
+type CaseCallback<T = number | object> = (data: T[], selected: T[], selectedItem: T) => void;
 
 const runCaseCallback = (
   dataCallback: CaseCallback<number>,
-  objDataCallback: CaseCallback<object>
+  objDataCallback: CaseCallback<object>,
 ) => {
   dataCallback(_data, _selected, _selectedItem);
   objDataCallback(_dataObj, _selectedObj, _selectedItemObj);
 };
 
-describe("useSelections", () => {
-  test("defaultSelected should work correct", () => {
+describe('useSelections', () => {
+  test('defaultSelected should work correct', () => {
     const caseCallback: CaseCallback = (data, selected, selectedItem) => {
       const { result } = setup(data, {
         defaultSelected: selected,
-        itemKey: "id",
+        itemKey: 'id',
       });
 
       expect(result.current.selected).toEqual(selected);
@@ -45,11 +41,11 @@ describe("useSelections", () => {
     runCaseCallback(caseCallback, caseCallback);
   });
 
-  test("select and unSelect should work correct", () => {
+  test('select and unSelect should work correct', () => {
     const caseCallback: CaseCallback = (data, selected, selectedItem) => {
       const { result } = setup(data, {
         defaultSelected: selected,
-        itemKey: "id",
+        itemKey: 'id',
       });
       const { unSelect, select } = result.current;
 
@@ -71,9 +67,9 @@ describe("useSelections", () => {
     runCaseCallback(caseCallback, caseCallback);
   });
 
-  test("toggle should work correct", () => {
+  test('toggle should work correct', () => {
     const caseCallback: CaseCallback = (data, selected, selectedItem) => {
-      const { result } = setup(data, { itemKey: "id" });
+      const { result } = setup(data, { itemKey: 'id' });
       const { toggle } = result.current;
 
       act(() => {
@@ -94,9 +90,9 @@ describe("useSelections", () => {
     runCaseCallback(caseCallback, caseCallback);
   });
 
-  test("selectAll and unSelectAll should work correct", async () => {
+  test('selectAll and unSelectAll should work correct', async () => {
     const caseCallback: CaseCallback = (data) => {
-      const { result } = setup(data, { itemKey: "id" });
+      const { result } = setup(data, { itemKey: 'id' });
       const { selectAll, unSelectAll } = result.current;
 
       expect(result.current.noneSelected).toBe(true);
@@ -120,10 +116,10 @@ describe("useSelections", () => {
     runCaseCallback(caseCallback, caseCallback);
   });
 
-  test("toggleAll should work correct", async () => {
+  test('toggleAll should work correct', async () => {
     const caseCallback: CaseCallback = (data) => {
       const { result } = setup(data, {
-        itemKey: "id",
+        itemKey: 'id',
       });
       const { toggleAll } = result.current;
 
@@ -148,10 +144,10 @@ describe("useSelections", () => {
     runCaseCallback(caseCallback, caseCallback);
   });
 
-  test("setSelected should work correct", async () => {
+  test('setSelected should work correct', async () => {
     const caseCallback: CaseCallback = (data, selected, selectedItem) => {
       const { result } = setup(data, {
-        itemKey: "id",
+        itemKey: 'id',
       });
       const { setSelected } = result.current;
 
@@ -193,18 +189,18 @@ describe("useSelections", () => {
     runCaseCallback(caseCallback, caseCallback);
   });
 
-  test("legacy parameter should work in <4.0", async () => {
+  test('legacy parameter should work in <4.0', async () => {
     const { result } = setup(_data, _selected);
 
     expect(result.current.selected).toEqual(_selected);
     expect(result.current.isSelected(_selectedItem)).toBe(true);
   });
 
-  test("clearAll should work correct", async () => {
+  test('clearAll should work correct', async () => {
     const runCase = (data: any, newData: any, remainData: any) => {
       const { result } = renderHook(() => {
         const [list, setList] = useState(data);
-        const hook = useSelections(list, { itemKey: "id" });
+        const hook = useSelections(list, { itemKey: 'id' });
         return { setList, hook };
       });
       const { setSelected, unSelectAll, clearAll } = result.current.hook;
@@ -235,10 +231,6 @@ describe("useSelections", () => {
     };
 
     runCase(_data, [3, 4, 5], [1, 2]);
-    runCase(
-      _dataObj,
-      [{ id: 3 }, { id: 4 }, { id: 5 }],
-      [{ id: 1 }, { id: 2 }]
-    );
+    runCase(_dataObj, [{ id: 3 }, { id: 4 }, { id: 5 }], [{ id: 1 }, { id: 2 }]);
   });
 });
