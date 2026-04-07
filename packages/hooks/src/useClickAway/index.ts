@@ -1,15 +1,15 @@
-import useLatest from "../useLatest";
-import type { BasicTarget } from "../utils/domTarget";
-import { getTargetElement } from "../utils/domTarget";
-import getDocumentOrShadow from "../utils/getDocumentOrShadow";
-import useEffectWithTarget from "../utils/useEffectWithTarget";
+import useLatest from '../useLatest';
+import type { BasicTarget } from '../utils/domTarget';
+import { getTargetElement } from '../utils/domTarget';
+import getDocumentOrShadow from '../utils/getDocumentOrShadow';
+import useEffectWithTarget from '../utils/useEffectWithTarget';
 
 type DocumentEventKey = keyof DocumentEventMap;
 
 const useClickAway = <T extends Event = Event>(
   onClickAway: (event: T) => void,
   target: BasicTarget | BasicTarget[],
-  eventName: DocumentEventKey | DocumentEventKey[] = "click"
+  eventName: DocumentEventKey | DocumentEventKey[] = 'click',
 ) => {
   const onClickAwayRef = useLatest(onClickAway);
 
@@ -43,7 +43,7 @@ const useClickAway = <T extends Event = Event>(
       };
     },
     Array.isArray(eventName) ? eventName : [eventName],
-    target
+    target,
   );
 };
 
