@@ -1,6 +1,6 @@
 const commonConfig = require('../../gulpfile');
 const gulp = require('gulp');
-const fs = require('fs');
+const fs = require('node:fs');
 const fse = require('fs-extra');
 const fg = require('fast-glob');
 const gm = require('gray-matter');

@@ -1,16 +1,16 @@
-import useLatest from '../useLatest';
-import type { BasicTarget } from '../utils/domTarget';
-import { getTargetElement } from '../utils/domTarget';
-import getDocumentOrShadow from '../utils/getDocumentOrShadow';
-import useEffectWithTarget from '../utils/useEffectWithTarget';
+import useLatest from "../useLatest";
+import type { BasicTarget } from "../utils/domTarget";
+import { getTargetElement } from "../utils/domTarget";
+import getDocumentOrShadow from "../utils/getDocumentOrShadow";
+import useEffectWithTarget from "../utils/useEffectWithTarget";
 
 type DocumentEventKey = keyof DocumentEventMap;
 
-export default function useClickAway<T extends Event = Event>(
+const useClickAway = <T extends Event = Event>(
   onClickAway: (event: T) => void,
   target: BasicTarget | BasicTarget[],
-  eventName: DocumentEventKey | DocumentEventKey[] = 'click',
-) {
+  eventName: DocumentEventKey | DocumentEventKey[] = "click"
+) => {
   const onClickAwayRef = useLatest(onClickAway);
 
   useEffectWithTarget(
@@ -32,13 +32,19 @@ export default function useClickAway<T extends Event = Event>(
 
       const eventNames = Array.isArray(eventName) ? eventName : [eventName];
 
-      eventNames.forEach((event) => documentOrShadow.addEventListener(event, handler));
+      eventNames.forEach((event) => {
+        documentOrShadow.addEventListener(event, handler);
+      });
 
       return () => {
-        eventNames.forEach((event) => documentOrShadow.removeEventListener(event, handler));
+        eventNames.forEach((event) => {
+          documentOrShadow.removeEventListener(event, handler);
+        });
       };
     },
     Array.isArray(eventName) ? eventName : [eventName],
-    target,
+    target
   );
-}
+};
+
+export default useClickAway;
