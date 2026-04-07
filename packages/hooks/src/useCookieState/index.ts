@@ -1,7 +1,7 @@
-import Cookies from "js-cookie";
-import { useState } from "react";
-import useMemoizedFn from "../useMemoizedFn";
-import { isFunction, isString } from "../utils";
+import Cookies from 'js-cookie';
+import { useState } from 'react';
+import useMemoizedFn from '../useMemoizedFn';
+import { isFunction, isString } from '../utils';
 
 export type State = string | undefined;
 
@@ -35,7 +35,7 @@ export interface CookieAttributes {
    * providing some protection against cross-site request forgery
    * attacks (CSRF)
    */
-  sameSite?: "strict" | "Strict" | "lax" | "Lax" | "none" | "None" | undefined;
+  sameSite?: 'strict' | 'Strict' | 'lax' | 'Lax' | 'none' | 'None' | undefined;
 
   /**
    * An attribute which will be serialized, conformably to RFC 6265
@@ -64,10 +64,7 @@ const useCookieState = (cookieKey: string, options: Options = {}) => {
   });
 
   const updateState = useMemoizedFn(
-    (
-      newValue: State | ((prevState: State) => State),
-      newOptions: CookieAttributes = {}
-    ) => {
+    (newValue: State | ((prevState: State) => State), newOptions: CookieAttributes = {}) => {
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { defaultValue, ...restOptions } = { ...options, ...newOptions };
       const value = isFunction(newValue) ? newValue(state) : newValue;
@@ -79,7 +76,7 @@ const useCookieState = (cookieKey: string, options: Options = {}) => {
       } else {
         Cookies.set(cookieKey, value, restOptions);
       }
-    }
+    },
   );
 
   return [state, updateState] as const;

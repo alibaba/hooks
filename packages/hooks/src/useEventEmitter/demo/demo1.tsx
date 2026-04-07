@@ -6,9 +6,9 @@
  * desc.zh-CN: 父组件创建了一个 `focus$` 事件，并且将它传递给了两个子组件。在 MessageBox 中调用 `focus$.emit` ，InputBox 组件就可以收到通知。
  */
 
-import React, { useRef } from "react";
-import { useEventEmitter } from "ahooks";
-import type { EventEmitter } from "..";
+import React, { useRef } from 'react';
+import { useEventEmitter } from 'ahooks';
+import type { EventEmitter } from '..';
 
 const MessageBox: React.FC<{ focus$: EventEmitter<void> }> = (props) => {
   return (
@@ -32,11 +32,7 @@ const InputBox: React.FC<{ focus$: EventEmitter<void> }> = (props) => {
     inputRef.current?.focus();
   });
   return (
-    <input
-      ref={inputRef}
-      placeholder="Enter reply"
-      style={{ width: "100%", padding: "4px" }}
-    />
+    <input ref={inputRef} placeholder="Enter reply" style={{ width: '100%', padding: '4px' }} />
   );
 };
 
