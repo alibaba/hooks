@@ -1,4 +1,4 @@
-import { useRef, useMemo } from 'react';
+import React, { useRef, useMemo } from 'react';
 import { useWebSocket } from 'ahooks';
 
 enum ReadyState {
@@ -8,15 +8,15 @@ enum ReadyState {
   Closed = 3,
 }
 
-export default () => {
-  const messageHistory = useRef<any[]>([]);
+const Demo: React.FC = () => {
+  const messageHistory = useRef<MessageEvent<any>[]>([]);
 
-  const { readyState, sendMessage, latestMessage, disconnect, connect } = useWebSocket(
+  const { readyState, latestMessage, sendMessage, disconnect, connect } = useWebSocket(
     'wss://ws.postman-echo.com/raw',
   );
 
   messageHistory.current = useMemo(
-    () => messageHistory.current.concat(latestMessage),
+    () => (latestMessage ? messageHistory.current.concat(latestMessage) : messageHistory.current),
     [latestMessage],
   );
 
@@ -24,7 +24,7 @@ export default () => {
     <div>
       {/* send message */}
       <button
-        onClick={() => sendMessage && sendMessage(`${Date.now()}`)}
+        onClick={() => sendMessage?.(`${Date.now()}`)}
         disabled={readyState !== ReadyState.Open}
         style={{ marginRight: 8 }}
       >
@@ -32,14 +32,14 @@ export default () => {
       </button>
       {/* disconnect */}
       <button
-        onClick={() => disconnect && disconnect()}
+        onClick={() => disconnect?.()}
         disabled={readyState !== ReadyState.Open}
         style={{ marginRight: 8 }}
       >
         ❌ disconnect
       </button>
       {/* connect */}
-      <button onClick={() => connect && connect()} disabled={readyState === ReadyState.Open}>
+      <button onClick={() => connect?.()} disabled={readyState === ReadyState.Open}>
         {readyState === ReadyState.Connecting ? 'connecting' : '📞 connect'}
       </button>
       <div style={{ marginTop: 8 }}>readyState: {readyState}</div>
@@ -54,3 +54,5 @@ export default () => {
     </div>
   );
 };
+
+export default Demo;

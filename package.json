@@ -74,7 +74,7 @@
     "react-shadow": "^20.6.0",
     "rimraf": "^3.0.2",
     "surge": "^0.21.3",
-    "typescript": "^5.8.3",
+    "typescript": "^6.0.2",
     "vitest": "^3.2.4",
     "vitest-websocket-mock": "^0.5.0",
     "webpack": "^5.99.9",
