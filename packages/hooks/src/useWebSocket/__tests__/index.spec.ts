@@ -1,19 +1,19 @@
-import { act, renderHook } from "@testing-library/react";
-import { afterEach, describe, expect, test, vi } from "vitest";
-import WS from "vitest-websocket-mock";
-import { sleep } from "../../utils/testingHelpers";
-import useWebSocket, { ReadyState } from "../index";
+import { act, renderHook } from '@testing-library/react';
+import { afterEach, describe, expect, test, vi } from 'vitest';
+import WS from 'vitest-websocket-mock';
+import { sleep } from '../../utils/testingHelpers';
+import useWebSocket, { ReadyState } from '../index';
 
 const promise: Promise<void> = new Promise((resolve) => resolve());
 
-const wsUrl = "ws://localhost:9999";
+const wsUrl = 'ws://localhost:9999';
 
-describe("useWebSocket", () => {
+describe('useWebSocket', () => {
   afterEach(() => {
     WS.clean();
   });
 
-  test("should work", async () => {
+  test('should work', async () => {
     const wsServer = new WS(wsUrl);
     const hooks = renderHook(() => useWebSocket(wsUrl));
 
@@ -46,7 +46,7 @@ describe("useWebSocket", () => {
     expect(hooks.result.current.readyState).toBe(ReadyState.Closed);
   });
 
-  test("disconnect should work", async () => {
+  test('disconnect should work', async () => {
     const wsServer = new WS(wsUrl);
     const hooks = renderHook(() => useWebSocket(wsUrl));
 
@@ -61,7 +61,7 @@ describe("useWebSocket", () => {
     expect(hooks.result.current.readyState).toBe(ReadyState.Closed);
   });
 
-  test("useWebSocket should be manually triggered", async () => {
+  test('useWebSocket should be manually triggered', async () => {
     const wsServer = new WS(wsUrl);
 
     new WebSocket(wsUrl);
@@ -85,12 +85,12 @@ describe("useWebSocket", () => {
     act(() => wsServer.close());
   });
 
-  test("should not call connect when initial socketUrl is empty", async () => {
+  test('should not call connect when initial socketUrl is empty', async () => {
     const wsServer = new WS(wsUrl);
     const onOpen = vi.fn();
     const onClose = vi.fn();
 
-    let url = "";
+    let url = '';
     const hooks = renderHook(() => useWebSocket(url, { onOpen, onClose }));
 
     await act(async () => {
@@ -112,8 +112,8 @@ describe("useWebSocket", () => {
     act(() => wsServer.close());
   });
 
-  test("change socketUrl should connect correctly", async () => {
-    const wsUrl1 = "ws://localhost:8888";
+  test('change socketUrl should connect correctly', async () => {
+    const wsUrl1 = 'ws://localhost:8888';
     const wsServer1 = new WS(wsUrl);
     const wsServer2 = new WS(wsUrl1);
 
@@ -121,9 +121,7 @@ describe("useWebSocket", () => {
     const onClose = vi.fn();
 
     let url = wsUrl;
-    const hooks = renderHook(() =>
-      useWebSocket(url, { onOpen, onClose, reconnectInterval: 300 })
-    );
+    const hooks = renderHook(() => useWebSocket(url, { onOpen, onClose, reconnectInterval: 300 }));
 
     expect(hooks.result.current.readyState).toBe(ReadyState.Connecting);
     await act(async () => {

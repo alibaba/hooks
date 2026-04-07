@@ -1,9 +1,9 @@
-import { renderHook } from "@testing-library/react";
-import { describe, expect, test, vi } from "vitest";
-import useUnmount from "../index";
+import { renderHook } from '@testing-library/react';
+import { describe, expect, test, vi } from 'vitest';
+import useUnmount from '../index';
 
-describe("useUnmount", () => {
-  test("useUnmount should work", async () => {
+describe('useUnmount', () => {
+  test('useUnmount should work', async () => {
     const fn = vi.fn();
     const hook = renderHook(() => useUnmount(fn));
     expect(fn).toHaveBeenCalledTimes(0);

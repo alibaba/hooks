@@ -1,6 +1,6 @@
-import { renderHook } from "@testing-library/react";
-import { afterAll, beforeAll, describe, expect, test, vi } from "vitest";
-import useRafInterval from "../index";
+import { renderHook } from '@testing-library/react';
+import { afterAll, beforeAll, describe, expect, test, vi } from 'vitest';
+import useRafInterval from '../index';
 
 interface ParamsObj {
   fn: (...arg: any) => any;
@@ -12,7 +12,7 @@ const setUp = ({ fn, delay, options }: ParamsObj) =>
   renderHook(() => useRafInterval(fn, delay, options));
 
 const FRAME_TIME = 16;
-describe("useRafInterval", () => {
+describe('useRafInterval', () => {
   beforeAll(() => {
     vi.useFakeTimers();
   });
@@ -20,7 +20,7 @@ describe("useRafInterval", () => {
     vi.restoreAllMocks();
   });
 
-  test("interval should work", () => {
+  test('interval should work', () => {
     const callback = vi.fn();
     setUp({ fn: callback, delay: FRAME_TIME });
     expect(callback).not.toHaveBeenCalled();
@@ -28,7 +28,7 @@ describe("useRafInterval", () => {
     expect(callback).toHaveBeenCalledTimes(2);
   });
 
-  test("delay is undefined should stop", () => {
+  test('delay is undefined should stop', () => {
     const delay: number | undefined = undefined;
     const callback = vi.fn();
     setUp({ fn: callback, delay });
@@ -37,7 +37,7 @@ describe("useRafInterval", () => {
     expect(callback).not.toHaveBeenCalled();
   });
 
-  test("immediate in options should work", () => {
+  test('immediate in options should work', () => {
     const callback = vi.fn();
     setUp({ fn: callback, delay: FRAME_TIME, options: { immediate: true } });
     expect(callback).toHaveBeenCalled();
@@ -46,7 +46,7 @@ describe("useRafInterval", () => {
     expect(callback).toHaveBeenCalledTimes(2);
   });
 
-  test("interval should be clear", () => {
+  test('interval should be clear', () => {
     const callback = vi.fn();
     const hook = setUp({ fn: callback, delay: FRAME_TIME });
 
@@ -58,7 +58,7 @@ describe("useRafInterval", () => {
     expect(callback).toHaveBeenCalledTimes(0);
   });
 
-  test("execute clear in the callback and interval should be clear", () => {
+  test('execute clear in the callback and interval should be clear', () => {
     const callback = vi.fn().mockImplementation(() => hook.result.current());
     const hook = setUp({ fn: callback, delay: FRAME_TIME });
 

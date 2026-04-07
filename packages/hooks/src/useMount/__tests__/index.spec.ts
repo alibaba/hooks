@@ -1,9 +1,9 @@
-import { renderHook } from "@testing-library/react";
-import { describe, expect, test, vi } from "vitest";
-import useMount from "../index";
+import { renderHook } from '@testing-library/react';
+import { describe, expect, test, vi } from 'vitest';
+import useMount from '../index';
 
-describe("useMount", () => {
-  test("test mount", async () => {
+describe('useMount', () => {
+  test('test mount', async () => {
     const destructor = vi.fn();
     const fn = vi.fn();
     fn.mockReturnValue(destructor);
@@ -22,7 +22,7 @@ describe("useMount", () => {
     expect(destructor).toHaveBeenCalledTimes(2);
   });
 
-  test("test mount with async function", async () => {
+  test('test mount with async function', async () => {
     const mockAsyncFn = vi.fn().mockResolvedValue(undefined);
     const hook = renderHook(() => useMount(mockAsyncFn));
     expect(mockAsyncFn).toHaveBeenCalledTimes(1);
@@ -32,7 +32,7 @@ describe("useMount", () => {
     expect(mockAsyncFn).toHaveBeenCalledTimes(1);
   });
 
-  test("test mount with async function that returns cleanup", async () => {
+  test('test mount with async function that returns cleanup', async () => {
     const cleanup = vi.fn();
     const mockAsyncFn = vi.fn().mockResolvedValue(cleanup);
     const hook = renderHook(() => useMount(mockAsyncFn));

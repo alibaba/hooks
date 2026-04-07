@@ -1,17 +1,9 @@
-import { act, renderHook } from "@testing-library/react";
-import { useState } from "react";
-import {
-  afterAll,
-  beforeAll,
-  beforeEach,
-  describe,
-  expect,
-  test,
-  vi,
-} from "vitest";
-import { sleep } from "../../utils/testingHelpers";
-import useInfiniteScroll from "..";
-import type { Data, InfiniteScrollOptions, Service } from "../types";
+import { act, renderHook } from '@testing-library/react';
+import { useState } from 'react';
+import { afterAll, beforeAll, beforeEach, describe, expect, test, vi } from 'vitest';
+import { sleep } from '../../utils/testingHelpers';
+import useInfiniteScroll from '..';
+import type { Data, InfiniteScrollOptions, Service } from '../types';
 
 let count = 0;
 export async function mockRequest() {
@@ -26,22 +18,20 @@ export async function mockRequest() {
   };
 }
 
-const targetEl = document.createElement("div");
+const targetEl = document.createElement('div');
 
 // set target property
-function setTargetInfo(key: "scrollTop", value: any) {
+function setTargetInfo(key: 'scrollTop', value: any) {
   Object.defineProperty(targetEl, key, {
     value,
     configurable: true,
   });
 }
 
-const setup = <T extends Data>(
-  service: Service<T>,
-  options?: InfiniteScrollOptions<T>
-) => renderHook(() => useInfiniteScroll(service, options));
+const setup = <T extends Data>(service: Service<T>, options?: InfiniteScrollOptions<T>) =>
+  renderHook(() => useInfiniteScroll(service, options));
 
-describe("useInfiniteScroll", () => {
+describe('useInfiniteScroll', () => {
   let mockRaf: ReturnType<typeof vi.spyOn>;
 
   beforeEach(() => {
@@ -52,7 +42,7 @@ describe("useInfiniteScroll", () => {
     vi.useFakeTimers();
     // Mock requestAnimationFrame to execute callbacks immediately
     mockRaf = vi
-      .spyOn(window, "requestAnimationFrame")
+      .spyOn(window, 'requestAnimationFrame')
       .mockImplementation((cb: FrameRequestCallback) => {
         cb(0);
         return 0;
@@ -64,7 +54,7 @@ describe("useInfiniteScroll", () => {
     vi.useRealTimers();
   });
 
-  test("should auto load", async () => {
+  test('should auto load', async () => {
     const { result } = setup(mockRequest);
     expect(result.current.loading).toBe(true);
     await act(async () => {
@@ -73,7 +63,7 @@ describe("useInfiniteScroll", () => {
     expect(result.current.loading).toBe(false);
   });
 
-  test("loadMore should be work", async () => {
+  test('loadMore should be work', async () => {
     const { result } = setup(mockRequest, { manual: true });
     const { loadMore, loading } = result.current;
     expect(loading).toBe(false);
@@ -87,7 +77,7 @@ describe("useInfiniteScroll", () => {
     expect(result.current.loadingMore).toBe(false);
   });
 
-  test("noMore should be true when isNoMore is true", async () => {
+  test('noMore should be true when isNoMore is true', async () => {
     const { result } = setup(mockRequest, {
       isNoMore: (d) => d?.nextId === undefined,
     });
@@ -104,10 +94,10 @@ describe("useInfiniteScroll", () => {
     expect(result.current.noMore).toBe(true);
   });
 
-  test("should auto load when scroll to bottom", async () => {
+  test('should auto load when scroll to bottom', async () => {
     const events: Record<string, any> = {};
     const mockAddEventListener = vi
-      .spyOn(targetEl, "addEventListener")
+      .spyOn(targetEl, 'addEventListener')
       .mockImplementation((eventName: string, callback: any) => {
         events[eventName] = callback;
       });
@@ -117,20 +107,16 @@ describe("useInfiniteScroll", () => {
     });
     // not work when loading
     expect(result.current.loading).toBe(true);
-    events["scroll"]();
+    events['scroll']();
     await act(async () => {
       vi.advanceTimersByTime(1000);
     });
     expect(result.current.loading).toBe(false);
-    const scrollHeightSpy = vi
-      .spyOn(targetEl, "scrollHeight", "get")
-      .mockImplementation(() => 150);
-    const clientHeightSpy = vi
-      .spyOn(targetEl, "clientHeight", "get")
-      .mockImplementation(() => 300);
-    setTargetInfo("scrollTop", 100);
+    const scrollHeightSpy = vi.spyOn(targetEl, 'scrollHeight', 'get').mockImplementation(() => 150);
+    const clientHeightSpy = vi.spyOn(targetEl, 'clientHeight', 'get').mockImplementation(() => 300);
+    setTargetInfo('scrollTop', 100);
     act(() => {
-      events["scroll"]();
+      events['scroll']();
     });
     expect(result.current.loadingMore).toBe(true);
     await act(async () => {
@@ -141,7 +127,7 @@ describe("useInfiniteScroll", () => {
     // not work when no more
     expect(result.current.noMore).toBe(true);
     act(() => {
-      events["scroll"]();
+      events['scroll']();
     });
     expect(result.current.loadingMore).toBe(false);
     // get list by order
@@ -152,51 +138,47 @@ describe("useInfiniteScroll", () => {
     clientHeightSpy.mockRestore();
   });
 
-  test("should auto load when scroll to top", async () => {
+  test('should auto load when scroll to top', async () => {
     const events: Record<string, any> = {};
     const mockAddEventListener = vi
-      .spyOn(targetEl, "addEventListener")
+      .spyOn(targetEl, 'addEventListener')
       .mockImplementation((eventName: string, callback: any) => {
         events[eventName] = callback;
       });
     // Mock scrollTo using Object.defineProperty
-    Object.defineProperty(targetEl, "scrollTo", {
+    Object.defineProperty(targetEl, 'scrollTo', {
       value: (x: number, y: number) => {
-        setTargetInfo("scrollTop", y);
+        setTargetInfo('scrollTop', y);
       },
       writable: true,
     });
 
     const { result } = setup(mockRequest, {
       target: targetEl,
-      direction: "top",
+      direction: 'top',
       isNoMore: (d) => d?.nextId === undefined,
     });
     // not work when loading
     expect(result.current.loading).toBe(true);
-    events["scroll"]();
+    events['scroll']();
     await act(async () => {
       vi.advanceTimersByTime(1000);
     });
     expect(result.current.loading).toBe(false);
 
     // mock first scroll
-    const scrollHeightSpy = vi
-      .spyOn(targetEl, "scrollHeight", "get")
-      .mockImplementation(() => 150);
-    const clientHeightSpy = vi
-      .spyOn(targetEl, "clientHeight", "get")
-      .mockImplementation(() => 500);
-    setTargetInfo("scrollTop", 300);
+    const scrollHeightSpy = vi.spyOn(targetEl, 'scrollHeight', 'get').mockImplementation(() => 150);
+    const clientHeightSpy = vi.spyOn(targetEl, 'clientHeight', 'get').mockImplementation(() => 500);
+    setTargetInfo('scrollTop', 300);
 
     act(() => {
-      events["scroll"]();
+      events['scroll']();
     });
     // mock scroll upward
-    setTargetInfo("scrollTop", 50);
+    setTargetInfo('scrollTop', 50);
 
     act(() => {
-      events["scroll"]();
+      events['scroll']();
     });
 
     expect(result.current.loadingMore).toBe(true);
@@ -211,7 +193,7 @@ describe("useInfiniteScroll", () => {
     // not work when no more
     expect(result.current.noMore).toBe(true);
     act(() => {
-      events["scroll"]();
+      events['scroll']();
     });
     expect(result.current.loadingMore).toBe(false);
 
@@ -220,7 +202,7 @@ describe("useInfiniteScroll", () => {
     clientHeightSpy.mockRestore();
   });
 
-  test("reload should be work", async () => {
+  test('reload should be work', async () => {
     const fn = vi.fn(() => Promise.resolve({ list: [] }));
     const { result } = setup(fn);
     const { reload } = result.current;
@@ -232,10 +214,10 @@ describe("useInfiniteScroll", () => {
     });
   });
 
-  test("reload should be triggered when reloadDeps change", async () => {
+  test('reload should be triggered when reloadDeps change', async () => {
     const fn = vi.fn(() => Promise.resolve({ list: [] }));
     const { result } = renderHook(() => {
-      const [value, setValue] = useState("");
+      const [value, setValue] = useState('');
       const res = useInfiniteScroll(fn, {
         reloadDeps: [value],
       });
@@ -246,7 +228,7 @@ describe("useInfiniteScroll", () => {
     });
     expect(fn).toHaveBeenCalledTimes(1);
     act(() => {
-      result.current.setValue("ahooks");
+      result.current.setValue('ahooks');
     });
     expect(fn).toHaveBeenCalledTimes(2);
     await act(async () => {
@@ -254,7 +236,7 @@ describe("useInfiniteScroll", () => {
     });
   });
 
-  test("reload data should be latest", async () => {
+  test('reload data should be latest', async () => {
     let listCount = 5;
     const mockRequestFn = async () => {
       await sleep(1000);
@@ -286,7 +268,7 @@ describe("useInfiniteScroll", () => {
     expect(result.current.data).toMatchObject({ list: [1, 2, 3], nextId: 3 });
   });
 
-  test("mutate should be work", async () => {
+  test('mutate should be work', async () => {
     const { result } = setup(mockRequest);
     const { mutate } = result.current;
     await act(async () => {
@@ -301,7 +283,7 @@ describe("useInfiniteScroll", () => {
     expect(result.current.data).toMatchObject(newData);
   });
 
-  test("cancel should be work", () => {
+  test('cancel should be work', () => {
     const onSuccess = vi.fn();
     const { result } = setup(mockRequest, { onSuccess });
     const { cancel } = result.current;
@@ -311,7 +293,7 @@ describe("useInfiniteScroll", () => {
     expect(onSuccess).not.toHaveBeenCalled();
   });
 
-  test("onBefore/onSuccess/onFinally should be called", async () => {
+  test('onBefore/onSuccess/onFinally should be called', async () => {
     const onBefore = vi.fn();
     const onSuccess = vi.fn();
     const onFinally = vi.fn();
@@ -328,10 +310,10 @@ describe("useInfiniteScroll", () => {
     expect(onFinally).toHaveBeenCalled();
   });
 
-  test("onError should be called when throw error", async () => {
+  test('onError should be called when throw error', async () => {
     const onError = vi.fn();
     const mockRequestError = () => {
-      return Promise.reject("error");
+      return Promise.reject('error');
     };
     setup(mockRequestError, {
       onError,
@@ -342,7 +324,7 @@ describe("useInfiniteScroll", () => {
     expect(onError).toHaveBeenCalled();
   });
 
-  test("loadMoreAsync should be work", async () => {
+  test('loadMoreAsync should be work', async () => {
     const { result } = setup(mockRequest, { manual: true });
     const { loadMoreAsync } = result.current;
     act(() => {
@@ -356,7 +338,7 @@ describe("useInfiniteScroll", () => {
     });
   });
 
-  test("reloadAsync should be work", async () => {
+  test('reloadAsync should be work', async () => {
     const fn = vi.fn(() => Promise.resolve({ list: [] }));
     const { result } = setup(fn);
     const { reloadAsync } = result.current;
@@ -372,7 +354,7 @@ describe("useInfiniteScroll", () => {
     });
   });
 
-  test("loading should be true when reload after loadMore", async () => {
+  test('loading should be true when reload after loadMore', async () => {
     const { result } = setup(mockRequest);
     expect(result.current.loading).toBeTruthy();
     const { reload, loadMore } = result.current;
@@ -395,7 +377,7 @@ describe("useInfiniteScroll", () => {
     expect(result.current.loading).toBeFalsy();
   });
 
-  test("loading should be true when reloadAsync after loadMore", async () => {
+  test('loading should be true when reloadAsync after loadMore', async () => {
     const { result } = setup(mockRequest);
     expect(result.current.loading).toBeTruthy();
     const { reloadAsync, loadMore } = result.current;
@@ -418,7 +400,7 @@ describe("useInfiniteScroll", () => {
     expect(result.current.loading).toBeFalsy();
   });
 
-  test("list can be null or undefined", async () => {
+  test('list can be null or undefined', async () => {
     // @ts-ignore
     const { result } = setup(async () => {
       await sleep(1000);
@@ -443,18 +425,18 @@ describe("useInfiniteScroll", () => {
     });
   });
 
-  test("error result", async () => {
+  test('error result', async () => {
     const { result } = setup(async () => {
-      throw new Error("error message");
+      throw new Error('error message');
     });
     await act(async () => {
       vi.advanceTimersByTime(1000);
     });
 
-    expect(result.current.error?.message).toBe("error message");
+    expect(result.current.error?.message).toBe('error message');
   });
 
-  test("reloadAsync should reset data and restart from page=1", async () => {
+  test('reloadAsync should reset data and restart from page=1', async () => {
     const PAGE_SIZE = 2;
 
     // Vitest 的 mock
@@ -468,7 +450,7 @@ describe("useInfiniteScroll", () => {
       useInfiniteScroll((d) => {
         const page = d ? Math.ceil(d.list.length / PAGE_SIZE) + 1 : 1;
         return getLoadMoreListMock(page, PAGE_SIZE);
-      })
+      }),
     );
 
     await act(async () => {
@@ -491,7 +473,7 @@ describe("useInfiniteScroll", () => {
     expect(result.current.data?.list).toEqual([1, 2]);
   });
 
-  test("service should be called only once when scrolling to bottom multiple times quickly", async () => {
+  test('service should be called only once when scrolling to bottom multiple times quickly', async () => {
     const mockService = vi.fn(async () => {
       await sleep(1000);
       return { list: [1, 2, 3], nextId: 1 };
@@ -499,17 +481,13 @@ describe("useInfiniteScroll", () => {
 
     const events: Record<string, any> = {};
     const mockAddEventListener = vi
-      .spyOn(targetEl, "addEventListener")
+      .spyOn(targetEl, 'addEventListener')
       .mockImplementation((eventName: string, callback: any) => {
         events[eventName] = callback;
       });
 
-    const scrollHeightSpy = vi
-      .spyOn(targetEl, "scrollHeight", "get")
-      .mockImplementation(() => 150);
-    const clientHeightSpy = vi
-      .spyOn(targetEl, "clientHeight", "get")
-      .mockImplementation(() => 100);
+    const scrollHeightSpy = vi.spyOn(targetEl, 'scrollHeight', 'get').mockImplementation(() => 150);
+    const clientHeightSpy = vi.spyOn(targetEl, 'clientHeight', 'get').mockImplementation(() => 100);
 
     const { result } = setup(mockService, {
       target: targetEl,
@@ -525,11 +503,11 @@ describe("useInfiniteScroll", () => {
 
     // Set scroll position to bottom (scrollHeight - scrollTop <= clientHeight + threshold)
     // 150 - 50 = 100 <= 100 + 100 = 200, so it should trigger loadMore
-    setTargetInfo("scrollTop", 50);
+    setTargetInfo('scrollTop', 50);
 
     // Trigger scroll event multiple times quickly (before first request completes)
     act(() => {
-      events["scroll"]();
+      events['scroll']();
     });
 
     // Service should be called once more (total 2 times: initial + loadMore)
@@ -537,13 +515,13 @@ describe("useInfiniteScroll", () => {
 
     // Trigger more scroll events while loading
     act(() => {
-      events["scroll"]();
+      events['scroll']();
     });
     act(() => {
-      events["scroll"]();
+      events['scroll']();
     });
     act(() => {
-      events["scroll"]();
+      events['scroll']();
     });
 
     // Service should still only be called twice (no additional calls during loading)
