@@ -46,7 +46,7 @@ export const createUseStorageState = (getStorage: () => Storage | undefined) => 
         onError(e);
       }
       return getDefaultValue();
-    }
+    };
 
     function getDefaultValue() {
       if (isFunction(options.defaultValue)) {
@@ -54,7 +54,7 @@ export const createUseStorageState = (getStorage: () => Storage | undefined) => 
       }
 
       return options.defaultValue;
-    };
+    }
 
     const [state, setState] = useState<T>(() => {
       if (getInitialValueInEffect) {
