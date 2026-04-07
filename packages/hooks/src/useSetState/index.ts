@@ -7,7 +7,7 @@ export type SetState<S extends Record<string, any>> = <K extends keyof S>(
 ) => void;
 
 const useSetState = <S extends Record<string, any>>(
-  initialState: S | (() => S),
+  initialState: S | (() => S) = {} as S,
 ): [S, SetState<S>] => {
   const [state, setState] = useState<S>(initialState);
 
