@@ -1,14 +1,14 @@
-import { renderHook } from '@testing-library/react';
-import { afterEach, beforeEach, describe, expect, test, vi } from 'vitest';
-import useMutationObserver from '../index';
+import { renderHook } from "@testing-library/react";
+import { afterEach, beforeEach, describe, expect, test, vi } from "vitest";
+import useMutationObserver from "../index";
 
 const options: MutationObserverInit = { attributes: true, childList: true };
 
-describe('useMutationObserver', () => {
+describe("useMutationObserver", () => {
   let container: HTMLDivElement;
 
   beforeEach(() => {
-    container = document.createElement('div');
+    container = document.createElement("div");
     document.body.appendChild(container);
   });
 
@@ -16,28 +16,34 @@ describe('useMutationObserver', () => {
     document.body.removeChild(container);
   });
 
-  test('should callback work when target style be changed', async () => {
+  test("should callback work when target style be changed", async () => {
     const callback = vi.fn();
-    const { rerender } = renderHook(() => useMutationObserver(callback, () => container, options));
-    container.style.backgroundColor = '#000';
+    const { rerender } = renderHook(() =>
+      useMutationObserver(callback, () => container, options)
+    );
+    container.style.backgroundColor = "#000";
     await rerender();
-    expect(callback).toBeCalled();
+    expect(callback).toHaveBeenCalled();
   });
 
-  test('should callback work when target node tree be changed', async () => {
+  test("should callback work when target node tree be changed", async () => {
     const callback = vi.fn();
-    const { rerender } = renderHook(() => useMutationObserver(callback, () => container, options));
-    const paraEl = document.createElement('p');
+    const { rerender } = renderHook(() =>
+      useMutationObserver(callback, () => container, options)
+    );
+    const paraEl = document.createElement("p");
     container.appendChild(paraEl);
     await rerender();
-    expect(callback).toBeCalled();
+    expect(callback).toHaveBeenCalled();
   });
 
-  test('should not work when target is null', async () => {
+  test("should not work when target is null", async () => {
     const callback = vi.fn();
-    const { rerender } = renderHook(() => useMutationObserver(callback, null, options));
-    container.style.backgroundColor = '#000';
+    const { rerender } = renderHook(() =>
+      useMutationObserver(callback, null, options)
+    );
+    container.style.backgroundColor = "#000";
     await rerender();
-    expect(callback).not.toBeCalled();
+    expect(callback).not.toHaveBeenCalled();
   });
 });
