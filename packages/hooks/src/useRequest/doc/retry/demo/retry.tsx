@@ -1,17 +1,17 @@
-import { useRequest } from 'ahooks';
-import { useState } from 'react';
-import { message } from 'antd';
+import { useRequest } from "ahooks";
+import React, { useState } from "react";
+import { message } from "antd";
 
-function editUsername(username: string) {
-  return new Promise((resolve, reject) => {
+const editUsername = (username: string) => {
+  return new Promise((_, reject) => {
     setTimeout(() => {
-      reject(new Error('Failed to modify username'));
+      reject(new Error("Failed to modify username"));
     }, 1000);
   });
-}
+};
 
-export default () => {
-  const [state, setState] = useState('');
+const Demo: React.FC = () => {
+  const [state, setState] = useState("");
   const { loading, run } = useRequest(editUsername, {
     retryCount: 3,
     manual: true,
@@ -29,8 +29,10 @@ export default () => {
         style={{ width: 240, marginRight: 16 }}
       />
       <button disabled={loading} type="button" onClick={() => run(state)}>
-        {loading ? 'Loading' : 'Edit'}
+        {loading ? "Loading" : "Edit"}
       </button>
     </div>
   );
 };
+
+export default Demo;

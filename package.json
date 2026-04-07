@@ -35,7 +35,7 @@
   },
   "devDependencies": {
     "@alifd/next": "^1.27.32",
-    "@ant-design/icons": "^5.6.1",
+    "@ant-design/icons": "^6.1.1",
     "@babel/cli": "^7.10.1",
     "@babel/core": "^7.10.2",
     "@babel/plugin-transform-runtime": "^7.19.6",
@@ -51,7 +51,7 @@
     "@types/react-router": "^5.1.19",
     "@umijs/fabric": "^2.1.0",
     "@vitest/coverage-istanbul": "^3.2.4",
-    "antd": "^5.26.3",
+    "antd": "^6.3.5",
     "babel-plugin-import": "^1.12.0",
     "coveralls": "^3.1.1",
     "cross-env": "^7.0.3",

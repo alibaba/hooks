@@ -2,7 +2,18 @@
   "extends": "../../tsconfig.pro.json",
   "compilerOptions": {
     "rootDir": "src",
-    "sourceMap": false
+    "sourceMap": false,
+    "lib": ["ESNext", "DOM"],
+    "types": ["node"]
   },
-  "include": ["src"]
+  "include": ["src"],
+  "exclude": [
+    "**/*.spec.ts",
+    "**/*.spec.tsx",
+    "**/__tests__",
+    "**/__test__",
+    "**/demo",
+    "**/tests.ts",
+    "**/tests.tsx"
+  ]
 }
