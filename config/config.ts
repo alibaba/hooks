@@ -1,8 +1,9 @@
+import { defineConfig } from 'dumi';
 import { menus } from './hooks';
 
 const packages = require('../packages/hooks/package.json');
 
-export default {
+const config = defineConfig({
   // ssr: {},
   exportStatic: {},
   nodeModulesTransform: {
@@ -39,8 +40,8 @@ export default {
   hash: true,
   publicPath: '/',
   alias: {
-    ahooks: process.cwd() + '/packages/hooks/src/index.ts',
-    '@ahooks.js/use-url-state': process.cwd() + '/packages/use-url-state/src/index.ts',
+    ahooks: `${process.cwd()}/packages/hooks/src/index.ts`,
+    '@ahooks.js/use-url-state': `${process.cwd()}/packages/use-url-state/src/index.ts`,
   },
   resolve: {
     includes: ['docs', 'packages/hooks/src', 'packages/use-url-state'],
@@ -185,7 +186,9 @@ export default {
     `
   const insertVersion = function() {
     const logo = document.querySelector('.__dumi-default-navbar-logo');
-    if (!logo) return;
+    if (!logo) {
+      return;
+    }
     const dom = document.createElement('span');
     dom.id = 'logo-version';
     dom.innerHTML = '${packages.version}';
@@ -206,4 +209,6 @@ export default {
   observer.observe(document.body, { childList: true, subtree: true });
   `,
   ],
-};
+});
+
+export default config;
