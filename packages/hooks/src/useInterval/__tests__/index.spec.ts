@@ -1,6 +1,6 @@
-import { renderHook } from '@testing-library/react';
-import { describe, expect, test, vi } from 'vitest';
-import useInterval from '../index';
+import { renderHook } from "@testing-library/react";
+import { describe, expect, test, vi } from "vitest";
+import useInterval from "../index";
 
 interface ParamsObj {
   fn: (...arg: any) => any;
@@ -11,19 +11,19 @@ interface ParamsObj {
 const setUp = ({ fn, delay, options }: ParamsObj) =>
   renderHook(() => useInterval(fn, delay, options));
 
-describe('useInterval', () => {
+describe("useInterval", () => {
   vi.useFakeTimers();
-  vi.spyOn(global, 'clearInterval');
+  vi.spyOn(global, "clearInterval");
 
-  test('interval should work', () => {
+  test("interval should work", () => {
     const callback = vi.fn();
     setUp({ fn: callback, delay: 20 });
-    expect(callback).not.toBeCalled();
+    expect(callback).not.toHaveBeenCalled();
     vi.advanceTimersByTime(70);
     expect(callback).toHaveBeenCalledTimes(3);
   });
 
-  test('interval should stop', () => {
+  test("interval should stop", () => {
     const callback = vi.fn();
 
     setUp({ fn: callback, delay: undefined });
@@ -35,20 +35,20 @@ describe('useInterval', () => {
     expect(callback).toHaveBeenCalledTimes(0);
   });
 
-  test('immediate in options should work', () => {
+  test("immediate in options should work", () => {
     const callback = vi.fn();
     setUp({ fn: callback, delay: 20, options: { immediate: true } });
-    expect(callback).toBeCalled();
+    expect(callback).toHaveBeenCalled();
     expect(callback).toHaveBeenCalledTimes(1);
     vi.advanceTimersByTime(50);
     expect(callback).toHaveBeenCalledTimes(3);
   });
 
-  test('interval should be clear', () => {
+  test("interval should be clear", () => {
     const callback = vi.fn();
     const hook = setUp({ fn: callback, delay: 20 });
 
-    expect(callback).not.toBeCalled();
+    expect(callback).not.toHaveBeenCalled();
 
     hook.result.current();
     vi.advanceTimersByTime(70);
