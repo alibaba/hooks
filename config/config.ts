@@ -1,8 +1,15 @@
+/// <reference types="node" />
+
+import { defineConfig } from 'dumi';
 import { menus } from './hooks';
 
-const packages = require('../packages/hooks/package.json');
+interface PackageJson {
+  version: string;
+}
 
-export default {
+const packages = require('../packages/hooks/package.json') as PackageJson;
+
+const config = defineConfig({
   // ssr: {},
   exportStatic: {},
   nodeModulesTransform: {
@@ -39,8 +46,8 @@ export default {
   hash: true,
   publicPath: '/',
   alias: {
-    ahooks: process.cwd() + '/packages/hooks/src/index.ts',
-    '@ahooks.js/use-url-state': process.cwd() + '/packages/use-url-state/src/index.ts',
+    ahooks: `${process.cwd()}/packages/hooks/src/index.ts`,
+    '@ahooks.js/use-url-state': `${process.cwd()}/packages/use-url-state/src/index.ts`,
   },
   resolve: {
     includes: ['docs', 'packages/hooks/src', 'packages/use-url-state'],
@@ -206,4 +213,6 @@ export default {
   observer.observe(document.body, { childList: true, subtree: true });
   `,
   ],
-};
+});
+
+export default config;
