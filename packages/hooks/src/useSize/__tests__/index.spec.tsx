@@ -1,17 +1,17 @@
-import { act, render, renderHook, screen } from "@testing-library/react";
-import React, { useRef } from "react";
-import { beforeEach, describe, expect, test, vi } from "vitest";
-import useSize from "../index";
+import { act, render, renderHook, screen } from '@testing-library/react';
+import React, { useRef } from 'react';
+import { beforeEach, describe, expect, test, vi } from 'vitest';
+import useSize from '../index';
 
 interface MockResizeObserverEntry {
-  target: Pick<HTMLElement, "clientHeight" | "clientWidth">;
+  target: Pick<HTMLElement, 'clientHeight' | 'clientWidth'>;
 }
 
 type ResizeObserverTestCallback = (entries: MockResizeObserverEntry[]) => void;
 
 let callback: ResizeObserverTestCallback | undefined;
 
-vi.mock("resize-observer-polyfill", () => {
+vi.mock('resize-observer-polyfill', () => {
   return {
     default: class MockResizeObserver {
       observe() {}
@@ -24,19 +24,19 @@ vi.mock("resize-observer-polyfill", () => {
 });
 
 // test about Resize Observer see https://github.com/que-etc/resize-observer-polyfill/tree/master/tests
-describe("useSize", () => {
+describe('useSize', () => {
   beforeEach(() => {
     callback = undefined;
   });
 
-  test("should work when target is a mounted DOM", () => {
+  test('should work when target is a mounted DOM', () => {
     const hook = renderHook(() => useSize(document.body));
     expect(hook.result.current).toEqual({ height: 0, width: 0 });
   });
 
-  test("should work when target is a `MutableRefObject`", async () => {
+  test('should work when target is a `MutableRefObject`', async () => {
     const mockRaf = vi
-      .spyOn(window, "requestAnimationFrame")
+      .spyOn(window, 'requestAnimationFrame')
       .mockImplementation((cb: FrameRequestCallback) => {
         cb(0);
         return 0;
@@ -54,33 +54,29 @@ describe("useSize", () => {
     };
 
     render(<Setup />);
-    expect((await screen.findByText(/^width/)).textContent).toBe(
-      "width: undefined"
-    );
-    expect((await screen.findByText(/^height/)).textContent).toBe(
-      "height: undefined"
-    );
+    expect((await screen.findByText(/^width/)).textContent).toBe('width: undefined');
+    expect((await screen.findByText(/^height/)).textContent).toBe('height: undefined');
 
     act(() => callback?.([{ target: { clientWidth: 10, clientHeight: 10 } }]));
-    expect((await screen.findByText(/^width/)).textContent).toBe("width: 10");
-    expect((await screen.findByText(/^height/)).textContent).toBe("height: 10");
+    expect((await screen.findByText(/^width/)).textContent).toBe('width: 10');
+    expect((await screen.findByText(/^height/)).textContent).toBe('height: 10');
     mockRaf.mockRestore();
   });
 
-  test("should not work when target is null", () => {
+  test('should not work when target is null', () => {
     expect(() => {
       renderHook(() => useSize(null));
     }).not.toThrow();
   });
 
-  test("should work", () => {
+  test('should work', () => {
     const mockRaf = vi
-      .spyOn(window, "requestAnimationFrame")
+      .spyOn(window, 'requestAnimationFrame')
       .mockImplementation((cb: FrameRequestCallback) => {
         cb(0);
         return 0;
       });
-    const targetEl = document.createElement("div");
+    const targetEl = document.createElement('div');
     const { result } = renderHook(() => useSize(targetEl));
 
     act(() => {

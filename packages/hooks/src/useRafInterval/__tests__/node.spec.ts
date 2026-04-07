@@ -1,6 +1,6 @@
-import { renderHook } from "@testing-library/react";
-import { beforeAll, afterAll, describe, test, expect, vi } from "vitest";
-import useRafInterval from "../index";
+import { renderHook } from '@testing-library/react';
+import { beforeAll, afterAll, describe, test, expect, vi } from 'vitest';
+import useRafInterval from '../index';
 
 interface ParamsObj {
   fn: (...arg: any) => any;
@@ -12,16 +12,16 @@ const setUp = ({ fn, delay, options }: ParamsObj) =>
   renderHook(() => useRafInterval(fn, delay, options));
 
 const FRAME_TIME = 16;
-describe("useRafInterval", () => {
+describe('useRafInterval', () => {
   beforeAll(() => {
     vi.useFakeTimers();
   });
   afterAll(() => {
     vi.restoreAllMocks();
   });
-  test("should downgrade to setInterval when requstAnimationFrame is undefined", () => {
-    Object.defineProperty(window, "cancelAnimationFrame", { value: undefined });
-    Object.defineProperty(window, "requestAnimationFrame", {
+  test('should downgrade to setInterval when requstAnimationFrame is undefined', () => {
+    Object.defineProperty(window, 'cancelAnimationFrame', { value: undefined });
+    Object.defineProperty(window, 'requestAnimationFrame', {
       value: undefined,
     });
     const callback = vi.fn();

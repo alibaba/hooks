@@ -1,9 +1,9 @@
-import { act, renderHook } from "@testing-library/react";
-import { beforeEach, describe, expect, test, vi } from "vitest";
+import { act, renderHook } from '@testing-library/react';
+import { beforeEach, describe, expect, test, vi } from 'vitest';
 
-import useInViewport from "../index";
+import useInViewport from '../index';
 
-const targetEl = document.createElement("div");
+const targetEl = document.createElement('div');
 document.body.appendChild(targetEl);
 
 interface MockIntersectionObserverEntry {
@@ -11,9 +11,7 @@ interface MockIntersectionObserverEntry {
   isIntersecting: boolean;
 }
 
-type IntersectionObserverTestCallback = (
-  entries: MockIntersectionObserverEntry[]
-) => void;
+type IntersectionObserverTestCallback = (entries: MockIntersectionObserverEntry[]) => void;
 
 let observeMock = vi.fn();
 let disconnectMock = vi.fn();
@@ -29,10 +27,9 @@ class MockIntersectionObserver {
   }
 }
 
-window.IntersectionObserver =
-  MockIntersectionObserver as unknown as typeof IntersectionObserver;
+window.IntersectionObserver = MockIntersectionObserver as unknown as typeof IntersectionObserver;
 
-describe("useInViewport", () => {
+describe('useInViewport', () => {
   beforeEach(() => {
     observeMock = vi.fn();
     disconnectMock = vi.fn();
@@ -40,7 +37,7 @@ describe("useInViewport", () => {
     intersectionObserverCallback = undefined;
   });
 
-  test("should work when target is in viewport", async () => {
+  test('should work when target is in viewport', async () => {
     const { result } = renderHook(() => useInViewport(targetEl));
 
     act(() => {
@@ -57,18 +54,18 @@ describe("useInViewport", () => {
     expect(ratio).toBe(0.5);
   });
 
-  test("should work when target array is in viewport and has a callback", async () => {
+  test('should work when target array is in viewport and has a callback', async () => {
     const targetEls: HTMLDivElement[] = [];
     const callback = vi.fn();
     for (let i = 0; i < 2; i++) {
-      const target = document.createElement("div");
+      const target = document.createElement('div');
       document.body.appendChild(target);
       targetEls.push(target);
     }
 
     const getValue = (
-      isIntersecting: MockIntersectionObserverEntry["isIntersecting"],
-      intersectionRatio: MockIntersectionObserverEntry["intersectionRatio"]
+      isIntersecting: MockIntersectionObserverEntry['isIntersecting'],
+      intersectionRatio: MockIntersectionObserverEntry['intersectionRatio'],
     ): MockIntersectionObserverEntry => ({
       isIntersecting,
       intersectionRatio,
@@ -89,12 +86,12 @@ describe("useInViewport", () => {
     expect(result.current[1]).toBe(0.5);
   });
 
-  test("should not work when target is null", async () => {
+  test('should not work when target is null', async () => {
     renderHook(() => useInViewport(null));
     expect(intersectionObserverCallCount).toBe(0);
   });
 
-  test("should disconnect when unmount", async () => {
+  test('should disconnect when unmount', async () => {
     const { unmount } = renderHook(() => useInViewport(targetEl));
     unmount();
     expect(disconnectMock).toHaveBeenCalled();

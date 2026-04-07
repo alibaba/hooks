@@ -1,24 +1,23 @@
-import { renderHook } from "@testing-library/react";
-import { afterAll, beforeAll, describe, expect, test, vi } from "vitest";
-import useRafTimeout from "../index";
+import { renderHook } from '@testing-library/react';
+import { afterAll, beforeAll, describe, expect, test, vi } from 'vitest';
+import useRafTimeout from '../index';
 
 interface ParamsObj {
   fn: (...arg: any) => any;
   delay: number | undefined;
 }
 
-const setUp = ({ fn, delay }: ParamsObj) =>
-  renderHook(() => useRafTimeout(fn, delay));
+const setUp = ({ fn, delay }: ParamsObj) => renderHook(() => useRafTimeout(fn, delay));
 
 const FRAME_TIME = 16.7;
-describe("useRafTimeout", () => {
+describe('useRafTimeout', () => {
   beforeAll(() => {
     vi.useFakeTimers();
   });
   afterAll(() => {
     vi.restoreAllMocks();
   });
-  test("should downgrade to setTimeout when requstAnimationFrame is undefined", () => {
+  test('should downgrade to setTimeout when requstAnimationFrame is undefined', () => {
     const _requestAnimationFrame = global.requestAnimationFrame;
     const _cancelAnimationFrame = global.cancelAnimationFrame;
 

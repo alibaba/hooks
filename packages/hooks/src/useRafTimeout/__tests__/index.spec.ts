@@ -1,18 +1,17 @@
-import { renderHook } from "@testing-library/react";
-import { afterAll, beforeAll, describe, expect, test, vi } from "vitest";
+import { renderHook } from '@testing-library/react';
+import { afterAll, beforeAll, describe, expect, test, vi } from 'vitest';
 
-import useRafTimeout from "../index";
+import useRafTimeout from '../index';
 
 interface ParamsObj {
   fn: (...arg: any) => any;
   delay: number | undefined;
 }
 
-const setUp = ({ fn, delay }: ParamsObj) =>
-  renderHook(() => useRafTimeout(fn, delay));
+const setUp = ({ fn, delay }: ParamsObj) => renderHook(() => useRafTimeout(fn, delay));
 
 const FRAME_TIME = 16.7;
-describe("useRafTimeout", () => {
+describe('useRafTimeout', () => {
   beforeAll(() => {
     vi.useFakeTimers();
   });
@@ -20,7 +19,7 @@ describe("useRafTimeout", () => {
     vi.restoreAllMocks();
   });
 
-  test("timeout should work", () => {
+  test('timeout should work', () => {
     const callback = vi.fn();
     setUp({ fn: callback, delay: FRAME_TIME });
     expect(callback).not.toHaveBeenCalled();
@@ -28,7 +27,7 @@ describe("useRafTimeout", () => {
     expect(callback).toHaveBeenCalledTimes(1);
   });
 
-  test("timeout should stop when delay is undefined", () => {
+  test('timeout should stop when delay is undefined', () => {
     const delay: number | undefined = undefined;
     const callback = vi.fn();
     setUp({ fn: callback, delay });
@@ -37,7 +36,7 @@ describe("useRafTimeout", () => {
     expect(callback).not.toHaveBeenCalled();
   });
 
-  test("timeout should be clear", () => {
+  test('timeout should be clear', () => {
     const callback = vi.fn();
 
     const hook = setUp({ fn: callback, delay: FRAME_TIME });

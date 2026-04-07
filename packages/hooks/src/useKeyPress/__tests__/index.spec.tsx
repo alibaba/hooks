@@ -1,6 +1,6 @@
-import { fireEvent, renderHook } from "@testing-library/react";
-import { afterEach, describe, expect, test, vi } from "vitest";
-import useKeyPress from "../index";
+import { fireEvent, renderHook } from '@testing-library/react';
+import { afterEach, describe, expect, test, vi } from 'vitest';
+import useKeyPress from '../index';
 
 const callback = vi.fn();
 
@@ -8,71 +8,69 @@ afterEach(() => {
   callback.mockClear();
 });
 
-describe("useKeyPress ", () => {
-  test("test single key", async () => {
-    const { unmount } = renderHook(() => useKeyPress(["c"], callback));
-    fireEvent.keyDown(document, { key: "c", keyCode: 67 });
+describe('useKeyPress ', () => {
+  test('test single key', async () => {
+    const { unmount } = renderHook(() => useKeyPress(['c'], callback));
+    fireEvent.keyDown(document, { key: 'c', keyCode: 67 });
     expect(callback.mock.calls.length).toBe(1);
     unmount();
   });
 
-  test("test standard key aliases", async () => {
-    const { unmount } = renderHook(() =>
-      useKeyPress(["arrowleft", "escape"], callback)
-    );
-    fireEvent.keyDown(document, { key: "ArrowLeft", keyCode: 37 });
-    fireEvent.keyDown(document, { key: "Escape", keyCode: 27 });
+  test('test standard key aliases', async () => {
+    const { unmount } = renderHook(() => useKeyPress(['arrowleft', 'escape'], callback));
+    fireEvent.keyDown(document, { key: 'ArrowLeft', keyCode: 37 });
+    fireEvent.keyDown(document, { key: 'Escape', keyCode: 27 });
     expect(callback.mock.calls.length).toBe(2);
     unmount();
   });
 
-  test("test standard vs legacy key aliases", async () => {
+  test('test standard vs legacy key aliases', async () => {
     const aliasCallback = vi.fn();
     const { unmount } = renderHook(() =>
       useKeyPress(
         [
-          "control",
-          "ctrl",
-          "escape",
-          "esc",
-          "arrowleft",
-          "leftarrow",
-          "spacebar",
-          "space",
-          "contextmenu",
-          "selectkey",
-          "pause",
-          "pausebreak",
+          'control',
+          'ctrl',
+          'escape',
+          'esc',
+          'arrowleft',
+          'leftarrow',
+          'spacebar',
+          'space',
+          'contextmenu',
+          'selectkey',
+          'pause',
+          'pausebreak',
         ],
-        aliasCallback
-      )
+        aliasCallback,
+      ),
     );
 
-    fireEvent.keyDown(document, { key: "Control", keyCode: 17, ctrlKey: true });
-    fireEvent.keyDown(document, { key: "Escape", keyCode: 27 });
-    fireEvent.keyDown(document, { key: "ArrowLeft", keyCode: 37 });
-    fireEvent.keyDown(document, { key: " ", keyCode: 32 });
-    fireEvent.keyDown(document, { key: "ContextMenu", keyCode: 93 });
-    fireEvent.keyDown(document, { key: "Pause", keyCode: 19 });
+    fireEvent.keyDown(document, { key: 'Control', keyCode: 17, ctrlKey: true });
+    fireEvent.keyDown(document, { key: 'Escape', keyCode: 27 });
+    fireEvent.keyDown(document, { key: 'ArrowLeft', keyCode: 37 });
+    fireEvent.keyDown(document, { key: ' ', keyCode: 32 });
+    fireEvent.keyDown(document, { key: 'ContextMenu', keyCode: 93 });
+    fireEvent.keyDown(document, { key: 'Pause', keyCode: 19 });
 
     // each event should match once (first alias hit)
     expect(aliasCallback.mock.calls.length).toBe(6);
     unmount();
   });
 
-  test("test modifier key", async () => {
-    const { unmount } = renderHook(() => useKeyPress(["ctrl"], callback));
-    fireEvent.keyDown(document, { key: "ctrl", keyCode: 17, ctrlKey: true });
+  test('test modifier key', async () => {
+    const { unmount } = renderHook(() => useKeyPress(['ctrl'], callback));
+    fireEvent.keyDown(document, { key: 'ctrl', keyCode: 17, ctrlKey: true });
     expect(callback.mock.calls.length).toBe(1);
     unmount();
   });
 
-  test("test combination keys", async () => {
-    const hook1 = renderHook(() => useKeyPress(["shift.c"], callback));
-    const hook2 = renderHook(() => useKeyPress(["shift"], callback));
-    const hook3 = renderHook(() => useKeyPress(["c"], callback));
+  test('test combination keys', async () => {
+    const hook1 = renderHook(() => useKeyPress(['shift.c'], callback));
+    const hook2 = renderHook(() => useKeyPress(['shift'], callback));
+    const hook3 = renderHook(() => useKeyPress(['c'], callback));
 
-    fireEvent.keyDown(document, { key: "c", shiftKey: true, keyCode: 67 });
+    fireEvent.keyDown(document, { key: 'c', shiftKey: true, keyCode: 67 });
 
     expect(callback.mock.calls.length).toBe(3);
     hook1.unmount();
@@ -80,24 +78,16 @@ describe("useKeyPress ", () => {
     hook3.unmount();
   });
 
-  test("test combination keys by exact match", async () => {
+  test('test combination keys by exact match', async () => {
     const callbackShift = vi.fn();
     const callbackC = vi.fn();
     const callbackMulti = vi.fn();
-    const hook1 = renderHook(() =>
-      useKeyPress(["shift.c"], callback, { exactMatch: true })
-    );
-    const hook2 = renderHook(() =>
-      useKeyPress(["shift"], callbackShift, { exactMatch: true })
-    );
-    const hook3 = renderHook(() =>
-      useKeyPress(["c"], callbackC, { exactMatch: true })
-    );
-    const hook4 = renderHook(() =>
-      useKeyPress(["ctrl.shift.c"], callbackMulti)
-    );
+    const hook1 = renderHook(() => useKeyPress(['shift.c'], callback, { exactMatch: true }));
+    const hook2 = renderHook(() => useKeyPress(['shift'], callbackShift, { exactMatch: true }));
+    const hook3 = renderHook(() => useKeyPress(['c'], callbackC, { exactMatch: true }));
+    const hook4 = renderHook(() => useKeyPress(['ctrl.shift.c'], callbackMulti));
 
-    fireEvent.keyDown(document, { key: "c", shiftKey: true, keyCode: 67 });
+    fireEvent.keyDown(document, { key: 'c', shiftKey: true, keyCode: 67 });
     /**
      * 只有 shift.c 才会触发，shift 和 c 都不应该触发
      */
@@ -107,7 +97,7 @@ describe("useKeyPress ", () => {
 
     callback.mockClear();
     fireEvent.keyDown(document, {
-      key: "c",
+      key: 'c',
       ctrlKey: true,
       shiftKey: true,
       keyCode: 67,
@@ -122,85 +112,81 @@ describe("useKeyPress ", () => {
     hook4.unmount();
   });
 
-  test("test multiple keys", async () => {
-    const { unmount } = renderHook(() => useKeyPress(["0", 65], callback));
-    fireEvent.keyDown(document, { key: "0", keyCode: 48 });
-    fireEvent.keyDown(document, { key: "a", keyCode: 65 });
+  test('test multiple keys', async () => {
+    const { unmount } = renderHook(() => useKeyPress(['0', 65], callback));
+    fireEvent.keyDown(document, { key: '0', keyCode: 48 });
+    fireEvent.keyDown(document, { key: 'a', keyCode: 65 });
     expect(callback.mock.calls.length).toBe(2);
     unmount();
   });
 
-  test("meta key should be work in keyup event", async () => {
+  test('meta key should be work in keyup event', async () => {
     renderHook(() =>
-      useKeyPress(["meta"], callback, {
-        events: ["keyup"],
-      })
+      useKeyPress(['meta'], callback, {
+        events: ['keyup'],
+      }),
     );
 
-    fireEvent.keyUp(document, { key: "meta", keyCode: 91, metaKey: false });
+    fireEvent.keyUp(document, { key: 'meta', keyCode: 91, metaKey: false });
     expect(callback).toHaveBeenCalled();
   });
 
-  test("test `keyFilter` function parameter", async () => {
+  test('test `keyFilter` function parameter', async () => {
     const callback1 = vi.fn();
     const callback2 = vi.fn();
 
     // all keys can trigger callback
     const hook1 = renderHook(() => useKeyPress(() => true, callback1));
-    fireEvent.keyDown(document, { key: "0", keyCode: 48 });
-    fireEvent.keyDown(document, { key: "a", keyCode: 65 });
+    fireEvent.keyDown(document, { key: '0', keyCode: 48 });
+    fireEvent.keyDown(document, { key: 'a', keyCode: 65 });
     expect(callback1.mock.calls.length).toBe(2);
 
     // only some keys can trigger callback
-    const hook2 = renderHook(() =>
-      useKeyPress((e) => ["0", "meta"].includes(e.key), callback2)
-    );
-    fireEvent.keyDown(document, { key: "0", keyCode: 48 });
-    fireEvent.keyDown(document, { key: "1", keyCode: 49 });
-    fireEvent.keyDown(document, { key: "ctrl", keyCode: 17, ctrlKey: true });
-    fireEvent.keyDown(document, { key: "meta", keyCode: 91, metaKey: true });
+    const hook2 = renderHook(() => useKeyPress((e) => ['0', 'meta'].includes(e.key), callback2));
+    fireEvent.keyDown(document, { key: '0', keyCode: 48 });
+    fireEvent.keyDown(document, { key: '1', keyCode: 49 });
+    fireEvent.keyDown(document, { key: 'ctrl', keyCode: 17, ctrlKey: true });
+    fireEvent.keyDown(document, { key: 'meta', keyCode: 91, metaKey: true });
     expect(callback2.mock.calls.length).toBe(2);
 
     hook1.unmount();
     hook2.unmount();
   });
 
-  test("test key in `eventHandler` parameter", async () => {
+  test('test key in `eventHandler` parameter', async () => {
     let pressedKey;
-    const KEYS = ["c", "shift.c", "shift.ctrl.c"];
+    const KEYS = ['c', 'shift.c', 'shift.ctrl.c'];
     const callbackKey = (e: any, key: any) => {
       pressedKey = key;
     };
 
     // test `exactMatch: true` props
-    const hook1 = renderHook(() =>
-      useKeyPress(KEYS, callbackKey, { exactMatch: true })
-    );
-    fireEvent.keyDown(document, { key: "c", keyCode: 67 });
-    expect(pressedKey).toBe("c");
-    fireEvent.keyDown(document, { key: "c", keyCode: 67, shiftKey: true });
-    expect(pressedKey).toBe("shift.c");
+    const hook1 = renderHook(() => useKeyPress(KEYS, callbackKey, { exactMatch: true }));
+    fireEvent.keyDown(document, { key: 'c', keyCode: 67 });
+    expect(pressedKey).toBe('c');
+    fireEvent.keyDown(document, { key: 'c', keyCode: 67, shiftKey: true });
+    expect(pressedKey).toBe('shift.c');
     fireEvent.keyDown(document, {
-      key: "c",
+      key: 'c',
       keyCode: 67,
       shiftKey: true,
       ctrlKey: true,
     });
-    expect(pressedKey).toBe("shift.ctrl.c");
+    expect(pressedKey).toBe('shift.ctrl.c');
 
     // test `exactMatch: false`(default) props
     const hook2 = renderHook(() => useKeyPress(KEYS, callbackKey));
-    fireEvent.keyDown(document, { key: "c", keyCode: 67 });
-    expect(pressedKey).toBe("c");
-    fireEvent.keyDown(document, { key: "c", keyCode: 67, shiftKey: true });
-    expect(pressedKey).toBe("c");
+    fireEvent.keyDown(document, { key: 'c', keyCode: 67 });
+    expect(pressedKey).toBe('c');
+    fireEvent.keyDown(document, { key: 'c', keyCode: 67, shiftKey: true });
+    expect(pressedKey).toBe('c');
     fireEvent.keyDown(document, {
-      key: "c",
+      key: 'c',
       keyCode: 67,
       shiftKey: true,
       ctrlKey: true,
     });
-    expect(pressedKey).toBe("c");
+    expect(pressedKey).toBe('c');
 
     hook2.unmount();
     hook1.unmount();
