@@ -96,7 +96,12 @@ describe('useKeyPress ', () => {
     expect(callbackC.mock.calls.length).toBe(0);
 
     callback.mockClear();
-    fireEvent.keyDown(document, { key: 'c', ctrlKey: true, shiftKey: true, keyCode: 67 });
+    fireEvent.keyDown(document, {
+      key: 'c',
+      ctrlKey: true,
+      shiftKey: true,
+      keyCode: 67,
+    });
     expect(callbackMulti.mock.calls.length).toBe(1);
     expect(callback.mock.calls.length).toBe(0);
     expect(callbackC.mock.calls.length).toBe(0);
@@ -123,7 +128,7 @@ describe('useKeyPress ', () => {
     );
 
     fireEvent.keyUp(document, { key: 'meta', keyCode: 91, metaKey: false });
-    expect(callback).toBeCalled();
+    expect(callback).toHaveBeenCalled();
   });
 
   test('test `keyFilter` function parameter', async () => {
@@ -161,7 +166,12 @@ describe('useKeyPress ', () => {
     expect(pressedKey).toBe('c');
     fireEvent.keyDown(document, { key: 'c', keyCode: 67, shiftKey: true });
     expect(pressedKey).toBe('shift.c');
-    fireEvent.keyDown(document, { key: 'c', keyCode: 67, shiftKey: true, ctrlKey: true });
+    fireEvent.keyDown(document, {
+      key: 'c',
+      keyCode: 67,
+      shiftKey: true,
+      ctrlKey: true,
+    });
     expect(pressedKey).toBe('shift.ctrl.c');
 
     // test `exactMatch: false`(default) props
@@ -170,7 +180,12 @@ describe('useKeyPress ', () => {
     expect(pressedKey).toBe('c');
     fireEvent.keyDown(document, { key: 'c', keyCode: 67, shiftKey: true });
     expect(pressedKey).toBe('c');
-    fireEvent.keyDown(document, { key: 'c', keyCode: 67, shiftKey: true, ctrlKey: true });
+    fireEvent.keyDown(document, {
+      key: 'c',
+      keyCode: 67,
+      shiftKey: true,
+      ctrlKey: true,
+    });
     expect(pressedKey).toBe('c');
 
     hook2.unmount();

@@ -37,13 +37,13 @@ describe('useLongPress', () => {
       onClick: mockClickCallback,
       onLongPressEnd: mockLongPressEndCallback,
     });
-    expect(mockTarget.addEventListener).toBeCalled();
+    expect(mockTarget.addEventListener).toHaveBeenCalled();
     events['mousedown']();
     vi.advanceTimersByTime(350);
     events['mouseleave']();
-    expect(mockCallback).toBeCalledTimes(1);
-    expect(mockLongPressEndCallback).toBeCalledTimes(1);
-    expect(mockClickCallback).toBeCalledTimes(0);
+    expect(mockCallback).toHaveBeenCalledTimes(1);
+    expect(mockLongPressEndCallback).toHaveBeenCalledTimes(1);
+    expect(mockClickCallback).toHaveBeenCalledTimes(0);
   });
 
   test('click callback correct', () => {
@@ -51,14 +51,14 @@ describe('useLongPress', () => {
       onClick: mockClickCallback,
       onLongPressEnd: mockLongPressEndCallback,
     });
-    expect(mockTarget.addEventListener).toBeCalled();
+    expect(mockTarget.addEventListener).toHaveBeenCalled();
     events['mousedown']();
     events['mouseup']();
     events['mousedown']();
     events['mouseup']();
-    expect(mockCallback).toBeCalledTimes(0);
-    expect(mockLongPressEndCallback).toBeCalledTimes(0);
-    expect(mockClickCallback).toBeCalledTimes(2);
+    expect(mockCallback).toHaveBeenCalledTimes(0);
+    expect(mockLongPressEndCallback).toHaveBeenCalledTimes(0);
+    expect(mockClickCallback).toHaveBeenCalledTimes(2);
   });
 
   test('longPress and click callback correct', () => {
@@ -66,15 +66,15 @@ describe('useLongPress', () => {
       onClick: mockClickCallback,
       onLongPressEnd: mockLongPressEndCallback,
     });
-    expect(mockTarget.addEventListener).toBeCalled();
+    expect(mockTarget.addEventListener).toHaveBeenCalled();
     events['mousedown']();
     vi.advanceTimersByTime(350);
     events['mouseup']();
     events['mousedown']();
     events['mouseup']();
-    expect(mockCallback).toBeCalledTimes(1);
-    expect(mockLongPressEndCallback).toBeCalledTimes(1);
-    expect(mockClickCallback).toBeCalledTimes(1);
+    expect(mockCallback).toHaveBeenCalledTimes(1);
+    expect(mockLongPressEndCallback).toHaveBeenCalledTimes(1);
+    expect(mockClickCallback).toHaveBeenCalledTimes(1);
   });
 
   test('onLongPress should not be called when over the threshold', () => {
@@ -86,14 +86,9 @@ describe('useLongPress', () => {
     });
     expect(events['mousemove']).toBeDefined();
     events['mousedown'](new MouseEvent('mousedown'));
-    events['mousemove'](
-      new MouseEvent('mousemove', {
-        clientX: 40,
-        clientY: 10,
-      }),
-    );
+    events['mousemove'](new MouseEvent('mousemove', { clientX: 40, clientY: 10 }));
     vi.advanceTimersByTime(320);
-    expect(mockCallback).not.toBeCalled();
+    expect(mockCallback).not.toHaveBeenCalled();
 
     unmount();
     expect(events['mousemove']).toBeUndefined();

@@ -127,7 +127,7 @@ describe('useCountDown', () => {
     act(() => {
       vi.advanceTimersByTime(6000);
     });
-    expect(onEnd).toBeCalled();
+    expect(onEnd).toHaveBeenCalled();
   });
 
   test('timeLeft should be 0 when target date less than current time', () => {
@@ -230,7 +230,7 @@ describe('useCountDown', () => {
     act(() => {
       vi.advanceTimersByTime(6000);
     });
-    expect(onEnd).toBeCalled();
+    expect(onEnd).toHaveBeenCalled();
   });
 
   test('timeLeft should be 0 when leftTime less than current time', () => {

@@ -188,7 +188,7 @@ describe('useCachePlugin', () => {
     await act(async () => {
       vi.advanceTimersByTime(1000);
     });
-    expect(errSpy).toBeCalled();
+    expect(errSpy).toHaveBeenCalled();
     expect(res.error).not.toBeUndefined();
 
     act(() => res.setKey(1));

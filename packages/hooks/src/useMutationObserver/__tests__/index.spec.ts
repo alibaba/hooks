@@ -21,7 +21,7 @@ describe('useMutationObserver', () => {
     const { rerender } = renderHook(() => useMutationObserver(callback, () => container, options));
     container.style.backgroundColor = '#000';
     await rerender();
-    expect(callback).toBeCalled();
+    expect(callback).toHaveBeenCalled();
   });
 
   test('should callback work when target node tree be changed', async () => {
@@ -30,7 +30,7 @@ describe('useMutationObserver', () => {
     const paraEl = document.createElement('p');
     container.appendChild(paraEl);
     await rerender();
-    expect(callback).toBeCalled();
+    expect(callback).toHaveBeenCalled();
   });
 
   test('should not work when target is null', async () => {
@@ -38,6 +38,6 @@ describe('useMutationObserver', () => {
     const { rerender } = renderHook(() => useMutationObserver(callback, null, options));
     container.style.backgroundColor = '#000';
     await rerender();
-    expect(callback).not.toBeCalled();
+    expect(callback).not.toHaveBeenCalled();
   });
 });

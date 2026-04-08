@@ -56,14 +56,14 @@ describe('useDrop', () => {
   test('should add/remove listener on mount/unmount', () => {
     const { unmount } = setup(mockTarget);
     const eventNames = ['dragenter', 'dragover', 'dragleave', 'drop', 'paste'];
-    expect(mockTarget.addEventListener).toBeCalledTimes(eventNames.length);
+    expect(mockTarget.addEventListener).toHaveBeenCalledTimes(eventNames.length);
     eventNames.forEach((eventName, i) => {
       expect(mockTarget.addEventListener.mock.calls[i][0]).toBe(eventName);
     });
     unmount();
-    expect(mockTarget.removeEventListener).toBeCalledTimes(eventNames.length);
+    expect(mockTarget.removeEventListener).toHaveBeenCalledTimes(eventNames.length);
     eventNames.forEach((eventName, i) => {
-      expect(mockTarget.addEventListener.mock.calls[i][0]).toBe(eventName);
+      expect(mockTarget.removeEventListener.mock.calls[i][0]).toBe(eventName);
     });
   });
 
@@ -86,7 +86,7 @@ describe('useDrop', () => {
     eventNames.forEach((event) => {
       events[event](mockEvent);
     });
-    callbacks.forEach((callback) => expect(callback).toBeCalled());
+    callbacks.forEach((callback) => expect(callback).toHaveBeenCalled());
   });
 
   test('should call onText on drop', async () => {

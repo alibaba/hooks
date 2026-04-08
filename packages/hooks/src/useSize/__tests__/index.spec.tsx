@@ -1,23 +1,34 @@
 import { act, render, renderHook, screen } from '@testing-library/react';
-import { useRef } from 'react';
-import { describe, expect, test, vi } from 'vitest';
+import React, { useRef } from 'react';
+import { beforeEach, describe, expect, test, vi } from 'vitest';
 import useSize from '../index';
 
-let callback: any;
+interface MockResizeObserverEntry {
+  target: Pick<HTMLElement, 'clientHeight' | 'clientWidth'>;
+}
+
+type ResizeObserverTestCallback = (entries: MockResizeObserverEntry[]) => void;
+
+let callback: ResizeObserverTestCallback | undefined;
+
 vi.mock('resize-observer-polyfill', () => {
   return {
-    default: vi.fn().mockImplementation((cb) => {
-      callback = cb;
-      return {
-        observe: () => {},
-        disconnect: () => {},
-      };
-    }),
+    default: class MockResizeObserver {
+      observe() {}
+      disconnect() {}
+      constructor(cb: ResizeObserverTestCallback) {
+        callback = cb;
+      }
+    },
   };
 });
 
 // test about Resize Observer see https://github.com/que-etc/resize-observer-polyfill/tree/master/tests
 describe('useSize', () => {
+  beforeEach(() => {
+    callback = undefined;
+  });
+
   test('should work when target is a mounted DOM', () => {
     const hook = renderHook(() => useSize(document.body));
     expect(hook.result.current).toEqual({ height: 0, width: 0 });
@@ -31,23 +42,22 @@ describe('useSize', () => {
         return 0;
       });
 
-    function Setup() {
-      const ref = useRef(null);
+    const Setup: React.FC = () => {
+      const ref = useRef<HTMLDivElement>(null);
       const size = useSize(ref);
-
       return (
         <div ref={ref}>
           <div>width: {String(size?.width)}</div>
           <div>height: {String(size?.height)}</div>
         </div>
       );
-    }
+    };
 
     render(<Setup />);
     expect((await screen.findByText(/^width/)).textContent).toBe('width: undefined');
     expect((await screen.findByText(/^height/)).textContent).toBe('height: undefined');
 
-    act(() => callback([{ target: { clientWidth: 10, clientHeight: 10 } }]));
+    act(() => callback?.([{ target: { clientWidth: 10, clientHeight: 10 } }]));
     expect((await screen.findByText(/^width/)).textContent).toBe('width: 10');
     expect((await screen.findByText(/^height/)).textContent).toBe('height: 10');
     mockRaf.mockRestore();
@@ -56,7 +66,7 @@ describe('useSize', () => {
   test('should not work when target is null', () => {
     expect(() => {
       renderHook(() => useSize(null));
-    }).not.toThrowError();
+    }).not.toThrow();
   });
 
   test('should work', () => {
@@ -70,7 +80,7 @@ describe('useSize', () => {
     const { result } = renderHook(() => useSize(targetEl));
 
     act(() => {
-      callback([
+      callback?.([
         {
           target: {
             clientWidth: 100,

@@ -22,7 +22,7 @@ describe('useRafTimeout', () => {
   test('timeout should work', () => {
     const callback = vi.fn();
     setUp({ fn: callback, delay: FRAME_TIME });
-    expect(callback).not.toBeCalled();
+    expect(callback).not.toHaveBeenCalled();
     vi.advanceTimersByTime(FRAME_TIME * 2.5);
     expect(callback).toHaveBeenCalledTimes(1);
   });
@@ -31,16 +31,16 @@ describe('useRafTimeout', () => {
     const delay: number | undefined = undefined;
     const callback = vi.fn();
     setUp({ fn: callback, delay });
-    expect(callback).not.toBeCalled();
+    expect(callback).not.toHaveBeenCalled();
     vi.advanceTimersByTime(FRAME_TIME * 1.5);
-    expect(callback).not.toBeCalled();
+    expect(callback).not.toHaveBeenCalled();
   });
 
   test('timeout should be clear', () => {
     const callback = vi.fn();
 
     const hook = setUp({ fn: callback, delay: FRAME_TIME });
-    expect(callback).not.toBeCalled();
+    expect(callback).not.toHaveBeenCalled();
 
     hook.result.current();
     vi.advanceTimersByTime(FRAME_TIME * 2.5);

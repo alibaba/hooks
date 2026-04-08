@@ -11,7 +11,7 @@ describe('useResponsive', () => {
   }
   changeWidth(1024);
 
-  const hook = renderHook(() => useResponsive());
+  const hook = renderHook(useResponsive);
 
   test('should response to window width changes', () => {
     expect(hook.result.current).toMatchSnapshot();

@@ -5,6 +5,7 @@ import { sleep } from '../../utils/testingHelpers';
 import useWebSocket, { ReadyState } from '../index';
 
 const promise: Promise<void> = new Promise((resolve) => resolve());
+
 const wsUrl = 'ws://localhost:9999';
 
 describe('useWebSocket', () => {
@@ -106,7 +107,7 @@ describe('useWebSocket', () => {
     });
 
     expect(hooks.result.current.readyState).toBe(ReadyState.Open);
-    expect(onOpen).toBeCalledTimes(1);
+    expect(onOpen).toHaveBeenCalledTimes(1);
 
     act(() => wsServer.close());
   });
@@ -138,8 +139,8 @@ describe('useWebSocket', () => {
     await act(async () => {
       await sleep(3000);
     });
-    expect(onOpen).toBeCalledTimes(2);
-    expect(onClose).toBeCalledTimes(1);
+    expect(onOpen).toHaveBeenCalledTimes(2);
+    expect(onClose).toHaveBeenCalledTimes(1);
 
     act(() => wsServer1.close());
     act(() => wsServer2.close());

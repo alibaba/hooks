@@ -21,11 +21,12 @@ describe('useRafInterval', () => {
   });
   test('should downgrade to setInterval when requstAnimationFrame is undefined', () => {
     Object.defineProperty(window, 'cancelAnimationFrame', { value: undefined });
-    Object.defineProperty(window, 'requestAnimationFrame', { value: undefined });
-
+    Object.defineProperty(window, 'requestAnimationFrame', {
+      value: undefined,
+    });
     const callback = vi.fn();
     setUp({ fn: callback, delay: FRAME_TIME });
-    expect(callback).not.toBeCalled();
+    expect(callback).not.toHaveBeenCalled();
     vi.advanceTimersByTime(FRAME_TIME * 1.5);
     expect(callback).toHaveBeenCalledTimes(1);
   });
