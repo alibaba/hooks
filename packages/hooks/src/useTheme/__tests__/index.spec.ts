@@ -44,4 +44,29 @@ describe('useTheme', () => {
     act(() => result.current.setThemeMode('system'));
     expect(result.current.themeMode).toBe('system');
   });
+
+  test('falls back to addListener/removeListener when addEventListener is not available (Safari ≤13)', () => {
+    const addListener = vi.fn();
+    const removeListener = vi.fn();
+
+    Object.defineProperty(window, 'matchMedia', {
+      writable: true,
+      value: vi.fn().mockImplementation((query) => ({
+        matches: false,
+        media: query,
+        onchange: null,
+        addListener,
+        removeListener,
+        addEventListener: undefined,
+        removeEventListener: undefined,
+        dispatchEvent: vi.fn(),
+      })),
+    });
+
+    const { unmount } = renderHook(useTheme);
+    expect(addListener).toHaveBeenCalledWith(expect.any(Function));
+
+    unmount();
+    expect(removeListener).toHaveBeenCalledWith(expect.any(Function));
+  });
 });
