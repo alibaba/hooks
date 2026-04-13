@@ -6,8 +6,8 @@
  * desc.zh-CN: 渲染大量数据
  */
 
-import { useMemo, useRef } from "react";
-import { useVirtualList } from "ahooks";
+import { useMemo, useRef } from 'react';
+import { useVirtualList } from 'ahooks';
 
 export default () => {
   const containerRef = useRef(null);
@@ -23,19 +23,16 @@ export default () => {
   });
   return (
     <>
-      <div
-        ref={containerRef}
-        style={{ height: "300px", overflow: "auto", border: "1px solid" }}
-      >
+      <div ref={containerRef} style={{ height: '300px', overflow: 'auto', border: '1px solid' }}>
         <div ref={wrapperRef}>
           {list.map((ele) => (
             <div
               style={{
                 height: 52,
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                border: "1px solid #e8e8e8",
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                border: '1px solid #e8e8e8',
                 marginBottom: 8,
               }}
               key={ele.index}

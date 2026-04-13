@@ -1,7 +1,7 @@
-import dayjs from "dayjs";
-import { useEffect, useMemo, useState } from "react";
-import useLatest from "../useLatest";
-import { isNumber } from "../utils";
+import dayjs from 'dayjs';
+import { useEffect, useMemo, useState } from 'react';
+import useLatest from '../useLatest';
+import { isNumber } from '../utils';
 
 export type TDate = dayjs.ConfigType;
 
@@ -43,12 +43,10 @@ const useCountdown = (options: Options = {}) => {
   const { leftTime, targetDate, interval = 1000, onEnd } = options || {};
 
   const memoLeftTime = useMemo<TDate>(() => {
-    return isNumber(leftTime) && leftTime > 0
-      ? Date.now() + leftTime
-      : undefined;
+    return isNumber(leftTime) && leftTime > 0 ? Date.now() + leftTime : undefined;
   }, [leftTime]);
 
-  const target = "leftTime" in options ? memoLeftTime : targetDate;
+  const target = 'leftTime' in options ? memoLeftTime : targetDate;
 
   const [timeLeft, setTimeLeft] = useState(() => calcLeft(target));
 
