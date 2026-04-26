@@ -54,7 +54,7 @@
     "antd": "^6.3.5",
     "babel-plugin-import": "^1.12.0",
     "coveralls": "^3.1.1",
-    "cross-env": "^7.0.3",
+    "cross-env": "^10.1.0",
     "czg": "^1.12.0",
     "del": "^5.1.0",
     "dumi": "^1.1.54",
@@ -78,8 +78,8 @@
     "typescript": "^6.0.2",
     "vitest": "^4.1.2",
     "vitest-websocket-mock": "^0.5.0",
-    "webpack": "^5.99.9",
-    "webpack-cli": "^6.0.1",
+    "webpack": "^5.106.2",
+    "webpack-cli": "^7.0.2",
     "webpack-merge": "^6.0.1"
   },
   "commitlint": {
