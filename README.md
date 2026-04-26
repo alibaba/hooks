@@ -85,9 +85,9 @@ Thanks to all the contributors:
 
 ## 👥 Discuss
 
-<img alt="ahooks discussion group 1" src="https://github.com/user-attachments/assets/0ba7a370-2a69-442f-b746-9eb16bbbc46c" width="200" style='display:inline' />
-<img alt="ahooks discussion group 2" src="https://github.com/user-attachments/assets/a08693d3-bfcc-4aca-b2b0-2d9c23012858" width="200" style='display:inline' />
-<img alt="ahooks discussion group 3" src="https://github.com/user-attachments/assets/15a505a7-06d1-4e72-ab02-6fad968323f1" width="200" style='display:inline' />
+<img alt="ahooks discussion group 1" draggable="false" src="https://github.com/user-attachments/assets/dda464be-26cf-4c83-8fee-16862fb916cb" width="200" style='display:inline' />
+<img alt="ahooks discussion group 2" draggable="false" src="https://github.com/user-attachments/assets/c804a026-3b07-4a20-ad7e-83cf2f86bc9a" width="200" style='display:inline' />
+<img alt="ahooks discussion group 3" draggable="false" src="https://github.com/user-attachments/assets/52ac8ef8-6506-4540-a17d-823ae4371b88" width="200" style='display:inline' />
 
 [1]: https://www.npmjs.com/package/ahooks
 [2]: https://npmjs.org/package/ahooks
