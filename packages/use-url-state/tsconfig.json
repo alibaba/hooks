@@ -4,5 +4,12 @@
     "paths": {
       "@ahooks.js/use-url-state": ["./src/index.ts"]
     }
+  },
+  "ts-node": {
+    "compilerOptions": {
+      "module": "CommonJS",
+      "types": ["node"],
+      "verbatimModuleSyntax": false
+    }
   }
 }

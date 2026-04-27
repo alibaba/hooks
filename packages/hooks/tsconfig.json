@@ -5,5 +5,12 @@
       "src/*": ["./src/*"],
       "ahooks": ["./src/index.ts"]
     }
+  },
+  "ts-node": {
+    "compilerOptions": {
+      "module": "CommonJS",
+      "types": ["node"],
+      "verbatimModuleSyntax": false
+    }
   }
 }

@@ -1,4 +1,6 @@
-module.exports = {
+import type { Configuration } from 'webpack';
+
+const config: Configuration = {
   output: {
     libraryTarget: 'umd',
     globalObject: 'this',
@@ -7,19 +9,11 @@ module.exports = {
   resolve: {
     extensions: ['.json', '.js'],
   },
-  // module: {
-  //   rules: [
-  //     {
-  //       test: /\.jsx?$/,
-  //       use: {
-  //         loader: 'babel-loader',
-  //       },
-  //     }
-  //   ],
-  // },
   externals: [
     {
       react: 'React',
     },
   ],
 };
+
+export default config;
