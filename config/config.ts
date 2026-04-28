@@ -3,14 +3,6 @@ import { menus } from './hooks';
 
 const packages = require('../packages/hooks/package.json');
 
-const sitePublicPath = process.env.DOCS_PUBLIC_PATH || '/';
-
-const normalizedPublicPath = sitePublicPath.endsWith('/') ? sitePublicPath : `${sitePublicPath}/`;
-
-const withPublicPath = (assetPath: string) => {
-  return `${normalizedPublicPath}${assetPath.replace(/^\//, '')}`;
-};
-
 // dumi v1 uses webpack 4, which needs Babel to parse modern syntax in antd v6 packages.
 const extraBabelIncludes = [
   'filter-obj',
@@ -101,12 +93,12 @@ const config = defineConfig({
   ],
   mode: 'site',
   title: 'ahooks 3.0',
-  favicon: withPublicPath('/simple-logo.svg'),
-  logo: withPublicPath('/logo.svg'),
+  favicon: '/hooks/simple-logo.svg',
+  logo: '/hooks/logo.svg',
   dynamicImport: {},
   manifest: {},
   hash: true,
-  publicPath: normalizedPublicPath,
+  publicPath: '/hooks/',
   alias: {
     ahooks: `${process.cwd()}/packages/hooks/src/index.ts`,
     '@ahooks.js/use-url-state': `${process.cwd()}/packages/use-url-state/src/index.ts`,
@@ -119,10 +111,7 @@ const config = defineConfig({
       rel: 'stylesheet',
       href: 'https://unpkg.com/@alifd/theme-design-pro@0.6.2/dist/next-noreset.min.css',
     },
-    {
-      rel: 'stylesheet',
-      href: withPublicPath('/style.css'),
-    },
+    { rel: 'stylesheet', href: '/hooks/style.css' },
   ],
   navs: {
     'zh-CN': [

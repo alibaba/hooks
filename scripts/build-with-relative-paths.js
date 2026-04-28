@@ -1,15 +1,30 @@
+const fs = require('node:fs');
 const path = require('node:path');
 const { execSync } = require('node:child_process');
 
+const configPath = path.join(__dirname, '../config/config.ts');
+const backupPath = path.join(__dirname, '../config/config.ts.backup');
+
+// 备份原配置
+fs.copyFileSync(configPath, backupPath);
+
 try {
+  // 读取配置文件
+  let config = fs.readFileSync(configPath, 'utf8');
+
+  // 修改配置
+  config = config.replace(/publicPath: ['"].*['"],/, "publicPath: '/hooks/',");
+  config = config.replace(
+    /{ rel: 'stylesheet', href: '\/style\.css' }/,
+    "{ rel: 'stylesheet', href: '/hooks/style.css' }",
+  );
+  config = config.replace(/logo: '\/logo\.svg',/, "logo: '/hooks/logo.svg',");
+
+  // 写入修改后的配置
+  fs.writeFileSync(configPath, config);
+
   // 运行构建命令
-  execSync('pnpm run build:doc', {
-    stdio: 'inherit',
-    env: {
-      ...process.env,
-      DOCS_PUBLIC_PATH: '/hooks/',
-    },
-  });
+  execSync('pnpm run build:doc', { stdio: 'inherit' });
 
   // 进入 dist 目录
   process.chdir(path.join(__dirname, '../dist'));
@@ -29,10 +44,8 @@ try {
 
   // 添加远程仓库（如果不存在）
   try {
-    execSync('git remote add origin git@github.com:alibaba/hooks.git', {
-      stdio: 'inherit',
-    });
-  } catch {
+    execSync('git remote add origin git@github.com:alibaba/hooks.git', { stdio: 'inherit' });
+  } catch (e) {
     // 如果远程仓库已存在，忽略错误
   }
 
@@ -41,7 +54,8 @@ try {
 
   // 返回到项目根目录
   process.chdir(path.join(__dirname, '..'));
-} catch (e) {
-  process.chdir(path.join(__dirname, '..'));
-  throw e;
+} finally {
+  // 恢复原配置
+  fs.copyFileSync(backupPath, configPath);
+  fs.unlinkSync(backupPath);
 }
