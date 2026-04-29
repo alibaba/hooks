@@ -24,7 +24,7 @@ try {
   fs.writeFileSync(enDocPath, enDoc);
   fs.writeFileSync(zhDocPath, zhDoc);
 
-  execSync('npm run build:doc', {
+  execSync('pnpm run build:doc', {
     stdio: 'inherit',
     env: process.env,
   });
