@@ -6,35 +6,35 @@ ahooks 大部分 DOM 类 Hooks 都会接收 `target` 参数，表示要处理的
 
 1. 支持 `React.MutableRefObject`
 
-```ts
+```tsx
 export default () => {
   const ref = useRef(null);
   const isHovering = useHover(ref);
-  return <div ref={ref}>{isHovering ? 'hover' : 'leaveHover'}</div>;
+  return <div ref={ref}>{isHovering ? "hover" : "leaveHover"}</div>;
 };
 ```
 
 2. 支持 `HTMLElement`
 
-```ts
+```tsx
 export default () => {
-  const isHovering = useHover(document.getElementById('test'));
-  return <div id="test">{isHovering ? 'hover' : 'leaveHover'}</div>;
+  const isHovering = useHover(document.getElementById("test"));
+  return <div id="test">{isHovering ? "hover" : "leaveHover"}</div>;
 };
 ```
 
 3. 支持 `() => HTMLElement`，一般适用在 SSR 场景
 
-```ts
+```tsx
 export default () => {
-  const isHovering = useHover(() => document.getElementById('test'));
-  return <div id="test">{isHovering ? 'hover' : 'leaveHover'}</div>;
+  const isHovering = useHover(() => document.getElementById("test"));
+  return <div id="test">{isHovering ? "hover" : "leaveHover"}</div>;
 };
 ```
 
 另外，**DOM 类 Hooks 的 `target` 是支持动态变化的**。比如：
 
-```ts
+```tsx
 export default () => {
   const [boolean, { toggle }] = useBoolean();
 
@@ -44,8 +44,8 @@ export default () => {
   const isHovering = useHover(boolean ? ref : ref2);
   return (
     <>
-      <div ref={ref}>{isHovering ? 'hover' : 'leaveHover'}</div>
-      <div ref={ref2}>{isHovering ? 'hover' : 'leaveHover'}</div>
+      <div ref={ref}>{isHovering ? "hover" : "leaveHover"}</div>
+      <div ref={ref2}>{isHovering ? "hover" : "leaveHover"}</div>
     </>
   );
 };

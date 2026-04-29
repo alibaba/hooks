@@ -26,13 +26,13 @@ const { data, error, loading } = useRequest(service);
 If `options.manual = true` is set, `useRequest` will not be executed by default, and the execution needs to be triggered by `run` or `runAsync`.
 
 ```tsx | pure
-const { loading, run, runAsync } = useRequest(service, {
-  manual: true
-});
+const { loading, run, runAsync } = useRequest(service, { manual: true });
 
-<button onClick={run} disabled={loading}>
-  {loading ? 'Loading' : 'Edit'}
-</button>
+return (
+  <button onClick={run} disabled={loading}>
+    {loading ? "Loading" : "Edit"}
+  </button>
+);
 ```
 
 The difference between `run` and `runAsync` is:
@@ -41,11 +41,13 @@ The difference between `run` and `runAsync` is:
 - `runAsync` is a asynchronous function that returns a `Promise`. If you use `runAsync` to call it, it means you need to catch the exception yourself.
 
   ```ts
-  runAsync().then((data) => {
-    console.log(data);
-  }).catch((error) => {
-    console.log(error);
-  })
+  runAsync()
+    .then((data) => {
+      console.log(data);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
   ```
 
 Next, we will demonstrate the difference between `run` and `runAsync` through the simple scenario of editing the username.
