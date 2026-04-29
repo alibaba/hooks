@@ -3,7 +3,7 @@ name: Deploy static content to Pages
 on:
   # Runs on pushes targeting the default branch
   push:
-    branches: ["master", "fix_docs_subpath"]
+    branches: ["master"]
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -58,7 +58,7 @@ jobs:
             ${{ runner.os }}-pnpm-
 
       - name: Build documentation
-        run: npm run build:doc:public-path
+        run: npm run build:doc-github
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
