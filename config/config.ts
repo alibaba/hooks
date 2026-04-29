@@ -1,7 +1,12 @@
 import { defineConfig } from 'dumi';
+import path from 'node:path';
 import { menus } from './hooks';
 
 const packages = require('../packages/hooks/package.json');
+
+const publicPath = process.env.DOCS_PUBLIC_PATH || '/';
+
+const join = (p: string) => path.join(publicPath, p).replaceAll('\\', '/');
 
 // dumi v1 uses webpack 4, which needs Babel to parse modern syntax in antd v6 packages.
 const extraBabelIncludes = [
@@ -93,12 +98,12 @@ const config = defineConfig({
   ],
   mode: 'site',
   title: 'ahooks 3.0',
-  favicon: '/simple-logo.svg',
-  logo: '/logo.svg',
+  favicon: join('/simple-logo.svg'),
+  logo: join('/logo.svg'),
   dynamicImport: {},
   manifest: {},
   hash: true,
-  publicPath: '/',
+  publicPath,
   alias: {
     ahooks: `${process.cwd()}/packages/hooks/src/index.ts`,
     '@ahooks.js/use-url-state': `${process.cwd()}/packages/use-url-state/src/index.ts`,
@@ -111,7 +116,7 @@ const config = defineConfig({
       rel: 'stylesheet',
       href: 'https://unpkg.com/@alifd/theme-design-pro@0.6.2/dist/next-noreset.min.css',
     },
-    { rel: 'stylesheet', href: '/style.css' },
+    { rel: 'stylesheet', href: join('/style.css') },
   ],
   navs: {
     'zh-CN': [
