@@ -7,9 +7,9 @@ export interface Actions<T> {
   toggle: () => void;
 }
 
-function useToggle<T = boolean>(): [boolean, Actions<T>];
+function useToggle(): [boolean, Actions<boolean>];
 
-function useToggle<T>(defaultValue: T): [T, Actions<T>];
+function useToggle(defaultValue: boolean): [boolean, Actions<boolean>];
 
 function useToggle<T, U>(defaultValue: T, reverseValue: U): [T | U, Actions<T | U>];
 

@@ -22,17 +22,15 @@ nav:
 ```typescript
 const [state, { toggle, set, setLeft, setRight }] = useToggle(defaultValue?: boolean);
 
-const [state, { toggle, set, setLeft, setRight }] = useToggle<T>(defaultValue: T);
-
 const [state, { toggle, set, setLeft, setRight }] = useToggle<T, U>(defaultValue: T, reverseValue: U);
 ```
 
 ### Params
 
-| 参数         | 说明                     | 类型 | 默认值  |
-| ------------ | ------------------------ | ---- | ------- |
-| defaultValue | 可选项，传入默认的状态值 | `T`  | `false` |
-| reverseValue | 可选项，传入取反的状态值 | `U`  | -       |
+| 参数         | 说明                     | 类型           | 默认值  |
+| ------------ | ------------------------ | -------------- | ------- |
+| defaultValue | 可选项，传入默认的状态值 | `boolean \| T` | `false` |
+| reverseValue | 可选项，传入取反的状态值 | `U`            | -       |
 
 ### Result
 

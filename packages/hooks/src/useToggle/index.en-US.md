@@ -22,17 +22,15 @@ A hook that toggle states.
 ```typescript
 const [state, { toggle, set, setLeft, setRight }] = useToggle(defaultValue?: boolean);
 
-const [state, { toggle, set, setLeft, setRight }] = useToggle<T>(defaultValue: T);
-
 const [state, { toggle, set, setLeft, setRight }] = useToggle<T, U>(defaultValue: T, reverseValue: U)
 ```
 
 ### Params
 
-| Property     | Description                 | Type | Default |
-| ------------ | --------------------------- | ---- | ------- |
-| defaultValue | The default value. Optional | `T`  | `false` |
-| reverseValue | The reverse value. Optional | `U`  | -       |
+| Property     | Description                 | Type           | Default |
+| ------------ | --------------------------- | -------------- | ------- |
+| defaultValue | The default value. Optional | `boolean \| T` | `false` |
+| reverseValue | The reverse value. Optional | `U`            | -       |
 
 ### Result
 
