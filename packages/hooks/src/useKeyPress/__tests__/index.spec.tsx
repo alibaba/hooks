@@ -131,6 +131,49 @@ describe('useKeyPress ', () => {
     expect(callback).toHaveBeenCalled();
   });
 
+  test('shift key should work in keyup event with exactMatch', async () => {
+    renderHook(() =>
+      useKeyPress(['shift'], callback, {
+        events: ['keyup'],
+        exactMatch: true,
+      }),
+    );
+
+    fireEvent.keyUp(document, { key: 'Shift', keyCode: 16, shiftKey: false });
+    expect(callback).toHaveBeenCalled();
+  });
+
+  test('ctrl key should work in keyup event with exactMatch', async () => {
+    renderHook(() =>
+      useKeyPress(['ctrl'], callback, {
+        events: ['keyup'],
+        exactMatch: true,
+      }),
+    );
+
+    fireEvent.keyUp(document, { key: 'Control', keyCode: 17, ctrlKey: false });
+    expect(callback).toHaveBeenCalled();
+  });
+
+  test('alt key should work in keyup event with exactMatch', async () => {
+    renderHook(() =>
+      useKeyPress(['alt'], callback, {
+        events: ['keyup'],
+        exactMatch: true,
+      }),
+    );
+
+    fireEvent.keyUp(document, { key: 'Alt', keyCode: 18, altKey: false });
+    expect(callback).toHaveBeenCalled();
+  });
+
+  test('modifier key keyup should not break combination keys', async () => {
+    renderHook(() => useKeyPress(['shift.c'], callback));
+
+    fireEvent.keyDown(document, { key: 'c', shiftKey: true, keyCode: 67 });
+    expect(callback).toHaveBeenCalled();
+  });
+
   test('test `keyFilter` function parameter', async () => {
     const callback1 = vi.fn();
     const callback2 = vi.fn();

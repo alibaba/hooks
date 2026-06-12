@@ -140,9 +140,24 @@ const aliasKeyCodeMap = {
 
 // 修饰键
 const modifierKey = {
-  ctrl: (event: KeyboardEvent) => event.ctrlKey,
-  shift: (event: KeyboardEvent) => event.shiftKey,
-  alt: (event: KeyboardEvent) => event.altKey,
+  ctrl: (event: KeyboardEvent) => {
+    if (event.type === 'keyup') {
+      return event.keyCode === 17;
+    }
+    return event.ctrlKey;
+  },
+  shift: (event: KeyboardEvent) => {
+    if (event.type === 'keyup') {
+      return event.keyCode === 16;
+    }
+    return event.shiftKey;
+  },
+  alt: (event: KeyboardEvent) => {
+    if (event.type === 'keyup') {
+      return event.keyCode === 18;
+    }
+    return event.altKey;
+  },
   meta: (event: KeyboardEvent) => {
     if (event.type === 'keyup') {
       return aliasKeyCodeMap.meta.includes(event.keyCode);
