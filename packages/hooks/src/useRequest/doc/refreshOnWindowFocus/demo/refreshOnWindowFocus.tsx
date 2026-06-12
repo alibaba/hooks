@@ -1,5 +1,4 @@
 import Mock from 'mockjs';
-import React from 'react';
 import { useRequest } from 'ahooks';
 
 function getUsername() {
@@ -15,5 +14,5 @@ export default () => {
     refreshOnWindowFocus: true,
   });
 
-  return <div>Username: {loading ? 'Loading' : data}</div>;
+  return <div>Username: {loading ? 'Loading' : String(data)}</div>;
 };

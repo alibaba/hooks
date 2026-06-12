@@ -6,7 +6,7 @@
  * desc.zh-CN: 在 2000ms 后执行。
  */
 
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useRafTimeout } from 'ahooks';
 
 export default () => {

@@ -27,6 +27,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       NODE_OPTIONS: --openssl-legacy-provider
+      DOCS_PUBLIC_PATH: /hooks/
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -34,20 +35,20 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '18' 
-      
+          node-version: 22
+
       - name: Setup pnpm
         run: |
-            npm install --global corepack@latest
-            corepack enable
-            corepack prepare pnpm@latest --activate
-            echo "$(pnpm bin --global)" >> $GITHUB_PATH
+          npm install --global corepack@latest
+          corepack enable
+          corepack prepare pnpm@latest --activate
+          echo "$(pnpm bin --global)" >> $GITHUB_PATH
 
       - name: Install dependencies
         run: pnpm install
 
       - name: Cache pnpm dependencies
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: |
             ~/.pnpm-store
@@ -55,10 +56,9 @@ jobs:
           key: ${{ runner.os }}-pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}
           restore-keys: |
             ${{ runner.os }}-pnpm-
-            
 
       - name: Build documentation
-        run: npm run build:doc
+        run: pnpm run build:doc-github
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
@@ -67,6 +67,5 @@ jobs:
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./dist  # 构建后的静态文件目录
+          publish_dir: ./dist # 构建后的静态文件目录
           force_orphan: true
-

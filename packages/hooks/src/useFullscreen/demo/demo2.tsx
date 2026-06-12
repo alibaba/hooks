@@ -4,8 +4,8 @@
  * title.zh-CN: 图片全屏
  */
 
-import React from 'react';
 import { useFullscreen } from 'ahooks';
+// @ts-ignore - Image import
 import img from './react-hooks.jpg';
 
 export default () => {

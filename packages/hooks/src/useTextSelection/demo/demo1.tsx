@@ -6,7 +6,6 @@
  * desc.zh-CN: 实时获取页面上选择的文本
  */
 
-import React from 'react';
 import { useTextSelection } from 'ahooks';
 
 export default () => {

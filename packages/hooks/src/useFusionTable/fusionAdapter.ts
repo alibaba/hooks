@@ -10,7 +10,7 @@ export const fieldAdapter = (field: Field) =>
     validateFields: (fields, callback) => {
       field.validate(fields, callback);
     },
-  } as AntdFormUtils);
+  }) as AntdFormUtils;
 
 export const resultAdapter = (result: any) => {
   const tableProps = {

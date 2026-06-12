@@ -6,10 +6,10 @@
  * desc.zh-CN: 拖拽区域可以接受文件，链接，文字，和下方的 box 节点。
  */
 
-import React, { useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { useDrop, useDrag } from 'ahooks';
 
-const DragItem = ({ data }) => {
+const DragItem = ({ data }: { data: string }) => {
   const dragRef = useRef(null);
 
   const [dragging, setDragging] = useState(false);

@@ -42,7 +42,7 @@ const loadScript: LoadExternal = (path, props = {}) => {
     newScript.src = path;
 
     Object.keys(props).forEach((key) => {
-      newScript[key] = props[key];
+      (newScript as any)[key] = (props as any)[key];
     });
 
     newScript.setAttribute('data-status', 'loading');
@@ -68,7 +68,7 @@ const loadCss: LoadExternal = (path, props = {}) => {
     newCss.rel = 'stylesheet';
     newCss.href = path;
     Object.keys(props).forEach((key) => {
-      newCss[key] = props[key];
+      (newCss as any)[key] = (props as any)[key];
     });
     // IE9+
     const isLegacyIECss = 'hideFocus' in newCss;

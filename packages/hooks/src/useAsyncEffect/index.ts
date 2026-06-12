@@ -5,7 +5,7 @@ import { isFunction } from '../utils';
 function isAsyncGenerator(
   val: AsyncGenerator<void, void, void> | Promise<void>,
 ): val is AsyncGenerator<void, void, void> {
-  return isFunction(val[Symbol.asyncIterator]);
+  return isFunction((val as any)[Symbol.asyncIterator]);
 }
 
 function useAsyncEffect(

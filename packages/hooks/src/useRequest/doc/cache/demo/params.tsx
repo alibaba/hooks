@@ -1,7 +1,7 @@
 import { useBoolean } from 'ahooks';
 import useRequest from '../../../';
 import Mock from 'mockjs';
-import React, { useState } from 'react';
+import { useState } from 'react';
 
 const getArticle = async (keyword: string) => {
   console.log('cacheKey', keyword);
@@ -54,7 +54,7 @@ export default () => {
   const [state, { toggle }] = useBoolean();
   return (
     <div>
-      <button type='button' onClick={() => toggle()} style={{ marginBottom: 16 }}>
+      <button type="button" onClick={() => toggle()} style={{ marginBottom: 16 }}>
         show/hidden
       </button>
       {state && <Article />}

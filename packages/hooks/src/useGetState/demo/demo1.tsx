@@ -6,7 +6,7 @@
  * desc.zh-CN: 计数器每 3 秒打印一次值
  */
 
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { useGetState } from 'ahooks';
 
 export default () => {

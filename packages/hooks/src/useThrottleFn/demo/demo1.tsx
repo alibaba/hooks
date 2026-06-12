@@ -6,7 +6,7 @@
  * desc.zh-CN: 频繁调用 run，但只会每隔 500ms 执行一次相关函数。
  */
 
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useThrottleFn } from 'ahooks';
 
 export default () => {

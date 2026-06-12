@@ -8,7 +8,7 @@
 
 import { DragOutlined } from '@ant-design/icons';
 import { Button, Form, Input, Table } from 'antd';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import ReactDragListView from 'react-drag-listview';
 import { useDynamicList } from 'ahooks';
 
@@ -75,6 +75,7 @@ export default () => {
   return (
     <div>
       <Form form={form}>
+        {/* @ts-ignore - ReactDragListView types issue */}
         <ReactDragListView
           onDragEnd={(oldIndex: number, newIndex: number) => move(oldIndex, newIndex)}
           handleSelector={'span[aria-label="drag"]'}
@@ -82,7 +83,7 @@ export default () => {
           <Table
             columns={columns}
             dataSource={list}
-            rowKey={(r: Item, index: number) => getKey(index).toString()}
+            rowKey={(r: Item, index?: number) => getKey(index || 0).toString()}
             pagination={false}
             style={{ overflow: 'auto' }}
           />

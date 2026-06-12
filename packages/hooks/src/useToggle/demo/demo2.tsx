@@ -6,7 +6,6 @@
  * desc.zh-CN: 接受两个可选参数，在它们之间进行切换。
  */
 
-import React from 'react';
 import { useToggle } from 'ahooks';
 
 export default () => {

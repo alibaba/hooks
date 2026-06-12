@@ -6,7 +6,6 @@
  * desc.zh-CN: 可配置属性：默认值、有效时间、路径、域名、协议、跨域等，详见 Options 文档。
  */
 
-import React from 'react';
 import { useCookieState } from 'ahooks';
 
 export default function App() {

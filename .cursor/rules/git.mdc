@@ -3,6 +3,7 @@ description:
 globs:
 alwaysApply: true
 ---
+
 # Git 规范
 
 ## 开发流程

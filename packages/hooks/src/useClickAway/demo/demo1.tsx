@@ -6,7 +6,7 @@
  * desc.zh-CN: 请点击按钮或按钮外查看效果。
  */
 
-import React, { useState, useRef } from 'react';
+import { useState, useRef } from 'react';
 import { useClickAway } from 'ahooks';
 
 export default () => {

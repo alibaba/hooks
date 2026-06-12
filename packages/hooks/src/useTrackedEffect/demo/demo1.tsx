@@ -6,7 +6,7 @@
  * desc.zh-CN: 查看每次 effect 执行时发生变化的依赖项
  */
 
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useTrackedEffect } from 'ahooks';
 
 export default () => {

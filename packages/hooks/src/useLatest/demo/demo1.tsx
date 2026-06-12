@@ -6,7 +6,7 @@
  * desc.zh-CN: useLatest 返回的永远是最新值
  */
 
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useLatest } from 'ahooks';
 
 export default () => {

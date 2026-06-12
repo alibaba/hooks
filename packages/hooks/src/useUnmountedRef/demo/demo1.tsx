@@ -8,7 +8,7 @@
 
 import { useBoolean, useUnmountedRef } from 'ahooks';
 import { message } from 'antd';
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 
 const MyComponent = () => {
   const unmountedRef = useUnmountedRef();

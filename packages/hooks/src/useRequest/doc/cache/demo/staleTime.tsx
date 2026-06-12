@@ -1,6 +1,5 @@
 import { useBoolean } from 'ahooks';
 import Mock from 'mockjs';
-import React from 'react';
 import { useRequest } from 'ahooks';
 
 const getArticle = async () => {
@@ -36,7 +35,7 @@ export default () => {
   const [state, { toggle }] = useBoolean();
   return (
     <div>
-      <button type='button' onClick={() => toggle()}>
+      <button type="button" onClick={() => toggle()}>
         show/hidden
       </button>
       {state && <Article />}

@@ -5,7 +5,7 @@
  */
 
 import { useMutationObserver } from 'ahooks';
-import React, { useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 
 const App: React.FC = () => {
   const [width, setWidth] = useState(200);

@@ -6,7 +6,7 @@
  * desc.zh-CN: 只要 props 中有 onChange 字段，则在 state 变化时，就会触发 onChange 函数
  */
 
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useControllableValue } from 'ahooks';
 
 const ControllableComponent = (props: any) => {

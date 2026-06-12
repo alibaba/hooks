@@ -6,7 +6,7 @@
  * desc.zh-CN: 依赖数组变化时，使用上一次的参数重新发起请求。
  */
 
-import React, { useState } from 'react';
+import { useState } from 'react';
 import Mock from 'mockjs';
 import { Space, Button } from 'antd';
 import { useRequest } from 'ahooks';

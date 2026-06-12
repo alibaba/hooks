@@ -20,7 +20,7 @@ export type Service<TData extends Data, TParams extends Params> = (
 
 export type Antd3ValidateFields = (
   fieldNames: string[],
-  callback: (errors, values: Record<string, any>) => void,
+  callback: (errors: any, values: Record<string, any>) => void,
 ) => void;
 export type Antd4ValidateFields = (fieldNames?: string[]) => Promise<Record<string, any>>;
 

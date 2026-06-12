@@ -27,10 +27,9 @@ const baseStringifyConfig: StringifyOptions = {
 type UrlState = Record<string, any>;
 
 const useUrlState = <S extends UrlState = UrlState>(
-  initialState?: S | (() => S),
+  baseState?: S | (() => S),
   options?: Options,
 ) => {
-
   type State = Partial<{
     [key in keyof S]: Required<S>[key] extends any[] ? string[] : string;
   }>;
@@ -53,9 +52,7 @@ const useUrlState = <S extends UrlState = UrlState>(
 
   const update = useUpdate();
 
-  const initialStateRef = useRef(
-    typeof initialState === 'function' ? initialState() : initialState || {},
-  );
+  const baseStateRef = useRef(typeof baseState === 'function' ? baseState() : baseState || {});
 
   const queryFromUrl = useMemo(() => {
     return qs.parse(location.search, mergedParseOptions);
@@ -63,7 +60,7 @@ const useUrlState = <S extends UrlState = UrlState>(
 
   const targetQuery = useMemo<State>(
     () => ({
-      ...initialStateRef.current,
+      ...baseStateRef.current,
       ...queryFromUrl,
     }),
     [queryFromUrl],

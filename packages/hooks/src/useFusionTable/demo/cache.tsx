@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Table, Pagination, Field, Form, Input, Button } from '@alifd/next';
 import { useFusionTable } from 'ahooks';
 import ReactJson from 'react-json-view';
@@ -17,8 +17,13 @@ interface Result {
   list: Item[];
 }
 
-const getTableData = (
-  { current, pageSize, filters, sorter },
+const getTableData = async (
+  {
+    current,
+    pageSize,
+    filters,
+    sorter,
+  }: { current: number; pageSize: number; filters: any; sorter: any },
   formData: Object,
 ): Promise<Result> => {
   console.log(sorter, filters);
@@ -39,7 +44,7 @@ const getTableData = (
 };
 
 const AppList = () => {
-  const field = Field.useField([]);
+  const field = Field.useField({} as any);
 
   const { tableProps, paginationProps, params, search } = useFusionTable(getTableData, {
     defaultPageSize: 5,

@@ -6,7 +6,7 @@
  * desc.zh-CN: 3000ms 后执行一次
  */
 
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useTimeout } from 'ahooks';
 
 export default () => {

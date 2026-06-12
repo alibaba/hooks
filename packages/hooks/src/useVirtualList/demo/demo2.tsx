@@ -6,7 +6,7 @@
  * desc.zh-CN: 动态指定每个元素的高度
  */
 
-import React, { useMemo, useRef } from 'react';
+import { useMemo, useRef, useState } from 'react';
 import { useVirtualList } from 'ahooks';
 
 export default () => {
@@ -15,7 +15,7 @@ export default () => {
 
   const originalList = useMemo(() => Array.from(Array(99999).keys()), []);
 
-  const [value, onChange] = React.useState<number>(0);
+  const [value, onChange] = useState<number>(0);
 
   const [list, scrollTo] = useVirtualList(originalList, {
     containerTarget: containerRef,

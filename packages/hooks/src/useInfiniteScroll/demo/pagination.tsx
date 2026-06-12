@@ -1,4 +1,3 @@
-import React from 'react';
 import { useInfiniteScroll } from 'ahooks';
 
 interface Result {

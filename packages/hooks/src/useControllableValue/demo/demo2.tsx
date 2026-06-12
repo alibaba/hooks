@@ -6,7 +6,7 @@
  * desc.zh-CN: 如果 props 有 value 字段，则由父级接管控制 state
  */
 
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useControllableValue } from 'ahooks';
 
 const ControllableComponent = (props: any) => {

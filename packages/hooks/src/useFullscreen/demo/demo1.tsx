@@ -6,7 +6,7 @@
  * desc.zh-CN: 使用 ref 设置需要全屏的元素
  */
 
-import React, { useRef } from 'react';
+import { useRef } from 'react';
 import { useFullscreen } from 'ahooks';
 
 export default () => {

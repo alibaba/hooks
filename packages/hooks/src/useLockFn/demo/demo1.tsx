@@ -8,7 +8,7 @@
 
 import { useLockFn } from 'ahooks';
 import { message } from 'antd';
-import React, { useState } from 'react';
+import { useState } from 'react';
 
 function mockApiRequest() {
   return new Promise<void>((resolve) => {

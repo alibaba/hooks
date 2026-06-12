@@ -6,7 +6,7 @@
  * desc.zh-CN: useSize 可以接收 ref 参数
  */
 
-import React, { useRef } from 'react';
+import { useRef } from 'react';
 import { useSize } from 'ahooks';
 
 export default () => {

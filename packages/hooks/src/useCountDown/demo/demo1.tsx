@@ -6,7 +6,6 @@
  * desc.zh-CN: 基础的倒计时管理。
  */
 
-import React from 'react';
 import { useCountDown } from 'ahooks';
 
 export default () => {

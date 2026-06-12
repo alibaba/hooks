@@ -6,7 +6,7 @@
  * desc.zh-CN: 通过 `yield` 语句可以增加一些检查点，如果发现当前 effect 已经被清理，会停止继续往下执行。
  */
 
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useAsyncEffect } from 'ahooks';
 
 function mockCheck(val: string): Promise<boolean> {

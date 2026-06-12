@@ -7,7 +7,7 @@
  */
 
 import { useAsyncEffect } from 'ahooks';
-import React, { useState } from 'react';
+import { useState } from 'react';
 
 function mockCheck(): Promise<boolean> {
   return new Promise((resolve) => {

@@ -6,7 +6,6 @@
  * desc.zh-CN: 返回网络状态信息
  */
 
-import React from 'react';
 import { useNetwork } from 'ahooks';
 
 export default () => {

@@ -1,7 +1,5 @@
 import { useRequest, useToggle } from 'ahooks';
 import Mock from 'mockjs';
-import React from 'react';
-
 function getUsername() {
   return new Promise((resolve) => {
     setTimeout(() => {
@@ -27,7 +25,7 @@ export default () => {
         </button>
       </p>
       <p>
-        Username: {loading ? 'Loading' : data}
+        Username: {loading ? 'Loading' : String(data)}
         <button type="button" onClick={run} style={{ marginLeft: 16 }}>
           run
         </button>

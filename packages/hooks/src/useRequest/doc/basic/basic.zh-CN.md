@@ -26,13 +26,13 @@ const { data, error, loading } = useRequest(service);
 如果设置了 `options.manual = true`，则 `useRequest` 不会默认执行，需要通过 `run` 或者 `runAsync` 来触发执行。
 
 ```tsx | pure
-const { loading, run, runAsync } = useRequest(service, {
-  manual: true
-});
+const { loading, run, runAsync } = useRequest(service, { manual: true });
 
-<button onClick={run} disabled={loading}>
-  {loading ? 'Loading' : 'Edit'}
-</button>
+return (
+  <button onClick={run} disabled={loading}>
+    {loading ? "Loading" : "Edit"}
+  </button>
+);
 ```
 
 `run` 与 `runAsync` 的区别在于：
@@ -41,11 +41,13 @@ const { loading, run, runAsync } = useRequest(service, {
 - `runAsync` 是一个返回 `Promise` 的异步函数，如果使用 `runAsync` 来调用，则意味着你需要自己捕获异常。
 
   ```ts
-  runAsync().then((data) => {
-    console.log(data);
-  }).catch((error) => {
-    console.log(error);
-  })
+  runAsync()
+    .then((data) => {
+      console.log(data);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
   ```
 
 接下来我们通过修改用户名这个简单的场景，来演示 useRequest 手动触发模式，以及 `run` 与 `runAsync` 的区别。

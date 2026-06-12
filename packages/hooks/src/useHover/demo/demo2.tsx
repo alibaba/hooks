@@ -6,7 +6,6 @@
  * desc.zh-CN: 传入 function 并返回一个 dom 元素。
  */
 
-import React from 'react';
 import { useHover } from 'ahooks';
 
 export default () => {
@@ -17,7 +16,7 @@ export default () => {
     onLeave: () => {
       console.log('onLeave');
     },
-    onChange: isHover => {
+    onChange: (isHover) => {
       console.log('onChange', isHover);
     },
   });

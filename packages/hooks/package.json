@@ -1,8 +1,12 @@
 {
   "name": "ahooks",
-  "version": "3.9.0",
+  "version": "3.9.7",
   "description": "react hooks library",
-  "keywords": ["ahooks", "umi hooks", "react hooks"],
+  "keywords": [
+    "ahooks",
+    "umi hooks",
+    "react hooks"
+  ],
   "main": "./lib/index.js",
   "module": "./es/index.js",
   "types": "./lib/index.d.ts",
@@ -18,9 +22,19 @@
   "repository": "https://github.com/alibaba/hooks",
   "homepage": "https://github.com/alibaba/hooks",
   "scripts": {
-    "build": "gulp && webpack-cli"
+    "build": "gulp && webpack-cli",
+    "test": "vitest run --color",
+    "test:cov": "vitest run --color --coverage",
+    "tsc": "tsc --noEmit"
   },
-  "files": ["dist", "lib", "es", "metadata.json", "package.json", "README.md"],
+  "files": [
+    "dist",
+    "lib",
+    "es",
+    "metadata.json",
+    "package.json",
+    "README.md"
+  ],
   "dependencies": {
     "@babel/runtime": "^7.21.0",
     "dayjs": "^1.9.1",
@@ -33,26 +47,11 @@
     "tslib": "^2.4.1"
   },
   "devDependencies": {
-    "@alifd/next": "^1.20.6",
-    "@ant-design/icons": "^5.0.1",
-    "@types/js-cookie": "^3.0.6",
-    "@types/lodash": "^4.14.202",
-    "@types/react": "^19.1.2",
-    "@types/react-dom": "^19.1.3",
-    "antd": "^5.2.1",
-    "jest-websocket-mock": "^2.1.0",
-    "mockjs": "^1.1.0",
-    "react": "^19.1.0",
-    "react-dom": "^19.1.0",
-    "react-drag-listview": "^0.1.6",
-    "react-json-view": "^1.21.3"
+    "@types/js-cookie": "^3.0.6"
   },
   "peerDependencies": {
     "react": "^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0",
     "react-dom": "^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0"
-  },
-  "engines": {
-    "node": ">=8.0.0"
   },
   "license": "MIT",
   "gitHead": "11f6ad571bd365c95ecb9409ca3050cbbfc9b34a"

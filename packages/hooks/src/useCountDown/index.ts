@@ -1,7 +1,7 @@
 import dayjs from 'dayjs';
 import { useEffect, useMemo, useState } from 'react';
 import useLatest from '../useLatest';
-import { isNumber } from '../utils/index';
+import { isNumber } from '../utils';
 
 export type TDate = dayjs.ConfigType;
 

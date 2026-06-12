@@ -7,7 +7,7 @@
  */
 
 import { Checkbox, Divider, Pagination, Spin } from 'antd';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useSelections } from 'ahooks';
 
 interface DataType {

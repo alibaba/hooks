@@ -1,10 +1,16 @@
 {
-  "extends": "../../tsconfig.json",
+  "extends": "../../tsconfig.base.json",
   "compilerOptions": {
-    "rootDir": "src",
-    "outDir": "lib",
-    "composite": true,
-    "declaration": true
+    "paths": {
+      "src/*": ["./src/*"],
+      "ahooks": ["./src/index.ts"]
+    }
   },
-  "include": ["src"]
+  "ts-node": {
+    "compilerOptions": {
+      "module": "CommonJS",
+      "types": ["node"],
+      "verbatimModuleSyntax": false
+    }
+  }
 }

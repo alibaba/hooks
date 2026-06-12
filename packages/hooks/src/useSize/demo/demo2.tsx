@@ -6,7 +6,6 @@
  * desc.zh-CN: useSize 可以接收 dom，在 SSR 场景可以传入函数 `() => dom`
  */
 
-import React from 'react';
 import { useSize } from 'ahooks';
 
 export default () => {

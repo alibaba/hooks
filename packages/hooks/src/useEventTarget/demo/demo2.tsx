@@ -6,7 +6,6 @@
  * desc.zh-CN: 只能输入数字的 input 组件
  */
 
-import React from 'react';
 import { useEventTarget } from 'ahooks';
 
 export default () => {

@@ -6,7 +6,7 @@
  * desc.zh-CN: 支持传入多个目标对象。
  */
 
-import React, { useState, useRef } from 'react';
+import { useState, useRef } from 'react';
 import { useClickAway } from 'ahooks';
 
 export default () => {

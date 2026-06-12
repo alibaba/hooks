@@ -6,7 +6,7 @@
  * desc.zh-CN: 设置 favicon
  */
 
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useFavicon } from 'ahooks';
 
 export const DEFAULT_FAVICON_URL = 'https://ahooks.js.org/simple-logo.svg';

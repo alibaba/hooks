@@ -14,9 +14,9 @@ To avoid this warning, useIsomorphicLayoutEffect can be used instead of useLayou
 The source code of useIsomorphicLayoutEffect is:
 
 ```javascript
-const useIsomorphicLayoutEffect = isBrowser ? useLayoutEffect : useEffect;
+const useIsomorphicLayoutEffect = isBrowser ? useLayoutEffect : noop;
 ```
 
-Return useLayoutEffect for browser environment and useEffect for other environments.
+Return useLayoutEffect for browser environment and a no-op in non-browser environments to avoid SSR warnings.
 
 For more information, please refer to [useLayoutEffect and SSR](https://medium.com/@alexandereardon/uselayouteffect-and-ssr-192986cdcf7a)

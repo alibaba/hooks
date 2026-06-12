@@ -6,7 +6,7 @@
  * desc.zh-CN: 按下键盘查看效果。
  */
 
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useEventListener } from 'ahooks';
 
 export default () => {

@@ -6,7 +6,7 @@
  * desc.zh-CN: 监听 document 的可见状态
  */
 
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { useDocumentVisibility } from 'ahooks';
 
 export default () => {

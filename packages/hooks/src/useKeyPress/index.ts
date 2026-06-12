@@ -35,20 +35,33 @@ const aliasKeyCodeMap = {
   tab: 9,
   enter: 13,
   shift: 16,
+  // Legacy alias kept for compatibility; standard name is "control".
   ctrl: 17,
+  control: 17,
   alt: 18,
+  // Legacy alias kept for compatibility; standard name is "pause".
   pausebreak: 19,
+  pause: 19,
   capslock: 20,
+  // Legacy alias kept for compatibility; standard name is "escape".
   esc: 27,
+  escape: 27,
+  // Legacy alias kept for compatibility; standard name is "spacebar" (non-standard but widely used).
   space: 32,
+  spacebar: 32,
   pageup: 33,
   pagedown: 34,
   end: 35,
   home: 36,
+  // Legacy aliases kept for compatibility; standard names are "arrowleft/arrowup/arrowright/arrowdown".
   leftarrow: 37,
+  arrowleft: 37,
   uparrow: 38,
+  arrowup: 38,
   rightarrow: 39,
+  arrowright: 39,
   downarrow: 40,
+  arrowdown: 40,
   insert: 45,
   delete: 46,
   a: 65,
@@ -80,7 +93,9 @@ const aliasKeyCodeMap = {
   leftwindowkey: 91,
   rightwindowkey: 92,
   meta: isAppleDevice ? [91, 93] : [91, 92],
+  // Legacy alias kept for compatibility; standard name is "contextmenu".
   selectkey: 93,
+  contextmenu: 93,
   numpad0: 96,
   numpad1: 97,
   numpad2: 98,
@@ -144,7 +159,7 @@ function isValidKeyType(value: unknown): value is string | number {
 // 根据 event 计算激活键数量
 function countKeyByEvent(event: KeyboardEvent) {
   const countOfModifier = Object.keys(modifierKey).reduce((total, key) => {
-    if (modifierKey[key](event)) {
+    if ((modifierKey as any)[key](event)) {
       return total + 1;
     }
 
@@ -178,9 +193,9 @@ function genFilterKey(event: KeyboardEvent, keyFilter: KeyType, exactMatch: bool
 
   for (const key of genArr) {
     // 组合键
-    const genModifier = modifierKey[key];
+    const genModifier = (modifierKey as any)[key];
     // keyCode 别名
-    const aliasKeyCode: number | number[] = aliasKeyCodeMap[key.toLowerCase()];
+    const aliasKeyCode: number | number[] = (aliasKeyCodeMap as any)[key.toLowerCase()];
 
     if ((genModifier && genModifier(event)) || (aliasKeyCode && aliasKeyCode === event.keyCode)) {
       genLen++;
@@ -236,13 +251,14 @@ function useKeyPress(
         return;
       }
 
-      const callbackHandler = (event: KeyboardEvent) => {
+      const callbackHandler = (event: Event) => {
+        const keyEvent = event as KeyboardEvent;
         const genGuard = genKeyFormatter(keyFilterRef.current, exactMatch);
-        const keyGuard = genGuard(event);
-        const firedKey = isValidKeyType(keyGuard) ? keyGuard : event.key;
+        const keyGuard = genGuard(keyEvent);
+        const firedKey = isValidKeyType(keyGuard) ? keyGuard : keyEvent.key;
 
         if (keyGuard) {
-          return eventHandlerRef.current?.(event, firedKey);
+          return eventHandlerRef.current?.(keyEvent, firedKey);
         }
       };
 

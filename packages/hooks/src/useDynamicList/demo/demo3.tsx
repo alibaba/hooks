@@ -6,7 +6,7 @@
  * desc.zh-CN: 注意 sortList 的使用，antd Form 获取的数据排序不对，通过 sortList 可以校准排序。
  */
 
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Form, Button, Input } from 'antd';
 import { MinusCircleOutlined, PlusCircleOutlined } from '@ant-design/icons';
 import { useDynamicList } from 'ahooks';

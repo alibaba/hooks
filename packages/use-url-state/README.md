@@ -2,36 +2,42 @@
 
 A hook that stores the state into url query parameters.
 
+> Important
+>
+> This package is now published as `@ahooks.js/use-url-state`.
+>
+> If you were using the previous package name, please migrate to the new package name as soon as possible.
+
 ## Installing
 
 Inside your React project directory, run the following:
 
 ```bash
-yarn add @ahooksjs/use-url-state -S
+yarn add @ahooks.js/use-url-state -S
 ```
 
 Or with npm:
 
 ```bash
-npm install @ahooksjs/use-url-state -S
+npm install @ahooks.js/use-url-state -S
 ```
 
 Or with pnpm
 
 ```bash
-pnpm add @ahooksjs/use-url-state
+pnpm add @ahooks.js/use-url-state
 ```
 
 Or with Bun
 
 ```bash
-bun add @ahooksjs/use-url-state
+bun add @ahooks.js/use-url-state
 ```
 
 ## Example
 
 ```javascript
-import useUrlState from '@ahooksjs/use-url-state';
+import useUrlState from '@ahooks.js/use-url-state';
 
 const [state, setState] = useUrlState({ demoCount: '1' });
 ```

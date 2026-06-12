@@ -4,23 +4,71 @@ on:
   schedule:
     - cron: '0 0 * * *'
 
+permissions:
+  issues: write
+
 jobs:
   close-issues:
     runs-on: ubuntu-latest
     steps:
-      - name: need reproduce
-        uses: actions-cool/issues-helper@v3
+      - name: close stale issues by label
+        uses: actions/github-script@v7
         with:
-          actions: 'close-issues'
-          labels: '🤔 Need Reproduce'
-          inactive-day: 3
+          script: |
+            const INACTIVE_DAYS = 3;
+            const cutoff = Date.now() - INACTIVE_DAYS * 24 * 60 * 60 * 1000;
 
-      - name: needs more info
-        uses: actions-cool/issues-helper@v3
-        with:
-          actions: 'close-issues'
-          labels: 'needs more info'
-          inactive-day: 3
-          body: |
-            Since the issue was labeled with `needs more info`, but no response in 3 days. This issue will be closed. If you have any questions, you can comment and reply.
-            由于该 issue 被标记为需要更多信息，却 3 天未收到回应。现关闭 issue，若有任何问题，可评论回复。
+            const targets = [
+              {
+                label: '🤔 Need Reproduce',
+                body: `Since the issue was labeled with \`🤔 Need Reproduce\`, but no response in 3 days. This issue will be closed. If you have any questions, you can comment and reply.
+由于该 issue 被标记为需要重现（🤔 Need Reproduce），却 3 天未收到回应。现关闭 issue，若有任何问题，可评论回复。`,
+              },
+              {
+                label: 'needs more info',
+                body: `Since the issue was labeled with \`needs more info\`, but no response in 3 days. This issue will be closed. If you have any questions, you can comment and reply.
+由于该 issue 被标记为需要更多信息，却 3 天未收到回应。现关闭 issue，若有任何问题，可评论回复。`,
+              },
+            ];
+
+            const closed = [];
+
+            for (const target of targets) {
+              const issues = await github.paginate(github.rest.issues.listForRepo, {
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                state: 'open',
+                labels: target.label,
+                per_page: 100,
+              });
+
+              for (const issue of issues) {
+                if (issue.pull_request) {
+                  continue;
+                }
+
+                const updatedAt = new Date(issue.updated_at).getTime();
+                if (Number.isNaN(updatedAt) || updatedAt > cutoff) {
+                  continue;
+                }
+
+                await github.rest.issues.createComment({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  issue_number: issue.number,
+                  body: target.body,
+                });
+
+                await github.rest.issues.update({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  issue_number: issue.number,
+                  state: 'closed',
+                  state_reason: 'not_planned',
+                });
+
+                closed.push(`#${issue.number}(${target.label})`);
+              }
+            }
+
+            core.info(`Closed ${closed.length} issue(s): ${closed.join(', ')}`);

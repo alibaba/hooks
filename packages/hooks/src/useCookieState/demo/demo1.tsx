@@ -6,7 +6,6 @@
  * desc.zh-CN: 刷新页面后，可以看到输入框中的内容被从 Cookie 中恢复了。
  */
 
-import React from 'react';
 import { useCookieState } from 'ahooks';
 
 export default () => {

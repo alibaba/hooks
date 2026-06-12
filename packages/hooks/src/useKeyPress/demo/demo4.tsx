@@ -6,7 +6,7 @@
  * desc.zh-CN: 支持接收一个返回 boolean 的回调函数，自己处理逻辑。
  */
 
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useKeyPress } from 'ahooks';
 
 export default () => {

@@ -6,7 +6,7 @@
  * desc.zh-CN: 设置了多个事件，你可以试试用鼠标左键或者右键。
  */
 
-import React, { useState, useRef } from 'react';
+import { useState, useRef } from 'react';
 import { useClickAway } from 'ahooks';
 
 export default () => {

@@ -1,5 +1,4 @@
 import Mock from 'mockjs';
-import React from 'react';
 import { useRequest } from 'ahooks';
 
 const getArticle = async () => {
@@ -25,7 +24,7 @@ const Article = () => {
     <>
       <p>Background loading: {loading ? 'true' : 'false'}</p>
       <p>
-        <button onClick={refresh} type='button'>
+        <button onClick={refresh} type="button">
           更新
         </button>
       </p>

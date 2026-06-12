@@ -8,7 +8,7 @@
 
 import { useMemoizedFn } from 'ahooks';
 import { message } from 'antd';
-import React, { useCallback, useRef, useState } from 'react';
+import { useCallback, useRef, useState, memo } from 'react';
 
 export default () => {
   const [count, setCount] = useState(0);
@@ -51,7 +51,7 @@ export default () => {
 };
 
 // some expensive component with React.memo
-const ExpensiveTree = React.memo<{ [key: string]: any }>(({ showCount }) => {
+const ExpensiveTree = memo<{ [key: string]: any }>(({ showCount }) => {
   const renderCountRef = useRef(0);
   renderCountRef.current += 1;
 

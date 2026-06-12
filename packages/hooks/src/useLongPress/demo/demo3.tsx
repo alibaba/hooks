@@ -5,7 +5,7 @@
  * title.zh-CN: 超出移动阈值
  * desc.zh-CN: 超出移动阈值之后，长按事件将不会触发
  */
-import React, { useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { useLongPress } from 'ahooks';
 
 export default () => {

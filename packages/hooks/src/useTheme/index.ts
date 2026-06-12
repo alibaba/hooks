@@ -1,21 +1,19 @@
-import { useEffect, useState } from "react";
-import useMemoizedFn from "../useMemoizedFn";
-import isBrowser from "../utils/isBrowser";
+import { useEffect, useState } from 'react';
+import useMemoizedFn from '../useMemoizedFn';
+import isBrowser from '../utils/isBrowser';
 
 export enum ThemeMode {
-  LIGHT = "light",
-  DARK = "dark",
-  SYSTEM = "system",
+  LIGHT = 'light',
+  DARK = 'dark',
+  SYSTEM = 'system',
 }
 
 export type ThemeModeType = `${ThemeMode}`;
 
-export type ThemeType = "light" | "dark";
+export type ThemeType = 'light' | 'dark';
 
 const useCurrentTheme = () => {
-  const matchMedia = isBrowser
-    ? window.matchMedia("(prefers-color-scheme: dark)")
-    : undefined;
+  const matchMedia = isBrowser ? window.matchMedia('(prefers-color-scheme: dark)') : undefined;
   const [theme, setTheme] = useState<ThemeType>(() => {
     if (isBrowser) {
       return matchMedia?.matches ? ThemeMode.DARK : ThemeMode.LIGHT;
@@ -25,7 +23,7 @@ const useCurrentTheme = () => {
   });
 
   useEffect(() => {
-    const onThemeChange: MediaQueryList["onchange"] = (event) => {
+    const onThemeChange: MediaQueryList['onchange'] = (event) => {
       if (event.matches) {
         setTheme(ThemeMode.DARK);
       } else {
@@ -33,10 +31,18 @@ const useCurrentTheme = () => {
       }
     };
 
-    matchMedia?.addEventListener("change", onThemeChange);
+    if (matchMedia?.addEventListener) {
+      matchMedia.addEventListener('change', onThemeChange);
+    } else if (matchMedia?.addListener) {
+      matchMedia.addListener(onThemeChange);
+    }
 
     return () => {
-      matchMedia?.removeEventListener("change", onThemeChange);
+      if (matchMedia?.removeEventListener) {
+        matchMedia.removeEventListener('change', onThemeChange);
+      } else if (matchMedia?.removeListener) {
+        matchMedia.removeListener(onThemeChange);
+      }
     };
   }, []);
 
@@ -52,10 +58,9 @@ export default function useTheme(options: Options = {}) {
 
   const [themeMode, setThemeMode] = useState<ThemeModeType>(() => {
     const preferredThemeMode =
-      localStorageKey?.length &&
-      (localStorage.getItem(localStorageKey) as ThemeModeType | null);
+      localStorageKey?.length && (localStorage.getItem(localStorageKey) as ThemeModeType | null);
 
-    return preferredThemeMode ? preferredThemeMode : ThemeMode.SYSTEM;
+    return preferredThemeMode || ThemeMode.SYSTEM;
   });
 
   const setThemeModeWithLocalStorage = (mode: ThemeModeType) => {

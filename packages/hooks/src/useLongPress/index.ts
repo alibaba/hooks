@@ -166,15 +166,15 @@ function useLongPress(
         }
       };
 
-      targetElement.addEventListener('mousedown', onMouseDown);
-      targetElement.addEventListener('mouseup', onMouseUp);
-      targetElement.addEventListener('mouseleave', onMouseLeave);
-      targetElement.addEventListener('touchstart', onTouchStart);
-      targetElement.addEventListener('touchend', onTouchEnd);
+      targetElement.addEventListener('mousedown', onMouseDown as EventListener);
+      targetElement.addEventListener('mouseup', onMouseUp as EventListener);
+      targetElement.addEventListener('mouseleave', onMouseLeave as EventListener);
+      targetElement.addEventListener('touchstart', onTouchStart as EventListener);
+      targetElement.addEventListener('touchend', onTouchEnd as EventListener);
 
       if (hasMoveThreshold) {
-        targetElement.addEventListener('mousemove', onMove);
-        targetElement.addEventListener('touchmove', onMove);
+        targetElement.addEventListener('mousemove', onMove as EventListener);
+        targetElement.addEventListener('touchmove', onMove as EventListener);
       }
 
       return () => {
@@ -183,15 +183,15 @@ function useLongPress(
           isTriggeredRef.current = false;
         }
 
-        targetElement.removeEventListener('mousedown', onMouseDown);
-        targetElement.removeEventListener('mouseup', onMouseUp);
-        targetElement.removeEventListener('mouseleave', onMouseLeave);
-        targetElement.removeEventListener('touchstart', onTouchStart);
-        targetElement.removeEventListener('touchend', onTouchEnd);
+        targetElement.removeEventListener('mousedown', onMouseDown as EventListener);
+        targetElement.removeEventListener('mouseup', onMouseUp as EventListener);
+        targetElement.removeEventListener('mouseleave', onMouseLeave as EventListener);
+        targetElement.removeEventListener('touchstart', onTouchStart as EventListener);
+        targetElement.removeEventListener('touchend', onTouchEnd as EventListener);
 
         if (hasMoveThreshold) {
-          targetElement.removeEventListener('mousemove', onMove);
-          targetElement.removeEventListener('touchmove', onMove);
+          targetElement.removeEventListener('mousemove', onMove as EventListener);
+          targetElement.removeEventListener('touchmove', onMove as EventListener);
         }
       };
     },

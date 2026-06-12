@@ -1,5 +1,22 @@
 {
-  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "target": "ES2015",
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "jsx": "react",
+    "esModuleInterop": true,
+    "sourceMap": true,
+    "paths": {
+      "@/*": ["./src/*"],
+      "@ahooks.js/use-url-state": ["./packages/use-url-state/src/index.ts"]
+    },
+    "types": [],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "declaration": false,
+    "strictNullChecks": true,
+    "importHelpers": true
+  },
   "exclude": [
     "node_modules",
     "lib",
@@ -9,6 +26,7 @@
     "**/__test__",
     "**/demo",
     "example",
-    "gulpfile.js"
+    "gulpfile.js",
+    "vitest.config.ts"
   ]
 }

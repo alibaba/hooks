@@ -7,8 +7,6 @@
  */
 
 import { useHistoryTravel } from 'ahooks';
-import React from 'react';
-
 export default () => {
   const maxLength = 3;
   const { value, setValue, backLength, forwardLength, back, forward } = useHistoryTravel<string>(

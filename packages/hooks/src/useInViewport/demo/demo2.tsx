@@ -6,7 +6,6 @@
  * desc.zh-CN: 传入 `options.threshold`, 可以控制在可见区域达到该比例时触发 ratio 更新。<br /> `options.root` 可以控制相对父级元素，在这个例子中，不会相对浏览器视窗变化。
  */
 
-import React from 'react';
 import { useInViewport } from 'ahooks';
 
 export default () => {

@@ -1,6 +1,7 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import useEventListener from '../useEventListener';
 import useMemoizedFn from '../useMemoizedFn';
+import useMount from '../useMount';
 import useUpdateEffect from '../useUpdateEffect';
 import { isFunction, isUndef } from '../utils';
 
@@ -10,21 +11,23 @@ export type SetState<S> = S | ((prevState?: S) => S);
 
 export interface Options<T> {
   defaultValue?: T | (() => T);
+  getInitialValueInEffect?: boolean;
   listenStorageChange?: boolean;
   serializer?: (value: T) => string;
   deserializer?: (value: string) => T;
   onError?: (error: unknown) => void;
 }
 
-export function createUseStorageState(getStorage: () => Storage | undefined) {
-  function useStorageState<T>(key: string, options: Options<T> = {}) {
+export const createUseStorageState = (getStorage: () => Storage | undefined) => {
+  const useStorageState = <T>(key: string, options: Options<T> = {}) => {
     let storage: Storage | undefined;
-    const {
-      listenStorageChange = false,
-      onError = (e) => {
-        console.error(e);
-      },
-    } = options;
+    const { listenStorageChange = false, getInitialValueInEffect = false } = options;
+
+    const serializer = isFunction(options.serializer) ? options.serializer : JSON.stringify;
+
+    const deserializer = isFunction(options.deserializer) ? options.deserializer : JSON.parse;
+
+    const onError = isFunction(options.onError) ? options.onError : console.error;
 
     // https://github.com/alibaba/hooks/issues/800
     try {
@@ -33,21 +36,7 @@ export function createUseStorageState(getStorage: () => Storage | undefined) {
       onError(err);
     }
 
-    const serializer = (value: T) => {
-      if (options.serializer) {
-        return options.serializer(value);
-      }
-      return JSON.stringify(value);
-    };
-
-    const deserializer = (value: string) => {
-      if (options.deserializer) {
-        return options.deserializer(value);
-      }
-      return JSON.parse(value);
-    };
-
-    function getStoredValue() {
+    const getStoredValue = () => {
       try {
         const raw = storage?.getItem(key);
         if (raw) {
@@ -56,22 +45,55 @@ export function createUseStorageState(getStorage: () => Storage | undefined) {
       } catch (e) {
         onError(e);
       }
+      return getDefaultValue();
+    };
+
+    function getDefaultValue() {
       if (isFunction(options.defaultValue)) {
         return options.defaultValue();
       }
+
       return options.defaultValue;
     }
 
-    const [state, setState] = useState<T>(getStoredValue);
+    const [state, setState] = useState<T>(() => {
+      if (getInitialValueInEffect) {
+        return getDefaultValue();
+      }
+
+      return getStoredValue();
+    });
+
+    useMount(() => {
+      if (!getInitialValueInEffect) {
+        return;
+      }
+
+      setState(getStoredValue());
+    });
+
+    const stateRef = useRef<T>(state);
+    stateRef.current = state;
 
     useUpdateEffect(() => {
-      setState(getStoredValue());
+      const nextState = getStoredValue();
+      if (Object.is(nextState, stateRef.current)) {
+        return; // 新旧状态相同，不更新 state，避免 setState 带来不必要的 re-render
+      }
+      stateRef.current = nextState;
+      setState(nextState);
     }, [key]);
 
     const updateState = (value: SetState<T>) => {
-      const currentState = isFunction(value) ? value(state) : value;
+      const previousState = stateRef.current;
+      const currentState = isFunction(value) ? value(previousState) : value;
+
+      if (Object.is(currentState, previousState)) {
+        return; // 新旧状态相同，不更新 state，避免 setState 带来不必要的 re-render
+      }
 
       if (!listenStorageChange) {
+        stateRef.current = currentState;
         setState(currentState);
       }
 
@@ -110,7 +132,14 @@ export function createUseStorageState(getStorage: () => Storage | undefined) {
         return;
       }
 
-      setState(getStoredValue());
+      const nextState = getStoredValue();
+
+      if (Object.is(nextState, stateRef.current)) {
+        return; // 新旧状态相同，不更新 state，避免 setState 带来不必要的 re-render
+      }
+
+      stateRef.current = nextState;
+      setState(nextState);
     };
 
     const syncStateFromCustomEvent = (event: CustomEvent<StorageEvent>) => {
@@ -128,7 +157,7 @@ export function createUseStorageState(getStorage: () => Storage | undefined) {
     });
 
     return [state, useMemoizedFn(updateState)] as const;
-  }
+  };
 
   return useStorageState;
-}
+};

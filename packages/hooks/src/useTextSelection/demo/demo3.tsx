@@ -6,7 +6,7 @@
  * desc.zh-CN: useTextSelection 可以接收 dom 或 ref，指定监听区域。
  */
 
-import React, { useRef } from 'react';
+import { useRef } from 'react';
 import { useTextSelection } from 'ahooks';
 
 export default () => {
