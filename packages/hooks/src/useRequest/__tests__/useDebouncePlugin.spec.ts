@@ -73,4 +73,45 @@ describe('useDebouncePlugin', () => {
 
     hook.unmount();
   });
+
+  test('useDebouncePlugin should reset leading debounce when ready becomes false', () => {
+    vi.useFakeTimers();
+    const callback = vi.fn();
+
+    act(() => {
+      hook = setUp(
+        () => {
+          callback();
+          return request({});
+        },
+        {
+          ready: true,
+          debounceWait: 100,
+          debounceLeading: true,
+        },
+      );
+    });
+
+    expect(callback).toHaveBeenCalledTimes(1);
+
+    hook.rerender({
+      ready: false,
+      debounceWait: 100,
+      debounceLeading: true,
+    });
+
+    act(() => {
+      vi.advanceTimersByTime(50);
+    });
+
+    hook.rerender({
+      ready: true,
+      debounceWait: 100,
+      debounceLeading: true,
+    });
+
+    expect(callback).toHaveBeenCalledTimes(2);
+
+    hook.unmount();
+  });
 });
