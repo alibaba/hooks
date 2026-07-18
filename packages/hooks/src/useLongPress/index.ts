@@ -25,6 +25,7 @@ function useLongPress(
 
   const isTriggeredRef = useRef(false);
   const pervPositionRef = useRef({ x: 0, y: 0 });
+  const pointerPressed = useRef(false);
   const mousePressed = useRef(false);
   const touchPressed = useRef(false);
   const hasMoveThreshold = !!(
@@ -38,6 +39,8 @@ function useLongPress(
       if (!targetElement?.addEventListener) {
         return;
       }
+      const supportPointerEvent =
+        typeof window !== 'undefined' && typeof window.PointerEvent === 'function';
 
       const overThreshold = (event: EventType) => {
         const { clientX, clientY } = getClientPosition(event);
@@ -74,6 +77,53 @@ function useLongPress(
         }, delay);
       };
 
+      const clearTimer = () => {
+        if (timerRef.current) {
+          clearTimeout(timerRef.current);
+          timerRef.current = undefined;
+        }
+      };
+
+      const finishPress = (event: EventType, triggerClick = true) => {
+        clearTimer();
+
+        if (isTriggeredRef.current) {
+          onLongPressEndRef.current?.(event);
+        } else if (triggerClick && onClickRef.current) {
+          onClickRef.current(event);
+        }
+        isTriggeredRef.current = false;
+      };
+
+      const onPointerDown = (event: PointerEvent) => {
+        if (pointerPressed.current || event.isPrimary === false) {
+          return;
+        }
+        pointerPressed.current = true;
+
+        if (hasMoveThreshold) {
+          pervPositionRef.current.x = event.clientX;
+          pervPositionRef.current.y = event.clientY;
+        }
+        createTimer(event);
+      };
+
+      const onPointerUp = (event: PointerEvent) => {
+        if (!pointerPressed.current || event.isPrimary === false) {
+          return;
+        }
+        pointerPressed.current = false;
+        finishPress(event);
+      };
+
+      const onPointerCancel = (event: PointerEvent) => {
+        if (!pointerPressed.current || event.isPrimary === false) {
+          return;
+        }
+        pointerPressed.current = false;
+        finishPress(event, false);
+      };
+
       const onTouchStart = (event: TouchEvent) => {
         if (touchPressed.current) {
           return;
@@ -104,8 +154,7 @@ function useLongPress(
 
       const onMove = (event: EventType) => {
         if (timerRef.current && overThreshold(event)) {
-          clearTimeout(timerRef.current);
-          timerRef.current = undefined;
+          clearTimer();
         }
       };
 
@@ -115,17 +164,7 @@ function useLongPress(
         }
         touchPressed.current = false;
 
-        if (timerRef.current) {
-          clearTimeout(timerRef.current);
-          timerRef.current = undefined;
-        }
-
-        if (isTriggeredRef.current) {
-          onLongPressEndRef.current?.(event);
-        } else if (onClickRef.current) {
-          onClickRef.current(event);
-        }
-        isTriggeredRef.current = false;
+        finishPress(event);
       };
 
       const onMouseUp = (event: MouseEvent) => {
@@ -137,17 +176,7 @@ function useLongPress(
         }
         mousePressed.current = false;
 
-        if (timerRef.current) {
-          clearTimeout(timerRef.current);
-          timerRef.current = undefined;
-        }
-
-        if (isTriggeredRef.current) {
-          onLongPressEndRef.current?.(event);
-        } else if (onClickRef.current) {
-          onClickRef.current(event);
-        }
-        isTriggeredRef.current = false;
+        finishPress(event);
       };
 
       const onMouseLeave = (event: MouseEvent) => {
@@ -156,14 +185,40 @@ function useLongPress(
         }
         mousePressed.current = false;
 
-        if (timerRef.current) {
-          clearTimeout(timerRef.current);
-          timerRef.current = undefined;
+        finishPress(event, false);
+      };
+
+      if (supportPointerEvent) {
+        targetElement.addEventListener('pointerdown', onPointerDown as EventListener);
+        targetElement.addEventListener('pointerup', onPointerUp as EventListener);
+        targetElement.addEventListener('pointerleave', onPointerCancel as EventListener);
+        targetElement.addEventListener('pointercancel', onPointerCancel as EventListener);
+
+        if (hasMoveThreshold) {
+          targetElement.addEventListener('pointermove', onMove as EventListener);
         }
-        if (isTriggeredRef.current) {
-          onLongPressEndRef.current?.(event);
+
+        return () => {
+          clearTimer();
           isTriggeredRef.current = false;
+
+          targetElement.removeEventListener('pointerdown', onPointerDown as EventListener);
+          targetElement.removeEventListener('pointerup', onPointerUp as EventListener);
+          targetElement.removeEventListener('pointerleave', onPointerCancel as EventListener);
+          targetElement.removeEventListener('pointercancel', onPointerCancel as EventListener);
+
+          if (hasMoveThreshold) {
+            targetElement.removeEventListener('pointermove', onMove as EventListener);
+          }
+        };
+      }
+
+      const onTouchCancel = (event: TouchEvent) => {
+        if (!touchPressed.current) {
+          return;
         }
+        touchPressed.current = false;
+        finishPress(event, false);
       };
 
       targetElement.addEventListener('mousedown', onMouseDown as EventListener);
@@ -171,6 +226,7 @@ function useLongPress(
       targetElement.addEventListener('mouseleave', onMouseLeave as EventListener);
       targetElement.addEventListener('touchstart', onTouchStart as EventListener);
       targetElement.addEventListener('touchend', onTouchEnd as EventListener);
+      targetElement.addEventListener('touchcancel', onTouchCancel as EventListener);
 
       if (hasMoveThreshold) {
         targetElement.addEventListener('mousemove', onMove as EventListener);
@@ -178,16 +234,15 @@ function useLongPress(
       }
 
       return () => {
-        if (timerRef.current) {
-          clearTimeout(timerRef.current);
-          isTriggeredRef.current = false;
-        }
+        clearTimer();
+        isTriggeredRef.current = false;
 
         targetElement.removeEventListener('mousedown', onMouseDown as EventListener);
         targetElement.removeEventListener('mouseup', onMouseUp as EventListener);
         targetElement.removeEventListener('mouseleave', onMouseLeave as EventListener);
         targetElement.removeEventListener('touchstart', onTouchStart as EventListener);
         targetElement.removeEventListener('touchend', onTouchEnd as EventListener);
+        targetElement.removeEventListener('touchcancel', onTouchCancel as EventListener);
 
         if (hasMoveThreshold) {
           targetElement.removeEventListener('mousemove', onMove as EventListener);

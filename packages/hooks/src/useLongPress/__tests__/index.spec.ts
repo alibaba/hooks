@@ -24,12 +24,46 @@ describe('useLongPress', () => {
   beforeEach(() => {
     vi.useFakeTimers();
     vi.clearAllMocks();
+    vi.stubGlobal('PointerEvent', undefined);
   });
 
   afterEach(() => {
     events = {};
     vi.useRealTimers();
+    vi.unstubAllGlobals();
     vi.clearAllMocks();
+  });
+
+  test('uses pointer events when available', () => {
+    class MockPointerEvent extends MouseEvent {
+      isPrimary: boolean;
+
+      constructor(type: string, eventInitDict?: MouseEventInit & { isPrimary?: boolean }) {
+        super(type, eventInitDict);
+        this.isPrimary = eventInitDict?.isPrimary ?? true;
+      }
+    }
+
+    vi.stubGlobal('PointerEvent', MockPointerEvent);
+
+    setup(mockCallback, mockTarget, {
+      onClick: mockClickCallback,
+      onLongPressEnd: mockLongPressEndCallback,
+    });
+    expect(events.pointerdown).toBeDefined();
+    expect(events.pointerup).toBeDefined();
+    expect(events.mousedown).toBeUndefined();
+
+    events.pointerdown(new PointerEvent('pointerdown'));
+    vi.advanceTimersByTime(350);
+    events.pointerup(new PointerEvent('pointerup'));
+
+    events.pointerdown(new PointerEvent('pointerdown'));
+    events.pointerup(new PointerEvent('pointerup'));
+
+    expect(mockCallback).toHaveBeenCalledTimes(1);
+    expect(mockLongPressEndCallback).toHaveBeenCalledTimes(1);
+    expect(mockClickCallback).toHaveBeenCalledTimes(1);
   });
 
   test('longPress callback correct', () => {
