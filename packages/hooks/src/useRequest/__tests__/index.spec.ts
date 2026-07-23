@@ -244,6 +244,67 @@ describe('useRequest', () => {
     hook.unmount();
   });
 
+  test('runAsync should settle (not hang) when superseded by a newer call', async () => {
+    act(() => {
+      hook = setUp(request, { manual: true });
+    });
+
+    let firstSettled = false;
+    let firstRejected = false;
+
+    await act(async () => {
+      // start a call, then immediately supersede it with a newer one
+      hook.result.current.runAsync(1).then(
+        () => {
+          firstSettled = true;
+        },
+        () => {
+          firstSettled = true;
+          firstRejected = true;
+        },
+      );
+      hook.result.current.runAsync(2);
+      vi.advanceTimersByTime(1000);
+    });
+
+    // before the fix the superseded call stayed pending forever
+    expect(firstSettled).toBe(true);
+    expect(firstRejected).toBe(false);
+    expect(hook.result.current.data).toBe('success');
+    hook.unmount();
+  });
+
+  test('runAsync should settle (not hang) when a superseded call rejects', async () => {
+    act(() => {
+      hook = setUp(request, { manual: true });
+    });
+
+    let firstSettled = false;
+    let firstRejected = false;
+
+    await act(async () => {
+      // first call will reject (req === 0), but a newer call supersedes it
+      hook.result.current.runAsync(0).then(
+        () => {
+          firstSettled = true;
+        },
+        () => {
+          firstSettled = true;
+          firstRejected = true;
+        },
+      );
+      hook.result.current.runAsync(2);
+      vi.advanceTimersByTime(1000);
+    });
+
+    // the superseded call must not hang; the stale error is dropped, it resolves
+    expect(firstSettled).toBe(true);
+    expect(firstRejected).toBe(false);
+    // state is untouched by the superseded call — the newer call wins
+    expect(hook.result.current.data).toBe('success');
+    hook.unmount();
+  });
+
   test('useRequest defaultParams should work', async () => {
     act(() => {
       hook = setUp<string, [number, number, number]>(request, {

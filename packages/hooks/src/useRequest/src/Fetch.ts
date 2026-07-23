@@ -81,8 +81,9 @@ export default class Fetch<TData, TParams extends any[]> {
       const res = await servicePromise;
 
       if (currentCount !== this.count) {
-        // prevent run.then when request is canceled
-        return new Promise(() => {});
+        // superseded: settle with current data (not the stale `res`) so
+        // `finally`/locks don't hang and a direct `.then` can't clobber fresher state
+        return Promise.resolve(this.state.data as TData);
       }
 
       // const formattedResult = this.options.formatResultRef.current ? this.options.formatResultRef.current(res) : res;
@@ -105,8 +106,8 @@ export default class Fetch<TData, TParams extends any[]> {
       return res;
     } catch (error) {
       if (currentCount !== this.count) {
-        // prevent run.then when request is canceled
-        return new Promise(() => {});
+        // superseded: settle so `finally`/locks don't hang; the stale error is dropped
+        return Promise.resolve(this.state.data as TData);
       }
 
       this.setState({
