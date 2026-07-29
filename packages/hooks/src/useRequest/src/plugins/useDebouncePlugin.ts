@@ -39,6 +39,10 @@ const useDebouncePlugin: Plugin<any, any[]> = (
       // debounce runAsync should be promise
       // https://github.com/lodash/lodash/issues/4400#issuecomment-834800398
       fetchInstance.runAsync = (...args) => {
+        if (fetchInstance.options.ready === false) {
+          return _originRunAsync(...args);
+        }
+
         return new Promise<void>((resolve, reject) => {
           debouncedRef.current?.(() => {
             _originRunAsync(...args)

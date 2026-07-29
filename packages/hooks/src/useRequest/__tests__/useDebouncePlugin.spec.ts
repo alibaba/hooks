@@ -74,7 +74,7 @@ describe('useDebouncePlugin', () => {
     hook.unmount();
   });
 
-  test('useDebouncePlugin should reset leading debounce when ready becomes false', () => {
+  test('useDebouncePlugin should bypass debounce when ready is false', () => {
     vi.useFakeTimers();
     const callback = vi.fn();
 
@@ -99,6 +99,12 @@ describe('useDebouncePlugin', () => {
       debounceWait: 100,
       debounceLeading: true,
     });
+
+    act(() => {
+      hook.result.current.run();
+    });
+
+    expect(callback).toHaveBeenCalledTimes(1);
 
     act(() => {
       vi.advanceTimersByTime(50);
