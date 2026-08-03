@@ -112,6 +112,33 @@ At the same time, `useRequest` will automatically ignore the response at the fol
 
 <code src="./demo/cancel.tsx" />
 
+### What an ignored request returns
+
+An ignored request never updates `data`/`error`, and never triggers `onSuccess`/`onError`/`onFinally`.
+
+For `run` and `refresh` that is the whole story: they report nothing.
+
+For `runAsync` and `refreshAsync` the promise **rejects with a `CancelledError`**, so that `await`,
+`.finally()` and any lock around the call are always released. Use `isCancelledError` to tell an
+ignored request apart from a real failure:
+
+```ts
+import { isCancelledError } from 'ahooks';
+
+try {
+  await runAsync();
+  // only reached when this call actually won
+} catch (error) {
+  if (isCancelledError(error)) {
+    return; // cancelled or superseded, `data` belongs to another call
+  }
+  handle(error);
+}
+```
+
+Note that the value of an ignored request is dropped: a superseded call rejects with a
+`CancelledError` even when its own promise rejected with a service error.
+
 ## Parameter management
 
 The `params` returned by `useRequest` will record the parameters of `service`. For example, if you trigger `run(1, 2, 3)`, then `params` is equal to `[1, 2, 3]`.
