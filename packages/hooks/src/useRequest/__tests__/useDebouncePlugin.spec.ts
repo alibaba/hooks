@@ -73,4 +73,51 @@ describe('useDebouncePlugin', () => {
 
     hook.unmount();
   });
+
+  test('useDebouncePlugin should bypass debounce when ready is false', () => {
+    vi.useFakeTimers();
+    const callback = vi.fn();
+
+    act(() => {
+      hook = setUp(
+        () => {
+          callback();
+          return request({});
+        },
+        {
+          ready: true,
+          debounceWait: 100,
+          debounceLeading: true,
+        },
+      );
+    });
+
+    expect(callback).toHaveBeenCalledTimes(1);
+
+    hook.rerender({
+      ready: false,
+      debounceWait: 100,
+      debounceLeading: true,
+    });
+
+    act(() => {
+      hook.result.current.run();
+    });
+
+    expect(callback).toHaveBeenCalledTimes(1);
+
+    act(() => {
+      vi.advanceTimersByTime(50);
+    });
+
+    hook.rerender({
+      ready: true,
+      debounceWait: 100,
+      debounceLeading: true,
+    });
+
+    expect(callback).toHaveBeenCalledTimes(2);
+
+    hook.unmount();
+  });
 });

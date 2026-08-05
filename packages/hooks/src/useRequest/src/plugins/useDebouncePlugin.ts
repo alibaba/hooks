@@ -1,11 +1,12 @@
 import type { DebouncedFunc, DebounceSettings } from 'lodash';
 import debounce from 'lodash/debounce';
 import { useEffect, useMemo, useRef } from 'react';
+import useUpdateEffect from '../../../useUpdateEffect';
 import type { Plugin } from '../types';
 
 const useDebouncePlugin: Plugin<any, any[]> = (
   fetchInstance,
-  { debounceWait, debounceLeading, debounceTrailing, debounceMaxWait },
+  { debounceWait, debounceLeading, debounceTrailing, debounceMaxWait, ready },
 ) => {
   const debouncedRef = useRef<DebouncedFunc<any>>(undefined);
 
@@ -38,6 +39,10 @@ const useDebouncePlugin: Plugin<any, any[]> = (
       // debounce runAsync should be promise
       // https://github.com/lodash/lodash/issues/4400#issuecomment-834800398
       fetchInstance.runAsync = (...args) => {
+        if (fetchInstance.options.ready === false) {
+          return _originRunAsync(...args);
+        }
+
         return new Promise<void>((resolve, reject) => {
           debouncedRef.current?.(() => {
             _originRunAsync(...args)
@@ -52,7 +57,13 @@ const useDebouncePlugin: Plugin<any, any[]> = (
         fetchInstance.runAsync = _originRunAsync;
       };
     }
-  }, [debounceWait, options]);
+  }, [debounceWait, options, fetchInstance]);
+
+  useUpdateEffect(() => {
+    if (ready === false) {
+      debouncedRef.current?.cancel();
+    }
+  }, [ready]);
 
   if (!debounceWait) {
     return {};
