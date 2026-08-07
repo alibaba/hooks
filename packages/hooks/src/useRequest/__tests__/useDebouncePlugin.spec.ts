@@ -126,4 +126,81 @@ describe('useDebouncePlugin', () => {
     expect(onSecondFulfilled).toHaveBeenCalledWith('second');
     hook.unmount();
   });
+
+  test('runAsync should reject a queued call when ready becomes false', async () => {
+    vi.useFakeTimers();
+    const service = vi.fn().mockResolvedValue('success');
+    const onRejected = vi.fn();
+
+    act(() => {
+      hook = setUp(service, {
+        manual: true,
+        ready: true,
+        debounceWait: 100,
+      });
+    });
+    hook.rerender();
+
+    hook.result.current.runAsync().catch(onRejected);
+    hook.rerender({
+      manual: true,
+      ready: false,
+      debounceWait: 100,
+    });
+
+    await act(async () => {
+      vi.runAllTimers();
+    });
+
+    expect(onRejected).toHaveBeenCalledTimes(1);
+    expect(onRejected.mock.calls[0][0]).toBeInstanceOf(CancelledError);
+    expect(service).not.toHaveBeenCalled();
+    hook.unmount();
+  });
+
+  test('useDebouncePlugin should bypass debounce when ready is false', () => {
+    vi.useFakeTimers();
+    const callback = vi.fn();
+
+    act(() => {
+      hook = setUp(
+        () => {
+          callback();
+          return request({});
+        },
+        {
+          ready: true,
+          debounceWait: 100,
+          debounceLeading: true,
+        },
+      );
+    });
+
+    expect(callback).toHaveBeenCalledTimes(1);
+
+    hook.rerender({
+      ready: false,
+      debounceWait: 100,
+      debounceLeading: true,
+    });
+
+    act(() => {
+      hook.result.current.run();
+    });
+
+    expect(callback).toHaveBeenCalledTimes(1);
+
+    act(() => {
+      vi.advanceTimersByTime(50);
+    });
+
+    hook.rerender({
+      ready: true,
+      debounceWait: 100,
+      debounceLeading: true,
+    });
+
+    expect(callback).toHaveBeenCalledTimes(2);
+    hook.unmount();
+  });
 });
