@@ -2,12 +2,14 @@ import type { DebouncedFunc, DebounceSettings } from 'lodash';
 import debounce from 'lodash/debounce';
 import { useEffect, useMemo, useRef } from 'react';
 import type { Plugin } from '../types';
+import { cancelPendingPromise } from '../utils/cancelledError';
 
 const useDebouncePlugin: Plugin<any, any[]> = (
   fetchInstance,
   { debounceWait, debounceLeading, debounceTrailing, debounceMaxWait },
 ) => {
   const debouncedRef = useRef<DebouncedFunc<any>>(undefined);
+  const pendingRejectRef = useRef<(reason?: any) => void>(undefined);
 
   const options = useMemo(() => {
     const ret: DebounceSettings = {};
@@ -38,8 +40,12 @@ const useDebouncePlugin: Plugin<any, any[]> = (
       // debounce runAsync should be promise
       // https://github.com/lodash/lodash/issues/4400#issuecomment-834800398
       fetchInstance.runAsync = (...args) => {
+        cancelPendingPromise(pendingRejectRef);
+
         return new Promise<void>((resolve, reject) => {
+          pendingRejectRef.current = reject;
           debouncedRef.current?.(() => {
+            pendingRejectRef.current = undefined;
             _originRunAsync(...args)
               .then(resolve)
               .catch(reject);
@@ -49,6 +55,7 @@ const useDebouncePlugin: Plugin<any, any[]> = (
 
       return () => {
         debouncedRef.current?.cancel();
+        cancelPendingPromise(pendingRejectRef);
         fetchInstance.runAsync = _originRunAsync;
       };
     }
@@ -61,6 +68,7 @@ const useDebouncePlugin: Plugin<any, any[]> = (
   return {
     onCancel: () => {
       debouncedRef.current?.cancel();
+      cancelPendingPromise(pendingRejectRef);
     },
   };
 };

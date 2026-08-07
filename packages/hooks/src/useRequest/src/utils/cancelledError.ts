@@ -1,5 +1,9 @@
 const CANCELLED_ERROR_FLAG = '__AHOOKS_CANCELLED_ERROR__';
 
+interface PendingPromiseRef {
+  current: ((reason?: any) => void) | undefined;
+}
+
 /**
  * Rejection reason used when `useRequest` ignores a request, either because
  * `cancel()` was called (or the component unmounted), or because a newer call superseded it.
@@ -26,4 +30,9 @@ export function isCancelledError(error: unknown): error is CancelledError {
       error !== null &&
       (error as Record<string, unknown>)[CANCELLED_ERROR_FLAG] === true)
   );
+}
+
+export function cancelPendingPromise(pendingRejectRef: PendingPromiseRef) {
+  pendingRejectRef.current?.(new CancelledError());
+  pendingRejectRef.current = undefined;
 }
