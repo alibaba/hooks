@@ -167,11 +167,38 @@ describe('useKeyPress ', () => {
     expect(callback).toHaveBeenCalled();
   });
 
-  test('modifier key keyup should not break combination keys', async () => {
-    renderHook(() => useKeyPress(['shift.c'], callback));
+  test.each([
+    ['shift.c', { key: 'c', keyCode: 67, shiftKey: true }],
+    ['ctrl.c', { key: 'c', keyCode: 67, ctrlKey: true }],
+    ['alt.c', { key: 'c', keyCode: 67, altKey: true }],
+    ['meta.c', { key: 'c', keyCode: 67, metaKey: true }],
+  ])('%s should work in keyup event', async (keyFilter, event) => {
+    renderHook(() =>
+      useKeyPress([keyFilter], callback, {
+        events: ['keyup'],
+        exactMatch: true,
+      }),
+    );
 
-    fireEvent.keyDown(document, { key: 'c', shiftKey: true, keyCode: 67 });
+    fireEvent.keyUp(document, event);
     expect(callback).toHaveBeenCalled();
+  });
+
+  test('modifier key keyup should respect other held modifiers with exactMatch', async () => {
+    renderHook(() =>
+      useKeyPress(['shift'], callback, {
+        events: ['keyup'],
+        exactMatch: true,
+      }),
+    );
+
+    fireEvent.keyUp(document, {
+      key: 'Shift',
+      keyCode: 16,
+      shiftKey: false,
+      ctrlKey: true,
+    });
+    expect(callback).not.toHaveBeenCalled();
   });
 
   test('test `keyFilter` function parameter', async () => {

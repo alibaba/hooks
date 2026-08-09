@@ -140,30 +140,12 @@ const aliasKeyCodeMap = {
 
 // 修饰键
 const modifierKey = {
-  ctrl: (event: KeyboardEvent) => {
-    if (event.type === 'keyup') {
-      return event.keyCode === 17;
-    }
-    return event.ctrlKey;
-  },
-  shift: (event: KeyboardEvent) => {
-    if (event.type === 'keyup') {
-      return event.keyCode === 16;
-    }
-    return event.shiftKey;
-  },
-  alt: (event: KeyboardEvent) => {
-    if (event.type === 'keyup') {
-      return event.keyCode === 18;
-    }
-    return event.altKey;
-  },
-  meta: (event: KeyboardEvent) => {
-    if (event.type === 'keyup') {
-      return aliasKeyCodeMap.meta.includes(event.keyCode);
-    }
-    return event.metaKey;
-  },
+  ctrl: (event: KeyboardEvent) => event.ctrlKey || (event.type === 'keyup' && event.keyCode === 17),
+  shift: (event: KeyboardEvent) =>
+    event.shiftKey || (event.type === 'keyup' && event.keyCode === 16),
+  alt: (event: KeyboardEvent) => event.altKey || (event.type === 'keyup' && event.keyCode === 18),
+  meta: (event: KeyboardEvent) =>
+    event.metaKey || (event.type === 'keyup' && aliasKeyCodeMap.meta.includes(event.keyCode)),
 };
 
 // 判断合法的按键类型
