@@ -48,7 +48,7 @@ import useRafInterval from './useRafInterval';
 import useRafState from './useRafState';
 import useRafTimeout from './useRafTimeout';
 import useReactive from './useReactive';
-import useRequest, { clearCache } from './useRequest';
+import useRequest, { CancelledError, clearCache, isCancelledError } from './useRequest';
 import useResetState from './useResetState';
 import useResponsive, { configResponsive } from './useResponsive';
 import useSafeState from './useSafeState';
@@ -151,6 +151,8 @@ export {
   useInfiniteScroll,
   useGetState,
   clearCache,
+  CancelledError,
+  isCancelledError,
   useFocusWithin,
   createUpdateEffect,
   useRafInterval,

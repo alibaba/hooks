@@ -1,7 +1,7 @@
 import { act, type RenderHookResult, renderHook } from '@testing-library/react';
 import { afterAll, beforeAll, describe, expect, test, vi } from 'vitest';
 import { request } from '../../utils/testingHelpers';
-import useRequest from '../index';
+import useRequest, { CancelledError, isCancelledError } from '../index';
 
 const errorSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
 
@@ -241,6 +241,161 @@ describe('useRequest', () => {
     expect(resolved).toBe(true);
     expect(value).toBeUndefined();
     expect(hook.result.current.loading).toBe(false);
+    hook.unmount();
+  });
+
+  // a service whose settle order is controlled by the caller
+  const delayedRequest = (value: string, delay: number) =>
+    new Promise<string>((resolve) => {
+      setTimeout(() => resolve(value), delay);
+    });
+
+  test('runAsync should reject with a CancelledError when cancel is called', async () => {
+    const onError = vi.fn();
+    act(() => {
+      hook = setUp(request, { manual: true, onError });
+    });
+
+    const onFulfilled = vi.fn();
+    const onRejected = vi.fn();
+    const onFinally = vi.fn();
+
+    await act(async () => {
+      hook.result.current.runAsync(1).then(onFulfilled).catch(onRejected).finally(onFinally);
+      hook.result.current.cancel();
+      vi.advanceTimersByTime(1000);
+    });
+
+    // before the fix the cancelled call stayed pending forever, so nothing below ran
+    expect(onFulfilled).not.toHaveBeenCalled();
+    expect(onRejected).toHaveBeenCalledTimes(1);
+    expect(onRejected.mock.calls[0][0]).toBeInstanceOf(CancelledError);
+    expect(onRejected.mock.calls[0][0]).toMatchObject({
+      name: 'CancelledError',
+      message: 'useRequest: the request was cancelled or superseded.',
+    });
+    expect(onFinally).toHaveBeenCalledTimes(1);
+    // cancellation is not a failure: it reaches neither onError nor the error state
+    expect(onError).not.toHaveBeenCalled();
+    expect(hook.result.current.error).toBeUndefined();
+    expect(hook.result.current.data).toBeUndefined();
+    expect(hook.result.current.loading).toBe(false);
+    hook.unmount();
+  });
+
+  test('isCancelledError should recognize only a true cancellation marker', () => {
+    expect(isCancelledError(new CancelledError())).toBe(true);
+    expect(isCancelledError({ __AHOOKS_CANCELLED_ERROR__: true })).toBe(true);
+    expect(isCancelledError({ __AHOOKS_CANCELLED_ERROR__: false })).toBe(false);
+    expect(isCancelledError(new Error('fail'))).toBe(false);
+  });
+
+  test('runAsync should reject the superseded call that settles first', async () => {
+    act(() => {
+      hook = setUp<string, [string, number]>(delayedRequest, { manual: true });
+    });
+
+    const onFirstFulfilled = vi.fn();
+    const onFirstRejected = vi.fn();
+    const onSecondFulfilled = vi.fn();
+
+    await act(async () => {
+      hook.result.current.runAsync('first', 500).then(onFirstFulfilled, onFirstRejected);
+      hook.result.current.runAsync('second', 1000).then(onSecondFulfilled);
+      // only the superseded call has settled by now
+      vi.advanceTimersByTime(500);
+    });
+
+    expect(onFirstFulfilled).not.toHaveBeenCalled();
+    expect(onFirstRejected).toHaveBeenCalledTimes(1);
+    expect(isCancelledError(onFirstRejected.mock.calls[0][0])).toBe(true);
+    // the loser publishes nothing, so `data` is not its value either
+    expect(hook.result.current.data).toBeUndefined();
+    expect(hook.result.current.loading).toBe(true);
+
+    await act(async () => {
+      vi.advanceTimersByTime(500);
+    });
+
+    expect(onSecondFulfilled).toHaveBeenCalledWith('second');
+    expect(hook.result.current.data).toBe('second');
+    expect(hook.result.current.loading).toBe(false);
+    hook.unmount();
+  });
+
+  test('runAsync should reject the superseded call that settles last', async () => {
+    act(() => {
+      hook = setUp<string, [string, number]>(delayedRequest, { manual: true });
+    });
+
+    const onFirstFulfilled = vi.fn();
+    const onFirstRejected = vi.fn();
+    const onSecondFulfilled = vi.fn();
+
+    await act(async () => {
+      hook.result.current.runAsync('first', 1000).then(onFirstFulfilled, onFirstRejected);
+      hook.result.current.runAsync('second', 200).then(onSecondFulfilled);
+      // only the winning call has settled by now
+      vi.advanceTimersByTime(200);
+    });
+
+    expect(onSecondFulfilled).toHaveBeenCalledWith('second');
+    expect(hook.result.current.data).toBe('second');
+    expect(onFirstRejected).not.toHaveBeenCalled();
+
+    await act(async () => {
+      vi.advanceTimersByTime(800);
+    });
+
+    expect(onFirstFulfilled).not.toHaveBeenCalled();
+    expect(onFirstRejected).toHaveBeenCalledTimes(1);
+    expect(isCancelledError(onFirstRejected.mock.calls[0][0])).toBe(true);
+    // the late loser must not overwrite the winner's data
+    expect(hook.result.current.data).toBe('second');
+    hook.unmount();
+  });
+
+  test('runAsync should report a superseded rejection as cancelled, not as the service error', async () => {
+    const onError = vi.fn();
+    act(() => {
+      hook = setUp(request, { manual: true, onError });
+    });
+
+    const onFirstFulfilled = vi.fn();
+    const onFirstRejected = vi.fn();
+
+    await act(async () => {
+      // the first call rejects with `new Error('fail')`, but a newer call supersedes it
+      hook.result.current.runAsync(0).then(onFirstFulfilled, onFirstRejected);
+      hook.result.current.runAsync(2);
+      vi.advanceTimersByTime(1000);
+    });
+
+    expect(onFirstFulfilled).not.toHaveBeenCalled();
+    expect(onFirstRejected).toHaveBeenCalledTimes(1);
+    expect(isCancelledError(onFirstRejected.mock.calls[0][0])).toBe(true);
+    // the stale error reaches neither the caller, nor onError, nor the state
+    expect(onFirstRejected.mock.calls[0][0]).not.toEqual(new Error('fail'));
+    expect(onError).not.toHaveBeenCalled();
+    expect(hook.result.current.error).toBeUndefined();
+    expect(hook.result.current.data).toBe('success');
+    hook.unmount();
+  });
+
+  test('run should stay silent when the request is cancelled', async () => {
+    errorSpy.mockClear();
+    act(() => {
+      // no onError, so `run` would fall back to console.error for a real failure
+      hook = setUp(request, { manual: true });
+    });
+
+    await act(async () => {
+      hook.result.current.run(1);
+      hook.result.current.cancel();
+      vi.advanceTimersByTime(1000);
+    });
+
+    expect(errorSpy).not.toHaveBeenCalled();
     hook.unmount();
   });
 

@@ -112,6 +112,32 @@ return (
 
 <code src="./demo/cancel.tsx" />
 
+### 被忽略的请求会返回什么
+
+被忽略的请求不会更新 `data`/`error`，也不会触发 `onSuccess`/`onError`/`onFinally`。
+
+对于 `run` 和 `refresh` 来说到此为止：它们不会报告任何东西。
+
+对于 `runAsync` 和 `refreshAsync`，其 promise 会**以 `CancelledError` reject**，从而保证 `await`、
+`.finally()` 以及调用外层的锁一定会被释放。可以用 `isCancelledError` 区分「被忽略」和「真正失败」：
+
+```ts
+import { isCancelledError } from 'ahooks';
+
+try {
+  await runAsync();
+  // 只有本次调用真正胜出时才会执行到这里
+} catch (error) {
+  if (isCancelledError(error)) {
+    return; // 被取消或被更新的调用覆盖，此时 data 属于另一次调用
+  }
+  handle(error);
+}
+```
+
+注意：被忽略的请求，其结果会被丢弃。即使它自身的 promise 是以 service 错误 reject 的，
+被覆盖的调用也只会以 `CancelledError` reject。
+
 ## 参数管理
 
 `useRequest` 返回的 `params` 会记录当次调用 `service` 的参数数组。比如你触发了 `run(1, 2, 3)`，则 `params` 等于 `[1, 2, 3]` 。
