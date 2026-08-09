@@ -2,7 +2,7 @@ import type { RenderHookResult } from '@testing-library/react';
 import { act, render, renderHook, waitFor } from '@testing-library/react';
 import { Form } from 'antd';
 import React, { createElement, useEffect } from 'react';
-import { describe, expect, test } from 'vitest';
+import { describe, expect, test, vi } from 'vitest';
 import { sleep } from '../../utils/testingHelpers';
 import useAntdTable from '../index';
 
@@ -131,6 +131,34 @@ describe('useAntdTable', () => {
 
     await sleep(1);
     expect(queryArgs).toBeUndefined();
+  });
+
+  test('should submit transformed values from ProForm', async () => {
+    queryArgs = undefined;
+    form.resetFields();
+    changeSearchType('simple');
+
+    const proForm = {
+      ...form,
+      validateFieldsReturnFormatValue: vi.fn().mockResolvedValue({
+        keyword: 'default name',
+      }),
+    };
+
+    act(() => {
+      hook = setUp(asyncFn, {
+        form: proForm,
+        manual: true,
+      });
+    });
+
+    act(() => {
+      hook.result.current.search.submit();
+    });
+
+    await waitFor(() => expect(queryArgs?.keyword).toBe('default name'));
+    expect(queryArgs.name).toBeUndefined();
+    expect(proForm.validateFieldsReturnFormatValue).toHaveBeenCalledWith(['name']);
   });
 
   test('should ready work', async () => {

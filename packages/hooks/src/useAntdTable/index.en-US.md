@@ -55,7 +55,7 @@ The following example sets paging data and form data during initialization.
 
 ### Form Validation
 
-Before the form is submitted, we will call `form.validateFields` to validate the form data. If the verification fails, the request will not be initiated.
+Before submitting the form, we validate the form data and do not initiate the request if validation fails. By default, `form.validateFields` is called. If the form instance provides `validateFieldsReturnFormatValue`, that method is preferred to support ProForm's `transform`.
 
 <code src="./demo/validate.tsx" />
 

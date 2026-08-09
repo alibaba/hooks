@@ -56,7 +56,7 @@ nav:
 
 ### 表单验证
 
-表单提交之前，我们会调用 `form.validateFields` 来校验表单数据，如果验证不通过，则不会发起请求。
+表单提交之前，我们会校验表单数据，如果验证不通过，则不会发起请求。默认调用 `form.validateFields`；如果表单实例提供 `validateFieldsReturnFormatValue`，则优先调用该方法，以支持 ProForm 的 `transform`。
 
 <code src="./demo/validate.tsx" />
 
