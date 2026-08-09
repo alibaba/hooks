@@ -94,4 +94,26 @@ describe('useThrottlePlugin', () => {
     expect(onSecondFulfilled).toHaveBeenCalledWith('second');
     hook.unmount();
   });
+
+  test('runAsync should reject a call suppressed when trailing is false', async () => {
+    const service = vi.fn((value: string) => Promise.resolve(value));
+
+    act(() => {
+      hook = setUp(service, {
+        manual: true,
+        throttleWait: 100,
+        throttleTrailing: false,
+      });
+    });
+    hook.rerender();
+
+    await act(async () => {
+      await expect(hook.result.current.runAsync('first')).resolves.toBe('first');
+      await expect(hook.result.current.runAsync('dropped')).rejects.toBeInstanceOf(CancelledError);
+      vi.advanceTimersByTime(100);
+    });
+
+    expect(service).toHaveBeenCalledTimes(1);
+    hook.unmount();
+  });
 });

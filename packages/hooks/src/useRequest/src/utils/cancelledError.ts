@@ -1,7 +1,7 @@
 const CANCELLED_ERROR_FLAG = '__AHOOKS_CANCELLED_ERROR__';
 
 interface PendingPromiseRef {
-  current: ((reason?: any) => void) | undefined;
+  current: ((reason?: unknown) => void) | undefined;
 }
 
 /**

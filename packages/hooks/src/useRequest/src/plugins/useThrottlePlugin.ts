@@ -9,7 +9,7 @@ const useThrottlePlugin: Plugin<any, any[]> = (
   { throttleWait, throttleLeading, throttleTrailing },
 ) => {
   const throttledRef = useRef<DebouncedFunc<any>>(undefined);
-  const pendingRejectRef = useRef<(reason?: any) => void>(undefined);
+  const pendingRejectRef = useRef<(reason?: unknown) => void>(undefined);
 
   const options: ThrottleSettings = {};
 
@@ -38,13 +38,19 @@ const useThrottlePlugin: Plugin<any, any[]> = (
         cancelPendingPromise(pendingRejectRef);
 
         return new Promise((resolve, reject) => {
+          let callbackInvoked = false;
           pendingRejectRef.current = reject;
           throttledRef.current?.(() => {
+            callbackInvoked = true;
             pendingRejectRef.current = undefined;
             _originRunAsync(...args)
               .then(resolve)
               .catch(reject);
           });
+
+          if (!callbackInvoked && options.trailing === false) {
+            cancelPendingPromise(pendingRejectRef);
+          }
         });
       };
 

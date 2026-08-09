@@ -10,7 +10,7 @@ const useDebouncePlugin: Plugin<any, any[]> = (
   { debounceWait, debounceLeading, debounceTrailing, debounceMaxWait, ready },
 ) => {
   const debouncedRef = useRef<DebouncedFunc<any>>(undefined);
-  const pendingRejectRef = useRef<(reason?: any) => void>(undefined);
+  const pendingRejectRef = useRef<(reason?: unknown) => void>(undefined);
 
   const options = useMemo(() => {
     const ret: DebounceSettings = {};
@@ -48,13 +48,19 @@ const useDebouncePlugin: Plugin<any, any[]> = (
         cancelPendingPromise(pendingRejectRef);
 
         return new Promise<void>((resolve, reject) => {
+          let callbackInvoked = false;
           pendingRejectRef.current = reject;
           debouncedRef.current?.(() => {
+            callbackInvoked = true;
             pendingRejectRef.current = undefined;
             _originRunAsync(...args)
               .then(resolve)
               .catch(reject);
           });
+
+          if (!callbackInvoked && options.trailing === false) {
+            cancelPendingPromise(pendingRejectRef);
+          }
         });
       };
 

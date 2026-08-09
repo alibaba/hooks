@@ -203,4 +203,28 @@ describe('useDebouncePlugin', () => {
     expect(callback).toHaveBeenCalledTimes(2);
     hook.unmount();
   });
+
+  test('runAsync should reject a call suppressed when trailing is false', async () => {
+    vi.useFakeTimers();
+    const service = vi.fn((value: string) => Promise.resolve(value));
+
+    act(() => {
+      hook = setUp(service, {
+        manual: true,
+        debounceWait: 100,
+        debounceLeading: true,
+        debounceTrailing: false,
+      });
+    });
+    hook.rerender();
+
+    await act(async () => {
+      await expect(hook.result.current.runAsync('first')).resolves.toBe('first');
+      await expect(hook.result.current.runAsync('dropped')).rejects.toBeInstanceOf(CancelledError);
+      vi.advanceTimersByTime(100);
+    });
+
+    expect(service).toHaveBeenCalledTimes(1);
+    hook.unmount();
+  });
 });
