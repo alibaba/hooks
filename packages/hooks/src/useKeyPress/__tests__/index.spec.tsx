@@ -131,6 +131,76 @@ describe('useKeyPress ', () => {
     expect(callback).toHaveBeenCalled();
   });
 
+  test('shift key should work in keyup event with exactMatch', async () => {
+    renderHook(() =>
+      useKeyPress(['shift'], callback, {
+        events: ['keyup'],
+        exactMatch: true,
+      }),
+    );
+
+    fireEvent.keyUp(document, { key: 'Shift', keyCode: 16, shiftKey: false });
+    expect(callback).toHaveBeenCalled();
+  });
+
+  test('ctrl key should work in keyup event with exactMatch', async () => {
+    renderHook(() =>
+      useKeyPress(['ctrl'], callback, {
+        events: ['keyup'],
+        exactMatch: true,
+      }),
+    );
+
+    fireEvent.keyUp(document, { key: 'Control', keyCode: 17, ctrlKey: false });
+    expect(callback).toHaveBeenCalled();
+  });
+
+  test('alt key should work in keyup event with exactMatch', async () => {
+    renderHook(() =>
+      useKeyPress(['alt'], callback, {
+        events: ['keyup'],
+        exactMatch: true,
+      }),
+    );
+
+    fireEvent.keyUp(document, { key: 'Alt', keyCode: 18, altKey: false });
+    expect(callback).toHaveBeenCalled();
+  });
+
+  test.each([
+    ['shift.c', { key: 'c', keyCode: 67, shiftKey: true }],
+    ['ctrl.c', { key: 'c', keyCode: 67, ctrlKey: true }],
+    ['alt.c', { key: 'c', keyCode: 67, altKey: true }],
+    ['meta.c', { key: 'c', keyCode: 67, metaKey: true }],
+  ])('%s should work in keyup event', async (keyFilter, event) => {
+    renderHook(() =>
+      useKeyPress([keyFilter], callback, {
+        events: ['keyup'],
+        exactMatch: true,
+      }),
+    );
+
+    fireEvent.keyUp(document, event);
+    expect(callback).toHaveBeenCalled();
+  });
+
+  test('modifier key keyup should respect other held modifiers with exactMatch', async () => {
+    renderHook(() =>
+      useKeyPress(['shift'], callback, {
+        events: ['keyup'],
+        exactMatch: true,
+      }),
+    );
+
+    fireEvent.keyUp(document, {
+      key: 'Shift',
+      keyCode: 16,
+      shiftKey: false,
+      ctrlKey: true,
+    });
+    expect(callback).not.toHaveBeenCalled();
+  });
+
   test('test `keyFilter` function parameter', async () => {
     const callback1 = vi.fn();
     const callback2 = vi.fn();
