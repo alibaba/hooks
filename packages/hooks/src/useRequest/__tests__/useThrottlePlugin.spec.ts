@@ -42,6 +42,59 @@ describe('useThrottlePlugin', () => {
     expect(callback).toHaveBeenCalledTimes(2);
   });
 
+  test('runAsync should respect leading and trailing options without rerender', async () => {
+    const service = vi.fn((value: string) => Promise.resolve(value));
+
+    act(() => {
+      hook = setUp(service, {
+        manual: true,
+        throttleWait: 100,
+        throttleLeading: true,
+        throttleTrailing: false,
+      });
+    });
+
+    await act(async () => {
+      await expect(hook.result.current.runAsync('first')).resolves.toBe('first');
+      await expect(hook.result.current.runAsync('dropped')).rejects.toBeInstanceOf(CancelledError);
+      vi.advanceTimersByTime(100);
+      await expect(hook.result.current.runAsync('after-window')).resolves.toBe('after-window');
+    });
+
+    expect(service).toHaveBeenCalledTimes(2);
+    expect(service).toHaveBeenNthCalledWith(1, 'first');
+    expect(service).toHaveBeenNthCalledWith(2, 'after-window');
+    hook.unmount();
+  });
+
+  test('runAsync should preserve a trailing call with the latest params', async () => {
+    const service = vi.fn((value: string) => Promise.resolve(value));
+
+    act(() => {
+      hook = setUp(service, {
+        manual: true,
+        throttleWait: 100,
+        throttleLeading: true,
+        throttleTrailing: true,
+      });
+    });
+
+    await act(async () => {
+      const firstPromise = hook.result.current.runAsync('first');
+      await expect(firstPromise).resolves.toBe('first');
+      vi.advanceTimersByTime(50);
+      const trailingPromise = hook.result.current.runAsync('latest');
+      vi.advanceTimersByTime(50);
+
+      await expect(trailingPromise).resolves.toBe('latest');
+    });
+
+    expect(service).toHaveBeenCalledTimes(2);
+    expect(service).toHaveBeenNthCalledWith(1, 'first');
+    expect(service).toHaveBeenNthCalledWith(2, 'latest');
+    hook.unmount();
+  });
+
   test('runAsync should reject a queued call when cancel is called', async () => {
     const service = vi.fn().mockResolvedValue('success');
     const onRejected = vi.fn();
