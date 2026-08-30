@@ -33,7 +33,7 @@
   "gitHead": "11f6ad571bd365c95ecb9409ca3050cbbfc9b34a",
   "dependencies": {
     "@babel/runtime": "^7.21.0",
-    "ahooks": "^3.4.1",
+    "ahooks": "workspace:^3.4.1",
     "query-string": "^8.1.0",
     "tslib": "^2.4.1"
   },
