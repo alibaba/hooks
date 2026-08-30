@@ -189,8 +189,8 @@ importers:
         specifier: ^7.21.0
         version: 7.28.3
       ahooks:
-        specifier: ^3.4.1
-        version: 3.9.4(react-dom@19.1.1(react@19.1.1))(react@19.1.1)
+        specifier: workspace:^3.4.1
+        version: link:../hooks
       query-string:
         specifier: ^8.1.0
         version: 8.2.0
@@ -2064,13 +2064,6 @@ packages:
   aggregate-error@3.1.0:
     resolution: {integrity: sha512-4I7Td01quW/RpocfNayFdFVk1qSuoh0E7JrbRJ16nH01HhKFQ88INq9Sd+nd72zqRySlr9BmDA8xlEJ6vJMrYA==}
     engines: {node: '>=8'}
-
-  ahooks@3.9.4:
-    resolution: {integrity: sha512-NkbX0mamCz4aBX27mZnObbzqcM9S4fzpjVf/6yOvmHh+McBo74xQw5Yz5ry4q2cLMkfNUjhe2q3M5RpjfMVu4g==}
-    engines: {node: '>=18'}
-    peerDependencies:
-      react: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
-      react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
 
   ajv-errors@1.0.1:
     resolution: {integrity: sha512-DCRfO/4nQ+89p/RK43i8Ezd41EqdGIU4ld7nGF8OQ14oc/we5rEntLCUa7+jrn3nn83BosfwZA0wb4pon2o8iQ==}
@@ -4444,9 +4437,6 @@ packages:
   interpret@3.1.1:
     resolution: {integrity: sha512-6xwYfHbajpoF0xLW+iwLkhwgvLoZDfjYfoFNu8ftMoXINzwuymNLd9u/KmwtdT2GbR+/Cz66otEGEVVUHX9QLQ==}
     engines: {node: '>=10.13.0'}
-
-  intersection-observer@0.12.2:
-    resolution: {integrity: sha512-7m1vEcPCxXYI8HqnL8CKI6siDyD+eIWSwgB3DZA+ZTogxk9I4CDnj4wilt9x/+/QbHI4YG5YZNmC6458/e9Ktg==}
 
   invert-kv@1.0.0:
     resolution: {integrity: sha512-xgs2NH9AE66ucSq4cNG1nhSFghr5l6tdL15Pk+jl46bmmBapgoaY/AacXyaDznAqmGL99TiLSQgO/XazFSKYeQ==}
@@ -10935,20 +10925,6 @@ snapshots:
       clean-stack: 2.2.0
       indent-string: 4.0.0
 
-  ahooks@3.9.4(react-dom@19.1.1(react@19.1.1))(react@19.1.1):
-    dependencies:
-      '@babel/runtime': 7.28.3
-      dayjs: 1.11.13
-      intersection-observer: 0.12.2
-      js-cookie: 3.0.5
-      lodash: 4.17.21
-      react: 19.1.1
-      react-dom: 19.1.1(react@19.1.1)
-      react-fast-compare: 3.2.2
-      resize-observer-polyfill: 1.5.1
-      screenfull: 5.2.0
-      tslib: 2.8.1
-
   ajv-errors@1.0.1(ajv@6.12.6):
     dependencies:
       ajv: 6.12.6
@@ -13930,8 +13906,6 @@ snapshots:
   interpret@1.4.0: {}
 
   interpret@3.1.1: {}
-
-  intersection-observer@0.12.2: {}
 
   invert-kv@1.0.0: {}
 
