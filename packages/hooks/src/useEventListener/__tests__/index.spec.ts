@@ -1,4 +1,5 @@
 import { renderHook } from '@testing-library/react';
+import { useRef } from 'react';
 import { afterEach, beforeEach, describe, expect, test } from 'vitest';
 import useEventListener from '../index';
 
@@ -79,5 +80,26 @@ describe('useEventListener', () => {
     container.click();
     expect(state).toBe(1);
     unmount();
+  });
+
+  // Type regression guard: this call should type-check when event generic is explicit
+  // and `target` is a ref. Runtime assertion only verifies listener still works.
+  test('should support ref target with explicit event generic', () => {
+    let state = 0;
+    const onScroll = () => {
+      state++;
+    };
+
+    const { unmount } = renderHook(() => {
+      const target = useRef<HTMLDivElement>(container);
+      useEventListener<'scroll'>('scroll', onScroll, { target });
+    });
+
+    container.dispatchEvent(new Event('scroll'));
+    expect(state).toBe(1);
+
+    unmount();
+    container.dispatchEvent(new Event('scroll'));
+    expect(state).toBe(1);
   });
 });

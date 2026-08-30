@@ -9,22 +9,28 @@ group:
 
 A hook that store the state into url query.
 
+> Important
+>
+> This package is now published as `@ahooks.js/use-url-state`.
+>
+> If you were using the previous package name, please migrate to the new package name as soon as possible.
+
 ## Install
 
 ```bash
-npm i @ahooksjs/use-url-state -S
+npm i @ahooks.js/use-url-state -S
 ```
 
 > This hook relies on useLocation & useHistory & useNavigate from `react-router`, to use this hook, you need to ensure
 >
 > 1\. Your project is using `react-router` version 5.0 or 6.0 to manage routing
 >
-> 2\. Installed @ahooksjs/use-url-state
+> 2\. Installed @ahooks.js/use-url-state
 
 ## Usage
 
 ```js
-import useUrlState from '@ahooksjs/use-url-state';
+import useUrlState from '@ahooks.js/use-url-state';
 ```
 
 ## Examples

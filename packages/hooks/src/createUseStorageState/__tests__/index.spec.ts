@@ -1,5 +1,7 @@
 import { act, renderHook } from '@testing-library/react';
-import { describe, expect, test } from 'vitest';
+import { createElement } from 'react';
+import { renderToString } from 'react-dom/server';
+import { describe, expect, test, vi } from 'vitest';
 import type { Options } from '../index';
 import { createUseStorageState } from '../index';
 
@@ -97,5 +99,46 @@ describe('useStorageState', () => {
     expect(hook.result.current.state).toBe('value');
     act(() => hook.result.current.setState(undefined));
     expect(hook.result.current.state).toBeUndefined();
+  });
+
+  test('should not read storage in SSR when getInitialValueInEffect is true', () => {
+    const storage = new TestStorage();
+    storage.setItem('key', JSON.stringify('stored-value'));
+    const getItemSpy = vi.spyOn(storage, 'getItem');
+    const useStorageState = createUseStorageState(() => storage);
+
+    const Demo = () => {
+      const [state] = useStorageState('key', {
+        defaultValue: 'default-value',
+        getInitialValueInEffect: true,
+      });
+
+      return createElement('span', null, state);
+    };
+
+    const html = renderToString(createElement(Demo));
+
+    expect(html).toContain('default-value');
+    expect(getItemSpy).not.toHaveBeenCalled();
+  });
+
+  test('should read storage in SSR when getInitialValueInEffect is false', () => {
+    const storage = new TestStorage();
+    storage.setItem('key', JSON.stringify('stored-value'));
+    const getItemSpy = vi.spyOn(storage, 'getItem');
+    const useStorageState = createUseStorageState(() => storage);
+
+    const Demo = () => {
+      const [state] = useStorageState('key', {
+        defaultValue: 'default-value',
+      });
+
+      return createElement('span', null, state);
+    };
+
+    const html = renderToString(createElement(Demo));
+
+    expect(html).toContain('stored-value');
+    expect(getItemSpy).toHaveBeenCalledWith('key');
   });
 });

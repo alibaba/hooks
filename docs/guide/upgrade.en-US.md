@@ -20,6 +20,16 @@ npm install ahooks-v2 --save
 npm install ahooks --save
 ```
 
+## `use-url-state` package rename
+
+The standalone `use-url-state` package is now published as `@ahooks.js/use-url-state`.
+
+If you are installing this package for the first time or upgrading from the previous package name, please use the new package name:
+
+```bash
+npm install @ahooks.js/use-url-state --save
+```
+
 ## New useRequest
 
 useRequest has been rewritten:

@@ -6,19 +6,19 @@
  * desc.zh-CN: 在组件卸载时，执行函数。
  */
 
+import React from 'react';
 import { useBoolean, useUnmount } from 'ahooks';
 import { message } from 'antd';
-const MyComponent = () => {
+
+const MyComponent: React.FC = () => {
   useUnmount(() => {
     message.info('unmount');
   });
-
   return <p>Hello World!</p>;
 };
 
-export default () => {
+const Demo: React.FC = () => {
   const [state, { toggle }] = useBoolean(true);
-
   return (
     <>
       <button type="button" onClick={toggle}>
@@ -28,3 +28,5 @@ export default () => {
     </>
   );
 };
+
+export default Demo;

@@ -18,7 +18,7 @@ describe('useTimeout', () => {
 
     setUp({ fn: callback, delay: 20 });
 
-    expect(callback).not.toBeCalled();
+    expect(callback).not.toHaveBeenCalled();
     vi.advanceTimersByTime(70);
     expect(callback).toHaveBeenCalledTimes(1);
   });
@@ -39,7 +39,7 @@ describe('useTimeout', () => {
     const callback = vi.fn();
 
     const hook = setUp({ fn: callback, delay: 20 });
-    expect(callback).not.toBeCalled();
+    expect(callback).not.toHaveBeenCalled();
 
     hook.result.current();
     vi.advanceTimersByTime(30);

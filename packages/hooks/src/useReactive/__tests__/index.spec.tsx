@@ -170,29 +170,29 @@ describe('test useReactive feature', () => {
       });
     });
 
-    expect(() => result.current.a.name).not.toThrowError();
-    expect(() => result.current.b.valueOf()).not.toThrowError();
-    expect(() => result.current.c.valueOf()).not.toThrowError();
-    expect(() => result.current.d.message).not.toThrowError();
-    expect(() => result.current.e.valueOf()).not.toThrowError();
-    expect(() => result.current.f.valueOf()).not.toThrowError();
-    expect(() => result.current.g.PI).not.toThrowError();
-    expect(() => result.current.h.getFullYear()).not.toThrowError();
-    expect(() => result.current.i.valueOf()).not.toThrowError();
-    expect(() => result.current.j1.test('a')).not.toThrowError();
-    expect(() => result.current.j2.test('a')).not.toThrowError();
-    expect(() => result.current.k.length).not.toThrowError();
-    expect(() => result.current.l.size).not.toThrowError();
-    expect(() => result.current.m.size).not.toThrowError();
-    expect(() => result.current.n.byteLength).not.toThrowError();
-    expect(() => result.current.o.byteLength).not.toThrowError();
-    expect(() => result.current.p.isLockFree(1)).not.toThrowError();
-    expect(() => result.current.q.stringify(1)).not.toThrowError();
-    expect(() => result.current.r.then()).not.toThrowError();
-    expect(() => result.current.s.ownKeys({})).not.toThrowError();
-    expect(() => result.current.t.toString()).not.toThrowError();
-    expect(() => result.current.u.DateTimeFormat()).not.toThrowError();
-    expect(() => result.current.v.Module).not.toThrowError();
+    expect(() => result.current.a.name).not.toThrow();
+    expect(() => result.current.b.valueOf()).not.toThrow();
+    expect(() => result.current.c.valueOf()).not.toThrow();
+    expect(() => result.current.d.message).not.toThrow();
+    expect(() => result.current.e.valueOf()).not.toThrow();
+    expect(() => result.current.f.valueOf()).not.toThrow();
+    expect(() => result.current.g.PI).not.toThrow();
+    expect(() => result.current.h.getFullYear()).not.toThrow();
+    expect(() => result.current.i.valueOf()).not.toThrow();
+    expect(() => result.current.j1.test('a')).not.toThrow();
+    expect(() => result.current.j2.test('a')).not.toThrow();
+    expect(() => result.current.k.length).not.toThrow();
+    expect(() => result.current.l.size).not.toThrow();
+    expect(() => result.current.m.size).not.toThrow();
+    expect(() => result.current.n.byteLength).not.toThrow();
+    expect(() => result.current.o.byteLength).not.toThrow();
+    expect(() => result.current.p.isLockFree(1)).not.toThrow();
+    expect(() => result.current.q.stringify(1)).not.toThrow();
+    expect(() => result.current.r.then()).not.toThrow();
+    expect(() => result.current.s.ownKeys({})).not.toThrow();
+    expect(() => result.current.t.toString()).not.toThrow();
+    expect(() => result.current.u.DateTimeFormat()).not.toThrow();
+    expect(() => result.current.v.Module).not.toThrow();
   });
 
   test('test JSX element', () => {
@@ -221,7 +221,7 @@ describe('test useReactive feature', () => {
     const hook = renderHook(() => useReactive(obj));
     const proxy = hook.result.current;
 
-    expect(() => proxy.user.name).not.toThrowError();
+    expect(() => proxy.user.name).not.toThrow();
     hook.unmount();
   });
 

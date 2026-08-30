@@ -1,5 +1,14 @@
 import { describe, expect, test } from 'vitest';
-import { isBoolean, isFunction, isNumber, isObject, isString, isUndef } from '../index';
+import {
+  isBoolean,
+  isFunction,
+  isNonNullable,
+  isNumber,
+  isObject,
+  isString,
+  isThenable,
+  isUndef,
+} from '../';
 
 describe('shared utils methods', () => {
   test('isBoolean', () => {
@@ -21,7 +30,7 @@ describe('shared utils methods', () => {
   test('isNumber', () => {
     expect(isNumber(1)).toBe(true);
     expect(isNumber(Infinity)).toBe(true);
-    expect(isNumber(NaN)).toBe(true);
+    expect(isNumber(NaN)).toBe(false);
 
     expect(isNumber('str')).toBe(false);
     expect(isNumber({})).toBe(false);
@@ -53,5 +62,26 @@ describe('shared utils methods', () => {
     expect(isUndef(null)).toBe(false);
     expect(isUndef(NaN)).toBe(false);
     expect(isUndef('')).toBe(false);
+  });
+
+  test('isNonNullable', () => {
+    expect(isNonNullable(0)).toBe(true);
+    expect(isNonNullable('')).toBe(true);
+    expect(isNonNullable(false)).toBe(true);
+    expect(isNonNullable({})).toBe(true);
+    expect(isNonNullable([])).toBe(true);
+    expect(isNonNullable(null)).toBe(false);
+    expect(isNonNullable(undefined)).toBe(false);
+  });
+
+  test('isThenable', () => {
+    expect(isThenable(Promise.resolve())).toBe(true);
+    expect(isThenable({ then: () => {} })).toBe(true);
+    expect(isThenable({ then: function () {} })).toBe(true);
+    expect(isThenable({ then: 'NOT THENABLE' })).toBe(false);
+    expect(isThenable({})).toBe(false);
+    expect(isThenable([])).toBe(false);
+    expect(isThenable(null)).toBe(false);
+    expect(isThenable(undefined)).toBe(false);
   });
 });

@@ -4,12 +4,7 @@ import { setup } from './setup';
 
 describe('useUrlState', () => {
   test('state should be url search params', () => {
-    const res = setup([
-      {
-        pathname: '/index',
-        search: '?count=1',
-      },
-    ]);
+    const res = setup([{ pathname: '/index', search: '?count=1' }]);
     expect(res.state).toMatchObject({ count: '1' });
   });
 

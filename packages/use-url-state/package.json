@@ -1,11 +1,11 @@
 {
-  "name": "@ahooksjs/use-url-state",
+  "name": "@ahooks.js/use-url-state",
   "version": "3.6.0",
   "description": "A hook that stores the state into url query parameters.",
   "main": "./lib/index.js",
   "module": "./es/index.js",
   "types": "./lib/index.d.ts",
-  "unpkg": "dist/ahooks-use-url-state.js",
+  "unpkg": "dist/ahooks.js-use-url-state.js",
   "files": [
     "dist",
     "lib",

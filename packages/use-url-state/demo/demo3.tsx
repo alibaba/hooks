@@ -6,7 +6,7 @@
  * desc.zh-CN: 可以通过传入 parseOptions 和 stringifyOptions 自定义转换规则。
  */
 
-import useUrlState from '@ahooksjs/use-url-state';
+import useUrlState from '@ahooks.js/use-url-state';
 
 export default () => {
   const [state, setState] = useUrlState(

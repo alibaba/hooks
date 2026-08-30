@@ -115,7 +115,9 @@ describe('useLocalStorageState', () => {
   test('should sync state when changes', async () => {
     const LOCAL_STORAGE_KEY = 'test-sync-state';
     const hook = setUp(LOCAL_STORAGE_KEY, 'foo', { listenStorageChange: true });
-    const anotherHook = setUp(LOCAL_STORAGE_KEY, 'bar', { listenStorageChange: true });
+    const anotherHook = setUp(LOCAL_STORAGE_KEY, 'bar', {
+      listenStorageChange: true,
+    });
 
     expect(hook.result.current.state).toBe('foo');
     expect(anotherHook.result.current.state).toBe('bar');
@@ -127,5 +129,37 @@ describe('useLocalStorageState', () => {
     act(() => anotherHook.result.current.setState('qux'));
     expect(hook.result.current.state).toBe('qux');
     expect(anotherHook.result.current.state).toBe('qux');
+  });
+
+  test('should not rerender when setting the same reference', () => {
+    const LOCAL_STORAGE_KEY = 'test-same-reference';
+    const value = {
+      name: 'A',
+    };
+    let renderCount = 0;
+
+    const hook = renderHook(() => {
+      renderCount += 1;
+      const [state, setState] = useLocalStorageState(LOCAL_STORAGE_KEY, {
+        defaultValue: value,
+        listenStorageChange: true,
+      });
+
+      return {
+        state,
+        setState,
+      } as const;
+    });
+
+    expect(renderCount).toBe(1);
+    expect(hook.result.current.state).toBe(value);
+
+    act(() => {
+      hook.result.current.setState((prev) => prev!);
+    });
+
+    expect(renderCount).toBe(1);
+    expect(hook.result.current.state).toBe(value);
+    expect(localStorage.getItem(LOCAL_STORAGE_KEY)).toBeNull();
   });
 });

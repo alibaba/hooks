@@ -81,6 +81,9 @@ const useAntdTable = <TData extends Data, TParams extends Params>(
 
     // antd 4
     if (isAntdV4) {
+      if (form.validateFieldsReturnFormatValue) {
+        return form.validateFieldsReturnFormatValue(fields);
+      }
       return (form.validateFields as Antd4ValidateFields)(fields);
     }
     // antd 3

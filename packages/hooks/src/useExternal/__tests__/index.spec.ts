@@ -57,7 +57,7 @@ describe('useExternal', () => {
   test('should throw error when provide unsupported type', () => {
     const mockSpy = vi.spyOn(console, 'error').mockImplementationOnce(() => {});
     setup('ahooks.ts');
-    expect(mockSpy).toBeCalled();
+    expect(mockSpy).toHaveBeenCalled();
   });
 
   test('should not load again when the js exists', () => {

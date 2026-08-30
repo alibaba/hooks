@@ -69,9 +69,7 @@ describe('useSelections', () => {
 
   test('toggle should work correct', () => {
     const caseCallback: CaseCallback = (data, selected, selectedItem) => {
-      const { result } = setup(data, {
-        itemKey: 'id',
-      });
+      const { result } = setup(data, { itemKey: 'id' });
       const { toggle } = result.current;
 
       act(() => {
@@ -94,9 +92,7 @@ describe('useSelections', () => {
 
   test('selectAll and unSelectAll should work correct', async () => {
     const caseCallback: CaseCallback = (data) => {
-      const { result } = setup(data, {
-        itemKey: 'id',
-      });
+      const { result } = setup(data, { itemKey: 'id' });
       const { selectAll, unSelectAll } = result.current;
 
       expect(result.current.noneSelected).toBe(true);
@@ -185,8 +181,8 @@ describe('useSelections', () => {
 
       // Keep compatible with older versions.
       act(() => {
-        expect(() => setSelected(undefined!)).not.toThrowError();
-        expect(() => setSelected(null!)).not.toThrowError();
+        expect(() => setSelected(undefined!)).not.toThrow();
+        expect(() => setSelected(null!)).not.toThrow();
       });
     };
 
@@ -204,10 +200,7 @@ describe('useSelections', () => {
     const runCase = (data: any, newData: any, remainData: any) => {
       const { result } = renderHook(() => {
         const [list, setList] = useState(data);
-        const hook = useSelections(list, {
-          itemKey: 'id',
-        });
-
+        const hook = useSelections(list, { itemKey: 'id' });
         return { setList, hook };
       });
       const { setSelected, unSelectAll, clearAll } = result.current.hook;

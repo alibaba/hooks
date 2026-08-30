@@ -18,7 +18,7 @@ describe('useInterval', () => {
   test('interval should work', () => {
     const callback = vi.fn();
     setUp({ fn: callback, delay: 20 });
-    expect(callback).not.toBeCalled();
+    expect(callback).not.toHaveBeenCalled();
     vi.advanceTimersByTime(70);
     expect(callback).toHaveBeenCalledTimes(3);
   });
@@ -38,7 +38,7 @@ describe('useInterval', () => {
   test('immediate in options should work', () => {
     const callback = vi.fn();
     setUp({ fn: callback, delay: 20, options: { immediate: true } });
-    expect(callback).toBeCalled();
+    expect(callback).toHaveBeenCalled();
     expect(callback).toHaveBeenCalledTimes(1);
     vi.advanceTimersByTime(50);
     expect(callback).toHaveBeenCalledTimes(3);
@@ -48,7 +48,7 @@ describe('useInterval', () => {
     const callback = vi.fn();
     const hook = setUp({ fn: callback, delay: 20 });
 
-    expect(callback).not.toBeCalled();
+    expect(callback).not.toHaveBeenCalled();
 
     hook.result.current();
     vi.advanceTimersByTime(70);

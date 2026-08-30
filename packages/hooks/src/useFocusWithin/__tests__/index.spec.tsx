@@ -1,11 +1,11 @@
 import { cleanup, fireEvent, render } from '@testing-library/react';
-import { useRef } from 'react';
+import React, { useRef } from 'react';
 import { beforeEach, describe, expect, test, vi } from 'vitest';
 import useFocusWithin, { type Options } from '../index';
 
 const setup = (options?: Options) => {
-  const TestComponent = () => {
-    const ref = useRef(null);
+  const TestComponent: React.FC = () => {
+    const ref = useRef<HTMLDivElement>(null);
     const isFocusWithin = useFocusWithin(ref, options);
     return (
       <div ref={ref}>
@@ -35,16 +35,16 @@ describe('useFocusWithin', () => {
     const onBlur = vi.fn();
     const result = setup({ onFocus, onBlur });
     fireEvent.focusIn(result.getAllByLabelText('First Name')[0]);
-    expect(onFocus).toBeCalled();
+    expect(onFocus).toHaveBeenCalled();
     fireEvent.focusOut(result.getAllByLabelText('First Name')[0]);
-    expect(onBlur).toBeCalled();
+    expect(onBlur).toHaveBeenCalled();
   });
 
   test('should call onChange', () => {
     const onChange = vi.fn();
     const result = setup({ onChange });
     fireEvent.focusIn(result.getAllByLabelText('First Name')[0]);
-    expect(onChange).toBeCalledWith(true);
+    expect(onChange).toHaveBeenCalledWith(true);
     fireEvent.focusOut(result.getAllByLabelText('First Name')[0]);
     expect(onChange).toHaveBeenLastCalledWith(false);
   });

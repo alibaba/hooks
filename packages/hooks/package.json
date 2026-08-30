@@ -1,6 +1,6 @@
 {
   "name": "ahooks",
-  "version": "3.9.6",
+  "version": "3.9.7",
   "description": "react hooks library",
   "keywords": [
     "ahooks",
@@ -36,7 +36,6 @@
     "README.md"
   ],
   "dependencies": {
-    "@types/js-cookie": "^3.0.6",
     "@babel/runtime": "^7.21.0",
     "dayjs": "^1.9.1",
     "js-cookie": "^3.0.5",
@@ -45,6 +44,9 @@
     "resize-observer-polyfill": "^1.5.1",
     "screenfull": "^5.0.0",
     "tslib": "^2.4.1"
+  },
+  "devDependencies": {
+    "@types/js-cookie": "^3.0.6"
   },
   "peerDependencies": {
     "react": "^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0",

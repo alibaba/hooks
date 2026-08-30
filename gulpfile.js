@@ -21,7 +21,7 @@ gulp.task('cjs', () =>
 );
 
 gulp.task('es', async () => {
-  const { execSync } = require('child_process');
+  const { execSync } = require('node:child_process');
 
   // 使用 tsc 直接编译
   console.log('Running TypeScript compilation...');

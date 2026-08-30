@@ -26,13 +26,13 @@ const { data, error, loading } = useRequest(service);
 如果设置了 `options.manual = true`，则 `useRequest` 不会默认执行，需要通过 `run` 或者 `runAsync` 来触发执行。
 
 ```tsx | pure
-const { loading, run, runAsync } = useRequest(service, {
-  manual: true
-});
+const { loading, run, runAsync } = useRequest(service, { manual: true });
 
-<button onClick={run} disabled={loading}>
-  {loading ? 'Loading' : 'Edit'}
-</button>
+return (
+  <button onClick={run} disabled={loading}>
+    {loading ? "Loading" : "Edit"}
+  </button>
+);
 ```
 
 `run` 与 `runAsync` 的区别在于：
@@ -41,11 +41,13 @@ const { loading, run, runAsync } = useRequest(service, {
 - `runAsync` 是一个返回 `Promise` 的异步函数，如果使用 `runAsync` 来调用，则意味着你需要自己捕获异常。
 
   ```ts
-  runAsync().then((data) => {
-    console.log(data);
-  }).catch((error) => {
-    console.log(error);
-  })
+  runAsync()
+    .then((data) => {
+      console.log(data);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
   ```
 
 接下来我们通过修改用户名这个简单的场景，来演示 useRequest 手动触发模式，以及 `run` 与 `runAsync` 的区别。
@@ -109,6 +111,32 @@ const { loading, run, runAsync } = useRequest(service, {
 - 竞态取消，当上一次 promise 还没返回时，又发起了下一次 promise，则会忽略上一次 promise 的响应
 
 <code src="./demo/cancel.tsx" />
+
+### 被忽略的请求会返回什么
+
+被忽略的请求不会更新 `data`/`error`，也不会触发 `onSuccess`/`onError`/`onFinally`。
+
+对于 `run` 和 `refresh` 来说到此为止：它们不会报告任何东西。
+
+对于 `runAsync` 和 `refreshAsync`，其 promise 会**以 `CancelledError` reject**，从而保证 `await`、
+`.finally()` 以及调用外层的锁一定会被释放。可以用 `isCancelledError` 区分「被忽略」和「真正失败」：
+
+```ts
+import { isCancelledError } from 'ahooks';
+
+try {
+  await runAsync();
+  // 只有本次调用真正胜出时才会执行到这里
+} catch (error) {
+  if (isCancelledError(error)) {
+    return; // 被取消或被更新的调用覆盖，此时 data 属于另一次调用
+  }
+  handle(error);
+}
+```
+
+注意：被忽略的请求，其结果会被丢弃。即使它自身的 promise 是以 service 错误 reject 的，
+被覆盖的调用也只会以 `CancelledError` reject。
 
 ## 参数管理
 

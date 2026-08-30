@@ -1,13 +1,16 @@
 import type { DebouncedFunc, DebounceSettings } from 'lodash';
 import debounce from 'lodash/debounce';
 import { useEffect, useMemo, useRef } from 'react';
+import useUpdateEffect from '../../../useUpdateEffect';
 import type { Plugin } from '../types';
+import { cancelPendingPromise } from '../utils/cancelledError';
 
 const useDebouncePlugin: Plugin<any, any[]> = (
   fetchInstance,
-  { debounceWait, debounceLeading, debounceTrailing, debounceMaxWait },
+  { debounceWait, debounceLeading, debounceTrailing, debounceMaxWait, ready },
 ) => {
   const debouncedRef = useRef<DebouncedFunc<any>>(undefined);
+  const pendingRejectRef = useRef<(reason?: unknown) => void>(undefined);
 
   const options = useMemo(() => {
     const ret: DebounceSettings = {};
@@ -38,21 +41,43 @@ const useDebouncePlugin: Plugin<any, any[]> = (
       // debounce runAsync should be promise
       // https://github.com/lodash/lodash/issues/4400#issuecomment-834800398
       fetchInstance.runAsync = (...args) => {
+        if (fetchInstance.options.ready === false) {
+          return _originRunAsync(...args);
+        }
+
+        cancelPendingPromise(pendingRejectRef);
+
         return new Promise<void>((resolve, reject) => {
+          let callbackInvoked = false;
+          pendingRejectRef.current = reject;
           debouncedRef.current?.(() => {
+            callbackInvoked = true;
+            pendingRejectRef.current = undefined;
             _originRunAsync(...args)
               .then(resolve)
               .catch(reject);
           });
+
+          if (!callbackInvoked && options.trailing === false) {
+            cancelPendingPromise(pendingRejectRef);
+          }
         });
       };
 
       return () => {
         debouncedRef.current?.cancel();
+        cancelPendingPromise(pendingRejectRef);
         fetchInstance.runAsync = _originRunAsync;
       };
     }
-  }, [debounceWait, options]);
+  }, [debounceWait, options, fetchInstance]);
+
+  useUpdateEffect(() => {
+    if (ready === false) {
+      debouncedRef.current?.cancel();
+      cancelPendingPromise(pendingRejectRef);
+    }
+  }, [ready]);
 
   if (!debounceWait) {
     return {};
@@ -61,6 +86,7 @@ const useDebouncePlugin: Plugin<any, any[]> = (
   return {
     onCancel: () => {
       debouncedRef.current?.cancel();
+      cancelPendingPromise(pendingRejectRef);
     },
   };
 };
