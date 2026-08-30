@@ -31,10 +31,18 @@ const useCurrentTheme = () => {
       }
     };
 
-    matchMedia?.addEventListener('change', onThemeChange);
+    if (matchMedia?.addEventListener) {
+      matchMedia.addEventListener('change', onThemeChange);
+    } else if (matchMedia?.addListener) {
+      matchMedia.addListener(onThemeChange);
+    }
 
     return () => {
-      matchMedia?.removeEventListener('change', onThemeChange);
+      if (matchMedia?.removeEventListener) {
+        matchMedia.removeEventListener('change', onThemeChange);
+      } else if (matchMedia?.removeListener) {
+        matchMedia.removeListener(onThemeChange);
+      }
     };
   }, []);
 

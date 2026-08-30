@@ -69,8 +69,7 @@ useKeyPress(
 
 ## Remarks
 
-1. All key alias refer to [code](https://github.com/alibaba/hooks/blob/master/packages/hooks/src/useKeyPress/index.ts#L21)
-
+1. Supports part of standard browser key values. Reference: [MDN keyboard key values](https://developer.mozilla.org/en-US/docs/Web/API/UI_Events/Keyboard_event_key_values). Full alias list refers to [code](https://github.com/alibaba/hooks/blob/master/packages/hooks/src/useKeyPress/index.ts#L21)
 2. Modifier keys
 
 ```text

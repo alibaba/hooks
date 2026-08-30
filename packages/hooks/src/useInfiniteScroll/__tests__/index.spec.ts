@@ -41,10 +41,12 @@ describe('useInfiniteScroll', () => {
   beforeAll(() => {
     vi.useFakeTimers();
     // Mock requestAnimationFrame to execute callbacks immediately
-    mockRaf = vi.spyOn(window, 'requestAnimationFrame').mockImplementation((cb: FrameRequestCallback) => {
-      cb(0);
-      return 0;
-    }) as ReturnType<typeof vi.spyOn>;
+    mockRaf = vi
+      .spyOn(window, 'requestAnimationFrame')
+      .mockImplementation((cb: FrameRequestCallback) => {
+        cb(0);
+        return 0;
+      }) as ReturnType<typeof vi.spyOn>;
   });
 
   afterAll(() => {
@@ -204,9 +206,9 @@ describe('useInfiniteScroll', () => {
     const fn = vi.fn(() => Promise.resolve({ list: [] }));
     const { result } = setup(fn);
     const { reload } = result.current;
-    expect(fn).toBeCalledTimes(1);
+    expect(fn).toHaveBeenCalledTimes(1);
     act(() => reload());
-    expect(fn).toBeCalledTimes(2);
+    expect(fn).toHaveBeenCalledTimes(2);
     await act(async () => {
       Promise.resolve();
     });
@@ -224,11 +226,11 @@ describe('useInfiniteScroll', () => {
         setValue,
       };
     });
-    expect(fn).toBeCalledTimes(1);
+    expect(fn).toHaveBeenCalledTimes(1);
     act(() => {
       result.current.setValue('ahooks');
     });
-    expect(fn).toBeCalledTimes(2);
+    expect(fn).toHaveBeenCalledTimes(2);
     await act(async () => {
       Promise.resolve();
     });
@@ -252,7 +254,10 @@ describe('useInfiniteScroll', () => {
     await act(async () => {
       vi.advanceTimersByTime(1000);
     });
-    expect(result.current.data).toMatchObject({ list: [1, 2, 3, 4, 5], nextId: 5 });
+    expect(result.current.data).toMatchObject({
+      list: [1, 2, 3, 4, 5],
+      nextId: 5,
+    });
 
     listCount = 3;
     await act(async () => {
@@ -280,14 +285,12 @@ describe('useInfiniteScroll', () => {
 
   test('cancel should be work', () => {
     const onSuccess = vi.fn();
-    const { result } = setup(mockRequest, {
-      onSuccess,
-    });
+    const { result } = setup(mockRequest, { onSuccess });
     const { cancel } = result.current;
     expect(result.current.loading).toBe(true);
     act(() => cancel());
     expect(result.current.loading).toBe(false);
-    expect(onSuccess).not.toBeCalled();
+    expect(onSuccess).not.toHaveBeenCalled();
   });
 
   test('onBefore/onSuccess/onFinally should be called', async () => {
@@ -302,9 +305,9 @@ describe('useInfiniteScroll', () => {
     await act(async () => {
       vi.advanceTimersByTime(1000);
     });
-    expect(onBefore).toBeCalled();
-    expect(onSuccess).toBeCalled();
-    expect(onFinally).toBeCalled();
+    expect(onBefore).toHaveBeenCalled();
+    expect(onSuccess).toHaveBeenCalled();
+    expect(onFinally).toHaveBeenCalled();
   });
 
   test('onError should be called when throw error', async () => {
@@ -318,13 +321,11 @@ describe('useInfiniteScroll', () => {
     await act(async () => {
       Promise.resolve();
     });
-    expect(onError).toBeCalled();
+    expect(onError).toHaveBeenCalled();
   });
 
   test('loadMoreAsync should be work', async () => {
-    const { result } = setup(mockRequest, {
-      manual: true,
-    });
+    const { result } = setup(mockRequest, { manual: true });
     const { loadMoreAsync } = result.current;
     act(() => {
       loadMoreAsync().then((res) => {
@@ -341,11 +342,11 @@ describe('useInfiniteScroll', () => {
     const fn = vi.fn(() => Promise.resolve({ list: [] }));
     const { result } = setup(fn);
     const { reloadAsync } = result.current;
-    expect(fn).toBeCalledTimes(1);
+    expect(fn).toHaveBeenCalledTimes(1);
 
     act(() => {
       reloadAsync().then(() => {
-        expect(fn).toBeCalledTimes(2);
+        expect(fn).toHaveBeenCalledTimes(2);
       });
     });
     await act(async () => {

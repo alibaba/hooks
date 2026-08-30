@@ -67,7 +67,7 @@ describe('useFullscreen', () => {
     const { enterFullscreen, exitFullscreen } = result.current[1];
 
     enterFullscreen();
-    expect(mockScreenfull.request).toBeCalledWith(targetEl);
+    expect(mockScreenfull.request).toHaveBeenCalledWith(targetEl);
 
     act(() => {
       if (changeCallback) changeCallback();
@@ -75,7 +75,7 @@ describe('useFullscreen', () => {
     expect(result.current[0]).toBe(true);
 
     exitFullscreen();
-    expect(mockScreenfull.exit).toBeCalled();
+    expect(mockScreenfull.exit).toHaveBeenCalled();
 
     act(() => {
       if (changeCallback) changeCallback();
@@ -88,7 +88,7 @@ describe('useFullscreen', () => {
     const { toggleFullscreen } = result.current[1];
 
     toggleFullscreen();
-    expect(mockScreenfull.request).toBeCalledWith(targetEl);
+    expect(mockScreenfull.request).toHaveBeenCalledWith(targetEl);
 
     act(() => {
       if (changeCallback) changeCallback();
@@ -96,7 +96,7 @@ describe('useFullscreen', () => {
     expect(result.current[0]).toBe(true);
 
     toggleFullscreen();
-    expect(mockScreenfull.exit).toBeCalled();
+    expect(mockScreenfull.exit).toHaveBeenCalled();
 
     act(() => {
       if (changeCallback) changeCallback();
@@ -115,15 +115,19 @@ describe('useFullscreen', () => {
 
     toggleFullscreen();
     act(() => {
-      if (changeCallback) changeCallback();
+      if (changeCallback) {
+        changeCallback();
+      }
     });
-    expect(onEnter).toBeCalled();
+    expect(onEnter).toHaveBeenCalled();
 
     toggleFullscreen();
     act(() => {
-      if (changeCallback) changeCallback();
+      if (changeCallback) {
+        changeCallback();
+      }
     });
-    expect(onExit).toBeCalled();
+    expect(onExit).toHaveBeenCalled();
   });
 
   test('onExit/onEnter should not be called', () => {
@@ -138,21 +142,25 @@ describe('useFullscreen', () => {
     // `onExit` should not be called when not full screen
     exitFullscreen();
     act(() => {
-      if (changeCallback) changeCallback();
+      if (changeCallback) {
+        changeCallback();
+      }
     });
-    expect(onExit).not.toBeCalled();
+    expect(onExit).not.toHaveBeenCalled();
 
     // Enter full screen
     enterFullscreen();
     act(() => {
-      if (changeCallback) changeCallback();
+      if (changeCallback) {
+        changeCallback();
+      }
     });
-    expect(onEnter).toBeCalled();
+    expect(onEnter).toHaveBeenCalled();
     onEnter.mockReset();
 
     // `onEnter` should not be called when full screen
     enterFullscreen();
-    expect(onEnter).not.toBeCalled();
+    expect(onEnter).not.toHaveBeenCalled();
   });
 
   test('pageFullscreen should be work', () => {
@@ -173,7 +181,7 @@ describe('useFullscreen', () => {
 
     act(() => toggleFullscreen());
     expect(result.current[0]).toBe(true);
-    expect(onEnter).toBeCalled();
+    expect(onEnter).toHaveBeenCalled();
     expect(targetEl.classList.contains(PAGE_FULLSCREEN_CLASS_NAME)).toBeTruthy();
     expect(getStyleEl()).not.toBeNull();
     expect(getStyleEl()?.textContent).toContain(`z-index: ${PAGE_FULLSCREEN_Z_INDEX}`);
@@ -181,7 +189,7 @@ describe('useFullscreen', () => {
 
     act(() => toggleFullscreen());
     expect(result.current[0]).toBe(false);
-    expect(onExit).toBeCalled();
+    expect(onExit).toHaveBeenCalled();
     expect(targetEl.classList.contains(PAGE_FULLSCREEN_CLASS_NAME)).toBeFalsy();
     expect(getStyleEl()).toBeNull();
     expect(getStyleEl()?.textContent).toBeUndefined();
@@ -193,16 +201,15 @@ describe('useFullscreen', () => {
     const { result } = setup(null, { onEnter });
     const { enterFullscreen } = result.current[1];
     enterFullscreen();
-    expect(mockScreenfull.request).not.toBeCalled();
-    expect(onEnter).not.toBeCalled();
+    expect(mockScreenfull.request).not.toHaveBeenCalled();
+    expect(onEnter).not.toHaveBeenCalled();
   });
 
   test('should remove event listener when unmount', () => {
     const { unmount } = setup(targetEl);
-    expect(mockScreenfull.on).toBeCalledWith('change', expect.any(Function));
-
+    expect(mockScreenfull.on).toHaveBeenCalledWith('change', expect.any(Function));
     unmount();
-    expect(mockScreenfull.off).toBeCalledWith('change', expect.any(Function));
+    expect(mockScreenfull.off).toHaveBeenCalledWith('change', expect.any(Function));
   });
 
   test('`isFullscreen` should be false when use `document.exitFullscreen`', () => {

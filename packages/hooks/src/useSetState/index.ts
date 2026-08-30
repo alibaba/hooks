@@ -6,10 +6,14 @@ export type SetState<S extends Record<string, any>> = <K extends keyof S>(
   state: Pick<S, K> | null | ((prevState: Readonly<S>) => Pick<S, K> | S | null),
 ) => void;
 
-const useSetState = <S extends Record<string, any>>(
-  initialState: S | (() => S),
-): [S, SetState<S>] => {
-  const [state, setState] = useState<S>(initialState);
+function useSetState<S extends Record<string, any>>(
+  initialState?: undefined,
+): [Partial<S>, SetState<Partial<S>>];
+function useSetState<S extends Record<string, any>>(initialState: S | (() => S)): [S, SetState<S>];
+function useSetState<S extends Record<string, any>>(
+  initialState?: S | (() => S),
+): [Partial<S>, SetState<Partial<S>>] {
+  const [state, setState] = useState<Partial<S>>(initialState ?? {});
 
   const setMergeState = useMemoizedFn((patch) => {
     setState((prevState) => {
@@ -19,6 +23,6 @@ const useSetState = <S extends Record<string, any>>(
   });
 
   return [state, setMergeState];
-};
+}
 
 export default useSetState;

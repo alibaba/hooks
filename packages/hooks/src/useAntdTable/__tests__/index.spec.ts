@@ -1,8 +1,8 @@
 import type { RenderHookResult } from '@testing-library/react';
-import { act, renderHook, waitFor } from '@testing-library/react';
+import { act, render, renderHook, waitFor } from '@testing-library/react';
 import { Form } from 'antd';
-import { useEffect } from 'react';
-import { describe, expect, test } from 'vitest';
+import React, { createElement, useEffect } from 'react';
+import { describe, expect, test, vi } from 'vitest';
 import { sleep } from '../../utils/testingHelpers';
 import useAntdTable from '../index';
 
@@ -131,6 +131,34 @@ describe('useAntdTable', () => {
 
     await sleep(1);
     expect(queryArgs).toBeUndefined();
+  });
+
+  test('should submit transformed values from ProForm', async () => {
+    queryArgs = undefined;
+    form.resetFields();
+    changeSearchType('simple');
+
+    const proForm = {
+      ...form,
+      validateFieldsReturnFormatValue: vi.fn().mockResolvedValue({
+        keyword: 'default name',
+      }),
+    };
+
+    act(() => {
+      hook = setUp(asyncFn, {
+        form: proForm,
+        manual: true,
+      });
+    });
+
+    act(() => {
+      hook.result.current.search.submit();
+    });
+
+    await waitFor(() => expect(queryArgs?.keyword).toBe('default name'));
+    expect(queryArgs.name).toBeUndefined();
+    expect(proForm.validateFieldsReturnFormatValue).toHaveBeenCalledWith(['name']);
   });
 
   test('should ready work', async () => {
@@ -347,36 +375,39 @@ describe('useAntdTable', () => {
     });
   });
 
-  test('should defaultParams work with manual is  true', async () => {
+  test('should defaultParams work with manual is true', async () => {
     queryArgs = undefined;
     form.resetFields();
     changeSearchType('advance');
 
-    act(() => {
-      renderHook((o) => {
-        const [myForm] = Form.useForm();
+    let currentName: string | undefined;
 
-        useAntdTable(
-          asyncFn,
-          o || {
-            form: myForm,
-            defaultParams: [
-              {
-                current: 2,
-                pageSize: 10,
-              },
-              { name: 'hello', phone: '123' },
-            ],
-            defaultType: 'advance',
-          },
-        );
-
-        useEffect(() => {
-          // defaultParams works
-          expect(myForm.getFieldValue('name')).toBe('hello');
-          expect(queryArgs).toBe(undefined);
-        }, []);
+    const Setup: React.FC = () => {
+      const [myForm] = Form.useForm();
+      useAntdTable(asyncFn, {
+        form: myForm,
+        manual: true,
+        defaultParams: [
+          { current: 2, pageSize: 10 },
+          { name: 'hello', phone: '123' },
+        ],
+        defaultType: 'advance',
       });
+
+      useEffect(() => {
+        currentName = myForm.getFieldValue('name');
+      }, [myForm]);
+
+      return createElement(Form, { form: myForm });
+    };
+
+    act(() => {
+      render(createElement(Setup));
+    });
+
+    await waitFor(() => {
+      expect(currentName).toBe('hello');
+      expect(queryArgs).toBe(undefined);
     });
   });
 });

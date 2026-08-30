@@ -1,5 +1,5 @@
 import { act, renderHook } from '@testing-library/react';
-import { describe, expect, test } from 'vitest';
+import { describe, expect, expectTypeOf, test } from 'vitest';
 import useSetState from '../index';
 
 describe('useSetState', () => {
@@ -37,5 +37,32 @@ describe('useSetState', () => {
       hook.result.current.setState((prev) => ({ count: prev.count + 1 }));
     });
     expect(hook.result.current.state).toEqual({ count: 1 });
+  });
+
+  test('should support empty initial state', () => {
+    const hook = renderHook(() => {
+      const [state, setState] = useSetState<{ hello?: string }>();
+      return {
+        state,
+        setState,
+      } as const;
+    });
+
+    expect(hook.result.current.state).toEqual({});
+
+    act(() => {
+      hook.result.current.setState({ hello: 'world' });
+    });
+
+    expect(hook.result.current.state).toEqual({ hello: 'world' });
+  });
+
+  test('should expose empty initial state as partial', () => {
+    const useRequiredState = () => {
+      const [state] = useSetState<{ required: string }>();
+      return state;
+    };
+
+    expectTypeOf(useRequiredState).returns.toEqualTypeOf<{ required?: string }>();
   });
 });

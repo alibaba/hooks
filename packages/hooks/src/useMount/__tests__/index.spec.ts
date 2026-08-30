@@ -41,13 +41,4 @@ describe('useMount', () => {
     // Cleanup should not be called for async functions
     expect(cleanup).toHaveBeenCalledTimes(0);
   });
-
-  // test('should output error when fn is not a function', () => {
-  //   const errSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
-  //   renderHook(() => useMount(1 as any));
-  //   expect(errSpy).toBeCalledWith(
-  //     'useMount: parameter `fn` expected to be a function, but got "number".',
-  //   );
-  //   errSpy.mockRestore();
-  // });
 });

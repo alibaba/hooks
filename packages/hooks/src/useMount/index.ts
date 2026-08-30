@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { type EffectCallback } from 'react';
-import { isFunction } from '../utils';
+import { isFunction, isThenable } from '../utils';
 import isDev from '../utils/isDev';
 
 type MountCallback = EffectCallback | (() => Promise<void | (() => void)>);
@@ -17,10 +17,10 @@ const useMount = (fn: MountCallback) => {
   useEffect(() => {
     const result = fn?.();
     // If fn returns a Promise, don't return it as cleanup function
-    if (result && typeof result === 'object' && typeof (result as any).then === 'function') {
+    if (isThenable(result)) {
       return;
     }
-    return result as ReturnType<EffectCallback>;
+    return result;
   }, []);
 };
 

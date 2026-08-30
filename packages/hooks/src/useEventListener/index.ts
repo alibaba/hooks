@@ -7,8 +7,10 @@ type noop = (...p: any) => void;
 
 export type Target = BasicTarget<HTMLElement | Element | Window | Document>;
 
-type Options<T extends Target = Target> = {
-  target?: T;
+type TargetType = HTMLElement | Element | Window | Document;
+
+type Options<T extends TargetType = TargetType> = {
+  target?: BasicTarget<T>;
   capture?: boolean;
   once?: boolean;
   passive?: boolean;

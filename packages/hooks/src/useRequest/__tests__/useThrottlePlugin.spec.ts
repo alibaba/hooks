@@ -1,7 +1,7 @@
 import { act, type RenderHookResult, renderHook } from '@testing-library/react';
 import { describe, expect, test, vi } from 'vitest';
 import { request } from '../../utils/testingHelpers';
-import useRequest from '../index';
+import useRequest, { CancelledError } from '../index';
 
 describe('useThrottlePlugin', () => {
   vi.useFakeTimers();
@@ -42,121 +42,131 @@ describe('useThrottlePlugin', () => {
     expect(callback).toHaveBeenCalledTimes(2);
   });
 
-  test('useThrottlePlugin should work with runAsync', () => {
-    const callback = vi.fn();
+  test('runAsync should respect leading and trailing options without rerender', async () => {
+    const service = vi.fn((value: string) => Promise.resolve(value));
 
     act(() => {
-      hook = setUp(
-        () => {
-          callback();
-          return request({});
-        },
-        {
-          manual: true,
-          throttleWait: 100,
-        },
-      );
+      hook = setUp(service, {
+        manual: true,
+        throttleWait: 100,
+        throttleLeading: true,
+        throttleTrailing: false,
+      });
     });
 
-    act(() => {
-      hook.result.current.runAsync(1);
-      vi.advanceTimersByTime(50);
-      hook.result.current.runAsync(2);
-      vi.advanceTimersByTime(50);
-      hook.result.current.runAsync(3);
-      vi.advanceTimersByTime(50);
-      hook.result.current.runAsync(4);
-      vi.advanceTimersByTime(40);
-    });
-
-    expect(callback).toHaveBeenCalledTimes(2);
-  });
-
-  test('useThrottlePlugin should respect throttleLeading and throttleTrailing options with runAsync', () => {
-    const callback = vi.fn();
-
-    act(() => {
-      hook = setUp(
-        () => {
-          callback();
-          return request({});
-        },
-        {
-          manual: true,
-          throttleWait: 3000,
-          throttleLeading: true,
-          throttleTrailing: false,
-        },
-      );
-    });
-
-    act(() => {
-      // First call should execute immediately (leading: true)
-      hook.result.current.runAsync(1);
-      // These calls should be ignored (within throttle window)
-      hook.result.current.runAsync(2);
-      hook.result.current.runAsync(3);
-      hook.result.current.runAsync(4);
-      hook.result.current.runAsync(5);
-      hook.result.current.runAsync(6);
-      hook.result.current.runAsync(7);
-
-      vi.advanceTimersByTime(3000);
-
-      // After throttle window, next call should execute
-      hook.result.current.runAsync(8);
-    });
-
-    // Should only execute twice: first call (leading) and call after throttle window
-    expect(callback).toHaveBeenCalledTimes(2);
-  });
-
-  test('useThrottlePlugin should resolve all promises when using runAsync', async () => {
-    let requestCount = 0;
-
-    act(() => {
-      hook = setUp(
-        () => {
-          requestCount++;
-          return request({ id: requestCount });
-        },
-        {
-          manual: true,
-          throttleWait: 100,
-          throttleLeading: true,
-          throttleTrailing: false,
-        },
-      );
-    });
-
-    let resolved1 = false;
-    let resolved2 = false;
-    let rejected2 = false;
-
-    // Make two calls within throttle window
-    const p1 = hook.result.current.runAsync(1);
-    const p2 = hook.result.current.runAsync(2);
-
-    p1.then(() => {
-      resolved1 = true;
-    });
-    p2.then(() => {
-      resolved2 = true;
-    }).catch(() => {
-      rejected2 = true;
-    });
-
-    // Advance time for throttle and request
     await act(async () => {
-      vi.advanceTimersByTime(100); // throttle wait
-      vi.advanceTimersByTime(1000); // request wait
-      await Promise.resolve();
+      await expect(hook.result.current.runAsync('first')).resolves.toBe('first');
+      await expect(hook.result.current.runAsync('dropped')).rejects.toBeInstanceOf(CancelledError);
+      vi.advanceTimersByTime(100);
+      await expect(hook.result.current.runAsync('after-window')).resolves.toBe('after-window');
     });
 
-    // First promise should be resolved
-    expect(resolved1).toBe(true);
-    // Second promise should be either resolved or rejected (not hanging)
-    expect(resolved2 || rejected2).toBe(true);
-    expect(requestCount).toBe(1); // Only one request should be made
+    expect(service).toHaveBeenCalledTimes(2);
+    expect(service).toHaveBeenNthCalledWith(1, 'first');
+    expect(service).toHaveBeenNthCalledWith(2, 'after-window');
+    hook.unmount();
+  });
+
+  test('runAsync should preserve a trailing call with the latest params', async () => {
+    const service = vi.fn((value: string) => Promise.resolve(value));
+
+    act(() => {
+      hook = setUp(service, {
+        manual: true,
+        throttleWait: 100,
+        throttleLeading: true,
+        throttleTrailing: true,
+      });
+    });
+
+    await act(async () => {
+      const firstPromise = hook.result.current.runAsync('first');
+      await expect(firstPromise).resolves.toBe('first');
+      vi.advanceTimersByTime(50);
+      const trailingPromise = hook.result.current.runAsync('latest');
+      vi.advanceTimersByTime(50);
+
+      await expect(trailingPromise).resolves.toBe('latest');
+    });
+
+    expect(service).toHaveBeenCalledTimes(2);
+    expect(service).toHaveBeenNthCalledWith(1, 'first');
+    expect(service).toHaveBeenNthCalledWith(2, 'latest');
+    hook.unmount();
+  });
+
+  test('runAsync should reject a queued call when cancel is called', async () => {
+    const service = vi.fn().mockResolvedValue('success');
+    const onRejected = vi.fn();
+
+    act(() => {
+      hook = setUp(service, {
+        manual: true,
+        throttleWait: 100,
+        throttleLeading: false,
+      });
+    });
+    hook.rerender();
+
+    await act(async () => {
+      hook.result.current.runAsync().catch(onRejected);
+      hook.result.current.cancel();
+      vi.runAllTimers();
+    });
+
+    expect(onRejected).toHaveBeenCalledTimes(1);
+    expect(onRejected.mock.calls[0][0]).toBeInstanceOf(CancelledError);
+    expect(service).not.toHaveBeenCalled();
+    hook.unmount();
+  });
+
+  test('runAsync should reject a queued call when it is superseded', async () => {
+    const service = vi.fn((value: string) => Promise.resolve(value));
+    const onFirstRejected = vi.fn();
+    const onSecondFulfilled = vi.fn();
+
+    act(() => {
+      hook = setUp(service, {
+        manual: true,
+        throttleWait: 100,
+        throttleLeading: false,
+      });
+    });
+    hook.rerender();
+
+    await act(async () => {
+      hook.result.current.runAsync('first').catch(onFirstRejected);
+      hook.result.current.runAsync('second').then(onSecondFulfilled);
+      vi.runAllTimers();
+    });
+
+    expect(onFirstRejected).toHaveBeenCalledTimes(1);
+    expect(onFirstRejected.mock.calls[0][0]).toBeInstanceOf(CancelledError);
+    expect(service).toHaveBeenCalledTimes(1);
+    expect(service).toHaveBeenCalledWith('second');
+    expect(onSecondFulfilled).toHaveBeenCalledWith('second');
+    hook.unmount();
+  });
+
+  test('runAsync should reject a call suppressed when trailing is false', async () => {
+    const service = vi.fn((value: string) => Promise.resolve(value));
+
+    act(() => {
+      hook = setUp(service, {
+        manual: true,
+        throttleWait: 100,
+        throttleTrailing: false,
+      });
+    });
+    hook.rerender();
+
+    await act(async () => {
+      await expect(hook.result.current.runAsync('first')).resolves.toBe('first');
+      await expect(hook.result.current.runAsync('dropped')).rejects.toBeInstanceOf(CancelledError);
+      vi.advanceTimersByTime(100);
+    });
+
+    expect(service).toHaveBeenCalledTimes(1);
+    hook.unmount();
   });
 });

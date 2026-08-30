@@ -26,13 +26,13 @@ const { data, error, loading } = useRequest(service);
 If `options.manual = true` is set, `useRequest` will not be executed by default, and the execution needs to be triggered by `run` or `runAsync`.
 
 ```tsx | pure
-const { loading, run, runAsync } = useRequest(service, {
-  manual: true
-});
+const { loading, run, runAsync } = useRequest(service, { manual: true });
 
-<button onClick={run} disabled={loading}>
-  {loading ? 'Loading' : 'Edit'}
-</button>
+return (
+  <button onClick={run} disabled={loading}>
+    {loading ? "Loading" : "Edit"}
+  </button>
+);
 ```
 
 The difference between `run` and `runAsync` is:
@@ -41,11 +41,13 @@ The difference between `run` and `runAsync` is:
 - `runAsync` is a asynchronous function that returns a `Promise`. If you use `runAsync` to call it, it means you need to catch the exception yourself.
 
   ```ts
-  runAsync().then((data) => {
-    console.log(data);
-  }).catch((error) => {
-    console.log(error);
-  })
+  runAsync()
+    .then((data) => {
+      console.log(data);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
   ```
 
 Next, we will demonstrate the difference between `run` and `runAsync` through the simple scenario of editing the username.
@@ -109,6 +111,33 @@ At the same time, `useRequest` will automatically ignore the response at the fol
 - Race cancellation, when the previous promise has not returned, if the next promise is initiated, the previous promise will be ignored
 
 <code src="./demo/cancel.tsx" />
+
+### What an ignored request returns
+
+An ignored request never updates `data`/`error`, and never triggers `onSuccess`/`onError`/`onFinally`.
+
+For `run` and `refresh` that is the whole story: they report nothing.
+
+For `runAsync` and `refreshAsync` the promise **rejects with a `CancelledError`**, so that `await`,
+`.finally()` and any lock around the call are always released. Use `isCancelledError` to tell an
+ignored request apart from a real failure:
+
+```ts
+import { isCancelledError } from 'ahooks';
+
+try {
+  await runAsync();
+  // only reached when this call actually won
+} catch (error) {
+  if (isCancelledError(error)) {
+    return; // cancelled or superseded, `data` belongs to another call
+  }
+  handle(error);
+}
+```
+
+Note that the value of an ignored request is dropped: a superseded call rejects with a
+`CancelledError` even when its own promise rejected with a service error.
 
 ## Parameter management
 

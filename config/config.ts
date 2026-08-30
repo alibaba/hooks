@@ -1,8 +1,74 @@
+import { defineConfig } from 'dumi';
+import path from 'node:path';
 import { menus } from './hooks';
 
 const packages = require('../packages/hooks/package.json');
 
-export default {
+const publicPath = process.env.DOCS_PUBLIC_PATH || '/';
+
+const join = (p: string) => path.join(publicPath, p).replaceAll('\\', '/');
+
+// dumi v1 uses webpack 4, which needs Babel to parse modern syntax in antd v6 packages.
+const extraBabelIncludes = [
+  'filter-obj',
+  'antd',
+  '@ant-design/colors',
+  '@ant-design/cssinjs',
+  '@ant-design/cssinjs-utils',
+  '@ant-design/fast-color',
+  '@ant-design/icons',
+  '@ant-design/icons-svg',
+  '@ant-design/react-slick',
+  '@rc-component/async-validator',
+  '@rc-component/cascader',
+  '@rc-component/checkbox',
+  '@rc-component/collapse',
+  '@rc-component/color-picker',
+  '@rc-component/context',
+  '@rc-component/dialog',
+  '@rc-component/drawer',
+  '@rc-component/dropdown',
+  '@rc-component/form',
+  '@rc-component/image',
+  '@rc-component/input',
+  '@rc-component/input-number',
+  '@rc-component/mentions',
+  '@rc-component/menu',
+  '@rc-component/mini-decimal',
+  '@rc-component/motion',
+  '@rc-component/mutate-observer',
+  '@rc-component/notification',
+  '@rc-component/overflow',
+  '@rc-component/pagination',
+  '@rc-component/picker',
+  '@rc-component/portal',
+  '@rc-component/progress',
+  '@rc-component/qrcode',
+  '@rc-component/rate',
+  '@rc-component/resize-observer',
+  '@rc-component/segmented',
+  '@rc-component/select',
+  '@rc-component/slider',
+  '@rc-component/steps',
+  '@rc-component/switch',
+  '@rc-component/table',
+  '@rc-component/tabs',
+  '@rc-component/textarea',
+  '@rc-component/tooltip',
+  '@rc-component/tour',
+  '@rc-component/tree',
+  '@rc-component/tree-select',
+  '@rc-component/trigger',
+  '@rc-component/upload',
+  '@rc-component/util',
+  '@rc-component/virtual-list',
+  'clsx',
+  'dayjs',
+  'scroll-into-view-if-needed',
+  'throttle-debounce',
+];
+
+const config = defineConfig({
   // ssr: {},
   exportStatic: {},
   nodeModulesTransform: {
@@ -10,7 +76,7 @@ export default {
     exclude: [],
   },
   // https://github.com/alibaba/hooks/issues/2155
-  extraBabelIncludes: ['filter-obj'],
+  extraBabelIncludes: extraBabelIncludes,
   extraBabelPlugins: [
     [
       'babel-plugin-import',
@@ -32,15 +98,15 @@ export default {
   ],
   mode: 'site',
   title: 'ahooks 3.0',
-  favicon: '/simple-logo.svg',
-  logo: '/logo.svg',
+  favicon: join('/simple-logo.svg'),
+  logo: join('/logo.svg'),
   dynamicImport: {},
   manifest: {},
   hash: true,
-  publicPath: '/',
+  publicPath,
   alias: {
-    ahooks: process.cwd() + '/packages/hooks/src/index.ts',
-    '@ahooksjs/use-url-state': process.cwd() + '/packages/use-url-state/src/index.ts',
+    ahooks: `${process.cwd()}/packages/hooks/src/index.ts`,
+    '@ahooks.js/use-url-state': `${process.cwd()}/packages/use-url-state/src/index.ts`,
   },
   resolve: {
     includes: ['docs', 'packages/hooks/src', 'packages/use-url-state'],
@@ -50,7 +116,7 @@ export default {
       rel: 'stylesheet',
       href: 'https://unpkg.com/@alifd/theme-design-pro@0.6.2/dist/next-noreset.min.css',
     },
-    { rel: 'stylesheet', href: '/style.css' },
+    { rel: 'stylesheet', href: join('/style.css') },
   ],
   navs: {
     'zh-CN': [
@@ -185,7 +251,9 @@ export default {
     `
   const insertVersion = function() {
     const logo = document.querySelector('.__dumi-default-navbar-logo');
-    if (!logo) return;
+    if (!logo) {
+      return;
+    }
     const dom = document.createElement('span');
     dom.id = 'logo-version';
     dom.innerHTML = '${packages.version}';
@@ -206,4 +274,6 @@ export default {
   observer.observe(document.body, { childList: true, subtree: true });
   `,
   ],
-};
+});
+
+export default config;

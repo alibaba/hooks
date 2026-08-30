@@ -2,12 +2,14 @@ import type { DebouncedFunc, ThrottleSettings } from 'lodash';
 import throttle from 'lodash/throttle';
 import { useEffect, useRef } from 'react';
 import type { Plugin } from '../types';
+import { cancelPendingPromise } from '../utils/cancelledError';
 
 const useThrottlePlugin: Plugin<any, any[]> = (
   fetchInstance,
   { throttleWait, throttleLeading, throttleTrailing },
 ) => {
   const throttledRef = useRef<DebouncedFunc<any>>(undefined);
+  const pendingRejectRef = useRef<(reason?: unknown) => void>(undefined);
 
   const options: ThrottleSettings = {};
 
@@ -22,10 +24,6 @@ const useThrottlePlugin: Plugin<any, any[]> = (
     if (throttleWait) {
       const _originRunAsync = fetchInstance.runAsync.bind(fetchInstance);
 
-      // Track the current promise and when it was created
-      let currentPromise: Promise<any> | null = null;
-      let promiseCreatedAt = 0;
-
       throttledRef.current = throttle(
         (callback) => {
           callback();
@@ -37,47 +35,29 @@ const useThrottlePlugin: Plugin<any, any[]> = (
       // throttle runAsync should be promise
       // https://github.com/lodash/lodash/issues/4400#issuecomment-834800398
       fetchInstance.runAsync = (...args) => {
-        const now = Date.now();
+        cancelPendingPromise(pendingRejectRef);
 
-        // If there's a current promise and it was created within the throttle window,
-        // return it to share the result
-        if (currentPromise && now - promiseCreatedAt < throttleWait) {
-          return currentPromise;
-        }
-
-        // Create a new promise
-        promiseCreatedAt = now;
-        currentPromise = new Promise((resolve, reject) => {
+        return new Promise((resolve, reject) => {
+          let callbackInvoked = false;
+          pendingRejectRef.current = reject;
           throttledRef.current?.(() => {
-            // Execute the request
+            callbackInvoked = true;
+            pendingRejectRef.current = undefined;
             _originRunAsync(...args)
-              .then((result) => {
-                resolve(result);
-                // Clear current promise after a delay to allow trailing calls
-                setTimeout(() => {
-                  if (currentPromise && Date.now() - promiseCreatedAt >= throttleWait) {
-                    currentPromise = null;
-                  }
-                }, 0);
-              })
-              .catch((error) => {
-                reject(error);
-                // Clear current promise after a delay to allow trailing calls
-                setTimeout(() => {
-                  if (currentPromise && Date.now() - promiseCreatedAt >= throttleWait) {
-                    currentPromise = null;
-                  }
-                }, 0);
-              });
+              .then(resolve)
+              .catch(reject);
           });
-        });
 
-        return currentPromise;
+          if (!callbackInvoked && options.trailing === false) {
+            cancelPendingPromise(pendingRejectRef);
+          }
+        });
       };
 
       return () => {
         fetchInstance.runAsync = _originRunAsync;
         throttledRef.current?.cancel();
+        cancelPendingPromise(pendingRejectRef);
       };
     }
   }, [throttleWait, throttleLeading, throttleTrailing]);
@@ -89,6 +69,7 @@ const useThrottlePlugin: Plugin<any, any[]> = (
   return {
     onCancel: () => {
       throttledRef.current?.cancel();
+      cancelPendingPromise(pendingRejectRef);
     },
   };
 };

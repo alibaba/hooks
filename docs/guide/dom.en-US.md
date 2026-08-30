@@ -6,35 +6,35 @@ Most of the DOM Hooks will receive the `target` parameter, which indicates the e
 
 1. Support `React.MutableRefObject`
 
-```ts
+```tsx
 export default () => {
   const ref = useRef(null);
   const isHovering = useHover(ref);
-  return <div ref={ref}>{isHovering ? 'hover' : 'leaveHover'}</div>;
+  return <div ref={ref}>{isHovering ? "hover" : "leaveHover"}</div>;
 };
 ```
 
 2. Support `HTMLElement`
 
-```ts
+```tsx
 export default () => {
-  const isHovering = useHover(document.getElementById('test'));
-  return <div id="test">{isHovering ? 'hover' : 'leaveHover'}</div>;
+  const isHovering = useHover(document.getElementById("test"));
+  return <div id="test">{isHovering ? "hover" : "leaveHover"}</div>;
 };
 ```
 
 3. Support `() => HTMLElement`, generally applicable in SSR scenarios
 
-```ts
+```tsx
 export default () => {
-  const isHovering = useHover(() => document.getElementById('test'));
-  return <div id="test">{isHovering ? 'hover' : 'leaveHover'}</div>;
+  const isHovering = useHover(() => document.getElementById("test"));
+  return <div id="test">{isHovering ? "hover" : "leaveHover"}</div>;
 };
 ```
 
 In addition, **the `target` of DOM Hooks supports dynamic changes**. for example:
 
-```ts
+```tsx
 export default () => {
   const [boolean, { toggle }] = useBoolean();
 
@@ -44,8 +44,8 @@ export default () => {
   const isHovering = useHover(boolean ? ref : ref2);
   return (
     <>
-      <div ref={ref}>{isHovering ? 'hover' : 'leaveHover'}</div>
-      <div ref={ref2}>{isHovering ? 'hover' : 'leaveHover'}</div>
+      <div ref={ref}>{isHovering ? "hover" : "leaveHover"}</div>
+      <div ref={ref2}>{isHovering ? "hover" : "leaveHover"}</div>
     </>
   );
 };

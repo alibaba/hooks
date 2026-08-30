@@ -1,3 +1,16 @@
 {
-  "extends": "../../tsconfig.base.json"
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "paths": {
+      "src/*": ["./src/*"],
+      "ahooks": ["./src/index.ts"]
+    }
+  },
+  "ts-node": {
+    "compilerOptions": {
+      "module": "CommonJS",
+      "types": ["node"],
+      "verbatimModuleSyntax": false
+    }
+  }
 }

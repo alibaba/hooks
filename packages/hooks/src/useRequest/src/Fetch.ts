@@ -2,6 +2,7 @@
 import type { RefObject } from 'react';
 import { isFunction } from '../../utils';
 import type { FetchState, Options, PluginReturn, Service, Subscribe } from './types';
+import { CancelledError, isCancelledError } from './utils/cancelledError';
 
 export default class Fetch<TData, TParams extends any[]> {
   pluginImpls: PluginReturn<TData, TParams>[] = [];
@@ -54,7 +55,7 @@ export default class Fetch<TData, TParams extends any[]> {
 
     // stop request
     if (stopNow) {
-      return new Promise(() => {});
+      return Promise.resolve(state.data);
     }
 
     this.setState({
@@ -81,8 +82,7 @@ export default class Fetch<TData, TParams extends any[]> {
       const res = await servicePromise;
 
       if (currentCount !== this.count) {
-        // prevent run.then when request is canceled
-        return new Promise(() => {});
+        throw new CancelledError();
       }
 
       // const formattedResult = this.options.formatResultRef.current ? this.options.formatResultRef.current(res) : res;
@@ -105,8 +105,7 @@ export default class Fetch<TData, TParams extends any[]> {
       return res;
     } catch (error) {
       if (currentCount !== this.count) {
-        // prevent run.then when request is canceled
-        return new Promise(() => {});
+        throw isCancelledError(error) ? error : new CancelledError();
       }
 
       this.setState({
@@ -129,6 +128,11 @@ export default class Fetch<TData, TParams extends any[]> {
 
   run(...params: TParams) {
     this.runAsync(...params).catch((error) => {
+      // cancellation is not a failure: `run` never reports it
+      if (isCancelledError(error)) {
+        return;
+      }
+
       if (!this.options.onError) {
         console.error(error);
       }

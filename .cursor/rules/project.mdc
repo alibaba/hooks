@@ -3,7 +3,8 @@ description:
 globs:
 alwaysApply: true
 ---
- # 项目背景
+
+# 项目背景
 
 这是由蚂蚁团队开发的一个高质量、可靠的 React Hooks 库。
 

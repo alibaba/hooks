@@ -6,7 +6,7 @@
  * desc.zh-CN: useUrlState 可以同时管理多个状态
  */
 
-import useUrlState from '@ahooksjs/use-url-state';
+import useUrlState from '@ahooks.js/use-url-state';
 
 export default () => {
   const [state, setState] = useUrlState({ page: '1', pageSize: '10' });

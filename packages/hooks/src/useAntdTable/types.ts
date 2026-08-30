@@ -30,6 +30,8 @@ export interface AntdFormUtils {
   getFieldsValue: (...args: any) => Record<string, any>;
   resetFields: (...args: any) => void;
   validateFields: Antd3ValidateFields | Antd4ValidateFields;
+  /** Validate fields and return values transformed by ProForm. */
+  validateFieldsReturnFormatValue?: Antd4ValidateFields;
   getInternalHooks?: any;
   [key: string]: any;
 }
