@@ -20,15 +20,16 @@ useSetState works similar to `this.setState` of class component, used to manage 
 ## API
 
 ```typescript
-const [state, setState] = useSetState<T>(initialState?);
+const [state, setState] = useSetState<T>(initialState);
+const [partialState, setPartialState] = useSetState<T>();
 ```
 
 ### Result
 
-| Property | Description          | Type                                                                                      | Default |
-| -------- | -------------------- | ----------------------------------------------------------------------------------------- | ------- |
-| state    | Current state        | `T`                                                                                       | -       |
-| setState | Update current state | `(state: Partial<T> \| null) => void` \| `((prevState: T) => Partial<T> \| null) => void` | -       |
+| Property | Description          | Type                                                                                  | Default |
+| -------- | -------------------- | ------------------------------------------------------------------------------------- | ------- |
+| state    | Current state        | `T`; `Partial<T>` when `initialState` is omitted                                      | -       |
+| setState | Update current state | `SetState<T>`; `SetState<Partial<T>>` when `initialState` is omitted                   | -       |
 
 ### Params
 

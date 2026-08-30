@@ -1,9 +1,9 @@
 import { act, renderHook } from '@testing-library/react';
-import { describe, expect, test } from 'vitest';
+import { describe, expect, expectTypeOf, test } from 'vitest';
 import useSetState from '../index';
 
 describe('useSetState', () => {
-  const setUp = <T extends object>(initialValue?: T) =>
+  const setUp = <T extends object>(initialValue: T) =>
     renderHook(() => {
       const [state, setState] = useSetState<T>(initialValue);
       return {
@@ -55,5 +55,14 @@ describe('useSetState', () => {
     });
 
     expect(hook.result.current.state).toEqual({ hello: 'world' });
+  });
+
+  test('should expose empty initial state as partial', () => {
+    const useRequiredState = () => {
+      const [state] = useSetState<{ required: string }>();
+      return state;
+    };
+
+    expectTypeOf(useRequiredState).returns.toEqualTypeOf<{ required?: string }>();
   });
 });
