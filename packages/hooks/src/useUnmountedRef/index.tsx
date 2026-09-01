@@ -1,6 +1,7 @@
+import type { MutableRefObject } from 'react';
 import { useEffect, useRef } from 'react';
 
-const useUnmountedRef = () => {
+const useUnmountedRef = (): MutableRefObject<boolean> => {
   const unmountedRef = useRef(false);
   useEffect(() => {
     unmountedRef.current = false;
