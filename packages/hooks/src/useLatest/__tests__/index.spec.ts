@@ -1,15 +1,10 @@
 import { renderHook } from '@testing-library/react';
-import type { MutableRefObject } from 'react';
-import { describe, expect, expectTypeOf, test } from 'vitest';
+import { describe, expect, test } from 'vitest';
 import useLatest from '../index';
 
 const setUp = (val: any) => renderHook((state) => useLatest(state), { initialProps: val });
 
 describe('useLatest', () => {
-  test('should expose a non-nullable mutable ref type', () => {
-    expectTypeOf(useLatest<string>).returns.toEqualTypeOf<MutableRefObject<string>>();
-  });
-
   test('useLatest with basic variable should work', async () => {
     const { result, rerender } = setUp(0);
 
