@@ -21,7 +21,7 @@ useEffect 支持异步函数。
 
 ```typescript
 function useAsyncEffect(
-  effect: () => AsyncGenerator | Promise,
+  effect: () => AsyncGenerator | Promise<void> | (() => void),
   deps: DependencyList
 );
 ```

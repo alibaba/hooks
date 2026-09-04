@@ -9,22 +9,26 @@ function isAsyncGenerator(
 }
 
 function useAsyncEffect(
-  effect: () => AsyncGenerator<void, void, void> | Promise<void>,
+  effect: () => AsyncGenerator<void, void, void> | Promise<void> | (() => void),
   deps?: DependencyList,
 ) {
   useEffect(() => {
     const e = effect();
+    if (typeof e === 'function') {
+      return e;
+    }
+    const asyncEffect = e;
     let cancelled = false;
     async function execute() {
-      if (isAsyncGenerator(e)) {
+      if (isAsyncGenerator(asyncEffect)) {
         while (true) {
-          const result = await e.next();
+          const result = await asyncEffect.next();
           if (result.done || cancelled) {
             break;
           }
         }
       } else {
-        await e;
+        await asyncEffect;
       }
     }
     execute();

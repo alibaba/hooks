@@ -1,6 +1,6 @@
 import { act, renderHook } from '@testing-library/react';
 import { useState } from 'react';
-import { describe, expect, test } from 'vitest';
+import { describe, expect, test, vi } from 'vitest';
 import { sleep } from '../../utils/testingHelpers';
 import useAsyncEffect from '../index';
 
@@ -66,5 +66,33 @@ describe('useAsyncEffect', () => {
       await sleep(50);
     });
     expect(hook.result.current.y).toBe(3);
+  });
+
+  test('should run a synchronous cleanup on unmount', () => {
+    const cleanup = vi.fn();
+    const hook = renderHook(() => {
+      useAsyncEffect(() => cleanup, []);
+    });
+
+    expect(cleanup).not.toHaveBeenCalled();
+    hook.unmount();
+    expect(cleanup).toHaveBeenCalledTimes(1);
+  });
+
+  test('should clean up before rerunning after a dependency change', () => {
+    const cleanups = [vi.fn(), vi.fn()];
+    const hook = renderHook(
+      ({ index }) => {
+        useAsyncEffect(() => cleanups[index], [index]);
+      },
+      { initialProps: { index: 0 } },
+    );
+
+    hook.rerender({ index: 1 });
+    expect(cleanups[0]).toHaveBeenCalledTimes(1);
+    expect(cleanups[1]).not.toHaveBeenCalled();
+
+    hook.unmount();
+    expect(cleanups[1]).toHaveBeenCalledTimes(1);
   });
 });
