@@ -21,7 +21,7 @@ useEffect support async function.
 
 ```typescript
 function useAsyncEffect(
-  effect: () => AsyncGenerator | Promise,
+  effect: () => AsyncGenerator | Promise<void> | (() => void),
   deps: DependencyList
 );
 ```
