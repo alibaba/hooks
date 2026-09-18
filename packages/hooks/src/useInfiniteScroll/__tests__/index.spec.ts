@@ -611,4 +611,39 @@ describe('useInfiniteScroll', () => {
     scrollHeightSpy.mockRestore();
     clientHeightSpy.mockRestore();
   });
+
+  test('should not auto loadMore after receiving an empty page', async () => {
+    setTargetInfo('scrollTop', 0);
+    const scrollHeightSpy = vi.spyOn(targetEl, 'scrollHeight', 'get').mockImplementation(() => 50);
+    const clientHeightSpy = vi.spyOn(targetEl, 'clientHeight', 'get').mockImplementation(() => 300);
+    let resolveSecondRequest: (() => void) | undefined;
+    const service = vi.fn((lastData?: Data) => {
+      if (lastData) {
+        return new Promise<Data>((resolve) => {
+          resolveSecondRequest = () => resolve({ list: [1] });
+        });
+      }
+      return Promise.resolve({ list: [] });
+    });
+
+    const { result, unmount } = setup(service, { manual: true, target: targetEl });
+
+    act(() => {
+      result.current.loadMore();
+    });
+    await act(async () => {
+      await Promise.resolve();
+      await Promise.resolve();
+    });
+
+    expect(service).toHaveBeenCalledTimes(1);
+
+    act(() => {
+      result.current.cancel();
+      resolveSecondRequest?.();
+    });
+    unmount();
+    scrollHeightSpy.mockRestore();
+    clientHeightSpy.mockRestore();
+  });
 });

@@ -80,7 +80,7 @@ const useInfiniteScroll = <TData extends Data>(
               }
             });
           });
-        } else {
+        } else if (d.currentData.list?.length) {
           pendingBottomScrollCheckRef.current = true;
         }
         onSuccess?.(d.currentData);
@@ -121,6 +121,10 @@ const useInfiniteScroll = <TData extends Data>(
   };
 
   const scrollMethod = () => {
+    if (loading || loadingMore) {
+      return;
+    }
+
     const el = getTargetElement(target);
     if (!el) {
       return;
