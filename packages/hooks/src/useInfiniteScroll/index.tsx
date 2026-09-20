@@ -68,6 +68,8 @@ const useInfiniteScroll = <TData extends Data>(
           });
         }
 
+        pendingBottomScrollCheckRef.current = !isScrollToTop && !!d.currentData.list?.length;
+
         if (isScrollToTop) {
           setTimeout(() => {
             // use requestAnimationFrame to ensure the scroll position is updated (To ensure compatibility react 19)
@@ -80,8 +82,6 @@ const useInfiniteScroll = <TData extends Data>(
               }
             });
           });
-        } else if (d.currentData.list?.length) {
-          pendingBottomScrollCheckRef.current = true;
         }
         onSuccess?.(d.currentData);
       },
@@ -150,23 +150,14 @@ const useInfiniteScroll = <TData extends Data>(
     }
   };
   useUpdateEffect(() => {
-    if (!pendingBottomScrollCheckRef.current) {
+    if (!pendingBottomScrollCheckRef.current || loading || loadingMore) {
       return;
     }
     pendingBottomScrollCheckRef.current = false;
     scrollMethod();
-  }, [finalData]);
+  }, [finalData, loading, loadingMore]);
 
-  useEventListener(
-    'scroll',
-    () => {
-      if (loading || loadingMore) {
-        return;
-      }
-      scrollMethod();
-    },
-    { target },
-  );
+  useEventListener('scroll', scrollMethod, { target });
 
   useUpdateEffect(() => {
     run();

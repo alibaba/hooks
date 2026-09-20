@@ -1,5 +1,6 @@
 import { act, renderHook } from '@testing-library/react';
 import { useState } from 'react';
+import { flushSync } from 'react-dom';
 import { afterAll, beforeAll, beforeEach, describe, expect, test, vi } from 'vitest';
 import { sleep } from '../../utils/testingHelpers';
 import useInfiniteScroll from '..';
@@ -645,5 +646,91 @@ describe('useInfiniteScroll', () => {
     unmount();
     scrollHeightSpy.mockRestore();
     clientHeightSpy.mockRestore();
+  });
+
+  test.each([false, true])(
+    'should keep filling the container with separate completion updates: %s',
+    async (separateUpdates) => {
+      setTargetInfo('scrollTop', 0);
+      const scrollHeightSpy = vi.spyOn(targetEl, 'scrollHeight', 'get').mockReturnValue(50);
+      const clientHeightSpy = vi.spyOn(targetEl, 'clientHeight', 'get').mockReturnValue(300);
+      const service = vi.fn(async (lastData?: { list: number[] }) => {
+        await sleep(1000);
+        return { list: [(lastData?.list.length ?? 0) + 1] };
+      });
+      const { result, unmount } = renderHook(() => {
+        const [, setCompleted] = useState(0);
+        return useInfiniteScroll(service, {
+          manual: true,
+          target: targetEl,
+          isNoMore: (data) => data?.list.length === 3,
+          onSuccess: () => {
+            if (separateUpdates) {
+              // Flush data before onFinally clears loadingMore, as in legacy React roots.
+              flushSync(() => setCompleted((completed) => completed + 1));
+            }
+          },
+        });
+      });
+
+      try {
+        act(() => result.current.loadMore());
+        for (let page = 1; page <= 3; page++) {
+          await act(async () => {
+            vi.advanceTimersByTime(1000);
+          });
+          expect(result.current.data?.list).toEqual(
+            Array.from({ length: page }, (_, index) => index + 1),
+          );
+          expect(result.current.loadingMore).toBe(page < 3);
+        }
+        expect(service).toHaveBeenCalledTimes(3);
+        expect(result.current.noMore).toBe(true);
+      } finally {
+        unmount();
+        scrollHeightSpy.mockRestore();
+        clientHeightSpy.mockRestore();
+      }
+    },
+  );
+
+  test('should stop on an empty subsequent page and allow manual loading afterwards', async () => {
+    setTargetInfo('scrollTop', 0);
+    const scrollHeightSpy = vi.spyOn(targetEl, 'scrollHeight', 'get').mockReturnValue(50);
+    const clientHeightSpy = vi.spyOn(targetEl, 'clientHeight', 'get').mockReturnValue(300);
+    const pages = [[1], [], [2]];
+    const service = vi.fn(async () => {
+      await sleep(1000);
+      return { list: pages.shift() ?? [] };
+    });
+    const { result, unmount } = setup(service, {
+      target: targetEl,
+      isNoMore: (data) => data?.list.length === 2,
+    });
+
+    try {
+      await act(async () => {
+        vi.advanceTimersByTime(1000);
+      });
+      expect(result.current.loadingMore).toBe(true);
+      await act(async () => {
+        vi.advanceTimersByTime(1000);
+      });
+      expect(service).toHaveBeenCalledTimes(2);
+      expect(result.current.data?.list).toEqual([1]);
+      expect(result.current.loadingMore).toBe(false);
+      expect(result.current.noMore).toBe(false);
+
+      act(() => result.current.loadMore());
+      await act(async () => {
+        vi.advanceTimersByTime(1000);
+      });
+      expect(service).toHaveBeenCalledTimes(3);
+      expect(result.current.data?.list).toEqual([1, 2]);
+    } finally {
+      unmount();
+      scrollHeightSpy.mockRestore();
+      clientHeightSpy.mockRestore();
+    }
   });
 });
