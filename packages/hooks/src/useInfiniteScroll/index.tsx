@@ -1,10 +1,12 @@
 import { useMemo, useRef, useState } from 'react';
+import ResizeObserver from 'resize-observer-polyfill';
 import useEventListener from '../useEventListener';
 import useMemoizedFn from '../useMemoizedFn';
 import useRequest from '../useRequest';
 import useUpdateEffect from '../useUpdateEffect';
 import { getTargetElement } from '../utils/domTarget';
 import { getClientHeight, getScrollHeight, getScrollTop } from '../utils/rect';
+import useIsomorphicLayoutEffectWithTarget from '../utils/useIsomorphicLayoutEffectWithTarget';
 import type { Data, InfiniteScrollOptions, Service } from './types';
 
 const useInfiniteScroll = <TData extends Data>(
@@ -120,7 +122,7 @@ const useInfiniteScroll = <TData extends Data>(
     return runAsyncForCurrent();
   };
 
-  const scrollMethod = () => {
+  const scrollMethod = useMemoizedFn(() => {
     if (loading || loadingMore) {
       return;
     }
@@ -148,7 +150,7 @@ const useInfiniteScroll = <TData extends Data>(
     } else if (scrollHeight - scrollTop <= clientHeight + threshold) {
       loadMore();
     }
-  };
+  });
   useUpdateEffect(() => {
     if (!pendingBottomScrollCheckRef.current || loading || loadingMore) {
       return;
@@ -158,6 +160,51 @@ const useInfiniteScroll = <TData extends Data>(
   }, [finalData, loading, loadingMore]);
 
   useEventListener('scroll', scrollMethod, { target });
+
+  // Re-check whether more data is needed when the scroll container suddenly gets taller
+  const resizeCheck = useMemoizedFn(() => {
+    // No successful data is available before a manual request or after the first load fails.
+    // A resize should not trigger a request in those cases.
+    if (!finalData) {
+      return;
+    }
+    scrollMethod();
+  });
+  useIsomorphicLayoutEffectWithTarget(
+    () => {
+      const el = getTargetElement(target);
+      if (!el) {
+        return;
+      }
+
+      // The document's content box does not necessarily resize with the viewport.
+      if (el === document) {
+        window.addEventListener('resize', resizeCheck);
+        return () => window.removeEventListener('resize', resizeCheck);
+      }
+
+      const targetEl = el as Element;
+      let clientWidth = targetEl.clientWidth;
+      let clientHeight = targetEl.clientHeight;
+      const observer = new ResizeObserver(() => {
+        const nextWidth = targetEl.clientWidth;
+        const nextHeight = targetEl.clientHeight;
+        // observe() also notifies initially, even when the container has not resized.
+        if (nextWidth === clientWidth && nextHeight === clientHeight) {
+          return;
+        }
+        clientWidth = nextWidth;
+        clientHeight = nextHeight;
+        resizeCheck();
+      });
+      observer.observe(targetEl);
+      return () => {
+        observer.disconnect();
+      };
+    },
+    [],
+    target,
+  );
 
   useUpdateEffect(() => {
     run();

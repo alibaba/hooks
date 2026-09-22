@@ -6,6 +6,26 @@ import { sleep } from '../../utils/testingHelpers';
 import useInfiniteScroll from '..';
 import type { Data, InfiniteScrollOptions, Service } from '../types';
 
+let resizeCallback: (() => void) | undefined;
+const observedTargets: Element[] = [];
+let disconnectCount = 0;
+
+vi.mock('resize-observer-polyfill', () => {
+  return {
+    default: class MockResizeObserver {
+      constructor(cb: () => void) {
+        resizeCallback = cb;
+      }
+      observe(el: Element) {
+        observedTargets.push(el);
+      }
+      disconnect() {
+        disconnectCount++;
+      }
+    },
+  };
+});
+
 let count = 0;
 export async function mockRequest() {
   await sleep(1000);
@@ -732,5 +752,184 @@ describe('useInfiniteScroll', () => {
       scrollHeightSpy.mockRestore();
       clientHeightSpy.mockRestore();
     }
+  });
+
+  describe('target resize', () => {
+    const pagedService = () =>
+      vi.fn(async (lastData?: { list: number[] }) => {
+        await sleep(1000);
+        return { list: [(lastData?.list.length ?? 0) + 1] };
+      });
+
+    beforeEach(() => {
+      resizeCallback = undefined;
+      observedTargets.length = 0;
+      disconnectCount = 0;
+      setTargetInfo('scrollTop', 0);
+    });
+
+    test('should ignore the initial resize notification after a fast empty first page', async () => {
+      const height = vi.spyOn(targetEl, 'scrollHeight', 'get').mockReturnValue(50);
+      const client = vi.spyOn(targetEl, 'clientHeight', 'get').mockReturnValue(300);
+      const service = vi.fn(async () => ({ list: [] }));
+      const { unmount } = setup(service, { target: targetEl });
+      try {
+        await act(async () => {
+          await Promise.resolve();
+        });
+        expect(service).toHaveBeenCalledTimes(1);
+        // ResizeObserver's first notification may arrive after a fast service resolves.
+        await act(async () => {
+          resizeCallback?.();
+        });
+        expect(service).toHaveBeenCalledTimes(1);
+      } finally {
+        unmount();
+        height.mockRestore();
+        client.mockRestore();
+      }
+    });
+
+    test('should load more when the target becomes larger and the content no longer fills it', async () => {
+      // content fills the container: 400 - 0 > 100 + 100
+      const scrollHeightSpy = vi.spyOn(targetEl, 'scrollHeight', 'get').mockReturnValue(400);
+      const clientHeightSpy = vi.spyOn(targetEl, 'clientHeight', 'get').mockReturnValue(100);
+      const service = pagedService();
+      const { unmount } = setup(service, { target: targetEl });
+
+      try {
+        await act(async () => {
+          vi.advanceTimersByTime(1000);
+        });
+        expect(service).toHaveBeenCalledTimes(1);
+
+        // the container grows: 400 - 0 <= 600 + 100, so more data is needed
+        clientHeightSpy.mockReturnValue(600);
+        act(() => {
+          resizeCallback?.();
+        });
+        expect(service).toHaveBeenCalledTimes(2);
+        expect(service).toHaveBeenLastCalledWith({ list: [1] });
+      } finally {
+        unmount();
+        scrollHeightSpy.mockRestore();
+        clientHeightSpy.mockRestore();
+      }
+    });
+
+    test('should not load more on resize while a request is in flight', async () => {
+      const scrollHeightSpy = vi.spyOn(targetEl, 'scrollHeight', 'get').mockReturnValue(50);
+      const clientHeightSpy = vi.spyOn(targetEl, 'clientHeight', 'get').mockReturnValue(300);
+      const service = pagedService();
+      const { result, unmount } = setup(service, { target: targetEl, manual: true });
+
+      try {
+        act(() => {
+          result.current.loadMore();
+        });
+        await act(async () => {
+          vi.advanceTimersByTime(1000);
+        });
+        // the first page already chained one extra request, which is still in flight
+        expect(result.current.loadingMore).toBe(true);
+        const callsWhileLoading = service.mock.calls.length;
+
+        act(() => {
+          clientHeightSpy.mockReturnValue(600);
+          resizeCallback?.();
+        });
+        expect(service).toHaveBeenCalledTimes(callsWhileLoading);
+      } finally {
+        unmount();
+        scrollHeightSpy.mockRestore();
+        clientHeightSpy.mockRestore();
+      }
+    });
+
+    test('should not load more on resize when there is no more data', async () => {
+      const scrollHeightSpy = vi.spyOn(targetEl, 'scrollHeight', 'get').mockReturnValue(50);
+      const clientHeightSpy = vi.spyOn(targetEl, 'clientHeight', 'get').mockReturnValue(300);
+      const service = pagedService();
+      const { result, unmount } = setup(service, {
+        target: targetEl,
+        isNoMore: (data) => (data?.list.length ?? 0) >= 1,
+      });
+
+      try {
+        await act(async () => {
+          vi.advanceTimersByTime(1000);
+        });
+        expect(result.current.noMore).toBe(true);
+        expect(service).toHaveBeenCalledTimes(1);
+
+        act(() => {
+          clientHeightSpy.mockReturnValue(600);
+          resizeCallback?.();
+        });
+        expect(service).toHaveBeenCalledTimes(1);
+      } finally {
+        unmount();
+        scrollHeightSpy.mockRestore();
+        clientHeightSpy.mockRestore();
+      }
+    });
+
+    test('should not load more on resize before the first page is loaded', () => {
+      const scrollHeightSpy = vi.spyOn(targetEl, 'scrollHeight', 'get').mockReturnValue(50);
+      const clientHeightSpy = vi.spyOn(targetEl, 'clientHeight', 'get').mockReturnValue(300);
+      const service = pagedService();
+      const { unmount } = setup(service, { target: targetEl, manual: true });
+
+      try {
+        act(() => {
+          clientHeightSpy.mockReturnValue(600);
+          resizeCallback?.();
+        });
+        expect(service).not.toHaveBeenCalled();
+      } finally {
+        unmount();
+        scrollHeightSpy.mockRestore();
+        clientHeightSpy.mockRestore();
+      }
+    });
+
+    test('should check viewport resize for document and remove the listener on unmount', async () => {
+      const scrollHeightSpy = vi
+        .spyOn(document.documentElement, 'scrollHeight', 'get')
+        .mockReturnValue(400);
+      const clientHeightSpy = vi
+        .spyOn(document.documentElement, 'clientHeight', 'get')
+        .mockReturnValue(100);
+      const removeListenerSpy = vi.spyOn(window, 'removeEventListener');
+      const service = pagedService();
+      const { unmount } = setup(service, { target: document });
+      try {
+        expect(observedTargets).toEqual([]);
+        await act(async () => {
+          vi.advanceTimersByTime(1000);
+        });
+        expect(service).toHaveBeenCalledTimes(1);
+        clientHeightSpy.mockReturnValue(600);
+        act(() => {
+          window.dispatchEvent(new Event('resize'));
+        });
+        expect(service).toHaveBeenCalledTimes(2);
+        expect(service).toHaveBeenLastCalledWith({ list: [1] });
+      } finally {
+        unmount();
+        expect(removeListenerSpy).toHaveBeenCalledWith('resize', expect.any(Function));
+        scrollHeightSpy.mockRestore();
+        clientHeightSpy.mockRestore();
+        removeListenerSpy.mockRestore();
+      }
+    });
+
+    test('should disconnect the observer on unmount', () => {
+      const { unmount } = setup(mockRequest, { target: targetEl });
+      expect(observedTargets).toEqual([targetEl]);
+      expect(disconnectCount).toBe(0);
+      unmount();
+      expect(disconnectCount).toBe(1);
+    });
   });
 });
