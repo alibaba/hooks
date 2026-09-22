@@ -163,7 +163,7 @@ const useInfiniteScroll = <TData extends Data>(
 
   // Re-check whether more data is needed when the scroll container suddenly gets taller
   const resizeCheck = useMemoizedFn(() => {
-    // finalData is empty when `manual` is set but never triggered, or when the first load failed.
+    // No successful data is available before a manual request or after the first load fails.
     // A resize should not trigger a request in those cases.
     if (!finalData) {
       return;
@@ -177,8 +177,27 @@ const useInfiniteScroll = <TData extends Data>(
         return;
       }
 
-      const observer = new ResizeObserver(() => resizeCheck());
-      observer.observe(el === document ? document.documentElement : (el as Element));
+      // The document's content box does not necessarily resize with the viewport.
+      if (el === document) {
+        window.addEventListener('resize', resizeCheck);
+        return () => window.removeEventListener('resize', resizeCheck);
+      }
+
+      const targetEl = el as Element;
+      let clientWidth = targetEl.clientWidth;
+      let clientHeight = targetEl.clientHeight;
+      const observer = new ResizeObserver(() => {
+        const nextWidth = targetEl.clientWidth;
+        const nextHeight = targetEl.clientHeight;
+        // observe() also notifies initially, even when the container has not resized.
+        if (nextWidth === clientWidth && nextHeight === clientHeight) {
+          return;
+        }
+        clientWidth = nextWidth;
+        clientHeight = nextHeight;
+        resizeCheck();
+      });
+      observer.observe(targetEl);
       return () => {
         observer.disconnect();
       };

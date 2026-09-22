@@ -768,6 +768,28 @@ describe('useInfiniteScroll', () => {
       setTargetInfo('scrollTop', 0);
     });
 
+    test('should ignore the initial resize notification after a fast empty first page', async () => {
+      const height = vi.spyOn(targetEl, 'scrollHeight', 'get').mockReturnValue(50);
+      const client = vi.spyOn(targetEl, 'clientHeight', 'get').mockReturnValue(300);
+      const service = vi.fn(async () => ({ list: [] }));
+      const { unmount } = setup(service, { target: targetEl });
+      try {
+        await act(async () => {
+          await Promise.resolve();
+        });
+        expect(service).toHaveBeenCalledTimes(1);
+        // ResizeObserver's first notification may arrive after a fast service resolves.
+        await act(async () => {
+          resizeCallback?.();
+        });
+        expect(service).toHaveBeenCalledTimes(1);
+      } finally {
+        unmount();
+        height.mockRestore();
+        client.mockRestore();
+      }
+    });
+
     test('should load more when the target becomes larger and the content no longer fills it', async () => {
       // content fills the container: 400 - 0 > 100 + 100
       const scrollHeightSpy = vi.spyOn(targetEl, 'scrollHeight', 'get').mockReturnValue(400);
@@ -813,6 +835,7 @@ describe('useInfiniteScroll', () => {
         const callsWhileLoading = service.mock.calls.length;
 
         act(() => {
+          clientHeightSpy.mockReturnValue(600);
           resizeCallback?.();
         });
         expect(service).toHaveBeenCalledTimes(callsWhileLoading);
@@ -840,6 +863,7 @@ describe('useInfiniteScroll', () => {
         expect(service).toHaveBeenCalledTimes(1);
 
         act(() => {
+          clientHeightSpy.mockReturnValue(600);
           resizeCallback?.();
         });
         expect(service).toHaveBeenCalledTimes(1);
@@ -858,6 +882,7 @@ describe('useInfiniteScroll', () => {
 
       try {
         act(() => {
+          clientHeightSpy.mockReturnValue(600);
           resizeCallback?.();
         });
         expect(service).not.toHaveBeenCalled();
@@ -868,10 +893,35 @@ describe('useInfiniteScroll', () => {
       }
     });
 
-    test('should observe document.documentElement when target is document', () => {
-      const { unmount } = setup(mockRequest, { target: document });
-      expect(observedTargets).toEqual([document.documentElement]);
-      unmount();
+    test('should check viewport resize for document and remove the listener on unmount', async () => {
+      const scrollHeightSpy = vi
+        .spyOn(document.documentElement, 'scrollHeight', 'get')
+        .mockReturnValue(400);
+      const clientHeightSpy = vi
+        .spyOn(document.documentElement, 'clientHeight', 'get')
+        .mockReturnValue(100);
+      const removeListenerSpy = vi.spyOn(window, 'removeEventListener');
+      const service = pagedService();
+      const { unmount } = setup(service, { target: document });
+      try {
+        expect(observedTargets).toEqual([]);
+        await act(async () => {
+          vi.advanceTimersByTime(1000);
+        });
+        expect(service).toHaveBeenCalledTimes(1);
+        clientHeightSpy.mockReturnValue(600);
+        act(() => {
+          window.dispatchEvent(new Event('resize'));
+        });
+        expect(service).toHaveBeenCalledTimes(2);
+        expect(service).toHaveBeenLastCalledWith({ list: [1] });
+      } finally {
+        unmount();
+        expect(removeListenerSpy).toHaveBeenCalledWith('resize', expect.any(Function));
+        scrollHeightSpy.mockRestore();
+        clientHeightSpy.mockRestore();
+        removeListenerSpy.mockRestore();
+      }
     });
 
     test('should disconnect the observer on unmount', () => {
