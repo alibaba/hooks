@@ -1,10 +1,12 @@
 import { useMemo, useRef, useState } from 'react';
+import ResizeObserver from 'resize-observer-polyfill';
 import useEventListener from '../useEventListener';
 import useMemoizedFn from '../useMemoizedFn';
 import useRequest from '../useRequest';
 import useUpdateEffect from '../useUpdateEffect';
 import { getTargetElement } from '../utils/domTarget';
 import { getClientHeight, getScrollHeight, getScrollTop } from '../utils/rect';
+import useIsomorphicLayoutEffectWithTarget from '../utils/useIsomorphicLayoutEffectWithTarget';
 import type { Data, InfiniteScrollOptions, Service } from './types';
 
 const useInfiniteScroll = <TData extends Data>(
@@ -120,7 +122,7 @@ const useInfiniteScroll = <TData extends Data>(
     return runAsyncForCurrent();
   };
 
-  const scrollMethod = () => {
+  const scrollMethod = useMemoizedFn(() => {
     if (loading || loadingMore) {
       return;
     }
@@ -148,7 +150,7 @@ const useInfiniteScroll = <TData extends Data>(
     } else if (scrollHeight - scrollTop <= clientHeight + threshold) {
       loadMore();
     }
-  };
+  });
   useUpdateEffect(() => {
     if (!pendingBottomScrollCheckRef.current || loading || loadingMore) {
       return;
@@ -158,6 +160,32 @@ const useInfiniteScroll = <TData extends Data>(
   }, [finalData, loading, loadingMore]);
 
   useEventListener('scroll', scrollMethod, { target });
+
+  // Re-check whether more data is needed when the scroll container suddenly gets taller
+  const resizeCheck = useMemoizedFn(() => {
+    // finalData is empty when `manual` is set but never triggered, or when the first load failed.
+    // A resize should not trigger a request in those cases.
+    if (!finalData) {
+      return;
+    }
+    scrollMethod();
+  });
+  useIsomorphicLayoutEffectWithTarget(
+    () => {
+      const el = getTargetElement(target);
+      if (!el) {
+        return;
+      }
+
+      const observer = new ResizeObserver(() => resizeCheck());
+      observer.observe(el === document ? document.documentElement : (el as Element));
+      return () => {
+        observer.disconnect();
+      };
+    },
+    [],
+    target,
+  );
 
   useUpdateEffect(() => {
     run();
