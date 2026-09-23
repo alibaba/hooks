@@ -42,9 +42,9 @@ const useAutoRunPlugin: Plugin<any, any[]> = (
   };
 };
 
-useAutoRunPlugin.onInit = ({ ready = true, manual }) => {
+useAutoRunPlugin.onInit = ({ ready = true, manual, loadingDelay }) => {
   return {
-    loading: !manual && ready,
+    loading: loadingDelay ? false : !manual && ready,
   };
 };
 
