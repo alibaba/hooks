@@ -11,9 +11,13 @@ import useRequestImplement from './useRequestImplement';
 
 type AnyService = (...args: any[]) => Promise<any>;
 
-type InferData<TService extends AnyService> = Awaited<ReturnType<TService>>;
+// The constraint returns `any`: a `Promise<any>` return type becomes the contextual type
+// of `promise.then(...)` and infers `any`. `TService & AnyService` still requires a promise.
+type AnyFunction = (...args: any[]) => any;
 
-type InferParams<TService extends AnyService> = Parameters<TService>;
+type InferData<TService extends AnyFunction> = Awaited<ReturnType<TService>>;
+
+type InferParams<TService extends AnyFunction> = Parameters<TService>;
 
 // function useRequest<TData, TParams extends any[], TFormated, TTFormated extends TFormated = any>(
 //   service: Service<TData, TParams>,
@@ -25,8 +29,8 @@ type InferParams<TService extends AnyService> = Parameters<TService>;
 //   options?: OptionsWithoutFormat<TData, TParams>,
 //   plugins?: Plugin<TData, TParams>[],
 // ): Result<TData, TParams>
-function useRequest<TService extends AnyService>(
-  service: TService,
+function useRequest<TService extends AnyFunction>(
+  service: TService & AnyService,
   options?: Options<InferData<TService>, InferParams<TService>>,
   plugins?: Plugin<InferData<TService>, InferParams<TService>>[],
 ): Result<InferData<TService>, InferParams<TService>>;
