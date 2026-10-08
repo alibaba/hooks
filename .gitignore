@@ -19,3 +19,14 @@ yarn-error.log
 package-lock.json
 metadata.json
 .eslintcache
+
+.dumi/tmp
+.dumi/tmp-production
+.dumi/tmp-test
+.utoo
+.turbopack
+.build-types-*
+
+.dumi/dev-dist
+.dumi/cache-dev
+.dumi/cache-production

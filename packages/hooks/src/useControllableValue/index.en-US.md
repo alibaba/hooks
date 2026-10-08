@@ -11,15 +11,15 @@ In some components, we need the state to be managed by itself or controlled by i
 
 ### Uncontrolled component
 
-<code src="./demo/demo1.tsx" />
+<code src="./demo/demo1.tsx"></code>
 
 ### Controlled component
 
-<code src="./demo/demo2.tsx" />
+<code src="./demo/demo2.tsx"></code>
 
 ### No value, have onChange component
 
-<code src="./demo/demo3.tsx" />
+<code src="./demo/demo3.tsx"></code>
 
 ## API
 

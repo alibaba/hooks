@@ -11,7 +11,7 @@ Debounce your `useEffect`.
 
 ### Default usage
 
-<code src="./demo/demo1.tsx" />
+<code src="./demo/demo1.tsx"></code>
 
 ## API
 

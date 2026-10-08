@@ -22,13 +22,13 @@ If the data returned for the first request is `{ list: [1, 2, 3], nextId: 4 }`, 
 
 In the first example, we demonstrate the implementation of a most basic infinite scroll.
 
-<code src="./demo/default.tsx" />
+<code src="./demo/default.tsx"></code>
 
 ## Pagination
 
 In the data fixation scenario, we sometimes use `page` and `pageSize` to request new data.
 
-<code src="./demo/pagination.tsx" />
+<code src="./demo/pagination.tsx"></code>
 
 ## Scrolling to automatically load
 
@@ -39,16 +39,16 @@ In the infinite scrolling scenario, the most common case is to automatically loa
 - `options.direction` determines the direction of scrolling, the default is `bottom`
 
 the scroll to bottom demo
-<code src="./demo/scroll.tsx" />
+<code src="./demo/scroll.tsx"></code>
 
 the scroll to top demo
-<code src="./demo/scrollTop.tsx" />
+<code src="./demo/scrollTop.tsx"></code>
 
 ## Data reset
 
 The data can be reset by `reload`. The following example shows that after the `filter` changes, the data is reset to the first page.
 
-<code src="./demo/reload.tsx" />
+<code src="./demo/reload.tsx"></code>
 
 The above code can be implemented with `reloadDeps` syntax sugar. When `reloadDeps` changes, `reload` will be triggered automatically.
 
@@ -62,7 +62,7 @@ const result = useInfiniteScroll(service, {
 
 With `mutate`, we can directly modify the current `data`. The following example demonstrates deleting a record from the data.
 
-<code src="./demo/mutate.tsx" />
+<code src="./demo/mutate.tsx"></code>
 
 ## API
 

@@ -1,9 +1,9 @@
 {
   "name": "ahooks",
   "private": true,
-  "packageManager": "pnpm@10.12.4",
   "engines": {
-    "pnpm": ">=7 <=10"
+    "node": ">=20.19.0",
+    "pnpm": ">=10 <=12"
   },
   "repository": {
     "type": "git",
@@ -12,7 +12,7 @@
   "scripts": {
     "init": "pnpm install && pnpm run build",
     "start": "pnpm run dev",
-    "dev": "cross-env NODE_OPTIONS=--openssl-legacy-provider dumi dev",
+    "dev": "dumi dev",
     "clean-dist": "rimraf 'packages/*/{lib,es,node_modules,dist}'",
     "clean": "pnpm run clean-dist && rimraf node_modules",
     "build": "pnpm -r --filter=./packages/* run build",
@@ -21,24 +21,25 @@
     "coveralls": "vitest run --coverage | coveralls",
     "lint": "biome lint --fix",
     "pretty": "biome format --fix --no-errors-on-unmatched",
-    "build:doc": "cross-env NODE_OPTIONS=--openssl-legacy-provider dumi build",
-    "build:doc-github": "node scripts/build-with-relative-paths.js",
+    "build:doc": "dumi build",
+    "build:doc-github": "cross-env DOCS_PUBLIC_PATH=/hooks/ dumi build",
     "pub:doc-surge": "surge ./dist --domain ahooks.js.org",
     "pub:doc-gitee": "cd ./dist && rm -rf .git && touch .spa && touch .nojekyll && git init && git remote add origin git@gitee.com:ahooks/ahooks.git && git add -A && git commit -m \"publish docs\" && git push origin main -f && echo https://gitee.com/ahooks/ahooks/pages",
     "pub:doc": "pnpm run build:doc && pnpm run pub:doc-surge",
     "pub": "pnpm run build && pnpm -r --filter=./packages/* publish",
     "pub:beta": "pnpm run build && pnpm -r --filter=./packages/* publish --tag beta",
     "preinstall": "npx only-allow pnpm",
-    "prepare": "husky install",
+    "prepare": "husky install && dumi setup",
     "commit": "git add -A && czg",
-    "tsc": "pnpm --filter=./packages/* tsc"
+    "tsc": "pnpm --filter=./packages/* tsc && tsc --project scripts/tsconfig.json",
+    "test:build": "vitest run --config scripts/vitest.config.ts scripts/tests/build.spec.ts",
+    "test:doc": "vitest run --config scripts/vitest.config.ts scripts/tests/docs.spec.ts"
   },
   "devDependencies": {
     "@alifd/next": "^1.27.32",
     "@ant-design/icons": "^6.1.1",
-    "@babel/cli": "^7.10.1",
     "@babel/core": "^7.10.2",
-    "@babel/plugin-transform-runtime": "^7.19.6",
+    "@babel/plugin-transform-modules-commonjs": "7.28.6",
     "@biomejs/biome": "^2.0.6",
     "@commitlint/cli": "^17.1.2",
     "@commitlint/config-conventional": "^17.1.0",
@@ -49,21 +50,16 @@
     "@types/react": "^19.1.8",
     "@types/react-dom": "^19.1.6",
     "@types/react-router": "^5.1.19",
-    "@umijs/fabric": "^2.1.0",
-    "@vitest/coverage-istanbul": "^3.2.4",
+    "@utoo/pack": "1.5.22",
+    "@vitest/coverage-istanbul": "4.1.2",
     "antd": "^6.3.5",
-    "babel-plugin-import": "^1.12.0",
     "coveralls": "^3.1.1",
     "cross-env": "^10.1.0",
     "czg": "^1.12.0",
-    "del": "^5.1.0",
-    "dumi": "^1.1.54",
+    "dumi": "2.4.50",
     "fast-glob": "^3.2.11",
     "fs-extra": "^10.0.1",
     "gray-matter": "^4.0.3",
-    "gulp": "^4.0.2",
-    "gulp-babel": "^8.0.0",
-    "gulp-typescript": "^6.0.0-alpha.1",
     "husky": "^8.0.0",
     "jsdom": "^29.0.2",
     "mockjs": "^1.1.0",
@@ -75,13 +71,10 @@
     "react-shadow": "^20.6.0",
     "rimraf": "^3.0.2",
     "surge": "^0.21.3",
-    "ts-node": "^10.9.2",
     "typescript": "^6.0.2",
-    "vitest": "^4.1.2",
+    "vitest": "4.1.2",
     "vitest-websocket-mock": "^0.5.0",
-    "webpack": "^5.106.2",
-    "webpack-cli": "^7.0.2",
-    "webpack-merge": "^6.0.1"
+    "webpack": "^5.106.2"
   },
   "commitlint": {
     "extends": [

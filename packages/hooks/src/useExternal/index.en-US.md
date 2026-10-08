@@ -11,11 +11,11 @@ Dynamically load JS or CSS, useExternal can ensure that the resource are globall
 
 ### Basic Usage
 
-<code src="./demo/demo1.tsx" />
+<code src="./demo/demo1.tsx"></code>
 
 ### Load CSS
 
-<code src="./demo/demo2.tsx" />
+<code src="./demo/demo2.tsx"></code>
 
 ## API
 

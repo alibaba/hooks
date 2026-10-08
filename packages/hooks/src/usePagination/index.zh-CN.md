@@ -18,25 +18,25 @@ nav:
 
 默认用法与 `useRequest` 一致，但会多返回一个 `pagination` 参数，包含所有分页信息，及操作分页的函数。
 
-<code src="./demo/demo1.tsx" />
+<code src="./demo/demo1.tsx"></code>
 
 ### 更多参数
 
 下面的代码演示了，增加了性别参数，在修改性别时，重置分页到第一页，并重新请求数据。
 
-<code src="./demo/demo2.tsx" />
+<code src="./demo/demo2.tsx"></code>
 
 ### refreshDeps
 
 `refreshDeps` 是一个语法糖，当它变化时，会重置分页到第一页，并重新请求数据，一般你可以把依赖的条件放这里。以下示例通过 `refreshDeps` 更方便的实现了上一个功能。
 
-<code src="./demo/demo3.tsx" />
+<code src="./demo/demo3.tsx"></code>
 
 ### 缓存
 
 通过 `useRequest` 的 `params` 缓存能力，我们可以缓存分页数据和其它条件。
 
-<code src="./demo/demo4.tsx" />
+<code src="./demo/demo4.tsx"></code>
 
 ## API
 

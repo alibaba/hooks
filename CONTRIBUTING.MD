@@ -33,3 +33,16 @@ After cloning `ahooks`, run `pnpm run init` to fetch its dependencies. Then, you
 2. `pnpm run test` runs the complete test suite.
 
 3. `pnpm run build` to build.
+
+
+## Documentation and package artifacts
+
+Development requires Node.js >= 20.19 and pnpm; CI uses pnpm 12.3.4.
+The documentation site uses dumi 2 with utoopack. Development output in `.dumi/dev-dist` is separate from production output in `dist`.
+
+- `pnpm build`: generate ESM, CommonJS, declarations and UMD for both packages, plus hooks metadata.
+- `pnpm test:build`: verify module entrypoints, declaration consumers, deep imports and UMD loading.
+- `pnpm build:doc` / `pnpm test:doc`: build and verify routes, navigation and assets at the root path.
+- `pnpm build:doc-github` / `pnpm test:doc`: verify the `/hooks/` deployment without rewriting documentation sources.
+
+Verify both deployment paths when changing build or site configuration. Use `<code src="./demo/demo1.tsx"></code>` for demos.

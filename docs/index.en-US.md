@@ -1,14 +1,13 @@
 ---
 title: ahooks - React Hooks Library
 hero:
-  image: /logo.svg
-  desc: A high-quality & reliable React Hooks library
+  title: ahooks
+  description: A high-quality & reliable React Hooks library
   actions:
     - text: Guide
       link: /guide
     - text: Hooks List
       link: /hooks
-footer: Open-source MIT Licensed | Copyright © 2019-present<br />Powered by [dumi](https://d.umijs.org)
 ---
 
 [![NPM version][image-1]][1]

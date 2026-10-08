@@ -11,7 +11,7 @@ A Hook can be used to get whether the component is unmounted.
 
 ### Default Usage
 
-<code src="./demo/demo1.tsx" />
+<code src="./demo/demo1.tsx"></code>
 
 ## API
 

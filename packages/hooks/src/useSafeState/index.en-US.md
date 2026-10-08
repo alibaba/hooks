@@ -11,7 +11,7 @@ It is exactly the same with `React.useState` , but after the component is unmoun
 
 ### Basic usage
 
-<code src="./demo/demo1.tsx" />
+<code src="./demo/demo1.tsx"></code>
 
 ## API
 

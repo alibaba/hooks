@@ -28,7 +28,7 @@ The following demos are for antd v4. For v3, please refer to: https://ahooks-v2.
 
 <br />
 
-<code src="./demo/table.tsx" />
+<code src="./demo/table.tsx"></code>
 
 ### Form and Table data binding
 
@@ -41,7 +41,7 @@ When `useAntdTable` receives the `form` instance, it will return a search object
 
 In the following example, you can try out the data binding between form and table.
 
-<code src="./demo/form.tsx" />
+<code src="./demo/form.tsx"></code>
 
 ### Default Params
 
@@ -51,19 +51,19 @@ It should be noted that the initial form data can be filled with all the form da
 
 The following example sets paging data and form data during initialization.
 
-<code src="./demo/init.tsx" />
+<code src="./demo/init.tsx"></code>
 
 ### Form Validation
 
 Before submitting the form, we validate the form data and do not initiate the request if validation fails. By default, `form.validateFields` is called. If the form instance provides `validateFieldsReturnFormatValue`, that method is preferred to support ProForm's `transform`.
 
-<code src="./demo/validate.tsx" />
+<code src="./demo/validate.tsx"></code>
 
 ### Data Caching
 
 By setting `cacheKey`, we can apply the data caching for the `Form` and `Table`.
 
-<code src="./demo/cache.tsx" />
+<code src="./demo/cache.tsx"></code>
 
 ## API
 

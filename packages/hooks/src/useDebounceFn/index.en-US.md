@@ -11,7 +11,7 @@ A hook that deal with the debounced function.
 
 ### Default usage
 
-<code src="./demo/demo1.tsx" />
+<code src="./demo/demo1.tsx"></code>
 
 ## API
 

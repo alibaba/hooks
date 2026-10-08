@@ -22,7 +22,7 @@ const b = useCreation(() => new Subject(), []); // 通过 factory 函数，可�
 
 ### 基础用法
 
-<code src="./demo/demo1.tsx" />
+<code src="./demo/demo1.tsx"></code>
 
 ## API
 

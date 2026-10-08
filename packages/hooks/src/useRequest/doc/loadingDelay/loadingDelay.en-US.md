@@ -21,7 +21,7 @@ For example, in the above scenario, if `getUsername` returns within 300ms, `load
 
 You can quickly click the button in the example below to experience the effect
 
-<code src="./demo/loadingDelay.tsx" />
+<code src="./demo/loadingDelay.tsx"></code>
 
 ## API
 

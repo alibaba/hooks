@@ -11,7 +11,7 @@ A hook that can manage the state of Map.
 
 ### Default usage
 
-<code src="./demo/demo1.tsx" />
+<code src="./demo/demo1.tsx"></code>
 
 ## API
 

@@ -19,7 +19,7 @@ For example, in the above scenario, `getUsername` will be requested every 3000ms
 
 You can experience the effect through the following example
 
-<code src="./demo/polling.tsx" />
+<code src="./demo/polling.tsx"></code>
 
 ## Polling error retry
 
@@ -34,7 +34,7 @@ const { data, run, cancel } = useRequest(getUsername, {
 
 You can experience the effect through the following example.
 
-<code src="./demo/pollingError.tsx" />
+<code src="./demo/pollingError.tsx"></code>
 
 ## API
 

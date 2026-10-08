@@ -11,7 +11,7 @@ A hook alike `useLayoutEffect` but skips running the effect for the first time.
 
 ### Basic usage
 
-<code src="./demo/demo1.tsx" />
+<code src="./demo/demo1.tsx"></code>
 
 ## API
 

@@ -33,3 +33,16 @@
 2. `pnpm run test` 运行测试。
 
 3. `pnpm run build` 构建编译。
+
+
+## 站点与发布产物
+
+开发环境需要 Node.js >= 20.19 和 pnpm；CI 使用 pnpm 12.3.4。
+文档站使用 dumi 2 + utoopack，开发输出在 `.dumi/dev-dist`，与生产的 `dist` 分离。
+
+- `pnpm build`：生成两个包的 ESM、CommonJS、声明文件、UMD，以及主包 metadata。
+- `pnpm test:build`：验证模块入口、类型声明、深层导入和 UMD 加载。
+- `pnpm build:doc` / `pnpm test:doc`：构建根路径站点并验证路由、导航和资源。
+- `pnpm build:doc-github` / `pnpm test:doc`：验证 `/hooks/` 部署，构建不会改写文档源文件。
+
+修改构建或站点配置时，分别验证这两种部署路径。Demo 使用 `<code src="./demo/demo1.tsx"></code>` 语法。

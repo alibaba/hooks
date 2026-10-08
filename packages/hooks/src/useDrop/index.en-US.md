@@ -17,11 +17,11 @@ A pair of hooks to help you manage data transfer between drag and drop
 
 ### Basic Usage
 
-<code src="./demo/demo1.tsx" />
+<code src="./demo/demo1.tsx"></code>
 
 ### Customize Image
 
-<code src="./demo/demo2.tsx" />
+<code src="./demo/demo2.tsx"></code>
 
 ## API
 

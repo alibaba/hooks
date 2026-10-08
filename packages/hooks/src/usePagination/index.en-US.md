@@ -18,25 +18,25 @@ nav:
 
 The default usage is the same as `useRequest`, but an additional `pagination` parameter will be returned, which contains all pagination information and functions to operate pagination.
 
-<code src="./demo/demo1.tsx" />
+<code src="./demo/demo1.tsx"></code>
 
 ### More parameters
 
 The following code demonstrates that the gender parameter is added. When the gender is modified, the paging is reset to the first page and the data is requested again.
 
-<code src="./demo/demo2.tsx" />
+<code src="./demo/demo2.tsx"></code>
 
 ### refreshDeps
 
 `refreshDeps` is a syntactic sugar. When it changes, it will reset the page to the first page and request data again. Generally, you can put the dependent conditions here. The following example implements the previous function more conveniently through `refreshDeps`.
 
-<code src="./demo/demo3.tsx" />
+<code src="./demo/demo3.tsx"></code>
 
 ### Cache
 
 Through the `params` caching capability of `useRequest`, we can cache paging data and other conditions.
 
-<code src="./demo/demo4.tsx" />
+<code src="./demo/demo4.tsx"></code>
 
 ## API
 

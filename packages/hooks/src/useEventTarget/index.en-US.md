@@ -11,11 +11,11 @@ A hook that encapsulates `onChange` and `value` logic for form controls that obt
 
 ### Basic Usage
 
-<code src="./demo/demo1.tsx" />
+<code src="./demo/demo1.tsx"></code>
 
 ### Custom transformer
 
-<code src="./demo/demo2.tsx" />
+<code src="./demo/demo2.tsx"></code>
 
 ## API
 

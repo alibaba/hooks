@@ -19,7 +19,7 @@ const { data, run } = useRequest(getUsername, {
 
 你可以在下面 input 框中输入文本，并点击 Edit 按钮，体验效果
 
-<code src="./demo/retry.tsx" />
+<code src="./demo/retry.tsx"></code>
 
 ## API
 

@@ -11,7 +11,7 @@ A hook that set the favicon of the page.
 
 ### Basic Usage
 
-<code src="./demo/demo1.tsx" />
+<code src="./demo/demo1.tsx"></code>
 
 ## API
 

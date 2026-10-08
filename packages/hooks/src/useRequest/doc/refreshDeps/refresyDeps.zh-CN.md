@@ -31,11 +31,11 @@ useEffect(() => {
 
 ### 重复上一次请求
 
-<code src="./demo/refreshDeps.tsx" />
+<code src="./demo/refreshDeps.tsx"></code>
 
 ### 自定义刷新行为
 
-<code src="./demo/refreshDepsAction.tsx" />
+<code src="./demo/refreshDepsAction.tsx"></code>
 
 ## API
 

@@ -31,11 +31,11 @@ useEffect(() => {
 
 ### Repeat last request
 
-<code src="./demo/refreshDeps.tsx" />
+<code src="./demo/refreshDeps.tsx"></code>
 
 ### Custom refresh
 
-<code src="./demo/refreshDepsAction.tsx" />
+<code src="./demo/refreshDepsAction.tsx"></code>
 
 ## API
 

@@ -11,27 +11,27 @@ nav:
 
 ### 基础用法
 
-<code src="./demo/demo1.tsx" />
+<code src="./demo/demo1.tsx"></code>
 
 ### 自定义 DOM
 
-<code src="./demo/demo2.tsx" />
+<code src="./demo/demo2.tsx"></code>
 
 ### 支持多个 DOM 对象
 
-<code src="./demo/demo3.tsx" />
+<code src="./demo/demo3.tsx"></code>
 
 ### 监听其它事件
 
-<code src="./demo/demo4.tsx" />
+<code src="./demo/demo4.tsx"></code>
 
 ### 支持多个事件
 
-<code src="./demo/demo5.tsx" />
+<code src="./demo/demo5.tsx"></code>
 
 ### 支持 shadow DOM
 
-<code src="./demo/demo6.tsx" />
+<code src="./demo/demo6.tsx"></code>
 
 ## API
 

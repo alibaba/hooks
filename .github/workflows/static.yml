@@ -23,10 +23,8 @@ jobs:
   deploy:
     environment:
       name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     env:
-      NODE_OPTIONS: --openssl-legacy-provider
       DOCS_PUBLIC_PATH: /hooks/
     steps:
       - name: Checkout
@@ -38,27 +36,18 @@ jobs:
           node-version: 22
 
       - name: Setup pnpm
-        run: |
-          npm install --global corepack@latest
-          corepack enable
-          corepack prepare pnpm@latest --activate
-          echo "$(pnpm bin --global)" >> $GITHUB_PATH
+        uses: pnpm/action-setup@v4
+        with:
+          version: 12.3.4
 
       - name: Install dependencies
-        run: pnpm install
-
-      - name: Cache pnpm dependencies
-        uses: actions/cache@v4
-        with:
-          path: |
-            ~/.pnpm-store
-            node_modules
-          key: ${{ runner.os }}-pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}
-          restore-keys: |
-            ${{ runner.os }}-pnpm-
+        run: pnpm install --frozen-lockfile
 
       - name: Build documentation
         run: pnpm run build:doc-github
+
+      - name: Verify documentation
+        run: pnpm run test:doc
 
       - name: Setup Pages
         uses: actions/configure-pages@v5

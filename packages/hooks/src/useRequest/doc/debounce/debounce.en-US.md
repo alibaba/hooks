@@ -20,7 +20,7 @@ As in the example code above, if `run` is triggered frequently, it will only wai
 
 You can quickly enter text in the input box below to experience the effect
 
-<code src="./demo/debounce.tsx" />
+<code src="./demo/debounce.tsx"></code>
 
 ## API
 

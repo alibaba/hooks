@@ -17,7 +17,7 @@ const { data } = useRequest(getUsername, {
 
 You can click outside the browser, and then click the current page to experience the effect (or hide the current page and redisplay). If the interval from the previous request is greater than 5000ms, it will be requested again.
 
-<code src="./demo/refreshOnWindowFocus.tsx" />
+<code src="./demo/refreshOnWindowFocus.tsx"></code>
 
 ## API
 

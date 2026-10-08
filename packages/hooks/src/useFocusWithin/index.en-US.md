@@ -11,11 +11,11 @@ Monitor whether the current focus is within a certain area, Same as css attribut
 
 ### Default usage
 
-<code src="./demo/demo1.tsx" />
+<code src="./demo/demo1.tsx"></code>
 
 ### Pass in DOM element
 
-<code src="./demo/demo2.tsx" />
+<code src="./demo/demo2.tsx"></code>
 
 ## API
 

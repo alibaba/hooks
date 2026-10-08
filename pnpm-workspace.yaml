@@ -1,2 +1,11 @@
 packages:
   - "packages/*"
+allowBuilds:
+  '@parcel/watcher': true
+  '@swc/core': true
+  core-js: true
+  core-js-pure: true
+  es5-ext: true
+  esbuild: true
+  fsevents: true
+  swiper: true

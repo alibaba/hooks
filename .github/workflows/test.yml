@@ -8,8 +8,11 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: pnpm/action-setup@v4
+        with:
+          version: 12.3.4
       - run: pnpm run init
       - run: pnpm run tsc
+      - run: pnpm run test:build
   test:
     runs-on: ubuntu-latest
 
@@ -23,6 +26,8 @@ jobs:
 
       - name: Install pnpm
         uses: pnpm/action-setup@v4
+        with:
+          version: 12.3.4
 
       - name: Get pnpm store directory
         id: pnpm-cache
@@ -55,3 +60,22 @@ jobs:
         if: ${{ matrix.mode == 'strict' }}
         run: |
           pnpm run test:strict
+
+  docs:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        public-path: ['/', '/hooks/']
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 12.3.4
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm run build:doc
+        env:
+          DOCS_PUBLIC_PATH: ${{ matrix.public-path }}
+      - run: pnpm run test:doc
