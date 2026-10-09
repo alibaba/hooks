@@ -222,7 +222,10 @@ const useInfiniteScroll = <TData extends Data>(
     reload: useMemoizedFn(reload),
     reloadAsync: useMemoizedFn(reloadAsync),
     mutate: setFinalData,
-    cancel,
+    cancel: useMemoizedFn(() => {
+      setLoadingMore(false);
+      cancel();
+    }),
   };
 };
 

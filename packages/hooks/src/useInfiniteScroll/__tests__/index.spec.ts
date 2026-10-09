@@ -314,6 +314,154 @@ describe('useInfiniteScroll', () => {
     expect(onSuccess).not.toHaveBeenCalled();
   });
 
+  test.each(['loadMore', 'loadMoreAsync'] as const)(
+    'cancel should clear loadingMore after %s and allow loading again',
+    async (method) => {
+      const onSuccess = vi.fn();
+      const onError = vi.fn();
+      const onFinally = vi.fn();
+      const { result } = setup(mockRequest, { manual: true, onSuccess, onError, onFinally });
+      let cancelled: Promise<unknown> | undefined;
+
+      act(() => {
+        const request = result.current[method]();
+        if (request) {
+          cancelled = request.catch((error: unknown) => error);
+        }
+      });
+      expect(result.current.loadingMore).toBe(true);
+
+      act(() => result.current.cancel());
+      expect(result.current.loading).toBe(false);
+      expect(result.current.loadingMore).toBe(false);
+
+      await act(async () => {
+        vi.advanceTimersByTime(1000);
+      });
+      if (cancelled) {
+        expect(await cancelled).toMatchObject({ name: 'CancelledError' });
+      }
+      expect(result.current.data).toBeUndefined();
+      expect(result.current.loadingMore).toBe(false);
+      expect(onSuccess).not.toHaveBeenCalled();
+      expect(onError).not.toHaveBeenCalled();
+      expect(onFinally).not.toHaveBeenCalled();
+
+      act(() => result.current.loadMore());
+      expect(result.current.loadingMore).toBe(true);
+      await act(async () => {
+        vi.advanceTimersByTime(1000);
+      });
+      expect(result.current.data?.list).toEqual([4, 5, 6]);
+      expect(result.current.loadingMore).toBe(false);
+      expect(onSuccess).toHaveBeenCalledTimes(1);
+      expect(onFinally).toHaveBeenCalledTimes(1);
+    },
+  );
+
+  test.each([
+    { outcome: 'resolve', settleBeforeNew: true },
+    { outcome: 'reject', settleBeforeNew: true },
+    { outcome: 'resolve', settleBeforeNew: false },
+    { outcome: 'reject', settleBeforeNew: false },
+  ])(
+    'cancelled $outcome should not affect a new request (settleBeforeNew: $settleBeforeNew)',
+    async ({ outcome, settleBeforeNew }) => {
+      const requests: {
+        resolve: (data: { list: number[] }) => void;
+        reject: (error: Error) => void;
+      }[] = [];
+      const service = vi.fn(
+        () =>
+          new Promise<{ list: number[] }>((resolve, reject) => {
+            requests.push({ resolve, reject });
+          }),
+      );
+      const onSuccess = vi.fn();
+      const onError = vi.fn();
+      const onFinally = vi.fn();
+      const { result } = setup(service, { manual: true, onSuccess, onError, onFinally });
+      act(() => result.current.mutate({ list: [1] }));
+      act(() => result.current.loadMore());
+      act(() => result.current.cancel());
+      expect(result.current.loadingMore).toBe(false);
+      act(() => result.current.loadMore());
+      expect(service).toHaveBeenCalledTimes(2);
+
+      const settleCancelled = async () => {
+        await act(async () => {
+          if (outcome === 'resolve') {
+            requests[0].resolve({ list: [99] });
+          } else {
+            requests[0].reject(new Error('cancelled request failed'));
+          }
+        });
+      };
+      if (settleBeforeNew) {
+        await settleCancelled();
+        expect(result.current.loadingMore).toBe(true);
+        expect(result.current.data?.list).toEqual([1]);
+        expect(onSuccess).not.toHaveBeenCalled();
+        expect(onFinally).not.toHaveBeenCalled();
+      }
+      await act(async () => requests[1].resolve({ list: [2] }));
+      if (!settleBeforeNew) {
+        await settleCancelled();
+      }
+      expect(result.current.data?.list).toEqual([1, 2]);
+      expect(result.current.loadingMore).toBe(false);
+      expect(result.current.error).toBeUndefined();
+      expect(onSuccess).toHaveBeenCalledTimes(1);
+      expect(onError).not.toHaveBeenCalled();
+      expect(onFinally).toHaveBeenCalledTimes(1);
+    },
+  );
+
+  test('cancel should allow scrolling to load more again', async () => {
+    const target = document.createElement('div');
+    Object.defineProperties(target, {
+      clientHeight: { value: 100 },
+      scrollHeight: { value: 300 },
+      scrollTop: { value: 0, writable: true },
+    });
+    const requests: ((data: { list: number[] }) => void)[] = [];
+    const service = vi.fn(
+      () =>
+        new Promise<{ list: number[] }>((resolve) => {
+          requests.push(resolve);
+        }),
+    );
+    const { result, unmount } = setup(service, {
+      manual: true,
+      target,
+      isNoMore: (data) => (data?.list.length ?? 0) >= 2,
+    });
+
+    try {
+      act(() => result.current.mutate({ list: [1] }));
+      act(() => result.current.loadMore());
+      expect(result.current.loadingMore).toBe(true);
+      act(() => result.current.cancel());
+      act(() => {
+        target.scrollTop = 150;
+        target.dispatchEvent(new Event('scroll'));
+      });
+      expect(service).toHaveBeenCalledTimes(2);
+      expect(result.current.loadingMore).toBe(true);
+
+      await act(async () => requests[0]({ list: [99] }));
+      expect(result.current.data?.list).toEqual([1]);
+      expect(result.current.loadingMore).toBe(true);
+
+      await act(async () => requests[1]({ list: [2] }));
+      expect(result.current.data?.list).toEqual([1, 2]);
+      expect(result.current.loadingMore).toBe(false);
+      expect(service).toHaveBeenCalledTimes(2);
+    } finally {
+      unmount();
+    }
+  });
+
   test('onBefore/onSuccess/onFinally should be called', async () => {
     const onBefore = vi.fn();
     const onSuccess = vi.fn();
