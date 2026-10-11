@@ -1,7 +1,7 @@
-import { getTargetElement } from '../utils/domTarget';
-import type { BasicTarget } from '../utils/domTarget';
-import useDeepCompareEffectWithTarget from '../utils/useDeepCompareWithTarget';
 import useLatest from '../useLatest';
+import type { BasicTarget } from '../utils/domTarget';
+import { getTargetElement } from '../utils/domTarget';
+import useDeepCompareEffectWithTarget from '../utils/useDeepCompareWithTarget';
 
 const useMutationObserver = (
   callback: MutationCallback,
@@ -16,7 +16,9 @@ const useMutationObserver = (
       if (!element) {
         return;
       }
-      const observer = new MutationObserver(callbackRef.current);
+      const observer = new MutationObserver((records, observer) =>
+        callbackRef.current.call(observer, records, observer),
+      );
       observer.observe(element, options);
       return () => {
         observer?.disconnect();
