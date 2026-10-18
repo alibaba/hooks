@@ -20,8 +20,6 @@ With the default `debounceLeading: false` and `debounceTrailing: true`, the exam
 
 Setting `debounceLeading: true` starts the first request immediately. If `debounceTrailing` is also `true`, a trailing request runs only when another call occurs during the wait period; a single call does not produce two requests. Setting `debounceMaxWait` limits how long execution can be postponed, so requests can still start while calls continue to arrive.
 
-For the difference between these timing strategies and throttling in search inputs, see [debounce versus throttle](https://frontendatlas.com/javascript/trivia/debounce-vs-throttle-search-input).
-
 You can quickly enter text in the input box below to experience the effect
 
 <code src="./demo/debounce.tsx" />
