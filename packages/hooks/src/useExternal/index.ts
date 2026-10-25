@@ -102,7 +102,7 @@ const useExternal = (path?: string, options?: Options) => {
       setStatus('unset');
       return;
     }
-    const pathname = path.replace(/[|#].*$/, '');
+    const pathname = path.replace(/[?#].*$/, '');
     if (options?.type === 'css' || (!options?.type && /(^css!|\.css$)/.test(pathname))) {
       const result = loadCss(path, options?.css);
       ref.current = result.ref;
