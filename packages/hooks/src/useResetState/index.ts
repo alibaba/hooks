@@ -1,8 +1,8 @@
-import { useRef, useState } from 'react';
 import type { Dispatch, SetStateAction } from 'react';
-import { isFunction } from '../utils';
-import useMemoizedFn from '../useMemoizedFn';
+import { useRef, useState } from 'react';
 import useCreation from '../useCreation';
+import useMemoizedFn from '../useMemoizedFn';
+import { isFunction } from '../utils';
 
 type ResetState = () => void;
 
@@ -16,10 +16,10 @@ const useResetState = <S>(
     [],
   );
 
-  const [state, setState] = useState(initialStateMemo);
+  const [state, setState] = useState(() => initialStateMemo);
 
   const resetState = useMemoizedFn(() => {
-    setState(initialStateMemo);
+    setState(() => initialStateMemo);
   });
 
   return [state, setState, resetState];
