@@ -54,43 +54,49 @@ export default function useHistoryTravel<T>(initialValue?: T, maxLength: number 
   };
 
   const updateValue = (val: T) => {
-    const _past = [...past, present];
-    const maxLengthNum = isNumber(maxLength) ? maxLength : Number(maxLength);
-    // maximum number of records exceeded
-    if (maxLengthNum > 0 && _past.length > maxLengthNum) {
-      //delete first
-      _past.splice(0, 1);
-    }
+    setHistory((current) => {
+      const _past = [...current.past, current.present];
+      const maxLengthNum = isNumber(maxLength) ? maxLength : Number(maxLength);
+      // maximum number of records exceeded
+      if (maxLengthNum > 0 && _past.length > maxLengthNum) {
+        //delete first
+        _past.splice(0, 1);
+      }
 
-    setHistory({
-      present: val,
-      future: [],
-      past: _past,
+      return {
+        present: val,
+        future: [],
+        past: _past,
+      };
     });
   };
 
   const _forward = (step: number = 1) => {
-    if (future.length === 0) {
-      return;
-    }
-    const { _before, _current, _after } = split(step, future);
-    setHistory({
-      past: [...past, present, ..._before],
-      present: _current,
-      future: _after,
+    setHistory((current) => {
+      if (current.future.length === 0) {
+        return current;
+      }
+      const { _before, _current, _after } = split(step, current.future);
+      return {
+        past: [...current.past, current.present, ..._before],
+        present: _current,
+        future: _after,
+      };
     });
   };
 
   const _backward = (step: number = -1) => {
-    if (past.length === 0) {
-      return;
-    }
+    setHistory((current) => {
+      if (current.past.length === 0) {
+        return current;
+      }
 
-    const { _before, _current, _after } = split(step, past);
-    setHistory({
-      past: _before,
-      present: _current,
-      future: [..._after, present, ...future],
+      const { _before, _current, _after } = split(step, current.past);
+      return {
+        past: _before,
+        present: _current,
+        future: [..._after, current.present, ...current.future],
+      };
     });
   };
 
