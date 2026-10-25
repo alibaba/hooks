@@ -27,4 +27,15 @@ describe('useFavicon', () => {
       expect(link.getAttribute('rel')).toBe('shortcut icon');
     });
   });
+
+  test.each(['?v=1', '#icon', '?fallback=other.gif#icon'])(
+    'should infer the image type without the URL suffix %s',
+    (suffix) => {
+      const url = `favicon.svg${suffix}`;
+      renderHook(() => useFavicon(url));
+      const link = document.querySelector("link[rel*='icon']");
+      expect(link?.getAttribute('type')).toBe('image/svg+xml');
+      expect(link?.getAttribute('href')).toBe(url);
+    },
+  );
 });
