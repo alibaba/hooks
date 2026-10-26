@@ -6,15 +6,40 @@ import useEffectWithTarget from '../utils/useEffectWithTarget';
 
 type DocumentEventKey = keyof DocumentEventMap;
 
+export type UseClickAwayEventName = DocumentEventKey | DocumentEventKey[];
+
+export interface UseClickAwayOptions {
+  eventName?: UseClickAwayEventName;
+  /** Whether the away listener is active. Defaults to `true`. */
+  enabled?: boolean;
+}
+
+const normalizeOptions = (
+  options: UseClickAwayEventName | UseClickAwayOptions,
+): Required<Pick<UseClickAwayOptions, 'eventName' | 'enabled'>> => {
+  if (typeof options === 'string' || Array.isArray(options)) {
+    return { eventName: options, enabled: true };
+  }
+  return {
+    eventName: options.eventName ?? 'click',
+    enabled: options.enabled ?? true,
+  };
+};
+
 const useClickAway = <T extends Event = Event>(
   onClickAway: (event: T) => void,
   target: BasicTarget | BasicTarget[],
-  eventName: DocumentEventKey | DocumentEventKey[] = 'click',
+  eventNameOrOptions: UseClickAwayEventName | UseClickAwayOptions = 'click',
 ) => {
   const onClickAwayRef = useLatest(onClickAway);
+  const { eventName, enabled } = normalizeOptions(eventNameOrOptions);
 
   useEffectWithTarget(
     () => {
+      if (!enabled) {
+        return;
+      }
+
       const handler = (event: any) => {
         const targets = Array.isArray(target) ? target : [target];
         if (
@@ -42,7 +67,7 @@ const useClickAway = <T extends Event = Event>(
         });
       };
     },
-    Array.isArray(eventName) ? eventName : [eventName],
+    [...(Array.isArray(eventName) ? eventName : [eventName]), enabled],
     target,
   );
 };
