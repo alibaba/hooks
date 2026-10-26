@@ -15,7 +15,7 @@ const useFavicon = (href: string) => {
       return;
     }
 
-    const cutUrl = href.split('.');
+    const cutUrl = href.replace(/[?#].*$/, '').split('.');
 
     const imgSuffix = cutUrl[cutUrl.length - 1].toLocaleUpperCase() as ImgTypes;
 

@@ -45,6 +45,42 @@ describe('useExternal', () => {
     expect(result.current).toBe('unset');
   });
 
+  test.each([
+    ['js', 'script', 'src'],
+    ['css', 'link', 'href'],
+  ])('should infer %s resources with a query or fragment', (extension, tag, attribute) => {
+    for (const suffix of ['?v=1', '#version', '?file=other.css#version']) {
+      const path = `/asset.${extension}${suffix}`;
+      const { result, unmount } = setup(path);
+      const element = document.querySelector(tag);
+
+      expect(element).not.toBeNull();
+      expect(element?.getAttribute(attribute)).toBe(path);
+      expect(result.current).toBe('loading');
+      act(() => {
+        fireEvent.load(element!);
+      });
+      expect(result.current).toBe('ready');
+
+      unmount();
+      expect(document.querySelector(tag)).toBeNull();
+    }
+  });
+
+  test.each([
+    ['js', 'script', 'src'],
+    ['css', 'link', 'href'],
+  ])('should reuse an existing %s resource with a query', (extension, tag, attribute) => {
+    const path = `/existing.${extension}?v=1`;
+    const element = document.createElement(tag);
+    element.setAttribute(attribute, path);
+    document.head.appendChild(element);
+
+    const { result } = setup(path);
+    expect(result.current).toBe('ready');
+    expect(document.querySelectorAll(tag)).toHaveLength(1);
+  });
+
   test('status should be error when load failed', async () => {
     const { result } = setup('xx.js');
     const script = document.querySelector('script') as HTMLScriptElement;
