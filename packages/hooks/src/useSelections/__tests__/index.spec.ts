@@ -27,6 +27,47 @@ const runCaseCallback = (
 };
 
 describe('useSelections', () => {
+  test('should rebuild the selection when the key property changes', () => {
+    const selected = { id: 1, name: 'before' };
+    const items = [{ id: 1, name: 'after' }];
+    const { result, rerender } = renderHook(
+      ({ itemKey }) => useSelections(items, { defaultSelected: [selected], itemKey }),
+      { initialProps: { itemKey: 'id' } },
+    );
+
+    expect(result.current.allSelected).toBe(true);
+
+    rerender({ itemKey: 'name' });
+
+    expect(result.current.isSelected(selected)).toBe(true);
+    expect(result.current.isSelected(items[0])).toBe(false);
+    expect(result.current.noneSelected).toBe(true);
+    expect(result.current.allSelected).toBe(false);
+    expect(result.current.partiallySelected).toBe(false);
+
+    act(() => result.current.toggleAll());
+    expect(result.current.selected).toEqual([selected, items[0]]);
+    expect(result.current.allSelected).toBe(true);
+  });
+
+  test('should use the latest key function to deselect an item', () => {
+    const items = [{ id: 1, name: 'first' }];
+    const byId = (item: (typeof items)[number]) => item.id;
+    const byName = (item: (typeof items)[number]) => item.name;
+    const { result, rerender } = renderHook(
+      ({ itemKey }: { itemKey: Options<(typeof items)[number]>['itemKey'] }) =>
+        useSelections(items, { defaultSelected: items, itemKey }),
+      { initialProps: { itemKey: byId as Options<(typeof items)[number]>['itemKey'] } },
+    );
+
+    rerender({ itemKey: byName });
+
+    expect(result.current.isSelected(items[0])).toBe(true);
+    act(() => result.current.unSelect(items[0]));
+    expect(result.current.selected).toEqual([]);
+    expect(result.current.noneSelected).toBe(true);
+  });
+
   test('defaultSelected should work correct', () => {
     const caseCallback: CaseCallback = (data, selected, selectedItem) => {
       const { result } = setup(data, {

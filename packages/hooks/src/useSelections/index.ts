@@ -1,7 +1,7 @@
 import isPlainObject from 'lodash/isPlainObject';
+import { useCallback, useMemo, useState } from 'react';
 import useMemoizedFn from '../useMemoizedFn';
 import { isFunction, isString } from '../utils';
-import { useMemo, useState } from 'react';
 
 export interface Options<T> {
   defaultSelected?: T[];
@@ -19,16 +19,19 @@ function useSelections<T>(items: T[], options?: T[] | Options<T>) {
     itemKey = options?.itemKey ?? itemKey;
   }
 
-  const getKey = (item: T) => {
-    if (isFunction(itemKey)) {
-      return itemKey(item);
-    }
-    if (isString(itemKey) && isPlainObject(item)) {
-      return (item as any)[itemKey];
-    }
+  const getKey = useCallback(
+    (item: T) => {
+      if (isFunction(itemKey)) {
+        return itemKey(item);
+      }
+      if (isString(itemKey) && isPlainObject(item)) {
+        return (item as any)[itemKey];
+      }
 
-    return item as React.Key;
-  };
+      return item as React.Key;
+    },
+    [itemKey],
+  );
 
   const [selected, setSelected] = useState<T[]>(defaultSelected);
 
@@ -44,7 +47,7 @@ function useSelections<T>(items: T[], options?: T[] | Options<T>) {
     });
 
     return keyToItemMap;
-  }, [selected]);
+  }, [selected, getKey]);
 
   const isSelected = (item: T) => selectedMap.has(getKey(item));
 
@@ -82,12 +85,12 @@ function useSelections<T>(items: T[], options?: T[] | Options<T>) {
 
   const noneSelected = useMemo<boolean>(
     () => items.every((item) => !selectedMap.has(getKey(item))),
-    [items, selectedMap],
+    [items, selectedMap, getKey],
   );
 
   const allSelected = useMemo<boolean>(
     () => items.every((item) => selectedMap.has(getKey(item))) && !noneSelected,
-    [items, selectedMap, noneSelected],
+    [items, selectedMap, noneSelected, getKey],
   );
 
   const partiallySelected = useMemo<boolean>(
