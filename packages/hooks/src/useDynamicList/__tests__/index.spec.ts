@@ -200,4 +200,16 @@ describe('useDynamicList', () => {
     sorted = hook.result.current.sortList(formData);
     expect(sorted[0].name).toBe('新增行');
   });
+
+  test('sortList should preserve falsy values while removing empty entries', () => {
+    const values = [0, false, '', undefined, null, 'last'];
+    const { result } = renderHook(() => useDynamicList(values));
+
+    expect(result.current.sortList(values)).toEqual([0, false, '', 'last']);
+
+    act(() => {
+      result.current.move(5, 0);
+    });
+    expect(result.current.sortList(values)).toEqual(['last', 0, false, '']);
+  });
 });
