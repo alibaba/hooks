@@ -1,8 +1,104 @@
 import { act, renderHook } from '@testing-library/react';
+import { StrictMode } from 'react';
 import { describe, expect, test } from 'vitest';
 import useHistoryTravel from '../index';
 
 describe('useHistoryTravel', () => {
+  test('should keep every value set in the same batch', () => {
+    const { result } = renderHook(() => useHistoryTravel('initial'), { wrapper: StrictMode });
+
+    act(() => {
+      result.current.setValue('first');
+      result.current.setValue('second');
+    });
+
+    expect(result.current.value).toBe('second');
+    expect(result.current.backLength).toBe(2);
+    act(() => result.current.back());
+    expect(result.current.value).toBe('first');
+    act(() => result.current.back());
+    expect(result.current.value).toBe('initial');
+  });
+
+  test('should apply batched navigation in order', () => {
+    const { result } = renderHook(() => useHistoryTravel(0));
+    act(() => result.current.setValue(1));
+    act(() => result.current.setValue(2));
+    act(() => result.current.setValue(3));
+
+    act(() => {
+      result.current.back();
+      result.current.go(-2);
+    });
+    expect(result.current.value).toBe(0);
+    expect(result.current.forwardLength).toBe(3);
+
+    act(() => {
+      result.current.forward();
+      result.current.go(2);
+    });
+    expect(result.current.value).toBe(3);
+    expect(result.current.backLength).toBe(3);
+  });
+
+  test('should set a value after a batched reset', () => {
+    const { result } = renderHook(() => useHistoryTravel('initial'));
+    act(() => result.current.setValue('previous'));
+
+    act(() => {
+      result.current.reset('reset');
+      result.current.setValue('next');
+    });
+
+    expect(result.current.backLength).toBe(1);
+    act(() => result.current.back());
+    expect(result.current.value).toBe('reset');
+  });
+
+  test('should discard the redo history when updating after a batched back', () => {
+    const { result } = renderHook(() => useHistoryTravel(0));
+    act(() => result.current.setValue(1));
+    act(() => result.current.setValue(2));
+
+    act(() => {
+      result.current.back();
+      result.current.setValue(3);
+    });
+
+    expect(result.current.forwardLength).toBe(0);
+    expect(result.current.backLength).toBe(2);
+    act(() => result.current.back());
+    expect(result.current.value).toBe(1);
+  });
+
+  test('should respect max length within a batch', () => {
+    const { result } = renderHook(() => useHistoryTravel(0, 2));
+
+    act(() => {
+      result.current.setValue(1);
+      result.current.setValue(2);
+      result.current.setValue(3);
+    });
+
+    expect(result.current.backLength).toBe(2);
+    act(() => result.current.go(-10));
+    expect(result.current.value).toBe(1);
+  });
+
+  test('should leave the value unchanged when navigation has nowhere to go', () => {
+    const { result } = renderHook(() => useHistoryTravel('initial'));
+
+    act(() => {
+      result.current.back();
+      result.current.forward();
+      result.current.go(0);
+    });
+
+    expect(result.current.value).toBe('initial');
+    expect(result.current.backLength).toBe(0);
+    expect(result.current.forwardLength).toBe(0);
+  });
+
   test('should work without initial value', async () => {
     const hook = renderHook(() => useHistoryTravel());
     expect(hook.result.current.value).toBeUndefined();
