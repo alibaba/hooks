@@ -15,7 +15,7 @@ export interface UseClickAwayOptions {
 }
 
 const normalizeOptions = (
-  options: UseClickAwayEventName | UseClickAwayOptions = 'click',
+  options: UseClickAwayEventName | UseClickAwayOptions,
 ): Required<Pick<UseClickAwayOptions, 'eventName' | 'enabled'>> => {
   if (typeof options === 'string' || Array.isArray(options)) {
     return { eventName: options, enabled: true };
