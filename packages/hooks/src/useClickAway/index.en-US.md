@@ -38,11 +38,15 @@ Listen for click events outside the target element.
 ```typescript
 type Target = Element | (() => Element) | React.MutableRefObject<Element>;
 type DocumentEventKey = keyof DocumentEventMap;
+type Options = {
+  eventName?: DocumentEventKey | DocumentEventKey[];
+  enabled?: boolean;
+};
 
 useClickAway<T extends Event = Event>(
   onClickAway: (event: T) => void,
   target: Target | Target[],
-  eventName?: DocumentEventKey | DocumentEventKey[]
+  eventNameOrOptions?: DocumentEventKey | DocumentEventKey[] | Options
 );
 ```
 
@@ -50,6 +54,7 @@ useClickAway<T extends Event = Event>(
 
 | Property    | Description                                    | Type                                       | Default |
 | ----------- | ---------------------------------------------- | ------------------------------------------ | ------- |
-| onClickAway | Trigger Function                               | `(event: T) => void`                       | -       |
-| target      | DOM elements or Ref or Function, support array | `Target` \| `Target[]`                     | -       |
-| eventName   | Set the event to be listened, support array    | `DocumentEventKey` \| `DocumentEventKey[]` | `click` |
+| onClickAway       | Trigger Function                               | `(event: T) => void`                       | -       |
+| target            | DOM elements or Ref or Function, support array | `Target` \| `Target[]`                     | -       |
+| eventNameOrOptions | Event name(s), or an options object            | `DocumentEventKey` \| `DocumentEventKey[]` \| `Options` | `click` |
+| enabled           | Only trigger when `true` (`Options` only)      | `boolean`                                  | `true`  |

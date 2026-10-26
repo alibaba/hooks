@@ -38,11 +38,15 @@ nav:
 ```typescript
 type Target = Element | (() => Element) | React.MutableRefObject<Element>;
 type DocumentEventKey = keyof DocumentEventMap;
+type Options = {
+  eventName?: DocumentEventKey | DocumentEventKey[];
+  enabled?: boolean;
+};
 
 useClickAway<T extends Event = Event>(
   onClickAway: (event: T) => void,
   target: Target | Target[],
-  eventName?: DocumentEventKey | DocumentEventKey[]
+  eventNameOrOptions?: DocumentEventKey | DocumentEventKey[] | Options
 );
 ```
 
@@ -50,6 +54,7 @@ useClickAway<T extends Event = Event>(
 
 | 参数        | 说明                                | 类型                                       | 默认值  |
 | ----------- | ----------------------------------- | ------------------------------------------ | ------- |
-| onClickAway | 触发函数                            | `(event: T) => void`                       | -       |
-| target      | DOM 节点或者 Ref 或者函数，支持数组 | `Target` \| `Target[]`                     | -       |
-| eventName   | 指定需要监听的事件，支持数组        | `DocumentEventKey` \| `DocumentEventKey[]` | `click` |
+| onClickAway        | 触发函数                            | `(event: T) => void`                       | -       |
+| target             | DOM 节点或者 Ref 或者函数，支持数组 | `Target` \| `Target[]`                     | -       |
+| eventNameOrOptions | 事件名（支持数组），或配置对象      | `DocumentEventKey` \| `DocumentEventKey[]` \| `Options` | `click` |
+| enabled            | 仅在为 `true` 时触发（配置对象中）  | `boolean`                                  | `true`  |

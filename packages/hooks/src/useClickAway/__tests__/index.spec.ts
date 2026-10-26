@@ -64,4 +64,46 @@ describe('useClickAway', () => {
     document.body.click();
     expect(state).toBe(1);
   });
+
+  test('respects the enabled option', async () => {
+    let state = 0;
+    const { rerender } = renderHook(
+      ({ enabled }: { enabled: boolean }) =>
+        useClickAway(
+          () => {
+            state++;
+          },
+          container,
+          { enabled },
+        ),
+      { initialProps: { enabled: false } },
+    );
+
+    document.body.click();
+    expect(state).toBe(0);
+
+    rerender({ enabled: true });
+    document.body.click();
+    expect(state).toBe(1);
+
+    rerender({ enabled: false });
+    document.body.click();
+    expect(state).toBe(1);
+  });
+
+  test('accepts eventName in the options object', () => {
+    let state = 0;
+    renderHook(() =>
+      useClickAway(
+        () => {
+          state++;
+        },
+        container,
+        { eventName: 'contextmenu' },
+      ),
+    );
+
+    document.body.dispatchEvent(new MouseEvent('contextmenu', { bubbles: true }));
+    expect(state).toBe(1);
+  });
 });
