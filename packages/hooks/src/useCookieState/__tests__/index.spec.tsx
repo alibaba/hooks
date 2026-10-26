@@ -5,7 +5,7 @@ import type { Options } from '../index';
 import useCookieState from '../index';
 
 describe('useCookieState', () => {
-  const setUp = (key: string, options: Options) =>
+  const setUp = (key: string, options?: Options) =>
     renderHook(() => {
       const [state, setState] = useCookieState(key, options);
       return {
@@ -52,7 +52,7 @@ describe('useCookieState', () => {
     expect(anotherHook.result.current.state).toBe('false');
     expect(Cookies.get(COOKIE)).toBeUndefined();
     act(() => {
-      // @ts-ignore
+      // @ts-expect-error
       hook.result.current.setState();
     });
     expect(hook.result.current.state).toBeUndefined();
@@ -67,6 +67,35 @@ describe('useCookieState', () => {
       defaultValue: 'hello',
     });
     expect(hook.result.current.state).toBe('');
+  });
+
+  test.each([
+    { name: 'hook options', options: { path: '/account' }, updateOptions: undefined },
+    { name: 'update options', options: { path: '/' }, updateOptions: { path: '/account' } },
+    { name: 'only update options', options: undefined, updateOptions: { path: '/account' } },
+  ])('should remove a cookie with a custom path from $name', ({ options, updateOptions }) => {
+    const key = 'custom-path-cookie';
+    const url = window.location.href;
+    const attributes = { path: '/account' };
+    window.history.replaceState(null, '', '/account');
+
+    try {
+      const hook = setUp(key, options);
+
+      act(() => {
+        hook.result.current.setState('saved', updateOptions);
+      });
+      expect(Cookies.get(key)).toBe('saved');
+
+      act(() => {
+        hook.result.current.setState(undefined, updateOptions);
+      });
+      expect(hook.result.current.state).toBeUndefined();
+      expect(Cookies.get(key)).toBeUndefined();
+    } finally {
+      Cookies.remove(key, attributes);
+      window.history.replaceState(null, '', url);
+    }
   });
 
   test('should support function updater', () => {

@@ -72,7 +72,7 @@ const useCookieState = (cookieKey: string, options: Options = {}) => {
       setState(value);
 
       if (value === undefined) {
-        Cookies.remove(cookieKey);
+        Cookies.remove(cookieKey, restOptions);
       } else {
         Cookies.set(cookieKey, value, restOptions);
       }
