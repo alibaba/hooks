@@ -1,5 +1,5 @@
 import { act, renderHook } from '@testing-library/react';
-import { describe, expect, test } from 'vitest';
+import { describe, expect, test, vi } from 'vitest';
 import useResetState from '../index';
 
 describe('useResetState', () => {
@@ -26,6 +26,27 @@ describe('useResetState', () => {
       hello: 'world',
     }));
     expect(hook.result.current.state).toEqual({ hello: 'world' });
+  });
+
+  test('should preserve function values when initializing and resetting', () => {
+    const initialValue = vi.fn(() => 'initial');
+    const nextValue = vi.fn(() => 'next');
+    const { result } = renderHook(() => useResetState(() => initialValue));
+
+    expect(result.current[0]).toBe(initialValue);
+    expect(initialValue).not.toHaveBeenCalled();
+
+    act(() => {
+      result.current[1](() => nextValue);
+    });
+    expect(result.current[0]).toBe(nextValue);
+
+    act(() => {
+      result.current[2]();
+    });
+    expect(result.current[0]).toBe(initialValue);
+    expect(initialValue).not.toHaveBeenCalled();
+    expect(nextValue).not.toHaveBeenCalled();
   });
 
   test('should reset state', () => {
