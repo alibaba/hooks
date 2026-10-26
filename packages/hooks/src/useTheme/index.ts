@@ -68,7 +68,7 @@ export default function useTheme(options: Options = {}) {
   const setThemeModeWithLocalStorage = (mode: ThemeModeType) => {
     setThemeMode(mode);
 
-    if (localStorageKey?.length) {
+    if (isBrowser && localStorageKey?.length) {
       localStorage.setItem(localStorageKey, mode);
     }
   };
