@@ -33,3 +33,7 @@
 2. `pnpm run test` 运行测试。
 
 3. `pnpm run build` 构建编译。
+
+## 版本发布
+
+维护者发布 npm 包、GitHub Release 和文档站时，请按照 [发布指南](./RELEASING.md) 核对版本、验证产物并完成发布后验收。
