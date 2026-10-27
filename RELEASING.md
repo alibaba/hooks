@@ -9,9 +9,10 @@
 | ahooks | `packages/hooks/package.json` | 单独发布到 npm |
 | @ahooks.js/use-url-state | `packages/use-url-state/package.json` | 独立版本，按实际变更决定是否发布 |
 | GitHub Release | 仓库 Releases | 发布中英文说明和对应 tag |
-| GitHub Pages | `.github/workflows/static.yml` | master 推送后自动部署 |
+| GitHub Pages 文档镜像 | `.github/workflows/static.yml` | master 推送后自动部署 |
 | 正式官网 ahooks.js.org | `pnpm run pub:doc` | 构建后通过 Surge 发布 |
-| Gitee 文档镜像 | `pnpm run pub:doc-gitee` | 按需手动同步 |
+
+文档镜像为 GitHub Pages。Gitee 已停止发布，仓库遗留的 `pub:doc-gitee` 脚本不属于当前发布流程。
 
 根目录的 `pub` 和 `pub:beta` 会遍历 `packages/*`，不要将它们当作只发布 ahooks 的命令。`Publish Any Commit` 工作流发布的是 `pkg.pr.new` 预览包，不代表 npm 正式版已经发布。
 
@@ -38,7 +39,7 @@ gh release list --repo alibaba/hooks --limit 10
 ## 准备版本提交和发布说明
 
 1. 更新待发布包的 `version`，按需更新内部依赖范围和锁文件。没有变更的独立包不必一起升版。
-2. 依据完整差异准备中英文 Release Notes，区分新功能、修复、文档和升级注意事项，附对应 PR 链接。
+2. 依据完整差异，将中英文 Release Notes 保存到 `release-notes/<version>.md`，区分新功能、修复、文档和升级注意事项，附对应 PR 链接。
 3. 准备 GitHub Release 草稿或本地说明文件。实际发布时使用最终版本提交创建 tag，避免草稿提前绑定错误提交。
 4. 检查版本 diff，确认没有无关依赖升级、构建产物或环境配置混入提交。
 
@@ -92,7 +93,7 @@ pnpm --filter ./packages/hooks publish --tag latest
 
 ## 发布文档
 
-### GitHub Pages
+### GitHub Pages 文档镜像
 
 master 推送会触发 `.github/workflows/static.yml`，构建并发布到 `gh-pages` 分支。检查这次版本提交对应的工作流和站点：
 
@@ -111,17 +112,12 @@ Pages 使用 `/hooks/` 资源路径，官网使用 `/`。不要将 Pages 构建�
 
 发布后检查官网版本号、中英文导航、新功能文档、示例和资源请求；必要时检查缓存是否仍返回旧内容。
 
-### Gitee 镜像
-
-仅在本次发布包含镜像同步时执行。`pub:doc-gitee` 会删除 `dist` 内的 Git 元数据并强推镜像仓库，应先确认目标远端和推送权限。该镜像位于子路径，需按镜像实际部署路径生成并检查资源链接，不能直接假设可复用官网的根路径产物。
-
 ## 验收和中断恢复
 
 - [ ] npm 目标版本、dist-tag 和实际安装结果正确。
 - [ ] tag 指向最终版本提交，GitHub Release 内容和版本匹配。
 - [ ] 最终版本提交的类型检查、构建、普通及 Strict 模式测试通过。
-- [ ] GitHub Pages 和正式官网都已更新，文档与包版本一致。
-- [ ] 如包含 Gitee 镜像，同步及页面检查已完成。
+- [ ] GitHub Pages 文档镜像和正式官网都已更新，文档与包版本一致。
 - [ ] 留下版本、提交 SHA、Release、CI、站点链接和未完成事项的发布记录。
 
 任何发布操作超时后，先查询远端结果，确认是否已经成功，再决定重试。npm 成功但文档失败时，只重试文档部署；npm 成功但 Release 缺失时，补齐 tag 和 Release。已经发布的 npm 版本不重复发布，已经存在的 tag 不重写。发现已发布代码有问题时，修复后发布新版本。
@@ -137,7 +133,6 @@ Pages 使用 `/hooks/` 资源路径，官网使用 `/`。不要将 Pages 构建�
 产物安装验证与 CI 链接：
 npm 版本与 dist-tag 验证：
 Git tag 与 GitHub Release 链接：
-GitHub Pages 与正式官网验收：
-Gitee 镜像是否包含：
+GitHub Pages 文档镜像与正式官网验收：
 未完成事项：
 ```
