@@ -1,13 +1,13 @@
 /**
- * title: Adcanved Uasge
- * desc: Dynamic change targetDate, suitable for verification codes or similar scenarios.
+ * title: Restart a countdown
+ * desc: Set a new targetDate to restart with the same duration, suitable for verification codes or similar scenarios.
  *
- * title.zh-CN: 进阶使用
- * desc.zh-CN: 动态变更配置项, 适用于验证码或类似场景，时间结束后会触发 onEnd 回调。
+ * title.zh-CN: 重新开始倒计时
+ * desc.zh-CN: 每次更新 targetDate，以相同时长重新开始倒计时，适用于验证码重发等场景，时间结束后会触发 onEnd 回调。
  */
 
-import { useState } from 'react';
 import { useCountDown } from 'ahooks';
+import { useState } from 'react';
 
 export default () => {
   const [targetDate, setTargetDate] = useState<number>();
@@ -22,14 +22,16 @@ export default () => {
   return (
     <>
       <button
+        type="button"
         onClick={() => {
           setTargetDate(Date.now() + 5000);
         }}
         disabled={countdown !== 0}
       >
-        {countdown === 0 ? 'Start Interval' : `Reset After ${Math.round(countdown / 1000)}s`}
+        {countdown === 0 ? 'Start 5s countdown' : `Restart after ${Math.ceil(countdown / 1000)}s`}
       </button>
       <button
+        type="button"
         onClick={() => {
           setTargetDate(undefined);
         }}

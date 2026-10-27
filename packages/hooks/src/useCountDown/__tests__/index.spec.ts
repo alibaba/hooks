@@ -263,4 +263,58 @@ describe('useCountDown', () => {
     });
     expect(result.current[0]).toBe(4000);
   });
+
+  test('the same leftTime does not restart a running or completed countdown', () => {
+    const { result, rerender, unmount } = setup({ leftTime: 5000 });
+
+    act(() => vi.advanceTimersByTime(2000));
+    rerender({ leftTime: 5000 });
+    expect(result.current[0]).toBe(3000);
+
+    act(() => vi.advanceTimersByTime(3000));
+    rerender({ leftTime: 5000 });
+    expect(result.current[0]).toBe(0);
+    unmount();
+  });
+
+  test('a changed leftTime starts the new duration from the update', () => {
+    const { result, rerender, unmount } = setup({ leftTime: 5000 });
+
+    act(() => vi.advanceTimersByTime(2000));
+    rerender({ leftTime: 10000 });
+    expect(result.current[0]).toBe(10000);
+
+    act(() => vi.advanceTimersByTime(1000));
+    expect(result.current[0]).toBe(9000);
+    unmount();
+  });
+
+  test('a new targetDate restarts the same duration after completion or stopping', () => {
+    const onEnd = vi.fn();
+    const { result, rerender, unmount } = setup({
+      targetDate: Date.now() + 5000,
+      onEnd,
+    });
+
+    act(() => vi.advanceTimersByTime(5000));
+    expect(result.current[0]).toBe(0);
+    expect(onEnd).toHaveBeenCalledTimes(1);
+
+    rerender({ targetDate: Date.now() + 5000, onEnd });
+    expect(result.current[0]).toBe(5000);
+    act(() => vi.advanceTimersByTime(2000));
+    expect(result.current[0]).toBe(3000);
+
+    rerender({ targetDate: undefined, onEnd });
+    expect(result.current[0]).toBe(0);
+    act(() => vi.advanceTimersByTime(5000));
+    expect(onEnd).toHaveBeenCalledTimes(1);
+
+    rerender({ targetDate: Date.now() + 5000, onEnd });
+    expect(result.current[0]).toBe(5000);
+    act(() => vi.advanceTimersByTime(5000));
+    expect(result.current[0]).toBe(0);
+    expect(onEnd).toHaveBeenCalledTimes(2);
+    unmount();
+  });
 });
