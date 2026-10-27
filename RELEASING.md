@@ -39,7 +39,7 @@ gh release list --repo alibaba/hooks --limit 10
 ## 准备版本提交和发布说明
 
 1. 更新待发布包的 `version`，按需更新内部依赖范围和锁文件。没有变更的独立包不必一起升版。
-2. 依据完整差异，将中英文 Release Notes 保存到 `release-notes/<version>.md`，区分新功能、修复、文档和升级注意事项，附对应 PR 链接。
+2. 依据完整差异准备中英文 Release Notes，区分新功能、修复、文档和升级注意事项，附对应 PR 链接。沿用 GitHub Release 发布说明的方式，不在仓库新增 release notes 文件。
 3. 准备 GitHub Release 草稿或本地说明文件。实际发布时使用最终版本提交创建 tag，避免草稿提前绑定错误提交。
 4. 检查版本 diff，确认没有无关依赖升级、构建产物或环境配置混入提交。
 
