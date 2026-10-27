@@ -47,6 +47,8 @@ gh release list --repo alibaba/hooks --limit 10
 
 使用根目录 `packageManager` 指定的 pnpm 版本和 CI 支持的 Node.js 版本。先检查本机版本，避免全局 pnpm 与仓库要求不一致。安装应遵循现有锁文件：
 
+确保构建脚本内再次调用 `pnpm` 时也能解析到该版本。仅在最外层使用 `corepack pnpm`，而 PATH 仍指向其他版本的全局 pnpm，可能导致嵌套命令失败。
+
 ```sh
 node --version
 pnpm --version
