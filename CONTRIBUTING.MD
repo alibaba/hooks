@@ -33,3 +33,7 @@ After cloning `ahooks`, run `pnpm run init` to fetch its dependencies. Then, you
 2. `pnpm run test` runs the complete test suite.
 
 3. `pnpm run build` to build.
+
+## Releasing
+
+Maintainers should follow the [release guide](./RELEASING.md) when publishing npm packages, GitHub Releases, and documentation sites.
