@@ -35,6 +35,17 @@ const useInfiniteScroll = <TData extends Data>(
   const scrollBottom = useRef<number>(0);
   // flag: set in onSuccess (bottom direction only) to trigger scrollMethod via effect
   const pendingBottomScrollCheckRef = useRef(false);
+  // Whether a request is in flight. `loading` and `loadingMore` are state, so two calls in the same
+  // tick both read the value from before the re-render and would both start a request. The service
+  // advances its own cursor per call while useRequest keeps only the newest response, so the
+  // superseded page would be dropped from the list entirely.
+  const inFlightRef = useRef(false);
+  // Identity of the request each completion belongs to. A boolean cannot tell an older request's
+  // completion from the newest one's, and a reload started from onSuccess/onError begins before the
+  // older request's onFinally runs: clearing the flag there let a third request supersede the reload
+  // and drop its page. The newest token is the only one allowed to release the guard.
+  const requestSeqRef = useRef(0);
+  const latestRequestRef = useRef(0);
 
   const noMore = useMemo(() => {
     if (!isNoMore) {
@@ -45,13 +56,30 @@ const useInfiniteScroll = <TData extends Data>(
 
   const { loading, error, run, runAsync, cancel } = useRequest(
     async (lastData?: TData) => {
-      const currentData = await service(lastData);
-      return { currentData, lastData };
+      const token = ++requestSeqRef.current;
+      latestRequestRef.current = token;
+      try {
+        const currentData = await service(lastData);
+        return { currentData, lastData, token };
+      } catch (err) {
+        // Tag the error with the same identity: onFinally receives `undefined` data for a rejected
+        // request, and a reload started from its onError runs before that onFinally.
+        if (err && typeof err === 'object') {
+          (err as { __inFlightToken?: number }).__inFlightToken = token;
+        }
+        throw err;
+      }
     },
     {
       manual,
       onFinally: (_, d, e) => {
-        setLoadingMore(false);
+        // Release the guard only for the newest request. An older request's completion (its
+        // onSuccess/onError has already started a reload) must not unlock the reload's protection.
+        const token = d?.token ?? (e as { __inFlightToken?: number } | undefined)?.__inFlightToken;
+        if (token === latestRequestRef.current) {
+          inFlightRef.current = false;
+          setLoadingMore(false);
+        }
         onFinally?.(d?.currentData, e);
       },
       onBefore: () => onBefore?.(),
@@ -92,9 +120,10 @@ const useInfiniteScroll = <TData extends Data>(
   );
 
   const loadMore = useMemoizedFn(() => {
-    if (noMore) {
+    if (noMore || inFlightRef.current) {
       return;
     }
+    inFlightRef.current = true;
     setLoadingMore(true);
     run(finalData);
   });
@@ -105,19 +134,24 @@ const useInfiniteScroll = <TData extends Data>(
   };
 
   const loadMoreAsync = useMemoizedFn(() => {
-    if (noMore) {
+    if (noMore || inFlightRef.current) {
       return Promise.reject();
     }
+    inFlightRef.current = true;
     setLoadingMore(true);
     return runAsyncForCurrent(finalData);
   });
 
+  // A reload supersedes whatever is in flight: useRequest cancels the older request, and a cancelled
+  // request never reaches `onFinally`, so the flag has to be released here as well.
   const reload = () => {
+    inFlightRef.current = true;
     setLoadingMore(false);
     return run();
   };
 
   const reloadAsync = () => {
+    inFlightRef.current = true;
     setLoadingMore(false);
     return runAsyncForCurrent();
   };
@@ -207,8 +241,13 @@ const useInfiniteScroll = <TData extends Data>(
   );
 
   useUpdateEffect(() => {
+    inFlightRef.current = true;
+    setLoadingMore(false);
     run();
   }, [...reloadDeps]);
+
+  // A cancelled request never reaches `onFinally`, so the in-flight flag has to be released here too.
+  // Without this `loadingMore` stays true and `scrollMethod` refuses to load again for good.
 
   return {
     data: finalData,
@@ -223,6 +262,7 @@ const useInfiniteScroll = <TData extends Data>(
     reloadAsync: useMemoizedFn(reloadAsync),
     mutate: setFinalData,
     cancel: useMemoizedFn(() => {
+      inFlightRef.current = false;
       setLoadingMore(false);
       cancel();
     }),
