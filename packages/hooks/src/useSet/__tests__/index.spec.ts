@@ -108,6 +108,37 @@ describe('useSet', () => {
     expect(result.current[0]).toEqual(new Set(['a', 'b']));
   });
 
+  test.each([
+    { initial: ['keep'], first: 'add', second: 'remove', expected: ['keep'] },
+    { initial: ['keep', 'item'], first: 'remove', second: 'add', expected: ['keep', 'item'] },
+  ] as const)(
+    'should apply $first then $second to the same key in one batch',
+    ({ initial, first, second, expected }) => {
+      const { result } = setUp<string>(initial);
+      const [originalSet, actions] = result.current;
+
+      act(() => {
+        actions[first]('item');
+        actions[second]('item');
+      });
+
+      expect(result.current[0]).toEqual(new Set(expected));
+      expect(originalSet).toEqual(new Set(initial));
+    },
+  );
+
+  test('should preserve the set reference for no-op updates', () => {
+    const { result } = setUp(['item']);
+    const [originalSet, actions] = result.current;
+
+    act(() => {
+      actions.add('item');
+      actions.remove('missing');
+    });
+
+    expect(result.current[0]).toBe(originalSet);
+  });
+
   test('should reset to initial set provided', () => {
     const { result } = setUp([1]);
     const [, utils] = result.current;
