@@ -49,6 +49,38 @@ interface StorageStateProps<T> extends Pick<Options<T>, 'defaultValue'> {
 }
 
 describe('useStorageState', () => {
+  test.each([localStorage, sessionStorage])(
+    'should sync clear events for its storage area',
+    (storage) => {
+      const key = 'clear-event';
+      storage.setItem(key, JSON.stringify('stored'));
+      const useStorageState = createUseStorageState(() => storage);
+      const { result } = renderHook(() =>
+        useStorageState(key, {
+          defaultValue: 'fallback',
+          listenStorageChange: true,
+        }),
+      );
+
+      expect(result.current[0]).toBe('stored');
+      storage.clear();
+
+      act(() => {
+        window.dispatchEvent(
+          new StorageEvent('storage', {
+            storageArea: storage === localStorage ? sessionStorage : localStorage,
+          }),
+        );
+      });
+      expect(result.current[0]).toBe('stored');
+
+      act(() => {
+        window.dispatchEvent(new StorageEvent('storage', { storageArea: storage }));
+      });
+      expect(result.current[0]).toBe('fallback');
+    },
+  );
+
   const setUp = <T>(props: StorageStateProps<T>) => {
     const storage = new TestStorage();
     const useStorageState = createUseStorageState(() => storage);
