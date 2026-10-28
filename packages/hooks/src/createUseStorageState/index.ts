@@ -128,7 +128,7 @@ export const createUseStorageState = (getStorage: () => Storage | undefined) => 
     };
 
     const syncState = (event: StorageEvent) => {
-      if (event.key !== key || event.storageArea !== storage) {
+      if ((event.key !== null && event.key !== key) || event.storageArea !== storage) {
         return;
       }
 
