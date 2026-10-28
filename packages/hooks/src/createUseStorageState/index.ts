@@ -39,7 +39,7 @@ export const createUseStorageState = (getStorage: () => Storage | undefined) => 
     const getStoredValue = () => {
       try {
         const raw = storage?.getItem(key);
-        if (raw) {
+        if (raw !== null && raw !== undefined) {
           return deserializer(raw);
         }
       } catch (e) {

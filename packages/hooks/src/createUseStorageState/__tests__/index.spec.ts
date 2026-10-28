@@ -49,6 +49,50 @@ interface StorageStateProps<T> extends Pick<Options<T>, 'defaultValue'> {
 }
 
 describe('useStorageState', () => {
+  test.each([false, true])(
+    'should deserialize stored empty strings with effect initialization %s',
+    (getInitialValueInEffect) => {
+      const key = 'empty-string';
+      localStorage.setItem(key, '');
+      const deserializer = vi.fn((value: string) => value);
+      const useStorageState = createUseStorageState(() => localStorage);
+      const { result, unmount } = renderHook(() =>
+        useStorageState(key, {
+          defaultValue: 'fallback',
+          deserializer,
+          getInitialValueInEffect,
+        }),
+      );
+
+      expect(result.current[0]).toBe('');
+      expect(deserializer).toHaveBeenCalledWith('');
+      unmount();
+      localStorage.removeItem(key);
+    },
+  );
+
+  test('should sync empty strings with custom serialization', () => {
+    const key = 'sync-empty-string';
+    const useStorageState = createUseStorageState(() => localStorage);
+    const options = {
+      defaultValue: 'fallback',
+      serializer: (value: string) => value,
+      deserializer: (value: string) => value,
+      listenStorageChange: true,
+    };
+    const first = renderHook(() => useStorageState(key, options));
+    const second = renderHook(() => useStorageState(key, options));
+
+    act(() => first.result.current[1](''));
+
+    expect(localStorage.getItem(key)).toBe('');
+    expect(first.result.current[0]).toBe('');
+    expect(second.result.current[0]).toBe('');
+    first.unmount();
+    second.unmount();
+    localStorage.removeItem(key);
+  });
+
   const setUp = <T>(props: StorageStateProps<T>) => {
     const storage = new TestStorage();
     const useStorageState = createUseStorageState(() => storage);
