@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { isObject } from '../utils';
+import isBrowser from '../utils/isBrowser';
 
 export interface NetworkState {
   since?: Date;
@@ -19,6 +20,9 @@ enum NetworkEventType {
 }
 
 function getConnection() {
+  if (!isBrowser) {
+    return null;
+  }
   const nav = navigator as any;
   if (!isObject(nav)) {
     return null;
@@ -43,9 +47,14 @@ function getConnectionProperty(): NetworkState {
 
 function useNetwork(): NetworkState {
   const [state, setState] = useState(() => {
+    // `navigator` is a browser global; SSR runtimes without it must render the
+    // default state instead of throwing from the initializer.
+    if (!isBrowser) {
+      return {};
+    }
     return {
       since: undefined,
-      online: navigator?.onLine,
+      online: navigator.onLine,
       ...getConnectionProperty(),
     };
   });
