@@ -570,7 +570,7 @@ describe('useInfiniteScroll', () => {
   });
 
   test('list can be null or undefined', async () => {
-    // @ts-ignore
+    // @ts-expect-error
     const { result } = setup(async () => {
       await sleep(1000);
       count++;
@@ -1080,4 +1080,169 @@ describe('useInfiniteScroll', () => {
       expect(disconnectCount).toBe(1);
     });
   });
+
+  describe('in-flight requests', () => {
+    // `loading` and `loadingMore` are state, so two calls in the same tick both read the value from
+    // before the re-render. Whether a request is in flight therefore has to be tracked in a ref.
+    function deferred<T>() {
+      let resolve!: (value: T) => void;
+      const promise = new Promise<T>((res) => {
+        resolve = res;
+      });
+      return { promise, resolve };
+    }
+
+    test('two loadMore calls in the same tick must not drop a page', async () => {
+      const pages = [deferred<Data>(), deferred<Data>(), deferred<Data>()];
+      let calls = 0;
+      const service: Service<Data> = async () => pages[calls++].promise;
+      const { result } = renderHook(() => useInfiniteScroll(service, { manual: true }));
+
+      act(() => {
+        result.current.loadMore();
+      });
+      await act(async () => {
+        pages[0].resolve({ list: [1, 2, 3], nextId: 1 });
+      });
+      expect(result.current.data?.list).toEqual([1, 2, 3]);
+
+      // A click handler and a scroll callback can land in the same tick. Only one request may be
+      // started: the service advances its own cursor per call while useRequest keeps only the newest
+      // response, so the superseded page would never appear in the list at all.
+      act(() => {
+        result.current.loadMore();
+        result.current.loadMore();
+      });
+      await act(async () => {
+        pages[1].resolve({ list: [4, 5, 6], nextId: 2 });
+      });
+
+      expect(calls).toBe(2);
+      expect(result.current.data?.list).toEqual([1, 2, 3, 4, 5, 6]);
+    });
+
+    test('loadMore during a reloadDeps reload must not merge the pre-reload list', async () => {
+      const pages = [deferred<Data>(), deferred<Data>(), deferred<Data>()];
+      let calls = 0;
+      const service: Service<Data> = async () => pages[calls++].promise;
+      const { result, rerender } = renderHook(
+        ({ d }: { d: number }) => useInfiniteScroll(service, { manual: true, reloadDeps: [d] }),
+        { initialProps: { d: 0 } },
+      );
+
+      act(() => {
+        result.current.loadMore();
+      });
+      await act(async () => {
+        pages[0].resolve({ list: [1, 2, 3], nextId: 1 });
+      });
+
+      // The caller changed what it is loading, so a reload starts and its first page has not arrived.
+      rerender({ d: 1 });
+      await act(async () => {});
+
+      act(() => {
+        result.current.loadMore();
+      });
+      await act(async () => {
+        pages[1].resolve({ list: [7, 8, 9], nextId: 9 });
+      });
+
+      // The reload is what the caller asked for. The page that was in the list before it must not be
+      // merged into the result, and the reload must not be superseded by the loadMore.
+      expect(calls).toBe(2);
+      expect(result.current.data?.list).toEqual([7, 8, 9]);
+    });
+
+    test('cancel must release loadingMore so a later loadMore still works', async () => {
+      const pages = [deferred<Data>(), deferred<Data>()];
+      let calls = 0;
+      const service: Service<Data> = async () => pages[calls++].promise;
+      const { result } = renderHook(() => useInfiniteScroll(service, { manual: true }));
+
+      act(() => {
+        result.current.loadMore();
+      });
+      expect(result.current.loadingMore).toBe(true);
+
+      // A cancelled request never reaches `onFinally`, so the flag has to be released by cancel
+      // itself — otherwise `scrollMethod` refuses to load again and scrolling stays dead.
+      act(() => {
+        result.current.cancel();
+      });
+      await act(async () => {
+        pages[0].resolve({ list: [1, 2, 3], nextId: 1 });
+      });
+      expect(result.current.loadingMore).toBe(false);
+
+      act(() => {
+        result.current.loadMore();
+      });
+      await act(async () => {
+        pages[1].resolve({ list: [4, 5, 6], nextId: 2 });
+      });
+      expect(result.current.data?.list).toEqual([4, 5, 6]);
+      expect(result.current.loadingMore).toBe(false);
+    });
+  });
+  test.each(['success', 'error'] as const)(
+    'a reload started inside on%s must keep its in-flight protection',
+    async (outcome) => {
+      const requests: {
+        resolve: (value: { list: number[] }) => void;
+        reject: (error: Error) => void;
+      }[] = [];
+      const service = vi.fn(
+        () =>
+          new Promise<{ list: number[] }>((resolve, reject) => {
+            requests.push({ resolve, reject });
+          }),
+      );
+      let reload = () => {};
+      let shouldReload = true;
+      const startReload = () => {
+        if (shouldReload) {
+          shouldReload = false;
+          reload();
+        }
+      };
+      const { result, unmount } = renderHook(() =>
+        useInfiniteScroll(service as Service<Data>, {
+          manual: true,
+          onSuccess: outcome === 'success' ? startReload : undefined,
+          onError: outcome === 'error' ? startReload : undefined,
+        }),
+      );
+      reload = result.current.reload;
+
+      act(() => {
+        result.current.loadMore();
+      });
+      await act(async () => {
+        if (outcome === 'success') {
+          requests[0].resolve({ list: [1] });
+        } else {
+          requests[0].reject(new Error('first failed'));
+        }
+      });
+      expect(service).toHaveBeenCalledTimes(2);
+      expect(result.current.loading).toBe(true);
+
+      // The reload is still pending: this must not start a third request, and the reload's page
+      // must not be dropped.
+      act(() => {
+        result.current.loadMore();
+      });
+      const count = service.mock.calls.length;
+      await act(async () => {
+        requests[1].resolve({ list: [10] });
+        if (requests[2]) {
+          requests[2].resolve({ list: [20] });
+        }
+      });
+      const list = result.current.data?.list;
+      unmount();
+      expect({ count, list }).toEqual({ count: 2, list: [10] });
+    },
+  );
 });
