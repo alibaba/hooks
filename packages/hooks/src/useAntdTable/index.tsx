@@ -76,17 +76,16 @@ const useAntdTable = <TData extends Data, TParams extends Params>(
     if (!form) {
       return Promise.resolve({});
     }
-    const activeFieldsValue = getActiveFieldValues();
-    const fields = Object.keys(activeFieldsValue);
-
     // antd 4
     if (isAntdV4) {
       if (form.validateFieldsReturnFormatValue) {
-        return form.validateFieldsReturnFormatValue(fields);
+        return form.validateFieldsReturnFormatValue();
       }
-      return (form.validateFields as Antd4ValidateFields)(fields);
+      return (form.validateFields as Antd4ValidateFields)();
     }
     // antd 3
+    const activeFieldsValue = getActiveFieldValues();
+    const fields = Object.keys(activeFieldsValue);
     return new Promise((resolve, reject) => {
       form.validateFields(fields, (errors, values) => {
         if (errors) {
