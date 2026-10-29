@@ -35,52 +35,64 @@ function useSelections<T>(items: T[], options?: T[] | Options<T>) {
 
   const [selected, setSelected] = useState<T[]>(defaultSelected);
 
-  const selectedMap = useMemo(() => {
-    const keyToItemMap = new Map<React.Key, T>();
-
-    if (!Array.isArray(selected)) {
+  const getSelectedMap = useCallback(
+    (values: T[]) => {
+      const keyToItemMap = new Map<React.Key, T>();
+      if (Array.isArray(values)) {
+        values.forEach((item) => {
+          keyToItemMap.set(getKey(item), item);
+        });
+      }
       return keyToItemMap;
-    }
+    },
+    [getKey],
+  );
 
-    selected.forEach((item) => {
-      keyToItemMap.set(getKey(item), item);
+  const selectedMap = useMemo(() => getSelectedMap(selected), [selected, getSelectedMap]);
+
+  const updateSelected = (update: (map: Map<React.Key, T>) => void) => {
+    setSelected((previous) => {
+      const map = getSelectedMap(previous);
+      update(map);
+      return Array.from(map.values());
     });
-
-    return keyToItemMap;
-  }, [selected, getKey]);
+  };
 
   const isSelected = (item: T) => selectedMap.has(getKey(item));
 
   const select = (item: T) => {
-    selectedMap.set(getKey(item), item);
-    setSelected(Array.from(selectedMap.values()));
+    updateSelected((map) => map.set(getKey(item), item));
   };
 
   const unSelect = (item: T) => {
-    selectedMap.delete(getKey(item));
-    setSelected(Array.from(selectedMap.values()));
+    updateSelected((map) => map.delete(getKey(item)));
   };
 
   const toggle = (item: T) => {
-    if (isSelected(item)) {
-      unSelect(item);
-    } else {
-      select(item);
-    }
+    updateSelected((map) => {
+      const key = getKey(item);
+      if (map.has(key)) {
+        map.delete(key);
+      } else {
+        map.set(key, item);
+      }
+    });
   };
 
   const selectAll = () => {
-    items.forEach((item) => {
-      selectedMap.set(getKey(item), item);
+    updateSelected((map) => {
+      items.forEach((item) => {
+        map.set(getKey(item), item);
+      });
     });
-    setSelected(Array.from(selectedMap.values()));
   };
 
   const unSelectAll = () => {
-    items.forEach((item) => {
-      selectedMap.delete(getKey(item));
+    updateSelected((map) => {
+      items.forEach((item) => {
+        map.delete(getKey(item));
+      });
     });
-    setSelected(Array.from<T>(selectedMap.values()));
   };
 
   const noneSelected = useMemo<boolean>(
@@ -98,10 +110,21 @@ function useSelections<T>(items: T[], options?: T[] | Options<T>) {
     [noneSelected, allSelected],
   );
 
-  const toggleAll = () => (allSelected ? unSelectAll() : selectAll());
+  const toggleAll = () => {
+    updateSelected((map) => {
+      const shouldUnselect = items.every((item) => map.has(getKey(item)));
+      items.forEach((item) => {
+        const key = getKey(item);
+        if (shouldUnselect) {
+          map.delete(key);
+        } else {
+          map.set(key, item);
+        }
+      });
+    });
+  };
 
   const clearAll = () => {
-    selectedMap.clear();
     setSelected([]);
   };
 
