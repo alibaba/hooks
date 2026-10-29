@@ -50,7 +50,6 @@ function useWebSocket(socketUrl: string, options: Options = {}): Result {
   const onCloseRef = useLatest(onClose);
   const onMessageRef = useLatest(onMessage);
   const onErrorRef = useLatest(onError);
-  const readyStateRef = useLatest(readyState);
 
   const reconnectTimesRef = useRef(0);
   const reconnectTimerRef = useRef<ReturnType<typeof setTimeout>>(undefined);
@@ -125,8 +124,9 @@ function useWebSocket(socketUrl: string, options: Options = {}): Result {
   };
 
   const sendMessage: WebSocket['send'] = (message) => {
-    if (readyStateRef.current === ReadyState.Open) {
-      websocketRef.current?.send(message);
+    const ws = websocketRef.current;
+    if (ws?.readyState === ReadyState.Open) {
+      ws.send(message);
     } else {
       throw new Error('WebSocket disconnected');
     }
