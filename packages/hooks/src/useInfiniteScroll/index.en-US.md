@@ -44,6 +44,8 @@ the scroll to bottom demo
 the scroll to top demo
 <code src="./demo/scrollTop.tsx" />
 
+When the scroll container uses `display: flex` (or `inline-flex`) and `flex-direction: column-reverse`, loading follows the list order. The default `direction: 'bottom'` loads at the end of the list (the visual top) and appends new data to `data.list`. With `direction: 'top'`, returning to the start of the list (the visual bottom) loads and prepends new data to `data.list`.
+
 ## Data reset
 
 The data can be reset by `reload`. The following example shows that after the `filter` changes, the data is reset to the first page.

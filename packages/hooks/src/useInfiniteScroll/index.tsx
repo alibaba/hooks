@@ -9,6 +9,11 @@ import { getClientHeight, getScrollHeight, getScrollTop } from '../utils/rect';
 import useIsomorphicLayoutEffectWithTarget from '../utils/useIsomorphicLayoutEffectWithTarget';
 import type { Data, InfiniteScrollOptions, Service } from './types';
 
+const isColumnReverse = (el: Element) => {
+  const { display, flexDirection } = window.getComputedStyle(el);
+  return (display === 'flex' || display === 'inline-flex') && flexDirection === 'column-reverse';
+};
+
 const useInfiniteScroll = <TData extends Data>(
   service: Service<TData>,
   options: InfiniteScrollOptions<TData> = {},
@@ -80,7 +85,11 @@ const useInfiniteScroll = <TData extends Data>(
               el = el === document ? document.documentElement : el;
               if (el) {
                 const scrollHeight = getScrollHeight(el);
-                (el as Element).scrollTo(0, scrollHeight - scrollBottom.current);
+                const scrollTop = scrollHeight - scrollBottom.current;
+                (el as Element).scrollTo(
+                  0,
+                  isColumnReverse(el as Element) ? -scrollTop : scrollTop,
+                );
               }
             });
           });
@@ -133,7 +142,8 @@ const useInfiniteScroll = <TData extends Data>(
     }
 
     const targetEl = el === document ? document.documentElement : el;
-    const scrollTop = getScrollTop(targetEl);
+    // column-reverse scrolls away from its origin with negative scrollTop values.
+    const scrollTop = getScrollTop(targetEl) * (isColumnReverse(targetEl as Element) ? -1 : 1);
     const scrollHeight = getScrollHeight(targetEl);
     const clientHeight = getClientHeight(targetEl);
 

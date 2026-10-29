@@ -44,6 +44,8 @@ useInfiniteScroll 的第一个参数 `service` 是一个异步函数，对这个
 向上滚动示例
 <code src="./demo/scrollTop.tsx" />
 
+当滚动容器使用 `display: flex`（或 `inline-flex`）和 `flex-direction: column-reverse` 时，加载方向跟随列表顺序：默认的 `direction: 'bottom'` 在滚动到列表末尾（视觉顶部）时加载，并将新数据追加到 `data.list`；`direction: 'top'` 在返回列表开头（视觉底部）时加载，并将新数据添加到 `data.list` 前面。
+
 ## 数据重置
 
 通过 `reload` 即可实现数据重置，下面示例我们演示在 `filter` 变化后，重置数据到第一页。
