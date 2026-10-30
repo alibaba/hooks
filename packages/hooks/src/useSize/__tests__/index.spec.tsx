@@ -127,11 +127,11 @@ describe('useSize', () => {
     const targetEl = document.createElement('div');
     Object.defineProperty(targetEl, 'clientWidth', {
       configurable: true,
-      get: () => targetEl.dataset.width ? Number(targetEl.dataset.width) : 0,
+      get: () => (targetEl.dataset.width ? Number(targetEl.dataset.width) : 0),
     });
     Object.defineProperty(targetEl, 'clientHeight', {
       configurable: true,
-      get: () => targetEl.dataset.height ? Number(targetEl.dataset.height) : 0,
+      get: () => (targetEl.dataset.height ? Number(targetEl.dataset.height) : 0),
     });
 
     // Simulate forceRender inactive pane: mounted but display:none → 0 size
