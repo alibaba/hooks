@@ -64,6 +64,7 @@ return (
 - `onSuccess`：请求成功触发
 - `onError`：请求失败触发
 - `onFinally`：请求完成触发
+- `onCancel`：请求取消触发
 
 <code src="./demo/lifeCycle.tsx" />
 
