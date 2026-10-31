@@ -97,6 +97,7 @@ export const menus = [
       'useKeyPress',
       'useLongPress',
       'useMouse',
+      'useMouseInElement',
       'useResponsive',
       'useScroll',
       'useSize',
