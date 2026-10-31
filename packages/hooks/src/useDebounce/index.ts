@@ -1,19 +1,8 @@
-import { useEffect, useState } from 'react';
-import useDebounceFn from '../useDebounceFn';
 import type { DebounceOptions } from './debounceOptions';
+import useDebounceFn from '../useDebounceFn';
+import { createRateLimitValue } from '../createRateLimitHooks';
 
-function useDebounce<T>(value: T, options?: DebounceOptions) {
-  const [debounced, setDebounced] = useState(value);
-
-  const { run } = useDebounceFn(() => {
-    setDebounced(value);
-  }, options);
-
-  useEffect(() => {
-    run();
-  }, [value]);
-
-  return debounced;
-}
+const useDebounce = createRateLimitValue(useDebounceFn);
 
 export default useDebounce;
+export type { DebounceOptions };
