@@ -63,6 +63,7 @@ useWebSocket(socketUrl: string, options?: Options): Result;
 | reconnectLimit    | 重试次数               | `number`                                                               | `3`     |
 | reconnectInterval | 重试时间间隔（ms）     | `number`                                                               | `3000`  |
 | manual            | 手动启动连接           | `boolean`                                                              | `false` |
+| binaryType        | 二进制类型             | `blob` \|  `arraybuffer`                                               | `blob`  |
 | protocols         | 子协议                 | `string` \| `string[]`                                                 | -       |
 
 ### Result
