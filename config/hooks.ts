@@ -101,6 +101,7 @@ export const menus = [
       'useScroll',
       'useSize',
       'useFocusWithin',
+      'useStickyFixed',
     ],
   },
   {
