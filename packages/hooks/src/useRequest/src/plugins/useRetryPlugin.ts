@@ -1,4 +1,5 @@
 import { useRef } from 'react';
+import useUpdateEffect from '../../../useUpdateEffect';
 import type { Plugin } from '../types';
 
 const useRetryPlugin: Plugin<any, any[]> = (fetchInstance, { retryInterval, retryCount }) => {
@@ -6,6 +7,16 @@ const useRetryPlugin: Plugin<any, any[]> = (fetchInstance, { retryInterval, retr
   const countRef = useRef<number>(0);
 
   const triggerByRetry = useRef(false);
+
+  useUpdateEffect(() => {
+    if (!retryCount) {
+      if (timerRef.current) {
+        clearTimeout(timerRef.current);
+      }
+      countRef.current = 0;
+      triggerByRetry.current = false;
+    }
+  }, [retryCount]);
 
   if (!retryCount) {
     return {};
