@@ -79,14 +79,11 @@ const useVirtualList = <T = any>(list: T[], options: Options<T>) => {
   };
 
   const totalHeight = useMemo(() => {
-    if (isNumber(itemHeightRef.current)) {
-      return list.length * itemHeightRef.current;
+    if (isNumber(itemHeight)) {
+      return list.length * itemHeight;
     }
-    return list.reduce<number>(
-      (sum, _, index) => sum + (itemHeightRef.current as ItemHeight<T>)(index, list[index]),
-      0,
-    );
-  }, [list]);
+    return list.reduce<number>((sum, _, index) => sum + itemHeight(index, list[index]), 0);
+  }, [list, itemHeight]);
 
   const calculateRange = () => {
     const container = getTargetElement(containerTarget);
@@ -102,16 +99,25 @@ const useVirtualList = <T = any>(list: T[], options: Options<T>) => {
 
       const offsetTop = getDistanceTop(start);
 
-      setWrapperStyle({
-        height: totalHeight - offsetTop + 'px',
-        marginTop: offsetTop + 'px',
-      });
+      const height = `${totalHeight - offsetTop}px`;
+      const marginTop = `${offsetTop}px`;
+      setWrapperStyle((previous) =>
+        previous.height === height && previous.marginTop === marginTop
+          ? previous
+          : { height, marginTop },
+      );
 
-      setTargetList(
-        list.slice(start, end).map((ele, index) => ({
-          data: ele,
-          index: index + start,
-        })),
+      const nextList = list
+        .slice(start, end)
+        .map((data, index) => ({ data, index: index + start }));
+      setTargetList((previous) =>
+        previous.length === nextList.length &&
+        previous.every(
+          (item, index) =>
+            item.index === nextList[index].index && Object.is(item.data, nextList[index].data),
+        )
+          ? previous
+          : nextList,
       );
     }
   };
@@ -130,7 +136,7 @@ const useVirtualList = <T = any>(list: T[], options: Options<T>) => {
       return;
     }
     calculateRange();
-  }, [size?.width, size?.height, list]);
+  }, [size?.width, size?.height, list, itemHeight]);
 
   useEventListener(
     'scroll',
