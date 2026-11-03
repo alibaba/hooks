@@ -61,6 +61,8 @@ useDrag<T>(
 
 ### useDrop
 
+在子元素之间移动不会重复触发 `onDragEnter` 或 `onDragLeave` 回调。
+
 ```typescript
 useDrop<T>(
   target: (() => Element) | Element | MutableRefObject<Element>,

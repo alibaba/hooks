@@ -2,7 +2,6 @@ import useLatest from '../useLatest';
 import type { BasicTarget } from '../utils/domTarget';
 import { getTargetElement } from '../utils/domTarget';
 import useEffectWithTarget from '../utils/useEffectWithTarget';
-import { useRef } from 'react';
 
 export interface Options {
   onFiles?: (files: File[], event?: React.DragEvent) => void;
@@ -19,15 +18,13 @@ export interface Options {
 const useDrop = (target: BasicTarget, options: Options = {}) => {
   const optionsRef = useLatest(options);
 
-  // https://stackoverflow.com/a/26459269
-  const dragEnterTarget = useRef<EventTarget>(undefined);
-
   useEffectWithTarget(
     () => {
       const targetElement = getTargetElement(target);
       if (!targetElement?.addEventListener) {
         return;
       }
+      let dragEnterCount = 0;
 
       const onData = (
         dataTransfer: DataTransfer,
@@ -66,10 +63,10 @@ const useDrop = (target: BasicTarget, options: Options = {}) => {
 
       const onDragEnter = (event: React.DragEvent) => {
         event.preventDefault();
-        event.stopPropagation();
-
-        dragEnterTarget.current = event.target;
-        optionsRef.current.onDragEnter?.(event);
+        dragEnterCount += 1;
+        if (dragEnterCount === 1) {
+          optionsRef.current.onDragEnter?.(event);
+        }
       };
 
       const onDragOver = (event: React.DragEvent) => {
@@ -78,13 +75,18 @@ const useDrop = (target: BasicTarget, options: Options = {}) => {
       };
 
       const onDragLeave = (event: React.DragEvent) => {
-        if (event.target === dragEnterTarget.current) {
+        if (dragEnterCount === 0) {
+          return;
+        }
+        dragEnterCount -= 1;
+        if (dragEnterCount === 0) {
           optionsRef.current.onDragLeave?.(event);
         }
       };
 
       const onDrop = (event: React.DragEvent) => {
         event.preventDefault();
+        dragEnterCount = 0;
         onData(event.dataTransfer, event);
         optionsRef.current.onDrop?.(event);
       };
