@@ -244,6 +244,33 @@ describe('useRequest', () => {
     hook.unmount();
   });
 
+  test('a stopped run should not supersede a request that is already in flight', async () => {
+    act(() => {
+      hook = setUp(request, { manual: true, ready: true });
+    });
+    expect(hook.result.current.loading).toBe(false);
+
+    act(() => {
+      hook.result.current.run(1);
+    });
+    expect(hook.result.current.loading).toBe(true);
+
+    // disabling `ready` and calling run() again must not invalidate the pending request
+    hook.rerender({ manual: true, ready: false });
+    act(() => {
+      hook.result.current.run(2);
+    });
+
+    await act(async () => {
+      vi.advanceTimersByTime(1000);
+    });
+
+    expect(hook.result.current.loading).toBe(false);
+    expect(hook.result.current.data).toBe('success');
+    expect(hook.result.current.params).toEqual([1]);
+    hook.unmount();
+  });
+
   // a service whose settle order is controlled by the caller
   const delayedRequest = (value: string, delay: number) =>
     new Promise<string>((resolve) => {
