@@ -109,5 +109,5 @@ export default () => {
 ## Reference
 
 - [fix: useDocumentVisiblility support ssr](https://github.com/alibaba/hooks/pull/935/files)
-- [UmiJS 服务端渲染](https://umijs.org/docs/ssr#window-is-not-defined-document-is-not-defined-navigator-is-not-defined)
+- [UmiJS 服务端渲染](https://v3.umijs.org/docs/ssr/#window-is-not-defined-document-is-not-defined-navigator-is-not-defined)
 - [useLayoutEffect and SSR](https://medium.com/@alexandereardon/uselayouteffect-and-ssr-192986cdcf7a)
