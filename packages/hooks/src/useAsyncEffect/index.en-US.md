@@ -17,6 +17,8 @@ useEffect support async function.
 
 <code src="./demo/demo2.tsx" />
 
+When a cancelled effect reaches a `yield` checkpoint, its async generator is closed so that `finally` blocks can release resources.
+
 ## API
 
 ```typescript
