@@ -17,6 +17,8 @@ useEffect 支持异步函数。
 
 <code src="./demo/demo2.tsx" />
 
+已清理的 effect 到达 `yield` 检查点时，会关闭异步生成器，使 `finally` 中的资源清理逻辑得到执行。
+
 ## API
 
 ```typescript
