@@ -243,6 +243,8 @@ function useLongPress(
       return () => {
         clearTimer();
         isTriggeredRef.current = false;
+        mousePressed.current = false;
+        touchPressed.current = false;
 
         targetElement.removeEventListener('mousedown', onMouseDown as EventListener);
         targetElement.removeEventListener('mouseup', onMouseUp as EventListener);
@@ -257,7 +259,7 @@ function useLongPress(
         }
       };
     },
-    [],
+    [delay, moveThreshold?.x, moveThreshold?.y],
     target,
   );
 }
