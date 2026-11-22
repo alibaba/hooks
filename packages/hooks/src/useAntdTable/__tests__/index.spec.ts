@@ -133,6 +133,33 @@ describe('useAntdTable', () => {
     expect(queryArgs).toBeUndefined();
   });
 
+  test('ignores an earlier search that finishes validating after a second submit', async () => {
+    let finishFirst!: (values: { name: string }) => void;
+    const firstValidation = new Promise<{ name: string }>((resolve) => {
+      finishFirst = resolve;
+    });
+    const validateFields = vi
+      .fn()
+      .mockReturnValueOnce(firstValidation)
+      .mockResolvedValueOnce({ name: 'new' });
+    const service = vi.fn(async (_query: Query, values: { name: string }) => ({
+      total: 1,
+      list: [values.name],
+    }));
+    const { result } = renderHook(() =>
+      useAntdTable(service, { manual: true, form: { ...form, validateFields } }),
+    );
+
+    act(() => result.current.search.submit());
+    await waitFor(() => expect(validateFields).toHaveBeenCalledTimes(1));
+    act(() => result.current.search.submit());
+    await waitFor(() => expect(result.current.tableProps.dataSource).toEqual(['new']));
+
+    await act(async () => finishFirst({ name: 'old' }));
+    expect(service).toHaveBeenCalledTimes(1);
+    expect(result.current.tableProps.dataSource).toEqual(['new']);
+  });
+
   test('should submit transformed values from ProForm', async () => {
     queryArgs = undefined;
     form.resetFields();

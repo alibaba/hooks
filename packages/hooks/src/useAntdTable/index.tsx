@@ -140,7 +140,7 @@ const useAntdTable = <TData extends Data, TParams extends Params>(
     if (!ready) {
       return;
     }
-    const generation = submissionGeneration.current;
+    const generation = ++submissionGeneration.current;
     const isStale = () => unmountedRef.current || submissionGeneration.current !== generation;
     setTimeout(() => {
       if (isStale()) {
