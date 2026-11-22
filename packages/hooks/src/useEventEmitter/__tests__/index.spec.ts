@@ -1,6 +1,6 @@
-import { act, renderHook } from '@testing-library/react';
 import { useState } from 'react';
 import { describe, expect, test } from 'vitest';
+import { act, renderHook } from '../../utils/tests';
 import useEventEmitter, { EventEmitter } from '../index';
 
 describe('useEventEmitter', () => {
