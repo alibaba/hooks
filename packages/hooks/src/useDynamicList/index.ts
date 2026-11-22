@@ -155,14 +155,8 @@ const useDynamicList = <T>(initialList: T[] = []) => {
     }));
   }, []);
 
-  const sortList = useCallback(
-    (result: T[]) =>
-      result
-        .map((item, index) => ({ key: index, item })) // add index into obj
-        .sort((a, b) => getIndex(a.key) - getIndex(b.key)) // sort based on the index of table
-        .filter((item) => item.item !== undefined && item.item !== null)
-        .map((item) => item.item), // retrive the data
-    [getIndex],
+  const sortList = useMemoizedFn((result: T[]): T[] =>
+    state.keys.map((key) => result[key]).filter((item) => item !== undefined && item !== null),
   );
 
   return {
