@@ -50,9 +50,9 @@ describe('useAntdTable', () => {
     resetFields() {
       this.fieldsValue = { ...this.initialValue };
     },
-    validateFields(fields: any[]) {
+    validateFields(fields?: any[]) {
       const targetFields: Record<string | number, any> = {};
-      fields.forEach((field: string | number) => {
+      (fields ?? Object.keys(this.getFieldsValue())).forEach((field: string | number) => {
         targetFields[field] = (this.fieldsValue as any)[field];
       });
       return Promise.resolve(targetFields);
@@ -158,7 +158,7 @@ describe('useAntdTable', () => {
 
     await waitFor(() => expect(queryArgs?.keyword).toBe('default name'));
     expect(queryArgs.name).toBeUndefined();
-    expect(proForm.validateFieldsReturnFormatValue).toHaveBeenCalledWith(['name']);
+    expect(proForm.validateFieldsReturnFormatValue).toHaveBeenCalledWith();
   });
 
   test('should ready work', async () => {
