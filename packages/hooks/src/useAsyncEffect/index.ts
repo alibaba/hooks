@@ -25,7 +25,10 @@ function useAsyncEffect(
           const result = await asyncEffect.next();
           if (result.done || cancelled) {
             if (!result.done) {
-              await asyncEffect.return();
+              let closing = await asyncEffect.return();
+              while (!closing.done) {
+                closing = await asyncEffect.next();
+              }
             }
             break;
           }

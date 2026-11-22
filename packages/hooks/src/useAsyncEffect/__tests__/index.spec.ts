@@ -5,6 +5,42 @@ import { sleep } from '../../utils/testingHelpers';
 import useAsyncEffect from '../index';
 
 describe('useAsyncEffect', () => {
+  test.each([false, true])(
+    'should finish generator cleanup after it yields (StrictMode: %s)',
+    async (reactStrictMode) => {
+      let resume = () => {};
+      const pending = new Promise<void>((resolve) => {
+        resume = resolve;
+      });
+      const releaseFirstResource = vi.fn();
+      const releaseSecondResource = vi.fn();
+      const { unmount } = renderHook(
+        () => {
+          useAsyncEffect(async function* () {
+            try {
+              await pending;
+              yield;
+            } finally {
+              releaseFirstResource();
+              yield;
+              releaseSecondResource();
+            }
+          }, []);
+        },
+        { reactStrictMode },
+      );
+
+      unmount();
+      await act(async () => {
+        resume();
+        await pending;
+      });
+
+      expect(releaseFirstResource).toHaveBeenCalled();
+      expect(releaseSecondResource).toHaveBeenCalledTimes(releaseFirstResource.mock.calls.length);
+    },
+  );
+
   test('should run generator finally after an unmounted effect reaches a yield', async () => {
     let resume = () => {};
     const pending = new Promise<void>((resolve) => {
