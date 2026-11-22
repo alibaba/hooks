@@ -223,6 +223,22 @@ describe('useDynamicList', () => {
     expect(sorted[0].name).toBe('新增行');
   });
 
+  test('sortList only returns form values for the remaining rows', () => {
+    const { result } = renderHook(() => useDynamicList(['A', 'B', 'C']));
+    const { sortList } = result.current;
+    act(() => {
+      result.current.remove(1);
+      result.current.move(1, 0);
+    });
+
+    const storedValues = ['edited A', 'removed B', 'edited C'];
+    expect(sortList(storedValues)).toEqual(['edited C', 'edited A']);
+
+    act(() => result.current.resetList(['D']));
+    expect(sortList(storedValues)).toEqual([]);
+    expect(sortList([...storedValues, 'edited D'])).toEqual(['edited D']);
+  });
+
   test('sortList should preserve falsy values while removing empty entries', () => {
     const values = [0, false, '', undefined, null, 'last'];
     const { result } = renderHook(() => useDynamicList(values));
