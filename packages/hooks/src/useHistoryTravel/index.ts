@@ -57,10 +57,8 @@ export default function useHistoryTravel<T>(initialValue?: T, maxLength: number 
     setHistory((current) => {
       const _past = [...current.past, current.present];
       const maxLengthNum = isNumber(maxLength) ? maxLength : Number(maxLength);
-      // maximum number of records exceeded
       if (maxLengthNum > 0 && _past.length > maxLengthNum) {
-        //delete first
-        _past.splice(0, 1);
+        _past.splice(0, _past.length - Math.floor(maxLengthNum));
       }
 
       return {
