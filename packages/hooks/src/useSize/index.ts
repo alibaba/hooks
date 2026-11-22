@@ -34,7 +34,7 @@ function useSize(target: BasicTarget): Size | undefined {
       // The client dimensions can change with padding even while the content box stays at zero.
       const borderBoxObserver =
         typeof window.ResizeObserver === 'function'
-          ? new ResizeObserver((entries) => {
+          ? new window.ResizeObserver((entries) => {
               entries.forEach((entry) => updateSize(entry.target));
             })
           : undefined;

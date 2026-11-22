@@ -1,6 +1,7 @@
 import { act, render, renderHook, screen } from '@testing-library/react';
 import React, { useRef } from 'react';
-import { beforeEach, describe, expect, test, vi } from 'vitest';
+import ResizeObserver from 'resize-observer-polyfill';
+import { afterEach, beforeEach, describe, expect, test, vi } from 'vitest';
 import useSize from '../index';
 
 interface MockResizeObserverEntry {
@@ -51,8 +52,9 @@ describe('useSize', () => {
     borderBoxCallback = undefined;
     intersectionCallback = undefined;
     vi.stubGlobal('IntersectionObserver', MockIntersectionObserver);
-    vi.stubGlobal('ResizeObserver', class MockNativeResizeObserver {});
+    vi.stubGlobal('ResizeObserver', ResizeObserver);
   });
+  afterEach(() => vi.unstubAllGlobals());
 
   test('should work when target is a mounted DOM', () => {
     const hook = renderHook(() => useSize(document.body));
@@ -205,10 +207,21 @@ describe('useSize', () => {
     const target = document.createElement('div');
     const { result } = renderHook(() => useSize(target));
     const initialSize = result.current;
+    const box = target.getBoundingClientRect();
 
     act(() =>
       intersectionCallback?.(
-        [{ target, isIntersecting: true } as IntersectionObserverEntry],
+        [
+          {
+            target,
+            isIntersecting: true,
+            intersectionRatio: 1,
+            boundingClientRect: box,
+            intersectionRect: box,
+            rootBounds: null,
+            time: 0,
+          },
+        ],
         {} as IntersectionObserver,
       ),
     );
