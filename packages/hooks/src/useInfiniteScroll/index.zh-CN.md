@@ -107,12 +107,16 @@ const {
 | loadingMore   | 是否正在进行更多数据请求                                                   | `boolean`                |
 | noMore        | 是否没有更多数据了，配置 `options.isNoMore` 后生效                         | `boolean`                |
 | error         | 请求错误消息                                                               | `Error`                  |
-| loadMore      | 加载更多数据，会自动捕获异常，通过 `options.onError` 处理                  | `() => void`             |
-| loadMoreAsync | 加载更多数据，与 `loadMore` 行为一致，但返回的是 Promise，需要自行处理异常 | `() => Promise<TData>`   |
+| loadMore      | 加载更多数据，会自动捕获异常，通过 `options.onError` 处理。已有请求在途中时本次调用会被忽略 | `() => void`             |
+| loadMoreAsync | 加载更多数据，与 `loadMore` 行为一致，但返回的是 Promise，需要自行处理异常。已有请求在途中时会 reject | `() => Promise<TData>`   |
 | reload        | 加载第一页数据，会自动捕获异常，通过 `options.onError` 处理                | `() => void`             |
 | reloadAsync   | 加载第一页数据，与 `reload` 行为一致，但返回的是 Promise，需要自行处理异常 | `() => Promise<TData>`   |
 | mutate        | 直接修改 `data`                                                            | `(data?: TData) => void` |
-| cancel        | 忽略当前 Promise 的响应                                                    | `() => void`             |
+| cancel        | 忽略当前 Promise 的响应，并释放挂起状态，使后续 `loadMore` 仍能生效        | `() => void`             |
+
+:::tip
+进行中保护覆盖由 `loadMore` / `loadMoreAsync` 或 `reload` 发起的请求。初始化时的自动请求是例外：在它返回前手动调用 `loadMore` / `loadMoreAsync` 仍会取代它（与 `reload` 一致，第一页被替换而不是追加）。
+:::
 
 ### Options
 

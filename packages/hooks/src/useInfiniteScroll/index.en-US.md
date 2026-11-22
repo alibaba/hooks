@@ -107,12 +107,18 @@ const {
 | loadingMore   | Is more data request in progress                                                                                                                  | `boolean`                |
 | noMore        | Whether there is no more data, it will take effect after configuring `options.isNoMore`                                                           | `boolean`                |
 | error         | Request error message                                                                                                                             | `Error`                  |
-| loadMore      | Load more data, it will automatically catch the exception, and handle it through `options.onError`                                                | `() => void`             |
-| loadMoreAsync | Load more data, which is consistent with the behavior of `loadMore`, but returns Promise, so you need to handle the exception yourself            | `() => Promise<TData>`   |
+| loadMore      | Load more data, it will automatically catch the exception, and handle it through `options.onError`. Ignored while a request is already in flight | `() => void`             |
+| loadMoreAsync | Load more data, which is consistent with the behavior of `loadMore`, but returns Promise, so you need to handle the exception yourself. Rejects while a request is already in flight | `() => Promise<TData>`   |
 | reload        | Load the first page of data, it will automatically catch the exception, and handle it through `options.onError`                                   | `() => void`             |
 | reloadAsync   | Load the first page of data, which is consistent with the behavior of `reload`, but returns Promise, so you need to handle the exception yourself | `() => Promise<TData>`   |
 | mutate        | Modify `data` directly                                                                                                                            | `(data?: TData) => void` |
-| cancel        | Ignore the current promise response                                                                                                               | `() => void`             |
+| cancel        | Ignore the current promise response, and release the pending state so a later `loadMore` still works | `() => void`             |
+
+:::tip
+The in-flight guard covers a request `loadMore` / `loadMoreAsync` or `reload` started. The automatic
+first request is the exception: a manual `loadMore` / `loadMoreAsync` before it settles supersedes it,
+like `reload` does — the first page is replaced rather than appended.
+:::
 
 ### Options
 
