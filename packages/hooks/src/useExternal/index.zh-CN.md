@@ -43,3 +43,5 @@ const status = useExternal(path: string, options?: Options);
 | js             | `script` 标签支持的属性                                           | `HTMLScriptElement` | -       |
 | css            | `link` 标签支持的属性                                             | `HTMLStyleElement`  | -       |
 | keepWhenUnused | 在不持有资源的引用后，仍然保留资源                                | `boolean`           | `false` |
+
+保留的资源可以在没有组件使用时完成加载，下次使用时会读取该资源的最新状态。若需要在 Strict Mode 的 effect 清理和重新执行期间继续复用同一节点，请为每个可能最后卸载的使用方设置 `keepWhenUnused: true`。
