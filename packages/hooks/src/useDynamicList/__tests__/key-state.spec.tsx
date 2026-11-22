@@ -1,5 +1,6 @@
 import { act, cleanup, fireEvent, render, renderHook, screen } from '@testing-library/react';
-import { StrictMode } from 'react';
+import { StrictMode, startTransition } from 'react';
+import { flushSync } from 'react-dom';
 import { afterEach, describe, expect, test } from 'vitest';
 import useDynamicList from '../index';
 
@@ -55,6 +56,62 @@ describe.each(['normal', 'strict'] as const)('useDynamicList keys in %s mode', (
     const remainingInput = screen.getByRole<HTMLInputElement>('textbox', { name: 'B' });
     expect(remainingInput.value).toBe('unsaved draft');
     expect(remainingInput).toBe(input);
+  });
+
+  test('should keep the urgent row and its draft when a transition is replayed', () => {
+    function ConcurrentForm() {
+      const rows = useDynamicList<string>();
+
+      return (
+        <div>
+          <button
+            type="button"
+            onClick={() => {
+              startTransition(() => rows.push('slow'));
+              flushSync(() => rows.push('urgent'));
+            }}
+          >
+            Add rows
+          </button>
+          {rows.list.map((value, index) => (
+            <input key={rows.getKey(index)} aria-label={value} defaultValue={value} />
+          ))}
+        </div>
+      );
+    }
+
+    render(<ConcurrentForm />, { wrapper });
+    let urgentInput: HTMLInputElement | undefined;
+    act(() => {
+      fireEvent.click(screen.getByRole('button', { name: 'Add rows' }));
+      expect(screen.queryByRole('textbox', { name: 'slow' })).toBeNull();
+      urgentInput = screen.getByRole<HTMLInputElement>('textbox', { name: 'urgent' });
+      fireEvent.change(urgentInput, { target: { value: 'urgent draft' } });
+    });
+
+    const slow = screen.getByRole<HTMLInputElement>('textbox', { name: 'slow' });
+    const urgent = screen.getByRole<HTMLInputElement>('textbox', { name: 'urgent' });
+    expect(urgent).toBe(urgentInput);
+    expect(urgent.value).toBe('urgent draft');
+    expect(slow.value).toBe('slow');
+  });
+
+  test('should retain the slots and row keys when moving an item in a sparse list', () => {
+    const initialList = new Array<string | undefined>(3);
+    initialList[0] = 'A';
+    initialList[2] = 'B';
+    const { result } = renderHook(() => useDynamicList(initialList), { wrapper });
+    const keyA = result.current.getKey(0);
+    const keyB = result.current.getKey(2);
+
+    act(() => result.current.move(0, 2));
+
+    expect(result.current.list).toStrictEqual([undefined, 'B', 'A']);
+    expect(result.current.getKey(1)).toBe(keyB);
+    expect(result.current.getKey(2)).toBe(keyA);
+    expect(new Set(result.current.list.map((_, index) => result.current.getKey(index))).size).toBe(
+      3,
+    );
   });
 
   test('should keep keys aligned when list operations are batched', () => {
