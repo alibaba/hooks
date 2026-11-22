@@ -1,6 +1,7 @@
 import { act, render, renderHook, screen } from '@testing-library/react';
 import React, { useRef } from 'react';
-import { beforeEach, describe, expect, test, vi } from 'vitest';
+import ResizeObserver from 'resize-observer-polyfill';
+import { afterEach, beforeEach, describe, expect, test, vi } from 'vitest';
 import useSize from '../index';
 
 interface MockResizeObserverEntry {
@@ -10,24 +11,50 @@ interface MockResizeObserverEntry {
 type ResizeObserverTestCallback = (entries: MockResizeObserverEntry[]) => void;
 
 let callback: ResizeObserverTestCallback | undefined;
+let intersectionCallback: IntersectionObserverCallback | undefined;
+let borderBoxCallback: ResizeObserverTestCallback | undefined;
 
 vi.mock('resize-observer-polyfill', () => {
   return {
     default: class MockResizeObserver {
-      observe() {}
-      disconnect() {}
-      constructor(cb: ResizeObserverTestCallback) {
-        callback = cb;
+      observe(_target: Element, options?: ResizeObserverOptions) {
+        if (options?.box === 'border-box') {
+          borderBoxCallback = this.notify;
+        } else {
+          callback = this.notify;
+        }
       }
+      disconnect() {}
+      constructor(private notify: ResizeObserverTestCallback) {}
     },
   };
 });
+
+class MockIntersectionObserver {
+  constructor(cb: IntersectionObserverCallback) {
+    intersectionCallback = cb;
+  }
+  observe() {}
+  unobserve() {}
+  disconnect() {}
+  takeRecords(): IntersectionObserverEntry[] {
+    return [];
+  }
+  root = null;
+  rootMargin = '';
+  thresholds = [];
+}
 
 // test about Resize Observer see https://github.com/que-etc/resize-observer-polyfill/tree/master/tests
 describe('useSize', () => {
   beforeEach(() => {
     callback = undefined;
+    borderBoxCallback = undefined;
+    intersectionCallback = undefined;
+    vi.stubGlobal('IntersectionObserver', MockIntersectionObserver);
+    vi.stubGlobal('ResizeObserver', ResizeObserver);
   });
+  afterEach(() => vi.unstubAllGlobals());
 
   test('should work when target is a mounted DOM', () => {
     const hook = renderHook(() => useSize(document.body));
@@ -96,5 +123,110 @@ describe('useSize', () => {
     });
 
     mockRaf.mockRestore();
+  });
+
+  test('should recompute size when target becomes visible again (Tabs forceRender)', () => {
+    const mockRaf = vi
+      .spyOn(window, 'requestAnimationFrame')
+      .mockImplementation((cb: FrameRequestCallback) => {
+        cb(0);
+        return 0;
+      });
+
+    const targetEl = document.createElement('div');
+    Object.defineProperty(targetEl, 'clientWidth', {
+      configurable: true,
+      get: () => (targetEl.dataset.width ? Number(targetEl.dataset.width) : 0),
+    });
+    Object.defineProperty(targetEl, 'clientHeight', {
+      configurable: true,
+      get: () => (targetEl.dataset.height ? Number(targetEl.dataset.height) : 0),
+    });
+
+    // Simulate forceRender inactive pane: mounted but display:none → 0 size
+    targetEl.dataset.width = '0';
+    targetEl.dataset.height = '0';
+
+    const { result } = renderHook(() => useSize(targetEl));
+
+    act(() => {
+      callback?.([{ target: { clientWidth: 0, clientHeight: 0 } }]);
+    });
+    expect(result.current).toMatchObject({ width: 0, height: 0 });
+
+    // Pane becomes visible; content has real size. ResizeObserver may not fire for
+    // ancestor display toggles — only IntersectionObserver reports visibility.
+    targetEl.dataset.width = '120';
+    targetEl.dataset.height = '80';
+
+    act(() => {
+      intersectionCallback?.(
+        [
+          {
+            isIntersecting: true,
+            target: targetEl,
+            intersectionRatio: 1,
+            boundingClientRect: targetEl.getBoundingClientRect(),
+            intersectionRect: targetEl.getBoundingClientRect(),
+            rootBounds: null,
+            time: 0,
+          } as IntersectionObserverEntry,
+        ],
+        {} as IntersectionObserver,
+      );
+    });
+
+    expect(result.current).toMatchObject({
+      width: 120,
+      height: 80,
+    });
+
+    mockRaf.mockRestore();
+  });
+
+  test('updates the client size when only the box with padding changes offscreen', () => {
+    const raf = vi.spyOn(window, 'requestAnimationFrame').mockImplementation((notify) => {
+      notify(0);
+      return 0;
+    });
+    const target = document.createElement('div');
+    const { result } = renderHook(() => useSize(target));
+    expect(result.current).toEqual({ width: 0, height: 0 });
+
+    act(() => borderBoxCallback?.([{ target: { clientWidth: 20, clientHeight: 20 } }]));
+
+    expect(result.current).toEqual({ width: 20, height: 20 });
+    raf.mockRestore();
+  });
+
+  test('keeps the same size object when the target intersects without resizing', () => {
+    const raf = vi.spyOn(window, 'requestAnimationFrame').mockImplementation((notify) => {
+      notify(0);
+      return 0;
+    });
+    const target = document.createElement('div');
+    const { result } = renderHook(() => useSize(target));
+    const initialSize = result.current;
+    const box = target.getBoundingClientRect();
+
+    act(() =>
+      intersectionCallback?.(
+        [
+          {
+            target,
+            isIntersecting: true,
+            intersectionRatio: 1,
+            boundingClientRect: box,
+            intersectionRect: box,
+            rootBounds: null,
+            time: 0,
+          },
+        ],
+        {} as IntersectionObserver,
+      ),
+    );
+
+    expect(result.current).toBe(initialSize);
+    raf.mockRestore();
   });
 });

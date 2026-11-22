@@ -2,7 +2,6 @@ import useLatest from '../useLatest';
 import type { BasicTarget } from '../utils/domTarget';
 import { getTargetElement } from '../utils/domTarget';
 import useEffectWithTarget from '../utils/useEffectWithTarget';
-import { useRef } from 'react';
 
 export interface Options {
   onFiles?: (files: File[], event?: React.DragEvent) => void;
@@ -19,15 +18,24 @@ export interface Options {
 const useDrop = (target: BasicTarget, options: Options = {}) => {
   const optionsRef = useLatest(options);
 
-  // https://stackoverflow.com/a/26459269
-  const dragEnterTarget = useRef<EventTarget>(undefined);
-
   useEffectWithTarget(
     () => {
       const targetElement = getTargetElement(target);
       if (!targetElement?.addEventListener) {
         return;
       }
+      const enteredTargets = new Set<Node>();
+      const ownerDocument = targetElement.ownerDocument ?? document;
+
+      const removeDetachedTargets = () => {
+        for (const entered of enteredTargets) {
+          if (entered !== targetElement && !targetElement.contains(entered)) {
+            enteredTargets.delete(entered);
+          }
+        }
+      };
+
+      const resetEnteredTargets = () => enteredTargets.clear();
 
       const onData = (
         dataTransfer: DataTransfer,
@@ -66,10 +74,12 @@ const useDrop = (target: BasicTarget, options: Options = {}) => {
 
       const onDragEnter = (event: React.DragEvent) => {
         event.preventDefault();
-        event.stopPropagation();
-
-        dragEnterTarget.current = event.target;
-        optionsRef.current.onDragEnter?.(event);
+        const alreadyInside = enteredTargets.size > 0;
+        enteredTargets.add((event.target as Node) || targetElement);
+        removeDetachedTargets();
+        if (!alreadyInside) {
+          optionsRef.current.onDragEnter?.(event);
+        }
       };
 
       const onDragOver = (event: React.DragEvent) => {
@@ -78,13 +88,18 @@ const useDrop = (target: BasicTarget, options: Options = {}) => {
       };
 
       const onDragLeave = (event: React.DragEvent) => {
-        if (event.target === dragEnterTarget.current) {
+        if (!enteredTargets.delete((event.target as Node) || targetElement)) {
+          return;
+        }
+        removeDetachedTargets();
+        if (enteredTargets.size === 0) {
           optionsRef.current.onDragLeave?.(event);
         }
       };
 
       const onDrop = (event: React.DragEvent) => {
         event.preventDefault();
+        resetEnteredTargets();
         onData(event.dataTransfer, event);
         optionsRef.current.onDrop?.(event);
       };
@@ -99,6 +114,8 @@ const useDrop = (target: BasicTarget, options: Options = {}) => {
       targetElement.addEventListener('dragleave', onDragLeave as any);
       targetElement.addEventListener('drop', onDrop as any);
       targetElement.addEventListener('paste', onPaste as any);
+      // Reset enclosing targets even when a nested drop handler stops bubbling.
+      ownerDocument.addEventListener('drop', resetEnteredTargets, true);
 
       return () => {
         targetElement.removeEventListener('dragenter', onDragEnter as any);
@@ -106,6 +123,7 @@ const useDrop = (target: BasicTarget, options: Options = {}) => {
         targetElement.removeEventListener('dragleave', onDragLeave as any);
         targetElement.removeEventListener('drop', onDrop as any);
         targetElement.removeEventListener('paste', onPaste as any);
+        ownerDocument.removeEventListener('drop', resetEnteredTargets, true);
       };
     },
     [],
