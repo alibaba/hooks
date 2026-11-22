@@ -15,11 +15,17 @@ vi.mock('resize-observer-polyfill', () => ({
 }));
 
 const layouts = [
-  { display: 'block', flexDirection: 'column', sign: 1 },
-  { display: 'flex', flexDirection: 'column', sign: 1 },
-  { display: 'flex', flexDirection: 'column-reverse', sign: -1 },
-  { display: 'inline-flex', flexDirection: 'column-reverse', sign: -1 },
-  { display: 'block', flexDirection: 'column-reverse', sign: 1 },
+  { display: 'block', flexDirection: 'column', writingMode: 'horizontal-tb', sign: 1 },
+  { display: 'flex', flexDirection: 'column', writingMode: 'horizontal-tb', sign: 1 },
+  { display: 'flex', flexDirection: 'column-reverse', writingMode: 'horizontal-tb', sign: -1 },
+  {
+    display: 'inline-flex',
+    flexDirection: 'column-reverse',
+    writingMode: 'horizontal-tb',
+    sign: -1,
+  },
+  { display: 'flex', flexDirection: 'column-reverse', writingMode: 'vertical-rl', sign: 1 },
+  { display: 'block', flexDirection: 'column-reverse', writingMode: 'horizontal-tb', sign: 1 },
 ];
 
 function createTarget(display: string, flexDirection: string, sign: number) {
@@ -70,9 +76,10 @@ describe('useInfiniteScroll scroll origin', () => {
   });
 
   test.each(layouts)(
-    'appends at the list end with $display / $flexDirection',
-    async ({ display, flexDirection, sign }) => {
+    'appends at the list end with $display / $flexDirection / $writingMode',
+    async ({ display, flexDirection, sign, writingMode }) => {
       const { target, scroll, service } = createTarget(display, flexDirection, sign);
+      target.style.writingMode = writingMode;
       const { result, unmount } = renderHook(() =>
         useInfiniteScroll(service, {
           target,
@@ -107,9 +114,10 @@ describe('useInfiniteScroll scroll origin', () => {
   );
 
   test.each(layouts)(
-    'prepends at the list start and restores position with $display / $flexDirection',
-    async ({ display, flexDirection, sign }) => {
+    'prepends at the list start and restores position with $display / $flexDirection / $writingMode',
+    async ({ display, flexDirection, sign, writingMode }) => {
       const { target, scrollTo, scroll, service } = createTarget(display, flexDirection, sign);
+      target.style.writingMode = writingMode;
       const { result, unmount } = renderHook(() =>
         useInfiniteScroll(service, {
           target,
@@ -158,6 +166,37 @@ describe('useInfiniteScroll scroll origin', () => {
     } finally {
       unmount();
       target.remove();
+    }
+  });
+
+  test('reads negative offsets from a separately scrolling body', async () => {
+    const target = document.body;
+    const previousStyle = target.style.cssText;
+    const previousScrollTop = target.scrollTop;
+    target.style.cssText =
+      'display:flex;flex-direction:column-reverse;overflow-y:auto;height:200px';
+    vi.spyOn(target, 'scrollHeight', 'get').mockReturnValue(600);
+    vi.spyOn(target, 'clientHeight', 'get').mockReturnValue(200);
+    const service = vi.fn(async () => ({ list: [1] }));
+    const { result, unmount } = renderHook(() =>
+      useInfiniteScroll(service, { target, manual: true, threshold: 50 }),
+    );
+
+    try {
+      await act(async () => {
+        await result.current.reloadAsync();
+      });
+      expect(service).toHaveBeenCalledTimes(1);
+
+      act(() => {
+        target.scrollTop = -350;
+        target.dispatchEvent(new Event('scroll'));
+      });
+      expect(service).toHaveBeenCalledTimes(2);
+    } finally {
+      unmount();
+      target.style.cssText = previousStyle;
+      target.scrollTop = previousScrollTop;
     }
   });
 

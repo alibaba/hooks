@@ -9,9 +9,13 @@ import { getClientHeight, getScrollHeight, getScrollTop } from '../utils/rect';
 import useIsomorphicLayoutEffectWithTarget from '../utils/useIsomorphicLayoutEffectWithTarget';
 import type { Data, InfiniteScrollOptions, Service } from './types';
 
-const isColumnReverse = (el: Element) => {
-  const { display, flexDirection } = window.getComputedStyle(el);
-  return (display === 'flex' || display === 'inline-flex') && flexDirection === 'column-reverse';
+const isVerticalColumnReverse = (el: Element) => {
+  const { display, flexDirection, writingMode } = window.getComputedStyle(el);
+  return (
+    (display === 'flex' || display === 'inline-flex') &&
+    flexDirection === 'column-reverse' &&
+    (!writingMode || writingMode === 'horizontal-tb')
+  );
 };
 
 const useInfiniteScroll = <TData extends Data>(
@@ -83,7 +87,7 @@ const useInfiniteScroll = <TData extends Data>(
                 const scrollTop = scrollHeight - scrollBottom.current;
                 (el as Element).scrollTo(
                   0,
-                  isColumnReverse(el as Element) ? -scrollTop : scrollTop,
+                  isVerticalColumnReverse(el as Element) ? -scrollTop : scrollTop,
                 );
               }
             });
@@ -137,8 +141,11 @@ const useInfiniteScroll = <TData extends Data>(
     }
 
     const targetEl = el === document ? document.documentElement : el;
-    // column-reverse scrolls away from its origin with negative scrollTop values.
-    const scrollTop = getScrollTop(targetEl) * (isColumnReverse(targetEl as Element) ? -1 : 1);
+    const scrollElement = targetEl as Element;
+    // Read the actual element offset to preserve negative values on independently scrolling body elements.
+    const scrollTop = isVerticalColumnReverse(scrollElement)
+      ? -scrollElement.scrollTop
+      : getScrollTop(targetEl);
     const scrollHeight = getScrollHeight(targetEl);
     const clientHeight = getClientHeight(targetEl);
 
