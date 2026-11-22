@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import useEventListener from '../useEventListener';
 import type { BasicTarget } from '../utils/domTarget';
 
@@ -10,15 +10,17 @@ export interface Options {
 
 export default function useFocusWithin(target: BasicTarget, options?: Options) {
   const [isFocusWithin, setIsFocusWithin] = useState(false);
+  const focusedRef = useRef(false);
   const { onFocus, onBlur, onChange } = options || {};
 
   useEventListener(
     'focusin',
     (e: FocusEvent) => {
-      if (!isFocusWithin) {
+      if (!focusedRef.current) {
+        focusedRef.current = true;
+        setIsFocusWithin(true);
         onFocus?.(e);
         onChange?.(true);
-        setIsFocusWithin(true);
       }
     },
     {
@@ -29,10 +31,14 @@ export default function useFocusWithin(target: BasicTarget, options?: Options) {
   useEventListener(
     'focusout',
     (e: FocusEvent) => {
-      if (isFocusWithin && !(e.currentTarget as Element)?.contains?.(e.relatedTarget as Element)) {
+      if (
+        focusedRef.current &&
+        !(e.currentTarget as Element)?.contains?.(e.relatedTarget as Element)
+      ) {
+        focusedRef.current = false;
+        setIsFocusWithin(false);
         onBlur?.(e);
         onChange?.(false);
-        setIsFocusWithin(false);
       }
     },
     {

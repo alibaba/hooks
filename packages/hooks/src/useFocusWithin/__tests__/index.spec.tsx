@@ -1,4 +1,4 @@
-import { cleanup, fireEvent, render } from '@testing-library/react';
+import { act, cleanup, fireEvent, render } from '@testing-library/react';
 import React, { useRef } from 'react';
 import { beforeEach, describe, expect, test, vi } from 'vitest';
 import useFocusWithin, { type Options } from '../index';
@@ -38,6 +38,26 @@ describe('useFocusWithin', () => {
     expect(onFocus).toHaveBeenCalled();
     fireEvent.focusOut(result.getAllByLabelText('First Name')[0]);
     expect(onBlur).toHaveBeenCalled();
+  });
+
+  test('tracks focus moving through the group before React renders again', () => {
+    const onChange = vi.fn();
+    const onFocus = vi.fn();
+    const onBlur = vi.fn();
+    const view = setup({ onChange, onFocus, onBlur });
+    const first = view.getByLabelText('First Name');
+    const last = view.getByLabelText('Last Name');
+
+    act(() => {
+      first.focus();
+      last.focus();
+      last.blur();
+    });
+
+    expect(onChange.mock.calls).toEqual([[true], [false]]);
+    expect(onFocus).toHaveBeenCalledTimes(1);
+    expect(onBlur).toHaveBeenCalledTimes(1);
+    expect(view.getByText('isFocusWithin: false')).toBeTruthy();
   });
 
   test('should call onChange', () => {
