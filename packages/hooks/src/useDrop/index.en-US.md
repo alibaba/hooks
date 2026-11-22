@@ -61,6 +61,8 @@ useDrag<T>(
 
 ### useDrop
 
+Moving between child elements does not trigger additional `onDragEnter` or `onDragLeave` callbacks.
+
 ```typescript
 useDrop<T>(
   target: (() => Element) | Element | MutableRefObject<Element>,

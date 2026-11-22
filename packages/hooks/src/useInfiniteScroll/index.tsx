@@ -1,4 +1,4 @@
-import { useMemo, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import ResizeObserver from 'resize-observer-polyfill';
 import useEventListener from '../useEventListener';
 import useMemoizedFn from '../useMemoizedFn';
@@ -41,12 +41,7 @@ const useInfiniteScroll = <TData extends Data>(
   // flag: set in onSuccess (bottom direction only) to trigger scrollMethod via effect
   const pendingBottomScrollCheckRef = useRef(false);
 
-  const noMore = useMemo(() => {
-    if (!isNoMore) {
-      return false;
-    }
-    return isNoMore(finalData);
-  }, [finalData]);
+  const noMore = isNoMore?.(finalData) ?? false;
 
   const { loading, error, run, runAsync, cancel } = useRequest(
     async (lastData?: TData) => {

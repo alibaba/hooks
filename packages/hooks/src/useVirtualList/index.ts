@@ -7,15 +7,43 @@ import useSize from '../useSize';
 import { getTargetElement } from '../utils/domTarget';
 import type { BasicTarget } from '../utils/domTarget';
 import { isNumber } from '../utils';
-import useUpdateEffect from '../useUpdateEffect';
+import useEffectWithTarget from '../utils/useEffectWithTarget';
 
 type ItemHeight<T> = (index: number, data: T) => number;
 
 export interface Options<T> {
   containerTarget: BasicTarget;
   wrapperTarget: BasicTarget;
+  /** Memoize height callbacks to avoid measuring the full list when their inputs are unchanged. */
   itemHeight: number | ItemHeight<T>;
   overscan?: number;
+}
+
+interface VirtualItem<T> {
+  index: number;
+  data: T;
+}
+
+interface VirtualRange<T> {
+  items: VirtualItem<T>[];
+  style: CSSProperties;
+}
+
+function hasSameItems<T>(previous: VirtualItem<T>[], next: VirtualItem<T>[]) {
+  if (previous.length !== next.length) {
+    return false;
+  }
+  for (let index = 0; index < next.length; index += 1) {
+    const before = previous[index];
+    const after = next[index];
+    if (
+      before !== after &&
+      (!before || !after || before.index !== after.index || !Object.is(before.data, after.data))
+    ) {
+      return false;
+    }
+  }
+  return true;
 }
 
 const useVirtualList = <T = any>(list: T[], options: Options<T>) => {
@@ -27,9 +55,8 @@ const useVirtualList = <T = any>(list: T[], options: Options<T>) => {
 
   const scrollTriggerByScrollToFunc = useRef(false);
 
-  const [targetList, setTargetList] = useState<{ index: number; data: T }[]>([]);
-
-  const [wrapperStyle, setWrapperStyle] = useState<CSSProperties>({});
+  const [range, setRange] = useState<VirtualRange<T>>({ items: [], style: {} });
+  const pendingRange = useRef(range);
 
   const getVisibleCount = (containerHeight: number, fromIndex: number) => {
     if (isNumber(itemHeightRef.current)) {
@@ -79,20 +106,21 @@ const useVirtualList = <T = any>(list: T[], options: Options<T>) => {
   };
 
   const totalHeight = useMemo(() => {
-    if (isNumber(itemHeightRef.current)) {
-      return list.length * itemHeightRef.current;
+    if (isNumber(itemHeight)) {
+      return list.length * itemHeight;
     }
-    return list.reduce<number>(
-      (sum, _, index) => sum + (itemHeightRef.current as ItemHeight<T>)(index, list[index]),
-      0,
-    );
-  }, [list]);
+    return list.reduce<number>((sum, _, index) => sum + itemHeight(index, list[index]), 0);
+  }, [list, itemHeight]);
 
   const calculateRange = () => {
     const container = getTargetElement(containerTarget);
 
     if (container) {
-      const { scrollTop, clientHeight } = container;
+      const { clientHeight } = container;
+      const scrollTop = Math.min(container.scrollTop, Math.max(0, totalHeight - clientHeight));
+      if (scrollTop !== container.scrollTop) {
+        container.scrollTop = scrollTop;
+      }
 
       const offset = getOffset(scrollTop);
       const visibleCount = getVisibleCount(clientHeight, offset);
@@ -102,35 +130,44 @@ const useVirtualList = <T = any>(list: T[], options: Options<T>) => {
 
       const offsetTop = getDistanceTop(start);
 
-      setWrapperStyle({
-        height: totalHeight - offsetTop + 'px',
-        marginTop: offsetTop + 'px',
-      });
+      const height = `${Math.max(0, totalHeight - offsetTop)}px`;
+      const marginTop = `${offsetTop}px`;
+      const nextList = list
+        .slice(start, end)
+        .map((data, index) => ({ data, index: index + start }));
+      const previous = pendingRange.current;
+      const style =
+        previous.style.height === height && previous.style.marginTop === marginTop
+          ? previous.style
+          : { height, marginTop };
+      const items = hasSameItems(previous.items, nextList) ? previous.items : nextList;
 
-      setTargetList(
-        list.slice(start, end).map((ele, index) => ({
-          data: ele,
-          index: index + start,
-        })),
-      );
+      if (style !== previous.style || items !== previous.items) {
+        // Compare queued ranges before scheduling a render, including batched scroll events.
+        const next = { items, style };
+        pendingRange.current = next;
+        setRange(next);
+      }
     }
   };
 
-  useUpdateEffect(() => {
-    const wrapper = getTargetElement(wrapperTarget) as HTMLElement;
-    if (wrapper) {
-      Object.keys(wrapperStyle).forEach(
-        (key) => ((wrapper.style as any)[key] = (wrapperStyle as any)[key]),
-      );
-    }
-  }, [wrapperStyle]);
+  useEffectWithTarget(
+    () => {
+      const wrapper = getTargetElement(wrapperTarget) as HTMLElement;
+      if (wrapper) {
+        Object.assign(wrapper.style, range.style);
+      }
+    },
+    [range.style],
+    wrapperTarget,
+  );
 
   useEffect(() => {
     if (!size?.width || !size?.height) {
       return;
     }
     calculateRange();
-  }, [size?.width, size?.height, list]);
+  }, [size?.width, size?.height, list, itemHeight]);
 
   useEventListener(
     'scroll',
@@ -156,7 +193,7 @@ const useVirtualList = <T = any>(list: T[], options: Options<T>) => {
     }
   };
 
-  return [targetList, useMemoizedFn(scrollTo)] as const;
+  return [range.items, useMemoizedFn(scrollTo)] as const;
 };
 
 export default useVirtualList;
