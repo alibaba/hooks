@@ -4,6 +4,35 @@ import { describe, expect, test } from 'vitest';
 import useHistoryTravel from '../index';
 
 describe('useHistoryTravel', () => {
+  test.each([
+    { maxLength: 2, backLength: 2, oldest: 3 },
+    { maxLength: 1, backLength: 1, oldest: 4 },
+    { maxLength: 2.5, backLength: 2, oldest: 3 },
+    { maxLength: 0, backLength: 5, oldest: 0 },
+  ])('applies a changed history limit of $maxLength on the next update', (expected) => {
+    const { result, rerender } = renderHook(({ maxLength }) => useHistoryTravel(0, maxLength), {
+      initialProps: { maxLength: 4 },
+      wrapper: StrictMode,
+    });
+    act(() => {
+      result.current.setValue(1);
+      result.current.setValue(2);
+      result.current.setValue(3);
+      result.current.setValue(4);
+    });
+    expect(result.current.backLength).toBe(4);
+
+    rerender({ maxLength: expected.maxLength });
+    act(() => result.current.setValue(5));
+
+    expect(result.current.value).toBe(5);
+    expect(result.current.backLength).toBe(expected.backLength);
+    act(() => result.current.go(-100));
+    expect(result.current.value).toBe(expected.oldest);
+    act(() => result.current.go(100));
+    expect(result.current.value).toBe(5);
+  });
+
   test('should keep every value set in the same batch', () => {
     const { result } = renderHook(() => useHistoryTravel('initial'), { wrapper: StrictMode });
 

@@ -5,6 +5,102 @@ import { sleep } from '../../utils/testingHelpers';
 import useAsyncEffect from '../index';
 
 describe('useAsyncEffect', () => {
+  test.each([false, true])(
+    'should finish generator cleanup after it yields (StrictMode: %s)',
+    async (reactStrictMode) => {
+      let resume = () => {};
+      const pending = new Promise<void>((resolve) => {
+        resume = resolve;
+      });
+      const releaseFirstResource = vi.fn();
+      const releaseSecondResource = vi.fn();
+      const { unmount } = renderHook(
+        () => {
+          useAsyncEffect(async function* () {
+            try {
+              await pending;
+              yield;
+            } finally {
+              releaseFirstResource();
+              yield;
+              releaseSecondResource();
+            }
+          }, []);
+        },
+        { reactStrictMode },
+      );
+
+      unmount();
+      await act(async () => {
+        resume();
+        await pending;
+      });
+
+      expect(releaseFirstResource).toHaveBeenCalled();
+      expect(releaseSecondResource).toHaveBeenCalledTimes(releaseFirstResource.mock.calls.length);
+    },
+  );
+
+  test('should run generator finally after an unmounted effect reaches a yield', async () => {
+    let resume = () => {};
+    const pending = new Promise<void>((resolve) => {
+      resume = resolve;
+    });
+    const cleanup = vi.fn();
+    const hook = renderHook(() => {
+      useAsyncEffect(async function* () {
+        try {
+          await pending;
+          yield;
+        } finally {
+          cleanup();
+        }
+      }, []);
+    });
+
+    hook.unmount();
+    await act(async () => {
+      resume();
+      await pending;
+    });
+
+    expect(cleanup).toHaveBeenCalledTimes(1);
+  });
+
+  test('should close the old generator after dependencies change', async () => {
+    let resume = () => {};
+    const pending = new Promise<void>((resolve) => {
+      resume = resolve;
+    });
+    const cleanup = vi.fn();
+    const hook = renderHook(
+      ({ version }) => {
+        useAsyncEffect(
+          async function* () {
+            try {
+              await pending;
+              yield;
+            } finally {
+              cleanup(version);
+            }
+          },
+          [version],
+        );
+      },
+      { initialProps: { version: 1 } },
+    );
+
+    hook.rerender({ version: 2 });
+    await act(async () => {
+      resume();
+      await pending;
+    });
+
+    expect(cleanup.mock.calls.map(([version]) => version).sort()).toEqual([1, 2]);
+    hook.unmount();
+    expect(cleanup).toHaveBeenCalledTimes(2);
+  });
+
   test('should work without clean up', async () => {
     const hook = renderHook(() => {
       const [x, setX] = useState(0);
