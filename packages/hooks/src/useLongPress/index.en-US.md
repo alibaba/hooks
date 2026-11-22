@@ -21,7 +21,7 @@ Listen for the long press event of the target element.
 
 <code src="./demo/demo3.tsx"/>
 
-Changes to `delay` or `moveThreshold` apply to subsequent presses and silently cancel any press in progress. The interrupted gesture does not trigger `onClick` or `onLongPressEnd`, even if `onLongPress` has already fired.
+Changes to `delay` or `moveThreshold` apply to subsequent presses. A press still waiting for `onLongPress` is silently cancelled. If `onLongPress` has already fired, the gesture still calls `onLongPressEnd` when it ends.
 
 ## API
 

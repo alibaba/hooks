@@ -1,7 +1,7 @@
-import { useLayoutEffect, useState } from 'react';
+import { createElement, createRef, useLayoutEffect, useState } from 'react';
 import { flushSync } from 'react-dom';
 import { afterEach, beforeEach, describe, expect, test, vi } from 'vitest';
-import { act, renderHook } from '../../utils/tests';
+import { act, render, renderHook } from '../../utils/tests';
 import type { Options } from '../index';
 import useLongPress from '../index';
 
@@ -190,6 +190,31 @@ describe.each(['pointer', 'mouse', 'touch'] as const)('updated options (%s)', (i
     }
   };
 
+  test('binds to a sibling whose ref is attached later in the commit', () => {
+    const target = createRef<HTMLButtonElement>();
+    const onLongPress = vi.fn();
+
+    function Subscriber() {
+      useLongPress(onLongPress, target);
+      return null;
+    }
+
+    const { getByRole, unmount } = render(
+      createElement(
+        'div',
+        null,
+        createElement(Subscriber),
+        createElement('button', { ref: target, type: 'button' }),
+      ),
+    );
+    const button = getByRole('button');
+    send(button, 'down');
+    vi.advanceTimersByTime(300);
+    send(button, 'up');
+    unmount();
+    expect(onLongPress).toHaveBeenCalledOnce();
+  });
+
   test.each([
     [100, 500],
     [500, 100],
@@ -276,7 +301,7 @@ describe.each(['pointer', 'mouse', 'touch'] as const)('updated options (%s)', (i
     send(target, 'up');
   });
 
-  test('does not report a stale release as a click or long press end', () => {
+  test('ignores an interrupted short press and ends an already triggered long press', () => {
     const target = document.createElement('button');
     const onLongPress = vi.fn();
     const onClick = vi.fn();
@@ -299,14 +324,14 @@ describe.each(['pointer', 'mouse', 'touch'] as const)('updated options (%s)', (i
     rerender({ delay: 300 });
     send(target, 'up');
     expect(onClick).not.toHaveBeenCalled();
-    expect(onLongPressEnd).not.toHaveBeenCalled();
+    expect(onLongPressEnd).toHaveBeenCalledTimes(1);
     send(target, 'down');
     vi.advanceTimersByTime(300);
     send(target, 'up');
     expect(onLongPress).toHaveBeenCalledTimes(2);
-    expect(onLongPressEnd).toHaveBeenCalledTimes(1);
+    expect(onLongPressEnd).toHaveBeenCalledTimes(2);
   });
-  test.each([50, 100])('ignores a release during the option update after %i ms', (elapsed) => {
+  test.each([50, 100])('handles a release during the option update after %i ms', (elapsed) => {
     const target = document.createElement('button');
     const onLongPress = vi.fn();
     const onClick = vi.fn();
@@ -330,7 +355,7 @@ describe.each(['pointer', 'mouse', 'touch'] as const)('updated options (%s)', (i
 
     expect(onLongPress).toHaveBeenCalledTimes(elapsed === 100 ? 1 : 0);
     expect(onClick).not.toHaveBeenCalled();
-    expect(onLongPressEnd).not.toHaveBeenCalled();
+    expect(onLongPressEnd).toHaveBeenCalledTimes(elapsed === 100 ? 1 : 0);
   });
 
   test('cancels the replacement timer on unmount', () => {
@@ -367,12 +392,12 @@ describe.each(['pointer', 'mouse', 'touch'] as const)('updated options (%s)', (i
     });
     send(target, 'up');
     expect(onClick).not.toHaveBeenCalled();
-    expect(onLongPressEnd).not.toHaveBeenCalled();
+    expect(onLongPressEnd).toHaveBeenCalledTimes(1);
 
     send(target, 'down');
     send(target, 'up');
     expect(onClick).toHaveBeenCalledOnce();
-    expect(onLongPressEnd).not.toHaveBeenCalled();
+    expect(onLongPressEnd).toHaveBeenCalledTimes(1);
   });
 });
 
