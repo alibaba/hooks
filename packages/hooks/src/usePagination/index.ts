@@ -2,7 +2,7 @@ import { useMemo } from 'react';
 import useMemoizedFn from '../useMemoizedFn';
 import useRequest from '../useRequest';
 
-import type { Data, PaginationOptions, Params, Service, PaginationResult } from './types';
+import type { Data, PaginationOptions, PaginationResult, Params, Service } from './types';
 
 const usePagination = <TData extends Data, TParams extends Params>(
   service: Service<TData, TParams>,
@@ -19,7 +19,7 @@ const usePagination = <TData extends Data, TParams extends Params>(
     ...rest,
   });
 
-  const { current = 1, pageSize = defaultPageSize } = result.params[0] || {};
+  const { current = defaultCurrent, pageSize = defaultPageSize } = result.params[0] || {};
 
   const total = result.data?.total || 0;
   const totalPage = useMemo(() => Math.ceil(total / pageSize), [pageSize, total]);
