@@ -53,6 +53,7 @@ import useResetState from './useResetState';
 import useResponsive, { configResponsive } from './useResponsive';
 import useSafeState from './useSafeState';
 import useScroll from './useScroll';
+import useScrollLock from './useScrollLock';
 import useSelections from './useSelections';
 import useSessionStorageState from './useSessionStorageState';
 import useSet from './useSet';
@@ -103,6 +104,7 @@ export {
   usePrevious,
   useMouse,
   useScroll,
+  useScrollLock,
   useClickAway,
   useFullscreen,
   useInViewport,
