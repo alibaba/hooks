@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { isObject } from '../utils';
+import isBrowser from '../utils/isBrowser';
 
 export interface NetworkState {
   since?: Date;
@@ -19,6 +20,9 @@ enum NetworkEventType {
 }
 
 function getConnection() {
+  if (!isBrowser) {
+    return null;
+  }
   const nav = navigator as any;
   if (!isObject(nav)) {
     return null;
@@ -42,15 +46,18 @@ function getConnectionProperty(): NetworkState {
 }
 
 function useNetwork(): NetworkState {
-  const [state, setState] = useState(() => {
-    return {
-      since: undefined,
-      online: navigator?.onLine,
-      ...getConnectionProperty(),
-    };
-  });
+  // Keep the first client render consistent with the server output during hydration.
+  const [state, setState] = useState<NetworkState>({});
 
   useEffect(() => {
+    if (!isBrowser) {
+      return;
+    }
+    setState({
+      online: window.navigator.onLine,
+      ...getConnectionProperty(),
+    });
+
     const onOnline = () => {
       setState((prevState) => ({
         ...prevState,
