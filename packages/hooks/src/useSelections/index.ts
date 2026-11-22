@@ -51,6 +51,8 @@ function useSelections<T>(items: T[], options?: T[] | Options<T>) {
   const selectedMap = useMemo(() => getSelectedMap(selected), [selected, getSelectedMap]);
 
   const updateSelected = (update: (map: Map<React.Key, T>) => void) => {
+    // Keep imperative reads in the same event working. React's queue still owns the state.
+    update(selectedMap);
     setSelected((previous) => {
       const map = getSelectedMap(previous);
       update(map);
@@ -125,6 +127,7 @@ function useSelections<T>(items: T[], options?: T[] | Options<T>) {
   };
 
   const clearAll = () => {
+    selectedMap.clear();
     setSelected([]);
   };
 
