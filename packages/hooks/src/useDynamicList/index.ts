@@ -1,80 +1,80 @@
 import { useCallback, useRef, useState } from 'react';
+import useMemoizedFn from '../useMemoizedFn';
 import isDev from '../utils/isDev';
 
+const createKeys = (length: number, firstKey: number) =>
+  Array.from({ length }, (_, index) => firstKey + index);
+
 const useDynamicList = <T>(initialList: T[] = []) => {
-  const counterRef = useRef(-1);
+  const nextKeyRef = useRef(initialList.length);
+  const [state, setState] = useState(() => ({
+    list: initialList,
+    keys: createKeys(initialList.length, 0),
+  }));
 
-  const keyList = useRef<number[]>([]);
-
-  const setKey = useCallback((index: number) => {
-    counterRef.current += 1;
-    keyList.current.splice(index, 0, counterRef.current);
+  // Reserve keys when an action is called so replaying its update preserves row identity.
+  const reserveKeys = useCallback((count: number) => {
+    const firstKey = nextKeyRef.current;
+    nextKeyRef.current += count;
+    return firstKey;
   }, []);
 
-  const [list, setList] = useState(() => {
-    initialList.forEach((_, index) => {
-      setKey(index);
-    });
-    return initialList;
-  });
-
-  const resetList = useCallback((newList: T[]) => {
-    keyList.current = [];
-    setList(() => {
-      newList.forEach((_, index) => {
-        setKey(index);
-      });
-      return newList;
-    });
-  }, []);
-
-  const insert = useCallback((index: number, item: T) => {
-    setList((l) => {
-      const temp = [...l];
-      temp.splice(index, 0, item);
-      setKey(index);
-      return temp;
-    });
-  }, []);
-
-  const getKey = useCallback((index: number) => keyList.current[index], []);
-
-  const getIndex = useCallback(
-    (key: number) => keyList.current.findIndex((ele) => ele === key),
-    [],
+  const resetList = useCallback(
+    (newList: T[]) => {
+      const keys = createKeys(newList.length, reserveKeys(newList.length));
+      setState({ list: newList, keys });
+    },
+    [reserveKeys],
   );
 
-  const merge = useCallback((index: number, items: T[]) => {
-    setList((l) => {
-      const temp = [...l];
-      items.forEach((_, i) => {
-        setKey(index + i);
+  const insert = useCallback(
+    (index: number, item: T) => {
+      const key = reserveKeys(1);
+      setState((current) => {
+        const list = [...current.list];
+        const keys = [...current.keys];
+        list.splice(index, 0, item);
+        keys.splice(index, 0, key);
+        return { list, keys };
       });
-      temp.splice(index, 0, ...items);
-      return temp;
-    });
-  }, []);
+    },
+    [reserveKeys],
+  );
+
+  const getKey = useMemoizedFn((index: number) => state.keys[index]);
+
+  const getIndex = useMemoizedFn((key: number) => state.keys.indexOf(key));
+
+  const merge = useCallback(
+    (index: number, items: T[]) => {
+      const insertedItems = [...items];
+      const insertedKeys = createKeys(insertedItems.length, reserveKeys(insertedItems.length));
+      setState((current) => {
+        const list = [...current.list];
+        const keys = [...current.keys];
+        list.splice(index, 0, ...insertedItems);
+        keys.splice(index, 0, ...insertedKeys);
+        return { list, keys };
+      });
+    },
+    [reserveKeys],
+  );
 
   const replace = useCallback((index: number, item: T) => {
-    setList((l) => {
-      const temp = [...l];
-      temp[index] = item;
-      return temp;
+    setState((current) => {
+      const list = [...current.list];
+      list[index] = item;
+      return { ...current, list };
     });
   }, []);
 
   const remove = useCallback((index: number) => {
-    setList((l) => {
-      const temp = [...l];
-      temp.splice(index, 1);
-
-      // remove keys if necessary
-      try {
-        keyList.current.splice(index, 1);
-      } catch (e) {
-        console.error(e);
-      }
-      return temp;
+    setState((current) => {
+      const list = [...current.list];
+      const keys = [...current.keys];
+      list.splice(index, 1);
+      keys.splice(index, 1);
+      return { ...current, list, keys };
     });
   }, []);
 
@@ -91,21 +91,16 @@ const useDynamicList = <T>(initialList: T[] = []) => {
       return;
     }
 
-    setList((prevList) => {
-      const newKeyList: number[] = [];
-      const newList = prevList.filter((item, index) => {
-        const shouldKeep = !indexes.includes(index);
-
-        if (shouldKeep) {
-          newKeyList.push(getKey(index));
+    setState((current) => {
+      const keys: number[] = [];
+      const list = current.list.filter((_, index) => {
+        if (indexes.includes(index)) {
+          return false;
         }
-
-        return shouldKeep;
+        keys.push(current.keys[index]);
+        return true;
       });
-
-      keyList.current = newKeyList;
-
-      return newList;
+      return { ...current, list, keys };
     });
   }, []);
 
@@ -113,57 +108,51 @@ const useDynamicList = <T>(initialList: T[] = []) => {
     if (oldIndex === newIndex) {
       return;
     }
-    setList((l) => {
-      const newList = [...l];
-      const temp = newList.filter((_, index: number) => index !== oldIndex);
-      temp.splice(newIndex, 0, newList[oldIndex]);
-
-      // move keys if necessary
-      try {
-        const keyTemp = keyList.current.filter((_, index: number) => index !== oldIndex);
-        keyTemp.splice(newIndex, 0, keyList.current[oldIndex]);
-        keyList.current = keyTemp;
-      } catch (e) {
-        console.error(e);
-      }
-
-      return temp;
+    setState((current) => {
+      const list = [...current.list].filter((_, index) => index !== oldIndex);
+      const keys = current.keys.filter((_, index) => index !== oldIndex);
+      list.splice(newIndex, 0, current.list[oldIndex]);
+      keys.splice(newIndex, 0, current.keys[oldIndex]);
+      return { ...current, list, keys };
     });
   }, []);
 
-  const push = useCallback((item: T) => {
-    setList((l) => {
-      setKey(l.length);
-      return l.concat([item]);
-    });
-  }, []);
+  const push = useCallback(
+    (item: T) => {
+      const key = reserveKeys(1);
+      setState((current) => ({
+        list: current.list.concat([item]),
+        keys: current.keys.concat(key),
+      }));
+    },
+    [reserveKeys],
+  );
 
   const pop = useCallback(() => {
-    // remove keys if necessary
-    try {
-      keyList.current = keyList.current.slice(0, keyList.current.length - 1);
-    } catch (e) {
-      console.error(e);
-    }
-
-    setList((l) => l.slice(0, l.length - 1));
+    setState((current) => ({
+      ...current,
+      list: current.list.slice(0, -1),
+      keys: current.keys.slice(0, -1),
+    }));
   }, []);
 
-  const unshift = useCallback((item: T) => {
-    setList((l) => {
-      setKey(0);
-      return [item].concat(l);
-    });
-  }, []);
+  const unshift = useCallback(
+    (item: T) => {
+      const key = reserveKeys(1);
+      setState((current) => ({
+        list: [item].concat(current.list),
+        keys: [key].concat(current.keys),
+      }));
+    },
+    [reserveKeys],
+  );
 
   const shift = useCallback(() => {
-    // remove keys if necessary
-    try {
-      keyList.current = keyList.current.slice(1, keyList.current.length);
-    } catch (e) {
-      console.error(e);
-    }
-    setList((l) => l.slice(1, l.length));
+    setState((current) => ({
+      ...current,
+      list: current.list.slice(1),
+      keys: current.keys.slice(1),
+    }));
   }, []);
 
   const sortList = useCallback(
@@ -173,11 +162,11 @@ const useDynamicList = <T>(initialList: T[] = []) => {
         .sort((a, b) => getIndex(a.key) - getIndex(b.key)) // sort based on the index of table
         .filter((item) => item.item !== undefined && item.item !== null)
         .map((item) => item.item), // retrive the data
-    [],
+    [getIndex],
   );
 
   return {
-    list,
+    list: state.list,
     insert,
     merge,
     replace,
