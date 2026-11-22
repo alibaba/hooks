@@ -15,14 +15,14 @@ type IntersectionObserverTestCallback = (entries: MockIntersectionObserverEntry[
 
 let observeMock = vi.fn();
 let disconnectMock = vi.fn();
-let intersectionObserverCallCount = 0;
+const observerOptions = vi.fn<(options: IntersectionObserverInit) => void>();
 let intersectionObserverCallback: IntersectionObserverTestCallback | undefined;
 
 class MockIntersectionObserver {
   observe = observeMock;
   disconnect = disconnectMock;
-  constructor(callback: IntersectionObserverTestCallback) {
-    intersectionObserverCallCount += 1;
+  constructor(callback: IntersectionObserverTestCallback, options: IntersectionObserverInit) {
+    observerOptions(options);
     intersectionObserverCallback = callback;
   }
 }
@@ -31,9 +31,9 @@ window.IntersectionObserver = MockIntersectionObserver as unknown as typeof Inte
 
 describe('useInViewport', () => {
   beforeEach(() => {
+    observerOptions.mockClear();
     observeMock = vi.fn();
     disconnectMock = vi.fn();
-    intersectionObserverCallCount = 0;
     intersectionObserverCallback = undefined;
   });
 
@@ -86,9 +86,35 @@ describe('useInViewport', () => {
     expect(result.current[1]).toBe(0.5);
   });
 
+  test('reconnects when the root ref points to a different scroll container', () => {
+    const initialRoot = document.createElement('section');
+    const root: { current: HTMLElement | null } = { current: initialRoot };
+    const first = document.createElement('div');
+    const second = document.createElement('div');
+    const targets = [first, second];
+    initialRoot.append(first, second);
+    const { rerender, unmount } = renderHook(() => useInViewport(targets, { root }));
+    expect(observerOptions).toHaveBeenLastCalledWith({ root: root.current });
+
+    root.current = document.createElement('section');
+    root.current.append(first, second);
+    rerender();
+    expect(disconnectMock).toHaveBeenCalledTimes(1);
+    expect(observerOptions).toHaveBeenLastCalledWith({ root: root.current });
+    expect(observeMock.mock.calls).toEqual([[first], [second], [first], [second]]);
+
+    rerender();
+    expect(observerOptions).toHaveBeenCalledTimes(2);
+    root.current = null;
+    rerender();
+    expect(observerOptions).toHaveBeenLastCalledWith({ root: null });
+    unmount();
+    expect(disconnectMock).toHaveBeenCalledTimes(3);
+  });
+
   test('should not work when target is null', async () => {
     renderHook(() => useInViewport(null));
-    expect(intersectionObserverCallCount).toBe(0);
+    expect(observerOptions).not.toHaveBeenCalled();
   });
 
   test('should disconnect when unmount', async () => {
