@@ -25,7 +25,8 @@ export const createUseStorageState = (getStorage: () => Storage | undefined) => 
 
     const serializer = isFunction(options.serializer) ? options.serializer : JSON.stringify;
 
-    const deserializer = isFunction(options.deserializer) ? options.deserializer : JSON.parse;
+    const customDeserializer = isFunction(options.deserializer) ? options.deserializer : undefined;
+    const deserializer = customDeserializer ?? JSON.parse;
 
     const onError = isFunction(options.onError) ? options.onError : console.error;
 
@@ -39,7 +40,7 @@ export const createUseStorageState = (getStorage: () => Storage | undefined) => 
     const getStoredValue = () => {
       try {
         const raw = storage?.getItem(key);
-        if (raw) {
+        if (raw || (raw === '' && customDeserializer)) {
           return deserializer(raw);
         }
       } catch (e) {
