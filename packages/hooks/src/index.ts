@@ -28,6 +28,7 @@ import useFusionTable from './useFusionTable';
 import useGetState from './useGetState';
 import useHistoryTravel from './useHistoryTravel';
 import useHover from './useHover';
+import useIdle from './useIdle';
 import useInfiniteScroll from './useInfiniteScroll';
 import useInterval from './useInterval';
 import useInViewport from './useInViewport';
@@ -109,6 +110,7 @@ export {
   useKeyPress,
   useEventListener,
   useHover,
+  useIdle,
   useUnmount,
   useSet,
   useMemoizedFn,
