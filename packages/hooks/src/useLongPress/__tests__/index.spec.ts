@@ -1,7 +1,7 @@
-import { act, renderHook } from '@testing-library/react';
-import { StrictMode, useState } from 'react';
+import { useLayoutEffect, useState } from 'react';
 import { flushSync } from 'react-dom';
 import { afterEach, beforeEach, describe, expect, test, vi } from 'vitest';
+import { act, renderHook } from '../../utils/tests';
 import type { Options } from '../index';
 import useLongPress from '../index';
 
@@ -164,22 +164,10 @@ describe('useLongPress', () => {
   });
 });
 
-describe.each([
-  'pointer',
-  'mouse',
-  'touch',
-  'pointer-strict',
-  'mouse-strict',
-  'touch-strict',
-] as const)('updated options (%s)', (input) => {
-  const renderUpdatedHook: typeof renderHook = (callback, options) =>
-    renderHook(callback, {
-      wrapper: input.endsWith('-strict') ? StrictMode : undefined,
-      ...options,
-    });
+describe.each(['pointer', 'mouse', 'touch'] as const)('updated options (%s)', (input) => {
   beforeEach(() => {
     vi.useFakeTimers();
-    vi.stubGlobal('PointerEvent', input.startsWith('pointer') ? MockPointerEvent : undefined);
+    vi.stubGlobal('PointerEvent', input === 'pointer' ? MockPointerEvent : undefined);
   });
 
   afterEach(() => {
@@ -188,11 +176,11 @@ describe.each([
   });
 
   const send = (target: HTMLElement, phase: 'down' | 'move' | 'up', x = 0, y = 0) => {
-    if (input.startsWith('pointer')) {
+    if (input === 'pointer') {
       target.dispatchEvent(
         new PointerEvent(`pointer${phase}`, { pointerId: 1, clientX: x, clientY: y }),
       );
-    } else if (input.startsWith('mouse')) {
+    } else if (input === 'mouse') {
       target.dispatchEvent(new MouseEvent(`mouse${phase}`, { clientX: x, clientY: y }));
     } else {
       const type = phase === 'down' ? 'touchstart' : phase === 'up' ? 'touchend' : 'touchmove';
@@ -208,12 +196,9 @@ describe.each([
   ])('uses delay updated from %i to %i for the next press', (initial, updated) => {
     const target = document.createElement('button');
     const onLongPress = vi.fn();
-    const { rerender } = renderUpdatedHook(
-      ({ delay }) => useLongPress(onLongPress, target, { delay }),
-      {
-        initialProps: { delay: initial },
-      },
-    );
+    const { rerender } = renderHook(({ delay }) => useLongPress(onLongPress, target, { delay }), {
+      initialProps: { delay: initial },
+    });
     rerender({ delay: updated });
     send(target, 'down');
     vi.advanceTimersByTime(updated - 1);
@@ -231,7 +216,7 @@ describe.each([
   ])('uses updated movement threshold %j -> %j', (initial, updated, x, y) => {
     const target = document.createElement('button');
     const onLongPress = vi.fn();
-    const { rerender } = renderUpdatedHook(
+    const { rerender } = renderHook(
       ({ moveThreshold }: { moveThreshold: Options['moveThreshold'] }) =>
         useLongPress(onLongPress, target, { moveThreshold }),
       { initialProps: { moveThreshold: initial } },
@@ -247,7 +232,7 @@ describe.each([
   test('removes the previous movement threshold', () => {
     const target = document.createElement('button');
     const onLongPress = vi.fn();
-    const { rerender } = renderUpdatedHook(
+    const { rerender } = renderHook(
       ({ moveThreshold }: { moveThreshold: Options['moveThreshold'] }) =>
         useLongPress(onLongPress, target, { moveThreshold }),
       { initialProps: { moveThreshold: { x: 10 } as Options['moveThreshold'] } },
@@ -263,7 +248,7 @@ describe.each([
   test('keeps an active press for an equivalent inline configuration', () => {
     const target = document.createElement('button');
     const onLongPress = vi.fn();
-    const { rerender } = renderUpdatedHook(() =>
+    const { rerender } = renderHook(() =>
       useLongPress(onLongPress, target, { delay: 300, moveThreshold: { x: 10 } }),
     );
     send(target, 'down');
@@ -277,12 +262,9 @@ describe.each([
   test('cancels the old press and accepts a fresh press after options change', () => {
     const target = document.createElement('button');
     const onLongPress = vi.fn();
-    const { rerender } = renderUpdatedHook(
-      ({ delay }) => useLongPress(onLongPress, target, { delay }),
-      {
-        initialProps: { delay: 100 },
-      },
-    );
+    const { rerender } = renderHook(({ delay }) => useLongPress(onLongPress, target, { delay }), {
+      initialProps: { delay: 100 },
+    });
     send(target, 'down');
     vi.advanceTimersByTime(50);
     rerender({ delay: 200 });
@@ -293,34 +275,7 @@ describe.each([
     expect(onLongPress).toHaveBeenCalledTimes(1);
     send(target, 'up');
   });
-});
 
-describe.each(['pointer', 'mouse', 'touch'] as const)('updated option cleanup (%s)', (input) => {
-  beforeEach(() => {
-    vi.useFakeTimers();
-    vi.stubGlobal('PointerEvent', input === 'pointer' ? MockPointerEvent : undefined);
-  });
-  afterEach(() => {
-    vi.useRealTimers();
-    vi.unstubAllGlobals();
-  });
-  const send = (target: HTMLElement, phase: 'down' | 'up') => {
-    const type =
-      input === 'pointer'
-        ? `pointer${phase}`
-        : input === 'mouse'
-          ? `mouse${phase}`
-          : phase === 'down'
-            ? 'touchstart'
-            : 'touchend';
-    const event =
-      input === 'pointer'
-        ? new PointerEvent(type, { pointerId: 1 })
-        : input === 'mouse'
-          ? new MouseEvent(type)
-          : new TouchEvent(type);
-    target.dispatchEvent(event);
-  };
   test('does not report a stale release as a click or long press end', () => {
     const target = document.createElement('button');
     const onLongPress = vi.fn();
@@ -351,6 +306,33 @@ describe.each(['pointer', 'mouse', 'touch'] as const)('updated option cleanup (%
     expect(onLongPress).toHaveBeenCalledTimes(2);
     expect(onLongPressEnd).toHaveBeenCalledTimes(1);
   });
+  test.each([50, 100])('ignores a release during the option update after %i ms', (elapsed) => {
+    const target = document.createElement('button');
+    const onLongPress = vi.fn();
+    const onClick = vi.fn();
+    const onLongPressEnd = vi.fn();
+    const { rerender } = renderHook(
+      ({ delay }) => {
+        useLongPress(onLongPress, target, { delay, onClick, onLongPressEnd });
+        useLayoutEffect(() => {
+          if (delay === 200) {
+            send(target, 'up');
+          }
+        }, [delay]);
+      },
+      { initialProps: { delay: 100 } },
+    );
+
+    send(target, 'down');
+    vi.advanceTimersByTime(elapsed);
+    rerender({ delay: 200 });
+    vi.advanceTimersByTime(200);
+
+    expect(onLongPress).toHaveBeenCalledTimes(elapsed === 100 ? 1 : 0);
+    expect(onClick).not.toHaveBeenCalled();
+    expect(onLongPressEnd).not.toHaveBeenCalled();
+  });
+
   test('cancels the replacement timer on unmount', () => {
     const target = document.createElement('button');
     const onLongPress = vi.fn();
@@ -451,6 +433,41 @@ describe('press cancellation and event guards', () => {
     expect(onLongPressEnd).toHaveBeenCalledTimes(1);
     expect(onClick).not.toHaveBeenCalled();
   });
+  test('cancels pending fallback mouse presses when the delay changes', () => {
+    vi.stubGlobal('PointerEvent', undefined);
+    const target = document.createElement('button');
+    const onLongPress = vi.fn();
+    const onClick = vi.fn();
+    const onLongPressEnd = vi.fn();
+    const { rerender } = renderHook(
+      ({ delay }) => useLongPress(onLongPress, target, { delay, onClick, onLongPressEnd }),
+      { initialProps: { delay: 100 } },
+    );
+
+    target.dispatchEvent(new MouseEvent('mousedown', { button: 0, buttons: 1 }));
+    vi.advanceTimersByTime(20);
+    target.dispatchEvent(new MouseEvent('mousedown', { button: 2, buttons: 3 }));
+    vi.advanceTimersByTime(30);
+    rerender({ delay: 200 });
+    vi.advanceTimersByTime(200);
+    target.dispatchEvent(new MouseEvent('mouseup', { button: 2, buttons: 1 }));
+    target.dispatchEvent(new MouseEvent('mouseup', { button: 0 }));
+
+    expect(onLongPress).not.toHaveBeenCalled();
+    expect(onClick).not.toHaveBeenCalled();
+    expect(onLongPressEnd).not.toHaveBeenCalled();
+
+    target.dispatchEvent(new MouseEvent('mousedown', { button: 0, buttons: 1 }));
+    vi.advanceTimersByTime(199);
+    expect(onLongPress).not.toHaveBeenCalled();
+    vi.advanceTimersByTime(1);
+    target.dispatchEvent(new MouseEvent('mouseup', { button: 0 }));
+
+    expect(onLongPress).toHaveBeenCalledOnce();
+    expect(onLongPressEnd).toHaveBeenCalledOnce();
+    expect(onClick).not.toHaveBeenCalled();
+  });
+
   test('cancels when moving past the vertical threshold and tolerates non-mouse events', () => {
     vi.stubGlobal('PointerEvent', undefined);
     const target = document.createElement('button');

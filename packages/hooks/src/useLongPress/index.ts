@@ -2,7 +2,7 @@ import { useRef } from 'react';
 import useLatest from '../useLatest';
 import type { BasicTarget } from '../utils/domTarget';
 import { getTargetElement } from '../utils/domTarget';
-import useEffectWithTarget from '../utils/useEffectWithTarget';
+import useIsomorphicLayoutEffectWithTarget from '../utils/useIsomorphicLayoutEffectWithTarget';
 
 type EventType = MouseEvent | TouchEvent;
 export interface Options {
@@ -33,7 +33,7 @@ function useLongPress(
     (moveThreshold?.y && moveThreshold.y > 0)
   );
 
-  useEffectWithTarget(
+  useIsomorphicLayoutEffectWithTarget(
     () => {
       const targetElement = getTargetElement(target);
       if (!targetElement?.addEventListener) {
@@ -70,18 +70,19 @@ function useLongPress(
         return { clientX: 0, clientY: 0 };
       }
 
-      const createTimer = (event: EventType) => {
-        timerRef.current = setTimeout(() => {
-          isTriggeredRef.current = true;
-          onLongPressRef.current(event);
-        }, delay);
-      };
-
       const clearTimer = () => {
         if (timerRef.current) {
           clearTimeout(timerRef.current);
           timerRef.current = undefined;
         }
+      };
+
+      const createTimer = (event: EventType) => {
+        clearTimer();
+        timerRef.current = setTimeout(() => {
+          isTriggeredRef.current = true;
+          onLongPressRef.current(event);
+        }, delay);
       };
 
       const finishPress = (event: EventType, triggerClick = true) => {
