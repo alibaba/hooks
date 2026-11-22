@@ -48,6 +48,13 @@ const useAntdTable = <TData extends Data, TParams extends Params>(
   const defaultDataSourceRef = useRef([]);
   const runSuccessRef = useRef(false);
   const unmountedRef = useUnmountedRef();
+  const submissionGeneration = useRef(0);
+  useEffect(
+    () => () => {
+      submissionGeneration.current += 1;
+    },
+    [],
+  );
 
   const isAntdV4 = !!form?.getInternalHooks;
 
@@ -133,13 +140,15 @@ const useAntdTable = <TData extends Data, TParams extends Params>(
     if (!ready) {
       return;
     }
+    const generation = submissionGeneration.current;
+    const isStale = () => unmountedRef.current || submissionGeneration.current !== generation;
     setTimeout(() => {
-      if (unmountedRef.current) {
+      if (isStale()) {
         return;
       }
       validateFields()
         .then((values = {}) => {
-          if (unmountedRef.current) {
+          if (isStale()) {
             return;
           }
           const pagination = initPagination || {
