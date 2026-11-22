@@ -25,11 +25,11 @@ function useScroll(
       }
       const updatePosition = () => {
         let newPosition: Position;
-        if (el === document) {
-          if (document.scrollingElement) {
+        if ('documentElement' in el) {
+          if (el.scrollingElement) {
             newPosition = {
-              left: document.scrollingElement.scrollLeft,
-              top: document.scrollingElement.scrollTop,
+              left: el.scrollingElement.scrollLeft,
+              top: el.scrollingElement.scrollTop,
             };
           } else {
             // When in quirks mode, the scrollingElement attribute returns the HTML body element if it exists and is potentially scrollable, otherwise it returns null.
@@ -37,21 +37,21 @@ function useScroll(
             // https://stackoverflow.com/questions/28633221/document-body-scrolltop-firefox-returns-0-only-js
             newPosition = {
               left: Math.max(
-                window.pageXOffset,
-                document.documentElement.scrollLeft,
-                document.body.scrollLeft,
+                el.defaultView?.pageXOffset ?? 0,
+                el.documentElement?.scrollLeft ?? 0,
+                el.body?.scrollLeft ?? 0,
               ),
               top: Math.max(
-                window.pageYOffset,
-                document.documentElement.scrollTop,
-                document.body.scrollTop,
+                el.defaultView?.pageYOffset ?? 0,
+                el.documentElement?.scrollTop ?? 0,
+                el.body?.scrollTop ?? 0,
               ),
             };
           }
         } else {
           newPosition = {
-            left: (el as Element).scrollLeft,
-            top: (el as Element).scrollTop,
+            left: el.scrollLeft,
+            top: el.scrollTop,
           };
         }
         if (shouldUpdateRef.current(newPosition)) {
