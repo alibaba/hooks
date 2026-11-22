@@ -268,7 +268,7 @@ function useKeyPress(
         }
       };
     },
-    [events],
+    [events, exactMatch, useCapture],
     target,
   );
 }

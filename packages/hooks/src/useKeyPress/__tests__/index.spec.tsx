@@ -112,6 +112,46 @@ describe('useKeyPress ', () => {
     hook4.unmount();
   });
 
+  test('uses the current exactMatch setting for a shortcut', () => {
+    const { rerender, unmount } = renderHook(
+      (exactMatch) => useKeyPress('c', callback, { exactMatch }),
+      {
+        initialProps: false,
+      },
+    );
+    const key = { key: 'c', keyCode: 67, shiftKey: true };
+    fireEvent.keyDown(document, key);
+    rerender(true);
+    fireEvent.keyDown(document, key);
+    expect(callback).toHaveBeenCalledTimes(1);
+    rerender(false);
+    fireEvent.keyDown(document, key);
+    expect(callback).toHaveBeenCalledTimes(2);
+    unmount();
+  });
+
+  test('moves the listener when useCapture changes', () => {
+    const target = document.createElement('div');
+    const child = target.appendChild(document.createElement('input'));
+    child.addEventListener('keydown', (event) => event.stopPropagation());
+    const { rerender, unmount } = renderHook(
+      (useCapture) => useKeyPress('c', callback, { target, useCapture }),
+      { initialProps: false },
+    );
+    const key = { key: 'c', keyCode: 67 };
+    fireEvent.keyDown(child, key);
+    expect(callback).not.toHaveBeenCalled();
+    rerender(true);
+    fireEvent.keyDown(child, key);
+    expect(callback).toHaveBeenCalledTimes(1);
+    rerender(false);
+    fireEvent.keyDown(child, key);
+    expect(callback).toHaveBeenCalledTimes(1);
+    unmount();
+    fireEvent.keyDown(target, key);
+    expect(callback).toHaveBeenCalledTimes(1);
+  });
+
   test('test multiple keys', async () => {
     const { unmount } = renderHook(() => useKeyPress(['0', 65], callback));
     fireEvent.keyDown(document, { key: '0', keyCode: 48 });
