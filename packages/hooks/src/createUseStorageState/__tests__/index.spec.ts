@@ -49,6 +49,24 @@ interface StorageStateProps<T> extends Pick<Options<T>, 'defaultValue'> {
 }
 
 describe('useStorageState', () => {
+  test('should use the default for raw empty strings without reporting a JSON error', () => {
+    const key = 'default-parser-empty-string';
+    localStorage.setItem(key, '');
+    const onError = vi.fn();
+    const useStorageState = createUseStorageState(() => localStorage);
+    const { result, unmount } = renderHook(() =>
+      useStorageState(key, { defaultValue: 'fallback', onError }),
+    );
+
+    try {
+      expect(result.current[0]).toBe('fallback');
+      expect(onError).not.toHaveBeenCalled();
+    } finally {
+      unmount();
+      localStorage.removeItem(key);
+    }
+  });
+
   test.each([false, true])(
     'should deserialize stored empty strings with effect initialization %s',
     (getInitialValueInEffect) => {
