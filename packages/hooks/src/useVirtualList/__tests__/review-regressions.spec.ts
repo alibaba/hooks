@@ -8,7 +8,7 @@ function setup(list: number[]) {
   const container = document.createElement('div');
   vi.spyOn(container, 'clientHeight', 'get').mockReturnValue(300);
   vi.spyOn(container, 'clientWidth', 'get').mockReturnValue(300);
-  let wrapper = document.createElement('div');
+  let wrapper: HTMLElement = document.createElement('div');
   container.appendChild(wrapper);
   document.body.appendChild(container);
   const hook = renderHook(
