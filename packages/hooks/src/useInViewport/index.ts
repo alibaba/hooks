@@ -14,13 +14,13 @@ export interface Options {
 
 function useInViewport(target: BasicTarget | BasicTarget[], options?: Options) {
   const { callback, ...option } = options || {};
+  const targets = Array.isArray(target) ? target : [target];
 
   const [state, setState] = useState<boolean>();
   const [ratio, setRatio] = useState<number>();
 
   useEffectWithTarget(
     () => {
-      const targets = Array.isArray(target) ? target : [target];
       const els = targets.map((element) => getTargetElement(element)).filter(Boolean);
 
       if (!els.length) {
@@ -48,7 +48,7 @@ function useInViewport(target: BasicTarget | BasicTarget[], options?: Options) {
       };
     },
     [options?.rootMargin, options?.threshold, callback],
-    target,
+    [...targets, options?.root],
   );
 
   return [state, ratio] as const;
