@@ -20,20 +20,25 @@ function useSize(target: BasicTarget): Size | undefined {
         return;
       }
 
-      const updateSize = () => {
-        setState({
-          width: (el as HTMLElement).clientWidth,
-          height: (el as HTMLElement).clientHeight,
-        });
+      const updateSize = ({ clientWidth: width, clientHeight: height }: Element) => {
+        setState((previous) =>
+          previous?.width === width && previous.height === height ? previous : { width, height },
+        );
       };
 
       const resizeObserver = new ResizeObserver((entries) => {
-        entries.forEach((entry) => {
-          const { clientWidth, clientHeight } = entry.target as HTMLElement;
-          setState({ width: clientWidth, height: clientHeight });
-        });
+        entries.forEach((entry) => updateSize(entry.target));
       });
       resizeObserver.observe(el);
+
+      // The client dimensions can change with padding even while the content box stays at zero.
+      const borderBoxObserver =
+        typeof window.ResizeObserver === 'function'
+          ? new ResizeObserver((entries) => {
+              entries.forEach((entry) => updateSize(entry.target));
+            })
+          : undefined;
+      borderBoxObserver?.observe(el, { box: 'border-box' });
 
       // Ant Design Tabs with forceRender keeps inactive panes mounted under display:none.
       // ResizeObserver may not notify when an ancestor toggles display (size stays stale / 0
@@ -43,7 +48,7 @@ function useSize(target: BasicTarget): Size | undefined {
         intersectionObserver = new IntersectionObserver((entries) => {
           for (const entry of entries) {
             if (entry.isIntersecting) {
-              updateSize();
+              updateSize(el);
             }
           }
         });
@@ -52,6 +57,7 @@ function useSize(target: BasicTarget): Size | undefined {
 
       return () => {
         resizeObserver.disconnect();
+        borderBoxObserver?.disconnect();
         intersectionObserver?.disconnect();
       };
     },

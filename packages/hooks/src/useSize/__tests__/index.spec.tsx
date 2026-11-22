@@ -11,15 +11,20 @@ type ResizeObserverTestCallback = (entries: MockResizeObserverEntry[]) => void;
 
 let callback: ResizeObserverTestCallback | undefined;
 let intersectionCallback: IntersectionObserverCallback | undefined;
+let borderBoxCallback: ResizeObserverTestCallback | undefined;
 
 vi.mock('resize-observer-polyfill', () => {
   return {
     default: class MockResizeObserver {
-      observe() {}
-      disconnect() {}
-      constructor(cb: ResizeObserverTestCallback) {
-        callback = cb;
+      observe(_target: Element, options?: ResizeObserverOptions) {
+        if (options?.box === 'border-box') {
+          borderBoxCallback = this.notify;
+        } else {
+          callback = this.notify;
+        }
       }
+      disconnect() {}
+      constructor(private notify: ResizeObserverTestCallback) {}
     },
   };
 });
@@ -43,8 +48,10 @@ class MockIntersectionObserver {
 describe('useSize', () => {
   beforeEach(() => {
     callback = undefined;
+    borderBoxCallback = undefined;
     intersectionCallback = undefined;
     vi.stubGlobal('IntersectionObserver', MockIntersectionObserver);
+    vi.stubGlobal('ResizeObserver', class MockNativeResizeObserver {});
   });
 
   test('should work when target is a mounted DOM', () => {
@@ -173,5 +180,40 @@ describe('useSize', () => {
     });
 
     mockRaf.mockRestore();
+  });
+
+  test('updates the client size when only the box with padding changes offscreen', () => {
+    const raf = vi.spyOn(window, 'requestAnimationFrame').mockImplementation((notify) => {
+      notify(0);
+      return 0;
+    });
+    const target = document.createElement('div');
+    const { result } = renderHook(() => useSize(target));
+    expect(result.current).toEqual({ width: 0, height: 0 });
+
+    act(() => borderBoxCallback?.([{ target: { clientWidth: 20, clientHeight: 20 } }]));
+
+    expect(result.current).toEqual({ width: 20, height: 20 });
+    raf.mockRestore();
+  });
+
+  test('keeps the same size object when the target intersects without resizing', () => {
+    const raf = vi.spyOn(window, 'requestAnimationFrame').mockImplementation((notify) => {
+      notify(0);
+      return 0;
+    });
+    const target = document.createElement('div');
+    const { result } = renderHook(() => useSize(target));
+    const initialSize = result.current;
+
+    act(() =>
+      intersectionCallback?.(
+        [{ target, isIntersecting: true } as IntersectionObserverEntry],
+        {} as IntersectionObserver,
+      ),
+    );
+
+    expect(result.current).toBe(initialSize);
+    raf.mockRestore();
   });
 });
