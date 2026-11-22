@@ -1,12 +1,13 @@
 import type { DebouncedFunc, ThrottleSettings } from 'lodash';
 import throttle from 'lodash/throttle';
 import { useEffect, useRef } from 'react';
+import useUpdateEffect from '../../../useUpdateEffect';
 import type { Plugin } from '../types';
 import { cancelPendingPromise } from '../utils/cancelledError';
 
 const useThrottlePlugin: Plugin<any, any[]> = (
   fetchInstance,
-  { throttleWait, throttleLeading, throttleTrailing },
+  { throttleWait, throttleLeading, throttleTrailing, ready },
 ) => {
   const throttledRef = useRef<DebouncedFunc<any>>(undefined);
   const pendingRejectRef = useRef<(reason?: unknown) => void>(undefined);
@@ -35,6 +36,10 @@ const useThrottlePlugin: Plugin<any, any[]> = (
       // throttle runAsync should be promise
       // https://github.com/lodash/lodash/issues/4400#issuecomment-834800398
       fetchInstance.runAsync = (...args) => {
+        if (fetchInstance.options.ready === false) {
+          return _originRunAsync(...args);
+        }
+
         cancelPendingPromise(pendingRejectRef);
 
         return new Promise((resolve, reject) => {
@@ -61,6 +66,13 @@ const useThrottlePlugin: Plugin<any, any[]> = (
       };
     }
   }, [throttleWait, throttleLeading, throttleTrailing]);
+
+  useUpdateEffect(() => {
+    if (ready === false) {
+      throttledRef.current?.cancel();
+      cancelPendingPromise(pendingRejectRef);
+    }
+  }, [ready]);
 
   if (!throttleWait) {
     return {};
