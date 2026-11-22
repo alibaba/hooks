@@ -1,5 +1,6 @@
-import { renderHook } from '@testing-library/react';
-import { StrictMode } from 'react';
+import { act, renderHook } from '@testing-library/react';
+import { StrictMode, useState } from 'react';
+import { flushSync } from 'react-dom';
 import { afterEach, beforeEach, describe, expect, test, vi } from 'vitest';
 import type { Options } from '../index';
 import useLongPress from '../index';
@@ -186,15 +187,17 @@ describe.each([
     vi.unstubAllGlobals();
   });
 
-  const send = (target: HTMLElement, phase: 'down' | 'move' | 'up', x = 0) => {
+  const send = (target: HTMLElement, phase: 'down' | 'move' | 'up', x = 0, y = 0) => {
     if (input.startsWith('pointer')) {
-      target.dispatchEvent(new PointerEvent(`pointer${phase}`, { pointerId: 1, clientX: x }));
+      target.dispatchEvent(
+        new PointerEvent(`pointer${phase}`, { pointerId: 1, clientX: x, clientY: y }),
+      );
     } else if (input.startsWith('mouse')) {
-      target.dispatchEvent(new MouseEvent(`mouse${phase}`, { clientX: x }));
+      target.dispatchEvent(new MouseEvent(`mouse${phase}`, { clientX: x, clientY: y }));
     } else {
       const type = phase === 'down' ? 'touchstart' : phase === 'up' ? 'touchend' : 'touchmove';
       target.dispatchEvent(
-        new TouchEvent(type, { touches: [{ clientX: x, clientY: 0 } as Touch] }),
+        new TouchEvent(type, { touches: [{ clientX: x, clientY: y } as Touch] }),
       );
     }
   };
@@ -221,10 +224,11 @@ describe.each([
   });
 
   test.each([
-    [undefined, { x: 10 }],
-    [{ x: 100 }, { x: 10 }],
-    [{ y: 100 }, { x: 10 }],
-  ])('uses updated movement threshold %j -> %j', (initial, updated) => {
+    [undefined, { x: 10 }, 30, 0],
+    [{ x: 100 }, { x: 10 }, 30, 0],
+    [{ y: 100 }, { x: 10 }, 30, 0],
+    [{ y: 100 }, { y: 10 }, 0, 30],
+  ])('uses updated movement threshold %j -> %j', (initial, updated, x, y) => {
     const target = document.createElement('button');
     const onLongPress = vi.fn();
     const { rerender } = renderUpdatedHook(
@@ -234,10 +238,10 @@ describe.each([
     );
     rerender({ moveThreshold: updated });
     send(target, 'down');
-    send(target, 'move', 30);
+    send(target, 'move', x, y);
     vi.advanceTimersByTime(350);
     expect(onLongPress).not.toHaveBeenCalled();
-    send(target, 'up', 30);
+    send(target, 'up', x, y);
   });
 
   test('removes the previous movement threshold', () => {
@@ -360,6 +364,33 @@ describe.each(['pointer', 'mouse', 'touch'] as const)('updated option cleanup (%
     unmount();
     vi.advanceTimersByTime(300);
     expect(onLongPress).not.toHaveBeenCalled();
+  });
+
+  test('handles the next short press after the long-press callback changes the delay', () => {
+    const target = document.createElement('button');
+    const onClick = vi.fn();
+    const onLongPressEnd = vi.fn();
+    renderHook(() => {
+      const [delay, setDelay] = useState(100);
+      useLongPress(() => flushSync(() => setDelay(200)), target, {
+        delay,
+        onClick,
+        onLongPressEnd,
+      });
+    });
+
+    send(target, 'down');
+    act(() => {
+      vi.advanceTimersByTime(100);
+    });
+    send(target, 'up');
+    expect(onClick).not.toHaveBeenCalled();
+    expect(onLongPressEnd).not.toHaveBeenCalled();
+
+    send(target, 'down');
+    send(target, 'up');
+    expect(onClick).toHaveBeenCalledOnce();
+    expect(onLongPressEnd).not.toHaveBeenCalled();
   });
 });
 

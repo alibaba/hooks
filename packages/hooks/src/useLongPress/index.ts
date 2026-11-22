@@ -72,8 +72,8 @@ function useLongPress(
 
       const createTimer = (event: EventType) => {
         timerRef.current = setTimeout(() => {
-          onLongPressRef.current(event);
           isTriggeredRef.current = true;
+          onLongPressRef.current(event);
         }, delay);
       };
 
