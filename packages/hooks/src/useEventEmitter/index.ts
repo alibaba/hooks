@@ -1,4 +1,4 @@
-import { useRef, useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 
 type Subscription<T> = (val: T) => void;
 
@@ -16,6 +16,7 @@ export class EventEmitter<T> {
     const callbackRef = useRef<Subscription<T>>(undefined);
     callbackRef.current = callback;
     // eslint-disable-next-line react-hooks/rules-of-hooks
+    // biome-ignore lint/correctness/useExhaustiveDependencies: A subscriber can receive a different emitter instance through props or context.
     useEffect(() => {
       function subscription(val: T) {
         if (callbackRef.current) {
@@ -26,7 +27,7 @@ export class EventEmitter<T> {
       return () => {
         this.subscriptions.delete(subscription);
       };
-    }, []);
+    }, [this]);
   };
 }
 

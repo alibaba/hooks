@@ -146,6 +146,28 @@ describe('useDynamicList', () => {
     expect(hook.result.current.getKey(7)).toBe(7);
   });
 
+  test('ignores invalid batch removal without logging in production', async () => {
+    vi.resetModules();
+    vi.doMock('../../utils/isDev', () => ({ default: false }));
+
+    try {
+      const { default: useProductionDynamicList } = await import('../index');
+      const { result } = renderHook(() => useProductionDynamicList(['A', 'B']));
+      const initialList = result.current.list;
+
+      act(() => {
+        // @ts-expect-error Exercise runtime validation for JavaScript callers.
+        result.current.batchRemove(1);
+      });
+
+      expect(result.current.list).toBe(initialList);
+      expect(warnSpy).not.toHaveBeenCalled();
+    } finally {
+      vi.doUnmock('../../utils/isDev');
+      vi.resetModules();
+    }
+  });
+
   test('initialValue changes', () => {
     const hook = renderHook(({ initialValue }) => useDynamicList(initialValue), {
       initialProps: {
