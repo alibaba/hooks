@@ -46,20 +46,18 @@ function getConnectionProperty(): NetworkState {
 }
 
 function useNetwork(): NetworkState {
-  const [state, setState] = useState(() => {
-    // `navigator` is a browser global; SSR runtimes without it must render the
-    // default state instead of throwing from the initializer.
-    if (!isBrowser) {
-      return {};
-    }
-    return {
-      since: undefined,
-      online: navigator.onLine,
-      ...getConnectionProperty(),
-    };
-  });
+  // Keep the first client render consistent with the server output during hydration.
+  const [state, setState] = useState<NetworkState>({});
 
   useEffect(() => {
+    if (!isBrowser) {
+      return;
+    }
+    setState({
+      online: window.navigator.onLine,
+      ...getConnectionProperty(),
+    });
+
     const onOnline = () => {
       setState((prevState) => ({
         ...prevState,
