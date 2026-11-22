@@ -144,6 +144,40 @@ describe('useExternal', () => {
     expect(result.current).toBe('ready');
   });
 
+  test.each([
+    ['js', 'script', 'load', 'ready'],
+    ['js', 'script', 'error', 'error'],
+    ['css', 'link', 'load', 'ready'],
+    ['css', 'link', 'error', 'error'],
+  ])(
+    'retained %s (%s): %s after unmount becomes %s on remount',
+    (extension, tag, event, status) => {
+      for (const reactStrictMode of [false, true]) {
+        const path = `/retained-${event}.${extension}`;
+        const first = renderHook(() => useExternal(path, { keepWhenUnused: true }), {
+          reactStrictMode,
+        });
+        const element = document.querySelector(tag)!;
+        expect(first.result.current).toBe('loading');
+
+        first.unmount();
+        expect(document.querySelector(tag)).toBe(element);
+        act(() => {
+          fireEvent(element, new Event(event));
+        });
+
+        const second = renderHook(() => useExternal(path, { keepWhenUnused: reactStrictMode }), {
+          reactStrictMode,
+        });
+        expect(document.querySelectorAll(tag)).toHaveLength(1);
+        expect(document.querySelector(tag)).toBe(element);
+        expect(second.result.current).toBe(status);
+        second.unmount();
+        element.remove();
+      }
+    },
+  );
+
   test('css preload should work in IE Edge', () => {
     Object.defineProperty(HTMLLinkElement.prototype, 'hideFocus', {
       value: true,

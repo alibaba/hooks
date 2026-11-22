@@ -1,6 +1,6 @@
 import type { RenderHookResult } from '@testing-library/react';
-import { act, renderHook, waitFor } from '@testing-library/react';
-import { describe, expect, test } from 'vitest';
+import { describe, expect, test, vi } from 'vitest';
+import { act, renderHook, waitFor } from '../../utils/tests';
 import usePagination from '../';
 
 // 初始化
@@ -26,6 +26,33 @@ describe('usePagination', () => {
   ) => renderHook((o) => usePagination(service, o || options));
 
   let hook: RenderHookResult<any, any>;
+
+  test.each([{ manual: true }, { ready: false }])(
+    'should expose the default current before fetching with %o',
+    (options) => {
+      const service = vi.fn(asyncFn);
+      const { result } = renderHook(() =>
+        usePagination(service, { defaultCurrent: 3, defaultPageSize: 20, ...options }),
+      );
+
+      expect(service).not.toHaveBeenCalled();
+      expect(result.current.pagination.current).toBe(3);
+      expect(result.current.pagination.pageSize).toBe(20);
+    },
+  );
+
+  test('should prefer request params to the default current', async () => {
+    const { result } = renderHook(() =>
+      usePagination(asyncFn, { manual: true, defaultCurrent: 3, defaultPageSize: 20 }),
+    );
+
+    expect(result.current.pagination.current).toBe(3);
+    await act(async () => {
+      await result.current.runAsync({ current: 4, pageSize: 10 });
+    });
+    expect(result.current.pagination.current).toBe(4);
+    expect(result.current.pagination.pageSize).toBe(10);
+  });
 
   test('should fetch after first render', async () => {
     queryArgs = undefined;

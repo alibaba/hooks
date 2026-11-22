@@ -24,6 +24,12 @@ function useAsyncEffect(
         while (true) {
           const result = await asyncEffect.next();
           if (result.done || cancelled) {
+            if (!result.done) {
+              let closing = await asyncEffect.return();
+              while (!closing.done) {
+                closing = await asyncEffect.next();
+              }
+            }
             break;
           }
         }
