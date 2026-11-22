@@ -37,10 +37,10 @@ const {
 
 ### Params
 
-| Property     | Description                                                                                                               | Type     | Default     |
-| ------------ | ------------------------------------------------------------------------------------------------------------------------- | -------- | ----------- |
-| initialValue | Optional initial value                                                                                                    | `T`      | -           |
-| maxLength    | Optional limit the maximum length of history records. If the maximum length is exceeded, the first record will be deleted | `number` | 0 unlimited |
+| Property     | Description                                                                                                                                                        | Type     | Default     |
+| ------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------ | -------- | ----------- |
+| initialValue | Optional initial value                                                                                                                                             | `T`      | -           |
+| maxLength    | Optional limit on undo history. Each `setValue` call trims the oldest records that exceed the limit, including on the first call after the limit has been lowered. | `number` | 0 unlimited |
 
 ### Result
 
