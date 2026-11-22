@@ -34,6 +34,17 @@ interface LoadResult {
 
 type LoadExternal = <T>(path: string, props?: Partial<T>) => LoadResult;
 
+const trackResourceStatus = (element: Element) => {
+  element.setAttribute('data-status', 'loading');
+  const handler = (event: Event) => {
+    element.setAttribute('data-status', event.type === 'load' ? 'ready' : 'error');
+    element.removeEventListener('load', handler);
+    element.removeEventListener('error', handler);
+  };
+  element.addEventListener('load', handler);
+  element.addEventListener('error', handler);
+};
+
 const loadScript: LoadExternal = (path, props = {}) => {
   const script = document.querySelector(`script[src="${path}"]`);
 
@@ -45,7 +56,7 @@ const loadScript: LoadExternal = (path, props = {}) => {
       (newScript as any)[key] = (props as any)[key];
     });
 
-    newScript.setAttribute('data-status', 'loading');
+    trackResourceStatus(newScript);
     document.body.appendChild(newScript);
 
     return {
@@ -77,7 +88,7 @@ const loadCss: LoadExternal = (path, props = {}) => {
       newCss.rel = 'preload';
       newCss.as = 'style';
     }
-    newCss.setAttribute('data-status', 'loading');
+    trackResourceStatus(newCss);
     document.head.appendChild(newCss);
 
     return {

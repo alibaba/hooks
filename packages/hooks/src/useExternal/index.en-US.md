@@ -43,3 +43,5 @@ const status = useExternal(path: string, options?: Options);
 | js             | Attributes supported by `script`                                                                                     | `HTMLScriptElement` | -       |
 | css            | Attributes supported by `link`                                                                                       | `HTMLStyleElement`  | -       |
 | keepWhenUnused | Allow resources to remain after they have lost their references                                                      | `boolean`           | `false` |
+
+A retained resource can finish loading without mounted consumers. The next consumer reads its last known status. To keep reusing the same element across Strict Mode's effect cleanup and setup, set `keepWhenUnused: true` on each consumer that can be the last to unmount.
