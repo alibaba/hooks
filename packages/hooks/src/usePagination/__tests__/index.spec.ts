@@ -1,6 +1,6 @@
 import type { RenderHookResult } from '@testing-library/react';
-import { act, renderHook, waitFor } from '@testing-library/react';
 import { describe, expect, test, vi } from 'vitest';
+import { act, renderHook, waitFor } from '../../utils/tests';
 import usePagination from '../';
 
 // 初始化
