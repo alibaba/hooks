@@ -5,25 +5,23 @@ function useSet<K>(initialValue?: Iterable<K>) {
   const getInitValue = () => new Set(initialValue);
   const [set, setSet] = useState<Set<K>>(getInitValue);
 
-  const updateSet = (updater: (set: Set<K>) => Set<K>) => {
-    setSet((prevSet) => updater(new Set(prevSet)));
-  };
-
   const add = (key: K) => {
-    if (set.has(key)) {
-      return;
-    }
-    updateSet((newSet) => {
+    setSet((prevSet) => {
+      if (prevSet.has(key)) {
+        return prevSet;
+      }
+      const newSet = new Set(prevSet);
       newSet.add(key);
       return newSet;
     });
   };
 
   const remove = (key: K) => {
-    if (!set.has(key)) {
-      return;
-    }
-    updateSet((newSet) => {
+    setSet((prevSet) => {
+      if (!prevSet.has(key)) {
+        return prevSet;
+      }
+      const newSet = new Set(prevSet);
       newSet.delete(key);
       return newSet;
     });
