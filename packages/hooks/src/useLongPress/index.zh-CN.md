@@ -21,6 +21,8 @@ nav:
 
 <code src="./demo/demo3.tsx"/>
 
+修改 `delay` 或 `moveThreshold` 会静默取消正在进行的按压，并在下一次按压时使用新配置。被中断的手势不会触发 `onClick` 或 `onLongPressEnd`，即使 `onLongPress` 已经触发。
+
 ## API
 
 ```typescript
