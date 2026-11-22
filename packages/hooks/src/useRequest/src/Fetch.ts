@@ -44,9 +44,6 @@ export default class Fetch<TData, TParams extends any[]> {
   }
 
   async runAsync(...params: TParams): Promise<TData> {
-    this.count += 1;
-    const currentCount = this.count;
-
     const {
       stopNow = false,
       returnNow = false,
@@ -57,6 +54,12 @@ export default class Fetch<TData, TParams extends any[]> {
     if (stopNow) {
       return Promise.resolve(state.data);
     }
+
+    // Only a run that actually starts may supersede a request that is already in flight.
+    // A stopped run (for example `ready: false`) must not invalidate the pending one:
+    // otherwise its result and its `loading: false` are discarded and loading never ends.
+    this.count += 1;
+    const currentCount = this.count;
 
     this.setState({
       loading: true,

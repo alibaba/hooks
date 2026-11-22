@@ -291,4 +291,30 @@ describe('useAutoRunPlugin', () => {
     expect(hook.result.current.params).toEqual([2]);
     expect(fn).toHaveBeenCalledTimes(1);
   });
+
+  test('useAutoRunPlugin should reset loading when ready turns false during a request', async () => {
+    let dep = 1;
+    act(() => {
+      hook = setUp(request, {
+        ready: true,
+        refreshDeps: [dep],
+      });
+    });
+    expect(hook.result.current.loading).toBe(true);
+
+    // clear the selection while the request is still in flight
+    dep = 2;
+    hook.rerender({
+      ready: false,
+      refreshDeps: [dep],
+    });
+
+    await act(async () => {
+      vi.advanceTimersByTime(1000);
+    });
+
+    expect(hook.result.current.loading).toBe(false);
+    expect(hook.result.current.data).toBe('success');
+    hook.unmount();
+  });
 });
