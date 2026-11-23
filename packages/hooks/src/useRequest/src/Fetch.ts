@@ -114,7 +114,9 @@ export default class Fetch<TData, TParams extends any[]> {
       });
 
       this.options.onError?.(error as Error, params);
-      this.runPluginHandler('onError', error, params);
+      if (currentCount === this.count) {
+        this.runPluginHandler('onError', error, params);
+      }
 
       this.options.onFinally?.(params, undefined, error as Error | undefined);
 
