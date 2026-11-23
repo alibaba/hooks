@@ -16,7 +16,9 @@ const { data, run } = useRequest(getUsername, {
 });
 ```
 
-As in the example code above, if `run` is triggered frequently, it will only wait for 300ms to execute after the last trigger.
+With the default `debounceLeading: false` and `debounceTrailing: true`, the example above waits until `run` has not been called for 300 ms, then starts the request with the latest arguments.
+
+Setting `debounceLeading: true` starts the first request immediately. If `debounceTrailing` is also `true`, a trailing request runs only when another call occurs during the wait period; a single call does not produce two requests. Setting `debounceMaxWait` limits how long execution can be postponed, so requests can still start while calls continue to arrive.
 
 You can quickly enter text in the input box below to experience the effect
 
