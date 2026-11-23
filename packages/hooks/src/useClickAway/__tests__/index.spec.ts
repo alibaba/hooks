@@ -67,6 +67,31 @@ describe('useClickAway', () => {
     expect(state).toBe(1);
   });
 
+  test('listens in the document that owns the target', () => {
+    const frame = document.createElement('iframe');
+    document.body.appendChild(frame);
+    try {
+      const frameDocument = frame.contentDocument!;
+      const inside = frameDocument.createElement('button');
+      const outside = frameDocument.createElement('button');
+      frameDocument.body.append(inside, outside);
+
+      let calls = 0;
+      const { unmount } = renderHook(() => useClickAway(() => calls++, inside));
+      inside.click();
+      expect(calls).toBe(0);
+
+      outside.click();
+      expect(calls).toBe(1);
+
+      unmount();
+      outside.click();
+      expect(calls).toBe(1);
+    } finally {
+      frame.remove();
+    }
+  });
+
   test('respects the enabled option', async () => {
     let state = 0;
     const { rerender } = renderHook(
