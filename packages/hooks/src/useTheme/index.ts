@@ -57,19 +57,25 @@ export default function useTheme(options: Options = {}) {
   const { localStorageKey } = options;
 
   const [themeMode, setThemeMode] = useState<ThemeModeType>(() => {
-    const preferredThemeMode =
-      isBrowser && localStorageKey?.length
-        ? (localStorage.getItem(localStorageKey) as ThemeModeType | null)
-        : null;
-
-    return preferredThemeMode || ThemeMode.SYSTEM;
+    if (isBrowser && localStorageKey) {
+      try {
+        return (localStorage.getItem(localStorageKey) as ThemeModeType | null) || ThemeMode.SYSTEM;
+      } catch {
+        // The browser can deny storage access even when a window is available.
+      }
+    }
+    return ThemeMode.SYSTEM;
   });
 
   const setThemeModeWithLocalStorage = (mode: ThemeModeType) => {
     setThemeMode(mode);
 
     if (isBrowser && localStorageKey?.length) {
-      localStorage.setItem(localStorageKey, mode);
+      try {
+        localStorage.setItem(localStorageKey, mode);
+      } catch {
+        // The selected mode still applies to this instance if persistence fails.
+      }
     }
   };
 
