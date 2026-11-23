@@ -60,18 +60,16 @@ const useInfiniteScroll = <TData extends Data>(
       },
       onBefore: () => onBefore?.(),
       onSuccess: (d) => {
+        const page = { ...d.currentData, list: [...(d.currentData.list ?? [])] };
         if (!d.lastData) {
-          setFinalData({
-            ...d.currentData,
-            list: [...(d.currentData.list ?? [])],
-          });
+          setFinalData(page);
         } else {
-          setFinalData({
-            ...d.currentData,
+          setFinalData((previous) => ({
+            ...page,
             list: isScrollToTop
-              ? [...d.currentData.list, ...(d.lastData.list ?? [])]
-              : [...(d.lastData.list ?? []), ...d.currentData.list],
-          });
+              ? [...page.list, ...(previous?.list ?? [])]
+              : [...(previous?.list ?? []), ...page.list],
+          }));
         }
 
         pendingBottomScrollCheckRef.current = !isScrollToTop && !!d.currentData.list?.length;
