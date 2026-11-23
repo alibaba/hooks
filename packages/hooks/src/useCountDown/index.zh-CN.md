@@ -13,6 +13,8 @@ nav:
 
 ## 配置项动态变化
 
+验证码重发等需要以相同时长反复启动倒计时的场景，请更新 `targetDate` 为新的目标时间：
+
 <code src="./demo/demo2.tsx" />
 
 ## 通过 leftTime 配置剩余时间
@@ -72,3 +74,7 @@ const [countdown, formattedRes] = useCountDown(
 ## 备注
 
 `leftTime`、`targetDate`、`interval`、`onEnd` 支持动态变化
+
+`leftTime` 的值发生变化时，会从更新时刻按新的剩余时间重新计时。它不会随倒计时递减；倒计时结束后，再次设置相同的 `leftTime` 值也不会重新开始。普通的组件重新渲染不会重置倒计时。
+
+需要以相同时长重新开始时，建议像上面的动态配置示例一样使用 `targetDate`，每次设置 `Date.now() + duration`。此时请不要同时传入 `leftTime`，因为它的优先级更高。将 `targetDate` 设置为 `undefined` 可以停止倒计时。

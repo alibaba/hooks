@@ -13,6 +13,8 @@ A hook for manage countdown.
 
 ## Dynamic config
 
+For scenarios such as resending a verification code, update `targetDate` to a new deadline to restart the countdown with the same duration:
+
 <code src="./demo/demo2.tsx" />
 
 ## Config leftTime
@@ -72,3 +74,7 @@ If both `leftTime` and `targetDate` are passed, the `targetDate` is ignored, the
 ## Remark
 
 `leftTime`、`targetDate`、`interval`、`onEnd` support dynamic change.
+
+Changing `leftTime` starts a countdown with the new duration from the time of the update. The option itself does not decrease as the countdown runs, so setting the same `leftTime` value again after completion does not restart it. Ordinary component re-renders do not reset the countdown.
+
+To restart with the same duration, use `targetDate` as shown in the dynamic config example and set it to `Date.now() + duration` each time. Omit `leftTime` in this case because it takes precedence over `targetDate`. Set `targetDate` to `undefined` to stop the countdown.
