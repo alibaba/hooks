@@ -105,11 +105,9 @@ const useFullscreen = (target: BasicTarget, options?: Options) => {
       return;
     }
     if (screenfull.isEnabled) {
-      try {
-        screenfull.request(el);
-      } catch (error) {
+      void screenfull.request(el).catch((error) => {
         console.error(error);
-      }
+      });
     }
   };
 

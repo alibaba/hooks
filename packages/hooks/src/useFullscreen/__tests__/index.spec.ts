@@ -83,6 +83,26 @@ describe('useFullscreen', () => {
     expect(result.current[0]).toBe(false);
   });
 
+  test('handles rejected native fullscreen requests', async () => {
+    const error = new Error('Fullscreen requires user activation');
+    const pending = Promise.reject(error);
+    void pending.catch(() => {});
+    mockScreenfull.request.mockReturnValueOnce(pending);
+    const log = vi.spyOn(console, 'error').mockImplementation(() => {});
+
+    try {
+      const { result } = setup(targetEl);
+      await act(async () => {
+        result.current[1].enterFullscreen();
+      });
+
+      expect(log).toHaveBeenCalledWith(error);
+      expect(result.current[0]).toBe(false);
+    } finally {
+      log.mockRestore();
+    }
+  });
+
   test('toggleFullscreen should be work', () => {
     const { result } = setup(targetEl);
     const { toggleFullscreen } = result.current[1];
