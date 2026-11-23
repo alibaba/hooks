@@ -49,7 +49,7 @@ useWebSocket(socketUrl: string, options?: Options): Result;
 
 | 参数      | 说明                 | 类型      | 默认值 |
 | --------- | -------------------- | --------- | ------ |
-| socketUrl | 必填，webSocket 地址 | `string`  | -      |
+| socketUrl | WebSocket 地址。自动连接模式下，清空地址会断开连接并取消待执行的重连。 | `string`  | -      |
 | options   | 可选，连接配置项     | `Options` | -      |
 
 #### Options
