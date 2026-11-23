@@ -21,4 +21,35 @@ describe('useRafState', () => {
     expect(result.current[0]).toBe(1);
     mockRaf.mockRestore();
   });
+  test('applies queued state updates in order on the next frame', () => {
+    vi.useFakeTimers();
+    try {
+      const { result, unmount } = renderHook(() => useRafState(1));
+      const setRafState = result.current[1];
+
+      act(() => {
+        setRafState((value) => value + 1);
+        setRafState((value) => value * 3);
+      });
+      expect(result.current[0]).toBe(1);
+
+      act(() => vi.advanceTimersToNextFrame());
+      expect(result.current[0]).toBe(6);
+
+      act(() => {
+        setRafState(4);
+        setRafState((value) => value + 2);
+      });
+      act(() => vi.advanceTimersToNextFrame());
+      expect(result.current[0]).toBe(6);
+
+      const update = vi.fn((value: number) => value + 1);
+      act(() => setRafState(update));
+      unmount();
+      act(() => vi.advanceTimersToNextFrame());
+      expect(update).not.toHaveBeenCalled();
+    } finally {
+      vi.useRealTimers();
+    }
+  });
 });
