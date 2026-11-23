@@ -14,6 +14,61 @@ describe('useRetryPlugin', () => {
   let hook: RenderHookResult<any, any>;
   let hook2: RenderHookResult<any, any>;
 
+  test('cancel in onError stops retries for a terminal error', async () => {
+    const error = new Error('subscription expired');
+    const service = vi.fn().mockRejectedValue(error);
+    const onFinally = vi.fn();
+    const { result, unmount } = renderHook(() =>
+      useRequest(service, {
+        manual: true,
+        retryCount: 1,
+        retryInterval: 50,
+        onError: () => result.current.cancel(),
+        onFinally,
+      }),
+    );
+    try {
+      await act(async () => {
+        await expect(result.current.runAsync()).rejects.toBe(error);
+        await vi.advanceTimersByTimeAsync(200);
+      });
+      expect(service).toHaveBeenCalledTimes(1);
+      expect(onFinally).toHaveBeenCalledTimes(1);
+      expect(result.current.loading).toBe(false);
+    } finally {
+      unmount();
+    }
+  });
+
+  test('a retry from the failed run cannot restart a replacement started in onError', async () => {
+    let finishRecovery!: (value: string) => void;
+    const recovery = new Promise<string>((resolve) => {
+      finishRecovery = resolve;
+    });
+    const service = vi.fn((key: string) =>
+      key === 'primary' ? Promise.reject(new Error('unavailable')) : recovery,
+    );
+    const { result, unmount } = renderHook(() =>
+      useRequest(service, {
+        manual: true,
+        retryCount: 1,
+        retryInterval: 50,
+        onError: () => result.current.run('fallback'),
+      }),
+    );
+    try {
+      act(() => result.current.run('primary'));
+      await act(async () => {
+        await vi.advanceTimersByTimeAsync(100);
+      });
+      expect(service.mock.calls).toEqual([['primary'], ['fallback']]);
+      await act(async () => finishRecovery('available'));
+      expect(result.current.data).toBe('available');
+    } finally {
+      unmount();
+    }
+  });
+
   test('useRetryPlugin should work', async () => {
     let errorCallback: any;
     act(() => {
