@@ -5,14 +5,17 @@ import type { Options } from '../index';
 import useCookieState from '../index';
 
 describe('useCookieState', () => {
-  const setUp = (key: string, options?: Options) =>
-    renderHook(() => {
-      const [state, setState] = useCookieState(key, options);
-      return {
-        state,
-        setState,
-      } as const;
-    });
+  const setUp = (key: string, options?: Options, reactStrictMode = false) =>
+    renderHook(
+      () => {
+        const [state, setState] = useCookieState(key, options);
+        return {
+          state,
+          setState,
+        } as const;
+      },
+      { reactStrictMode },
+    );
 
   test('getKey should work', () => {
     const COOKIE = 'test-key';
@@ -108,6 +111,51 @@ describe('useCookieState', () => {
       hook.result.current.setState((state) => `${state}, zhangsan`);
     });
     expect(hook.result.current.state).toBe('hello world, zhangsan');
+  });
+
+  test.each([false, true])(
+    'should apply batched function updates in order (strict mode: %s)',
+    (reactStrictMode) => {
+      const key = `batched-cookie-${reactStrictMode}`;
+      const hook = setUp(key, { defaultValue: 'A' }, reactStrictMode);
+      expect(Cookies.get(key)).toBeUndefined();
+
+      act(() => {
+        hook.result.current.setState((value) => `${value}B`);
+        expect(Cookies.get(key)).toBe('AB');
+        hook.result.current.setState((value) => `${value}C`);
+        expect(Cookies.get(key)).toBe('ABC');
+      });
+      expect(hook.result.current.state).toBe('ABC');
+
+      act(() => {
+        hook.result.current.setState('D');
+        hook.result.current.setState((value) => `${value}E`);
+      });
+      expect(hook.result.current.state).toBe('DE');
+      expect(Cookies.get(key)).toBe('DE');
+
+      act(() => {
+        hook.result.current.setState(undefined);
+        expect(Cookies.get(key)).toBeUndefined();
+        hook.result.current.setState((value) => value ?? 'F');
+      });
+      expect(hook.result.current.state).toBe('F');
+      expect(Cookies.get(key)).toBe('F');
+    },
+  );
+
+  test.each(['B', undefined])('should write %s before unmount', (value) => {
+    const key = `unmount-cookie-${value}`;
+    Cookies.set(key, 'A');
+    const hook = setUp(key, undefined, true);
+
+    act(() => {
+      hook.result.current.setState(() => value);
+      expect(Cookies.get(key)).toBe(value);
+      hook.unmount();
+    });
+    expect(Cookies.get(key)).toBe(value);
   });
 
   test('using the same cookie name', () => {

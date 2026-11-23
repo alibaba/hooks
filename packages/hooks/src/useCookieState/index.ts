@@ -1,5 +1,5 @@
 import Cookies from 'js-cookie';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import useMemoizedFn from '../useMemoizedFn';
 import { isFunction, isString } from '../utils';
 
@@ -62,13 +62,15 @@ const useCookieState = (cookieKey: string, options: Options = {}) => {
 
     return options.defaultValue;
   });
+  const stateRef = useRef(state);
 
   const updateState = useMemoizedFn(
     (newValue: State | ((prevState: State) => State), newOptions: CookieAttributes = {}) => {
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { defaultValue, ...restOptions } = { ...options, ...newOptions };
-      const value = isFunction(newValue) ? newValue(state) : newValue;
+      const value = isFunction(newValue) ? newValue(stateRef.current) : newValue;
 
+      stateRef.current = value;
       setState(value);
 
       if (value === undefined) {
