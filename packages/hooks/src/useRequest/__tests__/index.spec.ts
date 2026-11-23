@@ -1,5 +1,5 @@
 import { act, type RenderHookResult, renderHook } from '@testing-library/react';
-import { afterAll, beforeAll, describe, expect, test, vi } from 'vitest';
+import { afterAll, beforeAll, describe, expect, expectTypeOf, test, vi } from 'vitest';
 import { request } from '../../utils/testingHelpers';
 import useRequest, { CancelledError, isCancelledError } from '../index';
 
@@ -437,5 +437,22 @@ describe('useRequest', () => {
     };
 
     expect(assertRunParamTypes).toBeDefined();
+  });
+
+  test('should infer data type from a service that returns a promise chain', async () => {
+    const { result } = renderHook(() =>
+      useRequest((id: number) => Promise.resolve(id).then((value) => ({ value })), {
+        manual: true,
+      }),
+    );
+
+    expectTypeOf(result.current.data).toEqualTypeOf<{ value: number } | undefined>();
+    expectTypeOf(result.current.run).parameters.toEqualTypeOf<[number]>();
+
+    await act(async () => {
+      await result.current.runAsync(1);
+    });
+
+    expect(result.current.data).toEqual({ value: 1 });
   });
 });
