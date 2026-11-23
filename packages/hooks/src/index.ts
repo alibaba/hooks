@@ -3,6 +3,7 @@ import useAntdTable from './useAntdTable';
 import useAsyncEffect from './useAsyncEffect';
 import useBoolean from './useBoolean';
 import useClickAway from './useClickAway';
+import useComposingSearch from './useComposingSearch';
 import useControllableValue from './useControllableValue';
 import useCookieState from './useCookieState';
 import useCountDown from './useCountDown';
@@ -104,6 +105,7 @@ export {
   useMouse,
   useScroll,
   useClickAway,
+  useComposingSearch,
   useFullscreen,
   useInViewport,
   useKeyPress,
