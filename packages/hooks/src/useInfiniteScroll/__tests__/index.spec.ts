@@ -289,6 +289,33 @@ describe('useInfiniteScroll', () => {
     expect(result.current.data).toMatchObject({ list: [1, 2, 3], nextId: 3 });
   });
 
+  test.each(['bottom', 'top'] as const)(
+    'retains edits while loading a page at the %s',
+    async (direction) => {
+      type Page = { list: string[]; cursor: number };
+      let finishPage!: (page: Page) => void;
+      const nextPage = new Promise<Page>((resolve) => {
+        finishPage = resolve;
+      });
+      const service = vi
+        .fn<Service<Page>>()
+        .mockResolvedValueOnce({ list: ['A', 'B'], cursor: 1 })
+        .mockReturnValueOnce(nextPage);
+      const { result } = setup(service, { manual: true, direction });
+      await act(async () => {
+        await result.current.reloadAsync();
+      });
+      act(() => result.current.loadMore());
+      expect(service).toHaveBeenLastCalledWith({ list: ['A', 'B'], cursor: 1 });
+      act(() => result.current.mutate({ list: ['edited B'], cursor: 1 }));
+      await act(async () => finishPage({ list: ['C'], cursor: 2 }));
+      expect(result.current.data).toEqual({
+        list: direction === 'top' ? ['C', 'edited B'] : ['edited B', 'C'],
+        cursor: 2,
+      });
+    },
+  );
+
   test('mutate should be work', async () => {
     const { result } = setup(mockRequest);
     const { mutate } = result.current;
@@ -569,13 +596,13 @@ describe('useInfiniteScroll', () => {
     expect(result.current.loading).toBeFalsy();
   });
 
-  test('list can be null or undefined', async () => {
+  test.each([null, undefined])('treats a %s list as an empty page', async (list) => {
     // @ts-ignore
     const { result } = setup(async () => {
       await sleep(1000);
       count++;
       return {
-        list: Math.random() < 0.5 ? null : undefined,
+        list,
         nextId: count,
       };
     });
@@ -592,6 +619,11 @@ describe('useInfiniteScroll', () => {
     act(() => {
       loadMore();
     });
+    await act(async () => {
+      vi.advanceTimersByTime(1000);
+    });
+    expect(result.current.data).toEqual({ list: [], nextId: 2 });
+    expect(result.current.error).toBeUndefined();
   });
 
   test('error result', async () => {
