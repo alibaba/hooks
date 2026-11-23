@@ -4,7 +4,7 @@
 
 由于 SSR 是在非浏览器环境执行 JS 代码，所以会出现很多问题。本文主要介绍 React Hooks 在 SSR 模式下常见问题及解决方案。
 
-> 更多关于 SSR 的介绍可以看 UmiJS 的文档《[服务端渲染（SSR）](https://umijs.org/zh-CN/docs/ssr#服务端渲染（ssr）)》。
+> 更多关于 SSR 的介绍可以看 UmiJS 的文档《[服务端渲染（SSR）](https://v3.umijs.org/zh-CN/docs/ssr/#服务端渲染（ssr）)》。
 
 ## 问题一：DOM/BOM 缺失
 
@@ -111,5 +111,5 @@ export default () => {
 ## 参考资料
 
 - [fix: useDocumentVisiblility support ssr](https://github.com/alibaba/hooks/pull/935/files)
-- [UmiJS 服务端渲染](https://umijs.org/zh-CN/docs/ssr#window-is-not-defined-document-is-not-defined-navigator-is-not-defined)
+- [UmiJS 服务端渲染](https://v3.umijs.org/zh-CN/docs/ssr/#window-is-not-defined-document-is-not-defined-navigator-is-not-defined)
 - [useLayoutEffect and SSR](https://medium.com/@alexandereardon/uselayouteffect-and-ssr-192986cdcf7a)

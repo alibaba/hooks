@@ -44,4 +44,4 @@ const [state, setState] = useUrlState({ demoCount: '1' });
 
 ## Documentation
 
-https://ahooks.js.org/hooks/state/use-url-state
+https://ahooks.js.org/hooks/use-url-state/
