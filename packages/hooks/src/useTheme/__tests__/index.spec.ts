@@ -47,6 +47,30 @@ describe('useTheme', () => {
     expect(result.current.theme).toBe('light');
   });
 
+  test('falls back to the system theme when the browser denies access to localStorage', () => {
+    vi.spyOn(window, 'localStorage', 'get').mockImplementation(() => {
+      throw new DOMException('Storage is disabled', 'SecurityError');
+    });
+    const { result } = renderHook(() => useTheme({ localStorageKey: 'theme' }));
+    expect(result.current.themeMode).toBe('system');
+    expect(result.current.theme).toBe('light');
+    act(() => result.current.setThemeMode('dark'));
+    expect(result.current.theme).toBe('dark');
+  });
+
+  test('keeps the chosen theme in memory when the storage quota is exhausted', () => {
+    localStorage.setItem('theme', 'dark');
+    vi.spyOn(Storage.prototype, 'setItem').mockImplementation(() => {
+      throw new DOMException('Storage is full', 'QuotaExceededError');
+    });
+    const { result } = renderHook(() => useTheme({ localStorageKey: 'theme' }));
+    expect(result.current.theme).toBe('dark');
+    act(() => result.current.setThemeMode('light'));
+    expect(result.current.themeMode).toBe('light');
+    expect(result.current.theme).toBe('light');
+    expect(localStorage.getItem('theme')).toBe('dark');
+  });
+
   test('persists mode changes and keeps the setter stable across key changes', () => {
     const { result, rerender } = renderHook(
       ({ localStorageKey }) => useTheme({ localStorageKey }),

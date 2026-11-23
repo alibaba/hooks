@@ -27,6 +27,8 @@ const { theme, themeMode, setThemeMode } = useTheme({
 | --------------- | ----------------------------------------------------- | -------- | --------- |
 | localStorageKey | The key in localStorage to store selected theme mode | `string` | `undefined` |
 
+If the browser denies access to storage, the hook starts in system mode. Theme changes still take effect in memory when a preference cannot be saved.
+
 ### Result
 
 | Property     | Description           | Type                                            | Default                                                                               |

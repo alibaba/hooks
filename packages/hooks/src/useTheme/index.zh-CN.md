@@ -27,6 +27,8 @@ const { theme, themeMode, setThemeMode } = useTheme({
 | --------------- | ------------------------------------ | -------- | --------- |
 | localStorageKey | localStorage 中用于存放主题模式的键 | `string` | `undefined` |
 
+如果浏览器禁止读取存储，初始模式会跟随系统。偏好设置无法写入时，切换主题仍会在当前组件中生效。
+
 ### 返回值
 
 | 值           | 说明           | 类型                                            | 默认值                                                                 |
