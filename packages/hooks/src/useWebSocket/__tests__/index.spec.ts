@@ -112,6 +112,54 @@ describe('useWebSocket', () => {
     act(() => wsServer.close());
   });
 
+  test('closes the active connection when its automatic URL is cleared', async () => {
+    const server = new WS(wsUrl);
+    const { result, rerender, unmount } = renderHook((url) => useWebSocket(url), {
+      initialProps: wsUrl,
+    });
+    await act(() => server.connected);
+    const first = result.current.webSocketIns!;
+    rerender('');
+    expect(first.readyState).not.toBe(ReadyState.Open);
+    await act(() => server.closed);
+    expect(result.current.readyState).toBe(ReadyState.Closed);
+    expect(result.current.webSocketIns).toBeUndefined();
+
+    const nextUrl = 'ws://localhost:9998';
+    const nextServer = new WS(nextUrl);
+    rerender(nextUrl);
+    await act(() => nextServer.connected);
+    expect(result.current.webSocketIns?.url).toBe(nextUrl + '/');
+    unmount();
+  });
+
+  test('clearing the URL cancels a pending reconnect to the previous endpoint', () => {
+    vi.useFakeTimers();
+    class Socket {
+      readyState = ReadyState.Closed;
+      close = vi.fn();
+    }
+    const openSocket = vi.fn(Socket);
+    vi.stubGlobal('WebSocket', openSocket);
+    const { result, rerender, unmount } = renderHook(
+      (url) => useWebSocket(url, { reconnectInterval: 50 }),
+      {
+        initialProps: wsUrl,
+      },
+    );
+    try {
+      const socket = result.current.webSocketIns!;
+      act(() => socket.onclose?.(new CloseEvent('close')));
+      rerender('');
+      act(() => vi.advanceTimersByTime(100));
+      expect(openSocket).toHaveBeenCalledTimes(1);
+    } finally {
+      unmount();
+      vi.unstubAllGlobals();
+      vi.useRealTimers();
+    }
+  });
+
   test('change socketUrl should connect correctly', async () => {
     const wsUrl1 = 'ws://localhost:8888';
     const wsServer1 = new WS(wsUrl);

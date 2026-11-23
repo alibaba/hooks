@@ -49,7 +49,7 @@ useWebSocket(socketUrl: string, options?: Options): Result;
 
 | Property  | Description                    | Type      | Default |
 | --------- | ------------------------------ | --------- | ------- |
-| socketUrl | Required, webSocket url        | `string`  | -       |
+| socketUrl | WebSocket URL. In automatic mode, clearing it disconnects the socket and cancels pending retries. | `string`  | -       |
 | options   | connect the configuration item | `Options` | -       |
 
 #### Options

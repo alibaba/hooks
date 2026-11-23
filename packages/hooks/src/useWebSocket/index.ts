@@ -132,12 +132,12 @@ function useWebSocket(socketUrl: string, options: Options = {}): Result {
     }
   };
 
-  const connect = () => {
+  const connect = useMemoizedFn(() => {
     reconnectTimesRef.current = 0;
     connectWs();
-  };
+  });
 
-  const disconnect = () => {
+  const disconnect = useMemoizedFn(() => {
     if (reconnectTimerRef.current) {
       clearTimeout(reconnectTimerRef.current);
     }
@@ -145,23 +145,26 @@ function useWebSocket(socketUrl: string, options: Options = {}): Result {
     reconnectTimesRef.current = reconnectLimit;
     websocketRef.current?.close();
     websocketRef.current = undefined;
-  };
+  });
 
   useEffect(() => {
-    if (!manual && socketUrl) {
-      connect();
+    if (manual) {
+      return;
     }
-  }, [socketUrl, manual]);
+    if (socketUrl) {
+      connect();
+    } else {
+      disconnect();
+    }
+  }, [socketUrl, manual, connect, disconnect]);
 
-  useUnmount(() => {
-    disconnect();
-  });
+  useUnmount(disconnect);
 
   return {
     latestMessage,
     sendMessage: useMemoizedFn(sendMessage),
-    connect: useMemoizedFn(connect),
-    disconnect: useMemoizedFn(disconnect),
+    connect,
+    disconnect,
     readyState,
     webSocketIns: websocketRef.current,
   };
