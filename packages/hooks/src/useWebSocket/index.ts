@@ -92,7 +92,7 @@ function useWebSocket(socketUrl: string, options: Options = {}): Result {
       }
       reconnect();
       onErrorRef.current?.(event, ws);
-      setReadyState(ws.readyState || ReadyState.Closed);
+      setReadyState(ws.readyState ?? ReadyState.Closed);
     };
     ws.onopen = (event) => {
       if (websocketRef.current !== ws) {
@@ -100,7 +100,7 @@ function useWebSocket(socketUrl: string, options: Options = {}): Result {
       }
       onOpenRef.current?.(event, ws);
       reconnectTimesRef.current = 0;
-      setReadyState(ws.readyState || ReadyState.Open);
+      setReadyState(ws.readyState ?? ReadyState.Open);
     };
     ws.onmessage = (message: WebSocketEventMap['message']) => {
       if (websocketRef.current !== ws) {
@@ -117,7 +117,7 @@ function useWebSocket(socketUrl: string, options: Options = {}): Result {
       }
       // closed by disconnect or closed by server
       if (!websocketRef.current || websocketRef.current === ws) {
-        setReadyState(ws.readyState || ReadyState.Closed);
+        setReadyState(ws.readyState ?? ReadyState.Closed);
       }
     };
 
