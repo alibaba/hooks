@@ -34,6 +34,13 @@ const getDocumentOrShadow = (target: BasicTarget | BasicTarget[]): Document | No
     return getShadow(getTargetElement(targets[0]));
   }
 
+  const ownerDocument = getTargetElement(targets[0])?.ownerDocument;
+  if (
+    ownerDocument &&
+    targets.every((item) => getTargetElement(item)?.ownerDocument === ownerDocument)
+  ) {
+    return ownerDocument;
+  }
   return document;
 };
 
