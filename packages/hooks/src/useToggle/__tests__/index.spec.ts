@@ -1,5 +1,5 @@
 import { act, renderHook } from '@testing-library/react';
-import { describe, expect, test } from 'vitest';
+import { describe, expect, test, vi } from 'vitest';
 import useToggle from '../index';
 
 const callToggle = (hook: any) => {
@@ -27,6 +27,27 @@ describe('useToggle', () => {
       hook.result.current[1].setRight();
     });
     expect(hook.result.current[0]).toBeFalsy();
+  });
+
+  test('stores function values without invoking them', () => {
+    const left = vi.fn(() => 'left');
+    const right = vi.fn(() => 'right');
+    const replacement = vi.fn(() => 'replacement');
+    const { result } = renderHook(() => useToggle(left, right));
+    const { set, setLeft, setRight, toggle } = result.current[1];
+
+    expect(result.current[0]).toBe(left);
+    act(() => toggle());
+    expect(result.current[0]).toBe(right);
+    act(() => setLeft());
+    expect(result.current[0]).toBe(left);
+    act(() => setRight());
+    expect(result.current[0]).toBe(right);
+    act(() => set(replacement));
+    expect(result.current[0]).toBe(replacement);
+    expect(left).not.toHaveBeenCalled();
+    expect(right).not.toHaveBeenCalled();
+    expect(replacement).not.toHaveBeenCalled();
   });
 
   test('test on optional', () => {
