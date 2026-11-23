@@ -122,6 +122,40 @@ describe('useExternal', () => {
     expect(hook2.result.current).toBe('ready');
   });
 
+  test.each(['css', 'js'] as const)(
+    'keeps a page-owned %s element after its consumers unmount',
+    (type) => {
+      const path = '/shell.' + type;
+      const element =
+        type === 'css' ? document.createElement('link') : document.createElement('script');
+      if (element instanceof HTMLLinkElement) {
+        element.rel = 'stylesheet';
+        element.href = path;
+      } else {
+        element.src = path;
+      }
+      document.head.appendChild(element);
+      const first = setup(path);
+      const second = setup(path);
+      expect(first.result.current).toBe('ready');
+      first.unmount();
+      expect(element.isConnected).toBe(true);
+      second.unmount();
+      expect(element.isConnected).toBe(true);
+      expect(document.head.children).toHaveLength(1);
+    },
+  );
+
+  test('removes a hook-created stylesheet only after its last consumer unmounts', () => {
+    const first = setup('/dialog.css');
+    const second = setup('/dialog.css');
+    const element = document.querySelector('link')!;
+    first.unmount();
+    expect(element.isConnected).toBe(true);
+    second.unmount();
+    expect(element.isConnected).toBe(false);
+  });
+
   test('should remove when not use', () => {
     const { unmount } = setup('b.js');
     const script = document.querySelector('script') as HTMLScriptElement;

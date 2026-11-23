@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 type JsOptions = {
   type: 'js';
@@ -21,9 +21,8 @@ type DefaultOptions = {
 
 export type Options = JsOptions | CssOptions | DefaultOptions;
 
-// {[path]: count}
-// remove external when no used
-const EXTERNAL_USED_COUNT: Record<string, number> = {};
+// Only elements inserted by useExternal participate in automatic removal.
+const managedResources = new WeakMap<Element, { users: number }>();
 
 export type Status = 'unset' | 'loading' | 'ready' | 'error';
 
@@ -35,6 +34,7 @@ interface LoadResult {
 type LoadExternal = <T>(path: string, props?: Partial<T>) => LoadResult;
 
 const trackResourceStatus = (element: Element) => {
+  managedResources.set(element, { users: 0 });
   element.setAttribute('data-status', 'loading');
   const handler = (event: Event) => {
     element.setAttribute('data-status', event.type === 'load' ? 'ready' : 'error');
@@ -106,59 +106,49 @@ const loadCss: LoadExternal = (path, props = {}) => {
 const useExternal = (path?: string, options?: Options) => {
   const [status, setStatus] = useState<Status>(path ? 'loading' : 'unset');
 
-  const ref = useRef<Element>(undefined);
-
   useEffect(() => {
     if (!path) {
       setStatus('unset');
       return;
     }
     const pathname = path.replace(/[?#].*$/, '');
+    let result: LoadResult;
     if (options?.type === 'css' || (!options?.type && /(^css!|\.css$)/.test(pathname))) {
-      const result = loadCss(path, options?.css);
-      ref.current = result.ref;
-      setStatus(result.status);
+      result = loadCss(path, options?.css);
     } else if (options?.type === 'js' || (!options?.type && /(^js!|\.js$)/.test(pathname))) {
-      const result = loadScript(path, options?.js);
-      ref.current = result.ref;
-      setStatus(result.status);
+      result = loadScript(path, options?.js);
     } else {
-      // do nothing
       console.error(
         "Cannot infer the type of external resource, and please provide a type ('js' | 'css'). " +
           'Refer to the https://ahooks.js.org/hooks/dom/use-external/#options',
       );
-    }
-
-    if (!ref.current) {
       return;
     }
 
-    if (EXTERNAL_USED_COUNT[path] === undefined) {
-      EXTERNAL_USED_COUNT[path] = 1;
-    } else {
-      EXTERNAL_USED_COUNT[path] += 1;
+    const element = result.ref;
+    setStatus(result.status);
+    const resource = managedResources.get(element);
+    if (resource) {
+      resource.users += 1;
     }
 
     const handler = (event: Event) => {
       const targetStatus = event.type === 'load' ? 'ready' : 'error';
-      ref.current?.setAttribute('data-status', targetStatus);
+      element.setAttribute('data-status', targetStatus);
       setStatus(targetStatus);
     };
 
-    ref.current.addEventListener('load', handler);
-    ref.current.addEventListener('error', handler);
+    element.addEventListener('load', handler);
+    element.addEventListener('error', handler);
     return () => {
-      ref.current?.removeEventListener('load', handler);
-      ref.current?.removeEventListener('error', handler);
-
-      EXTERNAL_USED_COUNT[path] -= 1;
-
-      if (EXTERNAL_USED_COUNT[path] === 0 && !options?.keepWhenUnused) {
-        ref.current?.remove();
+      element.removeEventListener('load', handler);
+      element.removeEventListener('error', handler);
+      if (resource) {
+        resource.users -= 1;
+        if (resource.users === 0 && !options?.keepWhenUnused) {
+          element.remove();
+        }
       }
-
-      ref.current = undefined;
     };
   }, [path]);
 
