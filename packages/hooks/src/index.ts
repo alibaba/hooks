@@ -76,7 +76,7 @@ import useWebSocket from './useWebSocket';
 import useWhyDidYouUpdate from './useWhyDidYouUpdate';
 import useMutationObserver from './useMutationObserver';
 import useTheme from './useTheme';
-
+import useRowSpan from './useRowSpan';
 export {
   useRequest,
   useControllableValue,
@@ -160,4 +160,5 @@ export {
   useResetState,
   useMutationObserver,
   useTheme,
+  useRowSpan,
 };
