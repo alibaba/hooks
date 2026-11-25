@@ -81,7 +81,7 @@ useDrop<T>(
 
 | Property    | Description                                 | Type                                          | Default |
 | ----------- | ------------------------------------------- | --------------------------------------------- | ------- |
-| onText      | The callback when text is dropped or pasted | `(text: string, e: React.DragEvent) => void`  | -       |
+| onText      | Receives plain text when available, otherwise the first string format | `(text: string, e: React.DragEvent) => void`  | -       |
 | onFiles     | The callback when file is dropped or pasted | `(files: File[], e: React.DragEvent) => void` | -       |
 | onUri       | The callback when uri is dropped or pasted  | `(text: string, e: React.DragEvent) => void`  | -       |
 | onDom       | The callback when DOM is dropped or pasted  | `(content: any, e: React.DragEvent) => void`  | -       |

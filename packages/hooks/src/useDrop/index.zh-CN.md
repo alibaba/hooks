@@ -81,7 +81,7 @@ useDrop<T>(
 
 | 参数        | 说明                           | 类型                                          | 默认值 |
 | ----------- | ------------------------------ | --------------------------------------------- | ------ |
-| onText      | 拖拽/粘贴文字的回调            | `(text: string, e: React.DragEvent) => void`  | -      |
+| onText      | 拖拽或粘贴文字时优先读取纯文本，其次读取第一种字符串格式            | `(text: string, e: React.DragEvent) => void`  | -      |
 | onFiles     | 拖拽/粘贴文件的回调            | `(files: File[], e: React.DragEvent) => void` | -      |
 | onUri       | 拖拽/粘贴链接的回调            | `(text: string, e: React.DragEvent) => void`  | -      |
 | onDom       | 拖拽/粘贴自定义 DOM 节点的回调 | `(content: any, e: React.DragEvent) => void`  | -      |
