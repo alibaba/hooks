@@ -92,6 +92,8 @@ describe('useDrop', () => {
   test('should call onText on drop', async () => {
     vi.spyOn(mockEvent.dataTransfer, 'items', 'get').mockReturnValue([
       {
+        kind: 'string',
+        type: 'text/plain',
         getAsString: (callback: (text: string) => void) => {
           callback('drop text');
         },
@@ -165,6 +167,8 @@ describe('useDrop', () => {
   test('should call onText on paste', async () => {
     vi.spyOn(mockEvent.clipboardData, 'items', 'get').mockReturnValue([
       {
+        kind: 'string',
+        type: 'text/plain',
         getAsString: (callback: (text: string) => void) => {
           callback('paste text');
         },

@@ -66,8 +66,10 @@ const useDrop = (target: BasicTarget, options: Options = {}) => {
         }
 
         if (dataTransfer.items && dataTransfer.items.length && optionsRef.current.onText) {
-          dataTransfer.items[0].getAsString((text) => {
-            optionsRef.current.onText!(text, event as React.ClipboardEvent);
+          const strings = Array.from(dataTransfer.items).filter((item) => item.kind === 'string');
+          const item = strings.find((entry) => entry.type === 'text/plain') ?? strings[0];
+          item?.getAsString((text) => {
+            optionsRef.current.onText?.(text, event as React.ClipboardEvent);
           });
         }
       };
