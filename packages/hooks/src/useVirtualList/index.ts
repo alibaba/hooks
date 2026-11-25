@@ -53,7 +53,7 @@ const useVirtualList = <T = any>(list: T[], options: Options<T>) => {
 
   const size = useSize(containerTarget);
 
-  const scrollTriggerByScrollToFunc = useRef(false);
+  const pendingScroll = useRef<{ container: Element; top: number } | null>(null);
 
   const [range, setRange] = useState<VirtualRange<T>>({ items: [], style: {} });
   const pendingRange = useRef(range);
@@ -172,8 +172,13 @@ const useVirtualList = <T = any>(list: T[], options: Options<T>) => {
   useEventListener(
     'scroll',
     (e) => {
-      if (scrollTriggerByScrollToFunc.current) {
-        scrollTriggerByScrollToFunc.current = false;
+      const pending = pendingScroll.current;
+      pendingScroll.current = null;
+      if (
+        pending &&
+        e.currentTarget === pending.container &&
+        pending.container.scrollTop === pending.top
+      ) {
         return;
       }
       e.preventDefault();
@@ -187,9 +192,9 @@ const useVirtualList = <T = any>(list: T[], options: Options<T>) => {
   const scrollTo = (index: number) => {
     const container = getTargetElement(containerTarget);
     if (container) {
-      scrollTriggerByScrollToFunc.current = true;
       container.scrollTop = getDistanceTop(index);
       calculateRange();
+      pendingScroll.current = { container, top: container.scrollTop };
     }
   };
 

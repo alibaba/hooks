@@ -114,6 +114,17 @@ describe('itemHeight changes', () => {
     expect(result.current[0][0].index).toBe(30);
   });
 
+  test.each([0, 20])('handles a user scroll before a scroll event from scrollTo(%i)', (index) => {
+    const { result, container, wrapper } = setup(30);
+    act(() => result.current[1](index));
+
+    container.scrollTop = 900;
+    fireEvent.scroll(container);
+
+    expect(result.current[0][0]).toEqual({ index: 30, data: 30 });
+    expect(wrapper.style.marginTop).toBe('900px');
+  });
+
   test('handles unavailable targets and unmeasured containers', () => {
     const list = [1, 2, 3];
     let container: HTMLDivElement | null = null;
