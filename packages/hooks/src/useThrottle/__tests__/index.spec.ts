@@ -1,11 +1,34 @@
 import { act, type RenderHookResult, renderHook } from '@testing-library/react';
-import { describe, expect, test } from 'vitest';
+import { describe, expect, test, vi } from 'vitest';
 import { sleep } from '../../utils/testingHelpers';
 import useThrottle from '../index';
 
 let hook: RenderHookResult<any, any>;
 
 describe('useThrottle', () => {
+  test('updates a function value without invoking either callback', () => {
+    vi.useFakeTimers();
+    try {
+      const first = vi.fn();
+      const next = vi.fn();
+      const { result, rerender } = renderHook(({ value }) => useThrottle(value, { wait: 100 }), {
+        initialProps: { value: first },
+      });
+
+      expect(first).not.toHaveBeenCalled();
+      expect(result.current).toBe(first);
+      rerender({ value: next });
+      expect(result.current).toBe(first);
+      act(() => {
+        vi.advanceTimersByTime(100);
+      });
+      expect(result.current).toBe(next);
+      expect(next).not.toHaveBeenCalled();
+    } finally {
+      vi.useRealTimers();
+    }
+  });
+
   test('default useThrottle should work', async () => {
     let mountedState = 1;
     act(() => {

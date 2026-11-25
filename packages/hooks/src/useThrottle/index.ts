@@ -3,10 +3,10 @@ import useThrottleFn from '../useThrottleFn';
 import type { ThrottleOptions } from './throttleOptions';
 
 function useThrottle<T>(value: T, options?: ThrottleOptions) {
-  const [throttled, setThrottled] = useState(value);
+  const [throttled, setThrottled] = useState(() => value);
 
   const { run } = useThrottleFn(() => {
-    setThrottled(value);
+    setThrottled(() => value);
   }, options);
 
   useEffect(() => {

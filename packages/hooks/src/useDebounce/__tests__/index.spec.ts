@@ -1,9 +1,32 @@
 import { act, renderHook } from '@testing-library/react';
-import { describe, expect, test } from 'vitest';
+import { describe, expect, test, vi } from 'vitest';
 import { sleep } from '../../utils/testingHelpers';
 import useDebounce from '../index';
 
 describe('useDebounce', () => {
+  test('updates a function value without invoking either callback', () => {
+    vi.useFakeTimers();
+    try {
+      const first = vi.fn();
+      const next = vi.fn();
+      const { result, rerender } = renderHook(({ value }) => useDebounce(value, { wait: 100 }), {
+        initialProps: { value: first },
+      });
+
+      expect(first).not.toHaveBeenCalled();
+      expect(result.current).toBe(first);
+      rerender({ value: next });
+      expect(result.current).toBe(first);
+      act(() => {
+        vi.advanceTimersByTime(100);
+      });
+      expect(result.current).toBe(next);
+      expect(next).not.toHaveBeenCalled();
+    } finally {
+      vi.useRealTimers();
+    }
+  });
+
   test('useDebounce wait:200ms', async () => {
     let mountedState = 0;
     const { result, rerender } = renderHook(() => useDebounce(mountedState, { wait: 200 }));
