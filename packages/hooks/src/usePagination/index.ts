@@ -19,7 +19,8 @@ const usePagination = <TData extends Data, TParams extends Params>(
     ...rest,
   });
 
-  const { current = defaultCurrent, pageSize = defaultPageSize } = result.params[0] || {};
+  const params = result.params.length ? result.params : (options.defaultParams ?? []);
+  const { current = defaultCurrent, pageSize = defaultPageSize } = params[0] || {};
 
   const total = result.data?.total || 0;
   const totalPage = useMemo(() => Math.ceil(total / pageSize), [pageSize, total]);
@@ -28,11 +29,11 @@ const usePagination = <TData extends Data, TParams extends Params>(
     let toCurrent = c <= 0 ? 1 : c;
     const toPageSize = p <= 0 ? 1 : p;
     const tempTotalPage = Math.ceil(total / toPageSize);
-    if (toCurrent > tempTotalPage) {
+    if (result.data && toCurrent > tempTotalPage) {
       toCurrent = Math.max(1, tempTotalPage);
     }
 
-    const [oldPaginationParams = {}, ...restParams] = result.params || [];
+    const [oldPaginationParams = {}, ...restParams] = params;
 
     result.run(
       ...([
