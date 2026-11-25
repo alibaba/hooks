@@ -91,10 +91,11 @@ const useDynamicList = <T>(initialList: T[] = []) => {
       return;
     }
 
+    const removedIndexes = new Set(indexes);
     setState((current) => {
       const keys: number[] = [];
       const list = current.list.filter((_, index) => {
-        if (indexes.includes(index)) {
+        if (removedIndexes.has(index)) {
           return false;
         }
         keys.push(current.keys[index]);
