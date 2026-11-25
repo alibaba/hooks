@@ -114,6 +114,21 @@ describe.each(['normal', 'strict'] as const)('useDynamicList keys in %s mode', (
     );
   });
 
+  test('removes the selected indexes even if the caller reuses the array', () => {
+    const { result } = renderHook(() => useDynamicList(['A', 'B', 'C']), { wrapper });
+    const keyB = result.current.getKey(1);
+    const selected = [0, 2];
+
+    act(() => {
+      result.current.push('D');
+      result.current.batchRemove(selected);
+      selected.length = 0;
+    });
+
+    expect(result.current.list).toEqual(['B', 'D']);
+    expect(result.current.getKey(0)).toBe(keyB);
+  });
+
   test('should keep keys aligned when list operations are batched', () => {
     const { result } = renderHook(() => useDynamicList(['A', 'B', 'C']), { wrapper });
     const originalKeys = result.current.list.map((_, index) => result.current.getKey(index));
