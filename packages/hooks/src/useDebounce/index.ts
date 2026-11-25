@@ -3,10 +3,10 @@ import useDebounceFn from '../useDebounceFn';
 import type { DebounceOptions } from './debounceOptions';
 
 function useDebounce<T>(value: T, options?: DebounceOptions) {
-  const [debounced, setDebounced] = useState(value);
+  const [debounced, setDebounced] = useState(() => value);
 
   const { run } = useDebounceFn(() => {
-    setDebounced(value);
+    setDebounced(() => value);
   }, options);
 
   useEffect(() => {
