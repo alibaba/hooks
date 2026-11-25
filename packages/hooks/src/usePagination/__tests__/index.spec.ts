@@ -41,6 +41,43 @@ describe('usePagination', () => {
     },
   );
 
+  test('uses the configured query when a pagination action starts the first request', async () => {
+    const service = vi.fn(
+      async (_page: { current: number; pageSize: number; sort: string }, _filter: string) => ({
+        list: [],
+        total: 0,
+      }),
+    );
+    const { result } = renderHook(() =>
+      usePagination(service, {
+        manual: true,
+        defaultParams: [{ current: 2, pageSize: 25, sort: 'name' }, 'open'],
+      }),
+    );
+
+    await act(async () => result.current.pagination.changeCurrent(3));
+    expect(service).toHaveBeenCalledWith({ current: 3, pageSize: 25, sort: 'name' }, 'open');
+
+    await act(async () => result.current.pagination.changeCurrent(4));
+    expect(service).toHaveBeenLastCalledWith({ current: 1, pageSize: 25, sort: 'name' }, 'open');
+
+    await act(async () => {
+      await result.current.runAsync({ current: 1, pageSize: 10, sort: 'date' }, 'closed');
+    });
+    await act(async () => result.current.pagination.changePageSize(50));
+    expect(service).toHaveBeenLastCalledWith({ current: 1, pageSize: 50, sort: 'date' }, 'closed');
+  });
+
+  test('keeps the starting page when changing page size before the first response', async () => {
+    const service = vi.fn(asyncFn);
+    const { result } = renderHook(() =>
+      usePagination(service, { manual: true, defaultCurrent: 2 }),
+    );
+
+    await act(async () => result.current.pagination.changePageSize(20));
+    expect(service).toHaveBeenCalledWith({ current: 2, pageSize: 20 });
+  });
+
   test('should prefer request params to the default current', async () => {
     const { result } = renderHook(() =>
       usePagination(asyncFn, { manual: true, defaultCurrent: 3, defaultPageSize: 20 }),
