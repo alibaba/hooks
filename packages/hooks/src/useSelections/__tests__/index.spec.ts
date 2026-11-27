@@ -27,6 +27,21 @@ const runCaseCallback = (
 };
 
 describe('useSelections', () => {
+  test('uses the key property when refreshed items are class instances', () => {
+    class Row {
+      constructor(public id: number) {}
+    }
+    const selected = new Row(1);
+    const refreshed = new Row(1);
+    const { result } = renderHook(() =>
+      useSelections([refreshed], { defaultSelected: [selected], itemKey: 'id' }),
+    );
+
+    expect(result.current.allSelected).toBe(true);
+    act(() => result.current.unSelect(refreshed));
+    expect(result.current.selected).toEqual([]);
+  });
+
   test('should rebuild the selection when the key property changes', () => {
     const selected = { id: 1, name: 'before' };
     const items = [{ id: 1, name: 'after' }];
