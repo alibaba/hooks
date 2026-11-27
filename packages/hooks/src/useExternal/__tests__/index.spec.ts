@@ -181,13 +181,40 @@ describe('useExternal', () => {
   test('css preload should work in IE Edge', () => {
     Object.defineProperty(HTMLLinkElement.prototype, 'hideFocus', {
       value: true,
+      configurable: true,
     });
-    setup('b.css');
-    const link = document.querySelector('link') as HTMLLinkElement;
+    try {
+      setup('b.css');
+      const link = document.querySelector('link') as HTMLLinkElement;
+      act(() => {
+        fireEvent.load(link);
+      });
+      expect(link.rel).toBe('preload');
+      expect(link.as).toBe('style');
+      expect(setup('b.css').result.current).toBe('ready');
+      expect(document.querySelectorAll('link')).toHaveLength(1);
+    } finally {
+      Reflect.deleteProperty(HTMLLinkElement.prototype, 'hideFocus');
+    }
+  });
+
+  test('loads a stylesheet when a preload has the same href', () => {
+    const preload = document.createElement('link');
+    preload.rel = 'preload';
+    preload.as = 'style';
+    preload.href = '/theme.css';
+    document.head.appendChild(preload);
+
+    const { result, unmount } = setup('/theme.css');
+    const stylesheet = document.querySelector('link[rel~="stylesheet"][href="/theme.css"]');
+    expect(stylesheet).not.toBeNull();
+    expect(result.current).toBe('loading');
     act(() => {
-      fireEvent.load(link);
+      fireEvent.load(stylesheet!);
     });
-    expect(link.rel).toBe('preload');
-    expect(link.as).toBe('style');
+    expect(result.current).toBe('ready');
+    unmount();
+    expect(preload.isConnected).toBe(true);
+    preload.remove();
   });
 });
