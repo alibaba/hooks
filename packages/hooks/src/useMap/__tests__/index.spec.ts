@@ -5,6 +5,18 @@ import useMap from '../index';
 const setup = (initialMap?: Iterable<[any, any]>) => renderHook(() => useMap(initialMap));
 
 describe('useMap', () => {
+  test('resets to the original entries from an iterator', () => {
+    const entries = [
+      [1, 'one'],
+      [2, 'two'],
+    ] as const;
+    const initial = entries.values();
+    const { result } = renderHook(() => useMap(initial));
+    act(() => result.current[1].remove(1));
+    act(() => result.current[1].reset());
+    expect([...result.current[0]]).toEqual(entries);
+  });
+
   test('should init map and utils', () => {
     const { result } = setup([
       ['foo', 'bar'],

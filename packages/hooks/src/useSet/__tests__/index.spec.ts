@@ -5,6 +5,15 @@ import useSet from '../index';
 const setUp = <K>(initialSet?: Iterable<K>) => renderHook(() => useSet(initialSet));
 
 describe('useSet', () => {
+  test('resets to the original entries from an iterator', () => {
+    const entries = [1, 2];
+    const initial = entries.values();
+    const { result } = renderHook(() => useSet(initial));
+    act(() => result.current[1].remove(1));
+    act(() => result.current[1].reset());
+    expect([...result.current[0]]).toEqual(entries);
+  });
+
   test('should init set and utils', () => {
     const { result } = setUp([1, 2]);
     const [set, utils] = result.current;
