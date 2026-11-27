@@ -1,7 +1,7 @@
 import isPlainObject from 'lodash/isPlainObject';
 import { useCallback, useMemo, useState } from 'react';
 import useMemoizedFn from '../useMemoizedFn';
-import { isFunction, isString } from '../utils';
+import { isFunction, isObject, isString } from '../utils';
 
 export interface Options<T> {
   defaultSelected?: T[];
@@ -24,8 +24,8 @@ function useSelections<T>(items: T[], options?: T[] | Options<T>) {
       if (isFunction(itemKey)) {
         return itemKey(item);
       }
-      if (isString(itemKey) && isPlainObject(item)) {
-        return (item as any)[itemKey];
+      if (isString(itemKey) && isObject(item)) {
+        return item[itemKey];
       }
 
       return item as React.Key;
