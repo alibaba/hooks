@@ -9,6 +9,21 @@ const callToggle = (hook: any) => {
 };
 
 describe('useToggle', () => {
+  test('keeps callback values without calling them', () => {
+    const left = () => 'left';
+    const right = () => 'right';
+    const { result } = renderHook(() => useToggle(left, right));
+    expect(result.current[0]).toBe(left);
+    act(() => result.current[1].setRight());
+    expect(result.current[0]).toBe(right);
+    act(() => result.current[1].setLeft());
+    expect(result.current[0]).toBe(left);
+    act(() => result.current[1].set(right));
+    expect(result.current[0]).toBe(right);
+    act(() => result.current[1].toggle());
+    expect(result.current[0]).toBe(left);
+  });
+
   test('test on init', async () => {
     const hook = renderHook(() => useToggle());
     expect(hook.result.current[0]).toBeFalsy();
