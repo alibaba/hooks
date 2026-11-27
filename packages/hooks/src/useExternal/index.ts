@@ -72,7 +72,9 @@ const loadScript: LoadExternal = (path, props = {}) => {
 };
 
 const loadCss: LoadExternal = (path, props = {}) => {
-  const css = document.querySelector(`link[href="${path}"]`);
+  const css = document.querySelector(
+    `link[href="${path}"]:not([rel~="preload"]), link[href="${path}"][data-ahooks-stylesheet]`,
+  );
   if (!css) {
     const newCss = document.createElement('link');
 
@@ -87,6 +89,7 @@ const loadCss: LoadExternal = (path, props = {}) => {
     if (isLegacyIECss && newCss.relList) {
       newCss.rel = 'preload';
       newCss.as = 'style';
+      newCss.setAttribute('data-ahooks-stylesheet', '');
     }
     trackResourceStatus(newCss);
     document.head.appendChild(newCss);
