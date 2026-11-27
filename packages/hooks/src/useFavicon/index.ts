@@ -20,7 +20,7 @@ const useFavicon = (href: string) => {
     const imgSuffix = cutUrl[cutUrl.length - 1].toLocaleUpperCase() as ImgTypes;
 
     const link =
-      document.querySelector<HTMLLinkElement>("link[rel*='icon']") ||
+      document.querySelector<HTMLLinkElement>("link[rel~='icon' i]") ||
       document.createElement('link');
 
     link.type = ImgTypeMap[imgSuffix];

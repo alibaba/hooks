@@ -38,4 +38,24 @@ describe('useFavicon', () => {
       expect(link?.getAttribute('href')).toBe(url);
     },
   );
+
+  test('updates the favicon without replacing the touch icon', () => {
+    document.head.querySelectorAll('link').forEach((link) => {
+      link.remove();
+    });
+    const touchIcon = document.createElement('link');
+    touchIcon.rel = 'apple-touch-icon';
+    touchIcon.href = '/home-screen.png';
+    document.head.appendChild(touchIcon);
+    const { rerender } = renderHook((href: string) => useFavicon(href), {
+      initialProps: '/tab.ico',
+    });
+    expect(touchIcon.rel).toBe('apple-touch-icon');
+    expect(touchIcon.getAttribute('href')).toBe('/home-screen.png');
+    const favicon = document.head.querySelector('link[rel~="icon"]');
+    expect(favicon?.getAttribute('href')).toBe('/tab.ico');
+    rerender('/updated.svg');
+    expect(document.head.querySelector('link[rel~="icon"]')).toBe(favicon);
+    expect(favicon?.getAttribute('href')).toBe('/updated.svg');
+  });
 });
