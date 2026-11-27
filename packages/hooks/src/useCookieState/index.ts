@@ -49,7 +49,7 @@ export interface Options extends CookieAttributes {
 }
 
 const useCookieState = (cookieKey: string, options: Options = {}) => {
-  const [state, setState] = useState<State>(() => {
+  const readCookie = (): State => {
     const cookieValue = Cookies.get(cookieKey);
 
     if (isString(cookieValue)) {
@@ -61,7 +61,14 @@ const useCookieState = (cookieKey: string, options: Options = {}) => {
     }
 
     return options.defaultValue;
-  });
+  };
+
+  const [state, setState] = useState(readCookie);
+  const [previousKey, setPreviousKey] = useState(cookieKey);
+  if (previousKey !== cookieKey) {
+    setPreviousKey(cookieKey);
+    setState(readCookie());
+  }
 
   const updateState = useMemoizedFn(
     (newValue: State | ((prevState: State) => State), newOptions: CookieAttributes = {}) => {

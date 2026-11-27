@@ -69,6 +69,29 @@ describe('useCookieState', () => {
     expect(hook.result.current.state).toBe('');
   });
 
+  test('reads the active cookie when the key changes', () => {
+    Cookies.set('light-theme', 'day');
+    Cookies.set('dark-theme', 'night');
+    try {
+      const { result, rerender } = renderHook(
+        (key: string) => useCookieState(key, { defaultValue: () => 'auto' }),
+        { initialProps: 'light-theme' },
+      );
+      expect(result.current[0]).toBe('day');
+      rerender('dark-theme');
+      expect(result.current[0]).toBe('night');
+      act(() => result.current[1]((theme) => `${theme}-custom`));
+      expect(Cookies.get('dark-theme')).toBe('night-custom');
+      expect(Cookies.get('light-theme')).toBe('day');
+      rerender('missing-theme');
+      expect(result.current[0]).toBe('auto');
+      expect(Cookies.get('missing-theme')).toBeUndefined();
+    } finally {
+      Cookies.remove('light-theme');
+      Cookies.remove('dark-theme');
+    }
+  });
+
   test.each([
     { name: 'hook options', options: { path: '/account' }, updateOptions: undefined },
     { name: 'update options', options: { path: '/' }, updateOptions: { path: '/account' } },
