@@ -1,6 +1,6 @@
 import { describe, expect, test } from 'vitest';
 import { act, renderHook } from '../../utils/tests';
-import useResponsive from '../';
+import useResponsive, { configResponsive } from '../';
 
 describe('useResponsive', () => {
   function changeWidth(width: number) {
@@ -25,5 +25,18 @@ describe('useResponsive', () => {
     expect(hook.result.current).toMatchSnapshot();
     changeWidth(1200);
     expect(hook.result.current).toMatchSnapshot();
+  });
+
+  test('applies a new breakpoint configuration to mounted consumers', () => {
+    const mounted = renderHook(useResponsive);
+    try {
+      act(() => configResponsive({ xs: 0 }));
+      expect(mounted.result.current).toEqual({ xs: true });
+      changeWidth(300);
+      expect(mounted.result.current).toEqual({ xs: true });
+    } finally {
+      act(() => configResponsive({ xs: 0, sm: 576, md: 768, lg: 992, xl: 1200 }));
+      mounted.unmount();
+    }
   });
 });
